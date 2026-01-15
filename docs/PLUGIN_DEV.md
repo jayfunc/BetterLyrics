@@ -179,9 +179,9 @@ namespace BetterLyrics.Plugins.MyFeature
 ```
 
 ### 2. Configuration & Localization (`Config.cs`)
-This is the **Source of Truth**. Define properties here.
+This is the **Source of Truth**. Define properties here, and decorate them with `[Display]`.
 
-* **You write Code**: Add properties.
+* **You write Code**: Add a property with `[Display(Name="...")]`
 * **Tool writes JSON**: On build, `DevTools` creates/updates `Langs/*.json`.
 
 ```csharp
@@ -192,12 +192,14 @@ namespace BetterLyrics.Plugins.MyFeature
 {
     public class Config : PluginConfigBase
     {
+        [Display(Name = "API Key", Description = "Your secret key for the service.")]
         public string ApiKey
         {
             get => Get("");
             set => Set(value);
         }
 
+        [Display(Name = "Max Retries", Description = "How many times to retry on failure.")]
         public int MaxRetries
         {
             get => Get(3);
@@ -211,7 +213,7 @@ namespace BetterLyrics.Plugins.MyFeature
 After you build the project once:
 1.  Look at your **Solution Explorer**. You will see a `Langs` folder appear.
 2.  Open `Langs/*.json`. It will contain the keys generated from your Config code.
-3.  **Updates**: If you add a new property to `Config.cs` later and rebuild, the tool will **automatically append** the new key to `zh-CN.json` marked with `[TODO]`, preserving your existing translations.
+3.  **Updates**: If you add a new property to `Config.cs` later and rebuild, the tool will **automatically append** the new key to `*.json` marked with `[TODO]`, preserving your existing translations.
 
 ---
 
