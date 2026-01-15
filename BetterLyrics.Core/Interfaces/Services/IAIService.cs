@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BetterLyrics.Core.Interfaces.Services
+﻿namespace BetterLyrics.Core.Interfaces.Services
 {
     public interface IAIService
     {

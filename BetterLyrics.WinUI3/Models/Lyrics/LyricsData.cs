@@ -1,7 +1,4 @@
 ﻿using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Services.LocalizationService;
-using CommunityToolkit.Mvvm.DependencyInjection;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 

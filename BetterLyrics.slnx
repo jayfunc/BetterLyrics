@@ -19,5 +19,5 @@
   </Project>
   <Project Path="ColorThief.WinUI3/ColorThief.WinUI3.csproj" />
   <Project Path="Impressionist/Impressionist/Impressionist.csproj" />
-  <Project Path="PluginAnalyzer/PluginAnalyzer.csproj" Id="8ee58bf7-807d-486c-8d7d-c00bb9ec2b81" />
+  <Project Path="BetterLyrics.DevTools/BetterLyrics.DevTools.csproj" Id="8ee58bf7-807d-486c-8d7d-c00bb9ec2b81" />
 </Solution>

@@ -1,14 +1,14 @@
 ﻿using BetterLyrics.Core.Interfaces.Services;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace BetterLyrics.Core.Interfaces
+namespace BetterLyrics.Core.Interfaces.Infrastructure
 {
     public interface IPluginContext
     {
         string PluginDirectory { get; }
 
+        Dictionary<string, object> Settings { get; }
+
         IAIService? AIService { get; }
+        ILocalizer Localizer { get; }
     }
 }

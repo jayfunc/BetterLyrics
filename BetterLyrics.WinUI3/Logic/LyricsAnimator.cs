@@ -2,10 +2,8 @@
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.Models.Settings;
-using DevWinUI;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Logic

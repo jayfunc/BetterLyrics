@@ -1,7 +1,5 @@
 ﻿using LLama.Abstractions;
 using LLama.Common;
-using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace BetterLyrics.Plugins.AI.Local

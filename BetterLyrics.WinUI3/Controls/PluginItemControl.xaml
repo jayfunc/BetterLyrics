@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.PluginItemControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dev="using:DevWinUI"
+    xmlns:local="using:BetterLyrics.WinUI3.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    mc:Ignorable="d">
+
+    <dev:SettingsExpander
+        x:Name="RootExpander"
+        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                 Glyph=&#xE74C;}"
+        IsExpanded="False">
+        <dev:SettingsExpander.Header>
+            <StackPanel Spacing="2">
+                <TextBlock Text="{x:Bind PluginInfo.Plugin.Name, Mode=OneWay}" />
+                <TextBlock
+                    Foreground="{StaticResource TextFillColorSecondaryBrush}"
+                    IsTextSelectionEnabled="True"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{x:Bind PluginInfo.Id, Mode=OneWay}" />
+            </StackPanel>
+        </dev:SettingsExpander.Header>
+
+        <dev:SettingsExpander.Description>
+            <TextBlock
+                MaxLines="2"
+                Opacity="0.8"
+                Text="{x:Bind PluginInfo.Plugin.Description, Mode=OneWay}"
+                TextTrimming="CharacterEllipsis"
+                TextWrapping="Wrap" />
+        </dev:SettingsExpander.Description>
+
+        <dev:SettingsExpander.Content>
+            <StackPanel
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Orientation="Vertical"
+                Spacing="4">
+
+                <StackPanel
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal"
+                    Spacing="4">
+                    <local:InfoTag Glyph="&#xE8EC;" Text="{x:Bind PluginInfo.Plugin.Version, Mode=OneWay}" />
+                    <local:InfoTag
+                        Glyph="&#xE77B;"
+                        Link="https://github.com/jayfunc"
+                        Text="{x:Bind PluginInfo.Plugin.Author, Mode=OneWay}" />
+                </StackPanel>
+
+                <local:InfoTag
+                    HorizontalAlignment="Right"
+                    Glyph="&#xE787;"
+                    Text="{x:Bind PluginInfo.Plugin.LastUpdated, Mode=OneWay}" />
+            </StackPanel>
+        </dev:SettingsExpander.Content>
+
+        <dev:SettingsExpander.Items />
+
+    </dev:SettingsExpander>
+</UserControl>

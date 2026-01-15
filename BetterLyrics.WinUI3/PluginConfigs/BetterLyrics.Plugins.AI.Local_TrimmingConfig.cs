@@ -111,7 +111,6 @@ internal static class BetterLyrics_Plugins_AI_Local_Config
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Diagnostics.DebuggerBrowsableState))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Diagnostics.DebuggerDisplayAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Diagnostics.DebuggerHiddenAttribute))]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Diagnostics.DebuggerStepThroughAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Diagnostics.DebuggerTypeProxyAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Diagnostics.Process))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Diagnostics.ProcessStartInfo))]
@@ -162,6 +161,11 @@ internal static class BetterLyrics_Plugins_AI_Local_Config
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.IProgress<>))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.IServiceProvider))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Linq.Enumerable))]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Linq.Expressions.ConstantExpression))]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Linq.Expressions.Expression))]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Linq.Expressions.Expression<>))]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Linq.Expressions.MemberExpression))]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Linq.Expressions.ParameterExpression))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Linq.IOrderedEnumerable<>))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Math))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.MathF))]
@@ -220,6 +224,7 @@ internal static class BetterLyrics_Plugins_AI_Local_Config
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.AsyncStateMachineAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.AsyncTaskMethodBuilder))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.AsyncTaskMethodBuilder<>))]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.AsyncValueTaskMethodBuilder))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.AsyncValueTaskMethodBuilder<>))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.CallerArgumentExpressionAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.CompilationRelaxationsAttribute))]
@@ -294,6 +299,7 @@ internal static class BetterLyrics_Plugins_AI_Local_Config
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.Versioning.SupportedOSPlatformAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.Versioning.TargetFrameworkAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.Versioning.TargetPlatformAttribute))]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.RuntimeMethodHandle))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.RuntimeTypeHandle))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.SByte))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Security.Cryptography.HashAlgorithmName))]
@@ -409,6 +415,6 @@ internal static class BetterLyrics_Plugins_AI_Local_Config
     [ModuleInitializer]
     internal static void Initialize()
     {
-        // This method runs automatically on startup.
+        // This method runs automatically on startup to keep types from being trimmed.
     }
 }

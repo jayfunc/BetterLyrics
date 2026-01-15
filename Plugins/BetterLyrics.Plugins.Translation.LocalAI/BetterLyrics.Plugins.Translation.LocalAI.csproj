@@ -36,23 +36,30 @@
 		<Message Text="[Smart Trim] Excluded shared assemblies:%0a@(SharedFiles->'    -&gt; %(Filename)%(Extension)', '%0a')" Importance="High" Condition="'@(SharedFiles)' != ''" />
 	</Target>
 
-	<Target Name="RunPluginAnalyzer" AfterTargets="Build">
+	<Target Name="RunDevTools" AfterTargets="PostBuildEvent">
 		<PropertyGroup>
-			<AnalyzerPath>..\..\PluginAnalyzer\bin\$(Configuration)\net10.0\PluginAnalyzer.exe</AnalyzerPath>
-			<ScanDir>$(TargetDir)</ScanDir>
-			<Ns>BetterLyrics.WinUI3</Ns>
-			<Prefix>$(ProjectName)</Prefix>
-
-			<OutputDir>..\..\BetterLyrics.WinUI3\PluginConfigs\</OutputDir>
+			<AnalyzerPath>..\..\BetterLyrics.DevTools\bin\$(Configuration)\$(TargetFramework)\BetterLyrics.DevTools.exe</AnalyzerPath>
+			<MainAppConfigDir>..\..\BetterLyrics.WinUI3\PluginConfigs\</MainAppConfigDir>
+			<SourceLangDir>$(ProjectDir)Langs\</SourceLangDir>
+			<OutputLangDir>$(TargetDir)Langs\</OutputLangDir>
 		</PropertyGroup>
 
-		<Message Text="[Analyzer] Delivering configs to Main App..." Importance="High" />
-		<Exec Command="&quot;$(AnalyzerPath)&quot; &quot;$(ScanDir)\&quot; &quot;$(Ns)&quot; &quot;$(Prefix)&quot; &quot;$(OutputDir)\&quot;" />
-	</Target>
+		<Message Text="[Analyzer] Generating resources to Project Directory..." Importance="High" />
 
-	<Target Name="PackagePluginToZip" AfterTargets="Build" Condition="'$(Configuration)' == 'Release'">
+		<Exec Command="&quot;$(AnalyzerPath)&quot; &quot;$(TargetPath)&quot; All &quot;$(ProjectDir)\&quot;" />
+
+		<ItemGroup>
+			<FreshLangFiles Include="$(SourceLangDir)*.json" />
+		</ItemGroup>
+		<Copy SourceFiles="@(FreshLangFiles)" DestinationFolder="$(OutputLangDir)" />
+
+		<Copy SourceFiles="$(TargetDir)$(ProjectName)_TrimmingConfig.cs" DestinationFolder="$(MainAppConfigDir)" SkipUnchangedFiles="true" />
+		<Copy SourceFiles="$(TargetDir)$(ProjectName)_TrimmerRoots.xml" DestinationFolder="$(MainAppConfigDir)" SkipUnchangedFiles="true" />
+	</Target>
+	
+	<Target Name="PackagePluginToZip" AfterTargets="Build">
 		<PropertyGroup>
-			<PackageOutputDir>$(ProjectDir)..\_Dist\</PackageOutputDir>
+			<PackageOutputDir>$(ProjectDir)..\_Dist\$(Configuration)\</PackageOutputDir>
 
 			<ZipFileName>$(AssemblyName).v$(Version).zip</ZipFileName>
 			<FinalZipPath>$(PackageOutputDir)$(ZipFileName)</FinalZipPath>

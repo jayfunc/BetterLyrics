@@ -1,6 +1,4 @@
 ﻿using BetterLyrics.Core.Interfaces.Features;
-using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Serialization;
 using BetterLyrics.WinUI3.Services.PluginService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;

@@ -1,15 +1,11 @@
-using MeCab;
-using MeCab.Extension.UniDic;
 using BetterLyrics.Plugins.Romaji.Extensions;
 using BetterLyrics.Plugins.Romaji.Models;
-using System;
-using System.Collections.Generic;
+using BetterLyrics.Plugins.Romaji.Options;
+using MeCab;
+using MeCab.Extension.UniDic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using BetterLyrics.Plugins.Romaji.Options;
 
 namespace BetterLyrics.Plugins.Romaji.Helpers
 {

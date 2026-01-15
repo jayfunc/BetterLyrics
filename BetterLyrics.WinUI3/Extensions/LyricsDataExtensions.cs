@@ -1,6 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models.Lyrics;
-using BetterLyrics.WinUI3.Services.LocalizationService;
 using System;
 using System.Collections.Generic;
 using System.Linq;

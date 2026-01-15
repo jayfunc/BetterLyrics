@@ -1,8 +1,8 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using BetterLyrics.WinUI3.Enums;
 using System;
 using System.Numerics;
-using BetterLyrics.WinUI3.Enums;
 
 namespace BetterLyrics.WinUI3.Helper
 {
@@ -10,7 +10,7 @@ namespace BetterLyrics.WinUI3.Helper
     {
         #region Interpolators
 
-        public static Func<T, T, double, T> GetInterpolatorByEasingType<T>(EasingType? type, EaseMode easingMode = EaseMode.Out) 
+        public static Func<T, T, double, T> GetInterpolatorByEasingType<T>(EasingType? type, EaseMode easingMode = EaseMode.Out)
             where T : INumber<T>, IFloatingPointIeee754<T>
         {
             return (start, end, progress) =>

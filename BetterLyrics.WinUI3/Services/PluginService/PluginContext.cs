@@ -1,8 +1,7 @@
 ﻿using BetterLyrics.Core.Interfaces;
+using BetterLyrics.Core.Interfaces.Infrastructure;
 using BetterLyrics.Core.Interfaces.Services;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace BetterLyrics.WinUI3.Services.PluginService
 {
@@ -12,11 +11,15 @@ namespace BetterLyrics.WinUI3.Services.PluginService
 
         public string PluginDirectory { get; }
         public IAIService? AIService => _pluginService.GetPlugin<IAIService>();
+        public ILocalizer Localizer { get; }
+        public Dictionary<string, object> Settings { get; }
 
-        public PluginContext(IPluginService pluginService, string pluginDir)
+        public PluginContext(IPluginService pluginService, string pluginDir, ILocalizer localizer, Dictionary<string, object> settings)
         {
             _pluginService = pluginService;
+            Localizer = localizer;
             PluginDirectory = pluginDir;
+            Settings = settings;
         }
 
     }

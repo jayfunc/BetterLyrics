@@ -1,18 +1,20 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <UserControl
     x:Class="BetterLyrics.WinUI3.Controls.ExtendedSlider"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
-    <StackPanel>
+    <Grid RowSpacing="4">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
         <Slider
+            Grid.Row="0"
             IsEnabled="{x:Bind IsSliderEnabled, Mode=OneWay}"
             Maximum="{x:Bind Maximum, Mode=OneWay}"
             Minimum="{x:Bind Minimum, Mode=OneWay}"
@@ -23,41 +25,82 @@
             TickPlacement="None"
             Value="{x:Bind Value, Mode=TwoWay}" />
 
-        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="6" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
             <Button
+                Grid.Column="0"
                 VerticalAlignment="Center"
                 Click="ResetButton_Click"
-                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                      FontSize=12,
-                                      Glyph=&#xE777;}"
                 Style="{StaticResource GhostButtonStyle}"
-                Visibility="{x:Bind ResetButtonVisibility, Mode=OneWay}" />
-            <Button
-                x:Name="SubtractButton"
-                VerticalAlignment="Center"
-                Click="SubtractButton_Click"
-                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                      FontSize=12,
-                                      Glyph=&#xE738;}"
-                Style="{StaticResource GhostButtonStyle}" />
+                Visibility="{x:Bind ResetButtonVisibility, Mode=OneWay}">
+                <FontIcon
+                    FontFamily="{StaticResource IconFontFamily}"
+                    FontSize="12"
+                    Glyph="&#xE777;" />
+            </Button>
 
-            <StackPanel
-                Margin="3,-2,3,0"
-                Orientation="Horizontal"
-                Spacing="2">
-                <TextBlock VerticalAlignment="Center" Text="{x:Bind RoundedValue, Mode=OneWay}" />
-                <TextBlock VerticalAlignment="Center" Text="{x:Bind Unit, Mode=OneWay}" />
-            </StackPanel>
+            <Border
+                Grid.Column="2"
+                Padding="2"
+                Background="{ThemeResource ControlFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource ControlStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="4">
 
-            <Button
-                x:Name="AddButton"
-                VerticalAlignment="Center"
-                Click="AddButton_Click"
-                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                      FontSize=12,
-                                      Glyph=&#xE710;}"
-                Style="{StaticResource GhostButtonStyle}" />
-        </StackPanel>
+                <StackPanel Orientation="Horizontal" Spacing="0">
 
-    </StackPanel>
+                    <Button
+                        x:Name="SubtractButton"
+                        Width="30"
+                        Height="28"
+                        Padding="0"
+                        VerticalAlignment="Center"
+                        Click="SubtractButton_Click"
+                        CornerRadius="4,0,0,4"
+                        Style="{StaticResource DateTimePickerFlyoutButtonStyle}">
+                        <FontIcon
+                            FontFamily="{StaticResource IconFontFamily}"
+                            FontSize="12"
+                            Glyph="&#xE738;" />
+                    </Button>
+
+                    <Border MinWidth="40" Padding="8,0">
+                        <StackPanel
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal"
+                            Spacing="2">
+                            <TextBlock VerticalAlignment="Center" Text="{x:Bind RoundedValue, Mode=OneWay}" />
+
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Opacity="0.6"
+                                Text="{x:Bind Unit, Mode=OneWay}" />
+                        </StackPanel>
+                    </Border>
+
+                    <Button
+                        x:Name="AddButton"
+                        Width="30"
+                        Height="28"
+                        Padding="0"
+                        VerticalAlignment="Center"
+                        Click="AddButton_Click"
+                        CornerRadius="0,4,4,0"
+                        Style="{StaticResource DateTimePickerFlyoutButtonStyle}">
+                        <FontIcon
+                            FontFamily="{StaticResource IconFontFamily}"
+                            FontSize="12"
+                            Glyph="&#xE710;" />
+                    </Button>
+
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
 </UserControl>
