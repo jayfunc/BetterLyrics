@@ -10,14 +10,13 @@
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
-    <dev:SettingsExpander
-        x:Name="RootExpander"
-        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                 Glyph=&#xE74C;}"
-        IsExpanded="False">
+    <dev:SettingsExpander x:Name="RootExpander" IsExpanded="False">
         <dev:SettingsExpander.Header>
             <StackPanel Spacing="2">
-                <TextBlock Text="{x:Bind PluginInfo.Plugin.Name, Mode=OneWay}" />
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                    <TextBlock Text="{x:Bind PluginInfo.Plugin.Name, Mode=OneWay}" />
+                    <local:InfoTag Glyph="&#xE77B;" Text="{x:Bind PluginInfo.Plugin.Author, Mode=OneWay}" />
+                </StackPanel>
                 <TextBlock
                     Foreground="{StaticResource TextFillColorSecondaryBrush}"
                     IsTextSelectionEnabled="True"
@@ -47,10 +46,7 @@
                     Orientation="Horizontal"
                     Spacing="4">
                     <local:InfoTag Glyph="&#xE8EC;" Text="{x:Bind PluginInfo.Plugin.Version, Mode=OneWay}" />
-                    <local:InfoTag
-                        Glyph="&#xE77B;"
-                        Link="https://github.com/jayfunc"
-                        Text="{x:Bind PluginInfo.Plugin.Author, Mode=OneWay}" />
+                    <local:InfoTag Glyph="&#xE943;" Link="{x:Bind PluginInfo.Plugin.RepositoryUrl, Mode=OneWay}" />
                 </StackPanel>
 
                 <local:InfoTag
@@ -60,7 +56,19 @@
             </StackPanel>
         </dev:SettingsExpander.Content>
 
+        <dev:SettingsExpander.ItemsHeader>
+            <dev:SettingsCard x:Uid="PluginItemControlEnablePlugin">
+                <ToggleSwitch IsOn="{x:Bind PluginInfo.IsEnabled, Mode=TwoWay}" Toggled="ToggleSwitch_Toggled" />
+            </dev:SettingsCard>
+        </dev:SettingsExpander.ItemsHeader>
+
         <dev:SettingsExpander.Items />
+
+        <dev:SettingsExpander.ItemsFooter>
+            <dev:SettingsCard>
+                <Button x:Uid="PluginManagerControlUninstall" Click="UninstallClick" />
+            </dev:SettingsCard>
+        </dev:SettingsExpander.ItemsFooter>
 
     </dev:SettingsExpander>
 </UserControl>

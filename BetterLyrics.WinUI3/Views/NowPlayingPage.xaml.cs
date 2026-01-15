@@ -347,6 +347,14 @@ namespace BetterLyrics.WinUI3.Views
                 default:
                     break;
             }
+
+            //var tmp = LyricsCanvas.LyricsWidth;
+            //LyricsCanvas.LyricsWidth = LyricsCanvas.LyricsHeight;
+            //LyricsCanvas.LyricsHeight = tmp;
+
+            //tmp = LyricsCanvas.LyricsStartX;
+            //LyricsCanvas.LyricsStartX = LyricsCanvas.LyricsStartY;
+            //LyricsCanvas.LyricsStartY = tmp;
         }
 
         // ====

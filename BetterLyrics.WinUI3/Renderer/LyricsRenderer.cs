@@ -240,7 +240,7 @@ namespace BetterLyrics.WinUI3.Renderer
 
             Vector3 center = new(
                 (float)(lyricsX + lyricsWidth / 2),
-                (float)(lyricsY + lyricsHeight * playingLineTopOffsetFactor / 2),
+                (float)(lyricsY + lyricsHeight * playingLineTopOffsetFactor),
                 0);
 
             float rotationX = (float)(Math.PI * lyricsEffect.Lyrics3DXAngle / 180.0);

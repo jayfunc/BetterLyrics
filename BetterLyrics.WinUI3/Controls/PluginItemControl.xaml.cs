@@ -1,4 +1,6 @@
-﻿using BetterLyrics.Core.Models.SettingsSchema;
+﻿using BetterLyrics.Core.Abstractions;
+using BetterLyrics.Core.Interfaces;
+using BetterLyrics.Core.Models.SettingsSchema;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.PluginService;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -6,6 +8,7 @@ using DevWinUI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Collections.Generic;
 using TextBox = Microsoft.UI.Xaml.Controls.TextBox;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -48,73 +51,28 @@ namespace BetterLyrics.WinUI3.Controls
 
             if (PluginInfo == null) return;
 
-            var enableSwitch = new ToggleSwitch
+            if (PluginInfo.IsEnabled)
             {
-                IsOn = PluginInfo.IsEnabled
-            };
+                var configDict = PluginInfo.Plugin?.GetSettingDefDict();
+                if (configDict == null) return;
 
-            enableSwitch.Toggled += async (s, e) =>
-            {
-                enableSwitch.IsEnabled = false;
-
-                try
+                foreach (var kvp in configDict)
                 {
-                    await _pluginService.TogglePluginAsync(PluginInfo.Id, enableSwitch.IsOn);
-                    PluginInfo.IsEnabled = enableSwitch.IsOn;
-                    RebuildItems();
-                }
-                catch (Exception ex)
-                {
-                    enableSwitch.IsOn = !enableSwitch.IsOn;
-                }
-                finally
-                {
-                    enableSwitch.IsEnabled = true;
-                }
-            };
-
-            var enableCard = new SettingsCard
-            {
-                Header = "Enable Plugin",
-                Description = "Toggle to enable or disable this plugin.",
-                Content = enableSwitch
-            };
-            RootExpander.Items.Add(enableCard);
-
-            if (PluginInfo.IsEnabled && PluginInfo.SettingsDefinitions != null)
-            {
-                foreach (var def in PluginInfo.SettingsDefinitions)
-                {
-                    var dynamicCard = CreateSettingCard(def);
+                    var dynamicCard = CreateSettingCard(kvp);
                     if (dynamicCard != null)
                     {
                         RootExpander.Items.Add(dynamicCard);
                     }
                 }
             }
-
-            var uninstallBtn = new Button { Content = "Uninstall" };
-            uninstallBtn.Click += (s, e) => UninstallClicked?.Invoke(this, e);
-
-            var uninstallCard = new SettingsCard
-            {
-                Header = "Uninstall",
-                Description = "Remove this plugin and its data.",
-                Content = uninstallBtn,
-                IsClickEnabled = true,
-                ActionIconToolTip = "Uninstall"
-            };
-
-            uninstallCard.Click += (s, e) => UninstallClicked?.Invoke(this, e);
-
-            RootExpander.Items.Add(uninstallCard);
         }
 
-        private SettingsCard? CreateSettingCard(SettingDef def)
+        private SettingsCard? CreateSettingCard(KeyValuePair<string, SettingDef> kvp)
         {
-            var currentVal = PluginInfo.GetSetting<object>(def.Key, def.DefaultValue);
+            var def = kvp.Value;
+            var currentVal = def.Value;
 
-            FrameworkElement inputControl = null;
+            FrameworkElement? inputControl = null;
 
             switch (def)
             {
@@ -158,7 +116,7 @@ namespace BetterLyrics.WinUI3.Controls
 
                 case ActionSettingDef act:
                     var btn = new Button { Content = act.ButtonText };
-                    btn.Click += (s, e) => act.Action?.Invoke(PluginInfo.Settings);
+                    btn.Click += (s, e) => act.Action?.Invoke(act.Key);
                     inputControl = btn;
                     break;
             }
@@ -167,7 +125,7 @@ namespace BetterLyrics.WinUI3.Controls
 
             return new SettingsCard
             {
-                Header = def.Label,
+                Header = def.Header,
                 Description = def.Description,
                 Content = inputControl
             };
@@ -175,11 +133,17 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void UpdateSetting(string key, object value)
         {
-            if (PluginInfo != null)
-            {
-                PluginInfo.Settings[key] = value;
-            }
+            _pluginService.SetSettingItem(PluginInfo.Id, key, value);
         }
 
+        private void UninstallClick(object sender, RoutedEventArgs e)
+        {
+            UninstallClicked?.Invoke(this, e);
+        }
+
+        private void ToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            RebuildItems();
+        }
     }
 }

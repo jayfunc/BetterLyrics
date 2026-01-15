@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Abstractions;
 
 namespace BetterLyrics.Core.Interfaces.Infrastructure
 {
@@ -6,9 +7,13 @@ namespace BetterLyrics.Core.Interfaces.Infrastructure
     {
         string PluginDirectory { get; }
 
-        Dictionary<string, object> Settings { get; }
-
         IAIService? AIService { get; }
         ILocalizer Localizer { get; }
+        /// <summary>
+        /// If you are modifying config in plugin side, please use
+        /// <see cref="PluginBase{TConfig}.Config"/>
+        /// directly.
+        /// </summary>
+        IConfigurator Configurator { get; }
     }
 }

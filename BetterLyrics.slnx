@@ -5,12 +5,14 @@
     <Platform Name="x86" />
   </Configurations>
   <Folder Name="/Plugins/">
-    <Project Path="Plugins/BetterLyrics.Plugins.AI.Local/BetterLyrics.Plugins.AI.Local.csproj" />
+    <Project Path="Plugins/BetterLyrics.Plugins.AI.Local.LLM/BetterLyrics.Plugins.AI.Local.LLM.csproj" />
+    <Project Path="Plugins/BetterLyrics.Plugins.AI.Local.NMT/BetterLyrics.Plugins.AI.Local.NMT.csproj" Id="1a486be1-707e-41a0-ae40-a5b81f49925b" />
     <Project Path="Plugins/BetterLyrics.Plugins.Translation.LocalAI/BetterLyrics.Plugins.Translation.LocalAI.csproj" Id="17f9f675-6745-44cb-b8b4-604a2ae90dd1" />
     <Project Path="Plugins/BetterLyrics.Plugins.Transliteration.Romaji/BetterLyrics.Plugins.Transliteration.Romaji.csproj" />
   </Folder>
   <Folder Name="/Plugins/_Dist/" />
   <Project Path="BetterLyrics.Core/BetterLyrics.Core.csproj" />
+  <Project Path="BetterLyrics.DevTools/BetterLyrics.DevTools.csproj" Id="8ee58bf7-807d-486c-8d7d-c00bb9ec2b81" />
   <Project Path="BetterLyrics.WinUI3/BetterLyrics.WinUI3.csproj">
     <Platform Solution="*|ARM64" Project="ARM64" />
     <Platform Solution="*|x64" Project="x64" />
@@ -19,5 +21,4 @@
   </Project>
   <Project Path="ColorThief.WinUI3/ColorThief.WinUI3.csproj" />
   <Project Path="Impressionist/Impressionist/Impressionist.csproj" />
-  <Project Path="BetterLyrics.DevTools/BetterLyrics.DevTools.csproj" Id="8ee58bf7-807d-486c-8d7d-c00bb9ec2b81" />
 </Solution>

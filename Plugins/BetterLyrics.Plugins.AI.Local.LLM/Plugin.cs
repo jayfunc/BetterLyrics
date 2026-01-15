@@ -6,7 +6,7 @@ using LLama;
 using LLama.Common;
 using System.Text;
 
-namespace BetterLyrics.Plugins.AI.Local
+namespace BetterLyrics.Plugins.AI.Local.LLM
 {
     public class Plugin : PluginBase<Config>, IAIService
     {
@@ -55,11 +55,6 @@ namespace BetterLyrics.Plugins.AI.Local
             });
         }
 
-        public override IEnumerable<SettingDef> GetSettings()
-        {
-            yield return SettingBuilder.Text(() => Config.ModelPath, Context.Localizer);
-        }
-
         protected override async Task OnInitializeAsync()
         {
             if (string.IsNullOrEmpty(Config.ModelPath))
@@ -71,9 +66,9 @@ namespace BetterLyrics.Plugins.AI.Local
             {
                 var parameters = new ModelParams(Config.ModelPath)
                 {
-                    ContextSize = (uint?)Config.ContextSize, // 上下文长度，根据内存调整
-                    GpuLayerCount = 99, // 0 = 纯CPU，设为 20+ 可以通过显卡加速（需安装 Cuda 后端）
-                    Threads = Config.Threads // CPU 线程数
+                    ContextSize = (uint?)Config.ContextSize,
+                    GpuLayerCount = 99,
+                    Threads = Config.Threads
                 };
 
                 _model = LLamaWeights.LoadFromFile(parameters);

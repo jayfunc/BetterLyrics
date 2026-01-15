@@ -20,6 +20,9 @@ namespace BetterLyrics.WinUI3.Services.PluginService
         /// 卸载插件：创建删除标记 -> 提示重启
         /// </summary>
         void UninstallPlugin(string pluginId);
-        Task TogglePluginAsync(string pluginId, bool isEnabled);
+        Task TogglePluginAsync(string pluginId);
+
+        void SetSettingItem(string pluginId, string key, object value);
+        object GetSettingItem(string pluginId, string key);
     }
 }

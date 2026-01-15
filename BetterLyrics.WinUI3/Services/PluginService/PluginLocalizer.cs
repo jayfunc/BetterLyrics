@@ -11,7 +11,7 @@ namespace BetterLyrics.WinUI3.Services.PluginService
         private Dictionary<string, string> _translations = new();
         private readonly string _pluginDir;
 
-        public string CurrentLanguage { get; private set; } = "en-US";
+        public string CurrentLanguage { get; private set; } = "en";
 
         public PluginLocalizer(string pluginDir)
         {
@@ -44,7 +44,7 @@ namespace BetterLyrics.WinUI3.Services.PluginService
             if (!File.Exists(targetFile))
             {
                 var fallback = Directory.GetFiles(langFolder, $"{userLang.Split('-')[0]}-*.json").FirstOrDefault();
-                targetFile = fallback ?? Path.Combine(langFolder, "en-US.json");
+                targetFile = fallback ?? Path.Combine(langFolder, "en.json");
             }
 
             if (File.Exists(targetFile))

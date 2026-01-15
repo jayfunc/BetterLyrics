@@ -2,7 +2,7 @@
 using LLama.Common;
 using System.Text;
 
-namespace BetterLyrics.Plugins.AI.Local
+namespace BetterLyrics.Plugins.AI.Local.LLM
 {
     public class ChatMLHistoryTransform : IHistoryTransform
     {

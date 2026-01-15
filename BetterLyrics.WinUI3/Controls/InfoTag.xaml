@@ -19,10 +19,7 @@
         PointerExited="OnPointerExited"
         Tapped="OnTapped">
 
-        <StackPanel
-            VerticalAlignment="Center"
-            Orientation="Horizontal"
-            Spacing="4">
+        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
 
             <FontIcon
                 FontFamily="{StaticResource IconFontFamily}"
@@ -32,10 +29,12 @@
                 Visibility="{x:Bind HasIcon, Mode=OneWay}" />
 
             <TextBlock
+                Margin="4,0,0,0"
                 FontWeight="SemiBold"
                 Foreground="{StaticResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource CaptionTextBlockStyle}"
-                Text="{x:Bind Text, Mode=OneWay}" />
+                Text="{x:Bind Text, Mode=OneWay}"
+                Visibility="{x:Bind HasText, Mode=OneWay}" />
         </StackPanel>
     </Border>
 </UserControl>
