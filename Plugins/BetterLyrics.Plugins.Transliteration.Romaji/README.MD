@@ -6,4 +6,4 @@ All credits for those files go to the original author.
 ## Before you build...
 
 - Download `unidic-mecab-2.1.2_bin.zip` from https://clrd.ninjal.ac.jp/unidic_archive/cwj/2.1.2/
-- Unzip it and copy the contents of the `dic` folder to `BetterLyrics.Plugins.Romaji\unidic`
+- Unzip it and copy the contents of the `dic` folder to `BetterLyrics.Plugins.Transliteration.Romaji`
