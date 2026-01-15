@@ -35,7 +35,7 @@ namespace BetterLyrics.WinUI3.Services.PluginService
             {
                 return value;
             }
-            return default;
+            return defaultValue;
         }
 
         public void Set(string key, object value, ConfigChangedBy configChangedBy)
