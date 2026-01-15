@@ -14,7 +14,7 @@ namespace BetterLyrics.WinUI3.Controls
     public sealed partial class InfoTag : UserControl
     {
         public static readonly DependencyProperty TextProperty =
-        DependencyProperty.Register(nameof(Text), typeof(string), typeof(InfoTag), new PropertyMetadata(string.Empty));
+        DependencyProperty.Register(nameof(Text), typeof(string), typeof(InfoTag), new PropertyMetadata(string.Empty, OnDependencyPropertyChanged));
 
         public string Text
         {
@@ -23,7 +23,7 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public static readonly DependencyProperty GlyphProperty =
-            DependencyProperty.Register(nameof(Glyph), typeof(string), typeof(InfoTag), new PropertyMetadata(string.Empty));
+            DependencyProperty.Register(nameof(Glyph), typeof(string), typeof(InfoTag), new PropertyMetadata(string.Empty, OnDependencyPropertyChanged));
 
         public string Glyph
         {
@@ -32,7 +32,7 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public static readonly DependencyProperty LinkProperty =
-            DependencyProperty.Register(nameof(Link), typeof(string), typeof(InfoTag), new PropertyMetadata(string.Empty, OnLinkChanged));
+            DependencyProperty.Register(nameof(Link), typeof(string), typeof(InfoTag), new PropertyMetadata(string.Empty, OnDependencyPropertyChanged));
 
         public string Link
         {
@@ -41,6 +41,7 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public Visibility HasIcon => string.IsNullOrEmpty(Glyph) ? Visibility.Collapsed : Visibility.Visible;
+        public Visibility HasText => string.IsNullOrEmpty(Text) ? Visibility.Collapsed : Visibility.Visible;
 
         private bool HasLink => !string.IsNullOrEmpty(Link);
 
@@ -49,7 +50,7 @@ namespace BetterLyrics.WinUI3.Controls
             InitializeComponent();
         }
 
-        private static void OnLinkChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             if (d is InfoTag tag)
             {
@@ -61,6 +62,8 @@ namespace BetterLyrics.WinUI3.Controls
                 {
                     tag.ProtectedCursor = null;
                 }
+
+                tag.Bindings.Update();
             }
         }
 

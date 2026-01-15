@@ -555,6 +555,9 @@
   <data name="PlaylistViewFailed" xml:space="preserve">
     <value>パスが存在しないため、曲を表示できません</value>
   </data>
+  <data name="PluginManagerControlInfoBar.Message" xml:space="preserve">
+    <value />
+  </data>
   <data name="PluginManagerControlInstall.Content" xml:space="preserve">
     <value />
   </data>
@@ -1602,7 +1605,13 @@
   <data name="UserGuide.Content" xml:space="preserve">
     <value>ユーザーガイド</value>
   </data>
-  <data name="PluginManagerControlInfoBar.Message" xml:space="preserve">
+  <data name="PluginManagerControlInstallSuccessful" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PluginManagerControlRestartRequired" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PluginManagerControlUninstallSuccessful" xml:space="preserve">
     <value />
   </data>
 </root>

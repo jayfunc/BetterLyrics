@@ -30,6 +30,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Activation;
+using Windows.Storage;
 
 namespace BetterLyrics.WinUI3
 {
@@ -66,72 +68,73 @@ namespace BetterLyrics.WinUI3
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
         }
 
-        /// <summary>
-        /// 处理单实例逻辑。
-        /// 返回 true 表示我是主实例，继续运行。
-        /// 返回 false 表示我是第二个实例，已通知主实例，我应该退出。
-        /// </summary>
-        private bool TryHandleSingleInstance()
+        protected override async void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            // 尝试查找或注册当前实例
-            var mainInstance = AppInstance.FindOrRegisterForKey(_appKey);
+            await InitAppServicesAsync();
 
-            // 如果当前实例就是注册的那个主实例
-            if (mainInstance.IsCurrent)
+            AppActivationArguments appArgs = AppInstance.GetCurrent().GetActivatedEventArgs();
+            if (appArgs.Kind == ExtendedActivationKind.File)
             {
-                // 监听 "Activated" 事件。
-                // 当第二个实例启动并重定向过来时，这个事件会被触发。
-                mainInstance.Activated += OnMainInstanceActivated;
-                return true;
+                await HandleFileActivationAsync(appArgs);
             }
             else
             {
-                // 我不是主实例，我是后来者。
-                // 获取当前实例的激活参数（比如是通过文件双击打开的，这里能拿到文件路径）
-                var args = AppInstance.GetCurrent().GetActivatedEventArgs();
-
-                // 将激活请求重定向给主实例
-                // 注意：这里是同步等待，确保发送成功后再退出
-                try
-                {
-                    mainInstance.RedirectActivationToAsync(args).AsTask().Wait();
-                }
-                catch (Exception)
-                {
-                    // 即使重定向失败，作为第二个实例也应该退出
-                }
-
-                return false;
+                HandleNormalLaunch();
             }
         }
 
-        /// <summary>
-        /// 当第二个实例试图启动时，主实例会收到此回调
-        /// </summary>
-        private void OnMainInstanceActivated(object? sender, AppActivationArguments e)
+        private async Task HandleFileActivationAsync(AppActivationArguments args)
         {
-            // 这个事件是在后台线程触发的，必须切回 UI 线程操作窗口
-            m_window?.DispatcherQueue.TryEnqueue(() =>
+            if (args.Data is IFileActivatedEventArgs fileArgs)
             {
-                HandleActivation();
-            });
+                var item = fileArgs.Files.FirstOrDefault();
+                if (item is StorageFile file)
+                {
+                    _logger.LogInformation("App activated via file: {Path}", file.Path);
+
+                    WindowHook.OpenOrShowWindow<SettingsWindow>();
+
+                    var pluginManagerControlViewModel = Ioc.Default.GetRequiredService<PluginManagerControlViewModel>();
+                    await pluginManagerControlViewModel.InstallPluginByFileAsync(file);
+                }
+            }
         }
 
-        /// <summary>
-        /// 唤醒逻辑
-        /// </summary>
-        private void HandleActivation()
+        private void HandleNormalLaunch()
         {
-            WindowHook.OpenOrShowWindow<LyricsWindowSwitchWindow>();
+            var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+
+            // 初始化系统托盘
+            m_window = WindowHook.OpenOrShowWindow<SystemTrayWindow>();
+
+            // 自动打开歌词窗口逻辑
+            if (settingsService.AppSettings.GeneralSettings.AutoStartLyricsWindow)
+            {
+                var defaultStatus = settingsService.AppSettings.WindowBoundsRecords.Where(x => x.IsDefault);
+                if (defaultStatus != null)
+                {
+                    foreach (var item in defaultStatus)
+                    {
+                        WindowHook.OpenOrShowWindow<NowPlayingWindow>(item);
+                        if (!settingsService.AppSettings.GeneralSettings.MultiNowPlayingWindowMode) break;
+                    }
+                }
+            }
+
+            // 自动打开音乐库逻辑
+            if (settingsService.AppSettings.MusicGallerySettings.AutoOpen)
+            {
+                WindowHook.OpenOrShowWindow<MusicGalleryWindow>();
+            }
         }
 
-        protected override async void OnLaunched(LaunchActivatedEventArgs args)
+        private async Task InitAppServicesAsync()
         {
             await InitDatabasesAsync();
 
             var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
-            // Migrate MappedSongSearchQueries
+            // 迁移逻辑
             var songSearchMapService = Ioc.Default.GetRequiredService<ISongSearchMapService>();
             var obsoleteSongSearchMap = settingsService.AppSettings.MappedSongSearchQueries;
             if (obsoleteSongSearchMap.Count > 0)
@@ -143,9 +146,8 @@ namespace BetterLyrics.WinUI3
                 obsoleteSongSearchMap.Clear();
             }
 
-            // Start scan tasks in background
+            // 启动后台扫描
             var fileSystemService = Ioc.Default.GetRequiredService<IFileSystemService>();
-
             foreach (var item in settingsService.AppSettings.LocalMediaFolders)
             {
                 if (item.LastSyncTime == null)
@@ -155,35 +157,47 @@ namespace BetterLyrics.WinUI3
             }
             fileSystemService.StartAllFolderTimers();
 
-            // Ensure plugins
+            // 加载插件
             var pluginService = Ioc.Default.GetRequiredService<IPluginService>();
             pluginService.LoadPluginsAsync();
+        }
 
-            // Init system tray
-            m_window = WindowHook.OpenOrShowWindow<SystemTrayWindow>();
-
-            // Open lyrics window if set
-            if (settingsService.AppSettings.GeneralSettings.AutoStartLyricsWindow)
+        private bool TryHandleSingleInstance()
+        {
+            var mainInstance = AppInstance.FindOrRegisterForKey(_appKey);
+            if (mainInstance.IsCurrent)
             {
-                var defaultStatus = settingsService.AppSettings.WindowBoundsRecords.Where(x => x.IsDefault);
-                if (defaultStatus != null)
+                mainInstance.Activated += OnMainInstanceActivated;
+                return true;
+            }
+            else
+            {
+                var args = AppInstance.GetCurrent().GetActivatedEventArgs();
+                try
                 {
-                    foreach (var item in defaultStatus)
-                    {
-                        WindowHook.OpenOrShowWindow<NowPlayingWindow>(item);
-                        if (!settingsService.AppSettings.GeneralSettings.MultiNowPlayingWindowMode)
-                        {
-                            break;
-                        }
-                    }
+                    // 将激活参数（包括文件信息）发送给主实例
+                    mainInstance.RedirectActivationToAsync(args).AsTask().Wait();
                 }
+                catch (Exception) { }
+                return false;
             }
+        }
 
-            // Open music gallery if set
-            if (settingsService.AppSettings.MusicGallerySettings.AutoOpen)
+        private void OnMainInstanceActivated(object? sender, AppActivationArguments e)
+        {
+            m_window?.DispatcherQueue.TryEnqueue(async () =>
             {
-                WindowHook.OpenOrShowWindow<MusicGalleryWindow>();
-            }
+                if (e.Kind == ExtendedActivationKind.File)
+                {
+                    // 复用上面的文件处理逻辑
+                    await HandleFileActivationAsync(e);
+                }
+                else
+                {
+                    // 普通启动则打开窗口切换器
+                    WindowHook.OpenOrShowWindow<LyricsWindowSwitchWindow>();
+                }
+            });
         }
 
         private async Task InitDatabasesAsync()

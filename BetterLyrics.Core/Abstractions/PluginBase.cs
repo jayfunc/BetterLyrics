@@ -1,12 +1,14 @@
-﻿using BetterLyrics.Core.Interfaces;
+﻿using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Interfaces;
 using BetterLyrics.Core.Interfaces.Infrastructure;
 using BetterLyrics.Core.Models.SettingsSchema;
+using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Reflection;
 
 namespace BetterLyrics.Core.Abstractions
 {
-    public abstract class PluginBase<TConfig> : IPlugin, IConfigurable where TConfig : PluginConfigBase, new()
+    public abstract class PluginBase<TConfig> : IPlugin where TConfig : PluginConfigBase, new()
     {
         private bool _isDisposed;
 
@@ -88,6 +90,20 @@ namespace BetterLyrics.Core.Abstractions
                 return versionStr;
             }
         }
+        public string RepositoryUrl
+        {
+            get
+            {
+                var assembly = this.GetType().Assembly;
+                var metadata = assembly.GetCustomAttributes<AssemblyMetadataAttribute>()
+                    .FirstOrDefault(a => a.Key == "RepositoryUrl");
+                if (metadata != null && !string.IsNullOrWhiteSpace(metadata.Value))
+                {
+                    return metadata.Value;
+                }
+                return string.Empty;
+            }
+        }
 
         private IPluginContext? _context;
         protected IPluginContext Context
@@ -101,7 +117,7 @@ namespace BetterLyrics.Core.Abstractions
         public async Task InitializeAsync(IPluginContext context)
         {
             _context = context;
-            Config.Bind(_context.Settings);
+            Config.BindConfigurator(_context.Configurator);
             await OnInitializeAsync();
         }
         protected virtual Task OnInitializeAsync() => Task.CompletedTask;
@@ -121,7 +137,49 @@ namespace BetterLyrics.Core.Abstractions
             return ValueTask.CompletedTask;
         }
 
-        public virtual IEnumerable<SettingDef> GetSettings() => Enumerable.Empty<SettingDef>();
-        public virtual void OnConfigChanged(Dictionary<string, object> newConfig) { }
+        public Dictionary<string, SettingDef> GetSettingDefDict()
+        {
+            var dict = new Dictionary<string, SettingDef>();
+            
+            var props = typeof(TConfig).GetProperties(BindingFlags.Public | BindingFlags.Instance);
+
+            foreach (var prop in props)
+            {
+                var value = prop.GetValue(Config) ?? Context.Configurator.Get(prop.Name);
+
+                SettingDef? settingDef = null;
+
+                switch (value)
+                {
+                    case string:
+                        settingDef = SettingBuilder.Text(prop, Context.Localizer, (string)value);
+                        break;
+                    case bool:
+                        settingDef = SettingBuilder.Bool(prop, Context.Localizer, (bool)value);
+                        break;
+                    case double:
+                        settingDef = SettingBuilder.Number(prop, Context.Localizer, (double)value);
+                        break;
+                    case float:
+                        settingDef = SettingBuilder.Number(prop, Context.Localizer, (float)value);
+                        break;
+                    case int:
+                        settingDef = SettingBuilder.Number(prop, Context.Localizer, (int)value);
+                        break;
+                    case Array:
+                        settingDef = SettingBuilder.Choice(prop, Context.Localizer, ((Array)value).Cast<string>().ToList(), ((Array)value).GetValue(0)?.ToString() ?? string.Empty);
+                        break;
+                    default:
+                        break;
+                }
+
+                if (settingDef == null) continue;
+
+                dict.Add(prop.Name, settingDef);
+            }
+
+            return dict;
+        }
+
     }
 }

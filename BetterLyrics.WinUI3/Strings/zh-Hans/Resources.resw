@@ -555,6 +555,9 @@
   <data name="PlaylistViewFailed" xml:space="preserve">
     <value>无法查看曲目，因为路径不存在</value>
   </data>
+  <data name="PluginManagerControlInfoBar.Message" xml:space="preserve">
+    <value>安装、卸载或更新任何插件后，程序将自动重启。</value>
+  </data>
   <data name="PluginManagerControlInstall.Content" xml:space="preserve">
     <value>安装插件</value>
   </data>
@@ -1602,6 +1605,15 @@
   <data name="UserGuide.Content" xml:space="preserve">
     <value>使用指南</value>
   </data>
+  <data name="PluginManagerControlInstallSuccessful" xml:space="preserve">
+    <value>安装成功</value>
+  </data>
+  <data name="PluginManagerControlRestartRequired" xml:space="preserve">
+    <value>请重新启动程序以应用更改</value>
+  </data>
+  <data name="PluginItemControlEnablePlugin.Header" xml:space="preserve">
+    <value>启用插件</value>
+  </data>
   <data name="SettingsPageEasingMode.Header" xml:space="preserve">
     <value>缓动类型</value>
   </data>
@@ -1611,7 +1623,10 @@
   <data name="SettingsPageEasingModeInOut.Content" xml:space="preserve">
     <value>缓出</value>
   </data>
-  <data name="PluginManagerControlInfoBar.Message" xml:space="preserve">
-    <value>安装、卸载或更新任何插件后，程序将自动重启。</value>
+  <data name="PluginManagerControlRestartNow" xml:space="preserve">
+    <value>立即重启</value>
+  </data>
+  <data name="PluginManagerControlUninstallSuccessful" xml:space="preserve">
+    <value>卸载成功</value>
   </data>
 </root>

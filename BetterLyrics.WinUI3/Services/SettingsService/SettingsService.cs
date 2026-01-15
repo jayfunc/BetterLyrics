@@ -176,16 +176,7 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
 
         private static AppSettings ReadAppSettings()
         {
-            if (!File.Exists(PathHelper.SettingsFilePath))
-                return new AppSettings();
-
-            var json = File.ReadAllText(PathHelper.SettingsFilePath);
-            var data = System.Text.Json.JsonSerializer.Deserialize(json, SourceGenerationContext.Default.AppSettings);
-
-            if (data == null)
-                return new AppSettings();
-
-            return data;
+            return Core.Helpers.SettingsIO.ReadSettings(PathHelper.SettingsFilePath, SourceGenerationContext.Default.AppSettings);
         }
 
         private void WriteAppSettings()
@@ -201,7 +192,7 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
 
         private void SaveAppSettings()
         {
-            File.WriteAllText(PathHelper.SettingsFilePath, System.Text.Json.JsonSerializer.Serialize(AppSettings, SourceGenerationContext.Default.AppSettings));
+            Core.Helpers.SettingsIO.SaveSettings(PathHelper.SettingsFilePath, AppSettings, SourceGenerationContext.Default.AppSettings);
         }
     }
 }

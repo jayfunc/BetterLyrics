@@ -1,39 +1,32 @@
-﻿using System.Runtime.CompilerServices;
+﻿using BetterLyrics.Core.Interfaces;
+using System.Runtime.CompilerServices;
 
 namespace BetterLyrics.Core.Abstractions
 {
     public abstract class PluginConfigBase
     {
-        private Dictionary<string, object> _settingsStore;
+        private IConfigurator? _configurator;
 
-        public void Bind(Dictionary<string, object> settings)
+        public void BindConfigurator(IConfigurator configurator)
         {
-            _settingsStore = settings;
+            _configurator = configurator;
         }
 
         protected T Get<T>(T defaultValue = default, [CallerMemberName] string key = null)
         {
-            if (_settingsStore != null && _settingsStore.TryGetValue(key, out var val))
+            try
             {
-                try
-                {
-                    return (T)Convert.ChangeType(val, typeof(T));
-                }
-                catch
-                {
-                    return defaultValue;
-                }
+                return (T)Convert.ChangeType(_configurator.Get(key, defaultValue), typeof(T));
             }
-            return defaultValue;
+            catch
+            {
+                return defaultValue;
+            }
         }
 
         protected void Set<T>(T value, [CallerMemberName] string key = null)
         {
-            if (_settingsStore != null)
-            {
-                _settingsStore[key] = value;
-                // 这里还可以触发一个 OnConfigChanged 事件
-            }
+            _configurator.Set(key, value, Enums.ConfigChangedBy.Plugin);
         }
 
     }

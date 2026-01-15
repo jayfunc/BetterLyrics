@@ -1,0 +1,79 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
+		<RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+		<EnableDynamicLoading>true</EnableDynamicLoading>
+		<Version>1.0.0</Version>
+		<Authors>jayfunc</Authors>
+		<Company>$(Authors)</Company>
+		<Copyright>Copyright © 2026 jayfunc</Copyright>
+	</PropertyGroup>
+
+	<Target Name="AutoExcludeSharedAssemblies" AfterTargets="ResolveAssemblyReferences">
+		<PropertyGroup>
+			<HostOutputDir>..\..\BetterLyrics.WinUI3\bin\x64\$(Configuration)\$(TargetFramework)\win-x64\</HostOutputDir>
+		</PropertyGroup>
+
+		<Message Text="[Debug] Searching for Host Assemblies in: $(HostOutputDir)" Importance="High" />
+
+		<ItemGroup>
+			<FilesToCopy Include="@(ReferenceCopyLocalPaths)" />
+			<SharedFiles Include="@(FilesToCopy)" Condition="Exists('$(HostOutputDir)%(Filename)%(Extension)')" />
+			<ReferenceCopyLocalPaths Remove="@(SharedFiles)" />
+		</ItemGroup>
+
+		<Message Text="[Smart Trim] Excluded shared assemblies:%0a@(SharedFiles->'    -&gt; %(Filename)%(Extension)', '%0a')" Importance="High" Condition="'@(SharedFiles)' != ''" />
+	</Target>
+
+	<Target Name="RunDevTools" AfterTargets="PostBuildEvent">
+		<PropertyGroup>
+			<AnalyzerPath>..\..\BetterLyrics.DevTools\bin\$(Configuration)\$(TargetFramework)\BetterLyrics.DevTools.exe</AnalyzerPath>
+			<MainAppConfigDir>..\..\BetterLyrics.WinUI3\PluginConfigs\</MainAppConfigDir>
+			<SourceLangDir>$(ProjectDir)Langs\</SourceLangDir>
+			<OutputLangDir>$(TargetDir)Langs\</OutputLangDir>
+		</PropertyGroup>
+
+		<Message Text="[Analyzer] Generating resources to Project Directory..." Importance="High" />
+
+		<Exec Command="&quot;$(AnalyzerPath)&quot; &quot;$(TargetPath)&quot; All &quot;$(ProjectDir)\&quot;" />
+
+		<ItemGroup>
+			<FreshLangFiles Include="$(SourceLangDir)*.json" />
+		</ItemGroup>
+		<Copy SourceFiles="@(FreshLangFiles)" DestinationFolder="$(OutputLangDir)" />
+
+		<Copy SourceFiles="$(TargetDir)$(ProjectName)_TrimmingConfig.cs" DestinationFolder="$(MainAppConfigDir)" SkipUnchangedFiles="true" />
+		<Copy SourceFiles="$(TargetDir)$(ProjectName)_TrimmerRoots.xml" DestinationFolder="$(MainAppConfigDir)" SkipUnchangedFiles="true" />
+	</Target>
+
+	<Target Name="PackagePluginToZip" AfterTargets="Build">
+		<PropertyGroup>
+			<PackageOutputDir>$(ProjectDir)..\_Dist\$(Configuration)\</PackageOutputDir>
+
+			<ZipFileName>$(AssemblyName).v$(Version).zip</ZipFileName>
+			<FinalZipPath>$(PackageOutputDir)$(ZipFileName)</FinalZipPath>
+		</PropertyGroup>
+
+		<ZipDirectory SourceDirectory="$(OutputPath)" DestinationFile="$(FinalZipPath)" Overwrite="true" />
+
+		<Message Text="[Packager] The plugin package has been generated in the parent directory: $(FinalZipPath)" Importance="High" />
+	</Target>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.ML.OnnxRuntime.DirectML" Version="1.23.0" />
+	  <PackageReference Include="Microsoft.ML.Tokenizers" Version="2.0.0" />
+	  <PackageReference Include="System.Numerics.Tensors" Version="10.0.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\BetterLyrics.Core\BetterLyrics.Core.csproj">
+			<Private>false</Private>
+			<ExcludeAssets>runtime</ExcludeAssets>
+		</ProjectReference>
+	</ItemGroup>
+
+</Project>

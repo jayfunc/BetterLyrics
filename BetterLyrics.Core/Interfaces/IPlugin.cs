@@ -1,16 +1,21 @@
 ﻿using BetterLyrics.Core.Interfaces.Infrastructure;
+using BetterLyrics.Core.Models.SettingsSchema;
 
 namespace BetterLyrics.Core.Interfaces
 {
     public interface IPlugin : IAsyncDisposable
     {
-        string Id { get; }
         string Name { get; }
         string Description { get; }
         string Author { get; }
+
+        string Id { get; }
         string Version { get; }
         DateTime LastUpdated { get; }
 
+        string RepositoryUrl { get; }
+
         Task InitializeAsync(IPluginContext context);
+        Dictionary<string, SettingDef> GetSettingDefDict();
     }
 }

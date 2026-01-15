@@ -555,6 +555,9 @@
   <data name="PlaylistViewFailed" xml:space="preserve">
     <value>No se pueden ver las pistas porque la ruta no existe</value>
   </data>
+  <data name="PluginManagerControlInfoBar.Message" xml:space="preserve">
+    <value />
+  </data>
   <data name="PluginManagerControlInstall.Content" xml:space="preserve">
     <value />
   </data>
@@ -1602,10 +1605,16 @@
   <data name="UserGuide.Content" xml:space="preserve">
     <value>Guía de usuario</value>
   </data>
+  <data name="PluginManagerControlInstallSuccessful" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PluginManagerControlRestartRequired" xml:space="preserve">
+    <value />
+  </data>
   <data name="SettingsPageEasingMode.Header" xml:space="preserve">
     <value />
   </data>
-  <data name="PluginManagerControlInfoBar.Message" xml:space="preserve">
+  <data name="PluginManagerControlUninstallSuccessful" xml:space="preserve">
     <value />
   </data>
 </root>

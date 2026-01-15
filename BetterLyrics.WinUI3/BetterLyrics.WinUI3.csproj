@@ -197,6 +197,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<TrimmerRootDescriptor Include="PluginConfigs\**\*_TrimmerRoots.xml" />
+		<Content Remove="Assets\Logo.Plugin.png" />
 		<AppxManifest Include="Package.appxmanifest">
 		  <SubType>Designer</SubType>
 		</AppxManifest>

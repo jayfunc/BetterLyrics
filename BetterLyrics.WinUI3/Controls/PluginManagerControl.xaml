@@ -16,7 +16,6 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
@@ -59,7 +58,11 @@
                 Opacity="0.5" />
         </StackPanel>
 
-        <StackPanel Grid.Row="3" Margin="0,6,0,20">
+        <StackPanel
+            Grid.RowSpan="3"
+            Margin="0,0,0,20"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Bottom">
             <Button
                 x:Uid="PluginManagerControlInstall"
                 HorizontalAlignment="Right"

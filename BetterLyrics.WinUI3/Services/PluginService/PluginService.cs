@@ -2,8 +2,12 @@
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.SettingsService;
+using BetterLyrics.WinUI3.ViewModels;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
@@ -12,10 +16,11 @@ using Windows.Storage;
 
 namespace BetterLyrics.WinUI3.Services.PluginService
 {
-    public class PluginService : IPluginService
+    public partial class PluginService : BaseViewModel, IPluginService, IRecipient<PropertyChangedMessage<bool>>
     {
         private readonly ISettingsService _settingsService;
         private readonly ILogger<PluginService> _logger;
+        private readonly Dictionary<string, IConfigurator?> _configurator = [];
 
         public PluginService(ISettingsService settingsService, ILogger<PluginService> logger)
         {
@@ -131,14 +136,12 @@ namespace BetterLyrics.WinUI3.Services.PluginService
             }
         }
 
-        public async Task TogglePluginAsync(string pluginId, bool isEnabled)
+        public async Task TogglePluginAsync(string pluginId)
         {
             var info = _settingsService.AppSettings.PluginsInfo.FirstOrDefault(p => p.Id == pluginId);
             if (info == null) return;
 
-            info.IsEnabled = isEnabled;
-
-            if (isEnabled)
+            if (info.IsEnabled)
             {
                 if (!info.IsInitialized)
                 {
@@ -151,6 +154,7 @@ namespace BetterLyrics.WinUI3.Services.PluginService
                 {
                     try
                     {
+                        _configurator[pluginId] = null;
                         await info.Plugin.DisposeAsync();
                     }
                     catch (Exception ex)
@@ -177,8 +181,10 @@ namespace BetterLyrics.WinUI3.Services.PluginService
                 if (pluginDir == null) return;
 
                 var localizer = new PluginLocalizer(pluginDir);
-                var settingsDict = pluginInfo.Settings;
-                var context = new PluginContext(this, pluginDir, localizer, settingsDict);
+                var configurator = new PluginConfigurator(pluginDir);
+                var context = new PluginContext(this, pluginDir, localizer, configurator);
+
+                _configurator[pluginInfo.Id] = configurator;
 
                 await pluginInfo.Plugin.InitializeAsync(context);
                 pluginInfo.IsInitialized = true;
@@ -257,6 +263,27 @@ namespace BetterLyrics.WinUI3.Services.PluginService
             {
                 try { context.Unload(); } catch { }
                 throw;
+            }
+        }
+
+        public void SetSettingItem(string pluginId, string key, object value)
+        {
+            _configurator[pluginId].Set(key, value, Core.Enums.ConfigChangedBy.Host);
+        }
+
+        public object GetSettingItem(string pluginId, string key)
+        {
+            return _configurator[pluginId].Get(key);
+        }
+
+        public void Receive(PropertyChangedMessage<bool> message)
+        {
+            if (message.Sender is PluginInfo pluginInfo)
+            {
+                if (message.PropertyName == nameof(PluginInfo.IsEnabled))
+                {
+                    _ = TogglePluginAsync(pluginInfo.Id);
+                }
             }
         }
     }

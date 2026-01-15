@@ -555,6 +555,9 @@
   <data name="PlaylistViewFailed" xml:space="preserve">
     <value>無法檢視曲目，因為路徑不存在</value>
   </data>
+  <data name="PluginManagerControlInfoBar.Message" xml:space="preserve">
+    <value />
+  </data>
   <data name="PluginManagerControlInstall.Content" xml:space="preserve">
     <value />
   </data>
@@ -1602,7 +1605,13 @@
   <data name="UserGuide.Content" xml:space="preserve">
     <value>使用指南</value>
   </data>
-  <data name="PluginManagerControlInfoBar.Message" xml:space="preserve">
+  <data name="PluginManagerControlInstallSuccessful" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PluginManagerControlRestartRequired" xml:space="preserve">
+    <value />
+  </data>
+  <data name="PluginManagerControlUninstallSuccessful" xml:space="preserve">
     <value />
   </data>
 </root>

@@ -67,6 +67,17 @@
 					  Enabled="false"
 					  DisplayName="BetterLyrics" />
 				</uap5:Extension>
+				<uap:Extension Category="windows.fileTypeAssociation">
+					<uap:FileTypeAssociation Name="blp">
+						<uap:Logo>Assets\Logo.Plugin.png</uap:Logo>
+						<uap:DisplayName>BetterLyrics Plugin</uap:DisplayName>
+						<uap:SupportedFileTypes>
+							<uap:FileType>.blp</uap:FileType>
+						</uap:SupportedFileTypes>
+						<uap:EditFlags OpenIsSafe="true"/>
+						<uap:InfoTip>BetterLyrics Plugin</uap:InfoTip>
+					</uap:FileTypeAssociation>
+				</uap:Extension>
 			</Extensions>
 		</Application>
 	</Applications>

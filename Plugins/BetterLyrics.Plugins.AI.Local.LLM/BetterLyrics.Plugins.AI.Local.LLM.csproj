@@ -58,14 +58,11 @@
 			<FinalZipPath>$(PackageOutputDir)$(ZipFileName)</FinalZipPath>
 		</PropertyGroup>
 
-		<ZipDirectory
-			SourceDirectory="$(OutputPath)"
-			DestinationFile="$(FinalZipPath)"
-			Overwrite="true" />
+		<ZipDirectory SourceDirectory="$(OutputPath)" DestinationFile="$(FinalZipPath)" Overwrite="true" />
 
 		<Message Text="[Packager] The plugin package has been generated in the parent directory: $(FinalZipPath)" Importance="High" />
 	</Target>
-
+	
 	<ItemGroup>
 	  <PackageReference Include="LLamaSharp" Version="0.25.0" />
 	  <PackageReference Include="LLamaSharp.Backend.Vulkan.Windows" Version="0.25.0" />
