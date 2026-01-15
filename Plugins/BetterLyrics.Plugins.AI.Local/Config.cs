@@ -1,9 +1,11 @@
 ﻿using BetterLyrics.Core.Abstractions;
+using System.ComponentModel.DataAnnotations;
 
 namespace BetterLyrics.Plugins.AI.Local
 {
     public class Config : PluginConfigBase
     {
+        [Display(Name = "Model Path", Description = "Input model absolute uri here")]
         public string ModelPath
         {
             get => Get("");
