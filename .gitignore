@@ -412,3 +412,5 @@ FodyWeavers.xsd
 /Plugins/BetterLyrics.Plugins.Romaji/unidic
 /Plugins/BetterLyrics.Plugins.Transliteration.Romaji/unidic
 /Plugins/_Dist
+/BetterLyrics.WinUI3/Constants/LastFM.cs
+/BetterLyrics.WinUI3/Constants/Discord.cs
