@@ -1,14 +1,17 @@
 ﻿using BetterLyrics.Core.Interfaces;
-using System;
-using System.Collections.Generic;
+using BetterLyrics.Core.Interfaces.Infrastructure;
+using BetterLyrics.Core.Models.SettingsSchema;
 using System.Globalization;
 using System.Reflection;
-using System.Text;
 
-namespace BetterLyrics.Core
+namespace BetterLyrics.Core.Abstractions
 {
-    public abstract class PluginBase : IPlugin
+    public abstract class PluginBase<TConfig> : IPlugin, IConfigurable where TConfig : PluginConfigBase, new()
     {
+        private bool _isDisposed;
+
+        public TConfig Config { get; } = new TConfig();
+
         public abstract string Name { get; }
         public abstract string Description { get; }
 
@@ -86,7 +89,39 @@ namespace BetterLyrics.Core
             }
         }
 
-        public abstract void OnLoad(IPluginContext context);
-        public abstract void OnUnload();
+        private IPluginContext? _context;
+        protected IPluginContext Context
+        {
+            get
+            {
+                return _context ?? throw new InvalidOperationException("Plugin is not initialized yet! Do not access Context in the constructor.");
+            }
+        }
+
+        public async Task InitializeAsync(IPluginContext context)
+        {
+            _context = context;
+            Config.Bind(_context.Settings);
+            await OnInitializeAsync();
+        }
+        protected virtual Task OnInitializeAsync() => Task.CompletedTask;
+
+        public async ValueTask DisposeAsync()
+        {
+            if (_isDisposed) return;
+
+            await OnShutdownAsync();
+            _context = null;
+            _isDisposed = true;
+
+            GC.SuppressFinalize(this);
+        }
+        protected virtual ValueTask OnShutdownAsync()
+        {
+            return ValueTask.CompletedTask;
+        }
+
+        public virtual IEnumerable<SettingDef> GetSettings() => Enumerable.Empty<SettingDef>();
+        public virtual void OnConfigChanged(Dictionary<string, object> newConfig) { }
     }
 }

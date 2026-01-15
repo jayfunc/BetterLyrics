@@ -1,6 +1,3 @@
-using System;
-using System.Linq;
-
 namespace BetterLyrics.Plugins.Romaji.Extensions
 {
     public static class StringExtension

@@ -42,17 +42,7 @@
                                 </StackPanel>
                             </StackPanel>
                         </dev:SettingsExpander.Description>
-                        <StackPanel Orientation="Horizontal" Spacing="6">
-                            <RichTextBlock
-                                Margin="0,-1,0,0"
-                                VerticalAlignment="Center"
-                                Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                                <Paragraph>
-                                    <Run x:Uid="SettingsPageVersion" />
-                                    <Run Text="{x:Bind helper:MetadataHelper.AppVersion}" />
-                                </Paragraph>
-                            </RichTextBlock>
-                        </StackPanel>
+                        <local:InfoTag Glyph="&#xE8EC;" Text="{x:Bind helper:MetadataHelper.AppVersion}" />
                         <dev:SettingsExpander.Items>
 
                             <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">

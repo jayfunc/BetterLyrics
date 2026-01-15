@@ -14,8 +14,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Threading.Tasks;
-using Windows.Storage;
-using WinRT.Interop;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {

@@ -1,5 +1,4 @@
-﻿using BetterLyrics.Core;
-using BetterLyrics.Core.Interfaces;
+﻿using BetterLyrics.Core.Abstractions;
 using BetterLyrics.Core.Interfaces.Features;
 using BetterLyrics.Core.Interfaces.Services;
 using System.Text;
@@ -7,7 +6,7 @@ using System.Text.RegularExpressions;
 
 namespace BetterLyrics.Plugins.Translation.LocalAI
 {
-    public class Plugin : PluginBase, ILyricsTranslator
+    public class Plugin : PluginBase<Config>, ILyricsTranslator
     {
         private IAIService? _aiService;
 
@@ -94,13 +93,9 @@ namespace BetterLyrics.Plugins.Translation.LocalAI
             }
         }
 
-        public override void OnLoad(IPluginContext context)
+        protected override async Task OnInitializeAsync()
         {
-            _aiService = context.AIService;
-        }
-
-        public override void OnUnload()
-        {
+            _aiService = Context.AIService;
         }
 
         private string ConvertLangCodeToName(string code)

@@ -38,6 +38,7 @@
 		<None Remove="Controls\ExtendedSlider.xaml" />
 		<None Remove="Controls\FontFamilyAutoSuggestBox.xaml" />
 		<None Remove="Controls\ImageSwitcher.xaml" />
+		<None Remove="Controls\InfoTag.xaml" />
 		<None Remove="Controls\LyricsSearchControl.xaml" />
 		<None Remove="Controls\LyricsStyleSettingsControl.xaml" />
 		<None Remove="Controls\LyricsWindowSettingsControl.xaml" />
@@ -47,6 +48,7 @@
 		<None Remove="Controls\PatronControl.xaml" />
 		<None Remove="Controls\PlaybackSettingsControl.xaml" />
 		<None Remove="Controls\PlayQueue.xaml" />
+		<None Remove="Controls\PluginItemControl.xaml" />
 		<None Remove="Controls\PluginManagerControl.xaml" />
 		<None Remove="Controls\PropertyRow.xaml" />
 		<None Remove="Controls\RemoteServerConfigControl.xaml" />
@@ -496,6 +498,16 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="PluginConfigs\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\InfoTag.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\PluginItemControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<!-- Publish Properties -->
 	<PropertyGroup>

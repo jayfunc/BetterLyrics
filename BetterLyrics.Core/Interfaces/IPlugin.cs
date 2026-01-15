@@ -1,11 +1,8 @@
-﻿using BetterLyrics.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using BetterLyrics.Core.Interfaces.Infrastructure;
 
 namespace BetterLyrics.Core.Interfaces
 {
-    public interface IPlugin
+    public interface IPlugin : IAsyncDisposable
     {
         string Id { get; }
         string Name { get; }
@@ -14,7 +11,6 @@ namespace BetterLyrics.Core.Interfaces
         string Version { get; }
         DateTime LastUpdated { get; }
 
-        void OnLoad(IPluginContext context);
-        void OnUnload();
+        Task InitializeAsync(IPluginContext context);
     }
 }

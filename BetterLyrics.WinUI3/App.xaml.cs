@@ -157,8 +157,7 @@ namespace BetterLyrics.WinUI3
 
             // Ensure plugins
             var pluginService = Ioc.Default.GetRequiredService<IPluginService>();
-            pluginService.PerformFileSynchronization();
-            pluginService.LoadPlugins();
+            pluginService.LoadPluginsAsync();
 
             // Init system tray
             m_window = WindowHook.OpenOrShowWindow<SystemTrayWindow>();

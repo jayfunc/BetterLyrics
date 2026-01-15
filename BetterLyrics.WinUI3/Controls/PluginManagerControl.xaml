@@ -39,42 +39,7 @@
             SelectionMode="None">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="settingsmodels:PluginInfo">
-                    <dev:SettingsExpander Description="{x:Bind Id}" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE74C;}">
-                        <RichTextBlock TextAlignment="Right">
-                            <Paragraph>
-                                <Run Text="{x:Bind Plugin.Version}" />
-                            </Paragraph>
-                            <Paragraph>
-                                <Run
-                                    FontSize="{StaticResource ToolTipContentThemeFontSize}"
-                                    Foreground="{StaticResource TextFillColorSecondaryBrush}"
-                                    Text="{x:Bind Plugin.LastUpdated}" />
-                            </Paragraph>
-                        </RichTextBlock>
-                        <dev:SettingsExpander.Header>
-                            <RichTextBlock>
-                                <Paragraph>
-                                    <Run Text="{x:Bind Plugin.Name}" />
-                                    <Run
-                                        FontSize="{StaticResource ToolTipContentThemeFontSize}"
-                                        Foreground="{StaticResource TextFillColorSecondaryBrush}"
-                                        Text="by" />
-                                    <Hyperlink FontSize="{StaticResource ToolTipContentThemeFontSize}" NavigateUri="https://github.com/jayfunc">
-                                        <Run Text="{x:Bind Plugin.Author}" />
-                                    </Hyperlink>
-                                </Paragraph>
-                            </RichTextBlock>
-                        </dev:SettingsExpander.Header>
-                        <dev:SettingsExpander.Items>
-                            <dev:SettingsCard>
-                                <ToggleSwitch IsOn="{x:Bind IsEnabled, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                            <dev:SettingsCard Header="{x:Bind Plugin.Description}" />
-                            <dev:SettingsCard>
-                                <Button x:Uid="PluginManagerControlUninstall" Click="UninstallPluginButton_Click" />
-                            </dev:SettingsCard>
-                        </dev:SettingsExpander.Items>
-                    </dev:SettingsExpander>
+                    <local:PluginItemControl PluginInfo="{x:Bind}" UninstallClicked="UninstallPluginButton_Click" />
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

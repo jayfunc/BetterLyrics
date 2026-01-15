@@ -3,6 +3,7 @@
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Http;
 using BetterLyrics.WinUI3.Models.Settings;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -14,6 +15,7 @@ namespace BetterLyrics.WinUI3.Serialization
     [JsonSerializable(typeof(JsonElement))]
     [JsonSerializable(typeof(AppSettings))]
     [JsonSerializable(typeof(LyricsCacheItem))]
+    [JsonSerializable(typeof(Dictionary<string, string>))]
     [JsonSourceGenerationOptions(WriteIndented = true)]
     internal partial class SourceGenerationContext : JsonSerializerContext { }
 }

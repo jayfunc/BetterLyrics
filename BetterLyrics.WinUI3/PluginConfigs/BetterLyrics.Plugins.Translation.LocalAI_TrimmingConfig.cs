@@ -19,6 +19,7 @@ internal static class BetterLyrics_Plugins_Translation_LocalAI_Config
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Reflection.AssemblyProductAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Reflection.AssemblyTitleAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.AsyncStateMachineAttribute))]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.AsyncTaskMethodBuilder))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.AsyncTaskMethodBuilder<>))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.CompilationRelaxationsAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute))]
@@ -40,12 +41,13 @@ internal static class BetterLyrics_Plugins_Translation_LocalAI_Config
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Text.RegularExpressions.Regex))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Text.StringBuilder))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Text.StringBuilder.AppendInterpolatedStringHandler))]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Threading.Tasks.Task))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Threading.Tasks.Task<>))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Type))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.ValueType))]
     [ModuleInitializer]
     internal static void Initialize()
     {
-        // This method runs automatically on startup.
+        // This method runs automatically on startup to keep types from being trimmed.
     }
 }

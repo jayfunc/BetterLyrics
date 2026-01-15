@@ -29,7 +29,7 @@ namespace BetterLyrics.WinUI3.Helper
         }
 
         public static int CalculateScore(
-            SongInfo songInfo, 
+            SongInfo songInfo,
             string? compareTitle, string? compareArtist, string? compareAlbum, double? compareDuration, string? compareFileName = null)
         {
             double totalScore = 0;

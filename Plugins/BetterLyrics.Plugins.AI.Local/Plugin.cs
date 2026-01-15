@@ -1,20 +1,15 @@
-﻿using BetterLyrics.Core;
-using BetterLyrics.Core.Interfaces;
+﻿using BetterLyrics.Core.Abstractions;
+using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models.SettingsSchema;
 using LLama;
 using LLama.Common;
-using Microsoft.Extensions.Logging;
-using Microsoft.UI.Xaml;
-using System.Diagnostics;
 using System.Text;
-using Windows.Services.Maps;
 
 namespace BetterLyrics.Plugins.AI.Local
 {
-    public class Plugin : PluginBase, IAIService
+    public class Plugin : PluginBase<Config>, IAIService
     {
-        private IPluginContext? _pluginContext;
-
         private LLamaWeights? _model;
         private LLamaContext? _llamaContext;
         private ChatSession? _session;
@@ -60,24 +55,25 @@ namespace BetterLyrics.Plugins.AI.Local
             });
         }
 
-        public override void OnLoad(IPluginContext context)
+        public override IEnumerable<SettingDef> GetSettings()
         {
-            _pluginContext = context;
+            yield return SettingBuilder.Text(() => Config.ModelPath, Context.Localizer);
+        }
 
-            var modelPath = Directory.GetFiles(context.PluginDirectory, "*.gguf").FirstOrDefault();
-
-            if (string.IsNullOrEmpty(modelPath))
+        protected override async Task OnInitializeAsync()
+        {
+            if (string.IsNullOrEmpty(Config.ModelPath))
             {
                 return;
             }
 
             try
             {
-                var parameters = new ModelParams(modelPath)
+                var parameters = new ModelParams(Config.ModelPath)
                 {
-                    ContextSize = 2048, // 上下文长度，根据内存调整
+                    ContextSize = (uint?)Config.ContextSize, // 上下文长度，根据内存调整
                     GpuLayerCount = 99, // 0 = 纯CPU，设为 20+ 可以通过显卡加速（需安装 Cuda 后端）
-                    Threads = 4 // CPU 线程数
+                    Threads = Config.Threads // CPU 线程数
                 };
 
                 _model = LLamaWeights.LoadFromFile(parameters);
@@ -91,7 +87,7 @@ namespace BetterLyrics.Plugins.AI.Local
             }
         }
 
-        public override void OnUnload()
+        protected override async ValueTask OnShutdownAsync()
         {
             _llamaContext?.Dispose();
             _model?.Dispose();

@@ -1,0 +1,92 @@
+using Microsoft.UI.Input;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
+using System;
+using Windows.System;
+
+// To learn more about WinUI, the WinUI project structure,
+// and more about our project templates, see: http://aka.ms/winui-project-info.
+
+namespace BetterLyrics.WinUI3.Controls
+{
+    public sealed partial class InfoTag : UserControl
+    {
+        public static readonly DependencyProperty TextProperty =
+        DependencyProperty.Register(nameof(Text), typeof(string), typeof(InfoTag), new PropertyMetadata(string.Empty));
+
+        public string Text
+        {
+            get => (string)GetValue(TextProperty);
+            set => SetValue(TextProperty, value);
+        }
+
+        public static readonly DependencyProperty GlyphProperty =
+            DependencyProperty.Register(nameof(Glyph), typeof(string), typeof(InfoTag), new PropertyMetadata(string.Empty));
+
+        public string Glyph
+        {
+            get => (string)GetValue(GlyphProperty);
+            set => SetValue(GlyphProperty, value);
+        }
+
+        public static readonly DependencyProperty LinkProperty =
+            DependencyProperty.Register(nameof(Link), typeof(string), typeof(InfoTag), new PropertyMetadata(string.Empty, OnLinkChanged));
+
+        public string Link
+        {
+            get => (string)GetValue(LinkProperty);
+            set => SetValue(LinkProperty, value);
+        }
+
+        public Visibility HasIcon => string.IsNullOrEmpty(Glyph) ? Visibility.Collapsed : Visibility.Visible;
+
+        private bool HasLink => !string.IsNullOrEmpty(Link);
+
+        public InfoTag()
+        {
+            InitializeComponent();
+        }
+
+        private static void OnLinkChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is InfoTag tag)
+            {
+                if (tag.HasLink)
+                {
+                    tag.ProtectedCursor = InputSystemCursor.Create(InputSystemCursorShape.Hand);
+                }
+                else
+                {
+                    tag.ProtectedCursor = null;
+                }
+            }
+        }
+
+        private void OnPointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            if (HasLink)
+            {
+                BadgeBorder.Background = (Brush)Application.Current.Resources["CardBackgroundFillColorSecondaryBrush"];
+            }
+        }
+
+        private void OnPointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            if (HasLink)
+            {
+                BadgeBorder.Background = (Brush)Application.Current.Resources["CardBackgroundFillColorDefaultBrush"];
+            }
+        }
+
+        private async void OnTapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (HasLink && Uri.TryCreate(Link, UriKind.Absolute, out var uri))
+            {
+                await Launcher.LaunchUriAsync(uri);
+            }
+        }
+
+    }
+}

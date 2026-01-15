@@ -1,18 +1,17 @@
-﻿using BetterLyrics.Core;
-using BetterLyrics.Core.Interfaces;
+﻿using BetterLyrics.Core.Abstractions;
 using BetterLyrics.Core.Interfaces.Features;
 using BetterLyrics.Plugins.Romaji.Helpers;
 
 namespace BetterLyrics.Plugins.Transliteration.Romaji
 {
-    public class Plugin : PluginBase, ILyricsTransliterator
+    public class Plugin : PluginBase<Config>, ILyricsTransliterator
     {
         public override string Name => "Romaji";
         public override string Description => "Convert Japanese lyrics to Romaji transliteration";
 
-        public override void OnLoad(IPluginContext context)
+        protected override async Task OnInitializeAsync()
         {
-            RomajiHelper.Init(context.PluginDirectory);
+            RomajiHelper.Init(Context.PluginDirectory);
         }
 
         public Task<string?> GetTransliterationAsync(string text, string targetLangCode)
@@ -24,10 +23,6 @@ namespace BetterLyrics.Plugins.Transliteration.Romaji
                 result = string.Join("\n", lines.Select(p => string.Join(" ", RomajiHelper.ToRomaji(p).FirstOrDefault()?.Units.Select(q => q.Romaji) ?? [""])));
             }
             return Task.FromResult(result);
-        }
-
-        public override void OnUnload()
-        {
         }
     }
 }

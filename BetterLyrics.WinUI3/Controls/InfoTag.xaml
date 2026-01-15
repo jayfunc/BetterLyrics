@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.InfoTag"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:BetterLyrics.WinUI3.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Border
+        x:Name="BadgeBorder"
+        Padding="6,2"
+        Background="{StaticResource CardBackgroundFillColorDefaultBrush}"
+        BorderBrush="{StaticResource CardStrokeColorDefaultBrush}"
+        BorderThickness="1"
+        CornerRadius="4"
+        PointerEntered="OnPointerEntered"
+        PointerExited="OnPointerExited"
+        Tapped="OnTapped">
+
+        <StackPanel
+            VerticalAlignment="Center"
+            Orientation="Horizontal"
+            Spacing="4">
+
+            <FontIcon
+                FontFamily="{StaticResource IconFontFamily}"
+                FontSize="10"
+                Foreground="{StaticResource TextFillColorTertiaryBrush}"
+                Glyph="{x:Bind Glyph, Mode=OneWay}"
+                Visibility="{x:Bind HasIcon, Mode=OneWay}" />
+
+            <TextBlock
+                FontWeight="SemiBold"
+                Foreground="{StaticResource TextFillColorSecondaryBrush}"
+                Style="{StaticResource CaptionTextBlockStyle}"
+                Text="{x:Bind Text, Mode=OneWay}" />
+        </StackPanel>
+    </Border>
+</UserControl>

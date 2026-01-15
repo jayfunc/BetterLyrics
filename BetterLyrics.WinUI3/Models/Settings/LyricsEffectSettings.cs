@@ -1,14 +1,13 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
-using static BetterLyrics.WinUI3.Helper.EasingHelper;
 
 namespace BetterLyrics.WinUI3.Models.Settings
 {
     public partial class LyricsEffectSettings : ObservableRecipient, ICloneable
     {
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial WordByWordEffectMode WordByWordEffectMode { get; set; } = WordByWordEffectMode.Auto;
-     
+
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsBlurEffectEnabled { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsFadeOutEffectEnabled { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsOutOfSightEffectEnabled { get; set; } = true;

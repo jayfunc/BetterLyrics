@@ -1,7 +1,4 @@
-﻿using BetterLyrics.Core.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using BetterLyrics.Core.Models.Domain;
 
 namespace BetterLyrics.Core.Interfaces.Features
 {

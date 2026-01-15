@@ -4,15 +4,9 @@ using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.IO.Compression;
 using System.Linq;
-using System.Reflection;
-using System.Reflection.Metadata;
-using System.Reflection.PortableExecutable;
-using System.Runtime.Loader;
 using System.Threading.Tasks;
 using Windows.Storage;
 
@@ -20,9 +14,6 @@ namespace BetterLyrics.WinUI3.Services.PluginService
 {
     public class PluginService : IPluginService
     {
-        private Dictionary<string, PluginLoadContext> _pluginContexts = new();
-        private HashSet<string> _loadedDllPaths = new();
-
         private readonly ISettingsService _settingsService;
         private readonly ILogger<PluginService> _logger;
 
@@ -34,62 +25,193 @@ namespace BetterLyrics.WinUI3.Services.PluginService
 
         public T? GetPlugin<T>() where T : class
         {
-            var plugins = _settingsService.AppSettings.PluginsInfo;
+            var info = _settingsService.AppSettings.PluginsInfo
+                .FirstOrDefault(p =>
+                    p.IsEnabled &&
+                    p.IsInitialized &&
+                    p.Plugin is T
+                );
 
-            return plugins.OfType<T>().FirstOrDefault();
+            return info?.Plugin as T;
         }
 
-        public void LoadPlugins()
+        public async Task LoadPluginsAsync()
         {
+            PerformFileSynchronization();
+
+            var pluginsList = _settingsService.AppSettings.PluginsInfo;
+            pluginsList.ToList().RemoveAll(p => !Directory.Exists(Path.Combine(PathHelper.PluginsDirectory, p.Id)));
+
+            if (!Directory.Exists(PathHelper.PluginsDirectory)) return;
+
             var pluginFolders = Directory.GetDirectories(PathHelper.PluginsDirectory);
 
             foreach (var folder in pluginFolders)
             {
-                var dllFiles = Directory.GetFiles(folder, "*.dll");
+                string pluginId = Path.GetFileName(folder);
+                string dllPath = Path.Combine(folder, $"{pluginId}.dll");
 
-                foreach (var dllPath in dllFiles)
+                if (!File.Exists(dllPath)) continue;
+
+                try
                 {
-                    if (_loadedDllPaths.Contains(dllPath)) continue;
+                    var plugin = LoadPluginAssembly(dllPath);
+                    if (plugin == null) continue;
 
-                    TryLoadPlugin(dllPath);
+                    var existingInfo = pluginsList.FirstOrDefault(p => p.Id == pluginId);
+                    if (existingInfo != null)
+                    {
+                        existingInfo.Plugin = plugin;
+                    }
+                    else
+                    {
+                        pluginsList.Add(new PluginInfo(plugin));
+                    }
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Failed to load plugin from {Path}", dllPath);
                 }
             }
 
-            InitializePlugins();
-        }
-
-        public void UninstallPlugin(string pluginId)
-        {
-            var plugins = _settingsService.AppSettings.PluginsInfo;
-
-            var activePlugin = plugins.FirstOrDefault(p => p.Id == pluginId);
-            if (activePlugin != null)
+            foreach (var info in pluginsList)
             {
-                plugins.Remove(activePlugin);
+                if (info.IsEnabled && !info.IsInitialized)
+                {
+                    await InitializePluginsAsync(info);
+                }
             }
         }
 
         public void InstallPlugin(string zipPath)
         {
-            var plugins = _settingsService.AppSettings.PluginsInfo;
+            string tempId = Guid.NewGuid().ToString();
+            string tempPath = Path.Combine(ApplicationData.Current.TemporaryFolder.Path, tempId);
 
-            string tempExtractPath = Path.Combine(ApplicationData.Current.TemporaryFolder.Path, Guid.NewGuid().ToString());
-            ZipFile.ExtractToDirectory(zipPath, tempExtractPath);
+            try
+            {
+                ZipFile.ExtractToDirectory(zipPath, tempPath);
 
-            string? pluginId = IdentifyPluginId(tempExtractPath);
+                string? pluginId = PluginMetadataHelper.IdentifyPluginId(tempPath);
 
-            string pendingDir = Path.Combine(PathHelper.PendingPluginsDirectory, pluginId);
+                if (string.IsNullOrEmpty(pluginId))
+                {
+                    throw new Exception("Invalid plugin package: Could not identify Plugin ID.");
+                }
 
-            if (Directory.Exists(pendingDir)) Directory.Delete(pendingDir, true);
+                string pendingDir = Path.Combine(PathHelper.PendingPluginsDirectory, pluginId);
+                if (Directory.Exists(pendingDir)) Directory.Delete(pendingDir, true);
+                Directory.Move(tempPath, pendingDir);
 
-            Directory.Move(tempExtractPath, pendingDir);
-
-            plugins.Add(new PluginInfo(pluginId));
+                _logger.LogInformation("Plugin {Id} prepared for installation in {Path}", pluginId, pendingDir);
+            }
+            catch (Exception)
+            {
+                if (Directory.Exists(tempPath)) Directory.Delete(tempPath, true);
+                throw;
+            }
         }
 
-        public void PerformFileSynchronization()
+        public void UninstallPlugin(string pluginId)
         {
-            var plugins = _settingsService.AppSettings.PluginsInfo;
+            string targetDir = Path.Combine(PathHelper.PluginsDirectory, pluginId);
+
+            if (Directory.Exists(targetDir))
+            {
+                string markerFile = Path.Combine(targetDir, ".delete");
+                File.WriteAllText(markerFile, "delete me");
+
+                _logger.LogInformation("Plugin {Id} marked for deletion.", pluginId);
+            }
+
+            var info = _settingsService.AppSettings.PluginsInfo.FirstOrDefault(p => p.Id == pluginId);
+            if (info != null)
+            {
+                _settingsService.AppSettings.PluginsInfo.Remove(info);
+            }
+        }
+
+        public async Task TogglePluginAsync(string pluginId, bool isEnabled)
+        {
+            var info = _settingsService.AppSettings.PluginsInfo.FirstOrDefault(p => p.Id == pluginId);
+            if (info == null) return;
+
+            info.IsEnabled = isEnabled;
+
+            if (isEnabled)
+            {
+                if (!info.IsInitialized)
+                {
+                    await InitializePluginsAsync(info);
+                }
+            }
+            else
+            {
+                if (info.Plugin != null && info.IsInitialized)
+                {
+                    try
+                    {
+                        await info.Plugin.DisposeAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogError(ex, "Error disposing plugin {Id}", pluginId);
+                    }
+
+                    info.IsInitialized = false;
+                }
+            }
+        }
+
+        private async Task InitializePluginsAsync(PluginInfo pluginInfo)
+        {
+            if (pluginInfo.IsInitialized) return;
+
+            try
+            {
+                if (pluginInfo.Plugin == null) return;
+
+                string dllPath = pluginInfo.Plugin.GetType().Assembly.Location;
+                string? pluginDir = Path.GetDirectoryName(dllPath);
+
+                if (pluginDir == null) return;
+
+                var localizer = new PluginLocalizer(pluginDir);
+                var settingsDict = pluginInfo.Settings;
+                var context = new PluginContext(this, pluginDir, localizer, settingsDict);
+
+                await pluginInfo.Plugin.InitializeAsync(context);
+                pluginInfo.IsInitialized = true;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to initialize plugin {Name}", pluginInfo.Plugin?.Name);
+            }
+        }
+
+        /// <summary>
+        /// 文件同步逻辑：处理 Pending 的移动和标记为 .delete 的删除
+        /// </summary>
+        private void PerformFileSynchronization()
+        {
+            if (Directory.Exists(PathHelper.PluginsDirectory))
+            {
+                foreach (var dir in Directory.GetDirectories(PathHelper.PluginsDirectory))
+                {
+                    if (File.Exists(Path.Combine(dir, ".delete")))
+                    {
+                        try
+                        {
+                            Directory.Delete(dir, true);
+                            _logger.LogInformation("Cleaned up uninstalled plugin: {Dir}", dir);
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogError(ex, "Failed to delete plugin directory {Dir}", dir);
+                        }
+                    }
+                }
+            }
 
             if (Directory.Exists(PathHelper.PendingPluginsDirectory))
             {
@@ -100,191 +222,42 @@ namespace BetterLyrics.WinUI3.Services.PluginService
 
                     try
                     {
-                        if (Directory.Exists(targetDir))
-                        {
-                            Directory.Delete(targetDir, true);
-                        }
+                        if (Directory.Exists(targetDir)) Directory.Delete(targetDir, true);
 
                         Directory.Move(pendingDir, targetDir);
+                        _logger.LogInformation("Applied plugin update/install: {Dir}", targetDir);
                     }
                     catch (Exception ex)
                     {
+                        _logger.LogError(ex, "Failed to move plugin from {Src} to {Dst}", pendingDir, targetDir);
                     }
                 }
-            }
 
-            if (Directory.Exists(PathHelper.PluginsDirectory))
-            {
-                foreach (var pluginDir in Directory.GetDirectories(PathHelper.PluginsDirectory))
-                {
-                    string pluginId = Path.GetFileName(pluginDir);
-
-                    if (!plugins.Any(x => x.Id == pluginId))
-                    {
-                        try
-                        {
-                            Directory.Delete(pluginDir, true);
-                        }
-                        catch (Exception ex)
-                        {
-                        }
-                    }
-                }
+                // (可选) 清理空的 Pending 根目录，保持整洁
+                // try { Directory.Delete(PathHelper.PendingPluginsDirectory); } catch { }
             }
         }
 
-        private void InitializePlugins()
+        private IPlugin? LoadPluginAssembly(string dllPath)
         {
-            var plugins = _settingsService.AppSettings.PluginsInfo;
-
-            foreach (var plugin in plugins)
-            {
-                try
-                {
-                    string dllPath = plugin.GetType().Assembly.Location;
-                    string? pluginDir = Path.GetDirectoryName(dllPath);
-                    if (pluginDir == null) continue;
-
-                    var context = new PluginContext(this, pluginDir);
-                    plugin.Plugin.OnLoad(context);
-                }
-                catch (Exception ex)
-                {
-                    _logger.LogError(ex, "Failed to initialize plugin {Name}", plugin.Plugin.Name);
-                }
-            }
-        }
-
-        /// <summary>
-        /// Invoke this method only when the app starts
-        /// </summary>
-        /// <param name="dllPath"></param>
-        private void TryLoadPlugin(string dllPath)
-        {
-            var plugins = _settingsService.AppSettings.PluginsInfo;
-            var loadContext = new PluginLoadContext(dllPath);
+            var context = new PluginLoadContext(dllPath);
 
             try
             {
-                var assembly = loadContext.LoadFromAssemblyPath(dllPath);
-                int loadedCount = 0;
+                var assembly = context.LoadFromAssemblyPath(dllPath);
 
-                IEnumerable<Type> types;
-                try
-                {
-                    types = assembly.GetExportedTypes();
-                }
-                catch (ReflectionTypeLoadException ex)
-                {
-                    types = ex.Types.Where(t => t != null)!;
-                    foreach (var loaderEx in ex.LoaderExceptions)
-                    {
-                        _logger.LogWarning("Partial type loading failure in DLL {path}: {msg}", dllPath, loaderEx?.Message);
-                    }
-                }
+                var type = assembly.GetExportedTypes()
+                    .FirstOrDefault(t => typeof(IPlugin).IsAssignableFrom(t) && !t.IsAbstract);
 
-                foreach (var type in types)
-                {
-                    if (typeof(IPlugin).IsAssignableFrom(type) && !type.IsAbstract)
-                    {
-                        IPlugin? plugin = null;
-                        try
-                        {
-                            plugin = (IPlugin?)Activator.CreateInstance(type);
-                            if (plugin == null) continue;
+                if (type == null) return null;
 
-                            var pluginFound = plugins.FirstOrDefault(p => p.Id == plugin.Id);
-                            if (pluginFound == null)
-                            {
-                                plugins.Add(new PluginInfo(plugin));
-                            }
-                            else if (pluginFound.Plugin == null)
-                            {
-                                pluginFound.Plugin = plugin;
-                            }
-
-                            if (_pluginContexts.ContainsKey(plugin.Id))
-                            {
-                                _pluginContexts.Add(plugin.Id, loadContext);
-                                loadedCount++;
-                            }
-                            else
-                            {
-                                _logger.LogWarning("Skipping duplicate plugin: {id} ({path})", plugin.Id, dllPath);
-                            }
-                        }
-                        catch (Exception ex)
-                        {
-                            _logger.LogError(ex, "Failed to initialize/instantiate plugin {type}", type.FullName);
-
-                            if (plugin is IDisposable disposable)
-                            {
-                                try { disposable.Dispose(); } catch { }
-                            }
-                            plugin = null;
-                        }
-                    }
-                }
-
-                if (loadedCount > 0)
-                {
-                    _loadedDllPaths.Add(dllPath);
-                    _logger.LogInformation("Successfully loaded {count} plugin(s) from {path}", loadedCount, dllPath);
-                }
-                else
-                {
-                    _logger.LogWarning("No valid plugins found in {path}. Unloading context.", dllPath);
-                    loadContext.Unload();
-                }
+                return (IPlugin?)Activator.CreateInstance(type);
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to load assembly: {path}", dllPath);
-                try { loadContext.Unload(); } catch { }
+                try { context.Unload(); } catch { }
+                throw;
             }
         }
-
-        private string? IdentifyPluginId(string folderPath)
-        {
-            var dllFiles = Directory.GetFiles(folderPath, "*.dll", SearchOption.AllDirectories);
-
-            foreach (var dllPath in dllFiles)
-            {
-                try
-                {
-                    using var stream = File.OpenRead(dllPath);
-                    using var peReader = new PEReader(stream);
-
-                    if (!peReader.HasMetadata) continue;
-
-                    var reader = peReader.GetMetadataReader();
-                    if (!reader.IsAssembly) continue;
-
-                    var assemblyDefinition = reader.GetAssemblyDefinition();
-                    string assemblyName = reader.GetString(assemblyDefinition.Name);
-
-                    if (assemblyName.Contains("BetterLyrics.Plugins") || IsReferencingCore(reader))
-                    {
-                        return assemblyName;
-                    }
-                }
-                catch
-                {
-                }
-            }
-            return null;
-        }
-
-        private bool IsReferencingCore(MetadataReader reader)
-        {
-            foreach (var handle in reader.AssemblyReferences)
-            {
-                var reference = reader.GetAssemblyReference(handle);
-                string refName = reader.GetString(reference.Name);
-                if (refName == "BetterLyrics.Core") return true;
-            }
-            return false;
-        }
-
     }
 }

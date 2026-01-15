@@ -93,10 +93,13 @@ internal static class BetterLyrics_Plugins_Transliteration_Romaji_Config
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Reflection.AssemblyTitleAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Reflection.AssemblyTrademarkAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Reflection.DefaultMemberAttribute))]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.AsyncStateMachineAttribute))]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.AsyncTaskMethodBuilder))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.CallerMemberNameAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.CompilationRelaxationsAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.CompilerGeneratedAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.ExtensionAttribute))]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.IAsyncStateMachine))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.IsReadOnlyAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.IteratorStateMachineAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.NullableAttribute))]
@@ -137,6 +140,6 @@ internal static class BetterLyrics_Plugins_Transliteration_Romaji_Config
     [ModuleInitializer]
     internal static void Initialize()
     {
-        // This method runs automatically on startup.
+        // This method runs automatically on startup to keep types from being trimmed.
     }
 }
