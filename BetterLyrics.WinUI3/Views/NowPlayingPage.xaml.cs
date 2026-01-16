@@ -348,13 +348,12 @@ namespace BetterLyrics.WinUI3.Views
                     break;
             }
 
-            //var tmp = LyricsCanvas.LyricsWidth;
-            //LyricsCanvas.LyricsWidth = LyricsCanvas.LyricsHeight;
-            //LyricsCanvas.LyricsHeight = tmp;
-
-            //tmp = LyricsCanvas.LyricsStartX;
-            //LyricsCanvas.LyricsStartX = LyricsCanvas.LyricsStartY;
-            //LyricsCanvas.LyricsStartY = tmp;
+            if (LyricsWindowStatus.LyricsEffectSettings.Lyrics3DAutoFitLayout)
+            {
+                (LyricsCanvas.LyricsHeight, LyricsCanvas.LyricsWidth) = (LyricsCanvas.LyricsWidth, LyricsCanvas.LyricsHeight);
+                LyricsCanvas.LyricsStartX += (LyricsCanvas.LyricsHeight - LyricsCanvas.LyricsWidth) / 2;
+                LyricsCanvas.LyricsStartY += (LyricsCanvas.LyricsWidth - LyricsCanvas.LyricsHeight) / 2;
+            }
         }
 
         // ====
@@ -649,6 +648,13 @@ namespace BetterLyrics.WinUI3.Views
                     RenderSongInfo();
                 }
                 else if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.IsAutoCoverImageHeight))
+                {
+                    OnLayoutChanged();
+                }
+            }
+            else if (message.Sender == LyricsWindowStatus?.LyricsEffectSettings)
+            {
+                if (message.PropertyName == nameof(LyricsEffectSettings.Lyrics3DAutoFitLayout))
                 {
                     OnLayoutChanged();
                 }

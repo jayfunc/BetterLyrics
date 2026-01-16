@@ -179,6 +179,9 @@
                                     Unit="°"
                                     Value="{x:Bind LyricsEffectSettings.Lyrics3DZAngle, Mode=TwoWay}" />
                             </dev:SettingsCard>
+                            <dev:SettingsCard x:Uid="SettingsPage3DLyricsAutoFitLayout">
+                                <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.Lyrics3DAutoFitLayout, Mode=TwoWay}" />
+                            </dev:SettingsCard>
                             <dev:SettingsCard x:Uid="SettingsPage3DLyricsDepth" IsEnabled="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="1000"

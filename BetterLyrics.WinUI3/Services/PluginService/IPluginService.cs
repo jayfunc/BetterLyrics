@@ -23,6 +23,6 @@ namespace BetterLyrics.WinUI3.Services.PluginService
         Task TogglePluginAsync(string pluginId);
 
         void SetSettingItem(string pluginId, string key, object value);
-        object GetSettingItem(string pluginId, string key);
+        object GetSettingItem(string pluginId, string key, object defaultValue);
     }
 }

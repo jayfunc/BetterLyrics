@@ -232,8 +232,14 @@ namespace BetterLyrics.WinUI3.Renderer
             catch (Exception) { }
         }
 
-        public void CalculateLyrics3DMatrix(LyricsStyleSettings lyricsStyle, LyricsEffectSettings lyricsEffect, double lyricsX, double lyricsY, double lyricsWidth, double lyricsHeight)
+        public void CalculateLyrics3DMatrix(
+            LyricsStyleSettings lyricsStyle, LyricsEffectSettings lyricsEffect, 
+            double lyricsX, double lyricsY, 
+            double lyricsWidth, double lyricsHeight,
+            bool isLayoutChanged
+        )
         {
+            if (!isLayoutChanged) return;
             if (!lyricsEffect.Is3DLyricsEnabled) return;
 
             var playingLineTopOffsetFactor = lyricsStyle.PlayingLineTopOffset / 100.0;

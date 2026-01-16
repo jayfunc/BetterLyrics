@@ -145,7 +145,7 @@ namespace BetterLyrics.Core.Abstractions
 
             foreach (var prop in props)
             {
-                var value = prop.GetValue(Config) ?? Context.Configurator.Get(prop.Name);
+                var value = prop.GetValue(Config) ?? Context.Configurator.Get(prop.Name, default);
 
                 SettingDef? settingDef = null;
 

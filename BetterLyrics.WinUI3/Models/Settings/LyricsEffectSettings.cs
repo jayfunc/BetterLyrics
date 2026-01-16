@@ -43,6 +43,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int Lyrics3DXAngle { get; set; } = 30;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int Lyrics3DYAngle { get; set; } = 0;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int Lyrics3DZAngle { get; set; } = 0;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool Lyrics3DAutoFitLayout { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int Lyrics3DDepth { get; set; } = 1000;
 
         public LyricsEffectSettings(int lyricsScrollTopDuration, int lyricsScrollDuration, int lyricsScrollBottomDuration, EasingType lyricsScrollEasingType)
@@ -94,6 +95,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 Lyrics3DXAngle = this.Lyrics3DXAngle,
                 Lyrics3DYAngle = this.Lyrics3DYAngle,
                 Lyrics3DZAngle = this.Lyrics3DZAngle,
+                Lyrics3DAutoFitLayout = this.Lyrics3DAutoFitLayout,
                 Lyrics3DDepth = this.Lyrics3DDepth,
             };
         }

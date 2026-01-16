@@ -423,9 +423,9 @@
                                 </dev:SettingsCard>
                             </dev:SettingsExpander.Items>
                         </dev:SettingsExpander>
-                        <dev:SettingsExpander x:Uid="SettingsPageJapanese" IsExpanded="{x:Bind ViewModel.AppSettings.TranslationSettings.IsJapaneseRomanizationEnabled, Mode=OneWay}">
+                        <dev:SettingsCard x:Uid="SettingsPageJapanese">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsJapaneseRomanizationEnabled, Mode=TwoWay}" />
-                        </dev:SettingsExpander>
+                        </dev:SettingsCard>
 
                         <!--  中文简体繁体偏好  -->
                         <TextBlock x:Uid="SettingsPageChineseLyrics" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />

@@ -1,6 +1,6 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-namespace BetterLyrics.WinUI3.Enums
+namespace BetterLyrics.Core.Enums
 {
     public enum LyricsSearchProvider
     {

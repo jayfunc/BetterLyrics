@@ -271,9 +271,10 @@ namespace BetterLyrics.WinUI3.Services.PluginService
             _configurator[pluginId].Set(key, value, Core.Enums.ConfigChangedBy.Host);
         }
 
-        public object GetSettingItem(string pluginId, string key)
+        public object GetSettingItem(string pluginId, string key, object defaultValue)
         {
-            return _configurator[pluginId].Get(key);
+            _configurator.TryGetValue(pluginId, out var configurator);
+            return configurator.Get(key, defaultValue);
         }
 
         public void Receive(PropertyChangedMessage<bool> message)

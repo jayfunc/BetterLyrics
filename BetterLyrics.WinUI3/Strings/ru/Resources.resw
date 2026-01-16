@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -555,20 +555,35 @@
   <data name="PlaylistViewFailed" xml:space="preserve">
     <value>Невозможно просмотреть треки, так как путь не существует</value>
   </data>
+  <data name="PluginItemControlEnablePlugin.Header" xml:space="preserve">
+    <value>Включить плагин</value>
+  </data>
   <data name="PluginManagerControlInfoBar.Message" xml:space="preserve">
-    <value />
+    <value>Перезагрузка будет автоматически выполняться после установки, удаления или обновления любых плагинов</value>
   </data>
   <data name="PluginManagerControlInstall.Content" xml:space="preserve">
-    <value />
+    <value>Установите плагин</value>
+  </data>
+  <data name="PluginManagerControlInstallSuccessful" xml:space="preserve">
+    <value>Установка прошла успешно</value>
   </data>
   <data name="PluginManagerControlNoPluginsInstalled.Text" xml:space="preserve">
-    <value />
+    <value>Плагины не установлены</value>
+  </data>
+  <data name="PluginManagerControlRestartNow" xml:space="preserve">
+    <value>Перезапустить сейчас</value>
+  </data>
+  <data name="PluginManagerControlRestartRequired" xml:space="preserve">
+    <value>Приложение перезапустится, чтобы применить изменения</value>
   </data>
   <data name="PluginManagerControlTitle.Text" xml:space="preserve">
-    <value />
+    <value>Менеджер плагинов</value>
   </data>
   <data name="PluginManagerControlUninstall.Content" xml:space="preserve">
-    <value />
+    <value>Удалите плагин</value>
+  </data>
+  <data name="PluginManagerControlUninstallSuccessful" xml:space="preserve">
+    <value>Деинсталляция прошла успешно</value>
   </data>
   <data name="PrivacyPolicy.Content" xml:space="preserve">
     <value>Политика конфиденциальности</value>
@@ -632,6 +647,12 @@
   </data>
   <data name="SettingsPage3DLyrics.Header" xml:space="preserve">
     <value>[Экспериментально] Эффект глубины</value>
+  </data>
+  <data name="SettingsPage3DLyricsAutoFitLayout.Description" xml:space="preserve">
+    <value>Это подходит для ситуаций, когда текст песни не может заполнить весь экран после регулировки оси Z.</value>
+  </data>
+  <data name="SettingsPage3DLyricsAutoFitLayout.Header" xml:space="preserve">
+    <value>Автоматически подстраивается под макет</value>
   </data>
   <data name="SettingsPage3DLyricsDepth.Header" xml:space="preserve">
     <value>Глубина</value>
@@ -813,38 +834,47 @@
   <data name="SettingsPageDragArea.Header" xml:space="preserve">
     <value>Перетаскиваемая область</value>
   </data>
+  <data name="SettingsPageEasingMode.Header" xml:space="preserve">
+    <value>Режим облегчения</value>
+  </data>
+  <data name="SettingsPageEasingModeIn.Content" xml:space="preserve">
+    <value>На сайте</value>
+  </data>
+  <data name="SettingsPageEasingModeInOut.Content" xml:space="preserve">
+    <value>Вход-выход</value>
+  </data>
   <data name="SettingsPageEasingModeOut.Content" xml:space="preserve">
-    <value />
+    <value>Выход</value>
   </data>
   <data name="SettingsPageEasingTypeEaseBack.Content" xml:space="preserve">
-    <value>Back</value>
+    <value>Назад</value>
   </data>
   <data name="SettingsPageEasingTypeEaseBounce.Content" xml:space="preserve">
-    <value>Bounce</value>
+    <value>Подпрыгивание</value>
   </data>
   <data name="SettingsPageEasingTypeEaseCirc.Content" xml:space="preserve">
-    <value>Circular</value>
+    <value>Круглый</value>
   </data>
   <data name="SettingsPageEasingTypeEaseCubic.Content" xml:space="preserve">
-    <value>Cubic</value>
+    <value>Кубический</value>
   </data>
   <data name="SettingsPageEasingTypeEaseElastic.Content" xml:space="preserve">
-    <value>Elastic</value>
+    <value>Эластичный</value>
   </data>
   <data name="SettingsPageEasingTypeEaseExpo.Content" xml:space="preserve">
-    <value>Exponential</value>
+    <value>Экспоненциальный</value>
   </data>
   <data name="SettingsPageEasingTypeEaseQuad.Content" xml:space="preserve">
-    <value>Quadratic</value>
+    <value>Квадратные</value>
   </data>
   <data name="SettingsPageEasingTypeEaseQuart.Content" xml:space="preserve">
     <value>Quartic</value>
   </data>
   <data name="SettingsPageEasingTypeEaseQuint.Content" xml:space="preserve">
-    <value>Quintic</value>
+    <value>Квинтик</value>
   </data>
   <data name="SettingsPageEasingTypeEaseSine.Content" xml:space="preserve">
-    <value>Sine</value>
+    <value>Синус</value>
   </data>
   <data name="SettingsPageEasingTypeLinear.Content" xml:space="preserve">
     <value>Linear</value>
@@ -1270,7 +1300,7 @@
     <value>Горячая клавиша Воспроизведение/Пауза</value>
   </data>
   <data name="SettingsPagePlugins.Content" xml:space="preserve">
-    <value />
+    <value>Плагины</value>
   </data>
   <data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
     <value>Горячая клавиша предыдущего трека</value>
@@ -1604,14 +1634,5 @@
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>Руководство пользователя</value>
-  </data>
-  <data name="PluginManagerControlInstallSuccessful" xml:space="preserve">
-    <value />
-  </data>
-  <data name="PluginManagerControlRestartRequired" xml:space="preserve">
-    <value />
-  </data>
-  <data name="PluginManagerControlUninstallSuccessful" xml:space="preserve">
-    <value />
   </data>
 </root>

@@ -553,7 +553,8 @@ namespace BetterLyrics.WinUI3.Controls
                 lyricsX: _renderLyricsStartX,
                 lyricsY: _renderLyricsStartY,
                 lyricsWidth: _renderLyricsWidth,
-                lyricsHeight: _renderLyricsHeight
+                lyricsHeight: _renderLyricsHeight,
+                _isLayoutChanged
             );
 
             _isLayoutChanged = false;
@@ -800,6 +801,22 @@ namespace BetterLyrics.WinUI3.Controls
                     _isLayoutChanged = true;
                 }
                 else if (message.PropertyName == nameof(LyricsEffectSettings.FanLyricsAngle))
+                {
+                    _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsEffectSettings.Lyrics3DXAngle))
+                {
+                    _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsEffectSettings.Lyrics3DYAngle))
+                {
+                    _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsEffectSettings.Lyrics3DZAngle))
+                {
+                    _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsEffectSettings.Lyrics3DDepth))
                 {
                     _isLayoutChanged = true;
                 }

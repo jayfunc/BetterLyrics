@@ -648,6 +648,12 @@
   <data name="SettingsPage3DLyrics.Header" xml:space="preserve">
     <value>[Experimental] Depth Effect</value>
   </data>
+  <data name="SettingsPage3DLyricsAutoFitLayout.Description" xml:space="preserve">
+    <value>This is suitable for situations where lyrics cannot fill the entire screen after adjusting the Z-axis</value>
+  </data>
+  <data name="SettingsPage3DLyricsAutoFitLayout.Header" xml:space="preserve">
+    <value>Automatically Adjusts to Fit the Layout</value>
+  </data>
   <data name="SettingsPage3DLyricsDepth.Header" xml:space="preserve">
     <value>Depth</value>
   </data>

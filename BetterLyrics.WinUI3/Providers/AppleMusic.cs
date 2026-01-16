@@ -1,4 +1,5 @@
-﻿using BetterLyrics.WinUI3.Extensions;
+﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using System;
@@ -115,7 +116,7 @@ namespace BetterLyrics.WinUI3.Providers
         {
             LyricsCacheItem lyricsSearchResult = new()
             {
-                Provider = Enums.LyricsSearchProvider.AppleMusic
+                Provider = LyricsSearchProvider.AppleMusic
             };
 
             var query = $"{songInfo.Artist} {songInfo.Title}";
