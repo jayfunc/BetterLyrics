@@ -8,10 +8,12 @@
 		<RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
 		<EnableDynamicLoading>true</EnableDynamicLoading>
 		<MeCabUseDefaultDictionary>False</MeCabUseDefaultDictionary>
+		<Description>Convert Japanese to romaji</Description>
 		<Version>1.0.0</Version>
 		<Authors>jayfunc</Authors>
 		<Company>$(Authors)</Company>
 		<Copyright>Copyright © 2026 jayfunc</Copyright>
+		<RepositoryUrl>https://github.com/jayfunc/BetterLyrics/tree/dev/Plugins/BetterLyrics.Plugins.Transliteration.Romaji</RepositoryUrl>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -106,7 +108,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\BetterLyrics.Core\BetterLyrics.Core.csproj" >
+		<ProjectReference Include="..\..\BetterLyrics.Core\BetterLyrics.Core.csproj">
 			<Private>false</Private>
 			<ExcludeAssets>runtime</ExcludeAssets>
 		</ProjectReference>
@@ -153,14 +155,11 @@
 		<PropertyGroup>
 			<PackageOutputDir>$(ProjectDir)..\_Dist\$(Configuration)\</PackageOutputDir>
 
-			<ZipFileName>$(AssemblyName).v$(Version).zip</ZipFileName>
+			<ZipFileName>$(AssemblyName).v$(Version).blp</ZipFileName>
 			<FinalZipPath>$(PackageOutputDir)$(ZipFileName)</FinalZipPath>
 		</PropertyGroup>
 
-		<ZipDirectory
-			SourceDirectory="$(OutputPath)"
-			DestinationFile="$(FinalZipPath)"
-			Overwrite="true" />
+		<ZipDirectory SourceDirectory="$(OutputPath)" DestinationFile="$(FinalZipPath)" Overwrite="true" />
 
 		<Message Text="[Packager] The plugin package has been generated in the parent directory: $(FinalZipPath)" Importance="High" />
 	</Target>

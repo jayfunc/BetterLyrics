@@ -14,14 +14,9 @@
         <dev:SettingsExpander.Header>
             <StackPanel Spacing="2">
                 <StackPanel Orientation="Horizontal" Spacing="6">
-                    <TextBlock Text="{x:Bind PluginInfo.Plugin.Name, Mode=OneWay}" />
+                    <TextBlock Text="{x:Bind PluginInfo.Plugin.Id, Mode=OneWay}" />
                     <local:InfoTag Glyph="&#xE77B;" Text="{x:Bind PluginInfo.Plugin.Author, Mode=OneWay}" />
                 </StackPanel>
-                <TextBlock
-                    Foreground="{StaticResource TextFillColorSecondaryBrush}"
-                    IsTextSelectionEnabled="True"
-                    Style="{StaticResource CaptionTextBlockStyle}"
-                    Text="{x:Bind PluginInfo.Id, Mode=OneWay}" />
             </StackPanel>
         </dev:SettingsExpander.Header>
 
