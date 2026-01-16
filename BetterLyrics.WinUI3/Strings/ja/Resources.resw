@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -555,20 +555,35 @@
   <data name="PlaylistViewFailed" xml:space="preserve">
     <value>パスが存在しないため、曲を表示できません</value>
   </data>
+  <data name="PluginItemControlEnablePlugin.Header" xml:space="preserve">
+    <value>有効にする</value>
+  </data>
   <data name="PluginManagerControlInfoBar.Message" xml:space="preserve">
-    <value />
+    <value>プラグインのインストール・削除・更新後、BetterLyricsは自動的に再起動します</value>
   </data>
   <data name="PluginManagerControlInstall.Content" xml:space="preserve">
-    <value />
+    <value>インストール</value>
+  </data>
+  <data name="PluginManagerControlInstallSuccessful" xml:space="preserve">
+    <value>インストールが成功しました</value>
   </data>
   <data name="PluginManagerControlNoPluginsInstalled.Text" xml:space="preserve">
-    <value />
+    <value>プラグインがインストールされていません</value>
+  </data>
+  <data name="PluginManagerControlRestartNow" xml:space="preserve">
+    <value>今すぐ再起動</value>
+  </data>
+  <data name="PluginManagerControlRestartRequired" xml:space="preserve">
+    <value>変更を適用するためにBetterLyricsが再起動します</value>
   </data>
   <data name="PluginManagerControlTitle.Text" xml:space="preserve">
-    <value />
+    <value>プラグインマネージャー</value>
   </data>
   <data name="PluginManagerControlUninstall.Content" xml:space="preserve">
-    <value />
+    <value>アンインストール</value>
+  </data>
+  <data name="PluginManagerControlUninstallSuccessful" xml:space="preserve">
+    <value>アンインストール成功</value>
   </data>
   <data name="PrivacyPolicy.Content" xml:space="preserve">
     <value>個人情報保護方針</value>
@@ -632,6 +647,12 @@
   </data>
   <data name="SettingsPage3DLyrics.Header" xml:space="preserve">
     <value>[実験的] 奥行きのエフェクト</value>
+  </data>
+  <data name="SettingsPage3DLyricsAutoFitLayout.Description" xml:space="preserve">
+    <value>これは、Z軸を調整しても歌詞が画面いっぱいに表示されない場合に適しています。</value>
+  </data>
+  <data name="SettingsPage3DLyricsAutoFitLayout.Header" xml:space="preserve">
+    <value>レイアウトに合わせて自動調整</value>
   </data>
   <data name="SettingsPage3DLyricsDepth.Header" xml:space="preserve">
     <value>深度</value>
@@ -813,38 +834,47 @@
   <data name="SettingsPageDragArea.Header" xml:space="preserve">
     <value>ドラッグ可能エリア</value>
   </data>
+  <data name="SettingsPageEasingMode.Header" xml:space="preserve">
+    <value>イージングタイプ</value>
+  </data>
+  <data name="SettingsPageEasingModeIn.Content" xml:space="preserve">
+    <value>イーズイン</value>
+  </data>
+  <data name="SettingsPageEasingModeInOut.Content" xml:space="preserve">
+    <value>イーズインアウト</value>
+  </data>
   <data name="SettingsPageEasingModeOut.Content" xml:space="preserve">
-    <value />
+    <value>イーズアウト</value>
   </data>
   <data name="SettingsPageEasingTypeEaseBack.Content" xml:space="preserve">
-    <value>バックイーズ イン アウト</value>
+    <value>バック</value>
   </data>
   <data name="SettingsPageEasingTypeEaseBounce.Content" xml:space="preserve">
-    <value>バウンスイーズ イン アウト</value>
+    <value>バウンス</value>
   </data>
   <data name="SettingsPageEasingTypeEaseCirc.Content" xml:space="preserve">
-    <value>サーキュラーイーズ イン アウト</value>
+    <value>サーキュラー</value>
   </data>
   <data name="SettingsPageEasingTypeEaseCubic.Content" xml:space="preserve">
-    <value>キュービックイーズ イン アウト</value>
+    <value>キュービック</value>
   </data>
   <data name="SettingsPageEasingTypeEaseElastic.Content" xml:space="preserve">
-    <value>エラスティックイーズ イン アウト</value>
+    <value>エラスチック</value>
   </data>
   <data name="SettingsPageEasingTypeEaseExpo.Content" xml:space="preserve">
-    <value>エキスポネンシャルイーズ イン アウト</value>
+    <value>エキスポ</value>
   </data>
   <data name="SettingsPageEasingTypeEaseQuad.Content" xml:space="preserve">
-    <value>クアドラティックイーズ イン アウト</value>
+    <value>クアッド</value>
   </data>
   <data name="SettingsPageEasingTypeEaseQuart.Content" xml:space="preserve">
-    <value>クオートイーズ イン アウト</value>
+    <value>クオート</value>
   </data>
   <data name="SettingsPageEasingTypeEaseQuint.Content" xml:space="preserve">
-    <value>クイントイーズ イン アウト</value>
+    <value>クイント</value>
   </data>
   <data name="SettingsPageEasingTypeEaseSine.Content" xml:space="preserve">
-    <value>サインイーズ イン アウト</value>
+    <value>サイン</value>
   </data>
   <data name="SettingsPageEasingTypeLinear.Content" xml:space="preserve">
     <value>リニア</value>
@@ -1270,7 +1300,7 @@
     <value>再生/一時停止のショートカットキー</value>
   </data>
   <data name="SettingsPagePlugins.Content" xml:space="preserve">
-    <value />
+    <value>プラグイン</value>
   </data>
   <data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
     <value>次のトラックのショートカットキー</value>
@@ -1604,14 +1634,5 @@
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>ユーザーガイド</value>
-  </data>
-  <data name="PluginManagerControlInstallSuccessful" xml:space="preserve">
-    <value />
-  </data>
-  <data name="PluginManagerControlRestartRequired" xml:space="preserve">
-    <value />
-  </data>
-  <data name="PluginManagerControlUninstallSuccessful" xml:space="preserve">
-    <value />
   </data>
 </root>

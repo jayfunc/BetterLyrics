@@ -1,5 +1,6 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Features;
 using BetterLyrics.WinUI3.Constants;
 using BetterLyrics.WinUI3.Enums;
