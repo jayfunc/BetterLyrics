@@ -255,10 +255,12 @@ namespace BetterLyrics.WinUI3.Logic
                                 {
                                     if (syllable.DurationMs >= lyricsEffect.LyricsScaleEffectLongSyllableDuration)
                                     {
-                                        var stepDuration = Math.Min(syllable.DurationMs, maxAnimationDurationMs) / 2.0 / 1000.0;
+                                        var inDuration = Math.Min(syllable.DurationMs, maxAnimationDurationMs) / 1000.0;
+                                        var outDuration = Math.Min(maxAnimationDurationMs - inDuration * 1000, Time.AnimationDuration.TotalMilliseconds) / 1000.0;
+                                        outDuration = Math.Max(0, outDuration);
                                         renderChar.ScaleTransition.Start(
-                                            new Models.Keyframe<double>(targetCharScale, stepDuration),
-                                            new Models.Keyframe<double>(1.0, stepDuration)
+                                            new Models.Keyframe<double>(targetCharScale, inDuration),
+                                            new Models.Keyframe<double>(1.0, outDuration)
                                         );
                                     }
                                 }
