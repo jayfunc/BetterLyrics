@@ -1,1 +1,9 @@
-
+[
+  {
+    "Id": "BetterLyrics.Plugins.Transliteration.Romaji",
+    "Version": "1.0.0",
+    "Description": "Convert Japanese to romaji",
+    "Author": "jayfunc",
+    "LastUpdateTime": "2026-01-16T14:25:00"
+  }
+]
