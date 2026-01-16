@@ -255,9 +255,7 @@ namespace BetterLyrics.WinUI3.Logic
                                 {
                                     if (syllable.DurationMs >= lyricsEffect.LyricsScaleEffectLongSyllableDuration)
                                     {
-                                        var inDuration = Math.Min(syllable.DurationMs, maxAnimationDurationMs) / 1000.0;
-                                        var outDuration = Math.Min(maxAnimationDurationMs - inDuration * 1000, Time.AnimationDuration.TotalMilliseconds) / 1000.0;
-                                        outDuration = Math.Max(0, outDuration);
+                                        var (inDuration, outDuration) = CalculateSegmentDuration(syllable.DurationMs / 1000.0, maxAnimationDurationMs / 1000.0);
                                         renderChar.ScaleTransition.Start(
                                             new Models.Keyframe<double>(targetCharScale, inDuration),
                                             new Models.Keyframe<double>(1.0, outDuration)
@@ -271,9 +269,7 @@ namespace BetterLyrics.WinUI3.Logic
                             {
                                 foreach (var renderChar in syllable.ChildrenRenderLyricsChars)
                                 {
-                                    var inDuration = Math.Min(syllable.DurationMs, maxAnimationDurationMs) / 1000.0;
-                                    var outDuration = Math.Min(maxAnimationDurationMs - inDuration * 1000, Time.AnimationDuration.TotalMilliseconds) / 1000.0;
-                                    outDuration = Math.Max(0, outDuration);
+                                    var (inDuration, outDuration) = CalculateSegmentDuration(syllable.DurationMs / 1000.0, maxAnimationDurationMs / 1000.0);
                                     renderChar.GlowTransition.Start(
                                         new Models.Keyframe<double>(targetCharGlow, inDuration),
                                         new Models.Keyframe<double>(0, outDuration)
@@ -321,6 +317,16 @@ namespace BetterLyrics.WinUI3.Logic
                 }
             }
             return targetOpacity;
+        }
+
+        private static (double InDuration, double OutDuration) CalculateSegmentDuration(double desiredDuration, double maxDuration)
+        {
+            // 缓入动画时长尽量接近 desiredDuration
+            var inDuration = Math.Min(desiredDuration, maxDuration);
+            // 缓出动画时长保证合法
+            var outDuration = Math.Min(maxDuration - inDuration, Time.AnimationDuration.TotalSeconds);
+            outDuration = Math.Max(0, outDuration);
+            return (inDuration, outDuration);
         }
     }
 }
