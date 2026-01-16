@@ -5,7 +5,6 @@ namespace BetterLyrics.Core.Interfaces
 {
     public interface IPlugin : IAsyncDisposable
     {
-        string Name { get; }
         string Description { get; }
         string Author { get; }
 

@@ -191,7 +191,7 @@ namespace BetterLyrics.WinUI3.Services.PluginService
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "Failed to initialize plugin {Name}", pluginInfo.Plugin?.Name);
+                _logger.LogError(ex, "Failed to initialize plugin {Id}", pluginInfo.Plugin?.Id);
             }
         }
 

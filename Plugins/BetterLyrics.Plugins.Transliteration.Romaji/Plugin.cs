@@ -6,9 +6,6 @@ namespace BetterLyrics.Plugins.Transliteration.Romaji
 {
     public class Plugin : PluginBase<Config>, ILyricsTransliterator
     {
-        public override string Name => "Romaji";
-        public override string Description => "Convert Japanese lyrics to Romaji transliteration";
-
         protected override async Task OnInitializeAsync()
         {
             RomajiHelper.Init(Context.PluginDirectory);

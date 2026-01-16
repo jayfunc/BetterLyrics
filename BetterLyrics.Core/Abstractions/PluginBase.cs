@@ -14,8 +14,19 @@ namespace BetterLyrics.Core.Abstractions
 
         public TConfig Config { get; } = new TConfig();
 
-        public abstract string Name { get; }
-        public abstract string Description { get; }
+        public string Description
+        {
+            get
+            {
+                var assembly = this.GetType().Assembly;
+                var metadata = assembly.GetCustomAttributes<AssemblyDescriptionAttribute>().FirstOrDefault();
+                if (metadata != null && !string.IsNullOrWhiteSpace(metadata.Description))
+                {
+                    return metadata.Description;
+                }
+                return string.Empty;
+            }
+        }
 
         public string Author
         {
@@ -140,7 +151,7 @@ namespace BetterLyrics.Core.Abstractions
         public Dictionary<string, SettingDef> GetSettingDefDict()
         {
             var dict = new Dictionary<string, SettingDef>();
-            
+
             var props = typeof(TConfig).GetProperties(BindingFlags.Public | BindingFlags.Instance);
 
             foreach (var prop in props)

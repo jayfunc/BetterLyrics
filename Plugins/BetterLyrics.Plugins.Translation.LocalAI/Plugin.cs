@@ -10,9 +10,6 @@ namespace BetterLyrics.Plugins.Translation.LocalAI
     {
         private IAIService? _aiService;
 
-        public override string Name => "Local AI translator";
-        public override string Description => "Translate lyrics into your language via local AI plugin";
-
         public async Task<string?> GetTranslationAsync(string text, string targetLangCode)
         {
             if (_aiService == null || string.IsNullOrWhiteSpace(text)) return text;

@@ -14,9 +14,6 @@ namespace BetterLyrics.Plugins.AI.Local.LLM
         private LLamaContext? _llamaContext;
         private ChatSession? _session;
 
-        public override string Name => "Local AI Service";
-        public override string Description => "Provide AI service for other plugins";
-
         public async Task<string> ChatAsync(string systemPrompt, string userPrompt)
         {
             if (_session == null) return "Error: Session was not initialized";

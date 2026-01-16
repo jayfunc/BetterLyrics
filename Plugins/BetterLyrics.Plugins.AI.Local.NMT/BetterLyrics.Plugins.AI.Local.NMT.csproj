@@ -54,7 +54,7 @@
 		<PropertyGroup>
 			<PackageOutputDir>$(ProjectDir)..\_Dist\$(Configuration)\</PackageOutputDir>
 
-			<ZipFileName>$(AssemblyName).v$(Version).zip</ZipFileName>
+			<ZipFileName>$(AssemblyName).v$(Version).blp</ZipFileName>
 			<FinalZipPath>$(PackageOutputDir)$(ZipFileName)</FinalZipPath>
 		</PropertyGroup>
 

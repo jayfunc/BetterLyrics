@@ -269,10 +269,12 @@ namespace BetterLyrics.WinUI3.Logic
                             {
                                 foreach (var renderChar in syllable.ChildrenRenderLyricsChars)
                                 {
-                                    var stepDuration = Math.Min(syllable.DurationMs, maxAnimationDurationMs) / 2.0 / 1000.0;
+                                    var inDuration = Math.Min(syllable.DurationMs, maxAnimationDurationMs) / 1000.0;
+                                    var outDuration = Math.Min(maxAnimationDurationMs - inDuration * 1000, Time.AnimationDuration.TotalMilliseconds) / 1000.0;
+                                    outDuration = Math.Max(0, outDuration);
                                     renderChar.GlowTransition.Start(
-                                        new Models.Keyframe<double>(targetCharGlow, stepDuration),
-                                        new Models.Keyframe<double>(0, stepDuration)
+                                        new Models.Keyframe<double>(targetCharGlow, inDuration),
+                                        new Models.Keyframe<double>(0, outDuration)
                                     );
                                 }
                             }
