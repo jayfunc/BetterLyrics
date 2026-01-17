@@ -16,6 +16,7 @@
     <img src="https://img.shields.io/badge/License-GPL_v3.0-blue" alt="License">
     <a href="https://github.com/jayfunc/BetterLyrics/stargazers"><img src="https://img.shields.io/github/stars/jayfunc/BetterLyrics" alt="Stars"></a>
     <a href="https://crowdin.com/project/betterlyrics"><img src="https://badges.crowdin.net/betterlyrics/localized.svg" alt="Crowdin"></a>
+    <a href="https://betterlyrics.github.io/"><img src="https://img.shields.io/website?url=https%3A%2F%2Fbetterlyrics.github.io%2F&up_message=online&label=Website&style=flat&logo=github&color=2ea44f" alt="Website"></a>
   </div>
 
   <br>
