@@ -14,12 +14,12 @@
     <img src="https://img.shields.io/badge/语言-C%23-purple" alt="C#">
     <img src="https://img.shields.io/badge/框架-WinUI%203-blue" alt="WinUI 3">
     <img src="https://img.shields.io/badge/许可证-GPL_v3.0-blue" alt="License">
-    <a href="https://github.com/jayfunc/BetterLyrics/stargazers"><img src="https://img.shields.io/github/stars/jayfunc/BetterLyrics" alt="Stars"></a>
+    <a href="https://github.com/jayfunc/BetterLyrics/stargazers"><img src="https://img.shields.io/github/stars/jayfunc/BetterLyrics?label=%E6%98%9F%E6%A0%87" alt="Star"></a>
   </div>
 
   <div>
     <a href="https://crowdin.com/project/betterlyrics"><img src="https://badges.crowdin.net/betterlyrics/localized.svg" alt="Crowdin"></a>
-    <a href="https://betterlyrics.github.io"><img src="https://github.com/BetterLyrics/BetterLyrics.github.io/actions/workflows/pages/pages-build-deployment/badge.svg" alt="pages-build-deployment"></a>
+    <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/BetterLyrics/BetterLyrics.github.io/pages%2Fpages-build-deployment?label=%E7%BD%91%E7%AB%99%E9%83%A8%E7%BD%B2">
   </div>
 
   <br>
