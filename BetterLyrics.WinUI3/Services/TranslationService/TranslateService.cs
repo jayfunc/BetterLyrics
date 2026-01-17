@@ -1,4 +1,6 @@
 ﻿using BetterLyrics.Core.Interfaces.Features;
+using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Serialization;
 using BetterLyrics.WinUI3.Services.PluginService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
@@ -29,48 +31,48 @@ namespace BetterLyrics.WinUI3.Services.TranslationService
                 throw new Exception(text + " is empty or null.");
             }
 
-            //string? originalLangCode = LanguageHelper.DetectLanguageCode(text);
-            //if (string.IsNullOrWhiteSpace(originalLangCode) || originalLangCode == targetLangCode)
-            //{
-            //    return text; // No translation needed
-            //}
-
-            //if (string.IsNullOrEmpty(_settingsService.AppSettings.TranslationSettings.LibreTranslateServer))
-            //{
-            //    throw new Exception("LibreTranslate server URL is not set in settings.");
-            //}
-
-            //var url = $"{_settingsService.AppSettings.TranslationSettings.LibreTranslateServer}/translate";
-            //var response = await _httpClient.PostAsync(url, new FormUrlEncodedContent(
-            //[
-            //    new("q", text),
-            //    new("source", originalLangCode),
-            //    new("target", targetLangCode),
-            //]), token);
-
-            //response.EnsureSuccessStatusCode();
-            //var json = await response.Content.ReadAsStringAsync(token);
-
-            //var result = System.Text.Json.JsonSerializer.Deserialize(json, SourceGenerationContext.Default.LibreTranslateResponse);
-            //return result?.TranslatedText ?? string.Empty;
-
-            var translatorPlugin = _pluginService.GetPlugin<ILyricsTranslator>();
-            if (translatorPlugin != null)
+            string? originalLangCode = LanguageHelper.DetectLanguageCode(text);
+            if (string.IsNullOrWhiteSpace(originalLangCode) || originalLangCode == targetLangCode)
             {
-                var translatedText = await translatorPlugin.GetTranslationAsync(text, targetLangCode);
-                if (!string.IsNullOrWhiteSpace(translatedText))
-                {
-                    return translatedText;
-                }
-                else
-                {
-                    throw new Exception("Translation failed or returned empty result.");
-                }
+                return text; // No translation needed
             }
-            else
+
+            if (string.IsNullOrEmpty(_settingsService.AppSettings.TranslationSettings.LibreTranslateServer))
             {
-                throw new Exception("No translation plugin available.");
+                throw new Exception("LibreTranslate server URL is not set in settings.");
             }
+
+            var url = $"{_settingsService.AppSettings.TranslationSettings.LibreTranslateServer}/translate";
+            var response = await _httpClient.PostAsync(url, new FormUrlEncodedContent(
+            [
+                new("q", text),
+                new("source", originalLangCode),
+                new("target", targetLangCode),
+            ]), token);
+
+            response.EnsureSuccessStatusCode();
+            var json = await response.Content.ReadAsStringAsync(token);
+
+            var result = System.Text.Json.JsonSerializer.Deserialize(json, SourceGenerationContext.Default.LibreTranslateResponse);
+            return result?.TranslatedText ?? string.Empty;
+
+            //var translatorPlugin = _pluginService.GetPlugin<ILyricsTranslator>();
+            //if (translatorPlugin != null)
+            //{
+            //    var translatedText = await translatorPlugin.GetTranslationAsync(text, targetLangCode);
+            //    if (!string.IsNullOrWhiteSpace(translatedText))
+            //    {
+            //        return translatedText;
+            //    }
+            //    else
+            //    {
+            //        throw new Exception("Translation failed or returned empty result.");
+            //    }
+            //}
+            //else
+            //{
+            //    throw new Exception("No translation plugin available.");
+            //}
         }
     }
 }
