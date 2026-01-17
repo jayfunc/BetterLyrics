@@ -585,6 +585,9 @@
   <data name="PluginManagerControlUninstallSuccessful" xml:space="preserve">
     <value>Uninstallation Successful</value>
   </data>
+  <data name="PluginManagerControlVisitPluginStore.Content" xml:space="preserve">
+    <value>Visit plugins store</value>
+  </data>
   <data name="PrivacyPolicy.Content" xml:space="preserve">
     <value>Privacy Policy</value>
   </data>

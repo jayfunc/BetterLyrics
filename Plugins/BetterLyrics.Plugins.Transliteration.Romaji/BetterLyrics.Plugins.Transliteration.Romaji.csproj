@@ -13,6 +13,7 @@
 		<Authors>jayfunc</Authors>
 		<Company>$(Authors)</Company>
 		<Copyright>Copyright © 2026 jayfunc</Copyright>
+		<Title>Romaji</Title>
 		<RepositoryUrl>https://github.com/jayfunc/BetterLyrics/tree/dev/Plugins/BetterLyrics.Plugins.Transliteration.Romaji</RepositoryUrl>
 	</PropertyGroup>
 

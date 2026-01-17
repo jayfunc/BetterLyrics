@@ -62,11 +62,12 @@
             Grid.RowSpan="3"
             Margin="0,0,0,20"
             HorizontalAlignment="Right"
-            VerticalAlignment="Bottom">
+            VerticalAlignment="Bottom"
+            Orientation="Horizontal"
+            Spacing="6">
+            <HyperlinkButton x:Uid="PluginManagerControlVisitPluginStore" NavigateUri="https://betterlyrics.github.io/plugins" />
             <Button
                 x:Uid="PluginManagerControlInstall"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Center"
                 Command="{x:Bind ViewModel.InstallPluginCommand}"
                 Style="{StaticResource AccentButtonStyle}" />
         </StackPanel>

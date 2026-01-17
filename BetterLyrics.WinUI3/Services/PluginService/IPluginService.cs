@@ -24,5 +24,8 @@ namespace BetterLyrics.WinUI3.Services.PluginService
 
         void SetSettingItem(string pluginId, string key, object value);
         object GetSettingItem(string pluginId, string key, object defaultValue);
+
+        public int GetHashedId(string pluginId);
+        public string GetPluginId(int hashedId);
     }
 }

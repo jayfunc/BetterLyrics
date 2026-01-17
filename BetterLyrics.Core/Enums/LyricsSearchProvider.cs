@@ -14,6 +14,5 @@ namespace BetterLyrics.Core.Enums
         LocalEslrcFile,
         LocalTtmlFile,
         AppleMusic,
-        Plugin = 999,
     }
 }
