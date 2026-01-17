@@ -13,7 +13,7 @@
         public const string ShareHub = $"{BetterLyricsGitHub}/blob/dev/docs/resources/lyrics-status-window/README.md";
         public const string TermsOfService = $"{BetterLyricsGitHub}/blob/dev/docs/TERMS_OF_SERVICE.md";
         public const string PrivacyPolicy = $"{BetterLyricsGitHub}/blob/dev/docs/PRIVACY_POLICY.md";
-        public const string UserGuide = $"{BetterLyricsGitHub}/blob/dev/docs/USER_GUIDE.md";
+        public const string UserGuide = $"https://betterlyrics.github.io/docs";
 
         public const string AppleMusicCfg = $"{UserGuide}#lyrics-source-configuration";
 

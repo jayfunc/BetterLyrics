@@ -21,12 +21,14 @@
         </dev:SettingsExpander.Header>
 
         <dev:SettingsExpander.Description>
-            <TextBlock
-                MaxLines="2"
-                Opacity="0.8"
-                Text="{x:Bind PluginInfo.Plugin.Description, Mode=OneWay}"
-                TextTrimming="CharacterEllipsis"
-                TextWrapping="Wrap" />
+            <StackPanel>
+                <TextBlock
+                    MaxLines="2"
+                    Opacity="0.8"
+                    Text="{x:Bind PluginInfo.Plugin.Description, Mode=OneWay}"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="Wrap" />
+            </StackPanel>
         </dev:SettingsExpander.Description>
 
         <dev:SettingsExpander.Content>
