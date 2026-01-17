@@ -10,16 +10,13 @@
     Built with WinUI3 / Win2D
   </h4>
 
-  <p>
-    <a href="https://betterlyrics.github.io/">🌐 <b>Visit Official Website</b></a>
-  </p>
-
   <div>
     <img src="https://img.shields.io/badge/Language-C%23-purple" alt="C#">
     <img src="https://img.shields.io/badge/Framework-WinUI%203-blue" alt="WinUI 3">
     <img src="https://img.shields.io/badge/License-GPL_v3.0-blue" alt="License">
     <a href="https://github.com/jayfunc/BetterLyrics/stargazers"><img src="https://img.shields.io/github/stars/jayfunc/BetterLyrics" alt="Stars"></a>
     <a href="https://crowdin.com/project/betterlyrics"><img src="https://badges.crowdin.net/betterlyrics/localized.svg" alt="Crowdin"></a>
+    <a href="https://betterlyrics.github.io/"><img src="https://img.shields.io/website?url=https%3A%2F%2Fbetterlyrics.github.io%2F&up_message=online&label=Website&style=flat&logo=github&color=2ea44f" alt="Website"></a>
   </div>
 
   <br>
