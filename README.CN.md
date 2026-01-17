@@ -19,7 +19,7 @@
 
   <div>
     <a href="https://crowdin.com/project/betterlyrics"><img src="https://badges.crowdin.net/betterlyrics/localized.svg" alt="Crowdin"></a>
-    <img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/BetterLyrics/BetterLyrics.github.io/pages%2Fpages-build-deployment?label=%E7%BD%91%E7%AB%99%E9%83%A8%E7%BD%B2">
+    <a href="https://betterlyrics.github.io"><img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/BetterLyrics/BetterLyrics.github.io/pages%2Fpages-build-deployment?label=%E7%BD%91%E7%AB%99%E9%83%A8%E7%BD%B2"></a>
   </div>
 
   <br>
