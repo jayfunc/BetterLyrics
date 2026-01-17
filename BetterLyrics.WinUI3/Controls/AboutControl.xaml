@@ -157,6 +157,7 @@
                                     <dev:WrapPanel Margin="-12,0,0,0" Orientation="Horizontal">
                                         <HyperlinkButton Content="jayfunc" NavigateUri="https://github.com/jayfunc" />
                                         <HyperlinkButton Content="Raspberry-Monster" NavigateUri="https://github.com/Raspberry-Monster" />
+                                        <HyperlinkButton Content="zxbmmmmmmmmm" NavigateUri="https://github.com/zxbmmmmmmmmm" />
                                         <HyperlinkButton Content="ZHider" NavigateUri="https://github.com/ZHider" />
                                         <HyperlinkButton Content="kusutori" NavigateUri="https://github.com/kusutori" />
                                     </dev:WrapPanel>
