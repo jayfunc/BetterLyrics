@@ -46,7 +46,7 @@
 | :---: | :---: |
 | <a href="https://apps.microsoft.com/detail/9P1WCD1P597R?referrer=appbadge&mode=direct"><img src="https://get.microsoft.com/images/en-us%20dark.svg" width="160"/></a><br>Unlimited free trial (Same as paid) | [**📦 Latest Release (.zip)**](https://github.com/jayfunc/BetterLyrics/releases/latest)<br>See [Installation Guide](https://jayfunc.blog/blog/how-to-install-zip) |
 
-[📖 User Guide](docs/USER_GUIDE.md) | [🔒 Privacy Policy](docs/PRIVACY_POLICY.md) | [⚖️ Terms of Service](docs/TERMS_OF_SERVICE.md)
+[📖 Docs](https://betterlyrics.github.io/docs) | [🔒 Privacy Policy](docs/PRIVACY_POLICY.md) | [⚖️ Terms of Service](docs/TERMS_OF_SERVICE.md)
 
 </div>
 
