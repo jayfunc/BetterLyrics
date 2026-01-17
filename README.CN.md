@@ -120,7 +120,7 @@
 | :---: | :---: | :---: |
 | [PayPal](https://paypal.me/zhefangpay)<br><br>[Buy Me a Coffee](https://buymeacoffee.com/founchoo)<br><br>[爱发电 (Afdian)](https://afdian.com/a/jayfunc) | <img src="docs/assets/donate/Alipay.jpg" width="150"> | <img src="docs/assets/donate/WeChatReward.png" width="150"> |
 
-**[查看完整赞助者名单 (Hall of Fame)](SPONSORS.md)**
+**[查看完整赞助者名单 (Hall of Fame)](docs/SPONSORS.md)**
 
 </div>
 
