@@ -326,6 +326,10 @@ namespace BetterLyrics.WinUI3.Logic
             // 缓出动画时长保证合法
             var outDuration = Math.Min(maxDuration - inDuration, Time.AnimationDuration.TotalSeconds);
             outDuration = Math.Max(0, outDuration);
+            if (outDuration == 0)
+            {
+                inDuration = outDuration = inDuration / 2;
+            }
             return (inDuration, outDuration);
         }
     }

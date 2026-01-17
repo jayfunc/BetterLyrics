@@ -15,21 +15,6 @@ namespace BetterLyrics.Core.Abstractions
 
         public TConfig Config { get; } = new TConfig();
 
-        public string Title
-        {
-            get
-            {
-                {
-                    var assembly = this.GetType().Assembly;
-                    var metadata = assembly.GetCustomAttributes<AssemblyTitleAttribute>().FirstOrDefault();
-                    if (metadata != null && !string.IsNullOrWhiteSpace(metadata.Title))
-                    {
-                        return metadata.Title;
-                    }
-                    return string.Empty;
-                }
-            }
-        }
         public string Description
         {
             get
