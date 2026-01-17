@@ -11,12 +11,15 @@
   </h4>
 
   <div>
-    <img src="https://img.shields.io/badge/Language-C%23-purple" alt="C#">
-    <img src="https://img.shields.io/badge/Framework-WinUI%203-blue" alt="WinUI 3">
-    <img src="https://img.shields.io/badge/License-GPL_v3.0-blue" alt="License">
+    <img src="https://img.shields.io/badge/语言-C%23-purple" alt="C#">
+    <img src="https://img.shields.io/badge/框架-WinUI%203-blue" alt="WinUI 3">
+    <img src="https://img.shields.io/badge/许可证-GPL_v3.0-blue" alt="License">
     <a href="https://github.com/jayfunc/BetterLyrics/stargazers"><img src="https://img.shields.io/github/stars/jayfunc/BetterLyrics" alt="Stars"></a>
+  </div>
+
+  <div>
     <a href="https://crowdin.com/project/betterlyrics"><img src="https://badges.crowdin.net/betterlyrics/localized.svg" alt="Crowdin"></a>
-    <a href="https://betterlyrics.github.io/"><img src="https://img.shields.io/website?url=https%3A%2F%2Fbetterlyrics.github.io%2F&up_message=online&label=Website&style=flat&logo=github&color=2ea44f" alt="Website"></a>
+    <a href="https://betterlyrics.github.io"><img src="https://github.com/BetterLyrics/BetterLyrics.github.io/actions/workflows/pages/pages-build-deployment/badge.svg" alt="pages-build-deployment"></a>
   </div>
 
   <br>
