@@ -3,6 +3,8 @@
 using BetterLyrics.Core.Enums;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Services.LocalizationService;
+using BetterLyrics.WinUI3.Services.PluginService;
+using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml.Data;
 using System;
@@ -12,6 +14,7 @@ namespace BetterLyrics.WinUI3.Converters
     public partial class LyricsSearchProviderToDisplayNameConverter : IValueConverter
     {
         private readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
+        private readonly IPluginService _pluginService = Ioc.Default.GetRequiredService<IPluginService>();
 
         public object Convert(object value, Type targetType, object parameter, string language)
         {
@@ -29,7 +32,7 @@ namespace BetterLyrics.WinUI3.Converters
                     LyricsSearchProvider.LocalMusicFile => _localizationService.GetLocalizedString("LyricsSearchProviderLocalMusicFile"),
                     LyricsSearchProvider.LocalEslrcFile => _localizationService.GetLocalizedString("LyricsSearchProviderEslrcFile"),
                     LyricsSearchProvider.LocalTtmlFile => _localizationService.GetLocalizedString("LyricsSearchProviderTtmlFile"),
-                    _ => "N/A",
+                    _ => _pluginService.GetPluginId((int)provider),
                 };
             }
             return "N/A";

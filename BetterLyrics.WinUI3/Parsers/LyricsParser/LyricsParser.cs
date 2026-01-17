@@ -128,9 +128,9 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsParser
                     string romaji = string.Empty;
                     try
                     {
-                        romaji = await transliterationService.TransliterateText(main.WrappedOriginalText, PhoneticHelper.RomanCode, token);
+                        (romaji, transliterationSearchProvider) = 
+                            await transliterationService.TransliterateText(main.WrappedOriginalText, PhoneticHelper.RomanCode, token);
                         _lyricsDataArr.FirstOrDefault()?.SetTransliteration(romaji);
-                        transliterationSearchProvider = TransliterationSearchProvider.Plugin;
                     }
                     catch (TaskCanceledException) { }
                     catch (Exception)

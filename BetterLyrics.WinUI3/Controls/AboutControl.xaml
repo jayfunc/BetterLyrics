@@ -38,7 +38,7 @@
                                         Margin="0,-1,0,0"
                                         Content="{x:Bind const:App.AppAuthor}"
                                         NavigateUri="https://github.com/jayfunc" />
-                                    <TextBlock Text="2025" />
+                                    <TextBlock Text="2025-2026" />
                                 </StackPanel>
                             </StackPanel>
                         </dev:SettingsExpander.Description>

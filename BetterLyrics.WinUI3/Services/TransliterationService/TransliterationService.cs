@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.Core.Interfaces.Features;
+using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Services.PluginService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using System;
@@ -24,7 +25,7 @@ namespace BetterLyrics.WinUI3.Services.TransliterationService
             _pluginService = pluginService;
         }
 
-        public async Task<string> TransliterateText(string text, string targetLangCode, CancellationToken token)
+        public async Task<(string, TransliterationSearchProvider)> TransliterateText(string text, string targetLangCode, CancellationToken token)
         {
             string? result = null;
             if (string.IsNullOrWhiteSpace(text))
@@ -42,7 +43,7 @@ namespace BetterLyrics.WinUI3.Services.TransliterationService
                 }
             }
 
-            return result ?? "";
+            return (result ?? "", (TransliterationSearchProvider)_pluginService.GetHashedId(pluginInfo?.Id ?? ""));
         }
     }
 }

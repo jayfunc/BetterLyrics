@@ -167,6 +167,7 @@
 		<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
 		<PackageReference Include="SMBLibrary" Version="1.5.5.1" />
 		<PackageReference Include="System.Drawing.Common" Version="10.0.1" />
+		<PackageReference Include="System.IO.Hashing" Version="10.0.2" />
 		<PackageReference Include="System.Text.Encoding.CodePages" Version="10.0.1" />
 		<PackageReference Include="TagLibSharp" Version="2.3.0" />
 		<PackageReference Include="Ude.NetStandard" Version="1.2.0" />

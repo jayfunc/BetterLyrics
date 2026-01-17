@@ -21,6 +21,7 @@ namespace BetterLyrics.WinUI3.Services.PluginService
         private readonly ISettingsService _settingsService;
         private readonly ILogger<PluginService> _logger;
         private readonly Dictionary<string, IConfigurator?> _configurator = [];
+        private readonly Dictionary<string, int> _hashedId = [];
 
         public PluginService(ISettingsService settingsService, ILogger<PluginService> logger)
         {
@@ -154,7 +155,8 @@ namespace BetterLyrics.WinUI3.Services.PluginService
                 {
                     try
                     {
-                        _configurator[pluginId] = null;
+                        _configurator.Remove(pluginId);
+                        _hashedId.Remove(pluginId);
                         await info.Plugin.DisposeAsync();
                     }
                     catch (Exception ex)
@@ -185,6 +187,7 @@ namespace BetterLyrics.WinUI3.Services.PluginService
                 var context = new PluginContext(this, pluginDir, localizer, configurator);
 
                 _configurator[pluginInfo.Id] = configurator;
+                _hashedId[pluginInfo.Id] = HashHelper.GetSafeHash(pluginInfo.Id, 1000);
 
                 await pluginInfo.Plugin.InitializeAsync(context);
                 pluginInfo.IsInitialized = true;
@@ -268,14 +271,16 @@ namespace BetterLyrics.WinUI3.Services.PluginService
 
         public void SetSettingItem(string pluginId, string key, object value)
         {
-            _configurator[pluginId].Set(key, value, Core.Enums.ConfigChangedBy.Host);
+            _configurator.GetValueOrDefault(pluginId)?.Set(key, value, Core.Enums.ConfigChangedBy.Host);
         }
 
         public object GetSettingItem(string pluginId, string key, object defaultValue)
         {
-            _configurator.TryGetValue(pluginId, out var configurator);
-            return configurator.Get(key, defaultValue);
+            return _configurator.GetValueOrDefault(pluginId)?.Get(key, defaultValue) ?? defaultValue;
         }
+
+        public int GetHashedId(string pluginId) => _hashedId.GetValueOrDefault(pluginId, -1);
+        public string GetPluginId(int hashedId) => _hashedId.FirstOrDefault(x => x.Value == hashedId, new KeyValuePair<string, int>("N/A", -1)).Key;
 
         public void Receive(PropertyChangedMessage<bool> message)
         {

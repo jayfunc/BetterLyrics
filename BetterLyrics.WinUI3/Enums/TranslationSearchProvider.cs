@@ -13,6 +13,5 @@
         LocalEslrcFile,
         LocalTtmlFile,
         LibreTranslate,
-        Plugin = 999,
     }
 }

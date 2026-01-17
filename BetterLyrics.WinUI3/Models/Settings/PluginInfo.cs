@@ -1,9 +1,13 @@
 ﻿using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces;
 using BetterLyrics.Core.Models.SettingsSchema;
+using BetterLyrics.WinUI3.Helper;
 using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
+using System.IO.Hashing;
 using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using static Vanara.PInvoke.Kernel32;
