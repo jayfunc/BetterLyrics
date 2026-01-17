@@ -10,6 +10,10 @@
     基于 WinUI3 / Win2D 构建
   </h4>
 
+  <p>
+    <a href="https://betterlyrics.github.io/">🌐 <b>访问官网</b></a>
+  </p>
+
   <div>
     <img src="https://img.shields.io/badge/Language-C%23-purple" alt="C#">
     <img src="https://img.shields.io/badge/Framework-WinUI%203-blue" alt="WinUI 3">
