@@ -80,7 +80,7 @@
 				</uap:Extension>
 				<uap:Extension Category="windows.protocol">
 					<uap:Protocol Name="betterlyrics">
-						<uap:DisplayName>使用BetterLyrics打开</uap:DisplayName>
+						<uap:DisplayName>Open with BetterLyrics</uap:DisplayName>
 						<uap:Logo>Assets\Logo.png</uap:Logo>
 					</uap:Protocol>
 				</uap:Extension>
