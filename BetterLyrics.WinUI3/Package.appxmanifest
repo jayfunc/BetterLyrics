@@ -78,6 +78,12 @@
 						<uap:InfoTip>BetterLyrics Plugin</uap:InfoTip>
 					</uap:FileTypeAssociation>
 				</uap:Extension>
+				<uap:Extension Category="windows.protocol">
+					<uap:Protocol Name="betterlyrics">
+						<uap:DisplayName>使用BetterLyrics打开</uap:DisplayName>
+						<uap:Logo>Assets\Logo.png</uap:Logo>
+					</uap:Protocol>
+				</uap:Extension>
 			</Extensions>
 		</Application>
 	</Applications>
