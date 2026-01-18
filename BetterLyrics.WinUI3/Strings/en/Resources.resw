@@ -1422,6 +1422,12 @@
   <data name="SettingsPageSongTitle.Header" xml:space="preserve">
     <value>Title</value>
   </data>
+  <data name="SettingsPageSpectrumBreathingIntensity.Header" xml:space="preserve">
+    <value>Breathing Intensity</value>
+  </data>
+  <data name="SettingsPageSpectrumBrethingEffect.Header" xml:space="preserve">
+    <value>Breathing Effect</value>
+  </data>
   <data name="SettingsPageSpectrumGlowEffect.Header" xml:space="preserve">
     <value>Glow Effect</value>
   </data>

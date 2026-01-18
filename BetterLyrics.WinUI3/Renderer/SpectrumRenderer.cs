@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Enums;
+using Lyricify.Lyrics.Providers.Web.Netease;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
@@ -12,6 +13,9 @@ namespace BetterLyrics.WinUI3.Renderer
 {
     public partial class SpectrumRenderer : IDisposable
     {
+        private float _breathingScale = 1.0f;
+        private float _targetBreathingScale = 1.0f;
+
         private CanvasGeometry? _spectrumGeometry;
 
         public void Draw(
@@ -21,6 +25,7 @@ namespace BetterLyrics.WinUI3.Renderer
             int barCount,
             bool isEnabled,
             bool isGlowEffectEnabled,
+            bool isBreathingEffectEnabled,
             SpectrumPlacement placement,
             SpectrumStyle style,
             double canvasWidth,
@@ -37,7 +42,35 @@ namespace BetterLyrics.WinUI3.Renderer
 
             if (_spectrumGeometry != null)
             {
+                if (isBreathingEffectEnabled)
+                {
+                    var center = new Vector2((float)canvasWidth / 2, (float)canvasHeight);
+                    ds.Transform = Matrix3x2.CreateScale(_breathingScale, center);
+                }
+
                 DrawGeometry(ds, _spectrumGeometry, fillColor, isGlowEffectEnabled, placement, canvasHeight);
+
+                if (isBreathingEffectEnabled)
+                {
+                    ds.Transform = Matrix3x2.Identity;
+                }
+            }
+        }
+
+        public void Update(float bassEnergy, int breathingIntensity)
+        {
+            float maxScaleOffset = breathingIntensity / 100.0f;
+            _targetBreathingScale = 1.0f + (bassEnergy * maxScaleOffset);
+
+            if (_targetBreathingScale > _breathingScale)
+            {
+                // 鼓点出现，快速放大
+                _breathingScale += (_targetBreathingScale - _breathingScale) * 0.2f;
+            }
+            else
+            {
+                // 鼓点消失，缓慢回落
+                _breathingScale += (_targetBreathingScale - _breathingScale) * 0.05f;
             }
         }
 

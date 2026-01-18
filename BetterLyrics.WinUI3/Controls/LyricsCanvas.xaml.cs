@@ -21,6 +21,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Storage.Streams;
@@ -424,6 +425,7 @@ namespace BetterLyrics.WinUI3.Controls
                     barCount: _spectrumAnalyzer?.BarCount ?? 1,
                     isEnabled: lyricsBg.IsSpectrumOverlayEnabled,
                     isGlowEffectEnabled: lyricsBg.IsSpectrumGlowEffectEnabled,
+                    isBreathingEffectEnabled: lyricsBg.IsSpectrumBrethingEffectEnabled,
                     placement: lyricsBg.SpectrumPlacement,
                     style: lyricsBg.SpectrumStyle,
                     canvasWidth: sender.Size.Width,
@@ -434,10 +436,11 @@ namespace BetterLyrics.WinUI3.Controls
 
 #if DEBUG && false
             args.DrawingSession.DrawText(
+                    $"####: {_breathingScale}\n" +
                     $"Lyrics render start pos: ({(int)_renderLyricsStartX}, {(int)_renderLyricsStartY})\n" +
                     $"Lyrics render size: [{(int)_renderLyricsWidth} x {(int)_renderLyricsHeight}]\n" +
                     $"Lyrics actual height: {LyricsLayoutManager.CalculateActualHeight(_renderLyricsLines)}\n" +
-                    $"Playing line (idx): {_playingLineIndex}\n" +
+                    $"Playing line (idx): {_primaryPlayingLineIndex}\n" +
                     $"Mouse hovering line (idx): {_mouseHoverLineIndex}\n" +
                     $"Visible lines range (idx): [{_visibleRange.Start}, {_visibleRange.End}]\n" +
                     $"Total line count: {LyricsLayoutManager.CalculateMaxRange(_renderLyricsLines).End + 1}\n" +
@@ -597,6 +600,7 @@ namespace BetterLyrics.WinUI3.Controls
             if (_spectrumAnalyzer.IsCapturing)
             {
                 _spectrumAnalyzer.UpdateSmoothSpectrum();
+                _spectrumRenderer.Update(_spectrumAnalyzer.CurrentBassEnergy, lyricsBg.SpectrumBreathingIntensity);
             }
         }
 
