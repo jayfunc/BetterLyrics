@@ -5,12 +5,14 @@ using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
-using Hqub.Lastfm;
+using LiteFM;
+using LiteFM.Api;
+using LiteFM.Abstractions;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
 using Windows.System;
-
+using LiteFM.Abstractions.ApiContracts;
 namespace BetterLyrics.WinUI3.Services.LastFMService
 {
     public partial class LastFMService : ILastFMService
@@ -18,12 +20,13 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
         private readonly ISettingsService _settingsService;
         private readonly ILocalizationService _localizationService;
 
-        private readonly LastfmClient _client;
+        private readonly LastFMClient _client;
+        private string? _sessionKey;
 
         public event EventHandler<LastFMUserChangedEventArgs>? UserChanged;
         public event EventHandler<LastFMIsAuthenticatedChangedEventArgs>? IsAuthenticatedChanged;
 
-        public Hqub.Lastfm.Entities.User? User { get; private set; }
+        public LastFMUser? User { get; private set; }
 
         public bool IsAuthenticated { get; private set; }
 
@@ -32,57 +35,36 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
             _localizationService = localizationService;
             _settingsService = settingsService;
 
-            _client = new LastfmClient(Constants.LastFM.ApiKey, Constants.LastFM.SharedSecret);
-            _client.Session.SessionKey = PasswordVaultHelper.Get(Constants.App.AppName, Constants.LastFM.SessionKeyCredentialKey) ?? string.Empty;
-            UpdateAuthStatusAsync();
+            _client = new LastFMClient(new LastFMOptions() { ApiKey = Constants.LastFM.ApiKey, ApiSecret = Constants.LastFM.SharedSecret });
+            _sessionKey = PasswordVaultHelper.Get(Constants.App.AppName, Constants.LastFM.SessionKeyCredentialKey);
+            _ = UpdateAuthStatusAsync();
         }
 
-        public async Task ConfirmAuth()
+        public async Task ConfirmAuth(string param)
         {
-            try
+            var resp = await _client.RequestAsync(LastFMApi.GetSessionApi, new GetSessionRequest() { Token = param });
+            if (resp.IsSuccess)
             {
-                await _client.AuthenticateViaWebAsync();
-                PasswordVaultHelper.Save(Constants.App.AppName, Constants.LastFM.SessionKeyCredentialKey, _client.Session.SessionKey);
+                PasswordVaultHelper.Save(Constants.App.AppName, Constants.LastFM.SessionKeyCredentialKey, resp.Response!.Session!.Key);
                 await UpdateAuthStatusAsync();
             }
-            catch (Exception)
+            else
             {
-                ToastHelper.ShowToast("LastFMAuthFailed", null, InfoBarSeverity.Error);
+                ToastHelper.ShowToast("LastFMAuthFailed", resp.Error?.Message, InfoBarSeverity.Error);
             }
         }
 
         public async Task ConfirmUnAuthAsync()
         {
-            _client.Session.SessionKey = "";
+            _sessionKey = null;
             PasswordVaultHelper.Delete(Constants.App.AppName, Constants.LastFM.SessionKeyCredentialKey);
             await UpdateAuthStatusAsync();
         }
 
         public async Task AuthAsync()
         {
-            var dialogXamlRoot = WindowHook.GetWindow<SettingsWindow>()?.Content.XamlRoot;
-            if (dialogXamlRoot == null)
-            {
-                return;
-            }
-
-            var dialog = new ContentDialog
-            {
-                Title = _localizationService.GetLocalizedString("LastFMRequestAuthTitle") ?? "",
-                Content = _localizationService.GetLocalizedString("LastFMRequestAuthDesc") ?? "",
-                PrimaryButtonText = _localizationService.GetLocalizedString("LastFMRequestAuthConfirm") ?? "",
-                CloseButtonText = _localizationService.GetLocalizedString("Cancel") ?? "",
-                DefaultButton = ContentDialogButton.Close,
-                XamlRoot = dialogXamlRoot,
-            };
-            dialog.PrimaryButtonClick += async (s, args) =>
-            {
-                await ConfirmAuth();
-            };
-
-            string url = await _client.GetWebAuthenticationUrlAsync();
-            await Launcher.LaunchUriAsync(new Uri(url));
-            await dialog.ShowAsync();
+            string url = $"https://www.last.fm/api/auth?api_key={_client.Options.ApiKey}&cb=betterlyrics://link.last.fm";
+            _ = Launcher.LaunchUriAsync(new Uri(url));
         }
 
         public async Task UnAuthAsync()
@@ -113,11 +95,13 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
 
         private async Task UpdateAuthStatusAsync()
         {
-            IsAuthenticated = _client.Session.Authenticated;
+            IsAuthenticated = !(string.IsNullOrEmpty(_sessionKey));
             IsAuthenticatedChanged?.Invoke(this, new LastFMIsAuthenticatedChangedEventArgs(IsAuthenticated));
             if (IsAuthenticated)
             {
-                User = await _client.User.GetInfoAsync();
+                var resp = await _client.RequestAsync(LastFMApi.GetUserInfoApi, new GetUserInfoRequest() { User = null }, _sessionKey);
+                User = resp.Response?.User;
+                if(!resp.IsSuccess) ToastHelper.ShowToast("LastFMGetUserFailed", resp.Error?.Message, InfoBarSeverity.Error);
             }
             else
             {
@@ -130,18 +114,28 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
         {
             if (IsAuthenticated)
             {
-                await _client.Track.ScrobbleAsync(new Hqub.Lastfm.Entities.Scrobble
+                var resp = await _client.RequestAsync(LastFMApi.ScrobbleApi, new()
                 {
                     Track = songInfo.Title,
                     Artist = songInfo.Artist,
-                    Date = DateTime.Now,
-                });
+                    Album = songInfo.Album,
+                    TimeStamp = GetUnixTimeStamp()
+                }, _sessionKey);
+                if (!resp.IsSuccess)
+                {
+                    ToastHelper.ShowToast("LastFMScrobbleFailed", resp.Error?.Message, InfoBarSeverity.Error);
+                }
             }
         }
 
         public async Task RefreshAsync()
         {
             await UpdateAuthStatusAsync();
+        }
+
+        public uint GetUnixTimeStamp()
+        {
+            return (uint)(DateTime.UtcNow - DateTime.UnixEpoch).TotalSeconds;
         }
     }
 }
