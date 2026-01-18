@@ -69,7 +69,7 @@
 				</uap5:Extension>
 				<uap:Extension Category="windows.fileTypeAssociation">
 					<uap:FileTypeAssociation Name="blp">
-						<uap:Logo>Assets\Logo.Plugin.png</uap:Logo>
+						<uap:Logo>Assets\LogoPlugin.png</uap:Logo>
 						<uap:DisplayName>BetterLyrics Plugin</uap:DisplayName>
 						<uap:SupportedFileTypes>
 							<uap:FileType>.blp</uap:FileType>
