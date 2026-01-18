@@ -454,10 +454,10 @@
                                     <HyperlinkButton Content="{x:Bind ViewModel.LastFMUser.Name, Mode=OneWay}" NavigateUri="{x:Bind ViewModel.LastFMUser.Url, Mode=OneWay}" />
                                 </dev:SettingsCard>
                                 <dev:SettingsCard x:Uid="SettingsPageLastFMPlaycount" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
-                                    <TextBlock Text="{x:Bind ViewModel.LastFMUser.Playcount, Mode=OneWay}" />
+                                    <TextBlock Text="{x:Bind ViewModel.LastFMUser.PlayCount, Mode=OneWay}" />
                                 </dev:SettingsCard>
                                 <dev:SettingsCard x:Uid="SettingsPageLastFMRegistered" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
-                                    <TextBlock Text="{x:Bind ViewModel.LastFMUser.Registered.ToLongDateString(), Mode=OneWay}" />
+                                    <TextBlock Text="{x:Bind ViewModel.LastFMUser.UserRegisterTime.DateTime.ToLongDateString(), Mode=OneWay}" />
                                 </dev:SettingsCard>
                                 <dev:SettingsCard IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
                                     <Button x:Uid="SettingsPageLastFMRefresh" Command="{x:Bind ViewModel.LastFMRefreshCommand}" />

@@ -67,7 +67,6 @@ namespace BetterLyrics.WinUI3
             AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
         }
-
         protected override async void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             await InitAppServicesAsync();
@@ -97,6 +96,17 @@ namespace BetterLyrics.WinUI3
                     var pluginManagerControlViewModel = Ioc.Default.GetRequiredService<PluginManagerControlViewModel>();
                     await pluginManagerControlViewModel.InstallPluginByFileAsync(file);
                 }
+            }
+        }
+
+        private async Task HandleProtocolActivationAsync(AppActivationArguments args)
+        {
+            var protocolArgs = args.Data as IProtocolActivatedEventArgs;
+            if (protocolArgs != null)
+            if (protocolArgs.Uri.Host == "link.last.fm")
+            {
+                var lastFMService = Ioc.Default.GetRequiredService<ILastFMService>();
+                await lastFMService.ConfirmAuth(protocolArgs.Uri.Query.Replace("?token=", string.Empty));
             }
         }
 
@@ -185,6 +195,11 @@ namespace BetterLyrics.WinUI3
 
         private void OnMainInstanceActivated(object? sender, AppActivationArguments e)
         {
+            if (e.Kind == ExtendedActivationKind.Protocol)
+            {
+                _ = HandleProtocolActivationAsync(e);
+                return;
+            }
             m_window?.DispatcherQueue.TryEnqueue(async () =>
             {
                 if (e.Kind == ExtendedActivationKind.File)
