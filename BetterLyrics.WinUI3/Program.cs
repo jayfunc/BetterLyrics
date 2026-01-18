@@ -130,12 +130,14 @@ namespace BetterLyrics.WinUI3
         private static async Task HandleProtocolActivationAsync(AppActivationArguments args)
         {
             if (args.Data is IProtocolActivatedEventArgs protocolArgs)
+            {
                 if (protocolArgs.Uri.Host == "link.last.fm")
                 {
                     var lastFMService = Ioc.Default.GetRequiredService<ILastFMService>();
                     await lastFMService.ConfirmAuth(protocolArgs.Uri.Query.Replace("?token=", string.Empty));
                     WindowHook.OpenOrShowWindow<SettingsWindow>();
                 }
+            }
         }
 
         private static void ConfigureServices()
