@@ -32,6 +32,8 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
+using Windows.System;
+using WinRT;
 
 namespace BetterLyrics.WinUI3
 {
@@ -67,7 +69,6 @@ namespace BetterLyrics.WinUI3
             AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
         }
-
         protected override async void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             await InitAppServicesAsync();
@@ -97,6 +98,17 @@ namespace BetterLyrics.WinUI3
                     var pluginManagerControlViewModel = Ioc.Default.GetRequiredService<PluginManagerControlViewModel>();
                     await pluginManagerControlViewModel.InstallPluginByFileAsync(file);
                 }
+            }
+        }
+
+        private async Task HandleProtocolActivationAsync(AppActivationArguments args)
+        {
+            var protocolArgs = args.Data.As<IProtocolActivatedEventArgs>();
+            if (protocolArgs != null)
+            if (protocolArgs.Uri.Host == "link.last.fm")
+            {
+                var lastFMService = Ioc.Default.GetRequiredService<ILastFMService>();
+                await lastFMService.ConfirmAuth(protocolArgs.Uri.Query.Replace("?token=", string.Empty));
             }
         }
 
@@ -191,6 +203,10 @@ namespace BetterLyrics.WinUI3
                 {
                     // 复用上面的文件处理逻辑
                     await HandleFileActivationAsync(e);
+                }
+                else if (e.Kind == ExtendedActivationKind.Protocol)
+                {
+                    _ = HandleProtocolActivationAsync(e);
                 }
                 else
                 {

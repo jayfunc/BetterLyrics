@@ -147,8 +147,8 @@
 		<PackageReference Include="FlaUI.UIA3" Version="5.0.0" />
 		<PackageReference Include="FluentFTP" Version="53.0.2" />
 		<PackageReference Include="H.NotifyIcon.WinUI" Version="2.4.1" />
-		<PackageReference Include="Hqub.Last.fm" Version="2.5.1" />
 		<PackageReference Include="Interop.UIAutomationClient" Version="10.19041.0" />
+		<PackageReference Include="LiteFM" Version="1.0.2" />
 		<PackageReference Include="LiveChartsCore.SkiaSharpView.WinUI" Version="2.0.0-rc6.1" />
 		<PackageReference Include="Lyricify.Lyrics.Helper-NativeAot" Version="0.1.4-alpha.5" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.1" />
@@ -171,7 +171,6 @@
 		<PackageReference Include="SMBLibrary" Version="1.5.5.1" />
 		<PackageReference Include="System.Drawing.Common" Version="10.0.1" />
 		<PackageReference Include="System.IO.Hashing" Version="10.0.2" />
-		<PackageReference Include="System.Text.Encoding.CodePages" Version="10.0.1" />
 		<PackageReference Include="TagLibSharp" Version="2.3.0" />
 		<PackageReference Include="Ude.NetStandard" Version="1.2.0" />
 		<PackageReference Include="Vanara.PInvoke.DwmApi" Version="4.2.1" />

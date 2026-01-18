@@ -7,7 +7,7 @@ using BetterLyrics.WinUI3.Services.TranslationService;
 using BetterLyrics.WinUI3.Services.TransliterationService;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Hqub.Lastfm.Entities;
+using LiteFM.Abstractions;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Controls;
 using System;
@@ -34,7 +34,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial bool IsLastFMAuthenticated { get; set; }
 
         [ObservableProperty]
-        public partial User? LastFMUser { get; set; }
+        public partial LastFMUser? LastFMUser { get; set; }
 
         [ObservableProperty]
         public partial bool IsLibreTranslateServerTesting { get; set; } = false;
