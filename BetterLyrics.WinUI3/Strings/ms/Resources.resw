@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -556,37 +556,37 @@
     <value>Tidak dapat melihat trek kerana laluan tidak wujud</value>
   </data>
   <data name="PluginItemControlEnablePlugin.Header" xml:space="preserve">
-    <value>Enable Plugin</value>
+    <value>Dayakan Pemalam</value>
   </data>
   <data name="PluginManagerControlInfoBar.Message" xml:space="preserve">
-    <value>Restart will be automatically performed after install, uninstall or update any plugins</value>
+    <value>Mula semula akan dilakukan secara automatik selepas memasang, menyahpasang atau mengemas kini sebarang pemalam</value>
   </data>
   <data name="PluginManagerControlInstall.Content" xml:space="preserve">
-    <value>Install plugin</value>
+    <value>Pasang pemalam</value>
   </data>
   <data name="PluginManagerControlInstallSuccessful" xml:space="preserve">
-    <value>Installation Successful</value>
+    <value>Pemasangan Berjaya</value>
   </data>
   <data name="PluginManagerControlNoPluginsInstalled.Text" xml:space="preserve">
     <value>Tiada Pemalam Yang Dipasang</value>
   </data>
   <data name="PluginManagerControlRestartNow" xml:space="preserve">
-    <value>Restart now</value>
+    <value>Mula semula sekarang</value>
   </data>
   <data name="PluginManagerControlRestartRequired" xml:space="preserve">
-    <value>The application will now restart to apply the changes</value>
+    <value>Aplikasi kini akan dimulakan semula untuk melaksanakan perubahan</value>
   </data>
   <data name="PluginManagerControlTitle.Text" xml:space="preserve">
-    <value>Plugin Manager</value>
+    <value>Pengurus Plugin</value>
   </data>
   <data name="PluginManagerControlUninstall.Content" xml:space="preserve">
-    <value>Uninstall plugin</value>
+    <value>Nyahpasang pemalam</value>
   </data>
   <data name="PluginManagerControlUninstallSuccessful" xml:space="preserve">
-    <value>Uninstallation Successful</value>
+    <value>Penyahpasangan Berjaya</value>
   </data>
   <data name="PluginManagerControlVisitPluginStore.Content" xml:space="preserve">
-    <value />
+    <value>Lawati kedai pemalam</value>
   </data>
   <data name="PrivacyPolicy.Content" xml:space="preserve">
     <value>Dasar Privasi</value>
@@ -652,10 +652,10 @@
     <value>[Eksperimental] Kesan Kedalaman</value>
   </data>
   <data name="SettingsPage3DLyricsAutoFitLayout.Description" xml:space="preserve">
-    <value>This is suitable for situations where lyrics cannot fill the entire screen after adjusting the Z-axis</value>
+    <value>Ini sesuai untuk situasi di mana lirik tidak dapat memenuhi keseluruhan skrin selepas melaraskan paksi Z</value>
   </data>
   <data name="SettingsPage3DLyricsAutoFitLayout.Header" xml:space="preserve">
-    <value>Automatically Adjusts to Fit the Layout</value>
+    <value>Melaraskan Secara Automatik Agar Sesuai Dengan Susun Atur</value>
   </data>
   <data name="SettingsPage3DLyricsDepth.Header" xml:space="preserve">
     <value>Kedalaman</value>
@@ -838,13 +838,13 @@
     <value>Kawasan Boleh Diseret</value>
   </data>
   <data name="SettingsPageEasingMode.Header" xml:space="preserve">
-    <value>Easing Mode</value>
+    <value>Mod Pelonggaran</value>
   </data>
   <data name="SettingsPageEasingModeIn.Content" xml:space="preserve">
-    <value>In</value>
+    <value>Kemasukan perlahan</value>
   </data>
   <data name="SettingsPageEasingModeInOut.Content" xml:space="preserve">
-    <value>In-Out</value>
+    <value>Perlahan masuk, perlahan keluar</value>
   </data>
   <data name="SettingsPageEasingModeOut.Content" xml:space="preserve">
     <value>Keluar</value>
@@ -862,7 +862,7 @@
     <value>Kubik</value>
   </data>
   <data name="SettingsPageEasingTypeEaseElastic.Content" xml:space="preserve">
-    <value>Elastic</value>
+    <value>Elastik</value>
   </data>
   <data name="SettingsPageEasingTypeEaseExpo.Content" xml:space="preserve">
     <value>Eksponen</value>
@@ -1423,7 +1423,7 @@
     <value>Tajuk</value>
   </data>
   <data name="SettingsPageSpectrumGlowEffect.Header" xml:space="preserve">
-    <value />
+    <value>Kesan Cahaya</value>
   </data>
   <data name="SettingsPageSpectrumLayer.Header" xml:space="preserve">
     <value>[Eksperimental] Lapisan Spektrum</value>
@@ -1441,7 +1441,7 @@
     <value>Atas</value>
   </data>
   <data name="SettingsPageSpectrumSensitivity.Header" xml:space="preserve">
-    <value />
+    <value>Kepekaan</value>
   </data>
   <data name="SettingsPageSpectrumStyleBar.Content" xml:space="preserve">
     <value>Bar</value>

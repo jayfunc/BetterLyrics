@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -556,37 +556,37 @@
     <value>ट्रैक देखने में असमर्थ क्योंकि पथ मौजूद नहीं है</value>
   </data>
   <data name="PluginItemControlEnablePlugin.Header" xml:space="preserve">
-    <value>Enable Plugin</value>
+    <value>प्लगइन सक्षम करें</value>
   </data>
   <data name="PluginManagerControlInfoBar.Message" xml:space="preserve">
-    <value>Restart will be automatically performed after install, uninstall or update any plugins</value>
+    <value>किसी भी प्लगइन को इंस्टॉल, अनइंस्टॉल या अपडेट करने के बाद रीस्टार्ट अपने आप हो जाएगा</value>
   </data>
   <data name="PluginManagerControlInstall.Content" xml:space="preserve">
     <value>Plugins स्थापित</value>
   </data>
   <data name="PluginManagerControlInstallSuccessful" xml:space="preserve">
-    <value>Installation Successful</value>
+    <value>स्थापना सफल</value>
   </data>
   <data name="PluginManagerControlNoPluginsInstalled.Text" xml:space="preserve">
-    <value>No plugins installed</value>
+    <value>कोई प्लगइन्स इंस्टॉल नहीं है</value>
   </data>
   <data name="PluginManagerControlRestartNow" xml:space="preserve">
-    <value>Restart now</value>
+    <value>अब पुनःचालू करें</value>
   </data>
   <data name="PluginManagerControlRestartRequired" xml:space="preserve">
-    <value>The application will now restart to apply the changes</value>
+    <value>बदलाव लागू करने के लिए एप्लिकेशन अब रीस्टार्ट होगा</value>
   </data>
   <data name="PluginManagerControlTitle.Text" xml:space="preserve">
-    <value>Plugin Manager</value>
+    <value>प्लगइन प्रबंधक</value>
   </data>
   <data name="PluginManagerControlUninstall.Content" xml:space="preserve">
-    <value>Uninstall plugin</value>
+    <value>प्लगइन प्रबंधक</value>
   </data>
   <data name="PluginManagerControlUninstallSuccessful" xml:space="preserve">
-    <value>Uninstallation Successful</value>
+    <value>अनइंस्टॉलेशन सफल रहा</value>
   </data>
   <data name="PluginManagerControlVisitPluginStore.Content" xml:space="preserve">
-    <value />
+    <value>प्लगइन्स स्टोर पर जाएँ</value>
   </data>
   <data name="PrivacyPolicy.Content" xml:space="preserve">
     <value>गोपनीयता नीति</value>
@@ -652,10 +652,10 @@
     <value>[प्रयोगात्मक] गहराई प्रभाव</value>
   </data>
   <data name="SettingsPage3DLyricsAutoFitLayout.Description" xml:space="preserve">
-    <value>This is suitable for situations where lyrics cannot fill the entire screen after adjusting the Z-axis</value>
+    <value>यह उन स्थितियों के लिए सही है जहां Z-एक्सिस को एडजस्ट करने के बाद लिरिक्स पूरी स्क्रीन पर नहीं आ पाते हैं</value>
   </data>
   <data name="SettingsPage3DLyricsAutoFitLayout.Header" xml:space="preserve">
-    <value>Automatically Adjusts to Fit the Layout</value>
+    <value>लेआउट में फिट होने के लिए अपने आप एडजस्ट हो जाता है</value>
   </data>
   <data name="SettingsPage3DLyricsDepth.Header" xml:space="preserve">
     <value>गहराई</value>
@@ -838,13 +838,13 @@
     <value>खींचने योग्य क्षेत्र</value>
   </data>
   <data name="SettingsPageEasingMode.Header" xml:space="preserve">
-    <value>Easing Mode</value>
+    <value>आसान मोड</value>
   </data>
   <data name="SettingsPageEasingModeIn.Content" xml:space="preserve">
-    <value>In</value>
+    <value>धीमी प्रविष्टि</value>
   </data>
   <data name="SettingsPageEasingModeInOut.Content" xml:space="preserve">
-    <value>In-Out</value>
+    <value>धीरे अंदर, धीरे बाहर</value>
   </data>
   <data name="SettingsPageEasingModeOut.Content" xml:space="preserve">
     <value>बाहर</value>
@@ -871,10 +871,10 @@
     <value>द्विघात</value>
   </data>
   <data name="SettingsPageEasingTypeEaseQuart.Content" xml:space="preserve">
-    <value>Quartic</value>
+    <value>क्वार्टिक</value>
   </data>
   <data name="SettingsPageEasingTypeEaseQuint.Content" xml:space="preserve">
-    <value>Quintic</value>
+    <value>क्विंटिक</value>
   </data>
   <data name="SettingsPageEasingTypeEaseSine.Content" xml:space="preserve">
     <value>साइन</value>
@@ -1423,7 +1423,7 @@
     <value>शीर्षक</value>
   </data>
   <data name="SettingsPageSpectrumGlowEffect.Header" xml:space="preserve">
-    <value />
+    <value>चमक प्रभाव</value>
   </data>
   <data name="SettingsPageSpectrumLayer.Header" xml:space="preserve">
     <value>[प्रयोगात्मक] स्पेक्ट्रम परत</value>
@@ -1441,7 +1441,7 @@
     <value>ऊपरी</value>
   </data>
   <data name="SettingsPageSpectrumSensitivity.Header" xml:space="preserve">
-    <value />
+    <value>संवेदनशीलता</value>
   </data>
   <data name="SettingsPageSpectrumStyleBar.Content" xml:space="preserve">
     <value>बार</value>
