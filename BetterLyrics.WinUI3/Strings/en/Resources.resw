@@ -1422,6 +1422,9 @@
   <data name="SettingsPageSongTitle.Header" xml:space="preserve">
     <value>Title</value>
   </data>
+  <data name="SettingsPageSpectrumGlowEffect.Header" xml:space="preserve">
+    <value>Glow Effect</value>
+  </data>
   <data name="SettingsPageSpectrumLayer.Header" xml:space="preserve">
     <value>[Experimental] Spectrum Layer</value>
   </data>
@@ -1436,6 +1439,9 @@
   </data>
   <data name="SettingsPageSpectrumPlacementTop.Content" xml:space="preserve">
     <value>Top</value>
+  </data>
+  <data name="SettingsPageSpectrumSensitivity.Header" xml:space="preserve">
+    <value>Sensitivity</value>
   </data>
   <data name="SettingsPageSpectrumStyleBar.Content" xml:space="preserve">
     <value>Bar</value>

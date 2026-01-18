@@ -423,6 +423,7 @@ namespace BetterLyrics.WinUI3.Controls
                     spectrumData: _spectrumAnalyzer?.SmoothSpectrum,
                     barCount: _spectrumAnalyzer?.BarCount ?? 1,
                     isEnabled: lyricsBg.IsSpectrumOverlayEnabled,
+                    isGlowEffectEnabled: lyricsBg.IsSpectrumGlowEffectEnabled,
                     placement: lyricsBg.SpectrumPlacement,
                     style: lyricsBg.SpectrumStyle,
                     canvasWidth: sender.Size.Width,
@@ -586,6 +587,7 @@ namespace BetterLyrics.WinUI3.Controls
             if (lyricsBg.IsSpectrumOverlayEnabled && !_spectrumAnalyzer.IsCapturing)
             {
                 _spectrumAnalyzer.BarCount = lyricsBg.SpectrumCount;
+                _spectrumAnalyzer.Sensitivity = lyricsBg.SpectrumSensitivity;
                 _spectrumAnalyzer.StartCapture();
             }
             else if (!lyricsBg.IsSpectrumOverlayEnabled && _spectrumAnalyzer.IsCapturing)
@@ -819,6 +821,17 @@ namespace BetterLyrics.WinUI3.Controls
                 else if (message.PropertyName == nameof(LyricsEffectSettings.Lyrics3DDepth))
                 {
                     _isLayoutChanged = true;
+                }
+            }
+            else if (message.Sender == LyricsWindowStatus?.LyricsBackgroundSettings)
+            {
+                if (message.PropertyName == nameof(LyricsBackgroundSettings.SpectrumCount))
+                {
+                    _spectrumAnalyzer.BarCount = message.NewValue;
+                }
+                else if (message.PropertyName == nameof(LyricsBackgroundSettings.SpectrumSensitivity))
+                {
+                    _spectrumAnalyzer.Sensitivity = message.NewValue;
                 }
             }
         }
