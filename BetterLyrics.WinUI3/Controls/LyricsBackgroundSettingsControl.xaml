@@ -162,19 +162,32 @@
                             </dev:SettingsCard>
 
                             <dev:SettingsCard x:Uid="SettingsPageAmount" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=OneWay}">
-                                <NumberBox
+                                <uc:ExtendedSlider
+                                    Default="128"
                                     Maximum="1024"
                                     Minimum="1"
-                                    SpinButtonPlacementMode="Inline"
                                     Value="{x:Bind LyricsBackgroundSettings.SpectrumCount, Mode=TwoWay}" />
                             </dev:SettingsCard>
 
                             <dev:SettingsCard x:Uid="SettingsPageSpectrumSensitivity" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=OneWay}">
-                                <NumberBox
+                                <uc:ExtendedSlider
+                                    Default="100"
                                     Maximum="500"
                                     Minimum="50"
-                                    SpinButtonPlacementMode="Inline"
                                     Value="{x:Bind LyricsBackgroundSettings.SpectrumSensitivity, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+
+                            <dev:SettingsCard x:Uid="SettingsPageSpectrumBrethingEffect" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=OneWay}">
+                                <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsSpectrumBrethingEffectEnabled, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+
+                            <dev:SettingsCard x:Uid="SettingsPageSpectrumBreathingIntensity">
+                                <uc:ExtendedSlider
+                                    Default="80"
+                                    Maximum="200"
+                                    Minimum="0"
+                                    Unit="%"
+                                    Value="{x:Bind LyricsBackgroundSettings.SpectrumBreathingIntensity, Mode=TwoWay}" />
                             </dev:SettingsCard>
 
                             <dev:SettingsCard x:Uid="SettingsPageSpectrumGlowEffect" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=OneWay}">

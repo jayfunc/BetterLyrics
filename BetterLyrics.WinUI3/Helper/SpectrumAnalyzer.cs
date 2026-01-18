@@ -29,6 +29,7 @@ namespace BetterLyrics.WinUI3.Helper
         private float[]? _fullSpectrumData; // 存储合并后的数据
         private float[]? _currentSpectrum;
         public float[]? SmoothSpectrum { get; private set; }
+        public float CurrentBassEnergy { get; private set; }
 
         private bool _disposed = false;
 
@@ -198,6 +199,34 @@ namespace BetterLyrics.WinUI3.Helper
                 _fullSpectrumData[halfLen + i] = magR;
             }
 
+            // 低音能量 (Bass Energy)
+            float bassSum = 0f;
+
+            // 我们取低频段。由于你的数组结构是：[高频L ... 低频L][低频R ... 高频R]
+            // 所以低频数据集中在 halfLen (中心点) 的两侧。
+            // 采样率48000 / FFT 2048 ≈ 23Hz 每 bin。
+            // 取 5 个 bin 大概覆盖 20Hz - 140Hz (鼓点和贝斯的核心区)
+            int bassBinCount = 5;
+
+            for (int k = 0; k < bassBinCount; k++)
+            {
+                // 防止数组越界
+                if (halfLen + k < _fullSpectrumData.Length && halfLen - 1 - k >= 0)
+                {
+                    // 获取右声道的低频
+                    bassSum += _fullSpectrumData[halfLen + k];
+                    // 获取左声道的低频
+                    bassSum += _fullSpectrumData[halfLen - 1 - k];
+                }
+            }
+
+            //System.Diagnostics.Debug.WriteLine($"BassSum: {bassSum}");
+
+            // 归一化处理：
+            // 这个除数 (15.0f) 是经验值，如果呼吸感太弱，把这个数改小（比如 8.0f）
+            // 如果呼吸感太强总爆表，把这个数改大
+            CurrentBassEnergy = Math.Clamp(bassSum, 0f, 1f);
+
             // 映射到 BarCount (抽样)
             lock (_lock)
             {
@@ -235,9 +264,19 @@ namespace BetterLyrics.WinUI3.Helper
         private float CalculateCompensationFactor(float freq)
         {
             float[] frequencies = { 20, 50, 100, 200, 500, 1000, 2000, 4000, 8000, 16000, 20000 };
-            // 低频保持，高频线性增加
-            float[] gains = { 1.0f, 1.2f, 1.4f, 1.6f, 2.0f, 2.5f, 3.0f, 4.0f, 5.0f, 6.0f, 7.0f };
-            // 通常低频需要衰减一点，高频需要增益一点，例如 { 0.8f, ... , 2.5f } 这种曲线，否则高频通常看起来很平。
+            float[] gains = {
+                1.0f,  // 20Hz 基频
+                1.1f,  // 50Hz 超低音
+                1.1f,  // 100Hz 鼓点核心
+                1.2f,  // 200Hz 军鼓基频
+                1.4f,  // 500Hz 人声厚度区 
+                1.6f,  // 1k 人声核心区 
+                2.0f,  // 2k 人声齿音   
+                3.5f,  // 4k 乐器临场感
+                6.0f,  // 8k 高频细节
+                10.0f, // 16k 空气感   
+                12.0f  // 20k 极高频     
+            };
 
             if (freq <= frequencies[0]) return gains[0];
             if (freq >= frequencies[frequencies.Length - 1]) return gains[gains.Length - 1];

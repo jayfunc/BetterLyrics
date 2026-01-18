@@ -2,6 +2,8 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml;
 using System;
+using System.Collections.ObjectModel;
+using System.Windows.Documents;
 
 namespace BetterLyrics.WinUI3.Models.Settings
 {
@@ -27,6 +29,8 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int SpectrumCount { get; set; } = 128;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int SpectrumSensitivity { get; set; } = 100;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsSpectrumGlowEffectEnabled { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsSpectrumBrethingEffectEnabled { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int SpectrumBreathingIntensity { get; set; } = 80;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsSnowFlakeOverlayEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int SnowFlakeOverlayAmount { get; set; } = 10;
@@ -59,6 +63,10 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 SpectrumPlacement = this.SpectrumPlacement,
                 SpectrumStyle = this.SpectrumStyle,
                 SpectrumCount = this.SpectrumCount,
+                SpectrumSensitivity = this.SpectrumSensitivity,
+                IsSpectrumGlowEffectEnabled = this.IsSpectrumGlowEffectEnabled,
+                IsSpectrumBrethingEffectEnabled = this.IsSpectrumBrethingEffectEnabled,
+                SpectrumBreathingIntensity = this.SpectrumBreathingIntensity,
 
                 IsSnowFlakeOverlayEnabled = this.IsSnowFlakeOverlayEnabled,
                 SnowFlakeOverlayAmount = this.SnowFlakeOverlayAmount,
