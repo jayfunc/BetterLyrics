@@ -14,6 +14,9 @@
 		<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
 		<AppxDefaultResourceQualifiers>Language=en;ar;de;es;fr;hi;id;ja;ko;ms;pt;ru;th;vi;zh-Hans;zh-Hant|Contrast=standard|Scale=200|HomeRegion=001|TargetSize=256|LayoutDirection=LTR|DXFeatureLevel=DX9|Configuration=|AlternateForm=</AppxDefaultResourceQualifiers>
 	</PropertyGroup>
+	<PropertyGroup>
+		<DefineConstants>$(DefineConstants);DISABLE_XAML_GENERATED_MAIN</DefineConstants>
+	</PropertyGroup>
 	<ItemGroup>
 		<Compile Remove="TemplateSelector\**" />
 		<Compile Remove="ViewModels\Lyrics\**" />
@@ -201,7 +204,7 @@
 	<ItemGroup>
 		<TrimmerRootDescriptor Include="PluginConfigs\**\*_TrimmerRoots.xml" />
 		<AppxManifest Include="Package.appxmanifest">
-		  <SubType>Designer</SubType>
+			<SubType>Designer</SubType>
 		</AppxManifest>
 		<TrimmerRootDescriptor Include="Core_TrimmerRoots.xml" />
 	</ItemGroup>
@@ -325,7 +328,7 @@
 			<Generator>MSBuild:Compile</Generator>
 		</Page>
 		<Page Update="Styles\Converters.xaml">
-		  <SubType>Designer</SubType>
+			<SubType>Designer</SubType>
 		</Page>
 	</ItemGroup>
 	<ItemGroup>
@@ -494,32 +497,32 @@
 		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Folder Include="PluginConfigs\" />
+		<Folder Include="PluginConfigs\" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Content Update="Assets\Logo.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
+		<Content Update="Assets\Logo.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 	<ItemGroup>
-	  <Content Update="Assets\Logo.ico">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
+		<Content Update="Assets\Logo.ico">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 	<ItemGroup>
-	  <Content Update="Assets\LogoPlugin.png">
-	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-	  </Content>
+		<Content Update="Assets\LogoPlugin.png">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\InfoTag.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\InfoTag.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
-	  <Page Update="Controls\PluginItemControl.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
+		<Page Update="Controls\PluginItemControl.xaml">
+			<Generator>MSBuild:Compile</Generator>
+		</Page>
 	</ItemGroup>
 	<!-- Publish Properties -->
 	<PropertyGroup>

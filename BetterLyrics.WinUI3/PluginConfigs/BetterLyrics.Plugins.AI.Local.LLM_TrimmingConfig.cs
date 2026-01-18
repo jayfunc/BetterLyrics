@@ -247,7 +247,7 @@ internal static class BetterLyrics_Plugins_AI_Local_LLM_Config
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.InlineArrayAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.InternalsVisibleToAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.IsByRefLikeAttribute))]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.IsExternalInit))]
+    //[DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.IsExternalInit))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.IsReadOnlyAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.IsUnmanagedAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.IteratorStateMachineAttribute))]
