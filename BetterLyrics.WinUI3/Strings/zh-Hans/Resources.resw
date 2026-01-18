@@ -1111,7 +1111,7 @@
     <value>字重</value>
   </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
-    <value>发光效果</value>
+    <value>辉光效果</value>
   </data>
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
     <value>细体</value>
@@ -1422,6 +1422,9 @@
   <data name="SettingsPageSongTitle.Header" xml:space="preserve">
     <value>标题</value>
   </data>
+  <data name="SettingsPageSpectrumGlowEffect.Header" xml:space="preserve">
+    <value>辉光效果</value>
+  </data>
   <data name="SettingsPageSpectrumLayer.Header" xml:space="preserve">
     <value>[实验性] 频谱层</value>
   </data>
@@ -1436,6 +1439,9 @@
   </data>
   <data name="SettingsPageSpectrumPlacementTop.Content" xml:space="preserve">
     <value>顶部</value>
+  </data>
+  <data name="SettingsPageSpectrumSensitivity.Header" xml:space="preserve">
+    <value>灵敏度</value>
   </data>
   <data name="SettingsPageSpectrumStyleBar.Content" xml:space="preserve">
     <value>柱形</value>

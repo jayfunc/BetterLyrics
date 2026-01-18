@@ -1,6 +1,7 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
+using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.UI;
 using System;
@@ -19,6 +20,7 @@ namespace BetterLyrics.WinUI3.Renderer
             float[]? spectrumData,
             int barCount,
             bool isEnabled,
+            bool isGlowEffectEnabled,
             SpectrumPlacement placement,
             SpectrumStyle style,
             double canvasWidth,
@@ -35,7 +37,7 @@ namespace BetterLyrics.WinUI3.Renderer
 
             if (_spectrumGeometry != null)
             {
-                DrawGeometry(ds, _spectrumGeometry, fillColor, placement, canvasHeight);
+                DrawGeometry(ds, _spectrumGeometry, fillColor, isGlowEffectEnabled, placement, canvasHeight);
             }
         }
 
@@ -48,23 +50,22 @@ namespace BetterLyrics.WinUI3.Renderer
             double width,
             double height)
         {
-            if (barCount < 2) return null;
+            if (barCount < 2 || data == null || data.Length == 0) return null;
 
-            float maxDataVal = 0;
+            // 假设 Analyzer 的 Sensitivity 已经调整得当。
+            // 如果觉得波形太小，请增大 Analyzer 的 Sensitivity，或者在这里增加一个固定的放大倍率。
 
-            int checkCount = Math.Min(barCount, data.Length);
-            for (int i = 0; i < checkCount; i++)
-            {
-                if (data[i] > maxDataVal) maxDataVal = data[i];
-            }
+            // 这里的 1.0f 是一个基准，你可以根据实际显示效果调整这个值。
+            // 如果你的 Analyzer 输出值在 0~100 之间，而 Height 是 200，那么这里可以是 2.0f。
+            // 结合你之前的 SpectrumAnalyzer 代码 (Sensitivity默认100, 乘积后数值很大)，
+            // 建议在这里进行缩放以适应 View 的高度。
 
-            float limitY = (float)height * 0.2f; // 高度限制为总高度的 20%
-            float scaleRatio = 1.0f;
+            // 如果你想让最大高度限制在 Canvas 高度内，可以使用 Math.Min 截断，而不是整体缩放。
+            float viewHeight = (float)height;
 
-            if (maxDataVal > limitY)
-            {
-                scaleRatio = limitY / maxDataVal;
-            }
+            // 假设：我们希望 Analyzer 输出的 10000.0f 对应高度 100px (举例)
+            // 建议调试法：先给一个固定的缩放，比如 0.1f 或 0.5f，运行看效果，再调整。
+            float fixedScaleFactor = 0.05f * viewHeight;
 
             using var pathBuilder = new CanvasPathBuilder(creator);
 
@@ -72,16 +73,29 @@ namespace BetterLyrics.WinUI3.Renderer
             {
                 float totalStep = (float)width / barCount;
                 float gap = 2.0f;
+                // 防止条形太细导致消失
                 float barWidth = totalStep - gap;
-                if (barWidth < 1.0f) { barWidth = totalStep; gap = 0f; }
+                if (barWidth < 1.0f)
+                {
+                    barWidth = totalStep;
+                    gap = 0f;
+                }
+                // 如果 barWidth 很小，x 坐标微调
+                float halfGap = gap / 2.0f;
 
                 for (int i = 0; i < barCount; i++)
                 {
                     float rawVal = i < data.Length ? data[i] : 0;
-                    float barHeight = rawVal * scaleRatio;
-                    if (barHeight < 0.5f) continue;
 
-                    float x = i * totalStep;
+                    float barHeight = rawVal * fixedScaleFactor;
+
+                    // 限制最大高度不超过画布，防止画出去
+                    if (barHeight > viewHeight) barHeight = viewHeight;
+
+                    // 忽略极小值，减少绘制开销
+                    if (barHeight < 1.0f) continue;
+
+                    float x = i * totalStep + halfGap;
                     float topY, bottomY;
 
                     if (placement == SpectrumPlacement.Top)
@@ -91,11 +105,10 @@ namespace BetterLyrics.WinUI3.Renderer
                     }
                     else // Bottom
                     {
-                        topY = (float)height - barHeight;
-                        bottomY = (float)height;
+                        topY = viewHeight - barHeight;
+                        bottomY = viewHeight;
                     }
 
-                    // 绘制独立矩形
                     pathBuilder.BeginFigure(new Vector2(x, topY));
                     pathBuilder.AddLine(new Vector2(x + barWidth, topY));
                     pathBuilder.AddLine(new Vector2(x + barWidth, bottomY));
@@ -103,21 +116,26 @@ namespace BetterLyrics.WinUI3.Renderer
                     pathBuilder.EndFigure(CanvasFigureLoop.Closed);
                 }
             }
-            else
+            else // Curve
             {
-                var points = new Vector2[barCount];
+                Span<Vector2> points = barCount <= 512
+                    ? stackalloc Vector2[barCount]
+                    : new Vector2[barCount];
+
                 float pointSpacing = (float)width / (barCount - 1);
 
                 for (int i = 0; i < barCount; i++)
                 {
                     float rawVal = i < data.Length ? data[i] : 0;
-                    float y = rawVal * scaleRatio;
+                    float yVal = rawVal * fixedScaleFactor;
 
-                    // 处理翻转
-                    if (placement == SpectrumPlacement.Bottom)
-                    {
-                        y = (float)height - y;
-                    }
+                    // Clamp
+                    if (yVal > viewHeight) yVal = viewHeight;
+
+                    // 处理 Y 轴翻转
+                    float y = (placement == SpectrumPlacement.Bottom)
+                        ? viewHeight - yVal
+                        : yVal;
 
                     points[i] = new Vector2(i * pointSpacing, y);
                 }
@@ -127,18 +145,21 @@ namespace BetterLyrics.WinUI3.Renderer
 
                 for (int i = 0; i < barCount - 1; i++)
                 {
-                    Vector2 p0 = points[Math.Max(i - 1, 0)];
+                    // Catmull-Rom 样条插值转贝塞尔控制点逻辑
+                    // 边界检查优化
+                    Vector2 p0 = points[i > 0 ? i - 1 : 0];
                     Vector2 p1 = points[i];
                     Vector2 p2 = points[i + 1];
-                    Vector2 p3 = points[Math.Min(i + 2, barCount - 1)];
+                    Vector2 p3 = points[i + 2 < barCount ? i + 2 : barCount - 1];
 
-                    Vector2 cp1 = p1 + (p2 - p0) / 6.0f;
-                    Vector2 cp2 = p2 - (p3 - p1) / 6.0f;
+                    // 简单的张力系数 (Tension)，0.16f (即 1/6) 是标准 Catmull-Rom
+                    Vector2 cp1 = p1 + (p2 - p0) * 0.1666f;
+                    Vector2 cp2 = p2 - (p3 - p1) * 0.1666f;
 
                     pathBuilder.AddCubicBezier(cp1, cp2, p2);
                 }
 
-                // 封口
+                // 封口：连接底部/顶部直线以形成封闭区域用于填充
                 if (placement == SpectrumPlacement.Top)
                 {
                     pathBuilder.AddLine(new Vector2(points[barCount - 1].X, 0));
@@ -146,8 +167,8 @@ namespace BetterLyrics.WinUI3.Renderer
                 }
                 else
                 {
-                    pathBuilder.AddLine(new Vector2(points[barCount - 1].X, (float)height));
-                    pathBuilder.AddLine(new Vector2(points[0].X, (float)height));
+                    pathBuilder.AddLine(new Vector2(points[barCount - 1].X, viewHeight));
+                    pathBuilder.AddLine(new Vector2(points[0].X, viewHeight));
                 }
 
                 pathBuilder.EndFigure(CanvasFigureLoop.Closed);
@@ -160,13 +181,42 @@ namespace BetterLyrics.WinUI3.Renderer
             CanvasDrawingSession ds,
             CanvasGeometry geometry,
             Color color,
+            bool isGlowEffectEnabled,
             SpectrumPlacement placement,
             double height)
         {
+            if (isGlowEffectEnabled)
+            {
+                // 辉光层
+                using var commandList = new CanvasCommandList(ds);
+                using (var clds = commandList.CreateDrawingSession())
+                {
+                    clds.FillGeometry(geometry, color);
+                }
+
+                using var blurEffect = new GaussianBlurEffect
+                {
+                    Source = commandList,
+                    BlurAmount = 16.0f,
+                    BorderMode = EffectBorderMode.Soft
+                };
+
+                // 向外发射辉光
+                float glowOffsetY = placement == SpectrumPlacement.Bottom ? -4.0f : 4.0f;
+
+                using (var layer = ds.CreateLayer(1.0f))
+                {
+                    // 让颜色叠加变亮
+                    ds.Blend = CanvasBlend.Add;
+                    ds.DrawImage(blurEffect, 0, glowOffsetY);
+                    ds.Blend = CanvasBlend.SourceOver; // 还原混合模式
+                }
+            }
+
             var stops = new CanvasGradientStop[]
             {
                 new() { Position = 0.0f, Color = Colors.Transparent },
-                new() { Position = 0.7f, Color = Colors.Transparent },
+                new() { Position = 0.7f, Color = Color.FromArgb(76, color.R, color.G, color.B) },
                 new() { Position = 1.0f, Color = color }
             };
 
@@ -184,6 +234,9 @@ namespace BetterLyrics.WinUI3.Renderer
             }
 
             ds.FillGeometry(geometry, brush);
+
+            // (可选) 绘制一条高亮的描边，增强轮廓感，让波峰更清晰
+            //ds.DrawGeometry(geometry, Colors.White, 1.0f);
         }
 
         public void Dispose()

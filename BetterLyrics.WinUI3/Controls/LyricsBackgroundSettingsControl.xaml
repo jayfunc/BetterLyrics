@@ -162,14 +162,27 @@
                             </dev:SettingsCard>
 
                             <dev:SettingsCard x:Uid="SettingsPageAmount" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=OneWay}">
-                                <uc:ExtendedSlider
-                                    Default="128"
+                                <NumberBox
                                     Maximum="1024"
                                     Minimum="1"
+                                    SpinButtonPlacementMode="Inline"
                                     Value="{x:Bind LyricsBackgroundSettings.SpectrumCount, Mode=TwoWay}" />
                             </dev:SettingsCard>
 
+                            <dev:SettingsCard x:Uid="SettingsPageSpectrumSensitivity" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=OneWay}">
+                                <NumberBox
+                                    Maximum="500"
+                                    Minimum="50"
+                                    SpinButtonPlacementMode="Inline"
+                                    Value="{x:Bind LyricsBackgroundSettings.SpectrumSensitivity, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+
+                            <dev:SettingsCard x:Uid="SettingsPageSpectrumGlowEffect" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=OneWay}">
+                                <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsSpectrumGlowEffectEnabled, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+
                         </dev:SettingsExpander.Items>
+
                     </dev:SettingsExpander>
 
                 </StackPanel>

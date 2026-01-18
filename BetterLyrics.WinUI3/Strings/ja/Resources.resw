@@ -1422,6 +1422,9 @@
   <data name="SettingsPageSongTitle.Header" xml:space="preserve">
     <value>タイトル</value>
   </data>
+  <data name="SettingsPageSpectrumGlowEffect.Header" xml:space="preserve">
+    <value />
+  </data>
   <data name="SettingsPageSpectrumLayer.Header" xml:space="preserve">
     <value>[実験的] スペクトラムレイヤー</value>
   </data>
@@ -1436,6 +1439,9 @@
   </data>
   <data name="SettingsPageSpectrumPlacementTop.Content" xml:space="preserve">
     <value>上へ</value>
+  </data>
+  <data name="SettingsPageSpectrumSensitivity.Header" xml:space="preserve">
+    <value />
   </data>
   <data name="SettingsPageSpectrumStyleBar.Content" xml:space="preserve">
     <value>バー</value>
