@@ -32,8 +32,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
-using Windows.System;
-using WinRT;
 
 namespace BetterLyrics.WinUI3
 {
@@ -103,7 +101,7 @@ namespace BetterLyrics.WinUI3
 
         private async Task HandleProtocolActivationAsync(AppActivationArguments args)
         {
-            var protocolArgs = args.Data.As<IProtocolActivatedEventArgs>();
+            var protocolArgs = args.Data as IProtocolActivatedEventArgs;
             if (protocolArgs != null)
             if (protocolArgs.Uri.Host == "link.last.fm")
             {
@@ -197,16 +195,17 @@ namespace BetterLyrics.WinUI3
 
         private void OnMainInstanceActivated(object? sender, AppActivationArguments e)
         {
+            if (e.Kind == ExtendedActivationKind.Protocol)
+            {
+                _ = HandleProtocolActivationAsync(e);
+                return;
+            }
             m_window?.DispatcherQueue.TryEnqueue(async () =>
             {
                 if (e.Kind == ExtendedActivationKind.File)
                 {
                     // 复用上面的文件处理逻辑
                     await HandleFileActivationAsync(e);
-                }
-                else if (e.Kind == ExtendedActivationKind.Protocol)
-                {
-                    _ = HandleProtocolActivationAsync(e);
                 }
                 else
                 {
