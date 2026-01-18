@@ -40,24 +40,11 @@ namespace BetterLyrics.WinUI3
         private Window? m_window;
         private readonly ILogger<App> _logger;
         public static new App Current => (App)Application.Current;
-
-        private readonly string _appKey = Windows.ApplicationModel.Package.Current.Id.FamilyName;
+        public static Window MainWindow { get; private set; }
 
         public App()
         {
-            // Must be done before InitializeComponent
-            if (!TryHandleSingleInstance())
-            {
-                // 如果移交成功直接退出当前进程
-                Environment.Exit(0);
-                return;
-            }
-
             this.InitializeComponent();
-
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-            PathHelper.EnsureDirectories();
-            ConfigureServices();
 
             _logger = Ioc.Default.GetRequiredService<ILogger<App>>();
 
@@ -67,47 +54,11 @@ namespace BetterLyrics.WinUI3
             AppDomain.CurrentDomain.FirstChanceException += CurrentDomain_FirstChanceException;
             TaskScheduler.UnobservedTaskException += TaskScheduler_UnobservedTaskException;
         }
+
         protected override async void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             await InitAppServicesAsync();
-
-            AppActivationArguments appArgs = AppInstance.GetCurrent().GetActivatedEventArgs();
-            if (appArgs.Kind == ExtendedActivationKind.File)
-            {
-                await HandleFileActivationAsync(appArgs);
-            }
-            else
-            {
-                HandleNormalLaunch();
-            }
-        }
-
-        private async Task HandleFileActivationAsync(AppActivationArguments args)
-        {
-            if (args.Data is IFileActivatedEventArgs fileArgs)
-            {
-                var item = fileArgs.Files.FirstOrDefault();
-                if (item is StorageFile file)
-                {
-                    _logger.LogInformation("App activated via file: {Path}", file.Path);
-
-                    WindowHook.OpenOrShowWindow<SettingsWindow>();
-
-                    var pluginManagerControlViewModel = Ioc.Default.GetRequiredService<PluginManagerControlViewModel>();
-                    await pluginManagerControlViewModel.InstallPluginByFileAsync(file);
-                }
-            }
-        }
-
-        private async Task HandleProtocolActivationAsync(AppActivationArguments args)
-        {
-            var protocolArgs = args.Data as IProtocolActivatedEventArgs;
-            if (protocolArgs != null)
-            if (protocolArgs.Uri.Host == "link.last.fm")
-            {
-                var lastFMService = Ioc.Default.GetRequiredService<ILastFMService>();
-                await lastFMService.ConfirmAuth(protocolArgs.Uri.Query.Replace("?token=", string.Empty));
-            }
+            HandleNormalLaunch();
         }
 
         private void HandleNormalLaunch()
@@ -116,6 +67,7 @@ namespace BetterLyrics.WinUI3
 
             // 初始化系统托盘
             m_window = WindowHook.OpenOrShowWindow<SystemTrayWindow>();
+            MainWindow = m_window;
 
             // 自动打开歌词窗口逻辑
             if (settingsService.AppSettings.GeneralSettings.AutoStartLyricsWindow)
@@ -172,49 +124,6 @@ namespace BetterLyrics.WinUI3
             pluginService.LoadPluginsAsync();
         }
 
-        private bool TryHandleSingleInstance()
-        {
-            var mainInstance = AppInstance.FindOrRegisterForKey(_appKey);
-            if (mainInstance.IsCurrent)
-            {
-                mainInstance.Activated += OnMainInstanceActivated;
-                return true;
-            }
-            else
-            {
-                var args = AppInstance.GetCurrent().GetActivatedEventArgs();
-                try
-                {
-                    // 将激活参数（包括文件信息）发送给主实例
-                    mainInstance.RedirectActivationToAsync(args).AsTask().Wait();
-                }
-                catch (Exception) { }
-                return false;
-            }
-        }
-
-        private void OnMainInstanceActivated(object? sender, AppActivationArguments e)
-        {
-            if (e.Kind == ExtendedActivationKind.Protocol)
-            {
-                _ = HandleProtocolActivationAsync(e);
-                return;
-            }
-            m_window?.DispatcherQueue.TryEnqueue(async () =>
-            {
-                if (e.Kind == ExtendedActivationKind.File)
-                {
-                    // 复用上面的文件处理逻辑
-                    await HandleFileActivationAsync(e);
-                }
-                else
-                {
-                    // 普通启动则打开窗口切换器
-                    WindowHook.OpenOrShowWindow<LyricsWindowSwitchWindow>();
-                }
-            });
-        }
-
         private async Task InitDatabasesAsync()
         {
             // Init databases
@@ -242,72 +151,6 @@ namespace BetterLyrics.WinUI3
             {
                 await lyricsCacheDb.Database.EnsureCreatedAsync();
             }
-        }
-
-        private static void ConfigureServices()
-        {
-            Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Is(Serilog.Events.LogEventLevel.Verbose)
-                .MinimumLevel.Override("Microsoft.EntityFrameworkCore", Serilog.Events.LogEventLevel.Error)
-                .WriteTo.File(PathHelper.LogFilePattern, rollingInterval: RollingInterval.Day)
-                .CreateLogger();
-
-            Ioc.Default.ConfigureServices(
-                new ServiceCollection()
-                    // 数据库工厂
-                    .AddDbContextFactory<PlayHistoryDbContext>(options => options.UseSqlite($"Data Source={PathHelper.PlayHistoryPath}"))
-                    .AddDbContextFactory<FilesIndexDbContext>(options => options.UseSqlite($"Data Source={PathHelper.FilesIndexPath}"))
-                    .AddDbContextFactory<LyricsCacheDbContext>(options => options.UseSqlite($"Data Source={PathHelper.LyricsCachePath}"))
-                    .AddDbContextFactory<SongSearchMapDbContext>(options => options.UseSqlite($"Data Source={PathHelper.SongSearchMapPath}"))
-
-                    // 日志
-                    .AddLogging(loggingBuilder =>
-                    {
-                        loggingBuilder.ClearProviders();
-                        loggingBuilder.AddSerilog();
-                    })
-
-                    // Services
-                    .AddSingleton<ISettingsService, SettingsService>()
-                    .AddSingleton<ISMTCService, SMTCService>()
-                    .AddSingleton<IGSMTCService, GSMTCService>()
-                    .AddSingleton<IAlbumArtSearchService, AlbumArtSearchService>()
-                    .AddSingleton<ILyricsSearchService, LyricsSearchService>()
-                    .AddSingleton<ITranslationService, TranslationService>()
-                    .AddSingleton<ITransliterationService, TransliterationService>()
-                    .AddSingleton<ILastFMService, LastFMService>()
-                    .AddSingleton<IDiscordService, DiscordService>()
-                    .AddSingleton<ILocalizationService, LocalizationService>()
-                    .AddSingleton<IFileSystemService, FileSystemService>()
-                    .AddSingleton<IPlayHistoryService, PlayHistoryService>()
-                    .AddSingleton<ILyricsCacheService, LyricsCacheService>()
-                    .AddSingleton<ISongSearchMapService, SongSearchMapService>()
-                    .AddSingleton<IPluginService, PluginService>()
-
-                    // ViewModels
-                    .AddSingleton<AppSettingsControlViewModel>()
-                    .AddSingleton<PlaybackSettingsControlViewModel>()
-                    .AddSingleton<MediaSettingsControlViewModel>()
-                    .AddSingleton<LyricsSearchControlViewModel>()
-                    .AddSingleton<LyricsWindowSettingsControlViewModel>()
-                    .AddSingleton<LyricsWindowSwitchControlViewModel>()
-                    .AddSingleton<LyricsWindowSwitchWindowViewModel>()
-                    .AddSingleton<SettingsWindowViewModel>()
-                    .AddSingleton<SystemTrayViewModel>()
-                    .AddSingleton<SettingsPageViewModel>()
-                    .AddSingleton<MusicGalleryPageViewModel>()
-                    .AddSingleton<AboutControlViewModel>()
-                    .AddSingleton<MusicGalleryWindowViewModel>()
-                    .AddSingleton<StatsDashboardControlViewModel>()
-                    .AddSingleton<PlayQueueViewModel>()
-                    .AddSingleton<PluginManagerControlViewModel>()
-
-                    .AddTransient<NowPlayingWindowViewModel>()
-                    .AddTransient<NowPlayingPageViewModel>()
-                    .AddTransient<NowPlayingBarViewModel>()
-
-                    .BuildServiceProvider()
-            );
         }
 
         private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)

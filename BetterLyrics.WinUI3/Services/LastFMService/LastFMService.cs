@@ -45,7 +45,8 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
             var resp = await _client.RequestAsync(LastFMApi.GetSessionApi, new GetSessionRequest() { Token = param });
             if (resp.IsSuccess)
             {
-                PasswordVaultHelper.Save(Constants.App.AppName, Constants.LastFM.SessionKeyCredentialKey, resp.Response!.Session!.Key);
+                _sessionKey = resp.Response!.Session!.Key;
+                PasswordVaultHelper.Save(Constants.App.AppName, Constants.LastFM.SessionKeyCredentialKey, _sessionKey);
                 await UpdateAuthStatusAsync();
             }
             else
@@ -101,7 +102,7 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
             {
                 var resp = await _client.RequestAsync(LastFMApi.GetUserInfoApi, new GetUserInfoRequest() { User = null }, _sessionKey);
                 User = resp.Response?.User;
-                if(!resp.IsSuccess) ToastHelper.ShowToast("LastFMGetUserFailed", resp.Error?.Message, InfoBarSeverity.Error);
+                //if(!resp.IsSuccess) ToastHelper.ShowToast("LastFMGetUserFailed", resp.Error?.Message, InfoBarSeverity.Error);
             }
             else
             {

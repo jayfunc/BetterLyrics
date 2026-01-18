@@ -143,6 +143,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
                 castedWindow.Restore();
                 castedWindow.Activate();
+                castedWindow.AppWindow.MoveInZOrderAtTop();
 
                 if (typeof(T) == typeof(SystemTrayWindow))
                 {
