@@ -2,7 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Windows.Markup;
-using System.Windows.Media;
+//using System.Windows.Media;
 
 namespace BetterLyrics.WinUI3.Helper
 {
@@ -15,19 +15,19 @@ namespace BetterLyrics.WinUI3.Helper
                 langCode = CultureInfo.CurrentCulture.Name;
             }
 
-            foreach (var font in Fonts.SystemFontFamilies)
-            {
-                if (font.FamilyNames.TryGetValue(XmlLanguage.GetLanguage("en-us"), out string englishFamilyName) && englishFamilyName == sourceName)
-                {
-                    if (font.FamilyNames.ContainsKey(XmlLanguage.GetLanguage(langCode)))
-                    {
-                        if (font.FamilyNames.TryGetValue(XmlLanguage.GetLanguage(langCode), out string localizedFamilyName))
-                        {
-                            return localizedFamilyName;
-                        }
-                    }
-                }
-            }
+            //foreach (var font in Fonts.SystemFontFamilies)
+            //{
+            //    if (font.FamilyNames.TryGetValue(XmlLanguage.GetLanguage("en-us"), out string englishFamilyName) && englishFamilyName == sourceName)
+            //    {
+            //        if (font.FamilyNames.ContainsKey(XmlLanguage.GetLanguage(langCode)))
+            //        {
+            //            if (font.FamilyNames.TryGetValue(XmlLanguage.GetLanguage(langCode), out string localizedFamilyName))
+            //            {
+            //                return localizedFamilyName;
+            //            }
+            //        }
+            //    }
+            //}
 
             return sourceName;
         }
@@ -36,13 +36,13 @@ namespace BetterLyrics.WinUI3.Helper
         {
             List<string> fontFamilies = new();
 
-            foreach (var font in Fonts.SystemFontFamilies)
-            {
-                if (font.FamilyNames.TryGetValue(XmlLanguage.GetLanguage("en-us"), out string englishFamilyName))
-                {
-                    fontFamilies.Add(englishFamilyName);
-                }
-            }
+            //foreach (var font in Fonts.SystemFontFamilies)
+            //{
+            //    if (font.FamilyNames.TryGetValue(XmlLanguage.GetLanguage("en-us"), out string englishFamilyName))
+            //    {
+            //        fontFamilies.Add(englishFamilyName);
+            //    }
+            //}
 
             return fontFamilies.Order().ToList();
         }

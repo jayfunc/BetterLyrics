@@ -375,6 +375,24 @@ namespace BetterLyrics.WinUI3.Controls
 
             _fluidRenderer.Draw(sender, args.DrawingSession);
 
+            if (_spectrumAnalyzer.IsCapturing)
+            {
+                _spectrumRenderer.Draw(
+                    resourceCreator: sender,
+                    ds: args.DrawingSession,
+                    spectrumData: _spectrumAnalyzer?.SmoothSpectrum,
+                    barCount: _spectrumAnalyzer?.BarCount ?? 1,
+                    isEnabled: lyricsBg.IsSpectrumOverlayEnabled,
+                    isGlowEffectEnabled: lyricsBg.IsSpectrumGlowEffectEnabled,
+                    isBreathingEffectEnabled: lyricsBg.IsSpectrumBrethingEffectEnabled,
+                    placement: lyricsBg.SpectrumPlacement,
+                    style: lyricsBg.SpectrumStyle,
+                    canvasWidth: sender.Size.Width,
+                    canvasHeight: sender.Size.Height,
+                    fillColor: _albumArtThemeColors.BgFontColor
+                );
+            }
+
             _snowRenderer.Draw(sender, args.DrawingSession);
 
             _fogRenderer.Draw(sender, args.DrawingSession);
@@ -415,24 +433,6 @@ namespace BetterLyrics.WinUI3.Controls
                     );
                 }
             );
-
-            if (_spectrumAnalyzer.IsCapturing)
-            {
-                _spectrumRenderer.Draw(
-                    resourceCreator: sender,
-                    ds: args.DrawingSession,
-                    spectrumData: _spectrumAnalyzer?.SmoothSpectrum,
-                    barCount: _spectrumAnalyzer?.BarCount ?? 1,
-                    isEnabled: lyricsBg.IsSpectrumOverlayEnabled,
-                    isGlowEffectEnabled: lyricsBg.IsSpectrumGlowEffectEnabled,
-                    isBreathingEffectEnabled: lyricsBg.IsSpectrumBrethingEffectEnabled,
-                    placement: lyricsBg.SpectrumPlacement,
-                    style: lyricsBg.SpectrumStyle,
-                    canvasWidth: sender.Size.Width,
-                    canvasHeight: sender.Size.Height,
-                    fillColor: _albumArtThemeColors.BgFontColor
-                );
-            }
 
 #if DEBUG && false
             args.DrawingSession.DrawText(
