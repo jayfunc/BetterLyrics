@@ -5,9 +5,10 @@
   
   <h1>BetterLyrics</h1>
 
+  <h3>Strums the Heartstrings, Graces the Wordscapes</h4>
+
   <h4>
-    🤩 An elegant and deeply customizable lyrics visualizer & versatile music player <br>
-    Built with WinUI3 / Win2D
+    An elegant and deeply customizable lyrics visualizer & versatile music player<br>Built with WinUI3 / Win2D
   </h4>
 
   <div>
@@ -15,11 +16,9 @@
     <img src="https://img.shields.io/badge/Framework-WinUI%203-blue" alt="WinUI 3">
     <img src="https://img.shields.io/badge/License-GPL_v3.0-blue" alt="License">
     <a href="https://github.com/jayfunc/BetterLyrics/stargazers"><img src="https://img.shields.io/github/stars/jayfunc/BetterLyrics" alt="Stars"></a>
-  </div>
-
-  <div>
     <a href="https://crowdin.com/project/betterlyrics"><img src="https://badges.crowdin.net/betterlyrics/localized.svg" alt="Crowdin"></a>
-    <a href="https://betterlyrics.github.io"><img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/BetterLyrics/BetterLyrics.github.io/pages%2Fpages-build-deployment?label=Website%20Deployment"></a>
+    <a href="https://betterlyrics.github.io"><img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/BetterLyrics/BetterLyrics.github.io/pages%2Fpages-build-deployment?label=Official%20Website"></a>
+    <img src="https://img.shields.io/github/downloads/jayfunc/BetterLyrics/total?label=Downloads">
   </div>
 
   <br>
