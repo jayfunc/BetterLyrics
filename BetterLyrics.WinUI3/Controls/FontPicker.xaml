@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.FontPicker"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:BetterLyrics.WinUI3.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:BetterLyrics.WinUI3.Models"
+    mc:Ignorable="d">
+
+    <Grid>
+        <Button
+            x:Name="TriggerButton"
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Left"
+            Click="TriggerButton_Click">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <StackPanel VerticalAlignment="Center" Orientation="Vertical">
+                    <TextBlock
+                        x:Name="SelectedLocalizedText"
+                        Text="N/A"
+                        TextAlignment="Center" />
+                    <TextBlock
+                        x:Name="SelectedRawText"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        Text="N/A"
+                        TextAlignment="Center" />
+                </StackPanel>
+
+                <FontIcon
+                    Grid.Column="1"
+                    Margin="10,0,0,0"
+                    FontFamily="{StaticResource IconFontFamily}"
+                    FontSize="12"
+                    Glyph="&#xE70D;"
+                    Opacity="0.6" />
+            </Grid>
+        </Button>
+    </Grid>
+</UserControl>

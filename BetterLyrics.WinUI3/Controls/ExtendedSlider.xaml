@@ -79,7 +79,7 @@
 
                             <TextBlock
                                 VerticalAlignment="Center"
-                                Opacity="0.6"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Text="{x:Bind Unit, Mode=OneWay}" />
                         </StackPanel>
                     </Border>

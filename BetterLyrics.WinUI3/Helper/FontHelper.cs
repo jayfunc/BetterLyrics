@@ -1,50 +1,102 @@
-﻿using System.Collections.Generic;
+﻿using BetterLyrics.WinUI3.Models;
+using Microsoft.Graphics.Canvas.Text;
+using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Windows.Markup;
-//using System.Windows.Media;
+using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Helper
 {
     public static class FontHelper
     {
-        public static string GetLocalizedFontFamilyName(string sourceName, string langCode)
+        private static List<ExtendedFontFamily>? _fontCache;
+
+        public static async Task<List<ExtendedFontFamily>> GetSystemFontFamiliesAsync()
         {
-            if (langCode == "")
+            if (_fontCache != null)
             {
-                langCode = CultureInfo.CurrentCulture.Name;
+                return _fontCache;
             }
 
-            //foreach (var font in Fonts.SystemFontFamilies)
-            //{
-            //    if (font.FamilyNames.TryGetValue(XmlLanguage.GetLanguage("en-us"), out string englishFamilyName) && englishFamilyName == sourceName)
-            //    {
-            //        if (font.FamilyNames.ContainsKey(XmlLanguage.GetLanguage(langCode)))
-            //        {
-            //            if (font.FamilyNames.TryGetValue(XmlLanguage.GetLanguage(langCode), out string localizedFamilyName))
-            //            {
-            //                return localizedFamilyName;
-            //            }
-            //        }
-            //    }
-            //}
+            _fontCache = await Task.Run(() => LoadFontsInternal());
 
-            return sourceName;
+            return _fontCache;
         }
 
-        public static List<string> GetSystemFontFamilies()
+        private static List<ExtendedFontFamily> LoadFontsInternal()
         {
-            List<string> fontFamilies = new();
+            var fontList = new List<ExtendedFontFamily>();
+            var addedFamilyNames = new HashSet<string>();
 
-            //foreach (var font in Fonts.SystemFontFamilies)
-            //{
-            //    if (font.FamilyNames.TryGetValue(XmlLanguage.GetLanguage("en-us"), out string englishFamilyName))
-            //    {
-            //        fontFamilies.Add(englishFamilyName);
-            //    }
-            //}
+            var systemFontSet = CanvasFontSet.GetSystemFontSet();
 
-            return fontFamilies.Order().ToList();
+            string userLangPrefix = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName.ToLower();
+
+            foreach (var font in systemFontSet.Fonts)
+            {
+                string? familyNameID = "";
+
+                if (!font.FamilyNames.TryGetValue("en-us", out familyNameID))
+                {
+                    familyNameID = font.FamilyNames.FirstOrDefault().Value;
+                }
+
+                if (string.IsNullOrEmpty(familyNameID) || addedFamilyNames.Contains(familyNameID))
+                    continue;
+
+                string displayName = "";
+
+                var localizedStrings = font.GetInformationalStrings(CanvasFontInformation.PreferredFamilyNames);
+
+                if (localizedStrings == null || localizedStrings.Count == 0)
+                {
+                    localizedStrings = font.FamilyNames;
+                }
+
+                displayName = FindBestUpdatedMatch(localizedStrings, userLangPrefix);
+
+                if (!string.IsNullOrEmpty(displayName))
+                {
+                    fontList.Add(new ExtendedFontFamily
+                    {
+                        LocalizedFontFamily = displayName,
+                        FontFamily = familyNameID
+                    });
+
+                    addedFamilyNames.Add(familyNameID);
+                }
+            }
+
+            return fontList.OrderBy(f => f.LocalizedFontFamily).ToList();
+        }
+
+        private static string FindBestUpdatedMatch(IReadOnlyDictionary<string, string> names, string userLangPrefix)
+        {
+            if (names.Count == 0) return "";
+
+            foreach (var pair in names)
+            {
+                if (pair.Key.StartsWith(userLangPrefix, StringComparison.OrdinalIgnoreCase))
+                {
+                    return pair.Value;
+                }
+            }
+
+            if (names.TryGetValue("en-us", out var enName))
+            {
+                return enName;
+            }
+
+            foreach (var pair in names)
+            {
+                if (pair.Key.StartsWith("en", StringComparison.OrdinalIgnoreCase))
+                {
+                    return pair.Value;
+                }
+            }
+
+            return names.FirstOrDefault().Value;
         }
     }
 }

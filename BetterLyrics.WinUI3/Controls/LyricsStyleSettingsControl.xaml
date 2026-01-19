@@ -49,13 +49,17 @@
                             Value="{x:Bind LyricsStyleSettings.LyricsLineSpacingFactor, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
-                    <dev:SettingsExpander x:Uid="SettingsPageLyricsFontFamily" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8D2;}">
+                    <dev:SettingsExpander
+                        x:Uid="SettingsPageLyricsFontFamily"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                 Glyph=&#xE8D2;}"
+                        IsExpanded="True">
                         <dev:SettingsExpander.Items>
                             <dev:SettingsCard x:Uid="SettingsPageCJK">
-                                <local:FontFamilyAutoSuggestBox SelectedFontFamily="{x:Bind LyricsStyleSettings.LyricsCJKFontFamily, Mode=TwoWay}" />
+                                <local:FontPicker SelectedFontId="{x:Bind LyricsStyleSettings.LyricsCJKFontFamily, Mode=TwoWay}" />
                             </dev:SettingsCard>
                             <dev:SettingsCard x:Uid="SettingsPageWesternChar">
-                                <local:FontFamilyAutoSuggestBox SelectedFontFamily="{x:Bind LyricsStyleSettings.LyricsWesternFontFamily, Mode=TwoWay}" />
+                                <local:FontPicker SelectedFontId="{x:Bind LyricsStyleSettings.LyricsWesternFontFamily, Mode=TwoWay}" />
                             </dev:SettingsCard>
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
