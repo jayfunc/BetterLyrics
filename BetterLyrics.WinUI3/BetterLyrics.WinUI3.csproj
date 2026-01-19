@@ -130,8 +130,8 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="3v.EvtSource" Version="2.0.0" />
-		<PackageReference Include="CommunityToolkit.Labs.WinUI.Controls.OpacityMaskView" Version="0.1.251021-build.2365" />
-		<PackageReference Include="CommunityToolkit.Labs.WinUI.Shimmer" Version="0.1.250703-build.2173" />
+		<PackageReference Include="CommunityToolkit.Labs.WinUI.Controls.OpacityMaskView" Version="0.1.260109-build.2471" />
+		<PackageReference Include="CommunityToolkit.Labs.WinUI.Shimmer" Version="0.1.250828-build.2223" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="CommunityToolkit.WinUI.Behaviors" Version="8.2.251219" />
 		<PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.2.251219" />
@@ -154,33 +154,33 @@
 		<PackageReference Include="LiteFM" Version="1.0.2" />
 		<PackageReference Include="LiveChartsCore.SkiaSharpView.WinUI" Version="2.0.0-rc6.1" />
 		<PackageReference Include="Lyricify.Lyrics.Helper-NativeAot" Version="0.1.4-alpha.5" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="10.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.1">
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="10.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.2" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.2">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.1" />
-		<PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.1" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.2" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.2" />
 		<PackageReference Include="Microsoft.Graphics.Win2D" Version="1.3.2" />
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7463" />
-		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.251106002" />
+		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.260101001" />
 		<PackageReference Include="NAudio.Wasapi" Version="2.2.1" />
 		<PackageReference Include="NTextCat" Version="0.3.65" />
 		<PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0" />
 		<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
 		<PackageReference Include="SMBLibrary" Version="1.5.5.1" />
-		<PackageReference Include="System.Drawing.Common" Version="10.0.1" />
+		<PackageReference Include="System.Drawing.Common" Version="10.0.2" />
 		<PackageReference Include="System.IO.Hashing" Version="10.0.2" />
 		<PackageReference Include="TagLibSharp" Version="2.3.0" />
 		<PackageReference Include="Ude.NetStandard" Version="1.2.0" />
-		<PackageReference Include="Vanara.PInvoke.DwmApi" Version="4.2.1" />
-		<PackageReference Include="Vanara.PInvoke.Gdi32" Version="4.2.1" />
-		<PackageReference Include="Vanara.PInvoke.Shell32" Version="4.2.1" />
-		<PackageReference Include="Vanara.PInvoke.User32" Version="4.2.1" />
-		<PackageReference Include="Vanara.Windows.Shell" Version="4.2.1" />
+		<PackageReference Include="Vanara.PInvoke.DwmApi" Version="5.0.0" />
+		<PackageReference Include="Vanara.PInvoke.Gdi32" Version="5.0.0" />
+		<PackageReference Include="Vanara.PInvoke.Shell32" Version="5.0.0" />
+		<PackageReference Include="Vanara.PInvoke.User32" Version="5.0.0" />
+		<PackageReference Include="Vanara.Windows.Shell" Version="5.0.0" />
 		<PackageReference Include="VCollab.DiscordRichPresence" Version="1.7.0" />
 		<PackageReference Include="WebDav.Client" Version="2.9.0" />
 		<PackageReference Include="WinUIEx" Version="2.9.0" />
