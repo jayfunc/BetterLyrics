@@ -85,19 +85,8 @@ namespace BetterLyrics.WinUI3.Renderer
         {
             if (barCount < 2 || data == null || data.Length == 0) return null;
 
-            // 假设 Analyzer 的 Sensitivity 已经调整得当。
-            // 如果觉得波形太小，请增大 Analyzer 的 Sensitivity，或者在这里增加一个固定的放大倍率。
-
-            // 这里的 1.0f 是一个基准，你可以根据实际显示效果调整这个值。
-            // 如果你的 Analyzer 输出值在 0~100 之间，而 Height 是 200，那么这里可以是 2.0f。
-            // 结合你之前的 SpectrumAnalyzer 代码 (Sensitivity默认100, 乘积后数值很大)，
-            // 建议在这里进行缩放以适应 View 的高度。
-
-            // 如果你想让最大高度限制在 Canvas 高度内，可以使用 Math.Min 截断，而不是整体缩放。
             float viewHeight = (float)height;
 
-            // 假设：我们希望 Analyzer 输出的 10000.0f 对应高度 100px (举例)
-            // 建议调试法：先给一个固定的缩放，比如 0.1f 或 0.5f，运行看效果，再调整。
             float fixedScaleFactor = 0.05f * viewHeight;
 
             using var pathBuilder = new CanvasPathBuilder(creator);
@@ -218,13 +207,33 @@ namespace BetterLyrics.WinUI3.Renderer
             SpectrumPlacement placement,
             double height)
         {
+            var stops = new CanvasGradientStop[]
+            {
+                new() { Position = 0.0f, Color = Colors.Transparent },
+                new() { Position = 0.5f, Color = Color.FromArgb(128, color.R, color.G, color.B) },
+                new() { Position = 1.0f, Color = Color.FromArgb(255, color.R, color.G, color.B) }
+            };
+
+            using var brush = new CanvasLinearGradientBrush(ds, stops);
+
+            if (placement == SpectrumPlacement.Top)
+            {
+                brush.StartPoint = new Vector2(0, (float)height);
+                brush.EndPoint = new Vector2(0, 0);
+            }
+            else
+            {
+                brush.StartPoint = new Vector2(0, 0);
+                brush.EndPoint = new Vector2(0, (float)height);
+            }
+
             if (isGlowEffectEnabled)
             {
                 // 辉光层
                 using var commandList = new CanvasCommandList(ds);
                 using (var clds = commandList.CreateDrawingSession())
                 {
-                    clds.FillGeometry(geometry, color);
+                    clds.FillGeometry(geometry, brush);
                 }
 
                 using var blurEffect = new GaussianBlurEffect
@@ -244,26 +253,6 @@ namespace BetterLyrics.WinUI3.Renderer
                     ds.DrawImage(blurEffect, 0, glowOffsetY);
                     ds.Blend = CanvasBlend.SourceOver; // 还原混合模式
                 }
-            }
-
-            var stops = new CanvasGradientStop[]
-            {
-                new() { Position = 0.0f, Color = Colors.Transparent },
-                new() { Position = 0.7f, Color = Color.FromArgb(76, color.R, color.G, color.B) },
-                new() { Position = 1.0f, Color = color }
-            };
-
-            using var brush = new CanvasLinearGradientBrush(ds, stops);
-
-            if (placement == SpectrumPlacement.Top)
-            {
-                brush.StartPoint = new Vector2(0, (float)height);
-                brush.EndPoint = new Vector2(0, 0);
-            }
-            else
-            {
-                brush.StartPoint = new Vector2(0, 0);
-                brush.EndPoint = new Vector2(0, (float)height);
             }
 
             ds.FillGeometry(geometry, brush);

@@ -2,8 +2,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml;
 using System;
-using System.Collections.ObjectModel;
-using System.Windows.Documents;
 
 namespace BetterLyrics.WinUI3.Models.Settings
 {

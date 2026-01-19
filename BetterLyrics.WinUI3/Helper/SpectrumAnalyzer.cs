@@ -3,6 +3,7 @@ using NAudio.Wave;
 using System;
 using System.Runtime.InteropServices;
 using System.Linq;
+using System.Diagnostics;
 
 namespace BetterLyrics.WinUI3.Helper
 {
@@ -28,6 +29,10 @@ namespace BetterLyrics.WinUI3.Helper
         // Spectrum Data
         private float[]? _fullSpectrumData; // 存储合并后的数据
         private float[]? _currentSpectrum;
+
+        // 用于记录最近一段时间检测到的最大音量
+        private float _maxDetectedVolume = 0.1f;
+
         public float[]? SmoothSpectrum { get; private set; }
         public float CurrentBassEnergy { get; private set; }
 
@@ -132,26 +137,56 @@ namespace BetterLyrics.WinUI3.Helper
         {
             if (_disposed || e.BytesRecorded == 0) return;
 
-            // 快速将 byte[] 转为 float[] (性能优化：Span/Cast)
-            // WasapiLoopback 默认通常是 IEEE Float (32bit)
             var bufferSpan = e.Buffer.AsSpan(0, e.BytesRecorded);
             var floatSpan = MemoryMarshal.Cast<byte, float>(bufferSpan);
 
-            // 确保数据足够
-            // 每次步进通道数 (Stereo = 2)
+            // 音量归一化
+            float currentFramePeak = 0f;
+            for (int i = 0; i < floatSpan.Length; i++)
+            {
+                float abs = Math.Abs(floatSpan[i]);
+                if (abs > currentFramePeak) currentFramePeak = abs;
+            }
+
+            if (currentFramePeak > _maxDetectedVolume)
+            {
+                _maxDetectedVolume = currentFramePeak;
+            }
+            else
+            {
+                float ratio = currentFramePeak / _maxDetectedVolume;
+
+                float decayRate;
+
+                if (ratio < 0.2f)
+                {
+                    decayRate = 0.95f;
+                }
+                else if (ratio < 0.5f)
+                {
+                    decayRate = 0.99f;
+                }
+                else
+                {
+                    decayRate = 0.9995f;
+                }
+
+                _maxDetectedVolume *= decayRate;
+            }
+
+            _maxDetectedVolume = Math.Max(0.02f, _maxDetectedVolume);
+
+            float autoGainMultiplier = 1.0f / _maxDetectedVolume;
+
+            // 填充 FFT
             int frameCount = floatSpan.Length / 2;
             if (frameCount < _fftLength) return;
-
-            // 填充数据并应用窗函数
-            // 注意：这里我们只取最近的 _fftLength 个样本，或者处理环形缓冲区。
-            // 简单起见，取最新的 _fftLength 个数据
             int offset = (frameCount - _fftLength) * 2;
 
             for (int i = 0; i < _fftLength; i++)
             {
-                // 此时 floatSpan[offset + i * 2] 是左声道，+1 是右声道
-                float sampleL = floatSpan[offset + i * 2];
-                float sampleR = floatSpan[offset + i * 2 + 1];
+                float sampleL = floatSpan[offset + i * 2] * autoGainMultiplier;
+                float sampleR = floatSpan[offset + i * 2 + 1] * autoGainMultiplier;
 
                 double window = _hammingWindow[i];
 
@@ -162,72 +197,49 @@ namespace BetterLyrics.WinUI3.Helper
                 _fftRightData[i].Y = 0;
             }
 
-            // 执行 FFT (使用缓存的 m)
             FastFourierTransform.FFT(true, _m, _fftLeftData);
             FastFourierTransform.FFT(true, _m, _fftRightData);
 
-            // 计算幅值并应用补偿 (使用预计算表)
             if (_fullSpectrumData == null || _compensationMap == null) return;
 
             int halfLen = _fftLength / 2;
 
-            // 直接操作 _fullSpectrumData，避免中间数组分配
-            // 逻辑：[左声道反向 (0...halfLen)] + [右声道正向 (halfLen...End)]
-
             for (int i = 0; i < halfLen; i++)
             {
-                // 计算 Left 幅值
-                float realL = (float)_fftLeftData[i].X;
-                float imgL = (float)_fftLeftData[i].Y;
-                float magL = (float)Math.Sqrt(realL * realL + imgL * imgL);
+                float realL = _fftLeftData[i].X;
+                float imgL = _fftLeftData[i].Y;
+                float magL = MathF.Sqrt(realL * realL + imgL * imgL);
 
-                // 计算 Right 幅值
-                float realR = (float)_fftRightData[i].X;
-                float imgR = (float)_fftRightData[i].Y;
-                float magR = (float)Math.Sqrt(realR * realR + imgR * imgR);
+                float realR = _fftRightData[i].X;
+                float imgR = _fftRightData[i].Y;
+                float magR = MathF.Sqrt(realR * realR + imgR * imgR);
 
-                // 应用补偿
                 float compensation = _compensationMap[i];
                 magL *= compensation;
                 magR *= compensation;
 
-                // 填充到全谱图数组
-                // 左声道放在前半部分，且反转 (Index: halfLen - 1 - i)
                 _fullSpectrumData[halfLen - 1 - i] = magL;
-
-                // 右声道放在后半部分 (Index: halfLen + i)
                 _fullSpectrumData[halfLen + i] = magR;
             }
 
-            // 低音能量 (Bass Energy)
+            // Bass
             float bassSum = 0f;
 
-            // 我们取低频段。由于你的数组结构是：[高频L ... 低频L][低频R ... 高频R]
-            // 所以低频数据集中在 halfLen (中心点) 的两侧。
-            // 采样率48000 / FFT 2048 ≈ 23Hz 每 bin。
-            // 取 5 个 bin 大概覆盖 20Hz - 140Hz (鼓点和贝斯的核心区)
             int bassBinCount = 5;
 
             for (int k = 0; k < bassBinCount; k++)
             {
-                // 防止数组越界
                 if (halfLen + k < _fullSpectrumData.Length && halfLen - 1 - k >= 0)
                 {
-                    // 获取右声道的低频
                     bassSum += _fullSpectrumData[halfLen + k];
-                    // 获取左声道的低频
                     bassSum += _fullSpectrumData[halfLen - 1 - k];
                 }
             }
 
-            //System.Diagnostics.Debug.WriteLine($"BassSum: {bassSum}");
+            // 归一化
+            CurrentBassEnergy = Math.Clamp(bassSum / 1.0f, 0f, 1f);
 
-            // 归一化处理：
-            // 这个除数 (15.0f) 是经验值，如果呼吸感太弱，把这个数改小（比如 8.0f）
-            // 如果呼吸感太强总爆表，把这个数改大
-            CurrentBassEnergy = Math.Clamp(bassSum, 0f, 1f);
-
-            // 映射到 BarCount (抽样)
+            // 映射到 BarCount
             lock (_lock)
             {
                 if (_currentSpectrum == null || _currentSpectrum.Length != BarCount) return;
@@ -236,10 +248,6 @@ namespace BetterLyrics.WinUI3.Helper
 
                 for (int i = 0; i < BarCount; i++)
                 {
-                    // 使用简单的对数映射尝试 (让低频占更多格子)
-                    // 如果想要原本的线性，用注释掉的那行
-
-                    // 稍微优化一点的线性（防止最后越界）
                     int index = Math.Min(dataLen - 1, i * dataLen / BarCount);
 
                     _currentSpectrum[i] = _fullSpectrumData[index] * Sensitivity;
@@ -247,7 +255,6 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
-        // 预计算频率补偿表，避免每帧计算
         private void PrecomputeCompensation(int effectiveLength)
         {
             _compensationMap = new float[effectiveLength];
@@ -260,7 +267,6 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
-        // 原始的计算逻辑，提取出来只在初始化时调用
         private float CalculateCompensationFactor(float freq)
         {
             float[] frequencies = { 20, 50, 100, 200, 500, 1000, 2000, 4000, 8000, 16000, 20000 };
