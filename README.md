@@ -18,7 +18,7 @@
     <a href="https://github.com/jayfunc/BetterLyrics/stargazers"><img src="https://img.shields.io/github/stars/jayfunc/BetterLyrics" alt="Stars"></a>
     <a href="https://crowdin.com/project/betterlyrics"><img src="https://badges.crowdin.net/betterlyrics/localized.svg" alt="Crowdin"></a>
     <a href="https://betterlyrics.github.io"><img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/BetterLyrics/BetterLyrics.github.io/pages%2Fpages-build-deployment?label=Official%20Website"></a>
-    <img src="https://img.shields.io/github/downloads/jayfunc/BetterLyrics/total?label=Downloads">
+    <a href="https://github.com/jayfunc/BetterLyrics/releases/latest"><img src="https://img.shields.io/github/downloads/jayfunc/BetterLyrics/total?label=Downloads"></a>
   </div>
 
   <br>
