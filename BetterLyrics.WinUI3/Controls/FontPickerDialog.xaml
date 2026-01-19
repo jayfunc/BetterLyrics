@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentDialog
+    x:Class="BetterLyrics.WinUI3.Controls.FontPickerDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:BetterLyrics.WinUI3.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:BetterLyrics.WinUI3.Models"
+    DefaultButton="Primary"
+    Style="{StaticResource DefaultContentDialogStyle}"
+    mc:Ignorable="d">
+
+    <Grid
+        Width="350"
+        Height="450"
+        RowDefinitions="Auto, *">
+        <TextBox
+            x:Name="SearchBox"
+            x:Uid="FontPickerSearchBox"
+            Margin="0,0,0,12"
+            InputScope="Search"
+            TextChanged="SearchBox_TextChanged" />
+
+        <ListView
+            x:Name="FontListView"
+            Grid.Row="1"
+            Loaded="FontListView_Loaded"
+            SelectionChanged="FontListView_SelectionChanged"
+            SelectionMode="Single">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="models:ExtendedFontFamily">
+                    <Grid Padding="0,6" RowDefinitions="Auto,Auto">
+                        <TextBlock
+                            Margin="0,0,0,4"
+                            FontFamily="{x:Bind FontFamily}"
+                            FontSize="16"
+                            Text="曲拨心弦，词落云笺。&#x0a;Strums the Heartstrings, Graces the Wordscape."
+                            TextWrapping="Wrap" />
+
+                        <StackPanel Grid.Row="1" HorizontalAlignment="Right">
+                            <TextBlock
+                                FontFamily="{x:Bind FontFamily}"
+                                Text="{x:Bind LocalizedFontFamily}"
+                                TextAlignment="Right" />
+                            <TextBlock
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                Text="{x:Bind FontFamily}"
+                                TextAlignment="Right" />
+                        </StackPanel>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </Grid>
+</ContentDialog>

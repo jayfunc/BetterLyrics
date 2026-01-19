@@ -195,6 +195,9 @@
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
     <value>Preparing to scan...</value>
   </data>
+  <data name="FontPickerSearchBox.PlaceholderText" xml:space="preserve">
+    <value>Search fonts</value>
+  </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>Fullscreen Mode</value>
   </data>

@@ -122,6 +122,9 @@ namespace BetterLyrics.WinUI3
             // 加载插件
             var pluginService = Ioc.Default.GetRequiredService<IPluginService>();
             pluginService.LoadPluginsAsync();
+
+            // 预加载系统字体列表
+            _ = FontHelper.GetSystemFontFamiliesAsync();
         }
 
         private async Task InitDatabasesAsync()

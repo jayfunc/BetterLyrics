@@ -42,7 +42,8 @@
 		<None Remove="Controls\AppSettingsControl.xaml" />
 		<None Remove="Controls\DemoWindowGrid.xaml" />
 		<None Remove="Controls\ExtendedSlider.xaml" />
-		<None Remove="Controls\FontFamilyAutoSuggestBox.xaml" />
+		<None Remove="Controls\FontPicker.xaml" />
+		<None Remove="Controls\FontPickerDialog.xaml" />
 		<None Remove="Controls\ImageSwitcher.xaml" />
 		<None Remove="Controls\InfoTag.xaml" />
 		<None Remove="Controls\LyricsSearchControl.xaml" />
@@ -347,11 +348,6 @@
 		</Page>
 	</ItemGroup>
 	<ItemGroup>
-		<Page Update="Controls\FontFamilyAutoSuggestBox.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
 		<Page Update="Controls\LyricsStyleSettingsControl.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</Page>
@@ -513,6 +509,16 @@
 		<Content Update="Assets\LogoPlugin.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\FontPickerDialog.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\FontPicker.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 		<Page Update="Controls\InfoTag.xaml">
