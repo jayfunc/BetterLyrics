@@ -29,6 +29,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsSpectrumGlowEffectEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsSpectrumBrethingEffectEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int SpectrumBreathingIntensity { get; set; } = 80;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int SpectrumOpacity { get; set; } = 100; // 100%
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsSnowFlakeOverlayEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int SnowFlakeOverlayAmount { get; set; } = 10;
