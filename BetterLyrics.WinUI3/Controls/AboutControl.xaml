@@ -290,19 +290,20 @@
                     <RichTextBlock
                         Margin="0,16,0,0"
                         HorizontalAlignment="Center"
-                        HorizontalTextAlignment="Center"
-                        LineHeight="28">
-                        <Paragraph FontWeight="Bold">
-                            <Run Text="{x:Bind const:App.AppName}" />
+                        HorizontalTextAlignment="Center">
+                        <Paragraph>
+                            <Run Text="曲拨心弦，词落云笺。" />
+                        </Paragraph>
+                        <Paragraph LineHeight="28">
+                            <Run Text="Strums the Heartstrings, Graces the Wordscapes." />
                         </Paragraph>
                         <Paragraph>
-                            <Run Text="An elegant and deeply customizable lyrics visualizer &amp; versatile music player" />
-                        </Paragraph>
-                        <Paragraph>
-                            <Run Text="Proudly built by" />
+                            <Run FontWeight="Bold" Text="{x:Bind const:App.AppName}" />
+                            <Run Text="was Proudly built by" />
                             <Hyperlink NavigateUri="{x:Bind const:Link.AuthorGitHub}">
                                 <Run Text="{x:Bind const:App.AppAuthor}" />
                             </Hyperlink>
+                            <Run Text="and all its contributors" />
                         </Paragraph>
                     </RichTextBlock>
 

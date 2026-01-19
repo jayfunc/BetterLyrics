@@ -35,7 +35,7 @@
                             Margin="0,0,0,4"
                             FontFamily="{x:Bind FontFamily}"
                             FontSize="16"
-                            Text="曲拨心弦，词落云笺。&#x0a;Strums the Heartstrings, Graces the Wordscape."
+                            Text="曲拨心弦，词落云笺。&#x0a;Strums the Heartstrings, Graces the Wordscapes."
                             TextWrapping="Wrap" />
 
                         <StackPanel Grid.Row="1" HorizontalAlignment="Right">
