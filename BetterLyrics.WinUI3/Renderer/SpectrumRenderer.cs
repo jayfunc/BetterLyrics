@@ -26,6 +26,7 @@ namespace BetterLyrics.WinUI3.Renderer
             bool isEnabled,
             bool isGlowEffectEnabled,
             bool isBreathingEffectEnabled,
+            float opacity,
             SpectrumPlacement placement,
             SpectrumStyle style,
             double canvasWidth,
@@ -44,11 +45,11 @@ namespace BetterLyrics.WinUI3.Renderer
             {
                 if (isBreathingEffectEnabled)
                 {
-                    var center = new Vector2((float)canvasWidth / 2, (float)canvasHeight);
+                    var center = new Vector2((float)canvasWidth / 2, placement == SpectrumPlacement.Bottom ? (float)canvasHeight : 0);
                     ds.Transform = Matrix3x2.CreateScale(_breathingScale, center);
                 }
 
-                DrawGeometry(ds, _spectrumGeometry, fillColor, isGlowEffectEnabled, placement, canvasHeight);
+                DrawGeometry(ds, _spectrumGeometry, fillColor, isGlowEffectEnabled, opacity, placement, canvasHeight);
 
                 if (isBreathingEffectEnabled)
                 {
@@ -204,14 +205,14 @@ namespace BetterLyrics.WinUI3.Renderer
             CanvasGeometry geometry,
             Color color,
             bool isGlowEffectEnabled,
+            float opacity,
             SpectrumPlacement placement,
             double height)
         {
             var stops = new CanvasGradientStop[]
             {
                 new() { Position = 0.0f, Color = Colors.Transparent },
-                new() { Position = 0.5f, Color = Color.FromArgb(128, color.R, color.G, color.B) },
-                new() { Position = 1.0f, Color = Color.FromArgb(255, color.R, color.G, color.B) }
+                new() { Position = 1.0f, Color = Color.FromArgb((byte)(255 * opacity), color.R, color.G, color.B) }
             };
 
             using var brush = new CanvasLinearGradientBrush(ds, stops);

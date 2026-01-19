@@ -385,6 +385,7 @@ namespace BetterLyrics.WinUI3.Controls
                     isEnabled: lyricsBg.IsSpectrumOverlayEnabled,
                     isGlowEffectEnabled: lyricsBg.IsSpectrumGlowEffectEnabled,
                     isBreathingEffectEnabled: lyricsBg.IsSpectrumBrethingEffectEnabled,
+                    opacity: lyricsBg.SpectrumOpacity / 100.0f,
                     placement: lyricsBg.SpectrumPlacement,
                     style: lyricsBg.SpectrumStyle,
                     canvasWidth: sender.Size.Width,
