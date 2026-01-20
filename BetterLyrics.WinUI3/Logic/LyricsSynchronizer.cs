@@ -119,7 +119,7 @@ namespace BetterLyrics.WinUI3.Logic
             }
         }
 
-        private LinePlaybackState CalculateSyllableProgress(double time, RenderLyricsLine line, double lineEndMs)
+        private static LinePlaybackState CalculateSyllableProgress(double time, RenderLyricsLine line, double lineEndMs)
         {
             var state = new LinePlaybackState();
             int count = line.PrimaryRenderSyllables.Count;
@@ -153,7 +153,7 @@ namespace BetterLyrics.WinUI3.Logic
             return state;
         }
 
-        private LinePlaybackState CalculateSimulatedProgress(double time, RenderLyricsLine line, double lineEndMs)
+        private static LinePlaybackState CalculateSimulatedProgress(double time, RenderLyricsLine line, double lineEndMs)
         {
             var state = new LinePlaybackState();
             int textLength = line.PrimaryText.Length;
@@ -171,7 +171,7 @@ namespace BetterLyrics.WinUI3.Logic
             return state;
         }
 
-        private bool IsTimeInLine(double time, IList<RenderLyricsLine> lines, int index)
+        private static bool IsTimeInLine(double time, IList<RenderLyricsLine> lines, int index)
         {
             if (index < 0 || index >= lines.Count) return false;
             var line = lines[index];

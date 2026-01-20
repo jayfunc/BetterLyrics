@@ -195,7 +195,7 @@ namespace BetterLyrics.WinUI3.Logic
                 {
                     if (isSecondaryLinePlayingChanged)
                     {
-                        // 辉光动画
+                        // 辉光动画（从行首开始到当前）
                         if (isGlowEnabled && lyricsEffect.LyricsGlowEffectScope == Enums.LyricsEffectScope.LineStartToCurrentChar
                              && isSecondaryLinePlaying)
                         {
@@ -211,17 +211,34 @@ namespace BetterLyrics.WinUI3.Logic
                             }
                         }
 
-                        // 浮动动画
+                        // 浮动动画（控制整体）
                         if (isFloatEnabled)
                         {
                             foreach (var renderChar in line.PrimaryRenderChars)
                             {
-                                renderChar.FloatTransition.Start(isSecondaryLinePlaying ? targetCharFloat : 0);
+                                if (isSecondaryLinePlaying)
+                                {
+                                    if (renderChar.EndMs < currentPositionMs)
+                                    {
+                                        // 确保已播放的部分恢复原位
+                                        renderChar.FloatTransition.Start(0);
+                                    }
+                                    else
+                                    {
+                                        // 下沉（以便后续上浮）
+                                        renderChar.FloatTransition.Start(targetCharFloat);
+                                    }
+                                }
+                                else
+                                {
+                                    // 恢复初始状态（相当于上浮）
+                                    renderChar.FloatTransition.Start(0);
+                                }
                             }
                         }
                     }
 
-                    // 字符动画
+                    // 浮动动画（控制单个）
                     foreach (var renderChar in line.PrimaryRenderChars)
                     {
                         renderChar.ProgressPlayed = renderChar.GetPlayProgress(currentPositionMs);
@@ -241,7 +258,6 @@ namespace BetterLyrics.WinUI3.Logic
                         }
                     }
 
-                    // 音节动画
                     foreach (var syllable in line.PrimaryRenderSyllables)
                     {
                         bool isSyllablePlaying = syllable.GetIsPlaying(currentPositionMs);
@@ -249,6 +265,7 @@ namespace BetterLyrics.WinUI3.Logic
 
                         if (isSyllablePlayingChanged)
                         {
+                            // 缩放
                             if (isScaleEnabled && isSyllablePlaying)
                             {
                                 foreach (var renderChar in syllable.ChildrenRenderLyricsChars)
@@ -264,6 +281,7 @@ namespace BetterLyrics.WinUI3.Logic
                                 }
                             }
 
+                            // 辉光（长音节）
                             if (isGlowEnabled && isSyllablePlaying && lyricsEffect.LyricsGlowEffectScope == Enums.LyricsEffectScope.LongDurationSyllable
                                 && syllable.DurationMs >= lyricsEffect.LyricsGlowEffectLongSyllableDuration)
                             {

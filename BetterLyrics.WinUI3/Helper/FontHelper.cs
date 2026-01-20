@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.Globalization;
 
 namespace BetterLyrics.WinUI3.Helper
 {
@@ -35,35 +36,34 @@ namespace BetterLyrics.WinUI3.Helper
 
             foreach (var font in systemFontSet.Fonts)
             {
-                string? familyNameID = "";
-
-                if (!font.FamilyNames.TryGetValue("en-us", out familyNameID))
+                // Original family name
+                if (!font.FamilyNames.TryGetValue("en-us", out var familyNameID))
                 {
                     familyNameID = font.FamilyNames.FirstOrDefault().Value;
                 }
-
                 if (string.IsNullOrEmpty(familyNameID) || addedFamilyNames.Contains(familyNameID))
                     continue;
 
-                string displayName = "";
-
+                // Localized family name
                 var localizedStrings = font.GetInformationalStrings(CanvasFontInformation.PreferredFamilyNames);
-
                 if (localizedStrings == null || localizedStrings.Count == 0)
                 {
                     localizedStrings = font.FamilyNames;
                 }
+                var displayName = FindBestUpdatedMatch(localizedStrings, userLangPrefix);
 
-                displayName = FindBestUpdatedMatch(localizedStrings, userLangPrefix);
+                // Sample text
+                var sampleText = font.GetInformationalStrings(CanvasFontInformation.SampleText).FirstOrDefault().Value;
 
+                // Final handle
                 if (!string.IsNullOrEmpty(displayName))
                 {
                     fontList.Add(new ExtendedFontFamily
                     {
                         LocalizedFontFamily = displayName,
-                        FontFamily = familyNameID
+                        FontFamily = familyNameID,
+                        SampleText = sampleText,
                     });
-
                     addedFamilyNames.Add(familyNameID);
                 }
             }

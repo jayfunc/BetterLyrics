@@ -12,7 +12,7 @@
     mc:Ignorable="d">
 
     <Grid
-        Width="350"
+        Width="500"
         Height="450"
         RowDefinitions="Auto, *">
         <TextBox
@@ -30,13 +30,21 @@
             SelectionMode="Single">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="models:ExtendedFontFamily">
-                    <Grid Padding="0,6" RowDefinitions="Auto,Auto">
-                        <TextBlock
+                    <Grid Padding="0,12" RowDefinitions="Auto,Auto">
+                        <RichTextBlock
                             Margin="0,0,0,4"
                             FontFamily="{x:Bind FontFamily}"
-                            FontSize="16"
-                            Text="曲拨心弦，词落云笺。&#x0a;Strums the Heartstrings, Graces the Wordscapes."
-                            TextWrapping="Wrap" />
+                            FontSize="16">
+                            <Paragraph>
+                                <Run Text="曲拨心弦，词落云笺。" />
+                            </Paragraph>
+                            <Paragraph>
+                                <Run Text="Strums the Heartstrings, Graces the Wordscapes." />
+                            </Paragraph>
+                            <Paragraph>
+                                <Run Text="{x:Bind SampleText}" />
+                            </Paragraph>
+                        </RichTextBlock>
 
                         <StackPanel Grid.Row="1" HorizontalAlignment="Right">
                             <TextBlock
