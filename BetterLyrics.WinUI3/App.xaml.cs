@@ -114,7 +114,7 @@ namespace BetterLyrics.WinUI3
             {
                 if (item.LastSyncTime == null)
                 {
-                    _ = Task.Run(async () => await fileSystemService.ScanMediaFolderAsync(item, CancellationToken.None));
+                    _ = Task.Run(async () => await fileSystemService.ScanMediaFolderAsync(item, token: CancellationToken.None));
                 }
             }
             fileSystemService.StartAllFolderTimers();

@@ -24,10 +24,16 @@ namespace BetterLyrics.WinUI3.Controls
             ViewModel.RemoveFolder(folder);
         }
 
-        private void SyncNowButton_Click(object sender, RoutedEventArgs e)
+        private void ForceSyncButton_Click(object sender, RoutedEventArgs e)
         {
             var folder = (MediaFolder)((FrameworkElement)sender).DataContext;
-            ViewModel.SyncFolder(folder);
+            ViewModel.SyncFolder(folder, true);
+        }
+
+        private void SyncNowButton_Click(SplitButton sender, SplitButtonClickEventArgs args)
+        {
+            var folder = (MediaFolder)((FrameworkElement)sender).DataContext;
+            ViewModel.SyncFolder(folder, false);
         }
     }
 }

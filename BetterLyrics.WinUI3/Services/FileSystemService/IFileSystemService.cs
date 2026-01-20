@@ -47,7 +47,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
         /// </summary>
         /// <param name="folder"></param>
         /// <returns></returns>
-        Task ScanMediaFolderAsync(MediaFolder folder, CancellationToken token = default);
+        Task ScanMediaFolderAsync(MediaFolder folder, bool forceSync = false, CancellationToken token = default);
 
         /// <summary>
         /// 从数据库拉取全部已解析的数据
