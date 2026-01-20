@@ -179,5 +179,18 @@ namespace BetterLyrics.WinUI3.Helper
         {
             return Pinyin.Pinyin.Instance.IsHanzi(text);
         }
+
+        public static string GetLanguageScriptDisplayName(string? tag)
+        {
+            if (string.IsNullOrEmpty(tag)) return "";
+            try
+            {
+                return new Language($"{tag}").DisplayName;
+            }
+            catch (System.Exception)
+            {
+                return "";
+            }
+        }
     }
 }

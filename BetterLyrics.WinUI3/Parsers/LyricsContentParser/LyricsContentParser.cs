@@ -20,15 +20,15 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace BetterLyrics.WinUI3.Parsers.LyricsParser
+namespace BetterLyrics.WinUI3.Parsers.LyricsContentParser
 {
-    public partial class LyricsParser
+    public partial class LyricsContentParser
     {
-        private static readonly ILogger<LyricsParser> _logger = Ioc.Default.GetRequiredService<ILogger<LyricsParser>>();
+        private static readonly ILogger<LyricsContentParser> _logger = Ioc.Default.GetRequiredService<ILogger<LyricsContentParser>>();
 
         private List<LyricsData> _lyricsDataArr = [];
 
-        public LyricsParser()
+        public LyricsContentParser()
         {
         }
 

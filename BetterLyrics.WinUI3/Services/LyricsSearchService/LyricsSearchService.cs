@@ -271,12 +271,12 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                         lyricsSearchResult = await SearchAmllTtmlDbAsync(songInfo);
                         break;
                     case LyricsSearchProvider.LocalMusicFile:
-                        lyricsSearchResult = await SearchEmbedded(songInfo);
+                        lyricsSearchResult = await SearchMusicFile(songInfo);
                         break;
                     case LyricsSearchProvider.LocalLrcFile:
                     case LyricsSearchProvider.LocalEslrcFile:
                     case LyricsSearchProvider.LocalTtmlFile:
-                        lyricsSearchResult = await SearchFile(songInfo, provider.GetLyricsFormat());
+                        lyricsSearchResult = await SearchLyricsFile(songInfo, provider.GetLyricsFormat());
                         break;
                     case LyricsSearchProvider.AppleMusic:
                         lyricsSearchResult = await SearchAppleMusicAsync(songInfo);
@@ -303,7 +303,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             return lyricsSearchResult;
         }
 
-        private async Task<LyricsCacheItem> SearchFile(SongInfo songInfo, LyricsFormat format)
+        private async Task<LyricsCacheItem> SearchLyricsFile(SongInfo songInfo, LyricsFormat format)
         {
             int maxScore = -1;
 
@@ -356,7 +356,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             return lyricsSearchResult;
         }
 
-        private async Task<LyricsCacheItem> SearchEmbedded(SongInfo songInfo)
+        private async Task<LyricsCacheItem> SearchMusicFile(SongInfo songInfo)
         {
             var lyricsSearchResult = new LyricsCacheItem
             {

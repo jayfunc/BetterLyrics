@@ -68,13 +68,16 @@ namespace BetterLyrics.WinUI3.Views
             ViewModel.SelectedTracksTotalDuration = ViewModel.SelectedTracks.Select(x => x.Duration).Sum();
             if (SelectAllCheckBox != null)
             {
-                if (SongListView.SelectedItems.Count == SongListView.Items.Count)
+                if (SongListView.SelectionMode == ListViewSelectionMode.Multiple)
                 {
-                    SelectAllCheckBox.IsChecked = true;
-                }
-                else if (SongListView.SelectedItems.Count == 0)
-                {
-                    SelectAllCheckBox.IsChecked = false;
+                    if (SongListView.SelectedItems.Count == SongListView.Items.Count)
+                    {
+                        SelectAllCheckBox.IsChecked = true;
+                    }
+                    else if (SongListView.SelectedItems.Count == 0)
+                    {
+                        SelectAllCheckBox.IsChecked = false;
+                    }
                 }
             }
         }

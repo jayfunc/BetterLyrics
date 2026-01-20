@@ -74,6 +74,7 @@
                                         </Grid.ColumnDefinitions>
                                         <Grid
                                             Grid.Column="0"
+                                            Background="Transparent"
                                             ColumnSpacing="6"
                                             Tapped="PlaylistGrid_Tapped">
                                             <Grid.ColumnDefinitions>
@@ -190,7 +191,10 @@
 
                         <TreeView.ItemTemplate>
                             <DataTemplate x:DataType="models:FolderNode">
-                                <TreeViewItem IsExpanded="{x:Bind IsExpanded, Mode=TwoWay}" ItemsSource="{x:Bind SubFolders}">
+                                <TreeViewItem
+                                    Background="Transparent"
+                                    IsExpanded="{x:Bind IsExpanded, Mode=TwoWay}"
+                                    ItemsSource="{x:Bind SubFolders}">
                                     <StackPanel Orientation="Horizontal" Spacing="10">
                                         <FontIcon FontSize="16" Glyph="{x:Bind SourceType, Converter={StaticResource FileSourceTypeToIconConverter}}" />
                                         <TextBlock VerticalAlignment="Center" Text="{x:Bind FolderName}" />
@@ -380,6 +384,7 @@
                                 <DataTemplate x:DataType="models:ExtendedTrack">
                                     <Grid
                                         Padding="12"
+                                        Background="Transparent"
                                         ColumnSpacing="12"
                                         DoubleTapped="SongListViewItem_DoubleTapped">
 

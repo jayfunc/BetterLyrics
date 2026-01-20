@@ -112,13 +112,11 @@ namespace BetterLyrics.WinUI3.Renderer
             if (line.PrimaryTextLayout == null) return;
 
             var curCharIndex = state.SyllableStartIndex + state.SyllableLength * state.SyllableProgress;
-            float fadeWidth = (1f / Math.Max(1, line.PrimaryText.Length)) * 0.5f;
-
             var lineRegions = line.PrimaryTextLayout.GetCharacterRegions(0, line.PrimaryText.Length);
 
             foreach (var subLineRegion in lineRegions)
             {
-                DrawSubLineRegion(resourceCreator, ds, source, line, subLineRegion, curCharIndex, fadeWidth, bgColor, fgColor, settings);
+                DrawSubLineRegion(resourceCreator, ds, source, line, subLineRegion, curCharIndex, bgColor, fgColor, settings);
             }
         }
 
@@ -129,7 +127,6 @@ namespace BetterLyrics.WinUI3.Renderer
             RenderLyricsLine line,
             CanvasTextLayoutRegion subLineRegion,
             double curCharIndex,
-            float fadeWidth,
             Color bgColor,
             Color fgColor,
             LyricsEffectSettings settings)
@@ -150,19 +147,20 @@ namespace BetterLyrics.WinUI3.Renderer
                 using (var gradientLayerDs = gradientLayer.CreateDrawingSession())
                 {
                     float progressInRegion = (float)((curCharIndex - subLineRegion.CharacterIndex) / subLineRegion.CharacterCount);
-                    progressInRegion = Math.Clamp(progressInRegion, 0, 1 + fadeWidth);
+                    progressInRegion = Math.Clamp(progressInRegion, 0f, 1f);
+                    //float fadeProgressInRegion = 1f / subLineRegion.CharacterCount;
+                    float fadeProgressInRegion = 0;
 
                     var stop1 = fgColor.WithAlpha((byte)(255 * playedOpacity));
                     var stop2 = bgColor.WithAlpha((byte)(255 * unplayedOpacity));
 
                     using (var gradientBrush = new CanvasLinearGradientBrush(resourceCreator,
-                        [
-                            new CanvasGradientStop { Position = 0, Color = stop1 },
-                            new CanvasGradientStop { Position = progressInRegion, Color = stop1 },
-                            // 这里做判断是防止子行未播放时左侧出现渐变的问题
-                            new CanvasGradientStop { Position = progressInRegion == 0 ? 0 : (progressInRegion + fadeWidth), Color = stop2 },
-                            new CanvasGradientStop { Position = 1 + fadeWidth, Color = stop2 }
-                        ]))
+                    [
+                        new CanvasGradientStop { Position = -fadeProgressInRegion, Color = stop1 },
+                        new CanvasGradientStop { Position = progressInRegion - fadeProgressInRegion, Color = stop1 },
+                        new CanvasGradientStop { Position = progressInRegion, Color = stop2 },
+                        new CanvasGradientStop { Position = 1, Color = stop2 }
+                    ]))
                     {
                         gradientBrush.StartPoint = new Vector2((float)subLineRect.X, (float)subLineRect.Y);
                         gradientBrush.EndPoint = new Vector2((float)(subLineRect.X + subLineRect.Width), (float)subLineRect.Y);

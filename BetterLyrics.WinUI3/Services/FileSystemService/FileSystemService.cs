@@ -4,6 +4,7 @@ using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.DbContext;
 using BetterLyrics.WinUI3.Models.Entities;
 using BetterLyrics.WinUI3.Models.Settings;
+using BetterLyrics.WinUI3.Parsers.LyricsMetadataParser;
 using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
@@ -402,9 +403,16 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
                             using var stream = await OpenFileAsync(fs, item);
                             if (stream != null)
                             {
-                                using var reader = new StreamReader(stream);
-                                string content = await reader.ReadToEndAsync();
-                                item.EmbeddedLyrics = content;
+                                using (var reader = new StreamReader(stream))
+                                {
+                                    string content = await reader.ReadToEndAsync(token);
+                                    item.EmbeddedLyrics = content;
+                                    var metadata = LyricsMetadataParser.Parse(content, ext);
+                                    item.Title = metadata.Title;
+                                    item.Artist = metadata.Artist;
+                                    item.Album = metadata.Album;
+                                    item.Duration = (int)metadata.TotalSeconds;
+                                }
                                 item.IsMetadataParsed = true;
                             }
                         }

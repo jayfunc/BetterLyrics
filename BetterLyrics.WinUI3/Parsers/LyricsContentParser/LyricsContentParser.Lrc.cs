@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace BetterLyrics.WinUI3.Parsers.LyricsParser
+namespace BetterLyrics.WinUI3.Parsers.LyricsContentParser
 {
-    public partial class LyricsParser
+    public partial class LyricsContentParser
     {
         [GeneratedRegex(@"\[(\d*):(\d*)(\.|\:)(\d*)\]")]
         private static partial Regex LrcRegex();

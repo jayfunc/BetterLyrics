@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace BetterLyrics.WinUI3.Parsers.LyricsParser
+namespace BetterLyrics.WinUI3.Parsers.LyricsContentParser
 {
-    public partial class LyricsParser
+    public partial class LyricsContentParser
     {
         private readonly XNamespace _ttml = "http://www.w3.org/ns/ttml#metadata";
 

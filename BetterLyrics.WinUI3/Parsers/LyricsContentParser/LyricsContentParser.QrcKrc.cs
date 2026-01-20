@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BetterLyrics.WinUI3.Parsers.LyricsParser
+namespace BetterLyrics.WinUI3.Parsers.LyricsContentParser
 {
-    public partial class LyricsParser
+    public partial class LyricsContentParser
     {
         private void ParseQrcKrc(List<Lyricify.Lyrics.Models.ILineInfo>? lines)
         {
