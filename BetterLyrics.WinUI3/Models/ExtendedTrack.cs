@@ -147,6 +147,11 @@ namespace BetterLyrics.WinUI3.Models
             this.RawLyrics = entity.EmbeddedLyrics;
             this.LocalAlbumArtPath = entity.LocalAlbumArtPath;
 
+            if (string.IsNullOrEmpty(this.Title))
+            {
+                this.Title = Path.GetFileNameWithoutExtension(entity.FileName);
+            }
+
             if (stream != null)
             {
                 var track = new Track(stream, Path.GetExtension(FileName));
