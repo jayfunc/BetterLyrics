@@ -261,16 +261,17 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             string baseUri = folder.FolderPath;
             if (!baseUri.EndsWith("/")) baseUri += "/";
+            string decodedBaseUri = System.Net.WebUtility.UrlDecode(baseUri);
 
             _middleTracks = _allTracks.Where(track =>
             {
                 if (track.MediaFolderId != folder.MediaFolderId) return false;
 
-                string trackUriDecoded = System.Net.WebUtility.UrlDecode(track.Uri);
+                string decodedTrackUri = System.Net.WebUtility.UrlDecode(track.Uri);
 
-                if (!trackUriDecoded.StartsWith(baseUri, StringComparison.OrdinalIgnoreCase)) return false;
+                if (!decodedTrackUri.StartsWith(decodedBaseUri, StringComparison.OrdinalIgnoreCase)) return false;
 
-                string relativePart = trackUriDecoded.Substring(baseUri.Length);
+                string relativePart = decodedTrackUri.Substring(decodedBaseUri.Length);
 
                 return !relativePart.Contains('/');
             }).ToList();
