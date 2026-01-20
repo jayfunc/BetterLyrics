@@ -48,11 +48,11 @@ namespace BetterLyrics.WinUI3.ViewModels
             });
         }
 
-        public void SyncFolder(MediaFolder folder)
+        public void SyncFolder(MediaFolder folder, bool forceSync)
         {
             if (folder.IsProcessing) return;
 
-            _ = Task.Run(async () => await _fileSystemService.ScanMediaFolderAsync(folder, CancellationToken.None));
+            _ = Task.Run(async () => await _fileSystemService.ScanMediaFolderAsync(folder, forceSync, CancellationToken.None));
         }
 
         [RelayCommand]

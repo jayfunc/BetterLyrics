@@ -393,6 +393,9 @@
   <data name="MainPageSplitView.Content" xml:space="preserve">
     <value>Split View</value>
   </data>
+  <data name="MediaSettingsControlAdvOpt.Text" xml:space="preserve">
+    <value>Advanced Options</value>
+  </data>
   <data name="MediaSettingsControlLastSyncTime.Header" xml:space="preserve">
     <value>Last Sync Time</value>
   </data>
@@ -404,6 +407,12 @@
   </data>
   <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
     <value>Sync now</value>
+  </data>
+  <data name="MediaSettingsForceSyncButton.Content" xml:space="preserve">
+    <value>Perform forced sync</value>
+  </data>
+  <data name="MediaSettingsForceSyncHint.Text" xml:space="preserve">
+    <value>This option will force a re-resolution of metadata from the remote database. This option is helpful when there are problems with the local database, or when a full refresh is required for some reason.</value>
   </data>
   <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
     <value>Add to playlist</value>

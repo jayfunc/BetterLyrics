@@ -71,10 +71,31 @@
                                             <TextBox VerticalAlignment="Center" Text="{x:Bind Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                         </dev:SettingsCard>
                                         <dev:SettingsCard x:Uid="MediaSettingsControlLastSyncTime" Description="{x:Bind LastSyncTime.ToString(), Mode=OneWay, TargetNullValue=N/A}">
-                                            <Button
-                                                x:Uid="MediaSettingsControlSyncNow"
-                                                Click="SyncNowButton_Click"
-                                                IsEnabled="{x:Bind IsEnabled, Mode=OneWay}" />
+                                            <StackPanel>
+                                                <SplitButton
+                                                    x:Uid="MediaSettingsControlSyncNow"
+                                                    Click="SyncNowButton_Click"
+                                                    IsEnabled="{x:Bind IsEnabled, Mode=OneWay}">
+                                                    <SplitButton.Flyout>
+                                                        <Flyout>
+                                                            <StackPanel MaxWidth="250" Spacing="10">
+                                                                <TextBlock x:Uid="MediaSettingsControlAdvOpt" />
+
+                                                                <Button
+                                                                    x:Uid="MediaSettingsForceSyncButton"
+                                                                    HorizontalAlignment="Stretch"
+                                                                    Click="ForceSyncButton_Click" />
+
+                                                                <TextBlock
+                                                                    x:Uid="MediaSettingsForceSyncHint"
+                                                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                                    Style="{ThemeResource CaptionTextBlockStyle}"
+                                                                    TextWrapping="Wrap" />
+                                                            </StackPanel>
+                                                        </Flyout>
+                                                    </SplitButton.Flyout>
+                                                </SplitButton>
+                                            </StackPanel>
                                         </dev:SettingsCard>
                                         <dev:SettingsCard x:Uid="MusicSettingsControlAutoSyncInterval">
                                             <ComboBox IsEnabled="{x:Bind IsEnabled, Mode=OneWay}" SelectedIndex="{x:Bind ScanInterval, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">

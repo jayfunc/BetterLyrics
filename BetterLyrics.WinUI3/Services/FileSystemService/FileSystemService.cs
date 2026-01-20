@@ -52,10 +52,9 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
             _contextFactory = contextFactory;
         }
 
-        public async Task<List<FilesIndexItem>> GetFilesAsync(IUnifiedFileSystem provider, FilesIndexItem? parentFolder, string configId, bool forceRefresh = false)
+        public async Task<List<FilesIndexItem>> GetFilesAsync(IUnifiedFileSystem provider, FilesIndexItem? parentFolder, string configId, bool forceSync = false)
         {
             string queryParentUri = parentFolder == null ? "" : parentFolder.Uri;
-            if (parentFolder == null && !forceRefresh) forceRefresh = true;
 
             using var context = await _contextFactory.CreateDbContextAsync();
 
@@ -64,13 +63,8 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
                 .Where(x => x.MediaFolderId == configId && x.ParentUri == queryParentUri)
                 .ToListAsync();
 
-            bool needSync = forceRefresh || cachedEntities.Count == 0;
-
-            if (needSync)
-            {
-                // SyncAsync 内部自己管理 Context
-                cachedEntities = await SyncAsync(provider, parentFolder, configId);
-            }
+            // SyncAsync 内部自己管理 Context
+            cachedEntities = await SyncAsync(provider, parentFolder, configId, forceSync);
 
             return cachedEntities;
         }
@@ -78,7 +72,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
         /// <summary>
         /// 从远端/本地同步文件至数据库
         /// </summary>
-        private async Task<List<FilesIndexItem>> SyncAsync(IUnifiedFileSystem provider, FilesIndexItem? parentFolder, string configId)
+        private async Task<List<FilesIndexItem>> SyncAsync(IUnifiedFileSystem provider, FilesIndexItem? parentFolder, string configId, bool forceSync = false)
         {
             List<FilesIndexItem> remoteItems;
             try
@@ -132,7 +126,8 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
                     {
                         // 检查是否变更
                         bool isChanged = existing.FileSize != remote.FileSize ||
-                                         existing.LastModified != remote.LastModified;
+                            existing.LastModified != remote.LastModified ||
+                            forceSync;
 
                         if (isChanged)
                         {
@@ -273,7 +268,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
             }
         }
 
-        public async Task ScanMediaFolderAsync(MediaFolder folder, CancellationToken token = default)
+        public async Task ScanMediaFolderAsync(MediaFolder folder, bool forceSync = false, CancellationToken token = default)
         {
             if (folder == null || !folder.IsEnabled) return;
 
@@ -316,7 +311,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
                     if (scanCts.Token.IsCancellationRequested) return;
 
                     var currentParent = foldersToScan.Dequeue();
-                    var items = await GetFilesAsync(fs, currentParent, folder.Id, forceRefresh: true);
+                    var items = await GetFilesAsync(fs, currentParent, folder.Id, forceSync);
 
                     foreach (var item in items)
                     {
@@ -536,7 +531,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
 
                     while (await timer.WaitForNextTickAsync(newCts.Token))
                     {
-                        await ScanMediaFolderAsync(folder, newCts.Token);
+                        await ScanMediaFolderAsync(folder, token: newCts.Token);
                     }
                 }
                 catch (OperationCanceledException)
