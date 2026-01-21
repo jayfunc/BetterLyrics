@@ -186,6 +186,7 @@
                                 <StackPanel Spacing="6">
                                     <TextBlock x:Uid="SettingsPagePatrons" />
                                     <dev:WrapPanel Margin="-12,0,0,0" Orientation="Horizontal">
+                                        <uc:PatronControl Date="Jan 19, 2026" PatronName="**杭" />
                                         <uc:PatronControl Date="Jan 8, 2026" PatronName="Eureka-K_K" />
                                         <uc:PatronControl Date="Jan 3, 2026" PatronName="**轩" />
                                         <uc:PatronControl Date="Dec 13, 2025" PatronName="&lt;Anonymous&gt;" />
