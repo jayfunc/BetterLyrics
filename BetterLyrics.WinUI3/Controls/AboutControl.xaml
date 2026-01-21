@@ -17,34 +17,33 @@
 
     <Grid>
 
+        <!--  Banner as background  -->
+        <controls:OpacityMaskView>
+            <controls:OpacityMaskView.OpacityMask>
+                <Rectangle>
+                    <Rectangle.Fill>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Offset="0" Color="White" />
+                            <GradientStop Offset="1" Color="Transparent" />
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+            </controls:OpacityMaskView.OpacityMask>
+            <Grid>
+                <Image Source="ms-appx:///Assets/Banner.png" />
+                <Border>
+                    <Border.Background>
+                        <media:AcrylicBrush
+                            BlurAmount="5"
+                            TintColor="Black"
+                            TintOpacity=".6" />
+                    </Border.Background>
+                </Border>
+            </Grid>
+        </controls:OpacityMaskView>
+
         <ScrollViewer>
             <Grid Style="{StaticResource SettingsGridStyle}">
-
-                <!--  Banner as background  -->
-                <controls:OpacityMaskView>
-                    <controls:OpacityMaskView.OpacityMask>
-                        <Rectangle>
-                            <Rectangle.Fill>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                    <GradientStop Offset="0" Color="White" />
-                                    <GradientStop Offset="1" Color="Transparent" />
-                                </LinearGradientBrush>
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </controls:OpacityMaskView.OpacityMask>
-                    <Grid>
-                        <Image Source="ms-appx:///Assets/Banner.png" />
-                        <Border>
-                            <Border.Background>
-                                <media:AcrylicBrush
-                                    BlurAmount="5"
-                                    TintColor="Black"
-                                    TintOpacity=".6" />
-                            </Border.Background>
-                        </Border>
-                    </Grid>
-                </controls:OpacityMaskView>
-
                 <StackPanel Margin="36,0" Spacing="{StaticResource SettingsCardSpacing}">
 
                     <StackPanel Margin="0,48" Spacing="12">
