@@ -4,6 +4,7 @@ Special thanks to the following people for their support!
 
 | Date / 日期 | Name / 昵称 |
 | :--- | :--- |
+| Jan 19, 2026 | **杭 |
 | Jan 8, 2026 | Eureka-K_K |
 | Jan 3, 2026 | \*\*轩 |
 | Dec 13, 2025 | \<Anonymous\> |
