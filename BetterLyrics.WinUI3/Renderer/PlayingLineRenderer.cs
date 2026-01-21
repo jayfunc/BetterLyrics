@@ -131,8 +131,8 @@ namespace BetterLyrics.WinUI3.Renderer
             Color fgColor,
             LyricsEffectSettings settings)
         {
-            var playedOpacity = line.PlayedOriginalOpacityTransition.Value;
-            var unplayedOpacity = line.UnplayedOriginalOpacityTransition.Value;
+            var playedOpacity = line.PlayedPrimaryOpacityTransition.Value;
+            var unplayedOpacity = line.UnplayedPrimaryOpacityTransition.Value;
 
             var subLineLayoutBounds = subLineRegion.LayoutBounds;
             Rect subLineRect = new(
@@ -148,18 +148,21 @@ namespace BetterLyrics.WinUI3.Renderer
                 {
                     float progressInRegion = (float)((curCharIndex - subLineRegion.CharacterIndex) / subLineRegion.CharacterCount);
                     progressInRegion = Math.Clamp(progressInRegion, 0f, 1f);
-                    //float fadeProgressInRegion = 1f / subLineRegion.CharacterCount;
-                    float fadeProgressInRegion = 0;
+
+                    float fadeProgressInRegion = 1f / subLineRegion.CharacterCount * 0.5f;
+                    
+                    float firstCharProgressInRegion = (float)((curCharIndex - subLineRegion.CharacterIndex) / 1);
+                    firstCharProgressInRegion = Math.Clamp(firstCharProgressInRegion, 0f, 1f);
 
                     var stop1 = fgColor.WithAlpha((byte)(255 * playedOpacity));
                     var stop2 = bgColor.WithAlpha((byte)(255 * unplayedOpacity));
 
                     using (var gradientBrush = new CanvasLinearGradientBrush(resourceCreator,
                     [
-                        new CanvasGradientStop { Position = -fadeProgressInRegion, Color = stop1 },
-                        new CanvasGradientStop { Position = progressInRegion - fadeProgressInRegion, Color = stop1 },
-                        new CanvasGradientStop { Position = progressInRegion, Color = stop2 },
-                        new CanvasGradientStop { Position = 1, Color = stop2 }
+                        new CanvasGradientStop { Position = 0, Color = stop1 },
+                        new CanvasGradientStop { Position = progressInRegion, Color = stop1 },
+                        new CanvasGradientStop { Position = progressInRegion + fadeProgressInRegion * firstCharProgressInRegion, Color = stop2 },
+                        new CanvasGradientStop { Position = 1 + fadeProgressInRegion, Color = stop2 }
                     ]))
                     {
                         gradientBrush.StartPoint = new Vector2((float)subLineRect.X, (float)subLineRect.Y);

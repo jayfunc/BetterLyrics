@@ -29,7 +29,7 @@ namespace BetterLyrics.WinUI3.Renderer
 
             if (line.PrimaryTextLayout != null)
             {
-                double opacity = Math.Max(line.PlayedOriginalOpacityTransition.Value, line.UnplayedOriginalOpacityTransition.Value);
+                double opacity = Math.Max(line.PlayedPrimaryOpacityTransition.Value, line.UnplayedPrimaryOpacityTransition.Value);
                 DrawPart(ds, textOnlyLayer,
                     line.PrimaryTextLayout,
                     line.PrimaryPosition,

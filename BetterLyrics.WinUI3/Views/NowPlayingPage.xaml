@@ -42,6 +42,20 @@
                 <ColumnDefinition x:Name="RightGapDef" Width="0" />
             </Grid.ColumnDefinitions>
 
+            <Grid x:Name="LyricsPlaceholder" SizeChanged="LyricsPlaceholder_SizeChanged">
+                <ScrollViewer
+                    x:Name="LyricsScrollViewer"
+                    PointerEntered="LyricsScrollViewer_PointerEntered"
+                    PointerExited="LyricsScrollViewer_PointerExited"
+                    PointerMoved="LyricsScrollViewer_PointerMoved"
+                    PointerPressed="LyricsScrollViewer_PointerPressed"
+                    PointerReleased="LyricsScrollViewer_PointerReleased"
+                    PointerWheelChanged="LyricsScrollViewer_PointerWheelChanged"
+                    VerticalScrollBarVisibility="Hidden">
+                    <Grid />
+                </ScrollViewer>
+            </Grid>
+
             <!--  Album art and song info area  -->
             <Grid
                 x:Name="TrackSummaryGrid"
@@ -119,7 +133,7 @@
                             PointerCanceled="TitleAutoScrollHoverEffectView_PointerCanceled"
                             PointerEntered="TitleAutoScrollHoverEffectView_PointerEntered"
                             PointerExited="TitleAutoScrollHoverEffectView_PointerExited"
-                            ScrollingPixelsPreSecond="20">
+                            ScrollingPixelsPreSecond="25">
                             <TextBlock
                                 x:Name="TitleTextBlock"
                                 Padding="2,0"
@@ -144,7 +158,7 @@
                             PointerCanceled="ArtistsAutoScrollHoverEffectView_PointerCanceled"
                             PointerEntered="ArtistsAutoScrollHoverEffectView_PointerEntered"
                             PointerExited="ArtistsAutoScrollHoverEffectView_PointerExited"
-                            ScrollingPixelsPreSecond="20">
+                            ScrollingPixelsPreSecond="25">
                             <TextBlock
                                 x:Name="ArtistsTextBlock"
                                 Padding="2,0"
@@ -170,7 +184,7 @@
                             PointerCanceled="AlbumAutoScrollHoverEffectView_PointerCanceled"
                             PointerEntered="AlbumAutoScrollHoverEffectView_PointerEntered"
                             PointerExited="AlbumAutoScrollHoverEffectView_PointerExited"
-                            ScrollingPixelsPreSecond="20">
+                            ScrollingPixelsPreSecond="25">
                             <TextBlock
                                 x:Name="AlbumTextBlock"
                                 Padding="2,0"
@@ -183,20 +197,6 @@
 
                 </StackPanel>
 
-            </Grid>
-
-            <Grid x:Name="LyricsPlaceholder" SizeChanged="LyricsPlaceholder_SizeChanged">
-                <ScrollViewer
-                    x:Name="LyricsScrollViewer"
-                    PointerEntered="LyricsScrollViewer_PointerEntered"
-                    PointerExited="LyricsScrollViewer_PointerExited"
-                    PointerMoved="LyricsScrollViewer_PointerMoved"
-                    PointerPressed="LyricsScrollViewer_PointerPressed"
-                    PointerReleased="LyricsScrollViewer_PointerReleased"
-                    PointerWheelChanged="LyricsScrollViewer_PointerWheelChanged"
-                    VerticalScrollBarVisibility="Hidden">
-                    <Grid />
-                </ScrollViewer>
             </Grid>
 
         </Grid>

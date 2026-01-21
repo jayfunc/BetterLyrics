@@ -153,15 +153,15 @@ namespace BetterLyrics.WinUI3.Logic
                         CalculateTargetOpacity(phoneticOpacity, phoneticOpacity, distanceFactor, isMouseScrolling, lyricsEffect));
 
                     // 原文不透明度（已播放）
-                    line.PlayedOriginalOpacityTransition.SetDuration(yScrollDuration);
-                    line.PlayedOriginalOpacityTransition.SetDelay(yScrollDelay);
-                    line.PlayedOriginalOpacityTransition.Start(
+                    line.PlayedPrimaryOpacityTransition.SetDuration(yScrollDuration);
+                    line.PlayedPrimaryOpacityTransition.SetDelay(yScrollDelay);
+                    line.PlayedPrimaryOpacityTransition.Start(
                         isSecondaryLinePlaying ? 1.0 :
                         CalculateTargetOpacity(originalOpacity, 1.0, distanceFactor, isMouseScrolling, lyricsEffect));
                     // 原文不透明度（未播放）
-                    line.UnplayedOriginalOpacityTransition.SetDuration(yScrollDuration);
-                    line.UnplayedOriginalOpacityTransition.SetDelay(yScrollDelay);
-                    line.UnplayedOriginalOpacityTransition.Start(
+                    line.UnplayedPrimaryOpacityTransition.SetDuration(yScrollDuration);
+                    line.UnplayedPrimaryOpacityTransition.SetDelay(yScrollDelay);
+                    line.UnplayedPrimaryOpacityTransition.Start(
                         isSecondaryLinePlaying ? originalOpacity :
                         CalculateTargetOpacity(originalOpacity, originalOpacity, distanceFactor, isMouseScrolling, lyricsEffect));
 

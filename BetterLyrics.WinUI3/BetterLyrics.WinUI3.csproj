@@ -32,6 +32,7 @@
 		<PRIResource Remove="ViewModels\Lyrics\**" />
 	</ItemGroup>
 	<ItemGroup>
+		<None Remove="Assets\Banner.png" />
 		<None Remove="Assets\Logo.ico" />
 		<None Remove="Assets\Logo.png" />
 		<None Remove="Assets\LogoPlugin.png" />
@@ -509,6 +510,11 @@
 		<Content Update="Assets\LogoPlugin.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <Content Update="Assets\Banner.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Controls\FontPickerDialog.xaml">
