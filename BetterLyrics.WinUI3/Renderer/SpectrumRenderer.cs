@@ -1,5 +1,4 @@
 ﻿using BetterLyrics.WinUI3.Enums;
-using Lyricify.Lyrics.Providers.Web.Netease;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;

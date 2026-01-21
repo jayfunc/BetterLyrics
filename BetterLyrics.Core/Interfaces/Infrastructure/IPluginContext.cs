@@ -1,5 +1,5 @@
-﻿using BetterLyrics.Core.Interfaces.Services;
-using BetterLyrics.Core.Abstractions;
+﻿using BetterLyrics.Core.Abstractions;
+using BetterLyrics.Core.Interfaces.Services;
 
 namespace BetterLyrics.Core.Interfaces.Infrastructure
 {

@@ -2,8 +2,6 @@
 using NAudio.Wave;
 using System;
 using System.Runtime.InteropServices;
-using System.Linq;
-using System.Diagnostics;
 
 namespace BetterLyrics.WinUI3.Helper
 {

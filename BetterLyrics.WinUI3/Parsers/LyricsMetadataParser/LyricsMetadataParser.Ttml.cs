@@ -1,8 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Models;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Xml;
 
 namespace BetterLyrics.WinUI3.Parsers.LyricsMetadataParser

@@ -1,15 +1,8 @@
 ﻿using BetterLyrics.Core.Enums;
-using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces;
-using BetterLyrics.Core.Models.SettingsSchema;
-using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
-using System.Text;
-using static Lyricify.Lyrics.Providers.Web.Musixmatch.GetTranslationsResponse;
-using static Vanara.PInvoke.Kernel32;
 
 namespace BetterLyrics.WinUI3.Services.PluginService
 {

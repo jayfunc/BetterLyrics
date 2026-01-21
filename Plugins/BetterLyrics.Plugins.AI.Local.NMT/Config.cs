@@ -1,8 +1,5 @@
 ﻿using BetterLyrics.Core.Abstractions;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace BetterLyrics.Plugins.AI.Local.NMT
 {

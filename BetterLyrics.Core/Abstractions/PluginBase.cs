@@ -2,10 +2,8 @@
 using BetterLyrics.Core.Interfaces;
 using BetterLyrics.Core.Interfaces.Infrastructure;
 using BetterLyrics.Core.Models.SettingsSchema;
-using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Reflection;
-using System.Text;
 
 namespace BetterLyrics.Core.Abstractions
 {
