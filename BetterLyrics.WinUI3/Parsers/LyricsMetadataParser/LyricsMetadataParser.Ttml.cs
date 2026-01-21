@@ -28,30 +28,31 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsMetadataParser
 
                         while (reader.Read())
                         {
-                            if (reader.NodeType == XmlNodeType.Element && reader.LocalName == "body")
-                            {
-                                break;
-                            }
-
                             if (reader.NodeType == XmlNodeType.Element)
                             {
-                                string tagName = reader.LocalName.ToLower();
+                                string tagName = reader.Name.ToLower();
 
                                 switch (tagName)
                                 {
-                                    case "title":
+                                    case "ttm:title":
                                         metadata.Title = reader.ReadElementContentAsString();
                                         break;
-                                    case "desc":
-                                    case "description":
+                                    case "ttm:desc":
+                                    case "ttm:description":
                                         metadata.Comments.Add(reader.ReadElementContentAsString());
                                         break;
-                                    case "copyright":
+                                    case "ttm:copyright":
                                         metadata.Comments.Add("Copyright: " + reader.ReadElementContentAsString());
                                         break;
-                                    case "agent":
+                                    case "ttm:agent":
                                         ParseTtmlAgent(reader, metadata);
                                         break;
+                                    case "amll:meta":
+                                        ParseAmllMeta(reader, metadata);
+                                        break;
+                                    case "body":
+                                        metadata.Length = reader.GetAttribute("dur") ?? "00:00";
+                                        return metadata;
                                 }
                             }
                         }
@@ -84,6 +85,28 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsMetadataParser
             else if (role.Contains("lyricist"))
             {
                 metadata.Lyricist = content;
+            }
+        }
+
+        private static void ParseAmllMeta(XmlReader reader, LyricsMetadata metadata)
+        {
+            string? key = reader.GetAttribute("key");
+            string? value = reader.GetAttribute("value");
+
+            if (string.IsNullOrWhiteSpace(key)) return;
+            if (string.IsNullOrWhiteSpace(value)) return;
+
+            if (key == "musicName")
+            {
+                metadata.Title = value;
+            }
+            else if (key == "artists")
+            {
+                metadata.Artist = value;
+            }
+            else if (key == "album")
+            {
+                metadata.Album = value;
             }
         }
 

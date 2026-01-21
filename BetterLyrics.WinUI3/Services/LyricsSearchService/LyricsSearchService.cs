@@ -349,6 +349,11 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             {
                 lyricsSearchResult.Raw = bestFileEntity.EmbeddedLyrics;
 
+                lyricsSearchResult.Title = bestFileEntity.Title;
+                lyricsSearchResult.Artist = bestFileEntity.Artist;
+                lyricsSearchResult.Album = bestFileEntity.Album;
+                lyricsSearchResult.Duration = bestFileEntity.Duration;
+
                 lyricsSearchResult.Reference = bestFileEntity.Uri;
                 lyricsSearchResult.MatchPercentage = maxScore;
             }
