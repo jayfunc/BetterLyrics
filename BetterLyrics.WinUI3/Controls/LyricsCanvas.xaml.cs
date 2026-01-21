@@ -420,12 +420,8 @@ namespace BetterLyrics.WinUI3.Controls
                 currentProgressMs: _songPositionWithOffset.TotalMilliseconds,
                 getPlaybackState: (lineIndex) =>
                 {
-                    if (_renderLyricsLines == null) return new LinePlaybackState();
-
-                    var line = _renderLyricsLines.ElementAtOrDefault(lineIndex);
+                    var line = _renderLyricsLines?.ElementAtOrDefault(lineIndex);
                     if (line == null) return new LinePlaybackState();
-
-                    var nextLine = _renderLyricsLines.ElementAtOrDefault(lineIndex + 1);
 
                     return _synchronizer.GetLinePlayingProgress(
                         _songPositionWithOffset.TotalMilliseconds,

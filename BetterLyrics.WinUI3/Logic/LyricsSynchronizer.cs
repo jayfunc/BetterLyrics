@@ -119,34 +119,32 @@ namespace BetterLyrics.WinUI3.Logic
             }
         }
 
-        private static LinePlaybackState CalculateSyllableProgress(double time, RenderLyricsLine line, double lineEndMs)
+        private static LinePlaybackState CalculateSyllableProgress(double currentMs, RenderLyricsLine line, double lineEndMs)
         {
             var state = new LinePlaybackState();
             int count = line.PrimaryRenderSyllables.Count;
 
             for (int i = 0; i < count; i++)
             {
-                var timing = line.PrimaryRenderSyllables[i];
-                var nextTiming = (i + 1 < count) ? line.PrimaryRenderSyllables[i + 1] : null;
+                var syllable = line.PrimaryRenderSyllables[i];
+                var nextSyllable = (i + 1 < count) ? line.PrimaryRenderSyllables[i + 1] : null;
 
-                double timingEndMs = timing.EndMs ?? 0;
+                double syllableEndMs = syllable.EndMs ?? 0;
 
                 // 在当前字范围内
-                if (time >= timing.StartMs && time <= timingEndMs)
+                if (syllable.GetIsPlaying(currentMs))
                 {
-                    state.SyllableStartIndex = timing.StartIndex;
-                    state.SyllableLength = timing.Text.Length;
-                    state.SyllableProgress = (timingEndMs > timing.StartMs)
-                        ? (time - timing.StartMs) / (timingEndMs - timing.StartMs)
-                        : 0;
+                    state.SyllableStartIndex = syllable.StartIndex;
+                    state.SyllableLength = syllable.Text.Length;
+                    state.SyllableProgress = syllable.GetPlayProgress(currentMs);
                     return state;
                 }
                 // 在空隙中 (已过当前字，未到下个字)
-                else if (time > timingEndMs && (nextTiming == null || time < nextTiming.StartMs))
+                else if (currentMs > syllableEndMs && (nextSyllable == null || currentMs < nextSyllable.StartMs))
                 {
                     state.SyllableProgress = 1f; // 保持上个字满进度
-                    state.SyllableStartIndex = timing.StartIndex;
-                    state.SyllableLength = timing.Text.Length;
+                    state.SyllableStartIndex = syllable.StartIndex;
+                    state.SyllableLength = syllable.Text.Length;
                     return state;
                 }
             }

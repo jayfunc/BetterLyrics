@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Xml;
-using TagLib.Flac;
 
 namespace BetterLyrics.WinUI3.Parsers.LyricsMetadataParser
 {
