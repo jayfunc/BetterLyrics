@@ -4,16 +4,16 @@ namespace BetterLyrics.WinUI3.Models
 {
     public class LyricsMetadata
     {
-        public string Title { get; set; }       // [ti] 标题
-        public string Artist { get; set; }      // [ar] 歌手
-        public string Album { get; set; }       // [al] 专辑
+        public string Title { get; set; } = "";       // [ti] 标题
+        public string Artist { get; set; } = "";     // [ar] 歌手
+        public string Album { get; set; } = "";      // [al] 专辑
 
-        public string Author { get; set; }      // [au] 作曲/原作者
-        public string Lyricist { get; set; }    // [lr] 作词人
-        public string LrcCreator { get; set; }  // [by] LRC文件制作者
+        public string Author { get; set; } = "";     // [au] 作曲/原作者
+        public string Lyricist { get; set; } = "";  // [lr] 作词人
+        public string LrcCreator { get; set; } = ""; // [by] LRC文件制作者
 
-        public int Offset { get; set; } = 0;    // [offset] 整体时间偏移量(ms)
-        public string Length { get; set; }      // [length] 歌曲长度 (mm:ss)
+        public int Offset { get; set; } = 0;   // [offset] 整体时间偏移量(ms)
+        public string Length { get; set; } = "00:00";     // [length] 歌曲长度 (mm:ss)
         public double TotalSeconds
         {
             get
@@ -53,9 +53,9 @@ namespace BetterLyrics.WinUI3.Models
             }
         }
 
-        public string Tool { get; set; }        // [re] or [tool] 生成工具
-        public string Version { get; set; }     // [ve] 工具版本
+        public string Tool { get; set; } = "";      // [re] or [tool] 生成工具
+        public string Version { get; set; } = "";  // [ve] 工具版本
 
-        public List<string> Comments { get; set; } = new List<string>(); // [#] 注释
+        public List<string> Comments { get; set; } = []; // [#] 注释
     }
 }

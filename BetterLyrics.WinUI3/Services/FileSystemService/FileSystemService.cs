@@ -402,6 +402,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
                                 {
                                     string content = await reader.ReadToEndAsync(token);
                                     item.EmbeddedLyrics = content;
+
                                     var metadata = LyricsMetadataParser.Parse(content, ext);
                                     item.Title = metadata.Title;
                                     item.Artist = metadata.Artist;
