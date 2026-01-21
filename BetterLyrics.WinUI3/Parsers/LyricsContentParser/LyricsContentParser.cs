@@ -34,7 +34,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsContentParser
 
         public List<LyricsData> Parse(LyricsCacheItem? lyricsSearchResult)
         {
-            _logger.LogInformation("LyricsParser.Parse");
+            _logger.LogInformation("LyricsContentParser.Parse");
             _lyricsDataArr = [];
             if (string.IsNullOrWhiteSpace(lyricsSearchResult?.Raw))
             {
