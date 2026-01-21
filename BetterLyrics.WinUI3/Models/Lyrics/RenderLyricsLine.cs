@@ -23,8 +23,8 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
         public ValueTransition<double> AngleTransition { get; set; }
         public ValueTransition<double> BlurAmountTransition { get; set; }
         public ValueTransition<double> PhoneticOpacityTransition { get; set; }
-        public ValueTransition<double> PlayedOriginalOpacityTransition { get; set; }
-        public ValueTransition<double> UnplayedOriginalOpacityTransition { get; set; }
+        public ValueTransition<double> PlayedPrimaryOpacityTransition { get; set; }
+        public ValueTransition<double> UnplayedPrimaryOpacityTransition { get; set; }
         public ValueTransition<double> TranslatedOpacityTransition { get; set; }
         public ValueTransition<double> ScaleTransition { get; set; }
         public ValueTransition<double> YOffsetTransition { get; set; }
@@ -95,12 +95,12 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
                 EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
                 defaultTotalDuration: AnimationDuration
             );
-            PlayedOriginalOpacityTransition = new(
+            PlayedPrimaryOpacityTransition = new(
                 initialValue: 0,
                 EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
                 defaultTotalDuration: AnimationDuration
             );
-            UnplayedOriginalOpacityTransition = new(
+            UnplayedPrimaryOpacityTransition = new(
                 initialValue: 0,
                 EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
                 defaultTotalDuration: AnimationDuration
@@ -294,8 +294,8 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
             ScaleTransition.Update(elapsedTime);
             BlurAmountTransition.Update(elapsedTime);
             PhoneticOpacityTransition.Update(elapsedTime);
-            PlayedOriginalOpacityTransition.Update(elapsedTime);
-            UnplayedOriginalOpacityTransition.Update(elapsedTime);
+            PlayedPrimaryOpacityTransition.Update(elapsedTime);
+            UnplayedPrimaryOpacityTransition.Update(elapsedTime);
             TranslatedOpacityTransition.Update(elapsedTime);
             YOffsetTransition.Update(elapsedTime);
             ColorTransition.Update(elapsedTime);

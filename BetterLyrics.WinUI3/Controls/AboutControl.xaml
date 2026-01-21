@@ -4,139 +4,180 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:const="using:BetterLyrics.WinUI3.Constants"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dev="using:DevWinUI"
     xmlns:helper="using:BetterLyrics.WinUI3.Helper"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:media="using:CommunityToolkit.WinUI.Media"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
     <Grid>
 
-        <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
+        <ScrollViewer>
             <Grid Style="{StaticResource SettingsGridStyle}">
-                <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
-                    <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                <!--  Banner as background  -->
+                <controls:OpacityMaskView>
+                    <controls:OpacityMaskView.OpacityMask>
+                        <Rectangle>
+                            <Rectangle.Fill>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Offset="0" Color="White" />
+                                    <GradientStop Offset="1" Color="Transparent" />
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </controls:OpacityMaskView.OpacityMask>
+                    <Grid>
+                        <Image Source="ms-appx:///Assets/Banner.png" />
+                        <Border>
+                            <Border.Background>
+                                <media:AcrylicBrush
+                                    BlurAmount="5"
+                                    TintColor="Black"
+                                    TintOpacity=".6" />
+                            </Border.Background>
+                        </Border>
+                    </Grid>
+                </controls:OpacityMaskView>
 
-                    <dev:SettingsExpander HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/Logo.png}" IsExpanded="True">
-                        <dev:SettingsExpander.Header>
-                            <StackPanel Orientation="Horizontal" Spacing="6">
-                                <TextBlock Text="BetterLyrics" />
-                            </StackPanel>
-                        </dev:SettingsExpander.Header>
-                        <dev:SettingsExpander.Description>
-                            <StackPanel Orientation="Horizontal">
-                                <StackPanel
-                                    Margin="0,2,0,0"
-                                    Orientation="Horizontal"
-                                    Spacing="2">
-                                    <TextBlock Text="©" />
-                                    <HyperlinkButton
-                                        Margin="0,-1,0,0"
-                                        Content="{x:Bind const:App.AppAuthor}"
-                                        NavigateUri="https://github.com/jayfunc" />
-                                    <TextBlock Text="2025-2026" />
-                                </StackPanel>
-                            </StackPanel>
-                        </dev:SettingsExpander.Description>
+                <StackPanel Margin="36,0" Spacing="{StaticResource SettingsCardSpacing}">
+
+                    <StackPanel Margin="0,48" Spacing="12">
+                        <!--  App logo and name  -->
+                        <StackPanel
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal"
+                            Spacing="12">
+                            <Image
+                                Width="36"
+                                Height="36"
+                                Source="ms-appx:///Assets/Logo.png" />
+                            <TextBlock
+                                FontSize="36"
+                                Style="{ThemeResource DisplayTextBlockStyle}"
+                                Text="{x:Bind const:App.AppName}" />
+                        </StackPanel>
+                        <!--  App slogan  -->
+                        <StackPanel Spacing="4">
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                Style="{ThemeResource SubtitleTextBlockStyle}"
+                                Text="曲拨心弦，词落云笺" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="Strums the Heartstrings, Graces the Wordscapes" />
+                        </StackPanel>
+                    </StackPanel>
+
+                    <dev:SettingsCard Description="Licensed under GPL-3.0">
+                        <dev:SettingsCard.Header>
+                            <HyperlinkButton
+                                Margin="-2,0,0,0"
+                                Padding="0"
+                                NavigateUri="{x:Bind const:Link.AuthorGitHub}">
+                                <HyperlinkButton.Content>
+                                    <RichTextBlock IsTextSelectionEnabled="False">
+                                        <Paragraph>
+                                            <Run Text="©" />
+                                            <Run Text="{x:Bind const:App.AppAuthor}" />
+                                            <Run Text="2025-2026" />
+                                        </Paragraph>
+                                    </RichTextBlock>
+                                </HyperlinkButton.Content>
+                            </HyperlinkButton>
+                        </dev:SettingsCard.Header>
                         <local:InfoTag Glyph="&#xE8EC;" Text="{x:Bind helper:MetadataHelper.AppVersion}" />
-                        <dev:SettingsExpander.Items>
+                    </dev:SettingsCard>
 
-                            <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
-                                <StackPanel Spacing="6">
-                                    <dev:WrapPanel Margin="-12,0,0,0" Orientation="Horizontal">
-                                        <HyperlinkButton Content="GitHub" NavigateUri="{x:Bind const:Link.BetterLyricsGitHub}" />
-                                        <HyperlinkButton x:Uid="UserGuide" NavigateUri="{x:Bind const:Link.UserGuide}" />
-                                        <HyperlinkButton x:Uid="PrivacyPolicy" NavigateUri="{x:Bind const:Link.PrivacyPolicy}" />
-                                        <HyperlinkButton x:Uid="TermsOfService" NavigateUri="{x:Bind const:Link.TermsOfService}" />
-                                    </dev:WrapPanel>
-                                </StackPanel>
+                    <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
+                        <StackPanel Spacing="6">
+                            <dev:WrapPanel Margin="-12,0,0,0" Orientation="Horizontal">
+                                <HyperlinkButton Content="GitHub" NavigateUri="{x:Bind const:Link.BetterLyricsGitHub}" />
+                                <HyperlinkButton x:Uid="UserGuide" NavigateUri="{x:Bind const:Link.UserGuide}" />
+                                <HyperlinkButton x:Uid="PrivacyPolicy" NavigateUri="{x:Bind const:Link.PrivacyPolicy}" />
+                                <HyperlinkButton x:Uid="TermsOfService" NavigateUri="{x:Bind const:Link.TermsOfService}" />
+                            </dev:WrapPanel>
+                        </StackPanel>
 
-                            </dev:SettingsCard>
+                    </dev:SettingsCard>
 
-                            <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
-                                <StackPanel Spacing="6">
-                                    <TextBlock x:Uid="SetingsPageFeedback" />
-                                    <dev:WrapPanel Margin="-12,0,0,0" Orientation="Horizontal">
-                                        <HyperlinkButton Content="QQ 反馈交流群" NavigateUri="{x:Bind const:Link.QQGroup}" />
-                                        <HyperlinkButton Content="Discord" NavigateUri="{x:Bind const:Link.Discord}" />
-                                        <HyperlinkButton Content="Telegram" NavigateUri="{x:Bind const:Link.Telegram}" />
-                                    </dev:WrapPanel>
-                                </StackPanel>
-                            </dev:SettingsCard>
+                    <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
+                        <StackPanel Spacing="6">
+                            <TextBlock x:Uid="SetingsPageFeedback" />
+                            <dev:WrapPanel Margin="-12,0,0,0" Orientation="Horizontal">
+                                <HyperlinkButton Content="QQ 反馈交流群" NavigateUri="{x:Bind const:Link.QQGroup}" />
+                                <HyperlinkButton Content="Discord" NavigateUri="{x:Bind const:Link.Discord}" />
+                                <HyperlinkButton Content="Telegram" NavigateUri="{x:Bind const:Link.Telegram}" />
+                            </dev:WrapPanel>
+                        </StackPanel>
+                    </dev:SettingsCard>
 
-                            <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
-                                <StackPanel Spacing="6">
-                                    <TextBlock x:Uid="SetingsPageDonation" />
-                                    <dev:WrapPanel Margin="-12,0,0,0" Orientation="Horizontal">
-                                        <HyperlinkButton Content="Buy Me a Coffee" NavigateUri="{x:Bind const:Link.BuyMeACoffee}" />
-                                        <HyperlinkButton Content="PayPal" NavigateUri="{x:Bind const:Link.PayPal}" />
-                                        <HyperlinkButton
-                                            x:Name="AlipayButton"
-                                            Click="AlipayButton_Click"
-                                            Content="支付宝">
-                                            <HyperlinkButton.ContextFlyout>
-                                                <Flyout x:Name="AlipayFlyout">
-                                                    <Flyout.FlyoutPresenterStyle>
-                                                        <Style TargetType="FlyoutPresenter">
-                                                            <Setter Property="CornerRadius" Value="12" />
-                                                            <Setter Property="Padding" Value="0" />
-                                                        </Style>
-                                                    </Flyout.FlyoutPresenterStyle>
-                                                    <Image Height="300" Source="/Assets/Alipay.jpg" />
-                                                </Flyout>
-                                            </HyperlinkButton.ContextFlyout>
-                                        </HyperlinkButton>
-                                        <HyperlinkButton
-                                            x:Name="WeChatButton"
-                                            Click="WeChat_Click"
-                                            Content="微信">
-                                            <HyperlinkButton.ContextFlyout>
-                                                <Flyout x:Name="WeChatFlyout">
-                                                    <Flyout.FlyoutPresenterStyle>
-                                                        <Style TargetType="FlyoutPresenter">
-                                                            <Setter Property="CornerRadius" Value="12" />
-                                                            <Setter Property="Padding" Value="0" />
-                                                        </Style>
-                                                    </Flyout.FlyoutPresenterStyle>
-                                                    <Image Height="300" Source="/Assets/WeChatReward.png" />
-                                                </Flyout>
-                                            </HyperlinkButton.ContextFlyout>
-                                        </HyperlinkButton>
-                                        <HyperlinkButton Content="爱发电" NavigateUri="{x:Bind const:Link.Afdian}" />
-                                    </dev:WrapPanel>
-                                    <Grid ColumnSpacing="6">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock
-                                            Grid.Column="0"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Text="*" />
-                                        <TextBlock
-                                            x:Uid="SetingsPageThanks"
-                                            Grid.Column="1"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            TextWrapping="Wrap" />
-                                    </Grid>
-                                </StackPanel>
-                            </dev:SettingsCard>
-
-                        </dev:SettingsExpander.Items>
-                        <dev:SettingsExpander.ItemsFooter>
-                            <InfoBar
-                                x:Uid="SettingsPageDisclaimer"
-                                BorderThickness="0"
-                                CornerRadius="0"
-                                IsClosable="False"
-                                IsOpen="True"
-                                Severity="Warning" />
-                        </dev:SettingsExpander.ItemsFooter>
-                    </dev:SettingsExpander>
+                    <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
+                        <StackPanel Spacing="6">
+                            <TextBlock x:Uid="SetingsPageDonation" />
+                            <dev:WrapPanel Margin="-12,0,0,0" Orientation="Horizontal">
+                                <HyperlinkButton Content="Buy Me a Coffee" NavigateUri="{x:Bind const:Link.BuyMeACoffee}" />
+                                <HyperlinkButton Content="PayPal" NavigateUri="{x:Bind const:Link.PayPal}" />
+                                <HyperlinkButton
+                                    x:Name="AlipayButton"
+                                    Click="AlipayButton_Click"
+                                    Content="支付宝">
+                                    <HyperlinkButton.ContextFlyout>
+                                        <Flyout x:Name="AlipayFlyout">
+                                            <Flyout.FlyoutPresenterStyle>
+                                                <Style TargetType="FlyoutPresenter">
+                                                    <Setter Property="CornerRadius" Value="12" />
+                                                    <Setter Property="Padding" Value="0" />
+                                                </Style>
+                                            </Flyout.FlyoutPresenterStyle>
+                                            <Image Height="300" Source="/Assets/Alipay.jpg" />
+                                        </Flyout>
+                                    </HyperlinkButton.ContextFlyout>
+                                </HyperlinkButton>
+                                <HyperlinkButton
+                                    x:Name="WeChatButton"
+                                    Click="WeChat_Click"
+                                    Content="微信">
+                                    <HyperlinkButton.ContextFlyout>
+                                        <Flyout x:Name="WeChatFlyout">
+                                            <Flyout.FlyoutPresenterStyle>
+                                                <Style TargetType="FlyoutPresenter">
+                                                    <Setter Property="CornerRadius" Value="12" />
+                                                    <Setter Property="Padding" Value="0" />
+                                                </Style>
+                                            </Flyout.FlyoutPresenterStyle>
+                                            <Image Height="300" Source="/Assets/WeChatReward.png" />
+                                        </Flyout>
+                                    </HyperlinkButton.ContextFlyout>
+                                </HyperlinkButton>
+                                <HyperlinkButton Content="爱发电" NavigateUri="{x:Bind const:Link.Afdian}" />
+                            </dev:WrapPanel>
+                            <Grid ColumnSpacing="6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    Grid.Column="0"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Text="*" />
+                                <TextBlock
+                                    x:Uid="SetingsPageThanks"
+                                    Grid.Column="1"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Style="{StaticResource CaptionTextBlockStyle}"
+                                    TextWrapping="Wrap" />
+                            </Grid>
+                        </StackPanel>
+                    </dev:SettingsCard>
 
                     <dev:SettingsExpander x:Uid="SettingsPageThanksList">
                         <dev:SettingsExpander.HeaderIcon>
@@ -288,25 +329,12 @@
                             Value="{x:Bind ViewModel.AppSettings.AdvancedSettings.FPS, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
-                    <RichTextBlock
-                        Margin="0,16,0,0"
-                        HorizontalAlignment="Center"
-                        HorizontalTextAlignment="Center">
-                        <Paragraph>
-                            <Run Text="曲拨心弦，词落云笺。" />
-                        </Paragraph>
-                        <Paragraph LineHeight="28">
-                            <Run Text="Strums the Heartstrings, Graces the Wordscapes." />
-                        </Paragraph>
-                        <Paragraph>
-                            <Run FontWeight="Bold" Text="{x:Bind const:App.AppName}" />
-                            <Run Text="was Proudly built by" />
-                            <Hyperlink NavigateUri="{x:Bind const:Link.AuthorGitHub}">
-                                <Run Text="{x:Bind const:App.AppAuthor}" />
-                            </Hyperlink>
-                            <Run Text="and all its contributors" />
-                        </Paragraph>
-                    </RichTextBlock>
+                    <InfoBar
+                        x:Uid="SettingsPageDisclaimer"
+                        BorderThickness="0"
+                        IsClosable="False"
+                        IsOpen="True"
+                        Severity="Warning" />
 
                 </StackPanel>
             </Grid>

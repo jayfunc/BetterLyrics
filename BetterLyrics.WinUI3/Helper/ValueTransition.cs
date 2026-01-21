@@ -31,6 +31,7 @@ namespace BetterLyrics.WinUI3.Helper
         public bool IsTransitioning => _isTransitioning;
         public T TargetValue => _targetValue; // 获取当前段的目标值
         public double DurationSeconds => _totalDurationForAutoSplit;
+        public double Progress => _progress;
 
         public Func<T, T, double, T> Interpolator => _interpolator;
 
