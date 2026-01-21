@@ -1,14 +1,10 @@
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.LocalizationService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Controls
 {

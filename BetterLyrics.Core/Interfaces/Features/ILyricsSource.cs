@@ -1,5 +1,4 @@
-﻿using BetterLyrics.Core.Enums;
-using BetterLyrics.Core.Models.Domain;
+﻿using BetterLyrics.Core.Models.Domain;
 
 namespace BetterLyrics.Core.Interfaces.Features
 {

@@ -233,8 +233,8 @@ namespace BetterLyrics.WinUI3.Renderer
         }
 
         public void CalculateLyrics3DMatrix(
-            LyricsStyleSettings lyricsStyle, LyricsEffectSettings lyricsEffect, 
-            double lyricsX, double lyricsY, 
+            LyricsStyleSettings lyricsStyle, LyricsEffectSettings lyricsEffect,
+            double lyricsX, double lyricsY,
             double lyricsWidth, double lyricsHeight,
             bool isLayoutChanged
         )

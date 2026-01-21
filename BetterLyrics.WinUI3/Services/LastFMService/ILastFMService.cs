@@ -1,6 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Models;
-using LiteFM;
 using LiteFM.Abstractions;
 using System;
 using System.Threading.Tasks;

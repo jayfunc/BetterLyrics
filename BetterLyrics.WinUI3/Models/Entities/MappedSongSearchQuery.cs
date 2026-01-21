@@ -1,5 +1,4 @@
 ﻿using BetterLyrics.Core.Enums;
-using BetterLyrics.WinUI3.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.EntityFrameworkCore;
 using System;

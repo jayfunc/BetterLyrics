@@ -128,7 +128,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsContentParser
                     string romaji = string.Empty;
                     try
                     {
-                        (romaji, transliterationSearchProvider) = 
+                        (romaji, transliterationSearchProvider) =
                             await transliterationService.TransliterateText(main.WrappedOriginalText, PhoneticHelper.RomanCode, token);
                         _lyricsDataArr.FirstOrDefault()?.SetTransliteration(romaji);
                     }

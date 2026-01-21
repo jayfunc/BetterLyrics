@@ -1,9 +1,4 @@
-﻿using BetterLyrics.WinUI3.Extensions;
-using BetterLyrics.WinUI3.Models;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using BetterLyrics.WinUI3.Models;
 
 namespace BetterLyrics.WinUI3.Parsers.LyricsMetadataParser
 {

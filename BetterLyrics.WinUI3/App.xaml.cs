@@ -1,37 +1,19 @@
 ﻿using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.DbContext;
-using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
-using BetterLyrics.WinUI3.Services.DiscordService;
 using BetterLyrics.WinUI3.Services.FileSystemService;
-using BetterLyrics.WinUI3.Services.GSMTCService;
-using BetterLyrics.WinUI3.Services.LastFMService;
-using BetterLyrics.WinUI3.Services.LocalizationService;
-using BetterLyrics.WinUI3.Services.LyricsCacheService;
-using BetterLyrics.WinUI3.Services.LyricsSearchService;
-using BetterLyrics.WinUI3.Services.PlayHistoryService;
 using BetterLyrics.WinUI3.Services.PluginService;
 using BetterLyrics.WinUI3.Services.SettingsService;
-using BetterLyrics.WinUI3.Services.SMTCService;
 using BetterLyrics.WinUI3.Services.SongSearchMapService;
-using BetterLyrics.WinUI3.Services.TranslationService;
-using BetterLyrics.WinUI3.Services.TransliterationService;
-using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
-using Microsoft.Windows.AppLifecycle;
-using Serilog;
 using System;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Activation;
-using Windows.Storage;
 
 namespace BetterLyrics.WinUI3
 {

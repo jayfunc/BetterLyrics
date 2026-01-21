@@ -6,13 +6,13 @@ using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
 using LiteFM;
-using LiteFM.Api;
 using LiteFM.Abstractions;
+using LiteFM.Abstractions.ApiContracts;
+using LiteFM.Api;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
 using Windows.System;
-using LiteFM.Abstractions.ApiContracts;
 namespace BetterLyrics.WinUI3.Services.LastFMService
 {
     public partial class LastFMService : ILastFMService

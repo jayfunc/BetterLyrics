@@ -1,7 +1,5 @@
 ﻿using BetterLyrics.Core.Abstractions;
-using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Services;
-using BetterLyrics.Core.Models.SettingsSchema;
 using LLama;
 using LLama.Common;
 using System.Text;

@@ -1,5 +1,4 @@
 ﻿using BetterLyrics.Core.Enums;
-using BetterLyrics.Core.Models.SettingsSchema;
 
 namespace BetterLyrics.Core.Interfaces
 {
