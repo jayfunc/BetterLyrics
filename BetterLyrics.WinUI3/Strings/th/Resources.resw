@@ -822,7 +822,7 @@
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>โหมดเดสก์ท็อป (โปร่งใส)</value>
   </data>
-  <data name="SettingsPageDisclaimer.Message" xml:space="preserve">
+  <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
     <value>โปรเจกต์นี้จัดทำขึ้น "ตามสภาพ" โดยไม่มีการรับประกันใดๆ เนื้อเพลง แบบอักษร ไอคอน และทรัพยากรบุคคลที่สามอื่นๆ ทั้งหมดเป็นทรัพย์สินของผู้ถือลิขสิทธิ์แต่ละราย ผู้เขียนโปรเจกต์นี้ไม่อ้างสิทธิ์ความเป็นเจ้าของในทรัพยากรดังกล่าว นี่คือโปรเจกต์ที่ไม่ใช่เชิงพาณิชย์และห้ามนำไปใช้เพื่อละเมิดสิทธิ์ใดๆ ผู้ใช้ต้องรับผิดชอบในการตรวจสอบให้แน่ใจว่าการใช้งานของตนสอดคล้องกับกฎหมายและใบอนุญาตที่เกี่ยวข้อง</value>
   </data>
   <data name="SettingsPageDiscordPresence.Header" xml:space="preserve">

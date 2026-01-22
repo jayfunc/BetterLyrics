@@ -822,7 +822,7 @@
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>데스크톱 모드 (투명)</value>
   </data>
-  <data name="SettingsPageDisclaimer.Message" xml:space="preserve">
+  <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
     <value>이 프로젝트는 어떠한 보증 없이 있는 그대로 제공됩니다. 모든 가사, 글꼴, 아이콘 및 기타 타사 리소스는 해당 저작권 소유자의 자산입니다. 이 프로젝트의 작성자는 해당 리소스에 대한 소유권을 주장하지 않습니다. 이 프로젝트는 비영리 프로젝트이며 권리를 침해하는 데 사용되어서는 안 됩니다. 사용자는 자신의 사용이 해당 법률 및 라이선스를 준수하는지 확인할 책임이 있습니다.</value>
   </data>
   <data name="SettingsPageDiscordPresence.Header" xml:space="preserve">

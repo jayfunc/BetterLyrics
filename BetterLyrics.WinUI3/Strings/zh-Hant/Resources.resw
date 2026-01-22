@@ -822,7 +822,7 @@
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>桌面模式（透明）</value>
   </data>
-  <data name="SettingsPageDisclaimer.Message" xml:space="preserve">
+  <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
     <value>本專案按現狀提供，不提供任何形式的保證。所有歌詞、字型、圖示和其他第三方資源均為其各自版權所有者的財產。本專案的作者不主張此類資源的所有權。本專案為非商業性專案，不得用於侵犯任何權利。使用者有責任確保自己的使用符合適用的法律和許可。</value>
   </data>
   <data name="SettingsPageDiscordPresence.Header" xml:space="preserve">

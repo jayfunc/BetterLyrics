@@ -822,7 +822,7 @@
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>Mode Desktop (Transparan)</value>
   </data>
-  <data name="SettingsPageDisclaimer.Message" xml:space="preserve">
+  <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
     <value>Proyek ini disediakan "apa adanya" tanpa jaminan apa pun. Semua lirik, font, ikon, dan sumber daya pihak ketiga lainnya adalah milik pemegang hak cipta masing-masing. Penulis proyek ini tidak mengklaim kepemilikan atas sumber daya tersebut. Ini adalah proyek non-komersial dan tidak boleh digunakan untuk melanggar hak apa pun. Pengguna bertanggung jawab untuk memastikan penggunaannya mematuhi hukum dan lisensi yang berlaku.</value>
   </data>
   <data name="SettingsPageDiscordPresence.Header" xml:space="preserve">

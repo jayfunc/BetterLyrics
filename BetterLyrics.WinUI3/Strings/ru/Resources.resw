@@ -822,7 +822,7 @@
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>Режим рабочего стола (прозрачный)</value>
   </data>
-  <data name="SettingsPageDisclaimer.Message" xml:space="preserve">
+  <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
     <value>Этот проект предоставляется «как есть» без каких-либо гарантий. Все тексты песен, шрифты, иконки и другие ресурсы третьих лиц являются собственностью их соответствующих правообладателей. Авторы этого проекта не претендуют на владение такими ресурсами. Этот проект является некоммерческим и не должен использоваться для нарушения чьих-либо прав. Пользователи несут ответственность за то, чтобы их использование соответствовало применимым законам и лицензиям.</value>
   </data>
   <data name="SettingsPageDiscordPresence.Header" xml:space="preserve">

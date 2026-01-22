@@ -453,7 +453,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                         if (key == "musicName" && valueArr.GetArrayLength() > 0)
                             title = valueArr[0].GetString();
                         if (key == "artists" && valueArr.GetArrayLength() > 0)
-                            artist = string.Join(" / ", valueArr.EnumerateArray());
+                            artist = string.Join("/", valueArr.EnumerateArray());
                         if (key == "album" && valueArr.GetArrayLength() > 0)
                             album = valueArr[0].GetString();
                         if (key == "ncmMusicId" && valueArr.GetArrayLength() > 0)
