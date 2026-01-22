@@ -10,7 +10,7 @@
 
         public const string BetterLyricsGitHub = $"{AuthorGitHub}/BetterLyrics";
 
-        public const string ShareHub = $"{BetterLyricsGitHub}/blob/dev/resources/lyrics-status-window/README.md";
+        public const string ShareHub = $"{BetterLyricsGitHub}/blob/dev/resources/lyrics-window-status/README.md";
         public const string TermsOfService = $"{BetterLyricsGitHub}/blob/dev/docs/TERMS_OF_SERVICE.md";
         public const string PrivacyPolicy = $"{BetterLyricsGitHub}/blob/dev/docs/PRIVACY_POLICY.md";
         public const string UserGuide = $"https://betterlyrics.github.io";
