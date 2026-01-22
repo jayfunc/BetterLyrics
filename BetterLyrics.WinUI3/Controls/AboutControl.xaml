@@ -30,7 +30,7 @@
                 </Rectangle>
             </controls:OpacityMaskView.OpacityMask>
             <Grid>
-                <Image Source="ms-appx:///Assets/Banner.png" />
+                <Image Source="ms-appx:///Assets/Banner.png" Stretch="UniformToFill" />
                 <Border>
                     <Border.Background>
                         <media:AcrylicBrush
@@ -310,8 +310,7 @@
                                 BorderThickness="0"
                                 CornerRadius="0"
                                 IsClosable="False"
-                                IsOpen="True"
-                                Severity="Warning" />
+                                IsOpen="True" />
                         </dev:SettingsExpander.ItemsHeader>
                     </dev:SettingsExpander>
 
@@ -328,12 +327,11 @@
                             Value="{x:Bind ViewModel.AppSettings.AdvancedSettings.FPS, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
-                    <InfoBar
+                    <TextBlock
                         x:Uid="SettingsPageDisclaimer"
-                        BorderThickness="0"
-                        IsClosable="False"
-                        IsOpen="True"
-                        Severity="Warning" />
+                        Margin="12"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        Style="{StaticResource CaptionTextBlockStyle}" />
 
                 </StackPanel>
             </Grid>

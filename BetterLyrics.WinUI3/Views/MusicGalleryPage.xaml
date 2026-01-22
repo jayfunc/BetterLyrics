@@ -303,7 +303,7 @@
                         Style="{StaticResource GhostToggleButtonStyle}" />
 
                     <!--  为多选模式保留  -->
-                    <Grid Grid.Column="1" Visibility="{Binding ElementName=SongListViewSelectionModeToggleButton, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                    <Grid Grid.Column="1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition />
@@ -314,7 +314,8 @@
                             MinWidth="20"
                             VerticalAlignment="Center"
                             Checked="SelectAllCheckBox_Checked"
-                            Unchecked="SelectAllCheckBox_Unchecked" />
+                            Unchecked="SelectAllCheckBox_Unchecked"
+                            Visibility="{Binding ElementName=SongListViewSelectionModeToggleButton, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
                         <RichTextBlock Grid.Column="1" VerticalAlignment="Center">
                             <Paragraph>
                                 <Run Text="{x:Bind ViewModel.SelectedTracks.Count, Mode=OneWay}" />

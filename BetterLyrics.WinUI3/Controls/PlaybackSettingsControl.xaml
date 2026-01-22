@@ -451,7 +451,10 @@
                             </StackPanel>
                             <dev:SettingsExpander.Items>
                                 <dev:SettingsCard x:Uid="SettingsPageLastFMUsername" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
-                                    <HyperlinkButton Content="{x:Bind ViewModel.LastFMUser.Name, Mode=OneWay}" NavigateUri="{x:Bind ViewModel.LastFMUser.Url, Mode=OneWay}" />
+                                    <HyperlinkButton
+                                        Padding="0"
+                                        Content="{x:Bind ViewModel.LastFMUser.Name, Mode=OneWay}"
+                                        NavigateUri="{x:Bind ViewModel.LastFMUser.Url, Mode=OneWay}" />
                                 </dev:SettingsCard>
                                 <dev:SettingsCard x:Uid="SettingsPageLastFMPlaycount" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
                                     <TextBlock Text="{x:Bind ViewModel.LastFMUser.PlayCount, Mode=OneWay}" />

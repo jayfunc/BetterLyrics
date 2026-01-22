@@ -68,11 +68,12 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsMetadataParser
 
         private static void ParseTtmlAgent(XmlReader reader, LyricsMetadata metadata)
         {
+            if (reader.IsEmptyElement) return;
+
             string? role = reader.GetAttribute("role");
+            if (string.IsNullOrWhiteSpace(role)) return;
 
             string content = reader.ReadElementContentAsString();
-
-            if (string.IsNullOrWhiteSpace(role)) return;
 
             if (role.Contains("artist") || role.Contains("performer"))
             {
@@ -102,7 +103,11 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsMetadataParser
             }
             else if (key == "artists")
             {
-                metadata.Artist = value;
+                if (metadata.Artist != "")
+                {
+                    metadata.Artist += "/";
+                }
+                metadata.Artist += value;
             }
             else if (key == "album")
             {

@@ -822,7 +822,7 @@
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>Desktop-Modus (Transparent)</value>
   </data>
-  <data name="SettingsPageDisclaimer.Message" xml:space="preserve">
+  <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
     <value>Dieses Projekt wird "wie besehen" ohne jegliche Gewährleistung bereitgestellt. Alle Songtexte, Schriftarten, Symbole und andere Ressourcen Dritter sind Eigentum ihrer jeweiligen Urheberrechtsinhaber. Die Autoren dieses Projekts beanspruchen kein Eigentum an solchen Ressourcen. Dieses Projekt ist nicht-kommerziell und darf nicht zur Verletzung von Rechten verwendet werden. Benutzer sind dafür verantwortlich, dass ihre Nutzung den geltenden Gesetzen und Lizenzen entspricht.</value>
   </data>
   <data name="SettingsPageDiscordPresence.Header" xml:space="preserve">
