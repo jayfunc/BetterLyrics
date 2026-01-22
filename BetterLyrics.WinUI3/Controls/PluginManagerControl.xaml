@@ -3,6 +3,7 @@
     x:Class="BetterLyrics.WinUI3.Controls.PluginManagerControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:consts="using:BetterLyrics.WinUI3.Constants"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dev="using:DevWinUI"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
@@ -65,7 +66,7 @@
             VerticalAlignment="Bottom"
             Orientation="Horizontal"
             Spacing="6">
-            <HyperlinkButton x:Uid="PluginManagerControlVisitPluginStore" NavigateUri="https://betterlyrics.github.io/plugins" />
+            <HyperlinkButton x:Uid="PluginManagerControlVisitPluginStore" NavigateUri="{x:Bind consts:Link.PluginsStore}" />
             <Button
                 x:Uid="PluginManagerControlInstall"
                 Command="{x:Bind ViewModel.InstallPluginCommand}"
