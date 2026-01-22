@@ -1,4 +1,4 @@
-[**English**](TermsofService.md) | ﻿**中文**
+[**English**](TERMS_OF_SERVICE.md) | ﻿**中文**
 
 # BetterLyrics 服务条款
 
