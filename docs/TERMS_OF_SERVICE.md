@@ -1,4 +1,4 @@
-**English** | [**中文**](TermsofService.CN.md)
+**English** | [**中文**](TERMS_OF_SERVICE.CN.md)
 
 # Terms of Service for BetterLyrics
 
