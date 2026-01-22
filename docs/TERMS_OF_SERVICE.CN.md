@@ -12,7 +12,7 @@
 
 ## 1. 许可
 
-BetterLyrics 是开源软件。本应用根据 **MIT 许可证 (MIT License)** 的条款授权给您。
+BetterLyrics 是开源软件。本应用根据 **GPL-3.0 许可证 (GPL-3.0 License)** 的条款授权给您。
 
 您可以在 GitHub 仓库中和/或在本应用随附的 `LICENSE.txt` 文件中找到该许可证的副本。您对本应用的使用必须遵守此许可证的条款。
 
