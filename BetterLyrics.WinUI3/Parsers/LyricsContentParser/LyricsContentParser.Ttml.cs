@@ -128,7 +128,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsContentParser
                 EndMs = containerEndMs,
                 PrimaryText = fullOriginalText,
                 PrimarySyllables = syllables,
-                IsPrimaryHasRealSyllableInfo = true,
+                IsPrimaryHasRealSyllableInfo = syllables.Count > 0,
             });
 
             var transSpan = container.Elements()
