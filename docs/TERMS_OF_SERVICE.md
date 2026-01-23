@@ -1,4 +1,4 @@
-**English** | [**中文**](TermsofService.CN.md)
+**English** | [**中文**](TERMS_OF_SERVICE.CN.md)
 
 # Terms of Service for BetterLyrics
 
@@ -12,7 +12,7 @@ By accessing or using the App, you agree to be bound by these Terms. If you disa
 
 ## 1. License
 
-BetterLyrics is open-source software. The App is licensed to you under the terms of the **MIT License**.
+BetterLyrics is open-source software. The App is licensed to you under the terms of the **GPL-3.0 License**.
 
 A copy of this license is available in the GitHub repository and/or included with the App (`LICENSE.txt` file). Your use of the App must comply with the terms of this license.
 

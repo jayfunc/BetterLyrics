@@ -1,4 +1,4 @@
-**English** | [**中文**](PrivacyPolicy.CN.md)
+**English** | [**中文**](PRIVACY_POLICY.CN.md)
 
 # Privacy Policy for BetterLyrics
 
