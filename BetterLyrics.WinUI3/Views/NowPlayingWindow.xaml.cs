@@ -355,7 +355,9 @@ namespace BetterLyrics.WinUI3.Views
 
         private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            NowPlayingBar.IsCompactMode = RootGrid.ActualWidth < 400 || RootGrid.ActualHeight < 100;
+            NowPlayingBar.IsCompactMode = RootGrid.ActualWidth < 180 || RootGrid.ActualHeight < 100;
+            NowPlayingBar.ShowTime = NowPlayingBar.ShowVolumeButton = NowPlayingBar.ShowMoreButton =
+                NowPlayingBar.IsCompactMode || RootGrid.ActualWidth > 350;
             if (RootGrid.ActualWidth < 400)
             {
                 TopCenterCommandGrid.Visibility = Visibility.Visible;

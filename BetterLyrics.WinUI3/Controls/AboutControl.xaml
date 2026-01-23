@@ -35,8 +35,8 @@
                     <Border.Background>
                         <media:AcrylicBrush
                             BlurAmount="5"
-                            TintColor="Black"
-                            TintOpacity=".6" />
+                            TintColor="{ThemeResource SolidBackgroundFillColorBaseAlt}"
+                            TintOpacity=".7" />
                     </Border.Background>
                 </Border>
             </Grid>

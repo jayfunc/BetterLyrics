@@ -2,7 +2,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style x:Key="GhostSliderStyle" TargetType="Slider">
-        <Setter Property="Background" Value="{ThemeResource ControlStrokeColorOnAccentDefaultBrush}" />
+        <Setter Property="Background" Value="{ThemeResource ControlFillColorDefaultBrush}" />
         <Setter Property="BorderThickness" Value="{ThemeResource SliderBorderThemeThickness}" />
         <Setter Property="Foreground" Value="{ThemeResource TextFillColorPrimaryBrush}" />
         <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
@@ -66,16 +66,21 @@
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="{ThemeResource SliderPostContentMargin}" />
                                 </Grid.RowDefinitions>
+                                <!--  Progress bar (bottom-most layer)  -->
                                 <Rectangle
                                     x:Name="HorizontalTrackRect"
                                     Grid.Row="1"
                                     Grid.ColumnSpan="3"
                                     Height="2"
-                                    Fill="{TemplateBinding Background}" />
+                                    Fill="{TemplateBinding Background}"
+                                    Opacity="0.7" />
+                                <!--  Progress bar (top-most layer)  -->
                                 <Rectangle
                                     x:Name="HorizontalDecreaseRect"
                                     Grid.Row="1"
-                                    Fill="{TemplateBinding Foreground}" />
+                                    Height="2"
+                                    Fill="{TemplateBinding Foreground}"
+                                    Opacity="0.7" />
                                 <TickBar
                                     x:Name="TopTickBar"
                                     Grid.ColumnSpan="3"
@@ -100,6 +105,7 @@
                                     VerticalAlignment="Top"
                                     Fill="{ThemeResource SliderTickBarFill}"
                                     Visibility="Collapsed" />
+                                <!--  Current point  -->
                                 <Thumb
                                     x:Name="HorizontalThumb"
                                     Grid.Row="0"
@@ -110,6 +116,7 @@
                                     AutomationProperties.AccessibilityView="Raw"
                                     DataContext="{TemplateBinding Value}"
                                     FocusVisualMargin="-14,-6,-14,-6"
+                                    Opacity="0.7"
                                     Style="{StaticResource SliderThumbStyle}" />
                             </Grid>
                             <Grid

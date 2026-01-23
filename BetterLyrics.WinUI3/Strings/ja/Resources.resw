@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -394,7 +394,7 @@
     <value>分割表示</value>
   </data>
   <data name="MediaSettingsControlAdvOpt.Text" xml:space="preserve">
-    <value />
+    <value>高度なオプション</value>
   </data>
   <data name="MediaSettingsControlLastSyncTime.Header" xml:space="preserve">
     <value>最終同期時間</value>
@@ -409,10 +409,10 @@
     <value>今すぐ同期</value>
   </data>
   <data name="MediaSettingsForceSyncButton.Content" xml:space="preserve">
-    <value />
+    <value>強制同期を実行</value>
   </data>
   <data name="MediaSettingsForceSyncHint.Text" xml:space="preserve">
-    <value />
+    <value>このオプションでは、リモートからメタデータを強制的に再取得します。ローカルのデータに問題がある時や、情報を一から全て更新し直したい時に役立ちます。</value>
   </data>
   <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
     <value>プレイリストに追加</value>
@@ -823,7 +823,7 @@
     <value>デスクトップモード（透明）</value>
   </data>
   <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
-    <value>このプロジェクトは、いかなる種類の保証もなくそのまま提供されています。すべての歌詞、フォント、アイコン、およびその他のサードパーティのリソースは、それぞれの著作権者の所有物です。 このプロジェクトの著者は、そのようなリソースの所有権を主張していません。このプロジェクトは非商業的であり、いかなる権利も侵害するために使用してはなりません。 ユーザーは、適用される法律およびライセンスに従うことを確認する責任があります。</value>
+    <value>このプロジェクトは現状のまま提供されており、何の保証もありません。歌詞、フォント、アイコンなどの素材は、すべてそれぞれの権利者のものです。作者がそれらの権利を主張することはありません。これは非営利のプロジェクトです。権利を侵害するような使い方はしないでください。法律やライセンスを守って使うのは、利用する方の自己責任でお願いします。</value>
   </data>
   <data name="SettingsPageDiscordPresence.Header" xml:space="preserve">
     <value>Discord Presence で視聴ステータスを表示</value>

@@ -77,6 +77,24 @@ public sealed partial class NowPlayingBar : UserControl
     public static readonly DependencyProperty PlaybackOrderProperty =
         DependencyProperty.Register(nameof(PlaybackOrder), typeof(PlaybackOrder), typeof(NowPlayingBar), new PropertyMetadata(PlaybackOrder.RepeatAll));
 
+    public bool ShowVolumeButton
+    {
+        get { return (bool)GetValue(ShowVolumeButtonProperty); }
+        set { SetValue(ShowVolumeButtonProperty, value); }
+    }
+
+    public static readonly DependencyProperty ShowVolumeButtonProperty =
+        DependencyProperty.Register(nameof(ShowVolumeButton), typeof(bool), typeof(NowPlayingBar), new PropertyMetadata(true));
+
+    public bool ShowMoreButton
+    {
+        get { return (bool)GetValue(ShowMoreButtonProperty); }
+        set { SetValue(ShowMoreButtonProperty, value); }
+    }
+
+    public static readonly DependencyProperty ShowMoreButtonProperty =
+        DependencyProperty.Register(nameof(ShowMoreButton), typeof(bool), typeof(NowPlayingBar), new PropertyMetadata(true));
+
     public bool IsCompactMode
     {
         get { return (bool)GetValue(IsCompactModeProperty); }
