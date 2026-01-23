@@ -14,7 +14,7 @@
     <Grid x:Name="RootGrid">
         <Grid
             x:Name="BottomCommandGrid"
-            Background="{ThemeResource LayerOnMicaBaseAltFillColorDefaultBrush}"
+            Background="Transparent"
             Opacity="{x:Bind ViewModel.BottomCommandGridOpacity, Mode=OneWay}"
             PointerEntered="BottomCommandGrid_PointerEntered"
             PointerExited="BottomCommandGrid_PointerExited">
@@ -210,6 +210,7 @@
                                 </interactivity:DataTriggerBehavior>
                             </interactivity:Interaction.Behaviors>
                         </Button>
+                        <!--  Next track  -->
                         <Button
                             Command="{x:Bind ViewModel.NextSongCommand}"
                             Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
@@ -250,7 +251,10 @@
                         </Button>
 
                         <!--  Volume  -->
-                        <Button Click="VolumeButton_Click" Style="{StaticResource GhostButtonStyle}">
+                        <Button
+                            Click="VolumeButton_Click"
+                            Style="{StaticResource GhostButtonStyle}"
+                            Visibility="{x:Bind ShowVolumeButton, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                             <Grid>
 
                                 <!--  Volumn: 0  -->
@@ -363,7 +367,11 @@
                         </Button>
 
                         <!--  More  -->
-                        <Button Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE712;}" Style="{StaticResource GhostButtonStyle}">
+                        <Button
+                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                  Glyph=&#xE712;}"
+                            Style="{StaticResource GhostButtonStyle}"
+                            Visibility="{x:Bind ShowMoreButton, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                             <Button.Flyout>
                                 <MenuFlyout>
                                     <!--  Lyrics search window  -->
