@@ -45,7 +45,9 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         IRecipient<PropertyChangedMessage<ChineseRomanization>>,
         IRecipient<PropertyChangedMessage<DateTime?>>
     {
-        private EventSourceReader? _sse = null;
+        private EventSourceReader? _lxMusicSse = null;
+        private KugouMemoryReader _kugouMemoryReader = new();
+
         private readonly MediaManager _mediaManager = new();
         private IBuffer? _SMTCAlbumArtBuffer = null;
 
@@ -341,15 +343,10 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                     IsScrobbled = false;
                     ScrobbledDuration = TimeSpan.Zero;
 
-                    if (PlayerIdHelper.IsLXMusic(sessionId))
-                    {
-                        StartSSE();
-                    }
-                    else
-                    {
-                        StopSSE();
-                    }
+                    HandleLXMusicIfDetected(sessionId);
+                    HandleKugouMusicIfDetected(sessionId);
 
+                    // 处理专辑图片
                     if (PlayerIdHelper.IsLXMusic(sessionId) && _lxMusicAlbumArtBytes != null)
                     {
                         _SMTCAlbumArtBuffer = _lxMusicAlbumArtBytes.AsBuffer();
@@ -495,18 +492,32 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             }
         }
 
-        private void StartSSE()
+        // LX Music
+
+        private void HandleLXMusicIfDetected(string sessionId)
         {
-            if (_sse != null)
+            if (PlayerIdHelper.IsLXMusic(sessionId))
+            {
+                StartLXMusicSSE();
+            }
+            else
+            {
+                StopLXMusicSSE();
+            }
+        }
+
+        private void StartLXMusicSSE()
+        {
+            if (_lxMusicSse != null)
             {
                 return;
             }
 
             try
             {
-                _sse = new EventSourceReader(new Uri($"{_settingsService.AppSettings.GeneralSettings.LXMusicServer}{Constants.LXMusic.QuerySuffix}")).Start();
-                _sse.MessageReceived += Sse_MessageReceived;
-                _sse.Disconnected += Sse_Disconnected;
+                _lxMusicSse = new EventSourceReader(new Uri($"{_settingsService.AppSettings.GeneralSettings.LXMusicServer}{Constants.LXMusic.QuerySuffix}")).Start();
+                _lxMusicSse.MessageReceived += LXMusicSse_MessageReceived;
+                _lxMusicSse.Disconnected += LXMusicSse_Disconnected;
             }
             catch (Exception)
             {
@@ -515,33 +526,33 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                 {
                     ToastHelper.ShowToast("FailToStartLXMusicServer", null, InfoBarSeverity.Error);
                 });
-                StopSSE();
+                StopLXMusicSSE();
             }
         }
 
-        private void StopSSE()
+        private void StopLXMusicSSE()
         {
-            if (_sse != null)
+            if (_lxMusicSse != null)
             {
-                _sse.MessageReceived -= Sse_MessageReceived;
-                _sse.Disconnected -= Sse_Disconnected;
-                _sse.Dispose();
-                _sse = null;
+                _lxMusicSse.MessageReceived -= LXMusicSse_MessageReceived;
+                _lxMusicSse.Disconnected -= LXMusicSse_Disconnected;
+                _lxMusicSse.Dispose();
+                _lxMusicSse = null;
             }
         }
 
-        private void Sse_Disconnected(object sender, DisconnectEventArgs e)
+        private void LXMusicSse_Disconnected(object sender, DisconnectEventArgs e)
         {
             _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
             {
                 await Task.Delay(e.ReconnectDelay);
-                if (_sse != null && !_sse.IsDisposed) _sse.Start();
+                if (_lxMusicSse != null && !_lxMusicSse.IsDisposed) _lxMusicSse.Start();
             });
         }
 
-        private void Sse_MessageReceived(object sender, EventSourceMessageEventArgs e)
+        private void LXMusicSse_MessageReceived(object sender, EventSourceMessageEventArgs e)
         {
-            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
+            _dispatcherQueue.TryEnqueue(async () =>
             {
                 if (PlayerIdHelper.IsLXMusic(CurrentSongInfo.PlayerId))
                 {
@@ -585,6 +596,31 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                         }
                     }
                 }
+            });
+        }
+
+        // Kugou Music
+
+        private void HandleKugouMusicIfDetected(string sessionId)
+        {
+            if (sessionId == PlayerId.KugouMusic)
+            {
+                _kugouMemoryReader.Start();
+                _kugouMemoryReader.OnProgressChanged += KugouMemoryReader_OnProgressChanged;
+            }
+            else
+            {
+                _kugouMemoryReader.Stop();
+                _kugouMemoryReader.OnProgressChanged -= KugouMemoryReader_OnProgressChanged;
+            }
+        }
+
+        private void KugouMemoryReader_OnProgressChanged(double time, double total)
+        {
+            _dispatcherQueue.TryEnqueue(() =>
+            {
+                CurrentPosition = TimeSpan.FromSeconds(time);
+                CurrentSongInfo.DurationMs = total * 1000;
             });
         }
 
