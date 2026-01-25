@@ -36,6 +36,7 @@ using Vanara.Windows.Shell;
 using Windows.Media.Control;
 using Windows.Storage.Streams;
 using WindowsMediaController;
+using static WindowsMediaController.MediaManager;
 
 namespace BetterLyrics.WinUI3.Services.GSMTCService
 {
@@ -261,19 +262,14 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             }
         }
 
-        private void MediaManager_OnFocusedSessionChanged(MediaManager.MediaSession? mediaSession)
-        {
-            OnDesiredSessionChanged();
-        }
-
-        private void MediaManager_OnAnyTimelinePropertyChanged(MediaManager.MediaSession mediaSession, GlobalSystemMediaTransportControlsSessionTimelineProperties timelineProperties)
+        private void OnAnyTimelineChangedCore(MediaManager.MediaSession? mediaSession, TimeSpan currentPosition, TimeSpan duration)
         {
             _dispatcherQueue.TryEnqueue(() =>
             {
                 if (mediaSession != _currentDesiredSession) return;
 
-                CurrentPosition = timelineProperties.Position;
-                CurrentSongInfo.DurationMs = timelineProperties.EndTime.TotalMilliseconds;
+                CurrentPosition = currentPosition;
+                CurrentSongInfo.DurationMs = duration.TotalMilliseconds;
                 UpdateTargetScrobbledDuration();
                 if (CurrentPosition.TotalSeconds == 0)
                 {
@@ -281,6 +277,16 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                     ScrobbledDuration = TimeSpan.Zero;
                 }
             });
+        }
+
+        private void MediaManager_OnFocusedSessionChanged(MediaManager.MediaSession? mediaSession)
+        {
+            OnDesiredSessionChanged();
+        }
+
+        private void MediaManager_OnAnyTimelinePropertyChanged(MediaManager.MediaSession mediaSession, GlobalSystemMediaTransportControlsSessionTimelineProperties timelineProperties)
+        {
+            OnAnyTimelineChangedCore(mediaSession, timelineProperties.Position, timelineProperties.EndTime);
         }
 
         private void MediaManager_OnAnyPlaybackStateChanged(MediaManager.MediaSession mediaSession, GlobalSystemMediaTransportControlsSessionPlaybackInfo playbackInfo)
@@ -639,11 +645,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
         private void UniversalMemoryReader_OnProgressChanged(double time, double total)
         {
-            _dispatcherQueue.TryEnqueue(() =>
-            {
-                CurrentPosition = TimeSpan.FromSeconds(time);
-                CurrentSongInfo.DurationMs = total * 1000;
-            });
+            OnAnyTimelineChangedCore(_currentDesiredSession, TimeSpan.FromSeconds(time), TimeSpan.FromSeconds(total));
         }
 
         public async Task PlayAsync()
