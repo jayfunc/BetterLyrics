@@ -25,5 +25,6 @@
         public const string MoeKoeMusic = "MoeKoe Music";
         public const string Listen1 = "Listen 1";
         public const string OriginalSoundHQPlayer = "Original Sound HQ Player";
+        public const string JRiverMediaCenter = "JRiver Media Center";
     }
 }
