@@ -5,14 +5,18 @@ using BetterLyrics.WinUI3.Services.LastFMService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Services.TranslationService;
 using BetterLyrics.WinUI3.Services.TransliterationService;
+using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LiteFM.Abstractions;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -91,6 +95,19 @@ namespace BetterLyrics.WinUI3.ViewModels
         private void LastFMService_UserChanged(object? sender, Events.LastFMUserChangedEventArgs e)
         {
             LastFMUser = e.User;
+        }
+
+        [RelayCommand]
+        private async Task ImportMemoryReaderConfigAsync()
+        {
+            string[] fileTypeFilter = [".json"];
+            var file = await PickerHelper.PickSingleFileAsync<SettingsWindow>(fileTypeFilter);
+            if (file != null)
+            {
+                var json = File.ReadAllText(file.Path);
+                SelectedMediaSourceProvider?.MemoryReaderConfig = JsonSerializer.Deserialize(json, Serialization.SourceGenerationContext.Default.MemoryReaderConfig);
+                ToastHelper.ShowToast("ImportSettingsSuccess", null, InfoBarSeverity.Success);
+            }
         }
 
         [RelayCommand]

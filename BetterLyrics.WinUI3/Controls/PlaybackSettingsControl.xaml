@@ -95,14 +95,33 @@
                 <Grid Style="{StaticResource SettingsGridStyle}">
                     <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
-                        <dev:SettingsCard x:Uid="SettingsPageMediaSourceProvidersConfig">
+                        <!--  总开关  -->
+                        <dev:SettingsExpander x:Uid="SettingsPageMediaSourceProvidersConfig">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsEnabled, Mode=TwoWay}" />
-                        </dev:SettingsCard>
+                            <dev:SettingsExpander.Items>
+                                <dev:SettingsCard x:Uid="PlaybackSettingsControlMemoryReader">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsMemoryReaderEnabled, Mode=TwoWay}" />
+                                </dev:SettingsCard>
+                                <dev:SettingsCard>
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <HyperlinkButton
+                                            Padding="6"
+                                            Content="{ui:FontIcon FontSize=12,
+                                                                  FontFamily={StaticResource IconFontFamily},
+                                                                  Glyph=&#xE897;}"
+                                            NavigateUri="https://gist.github.com/jayfunc/ad09a3df951b95c8cf6228695fecc067" />
+                                        <Button x:Uid="SettingsPageImport" Command="{x:Bind ViewModel.ImportMemoryReaderConfigCommand}" />
+                                    </StackPanel>
+                                </dev:SettingsCard>
+                            </dev:SettingsExpander.Items>
+                        </dev:SettingsExpander>
 
+                        <!--  Last.fm  -->
                         <dev:SettingsCard x:Uid="SettingsPageLastFMTrack" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsLastFMTrackEnabled, Mode=TwoWay}" />
                         </dev:SettingsCard>
 
+                        <!--  Discord  -->
                         <dev:SettingsCard x:Uid="SettingsPageDiscordPresence">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsDiscordPresenceEnabled, Mode=TwoWay}" />
                         </dev:SettingsCard>

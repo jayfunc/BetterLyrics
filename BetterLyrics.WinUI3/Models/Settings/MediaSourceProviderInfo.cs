@@ -15,6 +15,10 @@ namespace BetterLyrics.WinUI3.Models.Settings
     {
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsEnabled { get; set; } = true;
 
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsMemoryReaderEnabled { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsMemoryReaderRiskAccepted { get; set; } = false;
+        [ObservableProperty] public partial MemoryReaderConfig? MemoryReaderConfig { get; set; } = new();
+
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string Provider { get; set; }
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLastFMTrackEnabled { get; set; } = false;

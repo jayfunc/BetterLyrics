@@ -564,6 +564,12 @@
   <data name="Pinyin" xml:space="preserve">
     <value>Pinyin (Mandarin)</value>
   </data>
+  <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
+    <value>Loads external configurations to read playback progress directly from target process memory. Please use with caution; the developer is not responsible for the safety of third-party configurations.</value>
+  </data>
+  <data name="PlaybackSettingsControlMemoryReader.Header" xml:space="preserve">
+    <value>Memory Reader Adapter</value>
+  </data>
   <data name="PlaylistViewFailed" xml:space="preserve">
     <value>Unable to view tracks because the path does not exist</value>
   </data>

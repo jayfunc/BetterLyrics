@@ -56,6 +56,7 @@ namespace BetterLyrics.WinUI3.Helper
             PlayerId.MoeKoeMusicAlternative => PlayerName.MoeKoeMusic,
             PlayerId.Listen1 => PlayerName.Listen1,
             PlayerId.OriginalSoundHQPlayer => PlayerName.OriginalSoundHQPlayer,
+            PlayerId.JRiverMediaCenter => PlayerName.JRiverMediaCenter,
             _ => id,
         };
 

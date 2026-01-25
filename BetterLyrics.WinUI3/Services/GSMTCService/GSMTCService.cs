@@ -46,7 +46,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         IRecipient<PropertyChangedMessage<DateTime?>>
     {
         private EventSourceReader? _lxMusicSse = null;
-        private KugouMemoryReader _kugouMemoryReader = new();
+        private UniversalMemoryReader? _memoryReader = null;
 
         private readonly MediaManager _mediaManager = new();
         private IBuffer? _SMTCAlbumArtBuffer = null;
@@ -103,6 +103,30 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             _scrobbleTimer = new();
             _scrobbleTimer.Interval = TimeSpan.FromSeconds(1);
             _scrobbleTimer.Tick += ScrobbleTimer_Tick;
+
+            // For dev only
+            //var memoryReaderConfig = new MemoryReaderConfig
+            //{
+            //    ProcessName = "",
+            //    Is64Bit = true,
+            //    CurrentTime = new MemoryAddressDefinition
+            //    {
+            //        ModuleName = "",
+            //        BaseOffset = 0x,
+            //        PointerOffsets = [0x],
+            //        ValueType = MemoryValueType.Int32,
+            //        UnitScale = 0.001
+            //    },
+            //    TotalDuration = new MemoryAddressDefinition
+            //    {
+            //        ModuleName = "",
+            //        BaseOffset = 0x,
+            //        PointerOffsets = [0x],
+            //        ValueType = MemoryValueType.Int32,
+            //        UnitScale = 0.001
+            //    }
+            //};
+            //var test = JsonSerializer.Serialize(memoryReaderConfig, Serialization.SourceGenerationContext.Default.MemoryReaderConfig);
 
             _onMediaPropsChangedTimer = _dispatcherQueue.CreateTimer();
 
@@ -344,7 +368,21 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                     ScrobbledDuration = TimeSpan.Zero;
 
                     HandleLXMusicIfDetected(sessionId);
-                    HandleKugouMusicIfDetected(sessionId);
+
+                    // 总是先回收 _memoryReader
+                    _memoryReader?.Stop();
+                    _memoryReader?.OnProgressChanged -= UniversalMemoryReader_OnProgressChanged;
+                    _memoryReader = null;
+                    // 注册
+                    if (currentMediaSourceProviderInfo?.IsMemoryReaderEnabled == true)
+                    {
+                        if (currentMediaSourceProviderInfo.MemoryReaderConfig is MemoryReaderConfig config)
+                        {
+                            _memoryReader = new(config);
+                            _memoryReader.Start();
+                            _memoryReader.OnProgressChanged += UniversalMemoryReader_OnProgressChanged;
+                        }
+                    }
 
                     // 处理专辑图片
                     if (PlayerIdHelper.IsLXMusic(sessionId) && _lxMusicAlbumArtBytes != null)
@@ -599,23 +637,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             });
         }
 
-        // Kugou Music
-
-        private void HandleKugouMusicIfDetected(string sessionId)
-        {
-            if (sessionId == PlayerId.KugouMusic)
-            {
-                _kugouMemoryReader.Start();
-                _kugouMemoryReader.OnProgressChanged += KugouMemoryReader_OnProgressChanged;
-            }
-            else
-            {
-                _kugouMemoryReader.Stop();
-                _kugouMemoryReader.OnProgressChanged -= KugouMemoryReader_OnProgressChanged;
-            }
-        }
-
-        private void KugouMemoryReader_OnProgressChanged(double time, double total)
+        private void UniversalMemoryReader_OnProgressChanged(double time, double total)
         {
             _dispatcherQueue.TryEnqueue(() =>
             {

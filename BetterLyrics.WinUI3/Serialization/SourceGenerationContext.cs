@@ -15,6 +15,7 @@ namespace BetterLyrics.WinUI3.Serialization
     [JsonSerializable(typeof(LyricsCacheItem))]
     [JsonSerializable(typeof(Dictionary<string, string>))]
     [JsonSerializable(typeof(Dictionary<string, object>))]
+    [JsonSerializable(typeof(MemoryReaderConfig))]
     [JsonSourceGenerationOptions(WriteIndented = true)]
     internal partial class SourceGenerationContext : JsonSerializerContext { }
 }
