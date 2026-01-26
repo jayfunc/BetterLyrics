@@ -71,6 +71,7 @@
 		<None Remove="Views\MusicGalleryPage.xaml" />
 		<None Remove="Views\MusicGalleryWindow.xaml" />
 		<None Remove="Views\SettingsWindow.xaml" />
+		<None Remove="Views\SplashWindow.xaml" />
 		<None Remove="Views\SystemTrayWindow.xaml" />
 	</ItemGroup>
 	<ItemGroup>
@@ -452,6 +453,11 @@
 	  <Content Update="Assets\Banner.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Views\SplashWindow.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Controls\FontPickerDialog.xaml">

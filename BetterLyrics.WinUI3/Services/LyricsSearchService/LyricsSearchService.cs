@@ -601,7 +601,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             {
                 result = new NeteaseSearchResult(songInfo.Title, [songInfo.Artist], songInfo.Album, [], (int)songInfo.DurationMs, songInfo.SongId);
             }
-            else if (songInfo.SongId != null && searcher == Searchers.QQMusic && songInfo.PlayerId == Constants.PlayerId.QQMusic)
+            else if (songInfo.SongId != null && searcher == Searchers.QQMusic && PlayerIdHelper.IsQQFamily(songInfo.PlayerId))
             {
                 result = new QQMusicSearchResult(songInfo.Title, [songInfo.Artist], songInfo.Album, [], (int)songInfo.DurationMs, songInfo.SongId, "");
             }

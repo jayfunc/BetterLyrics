@@ -24,12 +24,12 @@
                     <TextBlock
                         x:Name="SelectedLocalizedText"
                         Text="N/A"
-                        TextAlignment="Center" />
+                        TextAlignment="Right" />
                     <TextBlock
                         x:Name="SelectedRawText"
                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                         Text="N/A"
-                        TextAlignment="Center" />
+                        TextAlignment="Right" />
                 </StackPanel>
 
                 <FontIcon

@@ -30,7 +30,7 @@ namespace BetterLyrics.WinUI3.Helper
 
             if (d is Image imageControl)
             {
-                imageControl.Source = new BitmapImage(new Uri(PathHelper.UnknownPlayerLogoPath));
+                imageControl.Source = null;
 
                 try
                 {

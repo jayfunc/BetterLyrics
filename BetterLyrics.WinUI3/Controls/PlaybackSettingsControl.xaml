@@ -16,6 +16,7 @@
     xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:settingsmodels="using:BetterLyrics.WinUI3.Models.Settings"
     xmlns:ui="using:CommunityToolkit.WinUI"
+    Loaded="UserControl_Loaded"
     mc:Ignorable="d">
 
     <Grid ColumnSpacing="6">
@@ -24,26 +25,18 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0">
+        <Grid
+            x:Name="PlaybackListGrid"
+            Grid.Column="0"
+            Opacity="{x:Bind ViewModel.IsConfigPanelOpened, Mode=OneWay, Converter={StaticResource BoolNegationToOpacityConverter}}"
+            SizeChanged="PlaybackListGrid_SizeChanged">
+            <Grid.OpacityTransition>
+                <ScalarTransition />
+            </Grid.OpacityTransition>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            <interactivity:Interaction.Behaviors>
-                <interactivity:DataTriggerBehavior
-                    Binding="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo.Count, Mode=OneWay}"
-                    ComparisonCondition="NotEqual"
-                    Value="0">
-                    <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                </interactivity:DataTriggerBehavior>
-                <interactivity:DataTriggerBehavior
-                    Binding="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo.Count, Mode=OneWay}"
-                    ComparisonCondition="Equal"
-                    Value="0">
-                    <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
-                </interactivity:DataTriggerBehavior>
-            </interactivity:Interaction.Behaviors>
 
             <InfoBar
                 x:Uid="SettingsPageMusicGalleryOpened"
@@ -53,273 +46,361 @@
                 Severity="Informational" />
 
             <!--  播放源列表  -->
-            <Grid Grid.Row="1" Margin="36,0,36,4">
-                <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
-                    <TextBlock x:Uid="SettingsPageConfigPlaybackSource" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-                    <ComboBox
-                        x:Name="MediaSourceProvidersListView"
-                        HorizontalAlignment="Stretch"
-                        ItemsSource="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo, Mode=OneWay}"
-                        SelectedItem="{x:Bind ViewModel.SelectedMediaSourceProvider, Mode=TwoWay}">
-                        <ComboBox.ItemTemplate>
-                            <DataTemplate x:DataType="settingsmodels:MediaSourceProviderInfo">
-                                <Grid Padding="2,4" ColumnSpacing="12">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <ToolTipService.ToolTip>
-                                        <ToolTip Content="{Binding Provider, Mode=OneWay}" />
-                                    </ToolTipService.ToolTip>
-                                    <Image
-                                        Grid.Column="0"
-                                        Height="16"
-                                        VerticalAlignment="Center"
-                                        helper:AppExtensions.Aumid="{Binding Provider}" />
-                                    <TextBlock
-                                        Grid.Column="1"
-                                        VerticalAlignment="Center"
-                                        helper:AppExtensions.Aumid="{Binding Provider}"
-                                        TextWrapping="Wrap" />
-                                </Grid>
-                            </DataTemplate>
-                        </ComboBox.ItemTemplate>
-                    </ComboBox>
-                </StackPanel>
-            </Grid>
-
-            <!--  播放源配置  -->
-            <ScrollViewer Grid.Row="2" Style="{StaticResource SettingsScrollViewerStyle}">
-                <Grid Style="{StaticResource SettingsGridStyle}">
-                    <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
-
-                        <!--  总开关  -->
-                        <dev:SettingsExpander x:Uid="SettingsPageMediaSourceProvidersConfig">
-                            <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsEnabled, Mode=TwoWay}" />
-                            <dev:SettingsExpander.Items>
-                                <dev:SettingsCard x:Uid="PlaybackSettingsControlMemoryReader">
-                                    <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsMemoryReaderEnabled, Mode=TwoWay}" />
-                                </dev:SettingsCard>
-                                <dev:SettingsCard>
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <HyperlinkButton
-                                            Padding="6"
-                                            Content="{ui:FontIcon FontSize=12,
-                                                                  FontFamily={StaticResource IconFontFamily},
-                                                                  Glyph=&#xE897;}"
-                                            NavigateUri="https://gist.github.com/jayfunc/ad09a3df951b95c8cf6228695fecc067" />
-                                        <Button x:Uid="SettingsPageImport" Command="{x:Bind ViewModel.ImportMemoryReaderConfigCommand}" />
-                                    </StackPanel>
-                                </dev:SettingsCard>
-                            </dev:SettingsExpander.Items>
-                        </dev:SettingsExpander>
-
-                        <!--  Last.fm  -->
-                        <dev:SettingsCard x:Uid="SettingsPageLastFMTrack" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
-                            <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsLastFMTrackEnabled, Mode=TwoWay}" />
-                        </dev:SettingsCard>
-
-                        <!--  Discord  -->
-                        <dev:SettingsCard x:Uid="SettingsPageDiscordPresence">
-                            <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsDiscordPresenceEnabled, Mode=TwoWay}" />
-                        </dev:SettingsCard>
-
-                        <!--  LX music server  -->
-                        <dev:SettingsCard x:Uid="SettingsPageLXMusicServer" Visibility="{x:Bind ViewModel.SelectedMediaSourceProvider.IsLXMusic, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
-                            <Grid ColumnSpacing="6">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBox
-                                    x:Uid="SettingsPageLXMusicServerInput"
-                                    Grid.Column="0"
-                                    IsEnabled="{x:Bind ViewModel.IsLXMusicServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
-                                    Text="{x:Bind ViewModel.AppSettings.GeneralSettings.LXMusicServer, Mode=TwoWay}"
-                                    TextWrapping="Wrap" />
-                                <Button
-                                    x:Uid="SettingsPageServerTestButton"
-                                    Grid.Column="1"
-                                    Command="{x:Bind ViewModel.LXMusicServerTestCommand}"
-                                    IsEnabled="{x:Bind ViewModel.IsLXMusicServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}" />
-                            </Grid>
-                        </dev:SettingsCard>
-
-                        <!--  时间轴相关配置  -->
-                        <dev:SettingsExpander x:Uid="SettingsPageLyricsTimeline" IsExpanded="True">
-                            <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsTimelineSyncEnabled, Mode=TwoWay}" />
-                            <dev:SettingsExpander.Items>
-                                <dev:SettingsCard x:Uid="SettingsPageLyricsTimelineThreshold" IsEnabled="{x:Bind ViewModel.SelectedMediaSourceProvider.IsTimelineSyncEnabled, Mode=OneWay}">
-                                    <local:ExtendedSlider
-                                        Frequency="100"
-                                        Maximum="1000"
-                                        Minimum="0"
-                                        ResetButtonVisibility="Collapsed"
-                                        Unit="ms"
-                                        Value="{x:Bind ViewModel.SelectedMediaSourceProvider.TimelineSyncThreshold, Mode=TwoWay}" />
-                                </dev:SettingsCard>
-                            </dev:SettingsExpander.Items>
-                        </dev:SettingsExpander>
-                        <dev:SettingsExpander x:Uid="MainPagePositionOffsetSlider" IsExpanded="True">
-                            <local:ExtendedSlider
-                                x:Uid="SettingsPagePositionOffsetReset"
-                                Default="0"
-                                Frequency="100"
-                                Maximum="5000"
-                                Minimum="-5000"
-                                Unit="ms"
-                                Value="{x:Bind ViewModel.SelectedMediaSourceProvider.PositionOffset, Mode=TwoWay}" />
-                            <dev:SettingsExpander.Items>
-                                <dev:SettingsCard x:Uid="LyricsPagePositionOffsetHint">
-                                    <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.ResetPositionOffsetOnSongChanged, Mode=TwoWay}" />
-                                </dev:SettingsCard>
-                            </dev:SettingsExpander.Items>
-                        </dev:SettingsExpander>
-
-                        <!--  专辑封面源配置  -->
-                        <TextBlock x:Uid="SettingsPageAlbumArtSearchProvidersConfig" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+            <Grid Grid.Row="1" Padding="36,0,36,0">
+                <interactivity:Interaction.Behaviors>
+                    <interactivity:DataTriggerBehavior
+                        Binding="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo.Count, Mode=OneWay}"
+                        ComparisonCondition="NotEqual"
+                        Value="0">
+                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                    </interactivity:DataTriggerBehavior>
+                    <interactivity:DataTriggerBehavior
+                        Binding="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo.Count, Mode=OneWay}"
+                        ComparisonCondition="Equal"
+                        Value="0">
+                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                    </interactivity:DataTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+                <ScrollViewer>
+                    <StackPanel Margin="0,0,0,36" Spacing="{StaticResource SettingsCardSpacing}">
+                        <TextBlock x:Uid="SettingsPageConfigPlaybackSource" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
                         <ListView
-                            x:Name="AlbumArtSearchProvidersListView"
+                            x:Name="MediaSourceProvidersListView"
+                            HorizontalAlignment="Stretch"
                             AllowDrop="True"
                             CanDragItems="True"
                             CanReorderItems="True"
-                            DragItemsCompleted="AlbumArtSearchProvidersListView_DragItemsCompleted"
+                            DragItemsCompleted="MediaSourceProvidersListView_DragItemsCompleted"
                             ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
-                            ItemsSource="{x:Bind ViewModel.SelectedMediaSourceProvider.AlbumArtSearchProvidersInfo, Mode=OneWay}"
+                            ItemsSource="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo, Mode=OneWay}"
                             SelectionMode="None">
-                            <ListView.OpacityTransition>
-                                <ScalarTransition />
-                            </ListView.OpacityTransition>
                             <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="settingsmodels:AlbumArtSearchProviderInfo">
-                                    <dev:SettingsCard Header="{Binding Provider, Converter={StaticResource AlbumArtSearchProviderToDisplayNameConverter}, Mode=OneWay}">
-                                        <dev:SettingsCard.HeaderIcon>
-                                            <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#x283F;" />
-                                        </dev:SettingsCard.HeaderIcon>
-                                        <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" />
-                                    </dev:SettingsCard>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-
-                        <!--  歌词源配置  -->
-                        <TextBlock x:Uid="SettingsPageLyricsSearchProvidersConfig" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-                        <dev:SettingsCard x:Uid="SettingsPageLyricsSearchType">
-                            <ComboBox SelectedIndex="{x:Bind ViewModel.SelectedMediaSourceProvider.LyricsSearchType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                <ComboBoxItem x:Uid="SettingsPageLyricsSearchSequential" />
-                                <ComboBoxItem x:Uid="SettingsPageLyricsSearchBestMatch" />
-                            </ComboBox>
-                        </dev:SettingsCard>
-                        <dev:SettingsCard x:Uid="SettingsPageMatchingThreshold">
-                            <local:ExtendedSlider
-                                Default="0"
-                                Maximum="100"
-                                Minimum="0"
-                                Unit="%"
-                                Value="{x:Bind ViewModel.SelectedMediaSourceProvider.MatchingThreshold, Mode=TwoWay}" />
-                        </dev:SettingsCard>
-
-                        <ListView
-                            x:Name="LyricsSearchProvidersListView"
-                            AllowDrop="True"
-                            CanDragItems="True"
-                            CanReorderItems="True"
-                            DragItemsCompleted="LyricsSearchProvidersListView_DragItemsCompleted"
-                            ItemsSource="{x:Bind ViewModel.SelectedMediaSourceProvider.LyricsSearchProvidersInfo, Mode=OneWay}"
-                            SelectionMode="None">
-                            <ListView.OpacityTransition>
-                                <ScalarTransition />
-                            </ListView.OpacityTransition>
-                            <ListView.ItemContainerStyle>
-                                <Style TargetType="ListViewItem">
-                                    <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                    <Setter Property="Margin" Value="0" />
-                                    <Setter Property="Padding" Value="0" />
-                                </Style>
-                            </ListView.ItemContainerStyle>
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="settingsmodels:LyricsSearchProviderInfo">
-                                    <Grid>
-                                        <dev:SettingsExpander Header="{Binding Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}, Mode=OneWay}" IsExpanded="{Binding IsMatchingThresholdOverwritten, Mode=OneWay}">
-                                            <dev:SettingsExpander.HeaderIcon>
-                                                <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#x283F;" />
-                                            </dev:SettingsExpander.HeaderIcon>
-                                            <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" />
-                                            <dev:SettingsExpander.Items>
-                                                <dev:SettingsCard x:Uid="LyricsSearchControlIgnoreCache">
-                                                    <CheckBox IsChecked="{Binding IgnoreCacheWhenSearching, Mode=TwoWay}" />
-                                                </dev:SettingsCard>
-                                                <dev:SettingsCard x:Uid="SettingsPageOverwriteMatchingThreshold">
-                                                    <ToggleSwitch IsOn="{Binding IsMatchingThresholdOverwritten, Mode=TwoWay}" />
-                                                </dev:SettingsCard>
-                                                <dev:SettingsCard x:Uid="SettingsPageMatchingThreshold" IsEnabled="{Binding IsMatchingThresholdOverwritten, Mode=OneWay}">
-                                                    <local:ExtendedSlider
-                                                        Default="0"
-                                                        Maximum="100"
-                                                        Minimum="0"
-                                                        Unit="%"
-                                                        Value="{Binding MatchingThreshold, Mode=TwoWay}" />
-                                                </dev:SettingsCard>
-                                            </dev:SettingsExpander.Items>
-                                        </dev:SettingsExpander>
-                                        <Grid
-                                            Width="48"
-                                            HorizontalAlignment="Left"
-                                            Background="{ThemeResource ControlStrokeColorDefaultBrush}"
-                                            CornerRadius="4,0,0,4"
-                                            Opacity="0">
-                                            <interactivity:Interaction.Behaviors>
-                                                <interactivity:EventTriggerBehavior EventName="PointerEntered">
-                                                    <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
-                                                </interactivity:EventTriggerBehavior>
-                                                <interactivity:EventTriggerBehavior EventName="PointerExited">
-                                                    <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
-                                                </interactivity:EventTriggerBehavior>
-                                            </interactivity:Interaction.Behaviors>
-                                            <Grid.OpacityTransition>
-                                                <ScalarTransition />
-                                            </Grid.OpacityTransition>
-                                            <ToolTipService.ToolTip>
-                                                <ToolTip x:Uid="SettingsPageHoldDragSort" />
-                                            </ToolTipService.ToolTip>
+                                <DataTemplate x:DataType="settingsmodels:MediaSourceProviderInfo">
+                                    <Grid
+                                        Margin="0,1"
+                                        Padding="12"
+                                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                        ColumnSpacing="12"
+                                        CornerRadius="4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip Content="{Binding Provider, Mode=OneWay}" />
+                                        </ToolTipService.ToolTip>
+                                        <Grid Grid.Column="0">
+                                            <FontIcon
+                                                FontFamily="Segoe UI Symbol"
+                                                FontSize="12"
+                                                Glyph="&#x283F;" />
                                         </Grid>
+                                        <Image
+                                            Grid.Column="1"
+                                            Height="16"
+                                            VerticalAlignment="Center"
+                                            helper:AppExtensions.Aumid="{Binding Provider}" />
+                                        <StackPanel Grid.Column="2">
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                helper:AppExtensions.Aumid="{Binding Provider}"
+                                                TextWrapping="Wrap" />
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                MaxLines="1"
+                                                Style="{StaticResource CaptionTextBlockStyle}"
+                                                Text="{Binding Provider}"
+                                                TextTrimming="CharacterEllipsis" />
+                                        </StackPanel>
+                                        <Button
+                                            Grid.Column="3"
+                                            Click="ConfigButton_Click"
+                                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                                  FontSize=16,
+                                                                  Glyph=&#xE90F;}"
+                                            Style="{StaticResource GhostButtonStyle}" />
+                                        <Button
+                                            Grid.Column="4"
+                                            Click="DeleteButton_Click"
+                                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                                  FontSize=16,
+                                                                  Glyph=&#xE74D;}"
+                                            Style="{StaticResource GhostButtonStyle}" />
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
                         </ListView>
-
                     </StackPanel>
-                </Grid>
-            </ScrollViewer>
+                </ScrollViewer>
+            </Grid>
+
+            <!--  播放源空白占位  -->
+            <StackPanel
+                Grid.Row="1"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Spacing="12">
+                <interactivity:Interaction.Behaviors>
+                    <interactivity:DataTriggerBehavior
+                        Binding="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo.Count, Mode=OneWay}"
+                        ComparisonCondition="Equal"
+                        Value="0">
+                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
+                    </interactivity:DataTriggerBehavior>
+                    <interactivity:DataTriggerBehavior
+                        Binding="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo.Count, Mode=OneWay}"
+                        ComparisonCondition="NotEqual"
+                        Value="0">
+                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
+                    </interactivity:DataTriggerBehavior>
+                </interactivity:Interaction.Behaviors>
+                <Image MaxWidth="200" Source="/Assets/Leaf.png" />
+                <TextBlock
+                    x:Uid="SettingsPagePlaybackNotFound"
+                    HorizontalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+            </StackPanel>
 
         </Grid>
 
-        <!--  播放源空白占位  -->
-        <StackPanel
+        <!--  播放源配置  -->
+        <ScrollViewer
+            x:Name="PlaybackConfigScrollViewer"
             Grid.Column="0"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Spacing="12">
-            <interactivity:Interaction.Behaviors>
-                <interactivity:DataTriggerBehavior
-                    Binding="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo.Count, Mode=OneWay}"
-                    ComparisonCondition="Equal"
-                    Value="0">
-                    <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                </interactivity:DataTriggerBehavior>
-                <interactivity:DataTriggerBehavior
-                    Binding="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo.Count, Mode=OneWay}"
-                    ComparisonCondition="NotEqual"
-                    Value="0">
-                    <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
-                </interactivity:DataTriggerBehavior>
-            </interactivity:Interaction.Behaviors>
-            <Image MaxWidth="200" Source="/Assets/Leaf.png" />
-            <TextBlock
-                x:Uid="SettingsPagePlaybackNotFound"
-                HorizontalAlignment="Center"
-                Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-        </StackPanel>
+            Background="{ThemeResource RailNavigationViewDefaultPaneBackground}"
+            Opacity="{x:Bind ViewModel.IsConfigPanelOpened, Mode=OneWay, Converter={StaticResource BoolToOpacityConverter}}"
+            Style="{StaticResource SettingsScrollViewerStyle}"
+            Translation="{x:Bind ViewModel.ConfigPanelTranslation, Mode=OneWay}">
+            <ScrollViewer.OpacityTransition>
+                <ScalarTransition />
+            </ScrollViewer.OpacityTransition>
+            <ScrollViewer.TranslationTransition>
+                <Vector3Transition />
+            </ScrollViewer.TranslationTransition>
+            <Grid Style="{StaticResource SettingsGridStyle}">
+                <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            Grid.Column="0"
+                            helper:AppExtensions.Aumid="{x:Bind ViewModel.SelectedMediaSourceProvider.Provider, Mode=OneWay}"
+                            Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <Button
+                            Grid.Column="2"
+                            Margin="0,24,0,0"
+                            Command="{x:Bind ViewModel.CloseConfigPanelCommand}"
+                            Content="{ui:FontIcon FontSize=16,
+                                                  FontFamily={StaticResource IconFontFamily},
+                                                  Glyph=&#xE70D;}"
+                            Style="{StaticResource AccentButtonStyle}" />
+                    </Grid>
+
+                    <!--  总开关  -->
+                    <dev:SettingsExpander x:Uid="SettingsPageMediaSourceProvidersConfig">
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsEnabled, Mode=TwoWay}" />
+                        <dev:SettingsExpander.Items>
+                            <dev:SettingsCard x:Uid="PlaybackSettingsControlMemoryReader">
+                                <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsMemoryReaderEnabled, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+                            <dev:SettingsCard>
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <HyperlinkButton
+                                        Padding="6"
+                                        Content="{ui:FontIcon FontSize=12,
+                                                              FontFamily={StaticResource IconFontFamily},
+                                                              Glyph=&#xE897;}"
+                                        NavigateUri="https://gist.github.com/jayfunc/ad09a3df951b95c8cf6228695fecc067" />
+                                    <Button x:Uid="SettingsPageImport" Command="{x:Bind ViewModel.ImportMemoryReaderConfigCommand}" />
+                                </StackPanel>
+                            </dev:SettingsCard>
+                        </dev:SettingsExpander.Items>
+                    </dev:SettingsExpander>
+
+                    <!--  Last.fm  -->
+                    <dev:SettingsCard x:Uid="SettingsPageLastFMTrack" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsLastFMTrackEnabled, Mode=TwoWay}" />
+                    </dev:SettingsCard>
+
+                    <!--  Discord  -->
+                    <dev:SettingsCard x:Uid="SettingsPageDiscordPresence">
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsDiscordPresenceEnabled, Mode=TwoWay}" />
+                    </dev:SettingsCard>
+
+                    <!--  LX music server  -->
+                    <dev:SettingsCard x:Uid="SettingsPageLXMusicServer" Visibility="{x:Bind ViewModel.SelectedMediaSourceProvider.IsLXMusic, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                        <Grid ColumnSpacing="6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox
+                                x:Uid="SettingsPageLXMusicServerInput"
+                                Grid.Column="0"
+                                IsEnabled="{x:Bind ViewModel.IsLXMusicServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
+                                Text="{x:Bind ViewModel.AppSettings.GeneralSettings.LXMusicServer, Mode=TwoWay}"
+                                TextWrapping="Wrap" />
+                            <Button
+                                x:Uid="SettingsPageServerTestButton"
+                                Grid.Column="1"
+                                Command="{x:Bind ViewModel.LXMusicServerTestCommand}"
+                                IsEnabled="{x:Bind ViewModel.IsLXMusicServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}" />
+                        </Grid>
+                    </dev:SettingsCard>
+
+                    <!--  时间轴相关配置  -->
+                    <dev:SettingsExpander x:Uid="SettingsPageLyricsTimeline" IsExpanded="True">
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsTimelineSyncEnabled, Mode=TwoWay}" />
+                        <dev:SettingsExpander.Items>
+                            <dev:SettingsCard x:Uid="SettingsPageLyricsTimelineThreshold" IsEnabled="{x:Bind ViewModel.SelectedMediaSourceProvider.IsTimelineSyncEnabled, Mode=OneWay}">
+                                <local:ExtendedSlider
+                                    Frequency="100"
+                                    Maximum="1000"
+                                    Minimum="0"
+                                    ResetButtonVisibility="Collapsed"
+                                    Unit="ms"
+                                    Value="{x:Bind ViewModel.SelectedMediaSourceProvider.TimelineSyncThreshold, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+                        </dev:SettingsExpander.Items>
+                    </dev:SettingsExpander>
+                    <dev:SettingsExpander x:Uid="MainPagePositionOffsetSlider" IsExpanded="True">
+                        <local:ExtendedSlider
+                            x:Uid="SettingsPagePositionOffsetReset"
+                            Default="0"
+                            Frequency="100"
+                            Maximum="5000"
+                            Minimum="-5000"
+                            Unit="ms"
+                            Value="{x:Bind ViewModel.SelectedMediaSourceProvider.PositionOffset, Mode=TwoWay}" />
+                        <dev:SettingsExpander.Items>
+                            <dev:SettingsCard x:Uid="LyricsPagePositionOffsetHint">
+                                <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.ResetPositionOffsetOnSongChanged, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+                        </dev:SettingsExpander.Items>
+                    </dev:SettingsExpander>
+
+                    <!--  专辑封面源配置  -->
+                    <TextBlock x:Uid="SettingsPageAlbumArtSearchProvidersConfig" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                    <ListView
+                        x:Name="AlbumArtSearchProvidersListView"
+                        AllowDrop="True"
+                        CanDragItems="True"
+                        CanReorderItems="True"
+                        DragItemsCompleted="AlbumArtSearchProvidersListView_DragItemsCompleted"
+                        ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
+                        ItemsSource="{x:Bind ViewModel.SelectedMediaSourceProvider.AlbumArtSearchProvidersInfo, Mode=OneWay}"
+                        SelectionMode="None">
+                        <ListView.OpacityTransition>
+                            <ScalarTransition />
+                        </ListView.OpacityTransition>
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="settingsmodels:AlbumArtSearchProviderInfo">
+                                <dev:SettingsCard Header="{Binding Provider, Converter={StaticResource AlbumArtSearchProviderToDisplayNameConverter}, Mode=OneWay}">
+                                    <dev:SettingsCard.HeaderIcon>
+                                        <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#x283F;" />
+                                    </dev:SettingsCard.HeaderIcon>
+                                    <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" />
+                                </dev:SettingsCard>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                    <!--  歌词源配置  -->
+                    <TextBlock x:Uid="SettingsPageLyricsSearchProvidersConfig" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                    <dev:SettingsCard x:Uid="SettingsPageLyricsSearchType">
+                        <ComboBox SelectedIndex="{x:Bind ViewModel.SelectedMediaSourceProvider.LyricsSearchType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                            <ComboBoxItem x:Uid="SettingsPageLyricsSearchSequential" />
+                            <ComboBoxItem x:Uid="SettingsPageLyricsSearchBestMatch" />
+                        </ComboBox>
+                    </dev:SettingsCard>
+                    <dev:SettingsCard x:Uid="SettingsPageMatchingThreshold">
+                        <local:ExtendedSlider
+                            Default="0"
+                            Maximum="100"
+                            Minimum="0"
+                            Unit="%"
+                            Value="{x:Bind ViewModel.SelectedMediaSourceProvider.MatchingThreshold, Mode=TwoWay}" />
+                    </dev:SettingsCard>
+
+                    <ListView
+                        x:Name="LyricsSearchProvidersListView"
+                        AllowDrop="True"
+                        CanDragItems="True"
+                        CanReorderItems="True"
+                        DragItemsCompleted="LyricsSearchProvidersListView_DragItemsCompleted"
+                        ItemsSource="{x:Bind ViewModel.SelectedMediaSourceProvider.LyricsSearchProvidersInfo, Mode=OneWay}"
+                        SelectionMode="None">
+                        <ListView.OpacityTransition>
+                            <ScalarTransition />
+                        </ListView.OpacityTransition>
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="Margin" Value="0" />
+                                <Setter Property="Padding" Value="0" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="settingsmodels:LyricsSearchProviderInfo">
+                                <Grid>
+                                    <dev:SettingsExpander Header="{Binding Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}, Mode=OneWay}" IsExpanded="{Binding IsMatchingThresholdOverwritten, Mode=OneWay}">
+                                        <dev:SettingsExpander.HeaderIcon>
+                                            <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#x283F;" />
+                                        </dev:SettingsExpander.HeaderIcon>
+                                        <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" />
+                                        <dev:SettingsExpander.Items>
+                                            <dev:SettingsCard x:Uid="LyricsSearchControlIgnoreCache">
+                                                <CheckBox IsChecked="{Binding IgnoreCacheWhenSearching, Mode=TwoWay}" />
+                                            </dev:SettingsCard>
+                                            <dev:SettingsCard x:Uid="SettingsPageOverwriteMatchingThreshold">
+                                                <ToggleSwitch IsOn="{Binding IsMatchingThresholdOverwritten, Mode=TwoWay}" />
+                                            </dev:SettingsCard>
+                                            <dev:SettingsCard x:Uid="SettingsPageMatchingThreshold" IsEnabled="{Binding IsMatchingThresholdOverwritten, Mode=OneWay}">
+                                                <local:ExtendedSlider
+                                                    Default="0"
+                                                    Maximum="100"
+                                                    Minimum="0"
+                                                    Unit="%"
+                                                    Value="{Binding MatchingThreshold, Mode=TwoWay}" />
+                                            </dev:SettingsCard>
+                                        </dev:SettingsExpander.Items>
+                                    </dev:SettingsExpander>
+                                    <Grid
+                                        Width="48"
+                                        HorizontalAlignment="Left"
+                                        Background="{ThemeResource ControlStrokeColorDefaultBrush}"
+                                        CornerRadius="4,0,0,4"
+                                        Opacity="0">
+                                        <interactivity:Interaction.Behaviors>
+                                            <interactivity:EventTriggerBehavior EventName="PointerEntered">
+                                                <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
+                                            </interactivity:EventTriggerBehavior>
+                                            <interactivity:EventTriggerBehavior EventName="PointerExited">
+                                                <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
+                                            </interactivity:EventTriggerBehavior>
+                                        </interactivity:Interaction.Behaviors>
+                                        <Grid.OpacityTransition>
+                                            <ScalarTransition />
+                                        </Grid.OpacityTransition>
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip x:Uid="SettingsPageHoldDragSort" />
+                                        </ToolTipService.ToolTip>
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
 
         <!--  右侧杂项设置  -->
         <Grid Grid.Column="1">

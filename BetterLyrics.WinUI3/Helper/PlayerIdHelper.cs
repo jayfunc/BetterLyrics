@@ -6,18 +6,40 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public static class PlayerIdHelper
     {
-        private static readonly List<string> neteaseFamilyRegex =
+        private static readonly List<string> _neteaseFamilyRegex =
         [
             "cloudmusic.exe", //NetEaseCloudMusic
             "^17588BrandonWong\\.LyricEase_", //LyricEase
-            "^48848aaaaaaccd\\.HyPlayer_" //HyPlayer
+            "^48848aaaaaaccd\\.HyPlayer_", //HyPlayer
         ];
 
-        public static bool IsNeteaseFamily(string? id)
+        private static readonly List<string> _qqFamilyRegex =
+        [
+            "QQMusic.exe",
+        ];
+
+        private static readonly List<string> _appleMusicRegex =
+        [
+            "AppleMusic.exe",
+            "^AppleInc\\.AppleMusicWin_",
+        ];
+
+        private static readonly List<string> _betterLyricsRegex =
+        [
+            "^37412\\.BetterLyrics_",
+        ];
+
+        private static readonly List<string> _lxMusicRegex =
+        [
+            "cn.toside.music.desktop",
+            "lx-music-desktop.exe",
+        ];
+
+        private static bool Is(string? id, List<string> regexes)
         {
             if (id is null) return false;
 
-            foreach (var regex in neteaseFamilyRegex)
+            foreach (var regex in regexes)
             {
                 var isMatch = Regex.IsMatch(id, regex);
                 if (isMatch) return true;
@@ -25,11 +47,12 @@ namespace BetterLyrics.WinUI3.Helper
             return false;
         }
 
-        public static bool IsLXMusic(string? id) => id is PlayerId.LXMusic or PlayerId.LXMusicPortable;
+        public static bool IsNeteaseFamily(string? id) => Is(id, _neteaseFamilyRegex);
+        public static bool IsQQFamily(string? id) => Is(id, _qqFamilyRegex);
 
-        public static bool IsAppleMusic(string? id) => id is PlayerId.AppleMusic or PlayerId.AppleMusicAlternative;
-
-        public static bool IsBetterLyrics(string? id) => id is PlayerId.BetterLyrics or PlayerId.BetterLyricsDebug;
+        public static bool IsLXMusic(string? id) => Is(id, _lxMusicRegex);
+        public static bool IsAppleMusic(string? id) => Is(id, _appleMusicRegex);
+        public static bool IsBetterLyrics(string? id) => Is(id, _betterLyricsRegex);
 
     }
 }

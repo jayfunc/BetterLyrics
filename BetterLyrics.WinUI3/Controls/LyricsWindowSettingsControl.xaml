@@ -16,7 +16,13 @@
 
     <Grid>
 
-        <Grid x:Name="DisplayGrid" SizeChanged="DisplayGrid_SizeChanged">
+        <Grid
+            x:Name="DisplayGrid"
+            Opacity="{x:Bind ViewModel.IsConfigPanelOpened, Mode=OneWay, Converter={StaticResource BoolNegationToOpacityConverter}}"
+            SizeChanged="DisplayGrid_SizeChanged">
+            <Grid.OpacityTransition>
+                <ScalarTransition />
+            </Grid.OpacityTransition>
             <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
                 <Grid Style="{StaticResource SettingsGridStyle}">
 
@@ -146,7 +152,7 @@
 
         <Grid
             x:Name="ConfigGrid"
-            Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
+            Background="{ThemeResource RailNavigationViewDefaultPaneBackground}"
             Opacity="{x:Bind ViewModel.IsConfigPanelOpened, Mode=OneWay, Converter={StaticResource BoolToOpacityConverter}}"
             Translation="{x:Bind ViewModel.ConfigPanelTranslation, Mode=OneWay}">
             <Grid.OpacityTransition>
@@ -177,11 +183,11 @@
                             Text="{x:Bind LyricsWindowStatus.Name, Mode=OneWay}" />
                         <Button
                             Grid.Column="2"
-                            Margin="0,30,0,0"
+                            Margin="0,24,0,0"
                             Command="{x:Bind ViewModel.CloseConfigPanelCommand}"
                             Content="{ui:FontIcon FontSize=16,
                                                   FontFamily={StaticResource IconFontFamily},
-                                                  Glyph=&#xE711;}"
+                                                  Glyph=&#xE70D;}"
                             Style="{StaticResource AccentButtonStyle}" />
                     </Grid>
 

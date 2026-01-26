@@ -52,18 +52,17 @@ namespace BetterLyrics.WinUI3.Models.Settings
         public MediaSourceProviderInfo(string provider, bool isEnable = true)
         {
             IsEnabled = isEnable;
-            switch (provider)
+            if (PlayerIdHelper.IsAppleMusic(provider))
             {
-                case Constants.PlayerId.AppleMusic:
-                    // Apple Music 的特性
-                    TimelineSyncThreshold = 1000;
-                    PositionOffset = 1000;
-                    break;
-                default:
-                    // 设置 300 以防不必要的重复同步
-                    TimelineSyncThreshold = 300;
-                    PositionOffset = 0;
-                    break;
+                // Apple Music 的特性
+                TimelineSyncThreshold = 1000;
+                PositionOffset = 1000;
+            }
+            else
+            {
+                // 设置 300 以防不必要的重复同步
+                TimelineSyncThreshold = 300;
+                PositionOffset = 0;
             }
 
             Provider = provider;
