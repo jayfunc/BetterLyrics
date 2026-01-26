@@ -71,17 +71,15 @@
                                     <ToolTipService.ToolTip>
                                         <ToolTip Content="{Binding Provider, Mode=OneWay}" />
                                     </ToolTipService.ToolTip>
-                                    <Grid
+                                    <Image
                                         Grid.Column="0"
-                                        Width="16"
                                         Height="16"
-                                        CornerRadius="4">
-                                        <ImageIcon Source="{Binding LogoPath}" />
-                                    </Grid>
+                                        VerticalAlignment="Center"
+                                        helper:AppExtensions.Aumid="{Binding Provider}" />
                                     <TextBlock
                                         Grid.Column="1"
                                         VerticalAlignment="Center"
-                                        Text="{Binding DisplayName, Mode=OneWay}"
+                                        helper:AppExtensions.Aumid="{Binding Provider}"
                                         TextWrapping="Wrap" />
                                 </Grid>
                             </DataTemplate>
@@ -338,8 +336,8 @@
                             HorizontalAlignment="Stretch"
                             HorizontalContentAlignment="Left">
                             <StackPanel Spacing="6">
-                                <local:PropertyRow x:Uid="SettingsPagePlaybackSource" Value="{x:Bind ViewModel.GSMTCService.CurrentMediaSourceProviderInfo.DisplayName, Mode=OneWay}" />
-                                <local:PropertyRow x:Uid="SettingsPagePlaybackSourceID" Value="{x:Bind ViewModel.GSMTCService.CurrentSongInfo.PlayerId, TargetNullValue=N/A, Mode=OneWay}" />
+                                <local:PropertyRow x:Uid="SettingsPagePlaybackSource" helper:AppExtensions.Aumid="{x:Bind ViewModel.GSMTCService.CurrentMediaSourceProviderInfo.Provider, Mode=OneWay}" />
+                                <local:PropertyRow x:Uid="SettingsPagePlaybackSourceID" Value="{x:Bind ViewModel.GSMTCService.CurrentMediaSourceProviderInfo.Provider, TargetNullValue=N/A, Mode=OneWay}" />
                             </StackPanel>
                         </Expander>
 
