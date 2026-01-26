@@ -346,7 +346,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                             .FirstOrDefault(x => x.StartsWith(ExtendedGenreFiled.NetEaseCloudMusicTrackID))?
                             .Replace(ExtendedGenreFiled.NetEaseCloudMusicTrackID, "");
                     }
-                    else if (sessionId == PlayerId.QQMusic)
+                    else if (PlayerIdHelper.IsQQFamily(sessionId))
                     {
                         songId = mediaProperties.Genres
                             .FirstOrDefault(x => x.StartsWith(ExtendedGenreFiled.QQMusicTrackID))?

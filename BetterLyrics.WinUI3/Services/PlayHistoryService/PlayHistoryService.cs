@@ -200,11 +200,12 @@ namespace BetterLyrics.WinUI3.Services.PlayHistoryService
 
             var playerIds = new[]
             {
-                PlayerId.Spotify, PlayerId.Spotify, PlayerId.Spotify,
-                PlayerId.MusicBee, PlayerId.MusicBee,
-                PlayerId.QQMusic,
-                PlayerId.NetEaseCloudMusic,
-                PlayerId.AppleMusic,
+                //PlayerId.Spotify, PlayerId.Spotify, PlayerId.Spotify,
+                //PlayerId.MusicBee, PlayerId.MusicBee,
+                //PlayerId.QQMusic,
+                //PlayerId.NetEaseCloudMusic,
+                //PlayerId.AppleMusic,
+                ""
             };
 
             var batchList = new List<PlayHistoryItem>();

@@ -93,7 +93,7 @@ namespace BetterLyrics.WinUI3
         private static void OnActivated(object sender, AppActivationArguments args)
         {
             ExtendedActivationKind kind = args.Kind;
-            App.MainWindow.DispatcherQueue.TryEnqueue(() =>
+            App.SystemTrayWindow.DispatcherQueue.TryEnqueue(() =>
             {
                 if (kind == ExtendedActivationKind.File)
                 {

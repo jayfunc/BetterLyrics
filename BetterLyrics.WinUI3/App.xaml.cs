@@ -22,7 +22,7 @@ namespace BetterLyrics.WinUI3
         private Window? m_window;
         private readonly ILogger<App> _logger;
         public static new App Current => (App)Application.Current;
-        public static Window MainWindow { get; private set; }
+        public static Window SystemTrayWindow { get; private set; }
 
         public App()
         {
@@ -39,8 +39,13 @@ namespace BetterLyrics.WinUI3
 
         protected override async void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
+            var splashWindow = WindowHook.OpenOrShowWindow<SplashWindow>();
+            
             await InitAppServicesAsync();
+            
             HandleNormalLaunch();
+
+            WindowHook.CloseWindow(splashWindow);
         }
 
         private void HandleNormalLaunch()
@@ -49,7 +54,7 @@ namespace BetterLyrics.WinUI3
 
             // 初始化系统托盘
             m_window = WindowHook.OpenOrShowWindow<SystemTrayWindow>();
-            MainWindow = m_window;
+            SystemTrayWindow = m_window;
 
             // 自动打开歌词窗口逻辑
             if (settingsService.AppSettings.GeneralSettings.AutoStartLyricsWindow)
@@ -103,10 +108,10 @@ namespace BetterLyrics.WinUI3
 
             // 加载插件
             var pluginService = Ioc.Default.GetRequiredService<IPluginService>();
-            pluginService.LoadPluginsAsync();
+            await pluginService.LoadPluginsAsync();
 
             // 预加载系统字体列表
-            _ = FontHelper.GetSystemFontFamiliesAsync();
+            await FontHelper.GetSystemFontFamiliesAsync();
         }
 
         private async Task InitDatabasesAsync()

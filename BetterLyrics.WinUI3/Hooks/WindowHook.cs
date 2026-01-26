@@ -133,6 +133,10 @@ namespace BetterLyrics.WinUI3.Hooks
                 {
                     window = new SystemTrayWindow();
                 }
+                else if (typeof(T) == typeof(SplashWindow))
+                {
+                    window = new SplashWindow();
+                }
                 else
                 {
                     throw new ArgumentException("Unsupported window type", nameof(T));

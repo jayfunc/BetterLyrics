@@ -2,6 +2,7 @@
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Collections.Concurrent;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging; // 需引用 System.Drawing.Common
 using System.IO;
@@ -20,26 +21,78 @@ namespace BetterLyrics.WinUI3.Hooks
         private static readonly ConcurrentDictionary<string, string?> _nameCache = new();
         private static readonly ConcurrentDictionary<string, BitmapImage?> _iconCache = new();
 
-        private static ShellItem? GetShellItem(string aumid)
+        private static ShellItem? GetShellItem(string id)
         {
-            string parsingName = $"shell:AppsFolder\\{aumid}";
+            if (string.IsNullOrWhiteSpace(id)) return null;
+
             try
             {
-                return new ShellItem(parsingName);
+                return new ShellItem($"shell:AppsFolder\\{id}");
             }
-            catch
+            catch { }
+
+            if (Path.IsPathRooted(id) && File.Exists(id))
             {
                 try
                 {
-                    using var appsFolder = new ShellFolder(KNOWNFOLDERID.FOLDERID_AppsFolder);
-                    return appsFolder.FirstOrDefault(x =>
-                        x.ParsingName?.EndsWith(aumid, StringComparison.OrdinalIgnoreCase) == true);
+                    return new ShellItem(id);
                 }
-                catch
+                catch { }
+            }
+
+            try
+            {
+                using var appsFolder = new ShellFolder(KNOWNFOLDERID.FOLDERID_AppsFolder);
+                var found = appsFolder.FirstOrDefault(x =>
+                    x.ParsingName?.EndsWith(id, StringComparison.OrdinalIgnoreCase) == true ||
+                    x.Name?.Equals(id, StringComparison.OrdinalIgnoreCase) == true);
+
+                if (found != null) return found;
+            }
+            catch { }
+
+            string? processPath = TryGetPathFromProcess(id);
+            if (!string.IsNullOrEmpty(processPath))
+            {
+                try
                 {
-                    return null;
+                    return new ShellItem(processPath);
+                }
+                catch { }
+            }
+
+            return null;
+        }
+
+        private static string? TryGetPathFromProcess(string name)
+        {
+            try
+            {
+                string processName = name.EndsWith(".exe", StringComparison.OrdinalIgnoreCase)
+                    ? Path.GetFileNameWithoutExtension(name)
+                    : name;
+
+                var processes = Process.GetProcessesByName(processName);
+                if (processes.Length == 0) return null;
+
+                foreach (var proc in processes)
+                {
+                    try
+                    {
+                        if (proc.MainModule?.FileName is string path && File.Exists(path))
+                        {
+                            return path;
+                        }
+                    }
+                    catch { }
+                    finally
+                    {
+                        proc.Dispose();
+                    }
                 }
             }
+            catch { }
+            return null;
         }
 
         /// <summary>
@@ -47,19 +100,26 @@ namespace BetterLyrics.WinUI3.Hooks
         /// </summary>
         public static async Task<string?> GetDisplayNameByAumidAsync(string aumid)
         {
-            if (_nameCache.TryGetValue(aumid, out var cachedName))
-            {
-                return cachedName;
-            }
+            if (_nameCache.TryGetValue(aumid, out var cachedName)) return cachedName;
 
             string? name = await Task.Run(() =>
             {
                 var item = GetShellItem(aumid);
+                if (item != null && item.IsFileSystem)
+                {
+                    try
+                    {
+                        var info = FileVersionInfo.GetVersionInfo(item.ParsingName);
+                        if (!string.IsNullOrWhiteSpace(info.FileDescription))
+                            return info.FileDescription;
+                    }
+                    catch { }
+                }
+
                 return item?.GetDisplayName(ShellItemDisplayString.NormalDisplay);
             });
 
             _nameCache.TryAdd(aumid, name);
-
             return name;
         }
 
@@ -68,10 +128,7 @@ namespace BetterLyrics.WinUI3.Hooks
         /// </summary>
         public static async Task<BitmapImage?> GetIconByAumidAsync(string aumid, DispatcherQueue dispatcherQueue)
         {
-            if (_iconCache.TryGetValue(aumid, out var cachedImage))
-            {
-                return cachedImage;
-            }
+            if (_iconCache.TryGetValue(aumid, out var cachedImage)) return cachedImage;
 
             using var stream = await Task.Run(() =>
             {
@@ -80,11 +137,9 @@ namespace BetterLyrics.WinUI3.Hooks
 
                 try
                 {
-                    var options = ShellItemGetImageOptions.ResizeToFit |
-                                  ShellItemGetImageOptions.IconOnly;
+                    var options = ShellItemGetImageOptions.ResizeToFit | ShellItemGetImageOptions.IconOnly;
 
                     using var hBitmap = item.GetImage(new SIZE(256, 256), options);
-
                     using var bitmap = CreateBitmapWithAlpha(hBitmap);
 
                     if (bitmap == null) return null;
@@ -94,10 +149,7 @@ namespace BetterLyrics.WinUI3.Hooks
                     ms.Position = 0;
                     return ms;
                 }
-                catch
-                {
-                    return null;
-                }
+                catch { return null; }
             });
 
             if (stream == null)
@@ -107,22 +159,16 @@ namespace BetterLyrics.WinUI3.Hooks
             }
 
             var tcs = new TaskCompletionSource<BitmapImage?>();
-
             dispatcherQueue.TryEnqueue(async () =>
             {
                 try
                 {
                     var bitmapImage = new BitmapImage();
                     await bitmapImage.SetSourceAsync(stream.AsRandomAccessStream());
-
                     _iconCache.TryAdd(aumid, bitmapImage);
-
                     tcs.SetResult(bitmapImage);
                 }
-                catch (Exception ex)
-                {
-                    tcs.SetException(ex);
-                }
+                catch (Exception ex) { tcs.SetException(ex); }
             });
 
             return await tcs.Task;

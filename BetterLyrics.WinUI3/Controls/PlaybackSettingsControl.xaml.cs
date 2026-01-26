@@ -1,5 +1,7 @@
+using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -33,6 +35,28 @@ namespace BetterLyrics.WinUI3.Controls
         {
             // ÈÃ MediaSourceProvidersInfo ´¥·¢ CollectionChanged ÊÂ¼þ
             ViewModel.AppSettings.MediaSourceProvidersInfo?.Refresh();
+        }
+
+        private void ConfigButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            ViewModel.SelectedMediaSourceProvider = (MediaSourceProviderInfo)((Button)sender).DataContext;
+            ViewModel.OpenConfigPanel();
+        }
+
+        private void DeleteButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            var data = (MediaSourceProviderInfo)((Button)sender).DataContext;
+            ViewModel.AppSettings.MediaSourceProvidersInfo.Remove(data);
+        }
+
+        private void PlaybackListGrid_SizeChanged(object sender, Microsoft.UI.Xaml.SizeChangedEventArgs e)
+        {
+            ViewModel.PlaybackListGridHeight = e.NewSize.Height;
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            ViewModel.CloseConfigPanelCommand.Execute(null);
         }
     }
 }
