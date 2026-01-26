@@ -1,77 +1,166 @@
-﻿using Microsoft.UI.Xaml.Media.Imaging;
+﻿using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml.Media.Imaging;
 using System;
+using System.Collections.Concurrent;
 using System.Drawing;
-using System.Drawing.Imaging;
+using System.Drawing.Imaging; // 需引用 System.Drawing.Common
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Vanara.PInvoke;
 using Vanara.Windows.Shell;
+using static Vanara.PInvoke.Gdi32;
 using static Vanara.PInvoke.Shell32;
 
 namespace BetterLyrics.WinUI3.Hooks
 {
     public class AppHook
     {
-        public static HICON? GetIcon(ShellItem shellItem, int size = 32)
+        private static readonly ConcurrentDictionary<string, string?> _nameCache = new();
+        private static readonly ConcurrentDictionary<string, BitmapImage?> _iconCache = new();
+
+        private static ShellItem? GetShellItem(string aumid)
         {
-            HICON hIconCopy = HICON.NULL;
+            string parsingName = $"shell:AppsFolder\\{aumid}";
+            try
+            {
+                return new ShellItem(parsingName);
+            }
+            catch
+            {
+                try
+                {
+                    using var appsFolder = new ShellFolder(KNOWNFOLDERID.FOLDERID_AppsFolder);
+                    return appsFolder.FirstOrDefault(x =>
+                        x.ParsingName?.EndsWith(aumid, StringComparison.OrdinalIgnoreCase) == true);
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
+
+        /// <summary>
+        /// 通过 AUMID 获取应用名称 (DisplayName)
+        /// </summary>
+        public static async Task<string?> GetDisplayNameByAumidAsync(string aumid)
+        {
+            if (_nameCache.TryGetValue(aumid, out var cachedName))
+            {
+                return cachedName;
+            }
+
+            string? name = await Task.Run(() =>
+            {
+                var item = GetShellItem(aumid);
+                return item?.GetDisplayName(ShellItemDisplayString.NormalDisplay);
+            });
+
+            _nameCache.TryAdd(aumid, name);
+
+            return name;
+        }
+
+        /// <summary>
+        /// 通过 AUMID 获取 BitmapImage (自动处理 UI 线程切换)
+        /// </summary>
+        public static async Task<BitmapImage?> GetIconByAumidAsync(string aumid, DispatcherQueue dispatcherQueue)
+        {
+            if (_iconCache.TryGetValue(aumid, out var cachedImage))
+            {
+                return cachedImage;
+            }
+
+            using var stream = await Task.Run(() =>
+            {
+                var item = GetShellItem(aumid);
+                if (item == null) return null;
+
+                try
+                {
+                    var options = ShellItemGetImageOptions.ResizeToFit |
+                                  ShellItemGetImageOptions.IconOnly;
+
+                    using var hBitmap = item.GetImage(new SIZE(256, 256), options);
+
+                    using var bitmap = CreateBitmapWithAlpha(hBitmap);
+
+                    if (bitmap == null) return null;
+
+                    var ms = new MemoryStream();
+                    bitmap.Save(ms, ImageFormat.Png);
+                    ms.Position = 0;
+                    return ms;
+                }
+                catch
+                {
+                    return null;
+                }
+            });
+
+            if (stream == null)
+            {
+                _iconCache.TryAdd(aumid, null);
+                return null;
+            }
+
+            var tcs = new TaskCompletionSource<BitmapImage?>();
+
+            dispatcherQueue.TryEnqueue(async () =>
+            {
+                try
+                {
+                    var bitmapImage = new BitmapImage();
+                    await bitmapImage.SetSourceAsync(stream.AsRandomAccessStream());
+
+                    _iconCache.TryAdd(aumid, bitmapImage);
+
+                    tcs.SetResult(bitmapImage);
+                }
+                catch (Exception ex)
+                {
+                    tcs.SetException(ex);
+                }
+            });
+
+            return await tcs.Task;
+        }
+
+        private static Bitmap? CreateBitmapWithAlpha(SafeHBITMAP hBitmap)
+        {
+            if (hBitmap.IsInvalid) return null;
+
+            BITMAP dobj;
+            int structSize = Marshal.SizeOf(typeof(BITMAP));
+            IntPtr pStruct = Marshal.AllocHGlobal(structSize);
 
             try
             {
-                using Bitmap baseIcon = shellItem.GetImage(new SIZE { Height = size, Width = size }, ShellItemGetImageOptions.ResizeToFit).ToBitmap();
-                hIconCopy = User32.CopyIcon(baseIcon.GetHicon());
+                if (GetObject(hBitmap, structSize, pStruct) == 0) return null;
+                dobj = Marshal.PtrToStructure<BITMAP>(pStruct);
             }
-            catch (Exception) { }
+            finally
+            {
+                Marshal.FreeHGlobal(pStruct);
+            }
 
-            if (hIconCopy.IsNull)
-            {
-                User32.DestroyIcon(hIconCopy);
-                return null;
-            }
-            else
-            {
-                return hIconCopy;
-            }
+            var bmp = new Bitmap(dobj.bmWidth, dobj.bmHeight, PixelFormat.Format32bppArgb);
+            bmp.SetResolution(96, 96);
+            BitmapData data = bmp.LockBits(new Rectangle(0, 0, bmp.Width, bmp.Height),
+                                           ImageLockMode.WriteOnly,
+                                           PixelFormat.Format32bppArgb);
+
+            int byteCount = dobj.bmWidth * dobj.bmHeight * 4;
+            byte[] tempBuffer = new byte[byteCount];
+
+            GetBitmapBits(hBitmap, byteCount, tempBuffer);
+
+            Marshal.Copy(tempBuffer, 0, data.Scan0, byteCount);
+
+            bmp.UnlockBits(data);
+            return bmp;
         }
-
-        public static async Task<BitmapImage?> ToBitmapImageAsync(HICON hIcon)
-        {
-            if (hIcon.IsNull)
-            {
-                return null;
-            }
-
-            using Icon icon = Icon.FromHandle(hIcon.DangerousGetHandle());
-            using Bitmap bitmap = icon.ToBitmap();
-
-            using var memoryStream = new MemoryStream();
-            bitmap.Save(memoryStream, ImageFormat.Png);
-            memoryStream.Seek(0, SeekOrigin.Begin);
-
-            var bitmapImage = new BitmapImage();
-            await bitmapImage.SetSourceAsync(memoryStream.AsRandomAccessStream());
-
-            User32.DestroyIcon(hIcon);
-
-            return bitmapImage;
-        }
-
-        public static ShellItem? GetShellItem(string aumid)
-        {
-            string path = $"shell:AppsFolder\\{aumid}";
-            if (Path.Exists(path))
-            {
-                return new ShellItem(path);
-            }
-            else
-            {
-                var shellFolder = new ShellFolder(KNOWNFOLDERID.FOLDERID_AppsFolder);
-                var found = shellFolder.FirstOrDefault(x => x.ParsingName?.EndsWith(aumid) == true);
-                return found;
-            }
-        }
-
-        public static string? GetDisplayName(ShellItem shellItem) => shellItem.GetDisplayName(ShellItemDisplayString.NormalDisplay);
     }
 }

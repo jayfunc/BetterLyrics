@@ -1,5 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.Entities;
 using BetterLyrics.WinUI3.Models.Stats;
 using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
@@ -117,7 +118,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             HourlySeriesValues = [.. hourCounts];
         }
 
-        private void UpdatePlayerStats(List<PlayerStats> stats)
+        private async Task UpdatePlayerStats(List<PlayerStats> stats)
         {
             SourceSeries = new();
 
@@ -128,18 +129,23 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
 
             var topPlayer = stats.OrderByDescending(x => x.Count).FirstOrDefault();
-            TopPlayerName = PlayerIdHelper.GetDisplayName(topPlayer?.PlayerId) ?? "N/A";
+            TopPlayerName = await AppHook.GetDisplayNameByAumidAsync(topPlayer?.PlayerId) ?? "N/A";
 
-            var colors = PaletteHelper.GenerateChartColors(ColorHelper.GetSystemAccentColor(), stats.Count);
+            var tasks = stats.OrderByDescending(x => x.Count)
+                .Select(async (x, i) =>
+                {
+                    var name = await AppHook.GetDisplayNameByAumidAsync(x.PlayerId) ?? "N/A";
+                    return new PieSeries<int>
+                    {
+                        Values = [x.Count],
+                        Name = name,
+                        ToolTipLabelFormatter = point => $"{x.Count} {_localizedTimesValue}",
+                        Pushout = 4,
+                    };
+                });
 
-            SourceSeries = [.. stats.OrderByDescending(x => x.Count).Select((x, i) => new PieSeries<int>
-            {
-                Values = [x.Count],
-                Name = PlayerIdHelper.GetDisplayName(x.PlayerId),
-                ToolTipLabelFormatter = point => $"{x.Count} {_localizedTimesValue}",
-
-                Pushout = 4, // 间隙
-            })];
+            var resultSeries = await Task.WhenAll(tasks);
+            SourceSeries = [..resultSeries];
         }
 
         private (DateTime? Start, DateTime? End) CalculateDateRange()
