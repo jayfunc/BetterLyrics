@@ -4,6 +4,11 @@ Special thanks to the following people for their support!
 
 | Date / 日期 | Name / 昵称 |
 | :--- | :--- |
+| Jan 28, 2026 | 咯他ii |
+| Jan 28, 2026 | **林 |
+| Jan 28, 2026 | **棋 |
+| Jan 28, 2026 | **都 |
+| Jan 28, 2026 | **成 |
 | Jan 19, 2026 | **杭 |
 | Jan 8, 2026 | Eureka-K_K |
 | Jan 3, 2026 | \*\*轩 |
