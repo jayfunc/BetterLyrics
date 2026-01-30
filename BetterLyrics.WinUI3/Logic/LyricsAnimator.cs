@@ -94,7 +94,7 @@ namespace BetterLyrics.WinUI3.Logic
                 line.IsPlayingLastFrame = isSecondaryLinePlaying;
 
                 // 行动画
-                if (isLayoutChanged || isPrimaryPlayingLineChanged || isMouseScrollingChanged)
+                if (isLayoutChanged || isPrimaryPlayingLineChanged || isMouseScrollingChanged || isSecondaryLinePlayingChanged)
                 {
                     int lineCountDelta = i - primaryPlayingLineIndex;
                     double distanceFromPlayingLine = Math.Abs(line.PrimaryPosition.Y - primaryPlayingLine.PrimaryPosition.Y);
@@ -183,12 +183,15 @@ namespace BetterLyrics.WinUI3.Logic
                         fanAngleRad * distanceFactor * (i > primaryPlayingLineIndex ? 1 : -1) :
                         0);
 
-                    line.YOffsetTransition.SetInterpolator(canvasYScrollTransition.Interpolator);
-                    line.YOffsetTransition.SetDuration(yScrollDuration);
-                    line.YOffsetTransition.SetDelay(yScrollDelay);
-                    // 设计之初是当 isLayoutChanged 为真时 jumpTo
-                    // 但考虑到动画视觉，强制使用动画
-                    line.YOffsetTransition.Start(targetYScrollOffset);
+                    if (isLayoutChanged || isPrimaryPlayingLineChanged || isMouseScrollingChanged)
+                    {
+                        line.YOffsetTransition.SetInterpolator(canvasYScrollTransition.Interpolator);
+                        line.YOffsetTransition.SetDuration(yScrollDuration);
+                        line.YOffsetTransition.SetDelay(yScrollDelay);
+                        // 设计之初是当 isLayoutChanged 为真时 jumpTo
+                        // 但考虑到动画视觉，强制使用动画
+                        line.YOffsetTransition.Start(targetYScrollOffset);
+                    }
                 }
 
                 if (isWordAnimationEnabled)
@@ -343,11 +346,6 @@ namespace BetterLyrics.WinUI3.Logic
             var inDuration = Math.Min(desiredDuration, maxDuration);
             // 缓出动画时长保证合法
             var outDuration = Math.Min(maxDuration - inDuration, Time.AnimationDuration.TotalSeconds);
-            outDuration = Math.Max(0, outDuration);
-            if (outDuration <= 50)
-            {
-                inDuration = outDuration = inDuration / 2;
-            }
             return (inDuration, outDuration);
         }
     }

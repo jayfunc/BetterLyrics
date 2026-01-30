@@ -416,19 +416,7 @@ namespace BetterLyrics.WinUI3.Controls
                 strokeColor: _albumArtThemeColors.StrokeFontColor,
                 bgColor: _albumArtThemeColors.BgFontColor,
                 fgColor: _albumArtThemeColors.FgFontColor,
-                currentProgressMs: _songPositionWithOffset.TotalMilliseconds,
-                getPlaybackState: (lineIndex) =>
-                {
-                    var line = _renderLyricsLines?.ElementAtOrDefault(lineIndex);
-                    if (line == null) return new LinePlaybackState();
-
-                    return _synchronizer.GetLinePlayingProgress(
-                        _songPositionWithOffset.TotalMilliseconds,
-                        line,
-                        lyricsEffect.WordByWordEffectMode
-                    );
-                }
-            );
+                currentProgressMs: _songPositionWithOffset.TotalMilliseconds);
 
 #if DEBUG && false
             args.DrawingSession.DrawText(

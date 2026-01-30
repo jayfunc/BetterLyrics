@@ -41,8 +41,7 @@ namespace BetterLyrics.WinUI3.Renderer
             Color strokeColor,
             Color bgColor,
             Color fgColor,
-            double currentProgressMs,
-            Func<int, LinePlaybackState> getPlaybackState)
+            double currentProgressMs)
         {
             using (var opacityLayer = ds.CreateLayer((float)lyricsOpacity))
             {
@@ -70,8 +69,7 @@ namespace BetterLyrics.WinUI3.Renderer
                                 strokeColor,
                                 bgColor,
                                 fgColor,
-                                currentProgressMs,
-                                getPlaybackState);
+                                currentProgressMs);
                         }
 
                         ds.DrawImage(new Transform3DEffect
@@ -101,8 +99,7 @@ namespace BetterLyrics.WinUI3.Renderer
                         strokeColor,
                         bgColor,
                         fgColor,
-                        currentProgressMs,
-                        getPlaybackState);
+                        currentProgressMs);
                 }
             }
         }
@@ -125,8 +122,7 @@ namespace BetterLyrics.WinUI3.Renderer
             Color strokeColor,
             Color bgColor,
             Color fgColor,
-            double currentProgressMs,
-            Func<int, LinePlaybackState> getPlaybackState)
+            double currentProgressMs)
         {
             if (lines == null) return;
 
@@ -164,8 +160,7 @@ namespace BetterLyrics.WinUI3.Renderer
 
                     if (isPlaying)
                     {
-                        var state = getPlaybackState(i);
-                        _playingRenderer.Draw(control, ds, textOnlyLayer, line, state, bgColor, fgColor, effectSettings);
+                        _playingRenderer.Draw(control, ds, textOnlyLayer, line, currentProgressMs, bgColor, fgColor, effectSettings);
                     }
                     else
                     {

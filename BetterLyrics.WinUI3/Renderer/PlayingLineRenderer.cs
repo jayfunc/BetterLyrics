@@ -21,13 +21,13 @@ namespace BetterLyrics.WinUI3.Renderer
             CanvasDrawingSession ds,
             ICanvasImage textOnlyLayer,
             RenderLyricsLine line,
-            LinePlaybackState playbackState,
+            double currentProgressMs,
             Color bgColor,
             Color fgColor,
             LyricsEffectSettings settings)
         {
             DrawTertiaryText(ds, textOnlyLayer, line);
-            DrawPrimaryText(control, ds, textOnlyLayer, line, playbackState, bgColor, fgColor, settings);
+            DrawPrimaryText(control, ds, textOnlyLayer, line, currentProgressMs, bgColor, fgColor, settings);
             DrawSecondaryText(ds, textOnlyLayer, line);
         }
 
@@ -104,19 +104,18 @@ namespace BetterLyrics.WinUI3.Renderer
             CanvasDrawingSession ds,
             ICanvasImage source,
             RenderLyricsLine line,
-            LinePlaybackState state,
+            double currentProgressMs,
             Color bgColor,
             Color fgColor,
             LyricsEffectSettings settings)
         {
             if (line.PrimaryTextLayout == null) return;
 
-            var curCharIndex = state.SyllableStartIndex + state.SyllableLength * state.SyllableProgress;
             var lineRegions = line.PrimaryTextLayout.GetCharacterRegions(0, line.PrimaryText.Length);
 
             foreach (var subLineRegion in lineRegions)
             {
-                DrawSubLineRegion(resourceCreator, ds, source, line, subLineRegion, curCharIndex, bgColor, fgColor, settings);
+                DrawSubLineRegion(resourceCreator, ds, source, line, subLineRegion, currentProgressMs, bgColor, fgColor, settings);
             }
         }
 
@@ -126,7 +125,7 @@ namespace BetterLyrics.WinUI3.Renderer
             ICanvasImage source,
             RenderLyricsLine line,
             CanvasTextLayoutRegion subLineRegion,
-            double curCharIndex,
+            double currentProgressMs,
             Color bgColor,
             Color fgColor,
             LyricsEffectSettings settings)
@@ -146,12 +145,41 @@ namespace BetterLyrics.WinUI3.Renderer
             {
                 using (var gradientLayerDs = gradientLayer.CreateDrawingSession())
                 {
-                    float progressInRegion = (float)((curCharIndex - subLineRegion.CharacterIndex) / subLineRegion.CharacterCount);
+                    double playedWidth = 0;
+                    if (settings.WordByWordEffectMode == Enums.WordByWordEffectMode.Never ||
+                        (settings.WordByWordEffectMode == Enums.WordByWordEffectMode.Auto && !line.IsPrimaryHasRealSyllableInfo))
+                    {
+                        playedWidth = subLineRegion.LayoutBounds.Width;
+                    }
+                    else
+                    {
+                        for (int i = subLineRegion.CharacterIndex; i < subLineRegion.CharacterIndex + subLineRegion.CharacterCount; i++)
+                        {
+                            if (i >= line.PrimaryRenderChars.Count) break;
+                            var ch = line.PrimaryRenderChars[i];
+                            if (ch.IsPlayingLastFrame)
+                            {
+                                playedWidth += ch.LayoutRect.Width * ch.GetPlayProgress(currentProgressMs);
+                                break;
+                            }
+
+                            if (ch.GetPlayProgress(currentProgressMs) >= 1)
+                            {
+                                playedWidth += ch.LayoutRect.Width;
+                            }
+                            else
+                            {
+                                break;
+                            }
+                        }
+                    }
+
+                    float progressInRegion = (float)(playedWidth / subLineRegion.LayoutBounds.Width);
                     progressInRegion = Math.Clamp(progressInRegion, 0f, 1f);
 
                     float fadeProgressInRegion = 1f / subLineRegion.CharacterCount * 0.5f;
-                    
-                    float firstCharProgressInRegion = (float)((curCharIndex - subLineRegion.CharacterIndex) / 1);
+
+                    float firstCharProgressInRegion = (float)line.PrimaryRenderChars[subLineRegion.CharacterIndex].GetPlayProgress(currentProgressMs);
                     firstCharProgressInRegion = Math.Clamp(firstCharProgressInRegion, 0f, 1f);
 
                     var stop1 = fgColor.WithAlpha((byte)(255 * playedOpacity));
