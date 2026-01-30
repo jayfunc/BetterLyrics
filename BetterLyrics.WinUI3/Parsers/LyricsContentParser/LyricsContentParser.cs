@@ -72,6 +72,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsContentParser
 
             EnsureEndMs(lyricsSearchResult?.Duration);
             EnsureSyllables();
+            EnsureSufficientLineAni();
 
             return _lyricsDataArr;
         }
@@ -280,34 +281,35 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsContentParser
             foreach (var lyricsData in _lyricsDataArr)
             {
                 var lines = lyricsData.LyricsLines;
-                // 计算结束时间
                 for (int i = 0; i < lines.Count; i++)
                 {
+                    var line = lines[i];
+
                     // 计算行结束时间
-                    if (lines[i].EndMs == null)
+                    if (line.EndMs == null)
                     {
                         if (i + 1 < lines.Count)
                         {
-                            lines[i].EndMs = lines[i + 1].StartMs;
+                            line.EndMs = lines[i + 1].StartMs;
                         }
                         else
                         {
-                            lines[i].EndMs = (int)(duration ?? 0) * 1000;
+                            line.EndMs = (int)(duration ?? 0) * 1000;
                         }
                     }
                     // 计算音节结束时间
-                    for (int j = 0; j < lines[i].PrimarySyllables.Count; j++)
+                    for (int j = 0; j < line.PrimarySyllables.Count; j++)
                     {
-                        var syllable = lines[i].PrimarySyllables[j];
+                        var syllable = line.PrimarySyllables[j];
                         if (syllable.EndMs == null)
                         {
-                            if (j < lines[i].PrimarySyllables.Count - 1)
+                            if (j < line.PrimarySyllables.Count - 1)
                             {
-                                syllable.EndMs = lines[i].PrimarySyllables[j + 1].StartMs;
+                                syllable.EndMs = line.PrimarySyllables[j + 1].StartMs;
                             }
                             else
                             {
-                                syllable.EndMs = lines[i].EndMs;
+                                syllable.EndMs = line.EndMs;
                             }
                         }
                     }
@@ -349,6 +351,24 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsContentParser
                             StartMs = line.StartMs + avgSyllableDuration * j,
                             EndMs = line.StartMs + avgSyllableDuration * (j + 1),
                         });
+                    }
+                }
+            }
+        }
+
+        private void EnsureSufficientLineAni()
+        {
+            foreach (var lyricsData in _lyricsDataArr)
+            {
+                var lines = lyricsData.LyricsLines;
+                for (int i = 0; i < lines.Count; i++)
+                {
+                    var line = lines[i];
+                    var lineEndMs = line.EndMs;
+                    var lastSyllableEndMs = line.PrimarySyllables.LastOrDefault()?.EndMs;
+                    if (lineEndMs != null && lastSyllableEndMs != null)
+                    {
+                        line.EndMs = (int)Math.Max((int)lastSyllableEndMs + 100, (int)lineEndMs);
                     }
                 }
             }
