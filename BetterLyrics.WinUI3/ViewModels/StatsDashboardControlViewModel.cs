@@ -1,5 +1,4 @@
 ﻿using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.Entities;
 using BetterLyrics.WinUI3.Models.Stats;
@@ -145,7 +144,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 });
 
             var resultSeries = await Task.WhenAll(tasks);
-            SourceSeries = [..resultSeries];
+            SourceSeries = [.. resultSeries];
         }
 
         private (DateTime? Start, DateTime? End) CalculateDateRange()

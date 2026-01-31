@@ -1,5 +1,4 @@
-﻿using BetterLyrics.WinUI3.Constants;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace BetterLyrics.WinUI3.Helper
