@@ -36,7 +36,6 @@ using Vanara.Windows.Shell;
 using Windows.Media.Control;
 using Windows.Storage.Streams;
 using WindowsMediaController;
-using static WindowsMediaController.MediaManager;
 
 namespace BetterLyrics.WinUI3.Services.GSMTCService
 {

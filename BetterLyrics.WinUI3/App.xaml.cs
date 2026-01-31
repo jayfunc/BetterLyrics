@@ -43,7 +43,7 @@ namespace BetterLyrics.WinUI3
 
             await Task.Delay(100);
             await InitAppServicesAsync();
-            
+
             HandleNormalLaunch();
 
             WindowHook.CloseWindow(splashWindow);

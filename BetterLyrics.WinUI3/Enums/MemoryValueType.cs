@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace BetterLyrics.WinUI3.Enums
+﻿namespace BetterLyrics.WinUI3.Enums
 {
     /// <summary>
     /// 支持读取的内存数值类型
