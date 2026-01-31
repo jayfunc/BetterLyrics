@@ -370,9 +370,9 @@ namespace BetterLyrics.WinUI3.Controls
                 lyricsBg.IsPureColorOverlayEnabled
             );
 
-            _coverRenderer.Draw(sender, args.DrawingSession);
+            _coverRenderer.Draw(sender, args.DrawingSession, lyricsBg.IsCoverOverlayBrethingEffectEnabled);
 
-            _fluidRenderer.Draw(sender, args.DrawingSession);
+            _fluidRenderer.Draw(sender, args.DrawingSession, lyricsBg.IsFluidOverlayBrethingEffectEnabled);
 
             if (_spectrumAnalyzer.IsCapturing)
             {
@@ -393,9 +393,9 @@ namespace BetterLyrics.WinUI3.Controls
                 );
             }
 
-            _snowRenderer.Draw(sender, args.DrawingSession);
+            _snowRenderer.Draw(sender, args.DrawingSession, lyricsBg.IsSnowFlakeOverlayBrethingEffectEnabled);
 
-            _fogRenderer.Draw(sender, args.DrawingSession);
+            _fogRenderer.Draw(sender, args.DrawingSession, lyricsBg.IsFogOverlayBrethingEffectEnabled);
 
             _lyricsRenderer.Draw(
                 control: sender,
@@ -547,7 +547,19 @@ namespace BetterLyrics.WinUI3.Controls
 
             _isLayoutChanged = false;
 
+            if (!_spectrumAnalyzer.IsCapturing)
+            {
+                _spectrumAnalyzer.BarCount = lyricsBg.SpectrumCount;
+                _spectrumAnalyzer.Sensitivity = lyricsBg.SpectrumSensitivity;
+                _spectrumAnalyzer.StartCapture();
+            }
+            if (_spectrumAnalyzer.IsCapturing)
+            {
+                _spectrumAnalyzer.UpdateSmoothSpectrum();
+            }
+
             _fluidRenderer.IsEnabled = lyricsBg.IsFluidOverlayEnabled;
+            _fluidRenderer.EnableLightWave = lyricsBg.IsFluidOverlayLightWaveEnabled;
             _fluidRenderer.Opacity = lyricsBg.FluidOverlayOpacity / 100.0;
             _fluidRenderer.UpdateColors(
                 _accentColor1Transition.Value,
@@ -555,37 +567,25 @@ namespace BetterLyrics.WinUI3.Controls
                 _accentColor3Transition.Value,
                 _accentColor4Transition.Value
             );
-            _fluidRenderer.Update(elapsedTime);
+            _fluidRenderer.Update(elapsedTime, _spectrumAnalyzer.CurrentBassEnergy, lyricsBg.FluidOverlayBreathingIntensity);
 
             _coverRenderer.IsEnabled = lyricsBg.IsCoverOverlayEnabled;
             _coverRenderer.Opacity = lyricsBg.CoverOverlayOpacity;
             _coverRenderer.BlurAmount = lyricsBg.CoverOverlayBlurAmount;
             _coverRenderer.Speed = lyricsBg.CoverOverlaySpeed;
-            _coverRenderer.Update(elapsedTime);
+            _coverRenderer.Update(elapsedTime, _spectrumAnalyzer.CurrentBassEnergy, lyricsBg.CoverOverlayBreathingIntensity);
 
             _snowRenderer.IsEnabled = lyricsBg.IsSnowFlakeOverlayEnabled;
             _snowRenderer.Amount = lyricsBg.SnowFlakeOverlayAmount / 100f;
             _snowRenderer.Speed = lyricsBg.SnowFlakeOverlaySpeed;
-            _snowRenderer.Update(elapsedTime.TotalSeconds);
+            _snowRenderer.Update(elapsedTime.TotalSeconds, _spectrumAnalyzer.CurrentBassEnergy, lyricsBg.SnowFlakeOverlayBreathingIntensity);
 
             _fogRenderer.IsEnabled = lyricsBg.IsFogOverlayEnabled;
-            _fogRenderer.Update(elapsedTime.TotalSeconds);
+            _fogRenderer.Update(elapsedTime.TotalSeconds, _spectrumAnalyzer.CurrentBassEnergy, lyricsBg.FogOverlayBreathingIntensity);
 
-            if (lyricsBg.IsSpectrumOverlayEnabled && !_spectrumAnalyzer.IsCapturing)
-            {
-                _spectrumAnalyzer.BarCount = lyricsBg.SpectrumCount;
-                _spectrumAnalyzer.Sensitivity = lyricsBg.SpectrumSensitivity;
-                _spectrumAnalyzer.StartCapture();
-            }
-            else if (!lyricsBg.IsSpectrumOverlayEnabled && _spectrumAnalyzer.IsCapturing)
-            {
-                _spectrumAnalyzer.StopCapture();
-            }
-            if (_spectrumAnalyzer.IsCapturing)
-            {
-                _spectrumAnalyzer.UpdateSmoothSpectrum();
-                _spectrumRenderer.Update(_spectrumAnalyzer.CurrentBassEnergy, lyricsBg.SpectrumBreathingIntensity);
-            }
+            _spectrumRenderer.Update(_spectrumAnalyzer.CurrentBassEnergy, lyricsBg.SpectrumBreathingIntensity);
+
+            _lyricsRenderer.Update(_spectrumAnalyzer.CurrentBassEnergy, lyricsEffect.LyricsBreathingIntensity);
         }
 
         private void Canvas_Unloaded(object sender, RoutedEventArgs e)

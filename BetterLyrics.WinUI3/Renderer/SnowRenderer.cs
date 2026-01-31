@@ -3,10 +3,11 @@ using ComputeSharp.D2D1.WinUI;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
+using System.Numerics;
 
 namespace BetterLyrics.WinUI3.Renderer
 {
-    public partial class SnowRenderer : IDisposable
+    public partial class SnowRenderer : BreathingRendererBase, IDisposable
     {
         private PixelShaderEffect<SnowEffect>? _snowEffect;
         private float _timeAccumulator = 0f;
@@ -21,18 +22,21 @@ namespace BetterLyrics.WinUI3.Renderer
             _snowEffect = new PixelShaderEffect<SnowEffect>();
         }
 
-        public void Update(double deltaTime)
+        public void Update(double deltaTime, float bassEnergy, int breathingIntensity)
         {
             if (_snowEffect == null || !IsEnabled) return;
+            base.UpdateBreathing(bassEnergy, breathingIntensity);
             _timeAccumulator += (float)deltaTime;
         }
 
-        public void Draw(ICanvasAnimatedControl control, CanvasDrawingSession ds)
+        public void Draw(ICanvasAnimatedControl control, CanvasDrawingSession ds, bool isBreathingEffectEnabled)
         {
             if (_snowEffect == null || !IsEnabled) return;
 
             float width = control.ConvertDipsToPixels((float)control.Size.Width, CanvasDpiRounding.Round);
             float height = control.ConvertDipsToPixels((float)control.Size.Height, CanvasDpiRounding.Round);
+
+            var center = new Vector2((float)control.Size.Width / 2, (float)control.Size.Height / 2);
 
             _snowEffect.ConstantBuffer = new SnowEffect(
                 _timeAccumulator,
@@ -41,7 +45,9 @@ namespace BetterLyrics.WinUI3.Renderer
                 Speed
             );
 
+            ApplyBreathingTransform(ds, center, isBreathingEffectEnabled);
             ds.DrawImage(_snowEffect);
+            ResetTransform(ds, isBreathingEffectEnabled);
         }
 
         public void Dispose()

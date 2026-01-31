@@ -9,7 +9,7 @@ using Windows.Foundation;
 
 namespace BetterLyrics.WinUI3.Renderer
 {
-    public partial class CoverBackgroundRenderer : IDisposable
+    public partial class CoverBackgroundRenderer : BreathingRendererBase, IDisposable
     {
         private CanvasBitmap? _currentBitmap;
         private CanvasBitmap? _previousBitmap;
@@ -91,9 +91,11 @@ namespace BetterLyrics.WinUI3.Renderer
             _needsCacheUpdate = true;
         }
 
-        public void Update(TimeSpan deltaTime)
+        public void Update(TimeSpan deltaTime, float bassEnergy, int breathingIntensity)
         {
             if (!IsEnabled) return;
+
+            base.UpdateBreathing(bassEnergy, breathingIntensity);
 
             _crossfadeTransition.Update(deltaTime);
 
@@ -113,7 +115,7 @@ namespace BetterLyrics.WinUI3.Renderer
             }
         }
 
-        public void Draw(ICanvasAnimatedControl control, CanvasDrawingSession ds)
+        public void Draw(ICanvasAnimatedControl control, CanvasDrawingSession ds, bool isBreathingEffectEnabled)
         {
             if (!IsEnabled || Opacity <= 0) return;
 
@@ -139,6 +141,8 @@ namespace BetterLyrics.WinUI3.Renderer
 
             Vector2 screenCenter = new Vector2((float)control.Size.Width / 2f, (float)control.Size.Height / 2f);
 
+            ApplyBreathingTransform(ds, screenCenter, isBreathingEffectEnabled);
+
             if (isCrossfading)
             {
                 DrawCachedLayer(ds, _previousTargetCache, screenCenter, angle, baseAlpha);
@@ -150,6 +154,8 @@ namespace BetterLyrics.WinUI3.Renderer
             {
                 DrawCachedLayer(ds, _currentTargetCache, screenCenter, angle, baseAlpha);
             }
+
+            ResetTransform(ds, isBreathingEffectEnabled);
         }
 
         private void EnsureCachedLayer(ICanvasResourceCreator resourceCreator, CanvasBitmap? sourceBitmap, ref CanvasRenderTarget? targetCache)

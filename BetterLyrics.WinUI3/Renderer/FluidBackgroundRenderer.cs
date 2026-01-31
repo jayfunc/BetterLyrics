@@ -11,7 +11,7 @@ using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Renderer
 {
-    public partial class FluidBackgroundRenderer : IDisposable
+    public partial class FluidBackgroundRenderer : BreathingRendererBase, IDisposable
     {
         private PixelShaderEffect? _fluidEffect;
         private float _timeAccumulator = 0f;
@@ -20,7 +20,7 @@ namespace BetterLyrics.WinUI3.Renderer
         public bool IsEnabled { get; set; } = false;
         public double Opacity { get; set; } = 1.0;
 
-        public bool EnableLightWave { get; set; } = false;
+        public bool EnableLightWave { get; set; } = true;
 
         public async Task LoadResourcesAsync()
         {
@@ -57,9 +57,11 @@ namespace BetterLyrics.WinUI3.Renderer
             _c4 = c4.ToVector3RGB();
         }
 
-        public void Update(TimeSpan deltaTime)
+        public void Update(TimeSpan deltaTime, float bassEnergy, int breathingIntensity)
         {
             if (_fluidEffect == null || !IsEnabled) return;
+
+            base.UpdateBreathing(bassEnergy, breathingIntensity);
 
             _timeAccumulator += (float)deltaTime.TotalSeconds;
 
@@ -73,7 +75,7 @@ namespace BetterLyrics.WinUI3.Renderer
             _fluidEffect?.Properties["EnableLightWave"] = EnableLightWave;
         }
 
-        public void Draw(ICanvasAnimatedControl control, CanvasDrawingSession ds)
+        public void Draw(ICanvasAnimatedControl control, CanvasDrawingSession ds, bool isBreathingEffectEnabled)
         {
             if (_fluidEffect == null || !IsEnabled || Opacity <= 0) return;
 
@@ -82,6 +84,10 @@ namespace BetterLyrics.WinUI3.Renderer
 
             _fluidEffect.Properties["Width"] = pixelWidth;
             _fluidEffect.Properties["Height"] = pixelHeight;
+
+            var center = new Vector2((float)control.Size.Width / 2, (float)control.Size.Height / 2);
+
+            ApplyBreathingTransform(ds, center, isBreathingEffectEnabled);
 
             if (Opacity >= 1.0)
             {
@@ -98,6 +104,8 @@ namespace BetterLyrics.WinUI3.Renderer
                     ds.DrawImage(opacityEffect);
                 }
             }
+
+            ResetTransform(ds, isBreathingEffectEnabled);
         }
 
         public void Dispose()
