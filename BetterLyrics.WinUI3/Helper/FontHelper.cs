@@ -1,5 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Models;
 using Microsoft.Graphics.Canvas.Text;
+using Microsoft.UI.Dispatching;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -14,88 +15,86 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static async Task<List<ExtendedFontFamily>> GetSystemFontFamiliesAsync()
         {
-            if (_fontCache != null)
+            if (_fontCache != null) return _fontCache;
+
+            var rawData = await GetRawDataOnUIThreadAsync();
+
+            if (rawData.EnglishNames == null || rawData.LocalNames == null)
             {
-                return _fontCache;
+                return new List<ExtendedFontFamily>();
             }
 
-            _fontCache = await Task.Run(() => LoadFontsInternal());
+            _fontCache = await Task.Run(() =>
+            {
+                var list = rawData.EnglishNames
+                    .Zip(rawData.LocalNames, (en, loc) => new ExtendedFontFamily
+                    {
+                        FontFamily = en,
+                        LocalizedFontFamily = loc,
+                        SampleText = loc
+                    })
+                    .OrderBy(f => f.LocalizedFontFamily)
+                    .ToList();
+
+                return list;
+            });
 
             return _fontCache;
         }
 
-        private static List<ExtendedFontFamily> LoadFontsInternal()
+        private static Task<(string[] EnglishNames, string[] LocalNames)> GetRawDataOnUIThreadAsync()
         {
-            var fontList = new List<ExtendedFontFamily>();
-            var addedFamilyNames = new HashSet<string>();
+            var tcs = new TaskCompletionSource<(string[], string[])>();
+            var dispatcher = DispatcherQueue.GetForCurrentThread();
 
-            var systemFontSet = CanvasFontSet.GetSystemFontSet();
-
-            string userLangPrefix = CultureInfo.CurrentUICulture.TwoLetterISOLanguageName.ToLower();
-
-            foreach (var font in systemFontSet.Fonts)
+            if (dispatcher == null)
             {
-                // Original family name
-                if (!font.FamilyNames.TryGetValue("en-us", out var familyNameID))
+                try
                 {
-                    familyNameID = font.FamilyNames.FirstOrDefault().Value;
+                    dispatcher = Microsoft.UI.Xaml.Window.Current?.DispatcherQueue;
                 }
-                if (string.IsNullOrEmpty(familyNameID) || addedFamilyNames.Contains(familyNameID))
-                    continue;
+                catch { }
+            }
 
-                // Localized family name
-                var localizedStrings = font.GetInformationalStrings(CanvasFontInformation.PreferredFamilyNames);
-                if (localizedStrings == null || localizedStrings.Count == 0)
+            if (dispatcher == null)
+            {
+                tcs.SetException(new InvalidOperationException("无法获取 UI Dispatcher，请确保在 UI 线程调用或传入 Dispatcher"));
+                return tcs.Task;
+            }
+
+            dispatcher.TryEnqueue(() =>
+            {
+                try
                 {
-                    localizedStrings = font.FamilyNames;
-                }
-                var displayName = FindBestUpdatedMatch(localizedStrings, userLangPrefix);
+                    var enNames = CanvasTextFormat.GetSystemFontFamilies(new[] { "en-us" });
 
-                // Sample text
-                var sampleText = font.GetInformationalStrings(CanvasFontInformation.SampleText).FirstOrDefault().Value;
+                    var greedyLocales = new List<string>();
 
-                // Final handle
-                if (!string.IsNullOrEmpty(displayName))
-                {
-                    fontList.Add(new ExtendedFontFamily
+                    greedyLocales.Add(CultureInfo.CurrentUICulture.Name);
+
+                    if (CultureInfo.CurrentUICulture.TwoLetterISOLanguageName.Equals("zh", StringComparison.OrdinalIgnoreCase))
                     {
-                        LocalizedFontFamily = displayName,
-                        FontFamily = familyNameID,
-                        SampleText = sampleText,
-                    });
-                    addedFamilyNames.Add(familyNameID);
+                        greedyLocales.Add("zh-CN");
+                        greedyLocales.Add("zh-Hans"); // 简体
+                        greedyLocales.Add("zh-TW");
+                        greedyLocales.Add("zh-Hant"); // 繁体
+                        greedyLocales.Add("zh-HK");
+                        greedyLocales.Add("zh-SG");
+                    }
+
+                    greedyLocales.Add("en-us");
+
+                    var locNames = CanvasTextFormat.GetSystemFontFamilies(greedyLocales);
+
+                    tcs.SetResult((enNames, locNames));
                 }
-            }
-
-            return fontList.OrderBy(f => f.LocalizedFontFamily).ToList();
-        }
-
-        private static string FindBestUpdatedMatch(IReadOnlyDictionary<string, string> names, string userLangPrefix)
-        {
-            if (names.Count == 0) return "";
-
-            foreach (var pair in names)
-            {
-                if (pair.Key.StartsWith(userLangPrefix, StringComparison.OrdinalIgnoreCase))
+                catch (Exception ex)
                 {
-                    return pair.Value;
+                    tcs.SetException(ex);
                 }
-            }
+            });
 
-            if (names.TryGetValue("en-us", out var enName))
-            {
-                return enName;
-            }
-
-            foreach (var pair in names)
-            {
-                if (pair.Key.StartsWith("en", StringComparison.OrdinalIgnoreCase))
-                {
-                    return pair.Value;
-                }
-            }
-
-            return names.FirstOrDefault().Value;
+            return tcs.Task;
         }
     }
 }
