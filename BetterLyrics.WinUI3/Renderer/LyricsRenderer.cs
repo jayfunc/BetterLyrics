@@ -15,7 +15,7 @@ using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Renderer
 {
-    public class LyricsRenderer
+    public class LyricsRenderer : BreathingRendererBase
     {
         private readonly PlayingLineRenderer _playingRenderer = new();
         private readonly UnplayingLineRenderer _unplayingRenderer = new();
@@ -143,7 +143,14 @@ namespace BetterLyrics.WinUI3.Renderer
                 double xOffset = lyricsX;
                 double yOffset = line.YOffsetTransition.Value + userScrollOffset + lyricsY + lyricsHeight * playingLineTopOffsetFactor;
 
-                ds.Transform = Matrix3x2.CreateScale((float)line.ScaleTransition.Value, line.CenterPosition);
+                bool isPlaying = line.GetIsPlaying(currentProgressMs);
+
+                if (isPlaying)
+                {
+                    ApplyBreathingTransform(ds, line.CenterPosition, windowStatus.LyricsEffectSettings.IsLyricsBrethingEffectEnabled);
+                }
+
+                ds.Transform *= Matrix3x2.CreateScale((float)line.ScaleTransition.Value, line.CenterPosition);
 
                 if (effectSettings.IsFanLyricsEnabled)
                 {
@@ -156,8 +163,6 @@ namespace BetterLyrics.WinUI3.Renderer
 
                 using (var textOnlyLayer = RenderBaseTextLayer(control, line, styleSettings.LyricsFontStrokeWidth, strokeColor, line.ColorTransition.Value))
                 {
-                    bool isPlaying = line.GetIsPlaying(currentProgressMs);
-
                     if (isPlaying)
                     {
                         _playingRenderer.Draw(control, ds, textOnlyLayer, line, currentProgressMs, bgColor, fgColor, effectSettings);
@@ -265,6 +270,11 @@ namespace BetterLyrics.WinUI3.Renderer
                 rotation *
                 perspective *
                 Matrix4x4.CreateTranslation(center);
+        }
+
+        public void Update(float bassEnergy, int breathingIntensity)
+        {
+            base.UpdateBreathing(bassEnergy, breathingIntensity);
         }
 
     }

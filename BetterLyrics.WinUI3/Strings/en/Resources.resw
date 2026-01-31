@@ -1044,6 +1044,9 @@
   <data name="SettingsPageLight.Content" xml:space="preserve">
     <value>Light</value>
   </data>
+  <data name="SettingsPageLightWaveEffect.Header" xml:space="preserve">
+    <value>Lightwave</value>
+  </data>
   <data name="SettingsPageListenNewSession.Header" xml:space="preserve">
     <value>Enable listening for new playback sessions</value>
   </data>

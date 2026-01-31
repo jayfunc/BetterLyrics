@@ -46,6 +46,21 @@
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsOutOfSightEffectEnabled, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
+                    <!--  呼吸效果  -->
+                    <dev:SettingsExpander x:Uid="SettingsPageSpectrumBrethingEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEA3F;}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsBrethingEffectEnabled, Mode=TwoWay}" />
+                        <dev:SettingsExpander.Items>
+                            <dev:SettingsCard x:Uid="SettingsPageSpectrumBreathingIntensity" IsEnabled="{x:Bind LyricsEffectSettings.IsLyricsBrethingEffectEnabled, Mode=OneWay}">
+                                <local:ExtendedSlider
+                                    Default="80"
+                                    Maximum="200"
+                                    Minimum="0"
+                                    Unit="%"
+                                    Value="{x:Bind LyricsEffectSettings.LyricsBreathingIntensity, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+                        </dev:SettingsExpander.Items>
+                    </dev:SettingsExpander>
+
                     <!--  辉光效果  -->
                     <dev:SettingsExpander x:Uid="SettingsPageLyricsGlowEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE9A9;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsGlowEffectEnabled, Mode=TwoWay}" />

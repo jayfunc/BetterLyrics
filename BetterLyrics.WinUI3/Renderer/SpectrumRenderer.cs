@@ -10,11 +10,8 @@ using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Renderer
 {
-    public partial class SpectrumRenderer : IDisposable
+    public partial class SpectrumRenderer : BreathingRendererBase, IDisposable
     {
-        private float _breathingScale = 1.0f;
-        private float _targetBreathingScale = 1.0f;
-
         private CanvasGeometry? _spectrumGeometry;
 
         public void Draw(
@@ -42,36 +39,19 @@ namespace BetterLyrics.WinUI3.Renderer
 
             if (_spectrumGeometry != null)
             {
-                if (isBreathingEffectEnabled)
-                {
-                    var center = new Vector2((float)canvasWidth / 2, placement == SpectrumPlacement.Bottom ? (float)canvasHeight : 0);
-                    ds.Transform = Matrix3x2.CreateScale(_breathingScale, center);
-                }
+                var center = new Vector2((float)canvasWidth / 2, placement == SpectrumPlacement.Bottom ? (float)canvasHeight : 0);
+
+                ApplyBreathingTransform(ds, center, isBreathingEffectEnabled);
 
                 DrawGeometry(ds, _spectrumGeometry, fillColor, isGlowEffectEnabled, opacity, placement, canvasHeight);
 
-                if (isBreathingEffectEnabled)
-                {
-                    ds.Transform = Matrix3x2.Identity;
-                }
+                ResetTransform(ds, isBreathingEffectEnabled);
             }
         }
 
         public void Update(float bassEnergy, int breathingIntensity)
         {
-            float maxScaleOffset = breathingIntensity / 100.0f;
-            _targetBreathingScale = 1.0f + (bassEnergy * maxScaleOffset);
-
-            if (_targetBreathingScale > _breathingScale)
-            {
-                // 鼓点出现，快速放大
-                _breathingScale += (_targetBreathingScale - _breathingScale) * 0.2f;
-            }
-            else
-            {
-                // 鼓点消失，缓慢回落
-                _breathingScale += (_targetBreathingScale - _breathingScale) * 0.05f;
-            }
+            base.UpdateBreathing(bassEnergy, breathingIntensity);
         }
 
         private CanvasGeometry? CreateGeometry(
