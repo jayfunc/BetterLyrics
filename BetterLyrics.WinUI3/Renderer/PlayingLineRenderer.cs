@@ -155,7 +155,7 @@ namespace BetterLyrics.WinUI3.Renderer
                     {
                         for (int i = subLineRegion.CharacterIndex; i < subLineRegion.CharacterIndex + subLineRegion.CharacterCount; i++)
                         {
-                            if (i >= line.PrimaryRenderChars.Count) break;
+                            if (i >= line.PrimaryRenderChars.Count) return;
                             var ch = line.PrimaryRenderChars[i];
                             if (ch.IsPlayingLastFrame)
                             {
@@ -179,6 +179,7 @@ namespace BetterLyrics.WinUI3.Renderer
 
                     float fadeProgressInRegion = 1f / subLineRegion.CharacterCount * 0.5f;
 
+                    if (subLineRegion.CharacterIndex >= line.PrimaryRenderChars.Count) return;
                     float firstCharProgressInRegion = (float)line.PrimaryRenderChars[subLineRegion.CharacterIndex].GetPlayProgress(currentProgressMs);
                     firstCharProgressInRegion = Math.Clamp(firstCharProgressInRegion, 0f, 1f);
 
