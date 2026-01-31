@@ -40,7 +40,8 @@ namespace BetterLyrics.WinUI3
         protected override async void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             var splashWindow = WindowHook.OpenOrShowWindow<SplashWindow>();
-            
+
+            await Task.Delay(100);
             await InitAppServicesAsync();
             
             HandleNormalLaunch();
