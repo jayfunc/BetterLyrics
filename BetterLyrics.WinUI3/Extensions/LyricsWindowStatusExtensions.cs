@@ -51,6 +51,7 @@ namespace BetterLyrics.WinUI3.Extensions
                 IsShownInSwitchers = false,
                 LyricsDisplayType = LyricsDisplayType.LyricsOnly,
                 EnvironmentSampleMode = WindowPixelSampleMode.BelowWindow,
+                IsAlwaysHideUnlockButton = true,
                 LyricsStyleSettings = new LyricsStyleSettings
                 {
                     LyricsAlignmentType = TextAlignmentType.Center,
@@ -121,6 +122,7 @@ namespace BetterLyrics.WinUI3.Extensions
                 IsAdaptToEnvironment = true,
                 IsShownInSwitchers = false,
                 EnvironmentSampleMode = WindowPixelSampleMode.WindowEdge,
+                IsAlwaysHideUnlockButton = true,
                 LyricsStyleSettings = new()
                 {
                     LyricsAlignmentType = TextAlignmentType.Center,
