@@ -17,6 +17,8 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media.Imaging;
+using System.Threading.Tasks;
+using Vanara.PInvoke;
 using Windows.Foundation;
 using Windows.UI;
 using WinRT.Interop;
@@ -78,7 +80,6 @@ namespace BetterLyrics.WinUI3.Views
         {
             LyricsWindowStatus.UpdateMonitorBounds();
 
-            OnIsWorkAreaChanged();
             this.MoveAndResize(LyricsWindowStatus.WindowBounds);
             OnIsShownInSwitchersChanged();
             OnIsAlwaysOnTopChanged();
@@ -89,6 +90,7 @@ namespace BetterLyrics.WinUI3.Views
             OnTitleBarAreaChanged();
             OnIsPinToTaskbarChanged();
             OnIsAlwaysHideUnlockButtonChanged();
+            OnIsWorkAreaChangedAsync();
 
             LyricsWindowStatus.UpdateDemoWindowAndMonitorBounds();
         }
@@ -149,13 +151,15 @@ namespace BetterLyrics.WinUI3.Views
 
         // ====
 
-        private void OnIsWorkAreaChanged()
+        private async Task OnIsWorkAreaChangedAsync()
         {
             this.SetIsWorkArea(LyricsWindowStatus.IsWorkArea);
             if (LyricsWindowStatus.IsWorkArea)
             {
                 LyricsWindowStatus.IsLocked = true;
+                await Task.Delay(Constants.Time.WaitingDuration);
                 this.MoveAndResize(LyricsWindowStatus.GetWindowBoundsWhenWorkArea());
+                this.UpdateBackdropAccentColor(WindowNative.GetWindowHandle(this));
             }
             else
             {
@@ -177,7 +181,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void OnIsLockedChanged()
         {
-            if (LyricsWindowStatus.IsLocked && !LyricsWindowStatus.IsWorkArea)
+            if (LyricsWindowStatus.IsLocked)
             {
                 LockToggleButtonContainer.Visibility = Visibility.Visible;
                 StartOverlayInputHelper();
@@ -243,13 +247,14 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        private void OnWorkAreaChanged()
+        private async Task OnWorkAreaChangedAsync()
         {
             LyricsWindowStatus.UpdateMonitorBounds();
             if (LyricsWindowStatus.IsWorkArea)
             {
                 this.UpdateWorkArea();
                 LyricsWindowStatus.IsLocked = true;
+                await Task.Delay(Constants.Time.WaitingDuration);
                 this.MoveAndResize(LyricsWindowStatus.GetWindowBoundsWhenWorkArea());
             }
         }
@@ -308,6 +313,10 @@ namespace BetterLyrics.WinUI3.Views
                 var rect = AppWindow.Position;
 
                 if (rect.X < 0 && rect.Y < 0 && rect.X + size.Width < 0 && rect.Y + size.Height < 0)
+                {
+                    return;
+                }
+                else if (LyricsWindowStatus.IsMaximized || LyricsWindowStatus.IsFullscreen)
                 {
                     return;
                 }
@@ -479,7 +488,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(LyricsWindowStatus.IsWorkArea))
                 {
-                    OnIsWorkAreaChanged();
+                    OnIsWorkAreaChangedAsync();
                 }
                 else if (message.PropertyName == nameof(LyricsWindowStatus.IsShownInSwitchers))
                 {
@@ -537,7 +546,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(LyricsWindowStatus.DockHeight))
                 {
-                    OnWorkAreaChanged();
+                    OnWorkAreaChangedAsync();
                 }
             }
         }
@@ -548,7 +557,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(LyricsWindowStatus.MonitorDeviceName))
                 {
-                    OnWorkAreaChanged();
+                    OnWorkAreaChangedAsync();
                 }
                 else if (message.PropertyName == nameof(LyricsWindowStatus.Name))
                 {
@@ -563,7 +572,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(LyricsWindowStatus.DockPlacement))
                 {
-                    OnWorkAreaChanged();
+                    OnWorkAreaChangedAsync();
                 }
             }
         }
