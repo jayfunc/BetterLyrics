@@ -142,7 +142,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                     lyricsSearchResult.Title = overridenTitle;
                     lyricsSearchResult.Artist = overridenArtist;
                     lyricsSearchResult.Album = overridenAlbum;
-                    lyricsSearchResult.Raw = "[99:00.000]🎶🎶🎶";
+                    lyricsSearchResult.Raw = "[00:00.000]🎶🎶🎶\n[99:00.000]";
                     return lyricsSearchResult;
                 }
 

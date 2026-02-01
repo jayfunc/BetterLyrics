@@ -13,6 +13,7 @@ using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using Lyricify.Lyrics.Providers.Web.Netease;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
@@ -20,7 +21,9 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Storage.Streams;
@@ -418,9 +421,8 @@ namespace BetterLyrics.WinUI3.Controls
                 fgColor: _albumArtThemeColors.FgFontColor,
                 currentProgressMs: _songPositionWithOffset.TotalMilliseconds);
 
-#if DEBUG && false
+#if DEBUG
             args.DrawingSession.DrawText(
-                    $"####: {_breathingScale}\n" +
                     $"Lyrics render start pos: ({(int)_renderLyricsStartX}, {(int)_renderLyricsStartY})\n" +
                     $"Lyrics render size: [{(int)_renderLyricsWidth} x {(int)_renderLyricsHeight}]\n" +
                     $"Lyrics actual height: {LyricsLayoutManager.CalculateActualHeight(_renderLyricsLines)}\n" +
@@ -547,12 +549,6 @@ namespace BetterLyrics.WinUI3.Controls
 
             _isLayoutChanged = false;
 
-            if (!_spectrumAnalyzer.IsCapturing)
-            {
-                _spectrumAnalyzer.BarCount = lyricsBg.SpectrumCount;
-                _spectrumAnalyzer.Sensitivity = lyricsBg.SpectrumSensitivity;
-                _spectrumAnalyzer.StartCapture();
-            }
             if (_spectrumAnalyzer.IsCapturing)
             {
                 _spectrumAnalyzer.UpdateSmoothSpectrum();
@@ -588,23 +584,7 @@ namespace BetterLyrics.WinUI3.Controls
             _lyricsRenderer.Update(_spectrumAnalyzer.CurrentBassEnergy, lyricsEffect.LyricsBreathingIntensity);
         }
 
-        private void Canvas_Unloaded(object sender, RoutedEventArgs e)
-        {
-            _fluidRenderer.Dispose();
-            _coverRenderer.Dispose();
-            _snowRenderer.Dispose();
-            _fogRenderer.Dispose();
-            _spectrumRenderer.Dispose();
-
-            _renderLyricsLines = null;
-
-            DisposeAnalyzer();
-
-            Canvas.RemoveFromVisualTree();
-            Canvas = null;
-        }
-
-        private async void Canvas_CreateResources(CanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
+        private void Canvas_CreateResources(CanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
         {
             var tasks = new Task[]
             {
@@ -616,13 +596,44 @@ namespace BetterLyrics.WinUI3.Controls
             _snowRenderer.LoadResources();
             _fogRenderer.LoadResources();
 
+            InitSpectrumAnalyzer();
+
             _isLayoutChanged = true;
             TriggerRelayout();
         }
 
         // ====
 
-        private void DisposeAnalyzer()
+        private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            _fluidRenderer.Dispose();
+            _coverRenderer.Dispose();
+            _snowRenderer.Dispose();
+            _fogRenderer.Dispose();
+            _spectrumRenderer.Dispose();
+
+            _renderLyricsLines = null;
+
+            DisposeSpectrumAnalyzer();
+
+            Canvas.RemoveFromVisualTree();
+            Canvas = null;
+        }
+
+        // ====
+
+        private void InitSpectrumAnalyzer()
+        {
+            if (_lyricsWindowStatus == null) return;
+            var lyricsBg = _lyricsWindowStatus.LyricsBackgroundSettings;
+
+            _spectrumAnalyzer.BarCount = lyricsBg.SpectrumCount;
+            _spectrumAnalyzer.Sensitivity = lyricsBg.SpectrumSensitivity;
+
+            _spectrumAnalyzer.StartCapture();
+        }
+
+        private void DisposeSpectrumAnalyzer()
         {
             if (_spectrumAnalyzer.IsCapturing)
             {

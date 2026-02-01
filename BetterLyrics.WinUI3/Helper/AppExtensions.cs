@@ -76,6 +76,25 @@ namespace BetterLyrics.WinUI3.Helper
                     propertyRow.Value = aumid;
                 }
             }
+
+            else if (d is PersonPicture personPicture)
+            {
+                personPicture.DisplayName = aumid;
+
+                try
+                {
+                    var name = await AppHook.GetDisplayNameByAumidAsync(aumid);
+
+                    if (GetAumid(personPicture) == aumid)
+                    {
+                        personPicture.DisplayName = name ?? aumid;
+                    }
+                }
+                catch
+                {
+                    personPicture.DisplayName = aumid;
+                }
+            }
         }
     }
 }

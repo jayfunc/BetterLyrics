@@ -28,8 +28,9 @@ namespace BetterLyrics.WinUI3.Helper
                 }
             });
 
-            // (关键) 设置单元状态为 STA
+            // 设置单元状态为 STA
             thread.SetApartmentState(ApartmentState.STA);
+            thread.IsBackground = true;
             thread.Start();
 
             return tcs.Task;

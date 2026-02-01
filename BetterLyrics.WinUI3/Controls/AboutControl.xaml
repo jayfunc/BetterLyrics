@@ -320,10 +320,6 @@
                         </dev:SettingsExpander.ItemsHeader>
                     </dev:SettingsExpander>
 
-                    <dev:SettingsCard x:Uid="SettingsPageFixedTimeStep" Visibility="Collapsed">
-                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.AdvancedSettings.IsFixedTimeStep, Mode=TwoWay}" />
-                    </dev:SettingsCard>
-
                     <dev:SettingsCard x:Uid="SettingsPageFPS" Visibility="Collapsed">
                         <uc:ExtendedSlider
                             Default="60"
