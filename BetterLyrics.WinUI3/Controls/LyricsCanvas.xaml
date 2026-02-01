@@ -8,7 +8,7 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    Unloaded="Canvas_Unloaded"
+    Unloaded="UserControl_Unloaded"
     mc:Ignorable="d">
 
     <Grid>
@@ -16,6 +16,7 @@
             x:Name="Canvas"
             CreateResources="Canvas_CreateResources"
             Draw="Canvas_Draw"
+            IsFixedTimeStep="False"
             Update="Canvas_Update" />
     </Grid>
 </UserControl>

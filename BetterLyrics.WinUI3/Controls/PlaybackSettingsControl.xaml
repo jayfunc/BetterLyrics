@@ -99,11 +99,9 @@
                                                 Glyph="&#x283F;" />
                                         </Grid>
                                         <Image Grid.Column="1" />
-                                        <Grid
-                                            Grid.Column="1"
-                                            Height="24"
-                                            VerticalAlignment="Center">
-                                            <Image helper:AppExtensions.Aumid="{Binding Provider}" />
+                                        <Grid Grid.Column="1" VerticalAlignment="Center">
+                                            <!--<Image helper:AppExtensions.Aumid="{Binding Provider}" />-->
+                                            <PersonPicture Height="24" helper:AppExtensions.Aumid="{Binding Provider}" />
                                         </Grid>
 
                                         <StackPanel Grid.Column="2">
