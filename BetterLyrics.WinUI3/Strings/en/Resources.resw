@@ -999,6 +999,9 @@
   <data name="SettingsPageJyutping.Content" xml:space="preserve">
     <value>Jyutping (Cantonese)</value>
   </data>
+  <data name="SettingsPageKeepNowPlayingBarInteractive.Header" xml:space="preserve">
+    <value>Keep media control bar interactive when locked</value>
+  </data>
   <data name="SettingsPageLanguage.Header" xml:space="preserve">
     <value>Language</value>
   </data>

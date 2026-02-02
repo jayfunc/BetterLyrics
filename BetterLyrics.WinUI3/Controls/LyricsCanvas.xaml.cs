@@ -421,7 +421,7 @@ namespace BetterLyrics.WinUI3.Controls
                 fgColor: _albumArtThemeColors.FgFontColor,
                 currentProgressMs: _songPositionWithOffset.TotalMilliseconds);
 
-#if DEBUG
+#if DEBUG && false
             args.DrawingSession.DrawText(
                     $"Lyrics render start pos: ({(int)_renderLyricsStartX}, {(int)_renderLyricsStartY})\n" +
                     $"Lyrics render size: [{(int)_renderLyricsWidth} x {(int)_renderLyricsHeight}]\n" +

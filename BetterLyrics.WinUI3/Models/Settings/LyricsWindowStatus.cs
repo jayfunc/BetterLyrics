@@ -22,6 +22,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsShownInSwitchers { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLocked { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsAlwaysHideUnlockButton { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool KeepNowPlayingBarInteractiveWhenLocked { get; set; } = false;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsPinToTaskbar { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TaskbarPlacement TaskbarPlacement { get; set; } = TaskbarPlacement.Right;

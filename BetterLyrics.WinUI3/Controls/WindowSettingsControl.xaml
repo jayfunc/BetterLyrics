@@ -100,6 +100,14 @@
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAlwaysHideUnlockButton, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
+                    <dev:SettingsCard
+                        x:Uid="SettingsPageKeepNowPlayingBarInteractive"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                 Glyph=&#xE76F;}"
+                        IsEnabled="{x:Bind LyricsWindowStatus.IsLocked, Mode=OneWay}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.KeepNowPlayingBarInteractiveWhenLocked, Mode=TwoWay}" />
+                    </dev:SettingsCard>
+
                     <dev:SettingsExpander
                         x:Uid="SettingsPageAOT"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
