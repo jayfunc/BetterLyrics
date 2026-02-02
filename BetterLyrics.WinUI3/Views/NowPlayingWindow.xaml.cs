@@ -364,7 +364,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            NowPlayingBar.IsCompactMode = RootGrid.ActualWidth < 180 || RootGrid.ActualHeight < 100;
+            NowPlayingBar.IsCompactMode = RootGrid.ActualWidth < 180;
             NowPlayingBar.ShowTime = NowPlayingBar.ShowVolumeButton = NowPlayingBar.ShowMoreButton =
                 NowPlayingBar.IsCompactMode || RootGrid.ActualWidth > 350;
             if (RootGrid.ActualWidth < 400)
@@ -409,9 +409,13 @@ namespace BetterLyrics.WinUI3.Views
             _overlayInputHelper = new(this);
             _overlayInputHelper.Register(RootGrid);
             _overlayInputHelper.Register(LockToggleButtonContainer);
+            if (LyricsWindowStatus.KeepNowPlayingBarInteractiveWhenLocked)
+            {
+                _overlayInputHelper.Register(NowPlayingBar);
+            }
             _overlayInputHelper.OnInteractiveAreaMoved = (args) =>
             {
-                if (args.Elements.Contains(LockToggleButtonContainer))
+                if (args.Elements.Contains(LockToggleButtonContainer) || args.Elements.Contains(NowPlayingBar))
                 {
                     this.SetIsClickThrough(false);
                 }
@@ -432,6 +436,12 @@ namespace BetterLyrics.WinUI3.Views
         {
             _overlayInputHelper?.Stop();
             _overlayInputHelper = null;
+        }
+
+        private void RestartOverlayInputHelper()
+        {
+            StopOverlayInputHelper();
+            StartOverlayInputHelper();
         }
 
         private void UnlockButton_PointerEntered(object sender, PointerRoutedEventArgs e)
@@ -525,6 +535,10 @@ namespace BetterLyrics.WinUI3.Views
                 else if (message.PropertyName == nameof(LyricsWindowStatus.IsAlwaysHideUnlockButton))
                 {
                     OnIsAlwaysHideUnlockButtonChanged();
+                }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.KeepNowPlayingBarInteractiveWhenLocked))
+                {
+                    RestartOverlayInputHelper();
                 }
             }
         }
