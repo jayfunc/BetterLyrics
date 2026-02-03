@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class NowPlayingBarViewModel : BaseViewModel, IRecipient<PropertyChangedMessage<SongInfo>>
+    public partial class NowPlayingBarViewModel : BaseViewModel
     {
         public IGSMTCService GSMTCService { get; private set; }
 
@@ -45,7 +45,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             UpdateVolume();
         }
 
-        private void UpdateVolume()
+        public void UpdateVolume()
         {
             Volume = AudioMixerHook.GetApplicationVolume(GSMTCService.CurrentMediaSourceProviderInfo?.Provider);
         }
@@ -98,15 +98,5 @@ namespace BetterLyrics.WinUI3.ViewModels
             WindowHook.OpenOrShowWindow<LyricsSearchWindow>();
         }
 
-        public void Receive(PropertyChangedMessage<SongInfo> message)
-        {
-            if (message.Sender is IGSMTCService)
-            {
-                if (message.PropertyName == nameof(IGSMTCService.CurrentSongInfo))
-                {
-                    UpdateVolume();
-                }
-            }
-        }
     }
 }

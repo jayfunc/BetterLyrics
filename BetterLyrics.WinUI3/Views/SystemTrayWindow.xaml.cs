@@ -10,6 +10,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Xaml;
 using System.Collections.Generic;
+using System.Linq;
 using Vanara.PInvoke;
 using WinUIEx.Messaging;
 
@@ -21,7 +22,9 @@ namespace BetterLyrics.WinUI3.Views;
 /// <summary>
 /// An empty window that can be used on its own or navigated to within a Frame.
 /// </summary>
-public sealed partial class SystemTrayWindow : Window, IRecipient<PropertyChangedMessage<List<string>>>
+public sealed partial class SystemTrayWindow : Window,
+    IRecipient<PropertyChangedMessage<List<string>>>,
+    IRecipient<PropertyChangedMessage<bool>>
 {
     private ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
     private readonly IGSMTCService _gsmtcService = Ioc.Default.GetRequiredService<IGSMTCService>();
@@ -142,6 +145,13 @@ public sealed partial class SystemTrayWindow : Window, IRecipient<PropertyChange
         );
     }
 
+    private void UpdateScreenKeeperStatus()
+    {
+        // 检测已打开的窗口中是否存在配置为不休眠的窗口
+        var isKeepScreenOpen = _settingsService.AppSettings.WindowBoundsRecords.Where(x => x.IsOpened).Any(x => x.IsKeepScreenOpen);
+        ScreenKeeper.SetState(isKeepScreenOpen);
+    }
+
     public void Receive(PropertyChangedMessage<List<string>> message)
     {
         if (message.Sender is GeneralSettings)
@@ -169,4 +179,18 @@ public sealed partial class SystemTrayWindow : Window, IRecipient<PropertyChange
         }
     }
 
+    public void Receive(PropertyChangedMessage<bool> message)
+    {
+        if (message.Sender is LyricsWindowStatus)
+        {
+            if (message.PropertyName == nameof(LyricsWindowStatus.IsKeepScreenOpen))
+            {
+                UpdateScreenKeeperStatus();
+            }
+            else if (message.PropertyName == nameof(LyricsWindowStatus.IsOpened))
+            {
+                UpdateScreenKeeperStatus();
+            }
+        }
+    }
 }
