@@ -319,11 +319,4 @@ public sealed partial class NowPlayingBar : UserControl
         PlaybackOrder = PlaybackOrder.GetNext();
     }
 
-    private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
-    {
-        int padding = e.NewSize.Height < 80 ? 0 : 16;
-        BottomLeftCommandStackPanel.Padding =
-        BottomCenterCommandStackPanel.Padding =
-        BottomRightCommandStackPanel.Padding = new(padding);
-    }
 }

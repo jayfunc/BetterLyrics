@@ -11,7 +11,7 @@
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
-    <Grid x:Name="RootGrid" SizeChanged="RootGrid_SizeChanged">
+    <Grid x:Name="RootGrid">
         <Grid
             x:Name="BottomCommandGrid"
             Background="Transparent"
