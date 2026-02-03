@@ -354,8 +354,7 @@
                             <Button.ContextFlyout>
                                 <Flyout x:Name="VolumeFlyout" ShouldConstrainToRootBounds="False">
                                     <local:ExtendedSlider
-                                        Frequency="10"
-                                        IsSliderEnabled="False"
+                                        Frequency="1"
                                         Maximum="100"
                                         Minimum="0"
                                         ResetButtonVisibility="Collapsed"

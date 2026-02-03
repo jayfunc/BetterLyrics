@@ -247,7 +247,7 @@ public sealed partial class NowPlayingBar : UserControl
 
     private void ExtendedSlider_ValueChangedByUser(object sender, Events.ExtendedSliderValueChangedByUserEventArgs e)
     {
-        SystemVolumeHook.MasterVolume = ViewModel.Volume;
+        AudioMixerHook.SetApplicationVolume(ViewModel.GSMTCService.CurrentMediaSourceProviderInfo?.Provider, ViewModel.Volume);
     }
 
     private void LyricsSearchShortcutButton_Click(object sender, RoutedEventArgs e)
