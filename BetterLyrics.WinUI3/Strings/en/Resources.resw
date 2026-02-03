@@ -1002,6 +1002,9 @@
   <data name="SettingsPageKeepNowPlayingBarInteractive.Header" xml:space="preserve">
     <value>Keep media control bar interactive when locked</value>
   </data>
+  <data name="SettingsPageKeepScreenOpen.Header" xml:space="preserve">
+    <value>Keep screen awake</value>
+  </data>
   <data name="SettingsPageLanguage.Header" xml:space="preserve">
     <value>Language</value>
   </data>

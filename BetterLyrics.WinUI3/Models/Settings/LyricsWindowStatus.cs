@@ -46,6 +46,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial WindowPixelSampleMode EnvironmentSampleMode { get; set; } = WindowPixelSampleMode.WindowEdge;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool AutoShowOrHideWindow { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TitleBarArea TitleBarArea { get; set; } = TitleBarArea.Top;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsKeepScreenOpen { get; set; } = false;
 
         [JsonIgnore][ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsOpened { get; set; } = false;
         [JsonIgnore] public DispatcherQueueTimer? VisibilityTimer { get; set; }

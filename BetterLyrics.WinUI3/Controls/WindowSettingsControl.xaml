@@ -21,6 +21,7 @@
                         <TextBox Text="{x:Bind LyricsWindowStatus.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" />
                     </dev:SettingsCard>
 
+                    <!--  工作区  -->
                     <dev:SettingsExpander
                         x:Uid="SettingsPageWorkArea"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
@@ -58,7 +59,7 @@
 
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
-
+                    <!--  适应环境颜色  -->
                     <dev:SettingsExpander
                         x:Uid="SettingsPageAdaptEnvColor"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
@@ -79,7 +80,7 @@
                             </dev:SettingsCard>
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
-
+                    <!--  固定到任务栏  -->
                     <dev:SettingsExpander
                         x:Uid="SettingsPagePinToTaskbar"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
@@ -95,11 +96,15 @@
                             </dev:SettingsCard>
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
-
-                    <dev:SettingsCard x:Uid="SettingsPageAlwaysHideUnlockButton" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE785;}">
+                    <!--  隐藏解锁键  -->
+                    <dev:SettingsCard
+                        x:Uid="SettingsPageAlwaysHideUnlockButton"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                 Glyph=&#xE785;}"
+                        IsEnabled="{x:Bind LyricsWindowStatus.IsLocked, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAlwaysHideUnlockButton, Mode=TwoWay}" />
                     </dev:SettingsCard>
-
+                    <!--  保持控制栏可交互  -->
                     <dev:SettingsCard
                         x:Uid="SettingsPageKeepNowPlayingBarInteractive"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
@@ -107,7 +112,7 @@
                         IsEnabled="{x:Bind LyricsWindowStatus.IsLocked, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.KeepNowPlayingBarInteractiveWhenLocked, Mode=TwoWay}" />
                     </dev:SettingsCard>
-
+                    <!--  置顶  -->
                     <dev:SettingsExpander
                         x:Uid="SettingsPageAOT"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
@@ -120,15 +125,19 @@
                             </dev:SettingsCard>
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
-
+                    <!--  隐藏窗口  -->
                     <dev:SettingsCard x:Uid="SettingsPageHideWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xED1A;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.AutoShowOrHideWindow, Mode=TwoWay}" />
                     </dev:SettingsCard>
-
+                    <!--  保持屏幕常亮  -->
+                    <dev:SettingsCard x:Uid="SettingsPageKeepScreenOpen" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEA80;}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsKeepScreenOpen, Mode=TwoWay}" />
+                    </dev:SettingsCard>
+                    <!--  在系统环境中显示  -->
                     <dev:SettingsCard x:Uid="SettingsPageShowInSwitchers" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE7C4;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsShownInSwitchers, Mode=TwoWay}" />
                     </dev:SettingsCard>
-
+                    <!--  可拖动区域  -->
                     <dev:SettingsCard x:Uid="SettingsPageDragArea" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEB41;}">
                         <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.TitleBarArea, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageTitleBarAreaNone" />

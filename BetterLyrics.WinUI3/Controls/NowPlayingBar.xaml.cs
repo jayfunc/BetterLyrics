@@ -267,6 +267,7 @@ public sealed partial class NowPlayingBar : UserControl
 
     private void BottomCommandGrid_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
     {
+        ViewModel.UpdateVolume();
         _isPointerInBottomCommandGrid = true;
         if (IsAutoHideEnabled && BottomCommandGrid.Children.Count != 0)
         {
