@@ -123,6 +123,7 @@ namespace BetterLyrics.WinUI3.Extensions
                 IsShownInSwitchers = false,
                 EnvironmentSampleMode = WindowPixelSampleMode.WindowEdge,
                 IsAlwaysHideUnlockButton = true,
+                KeepNowPlayingBarInteractiveWhenLocked = true,
                 LyricsStyleSettings = new()
                 {
                     LyricsAlignmentType = TextAlignmentType.Center,
