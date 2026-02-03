@@ -48,7 +48,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TitleBarArea TitleBarArea { get; set; } = TitleBarArea.Top;
 
         [JsonIgnore][ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsOpened { get; set; } = false;
-
         [JsonIgnore] public DispatcherQueueTimer? VisibilityTimer { get; set; }
 
         public LyricsWindowStatus()

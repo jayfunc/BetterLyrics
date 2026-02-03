@@ -54,7 +54,7 @@ public sealed partial class SystemTrayWindow : Window, IRecipient<PropertyChange
 
     private void Wmm_WindowMessageReceived(object? sender, WindowMessageEventArgs e)
     {
-        if (e.Message.MessageId == (uint)User32.WindowMessage.WM_HOTKEY)
+        if ((User32.WindowMessage)e.Message.MessageId == User32.WindowMessage.WM_HOTKEY)
         {
             int id = (int)e.Message.WParam;
             GlobalHotKeyHook.TryInvokeAction(id);

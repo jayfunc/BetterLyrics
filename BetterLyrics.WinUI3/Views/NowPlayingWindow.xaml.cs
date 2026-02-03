@@ -17,11 +17,15 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media.Imaging;
+using System;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Vanara.PInvoke;
 using Windows.Foundation;
 using Windows.UI;
 using WinRT.Interop;
+using WinUIEx.Messaging;
+using static Vanara.PInvoke.User32;
 
 namespace BetterLyrics.WinUI3.Views
 {
@@ -41,6 +45,7 @@ namespace BetterLyrics.WinUI3.Views
         private ForegroundWindowHook? _fgWindowWatcher = null;
         private OverlayInputHelper? _overlayInputHelper;
         private TaskbarHook? _taskbarHook;
+        private WindowMessageMonitor _wmm;
 
         private DispatcherQueueTimer? _fgWindowWatcherTimer = null;
 
@@ -56,6 +61,9 @@ namespace BetterLyrics.WinUI3.Views
         {
             this.InitializeComponent();
 
+            _wmm = new WindowMessageMonitor(this);
+            _wmm.WindowMessageReceived += Wmm_WindowMessageReceived;
+
             _fgWindowWatcherTimer = DispatcherQueue.CreateTimer();
 
             LyricsWindowStatus = status;
@@ -69,6 +77,27 @@ namespace BetterLyrics.WinUI3.Views
             WeakReferenceMessenger.Default.RegisterAll(this);
 
             UpdateAlbumArtThemeColors();
+        }
+
+        private void Wmm_WindowMessageReceived(object? sender, WindowMessageEventArgs e)
+        {
+            var msg = (WindowMessage)e.Message.MessageId;
+            if (msg == WindowMessage.WM_WINDOWPOSCHANGING)
+            {
+                if (LyricsWindowStatus.IsWorkArea)
+                {
+                    var pos = Marshal.PtrToStructure<WINDOWPOS>(e.Message.LParam);
+                    var bounds = LyricsWindowStatus.GetWindowBoundsWhenWorkArea();
+                    pos.x = (int)bounds.X;
+                    pos.y = (int)bounds.Y;
+                    pos.cx = (int)bounds.Width;
+                    pos.cy = (int)bounds.Height;
+                    Marshal.StructureToPtr(pos, e.Message.LParam, false);
+
+                    e.Result = IntPtr.Zero;
+                    e.Handled = true;
+                }
+            }
         }
 
         private void OnTaskbarFreeBoundsChanged(Events.TaskbarFreeBoundsChangedEventArgs obj)
@@ -90,7 +119,7 @@ namespace BetterLyrics.WinUI3.Views
             OnTitleBarAreaChanged();
             OnIsPinToTaskbarChanged();
             OnIsAlwaysHideUnlockButtonChanged();
-            OnIsWorkAreaChangedAsync();
+            OnIsWorkAreaChanged();
 
             LyricsWindowStatus.UpdateDemoWindowAndMonitorBounds();
         }
@@ -151,14 +180,12 @@ namespace BetterLyrics.WinUI3.Views
 
         // ====
 
-        private async Task OnIsWorkAreaChangedAsync()
+        private void OnIsWorkAreaChanged()
         {
             this.SetIsWorkArea(LyricsWindowStatus.IsWorkArea);
             if (LyricsWindowStatus.IsWorkArea)
             {
                 LyricsWindowStatus.IsLocked = true;
-                await Task.Delay(Constants.Time.WaitingDuration);
-                this.MoveAndResize(LyricsWindowStatus.GetWindowBoundsWhenWorkArea());
                 this.UpdateBackdropAccentColor(WindowNative.GetWindowHandle(this));
             }
             else
@@ -247,15 +274,13 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        private async Task OnWorkAreaChangedAsync()
+        private void OnWorkAreaChanged()
         {
             LyricsWindowStatus.UpdateMonitorBounds();
             if (LyricsWindowStatus.IsWorkArea)
             {
                 this.UpdateWorkArea();
                 LyricsWindowStatus.IsLocked = true;
-                await Task.Delay(Constants.Time.WaitingDuration);
-                this.MoveAndResize(LyricsWindowStatus.GetWindowBoundsWhenWorkArea());
             }
         }
 
@@ -498,7 +523,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(LyricsWindowStatus.IsWorkArea))
                 {
-                    OnIsWorkAreaChangedAsync();
+                    OnIsWorkAreaChanged();
                 }
                 else if (message.PropertyName == nameof(LyricsWindowStatus.IsShownInSwitchers))
                 {
@@ -560,7 +585,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(LyricsWindowStatus.DockHeight))
                 {
-                    OnWorkAreaChangedAsync();
+                    OnWorkAreaChanged();
                 }
             }
         }
@@ -571,7 +596,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(LyricsWindowStatus.MonitorDeviceName))
                 {
-                    OnWorkAreaChangedAsync();
+                    OnWorkAreaChanged();
                 }
                 else if (message.PropertyName == nameof(LyricsWindowStatus.Name))
                 {
@@ -586,7 +611,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(LyricsWindowStatus.DockPlacement))
                 {
-                    OnWorkAreaChangedAsync();
+                    OnWorkAreaChanged();
                 }
             }
         }
