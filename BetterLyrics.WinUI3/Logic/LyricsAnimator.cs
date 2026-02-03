@@ -31,6 +31,7 @@ namespace BetterLyrics.WinUI3.Logic
             bool isLayoutChanged,
             bool isPrimaryPlayingLineChanged,
             bool isMouseScrollingChanged,
+            bool isArtThemeColorsChanged,
             double currentPositionMs
         )
         {
@@ -94,7 +95,7 @@ namespace BetterLyrics.WinUI3.Logic
                 line.IsPlayingLastFrame = isSecondaryLinePlaying;
 
                 // 行动画
-                if (isLayoutChanged || isPrimaryPlayingLineChanged || isMouseScrollingChanged || isSecondaryLinePlayingChanged)
+                if (isLayoutChanged || isPrimaryPlayingLineChanged || isMouseScrollingChanged || isSecondaryLinePlayingChanged || isArtThemeColorsChanged)
                 {
                     int lineCountDelta = i - primaryPlayingLineIndex;
                     double distanceFromPlayingLine = Math.Abs(line.PrimaryPosition.Y - primaryPlayingLine.PrimaryPosition.Y);

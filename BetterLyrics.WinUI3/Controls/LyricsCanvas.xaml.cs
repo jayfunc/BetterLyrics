@@ -122,6 +122,7 @@ namespace BetterLyrics.WinUI3.Controls
 
         private bool _isLayoutChanged = true;
         private bool _isMouseScrollingChanged = false;
+        private bool _isArtThemeColorsChanged = false;
 
         private int _primaryPlayingLineIndex;
         private (int Start, int End) _visibleRange;
@@ -329,7 +330,7 @@ namespace BetterLyrics.WinUI3.Controls
                     canvas._accentColor4Transition.Start(albumArtThemeColors.AccentColor4);
 
                     canvas._albumArtThemeColors = albumArtThemeColors;
-                    canvas._isLayoutChanged = true;
+                    canvas._isArtThemeColorsChanged = true;
                 }
             }
         }
@@ -532,10 +533,12 @@ namespace BetterLyrics.WinUI3.Controls
                 _isLayoutChanged,
                 isPrimaryPlayingLineChanged,
                 _isMouseScrollingChanged,
+                _isArtThemeColorsChanged,
                 _songPositionWithOffset.TotalMilliseconds
             );
 
             _isMouseScrollingChanged = false;
+            _isArtThemeColorsChanged = false;
 
             _lyricsRenderer.CalculateLyrics3DMatrix(
                 lyricsStyle: lyricsStyle,
