@@ -27,13 +27,12 @@
                 <Grid HorizontalAlignment="Left">
                     <StackPanel
                         x:Name="BottomLeftCommandStackPanel"
+                        Padding="{x:Bind Padding, Mode=OneWay}"
                         Orientation="Horizontal"
                         Spacing="3">
 
                         <StackPanel
                             x:Name="SongInfoStackPanel"
-                            Margin="8"
-                            Padding="8"
                             VerticalAlignment="Center"
                             CornerRadius="4"
                             Opacity="{x:Bind ShowSongInfo, Mode=OneWay, Converter={StaticResource BoolToOpacityConverter}}"
@@ -75,8 +74,6 @@
 
                         <StackPanel
                             x:Name="TimeStackPanel"
-                            Margin="8"
-                            Padding="8"
                             VerticalAlignment="Center"
                             Opacity="{x:Bind ShowTime, Mode=OneWay, Converter={StaticResource BoolToOpacityConverter}}"
                             Orientation="Horizontal"
@@ -111,7 +108,7 @@
                 <Grid HorizontalAlignment="Center">
                     <StackPanel
                         x:Name="BottomCenterCommandStackPanel"
-                        Padding="16"
+                        Padding="{x:Bind Padding, Mode=OneWay}"
                         Orientation="Horizontal"
                         Spacing="12">
                         <!--  Playback order  -->
@@ -233,7 +230,7 @@
                 <Grid HorizontalAlignment="Right">
                     <StackPanel
                         x:Name="BottomRightCommandStackPanel"
-                        Padding="16"
+                        Padding="{x:Bind Padding, Mode=OneWay}"
                         Orientation="Horizontal"
                         Spacing="3">
 
