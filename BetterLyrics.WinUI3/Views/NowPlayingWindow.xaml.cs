@@ -279,7 +279,7 @@ namespace BetterLyrics.WinUI3.Views
             LyricsWindowStatus.UpdateMonitorBounds();
             if (LyricsWindowStatus.IsWorkArea)
             {
-                this.UpdateWorkArea();
+                this.UpdateAppBar();
                 LyricsWindowStatus.IsLocked = true;
             }
         }
@@ -392,6 +392,7 @@ namespace BetterLyrics.WinUI3.Views
             NowPlayingBar.IsCompactMode = RootGrid.ActualWidth < 180;
             NowPlayingBar.ShowTime = NowPlayingBar.ShowVolumeButton = NowPlayingBar.ShowMoreButton =
                 NowPlayingBar.IsCompactMode || RootGrid.ActualWidth > 350;
+            NowPlayingBar.Padding = new Thickness(RootGrid.ActualHeight <= 80 ? 4 : 16);
             if (RootGrid.ActualWidth < 400)
             {
                 TopCenterCommandGrid.Visibility = Visibility.Visible;

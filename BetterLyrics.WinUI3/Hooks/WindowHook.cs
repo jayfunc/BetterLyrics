@@ -37,7 +37,7 @@ namespace BetterLyrics.WinUI3.Hooks
             {
                 if (GetWindowHandle(window) is IntPtr hwnd)
                 {
-                    UnregisterWorkArea(hwnd);
+                    UnregisterAppBar(hwnd);
                 }
                 nowPlayingWindow.LyricsWindowStatus.IsOpened = false;
             }
@@ -212,7 +212,7 @@ namespace BetterLyrics.WinUI3.Hooks
             {
                 if (GetWindowHandle(item) is IntPtr hwnd)
                 {
-                    UnregisterWorkArea(hwnd);
+                    UnregisterAppBar(hwnd);
                 }
             }
         }
@@ -240,11 +240,11 @@ namespace BetterLyrics.WinUI3.Hooks
 
             if (enable)
             {
-                RegisterWorkArea(hwnd, window.LyricsWindowStatus);
+                RegisterAppBar(hwnd, window.LyricsWindowStatus);
             }
             else
             {
-                UnregisterWorkArea(hwnd);
+                UnregisterAppBar(hwnd);
             }
         }
 
@@ -348,7 +348,12 @@ namespace BetterLyrics.WinUI3.Hooks
             window.SetTitleBarArea(titleBarArea);
         }
 
-        private static void RegisterWorkArea(IntPtr hwnd, LyricsWindowStatus status)
+        /// <summary>
+        /// 注册应用栏
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <param name="status"></param>
+        private static void RegisterAppBar(IntPtr hwnd, LyricsWindowStatus status)
         {
             if (_workAreas.Contains(hwnd)) return;
 
@@ -377,8 +382,11 @@ namespace BetterLyrics.WinUI3.Hooks
 
             _workAreas.Add(hwnd);
         }
-
-        private static void UnregisterWorkArea(IntPtr hwnd)
+        /// <summary>
+        /// 取消注册应用栏
+        /// </summary>
+        /// <param name="hwnd"></param>
+        private static void UnregisterAppBar(IntPtr hwnd)
         {
             if (!_workAreas.Contains(hwnd))
                 return;
@@ -393,8 +401,11 @@ namespace BetterLyrics.WinUI3.Hooks
 
             _workAreas.Remove(hwnd);
         }
-
-        public static void UpdateWorkArea(this NowPlayingWindow window)
+        /// <summary>
+        /// 更新应用栏
+        /// </summary>
+        /// <param name="window"></param>
+        public static void UpdateAppBar(this NowPlayingWindow window)
         {
             var hwnd = WindowNative.GetWindowHandle(window);
 
