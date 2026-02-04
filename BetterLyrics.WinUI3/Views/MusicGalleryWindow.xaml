@@ -30,6 +30,7 @@
 
         <uc:NowPlayingBar
             x:Name="NowPlayingBar"
+            Padding="16"
             VerticalAlignment="Bottom"
             IsAutoHideEnabled="False"
             PlayQueueButtonClick="NowPlayingBar_PlayingQueueClick"

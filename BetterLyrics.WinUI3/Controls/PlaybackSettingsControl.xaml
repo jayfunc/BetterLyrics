@@ -84,6 +84,7 @@
                                         CornerRadius="4">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="Auto" />
@@ -97,7 +98,10 @@
                                                 FontSize="12"
                                                 Glyph="&#x283F;" />
                                         </Grid>
-                                        <StackPanel Grid.Column="1">
+                                        <Grid Grid.Column="1">
+                                            <Image Height="24" helper:AppExtensions.Aumid="{Binding Provider, Mode=OneWay}" />
+                                        </Grid>
+                                        <StackPanel Grid.Column="2">
                                             <TextBlock
                                                 VerticalAlignment="Center"
                                                 helper:AppExtensions.Aumid="{Binding Provider}"
@@ -111,14 +115,14 @@
                                                 TextTrimming="CharacterEllipsis" />
                                         </StackPanel>
                                         <Button
-                                            Grid.Column="2"
+                                            Grid.Column="3"
                                             Click="ConfigButton_Click"
                                             Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                                   FontSize=16,
                                                                   Glyph=&#xE90F;}"
                                             Style="{StaticResource GhostButtonStyle}" />
                                         <Button
-                                            Grid.Column="3"
+                                            Grid.Column="4"
                                             Click="DeleteButton_Click"
                                             Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                                   FontSize=16,
