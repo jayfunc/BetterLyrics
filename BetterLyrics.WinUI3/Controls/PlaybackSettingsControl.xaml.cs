@@ -1,6 +1,10 @@
+using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Helper.Lyrics;
+using BetterLyrics.WinUI3.Helper.Lyrics.LyricsMetadataParser;
 using BetterLyrics.WinUI3.Hooks;
+using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
@@ -69,7 +73,7 @@ namespace BetterLyrics.WinUI3.Controls
             ViewModel.CloseConfigPanelCommand.Execute(null);
         }
 
-        private async void SaveLyricsButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveLyricsButton_Click(SplitButton sender, SplitButtonClickEventArgs args)
         {
             var window = WindowHook.GetWindow<SettingsWindow>();
             if (window == null) return;
@@ -77,36 +81,20 @@ namespace BetterLyrics.WinUI3.Controls
             var lyricsSearchResult = ViewModel.GSMTCService.CurrentLyricsSearchResult;
             if (lyricsSearchResult == null) return;
 
-            var raw = lyricsSearchResult.Raw;
-            if (raw == null) return;
+            var contentToWrite = LyricsConverter.Convert(
+                ViewModel.GSMTCService.CurrentLyricsData,
+                lyricsSearchResult!.Title,
+                lyricsSearchResult!.Artist,
+                lyricsSearchResult!.Album,
+                lyricsSearchResult!.Duration,
+                ViewModel.AppSettings.LyricsSaveConfig);
+            if (contentToWrite == null) return;
 
-            var format = lyricsSearchResult.Provider.GetLyricsFormat();
-            switch (format)
-            {
-                case Enums.LyricsFormat.Lrc:
-                    break;
-                case Enums.LyricsFormat.Eslrc:
-                    break;
-                case Enums.LyricsFormat.Ttml:
-                    break;
-                case Enums.LyricsFormat.Qrc:
-                    raw = Lyricify.Lyrics.Generators.LrcGenerator.Generate(Lyricify.Lyrics.Parsers.QrcParser.Parse(raw));
-                    format = Enums.LyricsFormat.Lrc;
-                    break;
-                case Enums.LyricsFormat.Krc:
-                    raw = Lyricify.Lyrics.Generators.LrcGenerator.Generate(Lyricify.Lyrics.Parsers.KrcParser.Parse(raw));
-                    format = Enums.LyricsFormat.Lrc;
-                    break;
-                case Enums.LyricsFormat.NotSpecified:
-                default:
-                    return;
-            }
-
-            var ext = format.ToFileExtension();
+            var ext = LyricsFormat.Lrc.ToFileExtension();
 
             IDictionary<string, IList<string>> fileTypeChoices = new Dictionary<string, IList<string>>()
             {
-                { ext, new List<string>() { ext } },
+                { ext.ToUpper(), new List<string>() { ext } },
             };
 
             var suggestedFileName = $"{lyricsSearchResult.Artist} - {lyricsSearchResult.Title}";
@@ -115,10 +103,9 @@ namespace BetterLyrics.WinUI3.Controls
 
             if (file != null)
             {
-                await FileIO.WriteTextAsync(file, raw);
+                await FileIO.WriteTextAsync(file, contentToWrite);
                 ToastHelper.ShowToast("ActionCompleted", null, InfoBarSeverity.Success);
             }
         }
-
     }
 }

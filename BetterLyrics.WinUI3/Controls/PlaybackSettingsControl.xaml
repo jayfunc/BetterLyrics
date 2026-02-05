@@ -471,13 +471,38 @@
                                     x:Uid="LyricsPageMatchPercentage"
                                     Unit="%"
                                     Value="{x:Bind ViewModel.GSMTCService.CurrentLyricsSearchResult.MatchPercentage, Mode=OneWay}" />
-                                <Button
+                                <SplitButton
+                                    x:Name="SaveLyricsButton"
                                     Margin="-16,0,-16,-16"
                                     HorizontalAlignment="Stretch"
                                     Click="SaveLyricsButton_Click"
                                     Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                                           FontSize=16,
-                                                          Glyph=&#xE74E;}" />
+                                                          Glyph=&#xE74E;}">
+                                    <SplitButton.Flyout>
+                                        <Flyout ShouldConstrainToRootBounds="False">
+                                            <Flyout.FlyoutPresenterStyle>
+                                                <Style BasedOn="{StaticResource FlyoutGhostStyle}" TargetType="FlyoutPresenter">
+                                                    <Setter Property="MaxWidth" Value="500" />
+                                                </Style>
+                                            </Flyout.FlyoutPresenterStyle>
+                                            <StackPanel MaxWidth="500">
+                                                <dev:SettingsCard x:Uid="LyricsSaveConfigInSyllablesFormat">
+                                                    <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.LyricsSaveConfig.InSyllablesFormat, Mode=TwoWay}" />
+                                                </dev:SettingsCard>
+                                                <dev:SettingsCard x:Uid="LyricsSaveConfigIncludeTranslation">
+                                                    <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.LyricsSaveConfig.IncludeTranslation, Mode=TwoWay}" />
+                                                </dev:SettingsCard>
+                                                <dev:SettingsCard x:Uid="LyricsSaveConfigIncludeTransliteration">
+                                                    <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.LyricsSaveConfig.IncludeTransliteration, Mode=TwoWay}" />
+                                                </dev:SettingsCard>
+                                                <dev:SettingsCard x:Uid="LyricsSaveConfigInOneLine">
+                                                    <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.LyricsSaveConfig.InOneLine, Mode=TwoWay}" />
+                                                </dev:SettingsCard>
+                                            </StackPanel>
+                                        </Flyout>
+                                    </SplitButton.Flyout>
+                                </SplitButton>
                             </StackPanel>
                         </Expander>
 
