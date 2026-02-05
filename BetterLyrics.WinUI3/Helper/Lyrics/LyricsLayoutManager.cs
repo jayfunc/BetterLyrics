@@ -1,5 +1,4 @@
-﻿using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Models.Lyrics;
+﻿using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.Models.Settings;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
@@ -8,7 +7,7 @@ using System.Linq;
 using System.Numerics;
 using Windows.Foundation;
 
-namespace BetterLyrics.WinUI3.Logic
+namespace BetterLyrics.WinUI3.Helper.Lyrics
 {
     public class LyricsLayoutManager
     {

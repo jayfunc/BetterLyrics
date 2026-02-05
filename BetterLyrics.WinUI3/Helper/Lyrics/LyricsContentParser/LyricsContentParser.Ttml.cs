@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 
-namespace BetterLyrics.WinUI3.Parsers.LyricsContentParser
+namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
 {
     public partial class LyricsContentParser
     {

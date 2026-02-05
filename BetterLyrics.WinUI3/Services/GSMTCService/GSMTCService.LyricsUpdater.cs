@@ -2,7 +2,8 @@
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Lyrics;
-using BetterLyrics.WinUI3.Parsers.LyricsContentParser;
+using BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser;
+using BetterLyrics.WinUI3.Helper.Lyrics.LyricsMetadataParser;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Extensions.Logging;
 using System.Threading;
@@ -34,7 +35,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                     var lyricsParser = new LyricsContentParser();
 
                     (CurrentLyricsData, CurrentLyricsSearchResult.TransliterationProvider, CurrentLyricsSearchResult.TranslationProvider) =
-                        await Task.Run(async () => await lyricsParser.Parse(
+                        await Task.Run(async () => await lyricsParser.ParseAsync(
                             _translationService, _transliterationService, _settingsService.AppSettings.TranslationSettings, CurrentLyricsSearchResult, token), token);
                 }
             }

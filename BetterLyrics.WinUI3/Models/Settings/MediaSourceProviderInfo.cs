@@ -41,6 +41,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int MatchingThreshold { get; set; } = 40;
 
         [JsonIgnore] public bool IsLXMusic => PlayerIdHelper.IsLXMusic(Provider);
+        [JsonIgnore][ObservableProperty] public partial bool IsNowPlaying { get; set; } = false;
 
         public MediaSourceProviderInfo()
         {

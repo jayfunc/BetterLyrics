@@ -20,7 +20,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace BetterLyrics.WinUI3.Parsers.LyricsContentParser
+namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
 {
     public partial class LyricsContentParser
     {
@@ -50,6 +50,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsContentParser
                         break;
                     case LyricsFormat.Qrc:
                         ParseQrcKrc(QrcParser.Parse(lyricsSearchResult.Raw).Lines);
+                        Lyricify.Lyrics.Generators.LrcGenerator.Generate(QrcParser.Parse(lyricsSearchResult.Raw));
                         break;
                     case LyricsFormat.Krc:
                         ParseQrcKrc(KrcParser.Parse(lyricsSearchResult.Raw).Lines);
@@ -77,7 +78,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsContentParser
             return _lyricsDataArr;
         }
 
-        public async Task<(LyricsData, TransliterationSearchProvider?, TranslationSearchProvider?)> Parse(
+        public async Task<(LyricsData, TransliterationSearchProvider?, TranslationSearchProvider?)> ParseAsync(
             ITranslationService translationService,
             ITransliterationService transliterationService,
             TranslationSettings settings,
@@ -368,7 +369,7 @@ namespace BetterLyrics.WinUI3.Parsers.LyricsContentParser
                     var lastSyllableEndMs = line.PrimarySyllables.LastOrDefault()?.EndMs;
                     if (lineEndMs != null && lastSyllableEndMs != null)
                     {
-                        line.EndMs = (int)Math.Max((int)lastSyllableEndMs + 100, (int)lineEndMs);
+                        line.EndMs = (int)Math.Max((int)lastSyllableEndMs + 0, (int)lineEndMs);
                     }
                 }
             }

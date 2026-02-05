@@ -6,7 +6,7 @@ using System;
 using System.Collections.Generic;
 using Windows.UI;
 
-namespace BetterLyrics.WinUI3.Logic
+namespace BetterLyrics.WinUI3.Helper.Lyrics
 {
     public class LyricsAnimator
     {

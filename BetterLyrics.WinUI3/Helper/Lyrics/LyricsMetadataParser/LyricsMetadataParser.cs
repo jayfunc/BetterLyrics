@@ -1,6 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Models;
 
-namespace BetterLyrics.WinUI3.Parsers.LyricsMetadataParser
+namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsMetadataParser
 {
     public partial class LyricsMetadataParser
     {

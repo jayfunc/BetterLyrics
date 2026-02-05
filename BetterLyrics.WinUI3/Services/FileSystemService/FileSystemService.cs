@@ -4,7 +4,7 @@ using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.DbContext;
 using BetterLyrics.WinUI3.Models.Entities;
 using BetterLyrics.WinUI3.Models.Settings;
-using BetterLyrics.WinUI3.Parsers.LyricsMetadataParser;
+using BetterLyrics.WinUI3.Helper.Lyrics.LyricsMetadataParser;
 using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;

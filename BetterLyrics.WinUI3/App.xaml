@@ -23,8 +23,12 @@
 
             <!--  Theme  -->
             <ResourceDictionary.ThemeDictionaries>
-                <ResourceDictionary x:Key="Light" />
-                <ResourceDictionary x:Key="Dark" />
+                <ResourceDictionary x:Key="Light">
+                    <ImageSource x:Key="MusicWave">ms-appx:///Assets/MusicWaveBlack.gif</ImageSource>
+                </ResourceDictionary>
+                <ResourceDictionary x:Key="Dark">
+                    <ImageSource x:Key="MusicWave">ms-appx:///Assets/MusicWaveWhite.gif</ImageSource>
+                </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
 
             <!--  Brush  -->

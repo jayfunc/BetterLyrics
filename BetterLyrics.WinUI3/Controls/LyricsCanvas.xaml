@@ -16,7 +16,6 @@
             x:Name="Canvas"
             CreateResources="Canvas_CreateResources"
             Draw="Canvas_Draw"
-            IsFixedTimeStep="False"
             Update="Canvas_Update" />
     </Grid>
 </UserControl>

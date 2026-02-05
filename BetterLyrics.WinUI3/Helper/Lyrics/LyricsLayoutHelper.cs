@@ -1,7 +1,7 @@
 ﻿using BetterLyrics.WinUI3.Models;
 using System;
 
-namespace BetterLyrics.WinUI3.Helper
+namespace BetterLyrics.WinUI3.Helper.Lyrics
 {
     public static class LyricsLayoutHelper
     {
