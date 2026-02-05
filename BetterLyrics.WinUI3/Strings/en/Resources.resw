@@ -300,6 +300,21 @@
   <data name="LyricsParseError" xml:space="preserve">
     <value>Lyrics parsing failed</value>
   </data>
+  <data name="LyricsSaveConfigIncludeTranslation.Header" xml:space="preserve">
+    <value>Include Translation</value>
+  </data>
+  <data name="LyricsSaveConfigIncludeTransliteration.Header" xml:space="preserve">
+    <value>Include Transliteration</value>
+  </data>
+  <data name="LyricsSaveConfigInOneLine.Description" xml:space="preserve">
+    <value>Separated by slashes</value>
+  </data>
+  <data name="LyricsSaveConfigInOneLine.Header" xml:space="preserve">
+    <value>Combine Original, Translation, and Transliteration</value>
+  </data>
+  <data name="LyricsSaveConfigInSyllablesFormat.Header" xml:space="preserve">
+    <value>Save as Word-Synced Lyrics</value>
+  </data>
   <data name="LyricsSearchControlAlbum.Header" xml:space="preserve">
     <value>Album</value>
   </data>

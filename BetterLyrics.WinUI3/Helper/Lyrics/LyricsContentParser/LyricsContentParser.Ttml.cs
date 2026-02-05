@@ -58,7 +58,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
 
                 if (romanLines.Count > 0)
                 {
-                    _lyricsDataArr.Add(new LyricsData(romanLines) { LanguageCode = PhoneticHelper.RomanCode });
+                    _lyricsDataArr.Add(new LyricsData(romanLines) { LanguageCode = LanguageHelper.RomanCode });
                 }
             }
             catch { }

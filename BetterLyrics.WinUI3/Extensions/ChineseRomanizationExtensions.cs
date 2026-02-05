@@ -10,8 +10,8 @@ namespace BetterLyrics.WinUI3.Extensions
         {
             public string ToPhoneticCode() => chineseRomanization switch
             {
-                ChineseRomanization.Pinyin => PhoneticHelper.PinyinCode,
-                ChineseRomanization.Jyutping => PhoneticHelper.JyutpingCode,
+                ChineseRomanization.Pinyin => LanguageHelper.PinyinCode,
+                ChineseRomanization.Jyutping => LanguageHelper.JyutpingCode,
                 _ => throw new ArgumentOutOfRangeException(nameof(chineseRomanization))
             };
         }

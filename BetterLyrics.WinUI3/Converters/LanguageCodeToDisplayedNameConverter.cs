@@ -15,9 +15,9 @@ namespace BetterLyrics.WinUI3.Converters
                 {
                     return langCode;
                 }
-                else if (PhoneticHelper.IsPhoneticCode(langCode))
+                else if (LanguageHelper.IsPhoneticCode(langCode))
                 {
-                    return PhoneticHelper.GetDisplayName(langCode);
+                    return LanguageHelper.GetDisplayName(langCode);
                 }
                 else
                 {
