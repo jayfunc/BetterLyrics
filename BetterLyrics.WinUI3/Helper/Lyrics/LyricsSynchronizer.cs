@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace BetterLyrics.WinUI3.Logic
+namespace BetterLyrics.WinUI3.Helper.Lyrics
 {
     public class LyricsSynchronizer
     {

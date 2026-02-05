@@ -696,6 +696,14 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             }
         }
 
+        partial void OnCurrentMediaSourceProviderInfoChanged(MediaSourceProviderInfo? value)
+        {
+            foreach (var item in _settingsService.AppSettings.MediaSourceProvidersInfo)
+            {
+                item.IsNowPlaying = item.Provider == value?.Provider;
+            }
+        }
+
         public void Receive(PropertyChangedMessage<bool> message)
         {
             if (message.Sender is MediaSourceProviderInfo)

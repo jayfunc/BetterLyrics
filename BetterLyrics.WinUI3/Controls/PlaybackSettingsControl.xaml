@@ -78,56 +78,72 @@
                                 <DataTemplate x:DataType="settingsmodels:MediaSourceProviderInfo">
                                     <Grid
                                         Margin="0,1"
-                                        Padding="12"
                                         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                                        ColumnSpacing="12"
                                         CornerRadius="4">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <ToolTipService.ToolTip>
-                                            <ToolTip Content="{Binding Provider, Mode=OneWay}" />
-                                        </ToolTipService.ToolTip>
-                                        <Grid Grid.Column="0">
-                                            <FontIcon
-                                                FontFamily="Segoe UI Symbol"
-                                                FontSize="12"
-                                                Glyph="&#x283F;" />
+                                        <Grid
+                                            Padding="12"
+                                            ColumnSpacing="12"
+                                            Opacity="{Binding IsEnabled, Converter={StaticResource BoolToPartialOpacityConverter}, Mode=OneWay}">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <ToolTipService.ToolTip>
+                                                <ToolTip Content="{Binding Provider, Mode=OneWay}" />
+                                            </ToolTipService.ToolTip>
+                                            <Grid Grid.Column="0">
+                                                <FontIcon
+                                                    FontFamily="Segoe UI Symbol"
+                                                    FontSize="12"
+                                                    Glyph="&#x283F;" />
+                                            </Grid>
+                                            <Grid Grid.Column="1">
+                                                <Image Height="24" helper:AppExtensions.Aumid="{Binding Provider, Mode=OneWay}" />
+                                            </Grid>
+                                            <StackPanel Grid.Column="2">
+                                                <StackPanel Orientation="Horizontal" Spacing="3">
+                                                    <TextBlock
+                                                        VerticalAlignment="Center"
+                                                        helper:AppExtensions.Aumid="{Binding Provider}"
+                                                        TextWrapping="Wrap" />
+                                                    <Image
+                                                        Height="16"
+                                                        Source="{ThemeResource MusicWave}"
+                                                        Visibility="{Binding IsNowPlaying, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                </StackPanel>
+                                                <TextBlock
+                                                    VerticalAlignment="Center"
+                                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                    MaxLines="1"
+                                                    Style="{StaticResource CaptionTextBlockStyle}"
+                                                    Text="{Binding Provider}"
+                                                    TextTrimming="CharacterEllipsis" />
+                                            </StackPanel>
                                         </Grid>
-                                        <Grid Grid.Column="1">
-                                            <Image Height="24" helper:AppExtensions.Aumid="{Binding Provider, Mode=OneWay}" />
+                                        <Grid
+                                            Padding="12"
+                                            Background="Transparent"
+                                            Opacity="0">
+                                            <Grid.OpacityTransition>
+                                                <ScalarTransition />
+                                            </Grid.OpacityTransition>
+                                            <interactivity:Interaction.Behaviors>
+                                                <interactivity:EventTriggerBehavior EventName="PointerEntered">
+                                                    <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
+                                                </interactivity:EventTriggerBehavior>
+                                                <interactivity:EventTriggerBehavior EventName="PointerExited">
+                                                    <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
+                                                </interactivity:EventTriggerBehavior>
+                                            </interactivity:Interaction.Behaviors>
+                                            <StackPanel
+                                                HorizontalAlignment="Right"
+                                                Orientation="Horizontal"
+                                                Spacing="6">
+                                                <Button Click="ConfigButton_Click" Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, FontSize=12, Glyph=&#xE90F;}" />
+                                                <Button Click="DeleteButton_Click" Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, FontSize=12, Glyph=&#xE74D;}" />
+                                            </StackPanel>
                                         </Grid>
-                                        <StackPanel Grid.Column="2">
-                                            <TextBlock
-                                                VerticalAlignment="Center"
-                                                helper:AppExtensions.Aumid="{Binding Provider}"
-                                                TextWrapping="Wrap" />
-                                            <TextBlock
-                                                VerticalAlignment="Center"
-                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                                MaxLines="1"
-                                                Style="{StaticResource CaptionTextBlockStyle}"
-                                                Text="{Binding Provider}"
-                                                TextTrimming="CharacterEllipsis" />
-                                        </StackPanel>
-                                        <Button
-                                            Grid.Column="3"
-                                            Click="ConfigButton_Click"
-                                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                                  FontSize=16,
-                                                                  Glyph=&#xE90F;}"
-                                            Style="{StaticResource GhostButtonStyle}" />
-                                        <Button
-                                            Grid.Column="4"
-                                            Click="DeleteButton_Click"
-                                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
-                                                                  FontSize=16,
-                                                                  Glyph=&#xE74D;}"
-                                            Style="{StaticResource GhostButtonStyle}" />
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
@@ -437,7 +453,7 @@
                         <Expander
                             x:Uid="SettingsPageSearchResultStatus"
                             HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Left">
+                            HorizontalContentAlignment="Stretch">
                             <StackPanel Spacing="6">
                                 <local:PropertyRow x:Uid="SettingsPageSongTitle" Value="{x:Bind ViewModel.GSMTCService.CurrentLyricsSearchResult.Title, TargetNullValue=N/A, Mode=OneWay}" />
                                 <local:PropertyRow x:Uid="SettingsPageArtist" Value="{x:Bind ViewModel.GSMTCService.CurrentLyricsSearchResult.Artist, TargetNullValue=N/A, Mode=OneWay}" />
@@ -455,6 +471,13 @@
                                     x:Uid="LyricsPageMatchPercentage"
                                     Unit="%"
                                     Value="{x:Bind ViewModel.GSMTCService.CurrentLyricsSearchResult.MatchPercentage, Mode=OneWay}" />
+                                <Button
+                                    Margin="-16,0,-16,-16"
+                                    HorizontalAlignment="Stretch"
+                                    Click="SaveLyricsButton_Click"
+                                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                          FontSize=16,
+                                                          Glyph=&#xE74E;}" />
                             </StackPanel>
                         </Expander>
 

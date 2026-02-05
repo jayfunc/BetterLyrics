@@ -2,7 +2,7 @@
 using System.IO;
 using System.Xml;
 
-namespace BetterLyrics.WinUI3.Parsers.LyricsMetadataParser
+namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsMetadataParser
 {
     public partial class LyricsMetadataParser
     {
