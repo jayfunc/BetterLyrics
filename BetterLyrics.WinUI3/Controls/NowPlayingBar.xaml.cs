@@ -1,6 +1,7 @@
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Hooks;
+using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -112,6 +113,15 @@ public sealed partial class NowPlayingBar : UserControl
 
     public static readonly DependencyProperty IsAutoHideEnabledProperty =
         DependencyProperty.Register(nameof(IsAutoHideEnabled), typeof(bool), typeof(NowPlayingBar), new PropertyMetadata(false, OnDependencyPropertyChanged));
+
+    public LyricsWindowStatus? LyricsWindowStatus
+    {
+        get { return (LyricsWindowStatus?)GetValue(LyricsWindowStatusProperty); }
+        set { SetValue(LyricsWindowStatusProperty, value); }
+    }
+
+    public static readonly DependencyProperty LyricsWindowStatusProperty =
+        DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus), typeof(NowPlayingBar), new PropertyMetadata(null));
 
     private bool _isPointerInBottomCommandGrid = false;
 
@@ -237,7 +247,10 @@ public sealed partial class NowPlayingBar : UserControl
 
     private void TimelineSliderOverlay_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
     {
-        ViewModel.TimelineSliderThumbOpacity = 1f;
+        if (LyricsWindowStatus?.IsTimelineLyricsPreviewEnabled == true)
+        {
+            ViewModel.TimelineSliderThumbOpacity = 1f;
+        }
     }
 
     private void TimelineSliderOverlay_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)

@@ -23,6 +23,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLocked { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsAlwaysHideUnlockButton { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool KeepNowPlayingBarInteractiveWhenLocked { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsTimelineLyricsPreviewEnabled { get; set; } = true;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsPinToTaskbar { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TaskbarPlacement TaskbarPlacement { get; set; } = TaskbarPlacement.Right;
@@ -228,6 +229,10 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 EnvironmentSampleMode = this.EnvironmentSampleMode,
                 AutoShowOrHideWindow = this.AutoShowOrHideWindow,
                 TitleBarArea = this.TitleBarArea,
+                IsKeepScreenOpen = this.IsKeepScreenOpen,
+
+                IsTimelineLyricsPreviewEnabled = this.IsTimelineLyricsPreviewEnabled,
+                KeepNowPlayingBarInteractiveWhenLocked = this.KeepNowPlayingBarInteractiveWhenLocked,
             };
 
         }
