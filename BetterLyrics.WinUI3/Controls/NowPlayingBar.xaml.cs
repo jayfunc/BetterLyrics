@@ -224,7 +224,7 @@ public sealed partial class NowPlayingBar : UserControl
         var grid = (Grid)sender;
         var pos = e.GetCurrentPoint(grid).Position;
         var ratio = pos.X / grid.ActualWidth;
-        ViewModel.GSMTCService.ChangePosition(TimelineSlider.Maximum * ratio);
+        ViewModel.GSMTCService.ChangePositionAsync(TimelineSlider.Maximum * ratio);
     }
 
     private void TimelineSliderOverlay_PointerMoved(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)

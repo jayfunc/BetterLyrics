@@ -5,5 +5,7 @@
         Local,
         SMTC,
         iTunes,
+        Kugou,
+        //Netease,
     }
 }

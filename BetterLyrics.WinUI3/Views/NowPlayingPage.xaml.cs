@@ -572,7 +572,7 @@ namespace BetterLyrics.WinUI3.Views
         private void LyricsScrollViewer_PointerReleased(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
             LyricsCanvas.IsMousePressing = false;
-            _gsmtcService.ChangeLyricsLine(LyricsCanvas.CurrentHoveringLineIndex);
+            _gsmtcService.ChangeLyricsLineAsync(LyricsCanvas.CurrentHoveringLineIndex);
         }
 
         private void LyricsScrollViewer_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
