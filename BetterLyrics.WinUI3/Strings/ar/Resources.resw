@@ -570,6 +570,9 @@
   <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
     <value>كُل 6 ساعات</value>
   </data>
+  <data name="MusicSettingsControlRealTimeScan.Header" xml:space="preserve">
+    <value>Real-time Monitoring</value>
+  </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>وضع الشاشة الضيقة</value>
   </data>

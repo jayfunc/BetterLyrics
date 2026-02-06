@@ -106,6 +106,9 @@
                                                 <ComboBoxItem x:Uid="MusicSettingsControlAutoSyncIntervalEveryDay" />
                                             </ComboBox>
                                         </dev:SettingsCard>
+                                        <dev:SettingsCard x:Uid="MusicSettingsControlRealTimeScan" IsEnabled="{x:Bind IsLocal, Mode=OneWay}">
+                                            <ToggleSwitch IsOn="{x:Bind IsRealTimeScanEnabled, Mode=TwoWay}" />
+                                        </dev:SettingsCard>
                                         <dev:SettingsCard>
                                             <Button x:Uid="SettingsPageRemovePath" Click="SettingsPageRemovePathButton_Click" />
                                         </dev:SettingsCard>
