@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -126,6 +126,12 @@
   <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
     <value>ローカルミュージックファイル</value>
   </data>
+  <data name="AlbumArtSearchProvidersTargetSize.Description" xml:space="preserve">
+    <value>オンラインソース限定。これは目標解像度であり、必ずしもそのサイズで取得できるとは限りません</value>
+  </data>
+  <data name="AlbumArtSearchProvidersTargetSize.Header" xml:space="preserve">
+    <value>希望サイズ</value>
+  </data>
   <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
     <value>ミュージックプレーヤー</value>
   </data>
@@ -145,7 +151,7 @@
     <value>プレイリストが作成されました</value>
   </data>
   <data name="CutletDockerFailed" xml:space="preserve">
-    <value>cutlet-docker からの音訳リクエストに失敗しました。ローカルの cutlet-docker 設定を確認してください</value>
+    <value>cutlet-docker へのローマ字変換リクエストに失敗しました。設定、またはローカルの cutlet-docker の構成を確認してください</value>
   </data>
   <data name="CutletServerTextBox.PlaceholderText" xml:space="preserve">
     <value>例: http://localhost:23333</value>
@@ -301,19 +307,19 @@
     <value>歌詞の解析に失敗しました</value>
   </data>
   <data name="LyricsSaveConfigIncludeTranslation.Header" xml:space="preserve">
-    <value>Include Translation</value>
+    <value>訳文を含める</value>
   </data>
   <data name="LyricsSaveConfigIncludeTransliteration.Header" xml:space="preserve">
-    <value>Include Transliteration</value>
+    <value>読みを含める</value>
   </data>
   <data name="LyricsSaveConfigInOneLine.Description" xml:space="preserve">
-    <value>Separated by slashes</value>
+    <value>スラッシュで区切る</value>
   </data>
   <data name="LyricsSaveConfigInOneLine.Header" xml:space="preserve">
-    <value>Combine Original, Translation, and Transliteration (separated by slashes)</value>
+    <value>原文、訳文、読みを組み合わせる</value>
   </data>
   <data name="LyricsSaveConfigInSyllablesFormat.Header" xml:space="preserve">
-    <value>Save as Word-Synced Lyrics</value>
+    <value>ワード同期歌詞として保存</value>
   </data>
   <data name="LyricsSearchControlAlbum.Header" xml:space="preserve">
     <value>アルバム</value>
@@ -552,6 +558,9 @@
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>ミュージックギャラリー - BetterLyrics</value>
   </data>
+  <data name="MusicSettingsControlAutoSyncInterval.Description" xml:space="preserve">
+    <value>一定間隔で変更を自動チェック、ローカルとリモート両対応</value>
+  </data>
   <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
     <value>自動同期の頻度</value>
   </data>
@@ -570,8 +579,11 @@
   <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
     <value>6時間間隔</value>
   </data>
+  <data name="MusicSettingsControlRealTimeScan.Description" xml:space="preserve">
+    <value>ファイル変更検知時に自動同期、ローカルソース限定</value>
+  </data>
   <data name="MusicSettingsControlRealTimeScan.Header" xml:space="preserve">
-    <value>Real-time Monitoring</value>
+    <value>リアルタイム監視</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>狭い表示モード</value>
@@ -835,7 +847,7 @@
     <value>クロスフェード</value>
   </data>
   <data name="SettingsPageCutletDockerServer.Header" xml:space="preserve">
-    <value>cutlet-docker 音訳サービス</value>
+    <value>cutlet-docker ローマ字変換サービス</value>
   </data>
   <data name="SettingsPageDark.Content" xml:space="preserve">
     <value>ダーク</value>
@@ -1021,10 +1033,10 @@
     <value>ロック中もメディアバー操作を可能にする</value>
   </data>
   <data name="SettingsPageKeepNowPlayingBarLyricsPreview.Header" xml:space="preserve">
-    <value>Progress Bar Lyrics Preview</value>
+    <value>プログレスバーの歌詞プレビュー</value>
   </data>
   <data name="SettingsPageKeepScreenOpen.Header" xml:space="preserve">
-    <value>スクリーンを覚醒させる</value>
+    <value>画面の自動オフを防止</value>
   </data>
   <data name="SettingsPageLanguage.Header" xml:space="preserve">
     <value>言語</value>
@@ -1234,16 +1246,16 @@
     <value>歌詞ウィンドウスイッチャーのショートカットキー</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectMode.Header" xml:space="preserve">
-    <value>文字単位の効果方式</value>
+    <value>ワード同期アニメーションのスタイル</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve">
-    <value>常に</value>
+    <value>強制</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeAuto.Content" xml:space="preserve">
     <value>自動</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve">
-    <value>なし</value>
+    <value>無効</value>
   </data>
   <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve">
     <value>この値を調整すると、順次検索とベストマッチ検索の結果に影響しますが、手動歌詞検索インターフェイスの検索結果には影響しません</value>

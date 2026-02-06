@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -125,6 +125,12 @@
   </data>
   <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
     <value>Tệp nhạc cục bộ</value>
+  </data>
+  <data name="AlbumArtSearchProvidersTargetSize.Description" xml:space="preserve">
+    <value>Áp dụng cho các nguồn trực tuyến. Đây là mục tiêu giải quyết và có thể không đạt được.</value>
+  </data>
+  <data name="AlbumArtSearchProvidersTargetSize.Header" xml:space="preserve">
+    <value>Kích thước mục tiêu</value>
   </data>
   <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
     <value>Trình phát nhạc</value>
@@ -301,19 +307,19 @@
     <value>Phân tích lời bài hát thất bại</value>
   </data>
   <data name="LyricsSaveConfigIncludeTranslation.Header" xml:space="preserve">
-    <value>Include Translation</value>
+    <value>Bao gồm bản dịch</value>
   </data>
   <data name="LyricsSaveConfigIncludeTransliteration.Header" xml:space="preserve">
-    <value>Include Transliteration</value>
+    <value>Bao gồm phiên âm</value>
   </data>
   <data name="LyricsSaveConfigInOneLine.Description" xml:space="preserve">
-    <value>Separated by slashes</value>
+    <value>Được phân tách bằng dấu gạch chéo</value>
   </data>
   <data name="LyricsSaveConfigInOneLine.Header" xml:space="preserve">
-    <value>Combine Original, Translation, and Transliteration (separated by slashes)</value>
+    <value>Kết hợp Bản gốc, Bản dịch và Chuyển tự</value>
   </data>
   <data name="LyricsSaveConfigInSyllablesFormat.Header" xml:space="preserve">
-    <value>Save as Word-Synced Lyrics</value>
+    <value>Lưu dưới dạng lời bài hát đồng bộ với Word</value>
   </data>
   <data name="LyricsSearchControlAlbum.Header" xml:space="preserve">
     <value>Album</value>
@@ -552,6 +558,9 @@
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>Thư viện nhạc - BetterLyrics</value>
   </data>
+  <data name="MusicSettingsControlAutoSyncInterval.Description" xml:space="preserve">
+    <value>Tự động kiểm tra các thay đổi trong tệp theo khoảng thời gian đã đặt. Áp dụng cho cả nguồn cục bộ và nguồn từ xa.</value>
+  </data>
   <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
     <value>Tần suất đồng bộ tự động</value>
   </data>
@@ -570,8 +579,11 @@
   <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
     <value>Mỗi 6 tiếng</value>
   </data>
+  <data name="MusicSettingsControlRealTimeScan.Description" xml:space="preserve">
+    <value>Tự động đồng bộ hóa khi phát hiện thay đổi trong tệp. Tùy chọn này chỉ khả dụng cho các nguồn cục bộ.</value>
+  </data>
   <data name="MusicSettingsControlRealTimeScan.Header" xml:space="preserve">
-    <value>Real-time Monitoring</value>
+    <value>Giám sát thời gian thực</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>Chế độ hẹp</value>
@@ -1021,7 +1033,7 @@
     <value>Giữ thanh điều khiển phương tiện tương tác khi bị khóa.</value>
   </data>
   <data name="SettingsPageKeepNowPlayingBarLyricsPreview.Header" xml:space="preserve">
-    <value>Progress Bar Lyrics Preview</value>
+    <value>Xem trước lời bài hát Thanh tiến trình</value>
   </data>
   <data name="SettingsPageKeepScreenOpen.Header" xml:space="preserve">
     <value>Giữ màn hình luôn sáng</value>

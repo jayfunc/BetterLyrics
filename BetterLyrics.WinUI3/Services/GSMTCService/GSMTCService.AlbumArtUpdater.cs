@@ -33,19 +33,22 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial BitmapImage? AlbumArtBitmapImage { get; set; }
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial IRandomAccessStream? AlbumArtBitmapStream { get; set; }
 
-        private void UpdateAlbumArt()
+        private void UpdateAlbumArt(bool ignoreCache = false)
         {
-            _ = _albumArtRefreshRunner.RunAsync(RefreshArtAlbum);
+            _ = _albumArtRefreshRunner.RunAsync(async (token) =>
+            {
+                RefreshArtAlbum(ignoreCache, token);
+            });
         }
 
-        private async Task RefreshArtAlbum(CancellationToken token)
+        private async Task RefreshArtAlbum(bool ignoreCache, CancellationToken token)
         {
             _logger.LogInformation("RefreshArtAlbum");
 
             IBuffer? buffer = null;
             if (CurrentSongInfo != SongInfoExtensions.Placeholder)
             {
-                buffer = await Task.Run(async () => await _albumArtSearchService.SearchAsync(CurrentSongInfo, _SMTCAlbumArtBuffer, token), token);
+                buffer = await Task.Run(async () => await _albumArtSearchService.SearchAsync(CurrentSongInfo, _SMTCAlbumArtBuffer, ignoreCache, token), token);
                 if (token.IsCancellationRequested) return;
             }
 

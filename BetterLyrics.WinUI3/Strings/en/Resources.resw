@@ -126,6 +126,12 @@
   <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
     <value>Local music files</value>
   </data>
+  <data name="AlbumArtSearchProvidersTargetSize.Description" xml:space="preserve">
+    <value>Applies to online sources only. This is a target resolution and may not be achievable</value>
+  </data>
+  <data name="AlbumArtSearchProvidersTargetSize.Header" xml:space="preserve">
+    <value>Target Size</value>
+  </data>
   <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
     <value>Music player</value>
   </data>
@@ -552,6 +558,9 @@
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>Music Gallery - BetterLyrics</value>
   </data>
+  <data name="MusicSettingsControlAutoSyncInterval.Description" xml:space="preserve">
+    <value>Automatically checks for file changes at a set interval. Applies to both local and remote sources</value>
+  </data>
   <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
     <value>Auto-sync Frequency</value>
   </data>
@@ -569,6 +578,9 @@
   </data>
   <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
     <value>Every 6 Hours</value>
+  </data>
+  <data name="MusicSettingsControlRealTimeScan.Description" xml:space="preserve">
+    <value>Automatically syncs when file changes are detected. This option is only available for local sources</value>
   </data>
   <data name="MusicSettingsControlRealTimeScan.Header" xml:space="preserve">
     <value>Real-time Monitoring</value>

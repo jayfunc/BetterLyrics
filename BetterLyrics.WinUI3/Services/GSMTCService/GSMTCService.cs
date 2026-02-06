@@ -43,7 +43,8 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         IRecipient<PropertyChangedMessage<bool>>,
         IRecipient<PropertyChangedMessage<string>>,
         IRecipient<PropertyChangedMessage<ChineseRomanization>>,
-        IRecipient<PropertyChangedMessage<DateTime?>>
+        IRecipient<PropertyChangedMessage<DateTime?>>,
+        IRecipient<PropertyChangedMessage<int>>
     {
         private EventSourceReader? _lxMusicSse = null;
         private UniversalMemoryReader? _memoryReader = null;
@@ -667,16 +668,16 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             await _currentDesiredSession?.ControlSession?.TrySkipNextAsync();
         }
 
-        public async Task ChangePosition(double seconds)
+        public async Task ChangePositionAsync(double seconds)
         {
             await _currentDesiredSession?.ControlSession?.TryChangePlaybackPositionAsync(TimeSpan.FromSeconds(seconds).Ticks);
         }
 
-        public async Task ChangeLyricsLine(int index)
+        public async Task ChangeLyricsLineAsync(int index)
         {
             if (CurrentLyricsData?.LyricsLines?.ElementAtOrDefault(index)?.StartMs is int startMs)
             {
-                await ChangePosition(startMs / 1000.0);
+                await ChangePositionAsync(startMs / 1000.0);
             }
         }
 
@@ -788,6 +789,17 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                 {
                     UpdateAlbumArt();
                     UpdateLyrics();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<int> message)
+        {
+            if (message.Sender is MediaSourceProviderInfo)
+            {
+                if (message.PropertyName == nameof(MediaSourceProviderInfo.TargetAlbumArtSize))
+                {
+                    UpdateAlbumArt(true);
                 }
             }
         }

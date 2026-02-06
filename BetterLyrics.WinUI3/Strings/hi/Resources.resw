@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -125,6 +125,12 @@
   </data>
   <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
     <value>स्थानीय संगीत फ़ाइलें</value>
+  </data>
+  <data name="AlbumArtSearchProvidersTargetSize.Description" xml:space="preserve">
+    <value>सिर्फ़ ऑनलाइन सोर्स पर लागू होता है। यह एक टारगेट रिज़ॉल्यूशन है और हो सकता है कि यह हासिल न हो पाए</value>
+  </data>
+  <data name="AlbumArtSearchProvidersTargetSize.Header" xml:space="preserve">
+    <value>लक्ष्य आकार</value>
   </data>
   <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
     <value>म्यूजिक प्लेयर</value>
@@ -301,19 +307,19 @@
     <value>बोल पार्सिंग विफल</value>
   </data>
   <data name="LyricsSaveConfigIncludeTranslation.Header" xml:space="preserve">
-    <value>Include Translation</value>
+    <value>अनुवाद शामिल करें</value>
   </data>
   <data name="LyricsSaveConfigIncludeTransliteration.Header" xml:space="preserve">
-    <value>Include Transliteration</value>
+    <value>लिप्यंतरण शामिल करें</value>
   </data>
   <data name="LyricsSaveConfigInOneLine.Description" xml:space="preserve">
-    <value>Separated by slashes</value>
+    <value>स्लैश से अलग किया गया</value>
   </data>
   <data name="LyricsSaveConfigInOneLine.Header" xml:space="preserve">
-    <value>Combine Original, Translation, and Transliteration (separated by slashes)</value>
+    <value>मूल, अनुवाद और लिप्यंतरण को मिलाएं</value>
   </data>
   <data name="LyricsSaveConfigInSyllablesFormat.Header" xml:space="preserve">
-    <value>Save as Word-Synced Lyrics</value>
+    <value>वर्ड-सिंक्ड लिरिक्स के तौर पर सेव करें</value>
   </data>
   <data name="LyricsSearchControlAlbum.Header" xml:space="preserve">
     <value>एल्बम</value>
@@ -552,6 +558,9 @@
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>संगीत लाइब्रेरी - BetterLyrics</value>
   </data>
+  <data name="MusicSettingsControlAutoSyncInterval.Description" xml:space="preserve">
+    <value>तय समय पर फ़ाइल में हुए बदलावों को अपने आप चेक करता है। लोकल और रिमोट दोनों सोर्स पर लागू होता है</value>
+  </data>
   <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
     <value>ऑटो-सिंक आवृत्ति</value>
   </data>
@@ -570,8 +579,11 @@
   <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
     <value>हर ६ घंटे</value>
   </data>
+  <data name="MusicSettingsControlRealTimeScan.Description" xml:space="preserve">
+    <value>फ़ाइल में बदलाव का पता चलने पर ऑटोमैटिकली सिंक हो जाता है। यह ऑप्शन सिर्फ़ लोकल सोर्स के लिए उपलब्ध है</value>
+  </data>
   <data name="MusicSettingsControlRealTimeScan.Header" xml:space="preserve">
-    <value>Real-time Monitoring</value>
+    <value>वास्तविक समय में निगरानी</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>संकीर्ण मोड</value>
@@ -1021,7 +1033,7 @@
     <value>लॉक होने पर मीडिया कंट्रोल बार को इंटरैक्टिव रखें</value>
   </data>
   <data name="SettingsPageKeepNowPlayingBarLyricsPreview.Header" xml:space="preserve">
-    <value>Progress Bar Lyrics Preview</value>
+    <value>प्रोग्रेस बार लिरिक्स प्रीव्यू</value>
   </data>
   <data name="SettingsPageKeepScreenOpen.Header" xml:space="preserve">
     <value>स्क्रीन को जगाए रखें</value>

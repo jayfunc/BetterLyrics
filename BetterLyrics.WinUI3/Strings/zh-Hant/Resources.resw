@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -125,6 +125,12 @@
   </data>
   <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
     <value>本機音樂檔案</value>
+  </data>
+  <data name="AlbumArtSearchProvidersTargetSize.Description" xml:space="preserve">
+    <value>僅適用於線上來源。這是目標解析度，可能無法達到。</value>
+  </data>
+  <data name="AlbumArtSearchProvidersTargetSize.Header" xml:space="preserve">
+    <value>目標尺寸</value>
   </data>
   <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
     <value>音樂播放器</value>
@@ -301,19 +307,19 @@
     <value>歌詞解析失敗</value>
   </data>
   <data name="LyricsSaveConfigIncludeTranslation.Header" xml:space="preserve">
-    <value>Include Translation</value>
+    <value>包括翻譯</value>
   </data>
   <data name="LyricsSaveConfigIncludeTransliteration.Header" xml:space="preserve">
-    <value>Include Transliteration</value>
+    <value>包含翻譯</value>
   </data>
   <data name="LyricsSaveConfigInOneLine.Description" xml:space="preserve">
-    <value>Separated by slashes</value>
+    <value>以斜線分隔</value>
   </data>
   <data name="LyricsSaveConfigInOneLine.Header" xml:space="preserve">
-    <value>Combine Original, Translation, and Transliteration (separated by slashes)</value>
+    <value>結合原文、翻譯和轉譯</value>
   </data>
   <data name="LyricsSaveConfigInSyllablesFormat.Header" xml:space="preserve">
-    <value>Save as Word-Synced Lyrics</value>
+    <value>儲存為 Word 聲明歌詞</value>
   </data>
   <data name="LyricsSearchControlAlbum.Header" xml:space="preserve">
     <value>專輯</value>
@@ -552,6 +558,9 @@
   <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>音樂庫 - BetterLyrics</value>
   </data>
+  <data name="MusicSettingsControlAutoSyncInterval.Description" xml:space="preserve">
+    <value>以設定的間隔自動檢查檔案變更。適用於本機和遠端來源</value>
+  </data>
   <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
     <value>自動同步頻率</value>
   </data>
@@ -570,8 +579,11 @@
   <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
     <value>每 6 小時</value>
   </data>
+  <data name="MusicSettingsControlRealTimeScan.Description" xml:space="preserve">
+    <value>偵測到檔案變更時自動同步。此選項只適用於本機來源</value>
+  </data>
   <data name="MusicSettingsControlRealTimeScan.Header" xml:space="preserve">
-    <value>Real-time Monitoring</value>
+    <value>即時監控</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>窄屏模式</value>
@@ -1021,7 +1033,7 @@
     <value>鎖定時保持媒體控制列的互動性</value>
   </data>
   <data name="SettingsPageKeepNowPlayingBarLyricsPreview.Header" xml:space="preserve">
-    <value>Progress Bar Lyrics Preview</value>
+    <value>進度列歌詞預覽</value>
   </data>
   <data name="SettingsPageKeepScreenOpen.Header" xml:space="preserve">
     <value>讓螢幕保持清醒</value>

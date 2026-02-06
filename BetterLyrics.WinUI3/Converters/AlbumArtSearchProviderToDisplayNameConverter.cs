@@ -19,6 +19,8 @@ namespace BetterLyrics.WinUI3.Converters
                     AlbumArtSearchProvider.Local => _localizationService.GetLocalizedString("AlbumArtSearchLocalProvider"),
                     AlbumArtSearchProvider.SMTC => _localizationService.GetLocalizedString("AlbumArtSearchSMTCProvider"),
                     AlbumArtSearchProvider.iTunes => "iTunes",
+                    AlbumArtSearchProvider.Kugou => "酷狗音乐",
+                    //AlbumArtSearchProvider.Netease => "网易云音乐",
                     _ => throw new Exception($"Unknown AlbumArtSearchProvider: {provider}"),
                 };
             }

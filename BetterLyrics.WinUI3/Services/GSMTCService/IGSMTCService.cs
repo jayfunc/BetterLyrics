@@ -21,8 +21,8 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         Task PauseAsync();
         Task PreviousAsync();
         Task NextAsync();
-        Task ChangePosition(double seconds);
-        Task ChangeLyricsLine(int index);
+        Task ChangePositionAsync(double seconds);
+        Task ChangeLyricsLineAsync(int index);
 
         void UpdateLyrics();
 
