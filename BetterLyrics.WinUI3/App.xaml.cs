@@ -2,6 +2,7 @@
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.DbContext;
 using BetterLyrics.WinUI3.Services.FileSystemService;
+using BetterLyrics.WinUI3.Services.FileWatchService;
 using BetterLyrics.WinUI3.Services.PluginService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Services.SongSearchMapService;
@@ -107,6 +108,9 @@ namespace BetterLyrics.WinUI3
             }
             fileSystemService.StartAllFolderTimers();
 
+            // 实时扫描
+            _ = Ioc.Default.GetRequiredService<IFileWatchService>();
+
             // 加载插件
             var pluginService = Ioc.Default.GetRequiredService<IPluginService>();
             await pluginService.LoadPluginsAsync();
@@ -115,7 +119,7 @@ namespace BetterLyrics.WinUI3
             await FontHelper.GetSystemFontFamiliesAsync();
         }
 
-        private async Task InitDatabasesAsync()
+        private static async Task InitDatabasesAsync()
         {
             // Init databases
             var playHistoryFactory = Ioc.Default.GetRequiredService<IDbContextFactory<PlayHistoryDbContext>>();

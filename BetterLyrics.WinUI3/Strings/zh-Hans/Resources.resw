@@ -570,6 +570,9 @@
   <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
     <value>每 6 小时</value>
   </data>
+  <data name="MusicSettingsControlRealTimeScan.Header" xml:space="preserve">
+    <value>Real-time Monitoring</value>
+  </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>窄屏模式</value>
   </data>

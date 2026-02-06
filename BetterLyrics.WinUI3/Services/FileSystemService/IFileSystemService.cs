@@ -63,7 +63,5 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
         Task<List<FilesIndexItem>> GetParsedFilesAsync(IEnumerable<string> enabledConfigIds);
 
         void StartAllFolderTimers();
-
-        event EventHandler<string> FolderUpdated;
     }
 }

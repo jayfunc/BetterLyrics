@@ -48,6 +48,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial DateTime? LastSyncTime { get; set; }
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial AutoScanInterval ScanInterval { get; set; } = AutoScanInterval.Disabled;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsRealTimeScanEnabled { get; set; } = false;
 
         public Uri GetStandardUri()
         {
