@@ -17,10 +17,10 @@
 
                     <TextBlock x:Uid="AppSettingsControlGeneral" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
+                    <!--  配置名称  -->
                     <dev:SettingsCard x:Uid="SettingsPageConfigName" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8AC;}">
                         <TextBox Text="{x:Bind LyricsWindowStatus.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" />
                     </dev:SettingsCard>
-
                     <!--  工作区  -->
                     <dev:SettingsExpander
                         x:Uid="SettingsPageWorkArea"
@@ -111,6 +111,10 @@
                                                  Glyph=&#xE76F;}"
                         IsEnabled="{x:Bind LyricsWindowStatus.IsLocked, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.KeepNowPlayingBarInteractiveWhenLocked, Mode=TwoWay}" />
+                    </dev:SettingsCard>
+                    <!--  进度条歌词预览  -->
+                    <dev:SettingsCard x:Uid="SettingsPageKeepNowPlayingBarLyricsPreview" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8C5;}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsTimelineLyricsPreviewEnabled, Mode=TwoWay}" />
                     </dev:SettingsCard>
                     <!--  置顶  -->
                     <dev:SettingsExpander

@@ -1020,6 +1020,9 @@
   <data name="SettingsPageKeepNowPlayingBarInteractive.Header" xml:space="preserve">
     <value>लॉक होने पर मीडिया कंट्रोल बार को इंटरैक्टिव रखें</value>
   </data>
+  <data name="SettingsPageKeepNowPlayingBarLyricsPreview.Header" xml:space="preserve">
+    <value>Progress Bar Lyrics Preview</value>
+  </data>
   <data name="SettingsPageKeepScreenOpen.Header" xml:space="preserve">
     <value>स्क्रीन को जगाए रखें</value>
   </data>

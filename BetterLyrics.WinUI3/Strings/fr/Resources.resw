@@ -1020,6 +1020,9 @@
   <data name="SettingsPageKeepNowPlayingBarInteractive.Header" xml:space="preserve">
     <value>Maintenir la barre de contrôle des médias interactive lorsqu'elle est verrouillée</value>
   </data>
+  <data name="SettingsPageKeepNowPlayingBarLyricsPreview.Header" xml:space="preserve">
+    <value>Progress Bar Lyrics Preview</value>
+  </data>
   <data name="SettingsPageKeepScreenOpen.Header" xml:space="preserve">
     <value>Maintenir l'écran éveillé</value>
   </data>

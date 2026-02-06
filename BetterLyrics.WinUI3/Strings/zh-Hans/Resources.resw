@@ -1020,6 +1020,9 @@
   <data name="SettingsPageKeepNowPlayingBarInteractive.Header" xml:space="preserve">
     <value>锁定时保持媒体控制栏的可交互状态</value>
   </data>
+  <data name="SettingsPageKeepNowPlayingBarLyricsPreview.Header" xml:space="preserve">
+    <value>Progress Bar Lyrics Preview</value>
+  </data>
   <data name="SettingsPageKeepScreenOpen.Header" xml:space="preserve">
     <value>保持屏幕唤醒</value>
   </data>

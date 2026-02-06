@@ -1020,6 +1020,9 @@
   <data name="SettingsPageKeepNowPlayingBarInteractive.Header" xml:space="preserve">
     <value>미디어 컨트롤 바가 잠겨 있을 때 대화형 유지</value>
   </data>
+  <data name="SettingsPageKeepNowPlayingBarLyricsPreview.Header" xml:space="preserve">
+    <value>Progress Bar Lyrics Preview</value>
+  </data>
   <data name="SettingsPageKeepScreenOpen.Header" xml:space="preserve">
     <value>화면 깨어 있음 유지</value>
   </data>

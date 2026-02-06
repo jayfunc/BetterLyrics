@@ -1020,6 +1020,9 @@
   <data name="SettingsPageKeepNowPlayingBarInteractive.Header" xml:space="preserve">
     <value>Giữ thanh điều khiển phương tiện tương tác khi bị khóa.</value>
   </data>
+  <data name="SettingsPageKeepNowPlayingBarLyricsPreview.Header" xml:space="preserve">
+    <value>Progress Bar Lyrics Preview</value>
+  </data>
   <data name="SettingsPageKeepScreenOpen.Header" xml:space="preserve">
     <value>Giữ màn hình luôn sáng</value>
   </data>
