@@ -1,7 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.Models.Settings;
 using System;
-using System.Collections.Generic;
 using System.Text;
 
 namespace BetterLyrics.WinUI3.Helper.Lyrics

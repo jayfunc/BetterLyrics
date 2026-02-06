@@ -1,6 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Models.Entities;
 using BetterLyrics.WinUI3.Models.Settings;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Windows.System.Display;
+﻿using Windows.System.Display;
 
 namespace BetterLyrics.WinUI3.Helper
 {

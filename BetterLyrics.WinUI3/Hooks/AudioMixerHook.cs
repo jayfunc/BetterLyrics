@@ -1,9 +1,6 @@
-﻿using Microsoft.UI.Dispatching;
-using NAudio.CoreAudioApi;
-using NAudio.CoreAudioApi.Interfaces;
+﻿using NAudio.CoreAudioApi;
 using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Text;
 using Vanara.PInvoke;
 

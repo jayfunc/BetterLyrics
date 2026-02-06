@@ -1,14 +1,11 @@
 ﻿using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.Services.GSMTCService;
 using BetterLyrics.WinUI3.Services.SMTCService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.ViewModels
