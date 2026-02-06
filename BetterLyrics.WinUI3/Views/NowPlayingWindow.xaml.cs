@@ -19,7 +19,6 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Runtime.InteropServices;
-using System.Threading.Tasks;
 using Vanara.PInvoke;
 using Windows.Foundation;
 using Windows.UI;
