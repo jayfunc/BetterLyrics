@@ -19,7 +19,7 @@
     Loaded="UserControl_Loaded"
     mc:Ignorable="d">
 
-    <Grid ColumnSpacing="6">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
@@ -46,7 +46,7 @@
                 Severity="Informational" />
 
             <!--  播放源列表  -->
-            <Grid Grid.Row="1" Padding="36,0,36,0">
+            <Grid Grid.Row="1">
                 <interactivity:Interaction.Behaviors>
                     <interactivity:DataTriggerBehavior
                         Binding="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo.Count, Mode=OneWay}"
@@ -62,7 +62,7 @@
                     </interactivity:DataTriggerBehavior>
                 </interactivity:Interaction.Behaviors>
                 <ScrollViewer>
-                    <StackPanel Margin="0,0,0,36" Spacing="{StaticResource SettingsCardSpacing}">
+                    <StackPanel Margin="36,0,36,36" Spacing="{StaticResource SettingsCardSpacing}">
                         <TextBlock x:Uid="SettingsPageConfigPlaybackSource" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
                         <ListView
                             x:Name="MediaSourceProvidersListView"
@@ -77,8 +77,9 @@
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="settingsmodels:MediaSourceProviderInfo">
                                     <Grid
-                                        Margin="0,1"
                                         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                        BorderThickness="1"
                                         CornerRadius="4">
                                         <Grid
                                             Padding="12"
@@ -663,7 +664,7 @@
                         </dev:SettingsCard>
 
                         <!--  Apple Music token  -->
-                        <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="Apple Muisc media-user-token" />
+                        <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="Apple Music media-user-token" />
                         <dev:SettingsCard
                             Background="{ThemeResource SystemFillColorCautionBackgroundBrush}"
                             Description="Use at your own risk"
