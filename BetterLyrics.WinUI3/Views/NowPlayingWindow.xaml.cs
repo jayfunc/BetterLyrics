@@ -327,7 +327,11 @@ namespace BetterLyrics.WinUI3.Views
         private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
         {
             ExitOrClose();
-            args.Cancel = true;
+        }
+
+        private void Window_Closed(object sender, WindowEventArgs args)
+        {
+            WeakReferenceMessenger.Default.UnregisterAll(this);
         }
 
         private void AppWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
@@ -698,5 +702,6 @@ namespace BetterLyrics.WinUI3.Views
                 }
             }
         }
+
     }
 }

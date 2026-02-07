@@ -60,8 +60,6 @@ namespace BetterLyrics.WinUI3.Services.FileWatchService
                 cts.Dispose();
             }
             _debounceTokens.Clear();
-
-            WeakReferenceMessenger.Default.UnregisterAll(this);
         }
 
         private void UpdateWatchers()
