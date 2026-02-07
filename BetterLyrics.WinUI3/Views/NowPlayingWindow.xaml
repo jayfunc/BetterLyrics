@@ -12,6 +12,7 @@
     xmlns:media="using:CommunityToolkit.WinUI.Media"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
+    Closed="Window_Closed"
     mc:Ignorable="d">
 
     <Grid x:Name="RootGrid" SizeChanged="RootGrid_SizeChanged">

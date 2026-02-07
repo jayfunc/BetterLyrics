@@ -139,5 +139,10 @@ namespace BetterLyrics.WinUI3.Views
                 PlayQueueFlyout.ShowAt(NowPlayingBar);
             }
         }
+
+        private void Window_Closed(object sender, WindowEventArgs args)
+        {
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+        }
     }
 }

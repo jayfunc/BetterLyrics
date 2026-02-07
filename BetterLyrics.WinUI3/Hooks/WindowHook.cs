@@ -21,7 +21,7 @@ namespace BetterLyrics.WinUI3.Hooks
     public static class WindowHook
     {
         private static List<object> _activeWindows = [];
-        private static List<object> _workAreas = [];
+        private static List<object> _appBars = [];
 
         private static WindowStyle? _defaultWindowStyle;
         private static ExtendedWindowStyle? _defaultExtendedWindowStyle;
@@ -37,12 +37,13 @@ namespace BetterLyrics.WinUI3.Hooks
             {
                 if (GetWindowHandle(window) is IntPtr hwnd)
                 {
+                    _appBars.Remove(window);
                     UnregisterAppBar(hwnd);
                 }
                 nowPlayingWindow.LyricsWindowStatus.IsOpened = false;
             }
-            window.Close();
             _activeWindows.Remove(window);
+            window.Close();
         }
 
         public static void MinimizeWindow(this Window window)
@@ -208,7 +209,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
         private static void EnsureAllWorkAreasReleased()
         {
-            foreach (var item in _workAreas)
+            foreach (var item in _appBars)
             {
                 if (GetWindowHandle(item) is IntPtr hwnd)
                 {
@@ -355,7 +356,7 @@ namespace BetterLyrics.WinUI3.Hooks
         /// <param name="status"></param>
         private static void RegisterAppBar(IntPtr hwnd, LyricsWindowStatus status)
         {
-            if (_workAreas.Contains(hwnd)) return;
+            if (_appBars.Contains(hwnd)) return;
 
             var uEdge = status.DockPlacement == DockPlacement.Top ? Shell32.ABE.ABE_TOP : Shell32.ABE.ABE_BOTTOM;
 
@@ -380,7 +381,7 @@ namespace BetterLyrics.WinUI3.Hooks
             Shell32.SHAppBarMessage(Shell32.ABM.ABM_QUERYPOS, ref abd);
             Shell32.SHAppBarMessage(Shell32.ABM.ABM_SETPOS, ref abd);
 
-            _workAreas.Add(hwnd);
+            _appBars.Add(hwnd);
         }
         /// <summary>
         /// 取消注册应用栏
@@ -388,7 +389,7 @@ namespace BetterLyrics.WinUI3.Hooks
         /// <param name="hwnd"></param>
         private static void UnregisterAppBar(IntPtr hwnd)
         {
-            if (!_workAreas.Contains(hwnd))
+            if (!_appBars.Contains(hwnd))
                 return;
 
             Shell32.APPBARDATA abd = new()
@@ -399,7 +400,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
             Shell32.SHAppBarMessage(Shell32.ABM.ABM_REMOVE, ref abd);
 
-            _workAreas.Remove(hwnd);
+            _appBars.Remove(hwnd);
         }
         /// <summary>
         /// 更新应用栏
@@ -409,7 +410,7 @@ namespace BetterLyrics.WinUI3.Hooks
         {
             var hwnd = WindowNative.GetWindowHandle(window);
 
-            if (!_workAreas.Contains(hwnd))
+            if (!_appBars.Contains(hwnd))
                 return;
 
             var status = window.LyricsWindowStatus;

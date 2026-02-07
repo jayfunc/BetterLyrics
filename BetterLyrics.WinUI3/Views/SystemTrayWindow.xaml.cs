@@ -64,6 +64,11 @@ public sealed partial class SystemTrayWindow : Window,
         }
     }
 
+    private void Window_Closed(object sender, WindowEventArgs args)
+    {
+        WeakReferenceMessenger.Default.UnregisterAll(this);
+    }
+
     private void EnsureLyricsWindowStatus()
     {
         var records = _settingsService.AppSettings.WindowBoundsRecords;
@@ -193,4 +198,5 @@ public sealed partial class SystemTrayWindow : Window,
             }
         }
     }
+
 }

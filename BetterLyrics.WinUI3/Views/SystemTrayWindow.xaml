@@ -8,6 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     Title="SystemTrayWindow"
+    Closed="Window_Closed"
     mc:Ignorable="d">
 
     <Grid>

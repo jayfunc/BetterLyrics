@@ -255,7 +255,7 @@ namespace BetterLyrics.WinUI3.Controls
             InitializeComponent();
 
             WeakReferenceMessenger.Default.RegisterAll(this);
-
+           
             UpdateRenderLyricsLines();
         }
 
@@ -636,6 +636,8 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+
             _fluidRenderer.Dispose();
             _coverRenderer.Dispose();
             _snowRenderer.Dispose();

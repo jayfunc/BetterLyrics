@@ -707,5 +707,9 @@ namespace BetterLyrics.WinUI3.Views
 
         }
 
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+        }
     }
 }
