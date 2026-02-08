@@ -110,22 +110,31 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
 
             IsSearching = true;
+
             LyricsSearchResults.Clear();
+
             MappedSongSearchQuery.LyricsSearchProvider = null;
+
             _ = _lyricsSearchRunner.RunAsync(async (token) =>
             {
-                LyricsSearchResults = [..await Task.Run(async () =>
+                try
                 {
-                    var result = await _lyricsSearchService.SearchAllAsync(
-                        ((SongInfo)_gsmtcService.CurrentSongInfo.Clone())
-                            .WithTitle(MappedSongSearchQuery.MappedTitle)
-                            .WithArtist(MappedSongSearchQuery.MappedArtist)
-                            .WithAlbum(MappedSongSearchQuery.MappedAlbum),
-                        !_settingsService.AppSettings.GeneralSettings.IgnoreCacheWhenSearching,
-                        token);
-                    return result;
-                }, token)];
-                IsSearching = false;
+                    var songInfo = ((SongInfo)_gsmtcService.CurrentSongInfo.Clone())
+                        .WithTitle(MappedSongSearchQuery.MappedTitle)
+                        .WithArtist(MappedSongSearchQuery.MappedArtist)
+                        .WithAlbum(MappedSongSearchQuery.MappedAlbum);
+
+                    var checkCache = !_settingsService.AppSettings.GeneralSettings.IgnoreCacheWhenSearching;
+
+                    await foreach (var item in _lyricsSearchService.SearchAllAsync(songInfo, checkCache, token))
+                    {
+                        _dispatcherQueue.TryEnqueue(() => LyricsSearchResults.Add(item));
+                    }
+                }
+                finally
+                {
+                    IsSearching = false;
+                }
             });
         }
 
