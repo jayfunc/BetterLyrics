@@ -104,7 +104,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 var json = File.ReadAllText(file.Path);
                 SelectedMediaSourceProvider?.MemoryReaderConfig = JsonSerializer.Deserialize(json, Serialization.SourceGenerationContext.Default.MemoryReaderConfig);
-                ToastHelper.ShowToast("ImportSettingsSuccess", null, InfoBarSeverity.Success);
+                GlobalToastManager.Show( "ImportSettingsSuccess", null, InfoBarSeverity.Success);
             }
         }
 
@@ -120,14 +120,14 @@ namespace BetterLyrics.WinUI3.ViewModels
                         "Hello, world!", AppSettings.TranslationSettings.SelectedTargetLanguageCode, new System.Threading.CancellationToken());
                     _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                     {
-                        ToastHelper.ShowToast("SettingsPageServerTestSuccessInfo", null, InfoBarSeverity.Success);
+                        GlobalToastManager.Show("SettingsPageServerTestSuccessInfo", null, InfoBarSeverity.Success);
                     });
                 }
                 catch (Exception)
                 {
                     _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                     {
-                        ToastHelper.ShowToast("SettingsPageServerTestFailedInfo", null, InfoBarSeverity.Error);
+                        GlobalToastManager.Show("SettingsPageServerTestFailedInfo", null, InfoBarSeverity.Error);
                     });
                 }
                 _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
@@ -166,11 +166,11 @@ namespace BetterLyrics.WinUI3.ViewModels
                 {
                     if (testResult)
                     {
-                        ToastHelper.ShowToast("SettingsPageServerTestSuccessInfo", null, InfoBarSeverity.Success);
+                        GlobalToastManager.Show("SettingsPageServerTestSuccessInfo", null, InfoBarSeverity.Success);
                     }
                     else
                     {
-                        ToastHelper.ShowToast("SettingsPageServerTestFailedInfo", null, InfoBarSeverity.Error);
+                        GlobalToastManager.Show("SettingsPageServerTestFailedInfo", null, InfoBarSeverity.Error);
                     }
                     IsLXMusicServerTesting = false;
                 });

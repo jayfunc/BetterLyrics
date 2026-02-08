@@ -701,7 +701,7 @@ namespace BetterLyrics.WinUI3.Views
                     await RandomAccessStream.CopyAsync(sourceStream, destStream);
                     await destStream.FlushAsync();
 
-                    ToastHelper.ShowToast("ActionCompleted", null, InfoBarSeverity.Success);
+                    GlobalToastManager.Show("ActionCompleted", null, InfoBarSeverity.Success);
                 }
             }
 

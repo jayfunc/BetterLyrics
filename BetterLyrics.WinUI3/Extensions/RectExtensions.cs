@@ -1,4 +1,5 @@
-﻿using Vanara.PInvoke;
+﻿using System.Numerics;
+using Vanara.PInvoke;
 using Windows.Foundation;
 using Windows.Graphics;
 
@@ -77,6 +78,8 @@ namespace BetterLyrics.WinUI3.Extensions
                     scaledHeight
                 );
             }
+
+            public Vector2 Center => new((float)(rect.X + rect.Width / 2), (float)(rect.Y + rect.Height / 2));
         }
 
         extension(RECT rect)

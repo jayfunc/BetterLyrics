@@ -568,7 +568,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                 _logger.LogError("Failed to start SSE connection for LX Music.");
                 _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                 {
-                    ToastHelper.ShowToast("FailToStartLXMusicServer", null, InfoBarSeverity.Error);
+                    GlobalToastManager.Show("FailToStartLXMusicServer", null, InfoBarSeverity.Error);
                 });
                 StopLXMusicSSE();
             }

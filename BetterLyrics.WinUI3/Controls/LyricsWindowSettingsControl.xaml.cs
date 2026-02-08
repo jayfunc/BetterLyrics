@@ -91,7 +91,7 @@ namespace BetterLyrics.WinUI3.Controls
                         clonedData.IsDefault = false;
                         var json = System.Text.Json.JsonSerializer.Serialize(clonedData, SourceGenerationContext.Default.LyricsWindowStatus);
                         File.WriteAllText(file.Path, json);
-                        ToastHelper.ShowToast("ExportSettingsSuccess", null, InfoBarSeverity.Success);
+                        GlobalToastManager.Show("ExportSettingsSuccess", null, InfoBarSeverity.Success);
                     }
                 }
             }
@@ -140,7 +140,7 @@ namespace BetterLyrics.WinUI3.Controls
                 if (data != null)
                 {
                     ViewModel.AppSettings.WindowBoundsRecords.Add(data);
-                    ToastHelper.ShowToast("ImportSettingsSuccess", null, InfoBarSeverity.Success);
+                    GlobalToastManager.Show("ImportSettingsSuccess", null, InfoBarSeverity.Success);
                 }
             }
         }
@@ -153,7 +153,7 @@ namespace BetterLyrics.WinUI3.Controls
         private void ConfigButton_Click(object sender, RoutedEventArgs e)
         {
             WindowSegmentedItem.IsEnabled = LayoutSegmentedItem.IsEnabled = true;
-            ConfigSegmented.SelectedItem = WindowSegmentedItem;
+            ConfigNavView.SelectedItem = WindowSegmentedItem;
             LyricsWindowStatus = (LyricsWindowStatus)((Button)sender).DataContext;
             ViewModel.OpenConfigPanel();
         }
@@ -161,19 +161,19 @@ namespace BetterLyrics.WinUI3.Controls
         private void EmbeddedConfigButton_Click(object sender, RoutedEventArgs e)
         {
             WindowSegmentedItem.IsEnabled = LayoutSegmentedItem.IsEnabled = false;
-            ConfigSegmented.SelectedItem = AlbumArtStyleSegmentedItem;
+            ConfigNavView.SelectedItem = AlbumArtStyleSegmentedItem;
             LyricsWindowStatus = _settingsService.AppSettings.MusicGallerySettings.LyricsWindowStatus;
             ViewModel.OpenConfigPanel();
-        }
-
-        private void ConfigSegmented_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            ViewModel.SelectorBarSelectedItemTag = (string)((SegmentedItem)((Segmented)sender).SelectedItem).Tag;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             ViewModel.CloseConfigPanelCommand.Execute(null);
+        }
+
+        private void ConfigNavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+            ViewModel.SelectorBarSelectedItemTag = (string)((NavigationViewItem)sender.SelectedItem).Tag;
         }
     }
 }
