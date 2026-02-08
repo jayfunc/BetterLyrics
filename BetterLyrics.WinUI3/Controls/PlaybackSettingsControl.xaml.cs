@@ -70,9 +70,6 @@ namespace BetterLyrics.WinUI3.Controls
 
         private async void SaveLyricsButton_Click(SplitButton sender, SplitButtonClickEventArgs args)
         {
-            var window = WindowHook.GetWindow<SettingsWindow>();
-            if (window == null) return;
-
             var lyricsSearchResult = ViewModel.GSMTCService.CurrentLyricsSearchResult;
             if (lyricsSearchResult == null) return;
 
@@ -83,24 +80,32 @@ namespace BetterLyrics.WinUI3.Controls
                 lyricsSearchResult!.Album,
                 lyricsSearchResult!.Duration,
                 ViewModel.AppSettings.LyricsSaveConfig);
+
             if (contentToWrite == null) return;
 
             var ext = LyricsFormat.Lrc.ToFileExtension();
+            var safeTitle = FileHelper.SanitizeFileName($"{lyricsSearchResult.Artist} - {lyricsSearchResult.Title}");
+            var fileName = $"{safeTitle}{ext}";
 
-            IDictionary<string, IList<string>> fileTypeChoices = new Dictionary<string, IList<string>>()
+            var folderPath = ViewModel.AppSettings.LyricsSaveConfig.SaveLocation;
+
+            try
             {
-                { ext.ToUpper(), new List<string>() { ext } },
-            };
+                var folder = await StorageFolder.GetFolderFromPathAsync(folderPath);
+                var storageFile = await folder.CreateFileAsync(fileName, CreationCollisionOption.GenerateUniqueName);
+                await FileIO.WriteTextAsync(storageFile, contentToWrite);
 
-            var suggestedFileName = $"{lyricsSearchResult.Artist} - {lyricsSearchResult.Title}";
-
-            var file = await PickerHelper.PickSaveFileAsync(window, fileTypeChoices, suggestedFileName);
-
-            if (file != null)
-            {
-                await FileIO.WriteTextAsync(file, contentToWrite);
-                GlobalToastManager.Show("ActionCompleted", null, InfoBarSeverity.Success);
+                GlobalToastManager.Show("ActionCompleted", storageFile.Path, InfoBarSeverity.Success);
             }
+            catch (Exception ex) { }
+        }
+
+        private async void BrowseLyricsSaveLocationButton_Click(object sender, RoutedEventArgs e)
+        {
+            var folder = await PickerHelper.PickSingleFolderAsync<SettingsWindow>();
+            if (folder == null) return;
+
+            ViewModel.AppSettings.LyricsSaveConfig.SaveLocation = folder.Path;
         }
     }
 }

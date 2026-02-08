@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Windows.ApplicationModel;
 using Windows.Storage;
 
@@ -9,6 +10,7 @@ namespace BetterLyrics.WinUI3.Helper
         public static string LocalFolder => ApplicationData.Current.LocalFolder.Path;
         public static string CacheFolder => ApplicationData.Current.LocalCacheFolder.Path;
         public static string AssetsFolder => Path.Combine(Package.Current.InstalledPath, "Assets");
+        public static string DocumentsFolder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
 
         public static string SettingsDirectory => Path.Combine(LocalFolder, "settings");
         public static string SettingsFilePath => Path.Combine(SettingsDirectory, "settings.json");
