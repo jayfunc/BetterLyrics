@@ -312,7 +312,7 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
                 }
                 catch (Exception ex)
                 {
-                    ToastHelper.ShowToast("Error", ex.Message, InfoBarSeverity.Error);
+                    GlobalToastManager.Show("Error", ex.Message, InfoBarSeverity.Error);
                     _timelineController.Pause();
                 }
             }

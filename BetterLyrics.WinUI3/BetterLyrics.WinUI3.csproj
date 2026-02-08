@@ -44,6 +44,7 @@
 		<None Remove="Controls\FontPicker.xaml" />
 		<None Remove="Controls\FontPickerDialog.xaml" />
 		<None Remove="Controls\ImageSwitcher.xaml" />
+		<None Remove="Controls\InAppNotificationStack.xaml" />
 		<None Remove="Controls\InfoTag.xaml" />
 		<None Remove="Controls\LyricsSearchControl.xaml" />
 		<None Remove="Controls\LyricsStyleSettingsControl.xaml" />
@@ -71,6 +72,7 @@
 		<None Remove="Views\SettingsWindow.xaml" />
 		<None Remove="Views\SplashWindow.xaml" />
 		<None Remove="Views\SystemTrayWindow.xaml" />
+		<None Remove="Views\ToastOverlayWindow.xaml" />
 	</ItemGroup>
 	<ItemGroup>
 		<Content Include="Logo.ico" />
@@ -401,6 +403,16 @@
 	  <Content Update="Assets\Banner.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Views\ToastOverlayWindow.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\InAppNotificationStack.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Views\SplashWindow.xaml">

@@ -219,11 +219,11 @@ namespace BetterLyrics.WinUI3.Views
                             }
                         }
                         File.WriteAllText(path, content);
-                        ToastHelper.ShowToast("TracksAddToPlaylistSuccessfully", null, InfoBarSeverity.Success);
+                        GlobalToastManager.Show("TracksAddToPlaylistSuccessfully", null, InfoBarSeverity.Success);
                     }
                     else
                     {
-                        ToastHelper.ShowToast("TracksAddToPlaylistFailed", null, InfoBarSeverity.Error);
+                        GlobalToastManager.Show("TracksAddToPlaylistFailed", null, InfoBarSeverity.Error);
                     }
                 }
             }

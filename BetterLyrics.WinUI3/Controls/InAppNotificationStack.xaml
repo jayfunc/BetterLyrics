@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.InAppNotificationStack"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:BetterLyrics.WinUI3.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:BetterLyrics.WinUI3.Models"
+    x:Name="RootControl"
+    mc:Ignorable="d">
+
+    <Grid
+        Width="400"
+        Margin="24"
+        PointerEntered="OnPointerEntered"
+        PointerExited="OnPointerExited">
+
+        <ItemsControl ItemsSource="{x:Bind Notifications}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <Grid VerticalAlignment="Bottom" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="models:NotificationItem">
+                    <Grid
+                        x:Name="ItemContainer"
+                        Margin="0,6,0,6"
+                        Loaded="OnItemContainerLoaded">
+
+                        <Grid.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform x:Name="ItemScale" />
+                                <TranslateTransform x:Name="ItemTranslate" Y="0" />
+                            </TransformGroup>
+                        </Grid.RenderTransform>
+
+                        <InfoBar
+                            Title="{x:Bind Title}"
+                            CloseButtonClick="OnInfoBarCloseButtonClick"
+                            CornerRadius="{StaticResource ControlCornerRadius}"
+                            IsClosable="{x:Bind IsClosable}"
+                            IsOpen="True"
+                            Message="{x:Bind Message}"
+                            Severity="{x:Bind Severity}" />
+
+                        <Grid
+                            x:Name="ShadowReceiverGrid"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch">
+                            <Grid.Shadow>
+                                <ThemeShadow />
+                            </Grid.Shadow>
+                        </Grid>
+
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+
+            <ItemsControl.ItemContainerTransitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition FromVerticalOffset="40" IsStaggeringEnabled="False" />
+                </TransitionCollection>
+            </ItemsControl.ItemContainerTransitions>
+
+        </ItemsControl>
+    </Grid>
+
+</UserControl>

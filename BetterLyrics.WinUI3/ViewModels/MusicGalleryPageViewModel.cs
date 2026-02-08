@@ -185,7 +185,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                             else
                             {
                                 _middleTracks = [];
-                                ToastHelper.ShowToast("PlaylistViewFailed", path, InfoBarSeverity.Success);
+                                GlobalToastManager.Show("PlaylistViewFailed", path, InfoBarSeverity.Success);
                             }
                         }
                         break;
@@ -332,7 +332,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (file != null)
             {
                 AddFileToStarredPlaylists(file);
-                ToastHelper.ShowToast("CreatePlaylistSuccessfully", file.Path, InfoBarSeverity.Success);
+                GlobalToastManager.Show("CreatePlaylistSuccessfully", file.Path, InfoBarSeverity.Success);
             }
         }
 
@@ -344,7 +344,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (file != null)
             {
                 AddFileToStarredPlaylists(file);
-                ToastHelper.ShowToast("ImportPlaylistSuccessfully", file.Path, InfoBarSeverity.Success);
+                GlobalToastManager.Show("ImportPlaylistSuccessfully", file.Path, InfoBarSeverity.Success);
             }
         }
 

@@ -80,7 +80,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    ToastHelper.ShowToast("ImportSettingsFailed", ex.Message, InfoBarSeverity.Error);
+                    GlobalToastManager.Show("ImportSettingsFailed", ex.Message, InfoBarSeverity.Error);
                 }
             }
         }
@@ -118,11 +118,11 @@ namespace BetterLyrics.WinUI3.ViewModels
                 Directory.Delete(tempDir, true);
                 File.Delete(tempZipPath);
 
-                ToastHelper.ShowToast("ExportSettingsSuccess", null, InfoBarSeverity.Success);
+                GlobalToastManager.Show("ExportSettingsSuccess", null, InfoBarSeverity.Success);
             }
             catch (Exception ex)
             {
-                ToastHelper.ShowToast("Error", ex.Message, InfoBarSeverity.Error);
+                GlobalToastManager.Show("Error", ex.Message, InfoBarSeverity.Error);
             }
         }
 
@@ -135,7 +135,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             DirectoryHelper.DeleteAllFiles(PathHelper.LyricsCacheDirectory);
             DirectoryHelper.DeleteAllFiles(PathHelper.iTunesAlbumArtCacheDirectory);
 
-            ToastHelper.ShowToast("ActionCompleted", null, InfoBarSeverity.Success);
+            GlobalToastManager.Show("ActionCompleted", null, InfoBarSeverity.Success);
         }
 
     }

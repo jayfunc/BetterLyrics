@@ -99,7 +99,7 @@ namespace BetterLyrics.WinUI3.Controls
             if (file != null)
             {
                 await FileIO.WriteTextAsync(file, contentToWrite);
-                ToastHelper.ShowToast("ActionCompleted", null, InfoBarSeverity.Success);
+                GlobalToastManager.Show("ActionCompleted", null, InfoBarSeverity.Success);
             }
         }
     }

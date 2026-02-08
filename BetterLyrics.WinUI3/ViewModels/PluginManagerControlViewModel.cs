@@ -60,7 +60,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    Helper.ToastHelper.ShowToast("Error", ex.Message, Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
+                    Helper.GlobalToastManager.Show("Error", ex.Message, Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
                 }
             }
         }
@@ -85,7 +85,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             catch (Exception ex)
             {
-                Helper.ToastHelper.ShowToast("Error", ex.Message, Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
+                Helper.GlobalToastManager.Show("Error", ex.Message, Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
             }
         }
 

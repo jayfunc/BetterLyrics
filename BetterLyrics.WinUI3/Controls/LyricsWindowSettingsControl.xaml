@@ -169,80 +169,66 @@
             <Grid
                 Grid.Row="0"
                 Padding="36,0"
+                RowSpacing="{StaticResource SettingsCardSpacing}"
                 Style="{StaticResource SettingsGridStyle}">
-                <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock
-                            Grid.Column="0"
-                            Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"
-                            Text="{x:Bind LyricsWindowStatus.Name, Mode=OneWay}" />
-                        <Button
-                            Grid.Column="2"
-                            Margin="0,24,0,0"
-                            Command="{x:Bind ViewModel.CloseConfigPanelCommand}"
-                            Content="{ui:FontIcon FontSize=16,
-                                                  FontFamily={StaticResource IconFontFamily},
-                                                  Glyph=&#xE70D;}"
-                            Style="{StaticResource AccentButtonStyle}" />
-                    </Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
 
-                    <controls:Segmented
-                        x:Name="ConfigSegmented"
-                        HorizontalAlignment="Stretch"
-                        SelectionChanged="ConfigSegmented_SelectionChanged"
-                        Style="{StaticResource PivotSegmentedStyle}">
+                <Grid Grid.Row="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock
+                        Grid.Column="0"
+                        Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"
+                        Text="{x:Bind LyricsWindowStatus.Name, Mode=OneWay}" />
+                    <Button
+                        Grid.Column="2"
+                        Margin="0,24,0,0"
+                        Command="{x:Bind ViewModel.CloseConfigPanelCommand}"
+                        Content="{ui:FontIcon FontSize=16,
+                                              FontFamily={StaticResource IconFontFamily},
+                                              Glyph=&#xE70D;}"
+                        Style="{StaticResource AccentButtonStyle}" />
+                </Grid>
 
-                        <controls:SegmentedItem x:Name="WindowSegmentedItem" Tag="Window">
-                            <TextBlock
-                                x:Uid="AppSettingsControlGeneral"
-                                MaxWidth="120"
-                                TextWrapping="Wrap" />
-                        </controls:SegmentedItem>
-                        <controls:SegmentedItem x:Name="LayoutSegmentedItem" Tag="Layout">
-                            <TextBlock
-                                x:Uid="SettingsPageLayout"
-                                MaxWidth="120"
-                                TextWrapping="Wrap" />
-                        </controls:SegmentedItem>
-                        <controls:SegmentedItem x:Name="AlbumArtStyleSegmentedItem" Tag="AlbumArtStyle">
-                            <TextBlock
-                                x:Uid="SettingsPageAlbumStyle"
-                                MaxWidth="120"
-                                TextWrapping="Wrap" />
-                        </controls:SegmentedItem>
-                        <controls:SegmentedItem Tag="AlbumArtEffect">
-                            <TextBlock
-                                x:Uid="SettingsPageAlbumEffect"
-                                MaxWidth="120"
-                                TextWrapping="Wrap" />
-                        </controls:SegmentedItem>
-                        <controls:SegmentedItem Tag="LyricsStyle">
-                            <TextBlock
-                                x:Uid="SettingsPageLyricsStyle"
-                                MaxWidth="120"
-                                TextWrapping="Wrap" />
-                        </controls:SegmentedItem>
-                        <controls:SegmentedItem Tag="LyricsEffect">
-                            <TextBlock
-                                x:Uid="SettingsPageLyricsEffect"
-                                MaxWidth="120"
-                                TextWrapping="Wrap" />
-                        </controls:SegmentedItem>
-                        <controls:SegmentedItem Tag="LyricsBackground">
-                            <TextBlock
-                                x:Uid="SettingsPageBackgroundOverlay"
-                                MaxWidth="120"
-                                TextWrapping="Wrap" />
-                        </controls:SegmentedItem>
-
-                    </controls:Segmented>
-
-                </StackPanel>
+                <NavigationView
+                    x:Name="ConfigNavView"
+                    Grid.Row="1"
+                    IsBackButtonVisible="Collapsed"
+                    IsBackEnabled="False"
+                    IsSettingsVisible="False"
+                    PaneDisplayMode="Top"
+                    SelectionChanged="ConfigNavView_SelectionChanged">
+                    <NavigationView.MenuItems>
+                        <NavigationViewItem x:Name="WindowSegmentedItem" Tag="Window">
+                            <TextBlock x:Uid="AppSettingsControlGeneral" />
+                        </NavigationViewItem>
+                        <NavigationViewItem x:Name="LayoutSegmentedItem" Tag="Layout">
+                            <TextBlock x:Uid="SettingsPageLayout" />
+                        </NavigationViewItem>
+                        <NavigationViewItem x:Name="AlbumArtStyleSegmentedItem" Tag="AlbumArtStyle">
+                            <TextBlock x:Uid="SettingsPageAlbumStyle" />
+                        </NavigationViewItem>
+                        <NavigationViewItem Tag="AlbumArtEffect">
+                            <TextBlock x:Uid="SettingsPageAlbumEffect" />
+                        </NavigationViewItem>
+                        <NavigationViewItem Tag="LyricsStyle">
+                            <TextBlock x:Uid="SettingsPageLyricsStyle" />
+                        </NavigationViewItem>
+                        <NavigationViewItem Tag="LyricsEffect">
+                            <TextBlock x:Uid="SettingsPageLyricsEffect" />
+                        </NavigationViewItem>
+                        <NavigationViewItem Tag="LyricsBackground">
+                            <TextBlock x:Uid="SettingsPageBackgroundOverlay" />
+                        </NavigationViewItem>
+                    </NavigationView.MenuItems>
+                    <!--<Frame x:Name="ConfigFrame" />-->
+                </NavigationView>
             </Grid>
 
             <controls:SwitchPresenter Grid.Row="1" Value="{x:Bind ViewModel.SelectorBarSelectedItemTag, Mode=OneWay}">

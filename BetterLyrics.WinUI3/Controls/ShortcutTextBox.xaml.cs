@@ -93,11 +93,11 @@ namespace BetterLyrics.WinUI3.Controls
             bool registered = GlobalHotKeyHook.IsHotKeyRegistered(Shortcut);
             if (registered)
             {
-                ToastHelper.ShowToast("SettingsPageShortcutRegSuccessInfo", null, InfoBarSeverity.Success);
+                GlobalToastManager.Show("SettingsPageShortcutRegSuccessInfo", null, InfoBarSeverity.Success);
             }
             else
             {
-                ToastHelper.ShowToast("SettingsPageShortcutRegFailInfo", null, InfoBarSeverity.Error);
+                GlobalToastManager.Show("SettingsPageShortcutRegFailInfo", null, InfoBarSeverity.Error);
             }
         }
     }

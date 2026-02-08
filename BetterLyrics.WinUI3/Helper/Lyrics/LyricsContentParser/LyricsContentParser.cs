@@ -136,7 +136,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
                     catch (TaskCanceledException) { }
                     catch (Exception)
                     {
-                        ToastHelper.ShowToast("CutletDockerFailed", null, InfoBarSeverity.Error);
+                        GlobalToastManager.Show("CutletDockerFailed", null, InfoBarSeverity.Error);
                     }
                 }
             }
@@ -162,7 +162,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
                     catch (TaskCanceledException) { }
                     catch (Exception)
                     {
-                        ToastHelper.ShowToast("LibreTranslateFailed", null, InfoBarSeverity.Error);
+                        GlobalToastManager.Show("LibreTranslateFailed", null, InfoBarSeverity.Error);
                     }
                 }
             }

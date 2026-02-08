@@ -51,7 +51,7 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
             }
             else
             {
-                ToastHelper.ShowToast("LastFMAuthFailed", resp.Error?.Message, InfoBarSeverity.Error);
+                GlobalToastManager.Show("LastFMAuthFailed", resp.Error?.Message, InfoBarSeverity.Error);
             }
         }
 
@@ -102,7 +102,7 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
             {
                 var resp = await _client.RequestAsync(LastFMApi.GetUserInfoApi, new GetUserInfoRequest() { User = null }, _sessionKey);
                 User = resp.Response?.User;
-                //if(!resp.IsSuccess) ToastHelper.ShowToast("LastFMGetUserFailed", resp.Error?.Message, InfoBarSeverity.Error);
+                //if(!resp.IsSuccess) GlobalToastManager.Show("LastFMGetUserFailed", resp.Error?.Message, InfoBarSeverity.Error);
             }
             else
             {
@@ -124,7 +124,7 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
                 }, _sessionKey);
                 if (!resp.IsSuccess)
                 {
-                    ToastHelper.ShowToast("LastFMScrobbleFailed", resp.Error?.Message, InfoBarSeverity.Error);
+                    GlobalToastManager.Show("LastFMScrobbleFailed", resp.Error?.Message, InfoBarSeverity.Error);
                 }
             }
         }
