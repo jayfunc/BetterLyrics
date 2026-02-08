@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
@@ -158,79 +159,109 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 }
             }
 
-            List<LyricsCacheItem> lyricsSearchResults = [];
-
             var mediaSourceProviderInfo = _settingsService.AppSettings.MediaSourceProvidersInfo.FirstOrDefault(x => x.Provider == songInfo.PlayerId);
-            if (mediaSourceProviderInfo != null)
+            if (mediaSourceProviderInfo == null) return null;
+
+            var enabledProviders = mediaSourceProviderInfo.LyricsSearchProvidersInfo.Where(x => x.IsEnabled).ToList();
+            if (enabledProviders.Count == 0) return null;
+
+            var baseSearchInfo = ((SongInfo)songInfo.Clone())
+                .WithTitle(overridenTitle)
+                .WithArtist(overridenArtist)
+                .WithAlbum(overridenAlbum);
+
+            if (lyricsSearchType == LyricsSearchType.BestMatch)
             {
-                // 曲目没有被映射
-                foreach (var provider in mediaSourceProviderInfo.LyricsSearchProvidersInfo)
+                var searchTasks = enabledProviders.Select(async provider =>
                 {
-                    if (!provider.IsEnabled)
+                    if (token.IsCancellationRequested) return null;
+
+                    var result = await SearchSingleAsync(
+                        (SongInfo)baseSearchInfo.Clone(),
+                        provider.Provider,
+                        !provider.IgnoreCacheWhenSearching,
+                        token);
+
+                    int threshold = provider.IsMatchingThresholdOverwritten
+                        ? provider.MatchingThreshold
+                        : mediaSourceProviderInfo.MatchingThreshold;
+
+                    if (result.IsFound && result.MatchPercentage >= threshold)
                     {
-                        continue;
+                        return result;
                     }
+                    return null;
+                });
 
-                    lyricsSearchResult = await SearchSingleAsync(
-                        ((SongInfo)songInfo.Clone())
-                            .WithTitle(overridenTitle)
-                            .WithArtist(overridenArtist)
-                            .WithAlbum(overridenAlbum),
-                        provider.Provider, !provider.IgnoreCacheWhenSearching, token);
+                var allResults = await Task.WhenAll(searchTasks);
 
-                    int matchingThreshold = mediaSourceProviderInfo.MatchingThreshold;
-                    if (provider.IsMatchingThresholdOverwritten)
+                return allResults
+                    .Where(r => r != null)
+                    .OrderByDescending(r => r.MatchPercentage)
+                    .FirstOrDefault();
+            }
+
+            else if (lyricsSearchType == LyricsSearchType.Sequential)
+            {
+                foreach (var provider in enabledProviders)
+                {
+                    if (token.IsCancellationRequested) break;
+
+                    var result = await SearchSingleAsync(
+                        (SongInfo)baseSearchInfo.Clone(),
+                        provider.Provider,
+                        !provider.IgnoreCacheWhenSearching,
+                        token);
+
+                    int threshold = provider.IsMatchingThresholdOverwritten
+                        ? provider.MatchingThreshold
+                        : mediaSourceProviderInfo.MatchingThreshold;
+
+                    if (result.IsFound && result.MatchPercentage >= threshold)
                     {
-                        matchingThreshold = provider.MatchingThreshold;
-                    }
-
-                    if (lyricsSearchResult.IsFound && lyricsSearchResult.MatchPercentage >= matchingThreshold)
-                    {
-                        switch (lyricsSearchType)
-                        {
-                            case LyricsSearchType.Sequential:
-                                return lyricsSearchResult;
-                            case LyricsSearchType.BestMatch:
-                                lyricsSearchResults.Add((LyricsCacheItem)lyricsSearchResult.Clone());
-                                break;
-                            default:
-                                break;
-                        }
+                        return result;
                     }
                 }
             }
 
-            return lyricsSearchType switch
-            {
-                LyricsSearchType.Sequential => lyricsSearchResult,
-                LyricsSearchType.BestMatch => lyricsSearchResults.OrderByDescending(x => x.MatchPercentage).FirstOrDefault(),
-                _ => null,
-            };
+            return null;
         }
 
-        public async Task<List<LyricsCacheItem>> SearchAllAsync(SongInfo songInfo, bool checkCache, CancellationToken token)
+        public async IAsyncEnumerable<LyricsCacheItem> SearchAllAsync(
+            SongInfo songInfo,
+            bool checkCache,
+            [EnumeratorCancellation] CancellationToken token)
         {
-            _logger.LogInformation("SearchAllAsync {SongInfo}", songInfo);
-            var results = new List<LyricsCacheItem>();
+            _logger.LogInformation("SearchAllAsync Concurrent {SongInfo}", songInfo);
+
+            var searchTasks = new List<Task<LyricsCacheItem>>();
 
             foreach (var provider in Enum.GetValues<LyricsSearchProvider>())
             {
-                var searchResult = await SearchSingleAsync(songInfo, provider, checkCache, token);
-                results.Add(searchResult);
+                searchTasks.Add(SearchSingleAsync(songInfo, provider, checkCache, token));
             }
 
             foreach (var plugin in _settingsService.AppSettings.PluginsInfo)
             {
-                if (token.IsCancellationRequested) break;
-
                 if (plugin.Plugin is ILyricsSource)
                 {
-                    var pluginResult = await SearchPluginAsync(songInfo, plugin, token);
-                    results.Add(pluginResult);
+                    searchTasks.Add(SearchPluginAsync(songInfo, plugin, token));
                 }
             }
 
-            return results;
+            await foreach (var task in Task.WhenEach(searchTasks))
+            {
+                if (token.IsCancellationRequested) yield break;
+
+                LyricsCacheItem? result = null;
+                try
+                {
+                    result = await task;
+                }
+                catch { }
+
+                if (result != null) yield return result;
+            }
         }
 
         private async Task<LyricsCacheItem> SearchSingleAsync(SongInfo songInfo, LyricsSearchProvider provider, bool checkCache, CancellationToken token)
@@ -271,12 +302,12 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                         lyricsSearchResult = await SearchAmllTtmlDbAsync(songInfo);
                         break;
                     case LyricsSearchProvider.LocalMusicFile:
-                        lyricsSearchResult = await SearchMusicFile(songInfo);
+                        lyricsSearchResult = await SearchMusicFileAsync(songInfo);
                         break;
                     case LyricsSearchProvider.LocalLrcFile:
                     case LyricsSearchProvider.LocalEslrcFile:
                     case LyricsSearchProvider.LocalTtmlFile:
-                        lyricsSearchResult = await SearchLyricsFile(songInfo, provider.GetLyricsFormat());
+                        lyricsSearchResult = await SearchLyricsFileAsync(songInfo, provider.GetLyricsFormat());
                         break;
                     case LyricsSearchProvider.AppleMusic:
                         lyricsSearchResult = await SearchAppleMusicAsync(songInfo);
@@ -303,7 +334,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             return lyricsSearchResult;
         }
 
-        private async Task<LyricsCacheItem> SearchLyricsFile(SongInfo songInfo, LyricsFormat format)
+        private async Task<LyricsCacheItem> SearchLyricsFileAsync(SongInfo songInfo, LyricsFormat format)
         {
             int maxScore = -1;
 
@@ -361,7 +392,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             return lyricsSearchResult;
         }
 
-        private async Task<LyricsCacheItem> SearchMusicFile(SongInfo songInfo)
+        private async Task<LyricsCacheItem> SearchMusicFileAsync(SongInfo songInfo)
         {
             var lyricsSearchResult = new LyricsCacheItem
             {
