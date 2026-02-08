@@ -306,6 +306,9 @@
   <data name="LyricsParseError" xml:space="preserve">
     <value>Lyrics parsing failed</value>
   </data>
+  <data name="LyricsSaveConfigFolder.Header" xml:space="preserve">
+    <value>Save Location</value>
+  </data>
   <data name="LyricsSaveConfigIncludeTranslation.Header" xml:space="preserve">
     <value>Include Translation</value>
   </data>

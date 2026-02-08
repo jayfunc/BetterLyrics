@@ -128,7 +128,11 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                     await foreach (var item in _lyricsSearchService.SearchAllAsync(songInfo, checkCache, token))
                     {
-                        _dispatcherQueue.TryEnqueue(() => LyricsSearchResults.Add(item));
+                        _dispatcherQueue.TryEnqueue(() =>
+                        {
+                            LyricsSearchResults.Add(item);
+                            LyricsSearchResults.Sort(x => x.MatchPercentage, true);
+                        });
                     }
                 }
                 finally

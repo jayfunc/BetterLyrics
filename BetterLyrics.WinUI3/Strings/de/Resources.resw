@@ -306,6 +306,9 @@
   <data name="LyricsParseError" xml:space="preserve">
     <value>Fehler beim Analysieren des Songtextes</value>
   </data>
+  <data name="LyricsSaveConfigFolder.Header" xml:space="preserve">
+    <value>Save Location</value>
+  </data>
   <data name="LyricsSaveConfigIncludeTranslation.Header" xml:space="preserve">
     <value>Übersetzung einbeziehen</value>
   </data>

@@ -512,7 +512,7 @@
                                     <SplitButton.Flyout>
                                         <Flyout ShouldConstrainToRootBounds="False">
                                             <Flyout.FlyoutPresenterStyle>
-                                                <Style BasedOn="{StaticResource FlyoutGhostStyle}" TargetType="FlyoutPresenter">
+                                                <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
                                                     <Setter Property="MaxWidth" Value="500" />
                                                 </Style>
                                             </Flyout.FlyoutPresenterStyle>
@@ -528,6 +528,23 @@
                                                 </dev:SettingsCard>
                                                 <dev:SettingsCard x:Uid="LyricsSaveConfigInOneLine">
                                                     <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.LyricsSaveConfig.InOneLine, Mode=TwoWay}" />
+                                                </dev:SettingsCard>
+                                                <dev:SettingsCard x:Uid="LyricsSaveConfigFolder">
+                                                    <Grid ColumnSpacing="6">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBox
+                                                            Grid.Column="0"
+                                                            IsReadOnly="True"
+                                                            Text="{x:Bind ViewModel.AppSettings.LyricsSaveConfig.SaveLocation, Mode=OneWay}"
+                                                            TextWrapping="Wrap" />
+                                                        <Button
+                                                            x:Uid="RemoteServerConfigControlBrowse"
+                                                            Grid.Column="1"
+                                                            Click="BrowseLyricsSaveLocationButton_Click" />
+                                                    </Grid>
                                                 </dev:SettingsCard>
                                             </StackPanel>
                                         </Flyout>
