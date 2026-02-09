@@ -864,6 +864,9 @@
   <data name="SettingsPageDark.Content" xml:space="preserve">
     <value>Тёмная</value>
   </data>
+  <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
+    <value>Debug Overlay</value>
+  </data>
   <data name="SettingsPageDelete.Text" xml:space="preserve">
     <value>Удалить</value>
   </data>
