@@ -4,6 +4,7 @@ using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.SettingsService;
+using BetterLyrics.WinUI3.Services.SongSearchMapService;
 using BetterLyrics.WinUI3.Views;
 using LiteFM;
 using LiteFM.Abstractions;
@@ -19,6 +20,7 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
     {
         private readonly ISettingsService _settingsService;
         private readonly ILocalizationService _localizationService;
+        private readonly ISongSearchMapService _songSearchMapService;
 
         private readonly LastFMClient _client;
         private string? _sessionKey;
@@ -30,10 +32,11 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
 
         public bool IsAuthenticated { get; private set; }
 
-        public LastFMService(ISettingsService settingsService, ILocalizationService localizationService)
+        public LastFMService(ISettingsService settingsService, ILocalizationService localizationService, ISongSearchMapService songSearchMapService)
         {
             _localizationService = localizationService;
             _settingsService = settingsService;
+            _songSearchMapService = songSearchMapService;
 
             _client = new LastFMClient(new LastFMOptions() { ApiKey = Constants.LastFM.ApiKey, ApiSecret = Constants.LastFM.SharedSecret });
             _sessionKey = PasswordVaultHelper.Get(Constants.App.AppName, Constants.LastFM.SessionKeyCredentialKey);
@@ -115,11 +118,27 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
         {
             if (IsAuthenticated)
             {
+                string mappedTitle = songInfo.Title;
+                string mappedArtist = songInfo.Artist;
+                string mappedAlbum = songInfo.Album;
+
+                var mapped = await _songSearchMapService.GetMappingAsync(
+                    songInfo.Title,
+                    songInfo.Artist,
+                    songInfo.Album);
+
+                if (mapped != null)
+                {
+                    mappedTitle = mapped.MappedTitle;
+                    mappedArtist = mapped.MappedArtist;
+                    mappedAlbum = mapped.MappedAlbum;
+                }
+
                 var resp = await _client.RequestAsync(LastFMApi.ScrobbleApi, new()
                 {
-                    Track = songInfo.Title,
-                    Artist = songInfo.Artist,
-                    Album = songInfo.Album,
+                    Track = mappedTitle,
+                    Artist = mappedArtist,
+                    Album = mappedAlbum,
                     TimeStamp = GetUnixTimeStamp()
                 }, _sessionKey);
                 if (!resp.IsSuccess)
