@@ -51,8 +51,8 @@ namespace BetterLyrics.WinUI3.Services.DiscordService
                     LargeImageKey = "banner",
                     SmallImageKey = "logo"
                 },
-                Details = songInfo.Title,
-                State = songInfo.Artist,
+                Details = mappedTitle,
+                State = mappedArtist,
                 Timestamps = Timestamps.FromTimeSpan(songInfo.Duration)
             });
         }
