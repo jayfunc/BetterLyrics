@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -124,10 +124,10 @@
     <value>Thêm</value>
   </data>
   <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Description" xml:space="preserve">
-    <value>Automatically scroll song info when it's too long, regardless of mouse hover</value>
+    <value>Tự động cuộn thông tin bài hát khi nó quá dài, bất kể việc di chuột qua.</value>
   </data>
   <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Header" xml:space="preserve">
-    <value>Auto-scroll Song Info</value>
+    <value>Tự động cuộn thông tin bài hát</value>
   </data>
   <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
     <value>Tệp nhạc cục bộ</value>
@@ -313,7 +313,7 @@
     <value>Phân tích lời bài hát thất bại</value>
   </data>
   <data name="LyricsSaveConfigFolder.Header" xml:space="preserve">
-    <value>Save Location</value>
+    <value>Lưu vị trí</value>
   </data>
   <data name="LyricsSaveConfigIncludeTranslation.Header" xml:space="preserve">
     <value>Bao gồm bản dịch</value>
@@ -373,7 +373,7 @@
     <value>Tiêu đề</value>
   </data>
   <data name="LyricsSearchControlWordByWord.Text" xml:space="preserve">
-    <value>Word-by-word</value>
+    <value>Từng từ một</value>
   </data>
   <data name="LyricsSearchPageTitle" xml:space="preserve">
     <value>Tìm kiếm lời bài hát - BetterLyrics</value>
@@ -865,7 +865,7 @@
     <value>Tối</value>
   </data>
   <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
-    <value>Debug Overlay</value>
+    <value>Giao diện gỡ lỗi</value>
   </data>
   <data name="SettingsPageDelete.Text" xml:space="preserve">
     <value>Xóa</value>
@@ -1492,7 +1492,7 @@
     <value>Thông tin bài hát</value>
   </data>
   <data name="SettingsPageSongInfoEffect.Text" xml:space="preserve">
-    <value>Song Info Effect</value>
+    <value>Thông tin bài hát Hiệu ứng</value>
   </data>
   <data name="SettingsPageSongStatus.Header" xml:space="preserve">
     <value>Bài hát hiện tại</value>
