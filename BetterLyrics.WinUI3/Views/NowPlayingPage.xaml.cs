@@ -8,6 +8,7 @@ using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.GSMTCService;
+using BetterLyrics.WinUI3.Services.SongSearchMapService;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
@@ -33,9 +34,11 @@ namespace BetterLyrics.WinUI3.Views
         IRecipient<PropertyChangedMessage<LyricsDisplayType>>,
         IRecipient<PropertyChangedMessage<int>>,
         IRecipient<PropertyChangedMessage<bool>>,
-        IRecipient<PropertyChangedMessage<string>>
+        IRecipient<PropertyChangedMessage<string>>,
+        IRecipient<PropertyChangedMessage<MappedSongSearchQuery?>>
     {
         private readonly IGSMTCService _gsmtcService = Ioc.Default.GetRequiredService<IGSMTCService>();
+        private readonly ISongSearchMapService _songSearchMapService = Ioc.Default.GetRequiredService<ISongSearchMapService>();
 
         private readonly DispatcherQueueTimer _layoutChangedTimer = App.Current.Resources.DispatcherQueue.CreateTimer();
         private readonly DispatcherQueueTimer _scrollChangedTimer = App.Current.Resources.DispatcherQueue.CreateTimer();
@@ -76,11 +79,11 @@ namespace BetterLyrics.WinUI3.Views
                 if (e.Property == LyricsWindowStatusProperty)
                 {
                     page.OnLayoutChanged();
-                    page.RenderSongInfo();
+                    page.RenderSongInfoAsync();
                 }
                 else if (e.Property == AlbumArtThemeColorsProperty)
                 {
-                    page.RenderSongInfo();
+                    page.RenderSongInfoAsync();
                 }
             }
         }
@@ -103,7 +106,7 @@ namespace BetterLyrics.WinUI3.Views
             sender.Foreground = new SolidColorBrush(AlbumArtThemeColors.BgFontColor);
         }
 
-        private void RenderSongInfo()
+        private async Task RenderSongInfoAsync()
         {
             if (LyricsWindowStatus == null) return;
 
@@ -115,9 +118,25 @@ namespace BetterLyrics.WinUI3.Views
             var artistsFontSize = albumArtLayoutSettings.IsAutoSongInfoFontSize ? lyricsLayoutMetrics.ArtistNameSize : albumArtLayoutSettings.SongInfoFontSize * 0.8;
             var albumFontSize = albumArtLayoutSettings.IsAutoSongInfoFontSize ? lyricsLayoutMetrics.AlbumNameSize : albumArtLayoutSettings.SongInfoFontSize * 0.8;
 
-            RenderTextBlock(TitleTextBlock, _gsmtcService.CurrentSongInfo.Title, titleFontSize);
-            RenderTextBlock(ArtistsTextBlock, _gsmtcService.CurrentSongInfo.Artist, artistsFontSize);
-            RenderTextBlock(AlbumTextBlock, _gsmtcService.CurrentSongInfo.Album, albumFontSize);
+            string mappedTitle = _gsmtcService.CurrentSongInfo.Title;
+            string mappedArtist = _gsmtcService.CurrentSongInfo.Artist;
+            string mappedAlbum = _gsmtcService.CurrentSongInfo.Album;
+
+            var mapped = await _songSearchMapService.GetMappingAsync(
+                _gsmtcService.CurrentSongInfo.Title,
+                _gsmtcService.CurrentSongInfo.Artist,
+                _gsmtcService.CurrentSongInfo.Album);
+
+            if (mapped != null)
+            {
+                mappedTitle = mapped.MappedTitle;
+                mappedArtist = mapped.MappedArtist;
+                mappedAlbum = mapped.MappedAlbum;
+            }
+
+            RenderTextBlock(TitleTextBlock, mappedTitle, titleFontSize);
+            RenderTextBlock(ArtistsTextBlock, mappedArtist, artistsFontSize);
+            RenderTextBlock(AlbumTextBlock, mappedAlbum, albumFontSize);
         }
 
         private void UpdateSongInfoOpacity()
@@ -144,7 +163,7 @@ namespace BetterLyrics.WinUI3.Views
         {
             SongInfoStackPanel.Opacity = 0;
             await Task.Delay(Constants.Time.AnimationDuration);
-            RenderSongInfo();
+            await RenderSongInfoAsync();
             SongInfoStackPanel.Opacity = 1;
             UpdateSongInfoOpacity();
         }
@@ -479,9 +498,9 @@ namespace BetterLyrics.WinUI3.Views
 
         // ====
 
-        private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        private async void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            RenderSongInfo();
+            await RenderSongInfoAsync();
             OnLayoutChanged();
         }
 
@@ -590,9 +609,44 @@ namespace BetterLyrics.WinUI3.Views
             LyricsCanvas.IsMousePressing = true;
         }
 
+        private async void SaveAlbumArtButton_Click(object sender, RoutedEventArgs e)
+        {
+            var sourceStream = ViewModel.MediaSessionsService.AlbumArtBitmapStream;
+            if (sourceStream == null) return;
+
+            var window = WindowHook.GetWindows<NowPlayingWindow>().FirstOrDefault(x => x.LyricsWindowStatus == LyricsWindowStatus);
+            if (window == null) return;
+
+            IDictionary<string, IList<string>> fileTypeChoices = new Dictionary<string, IList<string>>()
+            {
+                { "PNG", new List<string>() { ".png" } },
+                { "JPEG", new List<string>() { ".jpg", ".jpeg" } }
+            };
+
+            var file = await PickerHelper.PickSaveFileAsync(window, fileTypeChoices);
+
+            if (file != null)
+            {
+                using (IRandomAccessStream destStream = await file.OpenAsync(FileAccessMode.ReadWrite))
+                {
+                    sourceStream.Seek(0);
+                    await RandomAccessStream.CopyAsync(sourceStream, destStream);
+                    await destStream.FlushAsync();
+
+                    GlobalToastManager.Show("ActionCompleted", null, InfoBarSeverity.Success);
+                }
+            }
+
+        }
+
+        private void Page_Unloaded(object sender, RoutedEventArgs e)
+        {
+            WeakReferenceMessenger.Default.UnregisterAll(this);
+        }
+
         // ====
 
-        public async void Receive(PropertyChangedMessage<SongInfo> message)
+        public void Receive(PropertyChangedMessage<SongInfo> message)
         {
             if (message.Sender is IGSMTCService)
             {
@@ -631,7 +685,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.SongInfoFontSize))
                 {
-                    RenderSongInfo();
+                    RenderSongInfoAsync();
                 }
                 else if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.CoverImageHeight))
                 {
@@ -646,7 +700,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.IsAutoSongInfoFontSize))
                 {
-                    RenderSongInfo();
+                    RenderSongInfoAsync();
                 }
                 else if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.IsAutoCoverImageHeight))
                 {
@@ -668,48 +722,24 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(LyricsStyleSettings.LyricsCJKFontFamily))
                 {
-                    RenderSongInfo();
+                    RenderSongInfoAsync();
                 }
                 else if (message.PropertyName == nameof(LyricsStyleSettings.LyricsWesternFontFamily))
                 {
-                    RenderSongInfo();
+                    RenderSongInfoAsync();
                 }
             }
         }
 
-        private async void SaveAlbumArtButton_Click(object sender, RoutedEventArgs e)
+        public void Receive(PropertyChangedMessage<MappedSongSearchQuery?> message)
         {
-            var sourceStream = ViewModel.MediaSessionsService.AlbumArtBitmapStream;
-            if (sourceStream == null) return;
-
-            var window = WindowHook.GetWindows<NowPlayingWindow>().FirstOrDefault(x => x.LyricsWindowStatus == LyricsWindowStatus);
-            if (window == null) return;
-
-            IDictionary<string, IList<string>> fileTypeChoices = new Dictionary<string, IList<string>>()
+            if (message.Sender is LyricsSearchControlViewModel)
             {
-                { "PNG", new List<string>() { ".png" } },
-                { "JPEG", new List<string>() { ".jpg", ".jpeg" } }
-            };
-
-            var file = await PickerHelper.PickSaveFileAsync(window, fileTypeChoices);
-
-            if (file != null)
-            {
-                using (IRandomAccessStream destStream = await file.OpenAsync(FileAccessMode.ReadWrite))
+                if (message.PropertyName == nameof(LyricsSearchControlViewModel.MappedSongSearchQuery))
                 {
-                    sourceStream.Seek(0);
-                    await RandomAccessStream.CopyAsync(sourceStream, destStream);
-                    await destStream.FlushAsync();
-
-                    GlobalToastManager.Show("ActionCompleted", null, InfoBarSeverity.Success);
+                    RefreshSongInfo();
                 }
             }
-
-        }
-
-        private void Page_Unloaded(object sender, RoutedEventArgs e)
-        {
-            WeakReferenceMessenger.Default.UnregisterAll(this);
         }
     }
 }

@@ -40,6 +40,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         public partial ObservableCollection<LyricsData>? LyricsDataArr { get; set; }
 
         [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
         public partial MappedSongSearchQuery? MappedSongSearchQuery { get; set; }
 
         [ObservableProperty]

@@ -420,7 +420,7 @@ namespace BetterLyrics.WinUI3.Controls
                 fgColor: _albumArtThemeColors.FgFontColor,
                 currentProgressMs: _songPositionWithOffset.TotalMilliseconds);
 
-#if DEBUG
+#if DEBUG && false
             string debugText =
                 $"FPS          : {(1.0 / args.Timing.ElapsedTime.TotalSeconds):00.0} (Avg: {args.Timing.UpdateCount / args.Timing.TotalTime.TotalSeconds:00.0})\n" +
                 $"----------------------------------------\n" +
