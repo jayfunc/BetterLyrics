@@ -49,6 +49,9 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TitleBarArea TitleBarArea { get; set; } = TitleBarArea.Top;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsKeepScreenOpen { get; set; } = false;
 
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial FPS FPS { get; set; } = FPS.Hz60;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowDebugOverlay { get; set; } = false;
+
         [JsonIgnore][ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsOpened { get; set; } = false;
         [JsonIgnore] public DispatcherQueueTimer? VisibilityTimer { get; set; }
 
@@ -230,6 +233,9 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 AutoShowOrHideWindow = this.AutoShowOrHideWindow,
                 TitleBarArea = this.TitleBarArea,
                 IsKeepScreenOpen = this.IsKeepScreenOpen,
+
+                FPS = this.FPS,
+                ShowDebugOverlay = this.ShowDebugOverlay,
 
                 IsTimelineLyricsPreviewEnabled = this.IsTimelineLyricsPreviewEnabled,
                 KeepNowPlayingBarInteractiveWhenLocked = this.KeepNowPlayingBarInteractiveWhenLocked,

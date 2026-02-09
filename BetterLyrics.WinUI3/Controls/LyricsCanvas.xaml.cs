@@ -255,7 +255,7 @@ namespace BetterLyrics.WinUI3.Controls
             InitializeComponent();
 
             WeakReferenceMessenger.Default.RegisterAll(this);
-           
+
             UpdateRenderLyricsLines();
         }
 
@@ -420,50 +420,52 @@ namespace BetterLyrics.WinUI3.Controls
                 fgColor: _albumArtThemeColors.FgFontColor,
                 currentProgressMs: _songPositionWithOffset.TotalMilliseconds);
 
-#if DEBUG && false
-            string debugText =
-                $"FPS          : {(1.0 / args.Timing.ElapsedTime.TotalSeconds):00.0} (Avg: {args.Timing.UpdateCount / args.Timing.TotalTime.TotalSeconds:00.0})\n" +
-                $"----------------------------------------\n" +
-                $"Render Pos   : [{(int)_renderLyricsStartX}, {(int)_renderLyricsStartY}]\n" +
-                $"Render Size  : [{(int)_renderLyricsWidth} x {(int)_renderLyricsHeight}]\n" +
-                $"Actual Height: {LyricsLayoutManager.CalculateActualHeight(_renderLyricsLines)} px\n" +
-                $"----------------------------------------\n" +
-                $"Playing Line : #{_primaryPlayingLineIndex}\n" +
-                $"Hover Line   : #{_mouseHoverLineIndex}\n" +
-                $"Visible Range: [{_visibleRange.Start} -> {_visibleRange.End}]\n" +
-                $"Total Lines  : {LyricsLayoutManager.CalculateMaxRange(_renderLyricsLines).End + 1}\n" +
-                $"----------------------------------------\n" +
-                $"Time         : {_songPosition:mm\\:ss} / {TimeSpan.FromMilliseconds(_gsmtcService.CurrentSongInfo.DurationMs):mm\\:ss}\n" +
-                $"Y Offset     : {_canvasYScrollTransition.Value:0.00}\n" +
-                $"User Scroll  : {_mouseYScrollTransition.Value:0.00}";
-
-            using (var format = new Microsoft.Graphics.Canvas.Text.CanvasTextFormat
+            if (_lyricsWindowStatus.ShowDebugOverlay)
             {
-                FontFamily = "Consolas",
-                FontSize = 13,
-                VerticalAlignment = Microsoft.Graphics.Canvas.Text.CanvasVerticalAlignment.Top,
-                HorizontalAlignment = Microsoft.Graphics.Canvas.Text.CanvasHorizontalAlignment.Left
-            })
-            using (var layout = new Microsoft.Graphics.Canvas.Text.CanvasTextLayout(args.DrawingSession, debugText, format, 2000f, 2000f))
-            {
-                var textBounds = layout.LayoutBounds;
-                float padding = 12f;
-                float margin = 12f;
+                string debugText =
+                    $"FPS          : {(1.0 / args.Timing.ElapsedTime.TotalSeconds):00.0} (Avg: {args.Timing.UpdateCount / args.Timing.TotalTime.TotalSeconds:00.0})\n" +
+                    $"----------------------------------------\n" +
+                    $"Render Pos   : [{(int)_renderLyricsStartX}, {(int)_renderLyricsStartY}]\n" +
+                    $"Render Size  : [{(int)_renderLyricsWidth} x {(int)_renderLyricsHeight}]\n" +
+                    $"Actual Height: {LyricsLayoutManager.CalculateActualHeight(_renderLyricsLines)} px\n" +
+                    $"----------------------------------------\n" +
+                    $"Playing Line : #{_primaryPlayingLineIndex}\n" +
+                    $"Hover Line   : #{_mouseHoverLineIndex}\n" +
+                    $"Visible Range: [{_visibleRange.Start} -> {_visibleRange.End}]\n" +
+                    $"Total Lines  : {LyricsLayoutManager.CalculateMaxRange(_renderLyricsLines).End + 1}\n" +
+                    $"----------------------------------------\n" +
+                    $"Time         : {_songPosition:mm\\:ss} / {TimeSpan.FromMilliseconds(_gsmtcService.CurrentSongInfo.DurationMs):mm\\:ss}\n" +
+                    $"Y Offset     : {_canvasYScrollTransition.Value:0.00}\n" +
+                    $"User Scroll  : {_mouseYScrollTransition.Value:0.00}";
 
-                float boxWidth = (float)textBounds.Width + (padding * 2);
-                float boxHeight = (float)textBounds.Height + (padding * 2);
-                float canvasWidth = (float)sender.Size.Width;
+                using (var format = new Microsoft.Graphics.Canvas.Text.CanvasTextFormat
+                {
+                    FontFamily = "Consolas",
+                    FontSize = 13,
+                    VerticalAlignment = Microsoft.Graphics.Canvas.Text.CanvasVerticalAlignment.Top,
+                    HorizontalAlignment = Microsoft.Graphics.Canvas.Text.CanvasHorizontalAlignment.Left
+                })
+                using (var layout = new Microsoft.Graphics.Canvas.Text.CanvasTextLayout(args.DrawingSession, debugText, format, 2000f, 2000f))
+                {
+                    var textBounds = layout.LayoutBounds;
+                    float padding = 12f;
+                    float margin = 12f;
 
-                float xPos = canvasWidth - boxWidth - margin;
-                float yPos = margin;
+                    float boxWidth = (float)textBounds.Width + (padding * 2);
+                    float boxHeight = (float)textBounds.Height + (padding * 2);
+                    float canvasWidth = (float)sender.Size.Width;
 
-                var bgRect = new Rect(xPos, yPos, boxWidth, boxHeight);
+                    float xPos = canvasWidth - boxWidth - margin;
+                    float yPos = margin;
 
-                args.DrawingSession.FillRectangle(bgRect, Color.FromArgb(128, 10, 10, 10));
-                args.DrawingSession.DrawRectangle(bgRect, Colors.Cyan, 1.0f);
-                args.DrawingSession.DrawTextLayout(layout, new Vector2(xPos + padding, yPos + padding), Colors.GreenYellow);
+                    var bgRect = new Rect(xPos, yPos, boxWidth, boxHeight);
+
+                    args.DrawingSession.FillRectangle(bgRect, Color.FromArgb(128, 10, 10, 10));
+                    args.DrawingSession.DrawRectangle(bgRect, Colors.Cyan, 1.0f);
+                    args.DrawingSession.DrawTextLayout(layout, new Vector2(xPos + padding, yPos + padding), Colors.GreenYellow);
+                }
             }
-#endif
+
         }
 
         private void Canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)

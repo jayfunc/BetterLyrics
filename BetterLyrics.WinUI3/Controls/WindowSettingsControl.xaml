@@ -150,6 +150,25 @@
                         </ComboBox>
                     </dev:SettingsCard>
 
+                    <dev:SettingsCard x:Uid="SettingsPageFPS">
+                        <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.FPS, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                            <ComboBoxItem Content="60 Hz" />
+                            <ComboBoxItem Content="75 Hz" />
+                            <ComboBoxItem Content="120 Hz" />
+                            <ComboBoxItem Content="144 Hz" />
+                            <ComboBoxItem Content="165 Hz" />
+                            <ComboBoxItem Content="170 Hz" />
+                            <ComboBoxItem Content="180 Hz" />
+                            <ComboBoxItem Content="240 Hz" />
+                            <ComboBoxItem Content="360 Hz" />
+                            <ComboBoxItem Content="480 Hz" />
+                        </ComboBox>
+                    </dev:SettingsCard>
+
+                    <dev:SettingsCard x:Uid="SettingsPageDebugOverlay">
+                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.ShowDebugOverlay, Mode=TwoWay}" />
+                    </dev:SettingsCard>
+
                 </StackPanel>
             </Grid>
         </ScrollViewer>

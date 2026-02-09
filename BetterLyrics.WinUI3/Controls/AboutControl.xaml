@@ -320,15 +320,6 @@
                         </dev:SettingsExpander.ItemsHeader>
                     </dev:SettingsExpander>
 
-                    <dev:SettingsCard x:Uid="SettingsPageFPS" Visibility="Collapsed">
-                        <uc:ExtendedSlider
-                            Default="60"
-                            Frequency="10"
-                            Maximum="240"
-                            Minimum="30"
-                            Value="{x:Bind ViewModel.AppSettings.AdvancedSettings.FPS, Mode=TwoWay}" />
-                    </dev:SettingsCard>
-
                     <TextBlock
                         x:Uid="SettingsPageDisclaimer"
                         Margin="12"
