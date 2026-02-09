@@ -15,6 +15,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsAutoSongInfoFontSize { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int SongInfoFontSize { get; set; } = 18;
+
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowTitle { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowArtists { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowAlbum { get; set; } = false;
@@ -34,6 +35,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
                 IsAutoSongInfoFontSize = this.IsAutoSongInfoFontSize,
                 SongInfoFontSize = this.SongInfoFontSize,
+
                 ShowTitle = this.ShowTitle,
                 ShowArtists = this.ShowArtists,
                 ShowAlbum = this.ShowAlbum,

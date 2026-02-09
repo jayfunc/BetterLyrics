@@ -123,6 +123,12 @@
   <data name="Add" xml:space="preserve">
     <value>जोड़ें</value>
   </data>
+  <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Description" xml:space="preserve">
+    <value>Automatically scroll song info when it's too long, regardless of mouse hover</value>
+  </data>
+  <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Header" xml:space="preserve">
+    <value>Auto-scroll Song Info</value>
+  </data>
   <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
     <value>स्थानीय संगीत फ़ाइलें</value>
   </data>
@@ -1481,6 +1487,9 @@
   </data>
   <data name="SettingsPageSongInfo.Text" xml:space="preserve">
     <value>गीत की जानकारी</value>
+  </data>
+  <data name="SettingsPageSongInfoEffect.Text" xml:space="preserve">
+    <value>Song Info Effect</value>
   </data>
   <data name="SettingsPageSongStatus.Header" xml:space="preserve">
     <value>वर्तमान गीत</value>
