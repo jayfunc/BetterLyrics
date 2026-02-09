@@ -15,6 +15,12 @@
             <Grid Style="{StaticResource SettingsGridStyle}">
                 <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
+                    <TextBlock x:Uid="SettingsPageSongInfoEffect" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                    <dev:SettingsCard x:Uid="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEC52;}">
+                        <ToggleSwitch IsOn="{x:Bind AlbumArtAreaEffectSettings.SongInfoAutoScroll, Mode=TwoWay}" />
+                    </dev:SettingsCard>
+
                     <TextBlock x:Uid="SettingsPageAlbumEffect" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <dev:SettingsCard x:Uid="SettingsPageImageSwitchType" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8EB;}">

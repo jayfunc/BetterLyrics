@@ -14,6 +14,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using CommunityToolkit.WinUI;
+using DevWinUI;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -498,6 +499,18 @@ namespace BetterLyrics.WinUI3.Views
 
         // ====
 
+        private void UpdateAutoScrollViewIsPlaying(AutoScrollView element, bool isPointerEntered)
+        {
+            if (LyricsWindowStatus?.AlbumArtAreaEffectSettings.SongInfoAutoScroll == true)
+            {
+                element.IsPlaying = true;
+            }
+            else
+            {
+                element.IsPlaying = isPointerEntered;
+            }
+        }
+
         private async void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             await RenderSongInfoAsync();
@@ -506,47 +519,47 @@ namespace BetterLyrics.WinUI3.Views
 
         private void TitleAutoScrollHoverEffectView_PointerCanceled(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            TitleAutoScrollHoverEffectView.IsPlaying = false;
+            UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, false);
         }
 
         private void TitleAutoScrollHoverEffectView_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            TitleAutoScrollHoverEffectView.IsPlaying = true;
+            UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, true);
         }
 
         private void TitleAutoScrollHoverEffectView_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            TitleAutoScrollHoverEffectView.IsPlaying = false;
+            UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, false);
         }
 
         private void ArtistsAutoScrollHoverEffectView_PointerCanceled(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            ArtistsAutoScrollHoverEffectView.IsPlaying = false;
+            UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
         }
 
         private void ArtistsAutoScrollHoverEffectView_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            ArtistsAutoScrollHoverEffectView.IsPlaying = true;
+            UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, true);
         }
 
         private void ArtistsAutoScrollHoverEffectView_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            ArtistsAutoScrollHoverEffectView.IsPlaying = false;
+            UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
         }
 
         private void AlbumAutoScrollHoverEffectView_PointerCanceled(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            AlbumAutoScrollHoverEffectView.IsPlaying = false;
+            UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
         }
 
         private void AlbumAutoScrollHoverEffectView_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            AlbumAutoScrollHoverEffectView.IsPlaying = true;
+            UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, true);
         }
 
         private void AlbumAutoScrollHoverEffectView_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
-            AlbumAutoScrollHoverEffectView.IsPlaying = false;
+            UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
         }
 
         private void LyricsPlaceholder_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -653,6 +666,9 @@ namespace BetterLyrics.WinUI3.Views
                 if (message.PropertyName == nameof(IGSMTCService.CurrentSongInfo))
                 {
                     RefreshSongInfo();
+                    UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, false);
+                    UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
+                    UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
                 }
             }
         }
@@ -705,6 +721,15 @@ namespace BetterLyrics.WinUI3.Views
                 else if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.IsAutoCoverImageHeight))
                 {
                     OnLayoutChanged();
+                }
+            }
+            else if (message.Sender == LyricsWindowStatus?.AlbumArtAreaEffectSettings)
+            {
+                if (message.PropertyName == nameof(AlbumArtAreaEffectSettings.SongInfoAutoScroll))
+                {
+                    UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, false);
+                    UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
+                    UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
                 }
             }
             else if (message.Sender == LyricsWindowStatus?.LyricsEffectSettings)
