@@ -1,14 +1,17 @@
 ﻿using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Services.SongSearchMapService;
 using DiscordRPC;
 
 namespace BetterLyrics.WinUI3.Services.DiscordService
 {
     public class DiscordService : IDiscordService
     {
+        private readonly ISongSearchMapService _songSearchMapService;
         private DiscordRpcClient? _client;
 
-        public DiscordService()
+        public DiscordService(ISongSearchMapService songSearchMapService)
         {
+            _songSearchMapService = songSearchMapService;
         }
 
         public void Enable()
@@ -20,8 +23,24 @@ namespace BetterLyrics.WinUI3.Services.DiscordService
             }
         }
 
-        public void UpdateRichPresence(SongInfo songInfo)
+        public async void UpdateRichPresence(SongInfo songInfo)
         {
+            string mappedTitle = songInfo.Title;
+            string mappedArtist = songInfo.Artist;
+            string mappedAlbum = songInfo.Album;
+
+            var mapped = await _songSearchMapService.GetMappingAsync(
+                songInfo.Title,
+                songInfo.Artist,
+                songInfo.Album);
+
+            if (mapped != null)
+            {
+                mappedTitle = mapped.MappedTitle;
+                mappedArtist = mapped.MappedArtist;
+                mappedAlbum = mapped.MappedAlbum;
+            }
+
             _client?.SetPresence(new RichPresence
             {
                 StatusDisplay = StatusDisplayType.Details,
