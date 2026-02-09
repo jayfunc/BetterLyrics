@@ -25,21 +25,7 @@ namespace BetterLyrics.WinUI3.Services.DiscordService
 
         public async void UpdateRichPresence(SongInfo songInfo)
         {
-            string mappedTitle = songInfo.Title;
-            string mappedArtist = songInfo.Artist;
-            string mappedAlbum = songInfo.Album;
-
-            var mapped = await _songSearchMapService.GetMappingAsync(
-                songInfo.Title,
-                songInfo.Artist,
-                songInfo.Album);
-
-            if (mapped != null)
-            {
-                mappedTitle = mapped.MappedTitle;
-                mappedArtist = mapped.MappedArtist;
-                mappedAlbum = mapped.MappedAlbum;
-            }
+            (string mappedTitle, string mappedArtist, string mappedAlbum) = await _songSearchMapService.GetMappingAsync(songInfo);
 
             _client?.SetPresence(new RichPresence
             {

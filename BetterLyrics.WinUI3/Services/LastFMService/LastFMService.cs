@@ -118,21 +118,7 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
         {
             if (IsAuthenticated)
             {
-                string mappedTitle = songInfo.Title;
-                string mappedArtist = songInfo.Artist;
-                string mappedAlbum = songInfo.Album;
-
-                var mapped = await _songSearchMapService.GetMappingAsync(
-                    songInfo.Title,
-                    songInfo.Artist,
-                    songInfo.Album);
-
-                if (mapped != null)
-                {
-                    mappedTitle = mapped.MappedTitle;
-                    mappedArtist = mapped.MappedArtist;
-                    mappedAlbum = mapped.MappedAlbum;
-                }
+                (string mappedTitle, string mappedArtist, string mappedAlbum) = await _songSearchMapService.GetMappingAsync(songInfo);
 
                 var resp = await _client.RequestAsync(LastFMApi.ScrobbleApi, new()
                 {

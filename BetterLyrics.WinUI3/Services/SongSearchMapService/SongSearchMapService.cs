@@ -45,16 +45,34 @@ namespace BetterLyrics.WinUI3.Services.SongSearchMapService
             await context.SaveChangesAsync();
         }
 
-        public async Task<MappedSongSearchQuery?> GetMappingAsync(string title, string artist, string album)
+        public async Task<MappedSongSearchQuery?> TryGetMappingAsync(SongInfo songInfo)
         {
             using var context = await _contextFactory.CreateDbContextAsync();
 
             return await context.SongSearchMap
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x =>
-                    x.OriginalTitle == title &&
-                    x.OriginalArtist == artist &&
-                    x.OriginalAlbum == album);
+                    x.OriginalTitle == songInfo.Title &&
+                    x.OriginalArtist == songInfo.Artist &&
+                    x.OriginalAlbum == songInfo.Album);
+        }
+
+        public async Task<(string Title, string Artist, string Album)> GetMappingAsync(SongInfo songInfo)
+        {
+            string mappedTitle = songInfo.Title;
+            string mappedArtist = songInfo.Artist;
+            string mappedAlbum = songInfo.Album;
+
+            var mapped = await TryGetMappingAsync(songInfo);
+
+            if (mapped != null)
+            {
+                mappedTitle = mapped.MappedTitle;
+                mappedArtist = mapped.MappedArtist;
+                mappedAlbum = mapped.MappedAlbum;
+            }
+
+            return (mappedTitle, mappedArtist, mappedAlbum);
         }
 
         public async Task DeleteMappingAsync(MappedSongSearchQuery mapping)

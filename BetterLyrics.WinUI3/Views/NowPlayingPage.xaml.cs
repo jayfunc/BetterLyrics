@@ -15,6 +15,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using CommunityToolkit.WinUI;
 using DevWinUI;
+using Lyricify.Lyrics.Providers.Web.QQMusic;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -119,21 +120,7 @@ namespace BetterLyrics.WinUI3.Views
             var artistsFontSize = albumArtLayoutSettings.IsAutoSongInfoFontSize ? lyricsLayoutMetrics.ArtistNameSize : albumArtLayoutSettings.SongInfoFontSize * 0.8;
             var albumFontSize = albumArtLayoutSettings.IsAutoSongInfoFontSize ? lyricsLayoutMetrics.AlbumNameSize : albumArtLayoutSettings.SongInfoFontSize * 0.8;
 
-            string mappedTitle = _gsmtcService.CurrentSongInfo.Title;
-            string mappedArtist = _gsmtcService.CurrentSongInfo.Artist;
-            string mappedAlbum = _gsmtcService.CurrentSongInfo.Album;
-
-            var mapped = await _songSearchMapService.GetMappingAsync(
-                _gsmtcService.CurrentSongInfo.Title,
-                _gsmtcService.CurrentSongInfo.Artist,
-                _gsmtcService.CurrentSongInfo.Album);
-
-            if (mapped != null)
-            {
-                mappedTitle = mapped.MappedTitle;
-                mappedArtist = mapped.MappedArtist;
-                mappedAlbum = mapped.MappedAlbum;
-            }
+            (string mappedTitle, string mappedArtist, string mappedAlbum) = await _songSearchMapService.GetMappingAsync(_gsmtcService.CurrentSongInfo);
 
             RenderTextBlock(TitleTextBlock, mappedTitle, titleFontSize);
             RenderTextBlock(ArtistsTextBlock, mappedArtist, artistsFontSize);

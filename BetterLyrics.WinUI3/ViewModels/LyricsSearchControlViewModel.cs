@@ -69,10 +69,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             LyricsDataArr = null;
             if (_gsmtcService.CurrentSongInfo != null)
             {
-                var found = await _songSearchMapService.GetMappingAsync(
-                    _gsmtcService.CurrentSongInfo.Title,
-                    _gsmtcService.CurrentSongInfo.Artist,
-                    _gsmtcService.CurrentSongInfo.Album);
+                var found = await _songSearchMapService.TryGetMappingAsync(_gsmtcService.CurrentSongInfo);
 
                 if (found == null)
                 {
