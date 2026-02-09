@@ -127,7 +127,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             _logger.LogInformation("SearchSmartlyAsync {SongInfo}", songInfo);
 
             // 先检查该曲目是否已被用户映射
-            var found = await _songSearchMapService.GetMappingAsync(overridenTitle, overridenArtist, overridenAlbum);
+            var found = await _songSearchMapService.TryGetMappingAsync(songInfo);
 
             if (found != null)
             {
