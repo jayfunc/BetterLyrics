@@ -23,22 +23,13 @@ namespace BetterLyrics.WinUI3.Helper
             return stream;
         }
 
-        public static Task<ThemeColorResult> GetAccentColorAsync(BitmapDecoder decoder, PaletteGeneratorType generatorType)
-        {
-            return generatorType switch
-            {
-                PaletteGeneratorType.OctTree => PaletteHelper.OctTreeGetAccentColorFromByteAsync(decoder),
-                PaletteGeneratorType.MedianCut => PaletteHelper.MedianCutGetAccentColorFromByteAsync(decoder),
-                _ => throw new ArgumentOutOfRangeException(nameof(generatorType)),
-            };
-        }
-
-        public static Task<PaletteResult> GetAccentColorsAsync(BitmapDecoder decoder, int count, PaletteGeneratorType generatorType, bool? isDark = null)
+        public static Task<PaletteResult> GetAccentColorsAsync(BitmapDecoder decoder, int count, PaletteGeneratorType generatorType, bool isDark)
         {
             return generatorType switch
             {
                 PaletteGeneratorType.OctTree => PaletteHelper.OctTreeGetAccentColorsFromByteAsync(decoder, count, isDark),
                 PaletteGeneratorType.MedianCut => PaletteHelper.MedianCutGetAccentColorsFromByteAsync(decoder, count, isDark),
+                PaletteGeneratorType.Auto => PaletteHelper.AutoGetAccentColorsFromByteAsync(decoder, count, isDark),
                 _ => throw new ArgumentOutOfRangeException(nameof(generatorType)),
             };
         }

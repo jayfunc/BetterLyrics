@@ -2,7 +2,8 @@
 {
     public enum PaletteGeneratorType
     {
+        Auto,
         MedianCut,
-        OctTree
+        OctTree,
     }
 }

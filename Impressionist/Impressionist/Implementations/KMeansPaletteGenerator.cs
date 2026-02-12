@@ -12,7 +12,7 @@ namespace Impressionist.Implementations
         IThemeColorGenrator,
         IPaletteGenrator
     {
-        public Task<ThemeColorResult> CreateThemeColor(Dictionary<Vector3, int> sourceColor, bool ignoreWhite = false, bool toLab = false)
+        private static Task<ThemeColorResult> CreateThemeColorAsync(Dictionary<Vector3, int> sourceColor, bool ignoreWhite = false, bool toLab = false)
         {
             var builder = sourceColor.AsEnumerable();
             if (ignoreWhite && sourceColor.Count > 1)
@@ -34,31 +34,15 @@ namespace Impressionist.Implementations
             return Task.FromResult(new ThemeColorResult(colorVector, isDark));
         }
 
-        public async Task<PaletteResult> CreatePalette(Dictionary<Vector3, int> sourceColor, int clusterCount, bool ignoreWhite = false, bool toLab = false, bool useKMeansPP = false)
+        public async Task<PaletteResult> CreatePaletteAsync(Dictionary<Vector3, int> sourceColor, int clusterCount, bool isDark, bool toLab = false, bool useKMeansPP = false)
         {
             if (sourceColor.Count == 1)
             {
-                ignoreWhite = false;
                 useKMeansPP = false;
             }
-            var colorResult = await CreateThemeColor(sourceColor, ignoreWhite, toLab);
+            var colorResult = await CreateThemeColorAsync(sourceColor, false, toLab);
             var builder = sourceColor.AsEnumerable();
-            var colorIsDark = colorResult.ColorIsDark;
-            if (colorIsDark)
-            {
-                builder = builder.Where(t => t.Key.RGBVectorLStarIsDark());
-            }
-            else
-            {
-                if (!ignoreWhite)
-                {
-                    builder = builder.Where(t => !t.Key.RGBVectorLStarIsDark());
-                }
-                else
-                {
-                    builder = builder.Where(t => !t.Key.RGBVectorLStarIsDark() && (t.Key.X <= 250 || t.Key.Y <= 250 || t.Key.Z <= 250));
-                }
-            }
+            builder = builder.Where(t => t.Key.RGBVectorLStarIsDark() == isDark);
             if (toLab)
             {
                 builder = builder.Select(t => new KeyValuePair<Vector3, int>(t.Key.RGBVectorToLABVector(), t.Value));
@@ -82,8 +66,9 @@ namespace Impressionist.Implementations
                 // You know, it is always hard to fullfill a palette when you have no enough colors. So please forgive me when placing the same color over and over again.
                 result.Add(dominantColors[i % count]);
             }
-            return new PaletteResult(result, colorIsDark, colorResult);
+            return new PaletteResult(result, isDark, colorResult);
         }
+
         static Vector3[] KMeansCluster(Dictionary<Vector3, int> colors, int numClusters, bool useKMeansPP)
         {
             // Initialize the clusters, reduces the total number when total colors is less than clusters

@@ -118,8 +118,9 @@
 
                             <dev:SettingsCard x:Uid="SettingsPagePaletteGeneratorType" IsEnabled="{x:Bind LyricsBackgroundSettings.IsFluidOverlayEnabled, Mode=OneWay}">
                                 <ComboBox SelectedIndex="{x:Bind LyricsBackgroundSettings.PaletteGeneratorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                    <ComboBoxItem x:Uid="SettingsPageMedianCut" />
-                                    <ComboBoxItem x:Uid="SettingsPageOctTree" />
+                                    <ComboBoxItem Content="MedianCut" />
+                                    <ComboBoxItem Content="OctTree" />
+                                    <ComboBoxItem Content="Auto" />
                                 </ComboBox>
                             </dev:SettingsCard>
 

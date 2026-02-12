@@ -21,6 +21,7 @@ namespace BetterLyrics.WinUI3.Renderer
         public double Opacity { get; set; } = 1.0;
 
         public bool EnableLightWave { get; set; } = true;
+        public bool UseHSVBlending { get; set; } = false;
 
         public async Task LoadResourcesAsync()
         {
@@ -40,6 +41,7 @@ namespace BetterLyrics.WinUI3.Renderer
                     _fluidEffect = new PixelShaderEffect(bytes);
 
                     _fluidEffect.Properties["EnableLightWave"] = EnableLightWave;
+                    _fluidEffect.Properties["UseHSVBlending"] = UseHSVBlending;
                 }
             }
             catch (Exception ex)
@@ -73,6 +75,7 @@ namespace BetterLyrics.WinUI3.Renderer
             _fluidEffect?.Properties["color4"] = _c4;
 
             _fluidEffect?.Properties["EnableLightWave"] = EnableLightWave;
+            _fluidEffect?.Properties["UseHSVBlending"] = UseHSVBlending;
         }
 
         public void Draw(ICanvasAnimatedControl control, CanvasDrawingSession ds, bool isBreathingEffectEnabled)
