@@ -783,6 +783,9 @@
   <data name="SettingsPageArtist.Header" xml:space="preserve">
     <value>アーティスト</value>
   </data>
+  <data name="SettingsPageAuto.Content" xml:space="preserve">
+    <value>自動</value>
+  </data>
   <data name="SettingsPageAutoAdjust.Header" xml:space="preserve">
     <value>自動調整</value>
   </data>
@@ -1267,9 +1270,6 @@
     <value>強制</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeAuto.Content" xml:space="preserve">
-    <value>自動</value>
-  </data>
-  <data name="SettingsPageAuto.Content" xml:space="preserve">
     <value>自動</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve">

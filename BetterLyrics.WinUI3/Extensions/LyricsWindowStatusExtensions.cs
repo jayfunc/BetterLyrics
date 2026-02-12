@@ -52,6 +52,7 @@ namespace BetterLyrics.WinUI3.Extensions
                 LyricsDisplayType = LyricsDisplayType.LyricsOnly,
                 EnvironmentSampleMode = WindowPixelSampleMode.BelowWindow,
                 IsAlwaysHideUnlockButton = true,
+                KeepNowPlayingBarInteractiveWhenLocked = true,
                 LyricsStyleSettings = new LyricsStyleSettings
                 {
                     LyricsAlignmentType = TextAlignmentType.Center,

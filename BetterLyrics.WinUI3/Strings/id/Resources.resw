@@ -783,6 +783,9 @@
   <data name="SettingsPageArtist.Header" xml:space="preserve">
     <value>Artis</value>
   </data>
+  <data name="SettingsPageAuto.Content" xml:space="preserve">
+    <value>Otomatis</value>
+  </data>
   <data name="SettingsPageAutoAdjust.Header" xml:space="preserve">
     <value>Sesuaikan Otomatis</value>
   </data>
@@ -1267,9 +1270,6 @@
     <value>Selalu</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeAuto.Content" xml:space="preserve">
-    <value>Otomatis</value>
-  </data>
-  <data name="SettingsPageAuto.Content" xml:space="preserve">
     <value>Otomatis</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve">
