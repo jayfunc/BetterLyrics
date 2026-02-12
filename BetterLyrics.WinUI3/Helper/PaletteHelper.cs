@@ -13,67 +13,28 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public static class PaletteHelper
     {
-        private static ColorThief colorThief = new();
-        public static async Task<PaletteResult> OctTreeGetAccentColorsFromByteAsync(BitmapDecoder decoder, int count, bool? isDark = null)
+        public static async Task<PaletteResult> OctTreeGetAccentColorsFromByteAsync(BitmapDecoder decoder, int count, bool isDark)
         {
-            var colors = await GetPixelColor(decoder);
-            var palette = await PaletteGenerators.OctTreePaletteGenerator.CreatePalette(colors, count, false, isDark);
+            var colors = await GetPixelColorAsync(decoder);
+            var palette = await PaletteGenerators.OctTreePaletteGenerator.CreatePaletteAsync(colors, count, isDark);
             return palette;
         }
 
-        public static async Task<ThemeColorResult> OctTreeGetAccentColorFromByteAsync(BitmapDecoder decoder)
+        public static async Task<PaletteResult> MedianCutGetAccentColorsFromByteAsync(BitmapDecoder decoder, int count, bool isDark)
         {
-            var colors = await GetPixelColor(decoder);
-            var theme = await PaletteGenerators.OctTreePaletteGenerator.CreateThemeColor(colors, false);
-            return theme;
+            var colors = await GetPixelColorAsync(decoder);
+            var palette = await PaletteGenerators.KMeansPaletteGenerator.CreatePaletteAsync(colors, count, isDark);
+            return palette;
         }
 
-        public static async Task<ThemeColorResult> MedianCutGetAccentColorFromByteAsync(BitmapDecoder decoder)
+        public static async Task<PaletteResult> AutoGetAccentColorsFromByteAsync(BitmapDecoder decoder, int count, bool isDark)
         {
-            var mainColor = await colorThief.GetColor(decoder, 10, false);
-            var theme = new ThemeColorResult(new Vector3(mainColor.Color.R, mainColor.Color.G, mainColor.Color.B), mainColor.IsDark);
-            return theme;
+            var colors = await GetPixelColorAsync(decoder);
+            var palette = await AutoPaletteGenerator.CreatePalette(colors, count, isDark);
+            return palette;
         }
 
-        public static async Task<PaletteResult> MedianCutGetAccentColorsFromByteAsync(BitmapDecoder decoder, int count, bool? isDark = null)
-        {
-            var mainColor = await colorThief.GetColor(decoder, 10, false);
-            var theme = new ThemeColorResult(new Vector3(mainColor.Color.R, mainColor.Color.G, mainColor.Color.B), mainColor.IsDark);
-            var palette = await colorThief.GetPalette(decoder, 255, 10, false);
-            var topColors = palette
-                .Where(x => x.IsDark == (isDark ?? mainColor.IsDark))
-                .OrderByDescending(x => x.Population)
-                .Select(x => new Vector3(x.Color.R, x.Color.G, x.Color.B))
-                .Take(count)
-                .ToList();
-            var paletteResult = new PaletteResult(topColors, mainColor.IsDark, theme);
-
-            return paletteResult;
-        }
-
-        public static List<Windows.UI.Color> GenerateChartColors(Windows.UI.Color baseColor, int count)
-        {
-            List<Windows.UI.Color> results = [];
-
-            var baseHsl = baseColor.ToHsl();
-            double baseHue = baseHsl.H;
-            double baseSaturation = baseHsl.S;
-            double baseBrightness = baseHsl.L;
-
-            double step = 360.0 / count;
-
-            for (int i = 0; i < count; i++)
-            {
-                double newHue = (baseHue + (step * i)) % 360;
-
-                Windows.UI.Color newColor = CommunityToolkit.WinUI.Helpers.ColorHelper.FromHsl(newHue, baseSaturation, baseBrightness);
-                results.Add(newColor);
-            }
-
-            return results;
-        }
-
-        private static async Task<Dictionary<Vector3, int>> GetPixelColor(BitmapDecoder bitmapDecoder)
+        private static async Task<Dictionary<Vector3, int>> GetPixelColorAsync(BitmapDecoder bitmapDecoder)
         {
             var pixelDataProvider = await bitmapDecoder.GetPixelDataAsync();
             var pixels = pixelDataProvider.DetachPixelData();

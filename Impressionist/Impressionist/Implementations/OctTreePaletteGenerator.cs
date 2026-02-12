@@ -11,7 +11,7 @@ namespace Impressionist.Implementations
         IThemeColorGenrator,
         IPaletteGenrator
     {
-        public Task<ThemeColorResult> CreateThemeColor(Dictionary<Vector3, int> sourceColor, bool ignoreWhite = false)
+        private static Task<ThemeColorResult> CreateThemeColorAsync(Dictionary<Vector3, int> sourceColor, bool ignoreWhite = false)
         {
             var quantizer = new PaletteQuantizer();
             var builder = sourceColor.AsEnumerable();
@@ -30,44 +30,13 @@ namespace Impressionist.Implementations
             var colorIsDark = result.RGBVectorLStarIsDark();
             return Task.FromResult(new ThemeColorResult(result, colorIsDark));
         }
-        public async Task<PaletteResult> CreatePalette(Dictionary<Vector3, int> sourceColor, int clusterCount, bool ignoreWhite = false, bool? isDark = null)
+
+        public async Task<PaletteResult> CreatePaletteAsync(Dictionary<Vector3, int> sourceColor, int clusterCount, bool isDark)
         {
             var quantizer = new PaletteQuantizer();
-            if (sourceColor.Count == 1)
-            {
-                ignoreWhite = false;
-            }
             var builder = sourceColor.AsEnumerable();
-            var colorResult = await CreateThemeColor(sourceColor, ignoreWhite);
-            var colorIsDark = false;
-            if (isDark == null)
-            {
-                if (ignoreWhite)
-                {
-                    builder = builder.Where(t => t.Key.X <= 250 || t.Key.Y <= 250 || t.Key.Z <= 250);
-                }
-                colorIsDark = colorResult.ColorIsDark;
-                if (colorIsDark)
-                {
-                    builder = builder.Where(t => t.Key.RGBVectorLStarIsDark());
-                }
-                else
-                {
-                    builder = builder.Where(t => !t.Key.RGBVectorLStarIsDark());
-                }
-            }
-            else
-            {
-                colorIsDark = isDark.Value;
-                if (colorIsDark)
-                {
-                    builder = builder.Where(t => t.Key.RGBVectorLStarIsDark());
-                }
-                else
-                {
-                    builder = builder.Where(t => !t.Key.RGBVectorLStarIsDark());
-                }
-            }
+            var colorResult = await CreateThemeColorAsync(sourceColor);
+            builder = builder.Where(t => t.Key.RGBVectorLStarIsDark() == isDark);
             var targetColor = builder.ToDictionary(t => t.Key, t => t.Value);
             foreach (var color in targetColor)
             {
@@ -76,7 +45,7 @@ namespace Impressionist.Implementations
             quantizer.Quantize(clusterCount);
             var index = targetColor.Keys.ToList();
             List<Vector3> quantizeResult;
-            if (colorIsDark)
+            if (isDark)
             {
                 quantizeResult = quantizer.GetPaletteResult(clusterCount);
             }
@@ -99,7 +68,7 @@ namespace Impressionist.Implementations
             {
                 result = quantizeResult;
             }
-            return new PaletteResult(result, colorIsDark, colorResult);
+            return new PaletteResult(result, isDark, colorResult);
         }
 
         private class PaletteQuantizer
