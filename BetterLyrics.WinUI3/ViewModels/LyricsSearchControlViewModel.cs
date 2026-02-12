@@ -124,14 +124,12 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                     var checkCache = !_settingsService.AppSettings.GeneralSettings.IgnoreCacheWhenSearching;
 
-                    await foreach (var item in _lyricsSearchService.SearchAllAsync(songInfo, checkCache, token))
+                    var result = await _lyricsSearchService.SearchAllAsync(songInfo, checkCache, token);
+
+                    _dispatcherQueue.TryEnqueue(() =>
                     {
-                        _dispatcherQueue.TryEnqueue(() =>
-                        {
-                            LyricsSearchResults.Add(item);
-                            LyricsSearchResults.Sort(x => x.MatchPercentage, true);
-                        });
-                    }
+                        LyricsSearchResults = [.. result];
+                    });
                 }
                 finally
                 {
