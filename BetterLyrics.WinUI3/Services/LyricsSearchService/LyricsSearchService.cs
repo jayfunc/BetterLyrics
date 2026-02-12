@@ -227,10 +227,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             return null;
         }
 
-        public async IAsyncEnumerable<LyricsCacheItem> SearchAllAsync(
-            SongInfo songInfo,
-            bool checkCache,
-            [EnumeratorCancellation] CancellationToken token)
+        public async Task<List<LyricsCacheItem>> SearchAllAsync(SongInfo songInfo, bool checkCache, CancellationToken token)
         {
             _logger.LogInformation("SearchAllAsync Concurrent {SongInfo}", songInfo);
 
@@ -249,19 +246,20 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 }
             }
 
-            await foreach (var task in Task.WhenEach(searchTasks))
+            try
             {
-                if (token.IsCancellationRequested) yield break;
-
-                LyricsCacheItem? result = null;
-                try
-                {
-                    result = await task;
-                }
-                catch { }
-
-                if (result != null) yield return result;
+                await Task.WhenAll(searchTasks);
             }
+            catch (Exception)
+            {
+            }
+
+            var results = searchTasks
+                .Where(t => t.Status == TaskStatus.RanToCompletion && t.Result != null)
+                .Select(t => t.Result)
+                .ToList();
+
+            return results;
         }
 
         private async Task<LyricsCacheItem> SearchSingleAsync(SongInfo songInfo, LyricsSearchProvider provider, bool checkCache, CancellationToken token)

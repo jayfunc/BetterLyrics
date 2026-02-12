@@ -13,6 +13,6 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
     {
         Task<LyricsCacheItem?> SearchSmartlyAsync(SongInfo songInfo, LyricsSearchType? lyricsSearchType, CancellationToken token);
 
-        IAsyncEnumerable<LyricsCacheItem> SearchAllAsync(SongInfo songInfo, bool checkCache, CancellationToken token);
+        Task<List<LyricsCacheItem>> SearchAllAsync(SongInfo songInfo, bool checkCache, CancellationToken token);
     }
 }
