@@ -783,6 +783,9 @@
   <data name="SettingsPageArtist.Header" xml:space="preserve">
     <value>Nghệ sĩ</value>
   </data>
+  <data name="SettingsPageAuto.Content" xml:space="preserve">
+    <value>Tự động</value>
+  </data>
   <data name="SettingsPageAutoAdjust.Header" xml:space="preserve">
     <value>Tự động điều chỉnh</value>
   </data>
@@ -1267,9 +1270,6 @@
     <value>Luôn luôn</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeAuto.Content" xml:space="preserve">
-    <value>Tự động</value>
-  </data>
-  <data name="SettingsPageAuto.Content" xml:space="preserve">
     <value>Tự động</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve">
