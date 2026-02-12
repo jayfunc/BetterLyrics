@@ -1,5 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Extensions;
-using BetterLyrics.WinUI3.Shaders; // 引用刚才生成的 LightWaveEffect
+using BetterLyrics.WinUI3.Shaders;
 using ComputeSharp.D2D1.WinUI;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;

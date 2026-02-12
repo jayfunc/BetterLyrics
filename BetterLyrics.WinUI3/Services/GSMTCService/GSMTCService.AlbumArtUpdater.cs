@@ -41,7 +41,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         {
             _ = _albumArtRefreshRunner.RunAsync(async (token) =>
             {
-                RefreshArtAlbumAsync(ignoreCache, token);
+                await RefreshArtAlbumAsync(ignoreCache, token);
             });
         }
 

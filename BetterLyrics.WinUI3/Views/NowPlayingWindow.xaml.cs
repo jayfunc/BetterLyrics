@@ -401,9 +401,9 @@ namespace BetterLyrics.WinUI3.Views
 
             NowPlayingBar.ShowTime = NowPlayingBar.ShowVolumeButton = NowPlayingBar.ShowMoreButton =
                 NowPlayingBar.IsCompactMode || RootGrid.ActualWidth > 350;
-            
+
             NowPlayingBar.Padding = new Thickness(16);
-            
+
             if (RootGrid.ActualWidth < 400)
             {
                 TopCenterCommandGrid.Visibility = Visibility.Visible;

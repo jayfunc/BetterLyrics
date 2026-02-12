@@ -9,7 +9,6 @@ using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.TranslationService;
 using BetterLyrics.WinUI3.Services.TransliterationService;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using Lyricify.Lyrics.Helpers.General;
 using Lyricify.Lyrics.Parsers;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml.Controls;
@@ -172,14 +171,14 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
             {
                 foreach (var item in main.LyricsLines)
                 {
-                    item.PrimaryText = settings.IsTraditionalChineseEnabled ? ChineseHelper.ToTC(item.PrimaryText) : ChineseHelper.ToSC(item.PrimaryText);
+                    item.PrimaryText = settings.IsTraditionalChineseEnabled ? LanguageHelper.ToTraditionalChinese(item.PrimaryText) : LanguageHelper.ToSimplifiedChinese(item.PrimaryText);
                 }
             }
             if (settings.SelectedTargetLanguageCode == LanguageHelper.ChineseCode)
             {
                 foreach (var item in main.LyricsLines)
                 {
-                    item.SecondaryText = settings.IsTraditionalChineseEnabled ? ChineseHelper.ToTC(item.SecondaryText) : ChineseHelper.ToSC(item.SecondaryText);
+                    item.SecondaryText = settings.IsTraditionalChineseEnabled ? LanguageHelper.ToTraditionalChinese(item.SecondaryText) : LanguageHelper.ToSimplifiedChinese(item.SecondaryText);
                 }
             }
 
