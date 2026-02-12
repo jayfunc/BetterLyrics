@@ -224,7 +224,7 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static string ToTraditionalChinese(string text)
         {
-            return ChineseConverter.Convert(text, ChineseConversionDirection.TraditionalToSimplified);
+            return ChineseConverter.Convert(text, ChineseConversionDirection.SimplifiedToTraditional);
         }
 
         [GeneratedRegex(@"\b(the|and|for|that|this|with|you|are|not|what|all|have|one|can|just|but|was)\b|ing\b|tion\b|ment\b", RegexOptions.IgnoreCase | RegexOptions.Compiled)]
