@@ -90,8 +90,10 @@
                         <dev:SettingsExpander.Items>
                             <dev:SettingsCard x:Uid="SettingsPageTaskbarPlacement">
                                 <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.TaskbarPlacement, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                    <ComboBoxItem x:Uid="SettingsPageAuto" />
                                     <ComboBoxItem x:Uid="SettingsPageLeft" />
                                     <ComboBoxItem x:Uid="SettingsPageRight" />
+                                    <ComboBoxItem x:Uid="SettingsPageCenter" />
                                 </ComboBox>
                             </dev:SettingsCard>
                         </dev:SettingsExpander.Items>

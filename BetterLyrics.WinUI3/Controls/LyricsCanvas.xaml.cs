@@ -620,11 +620,11 @@ namespace BetterLyrics.WinUI3.Controls
         {
             var tasks = new Task[]
             {
-                _fluidRenderer.LoadResourcesAsync(),
                 ReloadCoverBackgroundResourcesAsync()
             };
             args.TrackAsyncAction(Task.WhenAll(tasks).AsAsyncAction());
 
+            _fluidRenderer.LoadResources();
             _snowRenderer.LoadResources();
             _fogRenderer.LoadResources();
 

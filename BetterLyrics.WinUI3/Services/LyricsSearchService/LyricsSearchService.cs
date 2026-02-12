@@ -311,6 +311,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                         lyricsSearchResult = await SearchAppleMusicAsync(songInfo);
                         break;
                     default:
+                        //lyricsSearchResult = await SearchPluginAsync(songInfo, provider, token);
                         break;
                 }
 

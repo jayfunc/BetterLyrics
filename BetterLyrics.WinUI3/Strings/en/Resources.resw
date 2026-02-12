@@ -1269,6 +1269,9 @@
   <data name="SettingsPageLyricsWordByWordEffectModeAuto.Content" xml:space="preserve">
     <value>Auto</value>
   </data>
+  <data name="SettingsPageAuto.Content" xml:space="preserve">
+    <value>Auto</value>
+  </data>
   <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve">
     <value>Never</value>
   </data>
