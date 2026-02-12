@@ -45,12 +45,9 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             }
         }
 
-        public async void UpdateLyrics()
+        public void UpdateLyrics()
         {
-            await _refreshLyricsRunner.RunAsync(async (token) =>
-            {
-                await RefreshLyricsAsync(token);
-            });
+            _ = _refreshLyricsRunner.RunAsync(RefreshLyricsAsync);
         }
 
     }

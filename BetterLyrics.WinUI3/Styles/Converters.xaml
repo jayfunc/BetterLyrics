@@ -5,14 +5,10 @@
     xmlns:bwc="using:BetterLyrics.WinUI3.Converters"
     xmlns:cwc="using:CommunityToolkit.WinUI.Converters">
 
-    <cwc:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
-    <cwc:BoolNegationConverter x:Key="BoolNegationConverter" />
     <cwc:ColorToDisplayNameConverter x:Key="ColorToDisplayNameConverter" />
     <cwc:CollectionVisibilityConverter x:Key="CollectionVisibilityConverter" />
 
-    <bwc:BoolNegationToVisibilityConverter x:Key="BoolNegationToVisibilityConverter" />
     <bwc:AlbumArtSearchProviderToDisplayNameConverter x:Key="AlbumArtSearchProviderToDisplayNameConverter" />
-    <bwc:EnumToIntConverter x:Key="EnumToIntConverter" />
     <bwc:ColorToBrushConverter x:Key="ColorToBrushConverter" />
     <bwc:MatchedLocalFilesPathToVisibilityConverter x:Key="MatchedLocalFilesPathToVisibilityConverter" />
     <bwc:IntToCornerRadius x:Key="IntToCornerRadius" />
@@ -24,9 +20,15 @@
     <bwc:MillisecondsToFormattedTimeConverter x:Key="MillisecondsToFormattedTimeConverter" />
     <bwc:FPSToTimeSpanConverter x:Key="FPSToTimeSpanConverter" />
     <bwc:ShortcutToStringConverter x:Key="ShortcutToStringConverter" />
+
+    <cwc:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     <bwc:BoolToOpacityConverter x:Key="BoolToOpacityConverter" />
     <bwc:BoolToPartialOpacityConverter x:Key="BoolToPartialOpacityConverter" />
+
     <bwc:BoolNegationToOpacityConverter x:Key="BoolNegationToOpacityConverter" />
+    <bwc:BoolNegationToVisibilityConverter x:Key="BoolNegationToVisibilityConverter" />
+    <cwc:BoolNegationConverter x:Key="BoolNegationConverter" />
+
     <bwc:RectToMarginConverter x:Key="RectToMarginConverter" />
     <bwc:LanguageCodeToDisplayedNameConverter x:Key="LanguageCodeToDisplayedNameConverter" />
     <bwc:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter" />
@@ -45,5 +47,9 @@
     <bwc:PathToImageConverter x:Key="PathToImageConverter" />
     <bwc:DoubleToDecimalConverter x:Key="DoubleToDecimalConverter" />
     <bwc:UriStringToDecodedAbsoluteUri x:Key="UriStringToDecodedAbsoluteUri" />
+
+    <bwc:EnumToIntConverter x:Key="EnumToIntConverter" />
+    <bwc:EnumToOpacityConverter x:Key="EnumToOpacityConverter" />
+    <bwc:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
 
 </ResourceDictionary>

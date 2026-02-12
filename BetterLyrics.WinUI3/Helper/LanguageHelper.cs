@@ -1,6 +1,7 @@
 ﻿using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.LocalizationService;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.International.Converters.TraditionalChineseToSimplifiedConverter;
 using NTextCat;
 using System.Collections.Generic;
 using System.Globalization;
@@ -216,6 +217,16 @@ namespace BetterLyrics.WinUI3.Helper
             return Pinyin.Jyutping.Instance.HanziToPinyin(text).ToStr();
         }
 
+        public static string ToSimplifiedChinese(string text)
+        {
+            return ChineseConverter.Convert(text, ChineseConversionDirection.TraditionalToSimplified);
+        }
+
+        public static string ToTraditionalChinese(string text)
+        {
+            return ChineseConverter.Convert(text, ChineseConversionDirection.TraditionalToSimplified);
+        }
+
         [GeneratedRegex(@"\b(the|and|for|that|this|with|you|are|not|what|all|have|one|can|just|but|was)\b|ing\b|tion\b|ment\b", RegexOptions.IgnoreCase | RegexOptions.Compiled)]
         private static partial Regex EnglishBlockerRegex();
 
@@ -224,7 +235,7 @@ namespace BetterLyrics.WinUI3.Helper
 
         [GeneratedRegex(@"[a-z]+[1-6]\b", RegexOptions.IgnoreCase | RegexOptions.Compiled)]
         private static partial Regex NumberedToneRegex();
-        
+
         [GeneratedRegex(@"[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]", RegexOptions.Compiled)]
         private static partial Regex PinyinToneRegex();
     }
