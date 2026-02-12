@@ -19,6 +19,7 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using Vanara.PInvoke;
 using Windows.Foundation;
 using Windows.UI;
@@ -102,7 +103,10 @@ namespace BetterLyrics.WinUI3.Views
 
         private void OnTaskbarFreeBoundsChanged(Events.TaskbarFreeBoundsChangedEventArgs obj)
         {
-            this.MoveAndResize(obj.TaskbarFreeBounds);
+            App.SystemTrayWindow.DispatcherQueue.TryEnqueue(() =>
+            {
+                this.MoveAndResize(obj.TaskbarFreeBounds);
+            });
         }
 
         public void InitStatus()
@@ -393,10 +397,13 @@ namespace BetterLyrics.WinUI3.Views
 
         private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            NowPlayingBar.IsCompactMode = RootGrid.ActualWidth < 180;
+            NowPlayingBar.IsCompactMode = RootGrid.ActualWidth < 180 || RootGrid.ActualHeight <= 72;
+
             NowPlayingBar.ShowTime = NowPlayingBar.ShowVolumeButton = NowPlayingBar.ShowMoreButton =
                 NowPlayingBar.IsCompactMode || RootGrid.ActualWidth > 350;
-            NowPlayingBar.Padding = new Thickness(RootGrid.ActualHeight <= 80 ? 4 : 16);
+            
+            NowPlayingBar.Padding = new Thickness(16);
+            
             if (RootGrid.ActualWidth < 400)
             {
                 TopCenterCommandGrid.Visibility = Visibility.Visible;

@@ -1,0 +1,159 @@
+﻿using ComputeSharp;
+using ComputeSharp.D2D1;
+
+namespace BetterLyrics.WinUI3.Shaders
+{
+    [D2DInputCount(0)]
+    [D2DRequiresScenePosition]
+    [D2DShaderProfile(D2D1ShaderProfile.PixelShader50)]
+    [D2DGeneratedPixelShaderDescriptor]
+    public readonly partial struct FluidBackgroundEffect(
+        float2 resolution, float time,
+        float3 color1, float3 color2, float3 color3, float3 color4,
+        float randomValue1, float randomValue2, float randomValue3,
+        bool useHSVBlending, bool enableLightWave) : ID2D1PixelShader
+    {
+        private float2 Rotate(float2 p, float a)
+        {
+            float c = Hlsl.Cos(a);
+            float s = Hlsl.Sin(a);
+            return new float2(
+                p.X * c - p.Y * s,
+                p.X * s + p.Y * c
+            );
+        }
+
+        private float2 F_Hash(float2 p)
+        {
+            p = new float2(
+                Hlsl.Dot(p, new float2(2127.1f, 81.17f)),
+                Hlsl.Dot(p, new float2(1269.5f, 283.37f))
+            );
+            return Hlsl.Frac(Hlsl.Sin(p) * 43758.5453f);
+        }
+
+        private float F_Noise(float2 p)
+        {
+            float2 i = Hlsl.Floor(p);
+            float2 f = Hlsl.Frac(p);
+            float2 u = f * f * (3.0f - (2.0f * f));
+
+            float n = Hlsl.Lerp(
+                Hlsl.Lerp(
+                    Hlsl.Dot(-1.0f + 2.0f * F_Hash(i + new float2(0.0f, 0.0f)), f - new float2(0.0f, 0.0f)),
+                    Hlsl.Dot(-1.0f + 2.0f * F_Hash(i + new float2(1.0f, 0.0f)), f - new float2(1.0f, 0.0f)),
+                    u.X),
+                Hlsl.Lerp(
+                    Hlsl.Dot(-1.0f + 2.0f * F_Hash(i + new float2(0.0f, 1.0f)), f - new float2(0.0f, 1.0f)),
+                    Hlsl.Dot(-1.0f + 2.0f * F_Hash(i + new float2(1.0f, 1.0f)), f - new float2(1.0f, 1.0f)),
+                    u.X),
+                u.Y);
+            return 0.5f + (0.5f * n);
+        }
+
+        private float Range(float val, float mi, float ma)
+        {
+            return val * (ma - mi) + mi;
+        }
+
+        private float3 Hsv2Rgb(float3 c)
+        {
+            float4 K = new float4(1.0f, 2.0f / 3.0f, 1.0f / 3.0f, 3.0f);
+            float3 p = Hlsl.Abs(Hlsl.Frac(c.XXX + K.XYZ) * 6.0f - K.WWW);
+            return c.Z * Hlsl.Lerp(K.XXX, Hlsl.Saturate(p - K.XXX), c.Y);
+        }
+
+        private float3 Rgb2Hsv(float3 c)
+        {
+            float4 K = new float4(0.0f, -1.0f / 3.0f, 2.0f / 3.0f, -1.0f);
+            float4 p = Hlsl.Lerp(new float4(c.BG, K.WZ), new float4(c.GB, K.XY), Hlsl.Step(c.B, c.G));
+            float4 q = Hlsl.Lerp(new float4(p.XYW, c.R), new float4(c.R, p.YZX), Hlsl.Step(p.X, c.R));
+
+            float d = q.X - Hlsl.Min(q.W, q.Y);
+            float e = 1.0e-10f;
+            return new float3(Hlsl.Abs(q.Z + (q.W - q.Y) / (6.0f * d + e)), d / (q.X + e), q.X);
+        }
+
+        private float3 LightWave(float3 input, bool isHSV, float2 uv)
+        {
+            float3 hsv = isHSV ? input : Rgb2Hsv(input);
+            float2 p = -1.0f + 1.5f * uv.XY;
+            float t = time / 5.0f;
+            float x = p.X;
+            float y = p.Y;
+
+            float mov0 = x + y + Hlsl.Cos(Hlsl.Sin(t) * 2.0f) * 100.0f + Hlsl.Sin(x / 100.0f) * 1000.0f;
+            float mov1 = y / 0.3f + t;
+            float mov2 = x / 0.2f;
+
+            float c1 = Hlsl.Sin(mov1 + t + randomValue1) / 2.0f + mov2 / 2.0f - mov1 - mov2 + t;
+            float c2 = Hlsl.Cos(c1 + Hlsl.Sin(mov0 / 1000.0f + t - randomValue2) + Hlsl.Sin(y / 40.0f + t + randomValue3) + Hlsl.Sin((x + y) / 100.0f) * 3.0f);
+            float c3 = Hlsl.Abs(Hlsl.Sin(c2 + Hlsl.Cos(mov1 + mov2 + c2) + Hlsl.Cos(mov2) + Hlsl.Sin(x / 1000.0f)));
+
+            float3 col = Hsv2Rgb(new float3(
+                Range(Hlsl.Abs(c2), hsv.X * 0.95f, hsv.X),
+                Range(c3, hsv.Y, hsv.Y * 0.85f),
+                Range(c3, hsv.Z, hsv.Z * 0.85f)));
+            return col;
+        }
+
+        public float4 Execute()
+        {
+            float2 uv = D2D.GetScenePosition().XY / resolution;
+
+            float2 tuv = uv;
+            tuv -= 0.5f;
+
+            float degree = F_Noise(new float2(time * 0.1f, tuv.X * tuv.Y));
+
+            tuv = Rotate(tuv, Hlsl.Radians(((degree - 0.5f) * 720.0f) + 180.0f));
+
+            float frequency = 5.0f;
+            float amplitude = 25.0f;
+            float speed = time * 0.75f;
+
+            tuv.X += Hlsl.Sin((tuv.Y * frequency) + speed) / amplitude;
+            tuv.Y += Hlsl.Sin(((tuv.X * frequency) * 1.5f) + speed) / (amplitude * 0.5f);
+
+            float3 c1, c2, c3, c4;
+            if (useHSVBlending)
+            {
+                c1 = Rgb2Hsv(color1);
+                c2 = Rgb2Hsv(color2);
+                c3 = Rgb2Hsv(color3);
+                c4 = Rgb2Hsv(color4);
+            }
+            else
+            {
+                c1 = color1;
+                c2 = color2;
+                c3 = color3;
+                c4 = color4;
+            }
+
+            float rotatedX = Rotate(tuv, Hlsl.Radians(-5.0f)).X;
+
+            float3 layer1 = Hlsl.Lerp(c1, c2, Hlsl.SmoothStep(-0.3f, 0.2f, rotatedX));
+            float3 layer2 = Hlsl.Lerp(c3, c4, Hlsl.SmoothStep(-0.3f, 0.2f, rotatedX));
+
+            float3 finalComp = Hlsl.Lerp(layer1, layer2, Hlsl.SmoothStep(0.5f, -0.3f, tuv.Y));
+
+            if (enableLightWave)
+            {
+                return new float4(LightWave(finalComp, useHSVBlending, uv), 1.0f);
+            }
+            else
+            {
+                if (useHSVBlending)
+                {
+                    return new float4(Hsv2Rgb(finalComp), 1.0f);
+                }
+                else
+                {
+                    return new float4(finalComp, 1.0f);
+                }
+            }
+
+        }
+    }
+}

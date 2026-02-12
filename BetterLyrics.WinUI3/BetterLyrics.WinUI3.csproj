@@ -177,9 +177,6 @@
 		<Content Update="Assets\EmptyState.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
-		<Content Update="Assets\FluidEffect.bin">
-		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
 		<Content Update="Assets\Folder.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>

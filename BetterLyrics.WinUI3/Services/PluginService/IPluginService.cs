@@ -5,7 +5,7 @@ namespace BetterLyrics.WinUI3.Services.PluginService
     public interface IPluginService
     {
         /// <summary>
-        /// 获取已加载的特定类型的插件实例
+        /// 返回已加载的特定类型的首个插件实例
         /// </summary>
         T? GetPlugin<T>() where T : class;
         /// <summary>

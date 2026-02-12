@@ -2,7 +2,9 @@
 {
     public enum TaskbarPlacement
     {
+        Auto,
         Left,
         Right,
+        Center
     }
 }

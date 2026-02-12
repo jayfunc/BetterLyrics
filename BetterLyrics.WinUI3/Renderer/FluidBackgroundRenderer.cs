@@ -1,62 +1,46 @@
 ﻿using BetterLyrics.WinUI3.Extensions;
+using BetterLyrics.WinUI3.Shaders; // 引用刚才生成的 LightWaveEffect
+using ComputeSharp.D2D1.WinUI;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Numerics;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.Storage;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Renderer
 {
     public partial class FluidBackgroundRenderer : BreathingRendererBase, IDisposable
     {
-        private PixelShaderEffect? _fluidEffect;
+        private PixelShaderEffect<FluidBackgroundEffect>? _fluidEffect;
         private float _timeAccumulator = 0f;
-        private Vector3 _c1, _c2, _c3, _c4;
+
+        private float3 _c1, _c2, _c3, _c4;
 
         public bool IsEnabled { get; set; } = false;
         public double Opacity { get; set; } = 1.0;
-
         public bool EnableLightWave { get; set; } = true;
         public bool UseHSVBlending { get; set; } = false;
 
-        public async Task LoadResourcesAsync()
+        private float _rnd1 = 0, _rnd2 = 0, _rnd3 = 0;
+
+        public void LoadResources()
         {
             Dispose();
-
-            try
-            {
-                var uri = new Uri("ms-appx:///Assets/FluidEffect.bin");
-                StorageFile file = await StorageFile.GetFileFromApplicationUriAsync(uri);
-
-                using (var stream = await file.OpenReadAsync())
-                {
-                    var buffer = new Windows.Storage.Streams.Buffer((uint)stream.Size);
-                    await stream.ReadAsync(buffer, (uint)stream.Size, Windows.Storage.Streams.InputStreamOptions.None);
-                    byte[] bytes = buffer.ToArray();
-
-                    _fluidEffect = new PixelShaderEffect(bytes);
-
-                    _fluidEffect.Properties["EnableLightWave"] = EnableLightWave;
-                    _fluidEffect.Properties["UseHSVBlending"] = UseHSVBlending;
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Diagnostics.Debug.WriteLine($"[FluidRenderer] Load Failed: {ex.Message}");
-                _fluidEffect = null;
-            }
+            _fluidEffect = new PixelShaderEffect<FluidBackgroundEffect>();
         }
 
         public void UpdateColors(Color c1, Color c2, Color c3, Color c4)
         {
-            _c1 = c1.ToVector3RGB();
-            _c2 = c2.ToVector3RGB();
-            _c3 = c3.ToVector3RGB();
-            _c4 = c4.ToVector3RGB();
+            Vector3 v1 = c1.ToVector3RGB();
+            Vector3 v2 = c2.ToVector3RGB();
+            Vector3 v3 = c3.ToVector3RGB();
+            Vector3 v4 = c4.ToVector3RGB();
+
+            _c1 = new float3(v1.X, v1.Y, v1.Z);
+            _c2 = new float3(v2.X, v2.Y, v2.Z);
+            _c3 = new float3(v3.X, v3.Y, v3.Z);
+            _c4 = new float3(v4.X, v4.Y, v4.Z);
         }
 
         public void Update(TimeSpan deltaTime, float bassEnergy, int breathingIntensity)
@@ -66,27 +50,23 @@ namespace BetterLyrics.WinUI3.Renderer
             base.UpdateBreathing(bassEnergy, breathingIntensity);
 
             _timeAccumulator += (float)deltaTime.TotalSeconds;
-
-            _fluidEffect?.Properties["iTime"] = _timeAccumulator;
-
-            _fluidEffect?.Properties["color1"] = _c1;
-            _fluidEffect?.Properties["color2"] = _c2;
-            _fluidEffect?.Properties["color3"] = _c3;
-            _fluidEffect?.Properties["color4"] = _c4;
-
-            _fluidEffect?.Properties["EnableLightWave"] = EnableLightWave;
-            _fluidEffect?.Properties["UseHSVBlending"] = UseHSVBlending;
         }
 
         public void Draw(ICanvasAnimatedControl control, CanvasDrawingSession ds, bool isBreathingEffectEnabled)
         {
             if (_fluidEffect == null || !IsEnabled || Opacity <= 0) return;
 
-            float pixelWidth = control.ConvertDipsToPixels((float)control.Size.Width, CanvasDpiRounding.Round);
-            float pixelHeight = control.ConvertDipsToPixels((float)control.Size.Height, CanvasDpiRounding.Round);
+            float width = control.ConvertDipsToPixels((float)control.Size.Width, CanvasDpiRounding.Round);
+            float height = control.ConvertDipsToPixels((float)control.Size.Height, CanvasDpiRounding.Round);
 
-            _fluidEffect.Properties["Width"] = pixelWidth;
-            _fluidEffect.Properties["Height"] = pixelHeight;
+            _fluidEffect.ConstantBuffer = new FluidBackgroundEffect(
+                new float2(width, height),
+                _timeAccumulator,
+                _c1, _c2, _c3, _c4,
+                _rnd1, _rnd2, _rnd3,
+                UseHSVBlending,
+                EnableLightWave
+            );
 
             var center = new Vector2((float)control.Size.Width / 2, (float)control.Size.Height / 2);
 
@@ -98,14 +78,12 @@ namespace BetterLyrics.WinUI3.Renderer
             }
             else
             {
-                using (var opacityEffect = new OpacityEffect
+                using var opacityEffect = new OpacityEffect
                 {
                     Source = _fluidEffect,
                     Opacity = (float)Opacity
-                })
-                {
-                    ds.DrawImage(opacityEffect);
-                }
+                };
+                ds.DrawImage(opacityEffect);
             }
 
             ResetTransform(ds, isBreathingEffectEnabled);
@@ -116,6 +94,5 @@ namespace BetterLyrics.WinUI3.Renderer
             _fluidEffect?.Dispose();
             _fluidEffect = null;
         }
-
     }
 }
