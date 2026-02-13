@@ -171,14 +171,14 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
             {
                 foreach (var item in main.LyricsLines)
                 {
-                    item.PrimaryText = settings.IsTraditionalChineseEnabled ? LanguageHelper.ToTraditionalChinese(item.PrimaryText) : LanguageHelper.ToSimplifiedChinese(item.PrimaryText);
+                    item.PrimaryText = settings.IsTraditionalChineseEnabled ? LanguageHelper.ConvertSCToTC(item.PrimaryText) : LanguageHelper.ConvertTCToSC(item.PrimaryText);
                 }
             }
             if (settings.SelectedTargetLanguageCode == LanguageHelper.ChineseCode)
             {
                 foreach (var item in main.LyricsLines)
                 {
-                    item.SecondaryText = settings.IsTraditionalChineseEnabled ? LanguageHelper.ToTraditionalChinese(item.SecondaryText) : LanguageHelper.ToSimplifiedChinese(item.SecondaryText);
+                    item.SecondaryText = settings.IsTraditionalChineseEnabled ? LanguageHelper.ConvertSCToTC(item.SecondaryText) : LanguageHelper.ConvertTCToSC(item.SecondaryText);
                 }
             }
 
@@ -239,12 +239,12 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
                             {
                                 StartMs = line.StartMs,
                                 EndMs = line.EndMs,
-                                PrimaryText = LanguageHelper.ToPinyin(line.PrimaryText),
+                                PrimaryText = LanguageHelper.ConvertHanziToPinyin(line.PrimaryText),
                                 PrimarySyllables = line.PrimarySyllables.Select(c => new BaseLyrics
                                 {
                                     StartMs = c.StartMs,
                                     EndMs = c.EndMs,
-                                    Text = LanguageHelper.ToPinyin(c.Text),
+                                    Text = LanguageHelper.ConvertHanziToPinyin(c.Text),
                                     StartIndex = c.StartIndex
                                 }).ToList()
                             }).ToList()
@@ -260,12 +260,12 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
                             {
                                 StartMs = line.StartMs,
                                 EndMs = line.EndMs,
-                                PrimaryText = LanguageHelper.ToJyutping(line.PrimaryText),
+                                PrimaryText = LanguageHelper.ConvertHanziToJyutping(line.PrimaryText),
                                 PrimarySyllables = line.PrimarySyllables.Select(c => new BaseLyrics
                                 {
                                     StartMs = c.StartMs,
                                     EndMs = c.EndMs,
-                                    Text = LanguageHelper.ToJyutping(c.Text),
+                                    Text = LanguageHelper.ConvertHanziToJyutping(c.Text),
                                     StartIndex = c.StartIndex
                                 }).ToList()
                             }).ToList()

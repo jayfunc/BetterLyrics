@@ -50,9 +50,16 @@
                                         Grid.Column="0"
                                         VerticalAlignment="Center" />
                                     <TextBox
+                                        x:Name="MappedTitleTextBox"
                                         Grid.Column="1"
                                         Text="{x:Bind ViewModel.MappedSongSearchQuery.MappedTitle, Mode=TwoWay}"
-                                        TextWrapping="Wrap" />
+                                        TextWrapping="Wrap">
+                                        <TextBox.ContextFlyout>
+                                            <MenuFlyout>
+                                                <MenuFlyoutItem x:Uid="LyricsSearchControlConvertToKanji" Click="ConvertMappedTitleToKanjiMenuFlyoutItem_Click" />
+                                            </MenuFlyout>
+                                        </TextBox.ContextFlyout>
+                                    </TextBox>
                                     <Button
                                         Grid.Column="2"
                                         VerticalAlignment="Center"
@@ -85,9 +92,16 @@
                                         Grid.Column="0"
                                         VerticalAlignment="Center" />
                                     <TextBox
+                                        x:Name="MappedArtistTextBox"
                                         Grid.Column="1"
                                         Text="{x:Bind ViewModel.MappedSongSearchQuery.MappedArtist, Mode=TwoWay}"
-                                        TextWrapping="Wrap" />
+                                        TextWrapping="Wrap">
+                                        <TextBox.ContextFlyout>
+                                            <MenuFlyout>
+                                                <MenuFlyoutItem x:Uid="LyricsSearchControlConvertToKanji" Click="ConvertMappedArtistToKanjiMenuFlyoutItem_Click" />
+                                            </MenuFlyout>
+                                        </TextBox.ContextFlyout>
+                                    </TextBox>
                                     <Button
                                         Grid.Column="2"
                                         VerticalAlignment="Center"
@@ -121,9 +135,16 @@
                                         Grid.Column="0"
                                         VerticalAlignment="Center" />
                                     <TextBox
+                                        x:Name="MappedAlbumTextBox"
                                         Grid.Column="1"
                                         Text="{x:Bind ViewModel.MappedSongSearchQuery.MappedAlbum, Mode=TwoWay}"
-                                        TextWrapping="Wrap" />
+                                        TextWrapping="Wrap">
+                                        <TextBox.ContextFlyout>
+                                            <MenuFlyout>
+                                                <MenuFlyoutItem x:Uid="LyricsSearchControlConvertToKanji" Click="ConvertMappedAlbumToKanjiMenuFlyoutItem_Click" />
+                                            </MenuFlyout>
+                                        </TextBox.ContextFlyout>
+                                    </TextBox>
                                     <Button
                                         Grid.Column="2"
                                         VerticalAlignment="Center"

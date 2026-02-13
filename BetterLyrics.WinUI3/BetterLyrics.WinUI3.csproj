@@ -40,6 +40,7 @@
 		<None Remove="Controls\AlbumArtAreaEffectSettingsControl.xaml" />
 		<None Remove="Controls\AppSettingsControl.xaml" />
 		<None Remove="Controls\DemoWindowGrid.xaml" />
+		<None Remove="Controls\DragIndicator.xaml" />
 		<None Remove="Controls\ExtendedSlider.xaml" />
 		<None Remove="Controls\FontPicker.xaml" />
 		<None Remove="Controls\FontPickerDialog.xaml" />
@@ -138,6 +139,7 @@
 		<PackageReference Include="Vanara.PInvoke.User32" Version="5.0.0" />
 		<PackageReference Include="Vanara.Windows.Shell" Version="5.0.0" />
 		<PackageReference Include="VCollab.DiscordRichPresence" Version="1.7.0" />
+		<PackageReference Include="WanaKana-net" Version="1.0.0" />
 		<PackageReference Include="WebDav.Client" Version="2.9.0" />
 		<PackageReference Include="WinUIEx" Version="2.9.0" />
 		<PackageReference Include="z440.atl.core" Version="7.10.0" />
@@ -400,6 +402,11 @@
 	  <Content Update="Assets\Banner.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\DragIndicator.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Views\ToastOverlayWindow.xaml">

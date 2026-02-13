@@ -10,6 +10,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Xaml;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Vanara.PInvoke;
 using WinUIEx.Messaging;
@@ -44,6 +45,19 @@ public sealed partial class SystemTrayWindow : Window,
         InitShortcuts();
 
         EnsureLyricsWindowStatus();
+
+#if DEBUG
+        Debug.WriteLine("=== Romaji to Kanji Conversion Tests ===");
+        string[] inputs = {
+            "",
+        };
+
+        foreach (var input in inputs)
+        {
+            string result = LanguageHelper.ConvertRomajiToKanji(input);
+            Debug.WriteLine($"{input} -> {result}");
+        }
+#endif
     }
 
     private void InitShortcuts()

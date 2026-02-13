@@ -122,7 +122,9 @@
                                                     TextTrimming="CharacterEllipsis" />
                                             </StackPanel>
                                         </Grid>
+                                        <local:DragIndicator Width="32" />
                                         <Grid
+                                            Margin="32,0,0,0"
                                             Padding="12"
                                             Background="Transparent"
                                             Opacity="0">
@@ -198,18 +200,31 @@
             </ScrollViewer.TranslationTransition>
             <Grid Style="{StaticResource SettingsGridStyle}">
                 <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
-                    <Grid>
+                    <Grid ColumnSpacing="6">
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock
+                        <Image
                             Grid.Column="0"
+                            Height="16"
+                            Margin="0,26,0,0"
+                            helper:AppExtensions.Aumid="{x:Bind ViewModel.SelectedMediaSourceProvider.Provider, Mode=OneWay}" />
+                        <TextBlock
+                            Grid.Column="1"
                             helper:AppExtensions.Aumid="{x:Bind ViewModel.SelectedMediaSourceProvider.Provider, Mode=OneWay}"
                             Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-                        <Button
+                        <Image
                             Grid.Column="2"
+                            Height="16"
+                            Margin="0,26,0,0"
+                            Source="{ThemeResource MusicWave}"
+                            Visibility="{x:Bind ViewModel.SelectedMediaSourceProvider.IsNowPlaying, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                        <Button
+                            Grid.Column="4"
                             Margin="0,24,0,0"
                             Command="{x:Bind ViewModel.CloseConfigPanelCommand}"
                             Content="{ui:FontIcon FontSize=16,
@@ -335,12 +350,15 @@
                                 </ListView.OpacityTransition>
                                 <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="settingsmodels:AlbumArtSearchProviderInfo">
-                                        <dev:SettingsCard Header="{Binding Provider, Converter={StaticResource AlbumArtSearchProviderToDisplayNameConverter}, Mode=OneWay}">
-                                            <dev:SettingsCard.HeaderIcon>
-                                                <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#x283F;" />
-                                            </dev:SettingsCard.HeaderIcon>
-                                            <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" />
-                                        </dev:SettingsCard>
+                                        <Grid>
+                                            <dev:SettingsCard Header="{Binding Provider, Converter={StaticResource AlbumArtSearchProviderToDisplayNameConverter}, Mode=OneWay}">
+                                                <dev:SettingsCard.HeaderIcon>
+                                                    <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#x283F;" />
+                                                </dev:SettingsCard.HeaderIcon>
+                                                <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" />
+                                            </dev:SettingsCard>
+                                            <local:DragIndicator />
+                                        </Grid>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
@@ -366,7 +384,7 @@
                             </dev:SettingsCard>
                             <dev:SettingsCard x:Uid="SettingsPageMatchingThreshold">
                                 <local:ExtendedSlider
-                                    Default="0"
+                                    Default="70"
                                     Maximum="100"
                                     Minimum="0"
                                     Unit="%"
@@ -378,18 +396,12 @@
                                 CanDragItems="True"
                                 CanReorderItems="True"
                                 DragItemsCompleted="LyricsSearchProvidersListView_DragItemsCompleted"
+                                ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
                                 ItemsSource="{x:Bind ViewModel.SelectedMediaSourceProvider.LyricsSearchProvidersInfo, Mode=OneWay}"
                                 SelectionMode="None">
                                 <ListView.OpacityTransition>
                                     <ScalarTransition />
                                 </ListView.OpacityTransition>
-                                <ListView.ItemContainerStyle>
-                                    <Style TargetType="ListViewItem">
-                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                                        <Setter Property="Margin" Value="0" />
-                                        <Setter Property="Padding" Value="0" />
-                                    </Style>
-                                </ListView.ItemContainerStyle>
                                 <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="settingsmodels:LyricsSearchProviderInfo">
                                         <Grid>
@@ -407,7 +419,7 @@
                                                     </dev:SettingsCard>
                                                     <dev:SettingsCard x:Uid="SettingsPageMatchingThreshold" IsEnabled="{Binding IsMatchingThresholdOverwritten, Mode=OneWay}">
                                                         <local:ExtendedSlider
-                                                            Default="0"
+                                                            Default="70"
                                                             Maximum="100"
                                                             Minimum="0"
                                                             Unit="%"
@@ -415,27 +427,7 @@
                                                     </dev:SettingsCard>
                                                 </dev:SettingsExpander.Items>
                                             </dev:SettingsExpander>
-                                            <Grid
-                                                Width="48"
-                                                HorizontalAlignment="Left"
-                                                Background="{ThemeResource ControlStrokeColorDefaultBrush}"
-                                                CornerRadius="4,0,0,4"
-                                                Opacity="0">
-                                                <interactivity:Interaction.Behaviors>
-                                                    <interactivity:EventTriggerBehavior EventName="PointerEntered">
-                                                        <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
-                                                    </interactivity:EventTriggerBehavior>
-                                                    <interactivity:EventTriggerBehavior EventName="PointerExited">
-                                                        <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
-                                                    </interactivity:EventTriggerBehavior>
-                                                </interactivity:Interaction.Behaviors>
-                                                <Grid.OpacityTransition>
-                                                    <ScalarTransition />
-                                                </Grid.OpacityTransition>
-                                                <ToolTipService.ToolTip>
-                                                    <ToolTip x:Uid="SettingsPageHoldDragSort" />
-                                                </ToolTipService.ToolTip>
-                                            </Grid>
+                                            <local:DragIndicator />
                                         </Grid>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>

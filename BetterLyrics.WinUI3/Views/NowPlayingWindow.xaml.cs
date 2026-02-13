@@ -336,6 +336,21 @@ namespace BetterLyrics.WinUI3.Views
         private void Window_Closed(object sender, WindowEventArgs args)
         {
             WeakReferenceMessenger.Default.UnregisterAll(this);
+
+            AppWindow.Changed -= AppWindow_Changed;
+            AppWindow.Closing -= AppWindow_Closing;
+
+            _wmm.WindowMessageReceived -= Wmm_WindowMessageReceived;
+            _wmm.Dispose();
+
+            _fgWindowWatcherTimer?.Stop();
+            _fgWindowWatcherTimer = null;
+
+            _fgWindowWatcher?.Stop();
+            _fgWindowWatcher = null;
+
+            _taskbarHook?.Dispose();
+            _taskbarHook = null;
         }
 
         private void AppWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
