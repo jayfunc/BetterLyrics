@@ -15,7 +15,7 @@ namespace BetterLyrics.WinUI3.Renderer
         private PixelShaderEffect<FluidBackgroundEffect>? _fluidEffect;
         private float _timeAccumulator = 0f;
 
-        private float3 _c1, _c2, _c3, _c4;
+        private float3 _c1 = 0, _c2 = 0, _c3 = 0, _c4 = 0;
 
         public bool IsEnabled { get; set; } = false;
         public double Opacity { get; set; } = 1.0;
@@ -27,11 +27,13 @@ namespace BetterLyrics.WinUI3.Renderer
         public void LoadResources()
         {
             Dispose();
-            _fluidEffect = new PixelShaderEffect<FluidBackgroundEffect>();
+            _fluidEffect = new();
         }
 
-        public void UpdateColors(Color c1, Color c2, Color c3, Color c4)
+        public void Update(TimeSpan deltaTime, Color c1, Color c2, Color c3, Color c4, float bassEnergy, int breathingIntensity)
         {
+            if (_fluidEffect == null || !IsEnabled) return;
+
             Vector3 v1 = c1.ToVector3RGB();
             Vector3 v2 = c2.ToVector3RGB();
             Vector3 v3 = c3.ToVector3RGB();
@@ -41,11 +43,6 @@ namespace BetterLyrics.WinUI3.Renderer
             _c2 = new float3(v2.X, v2.Y, v2.Z);
             _c3 = new float3(v3.X, v3.Y, v3.Z);
             _c4 = new float3(v4.X, v4.Y, v4.Z);
-        }
-
-        public void Update(TimeSpan deltaTime, float bassEnergy, int breathingIntensity)
-        {
-            if (_fluidEffect == null || !IsEnabled) return;
 
             base.UpdateBreathing(bassEnergy, breathingIntensity);
 

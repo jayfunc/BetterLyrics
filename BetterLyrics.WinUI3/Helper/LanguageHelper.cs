@@ -3,11 +3,15 @@ using BetterLyrics.WinUI3.Services.LocalizationService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.International.Converters.TraditionalChineseToSimplifiedConverter;
 using NTextCat;
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.RegularExpressions;
+using WanaKanaNet;
 using Windows.Globalization;
+using static BetterLyrics.WinUI3.Hooks.ImeHook;
 
 namespace BetterLyrics.WinUI3.Helper
 {
@@ -148,6 +152,14 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static bool IsCJK(char ch) => IsCJK(ch.ToString());
 
+        public static bool IsRomaji(string text)
+        {
+            return WanaKana.IsRomaji(text);
+        }
+
+        public static bool IsHanzi(char ch) => Pinyin.Pinyin.Instance.IsHanzi(ch.ToString());
+        public static bool IsHanzi(string text) => Pinyin.Pinyin.Instance.IsHanzi(text);
+
         public static string GetDefaultTargetTranslationLanguageCode()
         {
             var currentLang = ApplicationLanguages.Languages.FirstOrDefault();
@@ -166,15 +178,12 @@ namespace BetterLyrics.WinUI3.Helper
 
             if (IsHanzi(c))
             {
-                var pinyin = ToPinyin(c.ToString(), Pinyin.ManTone.Style.NORMAL);
+                var pinyin = ConvertHanziToPinyin(c.ToString(), Pinyin.ManTone.Style.NORMAL);
                 return pinyin.FirstOrDefault().ToString().ToUpperInvariant();
             }
 
             return "#";
         }
-
-        public static bool IsHanzi(char ch) => Pinyin.Pinyin.Instance.IsHanzi(ch.ToString());
-        public static bool IsHanzi(string text) => Pinyin.Pinyin.Instance.IsHanzi(text);
 
         public static string GetLanguageScriptDisplayName(string? tag)
         {
@@ -207,24 +216,76 @@ namespace BetterLyrics.WinUI3.Helper
             };
         }
 
-        public static string ToPinyin(string text, Pinyin.ManTone.Style style = Pinyin.ManTone.Style.TONE)
+        public static string ConvertHanziToPinyin(string text, Pinyin.ManTone.Style style = Pinyin.ManTone.Style.TONE)
         {
             return Pinyin.Pinyin.Instance.HanziToPinyin(text, style).ToStr();
         }
 
-        public static string ToJyutping(string text)
+        public static string ConvertHanziToJyutping(string text)
         {
             return Pinyin.Jyutping.Instance.HanziToPinyin(text).ToStr();
         }
 
-        public static string ToSimplifiedChinese(string text)
+        public static string ConvertTCToSC(string text)
         {
             return ChineseConverter.Convert(text, ChineseConversionDirection.TraditionalToSimplified);
         }
 
-        public static string ToTraditionalChinese(string text)
+        public static string ConvertSCToTC(string text)
         {
             return ChineseConverter.Convert(text, ChineseConversionDirection.SimplifiedToTraditional);
+        }
+
+        public static string ConvertRomajiToKanji(string romaji)
+        {
+            string hiragana = WanaKana.ToKana(romaji, new WanaKanaOptions() { ImeMode = ImeMode.ToHiragana }).Replace(" ", "");
+
+            IFELanguage? ife = null;
+            IntPtr resultPtr = IntPtr.Zero;
+
+            try
+            {
+                Type? imeType = Type.GetTypeFromProgID("MSIME.Japan");
+                if (imeType == null) return romaji; // 没装日文输入法，原样返回
+
+                ife = (IFELanguage?)Activator.CreateInstance(imeType);
+                if (ife?.Open() != 0) return romaji;
+
+                int hr = ife.GetJMorphResult(
+                    (uint)ConversionRequest.Conversion,
+                    (uint)ConversionMode.HiraganaOut,
+                    hiragana.Length,
+                    hiragana,
+                    IntPtr.Zero,
+                    out resultPtr
+                );
+
+                if (hr == 0 && resultPtr != IntPtr.Zero)
+                {
+                    MorphResult result = Marshal.PtrToStructure<MorphResult>(resultPtr);
+
+                    string? bestString = null;
+
+                    if (result.PtrToOutputString != IntPtr.Zero)
+                    {
+                        bestString = Marshal.PtrToStringUni(result.PtrToOutputString, result.OutputLength);
+                    }
+
+                    Marshal.FreeCoTaskMem(resultPtr);
+
+                    return string.IsNullOrEmpty(bestString) ? romaji : bestString;
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("IME Error: " + ex.Message);
+            }
+            finally
+            {
+                ife?.Close();
+            }
+
+            return romaji;
         }
 
         [GeneratedRegex(@"\b(the|and|for|that|this|with|you|are|not|what|all|have|one|can|just|but|was)\b|ing\b|tion\b|ment\b", RegexOptions.IgnoreCase | RegexOptions.Compiled)]

@@ -589,13 +589,14 @@ namespace BetterLyrics.WinUI3.Controls
             _fluidRenderer.IsEnabled = lyricsBg.IsFluidOverlayEnabled;
             _fluidRenderer.EnableLightWave = lyricsBg.IsFluidOverlayLightWaveEnabled;
             _fluidRenderer.Opacity = lyricsBg.FluidOverlayOpacity / 100.0;
-            _fluidRenderer.UpdateColors(
+            _fluidRenderer.Update(
+                elapsedTime,
                 _accentColor1Transition.Value,
                 _accentColor2Transition.Value,
                 _accentColor3Transition.Value,
-                _accentColor4Transition.Value
-            );
-            _fluidRenderer.Update(elapsedTime, _spectrumAnalyzer.CurrentBassEnergy, lyricsBg.FluidOverlayBreathingIntensity);
+                _accentColor4Transition.Value,
+                _spectrumAnalyzer.CurrentBassEnergy,
+                lyricsBg.FluidOverlayBreathingIntensity);
 
             _coverRenderer.IsEnabled = lyricsBg.IsCoverOverlayEnabled;
             _coverRenderer.Opacity = lyricsBg.CoverOverlayOpacity;
@@ -640,6 +641,10 @@ namespace BetterLyrics.WinUI3.Controls
         {
             WeakReferenceMessenger.Default.UnregisterAll(this);
 
+            Canvas.Paused = true;
+            Canvas.RemoveFromVisualTree();
+            Canvas = null;
+
             _fluidRenderer.Dispose();
             _coverRenderer.Dispose();
             _snowRenderer.Dispose();
@@ -649,9 +654,6 @@ namespace BetterLyrics.WinUI3.Controls
             _renderLyricsLines = null;
 
             DisposeSpectrumAnalyzer();
-
-            Canvas.RemoveFromVisualTree();
-            Canvas = null;
         }
 
         // ====
