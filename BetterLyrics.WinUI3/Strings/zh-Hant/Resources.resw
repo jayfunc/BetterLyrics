@@ -133,7 +133,7 @@
     <value>本機音樂檔案</value>
   </data>
   <data name="AlbumArtSearchProvidersTargetSize.Description" xml:space="preserve">
-    <value>僅適用於線上來源。這是目標解析度，可能無法達到。</value>
+    <value>僅適用於線上來源。此為目標解析度，可能無法達成</value>
   </data>
   <data name="AlbumArtSearchProvidersTargetSize.Header" xml:space="preserve">
     <value>目標尺寸</value>
@@ -316,19 +316,19 @@
     <value>儲存位置</value>
   </data>
   <data name="LyricsSaveConfigIncludeTranslation.Header" xml:space="preserve">
-    <value>包括翻譯</value>
+    <value>包含翻譯</value>
   </data>
   <data name="LyricsSaveConfigIncludeTransliteration.Header" xml:space="preserve">
-    <value>包含翻譯</value>
+    <value>包含音譯</value>
   </data>
   <data name="LyricsSaveConfigInOneLine.Description" xml:space="preserve">
     <value>以斜線分隔</value>
   </data>
   <data name="LyricsSaveConfigInOneLine.Header" xml:space="preserve">
-    <value>結合原文、翻譯和轉譯</value>
+    <value>結合原文、翻譯和音譯</value>
   </data>
   <data name="LyricsSaveConfigInSyllablesFormat.Header" xml:space="preserve">
-    <value>儲存為 Word 聲明歌詞</value>
+    <value>儲存為逐字同步歌詞</value>
   </data>
   <data name="LyricsSearchControlAlbum.Header" xml:space="preserve">
     <value>專輯</value>
@@ -376,7 +376,7 @@
     <value>標題</value>
   </data>
   <data name="LyricsSearchControlWordByWord.Text" xml:space="preserve">
-    <value>逐字說明</value>
+    <value>逐字</value>
   </data>
   <data name="LyricsSearchPageTitle" xml:space="preserve">
     <value>歌詞搜尋 - BetterLyrics</value>
@@ -574,7 +574,7 @@
     <value>音樂庫 - BetterLyrics</value>
   </data>
   <data name="MusicSettingsControlAutoSyncInterval.Description" xml:space="preserve">
-    <value>以設定的間隔自動檢查檔案變更。適用於本機和遠端來源</value>
+    <value>以設定的間隔時間自動檢查檔案變更。適用於本機和遠端來源</value>
   </data>
   <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
     <value>自動同步頻率</value>
@@ -610,10 +610,10 @@
     <value>漢語拼音</value>
   </data>
   <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
-    <value>載入外部設定，直接從目標程序記憶體讀取播放進度。請謹慎使用；開發者不對第三方配置的安全性負責。</value>
+    <value>載入外部配置以直接從目標軟體記憶體讀取播放進度。請謹慎使用，開發者不對第三方配置的安全性負責。</value>
   </data>
   <data name="PlaybackSettingsControlMemoryReader.Header" xml:space="preserve">
-    <value>記憶體讀卡機介面卡</value>
+    <value>記憶體讀取適配器</value>
   </data>
   <data name="PlaylistViewFailed" xml:space="preserve">
     <value>無法檢視曲目，因為路徑不存在</value>
@@ -622,7 +622,7 @@
     <value>啟用外掛程式</value>
   </data>
   <data name="PluginManagerControlInfoBar.Message" xml:space="preserve">
-    <value>安裝、卸載或更新任何外掛程式後，系統會自動重新啟動。</value>
+    <value>安裝、解除安裝或更新外掛程式後，程式將自動重新啟動</value>
   </data>
   <data name="PluginManagerControlInstall.Content" xml:space="preserve">
     <value>安裝外掛程式</value>
@@ -637,16 +637,16 @@
     <value>立即重新啟動</value>
   </data>
   <data name="PluginManagerControlRestartRequired" xml:space="preserve">
-    <value>應用程式現在會重新啟動以套用變更</value>
+    <value>請重新啟動程式以套用變更</value>
   </data>
   <data name="PluginManagerControlTitle.Text" xml:space="preserve">
-    <value>外掛程式管理員</value>
+    <value>外掛程式管理</value>
   </data>
   <data name="PluginManagerControlUninstall.Content" xml:space="preserve">
     <value>解除安裝外掛程式</value>
   </data>
   <data name="PluginManagerControlUninstallSuccessful" xml:space="preserve">
-    <value>卸載成功</value>
+    <value>解除安裝成功</value>
   </data>
   <data name="PluginManagerControlVisitPluginStore.Content" xml:space="preserve">
     <value>造訪外掛程式商店</value>
@@ -715,10 +715,10 @@
     <value>[實驗性] 縱深效果</value>
   </data>
   <data name="SettingsPage3DLyricsAutoFitLayout.Description" xml:space="preserve">
-    <value>這適用於歌詞在調整 Z 軸後無法填滿整個螢幕的情況。</value>
+    <value>適用於調整 Z 軸後歌詞無法佔滿螢幕的情況</value>
   </data>
   <data name="SettingsPage3DLyricsAutoFitLayout.Header" xml:space="preserve">
-    <value>自動調整以適合佈局</value>
+    <value>自動調整以符合版面配置</value>
   </data>
   <data name="SettingsPage3DLyricsDepth.Header" xml:space="preserve">
     <value>深度</value>
@@ -910,13 +910,13 @@
     <value>緩衝模式</value>
   </data>
   <data name="SettingsPageEasingModeIn.Content" xml:space="preserve">
-    <value>在</value>
+    <value>漸入</value>
   </data>
   <data name="SettingsPageEasingModeInOut.Content" xml:space="preserve">
-    <value>進出</value>
+    <value>漸入漸出</value>
   </data>
   <data name="SettingsPageEasingModeOut.Content" xml:space="preserve">
-    <value>外出</value>
+    <value>漸出</value>
   </data>
   <data name="SettingsPageEasingTypeEaseBack.Content" xml:space="preserve">
     <value>返回</value>
@@ -1051,13 +1051,13 @@
     <value>粵語拼音</value>
   </data>
   <data name="SettingsPageKeepNowPlayingBarInteractive.Header" xml:space="preserve">
-    <value>鎖定時保持媒體控制列的互動性</value>
+    <value>鎖定時保持媒體控制列的可互動狀態</value>
   </data>
   <data name="SettingsPageKeepNowPlayingBarLyricsPreview.Header" xml:space="preserve">
     <value>進度列歌詞預覽</value>
   </data>
   <data name="SettingsPageKeepScreenOpen.Header" xml:space="preserve">
-    <value>讓螢幕保持清醒</value>
+    <value>保持螢幕喚醒狀態</value>
   </data>
   <data name="SettingsPageLanguage.Header" xml:space="preserve">
     <value>語言</value>
@@ -1270,7 +1270,7 @@
     <value>逐字動畫策略</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve">
-    <value>永遠</value>
+    <value>一律</value>
   </data>
   <data name="SettingsPageLyricsWordByWordEffectModeAuto.Content" xml:space="preserve">
     <value>自動</value>
