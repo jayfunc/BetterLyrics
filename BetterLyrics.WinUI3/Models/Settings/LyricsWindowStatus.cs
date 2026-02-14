@@ -52,7 +52,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial FPS FPS { get; set; } = FPS.Hz60;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowDebugOverlay { get; set; } = false;
 
-        [JsonIgnore][ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsOpened { get; set; } = false;
+        [JsonIgnore][ObservableProperty][NotifyPropertyChangedRecipients] public partial WindowStatus WindowStatus { get; set; } = WindowStatus.Closed;
         [JsonIgnore] public DispatcherQueueTimer? VisibilityTimer { get; set; }
 
         public LyricsWindowStatus()

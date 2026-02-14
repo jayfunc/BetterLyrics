@@ -25,7 +25,8 @@ namespace BetterLyrics.WinUI3.Views;
 /// </summary>
 public sealed partial class SystemTrayWindow : Window,
     IRecipient<PropertyChangedMessage<List<string>>>,
-    IRecipient<PropertyChangedMessage<bool>>
+    IRecipient<PropertyChangedMessage<bool>>,
+    IRecipient<PropertyChangedMessage<WindowStatus>>
 {
     private ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
     private readonly IGSMTCService _gsmtcService = Ioc.Default.GetRequiredService<IGSMTCService>();
@@ -167,7 +168,9 @@ public sealed partial class SystemTrayWindow : Window,
     private void UpdateScreenKeeperStatus()
     {
         // 检测已打开的窗口中是否存在配置为不休眠的窗口
-        var isKeepScreenOpen = _settingsService.AppSettings.WindowBoundsRecords.Where(x => x.IsOpened).Any(x => x.IsKeepScreenOpen);
+        var isKeepScreenOpen = _settingsService.AppSettings.WindowBoundsRecords
+            .Where(x => x.WindowStatus == WindowStatus.Opened)
+            .Any(x => x.IsKeepScreenOpen);
         ScreenKeeper.SetState(isKeepScreenOpen);
     }
 
@@ -206,11 +209,17 @@ public sealed partial class SystemTrayWindow : Window,
             {
                 UpdateScreenKeeperStatus();
             }
-            else if (message.PropertyName == nameof(LyricsWindowStatus.IsOpened))
+        }
+    }
+
+    public void Receive(PropertyChangedMessage<WindowStatus> message)
+    {
+        if (message.Sender is LyricsWindowStatus)
+        {
+            if (message.PropertyName == nameof(LyricsWindowStatus.WindowStatus))
             {
                 UpdateScreenKeeperStatus();
             }
         }
     }
-
 }

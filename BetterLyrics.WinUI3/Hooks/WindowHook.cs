@@ -21,13 +21,22 @@ namespace BetterLyrics.WinUI3.Hooks
     public static class WindowHook
     {
         private static List<object> _activeWindows = [];
-        private static List<object> _appBars = [];
+        private static List<object> _activeAppBars = [];
 
         private static WindowStyle? _defaultWindowStyle;
         private static ExtendedWindowStyle? _defaultExtendedWindowStyle;
 
-        public static void HideWindow(this Window window)
+        public static void HideWindow(this Window window, bool hiddenByUser = true)
         {
+            if (window is NowPlayingWindow nowPlayingWindow)
+            {
+                if (nowPlayingWindow.LyricsWindowStatus.IsWorkArea && GetWindowHandle(window) is IntPtr hwnd)
+                {
+                    _activeAppBars.Remove(window);
+                    UnregisterAppBar(hwnd);
+                }
+                nowPlayingWindow.LyricsWindowStatus.WindowStatus = hiddenByUser ? WindowStatus.HiddenByUser : WindowStatus.HiddenBySystem;
+            }
             window.Hide();
         }
 
@@ -35,12 +44,12 @@ namespace BetterLyrics.WinUI3.Hooks
         {
             if (window is NowPlayingWindow nowPlayingWindow)
             {
-                if (GetWindowHandle(window) is IntPtr hwnd)
+                if (nowPlayingWindow.LyricsWindowStatus.IsWorkArea && GetWindowHandle(window) is IntPtr hwnd)
                 {
-                    _appBars.Remove(window);
+                    _activeAppBars.Remove(window);
                     UnregisterAppBar(hwnd);
                 }
-                nowPlayingWindow.LyricsWindowStatus.IsOpened = false;
+                nowPlayingWindow.LyricsWindowStatus.WindowStatus = WindowStatus.Closed;
             }
             _activeWindows.Remove(window);
             window.Close();
@@ -175,7 +184,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
             if (typeof(T) == typeof(NowPlayingWindow))
             {
-                ((NowPlayingWindow)window).LyricsWindowStatus.IsOpened = true;
+                ((NowPlayingWindow)window).LyricsWindowStatus.WindowStatus = WindowStatus.Opened;
             }
 
             return (T)window;
@@ -209,7 +218,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
         private static void EnsureAllWorkAreasReleased()
         {
-            foreach (var item in _appBars)
+            foreach (var item in _activeAppBars)
             {
                 if (GetWindowHandle(item) is IntPtr hwnd)
                 {
@@ -356,7 +365,7 @@ namespace BetterLyrics.WinUI3.Hooks
         /// <param name="status"></param>
         private static void RegisterAppBar(IntPtr hwnd, LyricsWindowStatus status)
         {
-            if (_appBars.Contains(hwnd)) return;
+            if (_activeAppBars.Contains(hwnd)) return;
 
             var uEdge = status.DockPlacement == DockPlacement.Top ? Shell32.ABE.ABE_TOP : Shell32.ABE.ABE_BOTTOM;
 
@@ -381,7 +390,7 @@ namespace BetterLyrics.WinUI3.Hooks
             Shell32.SHAppBarMessage(Shell32.ABM.ABM_QUERYPOS, ref abd);
             Shell32.SHAppBarMessage(Shell32.ABM.ABM_SETPOS, ref abd);
 
-            _appBars.Add(hwnd);
+            _activeAppBars.Add(hwnd);
         }
         /// <summary>
         /// 取消注册应用栏
@@ -389,7 +398,7 @@ namespace BetterLyrics.WinUI3.Hooks
         /// <param name="hwnd"></param>
         private static void UnregisterAppBar(IntPtr hwnd)
         {
-            if (!_appBars.Contains(hwnd))
+            if (!_activeAppBars.Contains(hwnd))
                 return;
 
             Shell32.APPBARDATA abd = new()
@@ -400,7 +409,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
             Shell32.SHAppBarMessage(Shell32.ABM.ABM_REMOVE, ref abd);
 
-            _appBars.Remove(hwnd);
+            _activeAppBars.Remove(hwnd);
         }
         /// <summary>
         /// 更新应用栏
@@ -410,7 +419,7 @@ namespace BetterLyrics.WinUI3.Hooks
         {
             var hwnd = WindowNative.GetWindowHandle(window);
 
-            if (!_appBars.Contains(hwnd))
+            if (!_activeAppBars.Contains(hwnd))
                 return;
 
             var status = window.LyricsWindowStatus;
@@ -453,24 +462,23 @@ namespace BetterLyrics.WinUI3.Hooks
 
             status.VisibilityTimer.Debounce(() =>
             {
-                if (status.AutoShowOrHideWindow && !isPlaying)
+                if (status.AutoShowOrHideWindow && status.WindowStatus is WindowStatus.Opened or WindowStatus.HiddenBySystem)
                 {
-                    if (status.IsWorkArea)
+                    if (isPlaying)
                     {
-                        window.SetIsWorkArea(false);
+                        OpenOrShowWindow<NowPlayingWindow>(status);
+                        if (status.IsWorkArea)
+                        {
+                            window.SetIsWorkArea(true);
+                        }
+                        if (status.IsWorkArea)
+                        {
+                            window.MoveAndResize(status.GetWindowBoundsWhenWorkArea());
+                        }
                     }
-                    window.HideWindow();
-                }
-                else if (status.AutoShowOrHideWindow && isPlaying)
-                {
-                    if (status.IsWorkArea)
+                    else
                     {
-                        window.SetIsWorkArea(true);
-                    }
-                    OpenOrShowWindow<NowPlayingWindow>(status);
-                    if (status.IsWorkArea)
-                    {
-                        window.MoveAndResize(status.GetWindowBoundsWhenWorkArea());
+                        window.HideWindow(false);
                     }
                 }
             }, Constants.Time.DebounceTimeout);

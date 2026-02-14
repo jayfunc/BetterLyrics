@@ -18,6 +18,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Vanara.PInvoke;
@@ -295,7 +296,7 @@ namespace BetterLyrics.WinUI3.Views
 
         // ====
 
-        private void ExitOrClose()
+        private void ExitOrHide()
         {
             _fgWindowWatcherTimer = null;
             _fgWindowWatcher?.Stop();
@@ -306,7 +307,7 @@ namespace BetterLyrics.WinUI3.Views
             }
             else
             {
-                this.CloseWindow();
+                this.HideWindow();
             }
         }
 
@@ -330,12 +331,14 @@ namespace BetterLyrics.WinUI3.Views
 
         private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
         {
-            ExitOrClose();
+            ExitOrHide();
         }
 
         private void Window_Closed(object sender, WindowEventArgs args)
         {
             WeakReferenceMessenger.Default.UnregisterAll(this);
+
+            StopOverlayInputHelper();
 
             AppWindow.Changed -= AppWindow_Changed;
             AppWindow.Closing -= AppWindow_Closing;
@@ -351,6 +354,8 @@ namespace BetterLyrics.WinUI3.Views
 
             _taskbarHook?.Dispose();
             _taskbarHook = null;
+
+            ViewModel.IsActive = false;
         }
 
         private void AppWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
@@ -392,7 +397,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            ExitOrClose();
+            ExitOrHide();
         }
 
         private void LyricsWindowSwitchButton_Click(object sender, RoutedEventArgs e)

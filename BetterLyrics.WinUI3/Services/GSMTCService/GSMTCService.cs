@@ -44,7 +44,8 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         IRecipient<PropertyChangedMessage<string>>,
         IRecipient<PropertyChangedMessage<ChineseRomanization>>,
         IRecipient<PropertyChangedMessage<DateTime?>>,
-        IRecipient<PropertyChangedMessage<int>>
+        IRecipient<PropertyChangedMessage<int>>,
+        IRecipient<PropertyChangedMessage<WindowStatus>>
     {
         private EventSourceReader? _lxMusicSse = null;
         private UniversalMemoryReader? _memoryReader = null;
@@ -208,7 +209,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         private bool IsMediaSourceEnabled(string id)
         {
             var found = _settingsService.AppSettings.MediaSourceProvidersInfo.FirstOrDefault(s => s.Provider == id);
-            if (_settingsService.AppSettings.MusicGallerySettings.LyricsWindowStatus.IsOpened)
+            if (_settingsService.AppSettings.MusicGallerySettings.LyricsWindowStatus.WindowStatus == WindowStatus.Opened)
             {
                 if (PlayerIdHelper.IsBetterLyrics(found?.Provider))
                 {
@@ -737,13 +738,6 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                     UpdateLyrics();
                 }
             }
-            else if (message.Sender is LyricsWindowStatus)
-            {
-                if (message.PropertyName == nameof(MusicGallerySettings.LyricsWindowStatus.IsOpened))
-                {
-                    OnDesiredSessionChanged();
-                }
-            }
             else if (message.Sender is MediaFolder)
             {
                 if (message.PropertyName == nameof(MediaFolder.IsEnabled))
@@ -800,6 +794,17 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                 if (message.PropertyName == nameof(MediaSourceProviderInfo.TargetAlbumArtSize))
                 {
                     UpdateAlbumArt(true);
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<WindowStatus> message)
+        {
+            if (message.Sender is LyricsWindowStatus)
+            {
+                if (message.PropertyName == nameof(MusicGallerySettings.LyricsWindowStatus.WindowStatus))
+                {
+                    OnDesiredSessionChanged();
                 }
             }
         }

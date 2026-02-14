@@ -4,7 +4,7 @@ using System;
 
 namespace BetterLyrics.WinUI3.Converters
 {
-    public class EnumToVisibilityConverter : IValueConverter
+    public partial class EnumToVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {

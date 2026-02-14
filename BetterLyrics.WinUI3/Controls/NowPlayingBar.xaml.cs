@@ -2,6 +2,7 @@ using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.Settings;
+using BetterLyrics.WinUI3.Services.GSMTCService;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -18,7 +19,8 @@ namespace BetterLyrics.WinUI3.Controls;
 
 public sealed partial class NowPlayingBar : UserControl
 {
-    public NowPlayingBarViewModel ViewModel => (NowPlayingBarViewModel)DataContext;
+    public NowPlayingBarViewModel ViewModel { get; set; }
+    public IGSMTCService GSMTCService { get; set; }
 
     public event EventHandler? SongInfoTapped;
     public event EventHandler? TimeTapped;
@@ -128,7 +130,8 @@ public sealed partial class NowPlayingBar : UserControl
     public NowPlayingBar()
     {
         InitializeComponent();
-        DataContext = Ioc.Default.GetRequiredService<NowPlayingBarViewModel>();
+        ViewModel = Ioc.Default.GetRequiredService<NowPlayingBarViewModel>();
+        GSMTCService = Ioc.Default.GetRequiredService<IGSMTCService>();
     }
 
     private static void OnDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -224,7 +227,7 @@ public sealed partial class NowPlayingBar : UserControl
         var grid = (Grid)sender;
         var pos = e.GetCurrentPoint(grid).Position;
         var ratio = pos.X / grid.ActualWidth;
-        ViewModel.GSMTCService.ChangePositionAsync(TimelineSlider.Maximum * ratio);
+        _ = GSMTCService.ChangePositionAsync(TimelineSlider.Maximum * ratio);
     }
 
     private void TimelineSliderOverlay_PointerMoved(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
@@ -260,7 +263,7 @@ public sealed partial class NowPlayingBar : UserControl
 
     private void ExtendedSlider_ValueChangedByUser(object sender, Events.ExtendedSliderValueChangedByUserEventArgs e)
     {
-        AudioMixerHook.SetApplicationVolume(ViewModel.GSMTCService.CurrentMediaSourceProviderInfo?.Provider, ViewModel.Volume);
+        AudioMixerHook.SetApplicationVolume(GSMTCService.CurrentMediaSourceProviderInfo?.Provider, ViewModel.Volume);
     }
 
     private void LyricsSearchShortcutButton_Click(object sender, RoutedEventArgs e)
@@ -333,4 +336,8 @@ public sealed partial class NowPlayingBar : UserControl
         PlaybackOrder = PlaybackOrder.GetNext();
     }
 
+    private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+    {
+        ViewModel.IsActive = false;
+    }
 }

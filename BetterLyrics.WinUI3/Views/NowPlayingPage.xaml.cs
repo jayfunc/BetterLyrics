@@ -22,6 +22,7 @@ using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -41,8 +42,8 @@ namespace BetterLyrics.WinUI3.Views
         private readonly IGSMTCService _gsmtcService = Ioc.Default.GetRequiredService<IGSMTCService>();
         private readonly ISongSearchMapService _songSearchMapService = Ioc.Default.GetRequiredService<ISongSearchMapService>();
 
-        private readonly DispatcherQueueTimer _layoutChangedTimer = App.Current.Resources.DispatcherQueue.CreateTimer();
-        private readonly DispatcherQueueTimer _scrollChangedTimer = App.Current.Resources.DispatcherQueue.CreateTimer();
+        private DispatcherQueueTimer? _layoutChangedTimer = App.Current.Resources.DispatcherQueue.CreateTimer();
+        private DispatcherQueueTimer? _scrollChangedTimer = App.Current.Resources.DispatcherQueue.CreateTimer();
 
         public NowPlayingPageViewModel ViewModel => (NowPlayingPageViewModel)DataContext;
 
@@ -466,7 +467,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void OnLayoutChanged()
         {
-            _layoutChangedTimer.Debounce(() =>
+            _layoutChangedTimer?.Debounce(() =>
             {
                 UpdateGap();
 
@@ -573,7 +574,7 @@ namespace BetterLyrics.WinUI3.Views
             }
             LyricsCanvas.MouseScrollOffset = value;
 
-            _scrollChangedTimer.Debounce(() =>
+            _scrollChangedTimer?.Debounce(() =>
             {
                 LyricsCanvas.MouseScrollOffset = 0;
                 LyricsCanvas.IsMouseScrolling = false;
@@ -641,6 +642,15 @@ namespace BetterLyrics.WinUI3.Views
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             WeakReferenceMessenger.Default.UnregisterAll(this);
+
+            _layoutChangedTimer?.Stop();
+            _layoutChangedTimer = null;
+
+            _scrollChangedTimer?.Stop();
+            _scrollChangedTimer = null;
+
+            ViewModel.IsActive = false;
+            DataContext = null;
         }
 
         // ====

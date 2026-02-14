@@ -12,8 +12,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 {
     public partial class NowPlayingBarViewModel : BaseViewModel
     {
-        public IGSMTCService GSMTCService { get; private set; }
-
+        private readonly IGSMTCService _gsmtcService;
         private readonly ISMTCService _smtcService;
 
         [ObservableProperty]
@@ -36,7 +35,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public NowPlayingBarViewModel(IGSMTCService mediaSessionsService, ISMTCService smtcService)
         {
-            GSMTCService = mediaSessionsService;
+            _gsmtcService = mediaSessionsService;
             _smtcService = smtcService;
 
             UpdateVolume();
@@ -44,37 +43,37 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public void UpdateVolume()
         {
-            Volume = AudioMixerHook.GetApplicationVolume(GSMTCService.CurrentMediaSourceProviderInfo?.Provider);
+            Volume = AudioMixerHook.GetApplicationVolume(_gsmtcService.CurrentMediaSourceProviderInfo?.Provider);
         }
 
         partial void OnTimelineSliderThumbSecondsChanged(double value)
         {
-            TimelineSliderThumbLyricsLine = GSMTCService.CurrentLyricsData?.GetLyricsLine(value);
+            TimelineSliderThumbLyricsLine = _gsmtcService.CurrentLyricsData?.GetLyricsLine(value);
         }
 
 
         [RelayCommand]
         private async Task PlaySongAsync()
         {
-            await GSMTCService.PlayAsync();
+            await _gsmtcService.PlayAsync();
         }
 
         [RelayCommand]
         private async Task PauseSongAsync()
         {
-            await GSMTCService.PauseAsync();
+            await _gsmtcService.PauseAsync();
         }
 
         [RelayCommand]
         private async Task PreviousSongAsync()
         {
-            await GSMTCService.PreviousAsync();
+            await _gsmtcService.PreviousAsync();
         }
 
         [RelayCommand]
         private async Task NextSongAsync()
         {
-            await GSMTCService.NextAsync();
+            await _gsmtcService.NextAsync();
         }
 
         [RelayCommand]

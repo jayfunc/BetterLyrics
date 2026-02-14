@@ -62,7 +62,7 @@ namespace BetterLyrics.WinUI3.Views
             }
             else
             {
-                this.CloseWindow();
+                this.HideWindow();
             }
         }
 
@@ -120,12 +120,12 @@ namespace BetterLyrics.WinUI3.Views
 
         private void RootGrid_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.IsOpened = true;
+            ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.WindowStatus = WindowStatus.Opened;
         }
 
         private void RootGrid_Unloaded(object sender, RoutedEventArgs e)
         {
-            ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.IsOpened = false;
+            ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.WindowStatus = WindowStatus.Closed;
         }
 
         private void NowPlayingBar_PlayingQueueClick(object sender, System.EventArgs e)

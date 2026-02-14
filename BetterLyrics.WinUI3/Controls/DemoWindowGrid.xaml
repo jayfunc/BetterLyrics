@@ -127,7 +127,7 @@
                 Click="CloseButton_Click"
                 Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
                                       Glyph=&#xE711;}"
-                IsEnabled="{x:Bind LyricsWindowStatus.IsOpened, Mode=OneWay}">
+                IsEnabled="{x:Bind LyricsWindowStatus.WindowStatus, Mode=OneWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=0}">
                 <ToolTipService.ToolTip>
                     <TextBlock x:Uid="SettingsPageCloseStatus" />
                 </ToolTipService.ToolTip>

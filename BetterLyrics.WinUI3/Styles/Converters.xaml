@@ -51,5 +51,6 @@
     <bwc:EnumToIntConverter x:Key="EnumToIntConverter" />
     <bwc:EnumToOpacityConverter x:Key="EnumToOpacityConverter" />
     <bwc:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
+    <bwc:EnumToBoolConverter x:Key="EnumToBoolConverter" />
 
 </ResourceDictionary>

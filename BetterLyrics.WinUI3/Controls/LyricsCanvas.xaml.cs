@@ -20,6 +20,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
@@ -641,7 +642,12 @@ namespace BetterLyrics.WinUI3.Controls
         {
             WeakReferenceMessenger.Default.UnregisterAll(this);
 
+            Canvas.Draw -= Canvas_Draw;
+            Canvas.Update -= Canvas_Update;
+            Canvas.CreateResources -= Canvas_CreateResources;
+
             Canvas.Paused = true;
+            
             Canvas.RemoveFromVisualTree();
             Canvas = null;
 
@@ -724,6 +730,8 @@ namespace BetterLyrics.WinUI3.Controls
             if (_gsmtcService.AlbumArtBitmapStream is IRandomAccessStream stream)
             {
                 stream.Seek(0);
+                if (Canvas == null || Canvas.Device == null) return;
+
                 CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(Canvas, stream);
                 _coverRenderer.SetCoverBitmap(bitmap);
             }

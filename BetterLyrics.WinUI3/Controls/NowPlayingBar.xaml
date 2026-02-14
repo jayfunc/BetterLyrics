@@ -9,6 +9,7 @@
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
+    Unloaded="UserControl_Unloaded"
     mc:Ignorable="d">
 
     <Grid x:Name="RootGrid">
@@ -61,14 +62,14 @@
                                 <local:ImageSwitcher
                                     Width="36"
                                     Height="36"
-                                    Source="{x:Bind ViewModel.GSMTCService.AlbumArtBitmapImage, Mode=OneWay}" />
+                                    Source="{x:Bind GSMTCService.AlbumArtBitmapImage, Mode=OneWay}" />
                             </Grid>
                             <StackPanel VerticalAlignment="Center">
-                                <TextBlock Text="{x:Bind ViewModel.GSMTCService.CurrentSongInfo.Title, Mode=OneWay}" />
+                                <TextBlock Text="{x:Bind GSMTCService.CurrentSongInfo.Title, Mode=OneWay}" />
                                 <TextBlock
                                     FontSize="12"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Text="{x:Bind ViewModel.GSMTCService.CurrentSongInfo.Artist, Mode=OneWay}" />
+                                    Text="{x:Bind GSMTCService.CurrentSongInfo.Artist, Mode=OneWay}" />
                             </StackPanel>
                         </StackPanel>
 
@@ -171,13 +172,13 @@
                             Style="{StaticResource GhostButtonStyle}">
                             <interactivity:Interaction.Behaviors>
                                 <interactivity:DataTriggerBehavior
-                                    Binding="{x:Bind ViewModel.GSMTCService.CurrentIsPlaying, Mode=OneWay}"
+                                    Binding="{x:Bind GSMTCService.CurrentIsPlaying, Mode=OneWay}"
                                     ComparisonCondition="Equal"
                                     Value="True">
                                     <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
                                 </interactivity:DataTriggerBehavior>
                                 <interactivity:DataTriggerBehavior
-                                    Binding="{x:Bind ViewModel.GSMTCService.CurrentIsPlaying, Mode=OneWay}"
+                                    Binding="{x:Bind GSMTCService.CurrentIsPlaying, Mode=OneWay}"
                                     ComparisonCondition="Equal"
                                     Value="False">
                                     <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
@@ -191,13 +192,13 @@
                             Style="{StaticResource GhostButtonStyle}">
                             <interactivity:Interaction.Behaviors>
                                 <interactivity:DataTriggerBehavior
-                                    Binding="{x:Bind ViewModel.GSMTCService.CurrentIsPlaying, Mode=OneWay}"
+                                    Binding="{x:Bind GSMTCService.CurrentIsPlaying, Mode=OneWay}"
                                     ComparisonCondition="Equal"
                                     Value="True">
                                     <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
                                 </interactivity:DataTriggerBehavior>
                                 <interactivity:DataTriggerBehavior
-                                    Binding="{x:Bind ViewModel.GSMTCService.CurrentIsPlaying, Mode=OneWay}"
+                                    Binding="{x:Bind GSMTCService.CurrentIsPlaying, Mode=OneWay}"
                                     ComparisonCondition="Equal"
                                     Value="False">
                                     <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
@@ -421,11 +422,11 @@
                     Margin="0,-14,0,0"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Top"
-                    Maximum="{x:Bind ViewModel.GSMTCService.CurrentSongInfo.DurationMs, Mode=OneWay, Converter={StaticResource MillisecondsToSecondsConverter}}"
+                    Maximum="{x:Bind GSMTCService.CurrentSongInfo.DurationMs, Mode=OneWay, Converter={StaticResource MillisecondsToSecondsConverter}}"
                     Minimum="0"
                     Style="{StaticResource GhostSliderStyle}"
                     ThumbToolTipValueConverter="{StaticResource SecondsToFormattedTimeConverter}"
-                    Value="{x:Bind ViewModel.GSMTCService.CurrentPosition.TotalSeconds, Mode=OneWay}" />
+                    Value="{x:Bind GSMTCService.CurrentPosition.TotalSeconds, Mode=OneWay}" />
 
                 <Grid
                     x:Name="TimelineSliderLyricsLineInfo"
