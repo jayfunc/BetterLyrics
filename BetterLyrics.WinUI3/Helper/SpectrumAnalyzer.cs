@@ -330,7 +330,6 @@ namespace BetterLyrics.WinUI3.Helper
                 StopCapture();
                 _disposed = true;
             }
-            GC.SuppressFinalize(this);
         }
     }
 }

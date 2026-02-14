@@ -42,7 +42,7 @@
                 x:Uid="SettingsPageMusicGalleryOpened"
                 Grid.Row="0"
                 IsClosable="False"
-                IsOpen="{x:Bind ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.IsOpened, Mode=OneWay}"
+                IsOpen="{x:Bind ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.WindowStatus, Mode=OneWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=0}"
                 Severity="Informational" />
 
             <!--  播放源列表  -->

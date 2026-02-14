@@ -4,6 +4,7 @@ using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
+using System.Diagnostics;
 
 namespace BetterLyrics.WinUI3
 {

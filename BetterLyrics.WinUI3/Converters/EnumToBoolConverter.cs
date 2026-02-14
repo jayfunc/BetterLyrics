@@ -5,21 +5,21 @@ using System.Text;
 
 namespace BetterLyrics.WinUI3.Converters
 {
-    public partial class EnumToOpacityConverter : IValueConverter
+    public partial class EnumToBoolConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
             if (value == null || parameter == null)
             {
-                return 0.0;
+                return false;
             }
 
             if (IsMatch(value, parameter))
             {
-                return 1.0;
+                return true;
             }
 
-            return 0.0;
+            return false;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
@@ -42,6 +42,6 @@ namespace BetterLyrics.WinUI3.Converters
 
             return valueString == parameter.ToString();
         }
-    }
 
+    }
 }

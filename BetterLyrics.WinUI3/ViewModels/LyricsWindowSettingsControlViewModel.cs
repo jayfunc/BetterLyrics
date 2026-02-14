@@ -106,7 +106,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 if (message.PropertyName == nameof(GeneralSettings.MultiNowPlayingWindowMode))
                 {
-                    if (!message.NewValue && AppSettings.WindowBoundsRecords.Count(x => x.IsOpened) > 0)
+                    if (!message.NewValue && AppSettings.WindowBoundsRecords.Any(x => x.WindowStatus == Enums.WindowStatus.Opened))
                     {
                         var windows = WindowHook.GetWindows<NowPlayingWindow>();
                         var latest = windows.Last();
@@ -114,7 +114,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                         {
                             if (item != latest)
                             {
-                                item.CloseWindow();
+                                item.HideWindow(false);
                             }
                         }
                     }

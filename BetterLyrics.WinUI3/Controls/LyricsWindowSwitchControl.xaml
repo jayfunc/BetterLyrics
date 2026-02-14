@@ -61,7 +61,7 @@
                             <Border
                                 BorderBrush="{ThemeResource AccentAAFillColorDefaultBrush}"
                                 BorderThickness="4"
-                                Visibility="{Binding IsOpened, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                Visibility="{Binding WindowStatus, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=0}" />
                             <uc:DemoWindowGrid Margin="4" LyricsWindowStatus="{Binding}" />
                         </Grid>
                     </DataTemplate>
