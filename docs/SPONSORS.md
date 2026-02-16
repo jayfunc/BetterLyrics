@@ -2,25 +2,40 @@ Special thanks to the following people for their support!
 
 特别感谢以下朋友的支持！
 
-| Date / 日期 | Name / 昵称 |
-| :--- | :--- |
-| Jan 31, 2026 | wu |
-| Jan 29, 2026 | 咯他ii |
-| Jan 29, 2026 | **林 |
-| Jan 29, 2026 | **棋 |
-| Jan 29, 2026 | **都 |
-| Jan 29, 2026 | **成 |
-| Jan 19, 2026 | **杭 |
-| Jan 8, 2026 | Eureka-K_K |
-| Jan 3, 2026 | \*\*轩 |
-| Dec 13, 2025 | \<Anonymous\> |
-| Dec 3, 2025 | YE |
-| Dec 2, 2025 | \<Anonymous\> |
-| Nov 23, 2025 | \*\*玄 |
-| Nov 21, 2025 | \*\*智 |
-| Nov 17, 2025 | SuHeAndZl |
-| Nov 2, 2025 | 借过 |
-| Aug 28, 2025 | \*\*华 |
+<table>
+  <tbody>
+    <tr>
+      <td></td>
+      <td>Feb 16, 2026 **昊</td>
+      <td>Feb 13, 2026 **鹏</td>
+      <td>Jan 31, 2026 wu</td>
+    </tr>
+    <tr>
+      <td>Jan 29, 2026 咯他ii</td>
+      <td>Jan 29, 2026 **林</td>
+      <td>Jan 29, 2026 **棋</td>
+      <td>Jan 29, 2026 **都</td>
+    </tr>
+    <tr>
+      <td>Jan 29, 2026 **成</td>
+      <td>Jan 19, 2026 **杭</td>
+      <td>Jan 8, 2026 Eureka-K_K</td>
+      <td>Jan 3, 2026 **轩</td>
+    </tr>
+    <tr>
+      <td>Dec 13, 2025 &lt;Anonymous&gt;</td>
+      <td>Dec 3, 2025 YE</td>
+      <td>Dec 2, 2025 &lt;Anonymous&gt;</td>
+      <td>Nov 23, 2025 **玄</td>
+    </tr>
+    <tr>
+      <td>Nov 21, 2025 **智</td>
+      <td>Nov 17, 2025 SuHeAndZl</td>
+      <td>Nov 2, 2025 借过</td>
+      <td>Aug 28, 2025 **华</td>
+    </tr>
+  </tbody>
+</table>
 
 > *List is updated manually. If you donated but don't see your name here, please contact me.*
 > 
