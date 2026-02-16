@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.Services.GSMTCService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -32,9 +33,11 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             GSMTCService = gsmtcService;
             _settingsService = settingsService;
+
+            RefreshCardData();
         }
 
-        public void UpdateSelectedLyrics(List<string> lyrics)
+        public void UpdateSelectedLyrics(List<LyricsLine> lyrics)
         {
             CardData = new LyricsShareCardData
             {

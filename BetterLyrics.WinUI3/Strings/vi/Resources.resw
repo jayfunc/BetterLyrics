@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -277,7 +277,7 @@
     <value>Ngôn ngữ lời bài hát</value>
   </data>
   <data name="LyricsPageLyricsCard.Text" xml:space="preserve">
-    <value>Lyrics Card</value>
+    <value>Thẻ lời bài hát</value>
   </data>
   <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
     <value>Nhà cung cấp lời bài hát</value>
@@ -397,61 +397,64 @@
     <value>Tệp .TTML cục bộ</value>
   </data>
   <data name="LyricsSharePageCopyImage.Content" xml:space="preserve">
-    <value>Copy Image</value>
+    <value>Sao chép hình ảnh</value>
   </data>
   <data name="LyricsSharePageGroupAtmosphere.Text" xml:space="preserve">
-    <value>Atmosphere</value>
+    <value>Khí quyển</value>
   </data>
   <data name="LyricsSharePageGroupClassic.Text" xml:space="preserve">
-    <value>Classic Design</value>
+    <value>Thiết kế cổ điển</value>
   </data>
   <data name="LyricsSharePageGroupPhysical.Text" xml:space="preserve">
-    <value>Physical</value>
+    <value>Vật lý</value>
   </data>
   <data name="LyricsSharePageGroupRetro.Text" xml:space="preserve">
-    <value>Digital Retro</value>
+    <value>Retro kỹ thuật số</value>
+  </data>
+  <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
+    <value>Chất lượng hình ảnh</value>
   </data>
   <data name="LyricsSharePageSaveImage.Content" xml:space="preserve">
-    <value>Save Image</value>
+    <value>Lưu hình ảnh</value>
   </data>
   <data name="LyricsSharePageSelectLyricsTitle.Text" xml:space="preserve">
-    <value>Select Lyrics</value>
+    <value>Chọn lời bài hát</value>
   </data>
   <data name="LyricsSharePageStyleCD.Content" xml:space="preserve">
-    <value>CD Case</value>
+    <value>Vỏ đựng đĩa CD</value>
   </data>
   <data name="LyricsSharePageStyleCinematic.Content" xml:space="preserve">
-    <value>Cinematic</value>
+    <value>Điện ảnh</value>
   </data>
   <data name="LyricsSharePageStyleCyberpunk.Content" xml:space="preserve">
     <value>Cyberpunk</value>
   </data>
   <data name="LyricsSharePageStyleMagazine.Content" xml:space="preserve">
-    <value>Magazine</value>
+    <value>Tạp chí</value>
   </data>
   <data name="LyricsSharePageStyleMinimal.Content" xml:space="preserve">
-    <value>Minimal</value>
+    <value>Tối thiểu</value>
   </data>
   <data name="LyricsSharePageStylePolaroid.Content" xml:space="preserve">
     <value>Polaroid</value>
   </data>
   <data name="LyricsSharePageStyleReceipt.Content" xml:space="preserve">
-    <value>Receipt</value>
+    <value>Phiếu thu</value>
   </data>
   <data name="LyricsSharePageStyleRetroMSN.Content" xml:space="preserve">
-    <value>Retro MSN</value>
+    <value>MSN cổ điển</value>
   </data>
   <data name="LyricsSharePageStyleRetroQQ.Content" xml:space="preserve">
     <value>Retro QQ</value>
   </data>
   <data name="LyricsSharePageStyleSwiss.Content" xml:space="preserve">
-    <value>Swiss</value>
+    <value>Thụy Sĩ</value>
   </data>
   <data name="LyricsSharePageStyleTicket.Content" xml:space="preserve">
-    <value>Ticket</value>
+    <value>Vé</value>
   </data>
   <data name="LyricsSharePageStyleTitle.Text" xml:space="preserve">
-    <value>Style</value>
+    <value>Phong cách</value>
   </data>
   <data name="LyricsSharePageStyleVinyl.Content" xml:space="preserve">
     <value>Vinyl</value>

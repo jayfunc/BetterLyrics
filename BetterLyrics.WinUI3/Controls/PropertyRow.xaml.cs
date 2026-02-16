@@ -77,10 +77,12 @@ namespace BetterLyrics.WinUI3.Controls
                 DataPackage dataPackage = new DataPackage();
                 dataPackage.SetText(targetValue);
                 Clipboard.SetContent(dataPackage);
+
+                GlobalToastManager.Show("ActionCompleted", null, InfoBarSeverity.Success);
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Copy failed: {ex.Message}");
+                GlobalToastManager.Show("Error", ex.Message, InfoBarSeverity.Error);
                 return;
             }
 

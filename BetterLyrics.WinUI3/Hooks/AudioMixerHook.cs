@@ -1,4 +1,6 @@
-﻿using NAudio.CoreAudioApi;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using NAudio.CoreAudioApi;
 using System;
 using System.Diagnostics;
 using System.Text;
@@ -6,13 +8,16 @@ using Vanara.PInvoke;
 
 namespace BetterLyrics.WinUI3.Hooks
 {
-    public static class AudioMixerHook
+    public class AudioMixerHook
     {
+        private static readonly ILogger<AudioMixerHook> _logger;
+
         private static MMDeviceEnumerator? _deviceEnumerator;
         private static MMDevice? _defaultDevice;
 
         static AudioMixerHook()
         {
+            _logger = Ioc.Default.GetRequiredService<ILogger<AudioMixerHook>>();
             InitializeAudioDevice();
         }
 
@@ -25,7 +30,7 @@ namespace BetterLyrics.WinUI3.Hooks
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Audio init failed: {ex.Message}");
+                _logger.LogError("InitializeAudioDevice: {Error}", ex.Message);
             }
         }
 
@@ -67,24 +72,14 @@ namespace BetterLyrics.WinUI3.Hooks
 
             if (_defaultDevice == null) return;
 
-
-
             float targetVol = Math.Clamp(volume, 0, 100) / 100f;
-
-
 
             RunOnAudioSessions(processId, (session) =>
 
             {
-
                 session.SimpleAudioVolume.Volume = targetVol;
-
-                if (session.SimpleAudioVolume.Mute)
-
-                    session.SimpleAudioVolume.Mute = false;
-
+                if (session.SimpleAudioVolume.Mute) session.SimpleAudioVolume.Mute = false;
             });
-
         }
 
         public static void SetApplicationVolume(string? processNameOrAumid, int volume)
@@ -147,7 +142,7 @@ namespace BetterLyrics.WinUI3.Hooks
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Error processing audio sessions: {ex.Message}");
+                _logger.LogError("SetApplicationVolume: {Error}", ex.Message);
             }
         }
 
@@ -198,7 +193,7 @@ namespace BetterLyrics.WinUI3.Hooks
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine($"Error getting Win32 volume for {procName}: {ex.Message}");
+                        _logger.LogError("GetApplicationVolume: {Error}", ex.Message);
                     }
                 }
             }
@@ -233,7 +228,7 @@ namespace BetterLyrics.WinUI3.Hooks
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Error scanning AUMID sessions: {ex.Message}");
+                _logger.LogError("GetApplicationVolume: {Error}", ex.Message);
             }
 
             return -1;
@@ -265,7 +260,7 @@ namespace BetterLyrics.WinUI3.Hooks
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Error accessing audio sessions: {ex.Message}");
+                _logger.LogError("RunOnAudioSessions: {Error}", ex.Message);
             }
         }
     }

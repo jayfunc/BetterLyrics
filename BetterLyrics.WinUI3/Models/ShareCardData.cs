@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml.Media;
+﻿using BetterLyrics.WinUI3.Models.Lyrics;
+using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +11,7 @@ namespace BetterLyrics.WinUI3.Models
         public string Title { get; set; } = "";
         public string Artist { get; set; } = "";
         public ImageSource? CoverImage { get; set; }
-        public Brush? OverlayBrush { get; set; } // 动态提取的背景色
-        public List<string> SelectedLyrics { get; set; } = new();
+        public Brush? OverlayBrush { get; set; }
+        public List<LyricsLine> SelectedLyrics { get; set; } = new();
     }
 }
