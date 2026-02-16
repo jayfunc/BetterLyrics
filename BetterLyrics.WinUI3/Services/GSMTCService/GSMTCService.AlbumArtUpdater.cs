@@ -28,7 +28,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
         private List<Color> _lightAccentColorsOctTree = Enumerable.Repeat(Colors.Black, 4).ToList();
         private List<Color> _darkAccentColorsOctTree = Enumerable.Repeat(Colors.Black, 4).ToList();
-        
+
         private List<Color> _lightAccentColorsAuto = Enumerable.Repeat(Colors.Black, 4).ToList();
         private List<Color> _darkAccentColorsAuto = Enumerable.Repeat(Colors.Black, 4).ToList();
 
@@ -207,6 +207,25 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                 _ => Colors.Transparent,
             };
             return result;
+        }
+
+        public List<Color> GetAlbumArtAccentColors(PaletteGeneratorType paletteGeneratorType, bool isDark)
+        {
+            var lightAccentColors = paletteGeneratorType switch
+            {
+                PaletteGeneratorType.MedianCut => _lightAccentColorsMedianCut,
+                PaletteGeneratorType.OctTree => _lightAccentColorsOctTree,
+                PaletteGeneratorType.Auto => _lightAccentColorsAuto,
+                _ => _lightAccentColorsMedianCut,
+            };
+            var darkAccentColors = paletteGeneratorType switch
+            {
+                PaletteGeneratorType.MedianCut => _darkAccentColorsMedianCut,
+                PaletteGeneratorType.OctTree => _darkAccentColorsOctTree,
+                PaletteGeneratorType.Auto => _darkAccentColorsAuto,
+                _ => _darkAccentColorsMedianCut,
+            };
+            return isDark ? darkAccentColors : lightAccentColors;
         }
 
     }

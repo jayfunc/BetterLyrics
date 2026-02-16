@@ -276,6 +276,9 @@
   <data name="LyricsPageLanguageCode.Header" xml:space="preserve">
     <value>Lyrics Language</value>
   </data>
+  <data name="LyricsPageLyricsCard.Text" xml:space="preserve">
+    <value>Lyrics Card</value>
+  </data>
   <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
     <value>Lyrics Provider</value>
   </data>
@@ -392,6 +395,66 @@
   </data>
   <data name="LyricsSearchProviderTtmlFile" xml:space="preserve">
     <value>Local .TTML File</value>
+  </data>
+  <data name="LyricsSharePageCopyImage.Content" xml:space="preserve">
+    <value>Copy Image</value>
+  </data>
+  <data name="LyricsSharePageGroupAtmosphere.Text" xml:space="preserve">
+    <value>Atmosphere</value>
+  </data>
+  <data name="LyricsSharePageGroupClassic.Text" xml:space="preserve">
+    <value>Classic Design</value>
+  </data>
+  <data name="LyricsSharePageGroupPhysical.Text" xml:space="preserve">
+    <value>Physical</value>
+  </data>
+  <data name="LyricsSharePageGroupRetro.Text" xml:space="preserve">
+    <value>Digital Retro</value>
+  </data>
+  <data name="LyricsSharePageSaveImage.Content" xml:space="preserve">
+    <value>Save Image</value>
+  </data>
+  <data name="LyricsSharePageSelectLyricsTitle.Text" xml:space="preserve">
+    <value>Select Lyrics</value>
+  </data>
+  <data name="LyricsSharePageStyleCD.Content" xml:space="preserve">
+    <value>CD Case</value>
+  </data>
+  <data name="LyricsSharePageStyleCinematic.Content" xml:space="preserve">
+    <value>Cinematic</value>
+  </data>
+  <data name="LyricsSharePageStyleCyberpunk.Content" xml:space="preserve">
+    <value>Cyberpunk</value>
+  </data>
+  <data name="LyricsSharePageStyleMagazine.Content" xml:space="preserve">
+    <value>Magazine</value>
+  </data>
+  <data name="LyricsSharePageStyleMinimal.Content" xml:space="preserve">
+    <value>Minimal</value>
+  </data>
+  <data name="LyricsSharePageStylePolaroid.Content" xml:space="preserve">
+    <value>Polaroid</value>
+  </data>
+  <data name="LyricsSharePageStyleReceipt.Content" xml:space="preserve">
+    <value>Receipt</value>
+  </data>
+  <data name="LyricsSharePageStyleRetroMSN.Content" xml:space="preserve">
+    <value>Retro MSN</value>
+  </data>
+  <data name="LyricsSharePageStyleRetroQQ.Content" xml:space="preserve">
+    <value>Retro QQ</value>
+  </data>
+  <data name="LyricsSharePageStyleSwiss.Content" xml:space="preserve">
+    <value>Swiss</value>
+  </data>
+  <data name="LyricsSharePageStyleTicket.Content" xml:space="preserve">
+    <value>Ticket</value>
+  </data>
+  <data name="LyricsSharePageStyleTitle.Text" xml:space="preserve">
+    <value>Style</value>
+  </data>
+  <data name="LyricsSharePageStyleVinyl.Content" xml:space="preserve">
+    <value>Vinyl</value>
   </data>
   <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
     <value>Configuration</value>

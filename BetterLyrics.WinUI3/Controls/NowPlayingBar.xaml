@@ -121,9 +121,9 @@
                             <ToolTipService.ToolTip>
                                 <ToolTip>
                                     <Grid>
-                                        <TextBlock x:Uid="MusicGalleryPageQueueLoop" Visibility="{x:Bind PlaybackOrder, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=0}" />
-                                        <TextBlock x:Uid="MusicGalleryPageSingleLoop" Visibility="{x:Bind PlaybackOrder, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=1}" />
-                                        <TextBlock x:Uid="MusicGalleryPageQueueRandom" Visibility="{x:Bind PlaybackOrder, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}" />
+                                        <TextBlock x:Uid="MusicGalleryPageQueueLoop" Visibility="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlaybackOrder, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=0}" />
+                                        <TextBlock x:Uid="MusicGalleryPageSingleLoop" Visibility="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlaybackOrder, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=1}" />
+                                        <TextBlock x:Uid="MusicGalleryPageQueueRandom" Visibility="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlaybackOrder, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}" />
                                     </Grid>
                                 </ToolTip>
                             </ToolTipService.ToolTip>
@@ -133,7 +133,7 @@
                                         FontFamily="{StaticResource IconFontFamily}"
                                         FontSize="16"
                                         Glyph="&#xE8EE;"
-                                        Opacity="{x:Bind PlaybackOrder, Mode=OneWay, Converter={StaticResource EnumToOpacityConverter}, ConverterParameter=0}">
+                                        Opacity="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlaybackOrder, Mode=OneWay, Converter={StaticResource EnumToOpacityConverter}, ConverterParameter=0}">
                                         <FontIcon.OpacityTransition>
                                             <ScalarTransition />
                                         </FontIcon.OpacityTransition>
@@ -142,7 +142,7 @@
                                         FontFamily="{StaticResource IconFontFamily}"
                                         FontSize="16"
                                         Glyph="&#xE8ED;"
-                                        Opacity="{x:Bind PlaybackOrder, Mode=OneWay, Converter={StaticResource EnumToOpacityConverter}, ConverterParameter=1}">
+                                        Opacity="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlaybackOrder, Mode=OneWay, Converter={StaticResource EnumToOpacityConverter}, ConverterParameter=1}">
                                         <FontIcon.OpacityTransition>
                                             <ScalarTransition />
                                         </FontIcon.OpacityTransition>
@@ -151,7 +151,7 @@
                                         FontFamily="{StaticResource IconFontFamily}"
                                         FontSize="16"
                                         Glyph="&#xE8B1;"
-                                        Opacity="{x:Bind PlaybackOrder, Mode=OneWay, Converter={StaticResource EnumToOpacityConverter}, ConverterParameter=2}">
+                                        Opacity="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlaybackOrder, Mode=OneWay, Converter={StaticResource EnumToOpacityConverter}, ConverterParameter=2}">
                                         <FontIcon.OpacityTransition>
                                             <ScalarTransition />
                                         </FontIcon.OpacityTransition>
@@ -404,6 +404,11 @@
                                                 ShouldConstrainToRootBounds="False" />
                                         </MenuFlyoutItem.ContextFlyout>
                                     </MenuFlyoutItem>
+                                    <MenuFlyoutItem
+                                        x:Uid="LyricsPageLyricsCard"
+                                        Command="{x:Bind ViewModel.OpenLyricsShareWindowCommand}"
+                                        Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                           Glyph=&#xE72D;}" />
                                     <!--  Settings  -->
                                     <MenuFlyoutItem
                                         x:Uid="LyricsPageSettings"

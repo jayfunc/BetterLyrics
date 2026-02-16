@@ -21,11 +21,10 @@
 
         <local:NowPlayingPage
             x:Name="NowPlayingPage"
-            LyricsWindowStatus="{x:Bind ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus, Mode=OneWay}"
             Opacity="0"
             Visibility="Collapsed">
             <local:NowPlayingPage.OpacityTransition>
-                <ScalarTransition Duration="{x:Bind consts:Time.AnimationDuration}" />
+                <ScalarTransition Duration="0:0:0.35" />
             </local:NowPlayingPage.OpacityTransition>
         </local:NowPlayingPage>
 
@@ -35,7 +34,6 @@
             VerticalAlignment="Bottom"
             IsAutoHideEnabled="False"
             PlayQueueButtonClick="NowPlayingBar_PlayingQueueClick"
-            PlaybackOrder="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlaybackOrder, Mode=TwoWay}"
             ShowPlaybackOrderButton="True"
             ShowPlayingQueueButton="True"
             ShowSongInfo="True"

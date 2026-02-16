@@ -1,7 +1,9 @@
 ﻿using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.Lyrics;
+using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.GSMTCService;
+using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Services.SMTCService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -14,29 +16,29 @@ namespace BetterLyrics.WinUI3.ViewModels
     {
         private readonly IGSMTCService _gsmtcService;
         private readonly ISMTCService _smtcService;
+        private readonly ISettingsService _settingsService;
 
-        [ObservableProperty]
-        public partial int Volume { get; set; }
+        [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 
-        [ObservableProperty]
-        public partial float TimelineSliderThumbOpacity { get; set; } = 0f;
+        [ObservableProperty] public partial int Volume { get; set; }
 
-        [ObservableProperty]
-        public partial LyricsLine? TimelineSliderThumbLyricsLine { get; set; }
+        [ObservableProperty] public partial float TimelineSliderThumbOpacity { get; set; } = 0f;
 
-        [ObservableProperty]
-        public partial double TimelineSliderThumbSeconds { get; set; } = 0;
+        [ObservableProperty] public partial LyricsLine? TimelineSliderThumbLyricsLine { get; set; }
 
-        [ObservableProperty]
-        public partial double BottomCommandGridOpacity { get; set; } = 1;
+        [ObservableProperty] public partial double TimelineSliderThumbSeconds { get; set; } = 0;
 
-        [ObservableProperty]
-        public partial double BottomCommandFlyoutTriggerOpacity { get; set; }
+        [ObservableProperty] public partial double BottomCommandGridOpacity { get; set; } = 1;
 
-        public NowPlayingBarViewModel(IGSMTCService mediaSessionsService, ISMTCService smtcService)
+        [ObservableProperty] public partial double BottomCommandFlyoutTriggerOpacity { get; set; }
+
+        public NowPlayingBarViewModel(IGSMTCService mediaSessionsService, ISMTCService smtcService, ISettingsService settingsService)
         {
             _gsmtcService = mediaSessionsService;
             _smtcService = smtcService;
+            _settingsService = settingsService;
+
+            AppSettings = _settingsService.AppSettings;
 
             UpdateVolume();
         }
@@ -92,6 +94,12 @@ namespace BetterLyrics.WinUI3.ViewModels
         private static void OpenLyricsSearchWindow()
         {
             WindowHook.OpenOrShowWindow<LyricsSearchWindow>();
+        }
+
+        [RelayCommand]
+        private static void OpenLyricsShareWindow()
+        {
+            WindowHook.OpenOrShowWindow<LyricsShareWindow>();
         }
 
     }

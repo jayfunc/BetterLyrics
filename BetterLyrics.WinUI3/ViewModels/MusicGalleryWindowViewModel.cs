@@ -8,8 +8,7 @@ namespace BetterLyrics.WinUI3.ViewModels
     {
         private readonly ISettingsService _settingsService;
 
-        [ObservableProperty]
-        public partial AppSettings AppSettings { get; set; }
+        [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 
         public MusicGalleryWindowViewModel(ISettingsService settingsService)
         {

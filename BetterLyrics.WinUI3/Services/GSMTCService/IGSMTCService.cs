@@ -1,10 +1,12 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.Models.Settings;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading.Tasks;
 using Windows.Storage.Streams;
@@ -41,6 +43,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         IRandomAccessStream? AlbumArtBitmapStream { get; }
 
         AlbumArtThemeColors CalculateAlbumArtThemeColors(LyricsWindowStatus lyricsWindowStatus, Color backdropAccentColor);
+        List<Color> GetAlbumArtAccentColors(PaletteGeneratorType paletteGeneratorType, bool isDark);
 
         LyricsCacheItem? CurrentLyricsSearchResult { get; }
     }

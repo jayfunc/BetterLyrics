@@ -46,7 +46,7 @@ namespace BetterLyrics.WinUI3.Views
         private ForegroundWindowHook? _fgWindowWatcher = null;
         private OverlayInputHelper? _overlayInputHelper;
         private TaskbarHook? _taskbarHook;
-        private WindowMessageMonitor _wmm;
+        private WindowMessageMonitor? _wmm;
 
         private DispatcherQueueTimer? _fgWindowWatcherTimer = null;
 
@@ -54,14 +54,12 @@ namespace BetterLyrics.WinUI3.Views
 
         public LyricsWindowStatus LyricsWindowStatus { get; private set; }
 
-        public NowPlayingWindowViewModel ViewModel { get; private set; } = Ioc.Default.GetRequiredService<NowPlayingWindowViewModel>();
         private readonly IGSMTCService _gsmtcService = Ioc.Default.GetRequiredService<IGSMTCService>();
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
         public NowPlayingWindow(LyricsWindowStatus status)
         {
             this.InitializeComponent();
-
             _wmm = new WindowMessageMonitor(this);
             _wmm.WindowMessageReceived += Wmm_WindowMessageReceived;
 
@@ -296,21 +294,6 @@ namespace BetterLyrics.WinUI3.Views
 
         // ====
 
-        private void ExitOrHide()
-        {
-            _fgWindowWatcherTimer = null;
-            _fgWindowWatcher?.Stop();
-            _fgWindowWatcher = null;
-            if (_settingsService.AppSettings.GeneralSettings.ExitOnLyricsWindowClosed)
-            {
-                WindowHook.ExitApp();
-            }
-            else
-            {
-                this.HideWindow();
-            }
-        }
-
         public void SetTitleBarArea(TitleBarArea titleBarArea)
         {
             switch (titleBarArea)
@@ -331,11 +314,20 @@ namespace BetterLyrics.WinUI3.Views
 
         private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
         {
-            ExitOrHide();
+            if (_settingsService.AppSettings.GeneralSettings.ExitOnLyricsWindowClosed)
+            {
+                WindowHook.ExitApp();
+            }
+            else
+            {
+                this.PrepareWindowClosing();
+            }
         }
 
         private void Window_Closed(object sender, WindowEventArgs args)
         {
+            this.Closed -= Window_Closed;
+
             WeakReferenceMessenger.Default.UnregisterAll(this);
 
             StopOverlayInputHelper();
@@ -343,8 +335,9 @@ namespace BetterLyrics.WinUI3.Views
             AppWindow.Changed -= AppWindow_Changed;
             AppWindow.Closing -= AppWindow_Closing;
 
-            _wmm.WindowMessageReceived -= Wmm_WindowMessageReceived;
-            _wmm.Dispose();
+            _wmm?.WindowMessageReceived -= Wmm_WindowMessageReceived;
+            _wmm?.Dispose();
+            _wmm = null;
 
             _fgWindowWatcherTimer?.Stop();
             _fgWindowWatcherTimer = null;
@@ -354,8 +347,6 @@ namespace BetterLyrics.WinUI3.Views
 
             _taskbarHook?.Dispose();
             _taskbarHook = null;
-
-            ViewModel.IsActive = false;
         }
 
         private void AppWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
@@ -382,12 +373,12 @@ namespace BetterLyrics.WinUI3.Views
 
         private void TopCommandGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
-            ViewModel.TopCommandGridOpacity = 1f;
+            TopCommandGrid.Opacity = 1f;
         }
 
         private void TopCommandGrid_PointerExited(object sender, PointerRoutedEventArgs e)
         {
-            ViewModel.TopCommandGridOpacity = 0f;
+            TopCommandGrid.Opacity = 0f;
         }
 
         private void MusicGalleryButton_Click(object sender, RoutedEventArgs e)
@@ -397,7 +388,14 @@ namespace BetterLyrics.WinUI3.Views
 
         private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
-            ExitOrHide();
+            if (_settingsService.AppSettings.GeneralSettings.ExitOnLyricsWindowClosed)
+            {
+                WindowHook.ExitApp();
+            }
+            else
+            {
+                this.CloseWindow();
+            }
         }
 
         private void LyricsWindowSwitchButton_Click(object sender, RoutedEventArgs e)

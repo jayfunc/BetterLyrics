@@ -67,6 +67,8 @@
 		<None Remove="Styles\GhostSliderStyle.xaml" />
 		<None Remove="Styles\InteractiveListViewHeaderStyle.xaml" />
 		<None Remove="Views\LyricsSearchWindow.xaml" />
+		<None Remove="Views\LyricsSharePage.xaml" />
+		<None Remove="Views\LyricsShareWindow.xaml" />
 		<None Remove="Views\LyricsWindowSwitchWindow.xaml" />
 		<None Remove="Views\MusicGalleryPage.xaml" />
 		<None Remove="Views\MusicGalleryWindow.xaml" />
@@ -126,6 +128,7 @@
 		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.260101001" />
 		<PackageReference Include="NAudio.Wasapi" Version="2.2.1" />
 		<PackageReference Include="NTextCat" Version="0.3.65" />
+		<PackageReference Include="QRCoder" Version="1.7.0" />
 		<PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0" />
 		<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
 		<PackageReference Include="SMBLibrary" Version="1.5.5.1" />
@@ -402,6 +405,16 @@
 	  <Content Update="Assets\Banner.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Views\LyricsShareWindow.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Views\LyricsSharePage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Controls\DragIndicator.xaml">
