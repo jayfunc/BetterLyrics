@@ -1,13 +1,30 @@
 ﻿using BetterLyrics.Core.Enums;
 using BetterLyrics.WinUI3.Models;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Services.LyricsCacheService
 {
     public interface ILyricsCacheService
     {
-        Task<LyricsCacheItem?> GetLyricsAsync(SongInfo songInfo, LyricsSearchProvider provider);
-        Task SaveLyricsAsync(SongInfo songInfo, LyricsCacheItem result);
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="songInfo"></param>
+        /// <param name="provider"></param>
+        /// <param name="token"></param>
+        /// <exception cref="OperationCanceledException"></exception>
+        /// <returns></returns>
+        Task<LyricsCacheItem?> GetLyricsAsync(SongInfo songInfo, LyricsSearchProvider provider, CancellationToken token);
+        /// <summary>
+        /// Write or update cache to DB
+        /// </summary>
+        /// <param name="songInfo"></param>
+        /// <param name="result"></param>
+        /// <param name="token"></param>
+        /// <exception cref="OperationCanceledException"></exception>
+        /// <returns></returns>
+        Task SaveLyricsAsync(SongInfo songInfo, LyricsCacheItem result, CancellationToken token);
         Task ClearCacheAsync();
     }
 }

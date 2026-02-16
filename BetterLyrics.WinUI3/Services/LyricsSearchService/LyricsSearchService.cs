@@ -19,6 +19,7 @@ using Lyricify.Lyrics.Searchers;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -84,21 +85,23 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             }
         }
 
-        public async Task<bool> DownloadAmllTtmlDbIndexAsync()
+        public async Task<bool> DownloadAmllTtmlDbIndexAsync(CancellationToken token)
         {
             try
             {
-                using var response = await _amllTtmlDbHttpClient.GetAsync($"{_settingsService.AppSettings.GeneralSettings.AmllTtmlDbBaseUrl}/{Constants.AmllTTmlDB.IndexSuffix}", HttpCompletionOption.ResponseHeadersRead);
+                using var response = await _amllTtmlDbHttpClient.GetAsync($"{_settingsService.AppSettings.GeneralSettings.AmllTtmlDbBaseUrl}/{Constants.AmllTTmlDB.IndexSuffix}", HttpCompletionOption.ResponseHeadersRead, token);
+
                 if (!response.IsSuccessStatusCode) return false;
 
-                await using var stream = await response.Content.ReadAsStreamAsync();
+                await using var stream = await response.Content.ReadAsStreamAsync(token);
+
                 await using var fs = new FileStream(
                     PathHelper.AmllTtmlDbIndexPath,
                     FileMode.Create,
                     FileAccess.Write,
                     FileShare.None
                 );
-                await stream.CopyToAsync(fs);
+                await stream.CopyToAsync(fs, token);
 
                 long currentTs = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
                 File.WriteAllText(PathHelper.AmllTtmlDbLastUpdatedPath, currentTs.ToString());
@@ -118,116 +121,149 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 return null;
             }
 
-            var lyricsSearchResult = new LyricsCacheItem();
-
-            string overridenTitle = songInfo.Title;
-            string overridenArtist = songInfo.Artist;
-            string overridenAlbum = songInfo.Album;
-
-            _logger.LogInformation("SearchSmartlyAsync {SongInfo}", songInfo);
-
-            // 先检查该曲目是否已被用户映射
-            var found = await _songSearchMapService.TryGetMappingAsync(songInfo);
-
-            if (found != null)
+            try
             {
-                overridenTitle = found.MappedTitle;
-                overridenArtist = found.MappedArtist;
-                overridenAlbum = found.MappedAlbum;
+                var lyricsSearchResult = new LyricsCacheItem();
 
-                _logger.LogInformation("Found mapped song search query: {MappedSongSearchQuery}", found);
+                string overridenTitle = songInfo.Title;
+                string overridenArtist = songInfo.Artist;
+                string overridenAlbum = songInfo.Album;
 
-                var pureMusic = found.IsMarkedAsPureMusic;
-                if (pureMusic)
+                _logger.LogInformation("SearchSmartlyAsync {SongInfo}", songInfo);
+
+                try
                 {
-                    lyricsSearchResult.Title = overridenTitle;
-                    lyricsSearchResult.Artist = overridenArtist;
-                    lyricsSearchResult.Album = overridenAlbum;
-                    lyricsSearchResult.Raw = "[00:00.000]🎶🎶🎶\n[99:00.000]";
-                    return lyricsSearchResult;
-                }
+                    var found = await _songSearchMapService.TryGetMappingAsync(songInfo, token);
 
-                var targetProvider = found.LyricsSearchProvider;
-                if (targetProvider != null)
-                {
-                    return await SearchSingleAsync(
-                        ((SongInfo)songInfo.Clone())
-                            .WithTitle(overridenTitle)
-                            .WithArtist(overridenArtist)
-                            .WithAlbum(overridenAlbum),
-                        targetProvider.Value, true, token);
-                }
-            }
-
-            var mediaSourceProviderInfo = _settingsService.AppSettings.MediaSourceProvidersInfo.FirstOrDefault(x => x.Provider == songInfo.PlayerId);
-            if (mediaSourceProviderInfo == null) return null;
-
-            var enabledProviders = mediaSourceProviderInfo.LyricsSearchProvidersInfo.Where(x => x.IsEnabled).ToList();
-            if (enabledProviders.Count == 0) return null;
-
-            var baseSearchInfo = ((SongInfo)songInfo.Clone())
-                .WithTitle(overridenTitle)
-                .WithArtist(overridenArtist)
-                .WithAlbum(overridenAlbum);
-
-            if (lyricsSearchType == LyricsSearchType.BestMatch)
-            {
-                var searchTasks = enabledProviders.Select(async provider =>
-                {
-                    if (token.IsCancellationRequested) return null;
-
-                    var result = await SearchSingleAsync(
-                        (SongInfo)baseSearchInfo.Clone(),
-                        provider.Provider,
-                        !provider.IgnoreCacheWhenSearching,
-                        token);
-
-                    int threshold = provider.IsMatchingThresholdOverwritten
-                        ? provider.MatchingThreshold
-                        : mediaSourceProviderInfo.MatchingThreshold;
-
-                    if (result.IsFound && result.MatchPercentage >= threshold)
+                    if (found != null)
                     {
-                        return result;
-                    }
-                    return null;
-                });
+                        overridenTitle = found.MappedTitle;
+                        overridenArtist = found.MappedArtist;
+                        overridenAlbum = found.MappedAlbum;
 
-                var allResults = await Task.WhenAll(searchTasks);
+                        _logger.LogInformation("Found mapped song search query: {MappedSongSearchQuery}", found);
 
-                return allResults
-                    .Where(r => r != null)
-                    .OrderByDescending(r => r.MatchPercentage)
-                    .FirstOrDefault();
-            }
+                        var pureMusic = found.IsMarkedAsPureMusic;
+                        if (pureMusic)
+                        {
+                            lyricsSearchResult.Title = overridenTitle;
+                            lyricsSearchResult.Artist = overridenArtist;
+                            lyricsSearchResult.Album = overridenAlbum;
+                            lyricsSearchResult.Raw = "[00:00.000]🎶🎶🎶\n[99:00.000]";
+                            return lyricsSearchResult;
+                        }
 
-            else if (lyricsSearchType == LyricsSearchType.Sequential)
-            {
-                foreach (var provider in enabledProviders)
-                {
-                    if (token.IsCancellationRequested) break;
-
-                    var result = await SearchSingleAsync(
-                        (SongInfo)baseSearchInfo.Clone(),
-                        provider.Provider,
-                        !provider.IgnoreCacheWhenSearching,
-                        token);
-
-                    int threshold = provider.IsMatchingThresholdOverwritten
-                        ? provider.MatchingThreshold
-                        : mediaSourceProviderInfo.MatchingThreshold;
-
-                    if (result.IsFound && result.MatchPercentage >= threshold)
-                    {
-                        return result;
+                        var targetProvider = found.LyricsSearchProvider;
+                        if (targetProvider != null)
+                        {
+                            return await SearchSingleAsync(
+                                ((SongInfo)songInfo.Clone())
+                                    .WithTitle(overridenTitle)
+                                    .WithArtist(overridenArtist)
+                                    .WithAlbum(overridenAlbum),
+                                targetProvider.Value, true, token);
+                        }
                     }
                 }
-            }
+                catch (OperationCanceledException) { throw; }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex, "Failed to check song mapping, falling back to normal search.");
+                }
 
-            return null;
+                var mediaSourceProviderInfo = _settingsService.AppSettings.MediaSourceProvidersInfo.FirstOrDefault(x => x.Provider == songInfo.PlayerId);
+                if (mediaSourceProviderInfo == null) return null;
+
+                var enabledProviders = mediaSourceProviderInfo.LyricsSearchProvidersInfo.Where(x => x.IsEnabled).ToList();
+                if (enabledProviders.Count == 0) return null;
+
+                var baseSearchInfo = ((SongInfo)songInfo.Clone())
+                    .WithTitle(overridenTitle)
+                    .WithArtist(overridenArtist)
+                    .WithAlbum(overridenAlbum);
+
+                if (lyricsSearchType == LyricsSearchType.BestMatch)
+                {
+                    var searchTasks = enabledProviders.Select(async provider =>
+                    {
+                        try
+                        {
+                            token.ThrowIfCancellationRequested();
+
+                            var result = await SearchSingleAsync(
+                                (SongInfo)baseSearchInfo.Clone(),
+                                provider.Provider,
+                                !provider.IgnoreCacheWhenSearching,
+                                token);
+
+                            int threshold = provider.IsMatchingThresholdOverwritten
+                                ? provider.MatchingThreshold
+                                : mediaSourceProviderInfo.MatchingThreshold;
+
+                            if (result.IsFound && result.MatchPercentage >= threshold)
+                            {
+                                return result;
+                            }
+                        }
+                        catch (OperationCanceledException) { throw; }
+                        catch (Exception ex)
+                        {
+                            _logger.LogWarning(ex, "Provider {Provider} failed during parallel search.", provider.Provider);
+                            return null;
+                        }
+                        return null;
+                    });
+
+                    var allResults = await Task.WhenAll(searchTasks);
+
+                    return allResults
+                        .Where(r => r != null)
+                        .OrderByDescending(r => r.MatchPercentage)
+                        .FirstOrDefault();
+                }
+                else if (lyricsSearchType == LyricsSearchType.Sequential)
+                {
+                    foreach (var provider in enabledProviders)
+                    {
+                        try
+                        {
+                            token.ThrowIfCancellationRequested();
+
+                            var result = await SearchSingleAsync(
+                                (SongInfo)baseSearchInfo.Clone(),
+                                provider.Provider,
+                                !provider.IgnoreCacheWhenSearching,
+                                token);
+
+                            int threshold = provider.IsMatchingThresholdOverwritten
+                                ? provider.MatchingThreshold
+                                : mediaSourceProviderInfo.MatchingThreshold;
+
+                            if (result.IsFound && result.MatchPercentage >= threshold)
+                            {
+                                return result;
+                            }
+                        }
+                        catch (OperationCanceledException) { throw; }
+                        catch (Exception ex)
+                        {
+                            _logger.LogWarning(ex, "Provider {Provider} failed during sequential search.", provider.Provider);
+                            continue;
+                        }
+                    }
+                }
+
+                return null;
+            }
+            catch (OperationCanceledException) { throw; }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred in SearchSmartlyAsync.");
+                return null;
+            }
         }
 
-        public async Task<List<LyricsCacheItem>> SearchAllAsync(SongInfo songInfo, bool checkCache, CancellationToken token)
+        public async Task<List<LyricsCacheItem>> SearchAllAsync(SongInfo songInfo, bool checkCache)
         {
             _logger.LogInformation("SearchAllAsync Concurrent {SongInfo}", songInfo);
 
@@ -235,14 +271,14 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
             foreach (var provider in Enum.GetValues<LyricsSearchProvider>())
             {
-                searchTasks.Add(SearchSingleAsync(songInfo, provider, checkCache, token));
+                searchTasks.Add(SearchSingleAsync(songInfo, provider, checkCache, default));
             }
 
             foreach (var plugin in _settingsService.AppSettings.PluginsInfo)
             {
                 if (plugin.Plugin is ILyricsSource)
                 {
-                    searchTasks.Add(SearchPluginAsync(songInfo, plugin, token));
+                    searchTasks.Add(SearchPluginAsync(songInfo, plugin, default));
                 }
             }
 
@@ -269,71 +305,59 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 Provider = provider,
             };
 
-            try
+            // Check cache first if allowed
+            if (checkCache && provider.IsRemote())
             {
-                // Check cache first if allowed
-                if (checkCache && provider.IsRemote())
+                var cached = await _lyricsCacheService.GetLyricsAsync(songInfo, provider, token);
+                if (cached != null)
                 {
-                    var cached = await _lyricsCacheService.GetLyricsAsync(songInfo, provider);
-                    if (cached != null)
-                    {
-                        lyricsSearchResult = cached;
-                        return lyricsSearchResult;
-                    }
-                }
-
-                switch (provider)
-                {
-                    case LyricsSearchProvider.QQ:
-                        lyricsSearchResult = await SearchQQNeteaseKugouAsync(songInfo, Searchers.QQMusic);
-                        break;
-                    case LyricsSearchProvider.Kugou:
-                        lyricsSearchResult = await SearchQQNeteaseKugouAsync(songInfo, Searchers.Kugou);
-                        break;
-                    case LyricsSearchProvider.Netease:
-                        lyricsSearchResult = await SearchQQNeteaseKugouAsync(songInfo, Searchers.Netease);
-                        break;
-                    case LyricsSearchProvider.LrcLib:
-                        lyricsSearchResult = await SearchLrcLibAsync(songInfo);
-                        break;
-                    case LyricsSearchProvider.AmllTtmlDb:
-                        lyricsSearchResult = await SearchAmllTtmlDbAsync(songInfo);
-                        break;
-                    case LyricsSearchProvider.LocalMusicFile:
-                        lyricsSearchResult = await SearchMusicFileAsync(songInfo);
-                        break;
-                    case LyricsSearchProvider.LocalLrcFile:
-                    case LyricsSearchProvider.LocalEslrcFile:
-                    case LyricsSearchProvider.LocalTtmlFile:
-                        lyricsSearchResult = await SearchLyricsFileAsync(songInfo, provider.GetLyricsFormat());
-                        break;
-                    case LyricsSearchProvider.AppleMusic:
-                        lyricsSearchResult = await SearchAppleMusicAsync(songInfo);
-                        break;
-                    default:
-                        //lyricsSearchResult = await SearchPluginAsync(songInfo, provider, token);
-                        break;
-                }
-
-                if (token.IsCancellationRequested)
-                {
+                    lyricsSearchResult = cached;
                     return lyricsSearchResult;
                 }
-
             }
-            catch (Exception)
+
+            switch (provider)
             {
+                case LyricsSearchProvider.QQ:
+                    lyricsSearchResult = await SearchQQNeteaseKugouAsync(songInfo, Searchers.QQMusic, token);
+                    break;
+                case LyricsSearchProvider.Kugou:
+                    lyricsSearchResult = await SearchQQNeteaseKugouAsync(songInfo, Searchers.Kugou, token);
+                    break;
+                case LyricsSearchProvider.Netease:
+                    lyricsSearchResult = await SearchQQNeteaseKugouAsync(songInfo, Searchers.Netease, token);
+                    break;
+                case LyricsSearchProvider.LrcLib:
+                    lyricsSearchResult = await SearchLrcLibAsync(songInfo, token);
+                    break;
+                case LyricsSearchProvider.AmllTtmlDb:
+                    lyricsSearchResult = await SearchAmllTtmlDbAsync(songInfo, token);
+                    break;
+                case LyricsSearchProvider.LocalMusicFile:
+                    lyricsSearchResult = await SearchMusicFileAsync(songInfo, token);
+                    break;
+                case LyricsSearchProvider.LocalLrcFile:
+                case LyricsSearchProvider.LocalEslrcFile:
+                case LyricsSearchProvider.LocalTtmlFile:
+                    lyricsSearchResult = await SearchLyricsFileAsync(songInfo, provider.GetLyricsFormat(), token);
+                    break;
+                case LyricsSearchProvider.AppleMusic:
+                    lyricsSearchResult = await SearchAppleMusicAsync(songInfo, token);
+                    break;
+                default:
+                    //lyricsSearchResult = await SearchPluginAsync(songInfo, provider, token);
+                    break;
             }
 
             if (provider.IsRemote())
             {
-                await _lyricsCacheService.SaveLyricsAsync(songInfo, lyricsSearchResult);
+                await _lyricsCacheService.SaveLyricsAsync(songInfo, lyricsSearchResult, token);
             }
 
             return lyricsSearchResult;
         }
 
-        private async Task<LyricsCacheItem> SearchLyricsFileAsync(SongInfo songInfo, LyricsFormat format)
+        private async Task<LyricsCacheItem> SearchLyricsFileAsync(SongInfo songInfo, LyricsFormat format, CancellationToken token)
         {
             int maxScore = -1;
 
@@ -356,7 +380,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
             if (enabledIds.Count == 0) return lyricsSearchResult;
 
-            var allFiles = await _fileSystemService.GetParsedFilesAsync(enabledIds);
+            var allFiles = await _fileSystemService.GetParsedFilesAsync(enabledIds, token);
             allFiles = allFiles.Where(x => FileHelper.LyricExtensions.Contains(Path.GetExtension(x.FileName))).ToList();
 
             foreach (var item in allFiles)
@@ -391,7 +415,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             return lyricsSearchResult;
         }
 
-        private async Task<LyricsCacheItem> SearchMusicFileAsync(SongInfo songInfo)
+        private async Task<LyricsCacheItem> SearchMusicFileAsync(SongInfo songInfo, CancellationToken token)
         {
             var lyricsSearchResult = new LyricsCacheItem
             {
@@ -405,7 +429,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
             if (enabledIds.Count == 0) return lyricsSearchResult;
 
-            var allFiles = await _fileSystemService.GetParsedFilesAsync(enabledIds);
+            var allFiles = await _fileSystemService.GetParsedFilesAsync(enabledIds, token);
             allFiles = allFiles.Where(x => FileHelper.MusicExtensions.Contains(Path.GetExtension(x.FileName))).ToList();
 
             FilesIndexItem? bestFile = null;
@@ -439,7 +463,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             return lyricsSearchResult;
         }
 
-        private async Task<LyricsCacheItem> SearchAmllTtmlDbAsync(SongInfo songInfo)
+        private async Task<LyricsCacheItem> SearchAmllTtmlDbAsync(SongInfo songInfo, CancellationToken token)
         {
             var lyricsSearchResult = new LyricsCacheItem
             {
@@ -448,7 +472,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
             if (IsAmllTtmlDbIndexInvalid())
             {
-                var downloadOk = await DownloadAmllTtmlDbIndexAsync();
+                var downloadOk = await DownloadAmllTtmlDbIndexAsync(token);
                 if (!downloadOk)
                 {
                     return lyricsSearchResult;
@@ -458,58 +482,47 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             string? rawLyricFile = null;
             string? bestNcmMusicId = null;
 
-            await foreach (var line in File.ReadLinesAsync(PathHelper.AmllTtmlDbIndexPath))
+            await foreach (var line in File.ReadLinesAsync(PathHelper.AmllTtmlDbIndexPath, token))
             {
-                if (string.IsNullOrWhiteSpace(line))
-                    continue;
-                try
+                if (string.IsNullOrWhiteSpace(line)) continue;
+                using var doc = JsonDocument.Parse(line);
+                var root = doc.RootElement;
+                if (!root.TryGetProperty("metadata", out var metadataArr)) continue;
+
+                string? title = null;
+                string? artist = null;
+                string? album = null;
+                string? ncmMusicId = null;
+
+                foreach (var meta in metadataArr.EnumerateArray())
                 {
-                    using var doc = JsonDocument.Parse(line);
-                    var root = doc.RootElement;
-                    if (!root.TryGetProperty("metadata", out var metadataArr))
-                        continue;
+                    if (meta.GetArrayLength() != 2) continue;
+                    var key = meta[0].GetString();
+                    var valueArr = meta[1];
+                    if (key == "musicName" && valueArr.GetArrayLength() > 0) title = valueArr[0].GetString();
+                    if (key == "artists" && valueArr.GetArrayLength() > 0) artist = string.Join("/", valueArr.EnumerateArray());
+                    if (key == "album" && valueArr.GetArrayLength() > 0) album = valueArr[0].GetString();
+                    if (key == "ncmMusicId" && valueArr.GetArrayLength() > 0) ncmMusicId = valueArr[0].GetString();
+                }
 
-                    string? title = null;
-                    string? artist = null;
-                    string? album = null;
-                    string? ncmMusicId = null;
-
-                    foreach (var meta in metadataArr.EnumerateArray())
+                int score = MetadataComparer.CalculateScore(songInfo, new LyricsCacheItem
+                {
+                    Title = title,
+                    Artist = artist,
+                    Album = album,
+                });
+                if (score > lyricsSearchResult.MatchPercentage)
+                {
+                    if (root.TryGetProperty("rawLyricFile", out var rawLyricFileProp))
                     {
-                        if (meta.GetArrayLength() != 2)
-                            continue;
-                        var key = meta[0].GetString();
-                        var valueArr = meta[1];
-                        if (key == "musicName" && valueArr.GetArrayLength() > 0)
-                            title = valueArr[0].GetString();
-                        if (key == "artists" && valueArr.GetArrayLength() > 0)
-                            artist = string.Join("/", valueArr.EnumerateArray());
-                        if (key == "album" && valueArr.GetArrayLength() > 0)
-                            album = valueArr[0].GetString();
-                        if (key == "ncmMusicId" && valueArr.GetArrayLength() > 0)
-                            ncmMusicId = valueArr[0].GetString();
-                    }
-
-                    int score = MetadataComparer.CalculateScore(songInfo, new LyricsCacheItem
-                    {
-                        Title = title,
-                        Artist = artist,
-                        Album = album,
-                    });
-                    if (score > lyricsSearchResult.MatchPercentage)
-                    {
-                        if (root.TryGetProperty("rawLyricFile", out var rawLyricFileProp))
-                        {
-                            bestNcmMusicId = ncmMusicId;
-                            rawLyricFile = rawLyricFileProp.GetString();
-                            lyricsSearchResult.Title = title;
-                            lyricsSearchResult.Artist = artist;
-                            lyricsSearchResult.Album = album;
-                            lyricsSearchResult.MatchPercentage = score;
-                        }
+                        bestNcmMusicId = ncmMusicId;
+                        rawLyricFile = rawLyricFileProp.GetString();
+                        lyricsSearchResult.Title = title;
+                        lyricsSearchResult.Artist = artist;
+                        lyricsSearchResult.Album = album;
+                        lyricsSearchResult.MatchPercentage = score;
                     }
                 }
-                catch { }
             }
 
             if (string.IsNullOrWhiteSpace(rawLyricFile))
@@ -519,35 +532,30 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
             var url = $"{_settingsService.AppSettings.GeneralSettings.AmllTtmlDbBaseUrl}/{AmllTTmlDB.QueryPrefix}/{rawLyricFile}";
             lyricsSearchResult.Reference = url;
-            try
-            {
-                // 下载写入歌词
-                using var response = await _amllTtmlDbHttpClient.GetAsync(url);
-                if (!response.IsSuccessStatusCode)
-                {
-                    return lyricsSearchResult;
-                }
-                string lyrics = await response.Content.ReadAsStringAsync();
-                lyricsSearchResult.Raw = lyrics;
 
-                // 反查时长
-                if (bestNcmMusicId != null && lyricsSearchResult.Duration == null)
-                {
-                    var tmp = await SearchQQNeteaseKugouAsync(
-                        ((SongInfo)songInfo.Clone()).WithSongId($"{ExtendedGenreFiled.NetEaseCloudMusicTrackID}{bestNcmMusicId}"),
-                        Searchers.Netease);
-                    lyricsSearchResult.Duration = tmp.Duration;
-                    lyricsSearchResult.MatchPercentage = MetadataComparer.CalculateScore(songInfo, lyricsSearchResult);
-                }
-            }
-            catch
+            // 下载写入歌词
+            using var response = await _amllTtmlDbHttpClient.GetAsync(url, token);
+            if (!response.IsSuccessStatusCode)
             {
+                return lyricsSearchResult;
+            }
+            string lyrics = await response.Content.ReadAsStringAsync(token);
+            lyricsSearchResult.Raw = lyrics;
+
+            // 反查时长
+            if (bestNcmMusicId != null && lyricsSearchResult.Duration == null)
+            {
+                var tmp = await SearchQQNeteaseKugouAsync(
+                    ((SongInfo)songInfo.Clone()).WithSongId($"{ExtendedGenreFiled.NetEaseCloudMusicTrackID}{bestNcmMusicId}"),
+                    Searchers.Netease, token);
+                lyricsSearchResult.Duration = tmp.Duration;
+                lyricsSearchResult.MatchPercentage = MetadataComparer.CalculateScore(songInfo, lyricsSearchResult);
             }
 
             return lyricsSearchResult;
         }
 
-        private async Task<LyricsCacheItem> SearchLrcLibAsync(SongInfo songInfo)
+        private async Task<LyricsCacheItem> SearchLrcLibAsync(SongInfo songInfo, CancellationToken token)
         {
             var lyricsSearchResult = new LyricsCacheItem
             {
@@ -562,13 +570,13 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 $"&album_name={Uri.EscapeDataString(songInfo.Album)}" +
                 $"&durationMs={Uri.EscapeDataString(songInfo.DurationMs.ToString())}";
 
-            using var response = await _lrcLibHttpClient.GetAsync(url);
+            using var response = await _lrcLibHttpClient.GetAsync(url, token);
             if (!response.IsSuccessStatusCode)
             {
                 return lyricsSearchResult;
             }
 
-            var json = await response.Content.ReadAsStringAsync();
+            var json = await response.Content.ReadAsStringAsync(token);
 
             var jArr = JsonSerializer.Deserialize(
                 json,
@@ -604,7 +612,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             return lyricsSearchResult;
         }
 
-        private static async Task<LyricsCacheItem> SearchQQNeteaseKugouAsync(SongInfo songInfo, Searchers searcher)
+        private static async Task<LyricsCacheItem> SearchQQNeteaseKugouAsync(SongInfo songInfo, Searchers searcher, CancellationToken token)
         {
             var lyricsSearchResult = new LyricsCacheItem();
 
@@ -644,6 +652,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                     Artist = songInfo.Artist,
                     Title = songInfo.Title,
                 }, searcher, Lyricify.Lyrics.Searchers.Helpers.CompareHelper.MatchType.NoMatch);
+                token.ThrowIfCancellationRequested();
             }
 
             if (result != null)
@@ -651,6 +660,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 if (result is QQMusicSearchResult qqResult)
                 {
                     var response = await Lyricify.Lyrics.Helpers.ProviderHelper.QQMusicApi.GetLyricsAsync(qqResult.Id);
+                    token.ThrowIfCancellationRequested();
 
                     lyricsSearchResult.Raw = response?.Lyrics;
                     lyricsSearchResult.Translation = response?.Trans;
@@ -659,6 +669,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 else if (result is NeteaseSearchResult neteaseResult)
                 {
                     var response = await Lyricify.Lyrics.Helpers.ProviderHelper.NeteaseApi.GetLyric(neteaseResult.Id);
+                    token.ThrowIfCancellationRequested();
 
                     lyricsSearchResult.Raw = response?.Lrc?.Lyric;
                     lyricsSearchResult.Translation = response?.Tlyric?.Lyric;
@@ -668,12 +679,16 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 else if (result is KugouSearchResult kugouResult)
                 {
                     var response = await Lyricify.Lyrics.Helpers.ProviderHelper.KugouApi.GetSearchLyrics(hash: kugouResult.Hash);
+                    token.ThrowIfCancellationRequested();
+
                     string? original = null;
                     string? translated = null;
                     var candidate = response?.Candidates.FirstOrDefault();
                     if (candidate != null)
                     {
                         original = await Lyricify.Lyrics.Decrypter.Krc.Helper.GetLyricsAsync(candidate.Id, candidate.AccessKey);
+                        token.ThrowIfCancellationRequested();
+
                         if (original != null)
                         {
                             var parsedList = Lyricify.Lyrics.Parsers.KrcParser.ParseLyrics(original);
@@ -710,7 +725,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             return lyricsSearchResult;
         }
 
-        private async Task<LyricsCacheItem> SearchAppleMusicAsync(SongInfo songInfo)
+        private async Task<LyricsCacheItem> SearchAppleMusicAsync(SongInfo songInfo, CancellationToken token)
         {
             LyricsCacheItem lyricsSearchResult = new()
             {
@@ -726,9 +741,9 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             //lyricsSearchResult.Raw = "<tt xmlns=\"http://www.w3.org/ns/ttml\" xmlns:itunes=\"http://music.apple.com/lyric-ttml-internal\" xmlns:ttm=\"http://www.w3.org/ns/ttml#metadata\" itunes:timing=\"Line\" xml:lang=\"ja\"><head><metadata><ttm:agent type=\"person\" xml:id=\"v1\"><ttm:name type=\"full\">AZU</ttm:name></ttm:agent><iTunesMetadata xmlns=\"http://music.apple.com/lyric-ttml-internal\" leadingSilence=\"0.000\"><translations/><songwriters><songwriter>Naho</songwriter><songwriter>h-wonder</songwriter></songwriters></iTunesMetadata></metadata></head><body dur=\"04:06.293\"><div begin=\"00:00\" end=\"00:38.693\" itunes:songPart=\"Verse\"><p begin=\"00:00\" end=\"00:25.275\" itunes:key=\"L1\" ttm:agent=\"v1\">昨日までの痛みは和らいで 君の夢包まれる</p><p begin=\"00:25.275\" end=\"00:33.24\" itunes:key=\"L2\" ttm:agent=\"v1\">もう一度あの日のように 君を見つめたい</p><p begin=\"00:33.24\" end=\"00:38.693\" itunes:key=\"L3\" ttm:agent=\"v1\">今ならば I can say my truth</p></div><div begin=\"00:38.693\" end=\"00:54.427\" itunes:songPart=\"Verse\"><p begin=\"00:38.693\" end=\"00:45.119\" itunes:key=\"L4\" ttm:agent=\"v1\">Dream of your love, I'm thinking of you</p><p begin=\"00:45.278\" end=\"00:54.427\" itunes:key=\"L5\" ttm:agent=\"v1\">時よ take back あの日の二人に</p></div><div begin=\"00:54.427\" end=\"01:21.411\" itunes:songPart=\"Verse\"><p begin=\"00:54.427\" end=\"01:04.596\" itunes:key=\"L6\" ttm:agent=\"v1\">Every time I 最後の恋 きっと君以上に誰も</p><p begin=\"01:04.596\" end=\"01:13.995\" itunes:key=\"L7\" ttm:agent=\"v1\">愛せはしない sweet baby もっと早く強く</p><p begin=\"01:13.995\" end=\"01:21.411\" itunes:key=\"L8\" ttm:agent=\"v1\">この気持ちを baby 叶えてあげたかった</p></div><div begin=\"01:35.877\" end=\"02:01.499\" itunes:songPart=\"Verse\"><p begin=\"01:35.877\" end=\"01:48.581\" itunes:key=\"L9\" ttm:agent=\"v1\">思い出は遠ざかるほどまるで 映画のように色づく</p><p begin=\"01:48.581\" end=\"01:56.18\" itunes:key=\"L10\" ttm:agent=\"v1\">お互いに子供すぎたって 今ならわかる</p><p begin=\"01:56.18\" end=\"02:01.499\" itunes:key=\"L11\" ttm:agent=\"v1\">優しささえ棘を刺す</p></div><div begin=\"02:01.499\" end=\"02:17.614\" itunes:songPart=\"Verse\"><p begin=\"02:01.499\" end=\"02:08.352\" itunes:key=\"L12\" ttm:agent=\"v1\">Dream of your love, I'm feeling for you</p><p begin=\"02:08.352\" end=\"02:17.614\" itunes:key=\"L13\" ttm:agent=\"v1\">心 今も置き去りのままで</p></div><div begin=\"02:17.614\" end=\"02:45.979\" itunes:songPart=\"Verse\"><p begin=\"02:17.614\" end=\"02:28.674\" itunes:key=\"L14\" ttm:agent=\"v1\">Every time I 最後の恋 夢で会える君はいつも</p><p begin=\"02:28.674\" end=\"02:37.191\" itunes:key=\"L15\" ttm:agent=\"v1\">勇気をくれる sweet honey 振り向くよりちゃんと</p><p begin=\"02:37.191\" end=\"02:45.979\" itunes:key=\"L16\" ttm:agent=\"v1\">前を向いて baby 新しい自分になりたい</p></div><div begin=\"02:46.44\" end=\"03:09.476\" itunes:songPart=\"Verse\"><p begin=\"02:46.44\" end=\"02:51.331\" itunes:key=\"L17\" ttm:agent=\"v1\">明けてゆく 今日の空に</p><p begin=\"02:51.331\" end=\"03:03.814\" itunes:key=\"L18\" ttm:agent=\"v1\">君の夢と say goodbye 小さな光見つめている</p><p begin=\"03:03.814\" end=\"03:09.476\" itunes:key=\"L19\" ttm:agent=\"v1\">My heart is still brightly</p></div><div begin=\"03:09.476\" end=\"03:53.997\" itunes:songPart=\"Verse\"><p begin=\"03:09.476\" end=\"03:18.939\" itunes:key=\"L20\" ttm:agent=\"v1\">Every time I 最後の恋 きっと君以上に誰も</p><p begin=\"03:18.939\" end=\"03:28.685\" itunes:key=\"L21\" ttm:agent=\"v1\">愛せはしない sweet baby もっと早く強く</p><p begin=\"03:28.685\" end=\"03:36.262\" itunes:key=\"L22\" ttm:agent=\"v1\">この気持ちをbaby 叶えてあげたかった</p><p begin=\"03:36.262\" end=\"03:53.997\" itunes:key=\"L23\" ttm:agent=\"v1\">Sweet baby</p></div></body></tt>";
             //lyricsSearchResult.MatchPercentage = 100;
 
-            if (await _appleMusic.InitAsync())
+            if (await _appleMusic.InitAsync(token))
             {
-                lyricsSearchResult = await _appleMusic.SearchSongInfoAsync(songInfo);
+                lyricsSearchResult = await _appleMusic.SearchSongInfoAsync(songInfo, token);
             }
 
             return lyricsSearchResult;
@@ -742,28 +757,21 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 Provider = (LyricsSearchProvider)_pluginService.GetHashedId(pluginInfo.Id),
             };
 
-            try
+            var result = await plugin.GetLyricsAsync(songInfo.Title, songInfo.Artist, songInfo.Album, songInfo.Duration, token);
+
+            if (result != null && !string.IsNullOrEmpty(result.Raw))
             {
-                var result = await plugin.GetLyricsAsync(songInfo.Title, songInfo.Artist, songInfo.Album, songInfo.Duration);
+                cacheItem.Title = result.Title;
+                cacheItem.Artist = result.Artist;
+                cacheItem.Album = result.Album;
+                cacheItem.Duration = result.Duration;
 
-                if (result != null && !string.IsNullOrEmpty(result.Raw))
-                {
-                    cacheItem.Title = result.Title;
-                    cacheItem.Artist = result.Artist;
-                    cacheItem.Album = result.Album;
-                    cacheItem.Duration = result.Duration;
+                cacheItem.Raw = result.Raw;
+                cacheItem.Translation = result.Translation;
+                cacheItem.Transliteration = result.Transliteration;
 
-                    cacheItem.Raw = result.Raw;
-                    cacheItem.Translation = result.Translation;
-                    cacheItem.Transliteration = result.Transliteration;
-
-                    cacheItem.Reference = result.Reference ?? "about:blank";
-                    cacheItem.MatchPercentage = MetadataComparer.CalculateScore(songInfo, cacheItem);
-                }
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Plugin {PluginName} failed to search", plugin);
+                cacheItem.Reference = result.Reference ?? "about:blank";
+                cacheItem.MatchPercentage = MetadataComparer.CalculateScore(songInfo, cacheItem);
             }
 
             return cacheItem;

@@ -157,7 +157,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                             {
                                 await _playHistoryService.AddLogAsync(playHistoryItem);
                             });
-                            _logger.LogInformation("ScrobbleTimer_Tick: {} scrobbled", CurrentSongInfo.Title);
+                            _logger.LogInformation("ScrobbleTimer_Tick: {Title} scrobbled", CurrentSongInfo.Title);
                         }
                         // 写入 Last.fm 播放记录
                         var isLastFMEnabled = CurrentMediaSourceProviderInfo?.IsLastFMTrackEnabled ?? false;
@@ -564,9 +564,9 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                 _lxMusicSse.MessageReceived += LXMusicSse_MessageReceived;
                 _lxMusicSse.Disconnected += LXMusicSse_Disconnected;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                _logger.LogError("Failed to start SSE connection for LX Music.");
+                _logger.LogError(ex, "StartLXMusicSSE");
                 _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                 {
                     GlobalToastManager.Show("FailToStartLXMusicServer", null, InfoBarSeverity.Error);

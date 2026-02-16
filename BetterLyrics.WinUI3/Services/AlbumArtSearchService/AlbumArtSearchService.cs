@@ -248,7 +248,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
             }
             catch (Exception ex)
             {
-                _logger.LogError("Kugou Search Error: {Error}", ex.Message);
+                _logger.LogError(ex, "SearchKugouAsync");
                 return null;
             }
         }

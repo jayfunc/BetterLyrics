@@ -30,7 +30,7 @@ namespace BetterLyrics.WinUI3.Hooks
             }
             catch (Exception ex)
             {
-                _logger.LogError("InitializeAudioDevice: {Error}", ex.Message);
+                _logger.LogError(ex, "InitializeAudioDevice");
             }
         }
 
@@ -142,7 +142,7 @@ namespace BetterLyrics.WinUI3.Hooks
             }
             catch (Exception ex)
             {
-                _logger.LogError("SetApplicationVolume: {Error}", ex.Message);
+                _logger.LogError(ex, "SetApplicationVolume");
             }
         }
 
@@ -193,7 +193,7 @@ namespace BetterLyrics.WinUI3.Hooks
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError("GetApplicationVolume: {Error}", ex.Message);
+                        _logger.LogError(ex, "GetApplicationVolume");
                     }
                 }
             }
@@ -228,7 +228,7 @@ namespace BetterLyrics.WinUI3.Hooks
             }
             catch (Exception ex)
             {
-                _logger.LogError("GetApplicationVolume: {Error}", ex.Message);
+                _logger.LogError(ex, "GetApplicationVolume");
             }
 
             return -1;
@@ -260,7 +260,7 @@ namespace BetterLyrics.WinUI3.Hooks
             }
             catch (Exception ex)
             {
-                _logger.LogError("RunOnAudioSessions: {Error}", ex.Message);
+                _logger.LogError(ex, "RunOnAudioSessions");
             }
         }
     }
