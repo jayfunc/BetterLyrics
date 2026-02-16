@@ -4,6 +4,7 @@ Special thanks to the following people for their support!
 
 | Date / 日期 | Name / 昵称 |
 | :--- | :--- |
+| Feb 16, 2026 | **昊 |
 | Feb 13, 2026 | **鹏 |
 | Jan 31, 2026 | wu |
 | Jan 29, 2026 | 咯他ii |
