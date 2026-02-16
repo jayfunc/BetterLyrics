@@ -256,7 +256,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
             }
             catch (Exception ex)
             {
-                _logger.LogError("DeleteCacheForMediaFolderAsync: {}", ex.Message);
+                _logger.LogError(ex, "DeleteCacheForMediaFolderAsync");
             }
             finally
             {
@@ -423,7 +423,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogError("ScanMediaFolderAsync: {}", ex.Message);
+                        _logger.LogError(ex, "ScanMediaFolderAsync");
                     }
                 }
 
@@ -470,7 +470,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
                 .ToListAsync();
         }
 
-        public async Task<List<FilesIndexItem>> GetParsedFilesAsync(IEnumerable<string> enabledConfigIds)
+        public async Task<List<FilesIndexItem>> GetParsedFilesAsync(IEnumerable<string> enabledConfigIds, CancellationToken token = default)
         {
             if (enabledConfigIds == null || !enabledConfigIds.Any())
             {
@@ -479,13 +479,13 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
 
             var idList = enabledConfigIds.ToList();
 
-            using var context = await _contextFactory.CreateDbContextAsync();
+            using var context = await _contextFactory.CreateDbContextAsync(token);
 
             // SQL: SELECT * FROM FileCache WHERE IsMetadataParsed = 1 AND MediaFolderId IN (...)
             return await context.FilesIndex
                 .AsNoTracking()
                 .Where(x => x.IsMetadataParsed && idList.Contains(x.MediaFolderId))
-                .ToListAsync();
+                .ToListAsync(token);
         }
 
         public void StartAllFolderTimers()

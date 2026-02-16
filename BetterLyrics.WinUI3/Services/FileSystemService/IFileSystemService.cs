@@ -1,5 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Models.Entities;
 using BetterLyrics.WinUI3.Models.Settings;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading;
@@ -58,8 +59,9 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
         /// 从数据库拉取全部已解析的且其所属的 MediaFolder 在应用内处于开启状态的数据
         /// </summary>
         /// <param name="enabledConfigIds"></param>
+        /// <exception cref="OperationCanceledException"></exception>
         /// <returns></returns>
-        Task<List<FilesIndexItem>> GetParsedFilesAsync(IEnumerable<string> enabledConfigIds);
+        Task<List<FilesIndexItem>> GetParsedFilesAsync(IEnumerable<string> enabledConfigIds, CancellationToken token = default);
 
         void StartAllFolderTimers();
     }

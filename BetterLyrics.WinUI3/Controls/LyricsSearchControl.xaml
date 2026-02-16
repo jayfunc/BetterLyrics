@@ -166,6 +166,7 @@
                             x:Uid="LyricsSearchControlSearch"
                             HorizontalAlignment="Stretch"
                             Command="{x:Bind ViewModel.SearchCommand}"
+                            IsEnabled="{x:Bind ViewModel.IsSearching, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
                             Style="{StaticResource AccentButtonStyle}" />
 
                         <dev:SettingsCard x:Uid="LyricsSearchControlIgnoreCache">

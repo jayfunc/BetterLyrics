@@ -114,7 +114,7 @@ namespace BetterLyrics.WinUI3.Helper
             catch (Exception ex)
             {
                 // 建议记录日志
-                _logger.LogError("StartCapture: {Error}", ex.Message);
+                _logger.LogError(ex, "StartCapture");
             }
         }
 

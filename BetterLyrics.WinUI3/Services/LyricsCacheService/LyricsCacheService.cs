@@ -3,6 +3,8 @@ using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.DbContext;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Services.LyricsCacheService
@@ -18,37 +20,35 @@ namespace BetterLyrics.WinUI3.Services.LyricsCacheService
 
         /// <summary>
         /// Read cache from DB
+        /// <exception cref="OperationCanceledException"></exception>
         /// </summary>
-        public async Task<LyricsCacheItem?> GetLyricsAsync(SongInfo songInfo, LyricsSearchProvider provider)
+        public async Task<LyricsCacheItem?> GetLyricsAsync(SongInfo songInfo, LyricsSearchProvider provider, CancellationToken token)
         {
-            using var context = await _contextFactory.CreateDbContextAsync();
+            using var context = await _contextFactory.CreateDbContextAsync(token);
 
             string key = songInfo.GetCacheKey();
 
             var existingItem = await context.LyricsCache
-                .FirstOrDefaultAsync(x => x.CacheKey == key && x.Provider == provider);
+                .FirstOrDefaultAsync(x => x.CacheKey == key && x.Provider == provider, token);
 
             return existingItem;
         }
 
-        /// <summary>
-        /// Write or update cache to DB
-        /// </summary>
-        public async Task SaveLyricsAsync(SongInfo songInfo, LyricsCacheItem result)
+        public async Task SaveLyricsAsync(SongInfo songInfo, LyricsCacheItem result, CancellationToken token)
         {
-            using var context = await _contextFactory.CreateDbContextAsync();
+            using var context = await _contextFactory.CreateDbContextAsync(token);
 
             string key = songInfo.GetCacheKey();
 
             var existingItem = await context.LyricsCache
-                .FirstOrDefaultAsync(x => x.CacheKey == key && x.Provider == result.Provider);
+                .FirstOrDefaultAsync(x => x.CacheKey == key && x.Provider == result.Provider, token);
 
             if (existingItem == null)
             {
                 var newItem = (LyricsCacheItem)result.Clone();
                 newItem.CacheKey = key;
 
-                await context.LyricsCache.AddAsync(newItem);
+                await context.LyricsCache.AddAsync(newItem, token);
             }
             else
             {
@@ -67,7 +67,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsCacheService
                 existingItem.Reference = result.Reference;
             }
 
-            await context.SaveChangesAsync();
+            await context.SaveChangesAsync(token);
         }
 
         public async Task ClearCacheAsync()

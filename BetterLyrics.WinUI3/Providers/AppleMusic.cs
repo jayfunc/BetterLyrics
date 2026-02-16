@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Providers
@@ -28,15 +29,15 @@ namespace BetterLyrics.WinUI3.Providers
             _client.DefaultRequestHeaders.Add("Referer", "https://music.apple.com/");
         }
 
-        public async Task<bool> InitAsync()
+        public async Task<bool> InitAsync(CancellationToken cancellationToken)
         {
             if (!_isInited)
             {
                 var mediaUserToken = PasswordVaultHelper.Get(Constants.App.AppName, Constants.AppleMusic.MediaUserTokenKey);
                 if (!string.IsNullOrEmpty(mediaUserToken))
                 {
-                    await GetAccessTokenAsync();
-                    await SetMediaUserTokenAsync(mediaUserToken);
+                    await GetAccessTokenAsync(cancellationToken);
+                    await SetMediaUserTokenAsync(mediaUserToken, cancellationToken);
                     _isInited = !string.IsNullOrEmpty(_accessToken);
                 }
             }
@@ -44,9 +45,9 @@ namespace BetterLyrics.WinUI3.Providers
             return _isInited;
         }
 
-        private async Task GetAccessTokenAsync()
+        private async Task GetAccessTokenAsync(CancellationToken cancellationToken)
         {
-            var resp = await _client.GetStringAsync("https://music.apple.com/us/browse");
+            var resp = await _client.GetStringAsync("https://music.apple.com/us/browse", cancellationToken);
             var jsMatch = Regex.Match(resp, "(?<=index)(.*?)(?=\\.js\")");
             if (!jsMatch.Success) throw new Exception("Failed to find index.js");
             var jsUrl = $"https://music.apple.com/assets/index{jsMatch.Value}.js";
@@ -58,11 +59,11 @@ namespace BetterLyrics.WinUI3.Providers
             _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {_accessToken}");
         }
 
-        private async Task SetMediaUserTokenAsync(string token)
+        private async Task SetMediaUserTokenAsync(string token, CancellationToken cancellationToken)
         {
             _client.DefaultRequestHeaders.Remove("media-user-token");
             _client.DefaultRequestHeaders.Add("media-user-token", token);
-            var resp = await _client.GetStringAsync("https://amp-api.music.apple.com/v1/me/storefront");
+            var resp = await _client.GetStringAsync("https://amp-api.music.apple.com/v1/me/storefront", cancellationToken);
             var json = JsonSerializer.Deserialize(resp, Serialization.SourceGenerationContext.Default.JsonElement);
             _storefront = json.GetProperty("data")[0].GetProperty("id").ToString();
             _language = json.GetProperty("data")[0].GetProperty("attributes").GetProperty("defaultLanguageTag").ToString();
@@ -70,11 +71,11 @@ namespace BetterLyrics.WinUI3.Providers
             _client.DefaultRequestHeaders.Add("Accept-Language", $"{_language},en;q=0.9");
         }
 
-        private async Task<string?> GetLyricsAsync(string id)
+        private async Task<string?> GetLyricsAsync(string id, CancellationToken token)
         {
             var apiUrl = $"https://amp-api.music.apple.com/v1/catalog/{_storefront}/songs/{id}";
             var url = apiUrl + $"?include[songs]=lyrics,syllable-lyrics&l={_language}";
-            var resp = await _client.GetStringAsync(url);
+            var resp = await _client.GetStringAsync(url, token);
             var json = JsonSerializer.Deserialize(resp, Serialization.SourceGenerationContext.Default.JsonElement);
             var data = json.GetProperty("data");
             if (data.GetArrayLength() == 0) return string.Empty;
@@ -112,7 +113,7 @@ namespace BetterLyrics.WinUI3.Providers
             return null;
         }
 
-        public async Task<LyricsCacheItem> SearchSongInfoAsync(Models.SongInfo songInfo)
+        public async Task<LyricsCacheItem> SearchSongInfoAsync(SongInfo songInfo, CancellationToken token)
         {
             LyricsCacheItem lyricsSearchResult = new()
             {
@@ -122,7 +123,7 @@ namespace BetterLyrics.WinUI3.Providers
             var query = $"{songInfo.Artist} {songInfo.Title}";
             var apiUrl = $"https://amp-api.music.apple.com/v1/catalog/{_storefront}/search";
             var url = apiUrl + $"?term={WebUtility.UrlEncode(query)}&types=songs&limit=1&l={_language}";
-            var resp = await _client.GetStringAsync(url);
+            var resp = await _client.GetStringAsync(url, token);
             var json = JsonSerializer.Deserialize(resp, Serialization.SourceGenerationContext.Default.JsonElement);
             var results = json.GetProperty("results");
             if (results.TryGetProperty("songs", out var songs) && songs.GetProperty("data").GetArrayLength() > 0)
@@ -143,7 +144,7 @@ namespace BetterLyrics.WinUI3.Providers
 
                 if (id != null)
                 {
-                    lyricsSearchResult.Raw = await GetLyricsAsync(id);
+                    lyricsSearchResult.Raw = await GetLyricsAsync(id, token);
                 }
             }
 

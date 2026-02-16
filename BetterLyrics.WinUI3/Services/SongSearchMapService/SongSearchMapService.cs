@@ -2,6 +2,7 @@
 using BetterLyrics.WinUI3.Models.DbContext;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Services.SongSearchMapService
@@ -45,25 +46,25 @@ namespace BetterLyrics.WinUI3.Services.SongSearchMapService
             await context.SaveChangesAsync();
         }
 
-        public async Task<MappedSongSearchQuery?> TryGetMappingAsync(SongInfo songInfo)
+        public async Task<MappedSongSearchQuery?> TryGetMappingAsync(SongInfo songInfo, CancellationToken token = default)
         {
-            using var context = await _contextFactory.CreateDbContextAsync();
+            using var context = await _contextFactory.CreateDbContextAsync(token);
 
             return await context.SongSearchMap
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x =>
                     x.OriginalTitle == songInfo.Title &&
                     x.OriginalArtist == songInfo.Artist &&
-                    x.OriginalAlbum == songInfo.Album);
+                    x.OriginalAlbum == songInfo.Album, token);
         }
 
-        public async Task<(string Title, string Artist, string Album)> GetMappingAsync(SongInfo songInfo)
+        public async Task<(string Title, string Artist, string Album)> GetMappingAsync(SongInfo songInfo, CancellationToken token = default)
         {
             string mappedTitle = songInfo.Title;
             string mappedArtist = songInfo.Artist;
             string mappedAlbum = songInfo.Album;
 
-            var mapped = await TryGetMappingAsync(songInfo);
+            var mapped = await TryGetMappingAsync(songInfo, token);
 
             if (mapped != null)
             {

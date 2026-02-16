@@ -14,6 +14,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using static SkiaSharp.HarfBuzz.SKShaper;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -25,26 +26,17 @@ namespace BetterLyrics.WinUI3.ViewModels
         private readonly ISettingsService _settingsService;
         private readonly ISongSearchMapService _songSearchMapService;
 
-        private LatestOnlyTaskRunner _lyricsSearchRunner = new();
+        [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 
-        [ObservableProperty]
-        public partial AppSettings AppSettings { get; set; }
+        [ObservableProperty] public partial ObservableCollection<LyricsCacheItem> LyricsSearchResults { get; set; } = [];
 
-        [ObservableProperty]
-        public partial ObservableCollection<LyricsCacheItem> LyricsSearchResults { get; set; } = [];
+        [ObservableProperty] public partial LyricsCacheItem? SelectedLyricsSearchResult { get; set; }
 
-        [ObservableProperty]
-        public partial LyricsCacheItem? SelectedLyricsSearchResult { get; set; }
+        [ObservableProperty] public partial ObservableCollection<LyricsData>? LyricsDataArr { get; set; }
 
-        [ObservableProperty]
-        public partial ObservableCollection<LyricsData>? LyricsDataArr { get; set; }
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial MappedSongSearchQuery? MappedSongSearchQuery { get; set; }
 
-        [ObservableProperty]
-        [NotifyPropertyChangedRecipients]
-        public partial MappedSongSearchQuery? MappedSongSearchQuery { get; set; }
-
-        [ObservableProperty]
-        public partial bool IsSearching { get; set; } = false;
+        [ObservableProperty] public partial bool IsSearching { get; set; } = false;
 
         public LyricsSearchControlViewModel(
             ILyricsSearchService lyricsSearchService,
@@ -113,7 +105,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             MappedSongSearchQuery.LyricsSearchProvider = null;
 
-            _ = _lyricsSearchRunner.RunAsync(async (token) =>
+            _ = Task.Run(async () =>
             {
                 try
                 {
@@ -124,7 +116,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                     var checkCache = !_settingsService.AppSettings.GeneralSettings.IgnoreCacheWhenSearching;
 
-                    var result = await _lyricsSearchService.SearchAllAsync(songInfo, checkCache, token);
+                    var result = await _lyricsSearchService.SearchAllAsync(songInfo, checkCache);
 
                     _dispatcherQueue.TryEnqueue(() =>
                     {
@@ -133,7 +125,10 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
                 finally
                 {
-                    IsSearching = false;
+                    _dispatcherQueue.TryEnqueue(() =>
+                    {
+                        IsSearching = false;
+                    });
                 }
             });
         }
