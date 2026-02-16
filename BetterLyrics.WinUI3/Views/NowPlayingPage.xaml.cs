@@ -649,7 +649,6 @@ namespace BetterLyrics.WinUI3.Views
             _scrollChangedTimer?.Stop();
             _scrollChangedTimer = null;
 
-            ViewModel.IsActive = false;
             DataContext = null;
         }
 

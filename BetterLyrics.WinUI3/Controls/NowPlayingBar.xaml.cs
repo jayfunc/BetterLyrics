@@ -1,5 +1,6 @@
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.GSMTCService;
@@ -70,15 +71,6 @@ public sealed partial class NowPlayingBar : UserControl
 
     public static readonly DependencyProperty ShowPlaybackOrderButtonProperty =
         DependencyProperty.Register(nameof(ShowPlaybackOrderButton), typeof(bool), typeof(NowPlayingBar), new PropertyMetadata(false));
-
-    public PlaybackOrder PlaybackOrder
-    {
-        get { return (PlaybackOrder)GetValue(PlaybackOrderProperty); }
-        set { SetValue(PlaybackOrderProperty, value); }
-    }
-
-    public static readonly DependencyProperty PlaybackOrderProperty =
-        DependencyProperty.Register(nameof(PlaybackOrder), typeof(PlaybackOrder), typeof(NowPlayingBar), new PropertyMetadata(PlaybackOrder.RepeatAll));
 
     public bool ShowVolumeButton
     {
@@ -333,11 +325,10 @@ public sealed partial class NowPlayingBar : UserControl
 
     private void PlaybackOrderButton_Click(object sender, RoutedEventArgs e)
     {
-        PlaybackOrder = PlaybackOrder.GetNext();
+        ViewModel.AppSettings.MusicGallerySettings.PlaybackOrder = ViewModel.AppSettings.MusicGallerySettings.PlaybackOrder.GetNext();
     }
 
     private void UserControl_Unloaded(object sender, RoutedEventArgs e)
     {
-        ViewModel.IsActive = false;
     }
 }

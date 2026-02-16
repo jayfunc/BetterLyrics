@@ -190,19 +190,19 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<LyricsWindowSettingsControlViewModel>()
                     .AddSingleton<LyricsWindowSwitchControlViewModel>()
                     .AddSingleton<LyricsWindowSwitchWindowViewModel>()
-                    .AddSingleton<SettingsWindowViewModel>()
                     .AddSingleton<SystemTrayViewModel>()
                     .AddSingleton<SettingsPageViewModel>()
                     .AddSingleton<MusicGalleryPageViewModel>()
                     .AddSingleton<AboutControlViewModel>()
-                    .AddSingleton<MusicGalleryWindowViewModel>()
                     .AddSingleton<StatsDashboardControlViewModel>()
                     .AddSingleton<PlayQueueViewModel>()
                     .AddSingleton<PluginManagerControlViewModel>()
+                    .AddSingleton<LyricsSharePageViewModel>()
+                    .AddSingleton<MusicGalleryWindowViewModel>()
 
-                    .AddTransient<NowPlayingWindowViewModel>()
                     .AddTransient<NowPlayingPageViewModel>()
                     .AddTransient<NowPlayingBarViewModel>()
+
 
                     .BuildServiceProvider()
             );

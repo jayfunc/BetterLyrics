@@ -31,7 +31,7 @@
             x:Name="TopCommandGrid"
             VerticalAlignment="Top"
             Background="Transparent"
-            Opacity="{x:Bind ViewModel.TopCommandGridOpacity, Mode=OneWay}"
+            Opacity="0"
             PointerEntered="TopCommandGrid_PointerEntered"
             PointerExited="TopCommandGrid_PointerExited">
             <Grid.OpacityTransition>
@@ -50,36 +50,33 @@
                         <ScalarTransition />
                     </StackPanel.OpacityTransition>
 
-                    <!--  Music gallery  -->
                     <Button Click="MusicGalleryButton_Click" Style="{StaticResource TitleBarButtonStyle}">
                         <FontIcon
                             FontFamily="{StaticResource IconFontFamily}"
-                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                            FontSize="12"
                             Glyph="&#xE8F1;" />
                         <ToolTipService.ToolTip>
                             <ToolTip x:Uid="HostWindowMusicGalleryButtonToolTip" />
                         </ToolTipService.ToolTip>
                     </Button>
 
-                    <!--  Settings  -->
                     <Button
                         x:Name="SettingsWindowButton"
                         Click="SettingsWindowButton_Click"
                         Style="{StaticResource TitleBarButtonStyle}">
                         <FontIcon
                             FontFamily="{StaticResource IconFontFamily}"
-                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                            FontSize="12"
                             Glyph="&#xE713;" />
                         <ToolTipService.ToolTip>
                             <ToolTip x:Uid="HostWindowSettingsButtonToolTip" />
                         </ToolTipService.ToolTip>
                     </Button>
 
-                    <!--  Lyrics window switcher  -->
                     <Button Click="LyricsWindowSwitchButton_Click" Style="{StaticResource TitleBarButtonStyle}">
                         <FontIcon
                             FontFamily="{StaticResource IconFontFamily}"
-                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                            FontSize="12"
                             Glyph="&#xE8AB;" />
                         <ToolTipService.ToolTip>
                             <ToolTip x:Uid="LyricsWindowSwitchButtonToolTip" />
@@ -101,7 +98,6 @@
                         <ScalarTransition />
                     </StackPanel.OpacityTransition>
 
-                    <!--  Lock button  -->
                     <Button
                         x:Name="LockButton"
                         Click="LockButton_Click"
@@ -114,7 +110,6 @@
                         </Button.OpacityTransition>
                     </Button>
 
-                    <!--  Always on top  -->
                     <Button
                         x:Name="AOTButton"
                         Click="AOTButton_Click"
@@ -122,12 +117,12 @@
                         <Grid>
                             <FontIcon
                                 FontFamily="{StaticResource IconFontFamily}"
-                                FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                                FontSize="12"
                                 Glyph="&#xE840;" />
                             <FontIcon
                                 x:Name="PinFillFontIcon"
                                 FontFamily="{StaticResource IconFontFamily}"
-                                FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                                FontSize="12"
                                 Glyph="&#xE841;">
                                 <FontIcon.OpacityTransition>
                                     <ScalarTransition />
@@ -136,7 +131,6 @@
                         </Grid>
                     </Button>
 
-                    <!--  Fullscreen  -->
                     <Button
                         x:Name="FullscreenButton"
                         Click="FullscreenButton_Click"
@@ -145,12 +139,12 @@
                             <FontIcon
                                 x:Name="EnterFullscreenFontIcon"
                                 FontFamily="{StaticResource IconFontFamily}"
-                                FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                                FontSize="12"
                                 Glyph="&#xE740;" />
                             <FontIcon
                                 x:Name="ExitFullscreenFontIcon"
                                 FontFamily="{StaticResource IconFontFamily}"
-                                FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                                FontSize="12"
                                 Glyph="&#xE73F;">
                                 <FontIcon.OpacityTransition>
                                     <ScalarTransition />
@@ -159,18 +153,16 @@
                         </Grid>
                     </Button>
 
-                    <!--  Window Minimize  -->
                     <Button
                         x:Name="MinimizeButton"
                         Click="MinimizeButton_Click"
                         Style="{StaticResource TitleBarButtonStyle}">
                         <FontIcon
                             FontFamily="{StaticResource IconFontFamily}"
-                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                            FontSize="12"
                             Glyph="&#xE738;" />
                     </Button>
 
-                    <!--  Window Maxmize  -->
                     <Button
                         x:Name="MaximizeButton"
                         Click="MaximizeButton_Click"
@@ -179,7 +171,7 @@
                             <FontIcon
                                 x:Name="EnterMaximizeFontIcon"
                                 FontFamily="{StaticResource IconFontFamily}"
-                                FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                                FontSize="12"
                                 Glyph="&#xE71A;">
                                 <FontIcon.OpacityTransition>
                                     <ScalarTransition />
@@ -188,7 +180,7 @@
                             <FontIcon
                                 x:Name="ExitMaximizeFontIcon"
                                 FontFamily="{StaticResource IconFontFamily}"
-                                FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                                FontSize="12"
                                 Glyph="&#xE744;">
                                 <FontIcon.OpacityTransition>
                                     <ScalarTransition />
@@ -197,14 +189,13 @@
                         </Grid>
                     </Button>
 
-                    <!--  Window Close  -->
                     <Button
                         x:Name="CloseButton"
                         Click="CloseButton_Click"
                         Style="{StaticResource TitleBarButtonStyle}">
                         <FontIcon
                             FontFamily="{StaticResource IconFontFamily}"
-                            FontSize="{x:Bind ViewModel.TitleBarFontSize, Mode=OneWay}"
+                            FontSize="12"
                             Glyph="&#xE711;" />
                     </Button>
 
@@ -224,6 +215,7 @@
                     <Button.OpacityTransition>
                         <ScalarTransition />
                     </Button.OpacityTransition>
+
                     <Button.Flyout>
                         <Flyout FlyoutPresenterStyle="{StaticResource FlyoutGhostStyle}" ShouldConstrainToRootBounds="False">
                             <Grid
@@ -232,6 +224,7 @@
                                 Height="38" />
                         </Flyout>
                     </Button.Flyout>
+
                 </Button>
             </Grid>
 
@@ -250,8 +243,6 @@
             Padding="3"
             HorizontalAlignment="Center"
             VerticalAlignment="Center">
-
-            <!--  Unlock button  -->
             <Button
                 x:Name="UnlockButton"
                 Click="UnlockButton_Click"

@@ -34,7 +34,7 @@ public sealed partial class DemoWindowGrid : UserControl
     {
         var data = (LyricsWindowStatus)(((FrameworkElement)sender).DataContext);
         var window = WindowHook.GetWindows<NowPlayingWindow>().FirstOrDefault(x => x.LyricsWindowStatus == data);
-        window?.HideWindow();
+        window?.CloseWindow();
     }
 
     private void OpenButton_Click(object sender, RoutedEventArgs e)
@@ -51,7 +51,7 @@ public sealed partial class DemoWindowGrid : UserControl
             var openedWindows = WindowHook.GetWindows<NowPlayingWindow>();
             foreach (var item in openedWindows.Where(x => x.LyricsWindowStatus != status))
             {
-                item.HideWindow(false);
+                item.CloseWindow();
             }
             WindowHook.OpenOrShowWindow<NowPlayingWindow>(status);
         }

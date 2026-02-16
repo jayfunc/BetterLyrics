@@ -1,6 +1,7 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.WinUI;
@@ -40,7 +41,7 @@ namespace BetterLyrics.WinUI3.Hooks
             window.Hide();
         }
 
-        public static void CloseWindow(this Window window)
+        public static void PrepareWindowClosing(this Window window)
         {
             if (window is NowPlayingWindow nowPlayingWindow)
             {
@@ -52,6 +53,12 @@ namespace BetterLyrics.WinUI3.Hooks
                 nowPlayingWindow.LyricsWindowStatus.WindowStatus = WindowStatus.Closed;
             }
             _activeWindows.Remove(window);
+        }
+
+
+        public static void CloseWindow(this Window window)
+        {
+            window.PrepareWindowClosing();
             window.Close();
         }
 
@@ -147,6 +154,10 @@ namespace BetterLyrics.WinUI3.Hooks
                 {
                     window = new SplashWindow();
                 }
+                else if (typeof(T) == typeof(LyricsShareWindow))
+                {
+                    window = new LyricsShareWindow();
+                }
                 else
                 {
                     throw new ArgumentException("Unsupported window type", nameof(T));
@@ -168,8 +179,6 @@ namespace BetterLyrics.WinUI3.Hooks
 
                 if (typeof(T) == typeof(NowPlayingWindow))
                 {
-                    var hwnd = WindowNative.GetWindowHandle(castedWindow);
-
                     var lyricsWindow = (NowPlayingWindow)window;
                     lyricsWindow.InitStatus();
                     lyricsWindow.InitFgWindowWatcher();
@@ -239,7 +248,13 @@ namespace BetterLyrics.WinUI3.Hooks
 
         private static void WindowHelper_Closed(object sender, WindowEventArgs args)
         {
+            var window = (Window)sender;
+            window.Closed -= WindowHelper_Closed;
+            
             _activeWindows.Remove(sender);
+
+            MemoryLeakDetector.Track(window);
+            MemoryLeakDetector.ScheduleCheck(4000);
         }
 
         public static void SetIsWorkArea(this NowPlayingWindow window, bool enable)

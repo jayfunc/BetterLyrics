@@ -114,7 +114,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                         {
                             if (item != latest)
                             {
-                                item.HideWindow(false);
+                                item.CloseWindow();
                             }
                         }
                     }

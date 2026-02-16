@@ -46,19 +46,6 @@ public sealed partial class SystemTrayWindow : Window,
         InitShortcuts();
 
         EnsureLyricsWindowStatus();
-
-#if DEBUG
-        Debug.WriteLine("=== Romaji to Kanji Conversion Tests ===");
-        string[] inputs = {
-            "",
-        };
-
-        foreach (var input in inputs)
-        {
-            string result = LanguageHelper.ConvertRomajiToKanji(input);
-            Debug.WriteLine($"{input} -> {result}");
-        }
-#endif
     }
 
     private void InitShortcuts()

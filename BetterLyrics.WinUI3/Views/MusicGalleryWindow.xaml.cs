@@ -27,15 +27,17 @@ namespace BetterLyrics.WinUI3.Views
          IRecipient<PropertyChangedMessage<ElementTheme>>,
          IRecipient<PropertyChangedMessage<PaletteGeneratorType>>
     {
-        public MusicGalleryWindowViewModel ViewModel { get; private set; } = Ioc.Default.GetRequiredService<MusicGalleryWindowViewModel>();
+        public MusicGalleryWindowViewModel ViewModel { get; private set; }
 
         private readonly IGSMTCService _gsmtcService = Ioc.Default.GetRequiredService<IGSMTCService>();
 
         public MusicGalleryWindow()
         {
             InitializeComponent();
-
+            ViewModel = Ioc.Default.GetRequiredService<MusicGalleryWindowViewModel>();
             this.Init("MusicGalleryPageTitle");
+
+            NowPlayingPage.LyricsWindowStatus = ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus;
 
             AppWindow.Closing += AppWindow_Closing;
 
@@ -62,40 +64,7 @@ namespace BetterLyrics.WinUI3.Views
             }
             else
             {
-                this.HideWindow();
-            }
-        }
-
-        public void Receive(PropertyChangedMessage<BitmapImage?> message)
-        {
-            if (message.Sender is IGSMTCService)
-            {
-                if (message.PropertyName == nameof(IGSMTCService.AlbumArtBitmapImage))
-                {
-                    UpdateAlbumArtThemeColors();
-                }
-            }
-        }
-
-        public void Receive(PropertyChangedMessage<ElementTheme> message)
-        {
-            if (message.Sender == ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.LyricsBackgroundSettings)
-            {
-                if (message.PropertyName == nameof(LyricsBackgroundSettings.LyricsBackgroundTheme))
-                {
-                    UpdateAlbumArtThemeColors();
-                }
-            }
-        }
-
-        public void Receive(PropertyChangedMessage<PaletteGeneratorType> message)
-        {
-            if (message.Sender == ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.LyricsBackgroundSettings)
-            {
-                if (message.PropertyName == nameof(LyricsBackgroundSettings.PaletteGeneratorType))
-                {
-                    UpdateAlbumArtThemeColors();
-                }
+                this.PrepareWindowClosing();
             }
         }
 
@@ -142,7 +111,45 @@ namespace BetterLyrics.WinUI3.Views
 
         private void Window_Closed(object sender, WindowEventArgs args)
         {
+            this.Closed -= Window_Closed;
+
             WeakReferenceMessenger.Default.UnregisterAll(this);
+
+            this.AppWindow.Closing -= AppWindow_Closing;
         }
+
+        public void Receive(PropertyChangedMessage<BitmapImage?> message)
+        {
+            if (message.Sender is IGSMTCService)
+            {
+                if (message.PropertyName == nameof(IGSMTCService.AlbumArtBitmapImage))
+                {
+                    UpdateAlbumArtThemeColors();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<ElementTheme> message)
+        {
+            if (message.Sender == ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.LyricsBackgroundSettings)
+            {
+                if (message.PropertyName == nameof(LyricsBackgroundSettings.LyricsBackgroundTheme))
+                {
+                    UpdateAlbumArtThemeColors();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<PaletteGeneratorType> message)
+        {
+            if (message.Sender == ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.LyricsBackgroundSettings)
+            {
+                if (message.PropertyName == nameof(LyricsBackgroundSettings.PaletteGeneratorType))
+                {
+                    UpdateAlbumArtThemeColors();
+                }
+            }
+        }
+
     }
 }
