@@ -1,4 +1,6 @@
-﻿using NAudio.Dsp;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using NAudio.Dsp;
 using NAudio.Wave;
 using System;
 using System.Runtime.InteropServices;
@@ -7,6 +9,7 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public partial class SpectrumAnalyzer : IDisposable
     {
+        private readonly ILogger<SpectrumAnalyzer> _logger;
         private readonly object _lock = new();
         private WasapiLoopbackCapture? _capture;
 
@@ -65,6 +68,8 @@ namespace BetterLyrics.WinUI3.Helper
 
         public SpectrumAnalyzer()
         {
+            _logger = Ioc.Default.GetRequiredService<ILogger<SpectrumAnalyzer>>();
+
             _m = (int)Math.Log(_fftLength, 2);
             _fftLeftBuffer = new float[_fftLength];
             _fftLeftData = new Complex[_fftLength];
@@ -88,20 +93,15 @@ namespace BetterLyrics.WinUI3.Helper
                 _capture = new WasapiLoopbackCapture();
                 _sampleRate = _capture.WaveFormat.SampleRate;
 
-                // 初始化数组
                 lock (_lock)
                 {
                     _currentSpectrum = new float[BarCount];
                     SmoothSpectrum = new float[BarCount];
 
-                    // 计算有效频率范围的数据长度 (这里保留你原本的逻辑，取一半FFT长度作为单声道有效数据)
-                    // Nyquist频率是 SampleRate / 2。FFT结果的后半部分是镜像，通常只需要前一半。
                     int effectiveLength = _fftLength / 2;
 
-                    // Left + Right 拼接后的总长度
                     _fullSpectrumData = new float[effectiveLength * 2];
 
-                    // 预计算频率补偿表 (Lookup Table)
                     PrecomputeCompensation(effectiveLength);
                 }
 
@@ -114,7 +114,7 @@ namespace BetterLyrics.WinUI3.Helper
             catch (Exception ex)
             {
                 // 建议记录日志
-                System.Diagnostics.Debug.WriteLine($"StartCapture Failed: {ex.Message}");
+                _logger.LogError("StartCapture: {Error}", ex.Message);
             }
         }
 

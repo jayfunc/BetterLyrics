@@ -411,6 +411,9 @@
   <data name="LyricsSharePageGroupRetro.Text" xml:space="preserve">
     <value>Digital Retro</value>
   </data>
+  <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
+    <value>Image Quality</value>
+  </data>
   <data name="LyricsSharePageSaveImage.Content" xml:space="preserve">
     <value>Save Image</value>
   </data>

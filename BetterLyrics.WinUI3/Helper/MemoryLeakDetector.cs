@@ -1,14 +1,18 @@
-﻿using System;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace BetterLyrics.WinUI3.Helper
 {
-    public static class MemoryLeakDetector
+    public class MemoryLeakDetector
     {
-        private static readonly List<(WeakReference Reference, string Name)> _watchedObjects = new();
+        private static readonly List<(WeakReference Reference, string Name)> _watchedObjects = [];
+        private static readonly ILogger<MemoryLeakDetector> _logger = Ioc.Default.GetRequiredService<ILogger<MemoryLeakDetector>>();
 
         public static void Track(object target)
         {
@@ -25,7 +29,7 @@ namespace BetterLyrics.WinUI3.Helper
                 _watchedObjects.Add((new WeakReference(target), name));
             }
 
-            Debug.WriteLine($"[MemoryLeakDetector] 开始监视: {name}");
+            _logger.LogInformation("[MemoryLeakDetector] GC is preparing: {Name}", name);
         }
 
         public static async Task CheckLeaksAsync()
@@ -46,7 +50,7 @@ namespace BetterLyrics.WinUI3.Helper
                     if (item.Reference.IsAlive)
                     {
                         aliveObjects.Add(item);
-                        Debug.WriteLine($"[警告 - 可能泄漏] 对象仍存活: {item.Name}");
+                        _logger.LogWarning("[MemoryLeakDetector] GC failed, object is still alive: {Name}", item.Name);
                     }
                     else
                     {
@@ -57,7 +61,7 @@ namespace BetterLyrics.WinUI3.Helper
                 foreach (var dead in deadObjects)
                 {
                     _watchedObjects.Remove(dead);
-                    Debug.WriteLine($"[成功回收] {dead.Name}");
+                    _logger.LogInformation("[MemoryLeakDetector] GC completed: {Name}", dead.Name);
                 }
             }
         }

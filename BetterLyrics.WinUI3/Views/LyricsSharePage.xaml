@@ -6,8 +6,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dev="using:DevWinUI"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
+    xmlns:lyricsmodels="using:BetterLyrics.WinUI3.Models.Lyrics"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BetterLyrics.WinUI3.Models"
+    xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -29,7 +31,7 @@
 
                     <ItemsControl ItemsSource="{x:Bind SelectedLyrics}">
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="lyricsmodels:LyricsLine">
                                 <TextBlock
                                     Margin="0,0,0,24"
                                     FontFamily="Segoe UI"
@@ -37,7 +39,7 @@
                                     FontWeight="Bold"
                                     Foreground="Black"
                                     LineHeight="40"
-                                    Text="{Binding}"
+                                    Text="{x:Bind Text}"
                                     TextAlignment="Left"
                                     TextWrapping="Wrap" />
                             </DataTemplate>
@@ -186,7 +188,7 @@
                         VerticalAlignment="Center"
                         ItemsSource="{x:Bind SelectedLyrics}">
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="lyricsmodels:LyricsLine">
                                 <TextBlock
                                     Margin="0,0,0,16"
                                     FontFamily="Segoe UI"
@@ -195,7 +197,7 @@
                                     Foreground="#F0F0F0"
                                     LineHeight="32"
                                     Opacity="0.95"
-                                    Text="{Binding}"
+                                    Text="{x:Bind Text}"
                                     TextAlignment="Center"
                                     TextWrapping="Wrap" />
                             </DataTemplate>
@@ -298,7 +300,7 @@
                             Margin="0,0,0,20"
                             ItemsSource="{x:Bind SelectedLyrics}">
                             <ItemsControl.ItemTemplate>
-                                <DataTemplate>
+                                <DataTemplate x:DataType="lyricsmodels:LyricsLine">
                                     <TextBlock
                                         Margin="0,0,0,8"
                                         CharacterSpacing="10"
@@ -307,7 +309,7 @@
                                         FontWeight="Bold"
                                         Foreground="#2B2B2B"
                                         LineHeight="28"
-                                        Text="{Binding}"
+                                        Text="{x:Bind Text}"
                                         TextAlignment="Center"
                                         TextWrapping="Wrap" />
                                 </DataTemplate>
@@ -421,14 +423,14 @@
                         Margin="24,30"
                         ItemsSource="{x:Bind SelectedLyrics}">
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="lyricsmodels:LyricsLine">
                                 <TextBlock
                                     Margin="0,0,0,12"
                                     FontFamily="Courier New"
                                     FontSize="18"
                                     Foreground="#444"
                                     LineHeight="28"
-                                    Text="{Binding}"
+                                    Text="{x:Bind Text}"
                                     TextWrapping="Wrap" />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -552,14 +554,14 @@
 
                     <ItemsControl Grid.Row="1" ItemsSource="{x:Bind SelectedLyrics}">
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="lyricsmodels:LyricsLine">
                                 <TextBlock
                                     Margin="0,0,0,12"
                                     FontFamily="Georgia"
                                     FontSize="18"
                                     Foreground="#333"
                                     LineHeight="30"
-                                    Text="{Binding}"
+                                    Text="{x:Bind Text}"
                                     TextWrapping="Wrap" />
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
@@ -643,7 +645,7 @@
 
                         <ItemsControl Margin="20,30" ItemsSource="{x:Bind SelectedLyrics}">
                             <ItemsControl.ItemTemplate>
-                                <DataTemplate>
+                                <DataTemplate x:DataType="lyricsmodels:LyricsLine">
                                     <TextBlock
                                         Margin="0,0,0,16"
                                         FontFamily="Arial"
@@ -651,7 +653,7 @@
                                         FontWeight="Bold"
                                         Foreground="Black"
                                         LineHeight="28"
-                                        Text="{Binding}"
+                                        Text="{x:Bind Text}"
                                         TextAlignment="Left"
                                         TextWrapping="Wrap" />
                                 </DataTemplate>
@@ -700,402 +702,574 @@
                 x:Name="QQCardRoot"
                 Width="450"
                 MinHeight="600"
-                Background="#D6E9F8">
-                <Border BorderBrush="#08519C" BorderThickness="1">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="26" />
-                            <RowDefinition Height="*" />
-                            <RowDefinition Height="36" />
-                        </Grid.RowDefinitions>
+                Background="#0055e4"
+                CornerRadius="8,8,0,0">
+                <Border
+                    Background="#dfdfdf"
+                    BorderBrush="#0055e4"
+                    BorderThickness="2,0,2,2">
+                    <Border
+                        Background="#dfdfdf"
+                        BorderBrush="#338bfa"
+                        BorderThickness="0,2,0,0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="36" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
 
-                        <Grid Grid.Row="0">
-                            <Grid.Background>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                    <GradientStop Offset="0" Color="#00309C" />
-                                    <GradientStop Offset="1" Color="#5CA7F6" />
-                                </LinearGradientBrush>
-                            </Grid.Background>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
+                            <Border
+                                Grid.Row="0"
+                                BorderBrush="#0d45d9"
+                                BorderThickness="0,0,0,2">
+                                <Grid Grid.Row="0" Background="#0269fc">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
 
-                            <Image
-                                Width="16"
-                                Height="16"
-                                Margin="4,0"
-                                Source="{x:Bind CoverImage}" />
-
-                            <StackPanel
-                                Grid.Column="1"
-                                Margin="4,0,0,0"
-                                VerticalAlignment="Center"
-                                Orientation="Horizontal">
-                                <TextBlock
-                                    FontFamily="SimSun"
-                                    FontSize="12"
-                                    FontWeight="Bold"
-                                    Foreground="White"
-                                    Text="{x:Bind Artist}" />
-                                <TextBlock
-                                    FontFamily="SimSun"
-                                    FontSize="12"
-                                    Foreground="White"
-                                    Text=" - 发送消息" />
-                            </StackPanel>
-
-                            <StackPanel
-                                Grid.Column="2"
-                                Margin="0,2,2,0"
-                                Orientation="Horizontal">
-                                <Border
-                                    Width="16"
-                                    Height="16"
-                                    Margin="0,0,2,0"
-                                    Background="#20FFFFFF"
-                                    BorderBrush="White"
-                                    BorderThickness="1"
-                                    CornerRadius="2">
-                                    <TextBlock
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        FontFamily="Marlett"
-                                        FontSize="10"
-                                        Foreground="White"
-                                        Text="0" />
-                                </Border>
-                                <Border
-                                    Width="16"
-                                    Height="16"
-                                    Background="#D54739"
-                                    BorderBrush="White"
-                                    BorderThickness="1"
-                                    CornerRadius="2">
-                                    <TextBlock
-                                        HorizontalAlignment="Center"
-                                        VerticalAlignment="Center"
-                                        FontFamily="Marlett"
-                                        FontSize="10"
-                                        Foreground="White"
-                                        Text="r" />
-                                </Border>
-                            </StackPanel>
-                        </Grid>
-
-                        <Grid Grid.Row="1" Margin="3,2,3,0">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="140" />
-                            </Grid.ColumnDefinitions>
-
-                            <Grid Grid.Column="0" Margin="0,0,2,0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="26" />
-                                    <RowDefinition Height="80" />
-                                </Grid.RowDefinitions>
-
-                                <Border
-                                    Grid.Row="0"
-                                    Padding="4"
-                                    Background="#F4F8FB"
-                                    BorderBrush="#8CA0B4"
-                                    BorderThickness="0,0,0,1">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <Border
-                                            Width="32"
-                                            Height="32"
-                                            Background="White"
-                                            BorderBrush="#8CA0B4"
-                                            BorderThickness="1">
-                                            <Image Source="{x:Bind CoverImage}" />
-                                        </Border>
-                                        <StackPanel
-                                            Grid.Column="1"
-                                            Margin="8,0,0,0"
-                                            VerticalAlignment="Center">
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock
-                                                    FontFamily="SimSun"
-                                                    FontSize="12"
-                                                    Foreground="Black"
-                                                    Text="QQ#: " />
-                                                <TextBlock
-                                                    FontFamily="SimSun"
-                                                    FontSize="12"
-                                                    Foreground="Black"
-                                                    Text="88888888" />
-                                            </StackPanel>
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock
-                                                    FontFamily="SimSun"
-                                                    FontSize="12"
-                                                    Foreground="Black"
-                                                    Text="昵称: " />
-                                                <TextBlock
-                                                    FontFamily="SimSun"
-                                                    FontSize="12"
-                                                    Foreground="Black"
-                                                    Text="{x:Bind Title}" />
-                                            </StackPanel>
-                                        </StackPanel>
-                                    </Grid>
-                                </Border>
-
-                                <Border
-                                    Grid.Row="1"
-                                    Background="White"
-                                    BorderBrush="#8CA0B4"
-                                    BorderThickness="0,0,0,1">
-                                    <ItemsControl Padding="4" ItemsSource="{x:Bind SelectedLyrics}">
-                                        <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
-                                                <StackPanel Margin="0,0,0,8">
-                                                    <StackPanel Margin="0,0,0,2" Orientation="Horizontal">
-                                                        <TextBlock
-                                                            FontFamily="SimSun"
-                                                            FontSize="12"
-                                                            Foreground="#0000FF"
-                                                            Text="{Binding DataContext.Artist, ElementName=QQCardRoot}" />
-                                                        <TextBlock
-                                                            FontFamily="SimSun"
-                                                            FontSize="12"
-                                                            Foreground="#008000"
-                                                            Text=" 15:30:44" />
-                                                    </StackPanel>
-                                                    <TextBlock
-                                                        Margin="8,0,0,0"
-                                                        FontFamily="SimSun"
-                                                        FontSize="13"
-                                                        Foreground="Black"
-                                                        LineHeight="18"
-                                                        Text="{Binding}"
-                                                        TextWrapping="Wrap" />
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </ItemsControl.ItemTemplate>
-                                    </ItemsControl>
-                                </Border>
-
-                                <Border
-                                    Grid.Row="2"
-                                    Background="#D6E9F8"
-                                    BorderBrush="#8CA0B4"
-                                    BorderThickness="0,0,0,1">
-                                    <StackPanel
+                                    <Image
+                                        Width="16"
+                                        Height="16"
                                         Margin="4,0"
-                                        VerticalAlignment="Center"
-                                        Orientation="Horizontal"
-                                        Spacing="10">
-                                        <StackPanel Orientation="Horizontal" Spacing="2">
-                                            <FontIcon
-                                                FontSize="12"
-                                                Foreground="#333"
-                                                Glyph="&#xE8D2;" />
-                                            <TextBlock
-                                                FontFamily="SimSun"
-                                                FontSize="12"
-                                                Foreground="#333"
-                                                Text="字体" />
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Spacing="2">
-                                            <FontIcon
-                                                FontSize="12"
-                                                Foreground="#333"
-                                                Glyph="&#xE76E;" />
-                                            <TextBlock
-                                                FontFamily="SimSun"
-                                                FontSize="12"
-                                                Foreground="#333"
-                                                Text="表情" />
-                                        </StackPanel>
-                                        <StackPanel Orientation="Horizontal" Spacing="2">
-                                            <FontIcon
-                                                FontSize="12"
-                                                Foreground="#333"
-                                                Glyph="&#xE870;" />
-                                            <TextBlock
-                                                FontFamily="SimSun"
-                                                FontSize="12"
-                                                Foreground="#333"
-                                                Text="手机短信" />
-                                        </StackPanel>
+                                        VerticalAlignment="Bottom"
+                                        Source="{x:Bind CoverImage}" />
+
+                                    <StackPanel
+                                        Grid.Column="1"
+                                        Margin="2,0,0,0"
+                                        VerticalAlignment="Bottom"
+                                        Orientation="Horizontal">
+                                        <TextBlock
+                                            FontFamily="SimSun"
+                                            FontSize="12"
+                                            FontWeight="Bold"
+                                            Foreground="White"
+                                            Text="{x:Bind Artist}" />
+                                        <TextBlock
+                                            FontFamily="SimSun"
+                                            FontSize="12"
+                                            FontWeight="Bold"
+                                            Foreground="White"
+                                            Text="-发送消息" />
                                     </StackPanel>
-                                </Border>
 
-                                <Border Grid.Row="3" Background="White">
-                                    <TextBlock
-                                        Margin="4"
-                                        FontFamily="SimSun"
-                                        FontSize="12"
-                                        Foreground="#CCC"
-                                        Text="BetterLyrics..." />
-                                </Border>
-                            </Grid>
+                                    <StackPanel
+                                        Grid.Column="2"
+                                        Margin="0,4,2,0"
+                                        Orientation="Horizontal">
+                                        <Border
+                                            Width="16"
+                                            Height="16"
+                                            Margin="0,0,2,0"
+                                            Background="#20FFFFFF"
+                                            BorderBrush="White"
+                                            BorderThickness="1"
+                                            CornerRadius="2">
+                                            <TextBlock
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                FontFamily="Marlett"
+                                                FontSize="10"
+                                                Foreground="White"
+                                                Text="&#x0030;" />
+                                        </Border>
+                                        <Border
+                                            Width="16"
+                                            Height="16"
+                                            Margin="0,0,2,0"
+                                            Background="#225feb"
+                                            BorderBrush="#5799fc"
+                                            BorderThickness="1"
+                                            CornerRadius="2">
+                                            <TextBlock
+                                                Margin="1.5,1,0,0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                FontFamily="Marlett"
+                                                FontSize="10"
+                                                Foreground="#8a9de7"
+                                                Text="&#x0031;" />
+                                        </Border>
+                                        <Border
+                                            Width="16"
+                                            Height="16"
+                                            Background="#D54739"
+                                            BorderBrush="White"
+                                            BorderThickness="1"
+                                            CornerRadius="2">
+                                            <TextBlock
+                                                Margin="1,0,0,0"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                FontFamily="Marlett"
+                                                FontSize="10"
+                                                Foreground="White"
+                                                Text="&#x0072;" />
+                                        </Border>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
 
-                            <Grid Grid.Column="1">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-
+                            <Grid Grid.Row="1" Padding="4,0,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
                                 <Border
-                                    Grid.Row="0"
-                                    Height="18"
-                                    Padding="4,0"
-                                    Background="#5CA7F6">
-                                    <TextBlock
-                                        VerticalAlignment="Center"
-                                        FontFamily="SimSun"
-                                        FontSize="11"
-                                        Foreground="White"
-                                        Text="QQ秀" />
-                                </Border>
-
-                                <Border
-                                    Grid.Row="1"
+                                    Width="32"
+                                    Height="32"
                                     Background="White"
-                                    BorderBrush="#8CA0B4"
-                                    BorderThickness="1">
-                                    <Image Source="{x:Bind CoverImage}" Stretch="Uniform" />
+                                    BorderBrush="#6c6d6d"
+                                    BorderThickness="1.5,1.5,0,0">
+                                    <Image Source="{x:Bind CoverImage}" Stretch="UniformToFill" />
                                 </Border>
-
                                 <StackPanel
-                                    Grid.Row="2"
-                                    Padding="4"
-                                    Background="#5CA7F6">
-                                    <TextBlock
-                                        Margin="0,0,0,4"
-                                        FontFamily="SimSun"
-                                        FontSize="11"
-                                        Foreground="White"
-                                        Text="您可以..." />
-                                    <StackPanel Margin="0,0,0,2" Orientation="Horizontal">
-                                        <FontIcon
-                                            Margin="0,0,4,0"
-                                            FontSize="10"
-                                            Foreground="White"
-                                            Glyph="&#xE714;" />
+                                    Grid.Column="1"
+                                    Margin="8,0,0,0"
+                                    VerticalAlignment="Center"
+                                    Spacing="3">
+                                    <StackPanel Orientation="Horizontal">
                                         <TextBlock
                                             FontFamily="SimSun"
-                                            FontSize="11"
-                                            Foreground="White"
-                                            Text="VQQ 视频聊天" />
-                                    </StackPanel>
-                                    <StackPanel Margin="0,0,0,2" Orientation="Horizontal">
-                                        <FontIcon
-                                            Margin="0,0,4,0"
-                                            FontSize="10"
-                                            Foreground="White"
-                                            Glyph="&#xE720;" />
+                                            FontSize="12"
+                                            Foreground="Black"
+                                            Text="QQ#: " />
                                         <TextBlock
                                             FontFamily="SimSun"
-                                            FontSize="11"
-                                            Foreground="White"
-                                            Text="语音聊天" />
+                                            FontSize="12"
+                                            Foreground="Black"
+                                            Text="88888888" />
                                     </StackPanel>
-                                    <TextBlock
-                                        Margin="14,0,0,2"
-                                        FontFamily="SimSun"
-                                        FontSize="11"
-                                        Foreground="#FFFF00"
-                                        Text="申请QQ号码" />
-                                    <StackPanel Margin="0,0,0,2" Orientation="Horizontal">
-                                        <FontIcon
-                                            Margin="0,0,4,0"
-                                            FontSize="10"
-                                            Foreground="#FFFF00"
-                                            Glyph="&#xE896;" />
+                                    <StackPanel Orientation="Horizontal">
                                         <TextBlock
                                             FontFamily="SimSun"
-                                            FontSize="11"
-                                            Foreground="White"
-                                            Text="发送文件" />
+                                            FontSize="12"
+                                            Foreground="Black"
+                                            Text="昵称: " />
+                                        <TextBlock
+                                            FontFamily="SimSun"
+                                            FontSize="12"
+                                            Foreground="Black"
+                                            Text="{x:Bind Title}" />
                                     </StackPanel>
-                                    <TextBlock
-                                        Margin="14,0,0,2"
-                                        FontFamily="SimSun"
-                                        FontSize="11"
-                                        Foreground="White"
-                                        Text="其他..." />
                                 </StackPanel>
                             </Grid>
-                        </Grid>
 
-                        <Grid Grid.Row="2">
-                            <StackPanel
-                                Margin="6,0"
-                                HorizontalAlignment="Left"
-                                VerticalAlignment="Center"
-                                Orientation="Horizontal"
-                                Spacing="6">
-                                <Border
-                                    Padding="6,2"
-                                    Background="#E1E1E1"
-                                    BorderBrush="#666"
-                                    BorderThickness="1"
-                                    CornerRadius="2">
-                                    <TextBlock
-                                        FontFamily="SimSun"
-                                        FontSize="12"
-                                        Foreground="Black"
-                                        Text="聊天记录" />
-                                </Border>
-                                <Border
-                                    Padding="6,2"
-                                    Background="#E1E1E1"
-                                    BorderBrush="#666"
-                                    BorderThickness="1"
-                                    CornerRadius="2">
-                                    <TextBlock
-                                        FontFamily="SimSun"
-                                        FontSize="12"
-                                        Foreground="Black"
-                                        Text="消息模式" />
-                                </Border>
-                            </StackPanel>
+                            <Grid Grid.Row="2" Margin="3">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="140" />
+                                </Grid.ColumnDefinitions>
 
-                            <StackPanel
-                                Margin="0,0,6,0"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Center"
-                                Orientation="Horizontal"
-                                Spacing="6">
-                                <Border
-                                    Padding="8,2"
-                                    Background="#E1E1E1"
-                                    BorderBrush="#666"
-                                    BorderThickness="1"
-                                    CornerRadius="2">
-                                    <TextBlock
-                                        FontFamily="SimSun"
-                                        FontSize="12"
-                                        Foreground="Black"
-                                        Text="取消发送" />
-                                </Border>
-                                <Border
-                                    Padding="8,2"
-                                    Background="#E1E1E1"
-                                    BorderBrush="#666"
-                                    BorderThickness="1"
-                                    CornerRadius="2">
-                                    <TextBlock
-                                        FontFamily="SimSun"
-                                        FontSize="12"
-                                        Foreground="Black"
-                                        Text="送讯息" />
-                                </Border>
-                            </StackPanel>
+                                <Grid Grid.Column="0" Margin="0,0,3,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="26" />
+                                        <RowDefinition Height="80" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <Border
+                                        Grid.Row="0"
+                                        Background="White"
+                                        BorderBrush="#ababab"
+                                        BorderThickness="1"
+                                        CornerRadius="4,4,0,0">
+                                        <ItemsControl Margin="12,8" ItemsSource="{x:Bind SelectedLyrics}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate x:DataType="lyricsmodels:LyricsLine">
+                                                    <StackPanel Margin="0,0,0,8">
+                                                        <StackPanel Margin="0,0,0,2" Orientation="Horizontal">
+                                                            <TextBlock
+                                                                FontFamily="SimSun"
+                                                                FontSize="12"
+                                                                Foreground="#0000FF"
+                                                                Text="{Binding DataContext.Artist, ElementName=QQCardRoot}" />
+                                                            <TextBlock
+                                                                FontFamily="SimSun"
+                                                                FontSize="12"
+                                                                Foreground="#008000"
+                                                                Text=" 15:30:44" />
+                                                        </StackPanel>
+                                                        <TextBlock
+                                                            Margin="8,0,0,0"
+                                                            FontFamily="SimSun"
+                                                            FontSize="13"
+                                                            Foreground="Black"
+                                                            LineHeight="18"
+                                                            Text="{x:Bind Text}"
+                                                            TextWrapping="Wrap" />
+                                                    </StackPanel>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </Border>
+
+                                    <Border
+                                        Grid.Row="1"
+                                        Background="#6281d0"
+                                        BorderBrush="#ababab"
+                                        BorderThickness="1,0">
+                                        <Grid>
+                                            <StackPanel
+                                                Margin="8,0"
+                                                VerticalAlignment="Center"
+                                                Orientation="Horizontal"
+                                                Spacing="12">
+                                                <StackPanel Orientation="Horizontal" Spacing="2">
+                                                    <Grid>
+                                                        <FontIcon
+                                                            FontSize="16"
+                                                            Foreground="Black"
+                                                            Glyph="&#xE8D2;"
+                                                            Translation="1,0,0" />
+                                                        <FontIcon
+                                                            FontSize="16"
+                                                            Foreground="#eba90f"
+                                                            Glyph="&#xE8D2;" />
+                                                    </Grid>
+                                                    <TextBlock
+                                                        VerticalAlignment="Bottom"
+                                                        FontFamily="SimSun"
+                                                        FontSize="12"
+                                                        Foreground="White"
+                                                        Text="字体" />
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Spacing="2">
+                                                    <Grid>
+                                                        <Ellipse
+                                                            Width="16"
+                                                            Height="16"
+                                                            Fill="#fbe22c" />
+                                                        <FontIcon
+                                                            FontSize="16"
+                                                            Foreground="#6c6f65"
+                                                            Glyph="&#xE76E;" />
+                                                    </Grid>
+                                                    <TextBlock
+                                                        VerticalAlignment="Bottom"
+                                                        FontFamily="SimSun"
+                                                        FontSize="12"
+                                                        Foreground="White"
+                                                        Text="表情" />
+                                                </StackPanel>
+                                                <StackPanel Orientation="Horizontal" Spacing="2">
+                                                    <Grid RenderTransformOrigin="0.5,0.5">
+                                                        <Grid.RenderTransform>
+                                                            <RotateTransform Angle="-30" />
+                                                        </Grid.RenderTransform>
+                                                        <Rectangle
+                                                            Width="6"
+                                                            Height="16"
+                                                            Fill="#cd9f12" />
+                                                        <FontIcon
+                                                            FontFamily="{StaticResource IconFontFamily}"
+                                                            FontSize="16"
+                                                            Foreground="#6c6f65"
+                                                            Glyph="&#xE8EA;" />
+                                                    </Grid>
+                                                    <TextBlock
+                                                        VerticalAlignment="Bottom"
+                                                        FontFamily="SimSun"
+                                                        FontSize="12"
+                                                        Foreground="White"
+                                                        Text="手机短信" />
+                                                </StackPanel>
+                                            </StackPanel>
+                                            <Border
+                                                Width="16"
+                                                Height="16"
+                                                Margin="8,0"
+                                                HorizontalAlignment="Right"
+                                                BorderBrush="#5c7cc3"
+                                                BorderThickness="2"
+                                                CornerRadius="16">
+                                                <Grid>
+                                                    <Ellipse
+                                                        Width="16"
+                                                        Height="16"
+                                                        Fill="#767dd3" />
+                                                    <TextBlock
+                                                        Margin="0,0,4,1"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontFamily="{StaticResource IconFontFamily}"
+                                                        FontSize="10"
+                                                        FontWeight="Black"
+                                                        Text="&#xE76B;" />
+                                                    <TextBlock
+                                                        Margin="3,0,0,1"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontFamily="{StaticResource IconFontFamily}"
+                                                        FontSize="10"
+                                                        FontWeight="Black"
+                                                        Text="&#xE76B;" />
+                                                </Grid>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+
+                                    <Border
+                                        Grid.Row="2"
+                                        Background="White"
+                                        BorderBrush="#ababab"
+                                        BorderThickness="1"
+                                        CornerRadius="0,0,4,4">
+                                        <TextBlock
+                                            Margin="4"
+                                            FontFamily="SimSun"
+                                            FontSize="12"
+                                            Foreground="#CCC"
+                                            Text="BetterLyrics..." />
+                                    </Border>
+
+                                    <Grid Grid.Row="3" Margin="0,3,0,0">
+                                        <StackPanel
+                                            Margin="0,3,0,0"
+                                            HorizontalAlignment="Left"
+                                            VerticalAlignment="Center"
+                                            Orientation="Horizontal"
+                                            Spacing="6">
+                                            <Border
+                                                BorderBrush="#ced3d9"
+                                                BorderThickness="1,1,1,0"
+                                                CornerRadius="2">
+                                                <Border
+                                                    Padding="6,2"
+                                                    Background="#ebeef6"
+                                                    BorderBrush="#666"
+                                                    BorderThickness="0,0,0,1"
+                                                    CornerRadius="2">
+                                                    <TextBlock
+                                                        FontFamily="SimSun"
+                                                        FontSize="12"
+                                                        Foreground="Black"
+                                                        Text="聊天记录" />
+                                                </Border>
+                                            </Border>
+                                            <Border
+                                                BorderBrush="#ced3d9"
+                                                BorderThickness="1,1,1,0"
+                                                CornerRadius="2">
+                                                <Border
+                                                    Padding="6,2"
+                                                    Background="#ebeef6"
+                                                    BorderBrush="#666"
+                                                    BorderThickness="0,0,0,1"
+                                                    CornerRadius="2">
+                                                    <TextBlock
+                                                        FontFamily="SimSun"
+                                                        FontSize="12"
+                                                        Foreground="Black"
+                                                        Text="消息模式" />
+                                                </Border>
+                                            </Border>
+                                        </StackPanel>
+
+                                        <StackPanel
+                                            Margin="0,3,1,0"
+                                            HorizontalAlignment="Right"
+                                            VerticalAlignment="Center"
+                                            Orientation="Horizontal"
+                                            Spacing="6">
+                                            <Border
+                                                BorderBrush="#ced3d9"
+                                                BorderThickness="1,1,1,0"
+                                                CornerRadius="2">
+                                                <Border
+                                                    Padding="6,2"
+                                                    Background="#ebeef6"
+                                                    BorderBrush="#666"
+                                                    BorderThickness="0,0,0,1"
+                                                    CornerRadius="2">
+                                                    <TextBlock
+                                                        FontFamily="SimSun"
+                                                        FontSize="12"
+                                                        Foreground="Black"
+                                                        Text="取消发送" />
+                                                </Border>
+                                            </Border>
+                                            <Border
+                                                BorderBrush="#ced3d9"
+                                                BorderThickness="1,1,1,0"
+                                                CornerRadius="2">
+                                                <Border
+                                                    Padding="14,2"
+                                                    Background="#c0d2f1"
+                                                    BorderBrush="#666"
+                                                    BorderThickness="0,0,0,1"
+                                                    CornerRadius="2">
+                                                    <TextBlock
+                                                        FontFamily="SimSun"
+                                                        FontSize="12"
+                                                        Foreground="Black"
+                                                        Text="送讯息" />
+                                                </Border>
+                                            </Border>
+                                        </StackPanel>
+                                    </Grid>
+
+                                </Grid>
+
+                                <Grid Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+
+                                    <Border
+                                        Grid.Row="0"
+                                        Height="20"
+                                        Padding="4,0"
+                                        Background="#6281d0"
+                                        CornerRadius="4,4,0,0">
+                                        <Grid>
+                                            <TextBlock
+                                                Margin="0,1,0,0"
+                                                VerticalAlignment="Center"
+                                                FontFamily="SimSun"
+                                                FontSize="11"
+                                                Foreground="White"
+                                                Text="QQ秀" />
+                                            <Border
+                                                Width="16"
+                                                Height="16"
+                                                HorizontalAlignment="Right"
+                                                BorderBrush="#5c7cc3"
+                                                BorderThickness="2"
+                                                CornerRadius="16">
+                                                <Grid>
+                                                    <Ellipse
+                                                        Width="16"
+                                                        Height="16"
+                                                        Fill="#767dd3" />
+                                                    <TextBlock
+                                                        Margin="0,0,0,1"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontFamily="{StaticResource IconFontFamily}"
+                                                        FontSize="10"
+                                                        FontWeight="Black"
+                                                        Text="&#xE70E;" />
+                                                </Grid>
+                                            </Border>
+                                        </Grid>
+                                    </Border>
+
+                                    <Border
+                                        Grid.Row="1"
+                                        Background="White"
+                                        BorderBrush="#6281d0"
+                                        BorderThickness="1">
+                                        <Image Source="{x:Bind CoverImage}" Stretch="Uniform" />
+                                    </Border>
+
+                                    <StackPanel
+                                        Grid.Row="2"
+                                        Background="#6281d0"
+                                        CornerRadius="0,0,4,4">
+                                        <Grid Padding="4,2,4,2">
+                                            <TextBlock
+                                                VerticalAlignment="Center"
+                                                FontFamily="SimSun"
+                                                FontSize="11"
+                                                Foreground="White"
+                                                Text="您可以..." />
+                                            <Border
+                                                Width="16"
+                                                Height="16"
+                                                HorizontalAlignment="Right"
+                                                VerticalAlignment="Center"
+                                                BorderBrush="#5c7cc3"
+                                                BorderThickness="2"
+                                                CornerRadius="16">
+                                                <Grid>
+                                                    <Ellipse
+                                                        Width="16"
+                                                        Height="16"
+                                                        Fill="#767dd3" />
+                                                    <TextBlock
+                                                        Margin="0,0,0,1"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontFamily="{StaticResource IconFontFamily}"
+                                                        FontSize="10"
+                                                        FontWeight="Black"
+                                                        Text="&#xE70E;" />
+                                                </Grid>
+                                            </Border>
+                                        </Grid>
+                                        <Grid Height="1">
+                                            <Grid.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                    <GradientStop Offset="0" Color="White" />
+                                                    <GradientStop Offset="1" Color="Transparent" />
+                                                </LinearGradientBrush>
+                                            </Grid.Background>
+                                        </Grid>
+                                        <StackPanel Padding="4" Orientation="Horizontal">
+                                            <FontIcon
+                                                Margin="0,0,4,0"
+                                                FontFamily="{StaticResource IconFontFamily}"
+                                                FontSize="10"
+                                                Foreground="#c3c8c8"
+                                                Glyph="&#xE722;" />
+                                            <TextBlock
+                                                FontFamily="SimSun"
+                                                FontSize="11"
+                                                Foreground="White"
+                                                Text="VQQ 视频聊天" />
+                                        </StackPanel>
+                                        <StackPanel Padding="4,0" Orientation="Horizontal">
+                                            <FontIcon
+                                                Margin="0,0,4,0"
+                                                FontFamily="{StaticResource IconFontFamily}"
+                                                FontSize="10"
+                                                Foreground="#c3c8c8"
+                                                Glyph="&#xEC71;" />
+                                            <TextBlock
+                                                FontFamily="SimSun"
+                                                FontSize="11"
+                                                Foreground="White"
+                                                Text="语音聊天" />
+                                        </StackPanel>
+                                        <TextBlock
+                                            Margin="18,4,0,4"
+                                            FontFamily="SimSun"
+                                            FontSize="11"
+                                            FontWeight="Bold"
+                                            Foreground="#FFFF00"
+                                            Text="申请QQ号码" />
+                                        <StackPanel Padding="4,0" Orientation="Horizontal">
+                                            <FontIcon
+                                                Margin="0,0,4,0"
+                                                FontFamily="{StaticResource IconFontFamily}"
+                                                FontSize="10"
+                                                Foreground="#f1e358"
+                                                Glyph="&#xE8D5;" />
+                                            <TextBlock
+                                                FontFamily="SimSun"
+                                                FontSize="11"
+                                                Foreground="White"
+                                                Text="发送文件" />
+                                        </StackPanel>
+                                        <TextBlock
+                                            Margin="18,4,0,0"
+                                            FontFamily="SimSun"
+                                            FontSize="11"
+                                            Foreground="White"
+                                            Text="其他..." />
+                                    </StackPanel>
+                                </Grid>
+                            </Grid>
+
                         </Grid>
-                    </Grid>
+                    </Border>
                 </Border>
             </Grid>
         </DataTemplate>
@@ -1322,10 +1496,10 @@
 
                                     <ItemsControl
                                         Grid.Column="0"
-                                        Padding="10"
+                                        Margin="10"
                                         ItemsSource="{x:Bind SelectedLyrics}">
                                         <ItemsControl.ItemTemplate>
-                                            <DataTemplate>
+                                            <DataTemplate x:DataType="lyricsmodels:LyricsLine">
                                                 <StackPanel Margin="0,0,0,10">
                                                     <TextBlock
                                                         FontFamily="Arial"
@@ -1344,7 +1518,7 @@
                                                         FontFamily="Arial"
                                                         FontSize="14"
                                                         Foreground="#000080"
-                                                        Text="{Binding}"
+                                                        Text="{x:Bind Text}"
                                                         TextWrapping="Wrap" />
                                                 </StackPanel>
                                             </DataTemplate>
@@ -1552,13 +1726,13 @@
 
                         <ItemsControl ItemsSource="{x:Bind SelectedLyrics}">
                             <ItemsControl.ItemTemplate>
-                                <DataTemplate>
+                                <DataTemplate x:DataType="lyricsmodels:LyricsLine">
                                     <TextBlock
                                         Margin="0,0,0,10"
                                         FontFamily="Courier New"
                                         FontSize="14"
                                         Foreground="#333"
-                                        Text="{Binding}"
+                                        Text="{x:Bind Text}"
                                         TextWrapping="Wrap" />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -1701,14 +1875,14 @@
 
                         <ItemsControl Grid.Row="1" ItemsSource="{x:Bind SelectedLyrics}">
                             <ItemsControl.ItemTemplate>
-                                <DataTemplate>
+                                <DataTemplate x:DataType="lyricsmodels:LyricsLine">
                                     <TextBlock
                                         Margin="0,0,0,12"
                                         FontFamily="Segoe UI"
                                         FontSize="15"
                                         Foreground="#333"
                                         LineHeight="26"
-                                        Text="{Binding}"
+                                        Text="{x:Bind Text}"
                                         TextWrapping="Wrap" />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>
@@ -1810,16 +1984,16 @@
                                     Text="{x:Bind Title}" />
                             </Grid>
 
-                            <ItemsControl ItemsSource="{x:Bind SelectedLyrics}">
+                            <ItemsControl Margin="0,0,0,48" ItemsSource="{x:Bind SelectedLyrics}">
                                 <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
+                                    <DataTemplate x:DataType="lyricsmodels:LyricsLine">
                                         <TextBlock
-                                            Margin="0,0,0,16"
+                                            Margin="0,0,0,24"
                                             FontFamily="Consolas"
                                             FontSize="20"
                                             FontWeight="Bold"
                                             Foreground="#E0E0E0"
-                                            Text="{Binding}"
+                                            Text="{x:Bind Text}"
                                             TextWrapping="Wrap">
                                             <TextBlock.Shadow>
                                                 <ThemeShadow />
@@ -1896,7 +2070,7 @@
                         VerticalAlignment="Bottom"
                         ItemsSource="{x:Bind SelectedLyrics}">
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="lyricsmodels:LyricsLine">
                                 <Grid Margin="0,6">
                                     <TextBlock
                                         Margin="2,2,0,0"
@@ -1906,7 +2080,7 @@
                                         FontWeight="Bold"
                                         Foreground="Black"
                                         Opacity="0.8"
-                                        Text="{Binding}"
+                                        Text="{x:Bind Text}"
                                         TextAlignment="Center"
                                         TextWrapping="Wrap" />
 
@@ -1918,7 +2092,7 @@
                                         FontWeight="Bold"
                                         Foreground="Black"
                                         Opacity="0.5"
-                                        Text="{Binding}"
+                                        Text="{x:Bind Text}"
                                         TextAlignment="Center"
                                         TextWrapping="Wrap" />
 
@@ -1928,7 +2102,7 @@
                                         FontStyle="Italic"
                                         FontWeight="Bold"
                                         Foreground="#FFCB4C"
-                                        Text="{Binding}"
+                                        Text="{x:Bind Text}"
                                         TextAlignment="Center"
                                         TextWrapping="Wrap" />
                                 </Grid>
@@ -2098,12 +2272,12 @@
 
                                         <ItemsControl ItemsSource="{x:Bind SelectedLyrics}">
                                             <ItemsControl.ItemTemplate>
-                                                <DataTemplate>
+                                                <DataTemplate x:DataType="lyricsmodels:LyricsLine">
                                                     <TextBlock
                                                         Margin="0,2"
                                                         FontSize="9"
                                                         Foreground="#333"
-                                                        Text="{Binding}"
+                                                        Text="{x:Bind Text}"
                                                         TextWrapping="Wrap" />
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
@@ -2295,14 +2469,14 @@
                 <Grid Margin="30,160,30,240" VerticalAlignment="Center">
                     <ItemsControl ItemsSource="{x:Bind SelectedLyrics}">
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="lyricsmodels:LyricsLine">
                                 <TextBlock
                                     Margin="0,0,0,20"
                                     FontFamily="Segoe UI Light"
                                     FontSize="26"
                                     Foreground="White"
                                     LineHeight="34"
-                                    Text="{Binding}"
+                                    Text="{x:Bind Text}"
                                     TextWrapping="Wrap">
                                     <TextBlock.Shadow>
                                         <ThemeShadow />
@@ -2399,9 +2573,9 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="LeftColDef" Width="*" />
+            <ColumnDefinition x:Name="LeftColDef" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition x:Name="RightColDef" Width="*" />
+            <ColumnDefinition x:Name="RightColDef" />
         </Grid.ColumnDefinitions>
 
         <Grid
@@ -2420,10 +2594,10 @@
                 SelectionChanged="LyricsListView_SelectionChanged"
                 SelectionMode="Multiple">
                 <ListView.ItemTemplate>
-                    <DataTemplate>
+                    <DataTemplate x:DataType="lyricsmodels:LyricsLine">
                         <TextBlock
                             Padding="0,8"
-                            Text="{Binding Text}"
+                            Text="{x:Bind Text}"
                             TextWrapping="Wrap" />
                     </DataTemplate>
                 </ListView.ItemTemplate>
@@ -2433,8 +2607,7 @@
         <Viewbox
             x:Name="PreviewCardContainer"
             Grid.Column="1"
-            Margin="24"
-            Stretch="Uniform">
+            Margin="24">
             <ContentControl
                 x:Name="PreviewCard"
                 Content="{x:Bind ViewModel.CardData, Mode=OneWay}"
@@ -2459,9 +2632,9 @@
                             Opacity="0.7"
                             Style="{ThemeResource BodyStrongTextBlockStyle}" />
                         <dev:WrapPanel
-                            HorizontalSpacing="12"
+                            HorizontalSpacing="8"
                             Orientation="Horizontal"
-                            VerticalSpacing="12">
+                            VerticalSpacing="8">
                             <Button
                                 x:Uid="LyricsSharePageStyleMinimal"
                                 Click="StyleButton_Click"
@@ -2483,9 +2656,9 @@
                             Opacity="0.7"
                             Style="{ThemeResource BodyStrongTextBlockStyle}" />
                         <dev:WrapPanel
-                            HorizontalSpacing="12"
+                            HorizontalSpacing="8"
                             Orientation="Horizontal"
-                            VerticalSpacing="12">
+                            VerticalSpacing="8">
                             <Button
                                 x:Uid="LyricsSharePageStyleVinyl"
                                 Click="StyleButton_Click"
@@ -2515,9 +2688,9 @@
                             Opacity="0.7"
                             Style="{ThemeResource BodyStrongTextBlockStyle}" />
                         <dev:WrapPanel
-                            HorizontalSpacing="12"
+                            HorizontalSpacing="8"
                             Orientation="Horizontal"
-                            VerticalSpacing="12">
+                            VerticalSpacing="8">
                             <Button
                                 Click="StyleButton_Click"
                                 Content="iPod"
@@ -2543,7 +2716,7 @@
                             Opacity="0.7"
                             Style="{ThemeResource BodyStrongTextBlockStyle}" />
                         <dev:WrapPanel
-                            HorizontalSpacing="12"
+                            HorizontalSpacing="8"
                             Orientation="Horizontal"
                             VerticalSpacing="12">
                             <Button
@@ -2560,13 +2733,31 @@
                 </StackPanel>
             </ScrollViewer>
 
-            <Grid Grid.Row="2" Padding="24">
-                <StackPanel Orientation="Horizontal" Spacing="16">
-                    <Button
-                        x:Uid="LyricsSharePageSaveImage"
-                        Click="SaveImage_Click"
-                        Style="{ThemeResource AccentButtonStyle}" />
-                    <Button x:Uid="LyricsSharePageCopyImage" Click="CopyImage_Click" />
+            <Grid Grid.Row="2">
+                <StackPanel Padding="24" Spacing="24">
+                    <StackPanel Spacing="12">
+                        <TextBlock
+                            x:Uid="LyricsSharePageImageQuality"
+                            Opacity="0.7"
+                            Style="{ThemeResource BodyStrongTextBlockStyle}" />
+                        <uc:ExtendedSlider
+                            x:Name="ImageQualitySlider"
+                            HorizontalAlignment="Left"
+                            Default="100"
+                            Frequency="1"
+                            Maximum="100"
+                            Minimum="10"
+                            Unit="%"
+                            Value="100" />
+                    </StackPanel>
+
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <Button
+                            x:Uid="LyricsSharePageSaveImage"
+                            Click="SaveImage_Click"
+                            Style="{ThemeResource AccentButtonStyle}" />
+                        <Button x:Uid="LyricsSharePageCopyImage" Click="CopyImage_Click" />
+                    </StackPanel>
                 </StackPanel>
             </Grid>
 
