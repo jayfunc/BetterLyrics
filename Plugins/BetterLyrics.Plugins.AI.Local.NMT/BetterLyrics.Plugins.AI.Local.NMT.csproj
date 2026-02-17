@@ -15,7 +15,7 @@
 
 	<Target Name="AutoExcludeSharedAssemblies" AfterTargets="ResolveAssemblyReferences">
 		<PropertyGroup>
-			<HostOutputDir>..\..\BetterLyrics.WinUI3\bin\x64\$(Configuration)\$(TargetFramework)\win-x64\</HostOutputDir>
+			<HostOutputDir>..\..\BetterLyrics.WinUI3\bin\x64\$(Configuration)\$(TargetFramework)\</HostOutputDir>
 		</PropertyGroup>
 
 		<Message Text="[Debug] Searching for Host Assemblies in: $(HostOutputDir)" Importance="High" />
@@ -53,12 +53,24 @@
 	<Target Name="PackagePluginToZip" AfterTargets="Build">
 		<PropertyGroup>
 			<PackageOutputDir>$(ProjectDir)..\_Dist\$(Configuration)\</PackageOutputDir>
-
 			<ZipFileName>$(AssemblyName).v$(Version).blp</ZipFileName>
 			<FinalZipPath>$(PackageOutputDir)$(ZipFileName)</FinalZipPath>
+			<StagingDir>$(OutputPath)_TempStaging\</StagingDir>
 		</PropertyGroup>
 
-		<ZipDirectory SourceDirectory="$(OutputPath)" DestinationFile="$(FinalZipPath)" Overwrite="true" />
+		<ItemGroup>
+			<FilesToPack Include="$(OutputPath)**\*" />
+			<FilesToPack Remove="$(OutputPath)$(ProjectName)_TrimmingConfig.cs" />
+			<FilesToPack Remove="$(OutputPath)$(ProjectName)_TrimmerRoots.xml" />
+			<FilesToPack Remove="$(StagingDir)**\*" />
+		</ItemGroup>
+
+		<RemoveDir Directories="$(StagingDir)" />
+		<Copy SourceFiles="@(FilesToPack)" DestinationFolder="$(StagingDir)%(RecursiveDir)" />
+
+		<ZipDirectory SourceDirectory="$(StagingDir)" DestinationFile="$(FinalZipPath)" Overwrite="true" />
+
+		<RemoveDir Directories="$(StagingDir)" />
 
 		<Message Text="[Packager] The plugin package has been generated in the parent directory: $(FinalZipPath)" Importance="High" />
 	</Target>

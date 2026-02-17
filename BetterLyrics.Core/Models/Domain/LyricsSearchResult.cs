@@ -5,7 +5,7 @@
         string? Artist,
         string? Album,
         double? Duration,
-        string Raw,
+        string? Raw,
         string? Translation = null,
         string? Transliteration = null,
         string? Reference = null);

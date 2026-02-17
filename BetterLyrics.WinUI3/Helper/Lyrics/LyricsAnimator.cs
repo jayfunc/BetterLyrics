@@ -259,6 +259,14 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
 
                             renderChar.IsPlayingLastFrame = isCharPlaying;
                         }
+                        else
+                        {
+                            if (!isCharPlaying && currentPositionMs > renderChar.EndMs && renderChar.FloatTransition.Value != 0)
+                            {
+                                renderChar.FloatTransition.SetDurationMs(Math.Min(lyricsEffect.LyricsFloatAnimationDuration, maxAnimationDurationMs));
+                                renderChar.FloatTransition.Start(0);
+                            }
+                        }
                     }
 
                     foreach (var syllable in line.PrimaryRenderSyllables)

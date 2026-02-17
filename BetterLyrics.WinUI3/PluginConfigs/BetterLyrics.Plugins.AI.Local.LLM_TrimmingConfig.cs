@@ -179,7 +179,6 @@ internal static class BetterLyrics_Plugins_AI_Local_LLM_Config
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Nullable))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Nullable<>))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Numerics.BitOperations))]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Numerics.Tensors.TensorPrimitives))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Numerics.Vector))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Numerics.Vector<>))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Object))]

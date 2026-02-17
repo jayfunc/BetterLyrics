@@ -7,6 +7,7 @@
   <Folder Name="/Plugins/">
     <Project Path="Plugins/BetterLyrics.Plugins.AI.Local.LLM/BetterLyrics.Plugins.AI.Local.LLM.csproj" />
     <Project Path="Plugins/BetterLyrics.Plugins.AI.Local.NMT/BetterLyrics.Plugins.AI.Local.NMT.csproj" Id="1a486be1-707e-41a0-ae40-a5b81f49925b" />
+    <Project Path="Plugins/BetterLyrics.Plugins.Source.LRCLIB/BetterLyrics.Plugins.Source.LRCLIB.csproj" />
     <Project Path="Plugins/BetterLyrics.Plugins.Translation.LocalAI/BetterLyrics.Plugins.Translation.LocalAI.csproj" Id="17f9f675-6745-44cb-b8b4-604a2ae90dd1" />
     <Project Path="Plugins/BetterLyrics.Plugins.Transliteration.Romaji/BetterLyrics.Plugins.Transliteration.Romaji.csproj" />
   </Folder>
