@@ -3,6 +3,7 @@ using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Entities;
+using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.FileSystemService;
 using BetterLyrics.WinUI3.Services.GSMTCService;
 using BetterLyrics.WinUI3.Services.SettingsService;
@@ -41,75 +42,123 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
         public async Task<IBuffer?> SearchAsync(SongInfo songInfo, IBuffer? bufferFromSMTC, bool ignoreCache, CancellationToken token)
         {
             string format = ".jpg";
-            byte[]? result = null;
 
             try
             {
                 var mediaSourceProviderInfo = _settingsService.AppSettings.MediaSourceProvidersInfo.FirstOrDefault(x => x.Provider == songInfo.PlayerId);
-                int size = mediaSourceProviderInfo?.TargetAlbumArtSize ?? 500;
+                if (mediaSourceProviderInfo == null) return null;
 
-                foreach (var provider in mediaSourceProviderInfo?.AlbumArtSearchProvidersInfo ?? [])
+                var providers = mediaSourceProviderInfo.AlbumArtSearchProvidersInfo;
+                int size = mediaSourceProviderInfo.TargetAlbumArtSize;
+
+                foreach (var providerInfo in providers)
                 {
-                    if (token.IsCancellationRequested) break;
+                    if (!providerInfo.IsEnabled) continue;
 
-                    if (!provider.IsEnabled)
+                    try
                     {
-                        continue;
-                    }
+                        token.ThrowIfCancellationRequested();
 
-                    if (!ignoreCache && provider.Provider.IsRemote())
-                    {
-                        var cachedAlbumArt = FileHelper.ReadAlbumArtCache(songInfo.Artist, songInfo.Album, format, provider.Provider.GetCacheDirectory());
+                        byte[]? result = null;
 
-                        if (cachedAlbumArt != null)
+                        if (!ignoreCache && providerInfo.Provider.IsRemote())
                         {
-                            return cachedAlbumArt.AsBuffer();
-                        }
-                    }
-
-                    switch (provider.Provider)
-                    {
-                        case AlbumArtSearchProvider.Local:
-                            result = await SearchFileAsync(songInfo);
-                            break;
-                        case AlbumArtSearchProvider.SMTC:
-                            if (bufferFromSMTC != null) return bufferFromSMTC;
-                            break;
-                        case AlbumArtSearchProvider.iTunes:
-                            foreach (string countryCode in new List<string>() { "us", "cn", "jp", "kr" })
+                            try
                             {
-                                result = await SearchiTunesAsync(songInfo, countryCode, size);
-                                if (result != null) break;
+                                var cachedAlbumArt = FileHelper.ReadAlbumArtCache(songInfo.Artist, songInfo.Album, format, providerInfo.Provider.GetCacheDirectory());
+                                if (cachedAlbumArt != null)
+                                {
+                                    return cachedAlbumArt.AsBuffer();
+                                }
                             }
-                            break;
-                        case AlbumArtSearchProvider.Kugou:
-                            result = await SearchKugouAsync(songInfo, size);
-                            break;
-                        //case AlbumArtSearchProvider.Netease:
-                        //    result = await SearchNeteaseAsync(songInfo, size);
-                        //    break;
-                        default:
-                            break;
-                    }
-
-                    if (result != null)
-                    {
-                        if (provider.Provider.IsRemote())
-                        {
-                            FileHelper.WriteAlbumArtCache(songInfo, result, format, provider.Provider.GetCacheDirectory());
+                            catch (Exception ex)
+                            {
+                                _logger.LogWarning(ex, "Failed to read album art cache.");
+                            }
                         }
-                        return result.AsBuffer();
+
+                        switch (providerInfo.Provider)
+                        {
+                            case AlbumArtSearchProvider.Local:
+                                result = await SearchFileAsync(songInfo, token);
+                                break;
+
+                            case AlbumArtSearchProvider.SMTC:
+                                if (bufferFromSMTC != null)
+                                {
+                                    return bufferFromSMTC;
+                                }
+                                break;
+
+                            case AlbumArtSearchProvider.iTunes:
+                                foreach (string countryCode in new List<string>() { "us", "cn", "jp", "kr" })
+                                {
+                                    try
+                                    {
+                                        if (token.IsCancellationRequested) break;
+                                        result = await SearchiTunesAsync(songInfo, countryCode, size, token);
+                                        if (result != null) break;
+                                    }
+                                    catch (OperationCanceledException) { throw; }
+                                    catch (Exception ex)
+                                    {
+                                        _logger.LogDebug(ex, "iTunes search failed for country {CountryCode}", countryCode);
+                                    }
+                                }
+                                break;
+
+                            case AlbumArtSearchProvider.Kugou:
+                                result = await SearchKugouAsync(songInfo, size, token);
+                                break;
+
+                            // case AlbumArtSearchProvider.Netease:
+                            //     result = await SearchNeteaseAsync(songInfo, size);
+                            //     break;
+
+                            default:
+                                break;
+                        }
+
+                        if (result != null)
+                        {
+                            if (providerInfo.Provider.IsRemote())
+                            {
+                                try
+                                {
+                                    FileHelper.WriteAlbumArtCache(songInfo, result, format, providerInfo.Provider.GetCacheDirectory());
+                                }
+                                catch (Exception ex)
+                                {
+                                    _logger.LogWarning(ex, "Failed to write album art cache.");
+                                }
+                            }
+
+                            return result.AsBuffer();
+                        }
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        throw;
+                    }
+                    catch (Exception ex)
+                    {
+                        _logger.LogWarning(ex, "Provider {Provider} failed to search album art.", providerInfo.Provider);
                     }
                 }
             }
-            catch (Exception)
+            catch (OperationCanceledException)
             {
+                throw;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Unexpected error in SearchAsync.");
             }
 
             return null;
         }
 
-        private async Task<byte[]?> SearchFileAsync(SongInfo songInfo)
+        private async Task<byte[]?> SearchFileAsync(SongInfo songInfo, CancellationToken token)
         {
             var enabledIds = _settingsService.AppSettings.LocalMediaFolders
                 .Where(f => f.IsEnabled)
@@ -118,7 +167,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
 
             if (enabledIds.Count == 0) return null;
 
-            var allFiles = await _fileSystemService.GetParsedFilesAsync(enabledIds);
+            var allFiles = await _fileSystemService.GetParsedFilesAsync(enabledIds, token);
             allFiles = allFiles.Where(x => FileHelper.MusicExtensions.Contains(Path.GetExtension(x.FileName))).ToList();
 
             FilesIndexItem? bestMatch = null;
@@ -152,105 +201,93 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
             {
                 if (File.Exists(bestMatch.LocalAlbumArtPath))
                 {
-                    return await File.ReadAllBytesAsync(bestMatch.LocalAlbumArtPath);
+                    return await File.ReadAllBytesAsync(bestMatch.LocalAlbumArtPath, token);
                 }
             }
             catch (Exception ex)
             {
                 System.Diagnostics.Debug.WriteLine($"读取本地缓存失败: {ex.Message}");
+                _logger.LogError(ex, "Failed to read local album art cache for {Artist} - {Album}", songInfo.Artist, songInfo.Album);
             }
 
             return null;
         }
 
-        private async Task<byte[]?> SearchiTunesAsync(SongInfo songInfo, string countryCode, int size)
+        private async Task<byte[]?> SearchiTunesAsync(SongInfo songInfo, string countryCode, int size, CancellationToken token)
         {
             // Source: https://gist.github.com/mcworkaholic/82fbf203e3f1043bbe534b5b2974c0ce
-            try
+
+            // Build the iTunes API URL
+            string url = $"{Constants.iTunes.QueryPrefix}term=" + WebUtility.UrlEncode($"{songInfo.Artist} {songInfo.Album}").Replace("%20", "+") + "&country=" + countryCode + "&entity=album&media=music&limit=1";
+
+            // Make a request to the API
+            using HttpResponseMessage response = await _iTunesHttpClinet.GetAsync(url, token);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync(token);
+
+            // Parse the JSON response
+            var data = JsonSerializer.Deserialize(responseBody, Serialization.SourceGenerationContext.Default.JsonElement);
+
+            if (data.TryGetProperty("results", out var results) && results.ValueKind == JsonValueKind.Array && results.GetArrayLength() > 0)
             {
-                // Build the iTunes API URL
-                string url = $"{Constants.iTunes.QueryPrefix}term=" + WebUtility.UrlEncode($"{songInfo.Artist} {songInfo.Album}").Replace("%20", "+") + "&country=" + countryCode + "&entity=album&media=music&limit=1";
-
-                // Make a request to the API
-                using HttpResponseMessage response = await _iTunesHttpClinet.GetAsync(url);
-                response.EnsureSuccessStatusCode();
-                string responseBody = await response.Content.ReadAsStringAsync();
-
-                // Parse the JSON response
-                var data = JsonSerializer.Deserialize(responseBody, Serialization.SourceGenerationContext.Default.JsonElement);
-
-                if (data.TryGetProperty("results", out var results) && results.ValueKind == JsonValueKind.Array && results.GetArrayLength() > 0)
+                // Get the first result
+                var result = results[0];
+                if (result.TryGetProperty("artworkUrl100", out var artworkUrlProp))
                 {
-                    // Get the first result
-                    var result = results[0];
-                    if (result.TryGetProperty("artworkUrl100", out var artworkUrlProp))
-                    {
-                        string artworkUrl = artworkUrlProp.GetString()?.Replace("100x100bb.jpg", $"{size}x{size}bb.jpg") ?? string.Empty;
-                        var fetched = await _iTunesHttpClinet.GetByteArrayAsync(artworkUrl);
+                    string artworkUrl = artworkUrlProp.GetString()?.Replace("100x100bb.jpg", $"{size}x{size}bb.jpg") ?? string.Empty;
+                    var fetched = await _iTunesHttpClinet.GetByteArrayAsync(artworkUrl, token);
 
-                        if (fetched != null && fetched.Length > 0)
-                        {
-                            return fetched;
-                        }
+                    if (fetched != null && fetched.Length > 0)
+                    {
+                        return fetched;
                     }
                 }
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "SearchiTunesAsync");
-            }
+
             return null;
         }
 
-        private async Task<byte[]?> SearchKugouAsync(SongInfo songInfo, int size)
+        private async Task<byte[]?> SearchKugouAsync(SongInfo songInfo, int size, CancellationToken token)
         {
-            try
+            string keyword = $"{songInfo.Title} {songInfo.Artist}".Trim();
+            if (string.IsNullOrEmpty(keyword)) return null;
+
+            string searchUrl = $"http://mobilecdn.kugou.com/api/v3/search/song?format=json&keyword={Uri.EscapeDataString(keyword)}&page=1&pagesize=1&showtype=1";
+
+            if (!_kugouHttpClient.DefaultRequestHeaders.Contains("User-Agent"))
             {
-                string keyword = $"{songInfo.Title} {songInfo.Artist}".Trim();
-                if (string.IsNullOrEmpty(keyword)) return null;
-
-                string searchUrl = $"http://mobilecdn.kugou.com/api/v3/search/song?format=json&keyword={Uri.EscapeDataString(keyword)}&page=1&pagesize=1&showtype=1";
-
-                if (!_kugouHttpClient.DefaultRequestHeaders.Contains("User-Agent"))
-                {
-                    _kugouHttpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36");
-                }
-
-                string searchResponse = await _kugouHttpClient.GetStringAsync(searchUrl);
-
-                var searchJson = JsonNode.Parse(searchResponse);
-                var songs = searchJson?["data"]?["info"]?.AsArray();
-
-                if (songs == null || songs.Count == 0)
-                {
-                    return null;
-                }
-
-                string? hash = songs[0]?["hash"]?.ToString();
-                string? albumId = songs[0]?["album_id"]?.ToString();
-
-                if (string.IsNullOrEmpty(hash)) return null;
-
-                string detailsUrl = $"http://m.kugou.com/app/i/getSongInfo.php?cmd=playInfo&hash={hash}";
-
-                string detailsResponse = await _kugouHttpClient.GetStringAsync(detailsUrl);
-                var detailsJson = JsonNode.Parse(detailsResponse);
-
-                string? imgUrl = detailsJson?["album_img"]?.ToString() ?? detailsJson?["img"]?.ToString();
-
-                if (string.IsNullOrEmpty(imgUrl)) return null;
-
-                imgUrl = imgUrl.Replace("{size}", $"{size}");
-
-                byte[] imageBytes = await _kugouHttpClient.GetByteArrayAsync(imgUrl);
-
-                return imageBytes;
+                _kugouHttpClient.DefaultRequestHeaders.Add("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36");
             }
-            catch (Exception ex)
+
+            string searchResponse = await _kugouHttpClient.GetStringAsync(searchUrl, token);
+
+            var searchJson = JsonNode.Parse(searchResponse);
+            var songs = searchJson?["data"]?["info"]?.AsArray();
+
+            if (songs == null || songs.Count == 0)
             {
-                _logger.LogError(ex, "SearchKugouAsync");
                 return null;
             }
+
+            string? hash = songs[0]?["hash"]?.ToString();
+            string? albumId = songs[0]?["album_id"]?.ToString();
+
+            if (string.IsNullOrEmpty(hash)) return null;
+
+            string detailsUrl = $"http://m.kugou.com/app/i/getSongInfo.php?cmd=playInfo&hash={hash}";
+
+            string detailsResponse = await _kugouHttpClient.GetStringAsync(detailsUrl, token);
+            var detailsJson = JsonNode.Parse(detailsResponse);
+
+            string? imgUrl = detailsJson?["album_img"]?.ToString() ?? detailsJson?["img"]?.ToString();
+
+            if (string.IsNullOrEmpty(imgUrl)) return null;
+
+            imgUrl = imgUrl.Replace("{size}", $"{size}");
+
+            byte[] imageBytes = await _kugouHttpClient.GetByteArrayAsync(imgUrl, token);
+
+            return imageBytes;
         }
     }
 }

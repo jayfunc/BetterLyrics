@@ -1964,24 +1964,33 @@
                         <StackPanel Margin="30" VerticalAlignment="Center">
                             <Grid Margin="0,0,0,30">
                                 <TextBlock
-                                    Margin="2,2,0,0"
                                     FontSize="36"
                                     FontWeight="Black"
                                     Foreground="#FF0055"
                                     Opacity="0.7"
-                                    Text="{x:Bind Title}" />
+                                    Text="{x:Bind Title}"
+                                    TextWrapping="Wrap">
+                                    <TextBlock.RenderTransform>
+                                        <TranslateTransform X="2" Y="2" />
+                                    </TextBlock.RenderTransform>
+                                </TextBlock>
                                 <TextBlock
-                                    Margin="-2,-2,0,0"
                                     FontSize="36"
                                     FontWeight="Black"
                                     Foreground="#00E5FF"
                                     Opacity="0.7"
-                                    Text="{x:Bind Title}" />
+                                    Text="{x:Bind Title}"
+                                    TextWrapping="Wrap">
+                                    <TextBlock.RenderTransform>
+                                        <TranslateTransform X="-2" Y="-2" />
+                                    </TextBlock.RenderTransform>
+                                </TextBlock>
                                 <TextBlock
                                     FontSize="36"
                                     FontWeight="Black"
                                     Foreground="White"
-                                    Text="{x:Bind Title}" />
+                                    Text="{x:Bind Title}"
+                                    TextWrapping="Wrap" />
                             </Grid>
 
                             <ItemsControl Margin="0,0,0,48" ItemsSource="{x:Bind SelectedLyrics}">
