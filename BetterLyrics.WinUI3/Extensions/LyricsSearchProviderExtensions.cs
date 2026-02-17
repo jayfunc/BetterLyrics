@@ -27,7 +27,9 @@ namespace BetterLyrics.WinUI3.Extensions
                 or LyricsSearchProvider.LocalEslrcFile
                 or LyricsSearchProvider.LocalTtmlFile;
 
-            public bool IsRemote() => !provider.IsLocal();
+            public bool IsCacheable() => !provider.IsLocal();
+
+            public bool IsPlugin() => (int)provider >= 1000;
 
             public TranslationSearchProvider? ToTranslationSearchProvider() => provider switch
             {

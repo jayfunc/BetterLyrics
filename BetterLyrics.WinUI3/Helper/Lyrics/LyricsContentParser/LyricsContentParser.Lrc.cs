@@ -13,7 +13,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
         [GeneratedRegex(@"(\[|\<)(\d*):(\d*)\.(\d*)(\]|\>)([^\[\]\<\>]*)")]
         private static partial Regex SyllableRegex();
 
-        private void ParseLrc(string raw, bool single)
+        private void ParseLrc(string raw)
         {
             var lines = raw.Split(["\r\n", "\n"], StringSplitOptions.RemoveEmptyEntries);
             var lrcLines = new List<LyricsLine>();
@@ -80,41 +80,34 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
                 }
             }
 
-            if (single)
+            // 按时间分组
+            var grouped = lrcLines.GroupBy(l => l.StartMs).OrderBy(g => g.Key).ToList();
+            int languageCount = 0;
+            if (grouped != null && grouped.Count > 0)
             {
-                _lyricsDataArr.Add(new LyricsData(lrcLines));
+                // 计算最大语言数量
+                languageCount = grouped.Max(g => g.Count());
             }
-            else
+
+            // 初始化每种语言的歌词列表
+            int langStartIndex = _lyricsDataArr.Count;
+            for (int i = 0; i < languageCount; i++) _lyricsDataArr.Add(new LyricsData());
+
+            // 遍历每个时间分组
+            if (grouped != null)
             {
-                // 按时间分组
-                var grouped = lrcLines.GroupBy(l => l.StartMs).OrderBy(g => g.Key).ToList();
-                int languageCount = 0;
-                if (grouped != null && grouped.Count > 0)
+                foreach (var group in grouped)
                 {
-                    // 计算最大语言数量
-                    languageCount = grouped.Max(g => g.Count());
-                }
-
-                // 初始化每种语言的歌词列表
-                int langStartIndex = _lyricsDataArr.Count;
-                for (int i = 0; i < languageCount; i++) _lyricsDataArr.Add(new LyricsData());
-
-                // 遍历每个时间分组
-                if (grouped != null)
-                {
-                    foreach (var group in grouped)
+                    var linesInGroup = group.ToList();
+                    for (int langIdx = 0; langIdx < languageCount; langIdx++)
                     {
-                        var linesInGroup = group.ToList();
-                        for (int langIdx = 0; langIdx < languageCount; langIdx++)
+                        // 只添加有对应行的语言，否则跳过
+                        if (langIdx < linesInGroup.Count)
                         {
-                            // 只添加有对应行的语言，否则跳过
-                            if (langIdx < linesInGroup.Count)
-                            {
-                                var lyricsLine = linesInGroup[langIdx];
-                                _lyricsDataArr[langStartIndex + langIdx].LyricsLines.Add(lyricsLine);
-                            }
-                            // 没有翻译行则不补原文，直接跳过
+                            var lyricsLine = linesInGroup[langIdx];
+                            _lyricsDataArr[langStartIndex + langIdx].LyricsLines.Add(lyricsLine);
                         }
+                        // 没有翻译行则不补原文，直接跳过
                     }
                 }
             }
