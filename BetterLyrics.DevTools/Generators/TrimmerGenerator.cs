@@ -104,6 +104,7 @@ namespace BetterLyrics.DevTools.Generators
             foreach (var type in _mergedSystemTypes.OrderBy(n => n))
             {
                 if (type == "System.Runtime.CompilerServices.IsExternalInit") continue;
+                if (type.StartsWith("System.Numerics.Tensors")) continue;
                 csBuilder.AppendLine($"    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof({type}))]");
             }
 
