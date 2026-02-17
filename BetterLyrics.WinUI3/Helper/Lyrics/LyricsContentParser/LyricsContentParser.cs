@@ -44,7 +44,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
                 {
                     case LyricsFormat.Lrc:
                     case LyricsFormat.Eslrc:
-                        ParseLrc(lyricsSearchResult.Raw, lyricsSearchResult.Provider.IsRemote());
+                        ParseLrc(lyricsSearchResult.Raw);
                         break;
                     case LyricsFormat.Qrc:
                         ParseQrcKrc(QrcParser.Parse(lyricsSearchResult.Raw).Lines);
@@ -194,7 +194,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
                     case LyricsSearchProvider.QQ:
                     case LyricsSearchProvider.Kugou:
                     case LyricsSearchProvider.Netease:
-                        ParseLrc(lyricsSearchResult.Translation, true);
+                        ParseLrc(lyricsSearchResult.Translation);
                         break;
                     default:
                         break;
@@ -209,8 +209,8 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
                 switch (lyricsSearchResult.Provider)
                 {
                     case LyricsSearchProvider.Netease:
-                        ParseLrc(lyricsSearchResult.Transliteration, true);
-                        _lyricsDataArr.LastOrDefault()?.LanguageCode = LanguageHelper.RomanCode;
+                        ParseLrc(lyricsSearchResult.Transliteration);
+                        //_lyricsDataArr.LastOrDefault()?.LanguageCode = LanguageHelper.RomanCode;
                         break;
                     default:
                         break;

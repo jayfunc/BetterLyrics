@@ -3,15 +3,16 @@
 using BetterLyrics.Core.Enums;
 using BetterLyrics.WinUI3.Collections;
 using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Serialization;
 using BetterLyrics.WinUI3.Services.LocalizationService;
+using BetterLyrics.WinUI3.Services.PluginService;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Dispatching;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Windows.Globalization;
@@ -69,40 +70,67 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
 
         private void EnsureMediaSourceProvidersInfo()
         {
-            // 确保当 LyricsSearchProvider 和 AlbumArtSearchProvider 枚举更新时，AppSettings 中的相关信息也能更新
             foreach (var x in AppSettings.MediaSourceProvidersInfo)
             {
-                // 更新 LyricsSearchProvidersInfo
-                foreach (var p in Enum.GetValues<LyricsSearchProvider>())
-                {
-                    var item = x.LyricsSearchProvidersInfo.FirstOrDefault(i => i.Provider == p);
-                    if (item == null)
-                    {
-                        x.LyricsSearchProvidersInfo.Add(new LyricsSearchProviderInfo(p, true));
-                    }
-                    // 可根据需要更新 item.IsEnabled
-                }
-                // 移除多余项
-                for (int i = x.LyricsSearchProvidersInfo.Count - 1; i >= 0; i--)
-                {
-                    if (!Enum.IsDefined(typeof(LyricsSearchProvider), x.LyricsSearchProvidersInfo[i].Provider))
-                        x.LyricsSearchProvidersInfo.RemoveAt(i);
-                }
+                // 同步歌词提供源
+                SyncProviderInfo<LyricsSearchProvider, LyricsSearchProviderInfo>(
+                    x.LyricsSearchProvidersInfo,
+                    p => p.Provider,
+                    p => new LyricsSearchProviderInfo(p, true)
+                );
 
-                // 更新 AlbumArtSearchProvidersInfo
-                foreach (var p in Enum.GetValues<AlbumArtSearchProvider>())
+                // 同步封面提供源
+                SyncProviderInfo<AlbumArtSearchProvider, AlbumArtSearchProviderInfo>(
+                    x.AlbumArtSearchProvidersInfo,
+                    p => p.Provider,
+                    p => new AlbumArtSearchProviderInfo(p, true)
+                );
+            }
+        }
+
+        /// <summary>
+        /// 通用同步方法：仅管理枚举值 < 1000 的项
+        /// </summary>
+        private void SyncProviderInfo<TEnum, TItem>(
+            IList<TItem> collection,
+            Func<TItem, TEnum> enumSelector,
+            Func<TEnum, TItem> itemFactory)
+            where TEnum : struct, Enum
+            where TItem : System.ComponentModel.INotifyPropertyChanged
+        {
+            var allEnums = Enum.GetValues<TEnum>();
+            var targetValidEnums = new HashSet<TEnum>();
+
+            foreach (var e in allEnums)
+            {
+                if (Convert.ToInt32(e) < 1000)
                 {
-                    var item = x.AlbumArtSearchProvidersInfo.FirstOrDefault(i => i.Provider == p);
-                    if (item == null)
-                    {
-                        x.AlbumArtSearchProvidersInfo.Add(new AlbumArtSearchProviderInfo(p, true));
-                    }
-                    // 可根据需要更新 item.IsEnabled
+                    targetValidEnums.Add(e);
                 }
-                for (int i = x.AlbumArtSearchProvidersInfo.Count - 1; i >= 0; i--)
+            }
+
+            var itemsToRemove = collection.Where(item =>
+            {
+                var enumVal = enumSelector(item);
+                int intVal = Convert.ToInt32(enumVal);
+
+                if (intVal >= 1000) return false;
+
+                return !targetValidEnums.Contains(enumVal);
+            }).ToList();
+
+            foreach (var item in itemsToRemove)
+            {
+                collection.Remove(item);
+            }
+
+            var existingEnums = collection.Select(enumSelector).ToHashSet();
+
+            foreach (var p in targetValidEnums)
+            {
+                if (!existingEnums.Contains(p))
                 {
-                    if (!Enum.IsDefined(typeof(AlbumArtSearchProvider), x.AlbumArtSearchProvidersInfo[i].Provider))
-                        x.AlbumArtSearchProvidersInfo.RemoveAt(i);
+                    collection.Add(itemFactory(p));
                 }
             }
         }
