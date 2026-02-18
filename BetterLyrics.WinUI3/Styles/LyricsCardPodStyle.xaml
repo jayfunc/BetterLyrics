@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:lyricsmodels="using:BetterLyrics.WinUI3.Models.Lyrics"
+    xmlns:models="using:BetterLyrics.WinUI3.Models">
+
+    <DataTemplate x:Key="LyricsCardPodStyle">
+        <Grid
+            Width="450"
+            MinHeight="600"
+            Background="#F2F2F2">
+            <Border
+                Margin="10"
+                BorderBrush="#D0D0D0"
+                BorderThickness="1"
+                CornerRadius="12">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="280" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Border
+                        Grid.Row="0"
+                        Margin="30,40,30,10"
+                        Background="White"
+                        BorderBrush="#333"
+                        BorderThickness="2"
+                        CornerRadius="4">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="24" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <Grid
+                                Grid.Row="0"
+                                Background="#F0F0F0"
+                                BorderBrush="#CCC"
+                                BorderThickness="0,0,0,1">
+                                <TextBlock
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    FontSize="10"
+                                    FontWeight="Bold"
+                                    Foreground="#333"
+                                    Text="Now Playing" />
+                                <FontIcon
+                                    Margin="0,0,5,0"
+                                    HorizontalAlignment="Right"
+                                    FontSize="10"
+                                    Foreground="#333"
+                                    Glyph="&#xE768;" />
+                                <FontIcon
+                                    Margin="5,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    FontSize="10"
+                                    Foreground="#333"
+                                    Glyph="&#xE76E;" />
+                            </Grid>
+
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <Grid
+                                    Grid.Column="0"
+                                    Margin="10"
+                                    VerticalAlignment="Center">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <Image
+                                        Grid.Row="0"
+                                        Source="{Binding CoverImage}"
+                                        Stretch="Uniform" />
+
+                                    <Grid
+                                        Grid.Row="1"
+                                        Height="80"
+                                        Margin="0,2,0,-80"
+                                        VerticalAlignment="Top"
+                                        Opacity="0.5">
+                                        <Image
+                                            RenderTransformOrigin="0.5,0.5"
+                                            Source="{Binding CoverImage}"
+                                            Stretch="Uniform">
+                                            <Image.RenderTransform>
+                                                <ScaleTransform ScaleY="-1" />
+                                            </Image.RenderTransform>
+                                        </Image>
+
+                                        <Rectangle>
+                                            <Rectangle.Fill>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                                    <GradientStop Offset="0" Color="#40FFFFFF" />
+                                                    <GradientStop Offset="0.8" Color="White" />
+                                                </LinearGradientBrush>
+                                            </Rectangle.Fill>
+                                        </Rectangle>
+                                    </Grid>
+                                </Grid>
+
+                                <StackPanel
+                                    Grid.Column="1"
+                                    Margin="0,10,10,10"
+                                    VerticalAlignment="Center">
+
+                                    <TextBlock
+                                        FontSize="12"
+                                        FontWeight="Bold"
+                                        MaxLines="2"
+                                        Text="{Binding Title}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="Wrap" />
+
+                                    <TextBlock
+                                        Margin="0,0,0,8"
+                                        FontSize="10"
+                                        Foreground="#666"
+                                        MaxLines="1"
+                                        Text="{Binding Artist}"
+                                        TextTrimming="CharacterEllipsis"
+                                        TextWrapping="NoWrap" />
+
+                                    <ItemsControl ItemsSource="{Binding SelectedLyrics}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="0,0,0,4">
+                                                    <TextBlock
+                                                        FontSize="9"
+                                                        FontWeight="SemiBold"
+                                                        Foreground="#333"
+                                                        Text="{Binding Text}"
+                                                        TextWrapping="Wrap" />
+
+                                                    <TextBlock
+                                                        Margin="0,1,0,0"
+                                                        FontSize="8"
+                                                        Foreground="#777"
+                                                        Text="{Binding SecondaryText}"
+                                                        TextWrapping="Wrap"
+                                                        Visibility="{Binding SecondaryText, Converter={StaticResource StringToVisibilityConverter}, FallbackValue=Visible}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </Border>
+
+                    <Grid
+                        Grid.Row="1"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center">
+                        <Ellipse
+                            Width="220"
+                            Height="220"
+                            Fill="#F8F8F8"
+                            Stroke="#D9D9D9"
+                            StrokeThickness="1" />
+
+                        <TextBlock
+                            Margin="0,25,0,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            FontSize="14"
+                            FontWeight="Bold"
+                            Foreground="#AAA"
+                            Text="MENU" />
+
+                        <FontIcon
+                            Margin="0,0,0,25"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            FontSize="16"
+                            Foreground="#AAA"
+                            Glyph="&#xE768;" />
+                        <FontIcon
+                            Margin="25,0,0,0"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontSize="16"
+                            Foreground="#AAA"
+                            Glyph="&#xE892;" />
+                        <FontIcon
+                            Margin="0,0,25,0"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            FontSize="16"
+                            Foreground="#AAA"
+                            Glyph="&#xE893;" />
+                        <Ellipse
+                            Width="80"
+                            Height="80"
+                            Fill="#DDD"
+                            Stroke="#CCC"
+                            StrokeThickness="1" />
+                    </Grid>
+
+                    <TextBlock
+                        Grid.Row="1"
+                        Margin="0,0,0,15"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        FontSize="8"
+                        Foreground="#BBB"
+                        Text="Designed by BetterLyrics on Earth" />
+                </Grid>
+            </Border>
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>

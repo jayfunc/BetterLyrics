@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:lyricsmodels="using:BetterLyrics.WinUI3.Models.Lyrics"
+    xmlns:models="using:BetterLyrics.WinUI3.Models">
+
+    <DataTemplate x:Key="LyricsCardCinematicStyle">
+        <Grid
+            Width="450"
+            MinHeight="600"
+            Background="Black">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="60" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="1">
+                <Image
+                    Opacity="0.9"
+                    Source="{Binding CoverImage}"
+                    Stretch="UniformToFill" />
+
+                <Rectangle Height="300" VerticalAlignment="Bottom">
+                    <Rectangle.Fill>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Offset="0" Color="Transparent" />
+                            <GradientStop Offset="0.4" Color="#40000000" />
+                            <GradientStop Offset="1" Color="#FF000000" />
+                        </LinearGradientBrush>
+                    </Rectangle.Fill>
+                </Rectangle>
+
+                <ItemsControl
+                    Margin="20,0,20,20"
+                    VerticalAlignment="Bottom"
+                    ItemsSource="{Binding SelectedLyrics}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0,0,0,24">
+
+                                <Grid HorizontalAlignment="Center">
+                                    <TextBlock
+                                        FontFamily="Segoe UI"
+                                        FontSize="22"
+                                        FontWeight="Bold"
+                                        Foreground="Black"
+                                        Opacity="0.8"
+                                        Text="{Binding Text}"
+                                        TextAlignment="Center"
+                                        TextWrapping="Wrap">
+                                        <TextBlock.RenderTransform>
+                                            <TranslateTransform X="2" Y="2" />
+                                        </TextBlock.RenderTransform>
+                                    </TextBlock>
+                                    <TextBlock
+                                        FontFamily="Segoe UI"
+                                        FontSize="22"
+                                        FontWeight="Bold"
+                                        Foreground="Black"
+                                        Opacity="0.8"
+                                        Text="{Binding Text}"
+                                        TextAlignment="Center"
+                                        TextWrapping="Wrap">
+                                        <TextBlock.RenderTransform>
+                                            <TranslateTransform X="-1" Y="-1" />
+                                        </TextBlock.RenderTransform>
+                                    </TextBlock>
+                                    <TextBlock
+                                        FontFamily="Segoe UI"
+                                        FontSize="22"
+                                        FontWeight="Bold"
+                                        Foreground="Black"
+                                        Opacity="0.8"
+                                        Text="{Binding Text}"
+                                        TextAlignment="Center"
+                                        TextWrapping="Wrap">
+                                        <TextBlock.RenderTransform>
+                                            <TranslateTransform X="1" Y="-1" />
+                                        </TextBlock.RenderTransform>
+                                    </TextBlock>
+                                    <TextBlock
+                                        FontFamily="Segoe UI"
+                                        FontSize="22"
+                                        FontWeight="Bold"
+                                        Foreground="Black"
+                                        Opacity="0.8"
+                                        Text="{Binding Text}"
+                                        TextAlignment="Center"
+                                        TextWrapping="Wrap">
+                                        <TextBlock.RenderTransform>
+                                            <TranslateTransform X="-1" Y="1" />
+                                        </TextBlock.RenderTransform>
+                                    </TextBlock>
+
+                                    <TextBlock
+                                        FontFamily="Segoe UI"
+                                        FontSize="22"
+                                        FontWeight="Bold"
+                                        Foreground="#FFCB4C"
+                                        Text="{Binding Text}"
+                                        TextAlignment="Center"
+                                        TextWrapping="Wrap" />
+                                </Grid>
+
+                                <Grid
+                                    Margin="0,6,0,0"
+                                    HorizontalAlignment="Center"
+                                    Visibility="{Binding SecondaryText, Converter={StaticResource StringToVisibilityConverter}, FallbackValue=Visible}">
+
+                                    <TextBlock
+                                        FontFamily="Segoe UI"
+                                        FontSize="15"
+                                        FontWeight="SemiBold"
+                                        Foreground="Black"
+                                        Opacity="0.8"
+                                        Text="{Binding SecondaryText}"
+                                        TextAlignment="Center"
+                                        TextWrapping="Wrap">
+                                        <TextBlock.RenderTransform>
+                                            <TranslateTransform X="1" Y="1" />
+                                        </TextBlock.RenderTransform>
+                                    </TextBlock>
+                                    <TextBlock
+                                        FontFamily="Segoe UI"
+                                        FontSize="15"
+                                        FontWeight="SemiBold"
+                                        Foreground="Black"
+                                        Opacity="0.8"
+                                        Text="{Binding SecondaryText}"
+                                        TextAlignment="Center"
+                                        TextWrapping="Wrap">
+                                        <TextBlock.RenderTransform>
+                                            <TranslateTransform X="-1" Y="-1" />
+                                        </TextBlock.RenderTransform>
+                                    </TextBlock>
+
+                                    <TextBlock
+                                        FontFamily="Segoe UI"
+                                        FontSize="15"
+                                        FontWeight="SemiBold"
+                                        Foreground="#E0E0E0"
+                                        Text="{Binding SecondaryText}"
+                                        TextAlignment="Center"
+                                        TextWrapping="Wrap" />
+                                </Grid>
+
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+
+            <TextBlock
+                Grid.Row="0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                CharacterSpacing="200"
+                FontFamily="Courier New"
+                FontSize="10"
+                Foreground="#444"
+                Text="NOW PLAYING" />
+
+            <StackPanel
+                Grid.Row="2"
+                Padding="0,10,0,40"
+                Background="Black">
+
+                <TextBlock
+                    Margin="20,0"
+                    HorizontalAlignment="Center"
+                    CharacterSpacing="50"
+                    FontFamily="Georgia"
+                    FontSize="26"
+                    FontWeight="Black"
+                    Foreground="White"
+                    Text="{Binding Title}"
+                    TextAlignment="Center"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="Wrap" />
+
+                <TextBlock
+                    Margin="40,12,40,0"
+                    HorizontalAlignment="Center"
+                    FontFamily="Segoe UI"
+                    FontSize="9"
+                    FontStretch="Condensed"
+                    LineHeight="14"
+                    TextAlignment="Center"
+                    TextWrapping="Wrap">
+                    <Run Foreground="#555" Text="STARRING" />
+                    <Run
+                        FontWeight="Bold"
+                        Foreground="#CCC"
+                        Text="{Binding Artist, Mode=OneWay}" />
+                    <Run Foreground="#555" Text="  MUSIC BY" />
+                    <Run Foreground="#CCC" Text="{Binding Artist, Mode=OneWay}" />
+                    <Run Foreground="#555" Text="  PRODUCED BY" />
+                    <Run Foreground="#CCC" Text="BETTERLYRICS" />
+                    <LineBreak />
+                    <Run Foreground="#555" Text="DOLBY DIGITAL" />
+                    <Run Foreground="#333" Text="  |  " />
+                    <Run Foreground="#555" Text="RESTRICTED" />
+                    <Run Foreground="#333" Text="  |  " />
+                    <Run Foreground="#555" Text="RATED R" />
+                </TextBlock>
+            </StackPanel>
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>

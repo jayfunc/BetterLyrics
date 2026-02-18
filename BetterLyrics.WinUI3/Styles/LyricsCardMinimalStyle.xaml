@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:lyricsmodels="using:BetterLyrics.WinUI3.Models.Lyrics"
+    xmlns:models="using:BetterLyrics.WinUI3.Models">
+
+    <DataTemplate x:Key="LyricsCardMinimalStyle">
+        <Grid
+            Width="450"
+            MinHeight="600"
+            Background="White">
+            <Border
+                Margin="16"
+                BorderBrush="Black"
+                BorderThickness="4" />
+            <Grid Padding="40">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <ItemsControl ItemsSource="{Binding SelectedLyrics}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="0,0,0,24">
+
+                                <TextBlock
+                                    FontFamily="Segoe UI"
+                                    FontSize="26"
+                                    FontWeight="Bold"
+                                    Foreground="Black"
+                                    LineHeight="36"
+                                    Text="{Binding Text}"
+                                    TextAlignment="Left"
+                                    TextWrapping="Wrap" />
+
+                                <TextBlock
+                                    Margin="0,4,0,0"
+                                    FontFamily="Segoe UI"
+                                    FontSize="18"
+                                    FontWeight="Normal"
+                                    Foreground="#666666"
+                                    LineHeight="26"
+                                    Text="{Binding SecondaryText}"
+                                    TextAlignment="Left"
+                                    TextWrapping="Wrap"
+                                    Visibility="{Binding SecondaryText, Converter={StaticResource StringToVisibilityConverter}, FallbackValue=Visible}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <Grid
+                    Grid.Row="1"
+                    Margin="0,20,0,0"
+                    Padding="0,20,0,0"
+                    BorderBrush="Black"
+                    BorderThickness="0,2,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Image
+                        Grid.Column="0"
+                        Width="60"
+                        Height="60"
+                        Source="{Binding CoverImage}" />
+
+                    <StackPanel
+                        Grid.Column="1"
+                        Margin="12,0,0,0"
+                        VerticalAlignment="Center">
+
+                        <TextBlock
+                            FontSize="18"
+                            FontWeight="Black"
+                            Foreground="Black"
+                            MaxLines="2"
+                            Text="{Binding Title}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="Wrap" />
+
+                        <TextBlock
+                            Margin="0,0,80,0"
+                            FontSize="14"
+                            Foreground="#555555"
+                            MaxLines="1"
+                            Text="{Binding Artist}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
+                    </StackPanel>
+
+                    <StackPanel
+                        Grid.Column="1"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        Opacity="0.6"
+                        Orientation="Horizontal"
+                        Spacing="4">
+                        <TextBlock
+                            FontSize="12"
+                            FontWeight="Bold"
+                            Foreground="Black"
+                            Text="BetterLyrics" />
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>

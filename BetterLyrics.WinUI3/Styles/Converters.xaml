@@ -47,6 +47,7 @@
     <bwc:PathToImageConverter x:Key="PathToImageConverter" />
     <bwc:DoubleToDecimalConverter x:Key="DoubleToDecimalConverter" />
     <bwc:UriStringToDecodedAbsoluteUri x:Key="UriStringToDecodedAbsoluteUri" />
+    <bwc:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
 
     <bwc:EnumToIntConverter x:Key="EnumToIntConverter" />
     <bwc:EnumToOpacityConverter x:Key="EnumToOpacityConverter" />
