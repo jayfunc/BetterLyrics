@@ -714,6 +714,9 @@
   <data name="PluginManagerControlUninstallSuccessful" xml:space="preserve">
     <value>Deinstallation erfolgreich</value>
   </data>
+  <data name="PluginManagerControlVisitPluginDevGuide.Content" xml:space="preserve">
+    <value>Plugin-Entwicklungsdokument besuchen</value>
+  </data>
   <data name="PluginManagerControlVisitPluginStore.Content" xml:space="preserve">
     <value>Plugin-Shop besuchen</value>
   </data>

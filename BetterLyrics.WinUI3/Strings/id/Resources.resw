@@ -714,6 +714,9 @@
   <data name="PluginManagerControlUninstallSuccessful" xml:space="preserve">
     <value>Pencopotan pemasangan berhasil</value>
   </data>
+  <data name="PluginManagerControlVisitPluginDevGuide.Content" xml:space="preserve">
+    <value>Kunjungi dokumen pengembangan plugin</value>
+  </data>
   <data name="PluginManagerControlVisitPluginStore.Content" xml:space="preserve">
     <value>Kunjungi toko plugin</value>
   </data>

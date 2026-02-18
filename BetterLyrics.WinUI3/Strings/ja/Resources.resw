@@ -412,7 +412,7 @@
     <value>デジタルレトロ</value>
   </data>
   <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
-    <value>画質</value>
+    <value>画像品質</value>
   </data>
   <data name="LyricsSharePageSaveImage.Content" xml:space="preserve">
     <value>画像を保存</value>
@@ -713,6 +713,9 @@
   </data>
   <data name="PluginManagerControlUninstallSuccessful" xml:space="preserve">
     <value>アンインストール成功</value>
+  </data>
+  <data name="PluginManagerControlVisitPluginDevGuide.Content" xml:space="preserve">
+    <value>プラグイン開発ドキュメントへ</value>
   </data>
   <data name="PluginManagerControlVisitPluginStore.Content" xml:space="preserve">
     <value>プラグインストアへ移動</value>

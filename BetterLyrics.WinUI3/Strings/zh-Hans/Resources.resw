@@ -714,6 +714,9 @@
   <data name="PluginManagerControlUninstallSuccessful" xml:space="preserve">
     <value>卸载成功</value>
   </data>
+  <data name="PluginManagerControlVisitPluginDevGuide.Content" xml:space="preserve">
+    <value>访问插件开发文档</value>
+  </data>
   <data name="PluginManagerControlVisitPluginStore.Content" xml:space="preserve">
     <value>访问插件商店</value>
   </data>

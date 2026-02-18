@@ -714,6 +714,9 @@
   <data name="PluginManagerControlUninstallSuccessful" xml:space="preserve">
     <value>अनइंस्टॉलेशन सफल रहा</value>
   </data>
+  <data name="PluginManagerControlVisitPluginDevGuide.Content" xml:space="preserve">
+    <value>प्लगइन डेव डॉक पर जाएं</value>
+  </data>
   <data name="PluginManagerControlVisitPluginStore.Content" xml:space="preserve">
     <value>प्लगइन्स स्टोर पर जाएँ</value>
   </data>

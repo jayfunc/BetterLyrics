@@ -222,7 +222,6 @@ internal static class BetterLyrics_Plugins_AI_Local_LLM_Config
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.AsyncStateMachineAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.AsyncTaskMethodBuilder))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.AsyncTaskMethodBuilder<>))]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.AsyncValueTaskMethodBuilder))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.AsyncValueTaskMethodBuilder<>))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.CallerArgumentExpressionAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Runtime.CompilerServices.CompilationRelaxationsAttribute))]
