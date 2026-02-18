@@ -315,8 +315,8 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
         private void MediaManager_OnAnyMediaPropertyChanged(MediaManager.MediaSession mediaSession, GlobalSystemMediaTransportControlsSessionMediaProperties mediaProperties)
         {
-            //_onMediaPropsChangedTimer?.Debounce(() =>
-            //{
+            _onMediaPropsChangedTimer?.Debounce(() =>
+            {
                 _dispatcherQueue.TryEnqueue(async () =>
                 {
                     if (mediaSession != _currentDesiredSession) return;
@@ -415,7 +415,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                     UpdateDiscordPresence();
                     UpdateCurrentMediaSourceProviderInfoPositionOffset();
                 });
-            //}, TimeSpan.FromSeconds(1));
+            }, TimeSpan.FromSeconds(1));
         }
 
         private void MediaManager_OnAnySessionClosed(MediaManager.MediaSession mediaSession)

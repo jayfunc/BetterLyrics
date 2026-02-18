@@ -2,6 +2,6 @@
 {
     public interface ILyricsTransliterator
     {
-        Task<string?> GetTransliterationAsync(string text, string targetLangCode);
+        Task<string?> GetTransliterationAsync(string text, string targetLangCode, CancellationToken token);
     }
 }

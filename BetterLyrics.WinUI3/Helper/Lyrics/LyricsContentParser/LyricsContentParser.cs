@@ -48,7 +48,6 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
                         break;
                     case LyricsFormat.Qrc:
                         ParseQrcKrc(QrcParser.Parse(lyricsSearchResult.Raw).Lines);
-                        Lyricify.Lyrics.Generators.LrcGenerator.Generate(QrcParser.Parse(lyricsSearchResult.Raw));
                         break;
                     case LyricsFormat.Krc:
                         ParseQrcKrc(KrcParser.Parse(lyricsSearchResult.Raw).Lines);
@@ -128,11 +127,12 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
                     string romaji = string.Empty;
                     try
                     {
-                        (romaji, transliterationSearchProvider) =
-                            await transliterationService.TransliterateText(main.WrappedOriginalText, LanguageHelper.RomanCode, token);
+                        (romaji, transliterationSearchProvider) = await transliterationService.TransliterateText(main.WrappedOriginalText, LanguageHelper.RomanCode, token);
+                        token.ThrowIfCancellationRequested();
+
                         _lyricsDataArr.FirstOrDefault()?.SetTransliteration(romaji);
                     }
-                    catch (TaskCanceledException)
+                    catch (OperationCanceledException)
                     {
                         throw;
                     }
@@ -158,10 +158,12 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
                     try
                     {
                         translated = await translationService.TranslateTextAsync(main.WrappedOriginalText, settings.SelectedTargetLanguageCode, token);
+                        token.ThrowIfCancellationRequested();
+
                         _lyricsDataArr.FirstOrDefault()?.SetTranslation(translated);
                         translationSearchProvider = TranslationSearchProvider.LibreTranslate;
                     }
-                    catch (TaskCanceledException)
+                    catch (OperationCanceledException)
                     {
                         throw;
                     }
@@ -187,6 +189,8 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
                     item.SecondaryText = settings.IsTraditionalChineseEnabled ? LanguageHelper.ConvertSCToTC(item.SecondaryText) : LanguageHelper.ConvertTCToSC(item.SecondaryText);
                 }
             }
+
+            token.ThrowIfCancellationRequested();
 
             return (main, transliterationSearchProvider, translationSearchProvider);
         }
