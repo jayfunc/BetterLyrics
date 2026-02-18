@@ -1,4 +1,4 @@
-﻿namespace BetterLyrics.Plugins.Romaji.Options
+﻿namespace BetterLyrics.Plugins.Transliteration.Romaji.Options
 {
     public class ToRomajiOptions
     {
