@@ -1,240 +1,214 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Events;
+using BetterLyrics.WinUI3.Extensions;
+using FlaUI.Core.AutomationElements;
+using FlaUI.Core.Definitions;
+using FlaUI.Core.EventHandlers;
+using FlaUI.UIA3;
+using Microsoft.UI.Dispatching;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Drawing.Imaging;
-using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading;
-using Windows.Foundation;
 
 namespace BetterLyrics.WinUI3.Hooks
 {
     public partial class TaskbarHook : IDisposable
     {
-        private readonly Action<TaskbarFreeBoundsChangedEventArgs> _onLayoutChanged;
-        private Timer? _scanTimer;
-        private Rect _lastValidRect;
-        private bool _isDisposed;
+        private readonly UIA3Automation _automation;
+        private AutomationElement? _taskbar;
+
+        private StructureChangedEventHandlerBase? _structureHandler;
+        private PropertyChangedEventHandlerBase? _propertyHandler;
 
         private TaskbarPlacement _currentPlacement;
 
-        private const int ScanInterval = 1000;
-        private const int ColorTolerance = 15;
-        private const int MinValidWidth = 50;
+        private readonly DispatcherQueue _dispatcherQueue;
+        private readonly Action<TaskbarFreeBoundsChangedEventArgs> _onLayoutChanged;
+        private Timer? _debounceTimer;
+        private const int DebounceDelay = 150;
+        private bool _isDisposed;
 
         public TaskbarHook(TaskbarPlacement placement, Action<TaskbarFreeBoundsChangedEventArgs> onLayoutChanged)
         {
-            _currentPlacement = placement;
+            _automation = new UIA3Automation();
             _onLayoutChanged = onLayoutChanged;
-            _scanTimer = new Timer(ScanLoop, null, 1000, ScanInterval);
+            _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
 
-            ScanLoop(null);
+            _currentPlacement = placement;
+
+            StartHook();
         }
 
         public void UpdatePlacement(TaskbarPlacement newPlacement)
         {
-            _currentPlacement = newPlacement;
-            ScanLoop(null);
+            if (_currentPlacement != newPlacement)
+            {
+                _currentPlacement = newPlacement;
+                RequestUpdate();
+            }
         }
 
-        private void ScanLoop(object? state)
+        private void StartHook()
         {
-            if (_isDisposed) return;
-
             try
             {
-                Rectangle bounds = GetTaskbarBounds();
-                if (bounds.IsEmpty || bounds.Width <= 0 || bounds.Height <= 0) return;
+                var desktop = _automation.GetDesktop();
+                _taskbar = desktop.FindFirstChild(cf => cf.ByClassName("Shell_TrayWnd"));
 
-                using (Bitmap bmp = new Bitmap(bounds.Width, bounds.Height))
+                if (_taskbar == null) return;
+
+                // 监听图标增删
+                _structureHandler = _taskbar.RegisterStructureChangedEvent(
+                    TreeScope.Descendants,
+                    (element, type, id) => RequestUpdate());
+
+                // 捕获内部按钮的位移
+                _propertyHandler = _taskbar.RegisterPropertyChangedEvent(
+                    TreeScope.Descendants,
+                    (element, id, val) => RequestUpdate(),
+                    _automation.PropertyLibrary.Element.BoundingRectangle);
+
+                RequestUpdate();
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Hook Init Failed: {ex.Message}");
+            }
+        }
+
+        private void RequestUpdate()
+        {
+            if (_isDisposed) return;
+            _debounceTimer?.Dispose();
+            _debounceTimer = new Timer(_ =>
+            {
+                Rectangle voidRect = CalculateVoidRect(_currentPlacement);
+                _dispatcherQueue.TryEnqueue(() =>
                 {
-                    using (Graphics g = Graphics.FromImage(bmp))
+                    if (!_isDisposed && voidRect != Rectangle.Empty)
                     {
-                        g.CopyFromScreen(bounds.Location, System.Drawing.Point.Empty, bounds.Size);
+                        _onLayoutChanged?.Invoke(new TaskbarFreeBoundsChangedEventArgs(voidRect.ToRect()));
                     }
+                });
+            }, null, DebounceDelay, Timeout.Infinite);
+        }
 
-                    var freeRect = AnalyzeFreeSpace(bmp, bounds, _lastValidRect);
+        private Rectangle CalculateVoidRect(TaskbarPlacement placement)
+        {
+            try
+            {
+                if (_taskbar == null) return Rectangle.Empty;
 
-                    if (freeRect != Rect.Empty && ShouldUpdate(freeRect, _lastValidRect))
+                try { var _ = _taskbar.BoundingRectangle; }
+                catch
+                {
+                    var desktop = _automation.GetDesktop();
+                    _taskbar = desktop.FindFirstChild(cf => cf.ByClassName("Shell_TrayWnd"));
+                    if (_taskbar == null) return Rectangle.Empty;
+                }
+
+                Rectangle taskbarRect = _taskbar.BoundingRectangle;
+
+                int barrierRight = taskbarRect.Right;
+                var tray = _taskbar.FindFirstDescendant(cf => cf.ByAutomationId("SystemTrayIcon")); // Win11
+                if (tray == null) tray = _taskbar.FindFirstDescendant(cf => cf.ByClassName("TrayNotifyWnd")); // Win10
+                if (tray != null) barrierRight = (int)tray.BoundingRectangle.Left;
+
+                int barrierLeft = taskbarRect.Left;
+                var widgets = _taskbar.FindFirstDescendant(cf => cf.ByAutomationId("WidgetsButton"));
+
+                if (widgets != null && widgets.BoundingRectangle.Left < taskbarRect.Left + 200)
+                {
+                    barrierLeft = (int)widgets.BoundingRectangle.Right;
+                }
+
+
+                int contentMinLeft = barrierRight;
+                int contentMaxRight = barrierLeft;
+
+                string[] systemButtonIds = new[] {
+                    "StartButton", "SearchButton", "TaskViewButton", "ChatButton", "CortanaButton"
+                };
+
+                foreach (var id in systemButtonIds)
+                {
+                    var btn = _taskbar.FindFirstDescendant(cf => cf.ByAutomationId(id));
+                    if (btn != null && !btn.IsOffscreen)
                     {
-                        _onLayoutChanged?.Invoke(new TaskbarFreeBoundsChangedEventArgs(freeRect));
-                        _lastValidRect = freeRect;
+                        var rect = btn.BoundingRectangle;
+                        if (rect.Width <= 0 || rect.Height <= 0) continue;
+
+                        if (rect.Left < contentMinLeft) contentMinLeft = (int)rect.Left;
+                        if (rect.Right > contentMaxRight) contentMaxRight = (int)rect.Right;
                     }
+                }
+
+                var appIcons = _taskbar.FindAllDescendants(cf => cf.ByClassName("Taskbar.TaskListButtonAutomationPeer"));
+                foreach (var icon in appIcons)
+                {
+                    var rect = icon.BoundingRectangle;
+                    if (rect.Width <= 0) continue;
+
+                    if (rect.Left < contentMinLeft) contentMinLeft = (int)rect.Left;
+                    if (rect.Right > contentMaxRight) contentMaxRight = (int)rect.Right;
+                }
+
+                if (contentMinLeft >= barrierRight) contentMinLeft = taskbarRect.Left + taskbarRect.Width / 2;
+                if (contentMaxRight <= barrierLeft) contentMaxRight = taskbarRect.Left + taskbarRect.Width / 2;
+
+
+                int padding = 12;
+
+                int leftZoneWidth = (contentMinLeft - padding) - (barrierLeft + padding);
+                Rectangle leftZone = Rectangle.Empty;
+                if (leftZoneWidth > 20)
+                {
+                    leftZone = new Rectangle(barrierLeft + padding, taskbarRect.Top, leftZoneWidth, taskbarRect.Height);
+                }
+
+                int rightZoneWidth = (barrierRight - padding) - (contentMaxRight + padding);
+                Rectangle rightZone = Rectangle.Empty;
+                if (rightZoneWidth > 20)
+                {
+                    rightZone = new Rectangle(contentMaxRight + padding, taskbarRect.Top, rightZoneWidth, taskbarRect.Height);
+                }
+
+
+                switch (placement)
+                {
+                    case TaskbarPlacement.Left:
+                        return leftZone;
+
+                    case TaskbarPlacement.Right:
+                        return rightZone;
+
+                    case TaskbarPlacement.Auto:
+                    case TaskbarPlacement.Center:
+                        if (leftZone.Width > rightZone.Width)
+                            return leftZone;
+                        else
+                            return rightZone;
+
+                    default:
+                        return rightZone;
                 }
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"[TaskbarHook] Scan Error: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"Calc Rect Error: {ex.Message}");
+                return Rectangle.Empty;
             }
         }
-
-        private bool ShouldUpdate(Rect newRect, Rect oldRect)
-        {
-            if (oldRect == Rect.Empty) return true;
-            return Math.Abs(newRect.X - oldRect.X) > 5 || Math.Abs(newRect.Width - oldRect.Width) > 5;
-        }
-
-        private Rect AnalyzeFreeSpace(Bitmap bmp, Rectangle globalBounds, Rect currentWindowRect)
-        {
-            int width = bmp.Width;
-            int height = bmp.Height;
-
-            BitmapData bData = bmp.LockBits(new Rectangle(0, 0, width, height), ImageLockMode.ReadOnly, PixelFormat.Format32bppArgb);
-
-            List<Rect> candidates = new List<Rect>();
-
-            try
-            {
-                unsafe
-                {
-                    byte* ptr = (byte*)bData.Scan0;
-                    int stride = bData.Stride;
-
-                    int sampleX = width - 5;
-                    if (sampleX < 0) sampleX = 0;
-                    int sampleY = height / 2;
-
-                    byte baseB = ptr[sampleY * stride + sampleX * 4];
-                    byte baseG = ptr[sampleY * stride + sampleX * 4 + 1];
-                    byte baseR = ptr[sampleY * stride + sampleX * 4 + 2];
-
-                    bool[] isColumnFree = new bool[width];
-                    int yStart = 2;
-                    int yEnd = height - 2;
-
-                    int ignoreStartX = -1, ignoreEndX = -1;
-                    if (currentWindowRect != Rect.Empty)
-                    {
-                        ignoreStartX = (int)(currentWindowRect.X - globalBounds.Left);
-                        ignoreEndX = (int)(ignoreStartX + currentWindowRect.Width);
-                    }
-
-                    for (int x = 0; x < width; x++)
-                    {
-                        if (x >= ignoreStartX && x <= ignoreEndX)
-                        {
-                            isColumnFree[x] = true;
-                            continue;
-                        }
-
-                        bool columnHasIcon = false;
-                        for (int y = yStart; y < yEnd; y++)
-                        {
-                            int offset = y * stride + x * 4;
-                            if (!IsColorSimilar(ptr[offset], ptr[offset + 1], ptr[offset + 2], baseB, baseG, baseR, ColorTolerance))
-                            {
-                                columnHasIcon = true;
-                                break;
-                            }
-                        }
-                        isColumnFree[x] = !columnHasIcon;
-                    }
-
-                    int currentStart = 0;
-                    int currentLen = 0;
-                    int padding = 4;
-
-                    for (int x = 0; x < width; x++)
-                    {
-                        if (isColumnFree[x])
-                        {
-                            if (currentLen == 0) currentStart = x;
-                            currentLen++;
-                        }
-                        else
-                        {
-                            if (currentLen >= MinValidWidth)
-                            {
-                                int finalX = globalBounds.Left + currentStart + padding;
-                                int finalW = currentLen - (padding * 2);
-                                if (finalW > 0)
-                                    candidates.Add(new Rect(finalX, globalBounds.Top, finalW, globalBounds.Height));
-                            }
-                            currentLen = 0;
-                        }
-                    }
-                    if (currentLen >= MinValidWidth)
-                    {
-                        int finalX = globalBounds.Left + currentStart + padding;
-                        int finalW = currentLen - (padding * 2);
-                        if (finalW > 0)
-                            candidates.Add(new Rect(finalX, globalBounds.Top, finalW, globalBounds.Height));
-                    }
-                }
-            }
-            finally
-            {
-                bmp.UnlockBits(bData);
-            }
-
-            return SelectBestCandidate(candidates, _currentPlacement);
-        }
-
-        private Rect SelectBestCandidate(List<Rect> candidates, TaskbarPlacement placement)
-        {
-            if (candidates == null || candidates.Count == 0) return Rect.Empty;
-
-            if (candidates.Count == 1) return candidates[0];
-
-            switch (placement)
-            {
-                case TaskbarPlacement.Left:
-                    return candidates.OrderBy(r => r.X).First();
-
-                case TaskbarPlacement.Right:
-                    return candidates.OrderByDescending(r => r.X).First();
-
-                case TaskbarPlacement.Auto:
-                default:
-                    return candidates.OrderByDescending(r => r.Width).First();
-            }
-        }
-
-        private bool IsColorSimilar(byte b1, byte g1, byte r1, byte b2, byte g2, byte r2, int tolerance)
-        {
-            int diff = Math.Abs(b1 - b2) + Math.Abs(g1 - g2) + Math.Abs(r1 - r2);
-            return diff < tolerance * 3;
-        }
-
-        #region Win32 API
-        [DllImport("user32.dll", SetLastError = true)]
-        private static extern IntPtr FindWindow(string lpClassName, string? lpWindowName);
-
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
-
-        [StructLayout(LayoutKind.Sequential)]
-        private struct RECT
-        {
-            public int Left;
-            public int Top;
-            public int Right;
-            public int Bottom;
-        }
-
-        private Rectangle GetTaskbarBounds()
-        {
-            IntPtr hWnd = FindWindow("Shell_TrayWnd", null);
-            if (hWnd == IntPtr.Zero) return Rectangle.Empty;
-
-            if (GetWindowRect(hWnd, out RECT rect))
-            {
-                return new Rectangle(rect.Left, rect.Top, rect.Right - rect.Left, rect.Bottom - rect.Top);
-            }
-            return Rectangle.Empty;
-        }
-        #endregion
 
         public void Dispose()
         {
             if (_isDisposed) return;
             _isDisposed = true;
-            _scanTimer?.Change(Timeout.Infinite, Timeout.Infinite);
-            _scanTimer?.Dispose();
-            _scanTimer = null;
+
+            _debounceTimer?.Dispose();
+            _structureHandler?.Dispose();
+            _propertyHandler?.Dispose();
+            _automation?.Dispose();
         }
     }
 }

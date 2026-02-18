@@ -92,7 +92,6 @@ internal static class BetterLyrics_Plugins_AI_Local_NMT_Config
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Diagnostics.DebuggerDisplayAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Diagnostics.DebuggerHiddenAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Diagnostics.DebuggerNonUserCodeAttribute))]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Diagnostics.DebuggerStepThroughAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Diagnostics.DebuggerTypeProxyAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Double))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Enum))]

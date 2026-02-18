@@ -10,6 +10,7 @@
   <assembly fullname="System.Drawing.Primitives" preserve="all" />
   <assembly fullname="System.IO.MemoryMappedFiles" preserve="all" />
   <assembly fullname="System.Linq" preserve="all" />
+  <assembly fullname="System.Linq.Expressions" preserve="all" />
   <assembly fullname="System.Memory" preserve="all" />
   <assembly fullname="System.Net.Http" preserve="all" />
   <assembly fullname="System.Net.Mail" preserve="all" />
