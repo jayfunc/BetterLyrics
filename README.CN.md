@@ -107,7 +107,7 @@
 
 **协助翻译：** 找不到你的语言？[点此开始翻译](https://github.com/jayfunc/BetterLyrics?tab=contributing-ov-file)。
 
-**开发插件：** 想要扩展功能？[🧩 阅读插件开发指南](docs/PLUGIN_DEV.md)。
+**开发插件：** 想要扩展功能？[🧩 阅读插件开发指南](https://betterlyrics.github.io/zh-cn/plugin-dev/intro/)。
 
 **从源码构建：**
 > 构建前，请确保已替换 `Constants` 文件夹下的 `DiscordTemplate.cs` 和 `LastFM.cs`。
