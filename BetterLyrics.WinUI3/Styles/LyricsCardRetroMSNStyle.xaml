@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:lyricsmodels="using:BetterLyrics.WinUI3.Models.Lyrics"
+    xmlns:models="using:BetterLyrics.WinUI3.Models">
+
+    <DataTemplate x:Key="LyricsCardRetroMSNStyle">
+        <Grid
+            x:Name="MSNCardRoot"
+            Width="450"
+            MinHeight="600"
+            Background="Transparent">
+            <Grid.Shadow>
+                <ThemeShadow />
+            </Grid.Shadow>
+
+            <Grid
+                Margin="10"
+                Background="#EBF3FA"
+                CornerRadius="8,8,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="24" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="24" />
+                </Grid.RowDefinitions>
+
+                <Grid Grid.Row="0">
+                    <Grid.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                            <GradientStop Offset="0" Color="#0058EE" />
+                            <GradientStop Offset="0.1" Color="#3B8BF6" />
+                            <GradientStop Offset="1" Color="#0050DC" />
+                        </LinearGradientBrush>
+                    </Grid.Background>
+                    <Border
+                        BorderBrush="#00309C"
+                        BorderThickness="1,1,1,0"
+                        CornerRadius="6,6,0,0" />
+
+                    <StackPanel
+                        Margin="8,0"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal">
+                        <FontIcon
+                            Margin="0,0,6,0"
+                            FontSize="14"
+                            Foreground="White"
+                            Glyph="&#xE77B;" />
+                        <TextBlock
+                            MaxWidth="200"
+                            FontFamily="Tahoma"
+                            FontSize="12"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            Text="{Binding Artist}"
+                            TextTrimming="CharacterEllipsis">
+                            <TextBlock.Shadow>
+                                <ThemeShadow />
+                            </TextBlock.Shadow>
+                        </TextBlock>
+                        <TextBlock
+                            FontFamily="Tahoma"
+                            FontSize="12"
+                            Foreground="#AACCFF"
+                            Text=" - Conversation" />
+                    </StackPanel>
+
+                    <StackPanel
+                        Margin="0,0,6,0"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal"
+                        Spacing="4">
+                        <Border
+                            Width="20"
+                            Height="20"
+                            Background="#3875D7"
+                            BorderBrush="White"
+                            BorderThickness="1"
+                            CornerRadius="3">
+                            <TextBlock
+                                Margin="0,-2,0,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontWeight="Bold"
+                                Foreground="White"
+                                Text="-" />
+                        </Border>
+                        <Border
+                            Width="20"
+                            Height="20"
+                            Background="#3875D7"
+                            BorderBrush="White"
+                            BorderThickness="1"
+                            CornerRadius="3">
+                            <Border
+                                Width="12"
+                                Height="12"
+                                Margin="3"
+                                BorderBrush="White"
+                                BorderThickness="1" />
+                        </Border>
+                        <Border
+                            Width="20"
+                            Height="20"
+                            Background="#E64028"
+                            BorderBrush="White"
+                            BorderThickness="1"
+                            CornerRadius="3">
+                            <TextBlock
+                                Margin="0,-2,0,0"
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                FontWeight="Bold"
+                                Foreground="White"
+                                Text="×" />
+                        </Border>
+                    </StackPanel>
+                </Grid>
+
+                <Border
+                    Grid.Row="1"
+                    Background="#EBEADB"
+                    BorderBrush="#ACA899"
+                    BorderThickness="1,0,1,1">
+                    <StackPanel
+                        Margin="10,0"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal"
+                        Spacing="12">
+                        <TextBlock
+                            FontFamily="Tahoma"
+                            FontSize="11"
+                            Foreground="Black"
+                            Text="File" />
+                        <TextBlock
+                            FontFamily="Tahoma"
+                            FontSize="11"
+                            Foreground="Black"
+                            Text="Edit" />
+                        <TextBlock
+                            FontFamily="Tahoma"
+                            FontSize="11"
+                            Foreground="Black"
+                            Text="Actions" />
+                        <TextBlock
+                            FontFamily="Tahoma"
+                            FontSize="11"
+                            Foreground="Black"
+                            Text="Tools" />
+                        <TextBlock
+                            FontFamily="Tahoma"
+                            FontSize="11"
+                            Foreground="Black"
+                            Text="Help" />
+                    </StackPanel>
+                </Border>
+
+                <Grid
+                    Grid.Row="2"
+                    Background="#EBF3FA"
+                    BorderBrush="#ACA899"
+                    BorderThickness="1,0,1,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Border
+                        Width="32"
+                        Height="32"
+                        Margin="10,4"
+                        BorderBrush="#8CA0B4"
+                        BorderThickness="1">
+                        <Image Source="{Binding CoverImage}" />
+                    </Border>
+
+                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                        <TextBlock
+                            FontFamily="Tahoma"
+                            FontSize="11"
+                            Foreground="#444"
+                            Text="To: BetterLyrics User" />
+                        <TextBlock
+                            FontFamily="Tahoma"
+                            FontSize="11"
+                            FontStyle="Italic"
+                            Foreground="#888"
+                            Text="&lt;Type a personal message&gt;" />
+                    </StackPanel>
+
+                    <StackPanel
+                        Grid.Column="1"
+                        Margin="0,0,10,0"
+                        HorizontalAlignment="Right"
+                        Orientation="Horizontal"
+                        Spacing="10">
+                        <FontIcon
+                            FontSize="14"
+                            Foreground="#444"
+                            Glyph="&#xE714;" />
+                        <FontIcon
+                            FontSize="14"
+                            Foreground="#444"
+                            Glyph="&#xE717;" />
+                    </StackPanel>
+                </Grid>
+
+                <Grid
+                    Grid.Row="3"
+                    Margin="4,0,4,4"
+                    Background="White">
+                    <Border BorderBrush="#ACA899" BorderThickness="1">
+                        <Grid>
+                            <Image
+                                Opacity="0.15"
+                                Source="{Binding CoverImage}"
+                                Stretch="UniformToFill" />
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="100" />
+                                </Grid.ColumnDefinitions>
+
+                                <ItemsControl
+                                    Grid.Column="0"
+                                    Margin="10"
+                                    ItemsSource="{Binding SelectedLyrics}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Margin="0,0,0,12">
+
+                                                <StackPanel Margin="0,0,0,2" Orientation="Horizontal">
+                                                    <TextBlock
+                                                        MaxWidth="260"
+                                                        FontFamily="Tahoma"
+                                                        FontSize="11"
+                                                        FontWeight="Bold"
+                                                        Foreground="#808080"
+                                                        Text="{Binding DataContext.Artist, ElementName=MSNCardRoot}"
+                                                        TextTrimming="CharacterEllipsis" />
+                                                    <TextBlock
+                                                        FontFamily="Tahoma"
+                                                        FontSize="11"
+                                                        Foreground="#808080"
+                                                        Text=" says:" />
+                                                </StackPanel>
+
+                                                <StackPanel Margin="10,0,0,0">
+
+                                                    <TextBlock
+                                                        FontFamily="Arial"
+                                                        FontSize="14"
+                                                        Foreground="#000080"
+                                                        Text="{Binding Text}"
+                                                        TextWrapping="Wrap" />
+
+                                                    <TextBlock
+                                                        Margin="0,2,0,0"
+                                                        FontFamily="Arial"
+                                                        FontSize="12"
+                                                        Foreground="#666666"
+                                                        Text="{Binding SecondaryText}"
+                                                        TextWrapping="Wrap"
+                                                        Visibility="{Binding SecondaryText, Converter={StaticResource StringToVisibilityConverter}, FallbackValue=Visible}" />
+                                                </StackPanel>
+
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                                <StackPanel Grid.Column="1" Margin="5">
+                                    <Border
+                                        Width="80"
+                                        Height="80"
+                                        Background="White"
+                                        BorderBrush="#8CA0B4"
+                                        BorderThickness="1">
+                                        <Image Source="{Binding CoverImage}" Stretch="UniformToFill" />
+                                    </Border>
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <Grid Grid.Row="4" Margin="4,0,4,4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Border
+                        Padding="4,2"
+                        Background="#EBF3FA"
+                        BorderBrush="#ACA899"
+                        BorderThickness="1,1,1,0">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock
+                                FontFamily="Times New Roman"
+                                FontWeight="Bold"
+                                Foreground="Black"
+                                Text="A" />
+                            <FontIcon
+                                FontSize="12"
+                                Foreground="Black"
+                                Glyph="&#xE76E;" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontSize="10"
+                                Foreground="Black"
+                                Text="Backgrounds" />
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontSize="10"
+                                Foreground="Black"
+                                Text="Winks" />
+                        </StackPanel>
+                    </Border>
+
+                    <Border
+                        Grid.Row="1"
+                        Height="60"
+                        Background="White"
+                        BorderBrush="#ACA899"
+                        BorderThickness="1">
+                        <Grid>
+                            <TextBlock
+                                Margin="5"
+                                FontFamily="Arial"
+                                FontSize="12"
+                                Foreground="#CCC"
+                                Text="BetterLyrics..." />
+
+                            <Border
+                                Margin="4"
+                                Padding="15,4,15,4"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                Background="#F0F0F0"
+                                BorderBrush="#888"
+                                BorderThickness="1">
+                                <TextBlock
+                                    FontSize="11"
+                                    Foreground="Black"
+                                    Text="Send" />
+                            </Border>
+                        </Grid>
+                    </Border>
+                </Grid>
+
+                <Border
+                    Grid.Row="5"
+                    Padding="6,0"
+                    Background="#EBF3FA"
+                    BorderBrush="#ACA899"
+                    BorderThickness="0,1,0,0">
+                    <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                        <TextBlock
+                            FontFamily="Tahoma"
+                            FontSize="10"
+                            Foreground="#666"
+                            Text="Last message received at 12:00 PM." />
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>

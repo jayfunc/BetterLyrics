@@ -66,6 +66,7 @@
 		<None Remove="Controls\WindowSettingsControl.xaml" />
 		<None Remove="Styles\GhostSliderStyle.xaml" />
 		<None Remove="Styles\InteractiveListViewHeaderStyle.xaml" />
+		<None Remove="Styles\LyricsCardMinimalStyle.xaml" />
 		<None Remove="Views\LyricsSearchWindow.xaml" />
 		<None Remove="Views\LyricsSharePage.xaml" />
 		<None Remove="Views\LyricsShareWindow.xaml" />
@@ -242,6 +243,42 @@
 		<Page Update="Controls\LyricsStyleSettingsControl.xaml">
 			<Generator>MSBuild:Compile</Generator>
 		</Page>
+		<Page Update="Styles\LyricsCardCinematicStyle.xaml">
+		  <SubType>Designer</SubType>
+		</Page>
+		<Page Update="Styles\LyricsCardPodStyle.xaml">
+		  <SubType>Designer</SubType>
+		</Page>
+		<Page Update="Styles\LyricsCardWindowsPhoneStyle.xaml">
+		  <SubType>Designer</SubType>
+		</Page>
+		<Page Update="Styles\LyricsCardCyberpunkStyle.xaml">
+		  <SubType>Designer</SubType>
+		</Page>
+		<Page Update="Styles\LyricsCardCDStyle.xaml">
+		  <SubType>Designer</SubType>
+		</Page>
+		<Page Update="Styles\LyricsCardReceiptStyle.xaml">
+		  <SubType>Designer</SubType>
+		</Page>
+		<Page Update="Styles\LyricsCardRetroMSNStyle.xaml">
+		  <SubType>Designer</SubType>
+		</Page>
+		<Page Update="Styles\LyricsCardRetroQQStyle.xaml">
+		  <SubType>Designer</SubType>
+		</Page>
+		<Page Update="Styles\LyricsCardSwissStyle.xaml">
+		  <SubType>Designer</SubType>
+		</Page>
+		<Page Update="Styles\LyricsCardMagazineStyle.xaml">
+		  <SubType>Designer</SubType>
+		</Page>
+		<Page Update="Styles\LyricsCardTicketStyle.xaml">
+		  <SubType>Designer</SubType>
+		</Page>
+		<Page Update="Styles\LyricsCardPolaroidStyle.xaml">
+		  <SubType>Designer</SubType>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
 		<Page Update="Views\LyricsWindowSwitchWindow.xaml">
@@ -405,6 +442,16 @@
 	  <Content Update="Assets\Banner.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Styles\LyricsCardMinimalStyle.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Styles\LyricsCardVinylStyle.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Views\LyricsShareWindow.xaml">

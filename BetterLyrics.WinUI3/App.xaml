@@ -19,6 +19,21 @@
                 <ResourceDictionary Source="/Styles/InteractiveListViewHeaderStyle.xaml" />
                 <ResourceDictionary Source="/Styles/GhostSliderStyle.xaml" />
 
+                <ResourceDictionary Source="/Styles/LyricsCardCDStyle.xaml" />
+                <ResourceDictionary Source="/Styles/LyricsCardCinematicStyle.xaml" />
+                <ResourceDictionary Source="/Styles/LyricsCardCyberpunkStyle.xaml" />
+                <ResourceDictionary Source="/Styles/LyricsCardMagazineStyle.xaml" />
+                <ResourceDictionary Source="/Styles/LyricsCardMinimalStyle.xaml" />
+                <ResourceDictionary Source="/Styles/LyricsCardPodStyle.xaml" />
+                <ResourceDictionary Source="/Styles/LyricsCardPolaroidStyle.xaml" />
+                <ResourceDictionary Source="/Styles/LyricsCardReceiptStyle.xaml" />
+                <ResourceDictionary Source="/Styles/LyricsCardRetroMSNStyle.xaml" />
+                <ResourceDictionary Source="/Styles/LyricsCardRetroQQStyle.xaml" />
+                <ResourceDictionary Source="/Styles/LyricsCardSwissStyle.xaml" />
+                <ResourceDictionary Source="/Styles/LyricsCardTicketStyle.xaml" />
+                <ResourceDictionary Source="/Styles/LyricsCardVinylStyle.xaml" />
+                <ResourceDictionary Source="/Styles/LyricsCardWindowsPhoneStyle.xaml" />
+
             </ResourceDictionary.MergedDictionaries>
 
             <!--  Theme  -->

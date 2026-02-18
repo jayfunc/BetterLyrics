@@ -31,7 +31,8 @@ namespace BetterLyrics.WinUI3.Views
         {
             if (sender is Button btn && btn.Tag is string styleKey)
             {
-                if (Resources.TryGetValue(styleKey, out object template))
+                StyleInfoTextBlock.Text = btn.Content.ToString();
+                if (App.Current.Resources.TryGetValue(styleKey, out object template))
                 {
                     PreviewCard.ContentTemplate = template as DataTemplate;
                 }
@@ -40,6 +41,13 @@ namespace BetterLyrics.WinUI3.Views
 
         private void LyricsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            var totalCount = LyricsListView.Items.Count;
+            var selectedCount = LyricsListView.SelectedItems.Count;
+
+            if (selectedCount == 0) LyricsHostCheckBox.IsChecked = false;
+            else if (selectedCount == totalCount) LyricsHostCheckBox.IsChecked = true;
+            else LyricsHostCheckBox.IsChecked = null;
+
             ViewModel.UpdateSelectedLyrics(LyricsListView.SelectedItems.Cast<LyricsLine>().ToList());
         }
 
@@ -157,5 +165,16 @@ namespace BetterLyrics.WinUI3.Views
             return stream;
         }
 
+        private void LyricsHostCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            if (LyricsHostCheckBox.IsChecked == true)
+            {
+                LyricsListView.SelectAll();
+            }
+            else if (LyricsHostCheckBox.IsChecked == false)
+            {
+                LyricsListView.SelectedItems.Clear();
+            }
+        }
     }
 }

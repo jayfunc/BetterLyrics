@@ -415,7 +415,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                     UpdateDiscordPresence();
                     UpdateCurrentMediaSourceProviderInfoPositionOffset();
                 });
-            }, Time.DebounceTimeout);
+            }, TimeSpan.FromSeconds(1));
         }
 
         private void MediaManager_OnAnySessionClosed(MediaManager.MediaSession mediaSession)

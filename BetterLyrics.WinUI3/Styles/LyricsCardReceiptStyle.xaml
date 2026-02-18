@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:lyricsmodels="using:BetterLyrics.WinUI3.Models.Lyrics"
+    xmlns:models="using:BetterLyrics.WinUI3.Models">
+
+    <DataTemplate x:Key="LyricsCardReceiptStyle">
+        <Grid
+            Width="450"
+            MinHeight="600"
+            Background="#CCC">
+            <Grid.Shadow>
+                <ThemeShadow />
+            </Grid.Shadow>
+
+            <Grid
+                Width="380"
+                Margin="0,20"
+                VerticalAlignment="Center"
+                Background="#FFFDF8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <StackPanel
+                    Grid.Row="0"
+                    Margin="0,30,0,20"
+                    HorizontalAlignment="Center"
+                    Spacing="5">
+                    <Image
+                        Width="60"
+                        Height="60"
+                        Margin="0,0,0,10"
+                        Source="{Binding CoverImage}" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontFamily="Courier New"
+                        FontSize="16"
+                        FontWeight="Bold"
+                        Foreground="#333"
+                        Text="OFFICIAL RECEIPT" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontFamily="Courier New"
+                        FontSize="12"
+                        Foreground="#555"
+                        Text="BETTERLYRICS STORE" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontFamily="Courier New"
+                        Foreground="#999"
+                        Text="--------------------------------" />
+                    <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+                        <TextBlock
+                            FontFamily="Courier New"
+                            FontSize="10"
+                            Foreground="#555"
+                            Text="DATE: " />
+                        <TextBlock
+                            FontFamily="Courier New"
+                            FontSize="10"
+                            Foreground="#555"
+                            Text="{Binding DateShort}" />
+                        <TextBlock
+                            Margin="20,0,0,0"
+                            FontFamily="Courier New"
+                            FontSize="10"
+                            Foreground="#555"
+                            Text="TIME: " />
+                        <TextBlock
+                            FontFamily="Courier New"
+                            FontSize="10"
+                            Foreground="#555"
+                            Text="{Binding TimeShort}" />
+                    </StackPanel>
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontFamily="Courier New"
+                        Foreground="#999"
+                        Text="--------------------------------" />
+                </StackPanel>
+
+                <StackPanel Grid.Row="1" Margin="30,0">
+                    <TextBlock
+                        Margin="0,0,0,10"
+                        FontFamily="Courier New"
+                        FontSize="10"
+                        Foreground="#777"
+                        Text="ITEM: MUSIC MEMORY" />
+
+                    <Grid Margin="0,0,0,20">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                            <TextBlock
+                                FontFamily="Courier New"
+                                FontSize="18"
+                                FontWeight="Bold"
+                                Foreground="Black"
+                                Text="{Binding Title}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap" />
+                            <TextBlock
+                                FontFamily="Courier New"
+                                FontSize="12"
+                                Foreground="#555"
+                                Text="{Binding Artist}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap" />
+                        </StackPanel>
+
+                        <StackPanel
+                            Grid.Column="1"
+                            VerticalAlignment="Top"
+                            Orientation="Horizontal">
+                            <TextBlock
+                                FontFamily="Courier New"
+                                FontSize="18"
+                                Foreground="Black"
+                                Text=" x 1" />
+                            <TextBlock
+                                Margin="20,0,0,0"
+                                FontFamily="Courier New"
+                                FontSize="18"
+                                Foreground="Black"
+                                Text="$9.99" />
+                        </StackPanel>
+                    </Grid>
+
+                    <ItemsControl ItemsSource="{Binding SelectedLyrics}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0,0,0,16">
+
+                                    <TextBlock
+                                        FontFamily="Courier New"
+                                        FontSize="14"
+                                        Foreground="#333"
+                                        Text="{Binding Text}"
+                                        TextWrapping="Wrap" />
+
+                                    <TextBlock
+                                        Margin="0,2,0,0"
+                                        FontFamily="Courier New"
+                                        FontSize="11"
+                                        Foreground="#888"
+                                        Text="{Binding SecondaryText}"
+                                        TextWrapping="Wrap"
+                                        Visibility="{Binding SecondaryText, Converter={StaticResource StringToVisibilityConverter}, FallbackValue=Visible}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+
+                <StackPanel
+                    Grid.Row="2"
+                    Margin="30,20,30,30"
+                    Spacing="8">
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontFamily="Courier New"
+                        Foreground="#999"
+                        Text="********************************" />
+                    <TextBlock
+                        HorizontalAlignment="Right"
+                        FontFamily="Courier New"
+                        FontSize="16"
+                        FontWeight="Bold"
+                        Foreground="Black"
+                        Text="TOTAL: PRICELESS" />
+                    <TextBlock
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center"
+                        FontFamily="Courier New"
+                        FontSize="10"
+                        Foreground="#555"
+                        Text="THANK YOU FOR LISTENING!" />
+
+                    <TextBlock
+                        Height="40"
+                        Margin="0,10,0,0"
+                        HorizontalAlignment="Center"
+                        FontFamily="Arial"
+                        FontSize="36"
+                        Foreground="Black"
+                        Opacity="0.8"
+                        Text="||| |||| | ||| || |||| ||" />
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        FontFamily="Courier New"
+                        FontSize="10"
+                        Foreground="Black"
+                        Text="0 12345 67890 5" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>
