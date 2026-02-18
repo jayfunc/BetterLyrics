@@ -54,5 +54,6 @@ namespace BetterLyrics.Plugins.Source.LRCLIB
 
             return new LyricsSearchResult(searchedTitle, searchedArtist, searchedAlbum, searchedDuration, original, null, null, url);
         }
+
     }
 }

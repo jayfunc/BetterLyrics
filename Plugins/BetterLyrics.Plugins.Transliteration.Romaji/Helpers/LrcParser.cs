@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace BetterLyrics.Plugins.Romaji.Helpers
+namespace BetterLyrics.Plugins.Transliteration.Romaji.Helpers
 {
     public static class LrcParser
     {

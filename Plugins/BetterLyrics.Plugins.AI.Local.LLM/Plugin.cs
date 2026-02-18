@@ -79,7 +79,7 @@ namespace BetterLyrics.Plugins.AI.Local.LLM
             }
         }
 
-        protected override async ValueTask OnShutdownAsync()
+        protected override async Task OnShutdownAsync()
         {
             _llamaContext?.Dispose();
             _model?.Dispose();

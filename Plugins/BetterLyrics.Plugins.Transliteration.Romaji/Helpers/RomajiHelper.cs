@@ -1,13 +1,13 @@
-using BetterLyrics.Plugins.Romaji.Extensions;
-using BetterLyrics.Plugins.Romaji.Models;
-using BetterLyrics.Plugins.Romaji.Options;
+using BetterLyrics.Plugins.Transliteration.Romaji.Extensions;
+using BetterLyrics.Plugins.Transliteration.Romaji.Models;
+using BetterLyrics.Plugins.Transliteration.Romaji.Options;
 using MeCab;
 using MeCab.Extension.UniDic;
 using System.Collections.ObjectModel;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace BetterLyrics.Plugins.Romaji.Helpers
+namespace BetterLyrics.Plugins.Transliteration.Romaji.Helpers
 {
     public static class RomajiHelper
     {

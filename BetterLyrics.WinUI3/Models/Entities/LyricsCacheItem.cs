@@ -1,5 +1,6 @@
 ﻿using BetterLyrics.Core.Enums;
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -45,7 +46,7 @@ namespace BetterLyrics.WinUI3.Models
         [ObservableProperty] public partial string Reference { get; set; } = "about:blank";
 
         [NotMapped][JsonIgnore] public bool IsFound => !string.IsNullOrEmpty(Raw);
-
+        [NotMapped][JsonIgnore] public bool IsPlugin => Provider.IsPlugin();
         [NotMapped][JsonIgnore] public LyricsSearchProvider? ProviderIfFound => IsFound ? Provider : null;
 
         public object Clone()

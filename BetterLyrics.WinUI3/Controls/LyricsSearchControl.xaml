@@ -182,11 +182,24 @@
                         <DataTemplate x:DataType="models:LyricsCacheItem">
                             <ListViewItem IsEnabled="{x:Bind IsFound}">
                                 <StackPanel Padding="0,6" Opacity="{x:Bind IsFound, Converter={StaticResource BoolToPartialOpacityConverter}}">
-                                    <local:PropertyRow
-                                        Margin="-8,0,0,0"
-                                        Link="{x:Bind Reference, Mode=OneWay}"
-                                        ToolTipService.ToolTip="{x:Bind Reference, TargetNullValue=N/A, Mode=OneWay}"
-                                        Value="{x:Bind Provider, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}" />
+                                    <Grid Margin="-8,0,0,0" ColumnSpacing="6">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <local:PropertyRow
+                                            Link="{x:Bind Reference, Mode=OneWay}"
+                                            ToolTipService.ToolTip="{x:Bind Reference, TargetNullValue=N/A, Mode=OneWay}"
+                                            Value="{x:Bind Provider, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}" />
+                                        <FontIcon
+                                            Grid.Column="1"
+                                            Margin="0,2,0,0"
+                                            FontFamily="{StaticResource IconFontFamily}"
+                                            FontSize="12"
+                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                            Glyph="&#xE74C;"
+                                            Visibility="{x:Bind IsPlugin, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                    </Grid>
                                     <!--  Lyrics search result  -->
                                     <StackPanel Visibility="{x:Bind IsFound, Converter={StaticResource BoolToVisibilityConverter}}">
                                         <local:PropertyRow x:Uid="SettingsPageSongTitle" Value="{x:Bind Title, TargetNullValue=N/A, Mode=OneWay}" />

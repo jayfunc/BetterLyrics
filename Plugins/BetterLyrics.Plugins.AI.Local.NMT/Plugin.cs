@@ -20,7 +20,7 @@ namespace BetterLyrics.Plugins.AI.Local.NMT
             }
         }
 
-        protected override async ValueTask OnShutdownAsync()
+        protected override async Task OnShutdownAsync()
         {
         }
     }

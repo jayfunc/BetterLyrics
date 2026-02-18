@@ -1,4 +1,4 @@
-namespace BetterLyrics.Plugins.Romaji.Extensions
+namespace BetterLyrics.Plugins.Transliteration.Romaji.Extensions
 {
     public static class StringExtension
     {

@@ -1,6 +1,6 @@
 ﻿using BetterLyrics.Core.Abstractions;
 using BetterLyrics.Core.Interfaces.Features;
-using BetterLyrics.Plugins.Romaji.Helpers;
+using BetterLyrics.Plugins.Transliteration.Romaji.Helpers;
 
 namespace BetterLyrics.Plugins.Transliteration.Romaji
 {

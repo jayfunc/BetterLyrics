@@ -144,9 +144,9 @@ namespace BetterLyrics.Core.Abstractions
 
             GC.SuppressFinalize(this);
         }
-        protected virtual ValueTask OnShutdownAsync()
+        protected virtual Task OnShutdownAsync()
         {
-            return ValueTask.CompletedTask;
+            return Task.CompletedTask;
         }
 
         public Dictionary<string, SettingDef> GetSettingDefDict()

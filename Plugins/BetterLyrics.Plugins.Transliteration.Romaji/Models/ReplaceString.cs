@@ -1,4 +1,4 @@
-﻿namespace BetterLyrics.Plugins.Romaji.Models
+﻿namespace BetterLyrics.Plugins.Transliteration.Romaji.Models
 {
     public class ReplaceString
     {

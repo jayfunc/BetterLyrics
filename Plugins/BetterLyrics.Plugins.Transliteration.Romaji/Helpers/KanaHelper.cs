@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace BetterLyrics.Plugins.Romaji.Helpers
+namespace BetterLyrics.Plugins.Transliteration.Romaji.Helpers
 {
     /// <summary>
     /// 此类用于片假、平假互转
