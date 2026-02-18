@@ -405,7 +405,24 @@
                                 <ListView.ItemTemplate>
                                     <DataTemplate x:DataType="settingsmodels:LyricsSearchProviderInfo">
                                         <Grid>
-                                            <dev:SettingsExpander Header="{Binding Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}, Mode=OneWay}" IsExpanded="{Binding IsMatchingThresholdOverwritten, Mode=OneWay}">
+                                            <dev:SettingsExpander IsExpanded="{Binding IsMatchingThresholdOverwritten, Mode=OneWay}">
+                                                <dev:SettingsExpander.Header>
+                                                    <Grid ColumnSpacing="6">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="*" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{Binding Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}, Mode=OneWay}" />
+                                                        <FontIcon
+                                                            Grid.Column="1"
+                                                            Margin="0,2,0,0"
+                                                            FontFamily="{StaticResource IconFontFamily}"
+                                                            FontSize="12"
+                                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                            Glyph="&#xE74C;"
+                                                            Visibility="{Binding IsPlugin, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                    </Grid>
+                                                </dev:SettingsExpander.Header>
                                                 <dev:SettingsExpander.HeaderIcon>
                                                     <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#x283F;" />
                                                 </dev:SettingsExpander.HeaderIcon>

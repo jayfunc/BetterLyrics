@@ -164,7 +164,7 @@ namespace BetterLyrics.WinUI3
                 .Where(x => x.Plugin is ILyricsSource)
                 .Select(p => new
                 {
-                    Id = (int)pluginService.GetHashedId(p.Id)
+                    Id = (int)pluginService.GetPluginHashedId(p.Id)
                 })
                 .ToList();
 

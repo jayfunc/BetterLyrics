@@ -13,6 +13,8 @@ namespace BetterLyrics.Core.Abstractions
 
         public TConfig Config { get; } = new TConfig();
 
+        public abstract string Title { get; set; }
+
         public string Description
         {
             get

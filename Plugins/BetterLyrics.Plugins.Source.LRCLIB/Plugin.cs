@@ -10,6 +10,8 @@ namespace BetterLyrics.Plugins.Source.LRCLIB
     {
         private readonly HttpClient _httpClient;
 
+        public override string Title { get; set; } = "LRCLIB";
+
         public Plugin()
         {
             _httpClient = new HttpClient();
