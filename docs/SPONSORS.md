@@ -6,6 +6,12 @@ Special thanks to the following people for their support!
   <tbody>
     <tr>
       <td></td>
+      <td></td>
+      <td></td>
+      <td>Feb 18, 2026 haitang000</td>
+    </tr>
+    <tr>
+      <td>Feb 17, 2026 AlexZhao</td>
       <td>Feb 16, 2026 **昊</td>
       <td>Feb 13, 2026 **鹏</td>
       <td>Jan 31, 2026 wu</td>
@@ -23,9 +29,9 @@ Special thanks to the following people for their support!
       <td>Jan 3, 2026 **轩</td>
     </tr>
     <tr>
-      <td>Dec 13, 2025 &lt;Anonymous&gt;</td>
+      <td>Dec 13, 2025 &lt;Anon/匿名&gt;</td>
       <td>Dec 3, 2025 YE</td>
-      <td>Dec 2, 2025 &lt;Anonymous&gt;</td>
+      <td>Dec 2, 2025 &lt;Anon/匿名&gt;</td>
       <td>Nov 23, 2025 **玄</td>
     </tr>
     <tr>
