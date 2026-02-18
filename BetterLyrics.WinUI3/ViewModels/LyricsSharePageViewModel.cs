@@ -2,6 +2,7 @@
 using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.Services.GSMTCService;
 using BetterLyrics.WinUI3.Services.SettingsService;
+using BetterLyrics.WinUI3.Services.SongSearchMapService;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
@@ -13,28 +14,30 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using Windows.Storage.Streams;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
     public partial class LyricsSharePageViewModel : BaseViewModel,
-        IRecipient<PropertyChangedMessage<BitmapImage?>>
+        IRecipient<PropertyChangedMessage<BitmapImage?>>,
+        IRecipient<PropertyChangedMessage<MappedSongSearchQuery?>>
     {
-        private readonly ISettingsService _settingsService;
-
+        private readonly ISongSearchMapService _songSearchMapService;
         public IGSMTCService GSMTCService { get; private set; }
 
         [ObservableProperty] public partial BitmapImage QRCode { get; set; }
         [ObservableProperty] public partial LyricsShareCardData CardData { get; set; } = new();
         [ObservableProperty] public partial Brush OverlayBrush { get; set; }
 
-        public LyricsSharePageViewModel(IGSMTCService gsmtcService, ISettingsService settingsService)
+        public LyricsSharePageViewModel(IGSMTCService gsmtcService, ISongSearchMapService songSearchMapService)
         {
+            _songSearchMapService = songSearchMapService;
             GSMTCService = gsmtcService;
-            _settingsService = settingsService;
 
-            RefreshCardData();
+            RefreshCardDataAsync();
+            ActivateCardDataForBinding();
         }
 
         public void UpdateSelectedLyrics(List<LyricsLine> lyrics)
@@ -44,9 +47,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 #endif
             CardData = new LyricsShareCardData
             {
-                Title = GSMTCService.CurrentSongInfo.Title,
-                Artist = GSMTCService.CurrentSongInfo.Artist,
-                CoverImage = GSMTCService.AlbumArtBitmapImage,
+                Title = CardData.Title,
+                Artist = CardData.Artist,
+                CoverImage = CardData.CoverImage,
                 OverlayBrush = CardData.OverlayBrush,
                 SelectedLyrics = lyrics
             };
@@ -83,7 +86,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             OverlayBrush = gradientBrush;
         }
 
-        private void RefreshCardData()
+        private async Task RefreshCardDataAsync()
         {
             UpdateOverlayBrush();
 
@@ -167,15 +170,25 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
             };
 #else
+            var (mappedTitle, mappedArtist, _) = await _songSearchMapService.GetMappingAsync(GSMTCService.CurrentSongInfo);
             CardData = new LyricsShareCardData
             {
-                Title = GSMTCService.CurrentSongInfo.Title,
-                Artist = GSMTCService.CurrentSongInfo.Artist,
+                Title = mappedTitle,
+                Artist = mappedArtist,
                 CoverImage = GSMTCService.AlbumArtBitmapImage,
                 OverlayBrush = OverlayBrush,
                 SelectedLyrics = CardData.SelectedLyrics
             };
 #endif
+        }
+
+        private void ActivateCardDataForBinding()
+        {
+            _ = CardData.Title;
+            _ = CardData.Artist;
+            _ = CardData.CoverImage;
+            _ = CardData.OverlayBrush;
+            _ = CardData.SelectedLyrics;
         }
 
         public void Receive(PropertyChangedMessage<BitmapImage?> message)
@@ -184,7 +197,18 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 if (message.PropertyName == nameof(IGSMTCService.AlbumArtBitmapImage))
                 {
-                    RefreshCardData();
+                    RefreshCardDataAsync();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<MappedSongSearchQuery?> message)
+        {
+            if (message.Sender is LyricsSearchControlViewModel)
+            {
+                if (message.PropertyName == nameof(LyricsSearchControlViewModel.MappedSongSearchQuery))
+                {
+                    RefreshCardDataAsync();
                 }
             }
         }
