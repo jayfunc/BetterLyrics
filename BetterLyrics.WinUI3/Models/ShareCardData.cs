@@ -2,6 +2,7 @@
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
 namespace BetterLyrics.WinUI3.Models

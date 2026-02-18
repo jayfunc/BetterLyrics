@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <linker>
+	
 	<assembly fullname="BetterLyrics.Core" preserve="all" />
 
 	<assembly fullname="FlaUI.UIA3" preserve="all" />

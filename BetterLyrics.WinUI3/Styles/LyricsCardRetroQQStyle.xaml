@@ -234,7 +234,7 @@
                                                             TextWrapping="Wrap" />
                                                     </StackPanel>
 
-                                                    <StackPanel Margin="0,8,0,0" Visibility="{Binding SecondaryText, Converter={StaticResource StringToVisibilityConverter}, FallbackValue=Visible}">
+                                                    <StackPanel Margin="0,8,0,0" Visibility="{Binding SecondaryText, Converter={StaticResource StringToVisibilityConverter}}">
 
                                                         <StackPanel Margin="0,0,0,2" Orientation="Horizontal">
                                                             <TextBlock
