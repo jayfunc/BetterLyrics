@@ -107,7 +107,7 @@
 
 **Help us translate:** Cannot find your language? [Start translating here](https://github.com/jayfunc/BetterLyrics?tab=contributing-ov-file).
 
-**Develop Plugins:** Want to extend functionality? [🧩 Read the Developer Guide](docs/PLUGIN_DEV.md).
+**Develop Plugins:** Want to extend functionality? [🧩 Read the Developer Guide](https://betterlyrics.github.io/plugin-dev/intro/).
 
 **Build from source:**
 > Before building, ensure you have replaced `DiscordTemplate.cs` and `LastFM.cs` in the `Constants` folder.
