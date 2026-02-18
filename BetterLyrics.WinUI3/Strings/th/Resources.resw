@@ -714,6 +714,9 @@
   <data name="PluginManagerControlUninstallSuccessful" xml:space="preserve">
     <value>การถอนการติดตั้งสำเร็จ</value>
   </data>
+  <data name="PluginManagerControlVisitPluginDevGuide.Content" xml:space="preserve">
+    <value>เยี่ยมชมเอกสารสำหรับนักพัฒนาปลั๊กอิน</value>
+  </data>
   <data name="PluginManagerControlVisitPluginStore.Content" xml:space="preserve">
     <value>เยี่ยมชมร้านค้าปลั๊กอิน</value>
   </data>

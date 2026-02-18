@@ -15,6 +15,7 @@
         public const string PrivacyPolicy = $"{BetterLyricsGitHub}/blob/dev/docs/PRIVACY_POLICY.md";
         public const string OfficialWebsite = $"https://betterlyrics.github.io";
         public const string UserGuide = $"{OfficialWebsite}";
+        public const string PluginDevGuide = $"{OfficialWebsite}/plugin-dev/intro";
         public const string PluginsStore = $"{OfficialWebsite}/plugins-store";
         public const string AppleMusicCfg = $"{OfficialWebsite}/lyrics-cfg/apple-music";
 
