@@ -15,7 +15,6 @@
             x:Name="Canvas"
             CreateResources="Canvas_CreateResources"
             Draw="Canvas_Draw"
-            IsFixedTimeStep="False"
             TargetElapsedTime="{x:Bind LyricsWindowStatus.FPS, Mode=OneWay, Converter={StaticResource FPSToTimeSpanConverter}}"
             Update="Canvas_Update" />
     </Grid>
