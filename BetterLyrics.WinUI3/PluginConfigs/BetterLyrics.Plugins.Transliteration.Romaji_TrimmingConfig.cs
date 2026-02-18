@@ -130,6 +130,7 @@ internal static class BetterLyrics_Plugins_Transliteration_Romaji_Config
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Text.RegularExpressions.Regex))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Text.RegularExpressions.RegexOptions))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Text.StringBuilder))]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Threading.CancellationToken))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Threading.Interlocked))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Threading.Tasks.Task))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Threading.Tasks.Task<>))]

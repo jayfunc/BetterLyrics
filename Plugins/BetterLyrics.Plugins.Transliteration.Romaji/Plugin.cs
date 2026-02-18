@@ -13,7 +13,7 @@ namespace BetterLyrics.Plugins.Transliteration.Romaji
             RomajiHelper.Init(Context.PluginDirectory);
         }
 
-        public Task<string?> GetTransliterationAsync(string text, string targetLangCode)
+        public Task<string?> GetTransliterationAsync(string text, string targetLangCode, CancellationToken token)
         {
             string? result = null;
             if (targetLangCode == "ja-latin")
