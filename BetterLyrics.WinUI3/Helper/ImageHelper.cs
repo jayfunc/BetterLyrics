@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
 using Windows.Storage;
@@ -43,7 +44,7 @@ namespace BetterLyrics.WinUI3.Helper
             return buffer;
         }
 
-        public static async Task<BitmapDecoder> GetBitmapDecoder(IBuffer buffer)
+        public static async Task<BitmapDecoder> GetBitmapDecoderAsync(IBuffer buffer)
         {
             using var stream = new InMemoryRandomAccessStream();
             await stream.WriteAsync(buffer);

@@ -20,8 +20,6 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
         private async Task RefreshLyricsAsync(CancellationToken token)
         {
-            _logger.LogInformation("RefreshLyricsAsync");
-
             CurrentLyricsData = LyricsData.GetLoadingPlaceholder();
 
             if (CurrentSongInfo != SongInfoExtensions.Placeholder)
