@@ -189,6 +189,13 @@ namespace BetterLyrics.WinUI3.ViewModels
             _ = CardData.CoverImage;
             _ = CardData.OverlayBrush;
             _ = CardData.SelectedLyrics;
+            
+            _ = CardData.DateLong;
+            _ = CardData.DateShort;
+            
+            _ = CardData.TimeShort;
+            _ = CardData.TimeWithSeconds;
+            _ = CardData.TimeWithSecondsReply;
         }
 
         public void Receive(PropertyChangedMessage<BitmapImage?> message)

@@ -278,7 +278,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             {
                 if (plugin.Plugin is ILyricsSource)
                 {
-                    var provider = (LyricsSearchProvider)_pluginService.GetHashedId(plugin.Plugin.Id);
+                    var provider = (LyricsSearchProvider)_pluginService.GetPluginHashedId(plugin.Plugin.Id);
                     searchTasks.Add(SearchSingleAsync(songInfo, provider, checkCache, default));
                 }
             }
@@ -761,7 +761,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             var plugin = (ILyricsSource)pluginInfo.Plugin!;
             var cacheItem = new LyricsCacheItem
             {
-                Provider = (LyricsSearchProvider)_pluginService.GetHashedId(pluginInfo.Id),
+                Provider = (LyricsSearchProvider)_pluginService.GetPluginHashedId(pluginInfo.Id),
             };
 
             var result = await plugin.GetLyricsAsync(songInfo.Title, songInfo.Artist, songInfo.Album, songInfo.Duration, token);
@@ -786,7 +786,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
         private async Task<LyricsCacheItem> SearchPluginAsync(SongInfo songInfo, LyricsSearchProvider provider, CancellationToken token)
         {
-            var pluginInfo = _settingsService.AppSettings.PluginsInfo.FirstOrDefault(p => _pluginService.GetHashedId(p.Id) == (int)provider);
+            var pluginInfo = _settingsService.AppSettings.PluginsInfo.FirstOrDefault(p => _pluginService.GetPluginHashedId(p.Id) == (int)provider);
             if (pluginInfo == null) throw new ArgumentNullException(nameof(pluginInfo));
 
             return await SearchPluginAsync(songInfo, pluginInfo, token);

@@ -9,6 +9,8 @@ internal static class BetterLyrics_Plugins_Source_LRCLIB_Config
 {
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Diagnostics.DebuggableAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Diagnostics.DebuggableAttribute.DebuggingModes))]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Diagnostics.DebuggerBrowsableAttribute))]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Diagnostics.DebuggerBrowsableState))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Diagnostics.DebuggerHiddenAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Diagnostics.DebuggerStepThroughAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Double))]

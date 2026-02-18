@@ -43,7 +43,7 @@ namespace BetterLyrics.WinUI3.Services.TransliterationService
                 }
             }
 
-            return (result ?? "", (TransliterationSearchProvider)_pluginService.GetHashedId(pluginInfo?.Id ?? ""));
+            return (result ?? "", (TransliterationSearchProvider)_pluginService.GetPluginHashedId(pluginInfo?.Id ?? ""));
         }
     }
 }

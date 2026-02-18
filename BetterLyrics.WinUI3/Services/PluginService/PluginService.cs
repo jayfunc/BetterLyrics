@@ -279,7 +279,7 @@ namespace BetterLyrics.WinUI3.Services.PluginService
             return _configurator.GetValueOrDefault(pluginId)?.Get(key, defaultValue) ?? defaultValue;
         }
 
-        public int GetHashedId(string pluginId) => _hashedId.GetValueOrDefault(pluginId, -1);
+        public int GetPluginHashedId(string pluginId) => _hashedId.GetValueOrDefault(pluginId, -1);
         public string GetPluginId(int hashedId) => _hashedId.FirstOrDefault(x => x.Value == hashedId, new KeyValuePair<string, int>("N/A", -1)).Key;
 
         public void Receive(PropertyChangedMessage<bool> message)
