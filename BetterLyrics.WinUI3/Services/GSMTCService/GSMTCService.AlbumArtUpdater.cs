@@ -47,52 +47,61 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
         private async Task RefreshArtAlbumAsync(bool ignoreCache, CancellationToken token)
         {
-            _logger.LogInformation("RefreshArtAlbum");
-
             IBuffer? buffer = null;
             if (CurrentSongInfo != SongInfoExtensions.Placeholder)
             {
                 buffer = await Task.Run(async () => await _albumArtSearchService.SearchAsync(CurrentSongInfo, _SMTCAlbumArtBuffer, ignoreCache, token), token);
-                if (token.IsCancellationRequested) return;
             }
 
             if (buffer == null)
             {
                 using var placeHolderStream = await ImageHelper.GetAlbumArtPlaceholderAsync();
+                token.ThrowIfCancellationRequested();
+
                 var tempBuffer = new Windows.Storage.Streams.Buffer((uint)placeHolderStream.Size);
+                
                 await placeHolderStream.ReadAsync(tempBuffer, (uint)placeHolderStream.Size, InputStreamOptions.None);
-                if (token.IsCancellationRequested) return;
+                token.ThrowIfCancellationRequested();
 
                 buffer = tempBuffer;
             }
 
-            _albumArtBitmapDecoder = await ImageHelper.GetBitmapDecoder(buffer);
-            if (token.IsCancellationRequested) return;
+            _albumArtBitmapDecoder = await ImageHelper.GetBitmapDecoderAsync(buffer);
+            token.ThrowIfCancellationRequested();
 
             _lightAccentColorsMedianCut =
                 (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, PaletteGeneratorType.MedianCut, false))
                 .Palette.Select(Helper.ColorHelper.FromVector3).ToList();
+            token.ThrowIfCancellationRequested();
+
             _darkAccentColorsMedianCut =
                 (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, PaletteGeneratorType.MedianCut, true))
                 .Palette.Select(Helper.ColorHelper.FromVector3).ToList();
+            token.ThrowIfCancellationRequested();
 
             _lightAccentColorsOctTree =
                 (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, PaletteGeneratorType.OctTree, false))
                 .Palette.Select(Helper.ColorHelper.FromVector3).ToList();
+            token.ThrowIfCancellationRequested();
+
             _darkAccentColorsOctTree =
                 (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, PaletteGeneratorType.OctTree, true))
                 .Palette.Select(Helper.ColorHelper.FromVector3).ToList();
+            token.ThrowIfCancellationRequested();
 
             _lightAccentColorsAuto =
                 (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, PaletteGeneratorType.Auto, false))
                 .Palette.Select(Helper.ColorHelper.FromVector3).ToList();
+            token.ThrowIfCancellationRequested();
+
             _darkAccentColorsAuto =
                 (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, PaletteGeneratorType.Auto, true))
                 .Palette.Select(Helper.ColorHelper.FromVector3).ToList();
+            token.ThrowIfCancellationRequested();
 
             var bitmapImage = new BitmapImage();
             await bitmapImage.SetSourceAsync(ImageHelper.ToIRandomAccessStream(buffer));
-            if (token.IsCancellationRequested) return;
+            token.ThrowIfCancellationRequested();
 
             AlbumArtBitmapImage = bitmapImage;
             AlbumArtBitmapStream = ImageHelper.ToIRandomAccessStream(buffer);

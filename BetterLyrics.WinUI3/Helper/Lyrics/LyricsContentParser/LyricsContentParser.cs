@@ -132,10 +132,13 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
                             await transliterationService.TransliterateText(main.WrappedOriginalText, LanguageHelper.RomanCode, token);
                         _lyricsDataArr.FirstOrDefault()?.SetTransliteration(romaji);
                     }
-                    catch (TaskCanceledException) { }
-                    catch (Exception)
+                    catch (TaskCanceledException)
                     {
-                        GlobalToastManager.Show("CutletDockerFailed", null, InfoBarSeverity.Error);
+                        throw;
+                    }
+                    catch (Exception ex)
+                    {
+                        GlobalToastManager.Show("CutletDockerFailed", ex.Message, InfoBarSeverity.Error);
                     }
                 }
             }
@@ -158,10 +161,13 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
                         _lyricsDataArr.FirstOrDefault()?.SetTranslation(translated);
                         translationSearchProvider = TranslationSearchProvider.LibreTranslate;
                     }
-                    catch (TaskCanceledException) { }
-                    catch (Exception)
+                    catch (TaskCanceledException)
                     {
-                        GlobalToastManager.Show("LibreTranslateFailed", null, InfoBarSeverity.Error);
+                        throw;
+                    }
+                    catch (Exception ex)
+                    {
+                        GlobalToastManager.Show("LibreTranslateFailed", ex.Message, InfoBarSeverity.Error);
                     }
                 }
             }
