@@ -1,0 +1,149 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:lyricsmodels="using:BetterLyrics.WinUI3.Models.Lyrics"
+    xmlns:models="using:BetterLyrics.WinUI3.Models">
+
+    <DataTemplate x:Key="LyricsCardBambooSlipsStyle">
+        <Grid
+            Width="450"
+            MinHeight="600"
+            Background="#E6D3B3">
+
+            <Grid Margin="0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Grid Grid.Column="1" Margin="0,40,20,40">
+                    <StackPanel
+                        HorizontalAlignment="Right"
+                        FlowDirection="RightToLeft"
+                        Orientation="Horizontal">
+
+                        <Border
+                            Margin="0,40,0,0"
+                            BorderBrush="#C2A882"
+                            BorderThickness="0,0,2,0">
+                            <TextBlock
+                                Width="40"
+                                Margin="0,0,10,0"
+                                FontFamily="LiSu, KaiTi, Microsoft YaHei"
+                                FontSize="32"
+                                Foreground="#1A110B"
+                                LineHeight="38"
+                                Text="{Binding Title}"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
+                        </Border>
+
+                        <Border BorderBrush="#C2A882" BorderThickness="0,0,2,0">
+                            <TextBlock
+                                Width="24"
+                                Margin="5,0,5,20"
+                                VerticalAlignment="Bottom"
+                                FontFamily="LiSu, KaiTi, Microsoft YaHei"
+                                FontSize="18"
+                                Foreground="#4A3424"
+                                LineHeight="24"
+                                Text="{Binding Artist}"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap" />
+                        </Border>
+                    </StackPanel>
+
+                    <Grid
+                        Width="36"
+                        Height="36"
+                        Margin="0,-20,0,0"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top">
+                        <Ellipse Fill="#80261E" />
+                        <Ellipse Margin="2" Fill="#9E3026" />
+                        <TextBlock
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontFamily="LiSu, STXingkai, Microsoft YaHei"
+                            FontSize="16"
+                            Foreground="#E3CBA8"
+                            Text="简" />
+                    </Grid>
+                </Grid>
+
+                <ItemsControl
+                    Grid.Column="0"
+                    Margin="20,40,0,40"
+                    FlowDirection="RightToLeft"
+                    ItemsSource="{Binding SelectedLyrics}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border
+                                Width="60"
+                                Background="#E6D3B3"
+                                BorderBrush="#C2A882"
+                                BorderThickness="0,0,2,0">
+                                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
+
+                                    <TextBlock
+                                        Width="28"
+                                        FontFamily="LiSu, KaiTi, Microsoft YaHei"
+                                        FontSize="20"
+                                        Foreground="#1A110B"
+                                        LineHeight="30"
+                                        Text="{Binding Text}"
+                                        TextAlignment="Center"
+                                        TextWrapping="Wrap" />
+
+                                    <TextBlock
+                                        Width="16"
+                                        Margin="8,0,0,0"
+                                        FontFamily="KaiTi, Microsoft YaHei"
+                                        FontSize="15"
+                                        Foreground="#5A402D"
+                                        LineHeight="22"
+                                        Text="{Binding SecondaryText}"
+                                        TextAlignment="Center"
+                                        TextWrapping="Wrap"
+                                        Visibility="{Binding SecondaryText, Converter={StaticResource StringToVisibilityConverter}}" />
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+            </Grid>
+
+            <Grid Margin="0,20,0,0" VerticalAlignment="Top">
+                <Rectangle
+                    Height="4"
+                    Fill="#3E2723"
+                    Opacity="0.8" />
+                <Rectangle
+                    Height="1"
+                    Margin="0,1,0,0"
+                    VerticalAlignment="Top"
+                    Fill="#6D4C41" />
+            </Grid>
+            <Grid Margin="0,0,0,20" VerticalAlignment="Bottom">
+                <Rectangle
+                    Height="4"
+                    Fill="#3E2723"
+                    Opacity="0.8" />
+                <Rectangle
+                    Height="1"
+                    Margin="0,1,0,0"
+                    VerticalAlignment="Top"
+                    Fill="#6D4C41" />
+            </Grid>
+
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>

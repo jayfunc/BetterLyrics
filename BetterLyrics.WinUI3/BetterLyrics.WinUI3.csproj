@@ -66,6 +66,7 @@
 		<None Remove="Controls\WindowSettingsControl.xaml" />
 		<None Remove="Styles\GhostSliderStyle.xaml" />
 		<None Remove="Styles\InteractiveListViewHeaderStyle.xaml" />
+		<None Remove="Styles\LyricsCardInkWashStyle.xaml" />
 		<None Remove="Styles\LyricsCardMinimalStyle.xaml" />
 		<None Remove="Views\LyricsSearchWindow.xaml" />
 		<None Remove="Views\LyricsSharePage.xaml" />
@@ -247,6 +248,21 @@
 		  <SubType>Designer</SubType>
 		</Page>
 		<Page Update="Styles\LyricsCardPodStyle.xaml">
+		  <SubType>Designer</SubType>
+		</Page>
+		<Page Update="Styles\LyricsCardBambooSlipsStyle.xaml">
+		  <SubType>Designer</SubType>
+		</Page>
+		<Page Update="Styles\LyricsCardDunhuangStyle.xaml">
+		  <SubType>Designer</SubType>
+		</Page>
+		<Page Update="Styles\LyricsCardJournalStyle.xaml">
+		  <SubType>Designer</SubType>
+		</Page>
+		<Page Update="Styles\LyricsCardStickyNoteStyle.xaml">
+		  <SubType>Designer</SubType>
+		</Page>
+		<Page Update="Styles\LyricsCardAncientBookStyle.xaml">
 		  <SubType>Designer</SubType>
 		</Page>
 		<Page Update="Styles\LyricsCardWindowsPhoneStyle.xaml">
@@ -442,6 +458,11 @@
 	  <Content Update="Assets\Banner.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Styles\LyricsCardInkWashStyle.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Styles\LyricsCardMinimalStyle.xaml">

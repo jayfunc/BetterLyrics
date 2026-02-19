@@ -27,9 +27,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         private readonly ISongSearchMapService _songSearchMapService;
         public IGSMTCService GSMTCService { get; private set; }
 
-        [ObservableProperty] public partial BitmapImage QRCode { get; set; }
-        [ObservableProperty] public partial LyricsShareCardData CardData { get; set; } = new();
-        [ObservableProperty] public partial Brush OverlayBrush { get; set; }
+        [ObservableProperty] public partial LyricsCardData CardData { get; set; } = new();
 
         public LyricsSharePageViewModel(IGSMTCService gsmtcService, ISongSearchMapService songSearchMapService)
         {
@@ -45,17 +43,10 @@ namespace BetterLyrics.WinUI3.ViewModels
 #if DEBUG && false
             return;
 #endif
-            CardData = new LyricsShareCardData
-            {
-                Title = CardData.Title,
-                Artist = CardData.Artist,
-                CoverImage = CardData.CoverImage,
-                OverlayBrush = CardData.OverlayBrush,
-                SelectedLyrics = lyrics
-            };
+            CardData.SelectedLyrics = lyrics;
         }
 
-        private void UpdateOverlayBrush()
+        private Brush GetOverlayBrush()
         {
             var dominantColor = GSMTCService.GetAlbumArtAccentColors(Enums.PaletteGeneratorType.Auto, true).First();
 
@@ -83,13 +74,11 @@ namespace BetterLyrics.WinUI3.ViewModels
                 Offset = 1.0
             });
 
-            OverlayBrush = gradientBrush;
+            return gradientBrush;
         }
 
         private async Task RefreshCardDataAsync()
         {
-            UpdateOverlayBrush();
-
 #if DEBUG && false
             CardData = new LyricsShareCardData
             {
@@ -171,12 +160,12 @@ namespace BetterLyrics.WinUI3.ViewModels
             };
 #else
             var (mappedTitle, mappedArtist, _) = await _songSearchMapService.GetMappingAsync(GSMTCService.CurrentSongInfo);
-            CardData = new LyricsShareCardData
+            CardData = new LyricsCardData
             {
                 Title = mappedTitle,
                 Artist = mappedArtist,
                 CoverImage = GSMTCService.AlbumArtBitmapImage,
-                OverlayBrush = OverlayBrush,
+                OverlayBrush = GetOverlayBrush(),
                 SelectedLyrics = CardData.SelectedLyrics
             };
 #endif
@@ -189,10 +178,10 @@ namespace BetterLyrics.WinUI3.ViewModels
             _ = CardData.CoverImage;
             _ = CardData.OverlayBrush;
             _ = CardData.SelectedLyrics;
-            
+
             _ = CardData.DateLong;
             _ = CardData.DateShort;
-            
+
             _ = CardData.TimeShort;
             _ = CardData.TimeWithSeconds;
             _ = CardData.TimeWithSecondsReply;

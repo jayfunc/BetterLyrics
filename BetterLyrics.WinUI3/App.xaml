@@ -16,12 +16,17 @@
                 <ResourceDictionary Source="ms-appx:///DevWinUI.Controls/Themes/Generic.xaml" />
 
                 <ResourceDictionary Source="/Styles/Converters.xaml" />
-                <ResourceDictionary Source="/Styles/InteractiveListViewHeaderStyle.xaml" />
                 <ResourceDictionary Source="/Styles/GhostSliderStyle.xaml" />
+                <ResourceDictionary Source="/Styles/InteractiveListViewHeaderStyle.xaml" />
 
+                <ResourceDictionary Source="/Styles/LyricsCardAncientBookStyle.xaml" />
+                <ResourceDictionary Source="/Styles/LyricsCardBambooSlipsStyle.xaml" />
                 <ResourceDictionary Source="/Styles/LyricsCardCDStyle.xaml" />
                 <ResourceDictionary Source="/Styles/LyricsCardCinematicStyle.xaml" />
                 <ResourceDictionary Source="/Styles/LyricsCardCyberpunkStyle.xaml" />
+                <ResourceDictionary Source="/Styles/LyricsCardDunhuangStyle.xaml" />
+                <ResourceDictionary Source="/Styles/LyricsCardInkWashStyle.xaml" />
+                <ResourceDictionary Source="/Styles/LyricsCardJournalStyle.xaml" />
                 <ResourceDictionary Source="/Styles/LyricsCardMagazineStyle.xaml" />
                 <ResourceDictionary Source="/Styles/LyricsCardMinimalStyle.xaml" />
                 <ResourceDictionary Source="/Styles/LyricsCardPodStyle.xaml" />
@@ -29,6 +34,7 @@
                 <ResourceDictionary Source="/Styles/LyricsCardReceiptStyle.xaml" />
                 <ResourceDictionary Source="/Styles/LyricsCardRetroMSNStyle.xaml" />
                 <ResourceDictionary Source="/Styles/LyricsCardRetroQQStyle.xaml" />
+                <ResourceDictionary Source="/Styles/LyricsCardStickyNoteStyle.xaml" />
                 <ResourceDictionary Source="/Styles/LyricsCardSwissStyle.xaml" />
                 <ResourceDictionary Source="/Styles/LyricsCardTicketStyle.xaml" />
                 <ResourceDictionary Source="/Styles/LyricsCardVinylStyle.xaml" />

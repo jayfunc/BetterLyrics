@@ -9,7 +9,8 @@
         <Grid
             Width="450"
             MinHeight="600"
-            Background="#F5F5F7">
+            Background="WhiteSmoke"
+            CornerRadius="8">
             <Grid
                 Margin="20"
                 Background="White"

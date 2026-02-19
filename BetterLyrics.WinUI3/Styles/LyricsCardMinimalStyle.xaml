@@ -11,7 +11,7 @@
             MinHeight="600"
             Background="White">
             <Border
-                Margin="16"
+                Margin="20"
                 BorderBrush="Black"
                 BorderThickness="4" />
             <Grid Padding="40">

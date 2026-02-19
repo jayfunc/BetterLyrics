@@ -9,9 +9,10 @@
         <Grid
             Width="450"
             MinHeight="600"
-            Background="#F2F2F2">
+            Background="WhiteSmoke"
+            CornerRadius="8">
             <Border
-                Margin="10"
+                Margin="20"
                 BorderBrush="#D0D0D0"
                 BorderThickness="1"
                 CornerRadius="12">

@@ -1,0 +1,180 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:lyricsmodels="using:BetterLyrics.WinUI3.Models.Lyrics"
+    xmlns:models="using:BetterLyrics.WinUI3.Models">
+
+    <DataTemplate x:Key="LyricsCardJournalStyle">
+        <Grid
+            Width="450"
+            MinHeight="600"
+            Background="WhiteSmoke"
+            CornerRadius="8">
+            <Grid
+                Margin="40"
+                Background="#F4EBD9"
+                BorderBrush="#E0D5C1"
+                BorderThickness="1"
+                CornerRadius="4">
+
+                <StackPanel
+                    Margin="16,0,0,0"
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Center"
+                    Spacing="30">
+                    <Border
+                        Width="16"
+                        Height="16"
+                        BorderBrush="#E0D5C1"
+                        BorderThickness="1"
+                        CornerRadius="16">
+                        <Ellipse Fill="WhiteSmoke" />
+                    </Border>
+                    <Border
+                        Width="16"
+                        Height="16"
+                        BorderBrush="#E0D5C1"
+                        BorderThickness="1"
+                        CornerRadius="16">
+                        <Ellipse Fill="WhiteSmoke" />
+                    </Border>
+                    <Border
+                        Width="16"
+                        Height="16"
+                        BorderBrush="#E0D5C1"
+                        BorderThickness="1"
+                        CornerRadius="16">
+                        <Ellipse Fill="WhiteSmoke" />
+                    </Border>
+                    <Border
+                        Width="16"
+                        Height="16"
+                        BorderBrush="#E0D5C1"
+                        BorderThickness="1"
+                        CornerRadius="16">
+                        <Ellipse Fill="WhiteSmoke" />
+                    </Border>
+                    <Border
+                        Width="16"
+                        Height="16"
+                        BorderBrush="#E0D5C1"
+                        BorderThickness="1"
+                        CornerRadius="16">
+                        <Ellipse Fill="WhiteSmoke" />
+                    </Border>
+                    <Border
+                        Width="16"
+                        Height="16"
+                        BorderBrush="#E0D5C1"
+                        BorderThickness="1"
+                        CornerRadius="16">
+                        <Ellipse Fill="WhiteSmoke" />
+                    </Border>
+                    <Border
+                        Width="16"
+                        Height="16"
+                        BorderBrush="#E0D5C1"
+                        BorderThickness="1"
+                        CornerRadius="16">
+                        <Ellipse Fill="WhiteSmoke" />
+                    </Border>
+                    <Border
+                        Width="16"
+                        Height="16"
+                        BorderBrush="#E0D5C1"
+                        BorderThickness="1"
+                        CornerRadius="16">
+                        <Ellipse Fill="WhiteSmoke" />
+                    </Border>
+                    <Border
+                        Width="16"
+                        Height="16"
+                        BorderBrush="#E0D5C1"
+                        BorderThickness="1"
+                        CornerRadius="16">
+                        <Ellipse Fill="WhiteSmoke" />
+                    </Border>
+                </StackPanel>
+
+                <Rectangle
+                    Width="1.5"
+                    Margin="45,0,0,0"
+                    HorizontalAlignment="Left"
+                    Fill="#D9A8A8"
+                    Opacity="0.6" />
+
+                <Grid Margin="65,36,36,36">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Grid.Row="0" Margin="0,0,0,24">
+                        <TextBlock
+                            FontFamily="KaiTi, Segoe Print, Segoe UI"
+                            FontSize="24"
+                            FontWeight="SemiBold"
+                            Foreground="#3C4858"
+                            Text="{Binding Title}"
+                            TextWrapping="Wrap" />
+                        <TextBlock
+                            Margin="0,8,0,0"
+                            FontFamily="KaiTi, Segoe Print, Segoe UI"
+                            FontSize="15"
+                            Foreground="#6C7A89"
+                            Text="{Binding Artist}" />
+                    </StackPanel>
+
+                    <ItemsControl Grid.Row="1" ItemsSource="{Binding SelectedLyrics}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,0,0,16">
+                                    <StackPanel>
+                                        <TextBlock
+                                            FontFamily="KaiTi, Segoe Print, Segoe UI"
+                                            FontSize="16"
+                                            Foreground="#3C4858"
+                                            LineHeight="26"
+                                            Text="{Binding Text}"
+                                            TextWrapping="Wrap" />
+
+                                        <TextBlock
+                                            Margin="0,4,0,0"
+                                            FontFamily="KaiTi, Segoe Print, Segoe UI"
+                                            FontSize="14"
+                                            Foreground="#8B96A5"
+                                            LineHeight="22"
+                                            Text="{Binding SecondaryText}"
+                                            TextWrapping="Wrap"
+                                            Visibility="{Binding SecondaryText, Converter={StaticResource StringToVisibilityConverter}}" />
+                                    </StackPanel>
+
+                                    <Rectangle
+                                        Height="1"
+                                        Margin="0,0,0,-4"
+                                        VerticalAlignment="Bottom"
+                                        Fill="#E5DCC5" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <StackPanel
+                        Grid.Row="2"
+                        HorizontalAlignment="Right"
+                        Opacity="0.5"
+                        Orientation="Horizontal">
+                        <TextBlock
+                            FontFamily="Georgia, Segoe UI"
+                            FontSize="10"
+                            FontStyle="Italic"
+                            Foreground="#3C4858"
+                            Text="BetterLyrics" />
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </Grid>
+    </DataTemplate>
+
+</ResourceDictionary>

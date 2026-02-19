@@ -402,6 +402,9 @@
   <data name="LyricsSharePageGroupAtmosphere.Text" xml:space="preserve">
     <value>Atmosphere</value>
   </data>
+  <data name="LyricsSharePageGroupChineseElegance.Text" xml:space="preserve">
+    <value>Chinese Elegance</value>
+  </data>
   <data name="LyricsSharePageGroupClassic.Text" xml:space="preserve">
     <value>Classic Design</value>
   </data>
@@ -410,6 +413,9 @@
   </data>
   <data name="LyricsSharePageGroupRetro.Text" xml:space="preserve">
     <value>Digital Retro</value>
+  </data>
+  <data name="LyricsSharePageGroupTracesOfTime.Text" xml:space="preserve">
+    <value>Traces of Time</value>
   </data>
   <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
     <value>Image Quality</value>
@@ -420,14 +426,29 @@
   <data name="LyricsSharePageSelectLyricsTitle.Text" xml:space="preserve">
     <value>Select Lyrics</value>
   </data>
+  <data name="LyricsSharePageStyleAncientBook.Content" xml:space="preserve">
+    <value>Ancient book</value>
+  </data>
+  <data name="LyricsSharePageStyleBambooSlips.Content" xml:space="preserve">
+    <value>Bamboo slips</value>
+  </data>
   <data name="LyricsSharePageStyleCD.Content" xml:space="preserve">
-    <value>CD Case</value>
+    <value>CD case</value>
   </data>
   <data name="LyricsSharePageStyleCinematic.Content" xml:space="preserve">
     <value>Cinematic</value>
   </data>
   <data name="LyricsSharePageStyleCyberpunk.Content" xml:space="preserve">
     <value>Cyberpunk</value>
+  </data>
+  <data name="LyricsSharePageStyleDunhuang.Content" xml:space="preserve">
+    <value>Dunhuang</value>
+  </data>
+  <data name="LyricsSharePageStyleInkWash.Content" xml:space="preserve">
+    <value>Ink wash</value>
+  </data>
+  <data name="LyricsSharePageStyleJournal.Content" xml:space="preserve">
+    <value>Journal</value>
   </data>
   <data name="LyricsSharePageStyleMagazine.Content" xml:space="preserve">
     <value>Magazine</value>
@@ -446,6 +467,9 @@
   </data>
   <data name="LyricsSharePageStyleRetroQQ.Content" xml:space="preserve">
     <value>Retro QQ</value>
+  </data>
+  <data name="LyricsSharePageStyleStickyNote.Content" xml:space="preserve">
+    <value>Sticky note</value>
   </data>
   <data name="LyricsSharePageStyleSwiss.Content" xml:space="preserve">
     <value>Swiss</value>

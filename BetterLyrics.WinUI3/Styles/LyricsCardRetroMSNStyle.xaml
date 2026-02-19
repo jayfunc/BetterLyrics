@@ -10,13 +10,11 @@
             x:Name="MSNCardRoot"
             Width="450"
             MinHeight="600"
-            Background="Transparent">
-            <Grid.Shadow>
-                <ThemeShadow />
-            </Grid.Shadow>
+            Background="WhiteSmoke"
+            CornerRadius="8">
 
             <Grid
-                Margin="10"
+                Margin="20"
                 Background="#EBF3FA"
                 CornerRadius="8,8,0,0">
                 <Grid.RowDefinitions>
@@ -163,7 +161,7 @@
                     Grid.Row="2"
                     Background="#EBF3FA"
                     BorderBrush="#ACA899"
-                    BorderThickness="1,0,1,0">
+                    BorderThickness="1,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="*" />
@@ -208,157 +206,166 @@
                     </StackPanel>
                 </Grid>
 
-                <Grid
+                <Border
                     Grid.Row="3"
-                    Margin="4,0,4,4"
-                    Background="White">
-                    <Border BorderBrush="#ACA899" BorderThickness="1">
-                        <Grid>
-                            <Image
-                                Opacity="0.15"
-                                Source="{Binding CoverImage}"
-                                Stretch="UniformToFill" />
-
+                    Background="#EBF3FA"
+                    BorderBrush="#ACA899"
+                    BorderThickness="1,0">
+                    <Grid Margin="4,0,4,4" Background="White">
+                        <Border BorderBrush="#ACA899" BorderThickness="1">
                             <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="100" />
-                                </Grid.ColumnDefinitions>
+                                <Image
+                                    Opacity="0.15"
+                                    Source="{Binding CoverImage}"
+                                    Stretch="UniformToFill" />
 
-                                <ItemsControl
-                                    Grid.Column="0"
-                                    Margin="10"
-                                    ItemsSource="{Binding SelectedLyrics}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <StackPanel Margin="0,0,0,12">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="100" />
+                                    </Grid.ColumnDefinitions>
 
-                                                <StackPanel Margin="0,0,0,2" Orientation="Horizontal">
-                                                    <TextBlock
-                                                        MaxWidth="260"
-                                                        FontFamily="Tahoma"
-                                                        FontSize="11"
-                                                        FontWeight="Bold"
-                                                        Foreground="#808080"
-                                                        Text="{Binding DataContext.Artist, ElementName=MSNCardRoot}"
-                                                        TextTrimming="CharacterEllipsis" />
-                                                    <TextBlock
-                                                        FontFamily="Tahoma"
-                                                        FontSize="11"
-                                                        Foreground="#808080"
-                                                        Text=" says:" />
+                                    <ItemsControl
+                                        Grid.Column="0"
+                                        Margin="10"
+                                        ItemsSource="{Binding SelectedLyrics}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="0,0,0,12">
+
+                                                    <StackPanel Margin="0,0,0,2" Orientation="Horizontal">
+                                                        <TextBlock
+                                                            MaxWidth="260"
+                                                            FontFamily="Tahoma"
+                                                            FontSize="11"
+                                                            FontWeight="Bold"
+                                                            Foreground="#808080"
+                                                            Text="{Binding DataContext.Artist, ElementName=MSNCardRoot}"
+                                                            TextTrimming="CharacterEllipsis" />
+                                                        <TextBlock
+                                                            FontFamily="Tahoma"
+                                                            FontSize="11"
+                                                            Foreground="#808080"
+                                                            Text=" says:" />
+                                                    </StackPanel>
+
+                                                    <StackPanel Margin="10,0,0,0">
+
+                                                        <TextBlock
+                                                            FontFamily="Arial"
+                                                            FontSize="14"
+                                                            Foreground="#000080"
+                                                            Text="{Binding Text}"
+                                                            TextWrapping="Wrap" />
+
+                                                        <TextBlock
+                                                            Margin="0,2,0,0"
+                                                            FontFamily="Arial"
+                                                            FontSize="12"
+                                                            Foreground="#666666"
+                                                            Text="{Binding SecondaryText}"
+                                                            TextWrapping="Wrap"
+                                                            Visibility="{Binding SecondaryText, Converter={StaticResource StringToVisibilityConverter}, FallbackValue=Visible}" />
+                                                    </StackPanel>
+
                                                 </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
 
-                                                <StackPanel Margin="10,0,0,0">
-
-                                                    <TextBlock
-                                                        FontFamily="Arial"
-                                                        FontSize="14"
-                                                        Foreground="#000080"
-                                                        Text="{Binding Text}"
-                                                        TextWrapping="Wrap" />
-
-                                                    <TextBlock
-                                                        Margin="0,2,0,0"
-                                                        FontFamily="Arial"
-                                                        FontSize="12"
-                                                        Foreground="#666666"
-                                                        Text="{Binding SecondaryText}"
-                                                        TextWrapping="Wrap"
-                                                        Visibility="{Binding SecondaryText, Converter={StaticResource StringToVisibilityConverter}, FallbackValue=Visible}" />
-                                                </StackPanel>
-
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
-
-                                <StackPanel Grid.Column="1" Margin="5">
-                                    <Border
-                                        Width="80"
-                                        Height="80"
-                                        Background="White"
-                                        BorderBrush="#8CA0B4"
-                                        BorderThickness="1">
-                                        <Image Source="{Binding CoverImage}" Stretch="UniformToFill" />
-                                    </Border>
-                                </StackPanel>
+                                    <StackPanel Grid.Column="1" Margin="5">
+                                        <Border
+                                            Width="80"
+                                            Height="80"
+                                            Background="White"
+                                            BorderBrush="#8CA0B4"
+                                            BorderThickness="1">
+                                            <Image Source="{Binding CoverImage}" Stretch="UniformToFill" />
+                                        </Border>
+                                    </StackPanel>
+                                </Grid>
                             </Grid>
-                        </Grid>
-                    </Border>
-                </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
 
-                <Grid Grid.Row="4" Margin="4,0,4,4">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
+                <Border
+                    Grid.Row="4"
+                    Background="#EBF3FA"
+                    BorderBrush="#ACA899"
+                    BorderThickness="1,0">
+                    <Grid Margin="4,0,4,4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
 
-                    <Border
-                        Padding="4,2"
-                        Background="#EBF3FA"
-                        BorderBrush="#ACA899"
-                        BorderThickness="1,1,1,0">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <TextBlock
-                                FontFamily="Times New Roman"
-                                FontWeight="Bold"
-                                Foreground="Black"
-                                Text="A" />
-                            <FontIcon
-                                FontSize="12"
-                                Foreground="Black"
-                                Glyph="&#xE76E;" />
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                FontSize="10"
-                                Foreground="Black"
-                                Text="Backgrounds" />
-                            <TextBlock
-                                VerticalAlignment="Center"
-                                FontSize="10"
-                                Foreground="Black"
-                                Text="Winks" />
-                        </StackPanel>
-                    </Border>
-
-                    <Border
-                        Grid.Row="1"
-                        Height="60"
-                        Background="White"
-                        BorderBrush="#ACA899"
-                        BorderThickness="1">
-                        <Grid>
-                            <TextBlock
-                                Margin="5"
-                                FontFamily="Arial"
-                                FontSize="12"
-                                Foreground="#CCC"
-                                Text="BetterLyrics..." />
-
-                            <Border
-                                Margin="4"
-                                Padding="15,4,15,4"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Bottom"
-                                Background="#F0F0F0"
-                                BorderBrush="#888"
-                                BorderThickness="1">
+                        <Border
+                            Padding="4,2"
+                            Background="#EBF3FA"
+                            BorderBrush="#ACA899"
+                            BorderThickness="1,1,1,0">
+                            <StackPanel Orientation="Horizontal" Spacing="8">
                                 <TextBlock
-                                    FontSize="11"
+                                    FontFamily="Times New Roman"
+                                    FontWeight="Bold"
                                     Foreground="Black"
-                                    Text="Send" />
-                            </Border>
-                        </Grid>
-                    </Border>
-                </Grid>
+                                    Text="A" />
+                                <FontIcon
+                                    FontSize="12"
+                                    Foreground="Black"
+                                    Glyph="&#xE76E;" />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontSize="10"
+                                    Foreground="Black"
+                                    Text="Backgrounds" />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontSize="10"
+                                    Foreground="Black"
+                                    Text="Winks" />
+                            </StackPanel>
+                        </Border>
+
+                        <Border
+                            Grid.Row="1"
+                            Height="60"
+                            Background="White"
+                            BorderBrush="#ACA899"
+                            BorderThickness="1">
+                            <Grid>
+                                <TextBlock
+                                    Margin="5"
+                                    FontFamily="Arial"
+                                    FontSize="12"
+                                    Foreground="#CCC"
+                                    Text="BetterLyrics..." />
+
+                                <Border
+                                    Margin="4"
+                                    Padding="15,4,15,4"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    Background="#F0F0F0"
+                                    BorderBrush="#888"
+                                    BorderThickness="1">
+                                    <TextBlock
+                                        FontSize="11"
+                                        Foreground="Black"
+                                        Text="Send" />
+                                </Border>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Border>
 
                 <Border
                     Grid.Row="5"
                     Padding="6,0"
                     Background="#EBF3FA"
                     BorderBrush="#ACA899"
-                    BorderThickness="0,1,0,0">
+                    BorderThickness="1">
                     <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                         <TextBlock
                             FontFamily="Tahoma"
