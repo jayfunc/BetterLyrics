@@ -3,6 +3,7 @@
     x:Class="BetterLyrics.WinUI3.Views.LyricsSharePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dev="using:DevWinUI"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
@@ -195,6 +196,54 @@
                                 x:Uid="LyricsSharePageStyleCyberpunk"
                                 Click="StyleButton_Click"
                                 Tag="LyricsCardCyberpunkStyle" />
+                        </dev:WrapPanel>
+                    </StackPanel>
+
+                    <StackPanel Spacing="12">
+                        <TextBlock
+                            x:Uid="LyricsSharePageGroupChineseElegance"
+                            Opacity="0.7"
+                            Style="{ThemeResource BodyStrongTextBlockStyle}" />
+                        <dev:WrapPanel
+                            HorizontalSpacing="8"
+                            Orientation="Horizontal"
+                            VerticalSpacing="12">
+                            <Button
+                                x:Uid="LyricsSharePageStyleInkWash"
+                                Click="StyleButton_Click"
+                                Tag="LyricsCardInkWashStyle" />
+                            <Button
+                                x:Uid="LyricsSharePageStyleAncientBook"
+                                Click="StyleButton_Click"
+                                Tag="LyricsCardAncientBookStyle" />
+                            <Button
+                                x:Uid="LyricsSharePageStyleBambooSlips"
+                                Click="StyleButton_Click"
+                                Tag="LyricsCardBambooSlipsStyle" />
+                            <Button
+                                x:Uid="LyricsSharePageStyleDunhuang"
+                                Click="StyleButton_Click"
+                                Tag="LyricsCardDunhuangStyle" />
+                        </dev:WrapPanel>
+                    </StackPanel>
+
+                    <StackPanel Spacing="12">
+                        <TextBlock
+                            x:Uid="LyricsSharePageGroupTracesOfTime"
+                            Opacity="0.7"
+                            Style="{ThemeResource BodyStrongTextBlockStyle}" />
+                        <dev:WrapPanel
+                            HorizontalSpacing="8"
+                            Orientation="Horizontal"
+                            VerticalSpacing="12">
+                            <Button
+                                x:Uid="LyricsSharePageStyleJournal"
+                                Click="StyleButton_Click"
+                                Tag="LyricsCardJournalStyle" />
+                            <Button
+                                x:Uid="LyricsSharePageStyleStickyNote"
+                                Click="StyleButton_Click"
+                                Tag="LyricsCardStickyNoteStyle" />
                         </dev:WrapPanel>
                     </StackPanel>
 

@@ -9,7 +9,8 @@
         <Grid
             Width="450"
             MinHeight="600"
-            Background="Transparent">
+            Background="WhiteSmoke"
+            CornerRadius="8">
             <Grid
                 Margin="20"
                 Background="#FFF8F0"
@@ -20,145 +21,164 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-                <Grid.Shadow>
-                    <ThemeShadow />
-                </Grid.Shadow>
 
-                <Grid Grid.Row="0" Margin="24,24,24,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="80" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Border CornerRadius="4">
-                        <Image
-                            Width="80"
-                            Height="80"
-                            Source="{Binding CoverImage}" />
-                    </Border>
-                    <StackPanel
-                        Grid.Column="1"
-                        Margin="16,0,0,0"
-                        VerticalAlignment="Center">
-                        <TextBlock
-                            CharacterSpacing="2"
-                            FontSize="10"
-                            FontWeight="Bold"
-                            Foreground="#FF5555"
-                            Text="ADMIT ONE" />
+                <Border
+                    Grid.Row="0"
+                    BorderBrush="#e6dfd8"
+                    BorderThickness="1,1,1,0"
+                    CornerRadius="12,12,0,0">
+                    <Grid Margin="24,24,24,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="80" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Border CornerRadius="4">
+                            <Image
+                                Width="80"
+                                Height="80"
+                                Source="{Binding CoverImage}" />
+                        </Border>
+                        <StackPanel
+                            Grid.Column="1"
+                            Margin="16,0,0,0"
+                            VerticalAlignment="Center">
+                            <TextBlock
+                                CharacterSpacing="2"
+                                FontSize="10"
+                                FontWeight="Bold"
+                                Foreground="#FF5555"
+                                Text="ADMIT ONE" />
 
-                        <TextBlock
-                            FontSize="20"
-                            FontWeight="Black"
-                            Foreground="#333"
-                            MaxLines="2"
-                            Text="{Binding Title}"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="Wrap" />
+                            <TextBlock
+                                FontSize="20"
+                                FontWeight="Black"
+                                Foreground="#333"
+                                MaxLines="2"
+                                Text="{Binding Title}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="Wrap" />
 
-                        <TextBlock
-                            Margin="0,4,0,0"
-                            FontSize="14"
-                            Foreground="#777"
-                            MaxLines="1"
-                            Text="{Binding Artist}"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap" />
-                    </StackPanel>
-                </Grid>
+                            <TextBlock
+                                Margin="0,4,0,0"
+                                FontSize="14"
+                                Foreground="#777"
+                                MaxLines="1"
+                                Text="{Binding Artist}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
 
-                <ItemsControl
+                <Border
                     Grid.Row="1"
-                    Margin="24,30"
-                    ItemsSource="{Binding SelectedLyrics}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="0,0,0,16">
+                    BorderBrush="#e6dfd8"
+                    BorderThickness="1,0">
+                    <ItemsControl Margin="24,30" ItemsSource="{Binding SelectedLyrics}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Margin="0,0,0,16">
 
-                                <TextBlock
-                                    FontFamily="Courier New"
-                                    FontSize="18"
-                                    Foreground="#444"
-                                    LineHeight="28"
-                                    Text="{Binding Text}"
-                                    TextWrapping="Wrap" />
+                                    <TextBlock
+                                        FontFamily="Courier New"
+                                        FontSize="18"
+                                        Foreground="#444"
+                                        LineHeight="28"
+                                        Text="{Binding Text}"
+                                        TextWrapping="Wrap" />
 
-                                <TextBlock
-                                    Margin="0,2,0,0"
-                                    FontFamily="Courier New"
-                                    FontSize="14"
-                                    Foreground="#888"
-                                    LineHeight="20"
-                                    Text="{Binding SecondaryText}"
-                                    TextWrapping="Wrap"
-                                    Visibility="{Binding SecondaryText, Converter={StaticResource StringToVisibilityConverter}, FallbackValue=Visible}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                                    <TextBlock
+                                        Margin="0,2,0,0"
+                                        FontFamily="Courier New"
+                                        FontSize="14"
+                                        Foreground="#888"
+                                        LineHeight="20"
+                                        Text="{Binding SecondaryText}"
+                                        TextWrapping="Wrap"
+                                        Visibility="{Binding SecondaryText, Converter={StaticResource StringToVisibilityConverter}, FallbackValue=Visible}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </Border>
 
                 <Grid Grid.Row="2" Height="20">
                     <Line
                         Margin="10,0"
                         VerticalAlignment="Center"
                         Stroke="#CCC"
-                        StrokeDashArray="4,2"
-                        StrokeThickness="2"
+                        StrokeDashArray="8"
+                        StrokeThickness="1"
                         X1="0"
                         X2="410"
-                        Y1="10"
-                        Y2="10" />
-                    <Ellipse
+                        Y1="3"
+                        Y2="3" />
+                    <Border
                         Width="20"
                         Height="20"
                         Margin="-10,0,0,0"
                         HorizontalAlignment="Left"
-                        Fill="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
-                    <Ellipse
+                        BorderBrush="#e6dfd8"
+                        BorderThickness="1"
+                        CornerRadius="10">
+                        <Ellipse Fill="WhiteSmoke" />
+                    </Border>
+                    <Border
                         Width="20"
                         Height="20"
                         Margin="0,0,-10,0"
                         HorizontalAlignment="Right"
-                        Fill="{ThemeResource ApplicationPageBackgroundThemeBrush}" />
+                        BorderBrush="#e6dfd8"
+                        BorderThickness="1"
+                        CornerRadius="10">
+                        <Ellipse Fill="WhiteSmoke" />
+                    </Border>
                 </Grid>
 
-                <Grid Grid.Row="3" Padding="24,10,24,24">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <StackPanel VerticalAlignment="Center">
-                        <TextBlock
-                            FontSize="10"
-                            Foreground="#999"
-                            Text="DATE" />
-                        <TextBlock
-                            FontFamily="Courier New"
-                            FontSize="14"
-                            Foreground="#333"
-                            Text="{Binding DateShort}" />
-                        <TextBlock
-                            Margin="0,8,0,0"
-                            FontSize="10"
-                            Foreground="#999"
-                            Text="LOCATION" />
-                        <TextBlock
-                            FontFamily="Courier New"
-                            FontSize="14"
-                            Foreground="#333"
-                            Text="BetterLyrics" />
-                    </StackPanel>
-                    <StackPanel
-                        Grid.Column="1"
-                        VerticalAlignment="Bottom"
-                        Opacity="0.8">
-                        <TextBlock
-                            HorizontalAlignment="Right"
-                            FontSize="16"
-                            FontWeight="Bold"
-                            Foreground="#333"
-                            Text="||| |||| | ||||" />
-                    </StackPanel>
-                </Grid>
+                <Border
+                    Grid.Row="3"
+                    BorderBrush="#e6dfd8"
+                    BorderThickness="1,0,1,1"
+                    CornerRadius="0,0,12,12">
+                    <Grid Padding="24,10,24,24">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel VerticalAlignment="Center">
+                            <TextBlock
+                                FontSize="10"
+                                Foreground="#999"
+                                Text="DATE" />
+                            <TextBlock
+                                FontFamily="Courier New"
+                                FontSize="14"
+                                Foreground="#333"
+                                Text="{Binding DateShort}" />
+                            <TextBlock
+                                Margin="0,8,0,0"
+                                FontSize="10"
+                                Foreground="#999"
+                                Text="LOCATION" />
+                            <TextBlock
+                                FontFamily="Courier New"
+                                FontSize="14"
+                                Foreground="#333"
+                                Text="BetterLyrics" />
+                        </StackPanel>
+                        <StackPanel
+                            Grid.Column="1"
+                            VerticalAlignment="Bottom"
+                            Opacity="0.8">
+                            <TextBlock
+                                HorizontalAlignment="Right"
+                                FontSize="16"
+                                Foreground="#333"
+                                Text="||| |||| | ||||" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
             </Grid>
         </Grid>
     </DataTemplate>

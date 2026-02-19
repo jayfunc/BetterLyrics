@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -258,6 +258,9 @@
   <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve">
     <value>例如 http://localhost:5000</value>
   </data>
+  <data name="LyricsSharePageStyleInkWash.Content" xml:space="preserve">
+    <value>水墨</value>
+  </data>
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve">
     <value>持续时间</value>
   </data>
@@ -402,6 +405,9 @@
   <data name="LyricsSharePageGroupAtmosphere.Text" xml:space="preserve">
     <value>氛围创意</value>
   </data>
+  <data name="LyricsSharePageGroupChineseElegance.Text" xml:space="preserve">
+    <value>国风雅韵</value>
+  </data>
   <data name="LyricsSharePageGroupClassic.Text" xml:space="preserve">
     <value>经典设计</value>
   </data>
@@ -410,6 +416,9 @@
   </data>
   <data name="LyricsSharePageGroupRetro.Text" xml:space="preserve">
     <value>数码怀旧</value>
+  </data>
+  <data name="LyricsSharePageGroupTracesOfTime.Text" xml:space="preserve">
+    <value>时光印记</value>
   </data>
   <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
     <value>图片质量</value>
@@ -420,6 +429,12 @@
   <data name="LyricsSharePageSelectLyricsTitle.Text" xml:space="preserve">
     <value>选择歌词</value>
   </data>
+  <data name="LyricsSharePageStyleAncientBook.Content" xml:space="preserve">
+    <value>古籍</value>
+  </data>
+  <data name="LyricsSharePageStyleBambooSlips.Content" xml:space="preserve">
+    <value>竹简</value>
+  </data>
   <data name="LyricsSharePageStyleCD.Content" xml:space="preserve">
     <value>CD 盒</value>
   </data>
@@ -428,6 +443,12 @@
   </data>
   <data name="LyricsSharePageStyleCyberpunk.Content" xml:space="preserve">
     <value>赛博朋克</value>
+  </data>
+  <data name="LyricsSharePageStyleDunhuang.Content" xml:space="preserve">
+    <value>敦煌</value>
+  </data>
+  <data name="LyricsSharePageStyleJournal.Content" xml:space="preserve">
+    <value>日记</value>
   </data>
   <data name="LyricsSharePageStyleMagazine.Content" xml:space="preserve">
     <value>杂志</value>
@@ -446,6 +467,9 @@
   </data>
   <data name="LyricsSharePageStyleRetroQQ.Content" xml:space="preserve">
     <value>复古 QQ</value>
+  </data>
+  <data name="LyricsSharePageStyleStickyNote.Content" xml:space="preserve">
+    <value>便签</value>
   </data>
   <data name="LyricsSharePageStyleSwiss.Content" xml:space="preserve">
     <value>瑞士风</value>
