@@ -20,7 +20,7 @@
                 Margin="3,0,0,0"
                 HorizontalAlignment="Right"
                 Click="ClearButton_Click"
-                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                       FontSize=12,
                                       Glyph=&#xE894;}"
                 Style="{StaticResource GhostButtonStyle}">
@@ -32,7 +32,7 @@
                 Margin="3,0,0,0"
                 HorizontalAlignment="Right"
                 Click="CheckButton_Click"
-                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                       FontSize=12,
                                       Glyph=&#xE721;}"
                 Style="{StaticResource GhostButtonStyle}">

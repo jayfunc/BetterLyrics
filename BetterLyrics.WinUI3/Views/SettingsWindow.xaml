@@ -21,7 +21,7 @@
 
             <Button Click="LyricsWindowSwitchButton_Click" Style="{StaticResource TitleBarButtonStyle}">
                 <FontIcon
-                    FontFamily="{StaticResource IconFontFamily}"
+                    FontFamily="{StaticResource SegoeFluentIcons}"
                     FontSize="12"
                     Glyph="&#xE8AB;" />
                 <ToolTipService.ToolTip>
@@ -31,7 +31,7 @@
 
             <Button
                 Click="MusicGalleryButton_Click"
-                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                       FontSize=12,
                                       Glyph=&#xE8F1;}"
                 Style="{StaticResource TitleBarButtonStyle}">

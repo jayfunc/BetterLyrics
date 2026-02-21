@@ -35,7 +35,7 @@
                 <FontIcon
                     Grid.Column="1"
                     Margin="10,0,0,0"
-                    FontFamily="{StaticResource IconFontFamily}"
+                    FontFamily="{StaticResource SegoeFluentIcons}"
                     FontSize="12"
                     Glyph="&#xE70D;"
                     Opacity="0.6" />

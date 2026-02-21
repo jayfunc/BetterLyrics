@@ -97,7 +97,7 @@
             <Button
                 VerticalAlignment="Bottom"
                 Command="{x:Bind ViewModel.RefreshDataCommand}"
-                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                       FontSize=16,
                                       Glyph=&#xE72C;}" />
         </controls:WrapPanel>

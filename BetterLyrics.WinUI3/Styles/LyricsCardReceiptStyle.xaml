@@ -28,48 +28,48 @@
                     Source="{Binding CoverImage}" />
                 <TextBlock
                     HorizontalAlignment="Center"
-                    FontFamily="Courier New"
+                    FontFamily="{StaticResource TypewriterFont}"
                     FontSize="16"
                     FontWeight="Bold"
                     Foreground="#333"
                     Text="OFFICIAL RECEIPT" />
                 <TextBlock
                     HorizontalAlignment="Center"
-                    FontFamily="Courier New"
+                    FontFamily="{StaticResource TypewriterFont}"
                     FontSize="12"
                     Foreground="#555"
                     Text="BETTERLYRICS STORE" />
                 <TextBlock
                     HorizontalAlignment="Center"
-                    FontFamily="Courier New"
+                    FontFamily="{StaticResource TypewriterFont}"
                     Foreground="#999"
                     Text="--------------------------------------" />
                 <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                     <TextBlock
-                        FontFamily="Courier New"
+                        FontFamily="{StaticResource TypewriterFont}"
                         FontSize="10"
                         Foreground="#555"
                         Text="DATE: " />
                     <TextBlock
-                        FontFamily="Courier New"
+                        FontFamily="{StaticResource TypewriterFont}"
                         FontSize="10"
                         Foreground="#555"
                         Text="{Binding DateShort}" />
                     <TextBlock
                         Margin="20,0,0,0"
-                        FontFamily="Courier New"
+                        FontFamily="{StaticResource TypewriterFont}"
                         FontSize="10"
                         Foreground="#555"
                         Text="TIME: " />
                     <TextBlock
-                        FontFamily="Courier New"
+                        FontFamily="{StaticResource TypewriterFont}"
                         FontSize="10"
                         Foreground="#555"
                         Text="{Binding TimeShort}" />
                 </StackPanel>
                 <TextBlock
                     HorizontalAlignment="Center"
-                    FontFamily="Courier New"
+                    FontFamily="{StaticResource TypewriterFont}"
                     Foreground="#999"
                     Text="--------------------------------------" />
             </StackPanel>
@@ -77,7 +77,7 @@
             <StackPanel Grid.Row="1" Margin="30,0">
                 <TextBlock
                     Margin="0,0,0,10"
-                    FontFamily="Courier New"
+                    FontFamily="{StaticResource TypewriterFont}"
                     FontSize="10"
                     Foreground="#777"
                     Text="ITEM: MUSIC MEMORY" />
@@ -90,7 +90,7 @@
 
                     <StackPanel Grid.Column="0" Margin="0,0,10,0">
                         <TextBlock
-                            FontFamily="Courier New"
+                            FontFamily="{StaticResource TypewriterFont}"
                             FontSize="18"
                             FontWeight="Bold"
                             Foreground="Black"
@@ -98,7 +98,7 @@
                             TextTrimming="CharacterEllipsis"
                             TextWrapping="NoWrap" />
                         <TextBlock
-                            FontFamily="Courier New"
+                            FontFamily="{StaticResource TypewriterFont}"
                             FontSize="12"
                             Foreground="#555"
                             Text="{Binding Artist}"
@@ -111,13 +111,13 @@
                         VerticalAlignment="Top"
                         Orientation="Horizontal">
                         <TextBlock
-                            FontFamily="Courier New"
+                            FontFamily="{StaticResource TypewriterFont}"
                             FontSize="18"
                             Foreground="Black"
                             Text=" x 1" />
                         <TextBlock
                             Margin="20,0,0,0"
-                            FontFamily="Courier New"
+                            FontFamily="{StaticResource TypewriterFont}"
                             FontSize="18"
                             Foreground="Black"
                             Text="$9.99" />
@@ -130,7 +130,7 @@
                             <StackPanel Margin="0,0,0,16">
 
                                 <TextBlock
-                                    FontFamily="Courier New"
+                                    FontFamily="{StaticResource TypewriterFont}"
                                     FontSize="14"
                                     Foreground="#333"
                                     Text="{Binding Text}"
@@ -138,7 +138,7 @@
 
                                 <TextBlock
                                     Margin="0,2,0,0"
-                                    FontFamily="Courier New"
+                                    FontFamily="{StaticResource TypewriterFont}"
                                     FontSize="11"
                                     Foreground="#888"
                                     Text="{Binding SecondaryText}"
@@ -156,12 +156,12 @@
                 Spacing="8">
                 <TextBlock
                     HorizontalAlignment="Center"
-                    FontFamily="Courier New"
+                    FontFamily="{StaticResource TypewriterFont}"
                     Foreground="#999"
                     Text="**************************************" />
                 <TextBlock
                     HorizontalAlignment="Right"
-                    FontFamily="Courier New"
+                    FontFamily="{StaticResource TypewriterFont}"
                     FontSize="16"
                     FontWeight="Bold"
                     Foreground="Black"
@@ -169,7 +169,7 @@
                 <TextBlock
                     Margin="0,10,0,0"
                     HorizontalAlignment="Center"
-                    FontFamily="Courier New"
+                    FontFamily="{StaticResource TypewriterFont}"
                     FontSize="10"
                     Foreground="#555"
                     Text="THANK YOU FOR LISTENING!" />
@@ -185,7 +185,7 @@
                     Text="||| |||| | ||| || |||| ||" />
                 <TextBlock
                     HorizontalAlignment="Center"
-                    FontFamily="Courier New"
+                    FontFamily="{StaticResource TypewriterFont}"
                     FontSize="10"
                     Foreground="Black"
                     Text="0 12345 67890 5" />

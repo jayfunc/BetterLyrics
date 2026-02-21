@@ -130,7 +130,7 @@
                             <Button.Content>
                                 <Grid>
                                     <FontIcon
-                                        FontFamily="{StaticResource IconFontFamily}"
+                                        FontFamily="{StaticResource SegoeFluentIcons}"
                                         FontSize="16"
                                         Glyph="&#xE8EE;"
                                         Opacity="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlaybackOrder, Mode=OneWay, Converter={StaticResource EnumToOpacityConverter}, ConverterParameter=0}">
@@ -139,7 +139,7 @@
                                         </FontIcon.OpacityTransition>
                                     </FontIcon>
                                     <FontIcon
-                                        FontFamily="{StaticResource IconFontFamily}"
+                                        FontFamily="{StaticResource SegoeFluentIcons}"
                                         FontSize="16"
                                         Glyph="&#xE8ED;"
                                         Opacity="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlaybackOrder, Mode=OneWay, Converter={StaticResource EnumToOpacityConverter}, ConverterParameter=1}">
@@ -148,7 +148,7 @@
                                         </FontIcon.OpacityTransition>
                                     </FontIcon>
                                     <FontIcon
-                                        FontFamily="{StaticResource IconFontFamily}"
+                                        FontFamily="{StaticResource SegoeFluentIcons}"
                                         FontSize="16"
                                         Glyph="&#xE8B1;"
                                         Opacity="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlaybackOrder, Mode=OneWay, Converter={StaticResource EnumToOpacityConverter}, ConverterParameter=2}">
@@ -162,12 +162,12 @@
                         <!--  上一曲目  -->
                         <Button
                             Command="{x:Bind ViewModel.PreviousSongCommand}"
-                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                            Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                   Glyph=&#xE622;}"
                             Style="{StaticResource GhostButtonStyle}" />
                         <Button
                             Command="{x:Bind ViewModel.PauseSongCommand}"
-                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                            Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                   Glyph=&#xF8AE;}"
                             Style="{StaticResource GhostButtonStyle}">
                             <interactivity:Interaction.Behaviors>
@@ -187,7 +187,7 @@
                         </Button>
                         <Button
                             Command="{x:Bind ViewModel.PlaySongCommand}"
-                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                            Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                   Glyph=&#xF5B0;}"
                             Style="{StaticResource GhostButtonStyle}">
                             <interactivity:Interaction.Behaviors>
@@ -208,13 +208,13 @@
                         <!--  Next track  -->
                         <Button
                             Command="{x:Bind ViewModel.NextSongCommand}"
-                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                            Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                   Glyph=&#xE623;}"
                             Style="{StaticResource GhostButtonStyle}" />
                         <!--  播放队列按钮  -->
                         <Button
                             Click="PlayingQueueButton_Click"
-                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                            Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                   Glyph=&#xE8FD;}"
                             Style="{StaticResource GhostButtonStyle}"
                             Visibility="{x:Bind ShowPlayingQueueButton, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
@@ -235,7 +235,7 @@
                         <!--  Stop media session  -->
                         <Button
                             Command="{x:Bind ViewModel.StopTrackCommand}"
-                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                            Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                   FontSize=16,
                                                   Glyph=&#xE71A;}"
                             Style="{StaticResource GhostButtonStyle}"
@@ -247,13 +247,14 @@
 
                         <!--  Volume  -->
                         <Button
+                            x:Name="VolumeButton"
                             Click="VolumeButton_Click"
                             Style="{StaticResource GhostButtonStyle}"
                             Visibility="{x:Bind ShowVolumeButton, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                             <Grid>
 
                                 <!--  Volumn: 0  -->
-                                <FontIcon FontFamily="{StaticResource IconFontFamily}" Glyph="&#xE74F;">
+                                <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE74F;">
                                     <FontIcon.OpacityTransition>
                                         <ScalarTransition />
                                     </FontIcon.OpacityTransition>
@@ -276,7 +277,7 @@
                                 <!--  Volumn: 1-32  -->
                                 <FontIcon
                                     x:Name="VolumeLevel1"
-                                    FontFamily="{StaticResource IconFontFamily}"
+                                    FontFamily="{StaticResource SegoeFluentIcons}"
                                     Glyph="&#xE993;">
                                     <FontIcon.OpacityTransition>
                                         <ScalarTransition />
@@ -300,7 +301,7 @@
                                 <!--  Volumn: 33-65  -->
                                 <FontIcon
                                     x:Name="VolumeLevel2"
-                                    FontFamily="{StaticResource IconFontFamily}"
+                                    FontFamily="{StaticResource SegoeFluentIcons}"
                                     Glyph="&#xE994;">
                                     <FontIcon.OpacityTransition>
                                         <ScalarTransition />
@@ -324,7 +325,7 @@
                                 <!--  Volumn: 66-100  -->
                                 <FontIcon
                                     x:Name="VolumeLevel3"
-                                    FontFamily="{StaticResource IconFontFamily}"
+                                    FontFamily="{StaticResource SegoeFluentIcons}"
                                     Glyph="&#xE995;">
                                     <FontIcon.OpacityTransition>
                                         <ScalarTransition />
@@ -362,7 +363,7 @@
 
                         <!--  More  -->
                         <Button
-                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                            Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                   Glyph=&#xE712;}"
                             Style="{StaticResource GhostButtonStyle}"
                             Visibility="{x:Bind ShowMoreButton, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
@@ -372,13 +373,13 @@
                                     <MenuFlyoutItem
                                         x:Uid="LyricsPageLyricsSearch"
                                         Command="{x:Bind ViewModel.OpenLyricsSearchWindowCommand}"
-                                        Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                        Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                            Glyph=&#xE721;}" />
                                     <!--  Lyrics window manager shortcut settings  -->
                                     <MenuFlyoutItem
                                         x:Uid="LyricsPageLyricsSettings"
                                         Click="LyricsSettingsShortcutMenuFlyoutItem_Click"
-                                        Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                        Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                            Glyph=&#xE61F;}">
                                         <MenuFlyoutItem.ContextFlyout>
                                             <Flyout
@@ -393,7 +394,7 @@
                                     <MenuFlyoutItem
                                         x:Uid="LyricsPagePlaybackSource"
                                         Click="PlaybackSettingsShortcutMenuFlyoutItem_Click"
-                                        Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                        Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                            Glyph=&#xEA69;}">
                                         <MenuFlyoutItem.ContextFlyout>
                                             <Flyout
@@ -407,13 +408,13 @@
                                     <MenuFlyoutItem
                                         x:Uid="LyricsPageLyricsCard"
                                         Command="{x:Bind ViewModel.OpenLyricsShareWindowCommand}"
-                                        Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                        Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                            Glyph=&#xE72D;}" />
                                     <!--  Settings  -->
                                     <MenuFlyoutItem
                                         x:Uid="LyricsPageSettings"
                                         Command="{x:Bind ViewModel.OpenSettingsWindowCommand}"
-                                        Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                        Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                            Glyph=&#xE713;}" />
                                 </MenuFlyout>
                             </Button.Flyout>

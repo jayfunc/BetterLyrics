@@ -80,7 +80,7 @@
                                 <StackPanel Margin="0,0,0,16">
 
                                     <TextBlock
-                                        FontFamily="Courier New"
+                                        FontFamily="{StaticResource TypewriterFont}"
                                         FontSize="18"
                                         Foreground="#444"
                                         LineHeight="28"
@@ -89,7 +89,7 @@
 
                                     <TextBlock
                                         Margin="0,2,0,0"
-                                        FontFamily="Courier New"
+                                        FontFamily="{StaticResource TypewriterFont}"
                                         FontSize="14"
                                         Foreground="#888"
                                         LineHeight="20"
@@ -151,7 +151,7 @@
                                 Foreground="#999"
                                 Text="DATE" />
                             <TextBlock
-                                FontFamily="Courier New"
+                                FontFamily="{StaticResource TypewriterFont}"
                                 FontSize="14"
                                 Foreground="#333"
                                 Text="{Binding DateShort}" />
@@ -161,7 +161,7 @@
                                 Foreground="#999"
                                 Text="LOCATION" />
                             <TextBlock
-                                FontFamily="Courier New"
+                                FontFamily="{StaticResource TypewriterFont}"
                                 FontSize="14"
                                 Foreground="#333"
                                 Text="BetterLyrics" />

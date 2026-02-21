@@ -143,8 +143,8 @@
                                                 HorizontalAlignment="Right"
                                                 Orientation="Horizontal"
                                                 Spacing="6">
-                                                <Button Click="ConfigButton_Click" Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, FontSize=12, Glyph=&#xE90F;}" />
-                                                <Button Click="DeleteButton_Click" Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, FontSize=12, Glyph=&#xE74D;}" />
+                                                <Button Click="ConfigButton_Click" Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, FontSize=12, Glyph=&#xE90F;}" />
+                                                <Button Click="DeleteButton_Click" Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, FontSize=12, Glyph=&#xE74D;}" />
                                             </StackPanel>
                                         </Grid>
                                     </Grid>
@@ -228,7 +228,7 @@
                             Margin="0,24,0,0"
                             Command="{x:Bind ViewModel.CloseConfigPanelCommand}"
                             Content="{ui:FontIcon FontSize=16,
-                                                  FontFamily={StaticResource IconFontFamily},
+                                                  FontFamily={StaticResource SegoeFluentIcons},
                                                   Glyph=&#xE70D;}"
                             Style="{StaticResource AccentButtonStyle}" />
                     </Grid>
@@ -245,7 +245,7 @@
                                     <HyperlinkButton
                                         Padding="6"
                                         Content="{ui:FontIcon FontSize=12,
-                                                              FontFamily={StaticResource IconFontFamily},
+                                                              FontFamily={StaticResource SegoeFluentIcons},
                                                               Glyph=&#xE897;}"
                                         NavigateUri="https://gist.github.com/jayfunc/ad09a3df951b95c8cf6228695fecc067" />
                                     <Button x:Uid="SettingsPageImport" Command="{x:Bind ViewModel.ImportMemoryReaderConfigCommand}" />
@@ -416,7 +416,7 @@
                                                         <FontIcon
                                                             Grid.Column="1"
                                                             Margin="0,2,0,0"
-                                                            FontFamily="{StaticResource IconFontFamily}"
+                                                            FontFamily="{StaticResource SegoeFluentIcons}"
                                                             FontSize="12"
                                                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                                             Glyph="&#xE74C;"
@@ -515,7 +515,7 @@
                                     Margin="-16,0,-16,-16"
                                     HorizontalAlignment="Stretch"
                                     Click="SaveLyricsButton_Click"
-                                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                           FontSize=16,
                                                           Glyph=&#xE74E;}">
                                     <SplitButton.Flyout>
@@ -682,7 +682,7 @@
                                     TextWrapping="Wrap" />
                                 <Button
                                     Grid.Column="1"
-                                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                           FontSize=12,
                                                           Glyph=&#xE8FB;}"
                                     Style="{StaticResource GhostButtonStyle}" />
@@ -709,14 +709,14 @@
                                     TextWrapping="Wrap" />
                                 <HyperlinkButton
                                     Grid.Column="1"
-                                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                           FontSize=12,
                                                           Glyph=&#xE897;}"
                                     NavigateUri="{x:Bind constants:Link.AppleMusicCfg}" />
                                 <Button
                                     Grid.Column="2"
                                     Command="{x:Bind ViewModel.SaveAppleMusicMediaUserTokenCommand}"
-                                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                           FontSize=12,
                                                           Glyph=&#xE8FB;}"
                                     Style="{StaticResource GhostButtonStyle}" />

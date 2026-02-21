@@ -34,7 +34,7 @@
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
                 Click="Button_Click"
-                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                       Glyph=&#xE73C;}"
                 Style="{StaticResource GhostButtonStyle}">
                 <Button.KeyboardAccelerators>

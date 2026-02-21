@@ -65,7 +65,7 @@
                 <Grid>
                     <FontIcon
                         x:Name="CopyIcon"
-                        FontFamily="{StaticResource IconFontFamily}"
+                        FontFamily="{StaticResource SegoeFluentIcons}"
                         FontSize="16"
                         Glyph="&#xE8C8;"
                         Opacity="1">
@@ -75,7 +75,7 @@
                     </FontIcon>
                     <FontIcon
                         x:Name="CheckIcon"
-                        FontFamily="{StaticResource IconFontFamily}"
+                        FontFamily="{StaticResource SegoeFluentIcons}"
                         FontSize="16"
                         Glyph="&#xE73E;"
                         Opacity="0">

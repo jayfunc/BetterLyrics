@@ -21,7 +21,7 @@
 
                     <TextBlock x:Uid="SettingsPageLyricsStyle" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <dev:SettingsCard x:Uid="SettingsPageLyricsAlignment" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E3;}">
+                    <dev:SettingsCard x:Uid="SettingsPageLyricsAlignment" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8E3;}">
                         <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsAlignmentType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageLeft" />
                             <ComboBoxItem x:Uid="SettingsPageCenter" />
@@ -29,7 +29,7 @@
                         </ComboBox>
                     </dev:SettingsCard>
 
-                    <dev:SettingsCard x:Uid="SettingsPageLyricsCenterTopOffset" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE78A;}">
+                    <dev:SettingsCard x:Uid="SettingsPageLyricsCenterTopOffset" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE78A;}">
                         <local:ExtendedSlider
                             Default="50"
                             Maximum="99"
@@ -38,7 +38,7 @@
                             Value="{x:Bind LyricsStyleSettings.PlayingLineTopOffset, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
-                    <dev:SettingsCard x:Uid="SettingsPageLyricsLineSpacingFactor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF579;}">
+                    <dev:SettingsCard x:Uid="SettingsPageLyricsLineSpacingFactor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xF579;}">
                         <local:ExtendedSlider
                             x:Uid="SettingsPageLyricsLineSpacingFactorSlider"
                             Default="0.5"
@@ -51,7 +51,7 @@
 
                     <dev:SettingsExpander
                         x:Uid="SettingsPageLyricsFontFamily"
-                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xE8D2;}"
                         IsExpanded="True">
                         <dev:SettingsExpander.Items>
@@ -64,7 +64,7 @@
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
 
-                    <dev:SettingsCard x:Uid="SettingsPageLyricsFontWeight" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8DD;}">
+                    <dev:SettingsCard x:Uid="SettingsPageLyricsFontWeight" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8DD;}">
                         <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsFontWeight, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageLyricsThin" />
                             <ComboBoxItem x:Uid="SettingsPageLyricsExtraLight" />
@@ -80,7 +80,7 @@
                         </ComboBox>
                     </dev:SettingsCard>
 
-                    <dev:SettingsCard x:Uid="SettingsPageLyricsFontStrokeWidth" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEC12;}">
+                    <dev:SettingsCard x:Uid="SettingsPageLyricsFontStrokeWidth" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEC12;}">
                         <local:ExtendedSlider
                             Default="0"
                             Maximum="10"
@@ -89,7 +89,7 @@
                     </dev:SettingsCard>
 
                     <!--  字体颜色  -->
-                    <dev:SettingsExpander x:Uid="SettingsPageFontColor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8D3;}">
+                    <dev:SettingsExpander x:Uid="SettingsPageFontColor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8D3;}">
                         <dev:SettingsExpander.Items>
                             <dev:SettingsCard x:Uid="SettingsPageStrokeFontColor">
                                 <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsStrokeFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
@@ -199,7 +199,7 @@
                     </dev:SettingsExpander>
 
                     <!--  字体大小  -->
-                    <dev:SettingsExpander x:Uid="SettingsPageLyricsFontSize" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8E9;}">
+                    <dev:SettingsExpander x:Uid="SettingsPageLyricsFontSize" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8E9;}">
                         <dev:SettingsExpander.Items>
                             <dev:SettingsCard x:Uid="SettingsPageAutoAdjust">
                                 <ToggleSwitch IsOn="{x:Bind LyricsStyleSettings.IsDynamicLyricsFontSize, Mode=TwoWay}" />
@@ -232,7 +232,7 @@
                     </dev:SettingsExpander>
 
                     <!--  字体不透明度  -->
-                    <dev:SettingsExpander x:Uid="SettingsPageLyricsOpacity" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEF20;}">
+                    <dev:SettingsExpander x:Uid="SettingsPageLyricsOpacity" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEF20;}">
                         <dev:SettingsExpander.Items>
                             <dev:SettingsCard x:Uid="SettingsPagePhoneticText">
                                 <local:ExtendedSlider

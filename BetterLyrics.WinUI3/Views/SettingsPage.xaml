@@ -27,44 +27,44 @@
 
                 <NavigationViewItem
                     x:Uid="SettingsPageApp"
-                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                    Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                        Glyph=&#xECAA;}"
                     IsSelected="True"
                     Tag="App" />
 
                 <NavigationViewItem
                     x:Uid="SettingsPageLyricsWindowMgr"
-                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                    Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                        Glyph=&#xE61F;}"
                     Tag="LyricsWindowMgr" />
 
                 <NavigationViewItem
                     x:Uid="SettingsPageMediaLib"
-                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                    Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                        Glyph=&#xE8B7;}"
                     Tag="MediaLib" />
 
                 <NavigationViewItem
                     x:Uid="SettingsPagePlaybackLib"
-                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                    Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                        Glyph=&#xEA69;}"
                     Tag="PlaybackLib" />
 
                 <NavigationViewItem
                     x:Uid="SettingsPageStats"
-                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                    Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                        Glyph=&#xE9D2;}"
                     Tag="Stats" />
 
                 <NavigationViewItem
                     x:Uid="SettingsPagePlugins"
-                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                    Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                        Glyph=&#xE74C;}"
                     Tag="Plugins" />
 
                 <NavigationViewItem
                     x:Uid="SettingsPageAbout"
-                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                    Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                        Glyph=&#xE946;}"
                     Tag="About" />
 

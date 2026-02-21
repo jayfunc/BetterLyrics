@@ -50,7 +50,7 @@
             VerticalAlignment="Center"
             Visibility="{x:Bind ViewModel.IsListEmpty, Mode=OneWay}">
             <FontIcon
-                FontFamily="{StaticResource IconFontFamily}"
+                FontFamily="{StaticResource SegoeFluentIcons}"
                 FontSize="48"
                 Glyph="&#xE74C;"
                 Opacity="0.3" />

@@ -9,10 +9,14 @@
             Width="450"
             MinHeight="600"
             Background="#D6C4A3">
+
             <Grid Opacity="0.15">
                 <Path Data="M 0,150 C 150,50 300,300 450,150 L 450,600 L 0,600 Z" Fill="#4A8272" />
                 <Path Data="M 0,300 C 200,450 350,150 450,250 L 450,600 L 0,600 Z" Fill="#3B5B6D" />
                 <Path Data="M 0,450 C 150,350 300,550 450,450 L 450,600 L 0,600 Z" Fill="#A24A3B" />
+                <Grid Margin="0,600,0,0" Background="#4A8272" />
+                <Grid Margin="0,600,0,0" Background="#3B5B6D" />
+                <Grid Margin="0,600,0,0" Background="#A24A3B" />
             </Grid>
 
             <Border

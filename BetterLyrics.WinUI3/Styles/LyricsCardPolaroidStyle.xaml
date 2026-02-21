@@ -41,7 +41,7 @@
 
                                 <TextBlock
                                     CharacterSpacing="10"
-                                    FontFamily="Ink Free"
+                                    FontFamily="{StaticResource HandwrittenFont}"
                                     FontSize="20"
                                     FontWeight="Bold"
                                     Foreground="#2B2B2B"
@@ -52,7 +52,7 @@
 
                                 <TextBlock
                                     Margin="0,2,0,0"
-                                    FontFamily="Ink Free"
+                                    FontFamily="{StaticResource HandwrittenFont}"
                                     FontSize="16"
                                     FontStyle="Italic"
                                     Foreground="#666666"

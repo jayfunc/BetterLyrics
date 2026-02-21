@@ -51,7 +51,7 @@
                 Grid.Column="1"
                 HorizontalAlignment="Right"
                 Click="ScrollToPlayingItemButton_Click"
-                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                       FontSize=16,
                                       Glyph=&#xE7B7;}"
                 Style="{StaticResource GhostButtonStyle}">
@@ -64,7 +64,7 @@
                 Grid.Column="2"
                 HorizontalAlignment="Right"
                 Click="EmptyPlayingQueueButton_Click"
-                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                       FontSize=16,
                                       Glyph=&#xE738;}"
                 Style="{StaticResource GhostButtonStyle}">
@@ -98,7 +98,7 @@
                             <Button
                                 VerticalAlignment="Center"
                                 Click="RemoveFromPlayingQueueButton_Click"
-                                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                       FontSize=16,
                                                       Glyph=&#xE738;}"
                                 Style="{StaticResource GhostButtonStyle}">

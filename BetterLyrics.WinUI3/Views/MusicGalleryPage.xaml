@@ -83,7 +83,7 @@
                                             </Grid.ColumnDefinitions>
                                             <FontIcon
                                                 Grid.Column="0"
-                                                FontFamily="{StaticResource IconFontFamily}"
+                                                FontFamily="{StaticResource SegoeFluentIcons}"
                                                 FontSize="16"
                                                 Glyph="{x:Bind Icon}" />
                                             <TextBlock
@@ -98,7 +98,7 @@
                                         <Button
                                             Grid.Column="1"
                                             Click="RemoveFromPlaylistButton_Click"
-                                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                            Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                                   FontSize=16,
                                                                   Glyph=&#xE738;}"
                                             Style="{StaticResource GhostButtonStyle}"
@@ -129,7 +129,7 @@
                                             Orientation="Horizontal"
                                             Spacing="6">
                                             <FontIcon
-                                                FontFamily="{StaticResource IconFontFamily}"
+                                                FontFamily="{StaticResource SegoeFluentIcons}"
                                                 FontSize="16"
                                                 Glyph="&#xE710;" />
                                             <TextBlock x:Uid="MusicGalleryPageNewPlaylist" />
@@ -150,7 +150,7 @@
                                             Orientation="Horizontal"
                                             Spacing="6">
                                             <FontIcon
-                                                FontFamily="{StaticResource IconFontFamily}"
+                                                FontFamily="{StaticResource SegoeFluentIcons}"
                                                 FontSize="16"
                                                 Glyph="&#xE896;" />
                                             <TextBlock x:Uid="MusicGalleryPageImportFromFile" />
@@ -173,7 +173,7 @@
                             Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
                         <Button
                             Command="{x:Bind ViewModel.OpenMediaSettingsCommand}"
-                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                            Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                   FontSize=12,
                                                   Glyph=&#xE713;}"
                             Style="{StaticResource GhostButtonStyle}" />
@@ -298,7 +298,7 @@
                         Grid.Column="0"
                         Command="{x:Bind ViewModel.ToggleSongListViewSelectionModeCommand}"
                         Content="{ui:FontIcon FontSize=16,
-                                              FontFamily={StaticResource IconFontFamily},
+                                              FontFamily={StaticResource SegoeFluentIcons},
                                               Glyph=&#xE762;}"
                         Style="{StaticResource GhostToggleButtonStyle}" />
 
@@ -438,7 +438,7 @@
                                             Grid.Column="4"
                                             HorizontalAlignment="Right"
                                             Click="SongListViewItemMoreButton_Click"
-                                            Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                            Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                                   FontSize=12,
                                                                   Glyph=&#xE712;}"
                                             Style="{StaticResource GhostButtonStyle}" />
