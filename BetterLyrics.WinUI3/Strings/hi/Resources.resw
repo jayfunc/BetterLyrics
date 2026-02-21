@@ -258,9 +258,6 @@
   <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve">
     <value>उदाहरण http://localhost:5000</value>
   </data>
-  <data name="LyricsSharePageStyleInkWash.Content" xml:space="preserve">
-    <value>Ink wash</value>
-  </data>
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve">
     <value>समयांतराल</value>
   </data>
@@ -446,6 +443,9 @@
   </data>
   <data name="LyricsSharePageStyleDunhuang.Content" xml:space="preserve">
     <value>Dunhuang</value>
+  </data>
+  <data name="LyricsSharePageStyleInkWash.Content" xml:space="preserve">
+    <value>Ink wash</value>
   </data>
   <data name="LyricsSharePageStyleJournal.Content" xml:space="preserve">
     <value>Journal</value>
@@ -1826,5 +1826,8 @@
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>उपयोगकर्ता गाइड</value>
+  </data>
+  <data name="FontPickerSelectedFontText.Text" xml:space="preserve">
+    <value>Selected Fonts</value>
   </data>
 </root>

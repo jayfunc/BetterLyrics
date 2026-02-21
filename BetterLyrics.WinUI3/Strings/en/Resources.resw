@@ -150,6 +150,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
   <data name="Copy.Content" xml:space="preserve">
     <value>Copy</value>
   </data>
@@ -209,6 +212,9 @@
   </data>
   <data name="FontPickerSearchBox.PlaceholderText" xml:space="preserve">
     <value>Search fonts</value>
+  </data>
+  <data name="FontPickerSelectedFontText.Text" xml:space="preserve">
+    <value>Selected Fonts</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>Fullscreen Mode</value>
