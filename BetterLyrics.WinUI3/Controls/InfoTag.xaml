@@ -22,7 +22,7 @@
         <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
 
             <FontIcon
-                FontFamily="{StaticResource IconFontFamily}"
+                FontFamily="{StaticResource SegoeFluentIcons}"
                 FontSize="10"
                 Foreground="{StaticResource TextFillColorTertiaryBrush}"
                 Glyph="{x:Bind Glyph, Mode=OneWay}"

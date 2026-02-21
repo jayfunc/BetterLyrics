@@ -12,15 +12,11 @@ namespace BetterLyrics.WinUI3.Services.TransliterationService
 {
     public class TransliterationService : ITransliterationService
     {
-        private readonly HttpClient _httpClient;
-
         private readonly ISettingsService _settingsService;
         private readonly IPluginService _pluginService;
 
         public TransliterationService(ISettingsService settingsService, IPluginService pluginService)
         {
-            _httpClient = new HttpClient();
-
             _settingsService = settingsService;
             _pluginService = pluginService;
         }

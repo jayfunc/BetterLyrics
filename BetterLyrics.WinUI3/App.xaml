@@ -169,7 +169,11 @@
             <!--  Dimensions  -->
 
             <!--  Fonts  -->
-            <FontFamily x:Key="IconFontFamily">ms-appx:///Assets/Segoe Fluent Icons.ttf#Segoe Fluent Icons</FontFamily>
+            <FontFamily x:Key="SegoeFluentIcons">ms-appx:///Assets/Fonts/SegoeFluentIcons.ttf#Segoe Fluent Icons</FontFamily>
+            <FontFamily x:Key="HandwrittenFont">Ink Free, Xiaolai, 方正舒体</FontFamily>
+            <FontFamily x:Key="TypewriterFont">Courier New, 霞鹜新致宋</FontFamily>
+            <FontFamily x:Key="PublicationFont">Georgia, 霞鹜致宋 CL</FontFamily>
+            <FontFamily x:Key="GeekFont">Consolas, LXGW WenKai Mono</FontFamily>
 
         </ResourceDictionary>
     </Application.Resources>

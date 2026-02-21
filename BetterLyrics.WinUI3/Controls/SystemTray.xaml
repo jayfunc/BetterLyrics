@@ -32,38 +32,38 @@
                 <MenuFlyoutItem
                     x:Uid="SystemTraySwitch"
                     Command="{x:Bind ViewModel.OpenLyricsWindowSwitchCommand}"
-                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                    Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                        Glyph=&#xE8AB;}" />
                 <MenuFlyoutItem
                     x:Uid="SystemTraySearch"
                     Command="{x:Bind ViewModel.OpenLyricsSearchWindowCommand}"
-                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                    Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                        Glyph=&#xE721;}" />
                 <MenuFlyoutItem
                     x:Uid="SystemTrayMusicGallery"
                     Command="{x:Bind ViewModel.OpenMusicGalleryCommand}"
-                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                    Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                        Glyph=&#xE8F1;}" />
                 <MenuFlyoutItem
                     x:Uid="SystemTraySettings"
                     Command="{x:Bind ViewModel.OpenSettingsCommand}"
-                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                    Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                        Glyph=&#xE713;}" />
                 <MenuFlyoutItem
                     x:Uid="SystemTrayResetWindowPosition"
                     Command="{x:Bind ViewModel.ResetWindowPositionCommand}"
-                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                    Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                        Glyph=&#xE923;}" />
                 <MenuFlyoutSeparator />
                 <MenuFlyoutItem
                     x:Uid="SystemTrayRestart"
                     Command="{x:Bind ViewModel.RestartAppCommand}"
-                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                    Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                        Glyph=&#xE777;}" />
                 <MenuFlyoutItem
                     x:Uid="SystemTrayExit"
                     Command="{x:Bind ViewModel.ExitAppCommand}"
-                    Icon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                    Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                        Glyph=&#xE7E8;}" />
             </MenuFlyout>
         </tb:TaskbarIcon.ContextFlyout>

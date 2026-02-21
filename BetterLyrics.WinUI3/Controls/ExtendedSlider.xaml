@@ -39,7 +39,7 @@
                 Style="{StaticResource GhostButtonStyle}"
                 Visibility="{x:Bind ResetButtonVisibility, Mode=OneWay}">
                 <FontIcon
-                    FontFamily="{StaticResource IconFontFamily}"
+                    FontFamily="{StaticResource SegoeFluentIcons}"
                     FontSize="12"
                     Glyph="&#xE777;" />
             </Button>
@@ -64,7 +64,7 @@
                         CornerRadius="4,0,0,4"
                         Style="{StaticResource DateTimePickerFlyoutButtonStyle}">
                         <FontIcon
-                            FontFamily="{StaticResource IconFontFamily}"
+                            FontFamily="{StaticResource SegoeFluentIcons}"
                             FontSize="12"
                             Glyph="&#xE738;" />
                     </Button>
@@ -94,7 +94,7 @@
                         CornerRadius="0,4,4,0"
                         Style="{StaticResource DateTimePickerFlyoutButtonStyle}">
                         <FontIcon
-                            FontFamily="{StaticResource IconFontFamily}"
+                            FontFamily="{StaticResource SegoeFluentIcons}"
                             FontSize="12"
                             Glyph="&#xE710;" />
                     </Button>

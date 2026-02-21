@@ -64,7 +64,7 @@
                                         Grid.Column="2"
                                         VerticalAlignment="Center"
                                         Command="{x:Bind ViewModel.ResetMappedTitleCommand}"
-                                        Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                        Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                               FontSize=12,
                                                               Glyph=&#xE777;}"
                                         Style="{StaticResource GhostButtonStyle}" />
@@ -106,7 +106,7 @@
                                         Grid.Column="2"
                                         VerticalAlignment="Center"
                                         Command="{x:Bind ViewModel.ResetMappedArtistCommand}"
-                                        Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                        Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                               FontSize=12,
                                                               Glyph=&#xE777;}"
                                         Style="{StaticResource GhostButtonStyle}" />
@@ -149,7 +149,7 @@
                                         Grid.Column="2"
                                         VerticalAlignment="Center"
                                         Command="{x:Bind ViewModel.ResetMappedAlbumCommand}"
-                                        Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                        Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                               FontSize=12,
                                                               Glyph=&#xE777;}"
                                         Style="{StaticResource GhostButtonStyle}" />
@@ -194,7 +194,7 @@
                                         <FontIcon
                                             Grid.Column="1"
                                             Margin="0,2,0,0"
-                                            FontFamily="{StaticResource IconFontFamily}"
+                                            FontFamily="{StaticResource SegoeFluentIcons}"
                                             FontSize="12"
                                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                             Glyph="&#xE74C;"
@@ -305,7 +305,7 @@
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
                                                     Click="PlayLyricsLineButton_Click"
-                                                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                                           FontSize=16,
                                                                           Glyph=&#xE768;}"
                                                     Opacity="0"

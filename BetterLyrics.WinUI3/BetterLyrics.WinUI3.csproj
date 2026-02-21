@@ -166,6 +166,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<TrimmerRootDescriptor Include="PluginConfigs\**\*_TrimmerRoots.xml" />
+		<Content Remove="Assets\Fonts\SegoeFluentIcons.ttf" />
 		<TrimmerRootDescriptor Include="Core_TrimmerRoots.xml" />
 	</ItemGroup>
 	<ItemGroup>
@@ -202,9 +203,9 @@
 		<Content Update="Assets\RevolvingHearts.gif">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
-		<Content Update="Assets\Segoe Fluent Icons.ttf">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
+		<None Update="Assets\Fonts\SegoeFluentIcons.ttf">
+			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
+		</None>
 		<Content Update="Assets\WeChatReward.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>

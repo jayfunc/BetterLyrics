@@ -52,7 +52,7 @@
 
                     <Button Click="MusicGalleryButton_Click" Style="{StaticResource TitleBarButtonStyle}">
                         <FontIcon
-                            FontFamily="{StaticResource IconFontFamily}"
+                            FontFamily="{StaticResource SegoeFluentIcons}"
                             FontSize="12"
                             Glyph="&#xE8F1;" />
                         <ToolTipService.ToolTip>
@@ -65,7 +65,7 @@
                         Click="SettingsWindowButton_Click"
                         Style="{StaticResource TitleBarButtonStyle}">
                         <FontIcon
-                            FontFamily="{StaticResource IconFontFamily}"
+                            FontFamily="{StaticResource SegoeFluentIcons}"
                             FontSize="12"
                             Glyph="&#xE713;" />
                         <ToolTipService.ToolTip>
@@ -75,7 +75,7 @@
 
                     <Button Click="LyricsWindowSwitchButton_Click" Style="{StaticResource TitleBarButtonStyle}">
                         <FontIcon
-                            FontFamily="{StaticResource IconFontFamily}"
+                            FontFamily="{StaticResource SegoeFluentIcons}"
                             FontSize="12"
                             Glyph="&#xE8AB;" />
                         <ToolTipService.ToolTip>
@@ -101,7 +101,7 @@
                     <Button
                         x:Name="LockButton"
                         Click="LockButton_Click"
-                        Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                        Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                               FontSize=12,
                                               Glyph=&#xE72E;}"
                         Style="{StaticResource TitleBarButtonStyle}">
@@ -116,12 +116,12 @@
                         Style="{StaticResource TitleBarButtonStyle}">
                         <Grid>
                             <FontIcon
-                                FontFamily="{StaticResource IconFontFamily}"
+                                FontFamily="{StaticResource SegoeFluentIcons}"
                                 FontSize="12"
                                 Glyph="&#xE840;" />
                             <FontIcon
                                 x:Name="PinFillFontIcon"
-                                FontFamily="{StaticResource IconFontFamily}"
+                                FontFamily="{StaticResource SegoeFluentIcons}"
                                 FontSize="12"
                                 Glyph="&#xE841;">
                                 <FontIcon.OpacityTransition>
@@ -138,12 +138,12 @@
                         <Grid>
                             <FontIcon
                                 x:Name="EnterFullscreenFontIcon"
-                                FontFamily="{StaticResource IconFontFamily}"
+                                FontFamily="{StaticResource SegoeFluentIcons}"
                                 FontSize="12"
                                 Glyph="&#xE740;" />
                             <FontIcon
                                 x:Name="ExitFullscreenFontIcon"
-                                FontFamily="{StaticResource IconFontFamily}"
+                                FontFamily="{StaticResource SegoeFluentIcons}"
                                 FontSize="12"
                                 Glyph="&#xE73F;">
                                 <FontIcon.OpacityTransition>
@@ -158,7 +158,7 @@
                         Click="MinimizeButton_Click"
                         Style="{StaticResource TitleBarButtonStyle}">
                         <FontIcon
-                            FontFamily="{StaticResource IconFontFamily}"
+                            FontFamily="{StaticResource SegoeFluentIcons}"
                             FontSize="12"
                             Glyph="&#xE738;" />
                     </Button>
@@ -170,7 +170,7 @@
                         <Grid>
                             <FontIcon
                                 x:Name="EnterMaximizeFontIcon"
-                                FontFamily="{StaticResource IconFontFamily}"
+                                FontFamily="{StaticResource SegoeFluentIcons}"
                                 FontSize="12"
                                 Glyph="&#xE71A;">
                                 <FontIcon.OpacityTransition>
@@ -179,7 +179,7 @@
                             </FontIcon>
                             <FontIcon
                                 x:Name="ExitMaximizeFontIcon"
-                                FontFamily="{StaticResource IconFontFamily}"
+                                FontFamily="{StaticResource SegoeFluentIcons}"
                                 FontSize="12"
                                 Glyph="&#xE744;">
                                 <FontIcon.OpacityTransition>
@@ -194,7 +194,7 @@
                         Click="CloseButton_Click"
                         Style="{StaticResource TitleBarButtonStyle}">
                         <FontIcon
-                            FontFamily="{StaticResource IconFontFamily}"
+                            FontFamily="{StaticResource SegoeFluentIcons}"
                             FontSize="12"
                             Glyph="&#xE711;" />
                     </Button>
@@ -208,7 +208,7 @@
                 HorizontalAlignment="Stretch">
                 <Button
                     HorizontalAlignment="Stretch"
-                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                           FontSize=12,
                                           Glyph=&#xE712;}"
                     Style="{StaticResource TitleBarButtonStyle}">
@@ -246,7 +246,7 @@
             <Button
                 x:Name="UnlockButton"
                 Click="UnlockButton_Click"
-                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                       FontSize=12,
                                       Glyph=&#xE785;}"
                 IsHitTestVisible="True"

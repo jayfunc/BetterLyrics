@@ -33,7 +33,7 @@
                         <StackPanel Orientation="Horizontal" Spacing="3">
 
                             <!--  Create from templates  -->
-                            <Button Content="{ui:FontIcon FontSize=16, FontFamily={StaticResource IconFontFamily}, Glyph=&#xE710;}" Style="{StaticResource GhostButtonStyle}">
+                            <Button Content="{ui:FontIcon FontSize=16, FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE710;}" Style="{StaticResource GhostButtonStyle}">
                                 <ToolTipService.ToolTip>
                                     <ToolTip x:Uid="SettingsPageCreateFromTemplates" />
                                 </ToolTipService.ToolTip>
@@ -52,7 +52,7 @@
                             <!--  Import  -->
                             <Button
                                 Click="ImportButton_Click"
-                                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                       FontSize=16,
                                                       Glyph=&#xE74B;}"
                                 Style="{StaticResource GhostButtonStyle}">
@@ -191,7 +191,7 @@
                         Margin="0,24,0,0"
                         Command="{x:Bind ViewModel.CloseConfigPanelCommand}"
                         Content="{ui:FontIcon FontSize=16,
-                                              FontFamily={StaticResource IconFontFamily},
+                                              FontFamily={StaticResource SegoeFluentIcons},
                                               Glyph=&#xE70D;}"
                         Style="{StaticResource AccentButtonStyle}" />
                 </Grid>

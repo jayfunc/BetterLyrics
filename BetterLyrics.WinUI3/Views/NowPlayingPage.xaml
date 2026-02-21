@@ -105,7 +105,7 @@
                                 <Button
                                     HorizontalAlignment="Stretch"
                                     Click="SaveAlbumArtButton_Click"
-                                    Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                           FontSize=16,
                                                           Glyph=&#xE74E;}" />
                             </StackPanel>

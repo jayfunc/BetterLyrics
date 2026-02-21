@@ -75,7 +75,7 @@
                         Opacity="0.5"
                         Orientation="Horizontal">
                         <TextBlock
-                            FontFamily="Georgia, Segoe UI"
+                            FontFamily="{StaticResource PublicationFont}"
                             FontSize="10"
                             FontStyle="Italic"
                             Foreground="#2C3440"

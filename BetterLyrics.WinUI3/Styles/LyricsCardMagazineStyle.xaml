@@ -38,7 +38,7 @@
 
                 <StackPanel Grid.Row="0">
                     <TextBlock
-                        FontFamily="Georgia"
+                        FontFamily="{StaticResource PublicationFont}"
                         FontSize="32"
                         FontWeight="Black"
                         Foreground="Black"
@@ -48,7 +48,7 @@
 
                     <TextBlock
                         Margin="0,8,0,0"
-                        FontFamily="Georgia"
+                        FontFamily="{StaticResource PublicationFont}"
                         FontSize="16"
                         FontStyle="Italic"
                         Foreground="#666"
@@ -69,7 +69,7 @@
                             <StackPanel Margin="0,0,0,20">
 
                                 <TextBlock
-                                    FontFamily="Georgia"
+                                    FontFamily="{StaticResource PublicationFont}"
                                     FontSize="18"
                                     Foreground="#333"
                                     LineHeight="28"

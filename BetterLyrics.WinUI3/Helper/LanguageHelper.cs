@@ -105,6 +105,27 @@ namespace BetterLyrics.WinUI3.Helper
             };
         }
 
+        public static string? DetectLanguageCode(IEnumerable<string> lines)
+        {
+            Dictionary<string, int> codeCount = new();
+            foreach (var line in lines)
+            {
+                var code = DetectLanguageCode(line);
+                if (code != null)
+                {
+                    if (!codeCount.ContainsKey(code))
+                    {
+                        codeCount[code] = 0;
+                    }
+                    codeCount[code]++;
+                }
+            }
+
+            if (codeCount.Count == 0) return null;
+
+            return codeCount.OrderByDescending(kv => kv.Value).First().Key;
+        }
+
         /// <summary>
         /// 尝试识别音译系统 (拼音/粤拼/罗马音)
         /// </summary>

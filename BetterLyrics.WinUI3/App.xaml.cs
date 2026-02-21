@@ -1,6 +1,7 @@
 ﻿using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Features;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.DbContext;
 using BetterLyrics.WinUI3.Models.Settings;

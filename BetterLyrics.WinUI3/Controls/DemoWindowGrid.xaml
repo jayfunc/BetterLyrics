@@ -49,11 +49,11 @@
             Opacity="0.7"
             Visibility="{x:Bind LyricsWindowStatus.IsAlwaysOnTop, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
             <FontIcon
-                FontFamily="{StaticResource IconFontFamily}"
+                FontFamily="{StaticResource SegoeFluentIcons}"
                 FontSize="12"
                 Glyph="&#xE718;" />
             <FontIcon
-                FontFamily="{StaticResource IconFontFamily}"
+                FontFamily="{StaticResource SegoeFluentIcons}"
                 FontSize="12"
                 Glyph="&#xE841;"
                 Visibility="{x:Bind LyricsWindowStatus.IsAlwaysOnTopPolling, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
@@ -114,7 +114,7 @@
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 Click="OpenButton_Click"
-                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                       Glyph=&#xE78B;}">
                 <ToolTipService.ToolTip>
                     <TextBlock x:Uid="SystemTrayLyrics" />
@@ -125,7 +125,7 @@
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 Click="CloseButton_Click"
-                Content="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                       Glyph=&#xE711;}"
                 IsEnabled="{x:Bind LyricsWindowStatus.WindowStatus, Mode=OneWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=0}">
                 <ToolTipService.ToolTip>

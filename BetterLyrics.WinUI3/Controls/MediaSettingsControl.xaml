@@ -21,7 +21,7 @@
 
                     <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <dev:SettingsCard x:Uid="SettingsPageMusicLib" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8B7;}" />
+                    <dev:SettingsCard x:Uid="SettingsPageMusicLib" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8B7;}" />
 
                     <InfoBar
                         x:Uid="SettingsPageRemoveInfo"
@@ -55,7 +55,7 @@
                                 <dev:SettingsExpander IsExpanded="True">
 
                                     <dev:SettingsExpander.HeaderIcon>
-                                        <FontIcon FontFamily="{StaticResource IconFontFamily}" Glyph="{x:Bind SourceType, Converter={StaticResource FileSourceTypeToIconConverter}, Mode=OneWay}" />
+                                        <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="{x:Bind SourceType, Converter={StaticResource FileSourceTypeToIconConverter}, Mode=OneWay}" />
                                     </dev:SettingsExpander.HeaderIcon>
                                     <dev:SettingsExpander.Header>
                                         <TextBlock IsTextSelectionEnabled="True" Text="{x:Bind Name, Mode=OneWay}" />
@@ -165,7 +165,7 @@
                                         Command="{x:Bind ViewModel.AddMediaSourceCommand}"
                                         CommandParameter="Local">
                                         <MenuFlyoutItem.Icon>
-                                            <FontIcon FontFamily="{StaticResource IconFontFamily}" Glyph="&#xE8B7;" />
+                                            <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE8B7;" />
                                         </MenuFlyoutItem.Icon>
                                     </MenuFlyoutItem>
 
@@ -176,7 +176,7 @@
                                         CommandParameter="SMB"
                                         Text="SMB">
                                         <MenuFlyoutItem.Icon>
-                                            <FontIcon FontFamily="{StaticResource IconFontFamily}" Glyph="&#xE839;" />
+                                            <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE839;" />
                                         </MenuFlyoutItem.Icon>
                                     </MenuFlyoutItem>
 
@@ -185,7 +185,7 @@
                                         CommandParameter="FTP"
                                         Text="FTP">
                                         <MenuFlyoutItem.Icon>
-                                            <FontIcon FontFamily="{StaticResource IconFontFamily}" Glyph="&#xE838;" />
+                                            <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE838;" />
                                         </MenuFlyoutItem.Icon>
                                     </MenuFlyoutItem>
 
@@ -194,7 +194,7 @@
                                         CommandParameter="WebDAV"
                                         Text="WebDAV">
                                         <MenuFlyoutItem.Icon>
-                                            <FontIcon FontFamily="{StaticResource IconFontFamily}" Glyph="&#xE774;" />
+                                            <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE774;" />
                                         </MenuFlyoutItem.Icon>
                                     </MenuFlyoutItem>
 

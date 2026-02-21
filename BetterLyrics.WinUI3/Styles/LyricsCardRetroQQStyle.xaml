@@ -327,7 +327,7 @@
                                                             Height="16"
                                                             Fill="#cd9f12" />
                                                         <FontIcon
-                                                            FontFamily="{StaticResource IconFontFamily}"
+                                                            FontFamily="{StaticResource SegoeFluentIcons}"
                                                             FontSize="16"
                                                             Foreground="#6c6f65"
                                                             Glyph="&#xE8EA;" />
@@ -357,7 +357,7 @@
                                                         Margin="0,0,4,1"
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center"
-                                                        FontFamily="{StaticResource IconFontFamily}"
+                                                        FontFamily="{StaticResource SegoeFluentIcons}"
                                                         FontSize="10"
                                                         FontWeight="Black"
                                                         Text="&#xE76B;" />
@@ -365,7 +365,7 @@
                                                         Margin="3,0,0,1"
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center"
-                                                        FontFamily="{StaticResource IconFontFamily}"
+                                                        FontFamily="{StaticResource SegoeFluentIcons}"
                                                         FontSize="10"
                                                         FontWeight="Black"
                                                         Text="&#xE76B;" />
@@ -513,7 +513,7 @@
                                                         Margin="0,0,0,1"
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center"
-                                                        FontFamily="{StaticResource IconFontFamily}"
+                                                        FontFamily="{StaticResource SegoeFluentIcons}"
                                                         FontSize="10"
                                                         FontWeight="Black"
                                                         Text="&#xE70E;" />
@@ -558,7 +558,7 @@
                                                         Margin="0,0,0,1"
                                                         HorizontalAlignment="Center"
                                                         VerticalAlignment="Center"
-                                                        FontFamily="{StaticResource IconFontFamily}"
+                                                        FontFamily="{StaticResource SegoeFluentIcons}"
                                                         FontSize="10"
                                                         FontWeight="Black"
                                                         Text="&#xE70E;" />
@@ -576,7 +576,7 @@
                                         <StackPanel Padding="4" Orientation="Horizontal">
                                             <FontIcon
                                                 Margin="0,0,4,0"
-                                                FontFamily="{StaticResource IconFontFamily}"
+                                                FontFamily="{StaticResource SegoeFluentIcons}"
                                                 FontSize="10"
                                                 Foreground="#c3c8c8"
                                                 Glyph="&#xE722;" />
@@ -589,7 +589,7 @@
                                         <StackPanel Padding="4,0" Orientation="Horizontal">
                                             <FontIcon
                                                 Margin="0,0,4,0"
-                                                FontFamily="{StaticResource IconFontFamily}"
+                                                FontFamily="{StaticResource SegoeFluentIcons}"
                                                 FontSize="10"
                                                 Foreground="#c3c8c8"
                                                 Glyph="&#xEC71;" />
@@ -609,7 +609,7 @@
                                         <StackPanel Padding="4,0" Orientation="Horizontal">
                                             <FontIcon
                                                 Margin="0,0,4,0"
-                                                FontFamily="{StaticResource IconFontFamily}"
+                                                FontFamily="{StaticResource SegoeFluentIcons}"
                                                 FontSize="10"
                                                 Foreground="#f1e358"
                                                 Glyph="&#xE8D5;" />

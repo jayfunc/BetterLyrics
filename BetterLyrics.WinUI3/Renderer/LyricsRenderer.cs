@@ -213,22 +213,14 @@ namespace BetterLyrics.WinUI3.Renderer
         {
             if (geo == null) return;
 
-            try
-            {
-                ds.DrawGeometry(geo, pos, color, (float)width);
-            }
-            catch (Exception) { }
+            ds.DrawGeometry(geo, pos, color, (float)width);
         }
 
         private void DrawTextLayoutSafely(CanvasDrawingSession ds, CanvasTextLayout? layout, Vector2 pos, Color color)
         {
             if (layout == null) return;
 
-            try
-            {
-                ds.DrawTextLayout(layout, pos, color);
-            }
-            catch (Exception) { }
+            ds.DrawTextLayout(layout, pos, color);
         }
 
         public void CalculateLyrics3DMatrix(

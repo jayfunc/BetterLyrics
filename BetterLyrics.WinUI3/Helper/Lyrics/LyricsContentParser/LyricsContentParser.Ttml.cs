@@ -155,16 +155,16 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
                     IsPrimaryHasRealSyllableInfo = false,
                 });
             }
-            else
-            {
-                destList.Add(new LyricsLine
-                {
-                    StartMs = startMs,
-                    EndMs = endMs,
-                    PrimaryText = "",
-                    IsPrimaryHasRealSyllableInfo = false,
-                });
-            }
+            //else
+            //{
+            //    destList.Add(new LyricsLine
+            //    {
+            //        StartMs = startMs,
+            //        EndMs = endMs,
+            //        PrimaryText = "",
+            //        IsPrimaryHasRealSyllableInfo = false,
+            //    });
+            //}
         }
 
         private static int ParseTtmlTime(string? t)

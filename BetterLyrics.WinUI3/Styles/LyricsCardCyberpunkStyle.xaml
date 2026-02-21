@@ -36,7 +36,7 @@
                         <TextBlock
                             Margin="10,0"
                             VerticalAlignment="Center"
-                            FontFamily="Consolas"
+                            FontFamily="{StaticResource GeekFont}"
                             FontSize="12"
                             Foreground="#00FF9D"
                             Text="BETTERLYRICS" />
@@ -95,7 +95,7 @@
                                     <StackPanel Margin="0,0,0,24">
 
                                         <TextBlock
-                                            FontFamily="Consolas"
+                                            FontFamily="{StaticResource GeekFont}"
                                             FontSize="22"
                                             FontWeight="Bold"
                                             Foreground="#FFFFFF"
@@ -105,7 +105,7 @@
 
                                         <TextBlock
                                             Margin="0,4,0,0"
-                                            FontFamily="Consolas"
+                                            FontFamily="{StaticResource GeekFont}"
                                             FontSize="14"
                                             Foreground="#00E5FF"
                                             LineHeight="20"
@@ -140,7 +140,7 @@
                                     Text="{Binding Artist}"
                                     TextTrimming="CharacterEllipsis" />
                                 <TextBlock
-                                    FontFamily="Consolas"
+                                    FontFamily="{StaticResource GeekFont}"
                                     FontSize="10"
                                     Foreground="#888"
                                     Text="// NOW_PLAYING" />
@@ -150,7 +150,7 @@
                         <TextBlock
                             HorizontalAlignment="Right"
                             VerticalAlignment="Bottom"
-                            FontFamily="Consolas"
+                            FontFamily="{StaticResource GeekFont}"
                             FontSize="10"
                             Foreground="#FFFF00"
                             Text="WARNING: LOUD" />

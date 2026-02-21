@@ -22,7 +22,7 @@
                         Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"
                         Text="Effect" />
 
-                    <dev:SettingsCard x:Uid="SettingsPageLyricsWordByWordEffectMode" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF714;}">
+                    <dev:SettingsCard x:Uid="SettingsPageLyricsWordByWordEffectMode" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xF714;}">
                         <ComboBox SelectedIndex="{x:Bind LyricsEffectSettings.WordByWordEffectMode, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageLyricsWordByWordEffectModeAuto" />
                             <ComboBoxItem x:Uid="SettingsPageLyricsWordByWordEffectModeNever" />
@@ -31,22 +31,22 @@
                     </dev:SettingsCard>
 
                     <!--  模糊效果  -->
-                    <dev:SettingsCard x:Uid="SettingsPageLyricsBlurEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE727;}">
+                    <dev:SettingsCard x:Uid="SettingsPageLyricsBlurEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE727;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsBlurEffectEnabled, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
                     <!--  淡出效果  -->
-                    <dev:SettingsCard x:Uid="SettingsPageLyricsFadeOutEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE89F;}">
+                    <dev:SettingsCard x:Uid="SettingsPageLyricsFadeOutEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE89F;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsFadeOutEffectEnabled, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
                     <!--  远离视野  -->
-                    <dev:SettingsCard x:Uid="SettingsPageLyricsOutOfSightEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xF19D;}">
+                    <dev:SettingsCard x:Uid="SettingsPageLyricsOutOfSightEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xF19D;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsOutOfSightEffectEnabled, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
                     <!--  呼吸效果  -->
-                    <dev:SettingsExpander x:Uid="SettingsPageSpectrumBrethingEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xEA3F;}">
+                    <dev:SettingsExpander x:Uid="SettingsPageSpectrumBrethingEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEA3F;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsBrethingEffectEnabled, Mode=TwoWay}" />
                         <dev:SettingsExpander.Items>
                             <dev:SettingsCard x:Uid="SettingsPageSpectrumBreathingIntensity" IsEnabled="{x:Bind LyricsEffectSettings.IsLyricsBrethingEffectEnabled, Mode=OneWay}">
@@ -61,7 +61,7 @@
                     </dev:SettingsExpander>
 
                     <!--  辉光效果  -->
-                    <dev:SettingsExpander x:Uid="SettingsPageLyricsGlowEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE9A9;}">
+                    <dev:SettingsExpander x:Uid="SettingsPageLyricsGlowEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE9A9;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsGlowEffectEnabled, Mode=TwoWay}" />
                         <dev:SettingsExpander.Items>
                             <dev:SettingsCard x:Uid="SettingsPageScope">
@@ -91,7 +91,7 @@
                     </dev:SettingsExpander>
 
                     <!--  缩放效果  -->
-                    <dev:SettingsExpander x:Uid="SettingsPageLyricsScaleEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8A3;}">
+                    <dev:SettingsExpander x:Uid="SettingsPageLyricsScaleEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8A3;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsScaleEffectEnabled, Mode=TwoWay}" />
                         <dev:SettingsExpander.Items>
                             <dev:SettingsCard x:Uid="SettingsPageLongSyllableDuration">
@@ -117,7 +117,7 @@
                     </dev:SettingsExpander>
 
                     <!--  浮动动画  -->
-                    <dev:SettingsExpander x:Uid="SettingsPageLyricsFloatAnimation" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xE8C5;}">
+                    <dev:SettingsExpander x:Uid="SettingsPageLyricsFloatAnimation" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8C5;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsFloatAnimationEnabled, Mode=TwoWay}" />
                         <dev:SettingsExpander.Items>
                             <dev:SettingsCard x:Uid="SettingsPageAutoAdjust">
@@ -144,7 +144,7 @@
                     <!--  扇形歌词  -->
                     <dev:SettingsExpander
                         x:Uid="SettingsPageFan"
-                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xEBC5;}"
                         IsExpanded="{x:Bind LyricsEffectSettings.IsFanLyricsEnabled, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsFanLyricsEnabled, Mode=TwoWay}" />
@@ -164,7 +164,7 @@
                     <!--  3D 歌词  -->
                     <dev:SettingsExpander
                         x:Uid="SettingsPage3DLyrics"
-                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily},
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xE914;}"
                         IsExpanded="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=TwoWay}" />
@@ -209,7 +209,7 @@
                     </dev:SettingsExpander>
 
                     <!--  歌词动画  -->
-                    <dev:SettingsExpander x:Uid="SettingsPageScrollEasing" HeaderIcon="{ui:FontIcon FontFamily={StaticResource IconFontFamily}, Glyph=&#xECE7;}">
+                    <dev:SettingsExpander x:Uid="SettingsPageScrollEasing" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xECE7;}">
                         <ComboBox SelectedIndex="{x:Bind LyricsEffectSettings.LyricsScrollEasingType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageEasingTypeLinear" />
                             <ComboBoxItem x:Uid="SettingsPageEasingTypeSmoothStep" />
