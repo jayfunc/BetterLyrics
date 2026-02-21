@@ -31,7 +31,6 @@ namespace BetterLyrics.WinUI3.Helper
                     {
                         FontFamily = en,
                         LocalizedFontFamily = loc,
-                        SampleText = loc
                     })
                     .OrderBy(f => f.LocalizedFontFamily)
                     .ToList();

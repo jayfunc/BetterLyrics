@@ -4,6 +4,5 @@
     {
         public string FontFamily { get; set; } = "";
         public string LocalizedFontFamily { get; set; } = "";
-        public string SampleText { get; set; } = "";
     }
 }

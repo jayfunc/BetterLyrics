@@ -4,7 +4,9 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Controls
 {
@@ -27,50 +29,88 @@ namespace BetterLyrics.WinUI3.Controls
 
         public static readonly DependencyProperty SelectedFontIdProperty =
             DependencyProperty.Register(nameof(SelectedFontId), typeof(string), typeof(FontPicker),
-                new PropertyMetadata(null, OnSelectedFontIdChanged));
+                new PropertyMetadata(string.Empty, OnSelectedFontIdChanged));
 
         private static void OnSelectedFontIdChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = (FontPicker)d;
-            control.UpdateDisplay((string)e.NewValue);
+            _ = control.UpdateDisplayAsync((string)e.NewValue);
         }
+
         #endregion
 
-        private async void UpdateDisplay(string fontId)
+        private async Task UpdateDisplayAsync(string fontIdString)
         {
-            if (string.IsNullOrEmpty(fontId))
+            SelectedLocalizedText.Text = string.Empty;
+            SelectedLocalizedText.Inlines.Clear();
+
+            if (string.IsNullOrWhiteSpace(fontIdString))
             {
                 SelectedLocalizedText.Text = "N/A";
                 SelectedRawText.Text = "";
                 return;
             }
 
-            var fonts = await FontHelper.GetSystemFontFamiliesAsync();
-            var match = fonts.FirstOrDefault(f => f.FontFamily == fontId);
+            var fontIds = fontIdString
+                .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(s => s.Trim())
+                .ToList();
 
-            if (match != null)
+            var fonts = await FontHelper.GetSystemFontFamiliesAsync();
+            var matchedFonts = fontIds.Select(id => fonts.FirstOrDefault(f => f.FontFamily == id)).Where(f => f != null).ToList();
+
+            if (matchedFonts.Any())
             {
-                SelectedLocalizedText.Text = match.LocalizedFontFamily;
-                SelectedRawText.Text = match.FontFamily;
-                SelectedLocalizedText.FontFamily = new Microsoft.UI.Xaml.Media.FontFamily(match.FontFamily);
+                SelectedRawText.Text = string.Join(", ", matchedFonts.Select(f => f.FontFamily));
+
+                for (int i = 0; i < matchedFonts.Count; i++)
+                {
+                    var f = matchedFonts[i];
+
+                    var fontRun = new Microsoft.UI.Xaml.Documents.Run
+                    {
+                        Text = f.LocalizedFontFamily,
+                        FontFamily = new Microsoft.UI.Xaml.Media.FontFamily(f.FontFamily)
+                    };
+                    SelectedLocalizedText.Inlines.Add(fontRun);
+
+                    if (i < matchedFonts.Count - 1)
+                    {
+                        var separatorRun = new Microsoft.UI.Xaml.Documents.Run
+                        {
+                            Text = ", "
+                        };
+                        SelectedLocalizedText.Inlines.Add(separatorRun);
+                    }
+                }
             }
             else
             {
-                SelectedLocalizedText.Text = fontId;
+                SelectedLocalizedText.Text = fontIdString;
                 SelectedRawText.Text = "Unknown";
             }
         }
 
         private async void TriggerButton_Click(object sender, RoutedEventArgs e)
         {
-            var dialog = new FontPickerDialog(SelectedFontId);
-            dialog.PrimaryButtonText = _localizationService.GetLocalizedString("Cancel");
-            dialog.XamlRoot = this.XamlRoot;
-            await dialog.ShowAsync();
+            var currentFontsList = string.IsNullOrWhiteSpace(SelectedFontId)
+                ? new List<string>()
+                : SelectedFontId.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                                .Select(s => s.Trim())
+                                .ToList();
 
-            if (!string.IsNullOrEmpty(dialog.SelectedFontId))
+            var dialog = new FontPickerDialog(currentFontsList)
             {
-                this.SelectedFontId = dialog.SelectedFontId;
+                XamlRoot = this.XamlRoot,
+                PrimaryButtonText = _localizationService.GetLocalizedString("Confirm"),
+                CloseButtonText = _localizationService.GetLocalizedString("Cancel")
+            };
+
+            var result = await dialog.ShowAsync(ContentDialogPlacement.Popup);
+
+            if (result == ContentDialogResult.Primary)
+            {
+                this.SelectedFontId = string.Join(", ", dialog.SelectedFontIds);
             }
         }
     }

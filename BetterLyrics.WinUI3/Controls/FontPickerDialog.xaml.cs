@@ -6,27 +6,26 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Controls
 {
     public sealed partial class FontPickerDialog : ContentDialog
     {
-        private bool _isInitializing = false;
         private ObservableCollection<ExtendedFontFamily> _filteredFonts = new();
+        private ObservableCollection<ExtendedFontFamily> _selectedFonts = new();
         private List<ExtendedFontFamily> _allFontsReference;
 
-        public string SelectedFontId { get; private set; }
+        public List<string> SelectedFontIds { get; private set; } = new();
 
-        public FontPickerDialog(string currentFontId)
+        public FontPickerDialog(List<string> currentFontIds)
         {
             this.InitializeComponent();
-            InitializeFonts(currentFontId);
+            SelectedFontsListView.ItemsSource = _selectedFonts;
+            _ = InitializeFontsAsync(currentFontIds);
         }
 
-        private async void InitializeFonts(string currentFontId)
+        private async Task InitializeFontsAsync(List<string> currentFontIds)
         {
             _allFontsReference = await FontHelper.GetSystemFontFamiliesAsync();
             foreach (var font in _allFontsReference)
@@ -35,15 +34,15 @@ namespace BetterLyrics.WinUI3.Controls
             }
             FontListView.ItemsSource = _filteredFonts;
 
-            if (!string.IsNullOrEmpty(currentFontId))
+            if (currentFontIds != null && currentFontIds.Any())
             {
-                var match = _allFontsReference.FirstOrDefault(f => f.FontFamily == currentFontId);
-                if (match != null)
+                foreach (var id in currentFontIds)
                 {
-                    _isInitializing = true;
-                    FontListView.SelectedItem = match;
-                    FontListView.ScrollIntoView(FontListView.SelectedItem, ScrollIntoViewAlignment.Leading);
-                    _isInitializing = false;
+                    var match = _allFontsReference.FirstOrDefault(f => f.FontFamily == id);
+                    if (match != null)
+                    {
+                        _selectedFonts.Add(match);
+                    }
                 }
             }
         }
@@ -65,22 +64,32 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void FontListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (_isInitializing) return;
-
             if (FontListView.SelectedItem is ExtendedFontFamily selected)
             {
-                SelectedFontId = selected.FontFamily;
-                this.Hide();
+                if (!_selectedFonts.Contains(selected))
+                {
+                    _selectedFonts.Add(selected);
+                }
+
+                FontListView.SelectedItem = null;
+            }
+        }
+
+        private void RemoveFont_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.Tag is ExtendedFontFamily fontToRemove)
+            {
+                _selectedFonts.Remove(fontToRemove);
             }
         }
 
         private void FontListView_Loaded(object sender, RoutedEventArgs e)
         {
-            if (FontListView.SelectedItem != null)
-            {
-                FontListView.ScrollIntoView(FontListView.SelectedItem, ScrollIntoViewAlignment.Leading);
-            }
         }
 
+        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            SelectedFontIds = _selectedFonts.Select(f => f.FontFamily).ToList();
+        }
     }
 }
