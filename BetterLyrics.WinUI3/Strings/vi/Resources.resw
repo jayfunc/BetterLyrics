@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -124,7 +124,7 @@
     <value>Thêm</value>
   </data>
   <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Description" xml:space="preserve">
-    <value>Tự động cuộn thông tin bài hát khi nó quá dài, bất kể việc di chuột qua.</value>
+    <value>Tự động cuộn thông tin bài hát khi nó quá dài, bất kể việc di chuột qua</value>
   </data>
   <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Header" xml:space="preserve">
     <value>Tự động cuộn thông tin bài hát</value>
@@ -149,6 +149,9 @@
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Hủy</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Xác nhận</value>
   </data>
   <data name="Copy.Content" xml:space="preserve">
     <value>Sao chép</value>
@@ -208,13 +211,13 @@
     <value>Đang chờ quét...</value>
   </data>
   <data name="FontPickerDialogFontNotFound.Text" xml:space="preserve">
-    <value>The font is not found in the system, it is not valid</value>
+    <value>Phông chữ không được tìm thấy trong hệ thống, nó không hợp lệ.</value>
   </data>
   <data name="FontPickerSearchBox.PlaceholderText" xml:space="preserve">
     <value>Tìm kiếm phông chữ</value>
   </data>
   <data name="FontPickerSelectedFontText.Text" xml:space="preserve">
-    <value>Selected Fonts</value>
+    <value>Phông chữ được chọn</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>Chế độ toàn màn hình</value>
@@ -406,13 +409,13 @@
     <value>Sao chép hình ảnh</value>
   </data>
   <data name="LyricsSharePageFontFamily.Text" xml:space="preserve">
-    <value>Font Family</value>
+    <value>Gia đình phông chữ</value>
   </data>
   <data name="LyricsSharePageGroupAtmosphere" xml:space="preserve">
     <value>Khí quyển</value>
   </data>
   <data name="LyricsSharePageGroupChineseElegance" xml:space="preserve">
-    <value>Chinese Elegance</value>
+    <value>Sự thanh lịch của Trung Hoa</value>
   </data>
   <data name="LyricsSharePageGroupClassic" xml:space="preserve">
     <value>Thiết kế cổ điển</value>
@@ -424,7 +427,7 @@
     <value>Retro kỹ thuật số</value>
   </data>
   <data name="LyricsSharePageGroupTracesOfTime" xml:space="preserve">
-    <value>Traces of Time</value>
+    <value>Dấu vết của Thời gian</value>
   </data>
   <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
     <value>Chất lượng hình ảnh</value>
@@ -436,10 +439,10 @@
     <value>Chọn lời bài hát</value>
   </data>
   <data name="LyricsSharePageStyleAncientBook" xml:space="preserve">
-    <value>Ancient book</value>
+    <value>Sách cổ</value>
   </data>
   <data name="LyricsSharePageStyleBambooSlips" xml:space="preserve">
-    <value>Bamboo slips</value>
+    <value>Các thanh tre</value>
   </data>
   <data name="LyricsSharePageStyleCD" xml:space="preserve">
     <value>Vỏ đựng đĩa CD</value>
@@ -451,13 +454,13 @@
     <value>Cyberpunk</value>
   </data>
   <data name="LyricsSharePageStyleDunhuang" xml:space="preserve">
-    <value>Dunhuang</value>
+    <value>Đôn Hoàng</value>
   </data>
   <data name="LyricsSharePageStyleInkWash" xml:space="preserve">
-    <value>Ink wash</value>
+    <value>Mực nước</value>
   </data>
   <data name="LyricsSharePageStyleJournal" xml:space="preserve">
-    <value>Journal</value>
+    <value>Tạp chí</value>
   </data>
   <data name="LyricsSharePageStyleMagazine" xml:space="preserve">
     <value>Tạp chí</value>
@@ -478,7 +481,7 @@
     <value>Retro QQ</value>
   </data>
   <data name="LyricsSharePageStyleStickyNote" xml:space="preserve">
-    <value>Sticky note</value>
+    <value>Ghi chú dính</value>
   </data>
   <data name="LyricsSharePageStyleSwiss" xml:space="preserve">
     <value>Thụy Sĩ</value>
