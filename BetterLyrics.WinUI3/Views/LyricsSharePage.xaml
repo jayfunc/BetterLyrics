@@ -212,8 +212,8 @@
                                         </GroupStyle.HeaderContainerStyle>
 
                                         <GroupStyle.HeaderTemplate>
-                                            <DataTemplate>
-                                                <TextBlock Style="{ThemeResource BodyStrongTextBlockStyle}" Text="{Binding GroupTitle}" />
+                                            <DataTemplate x:DataType="viewmodels:StyleGroup">
+                                                <TextBlock Style="{ThemeResource BodyStrongTextBlockStyle}" Text="{x:Bind GroupTitle}" />
                                             </DataTemplate>
                                         </GroupStyle.HeaderTemplate>
 
