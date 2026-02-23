@@ -60,6 +60,9 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
             AppSettings.PluginsInfo.CollectionChanged += AppSettings_CollectionChanged;
             AppSettings.PluginsInfo.ItemPropertyChanged += AppSettings_ItemPropertyChanged;
 
+            AppSettings.LyricsCardConfigs.CollectionChanged += AppSettings_CollectionChanged;
+            AppSettings.LyricsCardConfigs.ItemPropertyChanged += AppSettings_ItemPropertyChanged;
+
             AppSettings.MusicGallerySettings.PlayQueuePaths.CollectionChanged += AppSettings_CollectionChanged;
 
             AppSettings.Version = MetadataHelper.AppVersion;

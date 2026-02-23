@@ -39,7 +39,7 @@
                         Glyph="&#xE870;" />
                     <TextBlock
                         VerticalAlignment="Center"
-                        FontFamily="Segoe UI"
+                        FontFamily="{Binding Config.FontFamily}"
                         FontSize="12"
                         FontWeight="Bold"
                         Foreground="White"
@@ -86,14 +86,14 @@
 
                     <StackPanel Grid.Row="0" VerticalAlignment="Center">
                         <TextBlock
-                            FontFamily="Segoe UI Semibold"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="15"
                             Foreground="White"
                             Text="{Binding Artist}"
                             TextTrimming="CharacterEllipsis" />
                         <TextBlock
                             Margin="0,2,0,0"
-                            FontFamily="Segoe UI"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="13"
                             Foreground="#999"
                             Text="{Binding Title}"
@@ -123,13 +123,12 @@
             </Grid>
 
             <Grid Margin="30,160,30,240" VerticalAlignment="Center">
-                <ItemsControl ItemsSource="{Binding SelectedLyrics}">
+                <ItemsControl FontFamily="{Binding Config.FontFamily}" ItemsSource="{Binding SelectedLyrics}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Margin="0,0,0,24">
 
                                 <TextBlock
-                                    FontFamily="Segoe UI Light"
                                     FontSize="26"
                                     Foreground="White"
                                     LineHeight="34"
@@ -144,7 +143,6 @@
 
                                 <TextBlock
                                     Margin="0,4,0,0"
-                                    FontFamily="Segoe UI"
                                     FontSize="18"
                                     Foreground="#A6A6A6"
                                     LineHeight="24"
@@ -166,21 +164,21 @@
             <StackPanel Margin="24,0,0,40" VerticalAlignment="Bottom">
                 <TextBlock
                     Margin="-4,0,0,-12"
-                    FontFamily="Segoe UI Light"
+                    FontFamily="{Binding Config.FontFamily}"
                     FontSize="90"
                     Foreground="White"
                     Text="{Binding TimeShort}" />
 
                 <TextBlock
                     Margin="2,0,0,4"
-                    FontFamily="Segoe UI"
+                    FontFamily="{Binding Config.FontFamily}"
                     FontSize="22"
                     Foreground="White"
                     Text="{Binding DateLong}" />
 
                 <TextBlock
                     Margin="2,0,0,24"
-                    FontFamily="Segoe UI"
+                    FontFamily="{Binding Config.FontFamily}"
                     FontSize="16"
                     Foreground="#CCC"
                     Text="BetterLyrics" />
@@ -198,6 +196,7 @@
                             Margin="30,-2,0,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="10"
                             FontWeight="Bold"
                             Foreground="White"
@@ -212,6 +211,7 @@
                             Margin="30,-2,0,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="10"
                             FontWeight="Bold"
                             Foreground="White"
@@ -226,6 +226,7 @@
                             Margin="30,-2,0,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Top"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="10"
                             FontWeight="Bold"
                             Foreground="White"

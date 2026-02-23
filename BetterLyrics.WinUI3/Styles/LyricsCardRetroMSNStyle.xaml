@@ -50,7 +50,7 @@
                             Glyph="&#xE77B;" />
                         <TextBlock
                             MaxWidth="200"
-                            FontFamily="Tahoma"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="12"
                             FontWeight="Bold"
                             Foreground="White"
@@ -61,7 +61,7 @@
                             </TextBlock.Shadow>
                         </TextBlock>
                         <TextBlock
-                            FontFamily="Tahoma"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="12"
                             Foreground="#AACCFF"
                             Text=" - Conversation" />
@@ -130,27 +130,27 @@
                         Orientation="Horizontal"
                         Spacing="12">
                         <TextBlock
-                            FontFamily="Tahoma"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="11"
                             Foreground="Black"
                             Text="File" />
                         <TextBlock
-                            FontFamily="Tahoma"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="11"
                             Foreground="Black"
                             Text="Edit" />
                         <TextBlock
-                            FontFamily="Tahoma"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="11"
                             Foreground="Black"
                             Text="Actions" />
                         <TextBlock
-                            FontFamily="Tahoma"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="11"
                             Foreground="Black"
                             Text="Tools" />
                         <TextBlock
-                            FontFamily="Tahoma"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="11"
                             Foreground="Black"
                             Text="Help" />
@@ -177,12 +177,12 @@
 
                     <StackPanel Grid.Column="1" VerticalAlignment="Center">
                         <TextBlock
-                            FontFamily="Tahoma"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="11"
                             Foreground="#444"
                             Text="To: BetterLyrics User" />
                         <TextBlock
-                            FontFamily="Tahoma"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="11"
                             FontStyle="Italic"
                             Foreground="#888"
@@ -228,6 +228,7 @@
                                     <ItemsControl
                                         Grid.Column="0"
                                         Margin="10"
+                                        FontFamily="{Binding Config.FontFamily}"
                                         ItemsSource="{Binding SelectedLyrics}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
@@ -236,14 +237,12 @@
                                                     <StackPanel Margin="0,0,0,2" Orientation="Horizontal">
                                                         <TextBlock
                                                             MaxWidth="260"
-                                                            FontFamily="Tahoma"
                                                             FontSize="11"
                                                             FontWeight="Bold"
                                                             Foreground="#808080"
                                                             Text="{Binding DataContext.Artist, ElementName=MSNCardRoot}"
                                                             TextTrimming="CharacterEllipsis" />
                                                         <TextBlock
-                                                            FontFamily="Tahoma"
                                                             FontSize="11"
                                                             Foreground="#808080"
                                                             Text=" says:" />
@@ -252,7 +251,6 @@
                                                     <StackPanel Margin="10,0,0,0">
 
                                                         <TextBlock
-                                                            FontFamily="Arial"
                                                             FontSize="14"
                                                             Foreground="#000080"
                                                             Text="{Binding Text}"
@@ -260,7 +258,6 @@
 
                                                         <TextBlock
                                                             Margin="0,2,0,0"
-                                                            FontFamily="Arial"
                                                             FontSize="12"
                                                             Foreground="#666666"
                                                             Text="{Binding SecondaryText}"
@@ -307,7 +304,7 @@
                             BorderThickness="1,1,1,0">
                             <StackPanel Orientation="Horizontal" Spacing="8">
                                 <TextBlock
-                                    FontFamily="Times New Roman"
+                                    FontFamily="{Binding Config.FontFamily}"
                                     FontWeight="Bold"
                                     Foreground="Black"
                                     Text="A" />
@@ -317,11 +314,13 @@
                                     Glyph="&#xE76E;" />
                                 <TextBlock
                                     VerticalAlignment="Center"
+                                    FontFamily="{Binding Config.FontFamily}"
                                     FontSize="10"
                                     Foreground="Black"
                                     Text="Backgrounds" />
                                 <TextBlock
                                     VerticalAlignment="Center"
+                                    FontFamily="{Binding Config.FontFamily}"
                                     FontSize="10"
                                     Foreground="Black"
                                     Text="Winks" />
@@ -337,7 +336,7 @@
                             <Grid>
                                 <TextBlock
                                     Margin="5"
-                                    FontFamily="Arial"
+                                    FontFamily="{Binding Config.FontFamily}"
                                     FontSize="12"
                                     Foreground="#CCC"
                                     Text="BetterLyrics..." />
@@ -351,6 +350,7 @@
                                     BorderBrush="#888"
                                     BorderThickness="1">
                                     <TextBlock
+                                        FontFamily="{Binding Config.FontFamily}"
                                         FontSize="11"
                                         Foreground="Black"
                                         Text="Send" />
@@ -368,7 +368,7 @@
                     BorderThickness="1">
                     <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                         <TextBlock
-                            FontFamily="Tahoma"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="10"
                             Foreground="#666"
                             Text="Last message received at 12:00 PM." />

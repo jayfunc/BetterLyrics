@@ -13,22 +13,18 @@ namespace BetterLyrics.WinUI3.ViewModels
     {
         private readonly ISettingsService _settingsService;
 
-        [ObservableProperty]
-        public partial AppSettings AppSettings { get; set; }
+        [ObservableProperty] public partial AppSettings AppSettings { get; set; }
+
+        [ObservableProperty] public partial bool IsAutoStartupEnabled { get; set; } = false;
 
         public AppSettingsControlViewModel(ISettingsService settingsService)
         {
             _settingsService = settingsService;
             AppSettings = _settingsService.AppSettings;
+            _ = DetectIsAutoStartupEnabledAsync();
         }
 
-        [RelayCommand]
-        private static void RestartApp()
-        {
-            WindowHook.RestartApp();
-        }
-
-        public async Task<bool> ToggleAutoStartupAsync(bool target)
+        public async Task ToggleAutoStartupAsync(bool target)
         {
             StartupTask startupTask = await StartupTask.GetAsync(Constants.App.AutoStartupTaskId);
             if (target)
@@ -39,10 +35,10 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 startupTask.Disable();
             }
-            return await DetectIsAutoStartupEnabledAsync();
+            await DetectIsAutoStartupEnabledAsync();
         }
 
-        public async Task<bool> DetectIsAutoStartupEnabledAsync()
+        private async Task DetectIsAutoStartupEnabledAsync()
         {
             bool result = false;
             var startupTask = await StartupTask.GetAsync(Constants.App.AutoStartupTaskId);
@@ -57,7 +53,13 @@ namespace BetterLyrics.WinUI3.ViewModels
                     result = true;
                     break;
             }
-            return result;
+            IsAutoStartupEnabled = result;
+        }
+
+        [RelayCommand]
+        private static void RestartApp()
+        {
+            WindowHook.RestartApp();
         }
 
     }

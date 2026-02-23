@@ -127,26 +127,29 @@ namespace BetterLyrics.WinUI3.Renderer
 
             var effectSettings = windowStatus.LyricsEffectSettings;
             var styleSettings = windowStatus.LyricsStyleSettings;
+            var isBreathingEnabled = windowStatus.LyricsEffectSettings.IsLyricsBrethingEffectEnabled;
 
             var rotationX = effectSettings.FanLyricsAngle < 0 ? lyricsWidth : 0;
             rotationX += lyricsWidth / 2 * (effectSettings.FanLyricsAngle < 0 ? 1 : -1);
 
+            var yOffsetBase = userScrollOffset + lyricsY + lyricsHeight * playingLineTopOffsetFactor;
+
             for (int i = startVisibleIndex; i <= endVisibleIndex; i++)
             {
-                var line = lines.ElementAtOrDefault(i);
-                if (line == null) continue;
+                if (i < 0 || i >= lines.Count) continue;
+                var line = lines[i];
 
                 if (line.PrimaryTextLayout == null) continue;
                 if (line.PrimaryTextLayout.LayoutBounds.Width <= 0) continue;
 
                 double xOffset = lyricsX;
-                double yOffset = line.YOffsetTransition.Value + userScrollOffset + lyricsY + lyricsHeight * playingLineTopOffsetFactor;
+                double yOffset = line.YOffsetTransition.Value + yOffsetBase;
 
                 bool isPlaying = line.GetIsPlaying(currentProgressMs);
 
                 if (isPlaying)
                 {
-                    ApplyBreathingTransform(ds, line.CenterPosition, windowStatus.LyricsEffectSettings.IsLyricsBrethingEffectEnabled);
+                    ApplyBreathingTransform(ds, line.CenterPosition, isBreathingEnabled);
                 }
 
                 ds.Transform *= Matrix3x2.CreateScale((float)line.ScaleTransition.Value, line.CenterPosition);

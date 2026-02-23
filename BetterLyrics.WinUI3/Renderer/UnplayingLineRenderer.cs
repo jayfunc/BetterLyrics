@@ -66,7 +66,6 @@ namespace BetterLyrics.WinUI3.Renderer
                 bounds.Height
             );
 
-
             ds.DrawImage(new OpacityEffect
             {
                 Source = new GaussianBlurEffect

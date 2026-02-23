@@ -88,7 +88,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 return;
             }
-            _gsmtcService.ChangePositionAsync(value.StartMs / 1000.0);
+            _ = _gsmtcService.ChangePositionAsync(value.StartMs / 1000.0);
         }
 
         [RelayCommand]

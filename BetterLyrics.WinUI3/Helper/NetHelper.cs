@@ -4,7 +4,7 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public class NetHelper
     {
-        public static async Task<bool> CheckConnectivity(string url)
+        public static async Task<bool> CheckConnectivityAsync(string url)
         {
             try
             {

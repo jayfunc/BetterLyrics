@@ -207,8 +207,14 @@
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
     <value>स्कैन करने की तैयारी...</value>
   </data>
+  <data name="FontPickerDialogFontNotFound.Text" xml:space="preserve">
+    <value>The font is not found in the system, it is not valid</value>
+  </data>
   <data name="FontPickerSearchBox.PlaceholderText" xml:space="preserve">
     <value>फ़ॉन्ट्स खोजे</value>
+  </data>
+  <data name="FontPickerSelectedFontText.Text" xml:space="preserve">
+    <value>Selected Fonts</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>फुलस्क्रीन मोड</value>
@@ -399,22 +405,25 @@
   <data name="LyricsSharePageCopyImage.Content" xml:space="preserve">
     <value>चित्र कॉपी करें</value>
   </data>
-  <data name="LyricsSharePageGroupAtmosphere.Text" xml:space="preserve">
+  <data name="LyricsSharePageFontFamily.Text" xml:space="preserve">
+    <value>Font Family</value>
+  </data>
+  <data name="LyricsSharePageGroupAtmosphere" xml:space="preserve">
     <value>वातावरण</value>
   </data>
-  <data name="LyricsSharePageGroupChineseElegance.Text" xml:space="preserve">
+  <data name="LyricsSharePageGroupChineseElegance" xml:space="preserve">
     <value>Chinese Elegance</value>
   </data>
-  <data name="LyricsSharePageGroupClassic.Text" xml:space="preserve">
+  <data name="LyricsSharePageGroupClassic" xml:space="preserve">
     <value>क्लासिक डिज़ाइन</value>
   </data>
-  <data name="LyricsSharePageGroupPhysical.Text" xml:space="preserve">
+  <data name="LyricsSharePageGroupPhysical" xml:space="preserve">
     <value>शारीरिक</value>
   </data>
-  <data name="LyricsSharePageGroupRetro.Text" xml:space="preserve">
+  <data name="LyricsSharePageGroupRetro" xml:space="preserve">
     <value>डिजिटल रेट्रो</value>
   </data>
-  <data name="LyricsSharePageGroupTracesOfTime.Text" xml:space="preserve">
+  <data name="LyricsSharePageGroupTracesOfTime" xml:space="preserve">
     <value>Traces of Time</value>
   </data>
   <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
@@ -426,61 +435,61 @@
   <data name="LyricsSharePageSelectLyricsTitle.Text" xml:space="preserve">
     <value>बोल चुनें</value>
   </data>
-  <data name="LyricsSharePageStyleAncientBook.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleAncientBook" xml:space="preserve">
     <value>Ancient book</value>
   </data>
-  <data name="LyricsSharePageStyleBambooSlips.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleBambooSlips" xml:space="preserve">
     <value>Bamboo slips</value>
   </data>
-  <data name="LyricsSharePageStyleCD.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleCD" xml:space="preserve">
     <value>सीडी केस</value>
   </data>
-  <data name="LyricsSharePageStyleCinematic.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleCinematic" xml:space="preserve">
     <value>सिनेमाई</value>
   </data>
-  <data name="LyricsSharePageStyleCyberpunk.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleCyberpunk" xml:space="preserve">
     <value>साइबरपंक</value>
   </data>
-  <data name="LyricsSharePageStyleDunhuang.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleDunhuang" xml:space="preserve">
     <value>Dunhuang</value>
   </data>
-  <data name="LyricsSharePageStyleInkWash.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleInkWash" xml:space="preserve">
     <value>Ink wash</value>
   </data>
-  <data name="LyricsSharePageStyleJournal.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleJournal" xml:space="preserve">
     <value>Journal</value>
   </data>
-  <data name="LyricsSharePageStyleMagazine.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleMagazine" xml:space="preserve">
     <value>मैगज़ीन</value>
   </data>
-  <data name="LyricsSharePageStyleMinimal.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleMinimal" xml:space="preserve">
     <value>न्यूनतम</value>
   </data>
-  <data name="LyricsSharePageStylePolaroid.Content" xml:space="preserve">
+  <data name="LyricsSharePageStylePolaroid" xml:space="preserve">
     <value>पोलरोइड</value>
   </data>
-  <data name="LyricsSharePageStyleReceipt.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleReceipt" xml:space="preserve">
     <value>रसीद</value>
   </data>
-  <data name="LyricsSharePageStyleRetroMSN.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleRetroMSN" xml:space="preserve">
     <value>रेट्रो एमएसएन</value>
   </data>
-  <data name="LyricsSharePageStyleRetroQQ.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleRetroQQ" xml:space="preserve">
     <value>रेट्रो QQ</value>
   </data>
-  <data name="LyricsSharePageStyleStickyNote.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleStickyNote" xml:space="preserve">
     <value>Sticky note</value>
   </data>
-  <data name="LyricsSharePageStyleSwiss.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleSwiss" xml:space="preserve">
     <value>स्विस</value>
   </data>
-  <data name="LyricsSharePageStyleTicket.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleTicket" xml:space="preserve">
     <value>टिकट</value>
   </data>
   <data name="LyricsSharePageStyleTitle.Text" xml:space="preserve">
     <value>शैली</value>
   </data>
-  <data name="LyricsSharePageStyleVinyl.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleVinyl" xml:space="preserve">
     <value>विनाइल</value>
   </data>
   <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
@@ -1826,8 +1835,5 @@
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>उपयोगकर्ता गाइड</value>
-  </data>
-  <data name="FontPickerSelectedFontText.Text" xml:space="preserve">
-    <value>Selected Fonts</value>
   </data>
 </root>

@@ -19,8 +19,8 @@ namespace BetterLyrics.WinUI3.Extensions
                         {
                             StartMs = 0,
                             EndMs = (int)TimeSpan.FromSeconds(30).TotalMilliseconds,
-                            PrimaryText = "● ● ●",
-                            PrimarySyllables = [new BaseLyrics { Text = "● ● ●", StartMs = 0, EndMs = (int)TimeSpan.FromSeconds(30).TotalMilliseconds }],
+                            PrimaryText = "Loading...",
+                            PrimarySyllables = [new BaseLyrics { Text = "Loading...", StartMs = 0, EndMs = (int)TimeSpan.FromSeconds(30).TotalMilliseconds }],
                             IsPrimaryHasRealSyllableInfo = true,
                         },
                     ],
@@ -34,8 +34,8 @@ namespace BetterLyrics.WinUI3.Extensions
                 {
                     StartMs = 0,
                     EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds,
-                    PrimaryText = "N/A",
-                    PrimarySyllables = [new BaseLyrics { Text = "N/A", StartMs = 0, EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds }],
+                    PrimaryText = "Not Found",
+                    PrimarySyllables = [new BaseLyrics { Text = "Not Found", StartMs = 0, EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds }],
                 }]);
             }
 
@@ -49,7 +49,7 @@ namespace BetterLyrics.WinUI3.Extensions
 
                     if (transLine != null)
                     {
-                        // 此处 transLine.OriginalText 指翻译中的“原文”属性
+                        // 此处 transLine.PrimaryText 指翻译中的“原文”属性
                         line.SecondaryText = transLine.PrimaryText;
                     }
                     else
@@ -70,7 +70,7 @@ namespace BetterLyrics.WinUI3.Extensions
 
                     if (transLine != null)
                     {
-                        // 此处 transLine.OriginalText 指音译中的“原文”属性
+                        // 此处 transLine.PrimaryText 指音译中的“原文”属性
                         line.TertiaryText = transLine.PrimaryText;
                     }
                     else

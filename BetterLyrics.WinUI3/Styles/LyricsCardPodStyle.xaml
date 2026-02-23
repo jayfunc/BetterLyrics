@@ -43,6 +43,7 @@
                                 <TextBlock
                                     HorizontalAlignment="Center"
                                     VerticalAlignment="Center"
+                                    FontFamily="{Binding Config.FontFamily}"
                                     FontSize="10"
                                     FontWeight="Bold"
                                     Foreground="#333"
@@ -113,6 +114,7 @@
                                     VerticalAlignment="Center">
 
                                     <TextBlock
+                                        FontFamily="{Binding Config.FontFamily}"
                                         FontSize="12"
                                         FontWeight="Bold"
                                         MaxLines="2"
@@ -122,6 +124,7 @@
 
                                     <TextBlock
                                         Margin="0,0,0,8"
+                                        FontFamily="{Binding Config.FontFamily}"
                                         FontSize="10"
                                         Foreground="#666"
                                         MaxLines="1"
@@ -129,7 +132,7 @@
                                         TextTrimming="CharacterEllipsis"
                                         TextWrapping="NoWrap" />
 
-                                    <ItemsControl ItemsSource="{Binding SelectedLyrics}">
+                                    <ItemsControl FontFamily="{Binding Config.FontFamily}" ItemsSource="{Binding SelectedLyrics}">
                                         <ItemsControl.ItemTemplate>
                                             <DataTemplate>
                                                 <StackPanel Margin="0,0,0,4">

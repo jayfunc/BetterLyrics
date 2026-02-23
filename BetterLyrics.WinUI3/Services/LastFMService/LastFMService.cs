@@ -43,7 +43,7 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
             _ = UpdateAuthStatusAsync();
         }
 
-        public async Task ConfirmAuth(string param)
+        public async Task ConfirmAuthAsync(string param)
         {
             var resp = await _client.RequestAsync(LastFMApi.GetSessionApi, new GetSessionRequest() { Token = param });
             if (resp.IsSuccess)

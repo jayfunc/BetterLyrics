@@ -50,7 +50,7 @@ namespace BetterLyrics.WinUI3.Helper
             {
                 try
                 {
-                    dispatcher = Microsoft.UI.Xaml.Window.Current?.DispatcherQueue;
+                    dispatcher = App.SystemTrayWindow.DispatcherQueue;
                 }
                 catch { }
             }

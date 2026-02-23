@@ -45,10 +45,16 @@
                     Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                        Glyph=&#xE8F1;}" />
                 <MenuFlyoutItem
+                    x:Uid="LyricsPageLyricsCard"
+                    Command="{x:Bind ViewModel.OpenLyricsShareWindowCommand}"
+                    Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                       Glyph=&#xE70B;}" />
+                <MenuFlyoutItem
                     x:Uid="SystemTraySettings"
                     Command="{x:Bind ViewModel.OpenSettingsCommand}"
                     Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                        Glyph=&#xE713;}" />
+                <MenuFlyoutSeparator />
                 <MenuFlyoutItem
                     x:Uid="SystemTrayResetWindowPosition"
                     Command="{x:Bind ViewModel.ResetWindowPositionCommand}"

@@ -131,7 +131,7 @@ namespace BetterLyrics.WinUI3.Services.FileWatchService
             var newCts = new CancellationTokenSource();
             _debounceTokens.AddOrUpdate(key, newCts, (k, v) => newCts);
 
-            Task.Run(async () =>
+            _ = Task.Run(async () =>
             {
                 try
                 {

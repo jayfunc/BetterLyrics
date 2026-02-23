@@ -100,13 +100,15 @@
                             Fill="#EEE" />
                     </StackPanel>
 
-                    <ItemsControl Grid.Row="1" ItemsSource="{Binding SelectedLyrics}">
+                    <ItemsControl
+                        Grid.Row="1"
+                        FontFamily="{Binding Config.FontFamily}"
+                        ItemsSource="{Binding SelectedLyrics}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Margin="0,0,0,16">
 
                                     <TextBlock
-                                        FontFamily="Segoe UI"
                                         FontSize="15"
                                         Foreground="#333"
                                         LineHeight="24"
@@ -115,7 +117,6 @@
 
                                     <TextBlock
                                         Margin="0,4,0,0"
-                                        FontFamily="Segoe UI"
                                         FontSize="13.5"
                                         Foreground="#777"
                                         LineHeight="20"

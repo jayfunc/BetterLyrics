@@ -34,7 +34,7 @@ namespace BetterLyrics.WinUI3.Controls
             }
             FontListView.ItemsSource = _filteredFonts;
 
-            if (currentFontIds != null && currentFontIds.Any())
+            if (currentFontIds != null && currentFontIds.Count != 0)
             {
                 foreach (var id in currentFontIds)
                 {
@@ -42,6 +42,10 @@ namespace BetterLyrics.WinUI3.Controls
                     if (match != null)
                     {
                         _selectedFonts.Add(match);
+                    }
+                    else
+                    {
+                        _selectedFonts.Add(new ExtendedFontFamily { IsExistedInSystem = false, FontFamily = id, LocalizedFontFamily = id });
                     }
                 }
             }
@@ -77,7 +81,7 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void RemoveFont_Click(object sender, RoutedEventArgs e)
         {
-            if (sender is Button btn && btn.Tag is ExtendedFontFamily fontToRemove)
+            if (sender is Button btn && btn.DataContext is ExtendedFontFamily fontToRemove)
             {
                 _selectedFonts.Remove(fontToRemove);
             }

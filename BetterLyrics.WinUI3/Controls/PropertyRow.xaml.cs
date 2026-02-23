@@ -107,7 +107,7 @@ namespace BetterLyrics.WinUI3.Controls
                 }
                 else if (uri.Scheme == Uri.UriSchemeFile)
                 {
-                    await LauncherHelper.SelectAndShowFile(uri.LocalPath);
+                    await LauncherHelper.SelectAndShowFileAsync(uri.LocalPath);
                 }
             }
         }

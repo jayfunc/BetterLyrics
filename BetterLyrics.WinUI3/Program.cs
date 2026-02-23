@@ -43,7 +43,7 @@ namespace BetterLyrics.WinUI3
 {
     public class Program
     {
-        private static ILogger<Program> _logger;
+        private static ILogger<Program>? _logger;
 
         [STAThread]
         static int Main(string[] args)
@@ -91,7 +91,7 @@ namespace BetterLyrics.WinUI3
             return isRedirect;
         }
 
-        private static void OnActivated(object sender, AppActivationArguments args)
+        private static void OnActivated(object? sender, AppActivationArguments args)
         {
             ExtendedActivationKind kind = args.Kind;
             App.SystemTrayWindow.DispatcherQueue.TryEnqueue(() =>
@@ -118,7 +118,7 @@ namespace BetterLyrics.WinUI3
                 var item = fileArgs.Files.FirstOrDefault();
                 if (item is StorageFile file)
                 {
-                    _logger.LogInformation("App activated via file: {Path}", file.Path);
+                    _logger?.LogInformation("App activated via file: {Path}", file.Path);
 
                     WindowHook.OpenOrShowWindow<SettingsWindow>();
 
@@ -135,7 +135,7 @@ namespace BetterLyrics.WinUI3
                 if (protocolArgs.Uri.Host == "link.last.fm")
                 {
                     var lastFMService = Ioc.Default.GetRequiredService<ILastFMService>();
-                    await lastFMService.ConfirmAuth(protocolArgs.Uri.Query.Replace("?token=", string.Empty));
+                    await lastFMService.ConfirmAuthAsync(protocolArgs.Uri.Query.Replace("?token=", string.Empty));
                     WindowHook.OpenOrShowWindow<SettingsWindow>();
                 }
             }
@@ -231,7 +231,7 @@ namespace BetterLyrics.WinUI3
         public static void RedirectActivationTo(AppActivationArguments args, AppInstance keyInstance)
         {
             redirectEventHandle = CreateEvent(IntPtr.Zero, true, false, null);
-            Task.Run(() =>
+            _ = Task.Run(() =>
             {
                 keyInstance.RedirectActivationToAsync(args).AsTask().Wait();
                 SetEvent(redirectEventHandle);

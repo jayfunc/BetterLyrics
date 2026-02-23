@@ -40,7 +40,7 @@
                             Width="14"
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            FontFamily="KaiTi, Microsoft YaHei"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="14"
                             Foreground="#F5F4F0"
                             Text="水墨"
@@ -57,7 +57,7 @@
 
                     <StackPanel Grid.Row="0" Margin="0,0,0,30">
                         <TextBlock
-                            FontFamily="KaiTi, STKaiti, Microsoft YaHei"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="28"
                             FontWeight="SemiBold"
                             Foreground="#1A1A1A"
@@ -65,7 +65,7 @@
                             TextWrapping="Wrap" />
                         <TextBlock
                             Margin="0,8,0,0"
-                            FontFamily="KaiTi, STKaiti, Microsoft YaHei"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="16"
                             Foreground="#595959"
                             Text="{Binding Artist}" />
@@ -76,12 +76,14 @@
                             Opacity="0.1" />
                     </StackPanel>
 
-                    <ItemsControl Grid.Row="1" ItemsSource="{Binding SelectedLyrics}">
+                    <ItemsControl
+                        Grid.Row="1"
+                        FontFamily="{Binding Config.FontFamily}"
+                        ItemsSource="{Binding SelectedLyrics}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Margin="0,0,0,20">
                                     <TextBlock
-                                        FontFamily="KaiTi, STKaiti, Microsoft YaHei"
                                         FontSize="18"
                                         Foreground="#262626"
                                         LineHeight="28"
@@ -90,7 +92,6 @@
 
                                     <TextBlock
                                         Margin="0,6,0,0"
-                                        FontFamily="KaiTi, STKaiti, Microsoft YaHei"
                                         FontSize="14"
                                         Foreground="#737373"
                                         LineHeight="22"
@@ -110,7 +111,7 @@
                         Orientation="Horizontal">
                         <TextBlock
                             VerticalAlignment="Center"
-                            FontFamily="KaiTi, STKaiti, Microsoft YaHei"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="12"
                             Foreground="#333333"
                             Text="曲拨心弦 词落云笺" />

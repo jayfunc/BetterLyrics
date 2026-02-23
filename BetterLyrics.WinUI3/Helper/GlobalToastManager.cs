@@ -42,7 +42,7 @@ namespace BetterLyrics.WinUI3.Helper
             _isInitialized = true;
         }
 
-        public static void Show(string localizedTitleKey, string message, InfoBarSeverity severity = InfoBarSeverity.Informational, TimeSpan? duration = null)
+        public static void Show(string localizedTitleKey, string? message = null, InfoBarSeverity severity = InfoBarSeverity.Informational, TimeSpan? duration = null)
         {
             if (!_isInitialized)
             {

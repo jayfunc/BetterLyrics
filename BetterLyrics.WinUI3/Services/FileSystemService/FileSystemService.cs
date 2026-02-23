@@ -524,7 +524,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService
                 _ => TimeSpan.FromHours(1)
             };
 
-            Task.Run(async () =>
+            _ = Task.Run(async () =>
             {
                 try
                 {

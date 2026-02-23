@@ -34,6 +34,7 @@
                 <ItemsControl
                     Grid.Row="0"
                     Margin="0,0,0,20"
+                    FontFamily="{Binding Config.FontFamily}"
                     ItemsSource="{Binding SelectedLyrics}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
@@ -41,7 +42,6 @@
 
                                 <TextBlock
                                     CharacterSpacing="10"
-                                    FontFamily="{StaticResource HandwrittenFont}"
                                     FontSize="20"
                                     FontWeight="Bold"
                                     Foreground="#2B2B2B"
@@ -52,7 +52,6 @@
 
                                 <TextBlock
                                     Margin="0,2,0,0"
-                                    FontFamily="{StaticResource HandwrittenFont}"
                                     FontSize="16"
                                     FontStyle="Italic"
                                     Foreground="#666666"
@@ -76,7 +75,7 @@
                     <TextBlock
                         Grid.Column="0"
                         VerticalAlignment="Bottom"
-                        FontFamily="Ink Free"
+                        FontFamily="{Binding Config.FontFamily}"
                         FontSize="16"
                         FontWeight="Bold"
                         Foreground="#333"
@@ -91,7 +90,7 @@
                         Grid.Column="2"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
-                        FontFamily="Ink Free"
+                        FontFamily="{Binding Config.FontFamily}"
                         FontSize="14"
                         Foreground="#555"
                         Opacity="0.6"

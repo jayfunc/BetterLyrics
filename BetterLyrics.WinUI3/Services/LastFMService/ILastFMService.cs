@@ -15,7 +15,7 @@ namespace BetterLyrics.WinUI3.Services.LastFMService
         event EventHandler<LastFMIsAuthenticatedChangedEventArgs>? IsAuthenticatedChanged;
 
         Task AuthAsync();
-        Task ConfirmAuth(string param);
+        Task ConfirmAuthAsync(string param);
         Task UnAuthAsync();
         Task ConfirmUnAuthAsync();
         Task TrackAsync(SongInfo songInfo);

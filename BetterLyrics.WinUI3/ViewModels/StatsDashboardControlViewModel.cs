@@ -117,7 +117,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             HourlySeriesValues = [.. hourCounts];
         }
 
-        private async Task UpdatePlayerStats(List<PlayerStats> stats)
+        private async Task UpdatePlayerStatsAsync(List<PlayerStats> stats)
         {
             SourceSeries = new();
 
@@ -203,6 +203,53 @@ namespace BetterLyrics.WinUI3.ViewModels
             CustomEndTime = nowLocal.TimeOfDay;
         }
 
+        private async Task LoadDataCoreAsync()
+        {
+            if (IsLoading) return;
+            IsLoading = true;
+
+            try
+            {
+                await Task.Delay(Constants.Time.WaitingDuration);
+
+                var (start, end) = CalculateDateRange();
+
+                if (start == null || end == null)
+                {
+                    start = end = DateTime.Now.ToUniversalTime();
+                }
+
+                var durationTask = _playHistoryService.GetTotalListeningDurationAsync(start.Value, end.Value);
+                var logsTask = _playHistoryService.GetLogsByDateRangeAsync(start.Value, end.Value);
+                var topSongsTask = _playHistoryService.GetTopSongsAsync(start.Value, end.Value, 10);
+                var topArtistsTask = _playHistoryService.GetTopArtistsAsync(start.Value, end.Value, 10);
+                var playersTask = _playHistoryService.GetPlayerDistributionAsync(start.Value, end.Value);
+
+                await Task.WhenAll(durationTask, logsTask, topSongsTask, topArtistsTask, playersTask);
+
+                TotalDuration = await durationTask;
+                var logs = await logsTask;
+                TotalTracksPlayed = logs.Count;
+
+                TopSongs = [.. await topSongsTask];
+
+                var pStats = await playersTask;
+                _ = UpdatePlayerStatsAsync(pStats);
+
+                TopArtists = [.. await topArtistsTask];
+
+                ProcessHourlyStats(logs);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Error loading stats: {ex.Message}");
+            }
+            finally
+            {
+                IsLoading = false;
+            }
+        }
+
         [RelayCommand]
         private void RefreshData()
         {
@@ -219,51 +266,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         public void LoadData()
         {
-            _timer.Debounce(async () =>
+            _timer.Debounce(() =>
             {
-                if (IsLoading) return;
-                IsLoading = true;
-
-                try
-                {
-                    await Task.Delay(Constants.Time.WaitingDuration);
-
-                    var (start, end) = CalculateDateRange();
-
-                    if (start == null || end == null)
-                    {
-                        start = end = DateTime.Now.ToUniversalTime();
-                    }
-
-                    var durationTask = _playHistoryService.GetTotalListeningDurationAsync(start.Value, end.Value);
-                    var logsTask = _playHistoryService.GetLogsByDateRangeAsync(start.Value, end.Value);
-                    var topSongsTask = _playHistoryService.GetTopSongsAsync(start.Value, end.Value, 10);
-                    var topArtistsTask = _playHistoryService.GetTopArtistsAsync(start.Value, end.Value, 10);
-                    var playersTask = _playHistoryService.GetPlayerDistributionAsync(start.Value, end.Value);
-
-                    await Task.WhenAll(durationTask, logsTask, topSongsTask, topArtistsTask, playersTask);
-
-                    TotalDuration = await durationTask;
-                    var logs = await logsTask;
-                    TotalTracksPlayed = logs.Count;
-
-                    TopSongs = [.. await topSongsTask];
-
-                    var pStats = await playersTask;
-                    UpdatePlayerStats(pStats);
-
-                    TopArtists = [.. await topArtistsTask];
-
-                    ProcessHourlyStats(logs);
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine($"Error loading stats: {ex.Message}");
-                }
-                finally
-                {
-                    IsLoading = false;
-                }
+                _ = LoadDataCoreAsync();
             }, Constants.Time.DebounceTimeout);
         }
 

@@ -81,11 +81,11 @@ namespace BetterLyrics.WinUI3.Views
                 if (e.Property == LyricsWindowStatusProperty)
                 {
                     page.OnLayoutChanged();
-                    page.RenderSongInfoAsync();
+                    _ = page.RenderSongInfoAsync();
                 }
                 else if (e.Property == AlbumArtThemeColorsProperty)
                 {
-                    page.RenderSongInfoAsync();
+                    _ = page.RenderSongInfoAsync();
                 }
             }
         }
@@ -147,7 +147,7 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        private async void RefreshSongInfo()
+        private async Task RefreshSongInfoAsync()
         {
             SongInfoStackPanel.Opacity = 0;
             await Task.Delay(Constants.Time.AnimationDuration);
@@ -498,9 +498,9 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        private async void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            await RenderSongInfoAsync();
+            _ = RenderSongInfoAsync();
             OnLayoutChanged();
         }
 
@@ -591,7 +591,7 @@ namespace BetterLyrics.WinUI3.Views
         private void LyricsScrollViewer_PointerReleased(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
         {
             LyricsCanvas.IsMousePressing = false;
-            _gsmtcService.ChangeLyricsLineAsync(LyricsCanvas.CurrentHoveringLineIndex);
+            _ = _gsmtcService.ChangeLyricsLineAsync(LyricsCanvas.CurrentHoveringLineIndex);
         }
 
         private void LyricsScrollViewer_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
@@ -660,7 +660,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(IGSMTCService.CurrentSongInfo))
                 {
-                    RefreshSongInfo();
+                    _ = RefreshSongInfoAsync();
                     UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, false);
                     UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
                     UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
@@ -696,7 +696,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.SongInfoFontSize))
                 {
-                    RenderSongInfoAsync();
+                    _ = RenderSongInfoAsync();
                 }
                 else if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.CoverImageHeight))
                 {
@@ -711,7 +711,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.IsAutoSongInfoFontSize))
                 {
-                    RenderSongInfoAsync();
+                    _ = RenderSongInfoAsync();
                 }
                 else if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.IsAutoCoverImageHeight))
                 {
@@ -742,11 +742,11 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(LyricsStyleSettings.LyricsCJKFontFamily))
                 {
-                    RenderSongInfoAsync();
+                    _ = RenderSongInfoAsync();
                 }
                 else if (message.PropertyName == nameof(LyricsStyleSettings.LyricsWesternFontFamily))
                 {
-                    RenderSongInfoAsync();
+                    _ = RenderSongInfoAsync();
                 }
             }
         }
@@ -757,7 +757,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(LyricsSearchControlViewModel.MappedSongSearchQuery))
                 {
-                    RefreshSongInfo();
+                    _ = RefreshSongInfoAsync();
                 }
             }
         }

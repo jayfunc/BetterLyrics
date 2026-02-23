@@ -29,7 +29,7 @@
                             <TextBlock
                                 Width="40"
                                 Margin="0,0,10,0"
-                                FontFamily="LiSu, KaiTi, Microsoft YaHei"
+                                FontFamily="{Binding Config.FontFamily}"
                                 FontSize="32"
                                 Foreground="#1A110B"
                                 LineHeight="38"
@@ -43,7 +43,7 @@
                                 Width="24"
                                 Margin="5,0,5,20"
                                 VerticalAlignment="Bottom"
-                                FontFamily="LiSu, KaiTi, Microsoft YaHei"
+                                FontFamily="{Binding Config.FontFamily}"
                                 FontSize="18"
                                 Foreground="#4A3424"
                                 LineHeight="24"
@@ -64,7 +64,7 @@
                         <TextBlock
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            FontFamily="LiSu, STXingkai, Microsoft YaHei"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="16"
                             Foreground="#E3CBA8"
                             Text="简" />
@@ -75,6 +75,7 @@
                     Grid.Column="0"
                     Margin="20,40,0,40"
                     FlowDirection="RightToLeft"
+                    FontFamily="{Binding Config.FontFamily}"
                     ItemsSource="{Binding SelectedLyrics}">
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
@@ -93,7 +94,6 @@
 
                                     <TextBlock
                                         Width="28"
-                                        FontFamily="LiSu, KaiTi, Microsoft YaHei"
                                         FontSize="20"
                                         Foreground="#1A110B"
                                         LineHeight="30"
@@ -104,7 +104,6 @@
                                     <TextBlock
                                         Width="16"
                                         Margin="8,0,0,0"
-                                        FontFamily="KaiTi, Microsoft YaHei"
                                         FontSize="15"
                                         Foreground="#5A402D"
                                         LineHeight="22"

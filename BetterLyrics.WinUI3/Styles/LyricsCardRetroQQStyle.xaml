@@ -60,14 +60,14 @@
                                         <TextBlock
                                             Grid.Column="0"
                                             MaxWidth="200"
-                                            FontFamily="SimSun"
+                                            FontFamily="{Binding Config.FontFamily}"
                                             FontSize="12"
                                             FontWeight="Bold"
                                             Foreground="White"
                                             Text="{Binding Artist}" />
                                         <TextBlock
                                             Grid.Column="1"
-                                            FontFamily="SimSun"
+                                            FontFamily="{Binding Config.FontFamily}"
                                             FontSize="12"
                                             FontWeight="Bold"
                                             Foreground="White"
@@ -151,12 +151,12 @@
                                     Spacing="3">
                                     <StackPanel Orientation="Horizontal">
                                         <TextBlock
-                                            FontFamily="SimSun"
+                                            FontFamily="{Binding Config.FontFamily}"
                                             FontSize="12"
                                             Foreground="Black"
                                             Text="QQ#: " />
                                         <TextBlock
-                                            FontFamily="SimSun"
+                                            FontFamily="{Binding Config.FontFamily}"
                                             FontSize="12"
                                             Foreground="Black"
                                             Text="3344520" />
@@ -167,13 +167,13 @@
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
                                         <TextBlock
-                                            FontFamily="SimSun"
+                                            FontFamily="{Binding Config.FontFamily}"
                                             FontSize="12"
                                             Foreground="Black"
                                             Text="昵称: " />
                                         <TextBlock
                                             Grid.Column="1"
-                                            FontFamily="SimSun"
+                                            FontFamily="{Binding Config.FontFamily}"
                                             FontSize="12"
                                             Foreground="Black"
                                             Text="{Binding Title}"
@@ -202,7 +202,10 @@
                                         BorderBrush="#ababab"
                                         BorderThickness="1"
                                         CornerRadius="4,4,0,0">
-                                        <ItemsControl Margin="12,8" ItemsSource="{Binding SelectedLyrics}">
+                                        <ItemsControl
+                                            Margin="12,8"
+                                            FontFamily="{Binding Config.FontFamily}"
+                                            ItemsSource="{Binding SelectedLyrics}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
                                                     <StackPanel Margin="0,0,0,12">
@@ -215,14 +218,12 @@
                                                                 </Grid.ColumnDefinitions>
                                                                 <TextBlock
                                                                     MaxWidth="220"
-                                                                    FontFamily="SimSun"
                                                                     FontSize="12"
                                                                     Foreground="#0000FF"
                                                                     Text="{Binding DataContext.Artist, ElementName=QQCardRoot}"
                                                                     TextTrimming="CharacterEllipsis" />
                                                                 <TextBlock
                                                                     Grid.Column="1"
-                                                                    FontFamily="SimSun"
                                                                     FontSize="12"
                                                                     Foreground="#0000FF"
                                                                     Text=" 13:14:20" />
@@ -230,7 +231,6 @@
 
                                                             <TextBlock
                                                                 Margin="8,0,0,0"
-                                                                FontFamily="SimSun"
                                                                 FontSize="13"
                                                                 Foreground="Black"
                                                                 LineHeight="18"
@@ -242,12 +242,10 @@
 
                                                             <StackPanel Margin="0,0,0,2" Orientation="Horizontal">
                                                                 <TextBlock
-                                                                    FontFamily="SimSun"
                                                                     FontSize="12"
                                                                     Foreground="#008000"
                                                                     Text="我" />
                                                                 <TextBlock
-                                                                    FontFamily="SimSun"
                                                                     FontSize="12"
                                                                     Foreground="#008000"
                                                                     Text=" 20:13:14" />
@@ -255,7 +253,6 @@
 
                                                             <TextBlock
                                                                 Margin="8,0,0,0"
-                                                                FontFamily="SimSun"
                                                                 FontSize="13"
                                                                 Foreground="Black"
                                                                 LineHeight="18"
@@ -294,7 +291,7 @@
                                                     </Grid>
                                                     <TextBlock
                                                         VerticalAlignment="Bottom"
-                                                        FontFamily="SimSun"
+                                                        FontFamily="{Binding Config.FontFamily}"
                                                         FontSize="12"
                                                         Foreground="White"
                                                         Text="字体" />
@@ -312,7 +309,7 @@
                                                     </Grid>
                                                     <TextBlock
                                                         VerticalAlignment="Bottom"
-                                                        FontFamily="SimSun"
+                                                        FontFamily="{Binding Config.FontFamily}"
                                                         FontSize="12"
                                                         Foreground="White"
                                                         Text="表情" />
@@ -334,7 +331,7 @@
                                                     </Grid>
                                                     <TextBlock
                                                         VerticalAlignment="Bottom"
-                                                        FontFamily="SimSun"
+                                                        FontFamily="{Binding Config.FontFamily}"
                                                         FontSize="12"
                                                         Foreground="White"
                                                         Text="手机短信" />
@@ -382,7 +379,7 @@
                                         CornerRadius="0,0,4,4">
                                         <TextBlock
                                             Margin="4"
-                                            FontFamily="SimSun"
+                                            FontFamily="{Binding Config.FontFamily}"
                                             FontSize="12"
                                             Foreground="#CCC"
                                             Text="BetterLyrics..." />
@@ -406,7 +403,7 @@
                                                     BorderThickness="0,0,0,1"
                                                     CornerRadius="2">
                                                     <TextBlock
-                                                        FontFamily="SimSun"
+                                                        FontFamily="{Binding Config.FontFamily}"
                                                         FontSize="12"
                                                         Foreground="Black"
                                                         Text="聊天记录" />
@@ -423,7 +420,7 @@
                                                     BorderThickness="0,0,0,1"
                                                     CornerRadius="2">
                                                     <TextBlock
-                                                        FontFamily="SimSun"
+                                                        FontFamily="{Binding Config.FontFamily}"
                                                         FontSize="12"
                                                         Foreground="Black"
                                                         Text="消息模式" />
@@ -448,7 +445,7 @@
                                                     BorderThickness="0,0,0,1"
                                                     CornerRadius="2">
                                                     <TextBlock
-                                                        FontFamily="SimSun"
+                                                        FontFamily="{Binding Config.FontFamily}"
                                                         FontSize="12"
                                                         Foreground="Black"
                                                         Text="取消发送" />
@@ -465,7 +462,7 @@
                                                     BorderThickness="0,0,0,1"
                                                     CornerRadius="2">
                                                     <TextBlock
-                                                        FontFamily="SimSun"
+                                                        FontFamily="{Binding Config.FontFamily}"
                                                         FontSize="12"
                                                         Foreground="Black"
                                                         Text="送讯息" />
@@ -493,7 +490,7 @@
                                             <TextBlock
                                                 Margin="0,1,0,0"
                                                 VerticalAlignment="Center"
-                                                FontFamily="SimSun"
+                                                FontFamily="{Binding Config.FontFamily}"
                                                 FontSize="11"
                                                 Foreground="White"
                                                 Text="QQ秀" />
@@ -537,7 +534,7 @@
                                         <Grid Padding="4,2,4,2">
                                             <TextBlock
                                                 VerticalAlignment="Center"
-                                                FontFamily="SimSun"
+                                                FontFamily="{Binding Config.FontFamily}"
                                                 FontSize="11"
                                                 Foreground="White"
                                                 Text="您可以..." />
@@ -581,7 +578,7 @@
                                                 Foreground="#c3c8c8"
                                                 Glyph="&#xE722;" />
                                             <TextBlock
-                                                FontFamily="SimSun"
+                                                FontFamily="{Binding Config.FontFamily}"
                                                 FontSize="11"
                                                 Foreground="White"
                                                 Text="VQQ 视频聊天" />
@@ -594,14 +591,14 @@
                                                 Foreground="#c3c8c8"
                                                 Glyph="&#xEC71;" />
                                             <TextBlock
-                                                FontFamily="SimSun"
+                                                FontFamily="{Binding Config.FontFamily}"
                                                 FontSize="11"
                                                 Foreground="White"
                                                 Text="语音聊天" />
                                         </StackPanel>
                                         <TextBlock
                                             Margin="18,4,0,4"
-                                            FontFamily="SimSun"
+                                            FontFamily="{Binding Config.FontFamily}"
                                             FontSize="11"
                                             FontWeight="Bold"
                                             Foreground="#FFFF00"
@@ -614,14 +611,14 @@
                                                 Foreground="#f1e358"
                                                 Glyph="&#xE8D5;" />
                                             <TextBlock
-                                                FontFamily="SimSun"
+                                                FontFamily="{Binding Config.FontFamily}"
                                                 FontSize="11"
                                                 Foreground="White"
                                                 Text="发送文件" />
                                         </StackPanel>
                                         <TextBlock
                                             Margin="18,4,0,0"
-                                            FontFamily="SimSun"
+                                            FontFamily="{Binding Config.FontFamily}"
                                             FontSize="11"
                                             Foreground="White"
                                             Text="其他..." />

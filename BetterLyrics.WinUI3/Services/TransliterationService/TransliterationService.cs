@@ -21,7 +21,7 @@ namespace BetterLyrics.WinUI3.Services.TransliterationService
             _pluginService = pluginService;
         }
 
-        public async Task<(string, TransliterationSearchProvider)> TransliterateText(string text, string targetLangCode, CancellationToken token)
+        public async Task<(string, TransliterationSearchProvider)> TransliterateTextAsync(string text, string targetLangCode, CancellationToken token)
         {
             string? result = null;
 
