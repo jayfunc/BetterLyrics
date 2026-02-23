@@ -1,3 +1,4 @@
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -18,20 +19,9 @@ namespace BetterLyrics.WinUI3.Controls
             DataContext = Ioc.Default.GetRequiredService<AppSettingsControlViewModel>();
         }
 
-        private async void AutoStartupToggleSwitch_Loaded(object sender, RoutedEventArgs e)
+        private void AutoStartupToggleSwitch_Tapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            AutoStartupToggleSwitch.IsOn = await ViewModel.DetectIsAutoStartupEnabledAsync();
-            AutoStartupToggleSwitch.Toggled += AutoStartupToggleSwitch_Toggled;
-        }
-
-        private void AutoStartupToggleSwitch_Toggled(object sender, RoutedEventArgs e)
-        {
-            ViewModel.ToggleAutoStartupAsync(AutoStartupToggleSwitch.IsOn);
-        }
-
-        private void AutoStartupToggleSwitch_Unloaded(object sender, RoutedEventArgs e)
-        {
-            AutoStartupToggleSwitch.Toggled -= AutoStartupToggleSwitch_Toggled;
+            _ = ViewModel.ToggleAutoStartupAsync(AutoStartupToggleSwitch.IsOn);
         }
     }
 }

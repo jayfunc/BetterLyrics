@@ -60,8 +60,8 @@
                     <dev:SettingsCard x:Uid="SettingsPageAutoStart" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xF71C;}">
                         <ToggleSwitch
                             x:Name="AutoStartupToggleSwitch"
-                            Loaded="AutoStartupToggleSwitch_Loaded"
-                            Unloaded="AutoStartupToggleSwitch_Unloaded" />
+                            IsOn="{x:Bind ViewModel.IsAutoStartupEnabled, Mode=OneWay}"
+                            Tapped="AutoStartupToggleSwitch_Tapped" />
                     </dev:SettingsCard>
 
                     <dev:SettingsCard x:Uid="SettingsPageAutoOpenMusicGalleryWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8F1;}">

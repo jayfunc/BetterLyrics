@@ -409,7 +409,7 @@
                                         x:Uid="LyricsPageLyricsCard"
                                         Command="{x:Bind ViewModel.OpenLyricsShareWindowCommand}"
                                         Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                                           Glyph=&#xE72D;}" />
+                                                           Glyph=&#xE70B;}" />
                                     <!--  Settings  -->
                                     <MenuFlyoutItem
                                         x:Uid="LyricsPageSettings"

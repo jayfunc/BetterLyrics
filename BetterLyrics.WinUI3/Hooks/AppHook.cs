@@ -98,18 +98,19 @@ namespace BetterLyrics.WinUI3.Hooks
         /// <summary>
         /// 通过 AUMID 获取应用名称 (DisplayName)
         /// </summary>
-        public static async Task<string?> GetDisplayNameByAumidAsync(string aumid)
+        public static async Task<string?> GetDisplayNameByAumidAsync(string? aumid)
         {
+            if (aumid == null) return null;
             if (_nameCache.TryGetValue(aumid, out var cachedName)) return cachedName;
 
             string? name = await Task.Run(() =>
             {
                 var item = GetShellItem(aumid);
-                if (item != null && item.IsFileSystem)
+                if (item != null && item.IsFileSystem && item.ParsingName is string parsingName)
                 {
                     try
                     {
-                        var info = FileVersionInfo.GetVersionInfo(item.ParsingName);
+                        var info = FileVersionInfo.GetVersionInfo(parsingName);
                         if (!string.IsNullOrWhiteSpace(info.FileDescription))
                             return info.FileDescription;
                     }

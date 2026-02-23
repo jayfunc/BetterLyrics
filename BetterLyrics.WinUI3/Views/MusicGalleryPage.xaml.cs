@@ -37,7 +37,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private async void SongPathHyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
-            await LauncherHelper.SelectAndShowFile(((ExtendedTrack)((HyperlinkButton)sender).DataContext).Uri.ToDecodedAbsoluteUri());
+            await LauncherHelper.SelectAndShowFileAsync(((ExtendedTrack)((HyperlinkButton)sender).DataContext).Uri.ToDecodedAbsoluteUri());
         }
 
         private async void AddSongToQueueNextMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
@@ -164,7 +164,7 @@ namespace BetterLyrics.WinUI3.Views
             SongListView.SelectedItems.Clear();
         }
 
-        private async void SongListViewItem_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        private void SongListViewItem_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
             var displayedTracks = SongListView.Items.Cast<ExtendedTrack>();
             var track = (ExtendedTrack)((FrameworkElement)sender).DataContext;
@@ -175,7 +175,7 @@ namespace BetterLyrics.WinUI3.Views
 
             _smtcService.TrackPlayingQueue.InsertRange(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex + 1, displayedTracks.Select(x => new PlayQueueItem(x)));
             ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex = displayedTracks.ToList().IndexOf(track);
-            await _smtcService.PlayTrackAtAsync(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex);
+            _ = _smtcService.PlayTrackAtAsync(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex);
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -183,7 +183,7 @@ namespace BetterLyrics.WinUI3.Views
             var settings = ViewModel.AppSettings.MusicGallerySettings;
             if (settings.AutoPlay)
             {
-                Task.Run(async () =>
+                _ = Task.Run(async () =>
                 {
                     await Task.Delay(1000);
                     _ = _smtcService.PlayTrackAtAsync(settings.PlayQueueIndex);

@@ -20,13 +20,12 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <ItemsControl ItemsSource="{Binding SelectedLyrics}">
+                <ItemsControl FontFamily="{Binding Config.FontFamily}" ItemsSource="{Binding SelectedLyrics}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Margin="0,0,0,24">
 
                                 <TextBlock
-                                    FontFamily="Segoe UI"
                                     FontSize="26"
                                     FontWeight="Bold"
                                     Foreground="Black"
@@ -37,7 +36,6 @@
 
                                 <TextBlock
                                     Margin="0,4,0,0"
-                                    FontFamily="Segoe UI"
                                     FontSize="18"
                                     FontWeight="Normal"
                                     Foreground="#666666"
@@ -74,6 +72,7 @@
                         VerticalAlignment="Center">
 
                         <TextBlock
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="18"
                             FontWeight="Black"
                             Foreground="Black"
@@ -84,6 +83,7 @@
 
                         <TextBlock
                             Margin="0,0,80,0"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="14"
                             Foreground="#555555"
                             MaxLines="1"
@@ -100,6 +100,7 @@
                         Orientation="Horizontal"
                         Spacing="4">
                         <TextBlock
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="12"
                             FontWeight="Bold"
                             Foreground="Black"

@@ -20,6 +20,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial FullyObservableCollection<LyricsWindowStatus> WindowBoundsRecords { get; set; } = [];
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial FullyObservableCollection<SongsTabInfo> StarredPlaylists { get; set; } = [];
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial FullyObservableCollection<PluginInfo> PluginsInfo { get; set; } = [];
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial FullyObservableCollection<LyricsCardConfig> LyricsCardConfigs { get; set; } = [];
 
         public AppSettings() { }
     }

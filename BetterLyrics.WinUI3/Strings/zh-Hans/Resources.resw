@@ -150,6 +150,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>确定</value>
+  </data>
   <data name="Copy.Content" xml:space="preserve">
     <value>复制</value>
   </data>
@@ -207,8 +210,14 @@
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
     <value>正在准备扫描...</value>
   </data>
+  <data name="FontPickerDialogFontNotFound.Text" xml:space="preserve">
+    <value>未在系统中找到该字体，无法生效</value>
+  </data>
   <data name="FontPickerSearchBox.PlaceholderText" xml:space="preserve">
     <value>搜索字体</value>
+  </data>
+  <data name="FontPickerSelectedFontText.Text" xml:space="preserve">
+    <value>已选字体</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>全屏模式</value>
@@ -399,22 +408,25 @@
   <data name="LyricsSharePageCopyImage.Content" xml:space="preserve">
     <value>复制图片</value>
   </data>
-  <data name="LyricsSharePageGroupAtmosphere.Text" xml:space="preserve">
+  <data name="LyricsSharePageFontFamily.Text" xml:space="preserve">
+    <value>字体</value>
+  </data>
+  <data name="LyricsSharePageGroupAtmosphere" xml:space="preserve">
     <value>氛围创意</value>
   </data>
-  <data name="LyricsSharePageGroupChineseElegance.Text" xml:space="preserve">
+  <data name="LyricsSharePageGroupChineseElegance" xml:space="preserve">
     <value>国风雅韵</value>
   </data>
-  <data name="LyricsSharePageGroupClassic.Text" xml:space="preserve">
+  <data name="LyricsSharePageGroupClassic" xml:space="preserve">
     <value>经典设计</value>
   </data>
-  <data name="LyricsSharePageGroupPhysical.Text" xml:space="preserve">
+  <data name="LyricsSharePageGroupPhysical" xml:space="preserve">
     <value>实体质感</value>
   </data>
-  <data name="LyricsSharePageGroupRetro.Text" xml:space="preserve">
+  <data name="LyricsSharePageGroupRetro" xml:space="preserve">
     <value>数码怀旧</value>
   </data>
-  <data name="LyricsSharePageGroupTracesOfTime.Text" xml:space="preserve">
+  <data name="LyricsSharePageGroupTracesOfTime" xml:space="preserve">
     <value>时光印记</value>
   </data>
   <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
@@ -426,61 +438,61 @@
   <data name="LyricsSharePageSelectLyricsTitle.Text" xml:space="preserve">
     <value>选择歌词</value>
   </data>
-  <data name="LyricsSharePageStyleAncientBook.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleAncientBook" xml:space="preserve">
     <value>古籍</value>
   </data>
-  <data name="LyricsSharePageStyleBambooSlips.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleBambooSlips" xml:space="preserve">
     <value>竹简</value>
   </data>
-  <data name="LyricsSharePageStyleCD.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleCD" xml:space="preserve">
     <value>CD 盒</value>
   </data>
-  <data name="LyricsSharePageStyleCinematic.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleCinematic" xml:space="preserve">
     <value>电影感</value>
   </data>
-  <data name="LyricsSharePageStyleCyberpunk.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleCyberpunk" xml:space="preserve">
     <value>赛博朋克</value>
   </data>
-  <data name="LyricsSharePageStyleDunhuang.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleDunhuang" xml:space="preserve">
     <value>敦煌</value>
   </data>
-  <data name="LyricsSharePageStyleInkWash.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleInkWash" xml:space="preserve">
     <value>水墨</value>
   </data>
-  <data name="LyricsSharePageStyleJournal.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleJournal" xml:space="preserve">
     <value>日记</value>
   </data>
-  <data name="LyricsSharePageStyleMagazine.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleMagazine" xml:space="preserve">
     <value>杂志</value>
   </data>
-  <data name="LyricsSharePageStyleMinimal.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleMinimal" xml:space="preserve">
     <value>极简</value>
   </data>
-  <data name="LyricsSharePageStylePolaroid.Content" xml:space="preserve">
+  <data name="LyricsSharePageStylePolaroid" xml:space="preserve">
     <value>拍立得</value>
   </data>
-  <data name="LyricsSharePageStyleReceipt.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleReceipt" xml:space="preserve">
     <value>购物小票</value>
   </data>
-  <data name="LyricsSharePageStyleRetroMSN.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleRetroMSN" xml:space="preserve">
     <value>复古 MSN</value>
   </data>
-  <data name="LyricsSharePageStyleRetroQQ.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleRetroQQ" xml:space="preserve">
     <value>复古 QQ</value>
   </data>
-  <data name="LyricsSharePageStyleStickyNote.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleStickyNote" xml:space="preserve">
     <value>便签</value>
   </data>
-  <data name="LyricsSharePageStyleSwiss.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleSwiss" xml:space="preserve">
     <value>瑞士风</value>
   </data>
-  <data name="LyricsSharePageStyleTicket.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleTicket" xml:space="preserve">
     <value>票根</value>
   </data>
   <data name="LyricsSharePageStyleTitle.Text" xml:space="preserve">
     <value>风格</value>
   </data>
-  <data name="LyricsSharePageStyleVinyl.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleVinyl" xml:space="preserve">
     <value>黑胶</value>
   </data>
   <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
@@ -1273,7 +1285,7 @@
     <value>自定义</value>
   </data>
   <data name="SettingsPageLyricsFontFamily.Header" xml:space="preserve">
-    <value>字体系列</value>
+    <value>字体</value>
   </data>
   <data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
     <value>字体大小</value>
@@ -1826,11 +1838,5 @@
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>使用指南</value>
-  </data>
-  <data name="Confirm" xml:space="preserve">
-    <value>确定</value>
-  </data>
-  <data name="FontPickerSelectedFontText.Text" xml:space="preserve">
-    <value>已选字体</value>
   </data>
 </root>

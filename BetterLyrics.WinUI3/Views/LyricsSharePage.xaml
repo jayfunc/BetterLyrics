@@ -4,6 +4,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dev="using:DevWinUI"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
@@ -11,7 +12,15 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
+    xmlns:viewmodels="using:BetterLyrics.WinUI3.ViewModels"
     mc:Ignorable="d">
+
+    <Page.Resources>
+        <CollectionViewSource
+            x:Name="StyleGroupsCVS"
+            IsSourceGrouped="True"
+            Source="{x:Bind ViewModel.StyleGroups, Mode=OneWay}" />
+    </Page.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
@@ -57,6 +66,7 @@
         </Grid>
 
         <Grid
+            x:Name="RootGrid"
             Grid.Column="1"
             Margin="24"
             VerticalAlignment="Center"
@@ -69,215 +79,229 @@
                 <ContentControl
                     x:Name="PreviewCard"
                     Content="{x:Bind ViewModel.CardData, Mode=OneWay}"
-                    ContentTemplate="{StaticResource LyricsCardMinimalStyle}" />
+                    ContentTemplate="{x:Bind ViewModel.CardDataTemplate, Mode=OneWay}" />
             </Viewbox>
             <TextBlock
-                x:Name="StyleInfoTextBlock"
                 Grid.Row="1"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                Style="{StaticResource CaptionTextBlockStyle}" />
+                Style="{StaticResource CaptionTextBlockStyle}"
+                Text="{x:Bind ViewModel.SelectedStyleItem.DisplayText, Mode=OneWay}" />
         </Grid>
 
-        <Grid Grid.Column="2">
+        <Grid
+            Grid.Column="2"
+            Padding="24"
+            RowSpacing="12">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0" Padding="24">
-                <TextBlock x:Uid="LyricsSharePageStyleTitle" Style="{ThemeResource SubtitleTextBlockStyle}" />
+            <Grid Grid.Row="0">
+                <NavigationView
+                    x:Name="ConfigNavView"
+                    Grid.Row="0"
+                    Margin="-16,-8,0,0"
+                    IsBackButtonVisible="Collapsed"
+                    IsBackEnabled="False"
+                    IsSettingsVisible="False"
+                    PaneDisplayMode="Top"
+                    SelectionChanged="ConfigNavView_SelectionChanged">
+                    <NavigationView.MenuItems>
+                        <NavigationViewItem IsSelected="True" Tag="Style">
+                            <TextBlock x:Uid="LyricsSharePageStyleTitle" />
+                        </NavigationViewItem>
+                        <NavigationViewItem Tag="FontFamily">
+                            <TextBlock x:Uid="LyricsSharePageFontFamily" />
+                        </NavigationViewItem>
+                        <NavigationViewItem Tag="ImageQuality">
+                            <TextBlock x:Uid="LyricsSharePageImageQuality" />
+                        </NavigationViewItem>
+                    </NavigationView.MenuItems>
+                </NavigationView>
             </Grid>
-            <ScrollViewer Grid.Row="1">
-                <StackPanel
-                    x:Name="StyleContainer"
-                    Padding="24,0"
-                    Spacing="24">
+            <controls:SwitchPresenter Grid.Row="1" Value="{x:Bind ViewModel.ConfigNavViewSelectedItemTag, Mode=OneWay}">
+                <controls:SwitchPresenter.ContentTransitions>
+                    <TransitionCollection>
+                        <PopupThemeTransition />
+                    </TransitionCollection>
+                </controls:SwitchPresenter.ContentTransitions>
 
-                    <StackPanel Spacing="12">
-                        <TextBlock
-                            x:Uid="LyricsSharePageGroupClassic"
-                            Opacity="0.7"
-                            Style="{ThemeResource BodyStrongTextBlockStyle}" />
-                        <dev:WrapPanel
-                            HorizontalSpacing="8"
-                            Orientation="Horizontal"
-                            VerticalSpacing="8">
-                            <Button
-                                x:Uid="LyricsSharePageStyleMinimal"
-                                Click="StyleButton_Click"
-                                Tag="LyricsCardMinimalStyle" />
-                            <Button
-                                x:Uid="LyricsSharePageStyleSwiss"
-                                Click="StyleButton_Click"
-                                Tag="LyricsCardSwissStyle" />
-                            <Button
-                                x:Uid="LyricsSharePageStyleMagazine"
-                                Click="StyleButton_Click"
-                                Tag="LyricsCardMagazineStyle" />
-                        </dev:WrapPanel>
-                    </StackPanel>
+                <controls:Case Value="Style">
+                    <SemanticZoom>
+                        <SemanticZoom.ZoomedInView>
+                            <GridView ItemsSource="{Binding Source={StaticResource StyleGroupsCVS}}" SelectedItem="{x:Bind ViewModel.SelectedStyleItem, Mode=TwoWay}">
 
-                    <StackPanel Spacing="12">
-                        <TextBlock
-                            x:Uid="LyricsSharePageGroupPhysical"
-                            Opacity="0.7"
-                            Style="{ThemeResource BodyStrongTextBlockStyle}" />
-                        <dev:WrapPanel
-                            HorizontalSpacing="8"
-                            Orientation="Horizontal"
-                            VerticalSpacing="8">
-                            <Button
-                                x:Uid="LyricsSharePageStyleVinyl"
-                                Click="StyleButton_Click"
-                                Tag="LyricsCardVinylStyle" />
-                            <Button
-                                x:Uid="LyricsSharePageStyleCD"
-                                Click="StyleButton_Click"
-                                Tag="LyricsCardCDStyle" />
-                            <Button
-                                x:Uid="LyricsSharePageStylePolaroid"
-                                Click="StyleButton_Click"
-                                Tag="LyricsCardPolaroidStyle" />
-                            <Button
-                                x:Uid="LyricsSharePageStyleTicket"
-                                Click="StyleButton_Click"
-                                Tag="LyricsCardTicketStyle" />
-                            <Button
-                                x:Uid="LyricsSharePageStyleReceipt"
-                                Click="StyleButton_Click"
-                                Tag="LyricsCardReceiptStyle" />
-                        </dev:WrapPanel>
-                    </StackPanel>
+                                <GridView.ItemContainerStyle>
+                                    <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
+                                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                                    </Style>
+                                </GridView.ItemContainerStyle>
 
-                    <StackPanel Spacing="12">
-                        <TextBlock
-                            x:Uid="LyricsSharePageGroupRetro"
-                            Opacity="0.7"
-                            Style="{ThemeResource BodyStrongTextBlockStyle}" />
-                        <dev:WrapPanel
-                            HorizontalSpacing="8"
-                            Orientation="Horizontal"
-                            VerticalSpacing="8">
-                            <Button
-                                Click="StyleButton_Click"
-                                Content="iPod"
-                                Tag="LyricsCardPodStyle" />
-                            <Button
-                                Click="StyleButton_Click"
-                                Content="Windows Phone"
-                                Tag="LyricsCardWindowsPhoneStyle" />
-                            <Button
-                                x:Uid="LyricsSharePageStyleRetroQQ"
-                                Click="StyleButton_Click"
-                                Tag="LyricsCardRetroQQStyle" />
-                            <Button
-                                x:Uid="LyricsSharePageStyleRetroMSN"
-                                Click="StyleButton_Click"
-                                Tag="LyricsCardRetroMSNStyle" />
-                        </dev:WrapPanel>
-                    </StackPanel>
+                                <GridView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <ItemsWrapGrid HorizontalAlignment="Stretch" Orientation="Horizontal" />
+                                    </ItemsPanelTemplate>
+                                </GridView.ItemsPanel>
 
-                    <StackPanel Spacing="12">
-                        <TextBlock
-                            x:Uid="LyricsSharePageGroupAtmosphere"
-                            Opacity="0.7"
-                            Style="{ThemeResource BodyStrongTextBlockStyle}" />
-                        <dev:WrapPanel
-                            HorizontalSpacing="8"
-                            Orientation="Horizontal"
-                            VerticalSpacing="12">
-                            <Button
-                                x:Uid="LyricsSharePageStyleCinematic"
-                                Click="StyleButton_Click"
-                                Tag="LyricsCardCinematicStyle" />
-                            <Button
-                                x:Uid="LyricsSharePageStyleCyberpunk"
-                                Click="StyleButton_Click"
-                                Tag="LyricsCardCyberpunkStyle" />
-                        </dev:WrapPanel>
-                    </StackPanel>
+                                <GridView.GroupStyle>
+                                    <GroupStyle>
 
-                    <StackPanel Spacing="12">
-                        <TextBlock
-                            x:Uid="LyricsSharePageGroupChineseElegance"
-                            Opacity="0.7"
-                            Style="{ThemeResource BodyStrongTextBlockStyle}" />
-                        <dev:WrapPanel
-                            HorizontalSpacing="8"
-                            Orientation="Horizontal"
-                            VerticalSpacing="12">
-                            <Button
-                                x:Uid="LyricsSharePageStyleInkWash"
-                                Click="StyleButton_Click"
-                                Tag="LyricsCardInkWashStyle" />
-                            <Button
-                                x:Uid="LyricsSharePageStyleAncientBook"
-                                Click="StyleButton_Click"
-                                Tag="LyricsCardAncientBookStyle" />
-                            <Button
-                                x:Uid="LyricsSharePageStyleBambooSlips"
-                                Click="StyleButton_Click"
-                                Tag="LyricsCardBambooSlipsStyle" />
-                            <Button
-                                x:Uid="LyricsSharePageStyleDunhuang"
-                                Click="StyleButton_Click"
-                                Tag="LyricsCardDunhuangStyle" />
-                        </dev:WrapPanel>
-                    </StackPanel>
+                                        <GroupStyle.HeaderContainerStyle>
+                                            <Style TargetType="GridViewHeaderItem">
+                                                <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+                                                <Setter Property="FontSize" Value="{ThemeResource GridViewHeaderItemThemeFontSize}" />
+                                                <Setter Property="Background" Value="Transparent" />
+                                                <Setter Property="Margin" Value="0,0,0,4" />
+                                                <Setter Property="Padding" Value="6,12" />
+                                                <Setter Property="HorizontalContentAlignment" Value="Left" />
+                                                <Setter Property="VerticalContentAlignment" Value="Top" />
+                                                <Setter Property="MinHeight" Value="0" />
+                                                <Setter Property="CornerRadius" Value="4" />
+                                                <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate TargetType="GridViewHeaderItem">
+                                                            <Grid
+                                                                x:Name="RootGrid"
+                                                                Background="{TemplateBinding Background}"
+                                                                CornerRadius="{TemplateBinding CornerRadius}">
+                                                                <ContentPresenter
+                                                                    x:Name="ContentPresenter"
+                                                                    Margin="{TemplateBinding Padding}"
+                                                                    HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                                    VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                                    Content="{TemplateBinding Content}"
+                                                                    ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                                    ContentTransitions="{TemplateBinding ContentTransitions}" />
+                                                                <VisualStateManager.VisualStateGroups>
+                                                                    <VisualStateGroup x:Name="CommonStates">
+                                                                        <VisualStateGroup.Transitions>
+                                                                            <VisualTransition GeneratedDuration="0:0:0.1" />
+                                                                        </VisualStateGroup.Transitions>
 
-                    <StackPanel Spacing="12">
-                        <TextBlock
-                            x:Uid="LyricsSharePageGroupTracesOfTime"
-                            Opacity="0.7"
-                            Style="{ThemeResource BodyStrongTextBlockStyle}" />
-                        <dev:WrapPanel
-                            HorizontalSpacing="8"
-                            Orientation="Horizontal"
-                            VerticalSpacing="12">
-                            <Button
-                                x:Uid="LyricsSharePageStyleJournal"
-                                Click="StyleButton_Click"
-                                Tag="LyricsCardJournalStyle" />
-                            <Button
-                                x:Uid="LyricsSharePageStyleStickyNote"
-                                Click="StyleButton_Click"
-                                Tag="LyricsCardStickyNoteStyle" />
-                        </dev:WrapPanel>
-                    </StackPanel>
+                                                                        <VisualState x:Name="Normal" />
 
-                </StackPanel>
-            </ScrollViewer>
+                                                                        <VisualState x:Name="PointerOver">
+                                                                            <VisualState.Setters>
+                                                                                <Setter Target="RootGrid.Background" Value="{ThemeResource ListViewItemBackgroundPointerOver}" />
+                                                                            </VisualState.Setters>
+                                                                        </VisualState>
 
+                                                                        <VisualState x:Name="Pressed">
+                                                                            <VisualState.Setters>
+                                                                                <Setter Target="RootGrid.Background" Value="{ThemeResource ListViewItemBackgroundPressed}" />
+                                                                            </VisualState.Setters>
+                                                                        </VisualState>
+
+                                                                        <VisualState x:Name="Disabled">
+                                                                            <VisualState.Setters>
+                                                                                <Setter Target="ContentPresenter.Opacity" Value="{ThemeResource ListViewItemDisabledThemeOpacity}" />
+                                                                            </VisualState.Setters>
+                                                                        </VisualState>
+                                                                    </VisualStateGroup>
+                                                                </VisualStateManager.VisualStateGroups>
+                                                            </Grid>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </GroupStyle.HeaderContainerStyle>
+
+                                        <GroupStyle.HeaderTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Style="{ThemeResource BodyStrongTextBlockStyle}" Text="{Binding GroupTitle}" />
+                                            </DataTemplate>
+                                        </GroupStyle.HeaderTemplate>
+
+                                        <GroupStyle.Panel>
+                                            <ItemsPanelTemplate>
+                                                <dev:WrapPanel
+                                                    HorizontalSpacing="8"
+                                                    Orientation="Horizontal"
+                                                    VerticalSpacing="8" />
+                                            </ItemsPanelTemplate>
+                                        </GroupStyle.Panel>
+
+                                    </GroupStyle>
+                                </GridView.GroupStyle>
+
+                                <GridView.ItemTemplate>
+                                    <DataTemplate x:DataType="viewmodels:StyleItem">
+                                        <Grid Padding="0" Style="{StaticResource CardGridStyle}">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <Grid Grid.Row="0" Background="{ThemeResource SmokeFillColorDefaultBrush}">
+                                                <Viewbox
+                                                    Height="150"
+                                                    IsHitTestVisible="False"
+                                                    Stretch="Uniform">
+                                                    <ContentControl Content="{x:Bind CardData}" ContentTemplate="{x:Bind CardDataTemplate}" />
+                                                </Viewbox>
+                                            </Grid>
+                                            <TextBlock
+                                                Grid.Row="1"
+                                                Margin="8"
+                                                HorizontalAlignment="Center"
+                                                Text="{x:Bind DisplayText}"
+                                                TextAlignment="Center"
+                                                TextWrapping="Wrap" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </GridView.ItemTemplate>
+                            </GridView>
+                        </SemanticZoom.ZoomedInView>
+                        <SemanticZoom.ZoomedOutView>
+                            <ListView
+                                HorizontalAlignment="Center"
+                                VerticalAlignment="Center"
+                                ItemsSource="{Binding Source={StaticResource StyleGroupsCVS}, Path=CollectionGroups}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock
+                                            Margin="0,12"
+                                            Style="{ThemeResource SubtitleTextBlockStyle}"
+                                            Text="{Binding Group.GroupTitle}" />
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </SemanticZoom.ZoomedOutView>
+                    </SemanticZoom>
+                </controls:Case>
+                <controls:Case Value="FontFamily">
+                    <uc:FontPicker
+                        Margin="-4,0,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        SelectedFontId="{x:Bind ViewModel.CardData.Config.FontFamily, Mode=TwoWay}" />
+                </controls:Case>
+                <controls:Case Value="ImageQuality">
+                    <uc:ExtendedSlider
+                        x:Name="ImageQualitySlider"
+                        HorizontalAlignment="Left"
+                        Default="100"
+                        Frequency="1"
+                        Maximum="100"
+                        Minimum="10"
+                        Unit="%"
+                        Value="100" />
+                </controls:Case>
+
+            </controls:SwitchPresenter>
             <Grid Grid.Row="2">
-                <StackPanel Padding="24" Spacing="24">
-                    <StackPanel Spacing="12">
-                        <TextBlock
-                            x:Uid="LyricsSharePageImageQuality"
-                            Opacity="0.7"
-                            Style="{ThemeResource BodyStrongTextBlockStyle}" />
-                        <uc:ExtendedSlider
-                            x:Name="ImageQualitySlider"
-                            HorizontalAlignment="Left"
-                            Default="100"
-                            Frequency="1"
-                            Maximum="100"
-                            Minimum="10"
-                            Unit="%"
-                            Value="100" />
-                    </StackPanel>
-
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <Button
-                            x:Uid="LyricsSharePageSaveImage"
-                            Click="SaveImage_Click"
-                            Style="{ThemeResource AccentButtonStyle}" />
-                        <Button x:Uid="LyricsSharePageCopyImage" Click="CopyImage_Click" />
-                    </StackPanel>
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <Button
+                        x:Uid="LyricsSharePageSaveImage"
+                        Click="SaveImage_Click"
+                        Style="{ThemeResource AccentButtonStyle}" />
+                    <Button x:Uid="LyricsSharePageCopyImage" Click="CopyImage_Click" />
                 </StackPanel>
             </Grid>
-
         </Grid>
 
         <Grid

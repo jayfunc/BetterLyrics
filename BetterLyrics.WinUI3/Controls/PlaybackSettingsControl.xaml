@@ -71,16 +71,12 @@
                             CanDragItems="True"
                             CanReorderItems="True"
                             DragItemsCompleted="MediaSourceProvidersListView_DragItemsCompleted"
-                            ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
+                            ItemContainerStyle="{StaticResource ListViewItemSettingStyle}"
                             ItemsSource="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo, Mode=OneWay}"
                             SelectionMode="None">
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="settingsmodels:MediaSourceProviderInfo">
-                                    <Grid
-                                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                                        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                        BorderThickness="1"
-                                        CornerRadius="4">
+                                    <Grid Style="{StaticResource CardGridStyle}">
                                         <Grid
                                             Padding="12"
                                             ColumnSpacing="12"
@@ -96,7 +92,7 @@
                                             <Grid Grid.Column="0">
                                                 <FontIcon
                                                     FontFamily="Segoe UI Symbol"
-                                                    FontSize="12"
+                                                    FontSize="16"
                                                     Glyph="&#x283F;" />
                                             </Grid>
                                             <Grid Grid.Column="1">
@@ -143,8 +139,18 @@
                                                 HorizontalAlignment="Right"
                                                 Orientation="Horizontal"
                                                 Spacing="6">
-                                                <Button Click="ConfigButton_Click" Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, FontSize=12, Glyph=&#xE90F;}" />
-                                                <Button Click="DeleteButton_Click" Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, FontSize=12, Glyph=&#xE74D;}" />
+                                                <Button
+                                                    Padding="6"
+                                                    Click="ConfigButton_Click"
+                                                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                                          FontSize=16,
+                                                                          Glyph=&#xE90F;}" />
+                                                <Button
+                                                    Padding="6"
+                                                    Click="DeleteButton_Click"
+                                                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                                          FontSize=16,
+                                                                          Glyph=&#xE74D;}" />
                                             </StackPanel>
                                         </Grid>
                                     </Grid>
@@ -384,7 +390,7 @@
                             </dev:SettingsCard>
                             <dev:SettingsCard x:Uid="SettingsPageMatchingThreshold">
                                 <local:ExtendedSlider
-                                    Default="70"
+                                    Default="60"
                                     Maximum="100"
                                     Minimum="0"
                                     Unit="%"
@@ -436,7 +442,7 @@
                                                     </dev:SettingsCard>
                                                     <dev:SettingsCard x:Uid="SettingsPageMatchingThreshold" IsEnabled="{Binding IsMatchingThresholdOverwritten, Mode=OneWay}">
                                                         <local:ExtendedSlider
-                                                            Default="70"
+                                                            Default="60"
                                                             Maximum="100"
                                                             Minimum="0"
                                                             Unit="%"

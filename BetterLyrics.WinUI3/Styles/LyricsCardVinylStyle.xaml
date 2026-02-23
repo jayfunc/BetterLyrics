@@ -93,13 +93,13 @@
                 <ItemsControl
                     Grid.Row="0"
                     VerticalAlignment="Center"
+                    FontFamily="{Binding Config.FontFamily}"
                     ItemsSource="{Binding SelectedLyrics}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Margin="0,0,0,24">
 
                                 <TextBlock
-                                    FontFamily="Segoe UI"
                                     FontSize="18"
                                     FontWeight="SemiBold"
                                     Foreground="#F0F0F0"
@@ -111,7 +111,6 @@
 
                                 <TextBlock
                                     Margin="0,4,0,0"
-                                    FontFamily="Segoe UI"
                                     FontSize="14"
                                     FontWeight="Normal"
                                     Foreground="#B0B0B0"
@@ -158,12 +157,14 @@
                                 Opacity="0.8" />
                             <StackPanel Grid.Column="1">
                                 <TextBlock
+                                    FontFamily="{Binding Config.FontFamily}"
                                     FontSize="14"
                                     FontWeight="Bold"
                                     Foreground="White"
                                     Text="{Binding Title}"
                                     TextTrimming="CharacterEllipsis" />
                                 <TextBlock
+                                    FontFamily="{Binding Config.FontFamily}"
                                     FontSize="12"
                                     Foreground="#AAAAAA"
                                     Text="{Binding Artist}"
@@ -174,6 +175,7 @@
                         <TextBlock
                             Grid.Column="1"
                             VerticalAlignment="Center"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="12"
                             FontWeight="Bold"
                             Foreground="White"

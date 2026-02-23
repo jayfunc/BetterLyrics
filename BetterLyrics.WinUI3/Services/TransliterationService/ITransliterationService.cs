@@ -6,6 +6,6 @@ namespace BetterLyrics.WinUI3.Services.TransliterationService
 {
     public interface ITransliterationService
     {
-        Task<(string, TransliterationSearchProvider)> TransliterateText(string text, string targetLangCode, CancellationToken token);
+        Task<(string, TransliterationSearchProvider)> TransliterateTextAsync(string text, string targetLangCode, CancellationToken token);
     }
 }

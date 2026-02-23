@@ -34,7 +34,7 @@
 
                                 <TextBlock
                                     Width="12"
-                                    FontFamily="SimSun, STSong, Microsoft YaHei"
+                                    FontFamily="{Binding Config.FontFamily}"
                                     FontSize="12"
                                     Foreground="#3A2E28"
                                     LineHeight="18"
@@ -44,7 +44,7 @@
 
                                 <TextBlock
                                     Width="12"
-                                    FontFamily="SimSun, STSong, Microsoft YaHei"
+                                    FontFamily="{Binding Config.FontFamily}"
                                     FontSize="12"
                                     Foreground="#3A2E28"
                                     LineHeight="18"
@@ -57,7 +57,7 @@
                             <TextBlock
                                 Margin="0,0,0,20"
                                 VerticalAlignment="Bottom"
-                                FontFamily="SimSun, STSong, Microsoft YaHei"
+                                FontFamily="{Binding Config.FontFamily}"
                                 FontSize="12"
                                 Foreground="#3A2E28"
                                 Text="卷&#x0a;一"
@@ -76,6 +76,7 @@
                             <ItemsControl
                                 Grid.Column="0"
                                 FlowDirection="RightToLeft"
+                                FontFamily="{Binding Config.FontFamily}"
                                 ItemsSource="{Binding SelectedLyrics}">
 
                                 <ItemsControl.ItemsPanel>
@@ -93,7 +94,6 @@
                                             <StackPanel FlowDirection="RightToLeft" Orientation="Horizontal">
                                                 <TextBlock
                                                     Width="24"
-                                                    FontFamily="SimSun, STSong, NSimSun, Microsoft YaHei"
                                                     FontSize="18"
                                                     Foreground="#241B15"
                                                     LineHeight="26"
@@ -104,7 +104,6 @@
                                                 <TextBlock
                                                     Width="18"
                                                     Margin="12,0,0,0"
-                                                    FontFamily="KaiTi, STKaiti, Microsoft YaHei"
                                                     FontSize="14"
                                                     Foreground="#6B5D54"
                                                     LineHeight="22"
@@ -127,7 +126,7 @@
                                 <StackPanel FlowDirection="RightToLeft" Orientation="Horizontal">
                                     <TextBlock
                                         Width="32"
-                                        FontFamily="SimSun, STSong, NSimSun, Microsoft YaHei"
+                                        FontFamily="{Binding Config.FontFamily}"
                                         FontSize="26"
                                         FontWeight="Bold"
                                         Foreground="#241B15"
@@ -147,14 +146,14 @@
                                             CornerRadius="2">
                                             <TextBlock
                                                 HorizontalAlignment="Center"
-                                                FontFamily="SimSun, STSong, Microsoft YaHei"
+                                                FontFamily="{Binding Config.FontFamily}"
                                                 FontSize="10"
                                                 Foreground="#EFE8D8"
                                                 Text="撰" />
                                         </Border>
                                         <TextBlock
                                             Width="20"
-                                            FontFamily="SimSun, STSong, Microsoft YaHei"
+                                            FontFamily="{Binding Config.FontFamily}"
                                             FontSize="15"
                                             Foreground="#5A4E46"
                                             Text="{Binding Artist}"

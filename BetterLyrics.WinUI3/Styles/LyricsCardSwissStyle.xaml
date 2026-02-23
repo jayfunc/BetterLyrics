@@ -31,6 +31,7 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel>
                         <TextBlock
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="48"
                             FontWeight="Black"
                             Foreground="Black"
@@ -39,6 +40,7 @@
                             TextWrapping="Wrap" />
                         <TextBlock
                             Margin="0,10,0,0"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="20"
                             FontWeight="Bold"
                             Foreground="Black"
@@ -49,6 +51,7 @@
                         Grid.Column="1"
                         Margin="10,-20,-10,0"
                         VerticalAlignment="Top"
+                        FontFamily="{Binding Config.FontFamily}"
                         FontSize="80"
                         FontWeight="Bold"
                         Foreground="#EEE"
@@ -63,13 +66,15 @@
                 <Grid Grid.Row="2" Background="{Binding OverlayBrush}">
                     <Rectangle Fill="White" Opacity="0.8" />
 
-                    <ItemsControl Margin="20,30" ItemsSource="{Binding SelectedLyrics}">
+                    <ItemsControl
+                        Margin="20,30"
+                        FontFamily="{Binding Config.FontFamily}"
+                        ItemsSource="{Binding SelectedLyrics}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Margin="0,0,0,24">
 
                                     <TextBlock
-                                        FontFamily="Arial"
                                         FontSize="24"
                                         FontWeight="Black"
                                         Foreground="Black"
@@ -80,7 +85,6 @@
 
                                     <TextBlock
                                         Margin="0,4,0,0"
-                                        FontFamily="Arial"
                                         FontSize="16"
                                         FontWeight="Normal"
                                         Foreground="#444444"
@@ -115,6 +119,7 @@
                         </Border>
                         <TextBlock
                             VerticalAlignment="Center"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontWeight="Bold"
                             Foreground="White"
                             Text="NOW PLAYING" />
@@ -123,6 +128,7 @@
                         Grid.Column="1"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
+                        FontFamily="{Binding Config.FontFamily}"
                         Foreground="White"
                         Opacity="0.5"
                         Text="BetterLyrics" />

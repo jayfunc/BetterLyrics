@@ -23,6 +23,7 @@
             <TextBlock
                 Margin="-5,0,0,-20"
                 VerticalAlignment="Bottom"
+                FontFamily="{Binding Config.FontFamily}"
                 FontSize="80"
                 FontWeight="Bold"
                 Foreground="White"
@@ -38,7 +39,7 @@
 
                 <StackPanel Grid.Row="0">
                     <TextBlock
-                        FontFamily="{StaticResource PublicationFont}"
+                        FontFamily="{Binding Config.FontFamily}"
                         FontSize="32"
                         FontWeight="Black"
                         Foreground="Black"
@@ -48,7 +49,7 @@
 
                     <TextBlock
                         Margin="0,8,0,0"
-                        FontFamily="{StaticResource PublicationFont}"
+                        FontFamily="{Binding Config.FontFamily}"
                         FontSize="16"
                         FontStyle="Italic"
                         Foreground="#666"
@@ -63,13 +64,15 @@
                         Background="Black" />
                 </StackPanel>
 
-                <ItemsControl Grid.Row="1" ItemsSource="{Binding SelectedLyrics}">
+                <ItemsControl
+                    Grid.Row="1"
+                    FontFamily="{Binding Config.FontFamily}"
+                    ItemsSource="{Binding SelectedLyrics}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel Margin="0,0,0,20">
 
                                 <TextBlock
-                                    FontFamily="{StaticResource PublicationFont}"
                                     FontSize="18"
                                     Foreground="#333"
                                     LineHeight="28"
@@ -78,7 +81,6 @@
 
                                 <TextBlock
                                     Margin="0,4,0,0"
-                                    FontFamily="Segoe UI"
                                     FontSize="14"
                                     Foreground="#888"
                                     LineHeight="20"
@@ -96,11 +98,13 @@
                     Opacity="0.5"
                     Orientation="Horizontal">
                     <TextBlock
+                        FontFamily="{Binding Config.FontFamily}"
                         FontSize="12"
                         FontWeight="Bold"
                         Foreground="Black"
                         Text="BetterLyrics" />
                     <TextBlock
+                        FontFamily="{Binding Config.FontFamily}"
                         FontSize="12"
                         Foreground="Black"
                         Text=" • ISSUE 01" />

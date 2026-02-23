@@ -207,8 +207,14 @@
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
     <value>스캔 대기 중...</value>
   </data>
+  <data name="FontPickerDialogFontNotFound.Text" xml:space="preserve">
+    <value>The font is not found in the system, it is not valid</value>
+  </data>
   <data name="FontPickerSearchBox.PlaceholderText" xml:space="preserve">
     <value>글꼴 검색</value>
+  </data>
+  <data name="FontPickerSelectedFontText.Text" xml:space="preserve">
+    <value>Selected Fonts</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>전체 화면 모드</value>
@@ -399,22 +405,25 @@
   <data name="LyricsSharePageCopyImage.Content" xml:space="preserve">
     <value>이미지 복사</value>
   </data>
-  <data name="LyricsSharePageGroupAtmosphere.Text" xml:space="preserve">
+  <data name="LyricsSharePageFontFamily.Text" xml:space="preserve">
+    <value>Font Family</value>
+  </data>
+  <data name="LyricsSharePageGroupAtmosphere" xml:space="preserve">
     <value>분위기</value>
   </data>
-  <data name="LyricsSharePageGroupChineseElegance.Text" xml:space="preserve">
+  <data name="LyricsSharePageGroupChineseElegance" xml:space="preserve">
     <value>Chinese Elegance</value>
   </data>
-  <data name="LyricsSharePageGroupClassic.Text" xml:space="preserve">
+  <data name="LyricsSharePageGroupClassic" xml:space="preserve">
     <value>클래식한 디자인</value>
   </data>
-  <data name="LyricsSharePageGroupPhysical.Text" xml:space="preserve">
+  <data name="LyricsSharePageGroupPhysical" xml:space="preserve">
     <value>물리적</value>
   </data>
-  <data name="LyricsSharePageGroupRetro.Text" xml:space="preserve">
+  <data name="LyricsSharePageGroupRetro" xml:space="preserve">
     <value>디지털 레트로</value>
   </data>
-  <data name="LyricsSharePageGroupTracesOfTime.Text" xml:space="preserve">
+  <data name="LyricsSharePageGroupTracesOfTime" xml:space="preserve">
     <value>Traces of Time</value>
   </data>
   <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
@@ -426,61 +435,61 @@
   <data name="LyricsSharePageSelectLyricsTitle.Text" xml:space="preserve">
     <value>가사 선택</value>
   </data>
-  <data name="LyricsSharePageStyleAncientBook.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleAncientBook" xml:space="preserve">
     <value>Ancient book</value>
   </data>
-  <data name="LyricsSharePageStyleBambooSlips.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleBambooSlips" xml:space="preserve">
     <value>Bamboo slips</value>
   </data>
-  <data name="LyricsSharePageStyleCD.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleCD" xml:space="preserve">
     <value>CD 케이스</value>
   </data>
-  <data name="LyricsSharePageStyleCinematic.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleCinematic" xml:space="preserve">
     <value>시네마틱</value>
   </data>
-  <data name="LyricsSharePageStyleCyberpunk.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleCyberpunk" xml:space="preserve">
     <value>사이버펑크</value>
   </data>
-  <data name="LyricsSharePageStyleDunhuang.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleDunhuang" xml:space="preserve">
     <value>Dunhuang</value>
   </data>
-  <data name="LyricsSharePageStyleInkWash.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleInkWash" xml:space="preserve">
     <value>Ink wash</value>
   </data>
-  <data name="LyricsSharePageStyleJournal.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleJournal" xml:space="preserve">
     <value>Journal</value>
   </data>
-  <data name="LyricsSharePageStyleMagazine.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleMagazine" xml:space="preserve">
     <value>매거진</value>
   </data>
-  <data name="LyricsSharePageStyleMinimal.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleMinimal" xml:space="preserve">
     <value>최소</value>
   </data>
-  <data name="LyricsSharePageStylePolaroid.Content" xml:space="preserve">
+  <data name="LyricsSharePageStylePolaroid" xml:space="preserve">
     <value>폴라로이드</value>
   </data>
-  <data name="LyricsSharePageStyleReceipt.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleReceipt" xml:space="preserve">
     <value>영수증</value>
   </data>
-  <data name="LyricsSharePageStyleRetroMSN.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleRetroMSN" xml:space="preserve">
     <value>레트로 MSN</value>
   </data>
-  <data name="LyricsSharePageStyleRetroQQ.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleRetroQQ" xml:space="preserve">
     <value>레트로 QQ</value>
   </data>
-  <data name="LyricsSharePageStyleStickyNote.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleStickyNote" xml:space="preserve">
     <value>Sticky note</value>
   </data>
-  <data name="LyricsSharePageStyleSwiss.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleSwiss" xml:space="preserve">
     <value>스위스</value>
   </data>
-  <data name="LyricsSharePageStyleTicket.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleTicket" xml:space="preserve">
     <value>티켓</value>
   </data>
   <data name="LyricsSharePageStyleTitle.Text" xml:space="preserve">
     <value>스타일</value>
   </data>
-  <data name="LyricsSharePageStyleVinyl.Content" xml:space="preserve">
+  <data name="LyricsSharePageStyleVinyl" xml:space="preserve">
     <value>비닐</value>
   </data>
   <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
@@ -1826,8 +1835,5 @@
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>사용자 가이드</value>
-  </data>
-  <data name="FontPickerSelectedFontText.Text" xml:space="preserve">
-    <value>Selected Fonts</value>
   </data>
 </root>

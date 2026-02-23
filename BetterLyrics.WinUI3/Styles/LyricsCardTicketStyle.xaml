@@ -44,12 +44,14 @@
                             VerticalAlignment="Center">
                             <TextBlock
                                 CharacterSpacing="2"
+                                FontFamily="{Binding Config.FontFamily}"
                                 FontSize="10"
                                 FontWeight="Bold"
                                 Foreground="#FF5555"
                                 Text="ADMIT ONE" />
 
                             <TextBlock
+                                FontFamily="{Binding Config.FontFamily}"
                                 FontSize="20"
                                 FontWeight="Black"
                                 Foreground="#333"
@@ -60,6 +62,7 @@
 
                             <TextBlock
                                 Margin="0,4,0,0"
+                                FontFamily="{Binding Config.FontFamily}"
                                 FontSize="14"
                                 Foreground="#777"
                                 MaxLines="1"
@@ -74,13 +77,15 @@
                     Grid.Row="1"
                     BorderBrush="#e6dfd8"
                     BorderThickness="1,0">
-                    <ItemsControl Margin="24,30" ItemsSource="{Binding SelectedLyrics}">
+                    <ItemsControl
+                        Margin="24,30"
+                        FontFamily="{Binding Config.FontFamily}"
+                        ItemsSource="{Binding SelectedLyrics}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Margin="0,0,0,16">
 
                                     <TextBlock
-                                        FontFamily="{StaticResource TypewriterFont}"
                                         FontSize="18"
                                         Foreground="#444"
                                         LineHeight="28"
@@ -89,7 +94,6 @@
 
                                     <TextBlock
                                         Margin="0,2,0,0"
-                                        FontFamily="{StaticResource TypewriterFont}"
                                         FontSize="14"
                                         Foreground="#888"
                                         LineHeight="20"
@@ -151,17 +155,18 @@
                                 Foreground="#999"
                                 Text="DATE" />
                             <TextBlock
-                                FontFamily="{StaticResource TypewriterFont}"
+                                FontFamily="{Binding Config.FontFamily}"
                                 FontSize="14"
                                 Foreground="#333"
                                 Text="{Binding DateShort}" />
                             <TextBlock
                                 Margin="0,8,0,0"
+                                FontFamily="{Binding Config.FontFamily}"
                                 FontSize="10"
                                 Foreground="#999"
                                 Text="LOCATION" />
                             <TextBlock
-                                FontFamily="{StaticResource TypewriterFont}"
+                                FontFamily="{Binding Config.FontFamily}"
                                 FontSize="14"
                                 Foreground="#333"
                                 Text="BetterLyrics" />

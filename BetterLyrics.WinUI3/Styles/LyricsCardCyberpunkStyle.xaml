@@ -36,7 +36,7 @@
                         <TextBlock
                             Margin="10,0"
                             VerticalAlignment="Center"
-                            FontFamily="{StaticResource GeekFont}"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="12"
                             Foreground="#00FF9D"
                             Text="BETTERLYRICS" />
@@ -60,6 +60,7 @@
                     <StackPanel Margin="30" VerticalAlignment="Center">
                         <Grid Margin="0,0,0,30">
                             <TextBlock
+                                FontFamily="{Binding Config.FontFamily}"
                                 FontSize="36"
                                 FontWeight="Black"
                                 Foreground="#FF0055"
@@ -71,6 +72,7 @@
                                 </TextBlock.RenderTransform>
                             </TextBlock>
                             <TextBlock
+                                FontFamily="{Binding Config.FontFamily}"
                                 FontSize="36"
                                 FontWeight="Black"
                                 Foreground="#00E5FF"
@@ -82,6 +84,7 @@
                                 </TextBlock.RenderTransform>
                             </TextBlock>
                             <TextBlock
+                                FontFamily="{Binding Config.FontFamily}"
                                 FontSize="36"
                                 FontWeight="Black"
                                 Foreground="White"
@@ -89,13 +92,15 @@
                                 TextWrapping="Wrap" />
                         </Grid>
 
-                        <ItemsControl Margin="0,0,0,48" ItemsSource="{Binding SelectedLyrics}">
+                        <ItemsControl
+                            Margin="0,0,0,48"
+                            FontFamily="{Binding Config.FontFamily}"
+                            ItemsSource="{Binding SelectedLyrics}">
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate>
                                     <StackPanel Margin="0,0,0,24">
 
                                         <TextBlock
-                                            FontFamily="{StaticResource GeekFont}"
                                             FontSize="22"
                                             FontWeight="Bold"
                                             Foreground="#FFFFFF"
@@ -105,7 +110,6 @@
 
                                         <TextBlock
                                             Margin="0,4,0,0"
-                                            FontFamily="{StaticResource GeekFont}"
                                             FontSize="14"
                                             Foreground="#00E5FF"
                                             LineHeight="20"
@@ -134,13 +138,14 @@
                             </Border>
                             <StackPanel Grid.Column="1" VerticalAlignment="Center">
                                 <TextBlock
+                                    FontFamily="{Binding Config.FontFamily}"
                                     FontSize="14"
                                     FontWeight="Bold"
                                     Foreground="White"
                                     Text="{Binding Artist}"
                                     TextTrimming="CharacterEllipsis" />
                                 <TextBlock
-                                    FontFamily="{StaticResource GeekFont}"
+                                    FontFamily="{Binding Config.FontFamily}"
                                     FontSize="10"
                                     Foreground="#888"
                                     Text="// NOW_PLAYING" />
@@ -150,7 +155,7 @@
                         <TextBlock
                             HorizontalAlignment="Right"
                             VerticalAlignment="Bottom"
-                            FontFamily="{StaticResource GeekFont}"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="10"
                             Foreground="#FFFF00"
                             Text="WARNING: LOUD" />

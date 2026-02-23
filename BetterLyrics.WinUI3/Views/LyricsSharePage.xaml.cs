@@ -1,12 +1,15 @@
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models.Lyrics;
+using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.ViewModels;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
@@ -19,24 +22,13 @@ namespace BetterLyrics.WinUI3.Views
 {
     public sealed partial class LyricsSharePage : Page
     {
+
         public LyricsSharePageViewModel ViewModel { get; set; }
 
         public LyricsSharePage()
         {
             this.InitializeComponent();
             ViewModel = Ioc.Default.GetRequiredService<LyricsSharePageViewModel>();
-        }
-
-        private void StyleButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button btn && btn.Tag is string styleKey)
-            {
-                StyleInfoTextBlock.Text = btn.Content.ToString();
-                if (App.Current.Resources.TryGetValue(styleKey, out object template))
-                {
-                    PreviewCard.ContentTemplate = template as DataTemplate;
-                }
-            }
         }
 
         private void LyricsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -176,5 +168,11 @@ namespace BetterLyrics.WinUI3.Views
                 LyricsListView.SelectedItems.Clear();
             }
         }
+
+        private void ConfigNavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        {
+            ViewModel.ConfigNavViewSelectedItemTag = $"{((NavigationViewItem)sender.SelectedItem).Tag}";
+        }
+
     }
 }

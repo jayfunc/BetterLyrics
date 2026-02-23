@@ -39,7 +39,7 @@
 
                 <StackPanel Grid.Row="0" Margin="0,0,0,20">
                     <TextBlock
-                        FontFamily="KaiTi, STKaiti, Microsoft YaHei"
+                        FontFamily="{Binding Config.FontFamily}"
                         FontSize="30"
                         FontWeight="Bold"
                         Foreground="#2A1610"
@@ -47,7 +47,7 @@
                         TextWrapping="Wrap" />
                     <TextBlock
                         Margin="0,8,0,0"
-                        FontFamily="KaiTi, STKaiti, Microsoft YaHei"
+                        FontFamily="{Binding Config.FontFamily}"
                         FontSize="16"
                         Foreground="#6B4B3A"
                         Text="{Binding Artist}" />
@@ -76,12 +76,11 @@
                 </StackPanel>
 
                 <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
-                    <ItemsControl ItemsSource="{Binding SelectedLyrics}">
+                    <ItemsControl FontFamily="{Binding Config.FontFamily}" ItemsSource="{Binding SelectedLyrics}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Margin="0,0,0,24">
                                     <TextBlock
-                                        FontFamily="KaiTi, STKaiti, Microsoft YaHei"
                                         FontSize="19"
                                         Foreground="#301F16"
                                         LineHeight="28"
@@ -90,7 +89,6 @@
 
                                     <TextBlock
                                         Margin="0,6,0,0"
-                                        FontFamily="KaiTi, STKaiti, Microsoft YaHei"
                                         FontSize="14"
                                         Foreground="#4B6270"
                                         LineHeight="22"
@@ -112,7 +110,7 @@
                     CornerRadius="2"
                     Opacity="0.8">
                     <TextBlock
-                        FontFamily="KaiTi, STKaiti, Microsoft YaHei"
+                        FontFamily="{Binding Config.FontFamily}"
                         FontSize="12"
                         Foreground="#D6C4A3"
                         Text="莫高" />

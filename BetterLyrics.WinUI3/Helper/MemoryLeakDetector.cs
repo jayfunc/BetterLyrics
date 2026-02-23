@@ -68,7 +68,7 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static void ScheduleCheck(int delayMs = 3000)
         {
-            Task.Run(async () =>
+            _ = Task.Run(async () =>
             {
                 await Task.Delay(delayMs);
                 await CheckLeaksAsync();

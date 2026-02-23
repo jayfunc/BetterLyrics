@@ -1,4 +1,5 @@
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Services.LocalizationService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -41,63 +42,67 @@ namespace BetterLyrics.WinUI3.Controls
 
         private async Task UpdateDisplayAsync(string fontIdString)
         {
-            SelectedLocalizedText.Text = string.Empty;
-            SelectedLocalizedText.Inlines.Clear();
-
             if (string.IsNullOrWhiteSpace(fontIdString))
             {
-                SelectedLocalizedText.Text = "N/A";
-                SelectedRawText.Text = "";
+                SelectedFontsItemsControl.ItemsSource = new List<ExtendedFontFamily>
+                {
+                    new ExtendedFontFamily
+                    {
+                        LocalizedFontFamily = "Segoe UI",
+                        FontFamily = "Segoe UI"
+                    }
+                };
                 return;
             }
 
             var fontIds = fontIdString
-                .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                .Split([','], StringSplitOptions.RemoveEmptyEntries)
                 .Select(s => s.Trim())
                 .ToList();
 
             var fonts = await FontHelper.GetSystemFontFamiliesAsync();
-            var matchedFonts = fontIds.Select(id => fonts.FirstOrDefault(f => f.FontFamily == id)).Where(f => f != null).ToList();
+            var displayItems = new List<ExtendedFontFamily>();
 
-            if (matchedFonts.Any())
+            if (fontIds.Count != 0)
             {
-                SelectedRawText.Text = string.Join(", ", matchedFonts.Select(f => f.FontFamily));
-
-                for (int i = 0; i < matchedFonts.Count; i++)
+                foreach (var fontId in fontIds)
                 {
-                    var f = matchedFonts[i];
+                    var matchedFont = fonts.FirstOrDefault(f => f.FontFamily == fontId);
 
-                    var fontRun = new Microsoft.UI.Xaml.Documents.Run
+                    if (matchedFont != null)
                     {
-                        Text = f.LocalizedFontFamily,
-                        FontFamily = new Microsoft.UI.Xaml.Media.FontFamily(f.FontFamily)
-                    };
-                    SelectedLocalizedText.Inlines.Add(fontRun);
-
-                    if (i < matchedFonts.Count - 1)
+                        displayItems.Add(matchedFont);
+                    }
+                    else
                     {
-                        var separatorRun = new Microsoft.UI.Xaml.Documents.Run
+                        displayItems.Add(new ExtendedFontFamily
                         {
-                            Text = ", "
-                        };
-                        SelectedLocalizedText.Inlines.Add(separatorRun);
+                            LocalizedFontFamily = fontId,
+                            FontFamily = fontId
+                        });
                     }
                 }
             }
             else
             {
-                SelectedLocalizedText.Text = fontIdString;
-                SelectedRawText.Text = "Unknown";
+                displayItems.Add(new ExtendedFontFamily
+                {
+                    LocalizedFontFamily = fontIdString,
+                    FontFamily = "Unknown"
+                });
             }
+
+            SelectedFontsItemsControl.ItemsSource = displayItems;
         }
 
         private async void TriggerButton_Click(object sender, RoutedEventArgs e)
         {
             var currentFontsList = string.IsNullOrWhiteSpace(SelectedFontId)
                 ? new List<string>()
-                : SelectedFontId.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
-                                .Select(s => s.Trim())
-                                .ToList();
+                : SelectedFontId
+                    .Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(s => s.Trim())
+                    .ToList();
 
             var dialog = new FontPickerDialog(currentFontsList)
             {

@@ -36,6 +36,7 @@ using Vanara.Windows.Shell;
 using Windows.Media.Control;
 using Windows.Storage.Streams;
 using WindowsMediaController;
+using static WindowsMediaController.MediaManager;
 
 namespace BetterLyrics.WinUI3.Services.GSMTCService
 {
@@ -263,7 +264,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             }
         }
 
-        private void OnAnyTimelineChangedCore(MediaManager.MediaSession? mediaSession, TimeSpan currentPosition, TimeSpan duration)
+        private void OnAnyTimelineChangedCore(MediaSession? mediaSession, TimeSpan currentPosition, TimeSpan duration)
         {
             _dispatcherQueue.TryEnqueue(() =>
             {
@@ -280,17 +281,17 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             });
         }
 
-        private void MediaManager_OnFocusedSessionChanged(MediaManager.MediaSession? mediaSession)
+        private void MediaManager_OnFocusedSessionChanged(MediaSession? mediaSession)
         {
             OnDesiredSessionChanged();
         }
 
-        private void MediaManager_OnAnyTimelinePropertyChanged(MediaManager.MediaSession mediaSession, GlobalSystemMediaTransportControlsSessionTimelineProperties timelineProperties)
+        private void MediaManager_OnAnyTimelinePropertyChanged(MediaSession mediaSession, GlobalSystemMediaTransportControlsSessionTimelineProperties timelineProperties)
         {
             OnAnyTimelineChangedCore(mediaSession, timelineProperties.Position, timelineProperties.EndTime);
         }
 
-        private void MediaManager_OnAnyPlaybackStateChanged(MediaManager.MediaSession mediaSession, GlobalSystemMediaTransportControlsSessionPlaybackInfo playbackInfo)
+        private void MediaManager_OnAnyPlaybackStateChanged(MediaSession mediaSession, GlobalSystemMediaTransportControlsSessionPlaybackInfo playbackInfo)
         {
             _dispatcherQueue.TryEnqueue(() =>
             {
@@ -313,119 +314,25 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             });
         }
 
-        private void MediaManager_OnAnyMediaPropertyChanged(MediaManager.MediaSession mediaSession, GlobalSystemMediaTransportControlsSessionMediaProperties mediaProperties)
+        private void MediaManager_OnAnyMediaPropertyChanged(MediaSession mediaSession, GlobalSystemMediaTransportControlsSessionMediaProperties mediaProperties)
         {
             _onMediaPropsChangedTimer?.Debounce(() =>
             {
-                _dispatcherQueue.TryEnqueue(async () =>
+                _dispatcherQueue.TryEnqueue(() =>
                 {
-                    if (mediaSession != _currentDesiredSession) return;
-
-                    string sessionId = mediaSession.Id;
-
-                    var currentMediaSourceProviderInfo = GetCurrentDesiredMediaSourceProviderInfo();
-                    if (currentMediaSourceProviderInfo?.ResetPositionOffsetOnSongChanged == true)
-                    {
-                        currentMediaSourceProviderInfo?.PositionOffset = 0;
-                    }
-
-                    string fixedTitle = mediaProperties.Title;
-                    string fixedArtist = mediaProperties.Artist;
-                    string fixedAlbum = mediaProperties.AlbumTitle;
-                    string? songId = null;
-
-                    if (PlayerIdHelper.IsAppleMusic(sessionId))
-                    {
-                        fixedArtist = mediaProperties.Artist.Split(" — ").First();
-                        fixedAlbum = mediaProperties.Artist.Split(" — ").Last();
-                        fixedAlbum = fixedAlbum.Replace(" - Single", "");
-                        fixedAlbum = fixedAlbum.Replace(" - EP", "");
-                    }
-                    else if (PlayerIdHelper.IsNeteaseFamily(sessionId))
-                    {
-                        songId = mediaProperties.Genres
-                            .FirstOrDefault(x => x.StartsWith(ExtendedGenreFiled.NetEaseCloudMusicTrackID))?
-                            .Replace(ExtendedGenreFiled.NetEaseCloudMusicTrackID, "");
-                    }
-                    else if (PlayerIdHelper.IsQQFamily(sessionId))
-                    {
-                        songId = mediaProperties.Genres
-                            .FirstOrDefault(x => x.StartsWith(ExtendedGenreFiled.QQMusicTrackID))?
-                            .Replace(ExtendedGenreFiled.QQMusicTrackID, "");
-                    }
-
-                    var linkedFileName = mediaProperties.Genres
-                        .FirstOrDefault(x => x.StartsWith(ExtendedGenreFiled.FileName))?
-                        .Replace(ExtendedGenreFiled.FileName, "");
-
-                    CurrentSongInfo = new()
-                    {
-                        Title = fixedTitle,
-                        Artist = fixedArtist,
-                        Album = fixedAlbum,
-                        DurationMs = mediaSession.ControlSession.GetTimelineProperties().EndTime.TotalMilliseconds,
-                        PlayerId = sessionId,
-                        SongId = songId,
-                        LinkedFileName = linkedFileName,
-                        StartedAt = DateTime.Now.ToBinary(),
-                    };
-
-                    UpdateTargetScrobbledDuration();
-                    IsScrobbled = false;
-                    ScrobbledDuration = TimeSpan.Zero;
-
-                    HandleLXMusicIfDetected(sessionId);
-
-                    // 总是先回收 _memoryReader
-                    _memoryReader?.Stop();
-                    _memoryReader?.OnProgressChanged -= UniversalMemoryReader_OnProgressChanged;
-                    _memoryReader = null;
-                    // 注册
-                    if (currentMediaSourceProviderInfo?.IsMemoryReaderEnabled == true)
-                    {
-                        if (currentMediaSourceProviderInfo.MemoryReaderConfig is MemoryReaderConfig config)
-                        {
-                            _memoryReader = new(config);
-                            _memoryReader.Start();
-                            _memoryReader.OnProgressChanged += UniversalMemoryReader_OnProgressChanged;
-                        }
-                    }
-
-                    // 处理专辑图片
-                    if (PlayerIdHelper.IsLXMusic(sessionId) && _lxMusicAlbumArtBytes != null)
-                    {
-                        _SMTCAlbumArtBuffer = _lxMusicAlbumArtBytes.AsBuffer();
-                    }
-                    else if (mediaProperties.Thumbnail is IRandomAccessStreamReference streamReference)
-                    {
-                        _SMTCAlbumArtBuffer = await ImageHelper.ToBufferAsync(streamReference);
-                    }
-                    else
-                    {
-                        _SMTCAlbumArtBuffer = null;
-                    }
-
-                    _logger.LogInformation("MediaManager_OnAnyMediaPropertyChanged {SongInfo}", CurrentSongInfo);
-
-                    CurrentMediaSourceProviderInfo = GetCurrentDesiredMediaSourceProviderInfo();
-
-                    UpdateAlbumArt();
-                    UpdateLyrics();
-
-                    UpdateDiscordPresence();
-                    UpdateCurrentMediaSourceProviderInfoPositionOffset();
+                    _ = OnAnyMediaPropertyChangedCoreAsync(mediaSession, mediaProperties);
                 });
-            }, TimeSpan.FromSeconds(1));
+            }, Time.DebounceTimeout);
         }
 
-        private void MediaManager_OnAnySessionClosed(MediaManager.MediaSession mediaSession)
+        private void MediaManager_OnAnySessionClosed(MediaSession mediaSession)
         {
             if (mediaSession == null) return;
 
             OnDesiredSessionChanged();
         }
 
-        private void MediaManager_OnAnySessionOpened(MediaManager.MediaSession mediaSession)
+        private void MediaManager_OnAnySessionOpened(MediaSession mediaSession)
         {
             if (mediaSession == null) return;
 
@@ -436,6 +343,105 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                 RecordMediaSession(id);
                 OnDesiredSessionChanged();
             });
+        }
+
+        private async Task OnAnyMediaPropertyChangedCoreAsync(MediaSession mediaSession, GlobalSystemMediaTransportControlsSessionMediaProperties mediaProperties)
+        {
+            if (mediaSession != _currentDesiredSession) return;
+
+            string sessionId = mediaSession.Id;
+
+            var currentMediaSourceProviderInfo = GetCurrentDesiredMediaSourceProviderInfo();
+            if (currentMediaSourceProviderInfo?.ResetPositionOffsetOnSongChanged == true)
+            {
+                currentMediaSourceProviderInfo?.PositionOffset = 0;
+            }
+
+            string fixedTitle = mediaProperties.Title;
+            string fixedArtist = mediaProperties.Artist;
+            string fixedAlbum = mediaProperties.AlbumTitle;
+            string? songId = null;
+
+            if (PlayerIdHelper.IsAppleMusic(sessionId))
+            {
+                fixedArtist = mediaProperties.Artist.Split(" — ").First();
+                fixedAlbum = mediaProperties.Artist.Split(" — ").Last();
+                fixedAlbum = fixedAlbum.Replace(" - Single", "");
+                fixedAlbum = fixedAlbum.Replace(" - EP", "");
+            }
+            else if (PlayerIdHelper.IsNeteaseFamily(sessionId))
+            {
+                songId = mediaProperties.Genres
+                    .FirstOrDefault(x => x.StartsWith(ExtendedGenreFiled.NetEaseCloudMusicTrackID))?
+                    .Replace(ExtendedGenreFiled.NetEaseCloudMusicTrackID, "");
+            }
+            else if (PlayerIdHelper.IsQQFamily(sessionId))
+            {
+                songId = mediaProperties.Genres
+                    .FirstOrDefault(x => x.StartsWith(ExtendedGenreFiled.QQMusicTrackID))?
+                    .Replace(ExtendedGenreFiled.QQMusicTrackID, "");
+            }
+
+            var linkedFileName = mediaProperties.Genres
+                .FirstOrDefault(x => x.StartsWith(ExtendedGenreFiled.FileName))?
+                .Replace(ExtendedGenreFiled.FileName, "");
+
+            CurrentSongInfo = new()
+            {
+                Title = fixedTitle,
+                Artist = fixedArtist,
+                Album = fixedAlbum,
+                DurationMs = mediaSession.ControlSession.GetTimelineProperties().EndTime.TotalMilliseconds,
+                PlayerId = sessionId,
+                SongId = songId,
+                LinkedFileName = linkedFileName,
+                StartedAt = DateTime.Now.ToBinary(),
+            };
+
+            UpdateTargetScrobbledDuration();
+            IsScrobbled = false;
+            ScrobbledDuration = TimeSpan.Zero;
+
+            HandleLXMusicIfDetected(sessionId);
+
+            // 总是先回收 _memoryReader
+            _memoryReader?.Stop();
+            _memoryReader?.OnProgressChanged -= UniversalMemoryReader_OnProgressChanged;
+            _memoryReader = null;
+            // 注册
+            if (currentMediaSourceProviderInfo?.IsMemoryReaderEnabled == true)
+            {
+                if (currentMediaSourceProviderInfo.MemoryReaderConfig is MemoryReaderConfig config)
+                {
+                    _memoryReader = new(config);
+                    _memoryReader.Start();
+                    _memoryReader.OnProgressChanged += UniversalMemoryReader_OnProgressChanged;
+                }
+            }
+
+            // 处理专辑图片
+            if (PlayerIdHelper.IsLXMusic(sessionId) && _lxMusicAlbumArtBytes != null)
+            {
+                _SMTCAlbumArtBuffer = _lxMusicAlbumArtBytes.AsBuffer();
+            }
+            else if (mediaProperties.Thumbnail is IRandomAccessStreamReference streamReference)
+            {
+                _SMTCAlbumArtBuffer = await ImageHelper.ToBufferAsync(streamReference);
+            }
+            else
+            {
+                _SMTCAlbumArtBuffer = null;
+            }
+
+            _logger.LogInformation("MediaManager_OnAnyMediaPropertyChanged {SongInfo}", CurrentSongInfo);
+
+            CurrentMediaSourceProviderInfo = GetCurrentDesiredMediaSourceProviderInfo();
+
+            UpdateAlbumArt();
+            UpdateLyrics();
+
+            UpdateDiscordPresence();
+            UpdateCurrentMediaSourceProviderInfoPositionOffset();
         }
 
         private void RecordMediaSession(string id)

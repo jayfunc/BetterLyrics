@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Models.Lyrics;
+using BetterLyrics.WinUI3.Models.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml.Media;
 using System;
@@ -12,11 +13,13 @@ namespace BetterLyrics.WinUI3.Models
     {
         [ObservableProperty] public partial string Title { get; set; } = "";
         [ObservableProperty] public partial string Artist { get; set; } = "";
+
         [ObservableProperty] public partial ImageSource? CoverImage { get; set; }
         [ObservableProperty] public partial Brush? OverlayBrush { get; set; }
-        [ObservableProperty] public partial ImageSource? CrumpledLyricsSource { get; set; }
 
         [ObservableProperty] public partial List<LyricsLine> SelectedLyrics { get; set; } = new();
+
+        [ObservableProperty] public partial LyricsCardConfig Config { get; set; } = new();
 
         public string DateLong => DateTime.Now.ToString("dddd, MMMM d");
         public string DateShort => DateTime.Now.ToString("yyyy.MM.dd");

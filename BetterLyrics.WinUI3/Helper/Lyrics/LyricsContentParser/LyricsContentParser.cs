@@ -70,7 +70,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
 
             EnsureEndMs(lyricsSearchResult?.Duration);
             EnsureSyllables();
-            EnsureSufficientLineAni();
+            //EnsureSufficientLineAni();
 
             return _lyricsDataArr;
         }
@@ -127,7 +127,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
                     string romaji = string.Empty;
                     try
                     {
-                        (romaji, transliterationSearchProvider) = await transliterationService.TransliterateText(main.WrappedOriginalText, LanguageHelper.RomanCode, token);
+                        (romaji, transliterationSearchProvider) = await transliterationService.TransliterateTextAsync(main.WrappedOriginalText, LanguageHelper.RomanCode, token);
                         token.ThrowIfCancellationRequested();
 
                         _lyricsDataArr.FirstOrDefault()?.SetTransliteration(romaji);
@@ -146,7 +146,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
             // 应用翻译
             if (settings.IsTranslationEnabled && main.LanguageCode != settings.SelectedTargetLanguageCode)
             {
-                var found = _lyricsDataArr.FirstOrDefault(x => x.LanguageCode == settings.SelectedTargetLanguageCode);
+                var found = _lyricsDataArr.Where(x => x.LanguageCode == settings.SelectedTargetLanguageCode).OrderByDescending(x => x.LyricsLines.Count).FirstOrDefault();
                 if (found != null)
                 {
                     main.SetTranslatedText(found);

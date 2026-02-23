@@ -104,7 +104,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 var json = File.ReadAllText(file.Path);
                 SelectedMediaSourceProvider?.MemoryReaderConfig = JsonSerializer.Deserialize(json, Serialization.SourceGenerationContext.Default.MemoryReaderConfig);
-                GlobalToastManager.Show( "ImportSettingsSuccess", null, InfoBarSeverity.Success);
+                GlobalToastManager.Show("ImportSettingsSuccess", null, InfoBarSeverity.Success);
             }
         }
 
@@ -112,7 +112,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         private void LibreTranslateServerTest()
         {
             IsLibreTranslateServerTesting = true;
-            Task.Run(async () =>
+            _ = Task.Run(async () =>
             {
                 try
                 {
@@ -159,9 +159,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         private void LXMusicServerTest()
         {
             IsLXMusicServerTesting = true;
-            Task.Run(async () =>
+            _ = Task.Run(async () =>
             {
-                bool testResult = await NetHelper.CheckConnectivity($"{AppSettings.GeneralSettings.LXMusicServer}/status");
+                bool testResult = await NetHelper.CheckConnectivityAsync($"{AppSettings.GeneralSettings.LXMusicServer}/status");
                 _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                 {
                     if (testResult)

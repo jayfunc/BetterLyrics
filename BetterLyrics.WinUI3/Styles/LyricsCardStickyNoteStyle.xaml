@@ -27,7 +27,7 @@
 
                     <StackPanel Grid.Row="0" Margin="0,0,0,24">
                         <TextBlock
-                            FontFamily="KaiTi, Segoe Print, Comic Sans MS, Segoe UI"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="26"
                             FontWeight="SemiBold"
                             Foreground="#2C3440"
@@ -35,19 +35,21 @@
                             TextWrapping="Wrap" />
                         <TextBlock
                             Margin="0,8,0,0"
-                            FontFamily="KaiTi, Segoe Print, Comic Sans MS, Segoe UI"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="15"
                             Foreground="#5C6673"
                             Text="{Binding Artist}" />
                     </StackPanel>
 
-                    <ItemsControl Grid.Row="1" ItemsSource="{Binding SelectedLyrics}">
+                    <ItemsControl
+                        Grid.Row="1"
+                        FontFamily="{Binding Config.FontFamily}"
+                        ItemsSource="{Binding SelectedLyrics}">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Grid Margin="0,0,0,16">
                                     <StackPanel>
                                         <TextBlock
-                                            FontFamily="KaiTi, Segoe Print, Comic Sans MS, Segoe UI"
                                             FontSize="18"
                                             Foreground="#2C3440"
                                             LineHeight="28"
@@ -56,7 +58,6 @@
 
                                         <TextBlock
                                             Margin="0,4,0,0"
-                                            FontFamily="KaiTi, Segoe Print, Comic Sans MS, Segoe UI"
                                             FontSize="14"
                                             Foreground="#7A8491"
                                             LineHeight="22"
@@ -75,7 +76,7 @@
                         Opacity="0.5"
                         Orientation="Horizontal">
                         <TextBlock
-                            FontFamily="{StaticResource PublicationFont}"
+                            FontFamily="{Binding Config.FontFamily}"
                             FontSize="10"
                             FontStyle="Italic"
                             Foreground="#2C3440"

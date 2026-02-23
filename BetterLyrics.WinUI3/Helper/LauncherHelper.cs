@@ -7,7 +7,7 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public class LauncherHelper
     {
-        public static async Task SelectAndShowFile(string filePath)
+        public static async Task SelectAndShowFileAsync(string filePath)
         {
             var file = await StorageFile.GetFileFromPathAsync(filePath);
             var folder = await file.GetParentAsync();

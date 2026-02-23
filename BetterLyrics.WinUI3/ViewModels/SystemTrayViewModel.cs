@@ -54,5 +54,11 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             WindowHook.OpenOrShowWindow<LyricsSearchWindow>();
         }
+
+        [RelayCommand]
+        private static void OpenLyricsShareWindow()
+        {
+            WindowHook.OpenOrShowWindow<LyricsShareWindow>();
+        }
     }
 }

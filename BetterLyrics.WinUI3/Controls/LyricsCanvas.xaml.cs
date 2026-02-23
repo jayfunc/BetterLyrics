@@ -647,7 +647,7 @@ namespace BetterLyrics.WinUI3.Controls
             Canvas.CreateResources -= Canvas_CreateResources;
 
             Canvas.Paused = true;
-            
+
             Canvas.RemoveFromVisualTree();
             Canvas = null;
 
@@ -657,6 +657,7 @@ namespace BetterLyrics.WinUI3.Controls
             _fogRenderer.Dispose();
             _spectrumRenderer.Dispose();
 
+            DisposeRenderLyricsLines();
             _renderLyricsLines = null;
 
             DisposeSpectrumAnalyzer();
@@ -716,6 +717,9 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void UpdateRenderLyricsLines()
         {
+            Canvas.Paused = true;
+
+            DisposeRenderLyricsLines();
             _renderLyricsLines = null;
             var lines = _gsmtcService.CurrentLyricsData?.LyricsLines.Select(x => new RenderLyricsLine(x)).ToList();
             if (lines != null)
@@ -723,6 +727,8 @@ namespace BetterLyrics.WinUI3.Controls
                 LyricsLayoutManager.CalculateLanes(lines);
             }
             _renderLyricsLines = lines;
+            
+            Canvas.Paused = false;
         }
 
         private async Task ReloadCoverBackgroundResourcesAsync()
@@ -734,6 +740,18 @@ namespace BetterLyrics.WinUI3.Controls
 
                 CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(Canvas, stream);
                 _coverRenderer.SetCoverBitmap(bitmap);
+            }
+        }
+
+        private void DisposeRenderLyricsLines()
+        {
+            if (_renderLyricsLines != null)
+            {
+                foreach (var item in _renderLyricsLines)
+                {
+                    item.DisposeTextGeometry();
+                    item.DisposeTextLayout();
+                }
             }
         }
 
