@@ -322,7 +322,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                 {
                     _ = OnAnyMediaPropertyChangedCoreAsync(mediaSession, mediaProperties);
                 });
-            }, Time.DebounceTimeout);
+            }, TimeSpan.FromSeconds(1));
         }
 
         private void MediaManager_OnAnySessionClosed(MediaSession mediaSession)
