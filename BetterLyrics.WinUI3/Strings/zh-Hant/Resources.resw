@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -934,19 +934,19 @@
     <value>中文歌詞</value>
   </data>
   <data name="SettingsPageChinesePreference.Description" xml:space="preserve">
-    <value>Selecting "Unspecified" will preserve the original lyrics; selecting "Simplified Chinese" or "Traditional Chinese" will perform machine conversion on the original lyrics</value>
+    <value>選擇 「未指定 」會保留原始歌詞；選擇 「簡體中文 」或 「繁體中文 」會在原始歌詞上執行機器轉換。</value>
   </data>
   <data name="SettingsPageChinesePreference.Header" xml:space="preserve">
-    <value>中文轉換為繁體</value>
+    <value>中文偏好</value>
   </data>
   <data name="SettingsPageChinesePreferenceSToT.Content" xml:space="preserve">
-    <value>Traditional Chinese</value>
+    <value>繁體中文</value>
   </data>
   <data name="SettingsPageChinesePreferenceTToS.Content" xml:space="preserve">
-    <value>Simplified Chinese</value>
+    <value>簡體中文</value>
   </data>
   <data name="SettingsPageChinesePreferenceUnspecified.Content" xml:space="preserve">
-    <value>Unspecified</value>
+    <value>未指定</value>
   </data>
   <data name="SettingsPageCJK.Header" xml:space="preserve">
     <value>中日韓統一表意文字</value>
@@ -1285,10 +1285,10 @@
     <value>目前行</value>
   </data>
   <data name="SettingsPageLyricsFilter.Description" xml:space="preserve">
-    <value>Remove non-textual information such as lyrics and composition credits</value>
+    <value>移除非文字性資訊，例如歌詞和作曲鳴謝</value>
   </data>
   <data name="SettingsPageLyricsFilter.Header" xml:space="preserve">
-    <value>Lyrics Filter</value>
+    <value>歌詞篩選器</value>
   </data>
   <data name="SettingsPageLyricsFloatAnimation.Header" xml:space="preserve">
     <value>浮動動畫</value>
@@ -1447,7 +1447,7 @@
     <value>激進</value>
   </data>
   <data name="SettingsPageOneFontFamilyOnly.Message" xml:space="preserve">
-    <value>Please select only one font. Selecting multiple fonts will cause this setting to fail and revert to the system default font</value>
+    <value>請僅選擇一種字型。選擇多種字型會導致此設定失敗，並恢復為系統預設字型。</value>
   </data>
   <data name="SettingsPageOpacity.Header" xml:space="preserve">
     <value>不透明度</value>
