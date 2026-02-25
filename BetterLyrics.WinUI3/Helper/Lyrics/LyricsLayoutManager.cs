@@ -75,6 +75,8 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
 
                 line.RecreateTextGeometry();
 
+                line.DisposeCaches();
+
                 // 左上角坐标
                 line.TopLeftPosition = new Vector2(0, (float)currentY);
                 // 注音层
@@ -98,7 +100,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                 }
 
                 // 翻译层
-                if (line.SecondaryTextLayout != null)
+                if (line.PrimaryTextLayout != null && line.SecondaryTextLayout != null)
                 {
                     // 间距
                     currentY += (line.SecondaryTextLayout.LayoutBounds.Height / line.SecondaryTextLayout.LineCount) * 0.1;
@@ -115,7 +117,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                 line.BottomRightPosition = new Vector2(0 + (float)actualWidth, (float)currentY);
 
                 // 行间距
-                if (line.PrimaryTextLayout != null)
+                if (line.PrimaryTextLayout != null && line.PrimaryTextLayout != null)
                 {
                     currentY += (line.PrimaryTextLayout.LayoutBounds.Height / line.PrimaryTextLayout.LineCount) * style.LyricsLineSpacingFactor;
                 }

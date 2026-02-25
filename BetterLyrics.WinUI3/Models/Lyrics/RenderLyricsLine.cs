@@ -1,6 +1,8 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
+using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
@@ -67,6 +69,13 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
         public string PrimaryText { get; set; } = "";
         public string SecondaryText { get; set; } = "";
         public string TertiaryText { get; set; } = "";
+
+        public CanvasCommandList? CachedStroke { get; private set; }
+        public CanvasCommandList? CachedFill { get; private set; }
+        public TintEffect? DynamicFillEffect { get; private set; }
+        public CompositeEffect? CombinedEffect { get; private set; }
+
+        public CanvasTextLayoutRegion[]? PrimaryTextRegions { get; private set; }
 
         /// <summary>
         /// 轨道索引 (0 = 主轨道, 1 = 第一副轨道, etc.)
@@ -175,7 +184,8 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
         {
             DisposeTextLayout();
 
-            if (createPhonetic && TertiaryText != "")
+            // 音译
+            if (createPhonetic && !string.IsNullOrWhiteSpace(TertiaryText))
             {
                 TertiaryTextLayout = new CanvasTextLayout(control, TertiaryText, new CanvasTextFormat
                 {
@@ -190,6 +200,7 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
                 TertiaryTextLayout.SetFontFamily(TertiaryText, fontFamilyCJK, fontFamilyWestern);
             }
 
+            // 原文
             PrimaryTextLayout = new CanvasTextLayout(control, PrimaryText, new CanvasTextFormat
             {
                 HorizontalAlignment = CanvasHorizontalAlignment.Left,
@@ -201,8 +212,10 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
                 HorizontalAlignment = type.ToCanvasHorizontalAlignment()
             };
             PrimaryTextLayout.SetFontFamily(PrimaryText, fontFamilyCJK, fontFamilyWestern);
+            PrimaryTextRegions = PrimaryTextLayout.GetCharacterRegions(0, PrimaryText.Length);
 
-            if (createTranslated && SecondaryText != "")
+            // 翻译
+            if (createTranslated && !string.IsNullOrWhiteSpace(SecondaryText))
             {
                 SecondaryTextLayout = new CanvasTextLayout(control, SecondaryText, new CanvasTextFormat
                 {
@@ -286,6 +299,55 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
 
                 PrimaryRenderChars.Add(renderLyricsChar);
             }
+        }
+
+        public void EnsureCaches(ICanvasResourceCreator resourceCreator, Color strokeColor, double strokeWidth)
+        {
+            if (CachedStroke != null && CachedFill != null) return;
+
+            CachedStroke = new CanvasCommandList(resourceCreator);
+            using (var ds = CachedStroke.CreateDrawingSession())
+            {
+                if (strokeWidth > 0)
+                {
+                    if (TertiaryCanvasGeometry != null) ds.DrawGeometry(TertiaryCanvasGeometry, TertiaryPosition, strokeColor, (float)strokeWidth);
+                    if (PrimaryCanvasGeometry != null) ds.DrawGeometry(PrimaryCanvasGeometry, PrimaryPosition, strokeColor, (float)strokeWidth);
+                    if (SecondaryCanvasGeometry != null) ds.DrawGeometry(SecondaryCanvasGeometry, SecondaryPosition, strokeColor, (float)strokeWidth);
+                }
+            }
+
+            CachedFill = new CanvasCommandList(resourceCreator);
+            using (var ds = CachedFill.CreateDrawingSession())
+            {
+                if (TertiaryTextLayout != null) ds.DrawTextLayout(TertiaryTextLayout, TertiaryPosition, Colors.White);
+                if (PrimaryTextLayout != null) ds.DrawTextLayout(PrimaryTextLayout, PrimaryPosition, Colors.White);
+                if (SecondaryTextLayout != null) ds.DrawTextLayout(SecondaryTextLayout, SecondaryPosition, Colors.White);
+            }
+
+            DynamicFillEffect = new TintEffect
+            {
+                Source = CachedFill,
+                Color = Colors.White
+            };
+
+            CombinedEffect = new CompositeEffect
+            {
+                Sources = { CachedStroke, DynamicFillEffect },
+                Mode = CanvasComposite.SourceOver
+            };
+        }
+
+        public void DisposeCaches()
+        {
+            CachedStroke?.Dispose();
+            CachedFill?.Dispose();
+            DynamicFillEffect?.Dispose();
+            CombinedEffect?.Dispose();
+
+            CachedStroke = null;
+            CachedFill = null;
+            DynamicFillEffect = null;
+            CombinedEffect = null;
         }
 
         public void Update(TimeSpan elapsedTime)

@@ -1,7 +1,6 @@
 // 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Helper.Lyrics;
 using BetterLyrics.WinUI3.Models;
@@ -48,7 +47,6 @@ namespace BetterLyrics.WinUI3.Controls
         private readonly LyricsRenderer _lyricsRenderer = new();
         private readonly FluidBackgroundRenderer _fluidRenderer = new();
         private readonly CoverBackgroundRenderer _coverRenderer = new();
-        private readonly PureColorBackgroundRenderer _pureColorRenderer = new();
         private readonly SnowRenderer _snowRenderer = new();
         private readonly FogRenderer _fogRenderer = new();
         private readonly SpectrumRenderer _spectrumRenderer = new();
@@ -254,10 +252,7 @@ namespace BetterLyrics.WinUI3.Controls
         public LyricsCanvas()
         {
             InitializeComponent();
-
             WeakReferenceMessenger.Default.RegisterAll(this);
-
-            UpdateRenderLyricsLines();
         }
 
         private static void OnDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -365,7 +360,7 @@ namespace BetterLyrics.WinUI3.Controls
                 finalOpacity = lyricsBg.PureColorOverlayOpacity / 100.0;
             }
 
-            _pureColorRenderer.Draw(
+            PureColorBackgroundRenderer.Draw(
                 args.DrawingSession,
                 bounds,
                 overlayColor,
@@ -658,8 +653,6 @@ namespace BetterLyrics.WinUI3.Controls
             _spectrumRenderer.Dispose();
 
             DisposeRenderLyricsLines();
-            _renderLyricsLines = null;
-
             DisposeSpectrumAnalyzer();
         }
 
@@ -687,7 +680,14 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void TriggerRelayout()
         {
-            if (_renderLyricsLines == null || !_isLayoutChanged || _lyricsWindowStatus == null) return;
+            if (!_isLayoutChanged || _lyricsWindowStatus == null) return;
+
+            DisposeRenderLyricsLines();
+            _renderLyricsLines = _gsmtcService.CurrentLyricsData?.LyricsLines.Select(x => new RenderLyricsLine(x)).ToList();
+
+            if (_renderLyricsLines == null) return;
+
+            LyricsLayoutManager.CalculateLanes(_renderLyricsLines);
 
             LyricsLayoutManager.MeasureAndArrange(
                 resourceCreator: Canvas,
@@ -715,22 +715,6 @@ namespace BetterLyrics.WinUI3.Controls
             _songPosition = TimeSpan.Zero;
         }
 
-        private void UpdateRenderLyricsLines()
-        {
-            Canvas.Paused = true;
-
-            DisposeRenderLyricsLines();
-            _renderLyricsLines = null;
-            var lines = _gsmtcService.CurrentLyricsData?.LyricsLines.Select(x => new RenderLyricsLine(x)).ToList();
-            if (lines != null)
-            {
-                LyricsLayoutManager.CalculateLanes(lines);
-            }
-            _renderLyricsLines = lines;
-            
-            Canvas.Paused = false;
-        }
-
         private async Task ReloadCoverBackgroundResourcesAsync()
         {
             if (_gsmtcService.AlbumArtBitmapStream is IRandomAccessStream stream)
@@ -751,7 +735,9 @@ namespace BetterLyrics.WinUI3.Controls
                 {
                     item.DisposeTextGeometry();
                     item.DisposeTextLayout();
+                    item.DisposeCaches();
                 }
+                _renderLyricsLines = null;
             }
         }
 
@@ -787,7 +773,6 @@ namespace BetterLyrics.WinUI3.Controls
             {
                 if (message.PropertyName == nameof(IGSMTCService.CurrentLyricsData))
                 {
-                    UpdateRenderLyricsLines();
                     _isLayoutChanged = true;
                 }
             }

@@ -224,7 +224,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                                     if (renderChar.EndMs < currentPositionMs)
                                     {
                                         // 确保已播放的部分恢复原位
-                                        renderChar.FloatTransition.Start(0);
+                                        renderChar.FloatTransition.JumpTo(0);
                                     }
                                     else
                                     {

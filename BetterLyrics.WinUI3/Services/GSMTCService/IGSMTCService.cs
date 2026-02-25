@@ -8,6 +8,7 @@ using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage.Streams;
 using Windows.UI;
@@ -42,8 +43,8 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         BitmapImage? AlbumArtBitmapImage { get; }
         IRandomAccessStream? AlbumArtBitmapStream { get; }
 
-        AlbumArtThemeColors CalculateAlbumArtThemeColors(LyricsWindowStatus lyricsWindowStatus, Color backdropAccentColor);
-        List<Color> GetAlbumArtAccentColors(PaletteGeneratorType paletteGeneratorType, bool isDark);
+        Task<AlbumArtThemeColors> CalculateAlbumArtThemeColorsAsync(LyricsWindowStatus lyricsWindowStatus, Color backdropAccentColor, CancellationToken token = default);
+        Task<List<Color>> GetAlbumArtAccentColorsAsync(PaletteGeneratorType paletteGeneratorType, bool isDark, CancellationToken token = default);
 
         LyricsCacheItem? CurrentLyricsSearchResult { get; }
     }

@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using WanaKanaNet.Helpers;
 using Windows.Graphics.Imaging;
 using Windows.Storage.Streams;
 using Windows.UI;
@@ -22,15 +23,6 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
     public partial class GSMTCService : IGSMTCService
     {
         private readonly LatestOnlyTaskRunner _albumArtRefreshRunner = new();
-
-        private List<Color> _lightAccentColorsMedianCut = Enumerable.Repeat(Colors.Black, 4).ToList();
-        private List<Color> _darkAccentColorsMedianCut = Enumerable.Repeat(Colors.Black, 4).ToList();
-
-        private List<Color> _lightAccentColorsOctTree = Enumerable.Repeat(Colors.Black, 4).ToList();
-        private List<Color> _darkAccentColorsOctTree = Enumerable.Repeat(Colors.Black, 4).ToList();
-
-        private List<Color> _lightAccentColorsAuto = Enumerable.Repeat(Colors.Black, 4).ToList();
-        private List<Color> _darkAccentColorsAuto = Enumerable.Repeat(Colors.Black, 4).ToList();
 
         private BitmapDecoder? _albumArtBitmapDecoder = null;
 
@@ -59,7 +51,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                 token.ThrowIfCancellationRequested();
 
                 var tempBuffer = new Windows.Storage.Streams.Buffer((uint)placeHolderStream.Size);
-                
+
                 await placeHolderStream.ReadAsync(tempBuffer, (uint)placeHolderStream.Size, InputStreamOptions.None);
                 token.ThrowIfCancellationRequested();
 
@@ -67,36 +59,6 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             }
 
             _albumArtBitmapDecoder = await ImageHelper.GetBitmapDecoderAsync(buffer);
-            token.ThrowIfCancellationRequested();
-
-            _lightAccentColorsMedianCut =
-                (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, PaletteGeneratorType.MedianCut, false))
-                .Palette.Select(Helper.ColorHelper.FromVector3).ToList();
-            token.ThrowIfCancellationRequested();
-
-            _darkAccentColorsMedianCut =
-                (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, PaletteGeneratorType.MedianCut, true))
-                .Palette.Select(Helper.ColorHelper.FromVector3).ToList();
-            token.ThrowIfCancellationRequested();
-
-            _lightAccentColorsOctTree =
-                (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, PaletteGeneratorType.OctTree, false))
-                .Palette.Select(Helper.ColorHelper.FromVector3).ToList();
-            token.ThrowIfCancellationRequested();
-
-            _darkAccentColorsOctTree =
-                (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, PaletteGeneratorType.OctTree, true))
-                .Palette.Select(Helper.ColorHelper.FromVector3).ToList();
-            token.ThrowIfCancellationRequested();
-
-            _lightAccentColorsAuto =
-                (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, PaletteGeneratorType.Auto, false))
-                .Palette.Select(Helper.ColorHelper.FromVector3).ToList();
-            token.ThrowIfCancellationRequested();
-
-            _darkAccentColorsAuto =
-                (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, PaletteGeneratorType.Auto, true))
-                .Palette.Select(Helper.ColorHelper.FromVector3).ToList();
             token.ThrowIfCancellationRequested();
 
             var bitmapImage = new BitmapImage();
@@ -107,22 +69,23 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             AlbumArtBitmapStream = ImageHelper.ToIRandomAccessStream(buffer);
         }
 
-        public AlbumArtThemeColors CalculateAlbumArtThemeColors(LyricsWindowStatus lyricsWindowStatus, Color backdropAccentColor)
+        public async Task<AlbumArtThemeColors> CalculateAlbumArtThemeColorsAsync(LyricsWindowStatus lyricsWindowStatus, Color backdropAccentColor, CancellationToken token = default)
         {
-            var lightAccentColors = lyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType switch
+            var lightAccentColors = Enumerable.Repeat(Colors.Black, 4).ToList();
+            var darkAccentColors = Enumerable.Repeat(Colors.Black, 4).ToList();
+
+            if (_albumArtBitmapDecoder != null)
             {
-                PaletteGeneratorType.MedianCut => _lightAccentColorsMedianCut,
-                PaletteGeneratorType.OctTree => _lightAccentColorsOctTree,
-                PaletteGeneratorType.Auto => _lightAccentColorsAuto,
-                _ => _lightAccentColorsMedianCut,
-            };
-            var darkAccentColors = lyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType switch
-            {
-                PaletteGeneratorType.MedianCut => _darkAccentColorsMedianCut,
-                PaletteGeneratorType.OctTree => _darkAccentColorsOctTree,
-                PaletteGeneratorType.Auto => _darkAccentColorsAuto,
-                _ => _darkAccentColorsMedianCut,
-            };
+                lightAccentColors =
+                        (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, lyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType, false))
+                        .Palette.Select(Helper.ColorHelper.FromVector3).ToList();
+                token.ThrowIfCancellationRequested();
+
+                darkAccentColors =
+                    (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, lyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType, true))
+                    .Palette.Select(Helper.ColorHelper.FromVector3).ToList();
+                token.ThrowIfCancellationRequested();
+            }
 
             var result = new AlbumArtThemeColors();
             result.EnvColor = backdropAccentColor;
@@ -218,22 +181,23 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             return result;
         }
 
-        public List<Color> GetAlbumArtAccentColors(PaletteGeneratorType paletteGeneratorType, bool isDark)
+        public async Task<List<Color>> GetAlbumArtAccentColorsAsync(PaletteGeneratorType paletteGeneratorType, bool isDark, CancellationToken token = default)
         {
-            var lightAccentColors = paletteGeneratorType switch
+            var lightAccentColors = Enumerable.Repeat(Colors.Black, 4).ToList();
+            var darkAccentColors = Enumerable.Repeat(Colors.Black, 4).ToList();
+
+            if (_albumArtBitmapDecoder != null)
             {
-                PaletteGeneratorType.MedianCut => _lightAccentColorsMedianCut,
-                PaletteGeneratorType.OctTree => _lightAccentColorsOctTree,
-                PaletteGeneratorType.Auto => _lightAccentColorsAuto,
-                _ => _lightAccentColorsMedianCut,
-            };
-            var darkAccentColors = paletteGeneratorType switch
-            {
-                PaletteGeneratorType.MedianCut => _darkAccentColorsMedianCut,
-                PaletteGeneratorType.OctTree => _darkAccentColorsOctTree,
-                PaletteGeneratorType.Auto => _darkAccentColorsAuto,
-                _ => _darkAccentColorsMedianCut,
-            };
+                lightAccentColors =
+                        (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, paletteGeneratorType, false))
+                        .Palette.Select(Helper.ColorHelper.FromVector3).ToList();
+                token.ThrowIfCancellationRequested();
+
+                darkAccentColors =
+                    (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, paletteGeneratorType, true))
+                    .Palette.Select(Helper.ColorHelper.FromVector3).ToList();
+                token.ThrowIfCancellationRequested();
+            }
             return isDark ? darkAccentColors : lightAccentColors;
         }
 

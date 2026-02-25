@@ -62,6 +62,14 @@
                                 <local:FontPicker SelectedFontId="{x:Bind LyricsStyleSettings.LyricsWesternFontFamily, Mode=TwoWay}" />
                             </dev:SettingsCard>
                         </dev:SettingsExpander.Items>
+                        <dev:SettingsExpander.ItemsFooter>
+                            <InfoBar
+                                x:Uid="SettingsPageOneFontFamilyOnly"
+                                IsClosable="False"
+                                IsOpen="True"
+                                Message="请仅选择一种字体，选择多种字体将导致该设置项无法生效且回退到系统默认字体"
+                                Severity="Warning" />
+                        </dev:SettingsExpander.ItemsFooter>
                     </dev:SettingsExpander>
 
                     <dev:SettingsCard x:Uid="SettingsPageLyricsFontWeight" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8DD;}">

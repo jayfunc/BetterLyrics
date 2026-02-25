@@ -5,5 +5,6 @@
         Auto,
         MedianCut,
         OctTree,
+        KMeans
     }
 }

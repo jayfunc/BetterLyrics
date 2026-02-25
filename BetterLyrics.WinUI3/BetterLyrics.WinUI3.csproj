@@ -110,7 +110,6 @@
 		<PackageReference Include="Interop.UIAutomationClient" Version="10.19041.0" />
 		<PackageReference Include="LiteFM" Version="1.0.2" />
 		<PackageReference Include="LiveChartsCore.SkiaSharpView.WinUI" Version="2.0.0-rc6.1" />
-		<PackageReference Include="Lyricify.Lyrics.Helper-NativeAot" Version="0.1.4-alpha.5" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.2" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="10.0.2" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.2" />
@@ -153,6 +152,7 @@
 		<ProjectReference Include="..\BetterLyrics.Core\BetterLyrics.Core.csproj" />
 		<ProjectReference Include="..\ColorThief.WinUI3\ColorThief.WinUI3.csproj" />
 		<ProjectReference Include="..\Impressionist\Impressionist\Impressionist.csproj" />
+		<ProjectReference Include="..\Lyricify.Lyrics.Helper\Lyricify.Lyrics.Helper.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<Page Update="Rendering\InAppLyricsRenderer.xaml">
