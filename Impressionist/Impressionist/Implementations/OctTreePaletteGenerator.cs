@@ -31,7 +31,7 @@ namespace Impressionist.Implementations
             return Task.FromResult(new ThemeColorResult(result, colorIsDark));
         }
 
-        public async Task<PaletteResult> CreatePaletteAsync(Dictionary<Vector3, int> sourceColor, int clusterCount, bool isDark)
+        public static async Task<PaletteResult> CreatePaletteAsync(Dictionary<Vector3, int> sourceColor, int clusterCount, bool isDark)
         {
             var quantizer = new PaletteQuantizer();
             var builder = sourceColor.AsEnumerable();

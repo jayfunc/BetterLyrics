@@ -34,7 +34,7 @@ namespace Impressionist.Implementations
             return Task.FromResult(new ThemeColorResult(colorVector, isDark));
         }
 
-        public async Task<PaletteResult> CreatePaletteAsync(Dictionary<Vector3, int> sourceColor, int clusterCount, bool isDark, bool toLab = false, bool useKMeansPP = false)
+        public static async Task<PaletteResult> CreatePaletteAsync(Dictionary<Vector3, int> sourceColor, int clusterCount, bool isDark, bool toLab = false, bool useKMeansPP = false)
         {
             if (sourceColor.Count == 1)
             {
@@ -48,6 +48,11 @@ namespace Impressionist.Implementations
                 builder = builder.Select(t => new KeyValuePair<Vector3, int>(t.Key.RGBVectorToLABVector(), t.Value));
             }
             var targetColors = builder.ToDictionary(t => t.Key, t => t.Value);
+            // 解决除 0 异常（主要）
+            if (targetColors.Count == 0)
+            {
+                targetColors.Add(colorResult.Color, 1);
+            }
             var clusters = KMeansCluster(targetColors, clusterCount, useKMeansPP);
             var dominantColors = new List<Vector3>();
             foreach (var cluster in clusters)
@@ -61,6 +66,15 @@ namespace Impressionist.Implementations
             }
             var result = new List<Vector3>();
             var count = dominantColors.Count;
+            // 解决除 0 异常（可能需要）
+            if (count == 0)
+            {
+                for (int i = 0; i < clusterCount; i++)
+                {
+                    result.Add(colorResult.Color);
+                }
+                return new PaletteResult(result, isDark, colorResult);
+            }
             for (int i = 0; i < clusterCount; i++)
             {
                 // You know, it is always hard to fullfill a palette when you have no enough colors. So please forgive me when placing the same color over and over again.
@@ -117,14 +131,19 @@ namespace Impressionist.Implementations
                         count += colors[color];
                     }
 
-                    var x = (sumX / count);
-                    var y = (sumY / count);
-                    var z = (sumZ / count);
-                    var newCenter = new Vector3(x, y, z);
-                    if (!newCenter.Equals(centers[i]))
+                    // 解决除 0 异常（可能需要）
+                    if (count > 0f)
                     {
-                        centers[i] = newCenter;
-                        changed = true;
+                        var x = (sumX / count);
+                        var y = (sumY / count);
+                        var z = (sumZ / count);
+                        var newCenter = new Vector3(x, y, z);
+
+                        if (!newCenter.Equals(centers[i]))
+                        {
+                            centers[i] = newCenter;
+                            changed = true;
+                        }
                     }
                 }
             }

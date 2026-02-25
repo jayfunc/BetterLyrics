@@ -43,12 +43,12 @@ namespace BetterLyrics.WinUI3.Views
 
             WeakReferenceMessenger.Default.RegisterAll(this);
 
-            UpdateAlbumArtThemeColors();
+            _ = UpdateAlbumArtThemeColorsAsync();
         }
 
-        private void UpdateAlbumArtThemeColors()
+        private async Task UpdateAlbumArtThemeColorsAsync()
         {
-            var result = _gsmtcService.CalculateAlbumArtThemeColors(
+            var result = await _gsmtcService.CalculateAlbumArtThemeColorsAsync(
                 ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus, Colors.Transparent);
 
             NowPlayingPage.AlbumArtThemeColors = result;
@@ -124,7 +124,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(IGSMTCService.AlbumArtBitmapImage))
                 {
-                    UpdateAlbumArtThemeColors();
+                    _ = UpdateAlbumArtThemeColorsAsync();
                 }
             }
         }
@@ -135,7 +135,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(LyricsBackgroundSettings.LyricsBackgroundTheme))
                 {
-                    UpdateAlbumArtThemeColors();
+                    _ = UpdateAlbumArtThemeColorsAsync();
                 }
             }
         }
@@ -146,7 +146,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(LyricsBackgroundSettings.PaletteGeneratorType))
                 {
-                    UpdateAlbumArtThemeColors();
+                    _ = UpdateAlbumArtThemeColorsAsync();
                 }
             }
         }

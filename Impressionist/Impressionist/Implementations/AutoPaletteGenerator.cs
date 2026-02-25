@@ -11,8 +11,8 @@ namespace Impressionist.Implementations
     {
         public static async Task<PaletteResult> CreatePalette(Dictionary<Vector3, int> sourceColor, int clusterCount, bool isDark, bool toLab = false, bool useKMeansPP = false)
         {
-            var kmeansResult = await PaletteGenerators.KMeansPaletteGenerator.CreatePaletteAsync(sourceColor, clusterCount, isDark, toLab, useKMeansPP);
-            var octTreeResult = await PaletteGenerators.OctTreePaletteGenerator.CreatePaletteAsync(sourceColor, clusterCount, isDark);
+            var kmeansResult = await KMeansPaletteGenerator.CreatePaletteAsync(sourceColor, clusterCount, isDark, toLab, useKMeansPP);
+            var octTreeResult = await OctTreePaletteGenerator.CreatePaletteAsync(sourceColor, clusterCount, isDark);
             var kMeansCentralPoint = Vector3.Zero;
             var vectors = kmeansResult.Palette.Select(t => t.RGBVectorToLABVector()).ToList();
             foreach (var vector in vectors)

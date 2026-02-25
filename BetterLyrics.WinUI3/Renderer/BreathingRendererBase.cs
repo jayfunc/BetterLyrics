@@ -54,7 +54,7 @@ namespace BetterLyrics.WinUI3.Renderer
         /// <summary>
         /// 重置画布变换（绘制结束后调用）
         /// </summary>
-        protected void ResetTransform(CanvasDrawingSession ds, bool isEnabled)
+        protected static void ResetTransform(CanvasDrawingSession ds, bool isEnabled)
         {
             if (isEnabled)
             {

@@ -572,8 +572,9 @@
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.ListenOnNewPlaybackSource, Mode=TwoWay}" />
                         </dev:SettingsCard>
 
+                        <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="歌词处理" />
+
                         <!--  Lyrics translation  -->
-                        <TextBlock x:Uid="SettingsPageTranslation" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
                         <dev:SettingsExpander x:Uid="LyricsPageTranslationEnabled" IsExpanded="True">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=TwoWay}" />
                             <dev:SettingsExpander.Items>
@@ -617,7 +618,6 @@
                         </dev:SettingsExpander>
 
                         <!--  Lyrics phonetic  -->
-                        <TextBlock x:Uid="SettingsPagePhonetic" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
                         <dev:SettingsExpander x:Uid="SettingsPageChinese" IsExpanded="{x:Bind ViewModel.AppSettings.TranslationSettings.IsChineseRomanizationEnabled, Mode=OneWay}">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsChineseRomanizationEnabled, Mode=TwoWay}" />
                             <dev:SettingsExpander.Items>
@@ -634,9 +634,16 @@
                         </dev:SettingsCard>
 
                         <!--  中文简体繁体偏好  -->
-                        <TextBlock x:Uid="SettingsPageChineseLyrics" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
                         <dev:SettingsCard x:Uid="SettingsPageChinesePreference">
-                            <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTraditionalChineseEnabled, Mode=TwoWay}" />
+                            <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.TranslationSettings.ChineseConversion, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                <ComboBoxItem x:Uid="SettingsPageChinesePreferenceUnspecified" />
+                                <ComboBoxItem x:Uid="SettingsPageChinesePreferenceSToT" />
+                                <ComboBoxItem x:Uid="SettingsPageChinesePreferenceTToS" />
+                            </ComboBox>
+                        </dev:SettingsCard>
+
+                        <dev:SettingsCard x:Uid="SettingsPageLyricsFilter">
+                            <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsFilterEnabled, Mode=TwoWay}" />
                         </dev:SettingsCard>
 
                         <!--  Last.fm  -->

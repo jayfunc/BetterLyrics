@@ -16,9 +16,6 @@ namespace BetterLyrics.WinUI3.Renderer
 {
     public class LyricsRenderer : BreathingRendererBase
     {
-        private readonly PlayingLineRenderer _playingRenderer = new();
-        private readonly UnplayingLineRenderer _unplayingRenderer = new();
-
         private Matrix4x4 _threeDimMatrix = Matrix4x4.Identity;
 
         public void Draw(
@@ -42,65 +39,66 @@ namespace BetterLyrics.WinUI3.Renderer
             Color fgColor,
             double currentProgressMs)
         {
-            using (var opacityLayer = ds.CreateLayer((float)lyricsOpacity))
+            // TODO
+            //using (var opacityLayer = ds.CreateLayer((float)lyricsOpacity))
+            //{
+            if (windowStatus.LyricsEffectSettings.Is3DLyricsEnabled)
             {
-                if (windowStatus.LyricsEffectSettings.Is3DLyricsEnabled)
+                using (var layer = new CanvasCommandList(control))
                 {
-                    using (var layer = new CanvasCommandList(control))
+                    using (var layerDs = layer.CreateDrawingSession())
                     {
-                        using (var layerDs = layer.CreateDrawingSession())
-                        {
-                            DrawLyrics(
-                                control,
-                                layerDs,
-                                lines,
-                                mouseHoverLineIndex,
-                                isMousePressing,
-                                startVisibleIndex,
-                                endVisibleIndex,
-                                lyricsX,
-                                lyricsY,
-                                lyricsWidth,
-                                lyricsHeight,
-                                userScrollOffset,
-                                playingLineTopOffsetFactor,
-                                windowStatus,
-                                strokeColor,
-                                bgColor,
-                                fgColor,
-                                currentProgressMs);
-                        }
-
-                        ds.DrawImage(new Transform3DEffect
-                        {
-                            Source = layer,
-                            TransformMatrix = _threeDimMatrix
-                        });
+                        DrawLyrics(
+                            control,
+                            layerDs,
+                            lines,
+                            mouseHoverLineIndex,
+                            isMousePressing,
+                            startVisibleIndex,
+                            endVisibleIndex,
+                            lyricsX,
+                            lyricsY,
+                            lyricsWidth,
+                            lyricsHeight,
+                            userScrollOffset,
+                            playingLineTopOffsetFactor,
+                            windowStatus,
+                            strokeColor,
+                            bgColor,
+                            fgColor,
+                            currentProgressMs);
                     }
-                }
-                else
-                {
-                    DrawLyrics(
-                        control,
-                        ds,
-                        lines,
-                        mouseHoverLineIndex,
-                        isMousePressing,
-                        startVisibleIndex,
-                        endVisibleIndex,
-                        lyricsX,
-                        lyricsY,
-                        lyricsWidth,
-                        lyricsHeight,
-                        userScrollOffset,
-                        playingLineTopOffsetFactor,
-                        windowStatus,
-                        strokeColor,
-                        bgColor,
-                        fgColor,
-                        currentProgressMs);
+
+                    ds.DrawImage(new Transform3DEffect
+                    {
+                        Source = layer,
+                        TransformMatrix = _threeDimMatrix
+                    });
                 }
             }
+            else
+            {
+                DrawLyrics(
+                    control,
+                    ds,
+                    lines,
+                    mouseHoverLineIndex,
+                    isMousePressing,
+                    startVisibleIndex,
+                    endVisibleIndex,
+                    lyricsX,
+                    lyricsY,
+                    lyricsWidth,
+                    lyricsHeight,
+                    userScrollOffset,
+                    playingLineTopOffsetFactor,
+                    windowStatus,
+                    strokeColor,
+                    bgColor,
+                    fgColor,
+                    currentProgressMs);
+            }
+            //}
         }
 
         private void DrawLyrics(
@@ -163,67 +161,31 @@ namespace BetterLyrics.WinUI3.Renderer
 
                 ds.Transform *= Matrix3x2.CreateTranslation((float)xOffset, (float)yOffset);
 
-                using (var textOnlyLayer = RenderBaseTextLayer(control, line, styleSettings.LyricsFontStrokeWidth, strokeColor, line.ColorTransition.Value))
+                line.EnsureCaches(control, strokeColor, styleSettings.LyricsFontStrokeWidth);
+                line?.DynamicFillEffect?.Color = line.ColorTransition.Value;
+                if (line?.CombinedEffect is CompositeEffect compositeEffect)
                 {
                     if (isPlaying)
                     {
-                        _playingRenderer.Draw(control, ds, textOnlyLayer, line, currentProgressMs, bgColor, fgColor, effectSettings);
+                        PlayingLineRenderer.Draw(control, ds, compositeEffect, line, currentProgressMs, bgColor, fgColor, effectSettings);
                     }
                     else
                     {
-                        _unplayingRenderer.Draw(ds, textOnlyLayer, line);
+                        UnplayingLineRenderer.Draw(ds, compositeEffect, line);
                     }
+                }
 
-                    if (i == mouseHoverLineIndex)
-                    {
-                        byte opacity = isMousePressing ? (byte)32 : (byte)16;
-                        double scale = isMousePressing ? 1.09 : 1.10;
-                        ds.FillRoundedRectangle(
-                            new Windows.Foundation.Rect(line.TopLeftPosition.ToPoint().WithX(0), line.BottomRightPosition.ToPoint().WithX(lyricsWidth)).Scale(scale),
-                            8, 8, Color.FromArgb(opacity, 255, 255, 255));
-                    }
+                if (i == mouseHoverLineIndex)
+                {
+                    byte opacity = isMousePressing ? (byte)32 : (byte)16;
+                    double scale = isMousePressing ? 1.09 : 1.10;
+                    ds.FillRoundedRectangle(
+                        new Windows.Foundation.Rect(line.TopLeftPosition.ToPoint().WithX(0), line.BottomRightPosition.ToPoint().WithX(lyricsWidth)).Scale(scale),
+                        8, 8, Color.FromArgb(opacity, 255, 255, 255));
                 }
 
                 ds.Transform = Matrix3x2.Identity;
             }
-        }
-
-        private CanvasCommandList RenderBaseTextLayer(
-            ICanvasResourceCreator resourceCreator,
-            RenderLyricsLine line,
-            double strokeWidth,
-            Color strokeColor,
-            Color fillColor)
-        {
-            var commandList = new CanvasCommandList(resourceCreator);
-            using (var clds = commandList.CreateDrawingSession())
-            {
-                if (strokeWidth > 0)
-                {
-                    DrawGeometrySafely(clds, line.TertiaryCanvasGeometry, line.TertiaryPosition, strokeColor, strokeWidth);
-                    DrawGeometrySafely(clds, line.PrimaryCanvasGeometry, line.PrimaryPosition, strokeColor, strokeWidth);
-                    DrawGeometrySafely(clds, line.SecondaryCanvasGeometry, line.SecondaryPosition, strokeColor, strokeWidth);
-                }
-
-                DrawTextLayoutSafely(clds, line.TertiaryTextLayout, line.TertiaryPosition, fillColor);
-                DrawTextLayoutSafely(clds, line.PrimaryTextLayout, line.PrimaryPosition, fillColor);
-                DrawTextLayoutSafely(clds, line.SecondaryTextLayout, line.SecondaryPosition, fillColor);
-            }
-            return commandList;
-        }
-
-        private void DrawGeometrySafely(CanvasDrawingSession ds, CanvasGeometry? geo, Vector2 pos, Color color, double width)
-        {
-            if (geo == null) return;
-
-            ds.DrawGeometry(geo, pos, color, (float)width);
-        }
-
-        private void DrawTextLayoutSafely(CanvasDrawingSession ds, CanvasTextLayout? layout, Vector2 pos, Color color)
-        {
-            if (layout == null) return;
-
-            ds.DrawTextLayout(layout, pos, color);
         }
 
         public void CalculateLyrics3DMatrix(

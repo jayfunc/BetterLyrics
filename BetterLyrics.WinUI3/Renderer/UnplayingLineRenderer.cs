@@ -10,7 +10,7 @@ namespace BetterLyrics.WinUI3.Renderer
 {
     public class UnplayingLineRenderer
     {
-        public void Draw(
+        public static void Draw(
             CanvasDrawingSession ds,
             ICanvasImage textOnlyLayer,
             RenderLyricsLine line)
@@ -48,7 +48,7 @@ namespace BetterLyrics.WinUI3.Renderer
             }
         }
 
-        private void DrawPart(
+        private static void DrawPart(
             CanvasDrawingSession ds,
             ICanvasImage source,
             CanvasTextLayout layout,

@@ -25,4 +25,5 @@
   </Project>
   <Project Path="ColorThief.WinUI3/ColorThief.WinUI3.csproj" />
   <Project Path="Impressionist/Impressionist/Impressionist.csproj" />
+  <Project Path="Lyricify.Lyrics.Helper/Lyricify.Lyrics.Helper.csproj" />
 </Solution>

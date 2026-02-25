@@ -90,6 +90,12 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
 
             var main = _lyricsDataArr.First();
 
+            // 歌词过滤
+            if (settings.IsFilterEnabled)
+            {
+                main?.LyricsLines.RemoveAll(x => Lyricify.Lyrics.Helpers.Optimization.InfoLines.IsInfoLine(x.PrimaryText));
+            }
+
             // 应用音译
             LyricsData? phoneticLyricsData = null;
             // 已解析歌词内寻找
@@ -179,14 +185,38 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
             {
                 foreach (var item in main.LyricsLines)
                 {
-                    item.PrimaryText = settings.IsTraditionalChineseEnabled ? LanguageHelper.ConvertSCToTC(item.PrimaryText) : LanguageHelper.ConvertTCToSC(item.PrimaryText);
+                    switch (settings.ChineseConversion)
+                    {
+                        case ChineseConversion.Unspecified:
+                            break;
+                        case ChineseConversion.S2T:
+                            item.PrimaryText = LanguageHelper.ConvertSCToTC(item.PrimaryText);
+                            break;
+                        case ChineseConversion.T2S:
+                            item.PrimaryText = LanguageHelper.ConvertTCToSC(item.PrimaryText);
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
             if (settings.SelectedTargetLanguageCode == LanguageHelper.ChineseCode)
             {
                 foreach (var item in main.LyricsLines)
                 {
-                    item.SecondaryText = settings.IsTraditionalChineseEnabled ? LanguageHelper.ConvertSCToTC(item.SecondaryText) : LanguageHelper.ConvertTCToSC(item.SecondaryText);
+                    switch (settings.ChineseConversion)
+                    {
+                        case ChineseConversion.Unspecified:
+                            break;
+                        case ChineseConversion.S2T:
+                            item.SecondaryText = LanguageHelper.ConvertSCToTC(item.SecondaryText);
+                            break;
+                        case ChineseConversion.T2S:
+                            item.SecondaryText = LanguageHelper.ConvertTCToSC(item.SecondaryText);
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 

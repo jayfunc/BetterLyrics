@@ -933,8 +933,20 @@
   <data name="SettingsPageChineseLyrics.Text" xml:space="preserve">
     <value>Chinese Lyrics</value>
   </data>
+  <data name="SettingsPageChinesePreference.Description" xml:space="preserve">
+    <value>Selecting "Unspecified" will preserve the original lyrics; selecting "Simplified Chinese" or "Traditional Chinese" will perform machine conversion on the original lyrics</value>
+  </data>
   <data name="SettingsPageChinesePreference.Header" xml:space="preserve">
-    <value>Convert Chinese to Traditional</value>
+    <value>Chinese Preference</value>
+  </data>
+  <data name="SettingsPageChinesePreferenceSToT.Content" xml:space="preserve">
+    <value>Traditional Chinese</value>
+  </data>
+  <data name="SettingsPageChinesePreferenceTToS.Content" xml:space="preserve">
+    <value>Simplified Chinese</value>
+  </data>
+  <data name="SettingsPageChinesePreferenceUnspecified.Content" xml:space="preserve">
+    <value>Unspecified</value>
   </data>
   <data name="SettingsPageCJK.Header" xml:space="preserve">
     <value>CJK Unified Ideographs</value>
@@ -1272,6 +1284,12 @@
   <data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
     <value>Current Line</value>
   </data>
+  <data name="SettingsPageLyricsFilter.Description" xml:space="preserve">
+    <value>Remove non-textual information such as lyrics and composition credits</value>
+  </data>
+  <data name="SettingsPageLyricsFilter.Header" xml:space="preserve">
+    <value>Lyrics Filter</value>
+  </data>
   <data name="SettingsPageLyricsFloatAnimation.Header" xml:space="preserve">
     <value>Float Animation</value>
   </data>
@@ -1427,6 +1445,9 @@
   </data>
   <data name="SettingsPageOctTree.Content" xml:space="preserve">
     <value>Aggressive</value>
+  </data>
+  <data name="SettingsPageOneFontFamilyOnly.Message" xml:space="preserve">
+    <value>Please select only one font. Selecting multiple fonts will cause this setting to fail and revert to the system default font</value>
   </data>
   <data name="SettingsPageOpacity.Header" xml:space="preserve">
     <value>Opacity</value>

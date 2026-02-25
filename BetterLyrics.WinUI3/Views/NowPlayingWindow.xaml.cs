@@ -76,7 +76,7 @@ namespace BetterLyrics.WinUI3.Views
 
             WeakReferenceMessenger.Default.RegisterAll(this);
 
-            UpdateAlbumArtThemeColors();
+            _ = UpdateAlbumArtThemeColorsAsync();
         }
 
         private void Wmm_WindowMessageReceived(object? sender, WindowMessageEventArgs e)
@@ -138,7 +138,7 @@ namespace BetterLyrics.WinUI3.Views
             if (newValue != oldValue)
             {
                 _backdropAccentColor = newValue;
-                UpdateAlbumArtThemeColors();
+                _ = UpdateAlbumArtThemeColorsAsync();
             }
         }
 
@@ -173,9 +173,9 @@ namespace BetterLyrics.WinUI3.Views
             OnIsAdaptToEnvironmentChanged();
         }
 
-        private void UpdateAlbumArtThemeColors()
+        private async Task UpdateAlbumArtThemeColorsAsync()
         {
-            var result = _gsmtcService.CalculateAlbumArtThemeColors(LyricsWindowStatus, _backdropAccentColor);
+            var result = await _gsmtcService.CalculateAlbumArtThemeColorsAsync(LyricsWindowStatus, _backdropAccentColor);
 
             NowPlayingPage.AlbumArtThemeColors = result;
             RootGrid.RequestedTheme = result.ThemeType;
@@ -604,7 +604,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(IGSMTCService.AlbumArtBitmapImage))
                 {
-                    UpdateAlbumArtThemeColors();
+                    _ = UpdateAlbumArtThemeColorsAsync();
                 }
             }
         }
@@ -663,7 +663,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(LyricsWindowStatus.LyricsBackgroundSettings.LyricsBackgroundTheme))
                 {
-                    UpdateAlbumArtThemeColors();
+                    _ = UpdateAlbumArtThemeColorsAsync();
                 }
             }
         }
@@ -674,15 +674,15 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsBgFontColorType))
                 {
-                    UpdateAlbumArtThemeColors();
+                    _ = UpdateAlbumArtThemeColorsAsync();
                 }
                 else if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsFgFontColorType))
                 {
-                    UpdateAlbumArtThemeColors();
+                    _ = UpdateAlbumArtThemeColorsAsync();
                 }
                 else if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsStrokeFontColorType))
                 {
-                    UpdateAlbumArtThemeColors();
+                    _ = UpdateAlbumArtThemeColorsAsync();
                 }
             }
         }
@@ -693,15 +693,15 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsCustomBgFontColor))
                 {
-                    UpdateAlbumArtThemeColors();
+                    _ = UpdateAlbumArtThemeColorsAsync();
                 }
                 else if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsCustomFgFontColor))
                 {
-                    UpdateAlbumArtThemeColors();
+                    _ = UpdateAlbumArtThemeColorsAsync();
                 }
                 else if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsCustomStrokeFontColor))
                 {
-                    UpdateAlbumArtThemeColors();
+                    _ = UpdateAlbumArtThemeColorsAsync();
                 }
             }
         }
@@ -723,7 +723,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 if (message.PropertyName == nameof(LyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType))
                 {
-                    UpdateAlbumArtThemeColors();
+                    _ = UpdateAlbumArtThemeColorsAsync();
                 }
             }
         }

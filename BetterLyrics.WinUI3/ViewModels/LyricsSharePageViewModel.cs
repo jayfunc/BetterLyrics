@@ -143,9 +143,9 @@ namespace BetterLyrics.WinUI3.ViewModels
             CardData.SelectedLyrics = lyrics;
         }
 
-        private Brush GetOverlayBrush()
+        private async Task<Brush> GetOverlayBrushAsync()
         {
-            var dominantColor = GSMTCService.GetAlbumArtAccentColors(Enums.PaletteGeneratorType.Auto, true).First();
+            var dominantColor = (await GSMTCService.GetAlbumArtAccentColorsAsync(Enums.PaletteGeneratorType.Auto, true)).First();
 
             LinearGradientBrush gradientBrush = new LinearGradientBrush
             {
@@ -180,7 +180,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             CardData.Title = mappedTitle;
             CardData.Artist = mappedArtist;
             CardData.CoverImage = GSMTCService.AlbumArtBitmapImage;
-            CardData.OverlayBrush = GetOverlayBrush();
+            CardData.OverlayBrush = await GetOverlayBrushAsync();
             CardData.SelectedLyrics = [];
         }
 

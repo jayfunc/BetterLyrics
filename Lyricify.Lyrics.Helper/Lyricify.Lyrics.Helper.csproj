@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>netstandard2.1</TargetFrameworks>
+		<LangVersion>10.0</LangVersion>
+		<RootNamespace>Lyricify.Lyrics</RootNamespace>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>enable</Nullable>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+		<AssemblyVersion>0.1.4</AssemblyVersion>
+		<FileVersion>0.1.4</FileVersion>
+		<Authors>XY Wang</Authors>
+		<Company>WXRIW</Company>
+		<Title>Lyricify Lyrics Helper</Title>
+		<PackageProjectUrl>https://github.com/WXRIW/Lyricify-Lyrics-Helper</PackageProjectUrl>
+		<Description>Lyrics toolset for Lyricify. With lyrics parsers, generators, decrypters, searchers and useful helpers.</Description>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<AnalysisMode>AllEnabledByDefault</AnalysisMode>
+		<Version>0.1.4</Version>
+		<Copyright></Copyright>
+		<PackageIcon>icon.png</PackageIcon>
+		<RepositoryUrl>https://github.com/WXRIW/Lyricify-Lyrics-Helper/</RepositoryUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>lyrics;chinese;convert;search</PackageTags>
+		<PackageLicenseExpression>Apache-2.0</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="CHTCHSConv" Version="1.0.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="SharpZipLib" Version="1.4.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Include="Resources\icon.png" Pack="true" PackagePath="" />
+	</ItemGroup>
+</Project>

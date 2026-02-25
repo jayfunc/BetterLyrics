@@ -7,7 +7,7 @@ namespace BetterLyrics.WinUI3.Renderer
 {
     public class PureColorBackgroundRenderer
     {
-        public void Draw(
+        public static void Draw(
             CanvasDrawingSession ds,
             Rect bounds,
             Color color,

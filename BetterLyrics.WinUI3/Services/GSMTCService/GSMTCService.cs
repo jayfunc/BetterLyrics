@@ -46,7 +46,8 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         IRecipient<PropertyChangedMessage<ChineseRomanization>>,
         IRecipient<PropertyChangedMessage<DateTime?>>,
         IRecipient<PropertyChangedMessage<int>>,
-        IRecipient<PropertyChangedMessage<WindowStatus>>
+        IRecipient<PropertyChangedMessage<WindowStatus>>,
+        IRecipient<PropertyChangedMessage<ChineseConversion>>
     {
         private EventSourceReader? _lxMusicSse = null;
         private UniversalMemoryReader? _memoryReader = null;
@@ -739,7 +740,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                 {
                     UpdateLyrics();
                 }
-                else if (message.PropertyName == nameof(TranslationSettings.IsTraditionalChineseEnabled))
+                else if (message.PropertyName == nameof(TranslationSettings.IsFilterEnabled))
                 {
                     UpdateLyrics();
                 }
@@ -811,6 +812,17 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                 if (message.PropertyName == nameof(MusicGallerySettings.LyricsWindowStatus.WindowStatus))
                 {
                     OnDesiredSessionChanged();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<ChineseConversion> message)
+        {
+            if (message.Sender is TranslationSettings)
+            {
+                if (message.PropertyName == nameof(TranslationSettings.ChineseConversion))
+                {
+                    UpdateLyrics();
                 }
             }
         }

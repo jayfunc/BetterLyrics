@@ -179,7 +179,7 @@ namespace BetterLyrics.WinUI3.Renderer
             return CanvasGeometry.CreatePath(pathBuilder);
         }
 
-        private void DrawGeometry(
+        private static void DrawGeometry(
             CanvasDrawingSession ds,
             CanvasGeometry geometry,
             Color color,

@@ -221,7 +221,7 @@ namespace BetterLyrics.WinUI3.Renderer
             }
         }
 
-        private void DrawCachedLayer(CanvasDrawingSession ds, CanvasRenderTarget? cachedTexture, Vector2 screenCenter, float rotationRadians, float alpha)
+        private static void DrawCachedLayer(CanvasDrawingSession ds, CanvasRenderTarget? cachedTexture, Vector2 screenCenter, float rotationRadians, float alpha)
         {
             if (cachedTexture == null) return;
 
