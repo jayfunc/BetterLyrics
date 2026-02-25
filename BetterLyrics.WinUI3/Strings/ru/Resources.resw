@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -934,19 +934,19 @@
     <value>Китайский текст</value>
   </data>
   <data name="SettingsPageChinesePreference.Description" xml:space="preserve">
-    <value>Selecting "Unspecified" will preserve the original lyrics; selecting "Simplified Chinese" or "Traditional Chinese" will perform machine conversion on the original lyrics</value>
+    <value>При выборе "Неопределенный" сохраняется оригинальный текст; при выборе "Упрощенный китайский" или "Традиционный китайский" выполняется машинное преобразование оригинального текста.</value>
   </data>
   <data name="SettingsPageChinesePreference.Header" xml:space="preserve">
-    <value>Конвертировать китайский в традиционный</value>
+    <value>Китайские предпочтения</value>
   </data>
   <data name="SettingsPageChinesePreferenceSToT.Content" xml:space="preserve">
-    <value>Traditional Chinese</value>
+    <value>Традиционный китайский</value>
   </data>
   <data name="SettingsPageChinesePreferenceTToS.Content" xml:space="preserve">
-    <value>Simplified Chinese</value>
+    <value>Упрощенный китайский</value>
   </data>
   <data name="SettingsPageChinesePreferenceUnspecified.Content" xml:space="preserve">
-    <value>Unspecified</value>
+    <value>Неопределенный</value>
   </data>
   <data name="SettingsPageCJK.Header" xml:space="preserve">
     <value>Унифицированные иероглифы ККЯ</value>
@@ -1285,10 +1285,10 @@
     <value>Текущая строка</value>
   </data>
   <data name="SettingsPageLyricsFilter.Description" xml:space="preserve">
-    <value>Remove non-textual information such as lyrics and composition credits</value>
+    <value>Удалите нетекстовую информацию, например тексты песен и названия композиций.</value>
   </data>
   <data name="SettingsPageLyricsFilter.Header" xml:space="preserve">
-    <value>Lyrics Filter</value>
+    <value>Фильтр лирики</value>
   </data>
   <data name="SettingsPageLyricsFloatAnimation.Header" xml:space="preserve">
     <value>Анимация плавания</value>
@@ -1447,7 +1447,7 @@
     <value>Агрессивный</value>
   </data>
   <data name="SettingsPageOneFontFamilyOnly.Message" xml:space="preserve">
-    <value>Please select only one font. Selecting multiple fonts will cause this setting to fail and revert to the system default font</value>
+    <value>Пожалуйста, выберите только один шрифт. Выбор нескольких шрифтов приведет к сбою этой настройки и возврату к системному шрифту по умолчанию</value>
   </data>
   <data name="SettingsPageOpacity.Header" xml:space="preserve">
     <value>Непрозрачность</value>
