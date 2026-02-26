@@ -415,13 +415,20 @@ namespace BetterLyrics.WinUI3.Views
 
         private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            NowPlayingBar.IsCompactMode = RootGrid.ActualWidth < 180 || RootGrid.ActualHeight <= 72;
+            UpdateNowPlayingBarStatus();
+            UpdateTopCommandGridStatus();
+        }
+
+        private void UpdateNowPlayingBarStatus()
+        {
+            NowPlayingBar.IsCompactMode = LyricsWindowStatus.IsAlwaysHidePlayingBar || RootGrid.ActualWidth < 180 || RootGrid.ActualHeight <= 72;
 
             NowPlayingBar.ShowTime = NowPlayingBar.ShowVolumeButton = NowPlayingBar.ShowMoreButton =
                 NowPlayingBar.IsCompactMode || RootGrid.ActualWidth > 350;
+        }
 
-            NowPlayingBar.Padding = new Thickness(16);
-
+        private void UpdateTopCommandGridStatus()
+        {
             if (RootGrid.ActualWidth < 400)
             {
                 TopCenterCommandGrid.Visibility = Visibility.Visible;
@@ -594,6 +601,10 @@ namespace BetterLyrics.WinUI3.Views
                 else if (message.PropertyName == nameof(LyricsWindowStatus.KeepNowPlayingBarInteractiveWhenLocked))
                 {
                     RestartOverlayInputHelper();
+                }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.IsAlwaysHidePlayingBar))
+                {
+                    UpdateNowPlayingBarStatus();
                 }
             }
         }

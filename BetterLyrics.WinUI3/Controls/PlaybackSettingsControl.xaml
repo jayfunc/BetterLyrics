@@ -572,7 +572,7 @@
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.ListenOnNewPlaybackSource, Mode=TwoWay}" />
                         </dev:SettingsCard>
 
-                        <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="歌词处理" />
+                        <TextBlock x:Uid="SettingsPageLyricsProcessing" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                         <!--  Lyrics translation  -->
                         <dev:SettingsExpander x:Uid="LyricsPageTranslationEnabled" IsExpanded="True">
