@@ -19,16 +19,15 @@ namespace BetterLyrics.WinUI3.Helper
             if (target == null) return;
 
             string name = target.GetType().Name;
-            if (target is Microsoft.UI.Xaml.FrameworkElement fe && !string.IsNullOrEmpty(fe.Name))
-            {
-                name += $" ({fe.Name})";
-            }
+            int hashCode = target.GetHashCode();
+            name = $"{name}({hashCode})";
 
             lock (_watchedObjects)
             {
                 _watchedObjects.Add((new WeakReference(target), name));
             }
 
+            Debug.WriteLine($"[MemoryLeakDetector] GC is preparing: {name}");
             _logger.LogInformation("[MemoryLeakDetector] GC is preparing: {Name}", name);
         }
 
@@ -50,6 +49,8 @@ namespace BetterLyrics.WinUI3.Helper
                     if (item.Reference.IsAlive)
                     {
                         aliveObjects.Add(item);
+
+                        Debug.WriteLine($"[MemoryLeakDetector] GC failed, object is still alive: {item.Name}");
                         _logger.LogWarning("[MemoryLeakDetector] GC failed, object is still alive: {Name}", item.Name);
                     }
                     else
@@ -61,6 +62,8 @@ namespace BetterLyrics.WinUI3.Helper
                 foreach (var dead in deadObjects)
                 {
                     _watchedObjects.Remove(dead);
+
+                    Debug.WriteLine($"[MemoryLeakDetector] GC completed: {dead.Name}");
                     _logger.LogInformation("[MemoryLeakDetector] GC completed: {Name}", dead.Name);
                 }
             }

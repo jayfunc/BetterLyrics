@@ -79,25 +79,42 @@
 
 ## 🖼️ Screenshots
 
-<div align="center">
+<img src="docs/assets/screenshots/std.png" width="50%"><img src="docs/assets/screenshots/narrow.png" width="50%">
+<img src="docs/assets/screenshots/effect.png" width="50%"><img src="docs/assets/screenshots/all-in-one.png" width="50%">
+<img src="docs/assets/screenshots/fs3.png" width="50%"><img src="docs/assets/screenshots/fs2.png" width="50%">
+<img src="docs/assets/screenshots/music-gallery.png" width="50%"><img src="docs/assets/screenshots/stats.png" width="50%">
 
-| Standard View | Narrow Mode |
-| :---: | :---: |
-| <img src="docs/assets/screenshots/std.png" width="100%"> | <img src="docs/assets/screenshots/narrow.png" width="100%"> |
+### 🎴 Lyrics Card
 
-| Lyrics Visual Effects | Coexisting Modes |
-| :---: | :---: |
-| <img src="docs/assets/screenshots/effect.png" width="100%"> | <img src="docs/assets/screenshots/all-in-one.png" width="100%"> |
+<img src="docs/assets/screenshots/card-feat.png">
 
-| Fullscreen Mode | Fullscreen Mode |
-| :---: | :---: |
-| <img src="docs/assets/screenshots/fs3.png" width="100%"> | <img src="docs/assets/screenshots/fs2.png" width="100%"> |
+<details><summary>👉 Click here to see all the styles</summary>
 
-| Music Gallery | Playback Statistics |
-| :---: | :---: |
-| <img src="docs/assets/screenshots/music-gallery.png" width="100%"> | <img src="docs/assets/screenshots/stats.png" width="100%"> |
+### Classic Design
 
-</div>
+<img src="docs/assets/screenshots/card-0.png">
+
+### Physical
+
+<img src="docs/assets/screenshots/card-1.png">
+
+### Digital Retro
+
+<img src="docs/assets/screenshots/card-2.png">
+
+### Atmosphere
+
+<img src="docs/assets/screenshots/card-3.png">
+
+### Chinese Elegance
+
+<img src="docs/assets/screenshots/card-4.png">
+
+### Traces of Time
+
+<img src="docs/assets/screenshots/card-5.png">
+
+</details>
 
 ## 📹 Demonstration
 
