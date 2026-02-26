@@ -79,25 +79,42 @@
 
 ## 🖼️ 软件截图
 
-<div align="center">
+<img src="docs/assets/screenshots/std.png" width="50%"><img src="docs/assets/screenshots/narrow.png" width="50%">
+<img src="docs/assets/screenshots/effect.png" width="50%"><img src="docs/assets/screenshots/all-in-one.png" width="50%">
+<img src="docs/assets/screenshots/fs3.png" width="50%"><img src="docs/assets/screenshots/fs2.png" width="50%">
+<img src="docs/assets/screenshots/music-gallery.png" width="50%"><img src="docs/assets/screenshots/stats.png" width="50%">
 
-| 标准视图 | 侧边栏模式 |
-| :---: | :---: |
-| <img src="docs/assets/screenshots/std.png" width="100%"> | <img src="docs/assets/screenshots/narrow.png" width="100%"> |
+### 🎴 歌词卡片
 
-| 歌词视觉特效 | 多模式共存 |
-| :---: | :---: |
-| <img src="docs/assets/screenshots/effect.png" width="100%"> | <img src="docs/assets/screenshots/all-in-one.png" width="100%"> |
+<img src="docs/assets/screenshots/card-feat.png">
 
-| 全屏模式 | 全屏模式 |
-| :---: | :---: |
-| <img src="docs/assets/screenshots/fs3.png" width="100%"> | <img src="docs/assets/screenshots/fs2.png" width="100%"> |
+<details><summary>👉 点按此处查看所有样式</summary>
 
-| 音乐库 | 播放统计 |
-| :---: | :---: |
-| <img src="docs/assets/screenshots/music-gallery.png" width="100%"> | <img src="docs/assets/screenshots/stats.png" width="100%"> |
+### 经典设计
 
-</div>
+<img src="docs/assets/screenshots/card-0.png">
+
+### 实体质感
+
+<img src="docs/assets/screenshots/card-1.png">
+
+### 数码怀旧
+
+<img src="docs/assets/screenshots/card-2.png">
+
+### 氛围创意
+
+<img src="docs/assets/screenshots/card-3.png">
+
+### 国风雅韵
+
+<img src="docs/assets/screenshots/card-4.png">
+
+### 时光印记
+
+<img src="docs/assets/screenshots/card-5.png">
+
+</details>
 
 ## 📹 演示视频
 
