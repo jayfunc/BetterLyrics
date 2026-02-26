@@ -1338,6 +1338,9 @@
   <data name="SettingsPageLyricsOutOfSightEffect.Header" xml:space="preserve">
     <value>遠離視野</value>
   </data>
+  <data name="SettingsPageLyricsProcessing.Text" xml:space="preserve">
+    <value>歌詞處理</value>
+  </data>
   <data name="SettingsPageLyricsScaleEffect.Description" xml:space="preserve">
     <value>為持續時間較長的音節啟用縮放</value>
   </data>
@@ -1859,5 +1862,14 @@
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>使用指南</value>
+  </data>
+  <data name="WindowSettingsControlAlwaysHideNowPlayingBar.Header" xml:space="preserve">
+    <value>永遠將媒體控制列隱藏到最下方的白色列中</value>
+  </data>
+  <data name="WindowSettingsControlDebug.Text" xml:space="preserve">
+    <value>除錯</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBar.Text" xml:space="preserve">
+    <value>媒體控制面板</value>
   </data>
 </root>

@@ -1338,6 +1338,9 @@
   <data name="SettingsPageLyricsOutOfSightEffect.Header" xml:space="preserve">
     <value>Görüş Alanı Dışında</value>
   </data>
+  <data name="SettingsPageLyricsProcessing.Text" xml:space="preserve">
+    <value>Şarkı Sözü İşleme</value>
+  </data>
   <data name="SettingsPageLyricsScaleEffect.Description" xml:space="preserve">
     <value>Uzun süreli heceler için ölçeklendirmeyi etkinleştirin</value>
   </data>
@@ -1859,5 +1862,14 @@
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>Kullanıcı Kılavuzu</value>
+  </data>
+  <data name="WindowSettingsControlAlwaysHideNowPlayingBar.Header" xml:space="preserve">
+    <value>Medya kontrol çubuğunu her zaman en alttaki beyaz çubuğa gizleyin</value>
+  </data>
+  <data name="WindowSettingsControlDebug.Text" xml:space="preserve">
+    <value>Hata Ayıklama</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBar.Text" xml:space="preserve">
+    <value>Medya Kontrol Paneli</value>
   </data>
 </root>

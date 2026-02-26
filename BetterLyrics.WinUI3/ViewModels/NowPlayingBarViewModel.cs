@@ -28,10 +28,6 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty] public partial double TimelineSliderThumbSeconds { get; set; } = 0;
 
-        [ObservableProperty] public partial double BottomCommandGridOpacity { get; set; } = 1;
-
-        [ObservableProperty] public partial double BottomCommandFlyoutTriggerOpacity { get; set; }
-
         public NowPlayingBarViewModel(IGSMTCService mediaSessionsService, ISMTCService smtcService, ISettingsService settingsService)
         {
             _gsmtcService = mediaSessionsService;

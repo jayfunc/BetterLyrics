@@ -234,6 +234,7 @@
         <Grid VerticalAlignment="Bottom">
             <uc:NowPlayingBar
                 x:Name="NowPlayingBar"
+                Padding="16"
                 IsAutoHideEnabled="True"
                 ShowTime="True" />
         </Grid>

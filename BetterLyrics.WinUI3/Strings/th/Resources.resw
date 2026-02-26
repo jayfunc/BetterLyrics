@@ -1338,6 +1338,9 @@
   <data name="SettingsPageLyricsOutOfSightEffect.Header" xml:space="preserve">
     <value>หายไปจากสายตา (Out of Sight)</value>
   </data>
+  <data name="SettingsPageLyricsProcessing.Text" xml:space="preserve">
+    <value>การประมวลผลเนื้อเพลง</value>
+  </data>
   <data name="SettingsPageLyricsScaleEffect.Description" xml:space="preserve">
     <value>เปิดใช้งานการขยายสำหรับพยางค์ที่มีความยาวนาน</value>
   </data>
@@ -1859,5 +1862,14 @@
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>คู่มือผู้ใช้</value>
+  </data>
+  <data name="WindowSettingsControlAlwaysHideNowPlayingBar.Header" xml:space="preserve">
+    <value>ซ่อนแถบควบคุมสื่อไว้ที่แถบสีขาวด้านล่างเสมอ</value>
+  </data>
+  <data name="WindowSettingsControlDebug.Text" xml:space="preserve">
+    <value>การแก้ไขข้อผิดพลาด</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBar.Text" xml:space="preserve">
+    <value>แผงควบคุมสื่อ</value>
   </data>
 </root>

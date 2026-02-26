@@ -23,7 +23,6 @@
             <TextBlock
                 Margin="-5,0,0,-20"
                 VerticalAlignment="Bottom"
-                FontFamily="{Binding Config.FontFamily}"
                 FontSize="80"
                 FontWeight="Bold"
                 Foreground="White"

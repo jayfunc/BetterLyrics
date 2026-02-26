@@ -1338,6 +1338,9 @@
   <data name="SettingsPageLyricsOutOfSightEffect.Header" xml:space="preserve">
     <value>Xa tầm nhìn</value>
   </data>
+  <data name="SettingsPageLyricsProcessing.Text" xml:space="preserve">
+    <value>Xử lý lời bài hát</value>
+  </data>
   <data name="SettingsPageLyricsScaleEffect.Description" xml:space="preserve">
     <value>Bật thu phóng cho các âm tiết có thời lượng dài</value>
   </data>
@@ -1859,5 +1862,14 @@
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>Hướng dẫn sử dụng</value>
+  </data>
+  <data name="WindowSettingsControlAlwaysHideNowPlayingBar.Header" xml:space="preserve">
+    <value>Luôn ẩn thanh điều khiển phương tiện xuống thanh trắng ở dưới cùng.</value>
+  </data>
+  <data name="WindowSettingsControlDebug.Text" xml:space="preserve">
+    <value>Gỡ lỗi</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBar.Text" xml:space="preserve">
+    <value>Bảng điều khiển phương tiện truyền thông</value>
   </data>
 </root>

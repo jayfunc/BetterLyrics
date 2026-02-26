@@ -5,18 +5,19 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dev="using:DevWinUI"
+    xmlns:helper="using:BetterLyrics.WinUI3.Helper"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
-    Unloaded="UserControl_Unloaded"
     mc:Ignorable="d">
 
     <Grid x:Name="RootGrid">
+
         <Grid
             x:Name="BottomCommandGrid"
             Background="Transparent"
-            Opacity="{x:Bind ViewModel.BottomCommandGridOpacity, Mode=OneWay}"
+            Opacity="1"
             PointerEntered="BottomCommandGrid_PointerEntered"
             PointerExited="BottomCommandGrid_PointerExited">
             <Grid.OpacityTransition>
@@ -477,8 +478,7 @@
             Height="12"
             VerticalAlignment="Bottom"
             Background="Transparent"
-            CornerRadius="3,3,0,0"
-            Opacity="{x:Bind ViewModel.BottomCommandFlyoutTriggerOpacity, Mode=OneWay}"
+            Opacity="0"
             PointerEntered="BottomCommandFlyoutTrigger_PointerEntered"
             PointerExited="BottomCommandFlyoutTrigger_PointerExited"
             Tapped="BottomCommandFlyoutTrigger_Tapped">
@@ -487,10 +487,9 @@
             </Grid.OpacityTransition>
             <Grid
                 x:Name="BottomCommandFlyoutTriggerHint"
-                Width="150"
-                Margin="4"
-                Background="{ThemeResource TextFillColorPrimaryBrush}"
-                CornerRadius="2"
+                MaxWidth="400"
+                Background="{ThemeResource ControlAAFillColorDefaultBrush}"
+                CornerRadius="4,4,0,0"
                 Translation="0,0,0">
                 <Grid.TranslationTransition>
                     <Vector3Transition />
@@ -506,7 +505,82 @@
                             <Setter Property="CornerRadius" Value="12" />
                         </Style>
                     </Flyout.FlyoutPresenterStyle>
-                    <Grid x:Name="BottomCommandFlyoutContainer" VerticalAlignment="Bottom" />
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid
+                                Grid.Column="0"
+                                Width="48"
+                                Height="48"
+                                Margin="16"
+                                CornerRadius="4">
+                                <Image Source="{x:Bind GSMTCService.AlbumArtBitmapImage, Mode=OneWay}" />
+                            </Grid>
+                            <Grid
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                ColumnSpacing="16">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Text="{x:Bind GSMTCService.CurrentSongInfo.Title, Mode=OneWay}" />
+                                <TextBlock
+                                    Grid.Row="1"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Text="{x:Bind GSMTCService.CurrentSongInfo.Artist, Mode=OneWay}" />
+                            </Grid>
+                            <Grid
+                                Grid.Column="2"
+                                Margin="16,0,0,0"
+                                ColumnSpacing="16">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Button
+                                    Grid.Row="0"
+                                    Margin="0,0,8,0"
+                                    HorizontalAlignment="Right"
+                                    Click="OpenPlaybackSourceButton_Click"
+                                    Content="{ui:FontIcon FontSize=16,
+                                                          FontFamily={StaticResource SegoeFluentIcons},
+                                                          Glyph=&#xE8A7;}"
+                                    Style="{StaticResource GhostButtonStyle}" />
+                                <Grid
+                                    Grid.Row="1"
+                                    Margin="0,0,16,16"
+                                    VerticalAlignment="Bottom"
+                                    ColumnSpacing="6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Image
+                                        Grid.Column="0"
+                                        Width="16"
+                                        Height="16"
+                                        helper:AppExtensions.Aumid="{x:Bind GSMTCService.CurrentMediaSourceProviderInfo.Provider, Mode=OneWay}" />
+                                    <TextBlock
+                                        Grid.Column="1"
+                                        helper:AppExtensions.Aumid="{x:Bind GSMTCService.CurrentMediaSourceProviderInfo.Provider, Mode=OneWay}"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                        <Grid
+                            x:Name="BottomCommandFlyoutContainer"
+                            Grid.Row="1"
+                            VerticalAlignment="Bottom" />
+                    </Grid>
                 </Flyout>
             </Grid.ContextFlyout>
         </Grid>

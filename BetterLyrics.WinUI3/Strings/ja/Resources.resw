@@ -1338,6 +1338,9 @@
   <data name="SettingsPageLyricsOutOfSightEffect.Header" xml:space="preserve">
     <value>視界から外す</value>
   </data>
+  <data name="SettingsPageLyricsProcessing.Text" xml:space="preserve">
+    <value>歌詞処理</value>
+  </data>
   <data name="SettingsPageLyricsScaleEffect.Description" xml:space="preserve">
     <value>長い音節のスケーリングを有効にする</value>
   </data>
@@ -1859,5 +1862,14 @@
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>ユーザーガイド</value>
+  </data>
+  <data name="WindowSettingsControlAlwaysHideNowPlayingBar.Header" xml:space="preserve">
+    <value>メディアコントロールバーを常に一番下の白いバーに隠す</value>
+  </data>
+  <data name="WindowSettingsControlDebug.Text" xml:space="preserve">
+    <value>デバッグ</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBar.Text" xml:space="preserve">
+    <value>メディア・コントロール・パネル</value>
   </data>
 </root>

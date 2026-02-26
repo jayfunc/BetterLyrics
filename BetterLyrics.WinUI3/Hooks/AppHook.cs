@@ -19,6 +19,7 @@ namespace BetterLyrics.WinUI3.Hooks
     public class AppHook
     {
         private static readonly ConcurrentDictionary<string, string?> _nameCache = new();
+        private static readonly ConcurrentDictionary<string, string?> _pathCache = new();
         private static readonly ConcurrentDictionary<string, BitmapImage?> _iconCache = new();
 
         private static ShellItem? GetShellItem(string id)
@@ -173,6 +174,39 @@ namespace BetterLyrics.WinUI3.Hooks
             });
 
             return await tcs.Task;
+        }
+
+        /// <summary>
+        /// 通过 AUMID 获取应用程序的物理路径或解析名称
+        /// </summary>
+        public static async Task<string?> GetAppPathByAumidAsync(string? aumid)
+        {
+            if (string.IsNullOrWhiteSpace(aumid)) return null;
+            if (_pathCache.TryGetValue(aumid, out var cachedPath)) return cachedPath;
+
+            var path = await Task.Run(() =>
+            {
+                using var item = GetShellItem(aumid);
+                if (item == null) return null;
+
+                if (item.IsFileSystem)
+                {
+                    return item.ParsingName;
+                }
+
+                try
+                {
+                    return item.Properties.GetProperty<string>(Ole32.PROPERTYKEY.System.Link.TargetParsingPath);
+                }
+                catch
+                {
+                    return item.ParsingName;
+                }
+            });
+
+            _pathCache.TryAdd(aumid, path);
+
+            return path;
         }
 
         private static Bitmap? CreateBitmapWithAlpha(SafeHBITMAP hBitmap)

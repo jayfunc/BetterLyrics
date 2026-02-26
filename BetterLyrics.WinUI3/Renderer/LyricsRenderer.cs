@@ -39,9 +39,8 @@ namespace BetterLyrics.WinUI3.Renderer
             Color fgColor,
             double currentProgressMs)
         {
-            // TODO
-            //using (var opacityLayer = ds.CreateLayer((float)lyricsOpacity))
-            //{
+            if (lyricsOpacity == 0) return;
+
             if (windowStatus.LyricsEffectSettings.Is3DLyricsEnabled)
             {
                 using (var layer = new CanvasCommandList(control))
@@ -98,7 +97,6 @@ namespace BetterLyrics.WinUI3.Renderer
                     fgColor,
                     currentProgressMs);
             }
-            //}
         }
 
         private void DrawLyrics(
@@ -137,6 +135,7 @@ namespace BetterLyrics.WinUI3.Renderer
                 if (i < 0 || i >= lines.Count) continue;
                 var line = lines[i];
 
+                if (line == null) continue;
                 if (line.PrimaryTextLayout == null) continue;
                 if (line.PrimaryTextLayout.LayoutBounds.Width <= 0) continue;
 

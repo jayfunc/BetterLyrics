@@ -12,6 +12,8 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using System;
 using System.Numerics;
+using System.Threading.Tasks;
+using Windows.System;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -147,12 +149,12 @@ public sealed partial class NowPlayingBar : UserControl
         {
             if (!_isPointerInBottomCommandGrid)
             {
-                ViewModel.BottomCommandGridOpacity = 0;
+                BottomCommandGrid.Opacity = 0;
             }
         }
         else
         {
-            ViewModel.BottomCommandGridOpacity = 1;
+            BottomCommandGrid.Opacity = 1;
         }
     }
 
@@ -279,7 +281,7 @@ public sealed partial class NowPlayingBar : UserControl
         _isPointerInBottomCommandGrid = true;
         if (IsAutoHideEnabled && BottomCommandGrid.Children.Count != 0)
         {
-            ViewModel.BottomCommandGridOpacity = 1f;
+            BottomCommandGrid.Opacity = 1f;
         }
         e.Handled = true;
     }
@@ -289,7 +291,7 @@ public sealed partial class NowPlayingBar : UserControl
         _isPointerInBottomCommandGrid = false;
         if (IsAutoHideEnabled && BottomCommandGrid.Children.Count != 0)
         {
-            ViewModel.BottomCommandGridOpacity = 0f;
+            BottomCommandGrid.Opacity = 0f;
         }
         e.Handled = true;
     }
@@ -298,7 +300,7 @@ public sealed partial class NowPlayingBar : UserControl
     {
         if (BottomCommandFlyoutContainer.Children.Count != 0)
         {
-            ViewModel.BottomCommandFlyoutTriggerOpacity = 1f;
+            BottomCommandFlyoutTrigger.Opacity = 1f;
         }
     }
 
@@ -306,7 +308,7 @@ public sealed partial class NowPlayingBar : UserControl
     {
         if (BottomCommandFlyoutContainer.Children.Count != 0)
         {
-            ViewModel.BottomCommandFlyoutTriggerOpacity = 0f;
+            BottomCommandFlyoutTrigger.Opacity = 0f;
         }
     }
 
@@ -328,7 +330,12 @@ public sealed partial class NowPlayingBar : UserControl
         ViewModel.AppSettings.MusicGallerySettings.PlaybackOrder = ViewModel.AppSettings.MusicGallerySettings.PlaybackOrder.GetNext();
     }
 
-    private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+    private async void OpenPlaybackSourceButton_Click(object sender, RoutedEventArgs e)
     {
+        var path = await AppHook.GetAppPathByAumidAsync(GSMTCService.CurrentMediaSourceProviderInfo?.Provider);
+        if (path != null)
+        {
+            await Launcher.LaunchUriAsync(new Uri(path));
+        }
     }
 }
