@@ -22,9 +22,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         IRecipient<PropertyChangedMessage<SongInfo>>
     {
         private readonly ILyricsSearchService _lyricsSearchService;
-        private readonly IGSMTCService _gsmtcService;
         private readonly ISettingsService _settingsService;
         private readonly ISongSearchMapService _songSearchMapService;
+
+        public IGSMTCService GSMTCService { get; set; }
 
         [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 
@@ -46,10 +47,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         )
         {
             _lyricsSearchService = lyricsSearchService;
-            _gsmtcService = gsmtcService;
             _settingsService = settingsService;
             _songSearchMapService = songSearchMapService;
 
+            GSMTCService = gsmtcService;
             AppSettings = _settingsService.AppSettings;
 
             _ = InitMappedSongSearchQueryAsync();
@@ -59,20 +60,20 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             LyricsSearchResults.Clear();
             LyricsDataArr = null;
-            if (_gsmtcService.CurrentSongInfo != null)
+            if (GSMTCService.CurrentSongInfo != null)
             {
-                var found = await _songSearchMapService.TryGetMappingAsync(_gsmtcService.CurrentSongInfo);
+                var found = await _songSearchMapService.TryGetMappingAsync(GSMTCService.CurrentSongInfo);
 
                 if (found == null)
                 {
                     MappedSongSearchQuery = new MappedSongSearchQuery
                     {
-                        OriginalTitle = _gsmtcService.CurrentSongInfo.Title,
-                        OriginalArtist = _gsmtcService.CurrentSongInfo.Artist,
-                        OriginalAlbum = _gsmtcService.CurrentSongInfo.Album,
-                        MappedTitle = _gsmtcService.CurrentSongInfo.Title,
-                        MappedArtist = _gsmtcService.CurrentSongInfo.Artist,
-                        MappedAlbum = _gsmtcService.CurrentSongInfo.Album,
+                        OriginalTitle = GSMTCService.CurrentSongInfo.Title,
+                        OriginalArtist = GSMTCService.CurrentSongInfo.Artist,
+                        OriginalAlbum = GSMTCService.CurrentSongInfo.Album,
+                        MappedTitle = GSMTCService.CurrentSongInfo.Title,
+                        MappedArtist = GSMTCService.CurrentSongInfo.Artist,
+                        MappedAlbum = GSMTCService.CurrentSongInfo.Album,
                     };
                 }
                 else
@@ -88,7 +89,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 return;
             }
-            _ = _gsmtcService.ChangePositionAsync(value.StartMs / 1000.0);
+            _ = GSMTCService.ChangePositionAsync(value.StartMs / 1000.0);
         }
 
         [RelayCommand]
@@ -109,7 +110,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 try
                 {
-                    var songInfo = ((SongInfo)_gsmtcService.CurrentSongInfo.Clone())
+                    var songInfo = ((SongInfo)GSMTCService.CurrentSongInfo.Clone())
                         .WithTitle(MappedSongSearchQuery.MappedTitle)
                         .WithArtist(MappedSongSearchQuery.MappedArtist)
                         .WithAlbum(MappedSongSearchQuery.MappedAlbum);
@@ -143,7 +144,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             await _songSearchMapService.SaveMappingAsync(MappedSongSearchQuery);
             MappedSongSearchQuery = (MappedSongSearchQuery)MappedSongSearchQuery.Clone();
-            _gsmtcService.UpdateLyrics();
+            GSMTCService.UpdateLyrics();
         }
 
         [RelayCommand]
@@ -154,7 +155,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             await _songSearchMapService.DeleteMappingAsync(MappedSongSearchQuery);
             await InitMappedSongSearchQueryAsync();
             SelectedLyricsSearchResult = null;
-            _gsmtcService.UpdateLyrics();
+            GSMTCService.UpdateLyrics();
         }
 
         [RelayCommand]

@@ -1492,7 +1492,7 @@
     <value>พินอิน (จีนกลาง)</value>
   </data>
   <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
-    <value>แหล่งเล่นเพลง</value>
+    <value>แหล่งที่มาของการเล่นและประมวลผลเนื้อเพลง</value>
   </data>
   <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
     <value>ไม่พบแหล่งเล่นเพลง</value>

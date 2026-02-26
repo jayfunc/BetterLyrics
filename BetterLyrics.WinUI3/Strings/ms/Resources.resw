@@ -1492,7 +1492,7 @@
     <value>Pinyin (Mandarin)</value>
   </data>
   <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
-    <value>Sumber Main Balik</value>
+    <value>Sumber Main Semula dan Pemprosesan Lirik</value>
   </data>
   <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
     <value>Tiada sumber main balik ditangkap</value>

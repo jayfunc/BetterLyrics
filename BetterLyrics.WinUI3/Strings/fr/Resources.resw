@@ -1492,7 +1492,7 @@
     <value>Pinyin (Mandarin)</value>
   </data>
   <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
-    <value>Sources de lecture</value>
+    <value>Source de lecture et traitement des paroles</value>
   </data>
   <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
     <value>Aucune source de lecture capturée</value>

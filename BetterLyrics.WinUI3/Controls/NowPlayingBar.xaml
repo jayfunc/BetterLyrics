@@ -505,7 +505,7 @@
                             <Setter Property="CornerRadius" Value="12" />
                         </Style>
                     </Flyout.FlyoutPresenterStyle>
-                    <Grid>
+                    <Grid Width="400">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                             <RowDefinition Height="Auto" />
@@ -532,11 +532,15 @@
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Text="{x:Bind GSMTCService.CurrentSongInfo.Title, Mode=OneWay}" />
+                                <TextBlock
+                                    Grid.Row="0"
+                                    Text="{x:Bind GSMTCService.CurrentSongInfo.Title, Mode=OneWay}"
+                                    TextTrimming="CharacterEllipsis" />
                                 <TextBlock
                                     Grid.Row="1"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Text="{x:Bind GSMTCService.CurrentSongInfo.Artist, Mode=OneWay}" />
+                                    Text="{x:Bind GSMTCService.CurrentSongInfo.Artist, Mode=OneWay}"
+                                    TextTrimming="CharacterEllipsis" />
                             </Grid>
                             <Grid
                                 Grid.Column="2"

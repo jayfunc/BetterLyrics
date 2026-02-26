@@ -1492,7 +1492,7 @@
     <value>Pinyin (Mandarin)</value>
   </data>
   <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
-    <value>Oynatma Kaynakları</value>
+    <value>Oynatma Kaynağı ve Söz İşleme</value>
   </data>
   <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
     <value>Yakalanan oynatma kaynağı yok</value>

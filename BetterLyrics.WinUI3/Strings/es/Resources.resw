@@ -1492,7 +1492,7 @@
     <value>Pinyin (Mandarín)</value>
   </data>
   <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
-    <value>Fuentes de reproducción</value>
+    <value>Fuente de reproducción y procesamiento de letras</value>
   </data>
   <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
     <value>Ninguna fuente de reproducción capturada</value>

@@ -1492,7 +1492,7 @@
     <value>Bính âm (Quan thoại)</value>
   </data>
   <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
-    <value>Nguồn phát</value>
+    <value>Nguồn phát lại và xử lý lời bài hát</value>
   </data>
   <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
     <value>Không bắt được nguồn phát nào</value>

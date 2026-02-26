@@ -1492,7 +1492,7 @@
     <value>普通话拼音</value>
   </data>
   <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
-    <value>播放源</value>
+    <value>播放源及歌词处理</value>
   </data>
   <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
     <value>没有捕获的播放源</value>

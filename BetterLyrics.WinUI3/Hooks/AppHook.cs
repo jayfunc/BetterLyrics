@@ -177,32 +177,23 @@ namespace BetterLyrics.WinUI3.Hooks
         }
 
         /// <summary>
-        /// 通过 AUMID 获取应用程序的物理路径或解析名称
+        /// 通过 AUMID 获取应用程序的物理路径
         /// </summary>
         public static async Task<string?> GetAppPathByAumidAsync(string? aumid)
         {
             if (string.IsNullOrWhiteSpace(aumid)) return null;
             if (_pathCache.TryGetValue(aumid, out var cachedPath)) return cachedPath;
 
-            var path = await Task.Run(() =>
+            string? path = await Task.Run(() =>
             {
-                using var item = GetShellItem(aumid);
-                if (item == null) return null;
-
-                if (item.IsFileSystem)
-                {
-                    return item.ParsingName;
-                }
-
-                try
-                {
-                    return item.Properties.GetProperty<string>(Ole32.PROPERTYKEY.System.Link.TargetParsingPath);
-                }
-                catch
-                {
-                    return item.ParsingName;
-                }
+                var item = GetShellItem(aumid);
+                return item?.GetDisplayName(ShellItemDisplayString.DesktopAbsoluteParsing);
             });
+
+            if (path != null)
+            {
+                path = $"shell:AppsFolder\\{path}";
+            }
 
             _pathCache.TryAdd(aumid, path);
 

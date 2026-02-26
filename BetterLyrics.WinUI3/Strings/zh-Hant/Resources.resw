@@ -1492,7 +1492,7 @@
     <value>漢語拼音</value>
   </data>
   <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
-    <value>播放來源</value>
+    <value>播放來源與歌詞處理</value>
   </data>
   <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
     <value>未擷取到播放來源</value>

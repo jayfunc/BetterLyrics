@@ -1492,7 +1492,7 @@
     <value>Пиньинь (Мандарин)</value>
   </data>
   <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
-    <value>Источники воспроизведения</value>
+    <value>Обработка источника воспроизведения и лирики</value>
   </data>
   <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
     <value>Нет захваченных источников воспроизведения</value>

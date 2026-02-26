@@ -1492,7 +1492,7 @@
     <value>पिनयिन (मंडारिन)</value>
   </data>
   <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
-    <value>प्लेबैक स्रोत</value>
+    <value>प्लेबैक स्रोत और गीत प्रसंस्करण</value>
   </data>
   <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
     <value>कोई प्लेबैक स्रोत कैप्चर नहीं किया गया</value>
