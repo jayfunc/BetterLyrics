@@ -31,10 +31,7 @@
 
                         <TextBlock x:Uid="LyricsSearchControlSongInfoMapping" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                        <Grid
-                            Padding="16"
-                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                            CornerRadius="4">
+                        <Grid Padding="16" Style="{StaticResource CardGridStyle}">
                             <StackPanel Spacing="6">
 
                                 <local:PropertyRow x:Uid="LyricsSearchControlTitle" Value="{x:Bind ViewModel.MappedSongSearchQuery.OriginalTitle, Mode=OneWay}" />
@@ -73,10 +70,7 @@
                             </StackPanel>
                         </Grid>
 
-                        <Grid
-                            Padding="16"
-                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                            CornerRadius="4">
+                        <Grid Padding="16" Style="{StaticResource CardGridStyle}">
                             <StackPanel Spacing="6">
 
                                 <local:PropertyRow x:Uid="LyricsSearchControlArtist" Value="{x:Bind ViewModel.MappedSongSearchQuery.OriginalArtist, Mode=OneWay}" />
@@ -115,10 +109,7 @@
                             </StackPanel>
                         </Grid>
 
-                        <Grid
-                            Padding="16"
-                            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                            CornerRadius="4">
+                        <Grid Padding="16" Style="{StaticResource CardGridStyle}">
                             <StackPanel Spacing="6">
 
                                 <local:PropertyRow x:Uid="LyricsSearchControlAlbum" Value="{x:Bind ViewModel.MappedSongSearchQuery.OriginalAlbum, Mode=OneWay}" />
@@ -156,6 +147,10 @@
                                 </Grid>
 
                             </StackPanel>
+                        </Grid>
+
+                        <Grid Padding="16" Style="{StaticResource CardGridStyle}">
+                            <local:PropertyRow x:Uid="LyricsSearchControlDurauion" Value="{x:Bind ViewModel.GSMTCService.CurrentSongInfo.Duration, Converter={StaticResource SecondsToFormattedTimeConverter}, TargetNullValue=N/A, Mode=OneWay}" />
                         </Grid>
 
                         <dev:SettingsCard>

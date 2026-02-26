@@ -1492,7 +1492,7 @@
     <value>بينيين (ماندرين)</value>
   </data>
   <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
-    <value>مصدر التشغيل</value>
+    <value>مصدر التشغيل ومعالجة الأغاني</value>
   </data>
   <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
     <value>لم يتم التقاط أي مصدر تشغيل</value>

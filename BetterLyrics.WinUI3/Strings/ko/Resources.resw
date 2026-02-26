@@ -1492,7 +1492,7 @@
     <value>한어병음 (표준 중국어)</value>
   </data>
   <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
-    <value>재생 소스</value>
+    <value>재생 소스 및 가사 처리</value>
   </data>
   <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
     <value>캡처된 재생 소스가 없습니다</value>

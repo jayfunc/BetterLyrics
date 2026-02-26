@@ -332,10 +332,26 @@ public sealed partial class NowPlayingBar : UserControl
 
     private async void OpenPlaybackSourceButton_Click(object sender, RoutedEventArgs e)
     {
-        var path = await AppHook.GetAppPathByAumidAsync(GSMTCService.CurrentMediaSourceProviderInfo?.Provider);
+        var amuid = GSMTCService.CurrentMediaSourceProviderInfo?.Provider;
+        var path = await AppHook.GetAppPathByAumidAsync(amuid);
         if (path != null)
         {
-            await Launcher.LaunchUriAsync(new Uri(path));
+            try
+            {
+                bool ok = await Launcher.LaunchUriAsync(new Uri(path));
+                if (!ok)
+                {
+                    GlobalToastManager.Show("Error", $"Fail to launch {path}", InfoBarSeverity.Warning);
+                }
+            }
+            catch (Exception)
+            {
+                GlobalToastManager.Show("Error", $"Could't launch {path}", InfoBarSeverity.Error);
+            }
+        }
+        else
+        {
+            GlobalToastManager.Show("Error", $"Could't get the path for {amuid}", InfoBarSeverity.Warning);
         }
     }
 }

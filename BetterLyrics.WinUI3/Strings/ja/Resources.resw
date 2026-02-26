@@ -1492,7 +1492,7 @@
     <value>ピンイン (中国語)</value>
   </data>
   <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
-    <value>再生ソース</value>
+    <value>再生ソースと歌詞処理</value>
   </data>
   <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
     <value>キャプチャされた再生ソースがありません</value>
@@ -1864,12 +1864,12 @@
     <value>ユーザーガイド</value>
   </data>
   <data name="WindowSettingsControlAlwaysHideNowPlayingBar.Header" xml:space="preserve">
-    <value>メディアコントロールバーを常に一番下の白いバーに隠す</value>
+    <value>メディアコントロールバーを常に下部のバーに格納する</value>
   </data>
   <data name="WindowSettingsControlDebug.Text" xml:space="preserve">
     <value>デバッグ</value>
   </data>
   <data name="WindowSettingsControlNowPlayingBar.Text" xml:space="preserve">
-    <value>メディア・コントロール・パネル</value>
+    <value>メディアコントロールパネル</value>
   </data>
 </root>
