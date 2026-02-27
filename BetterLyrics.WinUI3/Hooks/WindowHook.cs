@@ -273,9 +273,12 @@ namespace BetterLyrics.WinUI3.Hooks
             }
         }
 
-        public static void SetIsLocked(this Window window, bool enable)
+        public static void SetIsLocked(this Window window, bool enable, bool removeBorder)
         {
-            SetIsBorderless(window, enable);
+            if (removeBorder)
+            {
+                SetIsBorderless(window, enable);
+            }
             SetIsClickThrough(window, enable);
         }
 

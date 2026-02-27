@@ -1,17 +1,22 @@
 ﻿using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using NAudio.CoreAudioApi;
+using NAudio.CoreAudioApi.Interfaces;
 using NAudio.Dsp;
 using NAudio.Wave;
 using System;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Helper
 {
-    public partial class SpectrumAnalyzer : IDisposable
+    public partial class SpectrumAnalyzer : IDisposable, IMMNotificationClient
     {
         private readonly ILogger<SpectrumAnalyzer> _logger;
         private readonly object _lock = new();
         private WasapiLoopbackCapture? _capture;
+        private readonly MMDeviceEnumerator _deviceEnumerator;
+        private readonly LatestOnlyTaskRunner _deviceChangedTaskRunner;
 
         private int _sampleRate = 48000;
         private readonly int _fftLength = 2048;
@@ -70,6 +75,11 @@ namespace BetterLyrics.WinUI3.Helper
         {
             _logger = Ioc.Default.GetRequiredService<ILogger<SpectrumAnalyzer>>();
 
+            _deviceEnumerator = new MMDeviceEnumerator();
+            _deviceEnumerator.RegisterEndpointNotificationCallback(this);
+
+            _deviceChangedTaskRunner = new();
+
             _m = (int)Math.Log(_fftLength, 2);
             _fftLeftBuffer = new float[_fftLength];
             _fftLeftData = new Complex[_fftLength];
@@ -122,13 +132,100 @@ namespace BetterLyrics.WinUI3.Helper
         {
             if (_capture != null)
             {
-                _capture.DataAvailable -= OnDataAvailable;
-                _capture.RecordingStopped -= OnRecordingStopped;
-                _capture.StopRecording();
-                _capture.Dispose();
+                _capture?.DataAvailable -= OnDataAvailable;
+                _capture?.RecordingStopped -= OnRecordingStopped;
+                _capture?.StopRecording();
+                _capture?.Dispose();
                 _capture = null;
             }
             IsCapturing = false;
+        }
+
+        private static float CalculateCompensationFactor(float freq)
+        {
+            float[] frequencies = { 20, 50, 100, 200, 500, 1000, 2000, 4000, 8000, 16000, 20000 };
+            float[] gains = {
+                1.0f,  // 20Hz 基频
+                1.1f,  // 50Hz 超低音
+                1.1f,  // 100Hz 鼓点核心
+                1.2f,  // 200Hz 军鼓基频
+                1.4f,  // 500Hz 人声厚度区 
+                1.6f,  // 1k 人声核心区 
+                2.0f,  // 2k 人声齿音   
+                3.5f,  // 4k 乐器临场感
+                6.0f,  // 8k 高频细节
+                10.0f, // 16k 空气感   
+                12.0f  // 20k 极高频     
+            };
+
+            if (freq <= frequencies[0]) return gains[0];
+            if (freq >= frequencies[frequencies.Length - 1]) return gains[gains.Length - 1];
+
+            int i = 0;
+            while (freq > frequencies[i + 1]) i++;
+
+            float x1 = frequencies[i];
+            float y1 = gains[i];
+            float x2 = frequencies[i + 1];
+            float y2 = gains[i + 1];
+
+            return y1 + (freq - x1) * ((y2 - y1) / (x2 - x1));
+        }
+
+        public void UpdateSmoothSpectrum()
+        {
+            if (SmoothSpectrum == null || _currentSpectrum == null) return;
+
+            lock (_lock)
+            {
+                // 这里可以用 SIMD 优化，但在 64-128 bar 级别下，普通循环足够快
+                for (int i = 0; i < BarCount; i++)
+                {
+                    // 简单的低通滤波
+                    float target = _currentSpectrum[i];
+                    float current = SmoothSpectrum[i];
+
+                    // 下落减速（上升快，下落慢）
+                    if (target > current)
+                        SmoothSpectrum[i] = current * SmoothingFactor + target * (1 - SmoothingFactor);
+                    else
+                        SmoothSpectrum[i] = current * 0.98f; // 下落慢一点
+                }
+            }
+        }
+
+        public void OnDefaultDeviceChanged(DataFlow flow, Role role, string defaultDeviceId)
+        {
+            if (flow == DataFlow.Render && role == Role.Multimedia)
+            {
+                _logger.LogInformation("System audio device is changing, ready to capture...");
+
+                _ = _deviceChangedTaskRunner.RunAsync(async (token) =>
+                {
+                    await Task.Delay(1000, token);
+
+                    StopCapture();
+                    await Task.Delay(500, token);
+                    StartCapture();
+                });
+            }
+        }
+
+        public void OnDeviceAdded(string pwstrDeviceId) { }
+        public void OnDeviceRemoved(string deviceId) { }
+        public void OnDeviceStateChanged(string deviceId, DeviceState newState) { }
+        public void OnPropertyValueChanged(string pwstrDeviceId, PropertyKey key) { }
+
+        public void Dispose()
+        {
+            if (!_disposed)
+            {
+                _deviceEnumerator.UnregisterEndpointNotificationCallback(this);
+                _deviceEnumerator.Dispose();
+
+                StopCapture();
+                _disposed = true;
+            }
         }
 
         private void OnDataAvailable(object? sender, WaveInEventArgs e)
@@ -265,71 +362,9 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
-        private float CalculateCompensationFactor(float freq)
-        {
-            float[] frequencies = { 20, 50, 100, 200, 500, 1000, 2000, 4000, 8000, 16000, 20000 };
-            float[] gains = {
-                1.0f,  // 20Hz 基频
-                1.1f,  // 50Hz 超低音
-                1.1f,  // 100Hz 鼓点核心
-                1.2f,  // 200Hz 军鼓基频
-                1.4f,  // 500Hz 人声厚度区 
-                1.6f,  // 1k 人声核心区 
-                2.0f,  // 2k 人声齿音   
-                3.5f,  // 4k 乐器临场感
-                6.0f,  // 8k 高频细节
-                10.0f, // 16k 空气感   
-                12.0f  // 20k 极高频     
-            };
-
-            if (freq <= frequencies[0]) return gains[0];
-            if (freq >= frequencies[frequencies.Length - 1]) return gains[gains.Length - 1];
-
-            int i = 0;
-            while (freq > frequencies[i + 1]) i++;
-
-            float x1 = frequencies[i];
-            float y1 = gains[i];
-            float x2 = frequencies[i + 1];
-            float y2 = gains[i + 1];
-
-            return y1 + (freq - x1) * ((y2 - y1) / (x2 - x1));
-        }
-
-        public void UpdateSmoothSpectrum()
-        {
-            if (SmoothSpectrum == null || _currentSpectrum == null) return;
-
-            lock (_lock)
-            {
-                // 这里可以用 SIMD 优化，但在 64-128 bar 级别下，普通循环足够快
-                for (int i = 0; i < BarCount; i++)
-                {
-                    // 简单的低通滤波
-                    float target = _currentSpectrum[i];
-                    float current = SmoothSpectrum[i];
-
-                    // 下落减速（上升快，下落慢）
-                    if (target > current)
-                        SmoothSpectrum[i] = current * SmoothingFactor + target * (1 - SmoothingFactor);
-                    else
-                        SmoothSpectrum[i] = current * 0.98f; // 下落慢一点
-                }
-            }
-        }
-
         private void OnRecordingStopped(object? sender, StoppedEventArgs e)
         {
             IsCapturing = false;
-        }
-
-        public void Dispose()
-        {
-            if (!_disposed)
-            {
-                StopCapture();
-                _disposed = true;
-            }
         }
     }
 }

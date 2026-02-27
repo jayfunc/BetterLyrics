@@ -14,7 +14,6 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using static SkiaSharp.HarfBuzz.SKShaper;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -101,10 +100,18 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
 
             IsSearching = true;
-
             LyricsSearchResults.Clear();
-
             MappedSongSearchQuery.LyricsSearchProvider = null;
+
+            var activeProviders = _lyricsSearchService.GetActiveProviders();
+            foreach (var provider in activeProviders)
+            {
+                LyricsSearchResults.Add(new LyricsCacheItem
+                {
+                    Provider = provider,
+                    IsSearching = true
+                });
+            }
 
             _ = Task.Run(async () =>
             {
@@ -117,17 +124,40 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                     var checkCache = !_settingsService.AppSettings.GeneralSettings.IgnoreCacheWhenSearching;
 
-                    var result = await _lyricsSearchService.SearchAllAsync(songInfo, checkCache);
-
-                    _dispatcherQueue.TryEnqueue(() =>
+                    await foreach (var item in _lyricsSearchService.SearchAllAsync(songInfo, checkCache))
                     {
-                        LyricsSearchResults = [.. result];
-                    });
+                        _dispatcherQueue.TryEnqueue(() =>
+                        {
+                            var index = -1;
+                            for (int i = 0; i < LyricsSearchResults.Count; i++)
+                            {
+                                if (LyricsSearchResults[i].Provider == item.Provider)
+                                {
+                                    index = i;
+                                    break;
+                                }
+                            }
+
+                            if (index != -1)
+                            {
+                                item.IsSearching = false;
+                                LyricsSearchResults[index] = item;
+                            }
+                        });
+                    }
                 }
                 finally
                 {
                     _dispatcherQueue.TryEnqueue(() =>
                     {
+                        for (int i = LyricsSearchResults.Count - 1; i >= 0; i--)
+                        {
+                            if (LyricsSearchResults[i].IsSearching)
+                            {
+                                LyricsSearchResults[i].IsSearching = false;
+                            }
+                        }
+
                         IsSearching = false;
                     });
                 }

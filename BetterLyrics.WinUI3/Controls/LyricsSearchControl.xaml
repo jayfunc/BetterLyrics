@@ -25,6 +25,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
+            <!--  映射  -->
             <Grid Grid.Column="0">
                 <ScrollViewer Padding="8,0">
                     <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
@@ -171,18 +172,31 @@
                     </StackPanel>
                 </ScrollViewer>
             </Grid>
+            <!--  词源一览  -->
             <Grid Grid.Column="1">
-                <ListView ItemsSource="{x:Bind ViewModel.LyricsSearchResults, Mode=OneWay}" SelectedItem="{x:Bind ViewModel.SelectedLyricsSearchResult, Mode=TwoWay}">
+                <ListView
+                    ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
+                    ItemsSource="{x:Bind ViewModel.LyricsSearchResults, Mode=OneWay}"
+                    SelectedItem="{x:Bind ViewModel.SelectedLyricsSearchResult, Mode=TwoWay}">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="models:LyricsCacheItem">
-                            <ListViewItem IsEnabled="{x:Bind IsFound}">
-                                <StackPanel Padding="0,6" Opacity="{x:Bind IsFound, Converter={StaticResource BoolToPartialOpacityConverter}}">
-                                    <Grid Margin="-8,0,0,0" ColumnSpacing="6">
+                            <ListViewItem>
+                                <Grid Padding="12,6" Style="{StaticResource CardGridStyle}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+                                    <!--  Lyrics source provider  -->
+                                    <Grid
+                                        Grid.Row="0"
+                                        Margin="-8,0,0,0"
+                                        ColumnSpacing="6">
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="*" />
                                             <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
                                         <local:PropertyRow
+                                            IsEnabled="{x:Bind IsFound, Mode=OneWay}"
                                             Link="{x:Bind Reference, Mode=OneWay}"
                                             ToolTipService.ToolTip="{x:Bind Reference, TargetNullValue=N/A, Mode=OneWay}"
                                             Value="{x:Bind Provider, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}" />
@@ -196,7 +210,7 @@
                                             Visibility="{x:Bind IsPlugin, Converter={StaticResource BoolToVisibilityConverter}}" />
                                     </Grid>
                                     <!--  Lyrics search result  -->
-                                    <StackPanel Visibility="{x:Bind IsFound, Converter={StaticResource BoolToVisibilityConverter}}">
+                                    <StackPanel Grid.Row="1" Opacity="{x:Bind IsFound, Converter={StaticResource BoolToOpacityConverter}, Mode=OneWay}">
                                         <local:PropertyRow x:Uid="SettingsPageSongTitle" Value="{x:Bind Title, TargetNullValue=N/A, Mode=OneWay}" />
                                         <local:PropertyRow x:Uid="SettingsPageArtist" Value="{x:Bind Artist, TargetNullValue=N/A, Mode=OneWay}" />
                                         <local:PropertyRow x:Uid="SettingsPageAlbum" Value="{x:Bind Album, TargetNullValue=N/A, Mode=OneWay}" />
@@ -207,11 +221,26 @@
                                             Value="{x:Bind MatchPercentage, Mode=OneWay}" />
                                     </StackPanel>
                                     <!--  NOT FOUND  -->
-                                    <TextBlock
-                                        x:Uid="LyricsSearchControlNotFound"
+                                    <StackPanel
+                                        Grid.Row="1"
+                                        HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
-                                        Visibility="{x:Bind IsFound, Converter={StaticResource BoolNegationToVisibilityConverter}}" />
-                                </StackPanel>
+                                        Spacing="6"
+                                        Visibility="{x:Bind IsFound, Converter={StaticResource BoolNegationToVisibilityConverter}, Mode=OneWay}">
+                                        <FontIcon
+                                            FontFamily="{StaticResource SegoeFluentIcons}"
+                                            FontSize="16"
+                                            Glyph="&#xE624;" />
+                                        <TextBlock x:Uid="LyricsSearchControlNotFound" />
+                                    </StackPanel>
+                                    <!--  Searching  -->
+                                    <Grid
+                                        Grid.Row="1"
+                                        Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
+                                        Visibility="{x:Bind IsSearching, Mode=OneWay}">
+                                        <ProgressRing VerticalAlignment="Center" IsActive="{x:Bind IsSearching, Mode=OneWay}" />
+                                    </Grid>
+                                </Grid>
                             </ListViewItem>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -256,6 +285,7 @@
                     IsIndeterminate="True"
                     Visibility="{x:Bind ViewModel.IsSearching, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
             </Grid>
+            <!--  歌词内容  -->
             <Grid Grid.Column="2">
                 <Pivot ItemsSource="{x:Bind ViewModel.LyricsDataArr, Mode=OneWay}">
                     <interactivity:Interaction.Behaviors>
@@ -349,6 +379,7 @@
                 </StackPanel>
             </Grid>
         </Grid>
+        <!--  操作栏  -->
         <Grid Grid.Row="1" ColumnSpacing="6">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />

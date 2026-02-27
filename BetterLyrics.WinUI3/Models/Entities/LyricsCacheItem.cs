@@ -48,6 +48,7 @@ namespace BetterLyrics.WinUI3.Models
         [NotMapped][JsonIgnore] public bool IsFound => !string.IsNullOrEmpty(Raw);
         [NotMapped][JsonIgnore] public bool IsPlugin => Provider.IsPlugin();
         [NotMapped][JsonIgnore] public LyricsSearchProvider? ProviderIfFound => IsFound ? Provider : null;
+        [NotMapped][JsonIgnore] public bool IsSearching { get; set; } = false;
 
         public object Clone()
         {

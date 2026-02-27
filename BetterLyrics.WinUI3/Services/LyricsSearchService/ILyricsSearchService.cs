@@ -1,5 +1,6 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using BetterLyrics.Core.Enums;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models;
 using System.Collections.Generic;
@@ -13,6 +14,11 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
     {
         Task<LyricsCacheItem?> SearchSmartlyAsync(SongInfo songInfo, LyricsSearchType? lyricsSearchType, CancellationToken token);
 
-        Task<List<LyricsCacheItem>> SearchAllAsync(SongInfo songInfo, bool checkCache);
+        IAsyncEnumerable<LyricsCacheItem> SearchAllAsync(
+            SongInfo songInfo,
+            bool checkCache,
+            CancellationToken cancellationToken = default);
+
+        List<LyricsSearchProvider> GetActiveProviders();
     }
 }

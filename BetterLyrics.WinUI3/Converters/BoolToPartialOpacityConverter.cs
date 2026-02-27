@@ -9,7 +9,7 @@ namespace BetterLyrics.WinUI3.Converters
         {
             if (value is bool boolValue)
             {
-                return boolValue ? 1.0 : 0.3;
+                return boolValue ? 1.0 : 0.7;
             }
             return 1.0;
         }

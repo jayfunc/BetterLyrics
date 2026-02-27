@@ -21,6 +21,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsAlwaysOnTopPolling { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsShownInSwitchers { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLocked { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsBorderlessWhenLocked { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsAlwaysHideUnlockButton { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool KeepNowPlayingBarInteractiveWhenLocked { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsTimelineLyricsPreviewEnabled { get; set; } = true;
@@ -206,6 +207,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 IsAlwaysOnTopPolling = this.IsAlwaysOnTopPolling,
                 IsShownInSwitchers = this.IsShownInSwitchers,
                 IsLocked = this.IsLocked,
+                IsBorderlessWhenLocked = this.IsBorderlessWhenLocked,
                 IsAlwaysHideUnlockButton = this.IsAlwaysHideUnlockButton,
 
                 IsPinToTaskbar = this.IsPinToTaskbar,
@@ -240,6 +242,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
                 IsTimelineLyricsPreviewEnabled = this.IsTimelineLyricsPreviewEnabled,
                 KeepNowPlayingBarInteractiveWhenLocked = this.KeepNowPlayingBarInteractiveWhenLocked,
+                IsAlwaysHidePlayingBar = this.IsAlwaysHidePlayingBar,
             };
 
         }

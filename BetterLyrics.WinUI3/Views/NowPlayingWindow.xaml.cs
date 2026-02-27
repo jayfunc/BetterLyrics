@@ -222,7 +222,7 @@ namespace BetterLyrics.WinUI3.Views
                 UnlockButton.Opacity = 0;
                 StopOverlayInputHelper();
             }
-            this.SetIsLocked(LyricsWindowStatus.IsLocked);
+            this.SetIsLocked(LyricsWindowStatus.IsLocked, LyricsWindowStatus.IsBorderlessWhenLocked);
         }
 
         private void OnIsPinToTaskbarChanged()

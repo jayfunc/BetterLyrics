@@ -263,7 +263,10 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             }
         }
 
-        public async Task<List<LyricsCacheItem>> SearchAllAsync(SongInfo songInfo, bool checkCache)
+        public async IAsyncEnumerable<LyricsCacheItem> SearchAllAsync(
+            SongInfo songInfo,
+            bool checkCache,
+            [EnumeratorCancellation] CancellationToken cancellationToken = default)
         {
             _logger.LogInformation("SearchAllAsync Concurrent {SongInfo}", songInfo);
 
@@ -271,7 +274,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
             foreach (var provider in Enum.GetValues<LyricsSearchProvider>())
             {
-                searchTasks.Add(SearchSingleAsync(songInfo, provider, checkCache, default));
+                searchTasks.Add(SearchSingleAsync(songInfo, provider, checkCache, cancellationToken));
             }
 
             foreach (var plugin in _settingsService.AppSettings.PluginsInfo)
@@ -279,24 +282,56 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 if (plugin.Plugin is ILyricsSource)
                 {
                     var provider = (LyricsSearchProvider)_pluginService.GetPluginHashedId(plugin.Plugin.Id);
-                    searchTasks.Add(SearchSingleAsync(songInfo, provider, checkCache, default));
+                    searchTasks.Add(SearchSingleAsync(songInfo, provider, checkCache, cancellationToken));
                 }
             }
 
-            try
+            while (searchTasks.Count > 0)
             {
-                await Task.WhenAll(searchTasks);
+                var completedTask = await Task.WhenAny(searchTasks);
+
+                searchTasks.Remove(completedTask);
+
+                LyricsCacheItem? result = null;
+                try
+                {
+                    result = await completedTask;
+                }
+                catch (OperationCanceledException)
+                {
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogDebug(ex, "A lyrics search provider failed or timed out.");
+                }
+
+                if (result != null)
+                {
+                    yield return result;
+                }
             }
-            catch (Exception)
+        }
+
+        public List<LyricsSearchProvider> GetActiveProviders()
+        {
+            List<LyricsSearchProvider> providers = [];
+
+            foreach (var provider in Enum.GetValues<LyricsSearchProvider>())
             {
+                providers.Add(provider);
             }
 
-            var results = searchTasks
-                .Where(t => t.Status == TaskStatus.RanToCompletion && t.Result != null)
-                .Select(t => t.Result)
-                .ToList();
+            foreach (var plugin in _settingsService.AppSettings.PluginsInfo)
+            {
+                if (plugin.Plugin is ILyricsSource)
+                {
+                    var provider = (LyricsSearchProvider)_pluginService.GetPluginHashedId(plugin.Plugin.Id);
+                    providers.Add(provider);
+                }
+            }
 
-            return results;
+            return providers;
         }
 
         private async Task<LyricsCacheItem> SearchSingleAsync(SongInfo songInfo, LyricsSearchProvider provider, bool checkCache, CancellationToken token)
