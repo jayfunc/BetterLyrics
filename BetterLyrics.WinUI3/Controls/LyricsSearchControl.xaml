@@ -227,11 +227,8 @@
                                         VerticalAlignment="Center"
                                         Spacing="6"
                                         Visibility="{x:Bind IsFound, Converter={StaticResource BoolNegationToVisibilityConverter}, Mode=OneWay}">
-                                        <FontIcon
-                                            FontFamily="{StaticResource SegoeFluentIcons}"
-                                            FontSize="16"
-                                            Glyph="&#xE624;" />
-                                        <TextBlock x:Uid="LyricsSearchControlNotFound" />
+                                        <Image MaxWidth="48" Source="/Assets/Empty.png" />
+                                        <TextBlock x:Uid="LyricsSearchControlNotFound" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                                     </StackPanel>
                                     <!--  Searching  -->
                                     <Grid
