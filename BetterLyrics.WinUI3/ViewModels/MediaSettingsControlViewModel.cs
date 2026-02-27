@@ -44,6 +44,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 _dispatcherQueue.TryEnqueue(() =>
                 {
                     AppSettings.LocalMediaFolders.Remove(folder);
+                    PasswordVaultHelper.Delete(Constants.App.AppName, folder.VaultKey);
                 });
             });
         }
