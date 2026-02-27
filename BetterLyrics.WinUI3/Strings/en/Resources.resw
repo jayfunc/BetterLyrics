@@ -1869,7 +1869,13 @@
   <data name="WindowSettingsControlDebug.Text" xml:space="preserve">
     <value>Debug</value>
   </data>
+  <data name="WindowSettingsControlLockAndUnlock.Text" xml:space="preserve">
+    <value>Lock and Unlock</value>
+  </data>
   <data name="WindowSettingsControlNowPlayingBar.Text" xml:space="preserve">
     <value>Media Control Panel</value>
+  </data>
+  <data name="WindowSettingsControlRemoveBorder.Header" xml:space="preserve">
+    <value>Remove borders when locked</value>
   </data>
 </root>

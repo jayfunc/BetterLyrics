@@ -93,14 +93,6 @@
                             <ComboBoxItem x:Uid="SettingsPageCenter" />
                         </ComboBox>
                     </dev:SettingsCard>
-                    <!--  隐藏解锁键  -->
-                    <dev:SettingsCard
-                        x:Uid="SettingsPageAlwaysHideUnlockButton"
-                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                                 Glyph=&#xE785;}"
-                        IsEnabled="{x:Bind LyricsWindowStatus.IsLocked, Mode=OneWay}">
-                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAlwaysHideUnlockButton, Mode=TwoWay}" />
-                    </dev:SettingsCard>
                     <!--  置顶  -->
                     <dev:SettingsExpander
                         x:Uid="SettingsPageAOT"
@@ -133,6 +125,25 @@
                             <ComboBoxItem x:Uid="SettingsPageTitleBarAreaTop" />
                             <ComboBoxItem x:Uid="SettingsPageTitleBarAreaWhole" />
                         </ComboBox>
+                    </dev:SettingsCard>
+
+                    <TextBlock x:Uid="WindowSettingsControlLockAndUnlock" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                    <!--  隐藏解锁键  -->
+                    <dev:SettingsCard
+                        x:Uid="SettingsPageAlwaysHideUnlockButton"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                 Glyph=&#xE785;}"
+                        IsEnabled="{x:Bind LyricsWindowStatus.IsLocked, Mode=OneWay}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAlwaysHideUnlockButton, Mode=TwoWay}" />
+                    </dev:SettingsCard>
+                    <!--  无边框  -->
+                    <dev:SettingsCard
+                        x:Uid="WindowSettingsControlRemoveBorder"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                 Glyph=&#xEA48;}"
+                        IsEnabled="{x:Bind LyricsWindowStatus.IsLocked, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsBorderlessWhenLocked, Mode=TwoWay}" />
                     </dev:SettingsCard>
 
                     <TextBlock x:Uid="WindowSettingsControlNowPlayingBar" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
