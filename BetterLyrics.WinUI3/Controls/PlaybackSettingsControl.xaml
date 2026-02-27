@@ -704,37 +704,41 @@
 
                         <!--  Apple Music token  -->
                         <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="Apple Music media-user-token" />
-                        <dev:SettingsCard
-                            Background="{ThemeResource SystemFillColorCautionBackgroundBrush}"
-                            Description="Use at your own risk"
-                            Foreground="{ThemeResource SystemFillColorCautionBrush}"
-                            Header="WARNING">
-                            <Grid ColumnSpacing="6">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBox
-                                    Grid.Column="0"
-                                    PlaceholderText="media-user-token"
-                                    Text="{x:Bind ViewModel.AppleMusicMediaUserToken, Mode=TwoWay}"
-                                    TextWrapping="Wrap" />
-                                <HyperlinkButton
-                                    Grid.Column="1"
-                                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                                          FontSize=12,
-                                                          Glyph=&#xE897;}"
-                                    NavigateUri="{x:Bind constants:Link.AppleMusicCfg}" />
-                                <Button
-                                    Grid.Column="2"
-                                    Command="{x:Bind ViewModel.SaveAppleMusicMediaUserTokenCommand}"
-                                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                                          FontSize=12,
-                                                          Glyph=&#xE8FB;}"
-                                    Style="{StaticResource GhostButtonStyle}" />
-                            </Grid>
-                        </dev:SettingsCard>
+                        <Grid
+                            Padding="16"
+                            ColumnSpacing="6"
+                            Style="{StaticResource CardGridStyle}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBox
+                                Grid.Column="0"
+                                PlaceholderText="media-user-token"
+                                Text="{x:Bind ViewModel.AppleMusicMediaUserToken, Mode=TwoWay}"
+                                TextWrapping="Wrap" />
+                            <HyperlinkButton
+                                Grid.Column="1"
+                                VerticalAlignment="Bottom"
+                                Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                      FontSize=12,
+                                                      Glyph=&#xE897;}"
+                                NavigateUri="{x:Bind constants:Link.AppleMusicCfg}" />
+                            <Button
+                                Grid.Column="2"
+                                VerticalAlignment="Bottom"
+                                Command="{x:Bind ViewModel.SaveAppleMusicMediaUserTokenCommand}"
+                                Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                      FontSize=12,
+                                                      Glyph=&#xE8FB;}"
+                                Style="{StaticResource GhostButtonStyle}" />
+                        </Grid>
+                        <InfoBar
+                            IsClosable="False"
+                            IsOpen="True"
+                            Message="USE AT YOUR OWN RISK"
+                            Severity="Warning" />
 
                     </StackPanel>
                 </Grid>
