@@ -652,6 +652,13 @@ namespace BetterLyrics.WinUI3.Views
             DataContext = null;
         }
 
+        private void AlbumArtGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            var transform = AlbumArtGrid.TransformToVisual(RootGrid);
+            var localRect = new Windows.Foundation.Rect(0, 0, AlbumArtGrid.ActualWidth, AlbumArtGrid.ActualHeight);
+            LyricsCanvas.AlbumArtRect = transform.TransformBounds(localRect);
+        }
+
         // ====
 
         public void Receive(PropertyChangedMessage<SongInfo> message)
@@ -761,5 +768,6 @@ namespace BetterLyrics.WinUI3.Views
                 }
             }
         }
+
     }
 }

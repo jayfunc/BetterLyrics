@@ -48,6 +48,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsAdaptToEnvironment { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial WindowPixelSampleMode EnvironmentSampleMode { get; set; } = WindowPixelSampleMode.WindowEdge;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool AutoShowOrHideWindow { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int AutoShowOrHideWindowDelay { get; set; } = 250; // 250ms
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TitleBarArea TitleBarArea { get; set; } = TitleBarArea.Top;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsKeepScreenOpen { get; set; } = false;
 
@@ -234,6 +235,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 IsAdaptToEnvironment = this.IsAdaptToEnvironment,
                 EnvironmentSampleMode = this.EnvironmentSampleMode,
                 AutoShowOrHideWindow = this.AutoShowOrHideWindow,
+                AutoShowOrHideWindowDelay = this.AutoShowOrHideWindowDelay,
                 TitleBarArea = this.TitleBarArea,
                 IsKeepScreenOpen = this.IsKeepScreenOpen,
 

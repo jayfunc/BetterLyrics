@@ -7,6 +7,7 @@ using Microsoft.UI;
 using System;
 using System.Numerics;
 using Windows.UI;
+using Windows.Foundation;
 
 namespace BetterLyrics.WinUI3.Renderer
 {
@@ -27,7 +28,9 @@ namespace BetterLyrics.WinUI3.Renderer
             SpectrumStyle style,
             double canvasWidth,
             double canvasHeight,
-            Color fillColor
+            Color fillColor,
+            Rect albumRect,
+            float cornerRadiusPercentage
             )
         {
             _spectrumGeometry?.Dispose();
@@ -35,15 +38,17 @@ namespace BetterLyrics.WinUI3.Renderer
 
             if (!isEnabled || spectrumData == null || spectrumData.Length == 0) return;
 
-            _spectrumGeometry = CreateGeometry(resourceCreator, spectrumData, barCount, placement, style, canvasWidth, canvasHeight);
+            _spectrumGeometry = CreateGeometry(resourceCreator, spectrumData, barCount, placement, style, canvasWidth, canvasHeight, albumRect, cornerRadiusPercentage);
 
             if (_spectrumGeometry != null)
             {
-                var center = new Vector2((float)canvasWidth / 2, placement == SpectrumPlacement.Bottom ? (float)canvasHeight : 0);
+                var center = placement == SpectrumPlacement.AroundAlbumArt
+                    ? new Vector2((float)(albumRect.X + albumRect.Width / 2), (float)(albumRect.Y + albumRect.Height / 2))
+                    : new Vector2((float)canvasWidth / 2, placement == SpectrumPlacement.Bottom ? (float)canvasHeight : 0);
 
                 ApplyBreathingTransform(ds, center, isBreathingEffectEnabled);
 
-                DrawGeometry(ds, _spectrumGeometry, fillColor, isGlowEffectEnabled, opacity, placement, canvasHeight);
+                DrawGeometry(ds, _spectrumGeometry, fillColor, isGlowEffectEnabled, opacity, placement, style, canvasHeight, albumRect);
 
                 ResetTransform(ds, isBreathingEffectEnabled);
             }
@@ -61,7 +66,9 @@ namespace BetterLyrics.WinUI3.Renderer
             SpectrumPlacement placement,
             SpectrumStyle style,
             double width,
-            double height)
+            double height,
+            Rect albumRect,
+            float cornerRadiusPercentage)
         {
             if (barCount < 2 || data == null || data.Length == 0) return null;
 
@@ -71,112 +78,213 @@ namespace BetterLyrics.WinUI3.Renderer
 
             using var pathBuilder = new CanvasPathBuilder(creator);
 
-            if (style == SpectrumStyle.Bar)
+            if (placement == SpectrumPlacement.AroundAlbumArt)
             {
-                float totalStep = (float)width / barCount;
-                float gap = 2.0f;
-                // 防止条形太细导致消失
-                float barWidth = totalStep - gap;
-                if (barWidth < 1.0f)
-                {
-                    barWidth = totalStep;
-                    gap = 0f;
-                }
-                // 如果 barWidth 很小，x 坐标微调
-                float halfGap = gap / 2.0f;
+                float w = (float)albumRect.Width;
+                float h = (float)albumRect.Height;
+                float cornerRadius = cornerRadiusPercentage / 100f * Math.Min(w / 2, h / 2);
+                float r = cornerRadius;
 
-                for (int i = 0; i < barCount; i++)
-                {
-                    float rawVal = i < data.Length ? data[i] : 0;
+                float perimeter = 2 * (w - 2 * r) + 2 * (h - 2 * r) + (float)(2 * Math.PI * r);
+                float step = perimeter / barCount;
 
-                    float barHeight = rawVal * fixedScaleFactor;
-
-                    // 限制最大高度不超过画布，防止画出去
-                    if (barHeight > viewHeight) barHeight = viewHeight;
-
-                    // 忽略极小值，减少绘制开销
-                    if (barHeight < 1.0f) continue;
-
-                    float x = i * totalStep + halfGap;
-                    float topY, bottomY;
-
-                    if (placement == SpectrumPlacement.Top)
-                    {
-                        topY = 0;
-                        bottomY = barHeight;
-                    }
-                    else // Bottom
-                    {
-                        topY = viewHeight - barHeight;
-                        bottomY = viewHeight;
-                    }
-
-                    pathBuilder.BeginFigure(new Vector2(x, topY));
-                    pathBuilder.AddLine(new Vector2(x + barWidth, topY));
-                    pathBuilder.AddLine(new Vector2(x + barWidth, bottomY));
-                    pathBuilder.AddLine(new Vector2(x, bottomY));
-                    pathBuilder.EndFigure(CanvasFigureLoop.Closed);
-                }
-            }
-            else // Curve
-            {
-                Span<Vector2> points = barCount <= 512
+                Span<Vector2> outerPoints = barCount <= 512
                     ? stackalloc Vector2[barCount]
                     : new Vector2[barCount];
 
-                float pointSpacing = (float)width / (barCount - 1);
-
                 for (int i = 0; i < barCount; i++)
                 {
                     float rawVal = i < data.Length ? data[i] : 0;
-                    float yVal = rawVal * fixedScaleFactor;
 
-                    // Clamp
-                    if (yVal > viewHeight) yVal = viewHeight;
+                    float barHeight = rawVal * fixedScaleFactor * 2.0f;
 
-                    // 处理 Y 轴翻转
-                    float y = (placement == SpectrumPlacement.Bottom)
-                        ? viewHeight - yVal
-                        : yVal;
+                    float distance = (i * step) % perimeter;
 
-                    points[i] = new Vector2(i * pointSpacing, y);
+                    var (pos, normal) = GetPointAndNormalOnRoundRect(distance, albumRect, r);
+
+                    outerPoints[i] = pos + normal * barHeight;
                 }
 
-                // 绘制曲线
-                pathBuilder.BeginFigure(points[0]);
+                pathBuilder.BeginFigure(outerPoints[0]);
 
-                for (int i = 0; i < barCount - 1; i++)
+                for (int i = 0; i < barCount; i++)
                 {
-                    // Catmull-Rom 样条插值转贝塞尔控制点逻辑
-                    // 边界检查优化
-                    Vector2 p0 = points[i > 0 ? i - 1 : 0];
-                    Vector2 p1 = points[i];
-                    Vector2 p2 = points[i + 1];
-                    Vector2 p3 = points[i + 2 < barCount ? i + 2 : barCount - 1];
+                    Vector2 p0 = outerPoints[(i - 1 + barCount) % barCount];
+                    Vector2 p1 = outerPoints[i];
+                    Vector2 p2 = outerPoints[(i + 1) % barCount];
+                    Vector2 p3 = outerPoints[(i + 2) % barCount];
 
-                    // 简单的张力系数 (Tension)，0.16f (即 1/6) 是标准 Catmull-Rom
                     Vector2 cp1 = p1 + (p2 - p0) * 0.1666f;
                     Vector2 cp2 = p2 - (p3 - p1) * 0.1666f;
 
                     pathBuilder.AddCubicBezier(cp1, cp2, p2);
                 }
 
-                // 封口：连接底部/顶部直线以形成封闭区域用于填充
-                if (placement == SpectrumPlacement.Top)
-                {
-                    pathBuilder.AddLine(new Vector2(points[barCount - 1].X, 0));
-                    pathBuilder.AddLine(new Vector2(points[0].X, 0));
-                }
-                else
-                {
-                    pathBuilder.AddLine(new Vector2(points[barCount - 1].X, viewHeight));
-                    pathBuilder.AddLine(new Vector2(points[0].X, viewHeight));
-                }
-
                 pathBuilder.EndFigure(CanvasFigureLoop.Closed);
+            }
+            else
+            {
+                if (style == SpectrumStyle.Bar)
+                {
+                    float totalStep = (float)width / barCount;
+                    float gap = 2.0f;
+                    float barWidth = totalStep - gap;
+                    if (barWidth < 1.0f)
+                    {
+                        barWidth = totalStep;
+                        gap = 0f;
+                    }
+                    float halfGap = gap / 2.0f;
+
+                    for (int i = 0; i < barCount; i++)
+                    {
+                        float rawVal = i < data.Length ? data[i] : 0;
+
+                        float barHeight = rawVal * fixedScaleFactor;
+
+                        if (barHeight > viewHeight) barHeight = viewHeight;
+
+                        if (barHeight < 1.0f) continue;
+
+                        float x = i * totalStep + halfGap;
+                        float topY, bottomY;
+
+                        if (placement == SpectrumPlacement.Top)
+                        {
+                            topY = 0;
+                            bottomY = barHeight;
+                        }
+                        else // Bottom
+                        {
+                            topY = viewHeight - barHeight;
+                            bottomY = viewHeight;
+                        }
+
+                        pathBuilder.BeginFigure(new Vector2(x, topY));
+                        pathBuilder.AddLine(new Vector2(x + barWidth, topY));
+                        pathBuilder.AddLine(new Vector2(x + barWidth, bottomY));
+                        pathBuilder.AddLine(new Vector2(x, bottomY));
+                        pathBuilder.EndFigure(CanvasFigureLoop.Closed);
+                    }
+                }
+                else // Curve
+                {
+                    Span<Vector2> points = barCount <= 512
+                        ? stackalloc Vector2[barCount]
+                        : new Vector2[barCount];
+
+                    float pointSpacing = (float)width / (barCount - 1);
+
+                    for (int i = 0; i < barCount; i++)
+                    {
+                        float rawVal = i < data.Length ? data[i] : 0;
+                        float yVal = rawVal * fixedScaleFactor;
+
+                        if (yVal > viewHeight) yVal = viewHeight;
+
+                        float y = (placement == SpectrumPlacement.Bottom)
+                            ? viewHeight - yVal
+                            : yVal;
+
+                        points[i] = new Vector2(i * pointSpacing, y);
+                    }
+
+                    pathBuilder.BeginFigure(points[0]);
+
+                    for (int i = 0; i < barCount - 1; i++)
+                    {
+                        Vector2 p0 = points[i > 0 ? i - 1 : 0];
+                        Vector2 p1 = points[i];
+                        Vector2 p2 = points[i + 1];
+                        Vector2 p3 = points[i + 2 < barCount ? i + 2 : barCount - 1];
+
+                        Vector2 cp1 = p1 + (p2 - p0) * 0.1666f;
+                        Vector2 cp2 = p2 - (p3 - p1) * 0.1666f;
+
+                        pathBuilder.AddCubicBezier(cp1, cp2, p2);
+                    }
+
+                    // 封口
+                    if (placement == SpectrumPlacement.Top)
+                    {
+                        pathBuilder.AddLine(new Vector2(points[barCount - 1].X, 0));
+                        pathBuilder.AddLine(new Vector2(points[0].X, 0));
+                    }
+                    else
+                    {
+                        pathBuilder.AddLine(new Vector2(points[barCount - 1].X, viewHeight));
+                        pathBuilder.AddLine(new Vector2(points[0].X, viewHeight));
+                    }
+
+                    pathBuilder.EndFigure(CanvasFigureLoop.Closed);
+                }
             }
 
             return CanvasGeometry.CreatePath(pathBuilder);
+        }
+
+        private (Vector2 Position, Vector2 Normal) GetPointAndNormalOnRoundRect(float distance, Rect rect, float r)
+        {
+            float w = (float)rect.Width;
+            float h = (float)rect.Height;
+            float x = (float)rect.X;
+            float y = (float)rect.Y;
+
+            float topL = w - 2 * r;
+            float arcL = (float)(Math.PI * r / 2.0);
+            float rightL = h - 2 * r;
+
+            // 上边缘 (向右)
+            if (distance <= topL)
+                return (new Vector2(x + r + distance, y), new Vector2(0, -1));
+            distance -= topL;
+
+            // 右上角圆弧
+            if (distance <= arcL)
+            {
+                float angle = -MathF.PI / 2 + (distance / arcL) * (MathF.PI / 2); // -90度到0度
+                Vector2 n = new Vector2(MathF.Cos(angle), MathF.Sin(angle));
+                return (new Vector2(x + w - r, y + r) + n * r, n);
+            }
+            distance -= arcL;
+
+            // 右边缘 (向下)
+            if (distance <= rightL)
+                return (new Vector2(x + w, y + r + distance), new Vector2(1, 0));
+            distance -= rightL;
+
+            // 右下角圆弧
+            if (distance <= arcL)
+            {
+                float angle = 0 + (distance / arcL) * (MathF.PI / 2); // 0度到90度
+                Vector2 n = new Vector2(MathF.Cos(angle), MathF.Sin(angle));
+                return (new Vector2(x + w - r, y + h - r) + n * r, n);
+            }
+            distance -= arcL;
+
+            // 下边缘 (向左)
+            if (distance <= topL)
+                return (new Vector2(x + w - r - distance, y + h), new Vector2(0, 1));
+            distance -= topL;
+
+            // 左下角圆弧
+            if (distance <= arcL)
+            {
+                float angle = MathF.PI / 2 + (distance / arcL) * (MathF.PI / 2); // 90度到180度
+                Vector2 n = new Vector2(MathF.Cos(angle), MathF.Sin(angle));
+                return (new Vector2(x + r, y + h - r) + n * r, n);
+            }
+            distance -= arcL;
+
+            // 左边缘 (向上)
+            if (distance <= rightL)
+                return (new Vector2(x, y + h - r - distance), new Vector2(-1, 0));
+            distance -= rightL;
+
+            // 左上角圆弧
+            float finalAngle = MathF.PI + (distance / arcL) * (MathF.PI / 2); // 180度到270度
+            Vector2 finalN = new Vector2(MathF.Cos(finalAngle), MathF.Sin(finalAngle));
+            return (new Vector2(x + r, y + r) + finalN * r, finalN);
         }
 
         private static void DrawGeometry(
@@ -186,7 +294,9 @@ namespace BetterLyrics.WinUI3.Renderer
             bool isGlowEffectEnabled,
             float opacity,
             SpectrumPlacement placement,
-            double height)
+            SpectrumStyle style,
+            double height,
+            Rect albumRect)
         {
             var stops = new CanvasGradientStop[]
             {
@@ -194,17 +304,47 @@ namespace BetterLyrics.WinUI3.Renderer
                 new() { Position = 1.0f, Color = Color.FromArgb((byte)(255 * opacity), color.R, color.G, color.B) }
             };
 
-            using var brush = new CanvasLinearGradientBrush(ds, stops);
+            ICanvasBrush brush;
 
-            if (placement == SpectrumPlacement.Top)
+            if (placement == SpectrumPlacement.AroundAlbumArt)
             {
-                brush.StartPoint = new Vector2(0, (float)height);
-                brush.EndPoint = new Vector2(0, 0);
+                float centerX = (float)(albumRect.X + albumRect.Width / 2);
+                float centerY = (float)(albumRect.Y + albumRect.Height / 2);
+
+                float maxRadius = (float)(Math.Max(albumRect.Width, albumRect.Height) / 2.0 + height * 0.3);
+
+                float edgeRatio = (float)(Math.Min(albumRect.Width, albumRect.Height) / 2.0) / maxRadius;
+                edgeRatio = Math.Clamp(edgeRatio, 0.1f, 0.8f);
+
+                var roundStops = new CanvasGradientStop[]
+                {
+                    new() { Position = 0.0f, Color = Color.FromArgb((byte)(255 * opacity), color.R, color.G, color.B) },
+                    new() { Position = edgeRatio, Color = Color.FromArgb((byte)(255 * opacity), color.R, color.G, color.B) },
+
+                    new() { Position = 1.0f, Color = Colors.Transparent }
+                };
+
+                brush = new CanvasRadialGradientBrush(ds, roundStops)
+                {
+                    Center = new Vector2(centerX, centerY),
+                    RadiusX = maxRadius,
+                    RadiusY = maxRadius
+                };
             }
             else
             {
-                brush.StartPoint = new Vector2(0, 0);
-                brush.EndPoint = new Vector2(0, (float)height);
+                var linearBrush = new CanvasLinearGradientBrush(ds, stops);
+                if (placement == SpectrumPlacement.Top)
+                {
+                    linearBrush.StartPoint = new Vector2(0, (float)height);
+                    linearBrush.EndPoint = new Vector2(0, 0);
+                }
+                else
+                {
+                    linearBrush.StartPoint = new Vector2(0, 0);
+                    linearBrush.EndPoint = new Vector2(0, (float)height);
+                }
+                brush = linearBrush;
             }
 
             if (isGlowEffectEnabled)
@@ -224,7 +364,7 @@ namespace BetterLyrics.WinUI3.Renderer
                 };
 
                 // 向外发射辉光
-                float glowOffsetY = placement == SpectrumPlacement.Bottom ? -4.0f : 4.0f;
+                float glowOffsetY = placement == SpectrumPlacement.AroundAlbumArt ? 0 : (placement == SpectrumPlacement.Bottom ? -4.0f : 4.0f);
 
                 using (var layer = ds.CreateLayer(1.0f))
                 {
@@ -237,8 +377,10 @@ namespace BetterLyrics.WinUI3.Renderer
 
             ds.FillGeometry(geometry, brush);
 
-            // (可选) 绘制一条高亮的描边，增强轮廓感，让波峰更清晰
+            // 绘制一条高亮的描边，增强轮廓感，让波峰更清晰
             //ds.DrawGeometry(geometry, Colors.White, 1.0f);
+
+            brush.Dispose();
         }
 
         public void Dispose()

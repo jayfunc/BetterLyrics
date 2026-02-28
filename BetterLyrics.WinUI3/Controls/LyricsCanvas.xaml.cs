@@ -108,6 +108,7 @@ namespace BetterLyrics.WinUI3.Controls
 
         private LyricsWindowStatus? _lyricsWindowStatus = null;
         private AlbumArtThemeColors _albumArtThemeColors = new();
+        private Rect _albumArtRect = new();
 
         private Point _mousePosition = new(0, 0);
         private int _mouseHoverLineIndex = -1;
@@ -147,6 +148,15 @@ namespace BetterLyrics.WinUI3.Controls
 
         public static readonly DependencyProperty AlbumArtThemeColorsProperty =
             DependencyProperty.Register(nameof(AlbumArtThemeColors), typeof(AlbumArtThemeColors), typeof(LyricsCanvas), new PropertyMetadata(new AlbumArtThemeColors(), OnDependencyPropertyChanged));
+
+        public Rect AlbumArtRect
+        {
+            get { return (Rect)GetValue(AlbumArtRectProperty); }
+            set { SetValue(AlbumArtRectProperty, value); }
+        }
+
+        public static readonly DependencyProperty AlbumArtRectProperty =
+            DependencyProperty.Register(nameof(AlbumArtRect), typeof(Rect), typeof(LyricsCanvas), new PropertyMetadata(new Rect(), OnDependencyPropertyChanged));
 
         // 歌词区域起始横 X 坐标
         public double LyricsStartX
@@ -264,6 +274,10 @@ namespace BetterLyrics.WinUI3.Controls
                     canvas._lyricsWindowStatus = (LyricsWindowStatus)e.NewValue;
                     canvas._isLayoutChanged = true;
                 }
+                else if (e.Property == AlbumArtRectProperty)
+                {
+                    canvas._albumArtRect = (Rect)e.NewValue;
+                }
                 else if (e.Property == LyricsStartXProperty)
                 {
                     canvas._renderLyricsStartX = Convert.ToDouble(e.NewValue);
@@ -341,6 +355,7 @@ namespace BetterLyrics.WinUI3.Controls
             var lyricsBg = _lyricsWindowStatus.LyricsBackgroundSettings;
             var lyricsStyle = _lyricsWindowStatus.LyricsStyleSettings;
             var lyricsEffect = _lyricsWindowStatus.LyricsEffectSettings;
+            var albumStyle = _lyricsWindowStatus.AlbumArtLayoutSettings;
 
             double songDuration = _gsmtcService.CurrentSongInfo.DurationMs;
 
@@ -387,7 +402,9 @@ namespace BetterLyrics.WinUI3.Controls
                     style: lyricsBg.SpectrumStyle,
                     canvasWidth: sender.Size.Width,
                     canvasHeight: sender.Size.Height,
-                    fillColor: _albumArtThemeColors.BgFontColor
+                    fillColor: _albumArtThemeColors.BgFontColor,
+                    albumRect: _albumArtRect,
+                    cornerRadiusPercentage: albumStyle.CoverImageRadius
                 );
             }
 
@@ -717,13 +734,30 @@ namespace BetterLyrics.WinUI3.Controls
 
         private async Task ReloadCoverBackgroundResourcesAsync()
         {
-            if (_gsmtcService.AlbumArtBitmapStream is IRandomAccessStream stream)
-            {
-                stream.Seek(0);
-                if (Canvas == null || Canvas.Device == null) return;
+            if (Canvas == null || Canvas.Device == null) return;
 
-                CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(Canvas, stream);
-                _coverRenderer.SetCoverBitmap(bitmap);
+            try
+            {
+                var originalStream = _gsmtcService.AlbumArtBitmapStream;
+                if (originalStream == null) return;
+
+                using (var localMemoryStream = new InMemoryRandomAccessStream())
+                {
+                    originalStream.Seek(0);
+
+                    await RandomAccessStream.CopyAsync(originalStream, localMemoryStream);
+
+                    localMemoryStream.Seek(0);
+
+                    if (Canvas.Device == null) return;
+
+                    CanvasBitmap bitmap = await CanvasBitmap.LoadAsync(Canvas, localMemoryStream);
+                    _coverRenderer.SetCoverBitmap(bitmap);
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"ReloadCoverBackgroundResourcesAsync: {ex.Message}");
             }
         }
 

@@ -1146,6 +1146,9 @@
   <data name="SettingsPageHideWindow.Header" xml:space="preserve">
     <value>Masquer/afficher la fenêtre auto.</value>
   </data>
+  <data name="SettingsPageHideWindowDelay.Header" xml:space="preserve">
+    <value>Delay</value>
+  </data>
   <data name="SettingsPageHoldDragSort.Content" xml:space="preserve">
     <value>Maintenir et glisser pour trier</value>
   </data>
@@ -1652,6 +1655,9 @@
   </data>
   <data name="SettingsPageSpectrumLayerStyle.Header" xml:space="preserve">
     <value>Style du spectre</value>
+  </data>
+  <data name="SettingsPageSpectrumPlacementAroundAlbumArt.Content" xml:space="preserve">
+    <value>Around the album art</value>
   </data>
   <data name="SettingsPageSpectrumPlacementBottom.Content" xml:space="preserve">
     <value>Bas</value>

@@ -107,9 +107,24 @@
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
                     <!--  隐藏窗口  -->
-                    <dev:SettingsCard x:Uid="SettingsPageHideWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xED1A;}">
+                    <dev:SettingsExpander
+                        x:Uid="SettingsPageHideWindow"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                 Glyph=&#xED1A;}"
+                        IsExpanded="{x:Bind LyricsWindowStatus.AutoShowOrHideWindow, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.AutoShowOrHideWindow, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                        <dev:SettingsExpander.Items>
+                            <dev:SettingsCard x:Uid="SettingsPageHideWindowDelay" IsEnabled="{x:Bind LyricsWindowStatus.AutoShowOrHideWindow, Mode=OneWay}">
+                                <local:ExtendedSlider
+                                    Default="250"
+                                    Frequency="50"
+                                    Maximum="3000"
+                                    Minimum="250"
+                                    Unit="ms"
+                                    Value="{x:Bind LyricsWindowStatus.AutoShowOrHideWindowDelay, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+                        </dev:SettingsExpander.Items>
+                    </dev:SettingsExpander>
                     <!--  保持屏幕常亮  -->
                     <dev:SettingsCard x:Uid="SettingsPageKeepScreenOpen" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEA80;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsKeepScreenOpen, Mode=TwoWay}" />
