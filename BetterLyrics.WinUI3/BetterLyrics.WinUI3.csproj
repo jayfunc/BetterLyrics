@@ -31,6 +31,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<None Remove="Assets\Banner.png" />
+		<None Remove="Assets\Fonts\SegoeFluentIcons.ttf" />
 		<None Remove="Assets\Logo.ico" />
 		<None Remove="Assets\Logo.png" />
 		<None Remove="Assets\LogoPlugin.png" />
@@ -167,7 +168,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<TrimmerRootDescriptor Include="PluginConfigs\**\*_TrimmerRoots.xml" />
-		<Content Remove="Assets\Fonts\SegoeFluentIcons.ttf" />
 		<TrimmerRootDescriptor Include="Core_TrimmerRoots.xml" />
 	</ItemGroup>
 	<ItemGroup>
@@ -204,9 +204,9 @@
 		<Content Update="Assets\RevolvingHearts.gif">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
-		<None Update="Assets\Fonts\SegoeFluentIcons.ttf">
-			<CopyToOutputDirectory>Never</CopyToOutputDirectory>
-		</None>
+		<Content Update="Assets\Fonts\SegoeFluentIcons.ttf">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 		<Content Update="Assets\WeChatReward.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>

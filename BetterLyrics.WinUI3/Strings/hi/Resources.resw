@@ -1146,6 +1146,9 @@
   <data name="SettingsPageHideWindow.Header" xml:space="preserve">
     <value>विंडो को स्वचालित रूप से छिपाएं/दिखाएं</value>
   </data>
+  <data name="SettingsPageHideWindowDelay.Header" xml:space="preserve">
+    <value>Delay</value>
+  </data>
   <data name="SettingsPageHoldDragSort.Content" xml:space="preserve">
     <value>यहाँ पकड़ें और क्रमबद्ध करने के लिए खींचें</value>
   </data>
@@ -1652,6 +1655,9 @@
   </data>
   <data name="SettingsPageSpectrumLayerStyle.Header" xml:space="preserve">
     <value>स्पेक्ट्रम शैली</value>
+  </data>
+  <data name="SettingsPageSpectrumPlacementAroundAlbumArt.Content" xml:space="preserve">
+    <value>Around the album art</value>
   </data>
   <data name="SettingsPageSpectrumPlacementBottom.Content" xml:space="preserve">
     <value>निचला</value>

@@ -1146,6 +1146,9 @@
   <data name="SettingsPageHideWindow.Header" xml:space="preserve">
     <value>自动隐藏/显示窗口</value>
   </data>
+  <data name="SettingsPageHideWindowDelay.Header" xml:space="preserve">
+    <value>Delay</value>
+  </data>
   <data name="SettingsPageHoldDragSort.Content" xml:space="preserve">
     <value>按住此处并拖动以排序</value>
   </data>
@@ -1652,6 +1655,9 @@
   </data>
   <data name="SettingsPageSpectrumLayerStyle.Header" xml:space="preserve">
     <value>频谱样式</value>
+  </data>
+  <data name="SettingsPageSpectrumPlacementAroundAlbumArt.Content" xml:space="preserve">
+    <value>Around the album art</value>
   </data>
   <data name="SettingsPageSpectrumPlacementBottom.Content" xml:space="preserve">
     <value>底部</value>

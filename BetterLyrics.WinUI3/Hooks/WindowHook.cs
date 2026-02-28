@@ -250,7 +250,7 @@ namespace BetterLyrics.WinUI3.Hooks
         {
             var window = (Window)sender;
             window.Closed -= WindowHelper_Closed;
-            
+
             _activeWindows.Remove(sender);
 
             MemoryLeakDetector.Track(window);
@@ -499,7 +499,7 @@ namespace BetterLyrics.WinUI3.Hooks
                         window.HideWindow(false);
                     }
                 }
-            }, Constants.Time.DebounceTimeout);
+            }, TimeSpan.FromMilliseconds(window.LyricsWindowStatus.AutoShowOrHideWindowDelay));
         }
 
     }

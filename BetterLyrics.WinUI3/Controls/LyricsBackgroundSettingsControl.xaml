@@ -229,6 +229,7 @@
                                 <ComboBox SelectedIndex="{x:Bind LyricsBackgroundSettings.SpectrumPlacement, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                     <ComboBoxItem x:Uid="SettingsPageSpectrumPlacementTop" />
                                     <ComboBoxItem x:Uid="SettingsPageSpectrumPlacementBottom" />
+                                    <ComboBoxItem x:Uid="SettingsPageSpectrumPlacementAroundAlbumArt" />
                                 </ComboBox>
                             </dev:SettingsCard>
 

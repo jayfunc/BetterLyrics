@@ -4,5 +4,6 @@
     {
         Top,
         Bottom,
+        AroundAlbumArt
     }
 }

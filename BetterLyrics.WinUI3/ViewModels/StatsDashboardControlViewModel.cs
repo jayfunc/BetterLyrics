@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.Entities;
 using BetterLyrics.WinUI3.Models.Stats;
@@ -7,12 +8,14 @@ using BetterLyrics.WinUI3.Services.GSMTCService;
 using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.PlayHistoryService;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using CommunityToolkit.WinUI;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
+using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 using System;
 using System.Collections.Generic;
@@ -27,10 +30,11 @@ namespace BetterLyrics.WinUI3.ViewModels
         private readonly IPlayHistoryService _playHistoryService;
         private readonly ILocalizationService _localizationService;
         private readonly IAlbumArtSearchService _albumArtSearchService;
+        private readonly ILogger<StatsDashboardControlViewModel> _logger;
 
         private string _localizedTimesValue;
 
-        private readonly DispatcherQueueTimer _timer;
+        private readonly DispatcherQueueTimer? _timer;
 
         [ObservableProperty] public partial IGSMTCService GSMTCService { get; set; }
 
@@ -75,9 +79,11 @@ namespace BetterLyrics.WinUI3.ViewModels
             _albumArtSearchService = albumArtSearchService;
             GSMTCService = gsmtcService;
 
+            _logger = Ioc.Default.GetRequiredService<ILogger<StatsDashboardControlViewModel>>();
+
             _localizedTimesValue = _localizationService.GetLocalizedString("StatsDashboardControlTimes");
 
-            _timer = _dispatcherQueue.CreateTimer();
+            _timer = DispatcherQueueHelper.GetUIDispatcherQueue()?.CreateTimer();
 
             UpdateDateRange();
         }
@@ -192,7 +198,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     startLocal = new DateTime(nowLocal.Year, 1, 1);
                     break;
                 case StatsRange.AllTime:
-                    startLocal = DateTime.MinValue;
+                    startLocal = new DateTime(2025, 5, 13, 2, 53, 2, DateTimeKind.Utc).ToLocalTime();
                     break;
             }
 
@@ -242,6 +248,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "StatsDashboardControlViewModel.LoadDataCoreAsync");
                 System.Diagnostics.Debug.WriteLine($"Error loading stats: {ex.Message}");
             }
             finally
@@ -266,7 +273,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         public void LoadData()
         {
-            _timer.Debounce(() =>
+            _timer?.Debounce(() =>
             {
                 _ = LoadDataCoreAsync();
             }, Constants.Time.DebounceTimeout);

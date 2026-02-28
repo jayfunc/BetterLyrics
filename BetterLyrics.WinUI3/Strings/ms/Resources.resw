@@ -1146,6 +1146,9 @@
   <data name="SettingsPageHideWindow.Header" xml:space="preserve">
     <value>Sembunyikan/Tunjukkan Tetingkap Secara Automatik</value>
   </data>
+  <data name="SettingsPageHideWindowDelay.Header" xml:space="preserve">
+    <value>Delay</value>
+  </data>
   <data name="SettingsPageHoldDragSort.Content" xml:space="preserve">
     <value>Tahan di sini dan seret untuk menyusun</value>
   </data>
@@ -1652,6 +1655,9 @@
   </data>
   <data name="SettingsPageSpectrumLayerStyle.Header" xml:space="preserve">
     <value>Gaya Spektrum</value>
+  </data>
+  <data name="SettingsPageSpectrumPlacementAroundAlbumArt.Content" xml:space="preserve">
+    <value>Around the album art</value>
   </data>
   <data name="SettingsPageSpectrumPlacementBottom.Content" xml:space="preserve">
     <value>Bawah</value>
