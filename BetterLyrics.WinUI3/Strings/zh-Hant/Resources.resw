@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -211,13 +211,13 @@
     <value>準備掃描...</value>
   </data>
   <data name="FontPickerDialogFontNotFound.Text" xml:space="preserve">
-    <value>在系統中找不到字型，該字型無效</value>
+    <value>在系統中找不到該字型，該字型無效</value>
   </data>
   <data name="FontPickerSearchBox.PlaceholderText" xml:space="preserve">
     <value>搜尋字型</value>
   </data>
   <data name="FontPickerSelectedFontText.Text" xml:space="preserve">
-    <value>精選字型</value>
+    <value>選定字型</value>
   </data>
   <data name="FullscreenMode" xml:space="preserve">
     <value>全螢幕模式</value>
@@ -286,7 +286,7 @@
     <value>歌詞語言</value>
   </data>
   <data name="LyricsPageLyricsCard.Text" xml:space="preserve">
-    <value>歌詞卡</value>
+    <value>歌詞卡片</value>
   </data>
   <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
     <value>歌詞提供者</value>
@@ -406,49 +406,49 @@
     <value>本機 .TTML 檔案</value>
   </data>
   <data name="LyricsSharePageCopyImage.Content" xml:space="preserve">
-    <value>複製影像</value>
+    <value>複製圖片</value>
   </data>
   <data name="LyricsSharePageFontFamily.Text" xml:space="preserve">
     <value>字型</value>
   </data>
   <data name="LyricsSharePageGroupAtmosphere" xml:space="preserve">
-    <value>氣氛</value>
+    <value>氛圍創意</value>
   </data>
   <data name="LyricsSharePageGroupChineseElegance" xml:space="preserve">
-    <value>中式典雅</value>
+    <value>漢雅風韻</value>
   </data>
   <data name="LyricsSharePageGroupClassic" xml:space="preserve">
     <value>經典設計</value>
   </data>
   <data name="LyricsSharePageGroupPhysical" xml:space="preserve">
-    <value>實體</value>
+    <value>實體質感</value>
   </data>
   <data name="LyricsSharePageGroupRetro" xml:space="preserve">
     <value>數位復古</value>
   </data>
   <data name="LyricsSharePageGroupTracesOfTime" xml:space="preserve">
-    <value>時間的痕跡</value>
+    <value>時光印記</value>
   </data>
   <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
-    <value>影像品質</value>
+    <value>圖像品質</value>
   </data>
   <data name="LyricsSharePageSaveImage.Content" xml:space="preserve">
-    <value>儲存圖片</value>
+    <value>儲存圖像</value>
   </data>
   <data name="LyricsSharePageSelectLyricsTitle.Text" xml:space="preserve">
     <value>選擇歌詞</value>
   </data>
   <data name="LyricsSharePageStyleAncientBook" xml:space="preserve">
-    <value>古書</value>
+    <value>古籍</value>
   </data>
   <data name="LyricsSharePageStyleBambooSlips" xml:space="preserve">
-    <value>竹條</value>
+    <value>竹簡</value>
   </data>
   <data name="LyricsSharePageStyleCD" xml:space="preserve">
     <value>CD 盒</value>
   </data>
   <data name="LyricsSharePageStyleCinematic" xml:space="preserve">
-    <value>電影</value>
+    <value>電影感</value>
   </data>
   <data name="LyricsSharePageStyleCyberpunk" xml:space="preserve">
     <value>賽博龐克</value>
@@ -460,16 +460,16 @@
     <value>水墨</value>
   </data>
   <data name="LyricsSharePageStyleJournal" xml:space="preserve">
-    <value>期刊</value>
+    <value>日記</value>
   </data>
   <data name="LyricsSharePageStyleMagazine" xml:space="preserve">
     <value>雜誌</value>
   </data>
   <data name="LyricsSharePageStyleMinimal" xml:space="preserve">
-    <value>最低限度</value>
+    <value>極簡</value>
   </data>
   <data name="LyricsSharePageStylePolaroid" xml:space="preserve">
-    <value>寶麗來</value>
+    <value>拍立得</value>
   </data>
   <data name="LyricsSharePageStyleReceipt" xml:space="preserve">
     <value>收據</value>
@@ -487,13 +487,13 @@
     <value>瑞士</value>
   </data>
   <data name="LyricsSharePageStyleTicket" xml:space="preserve">
-    <value>機票</value>
+    <value>票根</value>
   </data>
   <data name="LyricsSharePageStyleTitle.Text" xml:space="preserve">
     <value>風格</value>
   </data>
   <data name="LyricsSharePageStyleVinyl" xml:space="preserve">
-    <value>乙烯基</value>
+    <value>黑膠唱片</value>
   </data>
   <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
     <value>配置</value>
@@ -934,7 +934,7 @@
     <value>中文歌詞</value>
   </data>
   <data name="SettingsPageChinesePreference.Description" xml:space="preserve">
-    <value>選擇 「未指定 」會保留原始歌詞；選擇 「簡體中文 」或 「繁體中文 」會在原始歌詞上執行機器轉換。</value>
+    <value>選擇 「未指定 」會保留原始歌詞；選擇 「簡體中文 」或 「繁體中文 」會在原始歌詞上執行機器轉換</value>
   </data>
   <data name="SettingsPageChinesePreference.Header" xml:space="preserve">
     <value>中文偏好</value>
@@ -964,7 +964,7 @@
     <value>摺疊下拉式清單</value>
   </data>
   <data name="SettingsPageColor.Header" xml:space="preserve">
-    <value>Color</value>
+    <value>顏色</value>
   </data>
   <data name="SettingsPageConfigName.Description" xml:space="preserve">
     <value>命名記錄的視窗狀態可以幫助您更好地區分它們</value>
@@ -1048,7 +1048,7 @@
     <value>圓形</value>
   </data>
   <data name="SettingsPageEasingTypeEaseCubic.Content" xml:space="preserve">
-    <value>立方體</value>
+    <value>三次</value>
   </data>
   <data name="SettingsPageEasingTypeEaseElastic.Content" xml:space="preserve">
     <value>彈性</value>
@@ -1057,16 +1057,16 @@
     <value>指數</value>
   </data>
   <data name="SettingsPageEasingTypeEaseQuad.Content" xml:space="preserve">
-    <value>二次方</value>
+    <value>二次</value>
   </data>
   <data name="SettingsPageEasingTypeEaseQuart.Content" xml:space="preserve">
-    <value>四元</value>
+    <value>四次</value>
   </data>
   <data name="SettingsPageEasingTypeEaseQuint.Content" xml:space="preserve">
-    <value>Quintic</value>
+    <value>五次</value>
   </data>
   <data name="SettingsPageEasingTypeEaseSine.Content" xml:space="preserve">
-    <value>正弦波</value>
+    <value>正弦</value>
   </data>
   <data name="SettingsPageEasingTypeLinear.Content" xml:space="preserve">
     <value>線性</value>
@@ -1291,10 +1291,10 @@
     <value>目前行</value>
   </data>
   <data name="SettingsPageLyricsFilter.Description" xml:space="preserve">
-    <value>移除非文字性資訊，例如歌詞和作曲鳴謝</value>
+    <value>移除作詞、作曲等非正文信息</value>
   </data>
   <data name="SettingsPageLyricsFilter.Header" xml:space="preserve">
-    <value>歌詞篩選器</value>
+    <value>歌詞濾過器</value>
   </data>
   <data name="SettingsPageLyricsFloatAnimation.Header" xml:space="preserve">
     <value>浮動動畫</value>
@@ -1345,7 +1345,7 @@
     <value>遠離視野</value>
   </data>
   <data name="SettingsPageLyricsPlayedFgFontColor.Header" xml:space="preserve">
-    <value>當前線 (已播放)</value>
+    <value>當前行 (已播放)</value>
   </data>
   <data name="SettingsPageLyricsProcessing.Text" xml:space="preserve">
     <value>歌詞處理</value>
@@ -1393,7 +1393,7 @@
     <value>歌詞時間軸同步閾值</value>
   </data>
   <data name="SettingsPageLyricsUnplayedFgFontColor.Header" xml:space="preserve">
-    <value>當前線 (未播放)</value>
+    <value>當前行 (未播放)</value>
   </data>
   <data name="SettingsPageLyricsWindow.Text" xml:space="preserve">
     <value>歌詞視窗</value>
@@ -1462,7 +1462,7 @@
     <value>激進</value>
   </data>
   <data name="SettingsPageOneFontFamilyOnly.Message" xml:space="preserve">
-    <value>請僅選擇一種字型。選擇多種字型會導致此設定失敗，並恢復為系統預設字型。</value>
+    <value>請僅選擇一種字型。選擇多種字型會導致此設定失效，並回退至系統預設字型</value>
   </data>
   <data name="SettingsPageOpacity.Header" xml:space="preserve">
     <value>不透明度</value>
@@ -1519,10 +1519,10 @@
     <value>目前播放來源</value>
   </data>
   <data name="SettingsPagePlayedOriginalText.Header" xml:space="preserve">
-    <value>原版 (已播放)</value>
+    <value>原文 (已播放)</value>
   </data>
   <data name="SettingsPagePlayedStrokeFontColor.Header" xml:space="preserve">
-    <value>筆劃 (已完成)</value>
+    <value>描邊 (已播放)</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>在 「soundcloud.com」 上播放 「Cut to the Feeling」</value>
@@ -1747,10 +1747,10 @@
     <value>LibreTranslate 翻譯服務</value>
   </data>
   <data name="SettingsPageUnplayedOriginalText.Header" xml:space="preserve">
-    <value>原版 (未播放)</value>
+    <value>原文 (未播放)</value>
   </data>
   <data name="SettingsPageUnplayedStrokeFontColor.Header" xml:space="preserve">
-    <value>擊球 (未擊球)</value>
+    <value>描邊 (未播放)</value>
   </data>
   <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
     <value>以及購買支援 BetterLyrics 的使用者</value>
@@ -1891,10 +1891,10 @@
     <value>使用指南</value>
   </data>
   <data name="WindowSettingsControlAlwaysHideNowPlayingBar.Header" xml:space="preserve">
-    <value>永遠將媒體控制列隱藏到最下方的白色列中</value>
+    <value>永遠將媒體控制列隱藏到最下方的小白條中</value>
   </data>
   <data name="WindowSettingsControlDebug.Text" xml:space="preserve">
-    <value>除錯</value>
+    <value>偵錯</value>
   </data>
   <data name="WindowSettingsControlLockAndUnlock.Text" xml:space="preserve">
     <value>鎖定與解鎖</value>
@@ -1903,6 +1903,6 @@
     <value>媒體控制面板</value>
   </data>
   <data name="WindowSettingsControlRemoveBorder.Header" xml:space="preserve">
-    <value>鎖定時移除邊框</value>
+    <value>鎖定時移除窗口邊框</value>
   </data>
 </root>

@@ -217,14 +217,14 @@
                         <dev:SettingsExpander.Items>
 
                             <dev:SettingsCard x:Uid="SettingsPageColor">
-                                <ComboBox SelectedIndex="{x:Bind LyricsBackgroundSettings.SpectrumColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveColored" />
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
-                                </ComboBox>
-                            </dev:SettingsCard>
-                            <dev:SettingsCard Visibility="{x:Bind LyricsBackgroundSettings.SpectrumColorType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}">
-                                <controls:ColorPickerButton SelectedColor="{x:Bind LyricsBackgroundSettings.SpectrumCustomColor, Mode=TwoWay}" />
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <ComboBox SelectedIndex="{x:Bind LyricsBackgroundSettings.SpectrumColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveColored" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
+                                    </ComboBox>
+                                    <controls:ColorPickerButton SelectedColor="{x:Bind LyricsBackgroundSettings.SpectrumCustomColor, Mode=TwoWay}" Visibility="{x:Bind LyricsBackgroundSettings.SpectrumColorType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}" />
+                                </StackPanel>
                             </dev:SettingsCard>
 
                             <dev:SettingsCard x:Uid="SettingsPageOpacity" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=OneWay}">
