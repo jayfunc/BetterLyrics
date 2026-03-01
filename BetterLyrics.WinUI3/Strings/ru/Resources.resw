@@ -964,7 +964,7 @@
     <value>Свернуть выпадающий список</value>
   </data>
   <data name="SettingsPageColor.Header" xml:space="preserve">
-    <value>Color</value>
+    <value>Цвет</value>
   </data>
   <data name="SettingsPageConfigName.Description" xml:space="preserve">
     <value>Названия записанных состояний окон помогут вам лучше их различать</value>

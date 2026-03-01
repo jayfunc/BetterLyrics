@@ -1534,7 +1534,7 @@
     <value>プラグイン</value>
   </data>
   <data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
-    <value>次のトラック</value>
+    <value>前のトラック</value>
   </data>
   <data name="SettingsPagePureLayer.Header" xml:space="preserve">
     <value>単色レイヤー</value>

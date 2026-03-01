@@ -116,6 +116,8 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
         public async Task<LyricsCacheItem?> SearchSmartlyAsync(SongInfo songInfo, LyricsSearchType? lyricsSearchType, CancellationToken token)
         {
+            LyricsCacheItem? finalResult = null;
+
             if (lyricsSearchType == null)
             {
                 return null;
@@ -168,6 +170,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                 catch (OperationCanceledException) { throw; }
                 catch (Exception ex)
                 {
+                    Debug.WriteLine("Failed to check song mapping, falling back to normal search.");
                     _logger.LogWarning(ex, "Failed to check song mapping, falling back to normal search.");
                 }
 
@@ -209,6 +212,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                         catch (Exception ex)
                         {
                             _logger.LogWarning(ex, "Provider {Provider} failed during parallel search.", provider.Provider);
+                            Debug.WriteLine($"Provider {provider.Provider} failed during parallel search.");
                             return null;
                         }
                         return null;
@@ -216,7 +220,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
                     var allResults = await Task.WhenAll(searchTasks);
 
-                    return allResults
+                    finalResult = allResults
                         .Where(r => r != null)
                         .OrderByDescending(r => r.MatchPercentage)
                         .FirstOrDefault();
@@ -227,8 +231,6 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                     {
                         try
                         {
-                            token.ThrowIfCancellationRequested();
-
                             var result = await SearchSingleAsync(
                                 (SongInfo)baseSearchInfo.Clone(),
                                 provider.Provider,
@@ -241,26 +243,33 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
 
                             if (result.IsFound && result.MatchPercentage >= threshold)
                             {
-                                return result;
+                                finalResult = result;
+                                break;
                             }
                         }
                         catch (OperationCanceledException) { throw; }
                         catch (Exception ex)
                         {
                             _logger.LogWarning(ex, "Provider {Provider} failed during sequential search.", provider.Provider);
-                            continue;
+                            Debug.WriteLine($"Provider {provider.Provider} failed during sequential search.");
                         }
                     }
                 }
 
-                return null;
+                if (finalResult == null)
+                {
+                    throw new Exception("Could't find any lyric");
+                }
             }
             catch (OperationCanceledException) { throw; }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An unexpected error occurred in SearchSmartlyAsync.");
-                return null;
+                Debug.WriteLine($"An unexpected error occurred in SearchSmartlyAsync: {ex.Message}");
+                throw;
             }
+
+            return finalResult;
         }
 
         public async IAsyncEnumerable<LyricsCacheItem> SearchAllAsync(

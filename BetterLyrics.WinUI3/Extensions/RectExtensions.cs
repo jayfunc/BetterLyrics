@@ -59,6 +59,7 @@ namespace BetterLyrics.WinUI3.Extensions
             );
 
             public Rect Extend(double padding) => Extend(rect, padding, padding, padding, padding);
+            public Rect Extend(double horizontalPadding, double verticalPadding) => Extend(rect, horizontalPadding, verticalPadding, horizontalPadding, verticalPadding);
 
             public Rect Scale(double scale)
             {

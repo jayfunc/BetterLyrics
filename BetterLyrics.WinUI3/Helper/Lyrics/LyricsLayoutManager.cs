@@ -125,7 +125,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                 // 更新中心点
                 line.UpdateCenterPosition(lyricsWidth, style.LyricsAlignmentType);
 
-                line.RecreateRenderChars();
+                line.RecreateRenderChars(style.LyricsFontStrokeWidth);
             }
         }
 

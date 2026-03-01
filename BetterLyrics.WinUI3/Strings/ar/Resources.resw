@@ -964,7 +964,7 @@
     <value>طي القائمة المنسدلة</value>
   </data>
   <data name="SettingsPageColor.Header" xml:space="preserve">
-    <value>Color</value>
+    <value>اللون</value>
   </data>
   <data name="SettingsPageConfigName.Description" xml:space="preserve">
     <value>تسمية حالة النافذة المسجلة يمكن أن تساعدك على تمييزها بشكل أفضل</value>

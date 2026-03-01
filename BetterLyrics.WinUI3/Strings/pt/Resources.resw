@@ -964,7 +964,7 @@
     <value>Recolher Menu Suspenso</value>
   </data>
   <data name="SettingsPageColor.Header" xml:space="preserve">
-    <value>Color</value>
+    <value>Cor</value>
   </data>
   <data name="SettingsPageConfigName.Description" xml:space="preserve">
     <value>Nomear o estado da janela gravado pode ajudá-lo a distingui-los melhor</value>

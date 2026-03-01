@@ -18,6 +18,7 @@ namespace BetterLyrics.WinUI3.Renderer
         public static void Draw(
             ICanvasResourceCreator resourceCreator,
             CanvasDrawingSession ds,
+            int strokeWidth,
             ICanvasImage cachedStroke,
             ICanvasImage cachedFill,
             ICanvasImage unplayedComp,
@@ -27,18 +28,18 @@ namespace BetterLyrics.WinUI3.Renderer
         {
             if (cachedStroke == null) return;
 
-            DrawTertiaryText(ds, unplayedComp, line);
-            DrawPrimaryText(resourceCreator, ds, cachedStroke, cachedFill, line, currentProgressMs, settings);
-            DrawSecondaryText(ds, unplayedComp, line);
+            DrawTertiaryText(ds, unplayedComp, strokeWidth, line);
+            DrawPrimaryText(resourceCreator, ds, strokeWidth, cachedStroke, cachedFill, line, currentProgressMs, settings);
+            DrawSecondaryText(ds, unplayedComp, strokeWidth, line);
         }
 
-        private static void DrawTertiaryText(CanvasDrawingSession ds, ICanvasImage source, RenderLyricsLine line)
+        private static void DrawTertiaryText(CanvasDrawingSession ds, ICanvasImage source, int strokeWidth, RenderLyricsLine line)
         {
             if (line.TertiaryTextLayout == null) return;
 
             var opacity = line.PhoneticOpacityTransition.Value;
             var blur = line.BlurAmountTransition.Value;
-            var bounds = line.TertiaryTextLayout.LayoutBounds;
+            var bounds = line.TertiaryTextLayout.LayoutBounds.Extend(strokeWidth / 2f);
 
             if (double.IsNaN(opacity)) return;
 
@@ -55,13 +56,13 @@ namespace BetterLyrics.WinUI3.Renderer
             ds.DrawImage(opacityEffect);
         }
 
-        private static void DrawSecondaryText(CanvasDrawingSession ds, ICanvasImage source, RenderLyricsLine line)
+        private static void DrawSecondaryText(CanvasDrawingSession ds, ICanvasImage source, int strokeWidth, RenderLyricsLine line)
         {
             if (line.SecondaryTextLayout == null) return;
 
             var opacity = line.TranslatedOpacityTransition.Value;
             var blur = line.BlurAmountTransition.Value;
-            var bounds = line.SecondaryTextLayout.LayoutBounds;
+            var bounds = line.SecondaryTextLayout.LayoutBounds.Extend(strokeWidth / 2f);
 
             if (double.IsNaN(opacity)) return;
 
@@ -76,11 +77,14 @@ namespace BetterLyrics.WinUI3.Renderer
             using var blurEffect = new GaussianBlurEffect { BlurAmount = (float)blur, Source = cropEffect, BorderMode = EffectBorderMode.Soft };
             using var opacityEffect = new OpacityEffect { Source = blurEffect, Opacity = (float)opacity };
             ds.DrawImage(opacityEffect);
+
+            //ds.FillRectangle(destRect, Microsoft.UI.Colors.Red.WithAlpha(128));
         }
 
         private static void DrawPrimaryText(
             ICanvasResourceCreator resourceCreator,
             CanvasDrawingSession ds,
+            int strokeWidth,
             ICanvasImage cachedStroke,
             ICanvasImage cachedFill,
             RenderLyricsLine line,
@@ -91,13 +95,14 @@ namespace BetterLyrics.WinUI3.Renderer
 
             for (int i = 0; i < line.PrimaryTextRegions.Length; i++)
             {
-                DrawSubLineRegion(resourceCreator, ds, cachedStroke, cachedFill, line, line.PrimaryTextRegions[i], i, currentProgressMs, settings);
+                DrawSubLineRegion(resourceCreator, ds, strokeWidth, cachedStroke, cachedFill, line, line.PrimaryTextRegions[i], i, currentProgressMs, settings);
             }
         }
 
         private static void DrawSubLineRegion(
             ICanvasResourceCreator resourceCreator,
             CanvasDrawingSession ds,
+            int strokeWidth,
             ICanvasImage cachedStroke,
             ICanvasImage cachedFill,
             RenderLyricsLine line,
@@ -116,7 +121,7 @@ namespace BetterLyrics.WinUI3.Renderer
             var playedStrokeColor = line.PlayedStrokeColorTransition.Value;
             var unplayedStrokeColor = line.UnplayedStrokeColorTransition.Value;
 
-            var subLineLayoutBounds = subLineRegion.LayoutBounds;
+            var subLineLayoutBounds = subLineRegion.LayoutBounds.Extend(strokeWidth, strokeWidth / 2f);
             Rect subLineRect = new(
                 subLineLayoutBounds.X + line.PrimaryPosition.X,
                 subLineLayoutBounds.Y + line.PrimaryPosition.Y,

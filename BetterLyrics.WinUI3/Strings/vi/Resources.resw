@@ -964,7 +964,7 @@
     <value>Thu gọn danh sách thả xuống</value>
   </data>
   <data name="SettingsPageColor.Header" xml:space="preserve">
-    <value>Color</value>
+    <value>Màu sắc</value>
   </data>
   <data name="SettingsPageConfigName.Description" xml:space="preserve">
     <value>Đặt tên cho trạng thái cửa sổ đã ghi lại có thể giúp bạn phân biệt chúng tốt hơn</value>

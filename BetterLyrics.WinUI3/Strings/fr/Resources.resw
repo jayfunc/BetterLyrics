@@ -964,7 +964,7 @@
     <value>Réduire le menu déroulant</value>
   </data>
   <data name="SettingsPageColor.Header" xml:space="preserve">
-    <value>Color</value>
+    <value>Couleur</value>
   </data>
   <data name="SettingsPageConfigName.Description" xml:space="preserve">
     <value>Nommer les statuts de fenêtre enregistrés vous aide à mieux les distinguer</value>
