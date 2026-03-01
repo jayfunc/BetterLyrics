@@ -963,6 +963,9 @@
   <data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
     <value>ยุบเมนูแบบเลื่อนลง</value>
   </data>
+  <data name="SettingsPageColor.Header" xml:space="preserve">
+    <value>Color</value>
+  </data>
   <data name="SettingsPageConfigName.Description" xml:space="preserve">
     <value>การตั้งชื่อสถานะหน้าต่างที่บันทึกไว้จะช่วยให้คุณแยกแยะได้ดีขึ้น</value>
   </data>
@@ -1147,7 +1150,7 @@
     <value>ซ่อน/แสดงหน้าต่างอัตโนมัติ</value>
   </data>
   <data name="SettingsPageHideWindowDelay.Header" xml:space="preserve">
-    <value>Delay</value>
+    <value>ความล่าช้า</value>
   </data>
   <data name="SettingsPageHoldDragSort.Content" xml:space="preserve">
     <value>กดค้างที่นี่แล้วลากเพื่อเรียงลำดับ</value>
@@ -1341,6 +1344,9 @@
   <data name="SettingsPageLyricsOutOfSightEffect.Header" xml:space="preserve">
     <value>หายไปจากสายตา (Out of Sight)</value>
   </data>
+  <data name="SettingsPageLyricsPlayedFgFontColor.Header" xml:space="preserve">
+    <value>แถวปัจจุบัน (เล่นแล้ว)</value>
+  </data>
   <data name="SettingsPageLyricsProcessing.Text" xml:space="preserve">
     <value>การประมวลผลเนื้อเพลง</value>
   </data>
@@ -1385,6 +1391,9 @@
   </data>
   <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
     <value>เกณฑ์การซิงค์เวลาเนื้อเพลง</value>
+  </data>
+  <data name="SettingsPageLyricsUnplayedFgFontColor.Header" xml:space="preserve">
+    <value>แถวปัจจุบัน (ยังไม่ได้เล่น)</value>
   </data>
   <data name="SettingsPageLyricsWindow.Text" xml:space="preserve">
     <value>หน้าต่างเนื้อเพลง</value>
@@ -1508,6 +1517,12 @@
   </data>
   <data name="SettingsPagePlaybackStatus.Header" xml:space="preserve">
     <value>แหล่งเล่นเพลงปัจจุบัน</value>
+  </data>
+  <data name="SettingsPagePlayedOriginalText.Header" xml:space="preserve">
+    <value>ต้นฉบับ (เล่นแล้ว)</value>
+  </data>
+  <data name="SettingsPagePlayedStrokeFontColor.Header" xml:space="preserve">
+    <value>โรคหลอดเลือดสมอง (เล่น)</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>เล่น "Cut to the Feeling" บน "soundcloud.com"</value>
@@ -1657,7 +1672,7 @@
     <value>สไตล์สเปกตรัม</value>
   </data>
   <data name="SettingsPageSpectrumPlacementAroundAlbumArt.Content" xml:space="preserve">
-    <value>Around the album art</value>
+    <value>รอบๆ งานศิลปะของอัลบั้ม</value>
   </data>
   <data name="SettingsPageSpectrumPlacementBottom.Content" xml:space="preserve">
     <value>ด้านล่าง</value>
@@ -1730,6 +1745,12 @@
   </data>
   <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
     <value>บริการแปลภาษา LibreTranslate</value>
+  </data>
+  <data name="SettingsPageUnplayedOriginalText.Header" xml:space="preserve">
+    <value>ต้นฉบับ (ยังไม่ได้เล่น)</value>
+  </data>
+  <data name="SettingsPageUnplayedStrokeFontColor.Header" xml:space="preserve">
+    <value>จังหวะ (ไม่ได้เล่น)</value>
   </data>
   <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
     <value>และผู้ใช้ที่ซื้อและสนับสนุน BetterLyrics</value>
@@ -1876,12 +1897,12 @@
     <value>การแก้ไขข้อผิดพลาด</value>
   </data>
   <data name="WindowSettingsControlLockAndUnlock.Text" xml:space="preserve">
-    <value>Lock and Unlock</value>
+    <value>ล็อกและปลดล็อก</value>
   </data>
   <data name="WindowSettingsControlNowPlayingBar.Text" xml:space="preserve">
     <value>แผงควบคุมสื่อ</value>
   </data>
   <data name="WindowSettingsControlRemoveBorder.Header" xml:space="preserve">
-    <value>Remove borders when locked</value>
+    <value>ลบเส้นขอบเมื่อถูกล็อก</value>
   </data>
 </root>

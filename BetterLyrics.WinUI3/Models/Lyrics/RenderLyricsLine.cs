@@ -7,6 +7,7 @@ using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
+using Microsoft.UI.Xaml.Shapes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,10 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
         public ValueTransition<double> TranslatedOpacityTransition { get; set; }
         public ValueTransition<double> ScaleTransition { get; set; }
         public ValueTransition<double> YOffsetTransition { get; set; }
-        public ValueTransition<Color> ColorTransition { get; set; }
+        public ValueTransition<Color> PlayedFillColorTransition { get; set; }
+        public ValueTransition<Color> UnplayedFillColorTransition { get; set; }
+        public ValueTransition<Color> PlayedStrokeColorTransition { get; set; }
+        public ValueTransition<Color> UnplayedStrokeColorTransition { get; set; }
 
         public CanvasTextLayout? PrimaryTextLayout { get; private set; }
         public CanvasTextLayout? SecondaryTextLayout { get; private set; }
@@ -72,10 +76,14 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
 
         public CanvasCommandList? CachedStroke { get; private set; }
         public CanvasCommandList? CachedFill { get; private set; }
-        public TintEffect? DynamicFillEffect { get; private set; }
-        public CompositeEffect? CombinedEffect { get; private set; }
+
+        public TintEffect? UnplayedFillTint { get; private set; }
+        public TintEffect? UnplayedStrokeTint { get; private set; }
+        public CompositeEffect? UnplayedComposite { get; private set; }
 
         public CanvasTextLayoutRegion[]? PrimaryTextRegions { get; private set; }
+
+        public RenderLyricsRegion[]? RenderLyricsRegions { get; private set; }
 
         /// <summary>
         /// 轨道索引 (0 = 主轨道, 1 = 第一副轨道, etc.)
@@ -129,7 +137,22 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
                 EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
                 defaultTotalDuration: AnimationDuration
             );
-            ColorTransition = new(
+            PlayedFillColorTransition = new(
+                initialValue: Colors.Transparent,
+                defaultTotalDuration: 0.3f,
+                interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
+            );
+            UnplayedFillColorTransition = new(
+                initialValue: Colors.Transparent,
+                defaultTotalDuration: 0.3f,
+                interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
+            );
+            PlayedStrokeColorTransition = new(
+                initialValue: Colors.Transparent,
+                defaultTotalDuration: 0.3f,
+                interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
+            );
+            UnplayedStrokeColorTransition = new(
                 initialValue: Colors.Transparent,
                 defaultTotalDuration: 0.3f,
                 interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
@@ -301,21 +324,11 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
             }
         }
 
-        public void EnsureCaches(ICanvasResourceCreator resourceCreator, Color strokeColor, double strokeWidth)
+        public void EnsureCaches(ICanvasResourceCreator resourceCreator, double strokeWidth)
         {
             if (CachedStroke != null && CachedFill != null) return;
 
-            CachedStroke = new CanvasCommandList(resourceCreator);
-            using (var ds = CachedStroke.CreateDrawingSession())
-            {
-                if (strokeWidth > 0)
-                {
-                    if (TertiaryCanvasGeometry != null) ds.DrawGeometry(TertiaryCanvasGeometry, TertiaryPosition, strokeColor, (float)strokeWidth);
-                    if (PrimaryCanvasGeometry != null) ds.DrawGeometry(PrimaryCanvasGeometry, PrimaryPosition, strokeColor, (float)strokeWidth);
-                    if (SecondaryCanvasGeometry != null) ds.DrawGeometry(SecondaryCanvasGeometry, SecondaryPosition, strokeColor, (float)strokeWidth);
-                }
-            }
-
+            // 缓存纯白色的填充（作为 Fill Mask）
             CachedFill = new CanvasCommandList(resourceCreator);
             using (var ds = CachedFill.CreateDrawingSession())
             {
@@ -324,30 +337,68 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
                 if (SecondaryTextLayout != null) ds.DrawTextLayout(SecondaryTextLayout, SecondaryPosition, Colors.White);
             }
 
-            DynamicFillEffect = new TintEffect
-            {
-                Source = CachedFill,
-                Color = Colors.White
-            };
+            CachedStroke = new CanvasCommandList(resourceCreator);
 
-            CombinedEffect = new CompositeEffect
+            // 缓存纯白色的描边（作为 Stroke Mask）
+            if (strokeWidth > 0)
             {
-                Sources = { CachedStroke, DynamicFillEffect },
-                Mode = CanvasComposite.SourceOver
-            };
+                using var ds = CachedStroke.CreateDrawingSession();
+                if (TertiaryCanvasGeometry != null) ds.DrawGeometry(TertiaryCanvasGeometry, TertiaryPosition, Colors.White, (float)strokeWidth);
+                if (PrimaryCanvasGeometry != null) ds.DrawGeometry(PrimaryCanvasGeometry, PrimaryPosition, Colors.White, (float)strokeWidth);
+                if (SecondaryCanvasGeometry != null) ds.DrawGeometry(SecondaryCanvasGeometry, SecondaryPosition, Colors.White, (float)strokeWidth);
+            }
+
+            UnplayedFillTint = new TintEffect { Source = CachedFill, Color = Colors.White };
+            UnplayedStrokeTint = new TintEffect { Source = CachedStroke, Color = Colors.White };
+            UnplayedComposite = new CompositeEffect { Sources = { UnplayedStrokeTint, UnplayedFillTint }, Mode = CanvasComposite.SourceOver };
+
+            if (PrimaryTextRegions != null && (RenderLyricsRegions == null || RenderLyricsRegions.Length != PrimaryTextRegions.Length))
+            {
+                DisposeRenderLyricsRegions();
+                RenderLyricsRegions = new RenderLyricsRegion[PrimaryTextRegions.Length];
+                for (int i = 0; i < PrimaryTextRegions.Length; i++)
+                {
+                    RenderLyricsRegions[i] = new RenderLyricsRegion(CachedFill, CachedStroke);
+                }
+            }
+        }
+
+        private void DisposePrimaryRenderCharsEffects()
+        {
+            foreach (var cache in PrimaryRenderChars)
+            {
+                cache?.DisposeEffetcts();
+            }
+        }
+
+        private void DisposeRenderLyricsRegions()
+        {
+            if (RenderLyricsRegions != null)
+            {
+                foreach (var region in RenderLyricsRegions)
+                {
+                    region?.Dispose();
+                }
+                RenderLyricsRegions = null;
+            }
         }
 
         public void DisposeCaches()
         {
+            UnplayedComposite?.Dispose();
+            UnplayedStrokeTint?.Dispose();
+            UnplayedFillTint?.Dispose();
             CachedStroke?.Dispose();
             CachedFill?.Dispose();
-            DynamicFillEffect?.Dispose();
-            CombinedEffect?.Dispose();
 
+            UnplayedComposite = null;
+            UnplayedStrokeTint = null;
+            UnplayedFillTint = null;
             CachedStroke = null;
             CachedFill = null;
-            DynamicFillEffect = null;
-            CombinedEffect = null;
+
+            DisposeRenderLyricsRegions();
+            DisposePrimaryRenderCharsEffects();
         }
 
         public void Update(TimeSpan elapsedTime)
@@ -360,7 +411,10 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
             UnplayedPrimaryOpacityTransition.Update(elapsedTime);
             TranslatedOpacityTransition.Update(elapsedTime);
             YOffsetTransition.Update(elapsedTime);
-            ColorTransition.Update(elapsedTime);
+            PlayedFillColorTransition.Update(elapsedTime);
+            UnplayedFillColorTransition.Update(elapsedTime);
+            PlayedStrokeColorTransition.Update(elapsedTime);
+            UnplayedStrokeColorTransition.Update(elapsedTime);
         }
 
     }

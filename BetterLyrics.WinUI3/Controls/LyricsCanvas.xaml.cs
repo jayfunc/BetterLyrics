@@ -402,7 +402,7 @@ namespace BetterLyrics.WinUI3.Controls
                     style: lyricsBg.SpectrumStyle,
                     canvasWidth: sender.Size.Width,
                     canvasHeight: sender.Size.Height,
-                    fillColor: _albumArtThemeColors.BgFontColor,
+                    fillColor: _albumArtThemeColors.SpectrumColor,
                     albumRect: _albumArtRect,
                     cornerRadiusPercentage: albumStyle.CoverImageRadius
                 );
@@ -428,9 +428,6 @@ namespace BetterLyrics.WinUI3.Controls
                 lyricsOpacity: _renderLyricsOpacity,
                 playingLineTopOffsetFactor: lyricsStyle.PlayingLineTopOffset / 100.0,
                 windowStatus: _lyricsWindowStatus,
-                strokeColor: _albumArtThemeColors.StrokeFontColor,
-                bgColor: _albumArtThemeColors.BgFontColor,
-                fgColor: _albumArtThemeColors.FgFontColor,
                 currentProgressMs: _songPositionWithOffset.TotalMilliseconds);
 
             if (_lyricsWindowStatus.ShowDebugOverlay)
@@ -568,8 +565,7 @@ namespace BetterLyrics.WinUI3.Controls
                 _lyricsWindowStatus.LyricsStyleSettings,
                 _lyricsWindowStatus.LyricsEffectSettings,
                 _canvasYScrollTransition,
-                _albumArtThemeColors.BgFontColor,
-                _albumArtThemeColors.FgFontColor,
+                _albumArtThemeColors,
                 elapsedTime,
                 _isMouseScrolling,
                 _isLayoutChanged,
@@ -851,7 +847,7 @@ namespace BetterLyrics.WinUI3.Controls
                 {
                     _isLayoutChanged = true;
                 }
-                else if (message.PropertyName == nameof(LyricsStyleSettings.OriginalLyricsOpacity))
+                else if (message.PropertyName == nameof(LyricsStyleSettings.UnplayedOriginalLyricsOpacity))
                 {
                     _isLayoutChanged = true;
                 }

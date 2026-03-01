@@ -963,6 +963,9 @@
   <data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
     <value>ड्रॉपडाउन संक्षिप्त करें</value>
   </data>
+  <data name="SettingsPageColor.Header" xml:space="preserve">
+    <value>Color</value>
+  </data>
   <data name="SettingsPageConfigName.Description" xml:space="preserve">
     <value>रिकॉर्ड की गई विंडो स्थिति का नामकरण करने से आपको उन्हें बेहतर ढंग से अलग करने में मदद मिल सकती है</value>
   </data>
@@ -1341,6 +1344,9 @@
   <data name="SettingsPageLyricsOutOfSightEffect.Header" xml:space="preserve">
     <value>दृष्टि से बाहर</value>
   </data>
+  <data name="SettingsPageLyricsPlayedFgFontColor.Header" xml:space="preserve">
+    <value>Current Line (Played)</value>
+  </data>
   <data name="SettingsPageLyricsProcessing.Text" xml:space="preserve">
     <value>गीत प्रसंस्करण</value>
   </data>
@@ -1385,6 +1391,9 @@
   </data>
   <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
     <value>बोल समयरेखा सिंक थ्रेसहोल्ड</value>
+  </data>
+  <data name="SettingsPageLyricsUnplayedFgFontColor.Header" xml:space="preserve">
+    <value>Current Line (Unplayed)</value>
   </data>
   <data name="SettingsPageLyricsWindow.Text" xml:space="preserve">
     <value>बोल विंडो</value>
@@ -1508,6 +1517,12 @@
   </data>
   <data name="SettingsPagePlaybackStatus.Header" xml:space="preserve">
     <value>वर्तमान प्लेबैक स्रोत</value>
+  </data>
+  <data name="SettingsPagePlayedOriginalText.Header" xml:space="preserve">
+    <value>Original (Played)</value>
+  </data>
+  <data name="SettingsPagePlayedStrokeFontColor.Header" xml:space="preserve">
+    <value>Stroke (Played)</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>"soundcloud.com" पर "Cut to the Feeling" चलाएं</value>
@@ -1731,6 +1746,12 @@
   <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
     <value>LibreTranslate अनुवाद सेवा</value>
   </data>
+  <data name="SettingsPageUnplayedOriginalText.Header" xml:space="preserve">
+    <value>Original (Unplayed)</value>
+  </data>
+  <data name="SettingsPageUnplayedStrokeFontColor.Header" xml:space="preserve">
+    <value>Stroke (Unplayed)</value>
+  </data>
   <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
     <value>और वे उपयोगकर्ता जिन्होंने BetterLyrics को खरीदा और समर्थन किया</value>
   </data>
@@ -1876,12 +1897,12 @@
     <value>डिबग</value>
   </data>
   <data name="WindowSettingsControlLockAndUnlock.Text" xml:space="preserve">
-    <value>Lock and Unlock</value>
+    <value>लॉक और अनलॉक</value>
   </data>
   <data name="WindowSettingsControlNowPlayingBar.Text" xml:space="preserve">
     <value>मीडिया नियंत्रण पैनल</value>
   </data>
   <data name="WindowSettingsControlRemoveBorder.Header" xml:space="preserve">
-    <value>Remove borders when locked</value>
+    <value>लॉक होने पर बॉर्डर हटाएँ</value>
   </data>
 </root>

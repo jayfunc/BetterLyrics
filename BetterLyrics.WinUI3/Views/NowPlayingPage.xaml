@@ -80,7 +80,10 @@
                 </Grid.OpacityTransition>
 
                 <!--  Album art  -->
-                <Grid x:Name="AlbumArtGrid" SizeChanged="AlbumArtGrid_SizeChanged" HorizontalAlignment="{Binding ElementName=SongInfoStackPanel, Path=HorizontalAlignment, Mode=OneWay}">
+                <Grid
+                    x:Name="AlbumArtGrid"
+                    HorizontalAlignment="{Binding ElementName=SongInfoStackPanel, Path=HorizontalAlignment, Mode=OneWay}"
+                    SizeChanged="AlbumArtGrid_SizeChanged">
                     <Grid.OpacityTransition>
                         <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
                     </Grid.OpacityTransition>

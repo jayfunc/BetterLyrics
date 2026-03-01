@@ -8,6 +8,7 @@ using System;
 using System.Numerics;
 using Windows.UI;
 using Windows.Foundation;
+using BetterLyrics.WinUI3.Models;
 
 namespace BetterLyrics.WinUI3.Renderer
 {

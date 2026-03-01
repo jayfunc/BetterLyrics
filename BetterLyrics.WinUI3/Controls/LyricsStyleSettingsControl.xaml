@@ -99,41 +99,32 @@
                     <!--  字体颜色  -->
                     <dev:SettingsExpander x:Uid="SettingsPageFontColor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8D3;}">
                         <dev:SettingsExpander.Items>
-                            <dev:SettingsCard x:Uid="SettingsPageStrokeFontColor">
-                                <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsStrokeFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+
+                            <!--  描边（已播放）  -->
+                            <dev:SettingsCard x:Uid="SettingsPagePlayedStrokeFontColor">
+                                <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsPlayedStrokeFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                     <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveColored" />
                                     <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
                                     <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
                                 </ComboBox>
                             </dev:SettingsCard>
-
-                            <dev:SettingsCard HorizontalContentAlignment="Left">
-                                <interactivity:Interaction.Behaviors>
-                                    <interactivity:DataTriggerBehavior
-                                        Binding="{x:Bind LyricsStyleSettings.LyricsStrokeFontColorType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                                        ComparisonCondition="Equal"
-                                        Value="2">
-                                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                                    </interactivity:DataTriggerBehavior>
-                                    <interactivity:DataTriggerBehavior
-                                        Binding="{x:Bind LyricsStyleSettings.LyricsStrokeFontColorType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                                        ComparisonCondition="NotEqual"
-                                        Value="2">
-                                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
-                                    </interactivity:DataTriggerBehavior>
-                                </interactivity:Interaction.Behaviors>
-                                <ColorPicker
-                                    ColorSpectrumShape="Box"
-                                    IsAlphaEnabled="True"
-                                    IsAlphaSliderVisible="True"
-                                    IsAlphaTextInputVisible="True"
-                                    IsColorChannelTextInputVisible="True"
-                                    IsColorSliderVisible="True"
-                                    IsHexInputVisible="True"
-                                    IsMoreButtonVisible="True"
-                                    Color="{x:Bind LyricsStyleSettings.LyricsCustomStrokeFontColor, Mode=TwoWay}" />
+                            <dev:SettingsCard Visibility="{x:Bind LyricsStyleSettings.LyricsPlayedStrokeFontColorType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}">
+                                <controls:ColorPickerButton SelectedColor="{x:Bind LyricsStyleSettings.LyricsCustomPlayedStrokeFontColor, Mode=TwoWay}" />
                             </dev:SettingsCard>
 
+                            <!--  描边（未播放）  -->
+                            <dev:SettingsCard x:Uid="SettingsPageUnplayedStrokeFontColor">
+                                <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsUnplayedStrokeFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveColored" />
+                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
+                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
+                                </ComboBox>
+                            </dev:SettingsCard>
+                            <dev:SettingsCard Visibility="{x:Bind LyricsStyleSettings.LyricsUnplayedStrokeFontColorType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}">
+                                <controls:ColorPickerButton SelectedColor="{x:Bind LyricsStyleSettings.LyricsCustomUnplayedStrokeFontColor, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+
+                            <!--  非当前行  -->
                             <dev:SettingsCard x:Uid="SettingsPageLyricsBgFontColor">
                                 <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsBgFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                     <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveColored" />
@@ -141,68 +132,34 @@
                                     <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
                                 </ComboBox>
                             </dev:SettingsCard>
-
-                            <dev:SettingsCard>
-                                <interactivity:Interaction.Behaviors>
-                                    <interactivity:DataTriggerBehavior
-                                        Binding="{x:Bind LyricsStyleSettings.LyricsBgFontColorType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                                        ComparisonCondition="Equal"
-                                        Value="2">
-                                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                                    </interactivity:DataTriggerBehavior>
-                                    <interactivity:DataTriggerBehavior
-                                        Binding="{x:Bind LyricsStyleSettings.LyricsBgFontColorType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                                        ComparisonCondition="NotEqual"
-                                        Value="2">
-                                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
-                                    </interactivity:DataTriggerBehavior>
-                                </interactivity:Interaction.Behaviors>
-                                <ColorPicker
-                                    ColorSpectrumShape="Box"
-                                    IsAlphaEnabled="True"
-                                    IsAlphaSliderVisible="True"
-                                    IsAlphaTextInputVisible="True"
-                                    IsColorChannelTextInputVisible="True"
-                                    IsColorSliderVisible="True"
-                                    IsHexInputVisible="True"
-                                    IsMoreButtonVisible="True"
-                                    Color="{x:Bind LyricsStyleSettings.LyricsCustomBgFontColor, Mode=TwoWay}" />
+                            <dev:SettingsCard Visibility="{x:Bind LyricsStyleSettings.LyricsBgFontColorType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}">
+                                <controls:ColorPickerButton SelectedColor="{x:Bind LyricsStyleSettings.LyricsCustomBgFontColor, Mode=TwoWay}" />
                             </dev:SettingsCard>
 
-                            <dev:SettingsCard x:Uid="SettingsPageLyricsFgFontColor">
-                                <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsFgFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                            <!--  当前行（已播放）  -->
+                            <dev:SettingsCard x:Uid="SettingsPageLyricsPlayedFgFontColor">
+                                <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsPlayedFgFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                     <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveColored" />
                                     <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
                                     <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
                                 </ComboBox>
                             </dev:SettingsCard>
-
-                            <dev:SettingsCard>
-                                <interactivity:Interaction.Behaviors>
-                                    <interactivity:DataTriggerBehavior
-                                        Binding="{x:Bind LyricsStyleSettings.LyricsFgFontColorType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                                        ComparisonCondition="Equal"
-                                        Value="2">
-                                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                                    </interactivity:DataTriggerBehavior>
-                                    <interactivity:DataTriggerBehavior
-                                        Binding="{x:Bind LyricsStyleSettings.LyricsFgFontColorType, Mode=OneWay, Converter={StaticResource EnumToIntConverter}}"
-                                        ComparisonCondition="NotEqual"
-                                        Value="2">
-                                        <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
-                                    </interactivity:DataTriggerBehavior>
-                                </interactivity:Interaction.Behaviors>
-                                <ColorPicker
-                                    ColorSpectrumShape="Box"
-                                    IsAlphaEnabled="True"
-                                    IsAlphaSliderVisible="True"
-                                    IsAlphaTextInputVisible="True"
-                                    IsColorChannelTextInputVisible="True"
-                                    IsColorSliderVisible="True"
-                                    IsHexInputVisible="True"
-                                    IsMoreButtonVisible="True"
-                                    Color="{x:Bind LyricsStyleSettings.LyricsCustomFgFontColor, Mode=TwoWay}" />
+                            <dev:SettingsCard Visibility="{x:Bind LyricsStyleSettings.LyricsPlayedFgFontColorType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}">
+                                <controls:ColorPickerButton SelectedColor="{x:Bind LyricsStyleSettings.LyricsCustomPlayedFgFontColor, Mode=TwoWay}" />
                             </dev:SettingsCard>
+
+                            <!--  当前行（未播放）  -->
+                            <dev:SettingsCard x:Uid="SettingsPageLyricsUnplayedFgFontColor">
+                                <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsUnplayedFgFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveColored" />
+                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
+                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
+                                </ComboBox>
+                            </dev:SettingsCard>
+                            <dev:SettingsCard Visibility="{x:Bind LyricsStyleSettings.LyricsUnplayedFgFontColorType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}">
+                                <controls:ColorPickerButton SelectedColor="{x:Bind LyricsStyleSettings.LyricsCustomUnplayedFgFontColor, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+
                         </dev:SettingsExpander.Items>
                     </dev:SettingsExpander>
 
@@ -250,13 +207,21 @@
                                     Minimum="0"
                                     Value="{x:Bind LyricsStyleSettings.PhoneticLyricsOpacity, Mode=TwoWay}" />
                             </dev:SettingsCard>
-                            <dev:SettingsCard x:Uid="SettingsPageOriginalText">
+                            <dev:SettingsCard x:Uid="SettingsPagePlayedOriginalText">
+                                <local:ExtendedSlider
+                                    Default="100"
+                                    Frequency="1"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Value="{x:Bind LyricsStyleSettings.PlayedOriginalLyricsOpacity, Mode=TwoWay}" />
+                            </dev:SettingsCard>
+                            <dev:SettingsCard x:Uid="SettingsPageUnplayedOriginalText">
                                 <local:ExtendedSlider
                                     Default="30"
                                     Frequency="1"
                                     Maximum="100"
                                     Minimum="0"
-                                    Value="{x:Bind LyricsStyleSettings.OriginalLyricsOpacity, Mode=TwoWay}" />
+                                    Value="{x:Bind LyricsStyleSettings.UnplayedOriginalLyricsOpacity, Mode=TwoWay}" />
                             </dev:SettingsCard>
                             <dev:SettingsCard x:Uid="SettingsPageTranslatedText">
                                 <local:ExtendedSlider
