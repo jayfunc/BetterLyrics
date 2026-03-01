@@ -964,7 +964,7 @@
     <value>Açılır Menüyü Daralt</value>
   </data>
   <data name="SettingsPageColor.Header" xml:space="preserve">
-    <value>Color</value>
+    <value>Renk</value>
   </data>
   <data name="SettingsPageConfigName.Description" xml:space="preserve">
     <value>Kaydedilen pencere durumlarını adlandırmak onları daha iyi ayırt etmenize yardımcı olur</value>

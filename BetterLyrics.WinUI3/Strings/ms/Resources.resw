@@ -964,7 +964,7 @@
     <value>Runtuhkan Pilihan</value>
   </data>
   <data name="SettingsPageColor.Header" xml:space="preserve">
-    <value>Color</value>
+    <value>Warna</value>
   </data>
   <data name="SettingsPageConfigName.Description" xml:space="preserve">
     <value>Menamakan status tetingkap yang direkodkan boleh membantu anda membezakannya dengan lebih baik</value>
@@ -1150,7 +1150,7 @@
     <value>Sembunyikan/Tunjukkan Tetingkap Secara Automatik</value>
   </data>
   <data name="SettingsPageHideWindowDelay.Header" xml:space="preserve">
-    <value>Delay</value>
+    <value>Lengah</value>
   </data>
   <data name="SettingsPageHoldDragSort.Content" xml:space="preserve">
     <value>Tahan di sini dan seret untuk menyusun</value>
@@ -1345,7 +1345,7 @@
     <value>Jauh dari Pandangan</value>
   </data>
   <data name="SettingsPageLyricsPlayedFgFontColor.Header" xml:space="preserve">
-    <value>Current Line (Played)</value>
+    <value>Baris Semasa (Dimainkan)</value>
   </data>
   <data name="SettingsPageLyricsProcessing.Text" xml:space="preserve">
     <value>Pemprosesan lirik</value>
@@ -1393,7 +1393,7 @@
     <value>Ambang Penyegerakan Garis Masa Lirik</value>
   </data>
   <data name="SettingsPageLyricsUnplayedFgFontColor.Header" xml:space="preserve">
-    <value>Current Line (Unplayed)</value>
+    <value>Baris Semasa (Tidak Dimainkan)</value>
   </data>
   <data name="SettingsPageLyricsWindow.Text" xml:space="preserve">
     <value>Tetingkap Lirik</value>
@@ -1519,10 +1519,10 @@
     <value>Sumber Main Balik Semasa</value>
   </data>
   <data name="SettingsPagePlayedOriginalText.Header" xml:space="preserve">
-    <value>Original (Played)</value>
+    <value>Asal (Dimainkan)</value>
   </data>
   <data name="SettingsPagePlayedStrokeFontColor.Header" xml:space="preserve">
-    <value>Stroke (Played)</value>
+    <value>Strok (Dimainkan)</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>Mainkan "Cut to the Feeling" di "soundcloud.com"</value>
@@ -1672,7 +1672,7 @@
     <value>Gaya Spektrum</value>
   </data>
   <data name="SettingsPageSpectrumPlacementAroundAlbumArt.Content" xml:space="preserve">
-    <value>Around the album art</value>
+    <value>Di sekeliling seni album</value>
   </data>
   <data name="SettingsPageSpectrumPlacementBottom.Content" xml:space="preserve">
     <value>Bawah</value>
@@ -1747,10 +1747,10 @@
     <value>Perkhidmatan Terjemahan LibreTranslate</value>
   </data>
   <data name="SettingsPageUnplayedOriginalText.Header" xml:space="preserve">
-    <value>Original (Unplayed)</value>
+    <value>Asal (Tidak Dimainkan)</value>
   </data>
   <data name="SettingsPageUnplayedStrokeFontColor.Header" xml:space="preserve">
-    <value>Stroke (Unplayed)</value>
+    <value>Strok (Tidak Dimainkan)</value>
   </data>
   <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
     <value>dan pengguna yang membeli serta menyokong BetterLyrics</value>

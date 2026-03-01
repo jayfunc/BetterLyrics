@@ -964,7 +964,7 @@
     <value>ยุบเมนูแบบเลื่อนลง</value>
   </data>
   <data name="SettingsPageColor.Header" xml:space="preserve">
-    <value>Color</value>
+    <value>สี</value>
   </data>
   <data name="SettingsPageConfigName.Description" xml:space="preserve">
     <value>การตั้งชื่อสถานะหน้าต่างที่บันทึกไว้จะช่วยให้คุณแยกแยะได้ดีขึ้น</value>

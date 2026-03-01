@@ -286,7 +286,7 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
             }
         }
 
-        public void RecreateRenderChars()
+        public void RecreateRenderChars(int strokeWidth)
         {
             PrimaryRenderChars.Clear();
             if (PrimaryTextLayout == null) return;
@@ -301,7 +301,11 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
             for (int startCharIndex = 0; startCharIndex < textLength; startCharIndex++)
             {
                 var region = PrimaryTextLayout.GetCharacterRegions(startCharIndex, 1).FirstOrDefault();
-                var bounds = region.LayoutBounds;
+                var bounds = region.LayoutBounds.Extend(
+                    startCharIndex == 0 ? strokeWidth : strokeWidth / 4f,
+                    strokeWidth / 2f,
+                    startCharIndex == textLength - 1 ? strokeWidth : strokeWidth / 4f,
+                    strokeWidth / 2f);
 
                 var syllable = PrimaryRenderSyllables.FirstOrDefault(x => x.StartIndex <= startCharIndex && startCharIndex <= x.EndIndex);
                 if (syllable == null) continue;
@@ -342,10 +346,16 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
             // 缓存纯白色的描边（作为 Stroke Mask）
             if (strokeWidth > 0)
             {
+                using var roundStrokeStyle = new CanvasStrokeStyle
+                {
+                    LineJoin = CanvasLineJoin.Round,
+                    StartCap = CanvasCapStyle.Round,
+                    EndCap = CanvasCapStyle.Round
+                };
                 using var ds = CachedStroke.CreateDrawingSession();
-                if (TertiaryCanvasGeometry != null) ds.DrawGeometry(TertiaryCanvasGeometry, TertiaryPosition, Colors.White, (float)strokeWidth);
-                if (PrimaryCanvasGeometry != null) ds.DrawGeometry(PrimaryCanvasGeometry, PrimaryPosition, Colors.White, (float)strokeWidth);
-                if (SecondaryCanvasGeometry != null) ds.DrawGeometry(SecondaryCanvasGeometry, SecondaryPosition, Colors.White, (float)strokeWidth);
+                if (TertiaryCanvasGeometry != null) ds.DrawGeometry(TertiaryCanvasGeometry, TertiaryPosition, Colors.White, (float)strokeWidth, roundStrokeStyle);
+                if (PrimaryCanvasGeometry != null) ds.DrawGeometry(PrimaryCanvasGeometry, PrimaryPosition, Colors.White, (float)strokeWidth, roundStrokeStyle);
+                if (SecondaryCanvasGeometry != null) ds.DrawGeometry(SecondaryCanvasGeometry, SecondaryPosition, Colors.White, (float)strokeWidth, roundStrokeStyle);
             }
 
             UnplayedFillTint = new TintEffect { Source = CachedFill, Color = Colors.White };

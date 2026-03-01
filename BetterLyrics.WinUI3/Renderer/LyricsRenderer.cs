@@ -158,11 +158,11 @@ namespace BetterLyrics.WinUI3.Renderer
 
                 if (isPlaying)
                 {
-                    PlayingLineRenderer.Draw(control, ds, line.CachedStroke, line.CachedFill, line.UnplayedComposite, line, currentProgressMs, effectSettings);
+                    PlayingLineRenderer.Draw(control, ds, styleSettings.LyricsFontStrokeWidth, line.CachedStroke, line.CachedFill, line.UnplayedComposite, line, currentProgressMs, effectSettings);
                 }
                 else
                 {
-                    UnplayingLineRenderer.Draw(ds, line.UnplayedComposite, line);
+                    UnplayingLineRenderer.Draw(ds, line.UnplayedComposite, styleSettings.LyricsFontStrokeWidth, line);
                 }
 
                 if (i == mouseHoverLineIndex)

@@ -1,4 +1,5 @@
-﻿using BetterLyrics.WinUI3.Models.Lyrics;
+﻿using BetterLyrics.WinUI3.Extensions;
+using BetterLyrics.WinUI3.Models.Lyrics;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Text;
@@ -13,6 +14,7 @@ namespace BetterLyrics.WinUI3.Renderer
         public static void Draw(
             CanvasDrawingSession ds,
             ICanvasImage textOnlyLayer,
+            int strokeWidth,
             RenderLyricsLine line)
         {
             var blurAmount = (float)line.BlurAmountTransition.Value;
@@ -23,6 +25,7 @@ namespace BetterLyrics.WinUI3.Renderer
                 DrawPart(ds, textOnlyLayer,
                     line.TertiaryTextLayout,
                     line.TertiaryPosition,
+                    strokeWidth,
                     blurAmount,
                     (float)opacity);
             }
@@ -33,6 +36,7 @@ namespace BetterLyrics.WinUI3.Renderer
                 DrawPart(ds, textOnlyLayer,
                     line.PrimaryTextLayout,
                     line.PrimaryPosition,
+                    strokeWidth,
                     blurAmount,
                     (float)opacity);
             }
@@ -43,6 +47,7 @@ namespace BetterLyrics.WinUI3.Renderer
                 DrawPart(ds, textOnlyLayer,
                     line.SecondaryTextLayout,
                     line.SecondaryPosition,
+                    strokeWidth,
                     blurAmount,
                     (float)opacity);
             }
@@ -53,12 +58,13 @@ namespace BetterLyrics.WinUI3.Renderer
             ICanvasImage source,
             CanvasTextLayout layout,
             Vector2 position,
+            int strokeWidth,
             float blur,
             float opacity)
         {
             if (float.IsNaN(opacity) || opacity <= 0) return;
 
-            var bounds = layout.LayoutBounds;
+            var bounds = layout.LayoutBounds.Extend(strokeWidth / 2f);
             var destRect = new Rect(
                 bounds.X + position.X,
                 bounds.Y + position.Y,
@@ -81,6 +87,8 @@ namespace BetterLyrics.WinUI3.Renderer
                 },
                 Opacity = opacity
             });
+
+            //ds.FillRectangle(destRect, Microsoft.UI.Colors.Red.WithAlpha(128));
         }
     }
 }

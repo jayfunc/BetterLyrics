@@ -12,7 +12,7 @@ namespace BetterLyrics.WinUI3.Helper
         //private static readonly ILogger<LatestOnlyTaskRunner> _logger = Ioc.Default.GetRequiredService<ILogger<LatestOnlyTaskRunner>>();
         private CancellationTokenSource? _cts;
 
-        public async Task RunAsync(Func<CancellationToken, Task> taskFactory)
+        public async Task RunAsync(Func<CancellationToken, Task> taskFactory, int maxRetries = 1, int delayMilliseconds = 1000)
         {
             _cts?.Cancel();
             _cts?.Dispose();
@@ -23,25 +23,43 @@ namespace BetterLyrics.WinUI3.Helper
             string taskName = taskFactory.Method.Name;
             string tokenHashCode = token.GetHashCode().ToString();
 
-            try
+            for (int attempt = 1; attempt <= maxRetries; attempt++)
             {
-                //_logger.LogInformation("RunAsync: Starting task {Name} with token hash code {HashCode}.", taskName, tokenHashCode);
-                Debug.WriteLine($"RunAsync: Starting task {taskName} with token hash code {tokenHashCode}.");
+                try
+                {
+                    Debug.WriteLine($"RunAsync: Starting task {taskName} (Attempt {attempt}/{maxRetries}) with token {tokenHashCode}.");
 
-                await taskFactory(token);
-                
-                //_logger.LogInformation("RunAsync: Task {Name} with token hash code {HashCode} completed successfully.", taskFactory.Method.Name, tokenHashCode);
-                Debug.WriteLine($"RunAsync: Task {taskName} with token hash code {tokenHashCode} completed successfully.");
-            }
-            catch (OperationCanceledException)
-            {
-                //_logger.LogInformation("RunAsync: Task {Name} with token hash code {HashCode} was cancelled.", taskFactory.Method.Name, tokenHashCode);
-                Debug.WriteLine($"RunAsync: Task {taskName} with token hash code {tokenHashCode} was cancelled.");
-            }
-            catch (Exception ex)
-            {
-                //_logger.LogError(ex, "RunAsync: Task {Name} threw an exception.", taskFactory.Method.Name);
-                Debug.WriteLine($"RunAsync: Task {taskFactory.Method.Name} threw an exception: {ex}");
+                    await taskFactory(token);
+
+                    Debug.WriteLine($"RunAsync: Task {taskName} completed successfully on attempt {attempt}.");
+                    return;
+                }
+                catch (OperationCanceledException)
+                {
+                    Debug.WriteLine($"RunAsync: Task {taskName} with token hash code {tokenHashCode} was cancelled. Stopping retries.");
+                    return;
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"RunAsync: Task {taskName} threw an exception on attempt {attempt}: {ex.Message}");
+
+                    if (attempt == maxRetries)
+                    {
+                        Debug.WriteLine($"RunAsync: Task {taskName} failed after {maxRetries} attempts. Giving up.");
+                        return;
+                    }
+
+                    try
+                    {
+                        Debug.WriteLine($"RunAsync: Waiting {delayMilliseconds}ms before next retry...");
+                        await Task.Delay(delayMilliseconds, token);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        Debug.WriteLine($"RunAsync: Task {taskName} was cancelled during retry delay.");
+                        return;
+                    }
+                }
             }
         }
     }
