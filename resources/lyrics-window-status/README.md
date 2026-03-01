@@ -10,4 +10,6 @@ Each link is accompanied by a preview image of the lyrics window in that specifi
 
 https://github.com/user-attachments/assets/f0e09250-3bf8-41db-977b-4ce090bb0474
 
+> Shared by Owleam | 分享自 Owleam
+
 ---
