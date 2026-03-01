@@ -963,6 +963,9 @@
   <data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
     <value>Réduire le menu déroulant</value>
   </data>
+  <data name="SettingsPageColor.Header" xml:space="preserve">
+    <value>Color</value>
+  </data>
   <data name="SettingsPageConfigName.Description" xml:space="preserve">
     <value>Nommer les statuts de fenêtre enregistrés vous aide à mieux les distinguer</value>
   </data>
@@ -1147,7 +1150,7 @@
     <value>Masquer/afficher la fenêtre auto.</value>
   </data>
   <data name="SettingsPageHideWindowDelay.Header" xml:space="preserve">
-    <value>Delay</value>
+    <value>Délai</value>
   </data>
   <data name="SettingsPageHoldDragSort.Content" xml:space="preserve">
     <value>Maintenir et glisser pour trier</value>
@@ -1341,6 +1344,9 @@
   <data name="SettingsPageLyricsOutOfSightEffect.Header" xml:space="preserve">
     <value>Hors de vue</value>
   </data>
+  <data name="SettingsPageLyricsPlayedFgFontColor.Header" xml:space="preserve">
+    <value>Ligne actuelle (jouée)</value>
+  </data>
   <data name="SettingsPageLyricsProcessing.Text" xml:space="preserve">
     <value>Traitement des textes</value>
   </data>
@@ -1385,6 +1391,9 @@
   </data>
   <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
     <value>Seuil de sync de la chronologie</value>
+  </data>
+  <data name="SettingsPageLyricsUnplayedFgFontColor.Header" xml:space="preserve">
+    <value>Ligne actuelle (non jouée)</value>
   </data>
   <data name="SettingsPageLyricsWindow.Text" xml:space="preserve">
     <value>Fenêtre des paroles</value>
@@ -1508,6 +1517,12 @@
   </data>
   <data name="SettingsPagePlaybackStatus.Header" xml:space="preserve">
     <value>Source de lecture actuelle</value>
+  </data>
+  <data name="SettingsPagePlayedOriginalText.Header" xml:space="preserve">
+    <value>Original (Joué)</value>
+  </data>
+  <data name="SettingsPagePlayedStrokeFontColor.Header" xml:space="preserve">
+    <value>Stroke (Joué)</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>Jouer "Cut to the Feeling" sur "soundcloud.com"</value>
@@ -1657,7 +1672,7 @@
     <value>Style du spectre</value>
   </data>
   <data name="SettingsPageSpectrumPlacementAroundAlbumArt.Content" xml:space="preserve">
-    <value>Around the album art</value>
+    <value>Autour de la pochette de l'album</value>
   </data>
   <data name="SettingsPageSpectrumPlacementBottom.Content" xml:space="preserve">
     <value>Bas</value>
@@ -1730,6 +1745,12 @@
   </data>
   <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
     <value>Service LibreTranslate</value>
+  </data>
+  <data name="SettingsPageUnplayedOriginalText.Header" xml:space="preserve">
+    <value>Original (non joué)</value>
+  </data>
+  <data name="SettingsPageUnplayedStrokeFontColor.Header" xml:space="preserve">
+    <value>Stroke (non joué)</value>
   </data>
   <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
     <value>Et les utilisateurs ayant acheté BetterLyrics</value>
@@ -1876,12 +1897,12 @@
     <value>Débogage</value>
   </data>
   <data name="WindowSettingsControlLockAndUnlock.Text" xml:space="preserve">
-    <value>Lock and Unlock</value>
+    <value>Verrouiller et déverrouiller</value>
   </data>
   <data name="WindowSettingsControlNowPlayingBar.Text" xml:space="preserve">
     <value>Panneau de contrôle des médias</value>
   </data>
   <data name="WindowSettingsControlRemoveBorder.Header" xml:space="preserve">
-    <value>Remove borders when locked</value>
+    <value>Supprimer les bordures lorsqu'elles sont verrouillées</value>
   </data>
 </root>

@@ -963,6 +963,9 @@
   <data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
     <value>Collapse Dropdown</value>
   </data>
+  <data name="SettingsPageColor.Header" xml:space="preserve">
+    <value>Color</value>
+  </data>
   <data name="SettingsPageConfigName.Description" xml:space="preserve">
     <value>Naming recorded window statuses helps you distinguish them better</value>
   </data>
@@ -1341,6 +1344,9 @@
   <data name="SettingsPageLyricsOutOfSightEffect.Header" xml:space="preserve">
     <value>Out of Sight</value>
   </data>
+  <data name="SettingsPageLyricsPlayedFgFontColor.Header" xml:space="preserve">
+    <value>Current Line (Played)</value>
+  </data>
   <data name="SettingsPageLyricsProcessing.Text" xml:space="preserve">
     <value>Lyrics Processing</value>
   </data>
@@ -1385,6 +1391,9 @@
   </data>
   <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
     <value>Lyrics Timeline Sync Threshold</value>
+  </data>
+  <data name="SettingsPageLyricsUnplayedFgFontColor.Header" xml:space="preserve">
+    <value>Current Line (Unplayed)</value>
   </data>
   <data name="SettingsPageLyricsWindow.Text" xml:space="preserve">
     <value>Lyrics Window</value>
@@ -1508,6 +1517,12 @@
   </data>
   <data name="SettingsPagePlaybackStatus.Header" xml:space="preserve">
     <value>Current Playback Source</value>
+  </data>
+  <data name="SettingsPagePlayedOriginalText.Header" xml:space="preserve">
+    <value>Original (Played)</value>
+  </data>
+  <data name="SettingsPagePlayedStrokeFontColor.Header" xml:space="preserve">
+    <value>Stroke (Played)</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>Play "Cut to the Feeling" on "soundcloud.com"</value>
@@ -1730,6 +1745,12 @@
   </data>
   <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
     <value>LibreTranslate Service</value>
+  </data>
+  <data name="SettingsPageUnplayedOriginalText.Header" xml:space="preserve">
+    <value>Original (Unplayed)</value>
+  </data>
+  <data name="SettingsPageUnplayedStrokeFontColor.Header" xml:space="preserve">
+    <value>Stroke (Unplayed)</value>
   </data>
   <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
     <value>And users who purchased BetterLyrics</value>

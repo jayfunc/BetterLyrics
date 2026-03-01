@@ -963,6 +963,9 @@
   <data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
     <value>Свернуть выпадающий список</value>
   </data>
+  <data name="SettingsPageColor.Header" xml:space="preserve">
+    <value>Color</value>
+  </data>
   <data name="SettingsPageConfigName.Description" xml:space="preserve">
     <value>Названия записанных состояний окон помогут вам лучше их различать</value>
   </data>
@@ -1147,7 +1150,7 @@
     <value>Автоматически скрывать/показывать окно</value>
   </data>
   <data name="SettingsPageHideWindowDelay.Header" xml:space="preserve">
-    <value>Delay</value>
+    <value>Задержка</value>
   </data>
   <data name="SettingsPageHoldDragSort.Content" xml:space="preserve">
     <value>Удерживайте здесь и перетащите для сортировки</value>
@@ -1341,6 +1344,9 @@
   <data name="SettingsPageLyricsOutOfSightEffect.Header" xml:space="preserve">
     <value>Вне поля зрения</value>
   </data>
+  <data name="SettingsPageLyricsPlayedFgFontColor.Header" xml:space="preserve">
+    <value>Текущая линия (сыграно)</value>
+  </data>
   <data name="SettingsPageLyricsProcessing.Text" xml:space="preserve">
     <value>Обработка лирики</value>
   </data>
@@ -1385,6 +1391,9 @@
   </data>
   <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
     <value>Порог синхронизации таймлайна</value>
+  </data>
+  <data name="SettingsPageLyricsUnplayedFgFontColor.Header" xml:space="preserve">
+    <value>Текущая линия (не разыгранная)</value>
   </data>
   <data name="SettingsPageLyricsWindow.Text" xml:space="preserve">
     <value>Окно текста</value>
@@ -1508,6 +1517,12 @@
   </data>
   <data name="SettingsPagePlaybackStatus.Header" xml:space="preserve">
     <value>Текущий источник воспроизведения</value>
+  </data>
+  <data name="SettingsPagePlayedOriginalText.Header" xml:space="preserve">
+    <value>Оригинал (сыграно)</value>
+  </data>
+  <data name="SettingsPagePlayedStrokeFontColor.Header" xml:space="preserve">
+    <value>Штрих (сыграно)</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>Воспроизвести «Cut to the Feeling» на «soundcloud.com»</value>
@@ -1657,7 +1672,7 @@
     <value>Стиль спектра</value>
   </data>
   <data name="SettingsPageSpectrumPlacementAroundAlbumArt.Content" xml:space="preserve">
-    <value>Around the album art</value>
+    <value>Вокруг обложки альбома</value>
   </data>
   <data name="SettingsPageSpectrumPlacementBottom.Content" xml:space="preserve">
     <value>Снизу</value>
@@ -1730,6 +1745,12 @@
   </data>
   <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
     <value>Сервис LibreTranslate</value>
+  </data>
+  <data name="SettingsPageUnplayedOriginalText.Header" xml:space="preserve">
+    <value>Оригинал (не воспроизведено)</value>
+  </data>
+  <data name="SettingsPageUnplayedStrokeFontColor.Header" xml:space="preserve">
+    <value>Удар (не сыгранный)</value>
   </data>
   <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
     <value>И пользователям, купившим BetterLyrics</value>
@@ -1876,12 +1897,12 @@
     <value>Отладка</value>
   </data>
   <data name="WindowSettingsControlLockAndUnlock.Text" xml:space="preserve">
-    <value>Lock and Unlock</value>
+    <value>Блокировка и разблокировка</value>
   </data>
   <data name="WindowSettingsControlNowPlayingBar.Text" xml:space="preserve">
     <value>Панель управления мультимедиа</value>
   </data>
   <data name="WindowSettingsControlRemoveBorder.Header" xml:space="preserve">
-    <value>Remove borders when locked</value>
+    <value>Удаление границ при блокировке</value>
   </data>
 </root>

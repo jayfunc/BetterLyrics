@@ -6,6 +6,7 @@ using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
+using Microsoft.UI.Xaml.Shapes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,9 +35,6 @@ namespace BetterLyrics.WinUI3.Renderer
             double lyricsOpacity,
             double playingLineTopOffsetFactor,
             LyricsWindowStatus windowStatus,
-            Color strokeColor,
-            Color bgColor,
-            Color fgColor,
             double currentProgressMs)
         {
             if (lyricsOpacity == 0) return;
@@ -62,9 +60,6 @@ namespace BetterLyrics.WinUI3.Renderer
                             userScrollOffset,
                             playingLineTopOffsetFactor,
                             windowStatus,
-                            strokeColor,
-                            bgColor,
-                            fgColor,
                             currentProgressMs);
                     }
 
@@ -92,9 +87,6 @@ namespace BetterLyrics.WinUI3.Renderer
                     userScrollOffset,
                     playingLineTopOffsetFactor,
                     windowStatus,
-                    strokeColor,
-                    bgColor,
-                    fgColor,
                     currentProgressMs);
             }
         }
@@ -114,9 +106,6 @@ namespace BetterLyrics.WinUI3.Renderer
             double userScrollOffset,
             double playingLineTopOffsetFactor,
             LyricsWindowStatus windowStatus,
-            Color strokeColor,
-            Color bgColor,
-            Color fgColor,
             double currentProgressMs)
         {
             if (lines == null) return;
@@ -160,18 +149,20 @@ namespace BetterLyrics.WinUI3.Renderer
 
                 ds.Transform *= Matrix3x2.CreateTranslation((float)xOffset, (float)yOffset);
 
-                line.EnsureCaches(control, strokeColor, styleSettings.LyricsFontStrokeWidth);
-                line?.DynamicFillEffect?.Color = line.ColorTransition.Value;
-                if (line?.CombinedEffect is CompositeEffect compositeEffect)
+                line.EnsureCaches(control, styleSettings.LyricsFontStrokeWidth);
+                if (line.CachedStroke == null || line.CachedFill == null) continue;
+                if (line.UnplayedFillTint == null || line.UnplayedStrokeTint == null || line.UnplayedComposite == null) continue;
+
+                line.UnplayedFillTint.Color = line.UnplayedFillColorTransition.Value;
+                line.UnplayedStrokeTint.Color = line.UnplayedStrokeColorTransition.Value;
+
+                if (isPlaying)
                 {
-                    if (isPlaying)
-                    {
-                        PlayingLineRenderer.Draw(control, ds, compositeEffect, line, currentProgressMs, bgColor, fgColor, effectSettings);
-                    }
-                    else
-                    {
-                        UnplayingLineRenderer.Draw(ds, compositeEffect, line);
-                    }
+                    PlayingLineRenderer.Draw(control, ds, line.CachedStroke, line.CachedFill, line.UnplayedComposite, line, currentProgressMs, effectSettings);
+                }
+                else
+                {
+                    UnplayingLineRenderer.Draw(ds, line.UnplayedComposite, line);
                 }
 
                 if (i == mouseHoverLineIndex)

@@ -687,11 +687,26 @@ namespace BetterLyrics.WinUI3.Views
                 {
                     _ = UpdateAlbumArtThemeColorsAsync();
                 }
-                else if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsFgFontColorType))
+                else if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsPlayedFgFontColorType))
                 {
                     _ = UpdateAlbumArtThemeColorsAsync();
                 }
-                else if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsStrokeFontColorType))
+                else if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsUnplayedFgFontColorType))
+                {
+                    _ = UpdateAlbumArtThemeColorsAsync();
+                }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsPlayedStrokeFontColorType))
+                {
+                    _ = UpdateAlbumArtThemeColorsAsync();
+                }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsUnplayedStrokeFontColorType))
+                {
+                    _ = UpdateAlbumArtThemeColorsAsync();
+                }
+            }
+            else if (message.Sender == LyricsWindowStatus.LyricsBackgroundSettings)
+            {
+                if (message.PropertyName == nameof(LyricsWindowStatus.LyricsBackgroundSettings.SpectrumColorType))
                 {
                     _ = UpdateAlbumArtThemeColorsAsync();
                 }
@@ -706,11 +721,26 @@ namespace BetterLyrics.WinUI3.Views
                 {
                     _ = UpdateAlbumArtThemeColorsAsync();
                 }
-                else if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsCustomFgFontColor))
+                else if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsCustomPlayedFgFontColor))
                 {
                     _ = UpdateAlbumArtThemeColorsAsync();
                 }
-                else if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsCustomStrokeFontColor))
+                else if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsCustomUnplayedFgFontColor))
+                {
+                    _ = UpdateAlbumArtThemeColorsAsync();
+                }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsCustomPlayedStrokeFontColor))
+                {
+                    _ = UpdateAlbumArtThemeColorsAsync();
+                }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.LyricsStyleSettings.LyricsCustomUnplayedStrokeFontColor))
+                {
+                    _ = UpdateAlbumArtThemeColorsAsync();
+                }
+            }
+            else if (message.Sender == LyricsWindowStatus.LyricsBackgroundSettings)
+            {
+                if (message.PropertyName == nameof(LyricsWindowStatus.LyricsBackgroundSettings.SpectrumCustomColor))
                 {
                     _ = UpdateAlbumArtThemeColorsAsync();
                 }

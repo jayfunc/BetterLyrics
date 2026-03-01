@@ -92,6 +92,7 @@
 		<PackageReference Include="CommunityToolkit.Labs.WinUI.Shimmer" Version="0.1.250828-build.2223" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="CommunityToolkit.WinUI.Behaviors" Version="8.2.251219" />
+		<PackageReference Include="CommunityToolkit.WinUI.Controls.ColorPicker" Version="8.2.251219" />
 		<PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.2.251219" />
 		<PackageReference Include="CommunityToolkit.WinUI.Controls.Segmented" Version="8.2.251219" />
 		<PackageReference Include="CommunityToolkit.WinUI.Controls.Sizers" Version="8.2.251219" />

@@ -6,8 +6,11 @@ namespace BetterLyrics.WinUI3.Models
     public struct AlbumArtThemeColors
     {
         public Color BgFontColor;
-        public Color FgFontColor;
-        public Color StrokeFontColor;
+        public Color SpectrumColor;
+        public Color PlayedFgFontColor;
+        public Color UnplayedFgFontColor;
+        public Color PlayedStrokeFontColor;
+        public Color UnplayedStrokeFontColor;
         public Color EnvColor;
 
         public Color AccentColor1;

@@ -1,7 +1,9 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using System;
+using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Models.Settings
 {
@@ -35,6 +37,8 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsSpectrumBrethingEffectEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int SpectrumBreathingIntensity { get; set; } = 80;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int SpectrumOpacity { get; set; } = 100; // 100%
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsFontColorType SpectrumColorType { get; set; } = LyricsFontColorType.AdaptiveGrayed;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial Color SpectrumCustomColor { get; set; } = Colors.White;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsSnowFlakeOverlayEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int SnowFlakeOverlayAmount { get; set; } = 10;
@@ -80,6 +84,9 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 IsSpectrumGlowEffectEnabled = this.IsSpectrumGlowEffectEnabled,
                 IsSpectrumBrethingEffectEnabled = this.IsSpectrumBrethingEffectEnabled,
                 SpectrumBreathingIntensity = this.SpectrumBreathingIntensity,
+                SpectrumOpacity = this.SpectrumOpacity,
+                SpectrumColorType = this.SpectrumColorType,
+                SpectrumCustomColor = this.SpectrumCustomColor,
 
                 IsSnowFlakeOverlayEnabled = this.IsSnowFlakeOverlayEnabled,
                 SnowFlakeOverlayAmount = this.SnowFlakeOverlayAmount,

@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Constants;
+using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.Models.Settings;
 using System;
@@ -23,8 +24,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
             LyricsStyleSettings lyricsStyle,
             LyricsEffectSettings lyricsEffect,
             ValueTransition<double> canvasYScrollTransition,
-            Color bgColor,
-            Color fgColor,
+            AlbumArtThemeColors albumArtThemeColors,
             TimeSpan elapsedTime,
             bool isMouseScrolling,
             bool isLayoutChanged,
@@ -40,7 +40,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
             var primaryPlayingLine = lines[primaryPlayingLineIndex];
 
             var phoneticOpacity = lyricsStyle.PhoneticLyricsOpacity / 100.0;
-            var originalOpacity = lyricsStyle.OriginalLyricsOpacity / 100.0;
+            var originalOpacity = lyricsStyle.UnplayedOriginalLyricsOpacity / 100.0;
             var translatedOpacity = lyricsStyle.TranslatedLyricsOpacity / 100.0;
 
             double topHeightFactor = canvasHeight * playingLineTopOffsetFactor;
@@ -171,9 +171,21 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                         isSecondaryLinePlaying ? translatedOpacity :
                         CalculateTargetOpacity(translatedOpacity, translatedOpacity, distanceFactor, isMouseScrolling, lyricsEffect));
 
-                    line.ColorTransition.SetDuration(yScrollDuration);
-                    line.ColorTransition.SetDelay(yScrollDelay);
-                    line.ColorTransition.Start(isSecondaryLinePlaying ? fgColor : bgColor);
+                    line.PlayedFillColorTransition.SetDuration(yScrollDuration);
+                    line.PlayedFillColorTransition.SetDelay(yScrollDelay);
+                    line.PlayedFillColorTransition.Start(isSecondaryLinePlaying ? albumArtThemeColors.PlayedFgFontColor : albumArtThemeColors.BgFontColor);
+
+                    line.UnplayedFillColorTransition.SetDuration(yScrollDuration);
+                    line.UnplayedFillColorTransition.SetDelay(yScrollDelay);
+                    line.UnplayedFillColorTransition.Start(isSecondaryLinePlaying ? albumArtThemeColors.UnplayedFgFontColor : albumArtThemeColors.BgFontColor);
+
+                    line.PlayedStrokeColorTransition.SetDuration(yScrollDuration);
+                    line.PlayedStrokeColorTransition.SetDelay(yScrollDelay);
+                    line.PlayedStrokeColorTransition.Start(isSecondaryLinePlaying ? albumArtThemeColors.PlayedStrokeFontColor : albumArtThemeColors.UnplayedStrokeFontColor);
+
+                    line.UnplayedStrokeColorTransition.SetDuration(yScrollDuration);
+                    line.UnplayedStrokeColorTransition.SetDelay(yScrollDelay);
+                    line.UnplayedStrokeColorTransition.Start(isSecondaryLinePlaying ? albumArtThemeColors.UnplayedStrokeFontColor : albumArtThemeColors.UnplayedStrokeFontColor);
 
                     line.AngleTransition.SetInterpolator(canvasYScrollTransition.Interpolator);
                     line.AngleTransition.SetDuration(yScrollDuration);

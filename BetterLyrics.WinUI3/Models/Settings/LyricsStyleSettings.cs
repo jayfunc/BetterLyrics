@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI;
 using System;
+using System.Text.Json.Serialization;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Models.Settings
@@ -14,19 +15,52 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int TranslatedLyricsFontSize { get; set; } = 12;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int PhoneticLyricsOpacity { get; set; } = 60; // 60 %
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int OriginalLyricsOpacity { get; set; } = 30; // 30 %
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int PlayedOriginalLyricsOpacity { get; set; } = 100; // 100 % 已播放
+        [ObservableProperty][NotifyPropertyChangedRecipients][JsonPropertyName("OriginalLyricsOpacity")] public partial int UnplayedOriginalLyricsOpacity { get; set; } = 30; // 30 % 未播放
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int TranslatedLyricsOpacity { get; set; } = 60; // 60 %
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TextAlignmentType LyricsAlignmentType { get; set; } = TextAlignmentType.Left;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsFontStrokeWidth { get; set; } = 0;
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial Color LyricsCustomBgFontColor { get; set; } = Colors.White;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial Color LyricsCustomFgFontColor { get; set; } = Colors.White;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial Color LyricsCustomStrokeFontColor { get; set; } = Colors.White;
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial Color LyricsCustomBgFontColor { get; set; } = Colors.White;
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsFontColorType LyricsBgFontColorType { get; set; } = LyricsFontColorType.AdaptiveGrayed;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsFontColorType LyricsFgFontColorType { get; set; } = LyricsFontColorType.AdaptiveGrayed;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsFontColorType LyricsStrokeFontColorType { get; set; } = LyricsFontColorType.AdaptiveGrayed;
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        [JsonPropertyName("LyricsCustomFgFontColor")]
+        public partial Color LyricsCustomPlayedFgFontColor { get; set; } = Colors.White;
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial Color LyricsCustomUnplayedFgFontColor { get; set; } = Colors.White;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        [JsonPropertyName("LyricsCustomStrokeFontColor")]
+        public partial Color LyricsCustomPlayedStrokeFontColor { get; set; } = Colors.White;
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial Color LyricsCustomUnplayedStrokeFontColor { get; set; } = Colors.White;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial LyricsFontColorType LyricsBgFontColorType { get; set; } = LyricsFontColorType.AdaptiveGrayed;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        [JsonPropertyName("LyricsFgFontColorType")]
+        public partial LyricsFontColorType LyricsPlayedFgFontColorType { get; set; } = LyricsFontColorType.AdaptiveGrayed;
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial LyricsFontColorType LyricsUnplayedFgFontColorType { get; set; } = LyricsFontColorType.AdaptiveGrayed;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        [JsonPropertyName("LyricsStrokeFontColorType")]
+        public partial LyricsFontColorType LyricsPlayedStrokeFontColorType { get; set; } = LyricsFontColorType.AdaptiveGrayed;
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial LyricsFontColorType LyricsUnplayedStrokeFontColorType { get; set; } = LyricsFontColorType.AdaptiveGrayed;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsFontWeight LyricsFontWeight { get; set; } = LyricsFontWeight.Bold;
 
@@ -49,17 +83,22 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 TranslatedLyricsFontSize = this.TranslatedLyricsFontSize,
 
                 PhoneticLyricsOpacity = this.PhoneticLyricsOpacity,
-                OriginalLyricsOpacity = this.OriginalLyricsOpacity,
+                PlayedOriginalLyricsOpacity = this.PlayedOriginalLyricsOpacity,
+                UnplayedOriginalLyricsOpacity = this.UnplayedOriginalLyricsOpacity,
                 TranslatedLyricsOpacity = this.TranslatedLyricsOpacity,
 
                 LyricsAlignmentType = this.LyricsAlignmentType,
                 LyricsFontStrokeWidth = this.LyricsFontStrokeWidth,
                 LyricsCustomBgFontColor = this.LyricsCustomBgFontColor,
-                LyricsCustomFgFontColor = this.LyricsCustomFgFontColor,
-                LyricsCustomStrokeFontColor = this.LyricsCustomStrokeFontColor,
+                LyricsCustomPlayedFgFontColor = this.LyricsCustomPlayedFgFontColor,
+                LyricsCustomUnplayedFgFontColor = this.LyricsCustomUnplayedFgFontColor,
+                LyricsCustomPlayedStrokeFontColor = this.LyricsCustomPlayedStrokeFontColor,
+                LyricsCustomUnplayedStrokeFontColor = this.LyricsCustomUnplayedStrokeFontColor,
                 LyricsBgFontColorType = this.LyricsBgFontColorType,
-                LyricsFgFontColorType = this.LyricsFgFontColorType,
-                LyricsStrokeFontColorType = this.LyricsStrokeFontColorType,
+                LyricsPlayedFgFontColorType = this.LyricsPlayedFgFontColorType,
+                LyricsUnplayedFgFontColorType = this.LyricsUnplayedFgFontColorType,
+                LyricsPlayedStrokeFontColorType = this.LyricsPlayedStrokeFontColorType,
+                LyricsUnplayedStrokeFontColorType = this.LyricsUnplayedStrokeFontColorType,
                 LyricsFontWeight = this.LyricsFontWeight,
                 LyricsLineSpacingFactor = this.LyricsLineSpacingFactor,
                 LyricsCJKFontFamily = this.LyricsCJKFontFamily,

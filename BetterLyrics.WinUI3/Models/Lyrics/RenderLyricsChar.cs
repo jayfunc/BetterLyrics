@@ -1,6 +1,7 @@
 ﻿using BetterLyrics.WinUI3.Constants;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
+using Microsoft.Graphics.Canvas.Effects;
 using System;
 using Windows.Foundation;
 
@@ -13,6 +14,9 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
         public ValueTransition<double> ScaleTransition { get; set; }
         public ValueTransition<double> GlowTransition { get; set; }
         public ValueTransition<double> FloatTransition { get; set; }
+
+        public CropEffect Crop { get; }
+        public GaussianBlurEffect Glow { get; }
 
         public double ProgressPlayed { get; set; } = 0; // 0~1
 
@@ -34,6 +38,8 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
                 defaultTotalDuration: Time.LongAnimationDuration.TotalSeconds
             );
             LayoutRect = layoutRect;
+            Crop = new CropEffect { BorderMode = EffectBorderMode.Hard };
+            Glow = new GaussianBlurEffect { Source = Crop, BorderMode = EffectBorderMode.Soft };
         }
 
         public void Update(TimeSpan elapsedTime)
@@ -41,6 +47,12 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
             ScaleTransition.Update(elapsedTime);
             GlowTransition.Update(elapsedTime);
             FloatTransition.Update(elapsedTime);
+        }
+
+        public void DisposeEffetcts()
+        {
+            Crop?.Dispose();
+            Glow?.Dispose();
         }
 
     }

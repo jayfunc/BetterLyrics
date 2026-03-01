@@ -161,21 +161,44 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                 _ => adaptiveGrayedFontColor,
             };
 
-            // 前景字色
-            result.FgFontColor = lyricsWindowStatus.LyricsStyleSettings.LyricsFgFontColorType switch
+            // 频谱填充色
+            result.SpectrumColor = lyricsWindowStatus.LyricsBackgroundSettings.SpectrumColorType switch
             {
                 LyricsFontColorType.AdaptiveGrayed => adaptiveGrayedFontColor,
                 LyricsFontColorType.AdaptiveColored => adaptiveColoredFontColor ?? adaptiveGrayedFontColor,
-                LyricsFontColorType.Custom => lyricsWindowStatus.LyricsStyleSettings.LyricsCustomFgFontColor,
+                LyricsFontColorType.Custom => lyricsWindowStatus.LyricsBackgroundSettings.SpectrumCustomColor,
+                _ => adaptiveGrayedFontColor,
+            };
+
+            // 前景字色
+            result.PlayedFgFontColor = lyricsWindowStatus.LyricsStyleSettings.LyricsPlayedFgFontColorType switch
+            {
+                LyricsFontColorType.AdaptiveGrayed => adaptiveGrayedFontColor,
+                LyricsFontColorType.AdaptiveColored => adaptiveColoredFontColor ?? adaptiveGrayedFontColor,
+                LyricsFontColorType.Custom => lyricsWindowStatus.LyricsStyleSettings.LyricsCustomPlayedFgFontColor,
+                _ => adaptiveGrayedFontColor,
+            };
+            result.UnplayedFgFontColor = lyricsWindowStatus.LyricsStyleSettings.LyricsUnplayedFgFontColorType switch
+            {
+                LyricsFontColorType.AdaptiveGrayed => adaptiveGrayedFontColor,
+                LyricsFontColorType.AdaptiveColored => adaptiveColoredFontColor ?? adaptiveGrayedFontColor,
+                LyricsFontColorType.Custom => lyricsWindowStatus.LyricsStyleSettings.LyricsCustomUnplayedFgFontColor,
                 _ => adaptiveGrayedFontColor,
             };
 
             // 描边颜色
-            result.StrokeFontColor = lyricsWindowStatus.LyricsStyleSettings.LyricsStrokeFontColorType switch
+            result.PlayedStrokeFontColor = lyricsWindowStatus.LyricsStyleSettings.LyricsPlayedStrokeFontColorType switch
             {
                 LyricsFontColorType.AdaptiveGrayed => grayedEnvironmentalColor.WithBrightness(0.7),
                 LyricsFontColorType.AdaptiveColored => result.EnvColor.WithBrightness(0.7),
-                LyricsFontColorType.Custom => lyricsWindowStatus.LyricsStyleSettings.LyricsCustomStrokeFontColor,
+                LyricsFontColorType.Custom => lyricsWindowStatus.LyricsStyleSettings.LyricsCustomPlayedStrokeFontColor,
+                _ => Colors.Transparent,
+            };
+            result.UnplayedStrokeFontColor = lyricsWindowStatus.LyricsStyleSettings.LyricsUnplayedStrokeFontColorType switch
+            {
+                LyricsFontColorType.AdaptiveGrayed => grayedEnvironmentalColor.WithBrightness(0.7),
+                LyricsFontColorType.AdaptiveColored => result.EnvColor.WithBrightness(0.7),
+                LyricsFontColorType.Custom => lyricsWindowStatus.LyricsStyleSettings.LyricsCustomUnplayedStrokeFontColor,
                 _ => Colors.Transparent,
             };
             return result;
