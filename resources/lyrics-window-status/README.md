@@ -8,6 +8,6 @@ Each link is accompanied by a preview image of the lyrics window in that specifi
 
 ### [Narrow Rhythm (Vertical) | 窄屏律动（竖屏）](narrow-rhythm-vert.json)
 
-  ![](narrow-rhythm-vert.mp4)
+https://github.com/user-attachments/assets/f0e09250-3bf8-41db-977b-4ce090bb0474
 
 ---
