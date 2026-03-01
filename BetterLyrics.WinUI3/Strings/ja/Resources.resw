@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -847,16 +847,16 @@
     <value>アルバムアート</value>
   </data>
   <data name="SettingsPageAlbumArtHeight.Header" xml:space="preserve">
-    <value>アルバムアートの高さ</value>
+    <value>アルバムアート高さ</value>
   </data>
   <data name="SettingsPageAlbumArtLayer.Header" xml:space="preserve">
     <value>アルバムアートレイヤー</value>
   </data>
   <data name="SettingsPageAlbumArtSearchProvidersConfig.Text" xml:space="preserve">
-    <value>アルバムアートのソースを編集する</value>
+    <value>アルバムアートソースを編集する</value>
   </data>
   <data name="SettingsPageAlbumEffect.Text" xml:space="preserve">
-    <value>アルバムアートの効果</value>
+    <value>アルバムアート効果</value>
   </data>
   <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
     <value>角の丸み</value>
@@ -865,7 +865,7 @@
     <value>影の拡散</value>
   </data>
   <data name="SettingsPageAlbumStyle.Text" xml:space="preserve">
-    <value>アルバムアートエリアのスタイル</value>
+    <value>アルバムアートエリアスタイル</value>
   </data>
   <data name="SettingsPageAlignment.Header" xml:space="preserve">
     <value>配置設定</value>
@@ -964,7 +964,7 @@
     <value>リストを折りたたむ</value>
   </data>
   <data name="SettingsPageColor.Header" xml:space="preserve">
-    <value>Color</value>
+    <value>色</value>
   </data>
   <data name="SettingsPageConfigName.Description" xml:space="preserve">
     <value>ウィンドウの状態に名前を付けると、区別しやすくなります</value>
@@ -1150,7 +1150,7 @@
     <value>ウィンドウの自動非表示/表示</value>
   </data>
   <data name="SettingsPageHideWindowDelay.Header" xml:space="preserve">
-    <value>遅延</value>
+    <value>遅延時間</value>
   </data>
   <data name="SettingsPageHoldDragSort.Content" xml:space="preserve">
     <value>ここを押したままドラッグして並べ替え</value>
@@ -1300,7 +1300,7 @@
     <value>フロートアニメーション</value>
   </data>
   <data name="SettingsPageLyricsFontColorAdaptiveColored.Content" xml:space="preserve">
-    <value>歌詞の背景に合わせる（色付き）</value>
+    <value>歌詞の背景に合わせる（カラー）</value>
   </data>
   <data name="SettingsPageLyricsFontColorAdaptiveGrayed.Content" xml:space="preserve">
     <value>歌詞の背景に合わせる（グレー）</value>
@@ -1345,7 +1345,7 @@
     <value>視界から外す</value>
   </data>
   <data name="SettingsPageLyricsPlayedFgFontColor.Header" xml:space="preserve">
-    <value>現在のライン（プレー済み）</value>
+    <value>現在のライン（再生済み）</value>
   </data>
   <data name="SettingsPageLyricsProcessing.Text" xml:space="preserve">
     <value>歌詞処理</value>
@@ -1393,7 +1393,7 @@
     <value>歌詞同期のしきい値</value>
   </data>
   <data name="SettingsPageLyricsUnplayedFgFontColor.Header" xml:space="preserve">
-    <value>現在のライン（未プレー）</value>
+    <value>現在のライン（未再生）</value>
   </data>
   <data name="SettingsPageLyricsWindow.Text" xml:space="preserve">
     <value>歌詞ウィンドウ</value>
@@ -1519,10 +1519,10 @@
     <value>現在の再生ソース</value>
   </data>
   <data name="SettingsPagePlayedOriginalText.Header" xml:space="preserve">
-    <value>オリジナル（プレー済み）</value>
+    <value>原文（再生済み）</value>
   </data>
   <data name="SettingsPagePlayedStrokeFontColor.Header" xml:space="preserve">
-    <value>ストローク（プレー済み）</value>
+    <value>縁取り（再生済み）</value>
   </data>
   <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>"soundcloud.com" で "Cut to the Feeling" を再生</value>
@@ -1672,7 +1672,7 @@
     <value>スペクトラムスタイル</value>
   </data>
   <data name="SettingsPageSpectrumPlacementAroundAlbumArt.Content" xml:space="preserve">
-    <value>アルバム・アート周辺</value>
+    <value>アルバムアート周辺</value>
   </data>
   <data name="SettingsPageSpectrumPlacementBottom.Content" xml:space="preserve">
     <value>下へ</value>
@@ -1747,10 +1747,10 @@
     <value>LibreTranslate サービス</value>
   </data>
   <data name="SettingsPageUnplayedOriginalText.Header" xml:space="preserve">
-    <value>オリジナル（未プレー）</value>
+    <value>原文（未再生）</value>
   </data>
   <data name="SettingsPageUnplayedStrokeFontColor.Header" xml:space="preserve">
-    <value>ストローク（未プレー）</value>
+    <value>縁取り（未再生）</value>
   </data>
   <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
     <value>そしてBetterLyricsを購入したユーザー</value>

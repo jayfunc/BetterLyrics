@@ -102,62 +102,62 @@
 
                             <!--  描边（已播放）  -->
                             <dev:SettingsCard x:Uid="SettingsPagePlayedStrokeFontColor">
-                                <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsPlayedStrokeFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveColored" />
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
-                                </ComboBox>
-                            </dev:SettingsCard>
-                            <dev:SettingsCard Visibility="{x:Bind LyricsStyleSettings.LyricsPlayedStrokeFontColorType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}">
-                                <controls:ColorPickerButton SelectedColor="{x:Bind LyricsStyleSettings.LyricsCustomPlayedStrokeFontColor, Mode=TwoWay}" />
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsPlayedStrokeFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveColored" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
+                                    </ComboBox>
+                                    <controls:ColorPickerButton SelectedColor="{x:Bind LyricsStyleSettings.LyricsCustomPlayedStrokeFontColor, Mode=TwoWay}" Visibility="{x:Bind LyricsStyleSettings.LyricsPlayedStrokeFontColorType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}" />
+                                </StackPanel>
                             </dev:SettingsCard>
 
                             <!--  描边（未播放）  -->
                             <dev:SettingsCard x:Uid="SettingsPageUnplayedStrokeFontColor">
-                                <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsUnplayedStrokeFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveColored" />
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
-                                </ComboBox>
-                            </dev:SettingsCard>
-                            <dev:SettingsCard Visibility="{x:Bind LyricsStyleSettings.LyricsUnplayedStrokeFontColorType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}">
-                                <controls:ColorPickerButton SelectedColor="{x:Bind LyricsStyleSettings.LyricsCustomUnplayedStrokeFontColor, Mode=TwoWay}" />
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsUnplayedStrokeFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveColored" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
+                                    </ComboBox>
+                                    <controls:ColorPickerButton SelectedColor="{x:Bind LyricsStyleSettings.LyricsCustomUnplayedStrokeFontColor, Mode=TwoWay}" Visibility="{x:Bind LyricsStyleSettings.LyricsUnplayedStrokeFontColorType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}" />
+                                </StackPanel>
                             </dev:SettingsCard>
 
                             <!--  非当前行  -->
                             <dev:SettingsCard x:Uid="SettingsPageLyricsBgFontColor">
-                                <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsBgFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveColored" />
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
-                                </ComboBox>
-                            </dev:SettingsCard>
-                            <dev:SettingsCard Visibility="{x:Bind LyricsStyleSettings.LyricsBgFontColorType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}">
-                                <controls:ColorPickerButton SelectedColor="{x:Bind LyricsStyleSettings.LyricsCustomBgFontColor, Mode=TwoWay}" />
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsBgFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveColored" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
+                                    </ComboBox>
+                                    <controls:ColorPickerButton SelectedColor="{x:Bind LyricsStyleSettings.LyricsCustomBgFontColor, Mode=TwoWay}" Visibility="{x:Bind LyricsStyleSettings.LyricsBgFontColorType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}" />
+                                </StackPanel>
                             </dev:SettingsCard>
 
                             <!--  当前行（已播放）  -->
                             <dev:SettingsCard x:Uid="SettingsPageLyricsPlayedFgFontColor">
-                                <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsPlayedFgFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveColored" />
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
-                                </ComboBox>
-                            </dev:SettingsCard>
-                            <dev:SettingsCard Visibility="{x:Bind LyricsStyleSettings.LyricsPlayedFgFontColorType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}">
-                                <controls:ColorPickerButton SelectedColor="{x:Bind LyricsStyleSettings.LyricsCustomPlayedFgFontColor, Mode=TwoWay}" />
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsPlayedFgFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveColored" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
+                                    </ComboBox>
+                                    <controls:ColorPickerButton SelectedColor="{x:Bind LyricsStyleSettings.LyricsCustomPlayedFgFontColor, Mode=TwoWay}" Visibility="{x:Bind LyricsStyleSettings.LyricsPlayedFgFontColorType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}" />
+                                </StackPanel>
                             </dev:SettingsCard>
 
                             <!--  当前行（未播放）  -->
                             <dev:SettingsCard x:Uid="SettingsPageLyricsUnplayedFgFontColor">
-                                <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsUnplayedFgFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveColored" />
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
-                                    <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
-                                </ComboBox>
-                            </dev:SettingsCard>
-                            <dev:SettingsCard Visibility="{x:Bind LyricsStyleSettings.LyricsUnplayedFgFontColorType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}">
-                                <controls:ColorPickerButton SelectedColor="{x:Bind LyricsStyleSettings.LyricsCustomUnplayedFgFontColor, Mode=TwoWay}" />
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsUnplayedFgFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveColored" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
+                                    </ComboBox>
+                                    <controls:ColorPickerButton SelectedColor="{x:Bind LyricsStyleSettings.LyricsCustomUnplayedFgFontColor, Mode=TwoWay}" Visibility="{x:Bind LyricsStyleSettings.LyricsUnplayedFgFontColorType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}" />
+                                </StackPanel>
                             </dev:SettingsCard>
 
                         </dev:SettingsExpander.Items>
