@@ -1219,7 +1219,7 @@
     <value>垂直</value>
   </data>
   <data name="SettingsPageLeft.Content" xml:space="preserve">
-    <value>左</value>
+    <value>左揃え</value>
   </data>
   <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
     <value>サーバーアドレス</value>
@@ -1393,7 +1393,7 @@
     <value>歌詞同期のしきい値</value>
   </data>
   <data name="SettingsPageLyricsUnplayedFgFontColor.Header" xml:space="preserve">
-    <value>現在のライン（未再生）</value>
+    <value>現在のライン（再生待ち）</value>
   </data>
   <data name="SettingsPageLyricsWindow.Text" xml:space="preserve">
     <value>歌詞ウィンドウ</value>
@@ -1747,10 +1747,10 @@
     <value>LibreTranslate サービス</value>
   </data>
   <data name="SettingsPageUnplayedOriginalText.Header" xml:space="preserve">
-    <value>原文（未再生）</value>
+    <value>原文（再生待ち）</value>
   </data>
   <data name="SettingsPageUnplayedStrokeFontColor.Header" xml:space="preserve">
-    <value>縁取り（未再生）</value>
+    <value>縁取り（再生待ち）</value>
   </data>
   <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
     <value>そしてBetterLyricsを購入したユーザー</value>

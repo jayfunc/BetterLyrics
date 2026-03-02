@@ -7,11 +7,13 @@
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dev="using:DevWinUI"
+    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:lyricsmodels="using:BetterLyrics.WinUI3.Models.Lyrics"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
+    xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:viewmodels="using:BetterLyrics.WinUI3.ViewModels"
     mc:Ignorable="d">
 
@@ -249,8 +251,7 @@
                                                 Margin="8"
                                                 HorizontalAlignment="Center"
                                                 Text="{x:Bind DisplayText}"
-                                                TextAlignment="Center"
-                                                TextWrapping="Wrap" />
+                                                TextAlignment="Center" />
                                         </Grid>
                                     </DataTemplate>
                                 </GridView.ItemTemplate>

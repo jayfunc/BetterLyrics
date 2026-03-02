@@ -18,6 +18,8 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsGlowEffectAmountAutoAdjust { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsGlowEffectAmount { get; set; } = 8;
 
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsShadowEffectEnabled { get; set; } = false;
+
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsScaleEffectEnabled { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsScaleEffectLongSyllableDuration { get; set; } = 700; // 700ms
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsScaleEffectAmountAutoAdjust { get; set; } = true;

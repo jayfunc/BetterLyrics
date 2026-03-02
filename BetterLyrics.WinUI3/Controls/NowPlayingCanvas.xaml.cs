@@ -29,7 +29,7 @@ using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Controls
 {
-    public sealed partial class LyricsCanvas : UserControl,
+    public sealed partial class NowPlayingCanvas : UserControl,
         IRecipient<PropertyChangedMessage<TimeSpan>>,
         IRecipient<PropertyChangedMessage<LyricsData?>>,
         IRecipient<PropertyChangedMessage<SongInfo>>,
@@ -138,7 +138,7 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public static readonly DependencyProperty LyricsWindowStatusProperty =
-            DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus), typeof(LyricsCanvas), new PropertyMetadata(null, OnDependencyPropertyChanged));
+            DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus), typeof(NowPlayingCanvas), new PropertyMetadata(null, OnDependencyPropertyChanged));
 
         public AlbumArtThemeColors AlbumArtThemeColors
         {
@@ -147,7 +147,7 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public static readonly DependencyProperty AlbumArtThemeColorsProperty =
-            DependencyProperty.Register(nameof(AlbumArtThemeColors), typeof(AlbumArtThemeColors), typeof(LyricsCanvas), new PropertyMetadata(new AlbumArtThemeColors(), OnDependencyPropertyChanged));
+            DependencyProperty.Register(nameof(AlbumArtThemeColors), typeof(AlbumArtThemeColors), typeof(NowPlayingCanvas), new PropertyMetadata(new AlbumArtThemeColors(), OnDependencyPropertyChanged));
 
         public Rect AlbumArtRect
         {
@@ -156,7 +156,7 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public static readonly DependencyProperty AlbumArtRectProperty =
-            DependencyProperty.Register(nameof(AlbumArtRect), typeof(Rect), typeof(LyricsCanvas), new PropertyMetadata(new Rect(), OnDependencyPropertyChanged));
+            DependencyProperty.Register(nameof(AlbumArtRect), typeof(Rect), typeof(NowPlayingCanvas), new PropertyMetadata(new Rect(), OnDependencyPropertyChanged));
 
         // 歌词区域起始横 X 坐标
         public double LyricsStartX
@@ -166,7 +166,7 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public static readonly DependencyProperty LyricsStartXProperty =
-            DependencyProperty.Register(nameof(LyricsStartX), typeof(double), typeof(LyricsCanvas), new PropertyMetadata(0.0, OnDependencyPropertyChanged));
+            DependencyProperty.Register(nameof(LyricsStartX), typeof(double), typeof(NowPlayingCanvas), new PropertyMetadata(0.0, OnDependencyPropertyChanged));
 
         // 歌词区域起始 Y 坐标
         public double LyricsStartY
@@ -176,7 +176,7 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public static readonly DependencyProperty LyricsStartYProperty =
-            DependencyProperty.Register(nameof(LyricsStartY), typeof(double), typeof(LyricsCanvas), new PropertyMetadata(0.0, OnDependencyPropertyChanged));
+            DependencyProperty.Register(nameof(LyricsStartY), typeof(double), typeof(NowPlayingCanvas), new PropertyMetadata(0.0, OnDependencyPropertyChanged));
 
         // 歌词区域最大宽度
         public double LyricsWidth
@@ -186,7 +186,7 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public static readonly DependencyProperty LyricsWidthProperty =
-            DependencyProperty.Register(nameof(LyricsWidth), typeof(double), typeof(LyricsCanvas), new PropertyMetadata(0.0, OnDependencyPropertyChanged));
+            DependencyProperty.Register(nameof(LyricsWidth), typeof(double), typeof(NowPlayingCanvas), new PropertyMetadata(0.0, OnDependencyPropertyChanged));
 
         // 歌词区域最大高度
         public double LyricsHeight
@@ -196,7 +196,7 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public static readonly DependencyProperty LyricsHeightProperty =
-            DependencyProperty.Register(nameof(LyricsHeight), typeof(double), typeof(LyricsCanvas), new PropertyMetadata(0.0, OnDependencyPropertyChanged));
+            DependencyProperty.Register(nameof(LyricsHeight), typeof(double), typeof(NowPlayingCanvas), new PropertyMetadata(0.0, OnDependencyPropertyChanged));
 
         // 歌词区域不透明度
         public double LyricsOpacity
@@ -206,7 +206,7 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public static readonly DependencyProperty LyricsOpacityProperty =
-            DependencyProperty.Register(nameof(LyricsOpacity), typeof(double), typeof(LyricsCanvas), new PropertyMetadata(0.0, OnDependencyPropertyChanged));
+            DependencyProperty.Register(nameof(LyricsOpacity), typeof(double), typeof(NowPlayingCanvas), new PropertyMetadata(0.0, OnDependencyPropertyChanged));
 
         /// <summary>
         /// 用户操控鼠标已滚动的距离（从 0 开始算）
@@ -218,7 +218,7 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public static readonly DependencyProperty MouseScrollOffsetProperty =
-            DependencyProperty.Register(nameof(MouseScrollOffset), typeof(double), typeof(LyricsCanvas), new PropertyMetadata(0.0, OnDependencyPropertyChanged));
+            DependencyProperty.Register(nameof(MouseScrollOffset), typeof(double), typeof(NowPlayingCanvas), new PropertyMetadata(0.0, OnDependencyPropertyChanged));
 
         /// <summary>
         /// 用户鼠标当前的位置（相对于歌词区域左上角）
@@ -230,7 +230,7 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public static readonly DependencyProperty MousePositionProperty =
-            DependencyProperty.Register(nameof(MousePosition), typeof(Point), typeof(LyricsCanvas), new PropertyMetadata(new Point(0, 0), OnDependencyPropertyChanged));
+            DependencyProperty.Register(nameof(MousePosition), typeof(Point), typeof(NowPlayingCanvas), new PropertyMetadata(new Point(0, 0), OnDependencyPropertyChanged));
 
         public bool IsMouseInLyricsArea
         {
@@ -239,7 +239,7 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public static readonly DependencyProperty IsMouseInLyricsAreaProperty =
-            DependencyProperty.Register(nameof(IsMouseInLyricsArea), typeof(bool), typeof(LyricsCanvas), new PropertyMetadata(false, OnDependencyPropertyChanged));
+            DependencyProperty.Register(nameof(IsMouseInLyricsArea), typeof(bool), typeof(NowPlayingCanvas), new PropertyMetadata(false, OnDependencyPropertyChanged));
 
         public bool IsMousePressing
         {
@@ -248,7 +248,7 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public static readonly DependencyProperty IsMousePressingProperty =
-            DependencyProperty.Register(nameof(IsMousePressing), typeof(bool), typeof(LyricsCanvas), new PropertyMetadata(false, OnDependencyPropertyChanged));
+            DependencyProperty.Register(nameof(IsMousePressing), typeof(bool), typeof(NowPlayingCanvas), new PropertyMetadata(false, OnDependencyPropertyChanged));
 
         public bool IsMouseScrolling
         {
@@ -257,9 +257,9 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public static readonly DependencyProperty IsMouseScrollingProperty =
-            DependencyProperty.Register(nameof(IsMouseScrolling), typeof(bool), typeof(LyricsCanvas), new PropertyMetadata(false, OnDependencyPropertyChanged));
+            DependencyProperty.Register(nameof(IsMouseScrolling), typeof(bool), typeof(NowPlayingCanvas), new PropertyMetadata(false, OnDependencyPropertyChanged));
 
-        public LyricsCanvas()
+        public NowPlayingCanvas()
         {
             InitializeComponent();
             WeakReferenceMessenger.Default.RegisterAll(this);
@@ -267,7 +267,7 @@ namespace BetterLyrics.WinUI3.Controls
 
         private static void OnDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            if (d is LyricsCanvas canvas)
+            if (d is NowPlayingCanvas canvas)
             {
                 if (e.Property == LyricsWindowStatusProperty)
                 {

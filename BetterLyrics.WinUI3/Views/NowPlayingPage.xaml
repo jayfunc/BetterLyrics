@@ -24,7 +24,7 @@
     <Grid x:Name="RootGrid" SizeChanged="RootGrid_SizeChanged">
 
         <!--  Win2D drawing area  -->
-        <uc:LyricsCanvas
+        <uc:NowPlayingCanvas
             x:Name="LyricsCanvas"
             AlbumArtThemeColors="{x:Bind AlbumArtThemeColors, Mode=OneWay}"
             LyricsWindowStatus="{x:Bind LyricsWindowStatus, Mode=OneWay}" />

@@ -48,6 +48,7 @@
 		<None Remove="Controls\ImageSwitcher.xaml" />
 		<None Remove="Controls\InAppNotificationStack.xaml" />
 		<None Remove="Controls\InfoTag.xaml" />
+		<None Remove="Controls\LyricsPreviewCanvas.xaml" />
 		<None Remove="Controls\LyricsSearchControl.xaml" />
 		<None Remove="Controls\LyricsStyleSettingsControl.xaml" />
 		<None Remove="Controls\LyricsWindowSettingsControl.xaml" />
@@ -461,6 +462,11 @@
 	  <Content Update="Assets\Banner.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\LyricsPreviewCanvas.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Styles\LyricsCardInkWashStyle.xaml">
