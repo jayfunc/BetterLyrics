@@ -199,7 +199,7 @@
 - [椒盐音乐](https://moriafly.com/program/salt-player) `💰` `Prop`
 - [MyToolBar](https://github.com/TwilightLemon/MyToolBar) `FOSS`
 
-> `FOSS` 自由及开放源代码软件 ╹ `Prop` Proprietary 闭源 ╹ `💰` Paid 付费
+> `FOSS` 开源 ╹ `Prop` 闭源 ╹ `💰` 付费
 
 ## 💭 分享到社交媒体
 
