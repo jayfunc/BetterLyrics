@@ -62,7 +62,7 @@
 
 - 🎧 **Versatile Playback & Connectivity**
   - **Built-in Player:** Play from **Local Drives** or stream via **Network Protocols** (SMB, WebDAV).
-  - **External Integration:** Visualizes music from Spotify, Apple Music, NetEase, and [many others](https://github.com/jayfunc/BetterLyrics/wiki/User-Guide#known-supported-music-players-configuration-guide).
+  - **External Integration:** Visualizes music from Spotify, Apple Music, NetEase, and [many others](https://betterlyrics.github.io/player-cfg).
 
 - 🌐 **Advanced Lyrics System**
   - **Offline Translation:** Privacy-focused local machine translation (30+ languages).
