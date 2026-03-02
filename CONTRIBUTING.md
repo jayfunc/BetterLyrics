@@ -63,4 +63,4 @@ Thank you for helping us make BetterLyrics better!
 | Thai (ไทย) | th | ✅ | - | - |
 | Vietnamese (Tiếng Việt) | vi | ✅ | - | - |
 | Simplified Chinese (简体中文) | zh-Hans | ✅ | ✅ | [jayfunc](https://crowdin.com/profile/jayfunc)<br>[borcolasky](https://crowdin.com/profile/borcolasky) |
-| Traditional Chinese (繁體中文) | zh-Hant | ✅ | ✅ | [borcolasky](https://crowdin.com/profile/borcolasky) |
+| Traditional Chinese (繁體中文) | zh-Hant | ✅ | ✅ | [borcolasky](https://crowdin.com/profile/borcolasky)<br>[SuHeAndZl](https://crowdin.com/profile/SuHeAndZl) |
