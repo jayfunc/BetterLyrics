@@ -153,11 +153,9 @@ If you like BetterLyrics, please consider supporting it. Your support helps keep
 
 This project is licensed under the **GNU General Public License v3.0**.
 
-<details>
-<summary><b>💖 Special Thanks, Credits & Inspiration</b></summary>
-<br>
+## 💖 Special Thanks, Credits & Inspiration
 
-**Dependencies & References:**
+### Dependencies & References
 
 | Projects/Packages | Description |
 | :--- | :--- |
@@ -174,19 +172,20 @@ This project is licensed under the **GNU General Public License v3.0**.
 | [Vanara](https://github.com/dahall/Vanara) | Win32 API wrapper |
 | [WinUIEx](https://github.com/dotMorten/WinUIEx) | Provide easy ways to access the Win32 API regarding windowing |
 
-See [dependencies](https://github.com/jayfunc/BetterLyrics/network/dependencies) for full list.
+See [dependencies](https://github.com/jayfunc/BetterLyrics/network/dependencies) for the full list.
 
-<br>
-
-**💡 Inspired by:**
+### Inspired by
 
 Some design ideas are referenced from the following projects (design inspiration only):
-- [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease)
-- [Lyricify-App](https://github.com/WXRIW/Lyricify-App)
-- [Salt Player](https://moriafly.com/program/salt-player)
-- [MyToolBar](https://github.com/TwilightLemon/MyToolBar)
+- [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease) <sup>`FOSS`</sup>
+- [Lyricify-App](https://github.com/WXRIW/Lyricify-App) <sup>`Prop`</sup>
+- [Salt Player](https://moriafly.com/program/salt-player) `💰` <sup>`Prop`</sup> 
+- [MyToolBar](https://github.com/TwilightLemon/MyToolBar) <sup>`FOSS`</sup>
 
-</details>
+> [!NOTE]
+> - <sup>`FOSS`</sup> Free and Open Source Software
+> - <sup>`Prop`</sup> Proprietary
+> - `💰` Paid
 
 ## 💭 Share on Social Media
 
