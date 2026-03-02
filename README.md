@@ -155,6 +155,23 @@ This project is licensed under the **GNU General Public License v3.0**.
 
 ## 💖 Special Thanks, Credits & Inspiration
 
+### Acknowledgments
+
+#### Contributors
+
+* [Raspberry-Monster](https://github.com/Raspberry-Monster) `💻`
+* [zxbmmmmmmmmm](https://github.com/zxbmmmmmmmmm) `💻`
+* [ZHider](https://github.com/ZHider) `💻`
+* [kusutori](https://github.com/kusutori) `💻`
+* [suheandzl](https://github.com/suheandzl) `🌐` `🧪` `📝`
+* [borcolasky](https://crowdin.com/profile/borcolasky) `🌐`
+
+> `💻` Code ╹ `🌐` i18n ╹ `🧪` QA ╹ `📝` Docs
+
+#### Sponsors
+
+* Special thanks to everyone who has supported the project through donations. For full details, please refer to the [Sponsors List (Hall of Fame)](docs/SPONSORS.md).
+
 ### Dependencies & References
 
 | Projects/Packages | Description |
@@ -177,15 +194,12 @@ See [dependencies](https://github.com/jayfunc/BetterLyrics/network/dependencies)
 ### Inspired by
 
 Some design ideas are referenced from the following projects (design inspiration only):
-- [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease) <sup>`FOSS`</sup>
-- [Lyricify-App](https://github.com/WXRIW/Lyricify-App) <sup>`Prop`</sup>
-- [Salt Player](https://moriafly.com/program/salt-player) `💰` <sup>`Prop`</sup> 
-- [MyToolBar](https://github.com/TwilightLemon/MyToolBar) <sup>`FOSS`</sup>
+- [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease) `FOSS`
+- [Lyricify-App](https://github.com/WXRIW/Lyricify-App) `Prop`
+- [Salt Player](https://moriafly.com/program/salt-player) `💰` `Prop`
+- [MyToolBar](https://github.com/TwilightLemon/MyToolBar) `FOSS`
 
-> [!NOTE]
-> - <sup>`FOSS`</sup> Free and Open Source Software
-> - <sup>`Prop`</sup> Proprietary
-> - `💰` Paid
+> `FOSS` Free and Open Source Software ╹ `Prop` Proprietary ╹ `💰` Paid
 
 ## 💭 Share on Social Media
 
