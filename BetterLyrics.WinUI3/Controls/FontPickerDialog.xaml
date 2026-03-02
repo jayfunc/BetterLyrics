@@ -65,6 +65,9 @@
                                     <Run Text="曲拨心弦，词落云笺。" />
                                 </Paragraph>
                                 <Paragraph>
+                                    <Run Text="琴線に響くメロディ、雲箋に綴るフレーズ。" />
+                                </Paragraph>
+                                <Paragraph>
                                     <Run Text="Strums the Heartstrings, Graces the Wordscapes." />
                                 </Paragraph>
                             </RichTextBlock>
