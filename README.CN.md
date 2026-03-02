@@ -62,7 +62,7 @@
 
 - 🎧 **多功能播放与连接**
   - **内置播放器：** 支持播放 **本地硬盘** 文件或通过 **网络协议** (SMB, WebDAV) 流式播放。
-  - **外部集成：** 可视化来自 Spotify, Apple Music, 网易云音乐及 [其他多种播放器](https://github.com/jayfunc/BetterLyrics/wiki/使用指南#已知支持的音乐播放器配置指南) 的音乐。
+  - **外部集成：** 可视化来自 Spotify, Apple Music, 网易云音乐及 [其他多种播放器](https://betterlyrics.github.io/zh-cn/player-cfg) 的音乐。
 
 - 🌐 **强大的歌词系统**
   - **离线翻译：** 注重隐私的本地机器翻译（支持 30+ 种语言）。
