@@ -139,7 +139,7 @@
 | :---: | :---: | :---: |
 | [PayPal](https://paypal.me/zhefangpay)<br><br>[Buy Me a Coffee](https://buymeacoffee.com/founchoo)<br><br>[爱发电 (Afdian)](https://afdian.com/a/jayfunc) | <img src="docs/assets/donate/Alipay.jpg" width="150"> | <img src="docs/assets/donate/WeChatReward.png" width="150"> |
 
-**[查看完整赞助者名单 (Hall of Fame)](docs/SPONSORS.md)**
+[赞助者名单 (Hall of Fame)](docs/SPONSORS.md)
 
 </div>
 
@@ -153,11 +153,26 @@
 
 本项目采用 **GNU General Public License v3.0** 许可证。
 
-<details>
-<summary><b>💖 特别致谢、引用与灵感</b></summary>
-<br>
+## 💖 特别致谢、引用与灵感
 
-**依赖与引用：**
+### 鸣谢
+
+#### 贡献者
+
+- [Raspberry-Monster](https://github.com/Raspberry-Monster) `💻`
+- [zxbmmmmmmmmm](https://github.com/zxbmmmmmmmmm) `💻`
+- [ZHider](https://github.com/ZHider) `💻`
+- [kusutori](https://github.com/kusutori) `💻`
+- [suheandzl](https://github.com/suheandzl) `🌐` `🧪` `📝`
+- [borcolasky](https://crowdin.com/profile/borcolasky) `🌐`
+
+> `💻` Code ╹ `🌐` i18n ╹ `🧪` QA ╹ `📝` Docs
+
+#### 赞助名单
+
+- 感谢所有购买打赏支持的朋友，详情请见 [赞助者名单 (Hall of Fame)](docs/SPONSORS.md)。
+
+### 依赖与引用
 
 | 项目/包 (Projects/Packages) | 描述 (Description) |
 | :--- | :--- |
@@ -176,17 +191,15 @@
 
 查看 [完整依赖列表](https://github.com/jayfunc/BetterLyrics/network/dependencies)。
 
-<br>
-
-**💡 灵感来源：**
+### 灵感来源
 
 部分设计理念参考了以下插件/软件（仅作为设计思路参考，不涉及代码引用）：
-- [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease)
-- [Lyricify-App](https://github.com/WXRIW/Lyricify-App)
-- [椒盐音乐 Salt Player](https://moriafly.com/program/salt-player)
-- [MyToolBar](https://github.com/TwilightLemon/MyToolBar)
+- [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease) `FOSS`
+- [Lyricify-App](https://github.com/WXRIW/Lyricify-App) `Prop`
+- [椒盐音乐](https://moriafly.com/program/salt-player) `💰` `Prop`
+- [MyToolBar](https://github.com/TwilightLemon/MyToolBar) `FOSS`
 
-</details>
+> `FOSS` 自由及开放源代码软件 ╹ `Prop` Proprietary 闭源 ╹ `💰` Paid 付费
 
 ## 💭 分享到社交媒体
 
