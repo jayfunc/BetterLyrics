@@ -191,7 +191,7 @@
 部分设计理念参考了以下插件/软件（仅作为设计思路参考，不涉及代码引用）：
 - [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease) `FOSS`
 - [Lyricify-App](https://github.com/WXRIW/Lyricify-App) `Prop`
-- [椒盐音乐](https://moriafly.com/program/salt-player) `💰` `Prop`
+- [Salt Player for Windows](https://moriafly.com/program/spw) `💰` `Prop`
 - [MyToolBar](https://github.com/TwilightLemon/MyToolBar) `FOSS`
 
 > `FOSS` 开源 ╹ `Prop` 闭源 ╹ `💰` 付费
