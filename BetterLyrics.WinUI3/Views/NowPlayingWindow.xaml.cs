@@ -115,14 +115,14 @@ namespace BetterLyrics.WinUI3.Views
             this.MoveAndResize(LyricsWindowStatus.WindowBounds);
             OnIsShownInSwitchersChanged();
             OnIsAlwaysOnTopChanged();
-            OnIsMaximizedChanged();
-            OnIsFullscreenChanged();
             OnIsLockedChanged();
             OnAutoShowOrHideWindowChanged();
             OnTitleBarAreaChanged();
             OnIsPinToTaskbarChanged();
             OnIsAlwaysHideUnlockButtonChanged();
             OnIsWorkAreaChanged();
+            OnIsMaximizedChanged();
+            OnIsFullscreenChanged();
 
             LyricsWindowStatus.UpdateDemoWindowAndMonitorBounds();
         }
@@ -163,7 +163,7 @@ namespace BetterLyrics.WinUI3.Views
                         {
                             UpdateBackdropAccentColor(hwnd);
                         }
-                    }, Constants.Time.DebounceTimeout);
+                    }, TimeSpan.FromSeconds(1));
                 }
             );
             if (LyricsWindowStatus.IsAdaptToEnvironment)
@@ -214,7 +214,7 @@ namespace BetterLyrics.WinUI3.Views
             if (LyricsWindowStatus.IsLocked)
             {
                 LockToggleButtonContainer.Visibility = Visibility.Visible;
-                StartOverlayInputHelper();
+                RestartOverlayInputHelper();
             }
             else
             {
@@ -265,7 +265,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void OnAutoShowOrHideWindowChanged()
         {
-            this.SetLyricsWindowVisibilityByPlayingStatus(_gsmtcService.CurrentIsPlaying, DispatcherQueue);
+            this.SetLyricsWindowVisibilityByPlayingStatus(_gsmtcService.CurrentIsPlaying);
         }
 
         private void OnIsAdaptToEnvironmentChanged()

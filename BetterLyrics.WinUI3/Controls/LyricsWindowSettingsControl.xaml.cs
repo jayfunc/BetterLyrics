@@ -2,6 +2,7 @@ using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Serialization;
+using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
@@ -25,6 +26,7 @@ namespace BetterLyrics.WinUI3.Controls
         public LyricsWindowSettingsControlViewModel ViewModel => (LyricsWindowSettingsControlViewModel)DataContext;
 
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+        private readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
 
         public LyricsWindowStatus? LyricsWindowStatus
         {
@@ -174,6 +176,53 @@ namespace BetterLyrics.WinUI3.Controls
         private void ConfigNavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
             ViewModel.SelectorBarSelectedItemTag = (string)((NavigationViewItem)sender.SelectedItem).Tag;
+        }
+
+        private void CopyAndTransformMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is MenuFlyoutItem menuFlyoutItem)
+            {
+                if (menuFlyoutItem.DataContext is LyricsWindowStatus data)
+                {
+                    var to = menuFlyoutItem.Tag.ToString();
+                    if (to == null)
+                    {
+                        return;
+                    }
+
+                    var clonedData = (LyricsWindowStatus)data.Clone();
+                    clonedData.IsDefault = false;
+                    clonedData.IsPinToTaskbar = false;
+                    clonedData.IsWorkArea = false;
+                    clonedData.IsLocked = false;
+
+                    clonedData.Name = _localizationService.GetLocalizedString(to);
+                    switch (to)
+                    {
+                        case "StandardMode":
+                            break;
+                        case "DesktopMode":
+                            clonedData.IsLocked = true;
+                            break;
+                        case "DockedMode":
+                            clonedData.IsWorkArea = true;
+                            clonedData.IsLocked = true;
+                            break;
+                        case "FullscreenMode":
+                            break;
+                        case "NarrowMode":
+                            break;
+                        case "TaskbarMode":
+                            clonedData.IsPinToTaskbar = true;
+                            clonedData.IsLocked = true;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    ViewModel.AppSettings.WindowBoundsRecords.Add(clonedData);
+                }
+            }
         }
     }
 }

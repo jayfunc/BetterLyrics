@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -56,7 +57,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowDebugOverlay { get; set; } = false;
 
         [JsonIgnore][ObservableProperty][NotifyPropertyChangedRecipients] public partial WindowStatus WindowStatus { get; set; } = WindowStatus.Closed;
-        [JsonIgnore] public DispatcherQueueTimer? VisibilityTimer { get; set; }
+        [JsonIgnore] public DispatcherQueueTimer? VisibilityTimer { get; set; } = DispatcherQueueHelper.GetUIDispatcherQueue()?.CreateTimer();
 
         public LyricsWindowStatus()
         {

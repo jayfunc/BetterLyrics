@@ -1,6 +1,7 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Events;
 using BetterLyrics.WinUI3.Extensions;
+using BetterLyrics.WinUI3.Helper;
 using FlaUI.Core.AutomationElements;
 using FlaUI.Core.Definitions;
 using FlaUI.Core.EventHandlers;
@@ -9,6 +10,7 @@ using Microsoft.UI.Dispatching;
 using System;
 using System.Drawing;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Hooks
 {
@@ -22,17 +24,19 @@ namespace BetterLyrics.WinUI3.Hooks
 
         private TaskbarPlacement _currentPlacement;
 
-        private readonly DispatcherQueue _dispatcherQueue;
+        private readonly DispatcherQueue? _dispatcherQueue;
         private readonly Action<TaskbarFreeBoundsChangedEventArgs> _onLayoutChanged;
         private Timer? _debounceTimer;
-        private const int DebounceDelay = 150;
+        private readonly LatestOnlyTaskRunner _updateTaskRunner;
+        private const int DebounceDelay = 1000;
         private bool _isDisposed;
 
         public TaskbarHook(TaskbarPlacement placement, Action<TaskbarFreeBoundsChangedEventArgs> onLayoutChanged)
         {
             _automation = new UIA3Automation();
             _onLayoutChanged = onLayoutChanged;
-            _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+            _dispatcherQueue = DispatcherQueueHelper.GetUIDispatcherQueue();
+            _updateTaskRunner = new();
 
             _currentPlacement = placement;
 
@@ -79,18 +83,18 @@ namespace BetterLyrics.WinUI3.Hooks
         private void RequestUpdate()
         {
             if (_isDisposed) return;
-            _debounceTimer?.Dispose();
-            _debounceTimer = new Timer(_ =>
+            _ = _updateTaskRunner.RunAsync(async (token) =>
             {
+                await Task.Delay(1000, token);
                 Rectangle voidRect = CalculateVoidRect(_currentPlacement);
-                _dispatcherQueue.TryEnqueue(() =>
+                _dispatcherQueue?.TryEnqueue(() =>
                 {
                     if (!_isDisposed && voidRect != Rectangle.Empty)
                     {
                         _onLayoutChanged?.Invoke(new TaskbarFreeBoundsChangedEventArgs(voidRect.ToRect()));
                     }
                 });
-            }, null, DebounceDelay, Timeout.Infinite);
+            });
         }
 
         private Rectangle CalculateVoidRect(TaskbarPlacement placement)
