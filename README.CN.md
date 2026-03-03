@@ -159,7 +159,7 @@
 
 #### 贡献者
 
-* [jayfunc](https://github.com/Raspberry-Monster) `💻` `🌐` `🧪` `📝`
+* [jayfunc](https://github.com/jayfunc) `💻` `🌐` `🧪` `📝`
 - [Raspberry-Monster](https://github.com/Raspberry-Monster) `💻`
 - [zxbmmmmmmmmm](https://github.com/zxbmmmmmmmmm) `💻`
 - [ZHider](https://github.com/ZHider) `💻`
