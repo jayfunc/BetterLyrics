@@ -56,14 +56,14 @@ namespace BetterLyrics.WinUI3.Views
         public static readonly DependencyProperty LyricsWindowStatusProperty =
             DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus), typeof(NowPlayingPage), new PropertyMetadata(null, OnDependencyPropertyChanged));
 
-        public AlbumArtThemeColors AlbumArtThemeColors
+        public NowPlayingPalette AlbumArtThemeColors
         {
-            get { return (AlbumArtThemeColors)GetValue(AlbumArtThemeColorsProperty); }
+            get { return (NowPlayingPalette)GetValue(AlbumArtThemeColorsProperty); }
             set { SetValue(AlbumArtThemeColorsProperty, value); }
         }
 
         public static readonly DependencyProperty AlbumArtThemeColorsProperty =
-            DependencyProperty.Register(nameof(AlbumArtThemeColors), typeof(AlbumArtThemeColors), typeof(NowPlayingPage), new PropertyMetadata(new AlbumArtThemeColors(), OnDependencyPropertyChanged));
+            DependencyProperty.Register(nameof(AlbumArtThemeColors), typeof(NowPlayingPalette), typeof(NowPlayingPage), new PropertyMetadata(new NowPlayingPalette(), OnDependencyPropertyChanged));
 
         public NowPlayingPage()
         {
@@ -105,7 +105,7 @@ namespace BetterLyrics.WinUI3.Views
                 sender.Inlines.Add(new Run { Text = $"{ch}", FontFamily = new FontFamily(fontFamilyName) });
             }
             sender.FontSize = (int)fontSize;
-            sender.Foreground = new SolidColorBrush(AlbumArtThemeColors.BgFontColor);
+            sender.Foreground = new SolidColorBrush(AlbumArtThemeColors.NonCurrentLineFillColor);
         }
 
         private async Task RenderSongInfoAsync()

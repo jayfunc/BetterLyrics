@@ -24,7 +24,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
             LyricsStyleSettings lyricsStyle,
             LyricsEffectSettings lyricsEffect,
             ValueTransition<double> canvasYScrollTransition,
-            AlbumArtThemeColors albumArtThemeColors,
+            NowPlayingPalette albumArtThemeColors,
             TimeSpan elapsedTime,
             bool isMouseScrolling,
             bool isLayoutChanged,
@@ -173,19 +173,19 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
 
                     line.PlayedFillColorTransition.SetDuration(yScrollDuration);
                     line.PlayedFillColorTransition.SetDelay(yScrollDelay);
-                    line.PlayedFillColorTransition.Start(isSecondaryLinePlaying ? albumArtThemeColors.PlayedFgFontColor : albumArtThemeColors.BgFontColor);
+                    line.PlayedFillColorTransition.Start(isSecondaryLinePlaying ? albumArtThemeColors.PlayedCurrentLineFillColor : albumArtThemeColors.NonCurrentLineFillColor);
 
                     line.UnplayedFillColorTransition.SetDuration(yScrollDuration);
                     line.UnplayedFillColorTransition.SetDelay(yScrollDelay);
-                    line.UnplayedFillColorTransition.Start(isSecondaryLinePlaying ? albumArtThemeColors.UnplayedFgFontColor : albumArtThemeColors.BgFontColor);
+                    line.UnplayedFillColorTransition.Start(isSecondaryLinePlaying ? albumArtThemeColors.UnplayedCurrentLineFillColor : albumArtThemeColors.NonCurrentLineFillColor);
 
                     line.PlayedStrokeColorTransition.SetDuration(yScrollDuration);
                     line.PlayedStrokeColorTransition.SetDelay(yScrollDelay);
-                    line.PlayedStrokeColorTransition.Start(isSecondaryLinePlaying ? albumArtThemeColors.PlayedStrokeFontColor : albumArtThemeColors.UnplayedStrokeFontColor);
+                    line.PlayedStrokeColorTransition.Start(isSecondaryLinePlaying ? albumArtThemeColors.PlayedTextStrokeColor : albumArtThemeColors.UnplayedTextStrokeColor);
 
                     line.UnplayedStrokeColorTransition.SetDuration(yScrollDuration);
                     line.UnplayedStrokeColorTransition.SetDelay(yScrollDelay);
-                    line.UnplayedStrokeColorTransition.Start(isSecondaryLinePlaying ? albumArtThemeColors.UnplayedStrokeFontColor : albumArtThemeColors.UnplayedStrokeFontColor);
+                    line.UnplayedStrokeColorTransition.Start(isSecondaryLinePlaying ? albumArtThemeColors.UnplayedTextStrokeColor : albumArtThemeColors.UnplayedTextStrokeColor);
 
                     line.AngleTransition.SetInterpolator(canvasYScrollTransition.Interpolator);
                     line.AngleTransition.SetDuration(yScrollDuration);

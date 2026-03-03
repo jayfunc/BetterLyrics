@@ -176,18 +176,12 @@ This project is licensed under the **GNU General Public License v3.0**.
 
 | Projects/Packages | Description |
 | :--- | :--- |
-| [Audio Tools Library (ATL) for .NET](https://github.com/Zeugma440/atldotnet) | Used for extracting pictures from music files |
-| [cutlet](https://github.com/polm/cutlet) | Provide the ability for converting Japanese to romaji |
-| [DevWinUI](https://github.com/ghost1372/DevWinUI) | Provide many out-of-the-box features for building WinUI 3 applications |
 | [Isolation](https://github.com/Storyteller-Studios/Isolation) | Dynamic fluid background implementation |
 | [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate) | Provide the ability for offline lyrics translation |
 | [lrclib](https://github.com/tranxuanthang/lrclib) | LRCLIB lyrics API provider |
 | [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper) | Provide lyrics fetch, decryption, and parsing for QQ, Netease, and Kugou sources |
 | [Manzana-Apple-Music-Lyrics](https://github.com/dropcreations/Manzana-Apple-Music-Lyrics) | Apple Music lyrics fetch using Python |
 | [SpectrumVisualization](https://github.com/Johnwikix/SpectrumVisualization) | Audio visualization reference |
-| [TagLib#](https://github.com/mono/taglib-sharp) | Used for reading the original lyrics content |
-| [Vanara](https://github.com/dahall/Vanara) | Win32 API wrapper |
-| [WinUIEx](https://github.com/dotMorten/WinUIEx) | Provide easy ways to access the Win32 API regarding windowing |
 
 See [dependencies](https://github.com/jayfunc/BetterLyrics/network/dependencies) for the full list.
 
