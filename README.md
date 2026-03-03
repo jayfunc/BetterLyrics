@@ -159,7 +159,7 @@ This project is licensed under the **GNU General Public License v3.0**.
 
 #### Contributors
 
-* [jayfunc](https://github.com/Raspberry-Monster) `💻` `🌐` `🧪` `📝`
+* [jayfunc](https://github.com/jayfunc) `💻` `🌐` `🧪` `📝`
 * [Raspberry-Monster](https://github.com/Raspberry-Monster) `💻`
 * [zxbmmmmmmmmm](https://github.com/zxbmmmmmmmmm) `💻`
 * [ZHider](https://github.com/ZHider) `💻`
