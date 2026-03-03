@@ -219,6 +219,7 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
                 }, (float)maxWidth, (float)maxHeight)
                 {
                     HorizontalAlignment = type.ToCanvasHorizontalAlignment(),
+                    Options = CanvasDrawTextOptions.NoPixelSnap,
                 };
                 TertiaryTextLayout.SetFontFamily(TertiaryText, fontFamilyCJK, fontFamilyWestern);
             }
@@ -232,7 +233,8 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
                 FontWeight = fontWeight.ToFontWeight(),
             }, (float)maxWidth, (float)maxHeight)
             {
-                HorizontalAlignment = type.ToCanvasHorizontalAlignment()
+                HorizontalAlignment = type.ToCanvasHorizontalAlignment(),
+                Options = CanvasDrawTextOptions.NoPixelSnap,
             };
             PrimaryTextLayout.SetFontFamily(PrimaryText, fontFamilyCJK, fontFamilyWestern);
             PrimaryTextRegions = PrimaryTextLayout.GetCharacterRegions(0, PrimaryText.Length);
@@ -248,7 +250,8 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
                     FontWeight = fontWeight.ToFontWeight(),
                 }, (float)maxWidth, (float)maxHeight)
                 {
-                    HorizontalAlignment = type.ToCanvasHorizontalAlignment()
+                    HorizontalAlignment = type.ToCanvasHorizontalAlignment(),
+                    Options = CanvasDrawTextOptions.NoPixelSnap,
                 };
                 SecondaryTextLayout.SetFontFamily(SecondaryText, fontFamilyCJK, fontFamilyWestern);
             }
@@ -350,7 +353,7 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
                 {
                     LineJoin = CanvasLineJoin.Round,
                     StartCap = CanvasCapStyle.Round,
-                    EndCap = CanvasCapStyle.Round
+                    EndCap = CanvasCapStyle.Round,
                 };
                 using var ds = CachedStroke.CreateDrawingSession();
                 if (TertiaryCanvasGeometry != null) ds.DrawGeometry(TertiaryCanvasGeometry, TertiaryPosition, Colors.White, (float)strokeWidth, roundStrokeStyle);

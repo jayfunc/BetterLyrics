@@ -978,6 +978,9 @@
   <data name="SettingsPageCreateFromCurrent.Text" xml:space="preserve">
     <value>Duplicate</value>
   </data>
+  <data name="SettingsPageCreateFromCurrentAndTransformTo.Text" xml:space="preserve">
+    <value>Copy and transform to</value>
+  </data>
   <data name="SettingsPageCreateFromTemplates.Content" xml:space="preserve">
     <value>Create from template</value>
   </data>
@@ -1015,7 +1018,7 @@
     <value>Target Display</value>
   </data>
   <data name="SettingsPageDockPlacement.Header" xml:space="preserve">
-    <value>Workspace Position</value>
+    <value>Appbar Position</value>
   </data>
   <data name="SettingsPageDockPlacementBottom.Content" xml:space="preserve">
     <value>Bottom</value>
@@ -1765,13 +1768,13 @@
     <value>Width</value>
   </data>
   <data name="SettingsPageWorkArea.Description" xml:space="preserve">
-    <value>As a separate work area, docked to the top/bottom edge of the screen</value>
+    <value>Application desktop toolbar, docked to the top/bottom edge of the screen</value>
   </data>
   <data name="SettingsPageWorkArea.Header" xml:space="preserve">
-    <value>As Work Area</value>
+    <value>Appbar</value>
   </data>
   <data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve">
-    <value>Work Area Height</value>
+    <value>Appbar Height</value>
   </data>
   <data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
     <value>You, who are using this software</value>

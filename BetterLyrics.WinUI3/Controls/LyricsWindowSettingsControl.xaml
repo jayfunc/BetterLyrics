@@ -93,6 +93,32 @@
                                             <StackPanel.ContextFlyout>
                                                 <MenuBarItemFlyout>
                                                     <MenuFlyoutItem x:Uid="SettingsPageCreateFromCurrent" Click="CopyMenuFlyoutItem_Click" />
+                                                    <MenuFlyoutSubItem x:Uid="SettingsPageCreateFromCurrentAndTransformTo">
+                                                        <MenuFlyoutItem
+                                                            x:Uid="SettingsPageStandardMode"
+                                                            Click="CopyAndTransformMenuFlyoutItem_Click"
+                                                            Tag="StandardMode" />
+                                                        <MenuFlyoutItem
+                                                            x:Uid="SettingsPageDesktopMode"
+                                                            Click="CopyAndTransformMenuFlyoutItem_Click"
+                                                            Tag="DesktopMode" />
+                                                        <MenuFlyoutItem
+                                                            x:Uid="SettingsPageDockedMode"
+                                                            Click="CopyAndTransformMenuFlyoutItem_Click"
+                                                            Tag="DockedMode" />
+                                                        <MenuFlyoutItem
+                                                            x:Uid="SettingsPageFullscreenMode"
+                                                            Click="CopyAndTransformMenuFlyoutItem_Click"
+                                                            Tag="FullscreenMode" />
+                                                        <MenuFlyoutItem
+                                                            x:Uid="SettingsPageNarrowMode"
+                                                            Click="CopyAndTransformMenuFlyoutItem_Click"
+                                                            Tag="NarrowMode" />
+                                                        <MenuFlyoutItem
+                                                            x:Uid="SettingsPageTaskbarMode"
+                                                            Click="CopyAndTransformMenuFlyoutItem_Click"
+                                                            Tag="TaskbarMode" />
+                                                    </MenuFlyoutSubItem>
                                                     <MenuFlyoutItem x:Uid="LyricsWindowSettingsControlShare" Click="ShareMenuFlyoutItem_Click" />
                                                     <MenuFlyoutItem
                                                         x:Uid="SettingsPageDelete"
