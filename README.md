@@ -191,7 +191,7 @@ See [dependencies](https://github.com/jayfunc/BetterLyrics/network/dependencies)
 Some design ideas are referenced from the following projects (design inspiration only):
 - [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease) `FOSS`
 - [Lyricify-App](https://github.com/WXRIW/Lyricify-App) `Prop`
-- [Salt Player](https://moriafly.com/program/salt-player) `💰` `Prop`
+- [Salt Player for Windows](https://moriafly.com/program/spw.html) `💰` `Prop`
 - [MyToolBar](https://github.com/TwilightLemon/MyToolBar) `FOSS`
 
 > `FOSS` Free and Open Source Software ╹ `Prop` Proprietary ╹ `💰` Paid
