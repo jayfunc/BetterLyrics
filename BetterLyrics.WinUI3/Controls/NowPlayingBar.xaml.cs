@@ -1,4 +1,3 @@
-using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
@@ -12,7 +11,6 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using System;
 using System.Numerics;
-using System.Threading.Tasks;
 using Windows.System;
 
 // To learn more about WinUI, the WinUI project structure,

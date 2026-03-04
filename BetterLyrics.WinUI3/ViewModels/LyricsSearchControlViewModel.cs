@@ -1,5 +1,4 @@
 ﻿using BetterLyrics.WinUI3.Extensions;
-using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Lyrics;

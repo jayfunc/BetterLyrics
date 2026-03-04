@@ -11,10 +11,10 @@ namespace BetterLyrics.WinUI3.Models
 
         public Color PlayedCurrentLineFillColor;
         public Color UnplayedCurrentLineFillColor;
-        
+
         public Color PlayedTextStrokeColor;
         public Color UnplayedTextStrokeColor;
-        
+
         public Color UnderlayColor;
 
         public Color AccentColor1;

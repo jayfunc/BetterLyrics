@@ -6,7 +6,6 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
-using System.Text;
 using Vanara.PInvoke;
 using WinRT.Interop;
 using WinUIEx;
