@@ -57,7 +57,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowDebugOverlay { get; set; } = false;
 
         [JsonIgnore][ObservableProperty][NotifyPropertyChangedRecipients] public partial WindowStatus WindowStatus { get; set; } = WindowStatus.Closed;
-        [JsonIgnore] public DispatcherQueueTimer? VisibilityTimer { get; set; } = DispatcherQueueHelper.GetUIDispatcherQueue()?.CreateTimer();
+        [JsonIgnore] public DispatcherQueueTimer? VisibilityTimer { get; set; }
 
         public LyricsWindowStatus()
         {
