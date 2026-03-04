@@ -6,9 +6,8 @@ using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.UI;
 using System;
 using System.Numerics;
-using Windows.UI;
 using Windows.Foundation;
-using BetterLyrics.WinUI3.Models;
+using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Renderer
 {

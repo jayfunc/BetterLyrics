@@ -4,7 +4,6 @@ using BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Lyrics;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.Extensions.Logging;
 using System.Threading;
 using System.Threading.Tasks;
 

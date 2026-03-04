@@ -18,7 +18,7 @@ namespace BetterLyrics.WinUI3.Controls
             InitializeComponent();
             DataContext = Ioc.Default.GetRequiredService<LyricsSearchControlViewModel>();
         }
-        
+
         private void ConvertRomajiToKanji(TextBox textBox)
         {
             var selectedText = textBox.SelectedText;
@@ -26,7 +26,7 @@ namespace BetterLyrics.WinUI3.Controls
             var selectionLength = textBox.SelectionLength;
 
             var kanji = LanguageHelper.ConvertRomajiToKanji(selectedText);
-            
+
             textBox.Text = textBox.Text.Remove(selectionStart, selectionLength).Insert(selectionStart, kanji);
             textBox.SelectionStart = selectionStart;
             textBox.SelectionLength = kanji.Length;

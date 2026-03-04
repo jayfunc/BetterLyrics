@@ -1,5 +1,4 @@
 ﻿using ColorThiefDotNet;
-using CommunityToolkit.WinUI.Helpers;
 using Impressionist.Abstractions;
 using Impressionist.Implementations;
 using System;

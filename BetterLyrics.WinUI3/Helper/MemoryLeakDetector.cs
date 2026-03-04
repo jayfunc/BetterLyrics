@@ -3,9 +3,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 
 namespace BetterLyrics.WinUI3.Helper
 {

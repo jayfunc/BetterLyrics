@@ -10,7 +10,6 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Xaml;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using Vanara.PInvoke;
 using WinUIEx.Messaging;

@@ -2,8 +2,6 @@
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BetterLyrics.WinUI3.Models.Lyrics
 {
