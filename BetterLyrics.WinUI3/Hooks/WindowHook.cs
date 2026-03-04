@@ -472,11 +472,11 @@ namespace BetterLyrics.WinUI3.Hooks
         /// 
         /// </summary>
         /// <param name="dispatcherQueue">请确保此参数指向同一个对象，建议传值 BaseViewModel._dispatcherQueue</param>
-        public static void SetLyricsWindowVisibilityByPlayingStatus(this NowPlayingWindow window, bool isPlaying)
+        public static void SetLyricsWindowVisibilityByPlayingStatus(this NowPlayingWindow window, bool isPlaying, DispatcherQueue dispatcherQueue)
         {
             var status = window.LyricsWindowStatus;
 
-            status.VisibilityTimer ??= DispatcherQueueHelper.GetUIDispatcherQueue()?.CreateTimer();
+            status.VisibilityTimer ??= dispatcherQueue.CreateTimer();
             status.VisibilityTimer?.Debounce(() =>
             {
                 if (status.AutoShowOrHideWindow && status.WindowStatus is WindowStatus.Opened or WindowStatus.HiddenBySystem)
