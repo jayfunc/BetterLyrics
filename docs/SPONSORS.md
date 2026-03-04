@@ -5,7 +5,7 @@ Special thanks to the following people for their support!
 <table>
   <tbody>
     <tr>
-      <td></td>
+      <td>Mar 3, 2026 Aureliano</td>
       <td>Feb 27, 2026 Andrews Consulting</td>
       <td>Feb 20, 2026 Asane779</td>
       <td>Feb 18, 2026 haitang000</td>
