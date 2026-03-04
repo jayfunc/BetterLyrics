@@ -265,7 +265,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void OnAutoShowOrHideWindowChanged()
         {
-            this.SetLyricsWindowVisibilityByPlayingStatus(_gsmtcService.CurrentIsPlaying);
+            this.SetLyricsWindowVisibilityByPlayingStatus(_gsmtcService.CurrentIsPlaying, DispatcherQueue);
         }
 
         private void OnIsAdaptToEnvironmentChanged()
