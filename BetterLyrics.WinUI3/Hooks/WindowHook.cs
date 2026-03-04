@@ -476,6 +476,7 @@ namespace BetterLyrics.WinUI3.Hooks
         {
             var status = window.LyricsWindowStatus;
 
+            status.VisibilityTimer ??= DispatcherQueueHelper.GetUIDispatcherQueue()?.CreateTimer();
             status.VisibilityTimer?.Debounce(() =>
             {
                 if (status.AutoShowOrHideWindow && status.WindowStatus is WindowStatus.Opened or WindowStatus.HiddenBySystem)
