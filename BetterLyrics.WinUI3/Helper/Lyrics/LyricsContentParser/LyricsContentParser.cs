@@ -144,7 +144,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
                     }
                     catch (Exception ex)
                     {
-                        GlobalToastManager.Show("CutletDockerFailed", ex.Message, InfoBarSeverity.Error);
+                        GlobalToastManager.Show("Error", ex.Message, InfoBarSeverity.Error);
                     }
                 }
             }

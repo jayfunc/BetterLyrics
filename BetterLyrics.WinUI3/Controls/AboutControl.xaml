@@ -76,8 +76,8 @@
                         </StackPanel>
                     </StackPanel>
 
-                    <dev:SettingsCard Description="Licensed under GPL-3.0">
-                        <dev:SettingsCard.Header>
+                    <dev:SettingsExpander Description="Licensed under GPL-3.0" IsExpanded="True">
+                        <dev:SettingsExpander.Header>
                             <HyperlinkButton
                                 Margin="-2,0,0,0"
                                 Padding="0"
@@ -92,9 +92,42 @@
                                     </RichTextBlock>
                                 </HyperlinkButton.Content>
                             </HyperlinkButton>
-                        </dev:SettingsCard.Header>
+                        </dev:SettingsExpander.Header>
                         <local:InfoTag Glyph="&#xE8EC;" Text="{x:Bind helper:MetadataHelper.AppVersion}" />
-                    </dev:SettingsCard>
+                        <dev:SettingsExpander.Items>
+                            <dev:SettingsCard Description="{x:Bind ViewModel.AppSettings.GeneralSettings.LastAppUpateCheckDateTime.ToString(), Mode=OneWay}">
+                                <dev:SettingsCard.Header>
+                                    <TextBlock x:Uid="AboutControlLastCheckTime" />
+                                </dev:SettingsCard.Header>
+                                <Button x:Uid="AboutControlCheckUpdate" Command="{x:Bind ViewModel.CheckAppUpdateCommand}" />
+                            </dev:SettingsCard>
+                        </dev:SettingsExpander.Items>
+                    </dev:SettingsExpander>
+
+                    <InfoBar
+                        x:Uid="AboutControlUpToDate"
+                        IsClosable="False"
+                        IsOpen="True"
+                        Severity="Success"
+                        Visibility="{x:Bind ViewModel.AppUpdateService.AppUpdateStatus, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=0}" />
+                    <InfoBar
+                        x:Uid="AboutControlUpdateAvailable"
+                        IsClosable="False"
+                        IsOpen="True"
+                        Message="{x:Bind ViewModel.AppUpdateService.LatestVersion, Mode=OneWay}"
+                        Severity="Warning"
+                        Visibility="{x:Bind ViewModel.AppUpdateService.AppUpdateStatus, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=1}">
+                        <HyperlinkButton
+                            x:Uid="AboutControlOpenAppStorePage"
+                            Margin="-12,0,0,12"
+                            Command="{x:Bind ViewModel.OpenAppStorePageCommand}" />
+                    </InfoBar>
+                    <InfoBar
+                        x:Uid="AboutControlCheckUpdateError"
+                        IsClosable="False"
+                        IsOpen="True"
+                        Severity="Error"
+                        Visibility="{x:Bind ViewModel.AppUpdateService.AppUpdateStatus, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}" />
 
                     <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
                         <StackPanel Spacing="6">

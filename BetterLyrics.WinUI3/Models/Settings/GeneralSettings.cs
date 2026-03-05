@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System;
 using System.Collections.Generic;
 
 namespace BetterLyrics.WinUI3.Models.Settings
@@ -20,6 +21,8 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool MultiNowPlayingWindowMode { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool AutoStartLyricsWindow { get; set; } = true;
+
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial DateTime LastAppUpateCheckDateTime { get; set; } = DateTime.Now;
 
         public GeneralSettings() { }
     }

@@ -159,7 +159,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                             {
                                 await _playHistoryService.AddLogAsync(playHistoryItem);
                             });
-                            _logger.LogInformation("ScrobbleTimer_Tick: {Title} scrobbled", CurrentSongInfo.Title);
+                            _logger.LogInformation("ScrobbleTimer_Tick: {Title} scrobbled to local stat", CurrentSongInfo.Title);
                         }
                         // 写入 Last.fm 播放记录
                         var isLastFMEnabled = CurrentMediaSourceProviderInfo?.IsLastFMTrackEnabled ?? false;
@@ -167,6 +167,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                         {
                             // 后台
                             _ = Task.Run(() => _lastFMService.TrackAsync(CurrentSongInfo));
+                            _logger.LogInformation("ScrobbleTimer_Tick: {Title} scrobbled to last.fm", CurrentSongInfo.Title);
                         }
 
                         IsScrobbled = true;

@@ -2,6 +2,7 @@
 using BetterLyrics.WinUI3.Helper.BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.Settings;
+using BetterLyrics.WinUI3.Services.AppUpdateService;
 using BetterLyrics.WinUI3.Services.LyricsCacheService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
@@ -14,6 +15,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
 using System.Threading.Tasks;
+using Windows.System;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -22,18 +24,21 @@ namespace BetterLyrics.WinUI3.ViewModels
         private readonly ISettingsService _settingsService;
         private readonly ILyricsCacheService _lyricsCacheService;
 
-        [ObservableProperty]
-        public partial AppSettings AppSettings { get; set; }
+        [ObservableProperty] public partial IAppUpdateService AppUpdateService { get; set; }
 
-        public AboutControlViewModel(ISettingsService settingsService, ILyricsCacheService lyricsCacheService)
+        [ObservableProperty] public partial AppSettings AppSettings { get; set; }
+
+        public AboutControlViewModel(ISettingsService settingsService, ILyricsCacheService lyricsCacheService, IAppUpdateService appUpdateService)
         {
             _settingsService = settingsService;
             _lyricsCacheService = lyricsCacheService;
+            AppUpdateService = appUpdateService;
+
             AppSettings = _settingsService.AppSettings;
         }
 
         [RelayCommand]
-        private async Task LaunchProjectGitHubPageAsync()
+        private static async Task LaunchProjectGitHubPageAsync()
         {
             await Windows.System.Launcher.LaunchUriAsync(new Uri(Constants.Link.BetterLyricsGitHub));
         }
@@ -136,6 +141,18 @@ namespace BetterLyrics.WinUI3.ViewModels
             DirectoryHelper.DeleteAllFiles(PathHelper.iTunesAlbumArtCacheDirectory);
 
             GlobalToastManager.Show("ActionCompleted", null, InfoBarSeverity.Success);
+        }
+
+        [RelayCommand]
+        private static async Task OpenAppStorePageAsync()
+        {
+            await Launcher.LaunchUriAsync(new Uri(Constants.Link.StorePage));
+        }
+
+        [RelayCommand]
+        private async Task CheckAppUpdateAsync()
+        {
+            await AppUpdateService.UpdateAvailabilityAsync();
         }
 
     }

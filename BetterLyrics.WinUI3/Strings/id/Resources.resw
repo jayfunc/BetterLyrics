@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -117,6 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutControlCheckUpdate.Content" xml:space="preserve">
+    <value>Periksa pembaruan</value>
+  </data>
+  <data name="AboutControlCheckUpdateError.Title" xml:space="preserve">
+    <value>Terjadi kesalahan saat memeriksa pembaruan</value>
+  </data>
+  <data name="AboutControlLastCheckTime.Text" xml:space="preserve">
+    <value>Waktu terakhir diperiksa</value>
+  </data>
+  <data name="AboutControlOpenAppStorePage.Content" xml:space="preserve">
+    <value>Perbarui di Microsoft Store</value>
+  </data>
+  <data name="AboutControlUpdateAvailable.Title" xml:space="preserve">
+    <value>Versi baru BetterLyrics telah tersedia</value>
+  </data>
+  <data name="AboutControlUpToDate.Title" xml:space="preserve">
+    <value>BetterLyrics adalah yang terbaru</value>
+  </data>
   <data name="ActionCompleted" xml:space="preserve">
     <value>Tindakan selesai</value>
   </data>
@@ -144,6 +162,15 @@
   <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
     <value>Jendela</value>
   </data>
+  <data name="AppUpdateServiceNewVersionAvailable" xml:space="preserve">
+    <value>Versi baru BetterLyrics telah tersedia</value>
+  </data>
+  <data name="AppUpdateServiceUpdateAvailable" xml:space="preserve">
+    <value>Pembaruan Tersedia</value>
+  </data>
+  <data name="AppUpdateServiceUpdateMS" xml:space="preserve">
+    <value>Perbarui di Microsoft Store</value>
+  </data>
   <data name="ArtistsSplitHint.Text" xml:space="preserve">
     <value>Saat memasukkan beberapa artis, silakan gunakan salah satu pemisah berikut untuk memisahkannya (jangan dicampur)</value>
   </data>
@@ -158,9 +185,6 @@
   </data>
   <data name="CreatePlaylistSuccessfully" xml:space="preserve">
     <value>Daftar putar berhasil dibuat</value>
-  </data>
-  <data name="CutletDockerFailed" xml:space="preserve">
-    <value>Permintaan transliterasi ke cutlet-docker gagal, silakan periksa pengaturan atau konfigurasi cutlet-docker lokal</value>
   </data>
   <data name="CutletServerTextBox.PlaceholderText" xml:space="preserve">
     <value>Contoh: http://localhost:23333</value>
@@ -979,7 +1003,7 @@
     <value>Duplikat</value>
   </data>
   <data name="SettingsPageCreateFromCurrentAndTransformTo.Text" xml:space="preserve">
-    <value>Copy and transform to</value>
+    <value>Salin dan ubah ke</value>
   </data>
   <data name="SettingsPageCreateFromTemplates.Content" xml:space="preserve">
     <value>Buat dari Templat</value>
@@ -1018,7 +1042,7 @@
     <value>Monitor Target</value>
   </data>
   <data name="SettingsPageDockPlacement.Header" xml:space="preserve">
-    <value>Lokasi Ruang Kerja</value>
+    <value>Posisi Bilah Aplikasi</value>
   </data>
   <data name="SettingsPageDockPlacementBottom.Content" xml:space="preserve">
     <value>Bawah</value>
@@ -1768,13 +1792,13 @@
     <value>Lebar</value>
   </data>
   <data name="SettingsPageWorkArea.Description" xml:space="preserve">
-    <value>Sebagai ruang kerja terpisah, dipasang di tepi atas/bawah layar</value>
+    <value>Bilah alat desktop aplikasi, merapat ke tepi atas/bawah layar</value>
   </data>
   <data name="SettingsPageWorkArea.Header" xml:space="preserve">
-    <value>Sebagai Ruang Kerja</value>
+    <value>Bilah aplikasi</value>
   </data>
   <data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve">
-    <value>Tinggi Ruang Kerja</value>
+    <value>Tinggi Bilah Aplikasi</value>
   </data>
   <data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
     <value>Anda yang sedang menggunakan perangkat lunak ini</value>
