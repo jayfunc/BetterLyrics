@@ -4,6 +4,7 @@ using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.DbContext;
 using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
+using BetterLyrics.WinUI3.Services.AppUpdateService;
 using BetterLyrics.WinUI3.Services.DiscordService;
 using BetterLyrics.WinUI3.Services.FileSystemService;
 using BetterLyrics.WinUI3.Services.FileWatchService;
@@ -181,6 +182,7 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<ISongSearchMapService, SongSearchMapService>()
                     .AddSingleton<IPluginService, PluginService>()
                     .AddSingleton<IFileWatchService, FileWatchService>()
+                    .AddSingleton<IAppUpdateService, AppUpdateService>()
 
                     // ViewModels
                     .AddSingleton<AppSettingsControlViewModel>()

@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -117,6 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutControlCheckUpdate.Content" xml:space="preserve">
+    <value>更新プログラムをチェックする</value>
+  </data>
+  <data name="AboutControlCheckUpdateError.Title" xml:space="preserve">
+    <value>アップデートのチェック中にエラーが発生しました</value>
+  </data>
+  <data name="AboutControlLastCheckTime.Text" xml:space="preserve">
+    <value>最終確認日時</value>
+  </data>
+  <data name="AboutControlOpenAppStorePage.Content" xml:space="preserve">
+    <value>Microsoft Store で更新する</value>
+  </data>
+  <data name="AboutControlUpdateAvailable.Title" xml:space="preserve">
+    <value>BetterLyrics の新バージョンが利用可能</value>
+  </data>
+  <data name="AboutControlUpToDate.Title" xml:space="preserve">
+    <value>BetterLyrics は最新の状態です</value>
+  </data>
   <data name="ActionCompleted" xml:space="preserve">
     <value>操作完了</value>
   </data>
@@ -144,6 +162,15 @@
   <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
     <value>ウィンドウ</value>
   </data>
+  <data name="AppUpdateServiceNewVersionAvailable" xml:space="preserve">
+    <value>BetterLyrics の新バージョンが利用可能</value>
+  </data>
+  <data name="AppUpdateServiceUpdateAvailable" xml:space="preserve">
+    <value>更新プログラムが利用可能です</value>
+  </data>
+  <data name="AppUpdateServiceUpdateMS" xml:space="preserve">
+    <value>Microsoft Store で更新する</value>
+  </data>
   <data name="ArtistsSplitHint.Text" xml:space="preserve">
     <value>複数のアーティストを入力する場合は、以下の区切り文字のいずれかで区切ってください（混在させないでください）</value>
   </data>
@@ -158,9 +185,6 @@
   </data>
   <data name="CreatePlaylistSuccessfully" xml:space="preserve">
     <value>プレイリストが作成されました</value>
-  </data>
-  <data name="CutletDockerFailed" xml:space="preserve">
-    <value>cutlet-docker へのローマ字変換リクエストに失敗しました。設定、またはローカルの cutlet-docker の構成を確認してください</value>
   </data>
   <data name="CutletServerTextBox.PlaceholderText" xml:space="preserve">
     <value>例: http://localhost:23333</value>
@@ -724,7 +748,7 @@
     <value>有効にする</value>
   </data>
   <data name="PluginManagerControlInfoBar.Message" xml:space="preserve">
-    <value>プラグインのインストール・削除・更新後、BetterLyricsは自動的に再起動します</value>
+    <value>プラグインのインストール・削除・更新後、BetterLyrics は自動的に再起動します</value>
   </data>
   <data name="PluginManagerControlInstall.Content" xml:space="preserve">
     <value>インストール</value>
@@ -739,7 +763,7 @@
     <value>今すぐ再起動</value>
   </data>
   <data name="PluginManagerControlRestartRequired" xml:space="preserve">
-    <value>変更を適用するためにBetterLyricsが再起動します</value>
+    <value>変更を適用するために BetterLyrics が再起動します</value>
   </data>
   <data name="PluginManagerControlTitle.Text" xml:space="preserve">
     <value>プラグインマネージャー</value>
@@ -979,7 +1003,7 @@
     <value>コピー</value>
   </data>
   <data name="SettingsPageCreateFromCurrentAndTransformTo.Text" xml:space="preserve">
-    <value>Copy and transform to</value>
+    <value>コピーして変換</value>
   </data>
   <data name="SettingsPageCreateFromTemplates.Content" xml:space="preserve">
     <value>テンプレートから作成</value>
@@ -1018,7 +1042,7 @@
     <value>対象ディスプレイ</value>
   </data>
   <data name="SettingsPageDockPlacement.Header" xml:space="preserve">
-    <value>ワークスペースの位置</value>
+    <value>アプリバーの位置</value>
   </data>
   <data name="SettingsPageDockPlacementBottom.Content" xml:space="preserve">
     <value>下へ</value>
@@ -1282,7 +1306,7 @@
     <value>特太</value>
   </data>
   <data name="SettingsPageLyricsExtraLight.Content" xml:space="preserve">
-    <value>超細</value>
+    <value>細</value>
   </data>
   <data name="SettingsPageLyricsFadeOutEffect.Description" xml:space="preserve">
     <value>現在の行以外の行のフェードアウト効果を有効にする</value>
@@ -1333,10 +1357,10 @@
     <value>行間隔</value>
   </data>
   <data name="SettingsPageLyricsMedium.Content" xml:space="preserve">
-    <value>中字</value>
+    <value>中</value>
   </data>
   <data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
-    <value>ノーマル</value>
+    <value>標準</value>
   </data>
   <data name="SettingsPageLyricsOpacity.Header" xml:space="preserve">
     <value>フォントの不透明度</value>
@@ -1756,7 +1780,7 @@
     <value>縁取り（再生待ち）</value>
   </data>
   <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
-    <value>そしてBetterLyricsを購入したユーザー</value>
+    <value>そして BetterLyrics を購入したユーザー</value>
   </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">
     <value>バージョン</value>
@@ -1768,13 +1792,13 @@
     <value>横幅</value>
   </data>
   <data name="SettingsPageWorkArea.Description" xml:space="preserve">
-    <value>独立したワークエリアとして、画面の上端/下端にドッキングします</value>
+    <value>アプリケーションのデスクトップツールバーを、画面の上端または下端にドッキングする</value>
   </data>
   <data name="SettingsPageWorkArea.Header" xml:space="preserve">
-    <value>ワークエリアとして使用</value>
+    <value>アプリバー</value>
   </data>
   <data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve">
-    <value>ワークエリアの高さ</value>
+    <value>アプリバーの高さ</value>
   </data>
   <data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
     <value>このソフトウェアをご利用のあなた</value>
@@ -1888,7 +1912,7 @@
     <value>選択したトラックがこのプレイリストに追加されました</value>
   </data>
   <data name="TryRunMultipleInstance" xml:space="preserve">
-    <value>BetterLyricsは既に実行されています</value>
+    <value>BetterLyrics は既に実行されています</value>
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>ユーザーガイド</value>

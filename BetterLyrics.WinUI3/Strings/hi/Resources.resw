@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -117,6 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutControlCheckUpdate.Content" xml:space="preserve">
+    <value>नये उपलब्ध अपडेट की जांच करें</value>
+  </data>
+  <data name="AboutControlCheckUpdateError.Title" xml:space="preserve">
+    <value>अपडेट चेक करते समय एक एरर आया</value>
+  </data>
+  <data name="AboutControlLastCheckTime.Text" xml:space="preserve">
+    <value>अंतिम बार जाँचा गया समय</value>
+  </data>
+  <data name="AboutControlOpenAppStorePage.Content" xml:space="preserve">
+    <value>Microsoft Store में अपडेट करें</value>
+  </data>
+  <data name="AboutControlUpdateAvailable.Title" xml:space="preserve">
+    <value>BetterLyrics का नया वर्शन उपलब्ध है</value>
+  </data>
+  <data name="AboutControlUpToDate.Title" xml:space="preserve">
+    <value>BetterLyrics अप टू डेट है</value>
+  </data>
   <data name="ActionCompleted" xml:space="preserve">
     <value>कार्रवाई पूरी हुई</value>
   </data>
@@ -144,6 +162,15 @@
   <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
     <value>विंडो</value>
   </data>
+  <data name="AppUpdateServiceNewVersionAvailable" xml:space="preserve">
+    <value>BetterLyrics का नया वर्शन उपलब्ध है</value>
+  </data>
+  <data name="AppUpdateServiceUpdateAvailable" xml:space="preserve">
+    <value>उपलब्ध अद्यतन</value>
+  </data>
+  <data name="AppUpdateServiceUpdateMS" xml:space="preserve">
+    <value>Microsoft Store में अपडेट करें</value>
+  </data>
   <data name="ArtistsSplitHint.Text" xml:space="preserve">
     <value>कई कलाकारों को इनपुट करते समय, कृपया उन्हें अलग करने के लिए निम्नलिखित विभाजकों में से किसी एक का उपयोग करें (कृपया मिश्रण न करें)</value>
   </data>
@@ -158,9 +185,6 @@
   </data>
   <data name="CreatePlaylistSuccessfully" xml:space="preserve">
     <value>प्लेलिस्ट सफलतापूर्वक बनाई गई</value>
-  </data>
-  <data name="CutletDockerFailed" xml:space="preserve">
-    <value>cutlet-docker से लिप्यंतरण का अनुरोध विफल रहा, कृपया सेटिंग्स या स्थानीय cutlet-docker कॉन्फ़िगरेशन की जाँच करें</value>
   </data>
   <data name="CutletServerTextBox.PlaceholderText" xml:space="preserve">
     <value>उदाहरण http://localhost:23333</value>
@@ -979,7 +1003,7 @@
     <value>डुप्लिकेट</value>
   </data>
   <data name="SettingsPageCreateFromCurrentAndTransformTo.Text" xml:space="preserve">
-    <value>Copy and transform to</value>
+    <value>कॉपी करें और बदलें</value>
   </data>
   <data name="SettingsPageCreateFromTemplates.Content" xml:space="preserve">
     <value>टेम्पलेट्स से बनाएं</value>
@@ -1018,7 +1042,7 @@
     <value>लक्ष्य मॉनिटर</value>
   </data>
   <data name="SettingsPageDockPlacement.Header" xml:space="preserve">
-    <value>कार्यक्षेत्र स्थान</value>
+    <value>ऐपबार स्थिति</value>
   </data>
   <data name="SettingsPageDockPlacementBottom.Content" xml:space="preserve">
     <value>निचला</value>
@@ -1768,13 +1792,13 @@
     <value>चौड़ाई</value>
   </data>
   <data name="SettingsPageWorkArea.Description" xml:space="preserve">
-    <value>एक अलग कार्यक्षेत्र के रूप में, स्क्रीन के ऊपरी/निचले किनारे पर डॉक किया गया</value>
+    <value>एप्लिकेशन डेस्कटॉप टूलबार, स्क्रीन के ऊपर/नीचे किनारे पर डॉक किया गया</value>
   </data>
   <data name="SettingsPageWorkArea.Header" xml:space="preserve">
-    <value>कार्यक्षेत्र के रूप में</value>
+    <value>ऐपबार</value>
   </data>
   <data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve">
-    <value>कार्यक्षेत्र की ऊंचाई</value>
+    <value>ऐपबार की ऊँचाई</value>
   </data>
   <data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
     <value>आप जो अभी इस सॉफ़्टवेयर का उपयोग कर रहे हैं</value>

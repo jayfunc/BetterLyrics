@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -117,6 +117,24 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AboutControlCheckUpdate.Content" xml:space="preserve">
+    <value>Vérifier les mises à jour</value>
+  </data>
+  <data name="AboutControlCheckUpdateError.Title" xml:space="preserve">
+    <value>Une erreur s'est produite lors de la vérification des mises à jour</value>
+  </data>
+  <data name="AboutControlLastCheckTime.Text" xml:space="preserve">
+    <value>Heure de la dernière vérification</value>
+  </data>
+  <data name="AboutControlOpenAppStorePage.Content" xml:space="preserve">
+    <value>Mise à jour dans le Microsoft Store</value>
+  </data>
+  <data name="AboutControlUpdateAvailable.Title" xml:space="preserve">
+    <value>Une nouvelle version de BetterLyrics est disponible</value>
+  </data>
+  <data name="AboutControlUpToDate.Title" xml:space="preserve">
+    <value>BetterLyrics est à jour</value>
+  </data>
   <data name="ActionCompleted" xml:space="preserve">
     <value>Action terminée</value>
   </data>
@@ -144,6 +162,15 @@
   <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
     <value>Fenêtre</value>
   </data>
+  <data name="AppUpdateServiceNewVersionAvailable" xml:space="preserve">
+    <value>Une nouvelle version de BetterLyrics est disponible</value>
+  </data>
+  <data name="AppUpdateServiceUpdateAvailable" xml:space="preserve">
+    <value>Mise à jour disponible</value>
+  </data>
+  <data name="AppUpdateServiceUpdateMS" xml:space="preserve">
+    <value>Mise à jour dans le Microsoft Store</value>
+  </data>
   <data name="ArtistsSplitHint.Text" xml:space="preserve">
     <value>Lors de la saisie de plusieurs artistes, veuillez les séparer en utilisant l'un des délimiteurs suivants (ne pas mélanger)</value>
   </data>
@@ -158,9 +185,6 @@
   </data>
   <data name="CreatePlaylistSuccessfully" xml:space="preserve">
     <value>Liste de lecture créée avec succès</value>
-  </data>
-  <data name="CutletDockerFailed" xml:space="preserve">
-    <value>Échec de la demande de translittération auprès de cutlet-docker. Veuillez vérifier les paramètres ou la configuration locale de cutlet-docker</value>
   </data>
   <data name="CutletServerTextBox.PlaceholderText" xml:space="preserve">
     <value>ex : http://localhost:23333</value>
@@ -214,7 +238,7 @@
     <value>La police n'est pas trouvée dans le système, elle n'est pas valide</value>
   </data>
   <data name="FontPickerSearchBox.PlaceholderText" xml:space="preserve">
-    <value>Recherche de polices</value>
+    <value>Chercher des polices</value>
   </data>
   <data name="FontPickerSelectedFontText.Text" xml:space="preserve">
     <value>Polices sélectionnées</value>
@@ -241,22 +265,22 @@
     <value>Jyutping (Cantonais)</value>
   </data>
   <data name="LastFMAuthFailed" xml:space="preserve">
-    <value>Échec de l'autorisation, veuillez réessayer</value>
+    <value>L'autorisation a échoué, veuillez réessayer</value>
   </data>
   <data name="LastFMRequestAuthConfirm" xml:space="preserve">
-    <value>J'ai terminé l'autorisation</value>
+    <value>J'ai complété l'autorisation</value>
   </data>
   <data name="LastFMRequestAuthDesc" xml:space="preserve">
-    <value>Veuillez terminer l'autorisation dans votre navigateur</value>
+    <value>Veuillez finaliser l'autorisation dans votre navigateur</value>
   </data>
   <data name="LastFMRequestAuthTitle" xml:space="preserve">
-    <value>Accorder l'accès à votre compte Last.fm à BetterLyrics</value>
+    <value>Accorder accès à votre compte Last.fm à BetterLyrics</value>
   </data>
   <data name="LastFMRequestUnAuthConfirm" xml:space="preserve">
     <value>J'ai annulé mon autorisation</value>
   </data>
   <data name="LastFMRequestUnAuthDesc" xml:space="preserve">
-    <value>Veuillez terminer la révocation dans votre navigateur</value>
+    <value>Veuillez finaliser la révocation dans votre navigateur</value>
   </data>
   <data name="LastFMRequestUnAuthTitle" xml:space="preserve">
     <value>Révoquer l'accès de BetterLyrics à votre compte Last.fm</value>
@@ -772,7 +796,7 @@
     <value>Mot de passe</value>
   </data>
   <data name="RemoteServerConfigControlPath.Header" xml:space="preserve">
-    <value>Chemin</value>
+    <value>Chemin d'accès</value>
   </data>
   <data name="RemoteServerConfigControlPathNotExisted" xml:space="preserve">
     <value>Le chemin d'accès au dossier spécifié n'a pas été trouvé</value>
@@ -979,7 +1003,7 @@
     <value>Dupliquer</value>
   </data>
   <data name="SettingsPageCreateFromCurrentAndTransformTo.Text" xml:space="preserve">
-    <value>Copy and transform to</value>
+    <value>Copier et transformer en</value>
   </data>
   <data name="SettingsPageCreateFromTemplates.Content" xml:space="preserve">
     <value>Créer à partir d'un modèle</value>
@@ -1018,7 +1042,7 @@
     <value>Écran cible</value>
   </data>
   <data name="SettingsPageDockPlacement.Header" xml:space="preserve">
-    <value>Position de l'espace de travail</value>
+    <value>Position de l'Appbar</value>
   </data>
   <data name="SettingsPageDockPlacementBottom.Content" xml:space="preserve">
     <value>Bas</value>
@@ -1465,7 +1489,7 @@
     <value>Agressif</value>
   </data>
   <data name="SettingsPageOneFontFamilyOnly.Message" xml:space="preserve">
-    <value>Veuillez ne sélectionner qu'une seule police. La sélection de plusieurs polices entraînera l'échec de ce réglage et le retour à la police par défaut du système.</value>
+    <value>Veuillez sélectionner qu'une seule police. La sélection de plus qu'une police causera l'échec de ce réglage et le réglage retournera à la police par défaut</value>
   </data>
   <data name="SettingsPageOpacity.Header" xml:space="preserve">
     <value>Opacité</value>
@@ -1768,13 +1792,13 @@
     <value>Largeur</value>
   </data>
   <data name="SettingsPageWorkArea.Description" xml:space="preserve">
-    <value>Comme un espace de travail séparé, ancré au bord supérieur/inférieur de l'écran</value>
+    <value>Barre d'outils du bureau de l'application, ancrée au bord supérieur ou inférieur de l'écran</value>
   </data>
   <data name="SettingsPageWorkArea.Header" xml:space="preserve">
-    <value>Comme espace de travail</value>
+    <value>Appbar</value>
   </data>
   <data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve">
-    <value>Hauteur de l'espace de travail</value>
+    <value>Hauteur de l'Appbar</value>
   </data>
   <data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
     <value>Toi, qui utilise ce logiciel</value>
@@ -1843,10 +1867,10 @@
     <value>Durée totale</value>
   </data>
   <data name="StatsDashboardControlTrackCountAxis.AxisName" xml:space="preserve">
-    <value>Temps</value>
+    <value>Fois</value>
   </data>
   <data name="StatsDashboardControlTrackCountText.Text" xml:space="preserve">
-    <value>Temps</value>
+    <value>Fois</value>
   </data>
   <data name="StatsDashboardControlTracksPlayed.Text" xml:space="preserve">
     <value>Pistes jouées</value>
@@ -1906,6 +1930,6 @@
     <value>Panneau de contrôle des médias</value>
   </data>
   <data name="WindowSettingsControlRemoveBorder.Header" xml:space="preserve">
-    <value>Supprimer les bordures lorsqu'elles sont verrouillées</value>
+    <value>Retirer les bordures lorsqu'elles sont verrouillées</value>
   </data>
 </root>

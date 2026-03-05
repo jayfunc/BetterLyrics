@@ -8,5 +8,6 @@
         public const string AppName = "BetterLyrics";
 
         public const string AutoStartupTaskId = "AutoStartup";
+        public const string StoreId = "9p1wcd1p597r";
     }
 }

@@ -4,6 +4,7 @@ using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.DbContext;
 using BetterLyrics.WinUI3.Models.Settings;
+using BetterLyrics.WinUI3.Services.AppUpdateService;
 using BetterLyrics.WinUI3.Services.FileSystemService;
 using BetterLyrics.WinUI3.Services.FileWatchService;
 using BetterLyrics.WinUI3.Services.PluginService;
@@ -18,6 +19,7 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Windows.Services.Store;
 
 namespace BetterLyrics.WinUI3
 {
@@ -124,6 +126,9 @@ namespace BetterLyrics.WinUI3
 
             // 预加载系统字体列表
             await FontHelper.GetSystemFontFamiliesAsync();
+
+            var appUpdateService = Ioc.Default.GetRequiredService<IAppUpdateService>();
+            appUpdateService.StartDailyCheck();
         }
 
         private static async Task InitDatabasesAsync()
