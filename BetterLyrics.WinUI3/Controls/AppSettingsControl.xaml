@@ -6,7 +6,7 @@
     xmlns:consts="using:BetterLyrics.WinUI3.Constants"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dev="using:DevWinUI"
+    
     xmlns:globalization="using:Windows.Globalization"
     xmlns:helper="using:BetterLyrics.WinUI3.Helper"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
@@ -24,7 +24,7 @@
 
                     <TextBlock x:Uid="SettingsPageAppAppearance" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <dev:SettingsExpander
+                    <controls:SettingsExpander
                         x:Uid="SettingsPageLanguage"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xF2B7;}"
@@ -38,87 +38,87 @@
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
-                        <dev:SettingsExpander.Items>
-                            <dev:SettingsCard>
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard>
                                 <Button x:Uid="SettingsPageRestart" Command="{x:Bind ViewModel.RestartAppCommand}" />
-                            </dev:SettingsCard>
-                        </dev:SettingsExpander.Items>
-                        <dev:SettingsExpander.ItemsFooter>
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                        <controls:SettingsExpander.ItemsFooter>
                             <InfoBar IsClosable="False" IsOpen="True">
                                 <HyperlinkButton
                                     x:Uid="SettingsPageHelpUsTranslate"
                                     Padding="0"
                                     NavigateUri="{x:Bind consts:Link.Crowdin}" />
                             </InfoBar>
-                        </dev:SettingsExpander.ItemsFooter>
-                    </dev:SettingsExpander>
+                        </controls:SettingsExpander.ItemsFooter>
+                    </controls:SettingsExpander>
 
                     <!--  Startup  -->
 
                     <TextBlock x:Uid="SettingsPageStartup" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <dev:SettingsCard x:Uid="SettingsPageAutoStart" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xF71C;}">
+                    <controls:SettingsCard x:Uid="SettingsPageAutoStart" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xF71C;}">
                         <ToggleSwitch
                             x:Name="AutoStartupToggleSwitch"
                             IsOn="{x:Bind ViewModel.IsAutoStartupEnabled, Mode=OneWay}"
                             Tapped="AutoStartupToggleSwitch_Tapped" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
-                    <dev:SettingsCard x:Uid="SettingsPageAutoOpenMusicGalleryWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8F1;}">
+                    <controls:SettingsCard x:Uid="SettingsPageAutoOpenMusicGalleryWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8F1;}">
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.MusicGallerySettings.AutoOpen, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
-                    <dev:SettingsCard x:Uid="SettingsPageAutoOpenLyricsWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE90B;}">
+                    <controls:SettingsCard x:Uid="SettingsPageAutoOpenLyricsWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE90B;}">
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.AutoStartLyricsWindow, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
                     <!--  Music gallery window  -->
 
                     <TextBlock x:Uid="SettingsPageMusicGallery" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <dev:SettingsCard x:Uid="SettingsPageAutoPlayWhenOpenMusicGalleryWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE768;}">
+                    <controls:SettingsCard x:Uid="SettingsPageAutoPlayWhenOpenMusicGalleryWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE768;}">
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.MusicGallerySettings.AutoPlay, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
-                    <dev:SettingsCard x:Uid="SettingsPageStopTrackOnGalleryWindowClosed" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE71A;}">
+                    <controls:SettingsCard x:Uid="SettingsPageStopTrackOnGalleryWindowClosed" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE71A;}">
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.MusicGallerySettings.StopOnWindowClosed, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
-                    <dev:SettingsCard x:Uid="SettingsPageExitOnGalleryWindowClosed" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE711;}">
+                    <controls:SettingsCard x:Uid="SettingsPageExitOnGalleryWindowClosed" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE711;}">
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ExitOnWindowClosed, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
                     <!--  Lyrics window  -->
 
                     <TextBlock x:Uid="SettingsPageLyricsWindow" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <dev:SettingsCard x:Uid="SettingsPageExitOnLyricsWindowClosed" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE711;}">
+                    <controls:SettingsCard x:Uid="SettingsPageExitOnLyricsWindowClosed" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE711;}">
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.ExitOnLyricsWindowClosed, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
                     <!--  Playback shortcut  -->
 
                     <TextBlock x:Uid="SettingsPageShortcut" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <dev:SettingsCard x:Uid="SettingsPageShowHideHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEDA7;}">
+                    <controls:SettingsCard x:Uid="SettingsPageShowHideHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEDA7;}">
                         <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.ShowOrHideLyricsWindowShortcut, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
-                    <dev:SettingsCard x:Uid="SettingsPageLyricsWindowSwitchHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEDA7;}">
+                    <controls:SettingsCard x:Uid="SettingsPageLyricsWindowSwitchHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEDA7;}">
                         <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.LyricsWindowSwitchShortcut, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
-                    <dev:SettingsCard x:Uid="SettingsPagePlayOrPauseSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEDA7;}">
+                    <controls:SettingsCard x:Uid="SettingsPagePlayOrPauseSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEDA7;}">
                         <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.PlayOrPauseShortcut, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
-                    <dev:SettingsCard x:Uid="SettingsPageNextSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEDA7;}">
+                    <controls:SettingsCard x:Uid="SettingsPageNextSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEDA7;}">
                         <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.NextSongShortcut, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
-                    <dev:SettingsCard x:Uid="SettingsPagePreviousSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEDA7;}">
+                    <controls:SettingsCard x:Uid="SettingsPagePreviousSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEDA7;}">
                         <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.PreviousSongShortcut, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
                 </StackPanel>
             </Grid>

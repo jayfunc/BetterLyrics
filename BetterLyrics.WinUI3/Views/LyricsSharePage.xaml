@@ -6,7 +6,6 @@
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dev="using:DevWinUI"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:lyricsmodels="using:BetterLyrics.WinUI3.Models.Lyrics"
@@ -221,7 +220,7 @@
 
                                         <GroupStyle.Panel>
                                             <ItemsPanelTemplate>
-                                                <dev:WrapPanel
+                                                <controls:WrapPanel
                                                     HorizontalSpacing="8"
                                                     Orientation="Horizontal"
                                                     VerticalSpacing="8" />

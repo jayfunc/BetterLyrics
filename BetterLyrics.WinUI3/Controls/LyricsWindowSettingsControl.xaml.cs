@@ -56,17 +56,6 @@ namespace BetterLyrics.WinUI3.Controls
             }
         }
 
-        private void SetDefaultMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is FrameworkElement element)
-            {
-                if (element.DataContext is LyricsWindowStatus data)
-                {
-                    data.IsDefault = !data.IsDefault;
-                }
-            }
-        }
-
         private async void ShareMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             if (sender is MenuFlyoutItem menuFlyoutItem)
@@ -222,6 +211,11 @@ namespace BetterLyrics.WinUI3.Controls
                     ViewModel.AppSettings.WindowBoundsRecords.Add(clonedData);
                 }
             }
+        }
+
+        private void WindowStatusListView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
+        {
+            ViewModel.AppSettings.WindowBoundsRecords?.Refresh();
         }
     }
 }

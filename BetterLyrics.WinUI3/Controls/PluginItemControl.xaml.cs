@@ -2,7 +2,7 @@
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.PluginService;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using DevWinUI;
+using CommunityToolkit.WinUI.Controls;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Collections.Generic;

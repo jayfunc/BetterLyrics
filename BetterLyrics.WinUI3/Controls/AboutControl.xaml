@@ -6,7 +6,6 @@
     xmlns:const="using:BetterLyrics.WinUI3.Constants"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dev="using:DevWinUI"
     xmlns:helper="using:BetterLyrics.WinUI3.Helper"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -57,105 +56,101 @@
                                 Height="36"
                                 Source="ms-appx:///Assets/Logo.png" />
                             <TextBlock
+                                FontFamily="{StaticResource SloganENFont}"
                                 FontSize="36"
                                 Style="{ThemeResource DisplayTextBlockStyle}"
                                 Text="{x:Bind const:App.AppName}" />
                         </StackPanel>
                         <!--  App slogan  -->
-                        <StackPanel Spacing="4">
+                        <StackPanel Background="Transparent" Spacing="4">
+
                             <TextBlock
+                                x:Name="SloganCN"
                                 HorizontalAlignment="Center"
+                                FontFamily="{StaticResource SloganCNFont}"
                                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                 Style="{ThemeResource SubtitleTextBlockStyle}"
                                 Text="曲拨心弦，词落云笺" />
+
                             <TextBlock
+                                x:Name="SloganEN"
                                 HorizontalAlignment="Center"
+                                FontFamily="{StaticResource SloganENFont}"
+                                FontWeight="Bold"
                                 Foreground="{ThemeResource TextFillColorTertiaryBrush}"
                                 Style="{StaticResource CaptionTextBlockStyle}"
                                 Text="Strums the Heartstrings, Graces the Wordscapes" />
                         </StackPanel>
                     </StackPanel>
 
-                    <dev:SettingsExpander Description="Licensed under GPL-3.0" IsExpanded="True">
-                        <dev:SettingsExpander.Header>
-                            <HyperlinkButton
-                                Margin="-2,0,0,0"
-                                Padding="0"
-                                NavigateUri="{x:Bind const:Link.AuthorGitHub}">
-                                <HyperlinkButton.Content>
-                                    <RichTextBlock IsTextSelectionEnabled="False">
-                                        <Paragraph>
-                                            <Run Text="©" />
-                                            <Run Text="{x:Bind const:App.AppAuthor}" />
-                                            <Run Text="2025-2026" />
-                                        </Paragraph>
-                                    </RichTextBlock>
-                                </HyperlinkButton.Content>
-                            </HyperlinkButton>
-                        </dev:SettingsExpander.Header>
-                        <local:InfoTag Glyph="&#xE8EC;" Text="{x:Bind helper:MetadataHelper.AppVersion}" />
-                        <dev:SettingsExpander.Items>
-                            <dev:SettingsCard Description="{x:Bind ViewModel.AppSettings.GeneralSettings.LastAppUpateCheckDateTime.ToString(), Mode=OneWay}">
-                                <dev:SettingsCard.Header>
+                    <controls:SettingsExpander
+                        Description="© Zhe Fang 2025-2026. Licensed under GPL-3.0."
+                        Header="BetterLyrics"
+                        HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/Logo.png}">
+                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind helper:MetadataHelper.AppVersion}" />
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard Description="{x:Bind ViewModel.AppSettings.GeneralSettings.LastAppUpateCheckDateTime.ToString(), Mode=OneWay}">
+                                <controls:SettingsCard.Header>
                                     <TextBlock x:Uid="AboutControlLastCheckTime" />
-                                </dev:SettingsCard.Header>
+                                </controls:SettingsCard.Header>
                                 <Button x:Uid="AboutControlCheckUpdate" Command="{x:Bind ViewModel.CheckAppUpdateCommand}" />
-                            </dev:SettingsCard>
-                        </dev:SettingsExpander.Items>
-                    </dev:SettingsExpander>
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                        <controls:SettingsExpander.ItemsHeader>
+                            <Grid>
+                                <InfoBar
+                                    x:Uid="AboutControlUpToDate"
+                                    IsClosable="False"
+                                    IsOpen="True"
+                                    Severity="Success"
+                                    Visibility="{x:Bind ViewModel.AppUpdateService.AppUpdateStatus, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=0}" />
+                                <InfoBar
+                                    x:Uid="AboutControlUpdateAvailable"
+                                    IsClosable="False"
+                                    IsOpen="True"
+                                    Message="{x:Bind ViewModel.AppUpdateService.LatestVersion, Mode=OneWay}"
+                                    Severity="Warning"
+                                    Visibility="{x:Bind ViewModel.AppUpdateService.AppUpdateStatus, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=1}">
+                                    <HyperlinkButton
+                                        x:Uid="AboutControlOpenAppStorePage"
+                                        Margin="-12,0,0,12"
+                                        Command="{x:Bind ViewModel.OpenAppStorePageCommand}" />
+                                </InfoBar>
+                                <InfoBar
+                                    x:Uid="AboutControlCheckUpdateError"
+                                    IsClosable="False"
+                                    IsOpen="True"
+                                    Severity="Error"
+                                    Visibility="{x:Bind ViewModel.AppUpdateService.AppUpdateStatus, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}" />
+                            </Grid>
+                        </controls:SettingsExpander.ItemsHeader>
+                    </controls:SettingsExpander>
 
-                    <InfoBar
-                        x:Uid="AboutControlUpToDate"
-                        IsClosable="False"
-                        IsOpen="True"
-                        Severity="Success"
-                        Visibility="{x:Bind ViewModel.AppUpdateService.AppUpdateStatus, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=0}" />
-                    <InfoBar
-                        x:Uid="AboutControlUpdateAvailable"
-                        IsClosable="False"
-                        IsOpen="True"
-                        Message="{x:Bind ViewModel.AppUpdateService.LatestVersion, Mode=OneWay}"
-                        Severity="Warning"
-                        Visibility="{x:Bind ViewModel.AppUpdateService.AppUpdateStatus, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=1}">
-                        <HyperlinkButton
-                            x:Uid="AboutControlOpenAppStorePage"
-                            Margin="-12,0,0,12"
-                            Command="{x:Bind ViewModel.OpenAppStorePageCommand}" />
-                    </InfoBar>
-                    <InfoBar
-                        x:Uid="AboutControlCheckUpdateError"
-                        IsClosable="False"
-                        IsOpen="True"
-                        Severity="Error"
-                        Visibility="{x:Bind ViewModel.AppUpdateService.AppUpdateStatus, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}" />
+                    <Grid Margin="0,-4,0,0" Style="{StaticResource CardGridStyle}">
+                        <Grid.Resources>
+                            <Style TargetType="controls:WrapPanel">
+                                <Setter Property="Margin" Value="-12,0,0,0" />
+                            </Style>
+                        </Grid.Resources>
+                        <StackPanel Margin="58,6" Spacing="6">
 
-                    <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
-                        <StackPanel Spacing="6">
-                            <dev:WrapPanel Margin="-12,0,0,0" Orientation="Horizontal">
+                            <controls:WrapPanel Orientation="Horizontal">
+                                <HyperlinkButton Command="{x:Bind ViewModel.OpenAppStorePageCommand}" Content="Microsoft Store" />
                                 <HyperlinkButton Content="GitHub" NavigateUri="{x:Bind const:Link.BetterLyricsGitHub}" />
                                 <HyperlinkButton x:Uid="UserGuide" NavigateUri="{x:Bind const:Link.UserGuide}" />
                                 <HyperlinkButton x:Uid="PrivacyPolicy" NavigateUri="{x:Bind const:Link.PrivacyPolicy}" />
                                 <HyperlinkButton x:Uid="TermsOfService" NavigateUri="{x:Bind const:Link.TermsOfService}" />
-                            </dev:WrapPanel>
-                        </StackPanel>
+                            </controls:WrapPanel>
 
-                    </dev:SettingsCard>
-
-                    <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
-                        <StackPanel Spacing="6">
                             <TextBlock x:Uid="SetingsPageFeedback" />
-                            <dev:WrapPanel Margin="-12,0,0,0" Orientation="Horizontal">
+                            <controls:WrapPanel Orientation="Horizontal">
                                 <HyperlinkButton Content="QQ 反馈交流群" NavigateUri="{x:Bind const:Link.QQGroup}" />
                                 <HyperlinkButton Content="Discord" NavigateUri="{x:Bind const:Link.Discord}" />
                                 <HyperlinkButton Content="Telegram" NavigateUri="{x:Bind const:Link.Telegram}" />
-                            </dev:WrapPanel>
-                        </StackPanel>
-                    </dev:SettingsCard>
+                            </controls:WrapPanel>
 
-                    <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
-                        <StackPanel Spacing="6">
                             <TextBlock x:Uid="SetingsPageDonation" />
-                            <dev:WrapPanel Margin="-12,0,0,0" Orientation="Horizontal">
+                            <controls:WrapPanel Orientation="Horizontal">
                                 <HyperlinkButton Content="Buy Me a Coffee" NavigateUri="{x:Bind const:Link.BuyMeACoffee}" />
                                 <HyperlinkButton Content="PayPal" NavigateUri="{x:Bind const:Link.PayPal}" />
                                 <HyperlinkButton
@@ -191,7 +186,7 @@
                                     </HyperlinkButton.ContextFlyout>
                                 </HyperlinkButton>
                                 <HyperlinkButton Content="爱发电" NavigateUri="{x:Bind const:Link.Afdian}" />
-                            </dev:WrapPanel>
+                            </controls:WrapPanel>
                             <Grid ColumnSpacing="6">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -208,158 +203,88 @@
                                     Style="{StaticResource CaptionTextBlockStyle}"
                                     TextWrapping="Wrap" />
                             </Grid>
+
                         </StackPanel>
-                    </dev:SettingsCard>
+                    </Grid>
 
-                    <dev:SettingsExpander x:Uid="SettingsPageThanksList">
-                        <dev:SettingsExpander.HeaderIcon>
-                            <ImageIcon Source="ms-appx:///Assets/RevolvingHearts.gif" />
-                        </dev:SettingsExpander.HeaderIcon>
-                        <dev:SettingsExpander.Items>
+                    <Expander
+                        Padding="0"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch"
+                        Background="Transparent">
+                        <Expander.Header>
+                            <TextBlock x:Uid="SetingsPageContributors" />
+                        </Expander.Header>
+                        <StackPanel>
+                            <local:ContributorCard
+                                AvatarSource="https://github.com/jayfunc.png"
+                                Badges="💻 🌐 🧪 📝"
+                                Description="https://github.com/jayfunc"
+                                Header="jayfunc" />
+                            <local:ContributorCard
+                                AvatarSource="https://github.com/Raspberry-Monster.png"
+                                Badges="💻"
+                                Description="https://github.com/Raspberry-Monster"
+                                Header="Raspberry-Monster" />
+                            <local:ContributorCard
+                                AvatarSource="https://github.com/zxbmmmmmmmmm.png"
+                                Badges="💻"
+                                Description="https://github.com/zxbmmmmmmmmm"
+                                Header="zxbmmmmmmmmm" />
+                            <local:ContributorCard
+                                AvatarSource="https://github.com/ZHider.png"
+                                Badges="💻"
+                                Description="https://github.com/ZHider"
+                                Header="ZHider" />
+                            <local:ContributorCard
+                                AvatarSource="https://github.com/kusutori.png"
+                                Badges="💻"
+                                Description="https://github.com/kusutori"
+                                Header="kusutori" />
+                            <local:ContributorCard
+                                AvatarSource="https://crowdin-static.cf-downloads.crowdin.com/avatar/17495984/large/8ccabd161147e3f072cf116491cacbbd.png"
+                                Badges="🌐 🧪 📝"
+                                Description="https://crowdin.com/profile/SuHeAndZl"
+                                Header="SuHeAndZl" />
+                            <local:ContributorCard
+                                AvatarSource="https://crowdin-static.cf-downloads.crowdin.com/avatar/17490908/large/2b2818952b68061b46051cc1c3cbe7fe_default.png"
+                                Badges="🌐"
+                                Description="https://crowdin.com/profile/borcolasky"
+                                Header="borcolasky" />
+                        </StackPanel>
+                    </Expander>
 
-                            <!--  贡献者  -->
-                            <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
-                                <StackPanel Spacing="6">
-                                    <RichTextBlock>
-                                        <Paragraph>
-                                            <Run x:Uid="SetingsPageContributors" />
-                                            <Run Text="-" />
-                                            <Run Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Code" />
-                                        </Paragraph>
-                                    </RichTextBlock>
-                                    <dev:WrapPanel Margin="-12,0,0,0" Orientation="Horizontal">
-                                        <HyperlinkButton Content="jayfunc" NavigateUri="https://github.com/jayfunc" />
-                                        <HyperlinkButton Content="Raspberry-Monster" NavigateUri="https://github.com/Raspberry-Monster" />
-                                        <HyperlinkButton Content="zxbmmmmmmmmm" NavigateUri="https://github.com/zxbmmmmmmmmm" />
-                                        <HyperlinkButton Content="ZHider" NavigateUri="https://github.com/ZHider" />
-                                        <HyperlinkButton Content="kusutori" NavigateUri="https://github.com/kusutori" />
-                                    </dev:WrapPanel>
-                                </StackPanel>
-                            </dev:SettingsCard>
-
-                            <!--  贡献者 (Translator)  -->
-                            <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
-                                <StackPanel Spacing="6">
-                                    <RichTextBlock>
-                                        <Paragraph>
-                                            <Run x:Uid="SetingsPageContributors" />
-                                            <Run Text="-" />
-                                            <Run Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="Translator" />
-                                        </Paragraph>
-                                    </RichTextBlock>
-                                    <dev:WrapPanel Margin="-12,0,0,0" Orientation="Horizontal">
-                                        <HyperlinkButton Content="borcolasky" NavigateUri="https://crowdin.com/profile/borcolasky" />
-                                        <HyperlinkButton Content="SuHeAndZl" NavigateUri="https://crowdin.com/profile/SuHeAndZl" />
-                                    </dev:WrapPanel>
-                                </StackPanel>
-                            </dev:SettingsCard>
-
-                            <!--  赞助  -->
-                            <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
-                                <StackPanel Spacing="6">
-                                    <TextBlock x:Uid="SettingsPagePatrons" />
-                                    <dev:WrapPanel Margin="-12,0,0,0" Orientation="Horizontal">
-                                        <uc:PatronControl Date="Mar 4, 2026" PatronName="你的秋乔呐" />
-                                        <uc:PatronControl Date="Mar 3, 2026" PatronName="Aureliano" />
-                                        <uc:PatronControl Date="Feb 27, 2026" PatronName="Andrews Consulting" />
-                                        <uc:PatronControl Date="Feb 20, 2026" PatronName="Asane779" />
-                                        <uc:PatronControl Date="Feb 18, 2026" PatronName="haitang000" />
-                                        <uc:PatronControl Date="Feb 17, 2026" PatronName="AlexZhao" />
-                                        <uc:PatronControl Date="Feb 16, 2026" PatronName="**昊" />
-                                        <uc:PatronControl Date="Feb 13, 2026" PatronName="**鹏" />
-                                        <uc:PatronControl Date="Jan 31, 2026" PatronName="wu" />
-                                        <uc:PatronControl Date="Jan 29, 2026" PatronName="咯他ii" />
-                                        <uc:PatronControl Date="Jan 29, 2026" PatronName="**林" />
-                                        <uc:PatronControl Date="Jan 29, 2026" PatronName="**棋" />
-                                        <uc:PatronControl Date="Jan 29, 2026" PatronName="**都" />
-                                        <uc:PatronControl Date="Jan 29, 2026" PatronName="**成" />
-                                        <uc:PatronControl Date="Jan 19, 2026" PatronName="**杭" />
-                                        <uc:PatronControl Date="Jan 8, 2026" PatronName="Eureka-K_K" />
-                                        <uc:PatronControl Date="Jan 3, 2026" PatronName="**轩" />
-                                        <uc:PatronControl Date="Dec 13, 2025" PatronName="&lt;Anon/匿名&gt;" />
-                                        <uc:PatronControl Date="Dec 3, 2025" PatronName="YE" />
-                                        <uc:PatronControl Date="Dec 2, 2025" PatronName="&lt;Anon/匿名&gt;" />
-                                        <uc:PatronControl Date="Nov 23, 2025" PatronName="**玄" />
-                                        <uc:PatronControl Date="Nov 21, 2025" PatronName="**智" />
-                                        <uc:PatronControl Date="Nov 17, 2025" PatronName="SuHeAndZl" />
-                                        <uc:PatronControl Date="Nov 2, 2025" PatronName="借过" />
-                                        <uc:PatronControl Date="Aug 28, 2025" PatronName="**华" />
-                                        <TextBlock
-                                            x:Uid="SettingsPageUserWhoPurchased"
-                                            Margin="12,8"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                    </dev:WrapPanel>
-                                </StackPanel>
-                            </dev:SettingsCard>
-
-                            <!--  特别鸣谢  -->
-                            <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
-                                <StackPanel Spacing="6">
-                                    <TextBlock x:Uid="SetingsPageSpecialThanks" />
-                                    <TextBlock
-                                        x:Uid="SettingsPageYouNowUsing"
-                                        Margin="0,8"
-                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                </StackPanel>
-                            </dev:SettingsCard>
-
-                            <!--  代码参考  -->
-                            <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
-                                <StackPanel Spacing="6">
-                                    <TextBlock x:Uid="SetingsPageDeps" />
-                                    <HyperlinkButton Margin="-12,0,0,0" NavigateUri="https://github.com/jayfunc/BetterLyrics/network/dependencies">
-                                        <TextBlock x:Uid="SetingsPageDeps" />
-                                    </HyperlinkButton>
-                                </StackPanel>
-                            </dev:SettingsCard>
-
-                            <!--  UI/UX 参考  -->
-                            <dev:SettingsCard HorizontalContentAlignment="Left" ContentAlignment="Left">
-                                <StackPanel Spacing="6">
-                                    <TextBlock x:Uid="SetingsPageUIUXRef" />
-                                    <dev:WrapPanel Margin="-12,0,0,0" Orientation="Horizontal">
-                                        <HyperlinkButton Content="refined-now-playing-netease" NavigateUri="https://github.com/solstice23/refined-now-playing-netease" />
-                                        <HyperlinkButton Content="Lyricify" NavigateUri="https://github.com/WXRIW/Lyricify-App" />
-                                        <HyperlinkButton Content="椒盐音乐 Salt Player" NavigateUri="https://moriafly.com/program/salt-player" />
-                                        <HyperlinkButton Content="MyToolBar" NavigateUri="https://github.com/TwilightLemon/MyToolBar" />
-                                    </dev:WrapPanel>
-                                </StackPanel>
-                            </dev:SettingsCard>
-
-                        </dev:SettingsExpander.Items>
-                    </dev:SettingsExpander>
-
-                    <dev:SettingsCard x:Uid="SettingsPageMockMusicPlaying">
+                    <controls:SettingsCard x:Uid="SettingsPageMockMusicPlaying">
                         <HyperlinkButton x:Uid="SettingsPagePlayingMockMusicButton" NavigateUri="https://soundcloud.com/carlyraejepsen/cut-to-the-feeling" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
-                    <dev:SettingsExpander x:Uid="SettingsPageCache" IsExpanded="True">
+                    <controls:SettingsExpander x:Uid="SettingsPageCache" IsExpanded="True">
                         <Button x:Uid="SettingsPageOpenFolderButton" Command="{x:Bind ViewModel.OpenCacheFolderCommand}" />
-                        <dev:SettingsExpander.Items>
-                            <dev:SettingsCard>
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard>
                                 <Button x:Uid="SettingsPageClearCache" Command="{x:Bind ViewModel.ClearCacheFilesCommand}" />
-                            </dev:SettingsCard>
-                        </dev:SettingsExpander.Items>
-                    </dev:SettingsExpander>
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
 
-                    <dev:SettingsCard x:Uid="SettingsPageSettings">
+                    <controls:SettingsCard x:Uid="SettingsPageSettings">
                         <Button x:Uid="SettingsPageOpenFolderButton" Command="{x:Bind ViewModel.OpenSettingsFolderCommand}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
-                    <dev:SettingsExpander x:Uid="SettingsPageSettingsManager" IsExpanded="True">
+                    <controls:SettingsExpander x:Uid="SettingsPageSettingsManager" IsExpanded="True">
                         <StackPanel Orientation="Horizontal" Spacing="6">
                             <Button x:Uid="SettingsPageImportSettingsButton" Command="{x:Bind ViewModel.ImportSettingsCommand}" />
                             <Button x:Uid="SettingsPageExportSettingsButton" Command="{x:Bind ViewModel.ExportSettingsCommand}" />
                         </StackPanel>
-                        <dev:SettingsExpander.ItemsHeader>
+                        <controls:SettingsExpander.ItemsHeader>
                             <InfoBar
                                 x:Uid="SettingsPageImportSettingsInfo"
                                 BorderThickness="0"
                                 CornerRadius="0"
                                 IsClosable="False"
                                 IsOpen="True" />
-                        </dev:SettingsExpander.ItemsHeader>
-                    </dev:SettingsExpander>
+                        </controls:SettingsExpander.ItemsHeader>
+                    </controls:SettingsExpander>
 
                     <TextBlock
                         x:Uid="SettingsPageDisclaimer"

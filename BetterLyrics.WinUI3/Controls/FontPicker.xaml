@@ -3,65 +3,53 @@
     x:Class="BetterLyrics.WinUI3.Controls.FontPicker"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dev="using:DevWinUI"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BetterLyrics.WinUI3.Models"
     mc:Ignorable="d">
 
-    <Grid>
-        <Button
-            x:Name="TriggerButton"
-            Padding="4"
-            HorizontalAlignment="Stretch"
-            HorizontalContentAlignment="Left"
-            Background="Transparent"
-            BorderThickness="0"
-            Click="TriggerButton_Click">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <ItemsControl
-                    x:Name="SelectedFontsItemsControl"
-                    VerticalAlignment="Center"
-                    IsHitTestVisible="False">
+    <Button x:Name="TriggerButton" Click="TriggerButton_Click">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <ItemsControl
+                x:Name="SelectedFontsItemsControl"
+                VerticalAlignment="Center"
+                IsHitTestVisible="False">
 
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <dev:WrapPanel
-                                HorizontalSpacing="6"
-                                Orientation="Horizontal"
-                                VerticalSpacing="6" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <controls:WrapPanel
+                            HorizontalSpacing="6"
+                            Orientation="Horizontal"
+                            VerticalSpacing="6" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
 
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate x:DataType="models:ExtendedFontFamily">
-                            <StackPanel
-                                Padding="8,4"
-                                CornerRadius="4"
-                                Style="{ThemeResource CardPanelStyle}">
-                                <TextBlock FontFamily="{x:Bind FontFamily}" Text="{x:Bind LocalizedFontFamily}" />
-                                <TextBlock
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Style="{StaticResource CaptionTextBlockStyle}"
-                                    Text="{x:Bind FontFamily}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="models:ExtendedFontFamily">
+                        <StackPanel Padding="8,4" CornerRadius="4">
+                            <TextBlock FontFamily="{x:Bind FontFamily}" Text="{x:Bind LocalizedFontFamily}" />
+                            <TextBlock
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                Style="{StaticResource CaptionTextBlockStyle}"
+                                Text="{x:Bind FontFamily}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
 
-                <FontIcon
-                    Grid.Column="1"
-                    Margin="10,0"
-                    FontFamily="{StaticResource SegoeFluentIcons}"
-                    FontSize="12"
-                    Glyph="&#xE70D;"
-                    Opacity="0.6" />
-            </Grid>
-        </Button>
-    </Grid>
+            <FontIcon
+                Grid.Column="1"
+                Margin="0,0,4,0"
+                FontFamily="{StaticResource SegoeFluentIcons}"
+                FontSize="10"
+                Glyph="&#xE70D;"
+                Opacity="0.6" />
+        </Grid>
+    </Button>
 </UserControl>

@@ -1,5 +1,4 @@
 ﻿using BetterLyrics.WinUI3.Hooks;
-using DevWinUI;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -32,8 +31,10 @@ namespace BetterLyrics.WinUI3.Helper
             if (window == null) return null;
 
             var picker = new Windows.Storage.Pickers.FileOpenPicker();
-            picker.FileTypeFilter.AddRange(fileTypeFilter);
-
+            foreach (var item in fileTypeFilter)
+            {
+                picker.FileTypeFilter.Add(item);
+            }
             var hwnd = WindowNative.GetWindowHandle(window);
             InitializeWithWindow.Initialize(picker, hwnd);
 
@@ -54,7 +55,10 @@ namespace BetterLyrics.WinUI3.Helper
             if (window == null) return null;
 
             var picker = new Windows.Storage.Pickers.FileSavePicker();
-            picker.FileTypeChoices.AddRange(fileTypeChoices);
+            foreach (var item in fileTypeChoices)
+            {
+                picker.FileTypeChoices.Add(item);
+            }
             if (suggestedFileName != null)
             {
                 picker.SuggestedFileName = suggestedFileName;

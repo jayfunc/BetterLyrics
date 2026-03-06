@@ -3,8 +3,8 @@
     x:Class="BetterLyrics.WinUI3.Controls.AlbumArtAreaEffectSettingsControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dev="using:DevWinUI"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
@@ -17,18 +17,18 @@
 
                     <TextBlock x:Uid="SettingsPageSongInfoEffect" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <dev:SettingsCard x:Uid="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEC52;}">
+                    <controls:SettingsCard x:Uid="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEC52;}">
                         <ToggleSwitch IsOn="{x:Bind AlbumArtAreaEffectSettings.SongInfoAutoScroll, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
                     <TextBlock x:Uid="SettingsPageAlbumEffect" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <dev:SettingsCard x:Uid="SettingsPageImageSwitchType" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8EB;}">
+                    <controls:SettingsCard x:Uid="SettingsPageImageSwitchType" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8EB;}">
                         <ComboBox SelectedIndex="{x:Bind AlbumArtAreaEffectSettings.ImageSwitchType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageCrossfade" />
                             <ComboBoxItem x:Uid="SettingsPageSlide" />
                         </ComboBox>
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
                 </StackPanel>
             </Grid>

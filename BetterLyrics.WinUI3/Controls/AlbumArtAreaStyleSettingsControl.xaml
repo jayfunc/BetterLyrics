@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dev="using:DevWinUI"
+    
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
@@ -19,66 +19,66 @@
                     <TextBlock x:Uid="SettingsPageAlbumStyle" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <!--  整体对齐  -->
-                    <dev:SettingsCard x:Uid="SettingsPageAlignment" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8E3;}">
+                    <controls:SettingsCard x:Uid="SettingsPageAlignment" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8E3;}">
                         <ComboBox SelectedIndex="{x:Bind AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageLeft" />
                             <ComboBoxItem x:Uid="SettingsPageCenter" />
                             <ComboBoxItem x:Uid="SettingsPageRight" />
                         </ComboBox>
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
                     <TextBlock x:Uid="SettingsPageAlbumArt" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <!--  专辑高度  -->
-                    <dev:SettingsExpander
+                    <controls:SettingsExpander
                         x:Uid="SettingsPageAlbumArtHeight"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xE784;}"
                         IsExpanded="True">
-                        <dev:SettingsExpander.Items>
-                            <dev:SettingsCard x:Uid="SettingsPageAutoAdjust">
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="SettingsPageAutoAdjust">
                                 <ToggleSwitch IsOn="{x:Bind AlbumArtLayoutSettings.IsAutoCoverImageHeight, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                            <dev:SettingsCard IsEnabled="{x:Bind AlbumArtLayoutSettings.IsAutoCoverImageHeight, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
+                            </controls:SettingsCard>
+                            <controls:SettingsCard IsEnabled="{x:Bind AlbumArtLayoutSettings.IsAutoCoverImageHeight, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
                                 <NumberBox
                                     Minimum="0"
                                     SpinButtonPlacementMode="Inline"
                                     Value="{x:Bind AlbumArtLayoutSettings.CoverImageHeight, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                        </dev:SettingsExpander.Items>
-                    </dev:SettingsExpander>
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
 
                     <!--  专辑圆角  -->
-                    <dev:SettingsCard x:Uid="SettingsPageAlbumRadius" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEA3A;}">
+                    <controls:SettingsCard x:Uid="SettingsPageAlbumRadius" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEA3A;}">
                         <local:ExtendedSlider
                             Default="12"
                             Maximum="100"
                             Minimum="0"
                             Unit="%"
                             Value="{x:Bind AlbumArtLayoutSettings.CoverImageRadius, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
                     <!--  专辑阴影  -->
-                    <dev:SettingsCard x:Uid="SettingsPageAlbumShadowAmount" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xF5EF;}">
+                    <controls:SettingsCard x:Uid="SettingsPageAlbumShadowAmount" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xF5EF;}">
                         <local:ExtendedSlider
                             Default="12"
                             Maximum="64"
                             Minimum="0"
                             Value="{x:Bind AlbumArtLayoutSettings.CoverImageShadowAmount, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
                     <TextBlock x:Uid="SettingsPageSongInfo" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <dev:SettingsExpander
+                    <controls:SettingsExpander
                         x:Uid="SettingsPageLyricsFontSize"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xE8E9;}"
                         IsExpanded="True">
-                        <dev:SettingsExpander.Items>
-                            <dev:SettingsCard x:Uid="SettingsPageAutoAdjust">
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="SettingsPageAutoAdjust">
                                 <ToggleSwitch IsOn="{x:Bind AlbumArtLayoutSettings.IsAutoSongInfoFontSize, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                            <dev:SettingsCard>
+                            </controls:SettingsCard>
+                            <controls:SettingsCard>
                                 <local:ExtendedSlider
                                     Default="18"
                                     Frequency="2"
@@ -86,19 +86,19 @@
                                     Maximum="72"
                                     Minimum="8"
                                     Value="{x:Bind AlbumArtLayoutSettings.SongInfoFontSize, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                        </dev:SettingsExpander.Items>
-                    </dev:SettingsExpander>
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
 
-                    <dev:SettingsCard x:Uid="SettingsPageShowTitle" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEF3D;}">
+                    <controls:SettingsCard x:Uid="SettingsPageShowTitle" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEF3D;}">
                         <ToggleSwitch IsOn="{x:Bind AlbumArtLayoutSettings.ShowTitle, Mode=TwoWay}" />
-                    </dev:SettingsCard>
-                    <dev:SettingsCard x:Uid="SettingsPageShowArtists" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEF3D;}">
+                    </controls:SettingsCard>
+                    <controls:SettingsCard x:Uid="SettingsPageShowArtists" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEF3D;}">
                         <ToggleSwitch IsOn="{x:Bind AlbumArtLayoutSettings.ShowArtists, Mode=TwoWay}" />
-                    </dev:SettingsCard>
-                    <dev:SettingsCard x:Uid="SettingsPageShowAlbum" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEF3D;}">
+                    </controls:SettingsCard>
+                    <controls:SettingsCard x:Uid="SettingsPageShowAlbum" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEF3D;}">
                         <ToggleSwitch IsOn="{x:Bind AlbumArtLayoutSettings.ShowAlbum, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
                 </StackPanel>
             </Grid>

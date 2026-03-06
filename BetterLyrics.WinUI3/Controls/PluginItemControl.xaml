@@ -3,24 +3,24 @@
     x:Class="BetterLyrics.WinUI3.Controls.PluginItemControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dev="using:DevWinUI"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
-    <dev:SettingsExpander x:Name="RootExpander" IsExpanded="False">
-        <dev:SettingsExpander.Header>
+    <controls:SettingsExpander x:Name="RootExpander" IsExpanded="False">
+        <controls:SettingsExpander.Header>
             <StackPanel Spacing="2">
                 <StackPanel Orientation="Horizontal" Spacing="6">
                     <TextBlock Text="{x:Bind PluginInfo.Plugin.Id, Mode=OneWay}" />
                     <local:InfoTag Glyph="&#xE77B;" Text="{x:Bind PluginInfo.Plugin.Author, Mode=OneWay}" />
                 </StackPanel>
             </StackPanel>
-        </dev:SettingsExpander.Header>
+        </controls:SettingsExpander.Header>
 
-        <dev:SettingsExpander.Description>
+        <controls:SettingsExpander.Description>
             <StackPanel>
                 <TextBlock
                     MaxLines="2"
@@ -29,9 +29,9 @@
                     TextTrimming="CharacterEllipsis"
                     TextWrapping="Wrap" />
             </StackPanel>
-        </dev:SettingsExpander.Description>
+        </controls:SettingsExpander.Description>
 
-        <dev:SettingsExpander.Content>
+        <controls:SettingsExpander.Content>
             <StackPanel
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
@@ -51,21 +51,21 @@
                     Glyph="&#xE787;"
                     Text="{x:Bind PluginInfo.Plugin.LastUpdated, Mode=OneWay}" />
             </StackPanel>
-        </dev:SettingsExpander.Content>
+        </controls:SettingsExpander.Content>
 
-        <dev:SettingsExpander.ItemsHeader>
-            <dev:SettingsCard x:Uid="PluginItemControlEnablePlugin">
+        <controls:SettingsExpander.ItemsHeader>
+            <controls:SettingsCard x:Uid="PluginItemControlEnablePlugin">
                 <ToggleSwitch IsOn="{x:Bind PluginInfo.IsEnabled, Mode=TwoWay}" Toggled="ToggleSwitch_Toggled" />
-            </dev:SettingsCard>
-        </dev:SettingsExpander.ItemsHeader>
+            </controls:SettingsCard>
+        </controls:SettingsExpander.ItemsHeader>
 
-        <dev:SettingsExpander.Items />
+        <controls:SettingsExpander.Items />
 
-        <dev:SettingsExpander.ItemsFooter>
-            <dev:SettingsCard>
+        <controls:SettingsExpander.ItemsFooter>
+            <controls:SettingsCard>
                 <Button x:Uid="PluginManagerControlUninstall" Click="UninstallClick" />
-            </dev:SettingsCard>
-        </dev:SettingsExpander.ItemsFooter>
+            </controls:SettingsCard>
+        </controls:SettingsExpander.ItemsFooter>
 
-    </dev:SettingsExpander>
+    </controls:SettingsExpander>
 </UserControl>

@@ -9,8 +9,8 @@
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:converters="using:CommunityToolkit.WinUI.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dev="using:DevWinUI"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:labs="using:CommunityToolkit.Labs.WinUI.MarqueeTextRns"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:CommunityToolkit.WinUI.Media"
@@ -122,82 +122,86 @@
                         <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
                     </StackPanel.OpacityTransition>
 
-                    <dev:OpacityMaskView HorizontalAlignment="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=OneWay, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}}">
-                        <dev:OpacityMaskView.OpacityMask>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                <GradientStop Offset="0" Color="Transparent" />
-                                <GradientStop Offset="0.02" Color="#FFFFFFFF" />
-                                <GradientStop Offset="0.98" Color="#FFFFFFFF" />
-                                <GradientStop Offset="1" Color="Transparent" />
-                            </LinearGradientBrush>
-                        </dev:OpacityMaskView.OpacityMask>
-                        <dev:AutoScrollView
+                    <controls:OpacityMaskView HorizontalAlignment="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=OneWay, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}}">
+                        <controls:OpacityMaskView.OpacityMask>
+                            <Rectangle>
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Offset="0" Color="Transparent" />
+                                        <GradientStop Offset="0.02" Color="#FFFFFFFF" />
+                                        <GradientStop Offset="0.98" Color="#FFFFFFFF" />
+                                        <GradientStop Offset="1" Color="Transparent" />
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </controls:OpacityMaskView.OpacityMask>
+                        <Grid
                             x:Name="TitleAutoScrollHoverEffectView"
-                            IsPlaying="False"
                             PointerCanceled="TitleAutoScrollHoverEffectView_PointerCanceled"
                             PointerEntered="TitleAutoScrollHoverEffectView_PointerEntered"
-                            PointerExited="TitleAutoScrollHoverEffectView_PointerExited"
-                            ScrollingPixelsPreSecond="25">
-                            <TextBlock
+                            PointerExited="TitleAutoScrollHoverEffectView_PointerExited">
+                            <labs:MarqueeText
                                 x:Name="TitleTextBlock"
                                 Padding="2,0"
                                 FontWeight="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
-                                TextTrimming="None"
+                                Speed="0"
                                 Visibility="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.ShowTitle, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
-                        </dev:AutoScrollView>
-                    </dev:OpacityMaskView>
+                        </Grid>
+                    </controls:OpacityMaskView>
 
-                    <dev:OpacityMaskView HorizontalAlignment="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=OneWay, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}}">
-                        <dev:OpacityMaskView.OpacityMask>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                <GradientStop Offset="0" Color="Transparent" />
-                                <GradientStop Offset="0.02" Color="#FFFFFFFF" />
-                                <GradientStop Offset="0.98" Color="#FFFFFFFF" />
-                                <GradientStop Offset="1" Color="Transparent" />
-                            </LinearGradientBrush>
-                        </dev:OpacityMaskView.OpacityMask>
-                        <dev:AutoScrollView
+                    <controls:OpacityMaskView HorizontalAlignment="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=OneWay, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}}">
+                        <controls:OpacityMaskView.OpacityMask>
+                            <Rectangle>
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Offset="0" Color="Transparent" />
+                                        <GradientStop Offset="0.02" Color="#FFFFFFFF" />
+                                        <GradientStop Offset="0.98" Color="#FFFFFFFF" />
+                                        <GradientStop Offset="1" Color="Transparent" />
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </controls:OpacityMaskView.OpacityMask>
+                        <Grid
                             x:Name="ArtistsAutoScrollHoverEffectView"
-                            IsPlaying="False"
                             PointerCanceled="ArtistsAutoScrollHoverEffectView_PointerCanceled"
                             PointerEntered="ArtistsAutoScrollHoverEffectView_PointerEntered"
-                            PointerExited="ArtistsAutoScrollHoverEffectView_PointerExited"
-                            ScrollingPixelsPreSecond="25">
-                            <TextBlock
+                            PointerExited="ArtistsAutoScrollHoverEffectView_PointerExited">
+                            <labs:MarqueeText
                                 x:Name="ArtistsTextBlock"
                                 Padding="2,0"
                                 FontWeight="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
                                 Opacity="0.6"
-                                TextTrimming="None"
                                 Visibility="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.ShowArtists, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
-                        </dev:AutoScrollView>
-                    </dev:OpacityMaskView>
+                        </Grid>
+                    </controls:OpacityMaskView>
 
-                    <dev:OpacityMaskView HorizontalAlignment="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=OneWay, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}}">
-                        <dev:OpacityMaskView.OpacityMask>
-                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                <GradientStop Offset="0" Color="Transparent" />
-                                <GradientStop Offset="0.02" Color="#FFFFFFFF" />
-                                <GradientStop Offset="0.98" Color="#FFFFFFFF" />
-                                <GradientStop Offset="1" Color="Transparent" />
-                            </LinearGradientBrush>
-                        </dev:OpacityMaskView.OpacityMask>
-                        <dev:AutoScrollView
+                    <controls:OpacityMaskView HorizontalAlignment="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=OneWay, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}}">
+                        <controls:OpacityMaskView.OpacityMask>
+                            <Rectangle>
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Offset="0" Color="Transparent" />
+                                        <GradientStop Offset="0.02" Color="#FFFFFFFF" />
+                                        <GradientStop Offset="0.98" Color="#FFFFFFFF" />
+                                        <GradientStop Offset="1" Color="Transparent" />
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </controls:OpacityMaskView.OpacityMask>
+                        <Grid
                             x:Name="AlbumAutoScrollHoverEffectView"
-                            IsPlaying="False"
                             PointerCanceled="AlbumAutoScrollHoverEffectView_PointerCanceled"
                             PointerEntered="AlbumAutoScrollHoverEffectView_PointerEntered"
-                            PointerExited="AlbumAutoScrollHoverEffectView_PointerExited"
-                            ScrollingPixelsPreSecond="25">
-                            <TextBlock
+                            PointerExited="AlbumAutoScrollHoverEffectView_PointerExited">
+                            <labs:MarqueeText
                                 x:Name="AlbumTextBlock"
                                 Padding="2,0"
                                 FontWeight="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
                                 Opacity="0.3"
-                                TextTrimming="None"
                                 Visibility="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.ShowAlbum, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
-                        </dev:AutoScrollView>
-                    </dev:OpacityMaskView>
+                        </Grid>
+                    </controls:OpacityMaskView>
 
                 </StackPanel>
 

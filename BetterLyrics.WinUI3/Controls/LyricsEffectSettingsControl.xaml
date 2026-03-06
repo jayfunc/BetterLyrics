@@ -5,7 +5,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dev="using:DevWinUI"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
@@ -22,134 +21,134 @@
                         Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"
                         Text="Effect" />
 
-                    <dev:SettingsCard x:Uid="SettingsPageLyricsWordByWordEffectMode" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xF714;}">
+                    <controls:SettingsCard x:Uid="SettingsPageLyricsWordByWordEffectMode" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xF714;}">
                         <ComboBox SelectedIndex="{x:Bind LyricsEffectSettings.WordByWordEffectMode, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageLyricsWordByWordEffectModeAuto" />
                             <ComboBoxItem x:Uid="SettingsPageLyricsWordByWordEffectModeNever" />
                             <ComboBoxItem x:Uid="SettingsPageLyricsWordByWordEffectModeAlways" />
                         </ComboBox>
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
                     <!--  模糊效果  -->
-                    <dev:SettingsCard x:Uid="SettingsPageLyricsBlurEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE727;}">
+                    <controls:SettingsCard x:Uid="SettingsPageLyricsBlurEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE727;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsBlurEffectEnabled, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
                     <!--  淡出效果  -->
-                    <dev:SettingsCard x:Uid="SettingsPageLyricsFadeOutEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE89F;}">
+                    <controls:SettingsCard x:Uid="SettingsPageLyricsFadeOutEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE89F;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsFadeOutEffectEnabled, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
                     <!--  远离视野  -->
-                    <dev:SettingsCard x:Uid="SettingsPageLyricsOutOfSightEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xF19D;}">
+                    <controls:SettingsCard x:Uid="SettingsPageLyricsOutOfSightEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xF19D;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsOutOfSightEffectEnabled, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
                     <!--  呼吸效果  -->
-                    <dev:SettingsExpander x:Uid="SettingsPageSpectrumBrethingEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEA3F;}">
+                    <controls:SettingsExpander x:Uid="SettingsPageSpectrumBrethingEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEA3F;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsBrethingEffectEnabled, Mode=TwoWay}" />
-                        <dev:SettingsExpander.Items>
-                            <dev:SettingsCard x:Uid="SettingsPageSpectrumBreathingIntensity" IsEnabled="{x:Bind LyricsEffectSettings.IsLyricsBrethingEffectEnabled, Mode=OneWay}">
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="SettingsPageSpectrumBreathingIntensity" IsEnabled="{x:Bind LyricsEffectSettings.IsLyricsBrethingEffectEnabled, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="80"
                                     Maximum="200"
                                     Minimum="0"
                                     Unit="%"
                                     Value="{x:Bind LyricsEffectSettings.LyricsBreathingIntensity, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                        </dev:SettingsExpander.Items>
-                    </dev:SettingsExpander>
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
 
                     <!--  辉光效果  -->
-                    <dev:SettingsExpander x:Uid="SettingsPageLyricsGlowEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE9A9;}">
+                    <controls:SettingsExpander x:Uid="SettingsPageLyricsGlowEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE9A9;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsGlowEffectEnabled, Mode=TwoWay}" />
-                        <dev:SettingsExpander.Items>
-                            <dev:SettingsCard x:Uid="SettingsPageScope">
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="SettingsPageScope">
                                 <ComboBox SelectedIndex="{x:Bind LyricsEffectSettings.LyricsGlowEffectScope, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                     <ComboBoxItem x:Uid="SettingsPageEffectScopeLongDurationSyllable" />
                                     <ComboBoxItem x:Uid="SettingsPageEffectLineStartToCurrentChar" />
                                 </ComboBox>
-                            </dev:SettingsCard>
-                            <dev:SettingsCard x:Uid="SettingsPageLongSyllableDuration">
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="SettingsPageLongSyllableDuration">
                                 <local:ExtendedSlider
                                     Default="700"
                                     Maximum="1000"
                                     Minimum="0"
                                     Unit="ms"
                                     Value="{x:Bind LyricsEffectSettings.LyricsGlowEffectLongSyllableDuration, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                            <dev:SettingsCard x:Uid="SettingsPageAutoAdjust">
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="SettingsPageAutoAdjust">
                                 <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsGlowEffectAmountAutoAdjust, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                            <dev:SettingsCard x:Uid="SettingsPageAmount" IsEnabled="{x:Bind LyricsEffectSettings.IsLyricsGlowEffectAmountAutoAdjust, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="SettingsPageAmount" IsEnabled="{x:Bind LyricsEffectSettings.IsLyricsGlowEffectAmountAutoAdjust, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Maximum="16"
                                     Minimum="0"
                                     Value="{x:Bind LyricsEffectSettings.LyricsGlowEffectAmount, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                        </dev:SettingsExpander.Items>
-                    </dev:SettingsExpander>
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
 
                     <!--  缩放效果  -->
-                    <dev:SettingsExpander x:Uid="SettingsPageLyricsScaleEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8A3;}">
+                    <controls:SettingsExpander x:Uid="SettingsPageLyricsScaleEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8A3;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsScaleEffectEnabled, Mode=TwoWay}" />
-                        <dev:SettingsExpander.Items>
-                            <dev:SettingsCard x:Uid="SettingsPageLongSyllableDuration">
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="SettingsPageLongSyllableDuration">
                                 <local:ExtendedSlider
                                     Default="700"
                                     Maximum="1000"
                                     Minimum="0"
                                     Unit="ms"
                                     Value="{x:Bind LyricsEffectSettings.LyricsScaleEffectLongSyllableDuration, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                            <dev:SettingsCard x:Uid="SettingsPageAutoAdjust">
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="SettingsPageAutoAdjust">
                                 <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsScaleEffectAmountAutoAdjust, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                            <dev:SettingsCard x:Uid="SettingsPageAmount" IsEnabled="{x:Bind LyricsEffectSettings.IsLyricsScaleEffectAmountAutoAdjust, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="SettingsPageAmount" IsEnabled="{x:Bind LyricsEffectSettings.IsLyricsScaleEffectAmountAutoAdjust, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="115"
                                     Maximum="200"
                                     Minimum="100"
                                     Unit="%"
                                     Value="{x:Bind LyricsEffectSettings.LyricsScaleEffectAmount, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                        </dev:SettingsExpander.Items>
-                    </dev:SettingsExpander>
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
 
                     <!--  浮动动画  -->
-                    <dev:SettingsExpander x:Uid="SettingsPageLyricsFloatAnimation" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8C5;}">
+                    <controls:SettingsExpander x:Uid="SettingsPageLyricsFloatAnimation" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8C5;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsFloatAnimationEnabled, Mode=TwoWay}" />
-                        <dev:SettingsExpander.Items>
-                            <dev:SettingsCard x:Uid="SettingsPageAutoAdjust">
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="SettingsPageAutoAdjust">
                                 <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsFloatAnimationAmountAutoAdjust, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                            <dev:SettingsCard x:Uid="SettingsPageAmount" IsEnabled="{x:Bind LyricsEffectSettings.IsLyricsFloatAnimationAmountAutoAdjust, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="SettingsPageAmount" IsEnabled="{x:Bind LyricsEffectSettings.IsLyricsFloatAnimationAmountAutoAdjust, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="4"
                                     Maximum="16"
                                     Minimum="0"
                                     Value="{x:Bind LyricsEffectSettings.LyricsFloatAnimationAmount, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                            <dev:SettingsCard x:Uid="LyricsEffectSettingsControlAnimationDuration">
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="LyricsEffectSettingsControlAnimationDuration">
                                 <local:ExtendedSlider
                                     Default="450"
                                     Maximum="2000"
                                     Minimum="0"
                                     Unit="ms"
                                     Value="{x:Bind LyricsEffectSettings.LyricsFloatAnimationDuration, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                        </dev:SettingsExpander.Items>
-                    </dev:SettingsExpander>
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
 
                     <!--  扇形歌词  -->
-                    <dev:SettingsExpander
+                    <controls:SettingsExpander
                         x:Uid="SettingsPageFan"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xEBC5;}"
                         IsExpanded="{x:Bind LyricsEffectSettings.IsFanLyricsEnabled, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsFanLyricsEnabled, Mode=TwoWay}" />
-                        <dev:SettingsExpander.Items>
-                            <dev:SettingsCard IsEnabled="{x:Bind LyricsEffectSettings.IsFanLyricsEnabled, Mode=OneWay}">
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard IsEnabled="{x:Bind LyricsEffectSettings.IsFanLyricsEnabled, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="30"
                                     Maximum="90"
@@ -157,46 +156,46 @@
                                     Unit="°"
                                     Value="{x:Bind LyricsEffectSettings.FanLyricsAngle, Mode=TwoWay}" />
 
-                            </dev:SettingsCard>
-                        </dev:SettingsExpander.Items>
-                    </dev:SettingsExpander>
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
 
                     <!--  3D 歌词  -->
-                    <dev:SettingsExpander
+                    <controls:SettingsExpander
                         x:Uid="SettingsPage3DLyrics"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xE914;}"
                         IsExpanded="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=TwoWay}" />
-                        <dev:SettingsExpander.Items>
-                            <dev:SettingsCard Header="X" IsEnabled="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=OneWay}">
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard Header="X" IsEnabled="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="0"
                                     Maximum="90"
                                     Minimum="-90"
                                     Unit="°"
                                     Value="{x:Bind LyricsEffectSettings.Lyrics3DXAngle, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                            <dev:SettingsCard Header="Y" IsEnabled="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=OneWay}">
+                            </controls:SettingsCard>
+                            <controls:SettingsCard Header="Y" IsEnabled="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="0"
                                     Maximum="90"
                                     Minimum="-90"
                                     Unit="°"
                                     Value="{x:Bind LyricsEffectSettings.Lyrics3DYAngle, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                            <dev:SettingsCard Header="Z" IsEnabled="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=OneWay}">
+                            </controls:SettingsCard>
+                            <controls:SettingsCard Header="Z" IsEnabled="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="0"
                                     Maximum="90"
                                     Minimum="-90"
                                     Unit="°"
                                     Value="{x:Bind LyricsEffectSettings.Lyrics3DZAngle, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                            <dev:SettingsCard x:Uid="SettingsPage3DLyricsAutoFitLayout">
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="SettingsPage3DLyricsAutoFitLayout">
                                 <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.Lyrics3DAutoFitLayout, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                            <dev:SettingsCard x:Uid="SettingsPage3DLyricsDepth" IsEnabled="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=OneWay}">
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="SettingsPage3DLyricsDepth" IsEnabled="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="1000"
                                     Frequency="10"
@@ -204,12 +203,12 @@
                                     Minimum="100"
                                     Unit="°"
                                     Value="{x:Bind LyricsEffectSettings.Lyrics3DDepth, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                        </dev:SettingsExpander.Items>
-                    </dev:SettingsExpander>
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
 
                     <!--  歌词动画  -->
-                    <dev:SettingsExpander x:Uid="SettingsPageScrollEasing" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xECE7;}">
+                    <controls:SettingsExpander x:Uid="SettingsPageScrollEasing" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xECE7;}">
                         <ComboBox SelectedIndex="{x:Bind LyricsEffectSettings.LyricsScrollEasingType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageEasingTypeLinear" />
                             <ComboBoxItem x:Uid="SettingsPageEasingTypeSmoothStep" />
@@ -224,15 +223,15 @@
                             <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseElastic" />
                             <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseBounce" />
                         </ComboBox>
-                        <dev:SettingsExpander.Items>
-                            <dev:SettingsCard x:Uid="SettingsPageEasingMode">
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="SettingsPageEasingMode">
                                 <ComboBox SelectedIndex="{x:Bind LyricsEffectSettings.LyricsScrollEasingMode, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                     <ComboBoxItem x:Uid="SettingsPageEasingModeIn" />
                                     <ComboBoxItem x:Uid="SettingsPageEasingModeOut" />
                                     <ComboBoxItem x:Uid="SettingsPageEasingModeInOut" />
                                 </ComboBox>
-                            </dev:SettingsCard>
-                            <dev:SettingsCard x:Uid="SettingsPageScrollTopDuration">
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="SettingsPageScrollTopDuration">
                                 <local:ExtendedSlider
                                     Default="500"
                                     Frequency="50"
@@ -240,8 +239,8 @@
                                     Minimum="0"
                                     Unit="ms"
                                     Value="{x:Bind LyricsEffectSettings.LyricsScrollTopDuration, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                            <dev:SettingsCard x:Uid="SettingsPageScrollDuration">
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="SettingsPageScrollDuration">
                                 <local:ExtendedSlider
                                     Default="500"
                                     Frequency="50"
@@ -249,8 +248,8 @@
                                     Minimum="0"
                                     Unit="ms"
                                     Value="{x:Bind LyricsEffectSettings.LyricsScrollDuration, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                            <dev:SettingsCard x:Uid="SettingsPageScrollBottomDuration">
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="SettingsPageScrollBottomDuration">
                                 <local:ExtendedSlider
                                     Default="500"
                                     Frequency="50"
@@ -258,8 +257,8 @@
                                     Minimum="0"
                                     Unit="ms"
                                     Value="{x:Bind LyricsEffectSettings.LyricsScrollBottomDuration, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                            <dev:SettingsCard x:Uid="SettingsPageScrollTopDelay">
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="SettingsPageScrollTopDelay">
                                 <local:ExtendedSlider
                                     Default="0"
                                     Frequency="50"
@@ -267,8 +266,8 @@
                                     Minimum="0"
                                     Unit="ms"
                                     Value="{x:Bind LyricsEffectSettings.LyricsScrollTopDelay, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                            <dev:SettingsCard x:Uid="SettingsPageScrollBottomDelay">
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="SettingsPageScrollBottomDelay">
                                 <local:ExtendedSlider
                                     Default="0"
                                     Frequency="50"
@@ -276,9 +275,9 @@
                                     Minimum="0"
                                     Unit="ms"
                                     Value="{x:Bind LyricsEffectSettings.LyricsScrollBottomDelay, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                        </dev:SettingsExpander.Items>
-                    </dev:SettingsExpander>
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
 
                 </StackPanel>
             </Grid>

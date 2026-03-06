@@ -6,7 +6,6 @@
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:converters="using:BetterLyrics.WinUI3.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dev="using:DevWinUI"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:lvc="using:LiveChartsCore.SkiaSharpView.WinUI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -20,9 +19,9 @@
             <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
             <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="CornerRadius" Value="4" />
             <Setter Property="Padding" Value="16" />
-            <Setter Property="Margin" Value="0,0,12,12" />
+            <Setter Property="Margin" Value="0,0,4,4" />
         </Style>
     </UserControl.Resources>
 
@@ -34,12 +33,14 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <!--  加载条  -->
         <ProgressBar
             Grid.Row="0"
             Background="Transparent"
             IsIndeterminate="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
             Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
 
+        <!--  记录条  -->
         <Grid Grid.Row="1" Visibility="{x:Bind ViewModel.GSMTCService.IsScrobbled, Mode=OneWay, Converter={StaticResource BoolNegationToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -59,52 +60,61 @@
                 Value="{x:Bind ViewModel.GSMTCService.ScrobbledDuration.TotalSeconds, Mode=OneWay}" />
         </Grid>
 
-        <controls:WrapPanel
+        <!--  时间选取  -->
+        <controls:SettingsExpander
+            x:Uid="StatsDashboardControlTimeRange"
             Grid.Row="2"
-            Margin="36,36,36,12"
-            HorizontalSpacing="12"
-            Orientation="Horizontal"
-            VerticalSpacing="12">
-            <ComboBox
-                x:Uid="StatsDashboardControlTimeRange"
-                Header="Time Range"
-                SelectedIndex="{x:Bind ViewModel.SelectedTimeRange, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                <ComboBoxItem x:Uid="StatsDashboardControlToday" />
-                <ComboBoxItem x:Uid="StatsDashboardControlThisWeek" />
-                <ComboBoxItem x:Uid="StatsDashboardControlThisMonth" />
-                <ComboBoxItem x:Uid="StatsDashboardControlThisQuarter" />
-                <ComboBoxItem x:Uid="StatsDashboardControlThisYear" />
-                <ComboBoxItem x:Uid="StatsDashboardControlAllTime" />
-                <ComboBoxItem x:Uid="StatsDashboardControlCustom" />
-            </ComboBox>
+            Margin="36,36,36,4"
+            HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                     Glyph=&#xEC92;}"
+            IsExpanded="{x:Bind ViewModel.SelectedTimeRange, Mode=OneWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=6}">
+            <StackPanel Orientation="Horizontal" Spacing="6">
+                <Button
+                    Command="{x:Bind ViewModel.RefreshDataCommand}"
+                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                          FontSize=12,
+                                          Glyph=&#xE72C;}"
+                    Style="{StaticResource GhostButtonStyle}" />
+                <ComboBox SelectedIndex="{x:Bind ViewModel.SelectedTimeRange, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                    <ComboBoxItem x:Uid="StatsDashboardControlToday" />
+                    <ComboBoxItem x:Uid="StatsDashboardControlThisWeek" />
+                    <ComboBoxItem x:Uid="StatsDashboardControlThisMonth" />
+                    <ComboBoxItem x:Uid="StatsDashboardControlThisQuarter" />
+                    <ComboBoxItem x:Uid="StatsDashboardControlThisYear" />
+                    <ComboBoxItem x:Uid="StatsDashboardControlAllTime" />
+                    <ComboBoxItem x:Uid="StatsDashboardControlCustom" />
+                </ComboBox>
+            </StackPanel>
 
-            <CalendarDatePicker
-                x:Uid="StatsDashboardControlStart"
-                Date="{x:Bind ViewModel.CustomStartDate, Mode=TwoWay}"
-                IsEnabled="{x:Bind ViewModel.IsCustomRangeSelected, Mode=OneWay}" />
-            <TimePicker
-                VerticalAlignment="Bottom"
-                IsEnabled="{x:Bind ViewModel.IsCustomRangeSelected, Mode=OneWay}"
-                Time="{x:Bind ViewModel.CustomStartTime, Mode=TwoWay}" />
-            <CalendarDatePicker
-                x:Uid="StatsDashboardControlEnd"
-                Date="{x:Bind ViewModel.CustomEndDate, Mode=TwoWay}"
-                IsEnabled="{x:Bind ViewModel.IsCustomRangeSelected, Mode=OneWay}" />
-            <TimePicker
-                VerticalAlignment="Bottom"
-                IsEnabled="{x:Bind ViewModel.IsCustomRangeSelected, Mode=OneWay}"
-                Time="{x:Bind ViewModel.CustomEndTime, Mode=TwoWay}" />
-            <Button
-                VerticalAlignment="Bottom"
-                Command="{x:Bind ViewModel.RefreshDataCommand}"
-                Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                      FontSize=16,
-                                      Glyph=&#xE72C;}" />
-        </controls:WrapPanel>
+            <controls:SettingsExpander.Items>
+                <controls:SettingsCard x:Uid="StatsDashboardControlStart">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <CalendarDatePicker Date="{x:Bind ViewModel.CustomStartDate, Mode=TwoWay}" IsEnabled="{x:Bind ViewModel.IsCustomRangeSelected, Mode=OneWay}" />
+                        <TimePicker
+                            VerticalAlignment="Bottom"
+                            IsEnabled="{x:Bind ViewModel.IsCustomRangeSelected, Mode=OneWay}"
+                            Time="{x:Bind ViewModel.CustomStartTime, Mode=TwoWay}" />
+                    </StackPanel>
+                </controls:SettingsCard>
 
-        <ScrollViewer Grid.Row="3" Padding="36,0">
+                <controls:SettingsCard x:Uid="StatsDashboardControlEnd">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <CalendarDatePicker Date="{x:Bind ViewModel.CustomEndDate, Mode=TwoWay}" IsEnabled="{x:Bind ViewModel.IsCustomRangeSelected, Mode=OneWay}" />
+                        <TimePicker
+                            VerticalAlignment="Bottom"
+                            IsEnabled="{x:Bind ViewModel.IsCustomRangeSelected, Mode=OneWay}"
+                            Time="{x:Bind ViewModel.CustomEndTime, Mode=TwoWay}" />
+                    </StackPanel>
+                </controls:SettingsCard>
+
+            </controls:SettingsExpander.Items>
+        </controls:SettingsExpander>
+
+        <!--  结果展示  -->
+        <ScrollViewer Grid.Row="3" Padding="36,0,32,0">
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
@@ -119,6 +129,7 @@
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
+                    <!--  总时长  -->
                     <Border Grid.Column="0" Style="{StaticResource StatsCardStyle}">
                         <StackPanel>
                             <StackPanel
@@ -147,6 +158,7 @@
                         </StackPanel>
                     </Border>
 
+                    <!--  已播放曲目数  -->
                     <Border Grid.Column="1" Style="{StaticResource StatsCardStyle}">
                         <StackPanel>
                             <StackPanel
@@ -163,10 +175,8 @@
                         </StackPanel>
                     </Border>
 
-                    <Border
-                        Grid.Column="2"
-                        Margin="0,0,0,12"
-                        Style="{StaticResource StatsCardStyle}">
+                    <!--  常用播放源  -->
+                    <Border Grid.Column="2" Style="{StaticResource StatsCardStyle}">
                         <StackPanel>
                             <StackPanel
                                 Opacity="0.8"
@@ -184,10 +194,7 @@
                 </Grid>
 
                 <!--  Activity by hour  -->
-                <Border
-                    Grid.Row="1"
-                    Margin="0,0,0,12"
-                    Style="{StaticResource StatsCardStyle}">
+                <Border Grid.Row="1" Style="{StaticResource StatsCardStyle}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -313,10 +320,7 @@
                     </Border>
 
                     <!--  Top tracks  -->
-                    <Border
-                        Grid.Column="1"
-                        Margin="0,0,0,12"
-                        Style="{StaticResource StatsCardStyle}">
+                    <Border Grid.Column="1" Style="{StaticResource StatsCardStyle}">
                         <StackPanel>
                             <TextBlock
                                 x:Uid="StatsDashboardControlTopSongs"
@@ -372,10 +376,7 @@
                 </Grid>
 
                 <!--  播放源分布  -->
-                <Border
-                    Grid.Row="3"
-                    Margin="0,0,0,20"
-                    Style="{StaticResource StatsCardStyle}">
+                <Border Grid.Row="3" Style="{StaticResource StatsCardStyle}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -398,14 +399,10 @@
                     </Grid>
                 </Border>
 
+                <Grid Grid.Row="4" Height="32" />
+
             </Grid>
         </ScrollViewer>
 
-        <!--<Button
-            Grid.Row="2"
-            HorizontalAlignment="Right"
-            VerticalAlignment="Bottom"
-            Command="{x:Bind ViewModel.GenerateTestDataCommand}"
-            Content="Generate test data" />-->
     </Grid>
 </UserControl>

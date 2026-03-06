@@ -49,20 +49,13 @@
                 SelectionMode="None">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <controls:WrapPanel HorizontalSpacing="0" VerticalSpacing="0" />
+                        <controls:WrapPanel HorizontalSpacing="32" VerticalSpacing="32" />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid
-                            Margin="16"
-                            CornerRadius="4"
-                            Tapped="Grid_Tapped">
-                            <Border
-                                BorderBrush="{ThemeResource AccentAAFillColorDefaultBrush}"
-                                BorderThickness="4"
-                                Visibility="{Binding WindowStatus, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=0}" />
-                            <uc:DemoWindowGrid Margin="4" LyricsWindowStatus="{Binding}" />
+                        <Grid Tapped="Grid_Tapped">
+                            <uc:DemoWindowGrid LyricsWindowStatus="{Binding}" />
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>

@@ -6,7 +6,6 @@ using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.SMTCService;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using DevWinUI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -54,7 +53,10 @@ namespace BetterLyrics.WinUI3.Views
         private async void AddSongToQueueEndMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             bool startPlaying = _smtcService.TrackPlayingQueue.Count == 0;
-            _smtcService.TrackPlayingQueue.AddRange(SongListView.SelectedItems.Cast<ExtendedTrack>().Select(x => new PlayQueueItem(x)));
+            foreach (var item in SongListView.SelectedItems.Cast<ExtendedTrack>().Select(x => new PlayQueueItem(x)))
+            {
+                _smtcService.TrackPlayingQueue.Add(item);
+            }
             if (startPlaying)
             {
                 ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex = ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex + 1;
