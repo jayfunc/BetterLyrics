@@ -1,0 +1,16 @@
+﻿ICompositionDrawingSurfaceInterop2
+ID3D11Texture2D
+ID3D11Device4
+IDXGIDevice1
+IDXGIAdapter1
+IDXGIFactory7
+
+DXGI_ADAPTER_FLAG
+
+CreateDirect3D11DeviceFromDXGIDevice
+CreateDirect3D11SurfaceFromDXGISurface
+IDirect3DDxgiInterfaceAccess
+
+CreateThreadpoolWait
+CloseThreadpoolWait
+SetThreadpoolWait

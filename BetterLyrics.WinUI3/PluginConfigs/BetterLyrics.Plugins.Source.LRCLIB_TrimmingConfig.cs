@@ -9,7 +9,10 @@ internal static class BetterLyrics_Plugins_Source_LRCLIB_Config
 {
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Diagnostics.DebuggableAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Diagnostics.DebuggableAttribute.DebuggingModes))]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Diagnostics.DebuggerBrowsableAttribute))]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Diagnostics.DebuggerBrowsableState))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Diagnostics.DebuggerHiddenAttribute))]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Diagnostics.DebuggerStepThroughAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Double))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Exception))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.IDisposable))]
@@ -17,6 +20,7 @@ internal static class BetterLyrics_Plugins_Source_LRCLIB_Config
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Net.Http.HttpContent))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Net.Http.HttpResponseMessage))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Nullable<>))]
+    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Object))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Reflection.AssemblyCompanyAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Reflection.AssemblyConfigurationAttribute))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Reflection.AssemblyCopyrightAttribute))]
@@ -49,7 +53,6 @@ internal static class BetterLyrics_Plugins_Source_LRCLIB_Config
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Threading.Tasks.Task<>))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Type))]
     [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.Uri))]
-    [DynamicDependency(DynamicallyAccessedMemberTypes.All, typeof(System.ValueType))]
     [ModuleInitializer]
     internal static void Initialize()
     {

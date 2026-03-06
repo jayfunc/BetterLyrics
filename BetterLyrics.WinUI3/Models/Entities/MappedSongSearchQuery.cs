@@ -39,5 +39,13 @@ namespace BetterLyrics.WinUI3.Models
                 LyricsSearchProvider = this.LyricsSearchProvider
             };
         }
+
+        public override string ToString()
+        {
+            return
+                $"Title: {OriginalTitle} -> {MappedTitle} " +
+                $"Artist: {OriginalArtist} -> {MappedArtist} " +
+                $"Album: {OriginalAlbum} -> {MappedAlbum}";
+        }
     }
 }
