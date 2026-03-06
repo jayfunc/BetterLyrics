@@ -1,5 +1,6 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using BetterLyrics.WinUI3.Controls;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Helper.Lyrics;
@@ -14,6 +15,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using CommunityToolkit.WinUI;
+using DevWinUI;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -90,14 +92,18 @@ namespace BetterLyrics.WinUI3.Views
 
         // ==== SongInfo
 
-        private void RenderTextBlock(MarqueeText? sender, string? text, double fontSize)
+        private void RenderTextBlock(TextBlock? sender, string? text, double fontSize)
         {
             if (sender == null || text == null || fontSize == 0 || LyricsWindowStatus == null) return;
 
             var lyricsStyleSettings = LyricsWindowStatus.LyricsStyleSettings;
 
-            var fontFamilyName = LanguageHelper.IsCJK(sender.Text) ? lyricsStyleSettings.LyricsCJKFontFamily : lyricsStyleSettings.LyricsWesternFontFamily;
-            sender.FontFamily = new FontFamily(fontFamilyName);
+            sender.Inlines.Clear();
+            foreach (var ch in text)
+            {
+                var fontFamilyName = LanguageHelper.IsCJK(ch) ? lyricsStyleSettings.LyricsCJKFontFamily : lyricsStyleSettings.LyricsWesternFontFamily;
+                sender.Inlines.Add(new Run { Text = $"{ch}", FontFamily = new FontFamily(fontFamilyName) });
+            }
             sender.FontSize = (int)fontSize;
             sender.Foreground = new SolidColorBrush(AlbumArtThemeColors.NonCurrentLineFillColor);
         }
@@ -480,24 +486,15 @@ namespace BetterLyrics.WinUI3.Views
 
         // ====
 
-        private void UpdateAutoScrollViewIsPlaying(Grid element, bool isPointerEntered)
+        private void UpdateAutoScrollViewIsPlaying(AutoScrollView element, bool isPointerEntered)
         {
-            var marqueeText = (MarqueeText)element.Children.FirstOrDefault();
-            if (marqueeText == null) return;
             if (LyricsWindowStatus?.AlbumArtAreaEffectSettings.SongInfoAutoScroll == true)
             {
-                marqueeText.StartMarquee();
+                element.IsPlaying = true;
             }
             else
             {
-                if (isPointerEntered)
-                {
-                    marqueeText.StartMarquee();
-                }
-                else
-                {
-                    marqueeText.StopMarquee();
-                }
+                element.IsPlaying = isPointerEntered;
             }
         }
 

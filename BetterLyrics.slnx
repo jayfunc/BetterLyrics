@@ -4,6 +4,11 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
+  <Folder Name="/External/">
+    <Project Path="External/ColorThief.WinUI3/ColorThief.WinUI3.csproj" />
+    <Project Path="External/Impressionist/Impressionist/Impressionist.csproj" />
+    <Project Path="External/Lyricify.Lyrics.Helper/Lyricify.Lyrics.Helper.csproj" />
+  </Folder>
   <Folder Name="/Plugins/">
     <Project Path="Plugins/BetterLyrics.Plugins.AI.Local.LLM/BetterLyrics.Plugins.AI.Local.LLM.csproj" />
     <Project Path="Plugins/BetterLyrics.Plugins.AI.Local.NMT/BetterLyrics.Plugins.AI.Local.NMT.csproj" Id="1a486be1-707e-41a0-ae40-a5b81f49925b" />
@@ -23,7 +28,4 @@
     <Platform Solution="*|x86" Project="x86" />
     <Deploy />
   </Project>
-  <Project Path="ColorThief.WinUI3/ColorThief.WinUI3.csproj" />
-  <Project Path="Impressionist/Impressionist/Impressionist.csproj" />
-  <Project Path="Lyricify.Lyrics.Helper/Lyricify.Lyrics.Helper.csproj" />
 </Solution>

@@ -1,11 +1,11 @@
 
 <linker>
-  <assembly fullname="Microsoft.Extensions.Logging.Abstractions" preserve="all" />
   <assembly fullname="System.Collections" preserve="all" />
   <assembly fullname="System.Collections.Concurrent" preserve="all" />
   <assembly fullname="System.ComponentModel" preserve="all" />
   <assembly fullname="System.ComponentModel.Annotations" preserve="all" />
   <assembly fullname="System.ComponentModel.Primitives" preserve="all" />
+  <assembly fullname="System.Diagnostics.DiagnosticSource" preserve="all" />
   <assembly fullname="System.Diagnostics.Process" preserve="all" />
   <assembly fullname="System.Drawing.Primitives" preserve="all" />
   <assembly fullname="System.IO.MemoryMappedFiles" preserve="all" />
@@ -14,11 +14,11 @@
   <assembly fullname="System.Memory" preserve="all" />
   <assembly fullname="System.Net.Http" preserve="all" />
   <assembly fullname="System.Net.Mail" preserve="all" />
-  <assembly fullname="System.Numerics.Tensors" preserve="all" />
   <assembly fullname="System.Numerics.Vectors" preserve="all" />
   <assembly fullname="System.Runtime" preserve="all" />
   <assembly fullname="System.Runtime.InteropServices" preserve="all" />
   <assembly fullname="System.Runtime.Intrinsics" preserve="all" />
+  <assembly fullname="System.Runtime.Loader" preserve="all" />
   <assembly fullname="System.Security.Cryptography" preserve="all" />
   <assembly fullname="System.Text.Encodings.Web" preserve="all" />
   <assembly fullname="System.Text.Json" preserve="all" />

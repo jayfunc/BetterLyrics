@@ -109,6 +109,7 @@
 		<PackageReference Include="CommunityToolkit.WinUI.Triggers" Version="8.2.251219" />
 		<PackageReference Include="ComputeSharp.D2D1.WinUI" Version="3.2.0" />
 		<PackageReference Include="csharp-pinyin" Version="1.0.1" />
+		<PackageReference Include="DevWinUI.Controls" Version="9.9.3" />
 		<PackageReference Include="Dubya.WindowsMediaController" Version="2.5.6" />
 		<PackageReference Include="F23.StringSimilarity" Version="7.0.1" />
 		<PackageReference Include="FlaUI.UIA3" Version="5.0.0" />
@@ -158,9 +159,9 @@
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\BetterLyrics.Core\BetterLyrics.Core.csproj" />
-		<ProjectReference Include="..\ColorThief.WinUI3\ColorThief.WinUI3.csproj" />
-		<ProjectReference Include="..\Impressionist\Impressionist\Impressionist.csproj" />
-		<ProjectReference Include="..\Lyricify.Lyrics.Helper\Lyricify.Lyrics.Helper.csproj" />
+		<ProjectReference Include="..\External\ColorThief.WinUI3\ColorThief.WinUI3.csproj" />
+		<ProjectReference Include="..\External\Impressionist\Impressionist\Impressionist.csproj" />
+		<ProjectReference Include="..\External\Lyricify.Lyrics.Helper\Lyricify.Lyrics.Helper.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<Page Update="Rendering\InAppLyricsRenderer.xaml">

@@ -1,0 +1,43 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.33808.371
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoolControls.WinUI3", "CoolControls.WinUI3.csproj", "{EE88A30C-07AF-43C7-B250-3D29F02707DE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|ARM64 = Debug|ARM64
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|ARM64 = Release|ARM64
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EE88A30C-07AF-43C7-B250-3D29F02707DE}.Debug|ARM64.ActiveCfg = Debug|ARM64
+		{EE88A30C-07AF-43C7-B250-3D29F02707DE}.Debug|ARM64.Build.0 = Debug|ARM64
+		{EE88A30C-07AF-43C7-B250-3D29F02707DE}.Debug|ARM64.Deploy.0 = Debug|ARM64
+		{EE88A30C-07AF-43C7-B250-3D29F02707DE}.Debug|x64.ActiveCfg = Debug|x64
+		{EE88A30C-07AF-43C7-B250-3D29F02707DE}.Debug|x64.Build.0 = Debug|x64
+		{EE88A30C-07AF-43C7-B250-3D29F02707DE}.Debug|x64.Deploy.0 = Debug|x64
+		{EE88A30C-07AF-43C7-B250-3D29F02707DE}.Debug|x86.ActiveCfg = Debug|x86
+		{EE88A30C-07AF-43C7-B250-3D29F02707DE}.Debug|x86.Build.0 = Debug|x86
+		{EE88A30C-07AF-43C7-B250-3D29F02707DE}.Debug|x86.Deploy.0 = Debug|x86
+		{EE88A30C-07AF-43C7-B250-3D29F02707DE}.Release|ARM64.ActiveCfg = Release|ARM64
+		{EE88A30C-07AF-43C7-B250-3D29F02707DE}.Release|ARM64.Build.0 = Release|ARM64
+		{EE88A30C-07AF-43C7-B250-3D29F02707DE}.Release|ARM64.Deploy.0 = Release|ARM64
+		{EE88A30C-07AF-43C7-B250-3D29F02707DE}.Release|x64.ActiveCfg = Release|x64
+		{EE88A30C-07AF-43C7-B250-3D29F02707DE}.Release|x64.Build.0 = Release|x64
+		{EE88A30C-07AF-43C7-B250-3D29F02707DE}.Release|x64.Deploy.0 = Release|x64
+		{EE88A30C-07AF-43C7-B250-3D29F02707DE}.Release|x86.ActiveCfg = Release|x86
+		{EE88A30C-07AF-43C7-B250-3D29F02707DE}.Release|x86.Build.0 = Release|x86
+		{EE88A30C-07AF-43C7-B250-3D29F02707DE}.Release|x86.Deploy.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F8D3CAC3-498A-4B0A-B7A2-1B9E4266DCFE}
+	EndGlobalSection
+EndGlobal

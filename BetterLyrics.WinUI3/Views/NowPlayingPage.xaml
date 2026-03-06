@@ -9,6 +9,7 @@
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:converters="using:CommunityToolkit.WinUI.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dev="using:DevWinUI"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:labs="using:CommunityToolkit.Labs.WinUI.MarqueeTextRns"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
@@ -135,18 +136,20 @@
                                 </Rectangle.Fill>
                             </Rectangle>
                         </controls:OpacityMaskView.OpacityMask>
-                        <Grid
+                        <dev:AutoScrollView
                             x:Name="TitleAutoScrollHoverEffectView"
+                            IsPlaying="False"
                             PointerCanceled="TitleAutoScrollHoverEffectView_PointerCanceled"
                             PointerEntered="TitleAutoScrollHoverEffectView_PointerEntered"
-                            PointerExited="TitleAutoScrollHoverEffectView_PointerExited">
-                            <labs:MarqueeText
+                            PointerExited="TitleAutoScrollHoverEffectView_PointerExited"
+                            ScrollingPixelsPreSecond="25">
+                            <TextBlock
                                 x:Name="TitleTextBlock"
                                 Padding="2,0"
                                 FontWeight="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
-                                Speed="0"
+                                TextTrimming="None"
                                 Visibility="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.ShowTitle, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
-                        </Grid>
+                        </dev:AutoScrollView>
                     </controls:OpacityMaskView>
 
                     <controls:OpacityMaskView HorizontalAlignment="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=OneWay, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}}">
@@ -162,18 +165,21 @@
                                 </Rectangle.Fill>
                             </Rectangle>
                         </controls:OpacityMaskView.OpacityMask>
-                        <Grid
+                        <dev:AutoScrollView
                             x:Name="ArtistsAutoScrollHoverEffectView"
+                            IsPlaying="False"
                             PointerCanceled="ArtistsAutoScrollHoverEffectView_PointerCanceled"
                             PointerEntered="ArtistsAutoScrollHoverEffectView_PointerEntered"
-                            PointerExited="ArtistsAutoScrollHoverEffectView_PointerExited">
-                            <labs:MarqueeText
+                            PointerExited="ArtistsAutoScrollHoverEffectView_PointerExited"
+                            ScrollingPixelsPreSecond="25">
+                            <TextBlock
                                 x:Name="ArtistsTextBlock"
                                 Padding="2,0"
                                 FontWeight="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
                                 Opacity="0.6"
+                                TextTrimming="None"
                                 Visibility="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.ShowArtists, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
-                        </Grid>
+                        </dev:AutoScrollView>
                     </controls:OpacityMaskView>
 
                     <controls:OpacityMaskView HorizontalAlignment="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=OneWay, Converter={StaticResource TextAlignmentTypeToHorizontalAlignmentConverter}}">
@@ -189,20 +195,22 @@
                                 </Rectangle.Fill>
                             </Rectangle>
                         </controls:OpacityMaskView.OpacityMask>
-                        <Grid
+                        <dev:AutoScrollView
                             x:Name="AlbumAutoScrollHoverEffectView"
+                            IsPlaying="False"
                             PointerCanceled="AlbumAutoScrollHoverEffectView_PointerCanceled"
                             PointerEntered="AlbumAutoScrollHoverEffectView_PointerEntered"
-                            PointerExited="AlbumAutoScrollHoverEffectView_PointerExited">
-                            <labs:MarqueeText
+                            PointerExited="AlbumAutoScrollHoverEffectView_PointerExited"
+                            ScrollingPixelsPreSecond="25">
+                            <TextBlock
                                 x:Name="AlbumTextBlock"
                                 Padding="2,0"
                                 FontWeight="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
                                 Opacity="0.3"
+                                TextTrimming="None"
                                 Visibility="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.ShowAlbum, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
-                        </Grid>
+                        </dev:AutoScrollView>
                     </controls:OpacityMaskView>
-
                 </StackPanel>
 
             </Grid>
