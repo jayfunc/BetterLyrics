@@ -5,7 +5,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dev="using:DevWinUI"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:lyricsmodels="using:BetterLyrics.WinUI3.Models.Lyrics"
@@ -154,9 +153,9 @@
                             <local:PropertyRow x:Uid="LyricsSearchControlDurauion" Value="{x:Bind ViewModel.GSMTCService.CurrentSongInfo.Duration, Converter={StaticResource SecondsToFormattedTimeConverter}, TargetNullValue=N/A, Mode=OneWay}" />
                         </Grid>
 
-                        <dev:SettingsCard>
+                        <controls:SettingsCard>
                             <CheckBox x:Uid="LyricsSearchControlMarkAsPureMusic" IsChecked="{x:Bind ViewModel.MappedSongSearchQuery.IsMarkedAsPureMusic, Mode=TwoWay}" />
-                        </dev:SettingsCard>
+                        </controls:SettingsCard>
 
                         <Button
                             x:Uid="LyricsSearchControlSearch"
@@ -165,9 +164,9 @@
                             IsEnabled="{x:Bind ViewModel.IsSearching, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
                             Style="{StaticResource AccentButtonStyle}" />
 
-                        <dev:SettingsCard x:Uid="LyricsSearchControlIgnoreCache">
+                        <controls:SettingsCard x:Uid="LyricsSearchControlIgnoreCache">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.IgnoreCacheWhenSearching, Mode=TwoWay}" />
-                        </dev:SettingsCard>
+                        </controls:SettingsCard>
 
                     </StackPanel>
                 </ScrollViewer>

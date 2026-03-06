@@ -27,7 +27,7 @@ namespace BetterLyrics.WinUI3.Services.AppUpdateService
 
         [ObservableProperty]
         public partial string LatestVersion { get; set; } = "-";
-        
+
         public AppUpdateService(ILocalizationService localizationService, ISettingsService settingsService)
         {
             _localizationService = localizationService;
@@ -73,16 +73,19 @@ namespace BetterLyrics.WinUI3.Services.AppUpdateService
 
         public async Task UpdateAvailabilityAsync()
         {
+            _settingsService.AppSettings.GeneralSettings.LastAppUpateCheckDateTime = DateTime.Now;
+
             AppUpdateStatus appUpdateStatus = AppUpdateStatus.ErrorOccured;
             string latestVersion = "-";
 
+#if DEBUG
+#else
             try
             {
                 var packages = await _storeContext.GetAppAndOptionalStorePackageUpdatesAsync();
                 if (packages != null && packages.Count > 0)
                 {
                     appUpdateStatus = AppUpdateStatus.NewAvailable;
-                    _settingsService.AppSettings.GeneralSettings.LastAppUpateCheckDateTime = DateTime.Now;
                     var version = packages[0].Package.Id.Version;
                     latestVersion = $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
                 }
@@ -94,6 +97,7 @@ namespace BetterLyrics.WinUI3.Services.AppUpdateService
             catch (Exception)
             {
             }
+#endif
 
             if (appUpdateStatus == AppUpdateStatus.NewAvailable)
             {

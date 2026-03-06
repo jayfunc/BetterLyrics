@@ -26,5 +26,6 @@ namespace BetterLyrics.WinUI3.Controls
         {
             AlipayFlyout.ShowAt(AlipayButton);
         }
+
     }
 }

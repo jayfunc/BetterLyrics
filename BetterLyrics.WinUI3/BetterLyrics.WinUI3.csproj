@@ -32,6 +32,8 @@
 	<ItemGroup>
 		<None Remove="Assets\Banner.png" />
 		<None Remove="Assets\Fonts\SegoeFluentIcons.ttf" />
+		<None Remove="Assets\Fonts\SloganCNFont.ttf" />
+		<None Remove="Assets\Fonts\SloganENFont.ttf" />
 		<None Remove="Assets\Logo.ico" />
 		<None Remove="Assets\Logo.png" />
 		<None Remove="Assets\LogoPlugin.png" />
@@ -40,6 +42,7 @@
 		<None Remove="Controls\AboutControl.xaml" />
 		<None Remove="Controls\AlbumArtAreaEffectSettingsControl.xaml" />
 		<None Remove="Controls\AppSettingsControl.xaml" />
+		<None Remove="Controls\ContributorCard.xaml" />
 		<None Remove="Controls\DemoWindowGrid.xaml" />
 		<None Remove="Controls\DragIndicator.xaml" />
 		<None Remove="Controls\ExtendedSlider.xaml" />
@@ -90,12 +93,14 @@
 	<ItemGroup>
 		<PackageReference Include="3v.EvtSource" Version="2.0.0" />
 		<PackageReference Include="CommunityToolkit.Labs.WinUI.Controls.OpacityMaskView" Version="0.1.260203-build.2518" />
+		<PackageReference Include="CommunityToolkit.Labs.WinUI.MarqueeText" Version="0.1.250828-build.2223" />
 		<PackageReference Include="CommunityToolkit.Labs.WinUI.Shimmer" Version="0.1.250828-build.2223" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
 		<PackageReference Include="CommunityToolkit.WinUI.Behaviors" Version="8.2.251219" />
 		<PackageReference Include="CommunityToolkit.WinUI.Controls.ColorPicker" Version="8.2.251219" />
 		<PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.2.251219" />
 		<PackageReference Include="CommunityToolkit.WinUI.Controls.Segmented" Version="8.2.251219" />
+		<PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.2.251219" />
 		<PackageReference Include="CommunityToolkit.WinUI.Controls.Sizers" Version="8.2.251219" />
 		<PackageReference Include="CommunityToolkit.WinUI.Converters" Version="8.2.251219" />
 		<PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.2.251219" />
@@ -104,7 +109,6 @@
 		<PackageReference Include="CommunityToolkit.WinUI.Triggers" Version="8.2.251219" />
 		<PackageReference Include="ComputeSharp.D2D1.WinUI" Version="3.2.0" />
 		<PackageReference Include="csharp-pinyin" Version="1.0.1" />
-		<PackageReference Include="DevWinUI.Controls" Version="9.9.3" />
 		<PackageReference Include="Dubya.WindowsMediaController" Version="2.5.6" />
 		<PackageReference Include="F23.StringSimilarity" Version="7.0.1" />
 		<PackageReference Include="FlaUI.UIA3" Version="5.0.0" />
@@ -191,6 +195,12 @@
 		<Content Update="Assets\Folder.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
+		<Content Update="Assets\Fonts\SloganCNFont.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\Fonts\SloganENFont.ttf">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 		<Content Update="Assets\LastFM.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
@@ -201,9 +211,6 @@
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Update="Assets\Question.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="Assets\RevolvingHearts.gif">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Update="Assets\Fonts\SegoeFluentIcons.ttf">
@@ -462,6 +469,11 @@
 	  <Content Update="Assets\Banner.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\ContributorCard.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Controls\LyricsPreviewCanvas.xaml">

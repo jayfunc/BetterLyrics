@@ -42,7 +42,7 @@
             <ListView
                 x:Name="FontListView"
                 Grid.Row="1"
-                ItemContainerStyle="{StaticResource ListViewItemSettingStyle}"
+                ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
                 Loaded="FontListView_Loaded"
                 SelectionChanged="FontListView_SelectionChanged">
                 <ListView.ItemTemplate>
@@ -103,7 +103,7 @@
                 Grid.Row="1"
                 AllowDrop="True"
                 CanReorderItems="True"
-                ItemContainerStyle="{StaticResource ListViewItemSettingStyle}"
+                ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
                 SelectionMode="None">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:ExtendedFontFamily">

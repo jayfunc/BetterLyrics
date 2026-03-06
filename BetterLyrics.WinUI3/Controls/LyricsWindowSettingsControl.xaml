@@ -6,7 +6,6 @@
     xmlns:constants="using:BetterLyrics.WinUI3.Constants"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dev="using:DevWinUI"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
@@ -76,20 +75,22 @@
                             <ListView
                                 x:Name="WindowStatusListView"
                                 Padding="0,12"
+                                AllowDrop="True"
+                                CanDragItems="True"
+                                CanReorderItems="True"
                                 CornerRadius="4"
+                                DragItemsCompleted="WindowStatusListView_DragItemsCompleted"
+                                ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
                                 ItemsSource="{x:Bind ViewModel.AppSettings.WindowBoundsRecords, Mode=OneWay}"
                                 SelectionMode="None">
                                 <ItemsControl.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <controls:WrapPanel HorizontalSpacing="0" VerticalSpacing="0" />
+                                        <controls:WrapPanel HorizontalSpacing="16" VerticalSpacing="16" />
                                     </ItemsPanelTemplate>
                                 </ItemsControl.ItemsPanel>
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <StackPanel
-                                            Padding="0,10"
-                                            RightTapped="StackPanel_RightTapped"
-                                            Spacing="6">
+                                        <StackPanel RightTapped="StackPanel_RightTapped">
                                             <StackPanel.ContextFlyout>
                                                 <MenuBarItemFlyout>
                                                     <MenuFlyoutItem x:Uid="SettingsPageCreateFromCurrent" Click="CopyMenuFlyoutItem_Click" />
@@ -126,49 +127,25 @@
                                                         IsEnabled="{Binding IsDefault, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
                                                 </MenuBarItemFlyout>
                                             </StackPanel.ContextFlyout>
-                                            <Grid>
-                                                <Border
-                                                    BorderBrush="{ThemeResource AccentAAFillColorDefaultBrush}"
-                                                    BorderThickness="4"
-                                                    CornerRadius="4"
-                                                    Visibility="{Binding WindowStatus, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=0}" />
-                                                <uc:DemoWindowGrid Margin="4" LyricsWindowStatus="{Binding}" />
-                                            </Grid>
-                                            <Grid>
-                                                <ToggleButton
-                                                    Grid.Column="0"
-                                                    HorizontalAlignment="Stretch"
-                                                    Click="SetDefaultMenuFlyoutItem_Click"
-                                                    IsChecked="{Binding IsDefault, Mode=OneWay}">
-                                                    <TextBlock x:Uid="LyricsWindowSettingsControlSetDefault" />
-                                                </ToggleButton>
-                                            </Grid>
-                                            <Grid ColumnSpacing="4">
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-                                                <Button
-                                                    Grid.Column="0"
-                                                    HorizontalAlignment="Stretch"
-                                                    Click="ConfigButton_Click">
-                                                    <TextBlock x:Uid="LyricsWindowSettingsControlLyricsWindowConfig" />
-                                                </Button>
-                                            </Grid>
+                                            <uc:DemoWindowGrid LyricsWindowStatus="{Binding}" />
+                                            <Button HorizontalAlignment="Stretch" Click="ConfigButton_Click">
+                                                <TextBlock x:Uid="LyricsWindowSettingsControlLyricsWindowConfig" />
+                                            </Button>
                                         </StackPanel>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
                         </StackPanel>
 
-                        <dev:SettingsCard x:Uid="SettingsPageMultiNowPlayingWindows">
+                        <controls:SettingsCard x:Uid="SettingsPageMultiNowPlayingWindows">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.MultiNowPlayingWindowMode, Mode=TwoWay}" />
-                        </dev:SettingsCard>
+                        </controls:SettingsCard>
 
-                        <dev:SettingsCard x:Uid="SettingsPageMusicGalleryLyrics">
+                        <controls:SettingsCard x:Uid="SettingsPageMusicGalleryLyrics">
                             <Button HorizontalAlignment="Stretch" Click="EmbeddedConfigButton_Click">
                                 <TextBlock x:Uid="LyricsWindowSettingsControlLyricsWindowConfig" />
                             </Button>
-                        </dev:SettingsCard>
+                        </controls:SettingsCard>
 
                     </StackPanel>
 
@@ -178,7 +155,6 @@
 
         <Grid
             x:Name="ConfigGrid"
-            Background="{ThemeResource RailNavigationViewDefaultPaneBackground}"
             Opacity="{x:Bind ViewModel.IsConfigPanelOpened, Mode=OneWay, Converter={StaticResource BoolToOpacityConverter}}"
             Translation="{x:Bind ViewModel.ConfigPanelTranslation, Mode=OneWay}">
             <Grid.OpacityTransition>
@@ -277,21 +253,21 @@
 
                                 <TextBlock x:Uid="SettingsPageLayout" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                                <dev:SettingsExpander x:Uid="SettingsPageDisplayTypeSwitcher" IsExpanded="True">
+                                <controls:SettingsExpander x:Uid="SettingsPageDisplayTypeSwitcher" IsExpanded="True">
                                     <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.LyricsDisplayType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                         <ComboBoxItem x:Uid="MainPageAlbumArtOnly" />
                                         <ComboBoxItem x:Uid="MainPageLyriscOnly" />
                                         <ComboBoxItem x:Uid="MainPageSplitView" />
                                     </ComboBox>
-                                    <dev:SettingsExpander.Items>
-                                        <dev:SettingsCard x:Uid="SettingsPageLayoutOrientation">
+                                    <controls:SettingsExpander.Items>
+                                        <controls:SettingsCard x:Uid="SettingsPageLayoutOrientation">
                                             <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.LyricsLayoutOrientation, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                                 <ComboBoxItem x:Uid="SettingsPageLayoutOrientationHorizontal" />
                                                 <ComboBoxItem x:Uid="SettingsPageLayoutOrientationVertical" />
                                             </ComboBox>
-                                        </dev:SettingsCard>
-                                    </dev:SettingsExpander.Items>
-                                </dev:SettingsExpander>
+                                        </controls:SettingsCard>
+                                    </controls:SettingsExpander.Items>
+                                </controls:SettingsExpander>
 
                             </StackPanel>
                         </Grid>

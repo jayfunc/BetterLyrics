@@ -4,7 +4,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dev="using:DevWinUI"
     xmlns:enums="using:BetterLyrics.WinUI3.Enums"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
@@ -21,7 +20,7 @@
 
                     <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <dev:SettingsCard x:Uid="SettingsPageMusicLib" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8B7;}" />
+                    <controls:SettingsCard x:Uid="SettingsPageMusicLib" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8B7;}" />
 
                     <InfoBar
                         x:Uid="SettingsPageRemoveInfo"
@@ -52,25 +51,25 @@
                         SelectionMode="None">
                         <ListView.ItemTemplate>
                             <DataTemplate x:DataType="settingsmodels:MediaFolder">
-                                <dev:SettingsExpander IsExpanded="True">
+                                <controls:SettingsExpander IsExpanded="True">
 
-                                    <dev:SettingsExpander.HeaderIcon>
+                                    <controls:SettingsExpander.HeaderIcon>
                                         <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="{x:Bind SourceType, Converter={StaticResource FileSourceTypeToIconConverter}, Mode=OneWay}" />
-                                    </dev:SettingsExpander.HeaderIcon>
-                                    <dev:SettingsExpander.Header>
+                                    </controls:SettingsExpander.HeaderIcon>
+                                    <controls:SettingsExpander.Header>
                                         <TextBlock IsTextSelectionEnabled="True" Text="{x:Bind Name, Mode=OneWay}" />
-                                    </dev:SettingsExpander.Header>
-                                    <dev:SettingsExpander.Description>
+                                    </controls:SettingsExpander.Header>
+                                    <controls:SettingsExpander.Description>
                                         <TextBlock IsTextSelectionEnabled="True" Text="{x:Bind ConnectionSummary, Mode=OneWay}" />
-                                    </dev:SettingsExpander.Description>
+                                    </controls:SettingsExpander.Description>
 
                                     <ToggleSwitch IsOn="{x:Bind IsEnabled, Mode=TwoWay}" />
 
-                                    <dev:SettingsExpander.Items>
-                                        <dev:SettingsCard x:Uid="MediaSettingsControlNameSetting">
+                                    <controls:SettingsExpander.Items>
+                                        <controls:SettingsCard x:Uid="MediaSettingsControlNameSetting">
                                             <TextBox VerticalAlignment="Center" Text="{x:Bind Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        </dev:SettingsCard>
-                                        <dev:SettingsCard x:Uid="MediaSettingsControlLastSyncTime" Description="{x:Bind LastSyncTime.ToString(), Mode=OneWay, TargetNullValue=N/A}">
+                                        </controls:SettingsCard>
+                                        <controls:SettingsCard x:Uid="MediaSettingsControlLastSyncTime" Description="{x:Bind LastSyncTime.ToString(), Mode=OneWay, TargetNullValue=N/A}">
                                             <StackPanel>
                                                 <SplitButton
                                                     x:Uid="MediaSettingsControlSyncNow"
@@ -96,8 +95,8 @@
                                                     </SplitButton.Flyout>
                                                 </SplitButton>
                                             </StackPanel>
-                                        </dev:SettingsCard>
-                                        <dev:SettingsCard x:Uid="MusicSettingsControlAutoSyncInterval">
+                                        </controls:SettingsCard>
+                                        <controls:SettingsCard x:Uid="MusicSettingsControlAutoSyncInterval">
                                             <ComboBox IsEnabled="{x:Bind IsEnabled, Mode=OneWay}" SelectedIndex="{x:Bind ScanInterval, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                                 <ComboBoxItem x:Uid="MusicSettingsControlAutoSyncIntervalDisabled" />
                                                 <ComboBoxItem x:Uid="MusicSettingsControlAutoSyncIntervalEveryFifteenMin" />
@@ -105,16 +104,16 @@
                                                 <ComboBoxItem x:Uid="MusicSettingsControlAutoSyncIntervalEverySixHrs" />
                                                 <ComboBoxItem x:Uid="MusicSettingsControlAutoSyncIntervalEveryDay" />
                                             </ComboBox>
-                                        </dev:SettingsCard>
-                                        <dev:SettingsCard x:Uid="MusicSettingsControlRealTimeScan" IsEnabled="{x:Bind IsLocal, Mode=OneWay}">
+                                        </controls:SettingsCard>
+                                        <controls:SettingsCard x:Uid="MusicSettingsControlRealTimeScan" IsEnabled="{x:Bind IsLocal, Mode=OneWay}">
                                             <ToggleSwitch IsOn="{x:Bind IsRealTimeScanEnabled, Mode=TwoWay}" />
-                                        </dev:SettingsCard>
-                                        <dev:SettingsCard>
+                                        </controls:SettingsCard>
+                                        <controls:SettingsCard>
                                             <Button x:Uid="SettingsPageRemovePath" Click="SettingsPageRemovePathButton_Click" />
-                                        </dev:SettingsCard>
-                                    </dev:SettingsExpander.Items>
+                                        </controls:SettingsCard>
+                                    </controls:SettingsExpander.Items>
 
-                                    <dev:SettingsExpander.ItemsHeader>
+                                    <controls:SettingsExpander.ItemsHeader>
                                         <StackPanel>
                                             <!--  Index info  -->
                                             <InfoBar
@@ -142,9 +141,9 @@
                                                 </interactivity:Interaction.Behaviors>
                                             </ProgressBar>
                                         </StackPanel>
-                                    </dev:SettingsExpander.ItemsHeader>
+                                    </controls:SettingsExpander.ItemsHeader>
 
-                                </dev:SettingsExpander>
+                                </controls:SettingsExpander>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>

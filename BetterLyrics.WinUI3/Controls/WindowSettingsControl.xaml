@@ -3,8 +3,8 @@
     x:Class="BetterLyrics.WinUI3.Controls.WindowSettingsControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:dev="using:DevWinUI"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
@@ -18,34 +18,34 @@
                     <TextBlock x:Uid="AppSettingsControlGeneral" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <!--  配置名称  -->
-                    <dev:SettingsCard x:Uid="SettingsPageConfigName" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8AC;}">
+                    <controls:SettingsCard x:Uid="SettingsPageConfigName" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8AC;}">
                         <TextBox Text="{x:Bind LyricsWindowStatus.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
                     <!--  工作区  -->
-                    <dev:SettingsExpander
+                    <controls:SettingsExpander
                         x:Uid="SettingsPageWorkArea"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xE78B;}"
                         IsExpanded="{x:Bind LyricsWindowStatus.IsWorkArea, Mode=OneWay}"
                         Visibility="{x:Bind LyricsWindowStatus.IsWorkArea, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <dev:SettingsExpander.Items>
-                            <dev:SettingsCard x:Uid="SettingsPageWorkAreaHeight" IsEnabled="{x:Bind LyricsWindowStatus.IsWorkArea, Mode=OneWay}">
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="SettingsPageWorkAreaHeight" IsEnabled="{x:Bind LyricsWindowStatus.IsWorkArea, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="64"
                                     Maximum="{x:Bind LyricsWindowStatus.MonitorBounds.Height, Mode=OneWay}"
                                     Minimum="64"
                                     Unit="px"
                                     Value="{x:Bind LyricsWindowStatus.DockHeight, Mode=TwoWay}" />
-                            </dev:SettingsCard>
+                            </controls:SettingsCard>
 
-                            <dev:SettingsCard x:Uid="SettingsPageDockPlacement" IsEnabled="{x:Bind LyricsWindowStatus.IsWorkArea, Mode=OneWay}">
+                            <controls:SettingsCard x:Uid="SettingsPageDockPlacement" IsEnabled="{x:Bind LyricsWindowStatus.IsWorkArea, Mode=OneWay}">
                                 <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.DockPlacement, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                     <ComboBoxItem x:Uid="SettingsPageDockPlacementTop" />
                                     <ComboBoxItem x:Uid="SettingsPageDockPlacementBottom" />
                                 </ComboBox>
-                            </dev:SettingsCard>
+                            </controls:SettingsCard>
 
-                            <dev:SettingsCard x:Uid="SettingsPageDockMonitor" IsEnabled="{x:Bind LyricsWindowStatus.IsWorkArea, Mode=OneWay}">
+                            <controls:SettingsCard x:Uid="SettingsPageDockMonitor" IsEnabled="{x:Bind LyricsWindowStatus.IsWorkArea, Mode=OneWay}">
                                 <StackPanel Orientation="Horizontal" Spacing="6">
                                     <ComboBox ItemsSource="{x:Bind MonitorDeviceNames, Mode=OneWay}" SelectedItem="{x:Bind LyricsWindowStatus.MonitorDeviceName, Mode=TwoWay}" />
                                     <Button
@@ -55,19 +55,19 @@
                                                               Glyph=&#xE72C;}"
                                         Style="{StaticResource GhostButtonStyle}" />
                                 </StackPanel>
-                            </dev:SettingsCard>
+                            </controls:SettingsCard>
 
-                        </dev:SettingsExpander.Items>
-                    </dev:SettingsExpander>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
                     <!--  适应环境颜色  -->
-                    <dev:SettingsExpander
+                    <controls:SettingsExpander
                         x:Uid="SettingsPageAdaptEnvColor"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xE88F;}"
                         IsExpanded="{x:Bind LyricsWindowStatus.IsAdaptToEnvironment, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAdaptToEnvironment, Mode=TwoWay}" />
-                        <dev:SettingsExpander.Items>
-                            <dev:SettingsCard
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard
                                 x:Uid="SettingsPageEnvColorSample"
                                 Header="Environment color sample mode"
                                 IsEnabled="{x:Bind LyricsWindowStatus.IsAdaptToEnvironment, Mode=OneWay}">
@@ -77,11 +77,11 @@
                                     <ComboBoxItem x:Uid="SettingsPageEnvColorSampleInner" />
                                     <ComboBoxItem x:Uid="SettingsPageEnvColorSampleEdge" />
                                 </ComboBox>
-                            </dev:SettingsCard>
-                        </dev:SettingsExpander.Items>
-                    </dev:SettingsExpander>
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
                     <!--  固定到任务栏  -->
-                    <dev:SettingsCard
+                    <controls:SettingsCard
                         x:Uid="SettingsPageTaskbarPlacement"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xE8E3;}"
@@ -92,29 +92,29 @@
                             <ComboBoxItem x:Uid="SettingsPageRight" />
                             <ComboBoxItem x:Uid="SettingsPageCenter" />
                         </ComboBox>
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
                     <!--  置顶  -->
-                    <dev:SettingsExpander
+                    <controls:SettingsExpander
                         x:Uid="SettingsPageAOT"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xE718;}"
                         IsExpanded="True">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAlwaysOnTop, Mode=TwoWay}" />
-                        <dev:SettingsExpander.Items>
-                            <dev:SettingsCard x:Uid="SettingsPageForceAlwaysOnTop" IsEnabled="{x:Bind LyricsWindowStatus.IsAlwaysOnTop, Mode=OneWay}">
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="SettingsPageForceAlwaysOnTop" IsEnabled="{x:Bind LyricsWindowStatus.IsAlwaysOnTop, Mode=OneWay}">
                                 <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAlwaysOnTopPolling, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                        </dev:SettingsExpander.Items>
-                    </dev:SettingsExpander>
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
                     <!--  隐藏窗口  -->
-                    <dev:SettingsExpander
+                    <controls:SettingsExpander
                         x:Uid="SettingsPageHideWindow"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xED1A;}"
                         IsExpanded="{x:Bind LyricsWindowStatus.AutoShowOrHideWindow, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.AutoShowOrHideWindow, Mode=TwoWay}" />
-                        <dev:SettingsExpander.Items>
-                            <dev:SettingsCard x:Uid="SettingsPageHideWindowDelay" IsEnabled="{x:Bind LyricsWindowStatus.AutoShowOrHideWindow, Mode=OneWay}">
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="SettingsPageHideWindowDelay" IsEnabled="{x:Bind LyricsWindowStatus.AutoShowOrHideWindow, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="250"
                                     Frequency="50"
@@ -122,67 +122,67 @@
                                     Minimum="250"
                                     Unit="ms"
                                     Value="{x:Bind LyricsWindowStatus.AutoShowOrHideWindowDelay, Mode=TwoWay}" />
-                            </dev:SettingsCard>
-                        </dev:SettingsExpander.Items>
-                    </dev:SettingsExpander>
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
                     <!--  保持屏幕常亮  -->
-                    <dev:SettingsCard x:Uid="SettingsPageKeepScreenOpen" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEA80;}">
+                    <controls:SettingsCard x:Uid="SettingsPageKeepScreenOpen" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEA80;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsKeepScreenOpen, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
                     <!--  在系统环境中显示  -->
-                    <dev:SettingsCard x:Uid="SettingsPageShowInSwitchers" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE7C4;}">
+                    <controls:SettingsCard x:Uid="SettingsPageShowInSwitchers" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE7C4;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsShownInSwitchers, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
                     <!--  可拖动区域  -->
-                    <dev:SettingsCard x:Uid="SettingsPageDragArea" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEB41;}">
+                    <controls:SettingsCard x:Uid="SettingsPageDragArea" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEB41;}">
                         <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.TitleBarArea, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageTitleBarAreaNone" />
                             <ComboBoxItem x:Uid="SettingsPageTitleBarAreaTop" />
                             <ComboBoxItem x:Uid="SettingsPageTitleBarAreaWhole" />
                         </ComboBox>
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
                     <TextBlock x:Uid="WindowSettingsControlLockAndUnlock" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <!--  隐藏解锁键  -->
-                    <dev:SettingsCard
+                    <controls:SettingsCard
                         x:Uid="SettingsPageAlwaysHideUnlockButton"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xE785;}"
                         IsEnabled="{x:Bind LyricsWindowStatus.IsLocked, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAlwaysHideUnlockButton, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
                     <!--  无边框  -->
-                    <dev:SettingsCard
+                    <controls:SettingsCard
                         x:Uid="WindowSettingsControlRemoveBorder"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xEA48;}"
                         IsEnabled="{x:Bind LyricsWindowStatus.IsLocked, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsBorderlessWhenLocked, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
                     <TextBlock x:Uid="WindowSettingsControlNowPlayingBar" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <!--  保持控制栏可交互  -->
-                    <dev:SettingsCard
+                    <controls:SettingsCard
                         x:Uid="SettingsPageKeepNowPlayingBarInteractive"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xE76F;}"
                         IsEnabled="{x:Bind LyricsWindowStatus.IsLocked, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.KeepNowPlayingBarInteractiveWhenLocked, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
                     <!--  进度条歌词预览  -->
-                    <dev:SettingsCard x:Uid="SettingsPageKeepNowPlayingBarLyricsPreview" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8C5;}">
+                    <controls:SettingsCard x:Uid="SettingsPageKeepNowPlayingBarLyricsPreview" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8C5;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsTimelineLyricsPreviewEnabled, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
                     <!--  总是收起至小白条  -->
-                    <dev:SettingsCard x:Uid="WindowSettingsControlAlwaysHideNowPlayingBar" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE70A;}">
+                    <controls:SettingsCard x:Uid="WindowSettingsControlAlwaysHideNowPlayingBar" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE70A;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAlwaysHidePlayingBar, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
                     <TextBlock x:Uid="WindowSettingsControlDebug" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <dev:SettingsCard x:Uid="SettingsPageFPS">
+                    <controls:SettingsCard x:Uid="SettingsPageFPS">
                         <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.FPS, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem Content="60 Hz" />
                             <ComboBoxItem Content="75 Hz" />
@@ -195,11 +195,11 @@
                             <ComboBoxItem Content="360 Hz" />
                             <ComboBoxItem Content="480 Hz" />
                         </ComboBox>
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
-                    <dev:SettingsCard x:Uid="SettingsPageDebugOverlay">
+                    <controls:SettingsCard x:Uid="SettingsPageDebugOverlay">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.ShowDebugOverlay, Mode=TwoWay}" />
-                    </dev:SettingsCard>
+                    </controls:SettingsCard>
 
                 </StackPanel>
             </Grid>
