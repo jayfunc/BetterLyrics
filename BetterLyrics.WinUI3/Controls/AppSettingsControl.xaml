@@ -49,7 +49,11 @@
                         </controls:SettingsExpander.ItemsFooter>
                     </controls:SettingsExpander>
 
-                    <controls:SettingsExpander x:Uid="AppSettingsControlEnhanceControlAnimations" IsExpanded="True">
+                    <controls:SettingsExpander
+                        x:Uid="AppSettingsControlEnhanceControlAnimations"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                 Glyph=&#xF4A5;}"
+                        IsExpanded="True">
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.EnhanceControlInteractiveAnimations, Mode=TwoWay}" />
                         <controls:SettingsExpander.Items>
                             <controls:SettingsCard>

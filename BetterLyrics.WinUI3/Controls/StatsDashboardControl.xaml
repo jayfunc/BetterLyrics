@@ -29,19 +29,11 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!--  加载条  -->
-        <ProgressBar
-            Grid.Row="0"
-            Background="Transparent"
-            IsIndeterminate="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
-            Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
-
         <!--  记录条  -->
-        <Grid Grid.Row="1" Visibility="{x:Bind ViewModel.GSMTCService.IsScrobbled, Mode=OneWay, Converter={StaticResource BoolNegationToVisibilityConverter}}">
+        <Grid Grid.Row="0" Visibility="{x:Bind ViewModel.GSMTCService.IsScrobbled, Mode=OneWay, Converter={StaticResource BoolNegationToVisibilityConverter}}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -60,10 +52,19 @@
                 Value="{x:Bind ViewModel.GSMTCService.ScrobbledDuration.TotalSeconds, Mode=OneWay}" />
         </Grid>
 
+        <!--  加载条  -->
+        <ProgressBar
+            Grid.Row="0"
+            Grid.RowSpan="3"
+            VerticalAlignment="Top"
+            Background="Transparent"
+            IsIndeterminate="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
+            Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+
         <!--  时间选取  -->
         <controls:SettingsExpander
             x:Uid="StatsDashboardControlTimeRange"
-            Grid.Row="2"
+            Grid.Row="1"
             Margin="36,36,36,4"
             HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                      Glyph=&#xEC92;}"
@@ -111,7 +112,7 @@
         </controls:SettingsExpander>
 
         <!--  结果展示  -->
-        <ScrollViewer Grid.Row="3" Padding="36,0,32,0">
+        <ScrollViewer Grid.Row="2" Padding="36,0,32,0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />

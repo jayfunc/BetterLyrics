@@ -122,6 +122,10 @@
                                     IsOpen="True"
                                     Severity="Error"
                                     Visibility="{x:Bind ViewModel.AppUpdateService.AppUpdateStatus, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}" />
+                                <ProgressBar
+                                    VerticalAlignment="Top"
+                                    IsIndeterminate="True"
+                                    Visibility="{x:Bind ViewModel.AppUpdateService.IsChecking, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
                             </Grid>
                         </controls:SettingsExpander.ItemsHeader>
                     </controls:SettingsExpander>
