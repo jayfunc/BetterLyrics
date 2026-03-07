@@ -46,7 +46,7 @@
                     </InfoBar>
 
                     <ListView
-                        ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
+                        ItemContainerStyle="{ThemeResource ListViewStretchedItemContainerStyle}"
                         ItemsSource="{x:Bind ViewModel.AppSettings.LocalMediaFolders, Mode=OneWay}"
                         SelectionMode="None">
                         <ListView.ItemTemplate>

@@ -42,15 +42,12 @@
             <ListView
                 x:Name="FontListView"
                 Grid.Row="1"
-                ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
+                ItemContainerStyle="{ThemeResource ListViewCardStyle}"
                 Loaded="FontListView_Loaded"
                 SelectionChanged="FontListView_SelectionChanged">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:ExtendedFontFamily">
-                        <Grid
-                            Padding="12"
-                            RowSpacing="6"
-                            Style="{StaticResource CardGridStyle}">
+                        <Grid Padding="12" RowSpacing="6">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
@@ -103,11 +100,11 @@
                 Grid.Row="1"
                 AllowDrop="True"
                 CanReorderItems="True"
-                ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
+                ItemContainerStyle="{ThemeResource ListViewCardStyle}"
                 SelectionMode="None">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="models:ExtendedFontFamily">
-                        <Grid Style="{StaticResource CardGridStyle}">
+                        <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />
                                 <RowDefinition Height="Auto" />

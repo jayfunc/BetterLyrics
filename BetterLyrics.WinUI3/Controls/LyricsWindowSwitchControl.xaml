@@ -44,7 +44,7 @@
 
             <ListView
                 Margin="48,56"
-                ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
+                ItemContainerStyle="{ThemeResource ListViewStretchedItemContainerStyle}"
                 ItemsSource="{x:Bind ViewModel.AppSettings.WindowBoundsRecords, Mode=OneWay}"
                 SelectionMode="None">
                 <ItemsControl.ItemsPanel>

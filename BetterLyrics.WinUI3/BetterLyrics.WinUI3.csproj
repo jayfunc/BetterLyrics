@@ -74,6 +74,7 @@
 		<None Remove="Themes\FluentButtonStyle.xaml" />
 		<None Remove="Themes\FluentComboBoxItemStyle.xaml" />
 		<None Remove="Themes\FluentHyperlinkButtonStyle.xaml" />
+		<None Remove="Themes\FluentListViewItemStyle.xaml" />
 		<None Remove="Themes\FluentMenuFlyoutItemStyle.xaml" />
 		<None Remove="Themes\FluentSliderStyle.xaml" />
 		<None Remove="Themes\FluentStyles.xaml" />
@@ -480,6 +481,16 @@
 	  <Content Update="Assets\Banner.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Themes\FluentListViewItemStyle.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Themes\FluentNavigationViewItemPresenterStyles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Themes\DefaultStyles.xaml">

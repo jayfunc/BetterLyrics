@@ -33,7 +33,7 @@
 
         <ListView
             Grid.Row="2"
-            ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
+            ItemContainerStyle="{ThemeResource ListViewStretchedItemContainerStyle}"
             ItemsSource="{x:Bind ViewModel.AppSettings.PluginsInfo, Mode=OneWay}"
             SelectionMode="None">
             <ListView.ItemTemplate>

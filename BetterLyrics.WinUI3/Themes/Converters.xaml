@@ -11,7 +11,7 @@
     <bwc:AlbumArtSearchProviderToDisplayNameConverter x:Key="AlbumArtSearchProviderToDisplayNameConverter" />
     <bwc:ColorToBrushConverter x:Key="ColorToBrushConverter" />
     <bwc:MatchedLocalFilesPathToVisibilityConverter x:Key="MatchedLocalFilesPathToVisibilityConverter" />
-    <bwc:IntToCornerRadius x:Key="IntToCornerRadius" />
+
     <bwc:CornerRadiusToDoubleConverter x:Key="CornerRadiusToDoubleConverter" />
     <bwc:LyricsSearchProviderToDisplayNameConverter x:Key="LyricsSearchProviderToDisplayNameConverter" />
     <bwc:TranslationSearchProviderToDisplayNameConverter x:Key="TranslationSearchProviderToDisplayNameConverter" />
@@ -20,6 +20,12 @@
     <bwc:MillisecondsToFormattedTimeConverter x:Key="MillisecondsToFormattedTimeConverter" />
     <bwc:FPSToTimeSpanConverter x:Key="FPSToTimeSpanConverter" />
     <bwc:ShortcutToStringConverter x:Key="ShortcutToStringConverter" />
+
+    <bwc:IntToCornerRadius x:Key="IntToCornerRadius" />
+    <bwc:IntToVisibilityConverter x:Key="IntToVisibilityConverter" />
+    <bwc:IntNegationToVisibilityConverter x:Key="IntNegationToVisibilityConverter" />
+    <bwc:IntToBoolConverter x:Key="IntToBoolConverter" />
+    <bwc:IntToDoubleConverter x:Key="IntToDoubleConverter" />
 
     <cwc:BoolToVisibilityConverter x:Key="BoolToVisibilityConverter" />
     <bwc:BoolToOpacityConverter x:Key="BoolToOpacityConverter" />
@@ -34,20 +40,19 @@
     <bwc:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter" />
     <bwc:DisplayLanguageCodeToIndexConverter x:Key="DisplayLanguageCodeToIndexConverter" />
     <bwc:PathToParentFolderConverter x:Key="PathToParentFolderConverter" />
-    <bwc:IntToBoolConverter x:Key="IntToBoolConverter" />
     <bwc:IndexToDisplayConverter x:Key="IndexToDisplayConverter" />
-    <bwc:IntToDoubleConverter x:Key="IntToDoubleConverter" />
     <bwc:MillisecondsToSecondsConverter x:Key="MillisecondsToSecondsConverter" />
     <bwc:PictureInfosToImageSourceConverter x:Key="PictureInfosToImageSourceConverter" />
     <bwc:LyricsFontWeightToFontWeightConverter x:Key="LyricsFontWeightToFontWeightConverter" />
     <bwc:TextAlignmentTypeToHorizontalAlignmentConverter x:Key="TextAlignmentTypeToHorizontalAlignmentConverter" />
-    <bwc:LyricsLayoutOrientationToOrientationConverter x:Key="LyricsLayoutOrientationToOrientationConverter" />
-    <bwc:LyricsLayoutOrientationNegationToOrientationConverter x:Key="LyricsLayoutOrientationNegationToOrientationConverter" />
     <bwc:FileSourceTypeToIconConverter x:Key="FileSourceTypeToIconConverter" />
     <bwc:PathToImageConverter x:Key="PathToImageConverter" />
     <bwc:DoubleToDecimalConverter x:Key="DoubleToDecimalConverter" />
     <bwc:UriStringToDecodedAbsoluteUri x:Key="UriStringToDecodedAbsoluteUri" />
     <bwc:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
+
+    <bwc:LyricsLayoutOrientationToOrientationConverter x:Key="LyricsLayoutOrientationToOrientationConverter" />
+    <bwc:LyricsLayoutOrientationNegationToOrientationConverter x:Key="LyricsLayoutOrientationNegationToOrientationConverter" />
 
     <bwc:EnumToIntConverter x:Key="EnumToIntConverter" />
     <bwc:EnumToOpacityConverter x:Key="EnumToOpacityConverter" />
