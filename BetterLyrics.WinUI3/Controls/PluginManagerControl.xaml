@@ -71,7 +71,7 @@
             <Button
                 x:Uid="PluginManagerControlInstall"
                 Command="{x:Bind ViewModel.InstallPluginCommand}"
-                Style="{StaticResource FluentAccentButtonStyle}" />
+                Style="{ThemeResource AccentButtonStyle}" />
         </StackPanel>
 
     </Grid>

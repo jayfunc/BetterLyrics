@@ -8,10 +8,48 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Margin="12,8">
-        <StackPanel Orientation="Horizontal" Spacing="6">
-            <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind PatronName, Mode=OneWay}" />
-            <TextBlock Foreground="{ThemeResource TextFillColorTertiaryBrush}" Text="{x:Bind Date, Mode=OneWay}" />
-        </StackPanel>
-    </Grid>
+    <Border
+        Width="250"
+        Padding="16"
+        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+        BorderThickness="1"
+        CornerRadius="{StaticResource ControlCornerRadius}">
+
+        <Grid ColumnSpacing="16">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid
+                Width="40"
+                Height="40"
+                Background="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                CornerRadius="20">
+                <FontIcon
+                    FontFamily="{ThemeResource SegoeFluentIcons}"
+                    FontSize="16"
+                    Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                    Glyph="&#xEB52;" />
+            </Grid>
+
+            <StackPanel
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                Spacing="2">
+                <TextBlock
+                    Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                    Style="{ThemeResource BodyStrongTextBlockStyle}"
+                    Text="{x:Bind PatronName, Mode=OneWay}"
+                    TextTrimming="CharacterEllipsis" />
+
+                <TextBlock
+                    Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                    Style="{ThemeResource CaptionTextBlockStyle}"
+                    Text="{x:Bind Date, Mode=OneWay}" />
+            </StackPanel>
+        </Grid>
+
+    </Border>
 </UserControl>

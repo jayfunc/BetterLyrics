@@ -54,7 +54,7 @@
                 Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                       FontSize=16,
                                       Glyph=&#xE7B7;}"
-                Style="{StaticResource GhostButtonStyle}">
+                Style="{ThemeResource GhostButtonStyle}">
                 <ToolTipService.ToolTip>
                     <TextBlock x:Uid="MusicGalleryPageScrollToPlayingItem" />
                 </ToolTipService.ToolTip>
@@ -67,7 +67,7 @@
                 Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                       FontSize=16,
                                       Glyph=&#xE738;}"
-                Style="{StaticResource GhostButtonStyle}">
+                Style="{ThemeResource GhostButtonStyle}">
                 <ToolTipService.ToolTip>
                     <TextBlock x:Uid="MusicGalleryPageEmptyPlayingQueue" />
                 </ToolTipService.ToolTip>
@@ -101,7 +101,7 @@
                                 Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                       FontSize=16,
                                                       Glyph=&#xE738;}"
-                                Style="{StaticResource GhostButtonStyle}">
+                                Style="{ThemeResource GhostButtonStyle}">
                                 <ToolTipService.ToolTip>
                                     <TextBlock x:Uid="MusicGalleryPageRemoveFromPlayingQueue" />
                                 </ToolTipService.ToolTip>

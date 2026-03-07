@@ -49,7 +49,7 @@
                         <ScalarTransition />
                     </StackPanel.OpacityTransition>
 
-                    <Button Click="MusicGalleryButton_Click" Style="{StaticResource TitleBarButtonStyle}">
+                    <Button Click="MusicGalleryButton_Click" Style="{ThemeResource TitleBarButtonStyle}">
                         <FontIcon
                             FontFamily="{StaticResource SegoeFluentIcons}"
                             FontSize="12"
@@ -62,7 +62,7 @@
                     <Button
                         x:Name="SettingsWindowButton"
                         Click="SettingsWindowButton_Click"
-                        Style="{StaticResource TitleBarButtonStyle}">
+                        Style="{ThemeResource TitleBarButtonStyle}">
                         <FontIcon
                             FontFamily="{StaticResource SegoeFluentIcons}"
                             FontSize="12"
@@ -72,7 +72,7 @@
                         </ToolTipService.ToolTip>
                     </Button>
 
-                    <Button Click="LyricsWindowSwitchButton_Click" Style="{StaticResource TitleBarButtonStyle}">
+                    <Button Click="LyricsWindowSwitchButton_Click" Style="{ThemeResource TitleBarButtonStyle}">
                         <FontIcon
                             FontFamily="{StaticResource SegoeFluentIcons}"
                             FontSize="12"
@@ -103,7 +103,7 @@
                         Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                               FontSize=12,
                                               Glyph=&#xE72E;}"
-                        Style="{StaticResource TitleBarButtonStyle}">
+                        Style="{ThemeResource TitleBarButtonStyle}">
                         <Button.OpacityTransition>
                             <ScalarTransition />
                         </Button.OpacityTransition>
@@ -112,7 +112,7 @@
                     <Button
                         x:Name="AOTButton"
                         Click="AOTButton_Click"
-                        Style="{StaticResource TitleBarButtonStyle}">
+                        Style="{ThemeResource TitleBarButtonStyle}">
                         <Grid>
                             <FontIcon
                                 FontFamily="{StaticResource SegoeFluentIcons}"
@@ -133,7 +133,7 @@
                     <Button
                         x:Name="FullscreenButton"
                         Click="FullscreenButton_Click"
-                        Style="{StaticResource TitleBarButtonStyle}">
+                        Style="{ThemeResource TitleBarButtonStyle}">
                         <Grid>
                             <FontIcon
                                 x:Name="EnterFullscreenFontIcon"
@@ -155,7 +155,7 @@
                     <Button
                         x:Name="MinimizeButton"
                         Click="MinimizeButton_Click"
-                        Style="{StaticResource TitleBarButtonStyle}">
+                        Style="{ThemeResource TitleBarButtonStyle}">
                         <FontIcon
                             FontFamily="{StaticResource SegoeFluentIcons}"
                             FontSize="12"
@@ -165,7 +165,7 @@
                     <Button
                         x:Name="MaximizeButton"
                         Click="MaximizeButton_Click"
-                        Style="{StaticResource TitleBarButtonStyle}">
+                        Style="{ThemeResource TitleBarButtonStyle}">
                         <Grid>
                             <FontIcon
                                 x:Name="EnterMaximizeFontIcon"
@@ -191,7 +191,7 @@
                     <Button
                         x:Name="CloseButton"
                         Click="CloseButton_Click"
-                        Style="{StaticResource TitleBarButtonStyle}">
+                        Style="{ThemeResource TitleBarButtonStyle}">
                         <FontIcon
                             FontFamily="{StaticResource SegoeFluentIcons}"
                             FontSize="12"
@@ -210,7 +210,7 @@
                     Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                           FontSize=12,
                                           Glyph=&#xE712;}"
-                    Style="{StaticResource TitleBarButtonStyle}">
+                    Style="{ThemeResource TitleBarButtonStyle}">
                     <Button.OpacityTransition>
                         <ScalarTransition />
                     </Button.OpacityTransition>
@@ -253,7 +253,7 @@
                 Opacity="0"
                 PointerEntered="UnlockButton_PointerEntered"
                 PointerExited="UnlockButton_PointerExited"
-                Style="{StaticResource FluentAccentButtonStyle}">
+                Style="{ThemeResource AccentButtonStyle}">
                 <Button.OpacityTransition>
                     <ScalarTransition />
                 </Button.OpacityTransition>

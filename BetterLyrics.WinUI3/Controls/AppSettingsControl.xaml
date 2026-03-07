@@ -44,12 +44,18 @@
                         </controls:SettingsExpander.Items>
                         <controls:SettingsExpander.ItemsFooter>
                             <InfoBar IsClosable="False" IsOpen="True">
-                                <HyperlinkButton
-                                    x:Uid="SettingsPageHelpUsTranslate"
-                                    Padding="0"
-                                    NavigateUri="{x:Bind consts:Link.Crowdin}" />
+                                <HyperlinkButton x:Uid="SettingsPageHelpUsTranslate" NavigateUri="{x:Bind consts:Link.Crowdin}" />
                             </InfoBar>
                         </controls:SettingsExpander.ItemsFooter>
+                    </controls:SettingsExpander>
+
+                    <controls:SettingsExpander x:Uid="AppSettingsControlEnhanceControlAnimations" IsExpanded="True">
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.EnhanceControlInteractiveAnimations, Mode=TwoWay}" />
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard>
+                                <Button x:Uid="SettingsPageRestart" Command="{x:Bind ViewModel.RestartAppCommand}" />
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
 
                     <!--  Startup  -->

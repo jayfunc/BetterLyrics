@@ -36,7 +36,7 @@
                 Grid.Column="0"
                 VerticalAlignment="Center"
                 Click="ResetButton_Click"
-                Style="{StaticResource GhostButtonStyle}"
+                Style="{ThemeResource GhostButtonStyle}"
                 Visibility="{x:Bind ResetButtonVisibility, Mode=OneWay}">
                 <FontIcon
                     FontFamily="{StaticResource SegoeFluentIcons}"
@@ -61,7 +61,7 @@
                         Padding="0"
                         VerticalAlignment="Center"
                         Click="SubtractButton_Click"
-                        Style="{StaticResource GhostButtonStyle}">
+                        Style="{ThemeResource GhostButtonStyle}">
                         <FontIcon
                             FontFamily="{StaticResource SegoeFluentIcons}"
                             FontSize="12"
@@ -90,7 +90,7 @@
                         Padding="0"
                         VerticalAlignment="Center"
                         Click="AddButton_Click"
-                        Style="{StaticResource GhostButtonStyle}">
+                        Style="{ThemeResource GhostButtonStyle}">
                         <FontIcon
                             FontFamily="{StaticResource SegoeFluentIcons}"
                             FontSize="12"

@@ -36,7 +36,7 @@
                 Click="Button_Click"
                 Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                       Glyph=&#xE73C;}"
-                Style="{StaticResource GhostButtonStyle}">
+                Style="{ThemeResource GhostButtonStyle}">
                 <Button.KeyboardAccelerators>
                     <KeyboardAccelerator Key="Escape" />
                 </Button.KeyboardAccelerators>

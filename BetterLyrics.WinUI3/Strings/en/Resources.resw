@@ -159,6 +159,9 @@
   <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
     <value>Music player</value>
   </data>
+  <data name="AppSettingsControlEnhanceControlAnimations.Header" xml:space="preserve">
+    <value>Enhance Control Interactive Animations</value>
+  </data>
   <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
     <value>Window</value>
   </data>
