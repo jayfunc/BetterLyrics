@@ -94,6 +94,10 @@
         </Grid>
 
         <Grid Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}" Opacity="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
             <Grid.OpacityTransition>
                 <ScalarTransition />
             </Grid.OpacityTransition>
@@ -105,18 +109,32 @@
                     <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
                 </interactivity:EventTriggerBehavior>
             </interactivity:Interaction.Behaviors>
-            <StackPanel
-                Margin="6"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
-                Orientation="Horizontal"
-                Spacing="6">
-                <Button Click="OpenButton_Click" Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, FontSize=16, Glyph=&#xE78B;}">
+            <Grid
+                Grid.Row="0"
+                Margin="6,6,6,0"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                ColumnSpacing="6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button
+                    Grid.Column="0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Click="OpenButton_Click"
+                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                          FontSize=16,
+                                          Glyph=&#xE78B;}">
                     <ToolTipService.ToolTip>
                         <TextBlock x:Uid="SystemTrayLyrics" />
                     </ToolTipService.ToolTip>
                 </Button>
                 <Button
+                    Grid.Column="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
                     Click="CloseButton_Click"
                     Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                           FontSize=16,
@@ -126,8 +144,9 @@
                         <TextBlock x:Uid="SettingsPageCloseStatus" />
                     </ToolTipService.ToolTip>
                 </Button>
-            </StackPanel>
+            </Grid>
             <ToggleButton
+                Grid.Row="1"
                 Margin="6"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Bottom"

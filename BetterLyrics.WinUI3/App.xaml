@@ -15,40 +15,32 @@
                 <ResourceDictionary Source="ms-appx:///CommunityToolkit.WinUI.Controls.Segmented/Segmented/Segmented.xaml" />
                 <ResourceDictionary Source="ms-appx:///CommunityToolkit.WinUI.Controls.SettingsControls/SettingsExpander/SettingsExpander.xaml" />
 
-                <ResourceDictionary Source="/Styles/Converters.xaml" />
-                <ResourceDictionary Source="/Styles/GhostSliderStyle.xaml" />
-                <ResourceDictionary Source="/Styles/InteractiveListViewHeaderStyle.xaml" />
+                <ResourceDictionary Source="/Themes/DefaultStyles.xaml" />
 
-                <ResourceDictionary Source="/Styles/FluentAccentButtonStyle.xaml" />
-                <ResourceDictionary Source="/Styles/FluentButtonStyle.xaml" />
-                <ResourceDictionary Source="/Styles/FluentComboBoxItemStyle.xaml" />
-                <ResourceDictionary Source="/Styles/FluentHyperlinkButtonStyle.xaml" />
-                <ResourceDictionary Source="/Styles/FluentListViewItemStyle.xaml" />
-                <ResourceDictionary Source="/Styles/FluentMenuFlyoutItemStyle.xaml" />
-                <ResourceDictionary Source="/Styles/FluentSliderStyle.xaml" />
-                <ResourceDictionary Source="/Styles/FluentToggleButtonStyle.xaml" />
-                <ResourceDictionary Source="/Styles/FluentToolTipStyle.xaml" />
+                <ResourceDictionary Source="/Themes/Converters.xaml" />
+                <ResourceDictionary Source="/Themes/GhostSliderStyle.xaml" />
+                <ResourceDictionary Source="/Themes/InteractiveListViewHeaderStyle.xaml" />
 
-                <ResourceDictionary Source="/Styles/LyricsCardAncientBookStyle.xaml" />
-                <ResourceDictionary Source="/Styles/LyricsCardBambooSlipsStyle.xaml" />
-                <ResourceDictionary Source="/Styles/LyricsCardCDStyle.xaml" />
-                <ResourceDictionary Source="/Styles/LyricsCardCinematicStyle.xaml" />
-                <ResourceDictionary Source="/Styles/LyricsCardCyberpunkStyle.xaml" />
-                <ResourceDictionary Source="/Styles/LyricsCardDunhuangStyle.xaml" />
-                <ResourceDictionary Source="/Styles/LyricsCardInkWashStyle.xaml" />
-                <ResourceDictionary Source="/Styles/LyricsCardJournalStyle.xaml" />
-                <ResourceDictionary Source="/Styles/LyricsCardMagazineStyle.xaml" />
-                <ResourceDictionary Source="/Styles/LyricsCardMinimalStyle.xaml" />
-                <ResourceDictionary Source="/Styles/LyricsCardPodStyle.xaml" />
-                <ResourceDictionary Source="/Styles/LyricsCardPolaroidStyle.xaml" />
-                <ResourceDictionary Source="/Styles/LyricsCardReceiptStyle.xaml" />
-                <ResourceDictionary Source="/Styles/LyricsCardRetroMSNStyle.xaml" />
-                <ResourceDictionary Source="/Styles/LyricsCardRetroQQStyle.xaml" />
-                <ResourceDictionary Source="/Styles/LyricsCardStickyNoteStyle.xaml" />
-                <ResourceDictionary Source="/Styles/LyricsCardSwissStyle.xaml" />
-                <ResourceDictionary Source="/Styles/LyricsCardTicketStyle.xaml" />
-                <ResourceDictionary Source="/Styles/LyricsCardVinylStyle.xaml" />
-                <ResourceDictionary Source="/Styles/LyricsCardWindowsPhoneStyle.xaml" />
+                <ResourceDictionary Source="/Themes/LyricsCardAncientBookStyle.xaml" />
+                <ResourceDictionary Source="/Themes/LyricsCardBambooSlipsStyle.xaml" />
+                <ResourceDictionary Source="/Themes/LyricsCardCDStyle.xaml" />
+                <ResourceDictionary Source="/Themes/LyricsCardCinematicStyle.xaml" />
+                <ResourceDictionary Source="/Themes/LyricsCardCyberpunkStyle.xaml" />
+                <ResourceDictionary Source="/Themes/LyricsCardDunhuangStyle.xaml" />
+                <ResourceDictionary Source="/Themes/LyricsCardInkWashStyle.xaml" />
+                <ResourceDictionary Source="/Themes/LyricsCardJournalStyle.xaml" />
+                <ResourceDictionary Source="/Themes/LyricsCardMagazineStyle.xaml" />
+                <ResourceDictionary Source="/Themes/LyricsCardMinimalStyle.xaml" />
+                <ResourceDictionary Source="/Themes/LyricsCardPodStyle.xaml" />
+                <ResourceDictionary Source="/Themes/LyricsCardPolaroidStyle.xaml" />
+                <ResourceDictionary Source="/Themes/LyricsCardReceiptStyle.xaml" />
+                <ResourceDictionary Source="/Themes/LyricsCardRetroMSNStyle.xaml" />
+                <ResourceDictionary Source="/Themes/LyricsCardRetroQQStyle.xaml" />
+                <ResourceDictionary Source="/Themes/LyricsCardStickyNoteStyle.xaml" />
+                <ResourceDictionary Source="/Themes/LyricsCardSwissStyle.xaml" />
+                <ResourceDictionary Source="/Themes/LyricsCardTicketStyle.xaml" />
+                <ResourceDictionary Source="/Themes/LyricsCardVinylStyle.xaml" />
+                <ResourceDictionary Source="/Themes/LyricsCardWindowsPhoneStyle.xaml" />
 
             </ResourceDictionary.MergedDictionaries>
 
@@ -61,20 +53,6 @@
                     <ImageSource x:Key="MusicWave">ms-appx:///Assets/MusicWaveWhite.gif</ImageSource>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
-
-            <!--  Brush  -->
-            <LinearGradientBrush x:Key="BaseHighEdgeHorizontalFadeBrush" StartPoint="0,0.5" EndPoint="1,0.5">
-                <GradientStop Offset="0" Color="Transparent" />
-                <GradientStop Offset="0.02" Color="{ThemeResource SystemBaseHighColor}" />
-                <GradientStop Offset="0.98" Color="{ThemeResource SystemBaseHighColor}" />
-                <GradientStop Offset="1" Color="Transparent" />
-            </LinearGradientBrush>
-            <LinearGradientBrush x:Key="BaseHighEdgeVerticalFadeBrush" StartPoint="0.5,0" EndPoint="0.5,1">
-                <GradientStop Offset="0" Color="Transparent" />
-                <GradientStop Offset="0.15" Color="{ThemeResource SystemBaseHighColor}" />
-                <GradientStop Offset="0.85" Color="{ThemeResource SystemBaseHighColor}" />
-                <GradientStop Offset="1" Color="Transparent" />
-            </LinearGradientBrush>
 
             <!--  Animation  -->
             <ExponentialEase x:Key="EaseInOut" EasingMode="EaseInOut" />
@@ -93,64 +71,6 @@
                 </Style.Setters>
             </Style>
 
-            <!--  ToolTip Styles  -->
-            <Style BasedOn="{StaticResource FluentToolTipStyle}" TargetType="ToolTip" />
-
-            <!--  Button Styles  -->
-            <Style BasedOn="{StaticResource FluentButtonStyle}" TargetType="Button" />
-            <Style
-                x:Key="TitleBarButtonStyle"
-                BasedOn="{StaticResource FluentButtonStyle}"
-                TargetType="Button">
-                <Setter Property="VerticalAlignment" Value="Top" />
-                <Setter Property="CornerRadius" Value="4" />
-                <Setter Property="BorderThickness" Value="0" />
-                <Setter Property="Padding" Value="16,9,16,9" />
-                <Setter Property="Background" Value="Transparent" />
-            </Style>
-            <Style
-                x:Key="GhostButtonStyle"
-                BasedOn="{StaticResource FluentButtonStyle}"
-                TargetType="Button">
-                <Setter Property="VerticalAlignment" Value="Stretch" />
-                <Setter Property="Padding" Value="8" />
-                <Setter Property="CornerRadius" Value="4" />
-                <Setter Property="BorderThickness" Value="0" />
-                <Setter Property="Background" Value="Transparent" />
-            </Style>
-            <Style
-                x:Key="TitleBarToggleButtonStyle"
-                BasedOn="{StaticResource FluentToggleButtonStyle}"
-                TargetType="ToggleButton">
-                <Setter Property="VerticalAlignment" Value="Top" />
-                <Setter Property="CornerRadius" Value="4" />
-                <Setter Property="BorderThickness" Value="0" />
-                <Setter Property="Padding" Value="14,6,14,9" />
-                <Setter Property="Background" Value="Transparent" />
-            </Style>
-            <Style
-                x:Key="GhostToggleButtonStyle"
-                BasedOn="{StaticResource FluentToggleButtonStyle}"
-                TargetType="ToggleButton">
-                <Setter Property="CornerRadius" Value="4" />
-                <Setter Property="VerticalAlignment" Value="Stretch" />
-                <Setter Property="BorderThickness" Value="0" />
-                <Setter Property="Padding" Value="8" />
-                <Setter Property="Background" Value="Transparent" />
-            </Style>
-
-            <!--  ToggleButton Styles  -->
-            <Style BasedOn="{StaticResource FluentToggleButtonStyle}" TargetType="ToggleButton" />
-
-            <!--  HyperlinkButton Styles  -->
-            <Style BasedOn="{StaticResource FluentHyperlinkButtonStyle}" TargetType="HyperlinkButton" />
-
-            <!--  MenuFlyoutItem Styles  -->
-            <Style BasedOn="{StaticResource FluentMenuFlyoutItemStyle}" TargetType="MenuFlyoutItem" />
-
-            <!--  Slider Styles  -->
-            <Style BasedOn="{StaticResource FluentSliderStyle}" TargetType="Slider" />
-
             <!--  Grid Styles  -->
             <Style x:Key="CardGridStyle" TargetType="Grid">
                 <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
@@ -164,10 +84,9 @@
             </Style>
 
             <!--  ListViewItem Styles  -->
-            <Style BasedOn="{StaticResource FluentListViewItemStyle}" TargetType="ListViewItem" />
             <Style
                 x:Key="ListViewStretchedItemContainerStyle"
-                BasedOn="{StaticResource FluentListViewItemStyle}"
+                BasedOn="{StaticResource DefaultListViewItemStyle}"
                 TargetType="ListViewItem">
                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                 <Setter Property="VerticalContentAlignment" Value="Stretch" />
@@ -205,9 +124,6 @@
                 <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
                 <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
             </Style>
-
-            <!--  ComboBoxItem Styles  -->
-            <Style BasedOn="{StaticResource FluentComboBoxItemStyle}" TargetType="ComboBoxItem" />
 
             <!--  Dimensions  -->
 

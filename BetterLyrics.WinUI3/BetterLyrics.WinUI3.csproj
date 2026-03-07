@@ -69,19 +69,20 @@
 		<None Remove="Controls\StatsDashboardControl.xaml" />
 		<None Remove="Controls\SystemTray.xaml" />
 		<None Remove="Controls\WindowSettingsControl.xaml" />
-		<None Remove="Styles\FluentAccentButtonStyle.xaml" />
-		<None Remove="Styles\FluentButtonStyle.xaml" />
-		<None Remove="Styles\FluentComboBoxItemStyle.xaml" />
-		<None Remove="Styles\FluentHyperlinkButtonStyle.xaml" />
-		<None Remove="Styles\FluentListViewItemStyle.xaml" />
-		<None Remove="Styles\FluentMenuFlyoutItemStyle.xaml" />
-		<None Remove="Styles\FluentSliderStyle.xaml" />
-		<None Remove="Styles\FluentToggleButtonStyle.xaml" />
-		<None Remove="Styles\FluentToolTipStyle.xaml" />
-		<None Remove="Styles\GhostSliderStyle.xaml" />
-		<None Remove="Styles\InteractiveListViewHeaderStyle.xaml" />
-		<None Remove="Styles\LyricsCardInkWashStyle.xaml" />
-		<None Remove="Styles\LyricsCardMinimalStyle.xaml" />
+		<None Remove="Themes\DefaultStyles.xaml" />
+		<None Remove="Themes\FluentAccentButtonStyle.xaml" />
+		<None Remove="Themes\FluentButtonStyle.xaml" />
+		<None Remove="Themes\FluentComboBoxItemStyle.xaml" />
+		<None Remove="Themes\FluentHyperlinkButtonStyle.xaml" />
+		<None Remove="Themes\FluentMenuFlyoutItemStyle.xaml" />
+		<None Remove="Themes\FluentSliderStyle.xaml" />
+		<None Remove="Themes\FluentStyles.xaml" />
+		<None Remove="Themes\FluentToggleButtonStyle.xaml" />
+		<None Remove="Themes\FluentToolTipStyle.xaml" />
+		<None Remove="Themes\GhostSliderStyle.xaml" />
+		<None Remove="Themes\InteractiveListViewHeaderStyle.xaml" />
+		<None Remove="Themes\LyricsCardInkWashStyle.xaml" />
+		<None Remove="Themes\LyricsCardMinimalStyle.xaml" />
 		<None Remove="Views\LyricsSearchWindow.xaml" />
 		<None Remove="Views\LyricsSharePage.xaml" />
 		<None Remove="Views\LyricsShareWindow.xaml" />
@@ -481,6 +482,16 @@
 	  </Content>
 	</ItemGroup>
 	<ItemGroup>
+	  <Page Update="Themes\DefaultStyles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Styles\FluentStyles.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
 	  <Page Update="Styles\FluentSliderStyle.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>
@@ -517,9 +528,6 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Styles\FluentButtonStyle.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
-	  <Page Update="Styles\FluentListViewItemStyle.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>
 	</ItemGroup>

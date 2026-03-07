@@ -64,7 +64,7 @@
                                         Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                               FontSize=12,
                                                               Glyph=&#xE777;}"
-                                        Style="{StaticResource GhostButtonStyle}" />
+                                        Style="{ThemeResource GhostButtonStyle}" />
                                 </Grid>
 
                             </StackPanel>
@@ -103,7 +103,7 @@
                                         Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                               FontSize=12,
                                                               Glyph=&#xE777;}"
-                                        Style="{StaticResource GhostButtonStyle}" />
+                                        Style="{ThemeResource GhostButtonStyle}" />
                                 </Grid>
 
                             </StackPanel>
@@ -143,7 +143,7 @@
                                         Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                               FontSize=12,
                                                               Glyph=&#xE777;}"
-                                        Style="{StaticResource GhostButtonStyle}" />
+                                        Style="{ThemeResource GhostButtonStyle}" />
                                 </Grid>
 
                             </StackPanel>
@@ -162,7 +162,7 @@
                             HorizontalAlignment="Stretch"
                             Command="{x:Bind ViewModel.SearchCommand}"
                             IsEnabled="{x:Bind ViewModel.IsSearching, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
-                            Style="{StaticResource FluentAccentButtonStyle}" />
+                            Style="{ThemeResource AccentButtonStyle}" />
 
                         <controls:SettingsCard x:Uid="LyricsSearchControlIgnoreCache">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.IgnoreCacheWhenSearching, Mode=TwoWay}" />
@@ -330,7 +330,7 @@
                                                                           FontSize=16,
                                                                           Glyph=&#xE768;}"
                                                     Opacity="0"
-                                                    Style="{StaticResource FluentAccentButtonStyle}">
+                                                    Style="{ThemeResource AccentButtonStyle}">
                                                     <Button.OpacityTransition>
                                                         <ScalarTransition />
                                                     </Button.OpacityTransition>
@@ -398,7 +398,7 @@
                 x:Uid="LyricsSearchControlSaveChanges"
                 Grid.Column="3"
                 Command="{x:Bind ViewModel.SaveCommand}"
-                Style="{StaticResource FluentAccentButtonStyle}" />
+                Style="{ThemeResource AccentButtonStyle}" />
         </Grid>
     </Grid>
 </UserControl>

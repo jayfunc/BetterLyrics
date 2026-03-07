@@ -254,6 +254,77 @@
                         </StackPanel>
                     </Expander>
 
+                    <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">
+                        <Expander.Header>
+                            <TextBlock x:Uid="SettingsPagePatrons" />
+                        </Expander.Header>
+                        <controls:WrapPanel Orientation="Horizontal">
+                            <uc:PatronControl Date="Mar 4, 2026" PatronName="你的秋乔呐" />
+                            <uc:PatronControl Date="Mar 3, 2026" PatronName="Aureliano" />
+                            <uc:PatronControl Date="Feb 27, 2026" PatronName="Andrews Consulting" />
+                            <uc:PatronControl Date="Feb 20, 2026" PatronName="Asane779" />
+                            <uc:PatronControl Date="Feb 18, 2026" PatronName="haitang000" />
+                            <uc:PatronControl Date="Feb 17, 2026" PatronName="AlexZhao" />
+                            <uc:PatronControl Date="Feb 16, 2026" PatronName="**昊" />
+                            <uc:PatronControl Date="Feb 13, 2026" PatronName="**鹏" />
+                            <uc:PatronControl Date="Jan 31, 2026" PatronName="wu" />
+                            <uc:PatronControl Date="Jan 29, 2026" PatronName="咯他ii" />
+                            <uc:PatronControl Date="Jan 29, 2026" PatronName="**林" />
+                            <uc:PatronControl Date="Jan 29, 2026" PatronName="**棋" />
+                            <uc:PatronControl Date="Jan 29, 2026" PatronName="**都" />
+                            <uc:PatronControl Date="Jan 29, 2026" PatronName="**成" />
+                            <uc:PatronControl Date="Jan 19, 2026" PatronName="**杭" />
+                            <uc:PatronControl Date="Jan 8, 2026" PatronName="Eureka-K_K" />
+                            <uc:PatronControl Date="Jan 3, 2026" PatronName="**轩" />
+                            <uc:PatronControl Date="Dec 13, 2025" PatronName="&lt;Anon/匿名&gt;" />
+                            <uc:PatronControl Date="Dec 3, 2025" PatronName="YE" />
+                            <uc:PatronControl Date="Dec 2, 2025" PatronName="&lt;Anon/匿名&gt;" />
+                            <uc:PatronControl Date="Nov 23, 2025" PatronName="**玄" />
+                            <uc:PatronControl Date="Nov 21, 2025" PatronName="**智" />
+                            <uc:PatronControl Date="Nov 17, 2025" PatronName="SuHeAndZl" />
+                            <uc:PatronControl Date="Nov 2, 2025" PatronName="借过" />
+                            <uc:PatronControl Date="Aug 28, 2025" PatronName="**华" />
+                            <Border
+                                Width="500"
+                                Padding="16"
+                                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                BorderThickness="1"
+                                CornerRadius="{StaticResource ControlCornerRadius}">
+
+                                <Grid ColumnSpacing="16">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid
+                                        Width="40"
+                                        Height="40"
+                                        Background="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                                        CornerRadius="20">
+                                        <FontIcon
+                                            FontFamily="{ThemeResource SegoeFluentIcons}"
+                                            FontSize="16"
+                                            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                                            Glyph="&#xEB52;" />
+                                    </Grid>
+
+                                    <StackPanel
+                                        Grid.Column="1"
+                                        VerticalAlignment="Center"
+                                        Spacing="2">
+                                        <TextBlock
+                                            x:Uid="SettingsPageUserWhoPurchased"
+                                            Foreground="{ThemeResource TextFillColorPrimaryBrush}"
+                                            Style="{ThemeResource BodyStrongTextBlockStyle}"
+                                            TextTrimming="CharacterEllipsis" />
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </controls:WrapPanel>
+                    </Expander>
+
                     <controls:SettingsCard x:Uid="SettingsPageMockMusicPlaying">
                         <HyperlinkButton x:Uid="SettingsPagePlayingMockMusicButton" NavigateUri="https://soundcloud.com/carlyraejepsen/cut-to-the-feeling" />
                     </controls:SettingsCard>

@@ -74,7 +74,7 @@
                     Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                           FontSize=12,
                                           Glyph=&#xE72C;}"
-                    Style="{StaticResource GhostButtonStyle}" />
+                    Style="{ThemeResource GhostButtonStyle}" />
                 <ComboBox SelectedIndex="{x:Bind ViewModel.SelectedTimeRange, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                     <ComboBoxItem x:Uid="StatsDashboardControlToday" />
                     <ComboBoxItem x:Uid="StatsDashboardControlThisWeek" />

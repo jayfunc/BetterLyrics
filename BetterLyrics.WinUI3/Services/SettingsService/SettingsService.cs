@@ -10,6 +10,7 @@ using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.WinUI;
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -163,15 +164,33 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
 
         private void AppSettings_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
-            switch (e.PropertyName)
+            if (e.PropertyName == nameof(GeneralSettings.LanguageCode))
             {
-                case nameof(GeneralSettings.LanguageCode):
-                    ApplicationLanguages.PrimaryLanguageOverride = AppSettings.GeneralSettings.LanguageCode;
-                    break;
-                default:
-                    break;
+                ApplicationLanguages.PrimaryLanguageOverride = AppSettings.GeneralSettings.LanguageCode;
             }
             WriteAppSettings();
+        }
+
+        public void UpdateGlobalStyles(bool useCustom)
+        {
+            var mergedDicts = Application.Current.Resources.MergedDictionaries;
+
+            var customDict = mergedDicts.FirstOrDefault(d => d.Source != null && d.Source.OriginalString.Contains("FluentStyles.xaml"));
+
+            if (useCustom)
+            {
+                if (customDict == null)
+                {
+                    mergedDicts.Add(new ResourceDictionary { Source = new System.Uri("ms-appx:///Themes/FluentStyles.xaml") });
+                }
+            }
+            else
+            {
+                if (customDict != null)
+                {
+                    mergedDicts.Remove(customDict);
+                }
+            }
         }
 
         /// <summary>

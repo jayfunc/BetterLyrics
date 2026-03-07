@@ -32,7 +32,7 @@
                         <StackPanel Orientation="Horizontal" Spacing="3">
 
                             <!--  Create from templates  -->
-                            <Button Content="{ui:FontIcon FontSize=16, FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE710;}" Style="{StaticResource GhostButtonStyle}">
+                            <Button Content="{ui:FontIcon FontSize=16, FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE710;}" Style="{ThemeResource GhostButtonStyle}">
                                 <ToolTipService.ToolTip>
                                     <ToolTip x:Uid="SettingsPageCreateFromTemplates" />
                                 </ToolTipService.ToolTip>
@@ -54,7 +54,7 @@
                                 Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                       FontSize=16,
                                                       Glyph=&#xE74B;}"
-                                Style="{StaticResource GhostButtonStyle}">
+                                Style="{ThemeResource GhostButtonStyle}">
                                 <ToolTipService.ToolTip>
                                     <ToolTip x:Uid="SettingsPageImport" />
                                 </ToolTipService.ToolTip>
@@ -195,7 +195,7 @@
                         Content="{ui:FontIcon FontSize=16,
                                               FontFamily={StaticResource SegoeFluentIcons},
                                               Glyph=&#xE70D;}"
-                        Style="{StaticResource FluentAccentButtonStyle}" />
+                        Style="{ThemeResource AccentButtonStyle}" />
                 </Grid>
 
                 <NavigationView

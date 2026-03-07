@@ -100,7 +100,7 @@
                                             Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                                   FontSize=16,
                                                                   Glyph=&#xE738;}"
-                                            Style="{StaticResource GhostButtonStyle}"
+                                            Style="{ThemeResource GhostButtonStyle}"
                                             Visibility="{x:Bind IsDefault, Converter={StaticResource BoolNegationToVisibilityConverter}}">
                                             <ToolTipService.ToolTip>
                                                 <TextBlock x:Uid="MusicGalleryPageRemoveFromCustomList" />
@@ -175,7 +175,7 @@
                             Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                   FontSize=12,
                                                   Glyph=&#xE713;}"
-                            Style="{StaticResource GhostButtonStyle}" />
+                            Style="{ThemeResource GhostButtonStyle}" />
                     </StackPanel>
 
                     <TreeView
@@ -299,7 +299,7 @@
                         Content="{ui:FontIcon FontSize=16,
                                               FontFamily={StaticResource SegoeFluentIcons},
                                               Glyph=&#xE762;}"
-                        Style="{StaticResource GhostToggleButtonStyle}" />
+                        Style="{ThemeResource GhostToggleButtonStyle}" />
 
                     <!--  为多选模式保留  -->
                     <Grid Grid.Column="1">
@@ -440,7 +440,7 @@
                                             Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                                   FontSize=12,
                                                                   Glyph=&#xE712;}"
-                                            Style="{StaticResource GhostButtonStyle}" />
+                                            Style="{ThemeResource GhostButtonStyle}" />
 
                                     </Grid>
                                 </DataTemplate>

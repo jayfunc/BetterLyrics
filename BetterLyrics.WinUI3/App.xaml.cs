@@ -91,6 +91,9 @@ namespace BetterLyrics.WinUI3
 
             var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
+            // 应用增强动效设置项
+            settingsService.UpdateGlobalStyles(settingsService.AppSettings.GeneralSettings.EnhanceControlInteractiveAnimations);
+
             // 迁移逻辑
             var songSearchMapService = Ioc.Default.GetRequiredService<ISongSearchMapService>();
             var obsoleteSongSearchMap = settingsService.AppSettings.MappedSongSearchQueries;

@@ -116,7 +116,7 @@
                         <Button
                             Grid.Column="2"
                             Click="PlaybackOrderButton_Click"
-                            Style="{StaticResource GhostButtonStyle}"
+                            Style="{ThemeResource GhostButtonStyle}"
                             Visibility="{x:Bind ShowPlaybackOrderButton, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                             <ToolTipService.ToolTip>
                                 <ToolTip>
@@ -164,12 +164,12 @@
                             Command="{x:Bind ViewModel.PreviousSongCommand}"
                             Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                   Glyph=&#xE622;}"
-                            Style="{StaticResource GhostButtonStyle}" />
+                            Style="{ThemeResource GhostButtonStyle}" />
                         <Button
                             Command="{x:Bind ViewModel.PauseSongCommand}"
                             Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                   Glyph=&#xF8AE;}"
-                            Style="{StaticResource GhostButtonStyle}">
+                            Style="{ThemeResource GhostButtonStyle}">
                             <interactivity:Interaction.Behaviors>
                                 <interactivity:DataTriggerBehavior
                                     Binding="{x:Bind GSMTCService.CurrentIsPlaying, Mode=OneWay}"
@@ -189,7 +189,7 @@
                             Command="{x:Bind ViewModel.PlaySongCommand}"
                             Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                   Glyph=&#xF5B0;}"
-                            Style="{StaticResource GhostButtonStyle}">
+                            Style="{ThemeResource GhostButtonStyle}">
                             <interactivity:Interaction.Behaviors>
                                 <interactivity:DataTriggerBehavior
                                     Binding="{x:Bind GSMTCService.CurrentIsPlaying, Mode=OneWay}"
@@ -210,13 +210,13 @@
                             Command="{x:Bind ViewModel.NextSongCommand}"
                             Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                   Glyph=&#xE623;}"
-                            Style="{StaticResource GhostButtonStyle}" />
+                            Style="{ThemeResource GhostButtonStyle}" />
                         <!--  播放队列按钮  -->
                         <Button
                             Click="PlayingQueueButton_Click"
                             Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                   Glyph=&#xE8FD;}"
-                            Style="{StaticResource GhostButtonStyle}"
+                            Style="{ThemeResource GhostButtonStyle}"
                             Visibility="{x:Bind ShowPlayingQueueButton, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
                             <ToolTipService.ToolTip>
                                 <TextBlock x:Uid="MusicGalleryPagePlayingQueue" />
@@ -238,7 +238,7 @@
                             Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                   FontSize=16,
                                                   Glyph=&#xE71A;}"
-                            Style="{StaticResource GhostButtonStyle}"
+                            Style="{ThemeResource GhostButtonStyle}"
                             Visibility="{x:Bind ShowStopButton, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                             <ToolTipService.ToolTip>
                                 <TextBlock x:Uid="MusicGalleryPageStopTrack" />
@@ -249,7 +249,7 @@
                         <Button
                             x:Name="VolumeButton"
                             Click="VolumeButton_Click"
-                            Style="{StaticResource GhostButtonStyle}"
+                            Style="{ThemeResource GhostButtonStyle}"
                             Visibility="{x:Bind ShowVolumeButton, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                             <Grid>
 
@@ -365,7 +365,7 @@
                         <Button
                             Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                   Glyph=&#xE712;}"
-                            Style="{StaticResource GhostButtonStyle}"
+                            Style="{ThemeResource GhostButtonStyle}"
                             Visibility="{x:Bind ShowMoreButton, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                             <Button.Flyout>
                                 <MenuFlyout>
@@ -557,7 +557,7 @@
                                     Content="{ui:FontIcon FontSize=16,
                                                           FontFamily={StaticResource SegoeFluentIcons},
                                                           Glyph=&#xE8A7;}"
-                                    Style="{StaticResource GhostButtonStyle}" />
+                                    Style="{ThemeResource GhostButtonStyle}" />
                                 <Grid
                                     Grid.Row="1"
                                     Margin="0,0,16,16"

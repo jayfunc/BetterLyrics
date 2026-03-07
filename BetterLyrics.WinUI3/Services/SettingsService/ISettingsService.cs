@@ -8,6 +8,8 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
     {
         AppSettings AppSettings { get; set; }
 
+        void UpdateGlobalStyles(bool useCustom);
+
         bool ImportSettings(string importPath);
         void ExportSettings(string exportPath);
     }
