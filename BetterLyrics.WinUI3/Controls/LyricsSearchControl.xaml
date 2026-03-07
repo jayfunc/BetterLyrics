@@ -174,13 +174,13 @@
             <!--  词源一览  -->
             <Grid Grid.Column="1">
                 <ListView
-                    ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
+                    ItemContainerStyle="{ThemeResource ListViewCardStyle}"
                     ItemsSource="{x:Bind ViewModel.LyricsSearchResults, Mode=OneWay}"
                     SelectedItem="{x:Bind ViewModel.SelectedLyricsSearchResult, Mode=TwoWay}">
                     <ListView.ItemTemplate>
                         <DataTemplate x:DataType="models:LyricsCacheItem">
                             <ListViewItem>
-                                <Grid Padding="12,6" Style="{StaticResource CardGridStyle}">
+                                <Grid Padding="12,6">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
                                         <RowDefinition Height="*" />
@@ -310,7 +310,7 @@
                     <Pivot.ItemTemplate>
                         <DataTemplate x:DataType="lyricsmodels:LyricsData">
                             <ListView
-                                ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
+                                ItemContainerStyle="{ThemeResource ListViewStretchedItemContainerStyle}"
                                 ItemsSource="{x:Bind LyricsLines, Mode=OneWay}"
                                 SelectionMode="None">
                                 <ListView.ItemTemplate>

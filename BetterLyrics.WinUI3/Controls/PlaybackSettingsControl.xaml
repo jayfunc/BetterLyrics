@@ -70,12 +70,12 @@
                             CanDragItems="True"
                             CanReorderItems="True"
                             DragItemsCompleted="MediaSourceProvidersListView_DragItemsCompleted"
-                            ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
+                            ItemContainerStyle="{ThemeResource ListViewCardStyle}"
                             ItemsSource="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo, Mode=OneWay}"
                             SelectionMode="None">
                             <ListView.ItemTemplate>
                                 <DataTemplate x:DataType="settingsmodels:MediaSourceProviderInfo">
-                                    <Grid Style="{StaticResource CardGridStyle}">
+                                    <Grid>
                                         <Grid
                                             Padding="12"
                                             ColumnSpacing="12"
@@ -346,7 +346,7 @@
                                 CanDragItems="True"
                                 CanReorderItems="True"
                                 DragItemsCompleted="AlbumArtSearchProvidersListView_DragItemsCompleted"
-                                ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
+                                ItemContainerStyle="{ThemeResource ListViewStretchedItemContainerStyle}"
                                 ItemsSource="{x:Bind ViewModel.SelectedMediaSourceProvider.AlbumArtSearchProvidersInfo, Mode=OneWay}"
                                 SelectionMode="None">
                                 <ListView.OpacityTransition>
@@ -400,7 +400,7 @@
                                 CanDragItems="True"
                                 CanReorderItems="True"
                                 DragItemsCompleted="LyricsSearchProvidersListView_DragItemsCompleted"
-                                ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
+                                ItemContainerStyle="{ThemeResource ListViewStretchedItemContainerStyle}"
                                 ItemsSource="{x:Bind ViewModel.SelectedMediaSourceProvider.LyricsSearchProvidersInfo, Mode=OneWay}"
                                 SelectionMode="None">
                                 <ListView.OpacityTransition>

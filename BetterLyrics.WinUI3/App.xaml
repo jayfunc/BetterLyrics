@@ -83,17 +83,6 @@
                 <Setter Property="Padding" Value="0,0,0,36" />
             </Style>
 
-            <!--  ListViewItem Styles  -->
-            <Style
-                x:Key="ListViewStretchedItemContainerStyle"
-                BasedOn="{StaticResource DefaultListViewItemStyle}"
-                TargetType="ListViewItem">
-                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                <Setter Property="VerticalContentAlignment" Value="Stretch" />
-                <Setter Property="Margin" Value="0" />
-                <Setter Property="Padding" Value="0" />
-            </Style>
-
             <!--  ScrollViewer Styles  -->
             <Style
                 x:Key="SettingsScrollViewerStyle"

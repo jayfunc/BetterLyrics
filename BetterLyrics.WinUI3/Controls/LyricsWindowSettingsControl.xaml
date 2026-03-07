@@ -80,7 +80,7 @@
                                 CanReorderItems="True"
                                 CornerRadius="4"
                                 DragItemsCompleted="WindowStatusListView_DragItemsCompleted"
-                                ItemContainerStyle="{StaticResource ListViewStretchedItemContainerStyle}"
+                                ItemContainerStyle="{ThemeResource ListViewStretchedItemContainerStyle}"
                                 ItemsSource="{x:Bind ViewModel.AppSettings.WindowBoundsRecords, Mode=OneWay}"
                                 SelectionMode="None">
                                 <ItemsControl.ItemsPanel>

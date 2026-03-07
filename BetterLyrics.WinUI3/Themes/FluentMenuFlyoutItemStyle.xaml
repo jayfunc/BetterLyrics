@@ -23,52 +23,55 @@
                         Background="{TemplateBinding Background}"
                         BorderBrush="{TemplateBinding BorderBrush}"
                         BorderThickness="{TemplateBinding BorderThickness}"
-                        CornerRadius="{TemplateBinding CornerRadius}"
-                        RenderTransformOrigin="0.5,0.5">
-                        <Grid.RenderTransform>
-                            <TransformGroup>
-                                <ScaleTransform x:Name="RootScale" ScaleX="1" ScaleY="1" />
-                                <TranslateTransform x:Name="RootTranslate" X="0" Y="0" />
-                            </TransformGroup>
-                        </Grid.RenderTransform>
+                        CornerRadius="{TemplateBinding CornerRadius}">
+                        <Grid x:Name="InnerContentRoot" RenderTransformOrigin="0.5,0.5">
+                            <Grid.RenderTransform>
+                                <TransformGroup>
+                                    <ScaleTransform x:Name="RootScale" ScaleX="1" ScaleY="1" />
+                                    <TranslateTransform x:Name="RootTranslate" X="0" Y="0" />
+                                </TransformGroup>
+                            </Grid.RenderTransform>
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <Viewbox
-                            x:Name="IconRoot"
-                            Width="16"
-                            Height="16"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Visibility="Collapsed">
-                            <ContentPresenter
-                                x:Name="IconContent"
-                                Content="{TemplateBinding Icon}"
-                                Foreground="{TemplateBinding Foreground}" />
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
 
-                        </Viewbox>
-                        <TextBlock
-                            x:Name="TextBlock"
-                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                            Foreground="{TemplateBinding Foreground}"
-                            Text="{TemplateBinding Text}"
-                            TextTrimming="{ThemeResource MenuFlyoutItemTextTrimming}" />
-                        <TextBlock
-                            x:Name="KeyboardAcceleratorTextBlock"
-                            Grid.Column="1"
-                            MinWidth="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.KeyboardAcceleratorTextMinWidth}"
-                            Margin="24,4,0,0"
-                            HorizontalAlignment="Right"
-                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
-                            AutomationProperties.AccessibilityView="Raw"
-                            Foreground="{ThemeResource MenuFlyoutItemKeyboardAcceleratorTextForeground}"
-                            Style="{ThemeResource CaptionTextBlockStyle}"
-                            Text="{TemplateBinding KeyboardAcceleratorTextOverride}"
-                            TextAlignment="Right"
-                            Visibility="Collapsed" />
+                            <Viewbox
+                                x:Name="IconRoot"
+                                Width="16"
+                                Height="16"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Visibility="Collapsed">
+                                <ContentPresenter
+                                    x:Name="IconContent"
+                                    Content="{TemplateBinding Icon}"
+                                    Foreground="{TemplateBinding Foreground}" />
+                            </Viewbox>
+
+                            <TextBlock
+                                x:Name="TextBlock"
+                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                Foreground="{TemplateBinding Foreground}"
+                                Text="{TemplateBinding Text}"
+                                TextTrimming="{ThemeResource MenuFlyoutItemTextTrimming}" />
+
+                            <TextBlock
+                                x:Name="KeyboardAcceleratorTextBlock"
+                                Grid.Column="1"
+                                MinWidth="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=TemplateSettings.KeyboardAcceleratorTextMinWidth}"
+                                Margin="24,4,0,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+                                AutomationProperties.AccessibilityView="Raw"
+                                Foreground="{ThemeResource MenuFlyoutItemKeyboardAcceleratorTextForeground}"
+                                Style="{ThemeResource CaptionTextBlockStyle}"
+                                Text="{TemplateBinding KeyboardAcceleratorTextOverride}"
+                                TextAlignment="Right"
+                                Visibility="Collapsed" />
+                        </Grid>
 
                         <VisualStateManager.VisualStateGroups>
                             <VisualStateGroup x:Name="CommonStates">

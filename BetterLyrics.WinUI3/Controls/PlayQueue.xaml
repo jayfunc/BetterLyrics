@@ -77,6 +77,20 @@
 
         <NavigationViewItemSeparator Grid.Row="2" />
 
+        <Grid Grid.Row="3" Visibility="{x:Bind ViewModel.SMTCService.TrackPlayingQueue.Count, Mode=OneWay, Converter={StaticResource IntNegationToVisibilityConverter}}">
+            <StackPanel
+                Margin="0,24"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Spacing="12">
+                <Image MaxWidth="100" Source="/Assets/EmptyBox.png" />
+                <TextBlock
+                    x:Uid="MusicGalleryPagePlayingQueueEmpty"
+                    HorizontalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+            </StackPanel>
+        </Grid>
+
         <ListView
             x:Name="PlayingQueueListView"
             Grid.Row="3"
@@ -112,32 +126,6 @@
             </ListView.ItemTemplate>
         </ListView>
 
-        <Grid Grid.Row="3">
-            <interactivity:Interaction.Behaviors>
-                <interactivity:DataTriggerBehavior
-                    Binding="{x:Bind ViewModel.SMTCService.TrackPlayingQueue.Count, Mode=OneWay}"
-                    ComparisonCondition="Equal"
-                    Value="0">
-                    <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                </interactivity:DataTriggerBehavior>
-                <interactivity:DataTriggerBehavior
-                    Binding="{x:Bind ViewModel.SMTCService.TrackPlayingQueue.Count, Mode=OneWay}"
-                    ComparisonCondition="NotEqual"
-                    Value="0">
-                    <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
-                </interactivity:DataTriggerBehavior>
-            </interactivity:Interaction.Behaviors>
-            <StackPanel
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Spacing="12">
-                <Image MaxWidth="100" Source="/Assets/EmptyBox.png" />
-                <TextBlock
-                    x:Uid="MusicGalleryPagePlayingQueueEmpty"
-                    HorizontalAlignment="Center"
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-            </StackPanel>
-        </Grid>
     </Grid>
 
 </UserControl>

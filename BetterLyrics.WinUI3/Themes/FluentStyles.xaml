@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Themes/FluentAccentButtonStyle.xaml" />
         <ResourceDictionary Source="/Themes/FluentButtonStyle.xaml" />
         <ResourceDictionary Source="/Themes/FluentComboBoxItemStyle.xaml" />
         <ResourceDictionary Source="/Themes/FluentHyperlinkButtonStyle.xaml" />
+        <ResourceDictionary Source="/Themes/FluentListViewItemStyle.xaml" />
         <ResourceDictionary Source="/Themes/FluentMenuFlyoutItemStyle.xaml" />
+        <ResourceDictionary Source="/Themes/FluentNavigationViewItemPresenterStyles.xaml" />
         <ResourceDictionary Source="/Themes/FluentSliderStyle.xaml" />
         <ResourceDictionary Source="/Themes/FluentToggleButtonStyle.xaml" />
         <ResourceDictionary Source="/Themes/FluentToolTipStyle.xaml" />
@@ -37,6 +42,27 @@
 
     <!--  HyperlinkButton Styles  -->
     <Style BasedOn="{StaticResource FluentHyperlinkButtonStyle}" TargetType="HyperlinkButton" />
+
+    <!--  ListViewItem Styles  -->
+    <Style BasedOn="{StaticResource FluentListViewItemStyle}" TargetType="ListViewItem" />
+    <Style
+        x:Key="ListViewStretchedItemContainerStyle"
+        BasedOn="{StaticResource FluentListViewItemStyle}"
+        TargetType="ListViewItem">
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="VerticalContentAlignment" Value="Stretch" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="Padding" Value="0" />
+    </Style>
+    <Style
+        x:Key="ListViewCardStyle"
+        BasedOn="{StaticResource ListViewStretchedItemContainerStyle}"
+        TargetType="ListViewItem">
+        <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
+        <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
+    </Style>
 
     <!--  MenuFlyoutItem Styles  -->
     <Style BasedOn="{StaticResource FluentMenuFlyoutItemStyle}" TargetType="MenuFlyoutItem" />
