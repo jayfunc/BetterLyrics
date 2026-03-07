@@ -6,7 +6,6 @@
     xmlns:behaviors="using:CommunityToolkit.WinUI.Behaviors"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:CommunityToolkit.WinUI.Media"
@@ -254,7 +253,7 @@
                 Opacity="0"
                 PointerEntered="UnlockButton_PointerEntered"
                 PointerExited="UnlockButton_PointerExited"
-                Style="{StaticResource AccentButtonStyle}">
+                Style="{StaticResource FluentAccentButtonStyle}">
                 <Button.OpacityTransition>
                     <ScalarTransition />
                 </Button.OpacityTransition>

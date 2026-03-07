@@ -298,7 +298,7 @@
                     <Button
                         x:Uid="LyricsSharePageSaveImage"
                         Click="SaveImage_Click"
-                        Style="{ThemeResource AccentButtonStyle}" />
+                        Style="{ThemeResource FluentAccentButtonStyle}" />
                     <Button x:Uid="LyricsSharePageCopyImage" Click="CopyImage_Click" />
                 </StackPanel>
             </Grid>

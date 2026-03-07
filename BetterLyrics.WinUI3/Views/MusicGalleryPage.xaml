@@ -6,7 +6,6 @@
     xmlns:atl="using:ATL"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    
     xmlns:ext="using:BetterLyrics.WinUI3.Extensions"
     xmlns:helper="using:BetterLyrics.WinUI3.Helper"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"

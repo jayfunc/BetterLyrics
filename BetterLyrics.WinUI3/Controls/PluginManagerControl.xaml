@@ -5,7 +5,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:consts="using:BetterLyrics.WinUI3.Constants"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:settingsmodels="using:BetterLyrics.WinUI3.Models.Settings"
@@ -72,7 +71,7 @@
             <Button
                 x:Uid="PluginManagerControlInstall"
                 Command="{x:Bind ViewModel.InstallPluginCommand}"
-                Style="{StaticResource AccentButtonStyle}" />
+                Style="{StaticResource FluentAccentButtonStyle}" />
         </StackPanel>
 
     </Grid>
