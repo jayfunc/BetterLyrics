@@ -11,6 +11,7 @@ namespace BetterLyrics.WinUI3.Services.AppUpdateService
     {
         AppUpdateStatus AppUpdateStatus { get; }
         string LatestVersion { get; }
+        bool IsChecking { get; }
 
         public void StartDailyCheck();
 
