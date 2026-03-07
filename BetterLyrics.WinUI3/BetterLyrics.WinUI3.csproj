@@ -69,6 +69,15 @@
 		<None Remove="Controls\StatsDashboardControl.xaml" />
 		<None Remove="Controls\SystemTray.xaml" />
 		<None Remove="Controls\WindowSettingsControl.xaml" />
+		<None Remove="Styles\FluentAccentButtonStyle.xaml" />
+		<None Remove="Styles\FluentButtonStyle.xaml" />
+		<None Remove="Styles\FluentComboBoxItemStyle.xaml" />
+		<None Remove="Styles\FluentHyperlinkButtonStyle.xaml" />
+		<None Remove="Styles\FluentListViewItemStyle.xaml" />
+		<None Remove="Styles\FluentMenuFlyoutItemStyle.xaml" />
+		<None Remove="Styles\FluentSliderStyle.xaml" />
+		<None Remove="Styles\FluentToggleButtonStyle.xaml" />
+		<None Remove="Styles\FluentToolTipStyle.xaml" />
 		<None Remove="Styles\GhostSliderStyle.xaml" />
 		<None Remove="Styles\InteractiveListViewHeaderStyle.xaml" />
 		<None Remove="Styles\LyricsCardInkWashStyle.xaml" />
@@ -470,6 +479,49 @@
 	  <Content Update="Assets\Banner.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Styles\FluentSliderStyle.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Styles\FluentMenuFlyoutItemStyle.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Styles\FluentComboBoxItemStyle.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Styles\FluentHyperlinkButtonStyle.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Styles\FluentAccentButtonStyle.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Styles\FluentToggleButtonStyle.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Styles\FluentToolTipStyle.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Styles\FluentButtonStyle.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Styles\FluentListViewItemStyle.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Controls\ContributorCard.xaml">

@@ -234,7 +234,7 @@
                             Content="{ui:FontIcon FontSize=16,
                                                   FontFamily={StaticResource SegoeFluentIcons},
                                                   Glyph=&#xE70D;}"
-                            Style="{StaticResource AccentButtonStyle}" />
+                            Style="{StaticResource FluentAccentButtonStyle}" />
                     </Grid>
 
                     <!--  总开关  -->

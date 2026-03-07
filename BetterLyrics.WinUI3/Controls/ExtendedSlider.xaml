@@ -61,8 +61,7 @@
                         Padding="0"
                         VerticalAlignment="Center"
                         Click="SubtractButton_Click"
-                        CornerRadius="4,0,0,4"
-                        Style="{StaticResource DateTimePickerFlyoutButtonStyle}">
+                        Style="{StaticResource GhostButtonStyle}">
                         <FontIcon
                             FontFamily="{StaticResource SegoeFluentIcons}"
                             FontSize="12"
@@ -91,8 +90,7 @@
                         Padding="0"
                         VerticalAlignment="Center"
                         Click="AddButton_Click"
-                        CornerRadius="0,4,4,0"
-                        Style="{StaticResource DateTimePickerFlyoutButtonStyle}">
+                        Style="{StaticResource GhostButtonStyle}">
                         <FontIcon
                             FontFamily="{StaticResource SegoeFluentIcons}"
                             FontSize="12"

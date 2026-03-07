@@ -359,6 +359,8 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                 currentMediaSourceProviderInfo?.PositionOffset = 0;
             }
 
+            mediaProperties = await mediaSession.ControlSession.TryGetMediaPropertiesAsync();
+
             string fixedTitle = mediaProperties.Title;
             string fixedArtist = mediaProperties.Artist;
             string fixedAlbum = mediaProperties.AlbumTitle;

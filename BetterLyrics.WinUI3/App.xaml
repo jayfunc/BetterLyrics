@@ -19,6 +19,16 @@
                 <ResourceDictionary Source="/Styles/GhostSliderStyle.xaml" />
                 <ResourceDictionary Source="/Styles/InteractiveListViewHeaderStyle.xaml" />
 
+                <ResourceDictionary Source="/Styles/FluentAccentButtonStyle.xaml" />
+                <ResourceDictionary Source="/Styles/FluentButtonStyle.xaml" />
+                <ResourceDictionary Source="/Styles/FluentComboBoxItemStyle.xaml" />
+                <ResourceDictionary Source="/Styles/FluentHyperlinkButtonStyle.xaml" />
+                <ResourceDictionary Source="/Styles/FluentListViewItemStyle.xaml" />
+                <ResourceDictionary Source="/Styles/FluentMenuFlyoutItemStyle.xaml" />
+                <ResourceDictionary Source="/Styles/FluentSliderStyle.xaml" />
+                <ResourceDictionary Source="/Styles/FluentToggleButtonStyle.xaml" />
+                <ResourceDictionary Source="/Styles/FluentToolTipStyle.xaml" />
+
                 <ResourceDictionary Source="/Styles/LyricsCardAncientBookStyle.xaml" />
                 <ResourceDictionary Source="/Styles/LyricsCardBambooSlipsStyle.xaml" />
                 <ResourceDictionary Source="/Styles/LyricsCardCDStyle.xaml" />
@@ -73,7 +83,7 @@
 
             <x:Double x:Key="SettingsCardSpacing">4</x:Double>
 
-            <!--  Style  -->
+            <!--  TextBlock Styles  -->
             <Style
                 x:Key="SettingsSectionHeaderTextBlockStyle"
                 BasedOn="{StaticResource BodyStrongTextBlockStyle}"
@@ -82,14 +92,26 @@
                     <Setter Property="Margin" Value="1,30,0,6" />
                 </Style.Setters>
             </Style>
-            <Style x:Key="TitleBarButtonStyle" TargetType="Button">
+
+            <!--  ToolTip Styles  -->
+            <Style BasedOn="{StaticResource FluentToolTipStyle}" TargetType="ToolTip" />
+
+            <!--  Button Styles  -->
+            <Style BasedOn="{StaticResource FluentButtonStyle}" TargetType="Button" />
+            <Style
+                x:Key="TitleBarButtonStyle"
+                BasedOn="{StaticResource FluentButtonStyle}"
+                TargetType="Button">
                 <Setter Property="VerticalAlignment" Value="Top" />
                 <Setter Property="CornerRadius" Value="4" />
                 <Setter Property="BorderThickness" Value="0" />
                 <Setter Property="Padding" Value="16,9,16,9" />
                 <Setter Property="Background" Value="Transparent" />
             </Style>
-            <Style x:Key="GhostButtonStyle" TargetType="Button">
+            <Style
+                x:Key="GhostButtonStyle"
+                BasedOn="{StaticResource FluentButtonStyle}"
+                TargetType="Button">
                 <Setter Property="VerticalAlignment" Value="Stretch" />
                 <Setter Property="Padding" Value="8" />
                 <Setter Property="CornerRadius" Value="4" />
@@ -98,7 +120,7 @@
             </Style>
             <Style
                 x:Key="TitleBarToggleButtonStyle"
-                BasedOn="{StaticResource DefaultToggleButtonStyle}"
+                BasedOn="{StaticResource FluentToggleButtonStyle}"
                 TargetType="ToggleButton">
                 <Setter Property="VerticalAlignment" Value="Top" />
                 <Setter Property="CornerRadius" Value="4" />
@@ -108,7 +130,7 @@
             </Style>
             <Style
                 x:Key="GhostToggleButtonStyle"
-                BasedOn="{StaticResource DefaultToggleButtonStyle}"
+                BasedOn="{StaticResource FluentToggleButtonStyle}"
                 TargetType="ToggleButton">
                 <Setter Property="CornerRadius" Value="4" />
                 <Setter Property="VerticalAlignment" Value="Stretch" />
@@ -116,6 +138,20 @@
                 <Setter Property="Padding" Value="8" />
                 <Setter Property="Background" Value="Transparent" />
             </Style>
+
+            <!--  ToggleButton Styles  -->
+            <Style BasedOn="{StaticResource FluentToggleButtonStyle}" TargetType="ToggleButton" />
+
+            <!--  HyperlinkButton Styles  -->
+            <Style BasedOn="{StaticResource FluentHyperlinkButtonStyle}" TargetType="HyperlinkButton" />
+
+            <!--  MenuFlyoutItem Styles  -->
+            <Style BasedOn="{StaticResource FluentMenuFlyoutItemStyle}" TargetType="MenuFlyoutItem" />
+
+            <!--  Slider Styles  -->
+            <Style BasedOn="{StaticResource FluentSliderStyle}" TargetType="Slider" />
+
+            <!--  Grid Styles  -->
             <Style x:Key="CardGridStyle" TargetType="Grid">
                 <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
                 <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
@@ -123,9 +159,15 @@
                 <Setter Property="CornerRadius" Value="{ThemeResource ControlCornerRadius}" />
             </Style>
 
+            <Style x:Key="SettingsGridStyle" TargetType="Grid">
+                <Setter Property="Padding" Value="0,0,0,36" />
+            </Style>
+
+            <!--  ListViewItem Styles  -->
+            <Style BasedOn="{StaticResource FluentListViewItemStyle}" TargetType="ListViewItem" />
             <Style
                 x:Key="ListViewStretchedItemContainerStyle"
-                BasedOn="{StaticResource DefaultListViewItemStyle}"
+                BasedOn="{StaticResource FluentListViewItemStyle}"
                 TargetType="ListViewItem">
                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                 <Setter Property="VerticalContentAlignment" Value="Stretch" />
@@ -133,6 +175,7 @@
                 <Setter Property="Padding" Value="0" />
             </Style>
 
+            <!--  ScrollViewer Styles  -->
             <Style
                 x:Key="SettingsScrollViewerStyle"
                 BasedOn="{StaticResource DefaultScrollViewerStyle}"
@@ -140,10 +183,7 @@
                 <Setter Property="Padding" Value="36,0" />
             </Style>
 
-            <Style x:Key="SettingsGridStyle" TargetType="Grid">
-                <Setter Property="Padding" Value="0,0,0,36" />
-            </Style>
-
+            <!--  FlyoutPresenter Styles  -->
             <Style
                 x:Key="FlyoutPageStyle"
                 BasedOn="{StaticResource DefaultFlyoutPresenterStyle}"
@@ -165,6 +205,9 @@
                 <Setter Property="ScrollViewer.HorizontalScrollMode" Value="Disabled" />
                 <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
             </Style>
+
+            <!--  ComboBoxItem Styles  -->
+            <Style BasedOn="{StaticResource FluentComboBoxItemStyle}" TargetType="ComboBoxItem" />
 
             <!--  Dimensions  -->
 
