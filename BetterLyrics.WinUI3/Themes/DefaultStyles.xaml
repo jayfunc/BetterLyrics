@@ -50,6 +50,7 @@
     </Style>
 
     <!--  ListViewItem Styles  -->
+    <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem" />
     <Style
         x:Key="ListViewStretchedItemContainerStyle"
         BasedOn="{StaticResource DefaultListViewItemStyle}"

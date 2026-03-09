@@ -168,6 +168,10 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
             {
                 ApplicationLanguages.PrimaryLanguageOverride = AppSettings.GeneralSettings.LanguageCode;
             }
+            //else if (e.PropertyName == nameof(GeneralSettings.EnhanceControlInteractiveAnimations))
+            //{
+            //    UpdateGlobalStyles(AppSettings.GeneralSettings.EnhanceControlInteractiveAnimations);
+            //}
             WriteAppSettings();
         }
 
@@ -175,20 +179,29 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
         {
             var mergedDicts = Application.Current.Resources.MergedDictionaries;
 
-            var customDict = mergedDicts.FirstOrDefault(d => d.Source != null && d.Source.OriginalString.Contains("FluentStyles.xaml"));
+            var fluentDict = mergedDicts.FirstOrDefault(d => d.Source != null && d.Source.OriginalString.Contains("FluentStyles.xaml"));
+            var defaultDict = mergedDicts.FirstOrDefault(d => d.Source != null && d.Source.OriginalString.Contains("DefaultStyles.xaml"));
 
             if (useCustom)
             {
-                if (customDict == null)
+                if (fluentDict == null)
                 {
                     mergedDicts.Add(new ResourceDictionary { Source = new System.Uri("ms-appx:///Themes/FluentStyles.xaml") });
+                }
+                if (defaultDict != null)
+                {
+                    mergedDicts.Remove(defaultDict);
                 }
             }
             else
             {
-                if (customDict != null)
+                if (defaultDict == null)
                 {
-                    mergedDicts.Remove(customDict);
+                    mergedDicts.Add(new ResourceDictionary { Source = new System.Uri("ms-appx:///Themes/DefaultStyles.xaml") });
+                }
+                if (fluentDict != null)
+                {
+                    mergedDicts.Remove(fluentDict);
                 }
             }
         }

@@ -224,16 +224,14 @@
                                         Grid.Row="1"
                                         HorizontalAlignment="Center"
                                         VerticalAlignment="Center"
+                                        Opacity="{x:Bind IsSearching, Converter={StaticResource BoolNegationToOpacityConverter}, Mode=OneWay}"
                                         Spacing="6"
                                         Visibility="{x:Bind IsFound, Converter={StaticResource BoolNegationToVisibilityConverter}, Mode=OneWay}">
                                         <Image MaxWidth="48" Source="/Assets/Empty.png" />
                                         <TextBlock x:Uid="LyricsSearchControlNotFound" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                                     </StackPanel>
                                     <!--  Searching  -->
-                                    <Grid
-                                        Grid.Row="1"
-                                        Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
-                                        Visibility="{x:Bind IsSearching, Mode=OneWay}">
+                                    <Grid Grid.Row="1" Visibility="{x:Bind IsSearching, Mode=OneWay}">
                                         <ProgressRing VerticalAlignment="Center" IsActive="{x:Bind IsSearching, Mode=OneWay}" />
                                     </Grid>
                                 </Grid>

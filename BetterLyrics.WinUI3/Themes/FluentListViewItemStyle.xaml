@@ -55,10 +55,9 @@
                         <Rectangle
                             x:Name="SelectionIndicator"
                             Width="3"
-                            Height="16"
-                            Margin="4,0,0,0"
+                            Margin="0,8"
                             HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
+                            VerticalAlignment="Stretch"
                             Fill="{ThemeResource ListViewItemSelectionIndicatorBrush}"
                             Opacity="0"
                             RadiusX="1.5"
