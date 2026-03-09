@@ -75,63 +75,81 @@
                             <ListView
                                 x:Name="WindowStatusListView"
                                 Padding="0,12"
+                                HorizontalAlignment="Center"
                                 AllowDrop="True"
                                 CanDragItems="True"
                                 CanReorderItems="True"
                                 CornerRadius="4"
                                 DragItemsCompleted="WindowStatusListView_DragItemsCompleted"
-                                ItemContainerStyle="{ThemeResource ListViewStretchedItemContainerStyle}"
                                 ItemsSource="{x:Bind ViewModel.AppSettings.WindowBoundsRecords, Mode=OneWay}"
                                 SelectionMode="None">
-                                <ItemsControl.ItemsPanel>
+                                <ListView.ItemContainerStyle>
+                                    <Style BasedOn="{StaticResource ListViewCardStyle}" TargetType="ListViewItem">
+                                        <Setter Property="Margin" Value="8" />
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                                <ListView.ItemsPanel>
                                     <ItemsPanelTemplate>
-                                        <controls:WrapPanel HorizontalSpacing="16" VerticalSpacing="16" />
+                                        <ItemsWrapGrid Orientation="Horizontal" />
                                     </ItemsPanelTemplate>
-                                </ItemsControl.ItemsPanel>
+                                </ListView.ItemsPanel>
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <StackPanel RightTapped="StackPanel_RightTapped">
-                                            <StackPanel.ContextFlyout>
-                                                <MenuBarItemFlyout>
-                                                    <MenuFlyoutItem x:Uid="SettingsPageCreateFromCurrent" Click="CopyMenuFlyoutItem_Click" />
-                                                    <MenuFlyoutSubItem x:Uid="SettingsPageCreateFromCurrentAndTransformTo">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid Grid.Column="0">
+                                                <FontIcon
+                                                    FontFamily="Segoe UI Symbol"
+                                                    FontSize="16"
+                                                    Glyph="&#x283F;" />
+                                                <uc:DragIndicator Width="32" />
+                                            </Grid>
+                                            <StackPanel Grid.Column="1" RightTapped="StackPanel_RightTapped">
+                                                <StackPanel.ContextFlyout>
+                                                    <MenuBarItemFlyout>
+                                                        <MenuFlyoutItem x:Uid="SettingsPageCreateFromCurrent" Click="CopyMenuFlyoutItem_Click" />
+                                                        <MenuFlyoutSubItem x:Uid="SettingsPageCreateFromCurrentAndTransformTo">
+                                                            <MenuFlyoutItem
+                                                                x:Uid="SettingsPageStandardMode"
+                                                                Click="CopyAndTransformMenuFlyoutItem_Click"
+                                                                Tag="StandardMode" />
+                                                            <MenuFlyoutItem
+                                                                x:Uid="SettingsPageDesktopMode"
+                                                                Click="CopyAndTransformMenuFlyoutItem_Click"
+                                                                Tag="DesktopMode" />
+                                                            <MenuFlyoutItem
+                                                                x:Uid="SettingsPageDockedMode"
+                                                                Click="CopyAndTransformMenuFlyoutItem_Click"
+                                                                Tag="DockedMode" />
+                                                            <MenuFlyoutItem
+                                                                x:Uid="SettingsPageFullscreenMode"
+                                                                Click="CopyAndTransformMenuFlyoutItem_Click"
+                                                                Tag="FullscreenMode" />
+                                                            <MenuFlyoutItem
+                                                                x:Uid="SettingsPageNarrowMode"
+                                                                Click="CopyAndTransformMenuFlyoutItem_Click"
+                                                                Tag="NarrowMode" />
+                                                            <MenuFlyoutItem
+                                                                x:Uid="SettingsPageTaskbarMode"
+                                                                Click="CopyAndTransformMenuFlyoutItem_Click"
+                                                                Tag="TaskbarMode" />
+                                                        </MenuFlyoutSubItem>
+                                                        <MenuFlyoutItem x:Uid="LyricsWindowSettingsControlShare" Click="ShareMenuFlyoutItem_Click" />
                                                         <MenuFlyoutItem
-                                                            x:Uid="SettingsPageStandardMode"
-                                                            Click="CopyAndTransformMenuFlyoutItem_Click"
-                                                            Tag="StandardMode" />
-                                                        <MenuFlyoutItem
-                                                            x:Uid="SettingsPageDesktopMode"
-                                                            Click="CopyAndTransformMenuFlyoutItem_Click"
-                                                            Tag="DesktopMode" />
-                                                        <MenuFlyoutItem
-                                                            x:Uid="SettingsPageDockedMode"
-                                                            Click="CopyAndTransformMenuFlyoutItem_Click"
-                                                            Tag="DockedMode" />
-                                                        <MenuFlyoutItem
-                                                            x:Uid="SettingsPageFullscreenMode"
-                                                            Click="CopyAndTransformMenuFlyoutItem_Click"
-                                                            Tag="FullscreenMode" />
-                                                        <MenuFlyoutItem
-                                                            x:Uid="SettingsPageNarrowMode"
-                                                            Click="CopyAndTransformMenuFlyoutItem_Click"
-                                                            Tag="NarrowMode" />
-                                                        <MenuFlyoutItem
-                                                            x:Uid="SettingsPageTaskbarMode"
-                                                            Click="CopyAndTransformMenuFlyoutItem_Click"
-                                                            Tag="TaskbarMode" />
-                                                    </MenuFlyoutSubItem>
-                                                    <MenuFlyoutItem x:Uid="LyricsWindowSettingsControlShare" Click="ShareMenuFlyoutItem_Click" />
-                                                    <MenuFlyoutItem
-                                                        x:Uid="SettingsPageDelete"
-                                                        Click="DeleteMenuFlyoutItem_Click"
-                                                        IsEnabled="{Binding IsDefault, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
-                                                </MenuBarItemFlyout>
-                                            </StackPanel.ContextFlyout>
-                                            <uc:DemoWindowGrid LyricsWindowStatus="{Binding}" />
-                                            <Button HorizontalAlignment="Stretch" Click="ConfigButton_Click">
-                                                <TextBlock x:Uid="LyricsWindowSettingsControlLyricsWindowConfig" />
-                                            </Button>
-                                        </StackPanel>
+                                                            x:Uid="SettingsPageDelete"
+                                                            Click="DeleteMenuFlyoutItem_Click"
+                                                            IsEnabled="{Binding IsDefault, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+                                                    </MenuBarItemFlyout>
+                                                </StackPanel.ContextFlyout>
+                                                <uc:DemoWindowGrid LyricsWindowStatus="{Binding}" />
+                                                <Button HorizontalAlignment="Stretch" Click="ConfigButton_Click">
+                                                    <TextBlock x:Uid="LyricsWindowSettingsControlLyricsWindowConfig" />
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
