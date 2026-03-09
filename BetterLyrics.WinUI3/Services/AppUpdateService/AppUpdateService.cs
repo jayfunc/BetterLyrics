@@ -111,7 +111,7 @@ namespace BetterLyrics.WinUI3.Services.AppUpdateService
             {
                 var notification = new AppNotificationBuilder()
                     .AddText(_localizationService.GetLocalizedString("AppUpdateServiceUpdateAvailable"))
-                    .AddText($"{_localizationService.GetLocalizedString("AppUpdateServiceNewVersionAvailable")} {latestVersion}")
+                    .AddText($"{_localizationService.GetLocalizedString("AppUpdateServiceNewVersionAvailable")}")
                     .AddButton(new AppNotificationButton(_localizationService.GetLocalizedString("AppUpdateServiceUpdateMS"))
                         .SetInvokeUri(new Uri(Constants.Link.StorePage))
                     )

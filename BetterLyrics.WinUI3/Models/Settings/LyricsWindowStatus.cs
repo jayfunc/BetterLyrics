@@ -46,7 +46,12 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial AlbumArtAreaStyleSettings AlbumArtLayoutSettings { get; set; } = new();
         [ObservableProperty] public partial AlbumArtAreaEffectSettings AlbumArtAreaEffectSettings { get; set; } = new();
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsAdaptToEnvironment { get; set; } = false;
+
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial WindowPixelSampleMode EnvironmentSampleMode { get; set; } = WindowPixelSampleMode.WindowEdge;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial ElementTheme WindowTheme { get; set; } = ElementTheme.Dark;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial PaletteGeneratorType PaletteGeneratorType { get; set; } = PaletteGeneratorType.Auto;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial NowPlayingPalette WindowPalette { get; set; } = new();
+
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool AutoShowOrHideWindow { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int AutoShowOrHideWindowDelay { get; set; } = 250; // 250ms
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TitleBarArea TitleBarArea { get; set; } = TitleBarArea.Top;
@@ -234,6 +239,10 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
                 IsAdaptToEnvironment = this.IsAdaptToEnvironment,
                 EnvironmentSampleMode = this.EnvironmentSampleMode,
+                WindowTheme = this.WindowTheme,
+                PaletteGeneratorType = this.PaletteGeneratorType,
+                WindowPalette = this.WindowPalette,
+
                 AutoShowOrHideWindow = this.AutoShowOrHideWindow,
                 AutoShowOrHideWindowDelay = this.AutoShowOrHideWindowDelay,
                 TitleBarArea = this.TitleBarArea,

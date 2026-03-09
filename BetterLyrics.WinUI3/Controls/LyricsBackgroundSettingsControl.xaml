@@ -18,14 +18,6 @@
 
                     <TextBlock x:Uid="SettingsPageBackgroundOverlay" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <controls:SettingsCard x:Uid="SettingsPageTheme" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE790;}">
-                        <ComboBox x:Name="ThemeComboBox" SelectedIndex="{x:Bind LyricsBackgroundSettings.LyricsBackgroundTheme, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                            <ComboBoxItem x:Uid="SettingsPageFollowSystem" />
-                            <ComboBoxItem x:Uid="SettingsPageLight" />
-                            <ComboBoxItem x:Uid="SettingsPageDark" />
-                        </ComboBox>
-                    </controls:SettingsCard>
-
                     <controls:SettingsExpander
                         x:Uid="SettingsPagePureLayer"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
@@ -113,15 +105,6 @@
                                     Minimum="0"
                                     Unit="%"
                                     Value="{x:Bind LyricsBackgroundSettings.FluidOverlayOpacity, Mode=TwoWay}" />
-                            </controls:SettingsCard>
-
-                            <controls:SettingsCard x:Uid="SettingsPagePaletteGeneratorType" IsEnabled="{x:Bind LyricsBackgroundSettings.IsFluidOverlayEnabled, Mode=OneWay}">
-                                <ComboBox SelectedIndex="{x:Bind LyricsBackgroundSettings.PaletteGeneratorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                    <ComboBoxItem x:Uid="SettingsPageAuto" />
-                                    <ComboBoxItem Content="MedianCut" />
-                                    <ComboBoxItem Content="OctTree" />
-                                    <ComboBoxItem Content="KMeans" />
-                                </ComboBox>
                             </controls:SettingsCard>
 
                             <controls:SettingsCard x:Uid="SettingsPageLightWaveEffect" IsEnabled="{x:Bind LyricsBackgroundSettings.IsFluidOverlayEnabled, Mode=OneWay}">

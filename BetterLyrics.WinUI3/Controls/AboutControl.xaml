@@ -108,7 +108,6 @@
                                     x:Uid="AboutControlUpdateAvailable"
                                     IsClosable="False"
                                     IsOpen="True"
-                                    Message="{x:Bind ViewModel.AppUpdateService.LatestVersion, Mode=OneWay}"
                                     Severity="Warning"
                                     Visibility="{x:Bind ViewModel.AppUpdateService.AppUpdateStatus, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=1}">
                                     <HyperlinkButton

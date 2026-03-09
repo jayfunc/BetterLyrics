@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.PaletteItemControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:BetterLyrics.WinUI3.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <StackPanel
+        Padding="4"
+        Orientation="Horizontal"
+        Spacing="12">
+        <Rectangle
+            Width="32"
+            Height="32"
+            VerticalAlignment="Center"
+            Fill="{x:Bind Color, Mode=OneWay, Converter={StaticResource ColorToBrushConverter}}"
+            RadiusX="4"
+            RadiusY="4"
+            Stroke="{ThemeResource SystemControlForegroundBaseLowBrush}"
+            StrokeThickness="0.5" />
+
+        <StackPanel VerticalAlignment="Center">
+            <TextBlock
+                FontSize="14"
+                Style="{ThemeResource BodyStrongTextBlockStyle}"
+                Text="{x:Bind Color, Mode=OneWay, Converter={StaticResource ColorToDisplayNameConverter}}" />
+
+            <TextBlock
+                FontFamily="Consolas"
+                Foreground="{ThemeResource SystemControlForegroundBaseMediumBrush}"
+                Style="{ThemeResource CaptionTextBlockStyle}"
+                Text="{x:Bind Color, Mode=OneWay, Converter={StaticResource ColorToHexConverter}}" />
+        </StackPanel>
+    </StackPanel>
+</UserControl>

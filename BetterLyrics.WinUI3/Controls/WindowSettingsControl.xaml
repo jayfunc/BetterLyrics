@@ -59,28 +59,7 @@
 
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
-                    <!--  适应环境颜色  -->
-                    <controls:SettingsExpander
-                        x:Uid="SettingsPageAdaptEnvColor"
-                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                                 Glyph=&#xE88F;}"
-                        IsExpanded="{x:Bind LyricsWindowStatus.IsAdaptToEnvironment, Mode=OneWay}">
-                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAdaptToEnvironment, Mode=TwoWay}" />
-                        <controls:SettingsExpander.Items>
-                            <controls:SettingsCard
-                                x:Uid="SettingsPageEnvColorSample"
-                                Header="Environment color sample mode"
-                                IsEnabled="{x:Bind LyricsWindowStatus.IsAdaptToEnvironment, Mode=OneWay}">
-                                <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.EnvironmentSampleMode, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                    <ComboBoxItem x:Uid="SettingsPageEnvColorSampleBelow" />
-                                    <ComboBoxItem x:Uid="SettingsPageEnvColorSampleAbove" />
-                                    <ComboBoxItem x:Uid="SettingsPageEnvColorSampleInner" />
-                                    <ComboBoxItem x:Uid="SettingsPageEnvColorSampleEdge" />
-                                </ComboBox>
-                            </controls:SettingsCard>
-                        </controls:SettingsExpander.Items>
-                    </controls:SettingsExpander>
-                    <!--  固定到任务栏  -->
+                    <!--  任务栏固定位置  -->
                     <controls:SettingsCard
                         x:Uid="SettingsPageTaskbarPlacement"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
@@ -141,6 +120,68 @@
                             <ComboBoxItem x:Uid="SettingsPageTitleBarAreaWhole" />
                         </ComboBox>
                     </controls:SettingsCard>
+
+                    <TextBlock x:Uid="WindowSettingsControlColor" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                    <!--  窗口主题色  -->
+                    <controls:SettingsCard
+                        x:Uid="WindowSettingsControlTheme"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                 Glyph=&#xE790;}"
+                        IsEnabled="{x:Bind LyricsWindowStatus.IsAdaptToEnvironment, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
+                        <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.WindowTheme, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                            <ComboBoxItem x:Uid="SettingsPageFollowSystem" />
+                            <ComboBoxItem x:Uid="SettingsPageLight" />
+                            <ComboBoxItem x:Uid="SettingsPageDark" />
+                        </ComboBox>
+                    </controls:SettingsCard>
+                    <!--  适应环境颜色  -->
+                    <controls:SettingsExpander
+                        x:Uid="SettingsPageAdaptEnvColor"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                 Glyph=&#xE88F;}"
+                        IsExpanded="{x:Bind LyricsWindowStatus.IsAdaptToEnvironment, Mode=OneWay}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAdaptToEnvironment, Mode=TwoWay}" />
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard
+                                x:Uid="SettingsPageEnvColorSample"
+                                Header="Environment color sample mode"
+                                IsEnabled="{x:Bind LyricsWindowStatus.IsAdaptToEnvironment, Mode=OneWay}">
+                                <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.EnvironmentSampleMode, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                    <ComboBoxItem x:Uid="SettingsPageEnvColorSampleBelow" />
+                                    <ComboBoxItem x:Uid="SettingsPageEnvColorSampleAbove" />
+                                    <ComboBoxItem x:Uid="SettingsPageEnvColorSampleInner" />
+                                    <ComboBoxItem x:Uid="SettingsPageEnvColorSampleEdge" />
+                                </ComboBox>
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
+                    <!--  取色风格  -->
+                    <controls:SettingsCard x:Uid="SettingsPagePaletteGeneratorType" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE771;}">
+                        <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.PaletteGeneratorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                            <ComboBoxItem x:Uid="SettingsPageAuto" />
+                            <ComboBoxItem Content="MedianCut" />
+                            <ComboBoxItem Content="OctTree" />
+                            <ComboBoxItem Content="KMeans" />
+                        </ComboBox>
+                    </controls:SettingsCard>
+                    <!--  取色结果  -->
+                    <controls:SettingsExpander x:Uid="WindowSettingsControlRealTimePalette" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE80A;}">
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="WindowSettingsControlRealTimePaletteAccentColor1">
+                                <local:PaletteItemControl Color="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor1, Mode=OneWay}" />
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="WindowSettingsControlRealTimePaletteAccentColor2">
+                                <local:PaletteItemControl Color="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor2, Mode=OneWay}" />
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="WindowSettingsControlRealTimePaletteAccentColor3">
+                                <local:PaletteItemControl Color="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor3, Mode=OneWay}" />
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="WindowSettingsControlRealTimePaletteAccentColor4">
+                                <local:PaletteItemControl Color="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor4, Mode=OneWay}" />
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
 
                     <TextBlock x:Uid="WindowSettingsControlLockAndUnlock" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 

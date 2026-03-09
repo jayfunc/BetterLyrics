@@ -861,9 +861,6 @@
   <data name="SettingsPageAbout.Content" xml:space="preserve">
     <value>정보</value>
   </data>
-  <data name="SettingsPageAdaptEnvColor.Description" xml:space="preserve">
-    <value>이 항목을 활성화하면 가사 배경의 테마 설정을 덮어씁니다</value>
-  </data>
   <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
     <value>환경 색상에 적응</value>
   </data>
@@ -1755,9 +1752,6 @@
   <data name="SettingsPageThanksList.Header" xml:space="preserve">
     <value>크레딧</value>
   </data>
-  <data name="SettingsPageTheme.Header" xml:space="preserve">
-    <value>가사 배경 테마</value>
-  </data>
   <data name="SettingsPageTitle" xml:space="preserve">
     <value>설정 - BetterLyrics</value>
   </data>
@@ -1926,6 +1920,9 @@
   <data name="WindowSettingsControlAlwaysHideNowPlayingBar.Header" xml:space="preserve">
     <value>미디어 컨트롤 막대는 항상 하단 흰색 막대로 숨깁니다.</value>
   </data>
+  <data name="WindowSettingsControlColor.Text" xml:space="preserve">
+    <value>Color</value>
+  </data>
   <data name="WindowSettingsControlDebug.Text" xml:space="preserve">
     <value>Debug</value>
   </data>
@@ -1935,7 +1932,25 @@
   <data name="WindowSettingsControlNowPlayingBar.Text" xml:space="preserve">
     <value>미디어 제어판</value>
   </data>
+  <data name="WindowSettingsControlRealTimePalette.Header" xml:space="preserve">
+    <value>Live Palette Preview</value>
+  </data>
+  <data name="WindowSettingsControlRealTimePaletteAccentColor1.Header" xml:space="preserve">
+    <value>Accent Color 1</value>
+  </data>
+  <data name="WindowSettingsControlRealTimePaletteAccentColor2.Header" xml:space="preserve">
+    <value>Accent Color 2</value>
+  </data>
+  <data name="WindowSettingsControlRealTimePaletteAccentColor3.Header" xml:space="preserve">
+    <value>Accent Color 3</value>
+  </data>
+  <data name="WindowSettingsControlRealTimePaletteAccentColor4.Header" xml:space="preserve">
+    <value>Accent Color 4</value>
+  </data>
   <data name="WindowSettingsControlRemoveBorder.Header" xml:space="preserve">
     <value>잠긴 경우 테두리 제거</value>
+  </data>
+  <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
+    <value>Window Theme</value>
   </data>
 </root>

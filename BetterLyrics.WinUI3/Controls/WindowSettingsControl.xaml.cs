@@ -13,7 +13,7 @@ namespace BetterLyrics.WinUI3.Controls;
 public sealed partial class WindowSettingsControl : UserControl
 {
     public static readonly DependencyProperty LyricsWindowStatusProperty =
-        DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(AlbumArtAreaEffectSettings), typeof(WindowSettingsControl), new PropertyMetadata(default));
+        DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus), typeof(WindowSettingsControl), new PropertyMetadata(default));
 
     public LyricsWindowStatus LyricsWindowStatus
     {

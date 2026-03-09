@@ -39,7 +39,8 @@ namespace BetterLyrics.WinUI3.Controls
         IRecipient<PropertyChangedMessage<TextAlignmentType>>,
         IRecipient<PropertyChangedMessage<LyricsFontWeight>>,
         IRecipient<PropertyChangedMessage<string>>,
-        IRecipient<PropertyChangedMessage<IRandomAccessStream?>>
+        IRecipient<PropertyChangedMessage<IRandomAccessStream?>>,
+        IRecipient<PropertyChangedMessage<NowPlayingPalette>>
     {
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
         private readonly IGSMTCService _gsmtcService = Ioc.Default.GetRequiredService<IGSMTCService>();
@@ -107,7 +108,6 @@ namespace BetterLyrics.WinUI3.Controls
         private double _renderLyricsOpacity = 0;
 
         private LyricsWindowStatus? _lyricsWindowStatus = null;
-        private NowPlayingPalette _nowPlayingPalette = new();
         private Rect _albumArtRect = new();
 
         private Point _mousePosition = new(0, 0);
@@ -139,15 +139,6 @@ namespace BetterLyrics.WinUI3.Controls
 
         public static readonly DependencyProperty LyricsWindowStatusProperty =
             DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus), typeof(NowPlayingCanvas), new PropertyMetadata(null, OnDependencyPropertyChanged));
-
-        public NowPlayingPalette AlbumArtThemeColors
-        {
-            get { return (NowPlayingPalette)GetValue(AlbumArtThemeColorsProperty); }
-            set { SetValue(AlbumArtThemeColorsProperty, value); }
-        }
-
-        public static readonly DependencyProperty AlbumArtThemeColorsProperty =
-            DependencyProperty.Register(nameof(AlbumArtThemeColors), typeof(NowPlayingPalette), typeof(NowPlayingCanvas), new PropertyMetadata(new NowPlayingPalette(), OnDependencyPropertyChanged));
 
         public Rect AlbumArtRect
         {
@@ -273,6 +264,7 @@ namespace BetterLyrics.WinUI3.Controls
                 {
                     canvas._lyricsWindowStatus = (LyricsWindowStatus)e.NewValue;
                     canvas._isLayoutChanged = true;
+                    canvas.UpdatePalette();
                 }
                 else if (e.Property == AlbumArtRectProperty)
                 {
@@ -327,18 +319,6 @@ namespace BetterLyrics.WinUI3.Controls
                         canvas._isMouseScrollingChanged = true;
                     }
                     canvas._isMouseScrolling = value;
-                }
-                else if (e.Property == AlbumArtThemeColorsProperty)
-                {
-                    var nowPlayingPalette = (NowPlayingPalette)e.NewValue;
-                    canvas._immersiveBgColorTransition.Start(nowPlayingPalette.UnderlayColor);
-                    canvas._accentColor1Transition.Start(nowPlayingPalette.AccentColor1);
-                    canvas._accentColor2Transition.Start(nowPlayingPalette.AccentColor2);
-                    canvas._accentColor3Transition.Start(nowPlayingPalette.AccentColor3);
-                    canvas._accentColor4Transition.Start(nowPlayingPalette.AccentColor4);
-
-                    canvas._nowPlayingPalette = nowPlayingPalette;
-                    canvas._isNowPlayingPaletteChanged = true;
                 }
             }
         }
@@ -402,7 +382,7 @@ namespace BetterLyrics.WinUI3.Controls
                     style: lyricsBg.SpectrumStyle,
                     canvasWidth: sender.Size.Width,
                     canvasHeight: sender.Size.Height,
-                    fillColor: _nowPlayingPalette.SpectrumColor,
+                    fillColor: _lyricsWindowStatus.WindowPalette.SpectrumColor,
                     albumRect: _albumArtRect,
                     cornerRadiusPercentage: albumStyle.CoverImageRadius
                 );
@@ -565,7 +545,7 @@ namespace BetterLyrics.WinUI3.Controls
                 _lyricsWindowStatus.LyricsStyleSettings,
                 _lyricsWindowStatus.LyricsEffectSettings,
                 _canvasYScrollTransition,
-                _nowPlayingPalette,
+                _lyricsWindowStatus.WindowPalette,
                 elapsedTime,
                 _isMouseScrolling,
                 _isLayoutChanged,
@@ -769,6 +749,20 @@ namespace BetterLyrics.WinUI3.Controls
                 }
                 _renderLyricsLines = null;
             }
+        }
+
+        private void UpdatePalette()
+        {
+            if (_lyricsWindowStatus == null) return;
+
+            var palette = _lyricsWindowStatus.WindowPalette;
+            _immersiveBgColorTransition.Start(palette.UnderlayColor);
+            _accentColor1Transition.Start(palette.AccentColor1);
+            _accentColor2Transition.Start(palette.AccentColor2);
+            _accentColor3Transition.Start(palette.AccentColor3);
+            _accentColor4Transition.Start(palette.AccentColor4);
+
+            _isNowPlayingPaletteChanged = true;
         }
 
         public void Receive(PropertyChangedMessage<TimeSpan> message)
@@ -1001,5 +995,15 @@ namespace BetterLyrics.WinUI3.Controls
             }
         }
 
+        public void Receive(PropertyChangedMessage<NowPlayingPalette> message)
+        {
+            if (message.Sender == _lyricsWindowStatus)
+            {
+                if (message.PropertyName == nameof(LyricsWindowStatus.WindowPalette))
+                {
+                    UpdatePalette();
+                }
+            }
+        }
     }
 }

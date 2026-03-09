@@ -75,12 +75,12 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             if (_albumArtBitmapDecoder != null)
             {
                 lightAccentColors =
-                        (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, lyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType, false))
+                        (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, lyricsWindowStatus.PaletteGeneratorType, false))
                         .Palette.Select(Helper.ColorHelper.FromVector3).ToList();
                 token.ThrowIfCancellationRequested();
 
                 darkAccentColors =
-                    (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, lyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType, true))
+                    (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, lyricsWindowStatus.PaletteGeneratorType, true))
                     .Palette.Select(Helper.ColorHelper.FromVector3).ToList();
                 token.ThrowIfCancellationRequested();
             }
@@ -95,7 +95,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             }
             else
             {
-                themeTypeSent = lyricsWindowStatus.LyricsBackgroundSettings.LyricsBackgroundTheme;
+                themeTypeSent = lyricsWindowStatus.WindowTheme;
             }
 
             bool isLight = themeTypeSent switch

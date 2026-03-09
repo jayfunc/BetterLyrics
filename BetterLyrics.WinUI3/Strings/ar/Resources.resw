@@ -861,9 +861,6 @@
   <data name="SettingsPageAbout.Content" xml:space="preserve">
     <value>حول</value>
   </data>
-  <data name="SettingsPageAdaptEnvColor.Description" xml:space="preserve">
-    <value>سيؤدي تشغيل هذا الخيار إلى تجاوز إعداد السمة في إعدادات خلفية الكلمات</value>
-  </data>
   <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
     <value>التكيف مع لون البيئة</value>
   </data>
@@ -1755,9 +1752,6 @@
   <data name="SettingsPageThanksList.Header" xml:space="preserve">
     <value>قائمة الشكر</value>
   </data>
-  <data name="SettingsPageTheme.Header" xml:space="preserve">
-    <value>موضوع خلفية الكلمات</value>
-  </data>
   <data name="SettingsPageTitle" xml:space="preserve">
     <value>الإعدادات - BetterLyrics</value>
   </data>
@@ -1926,6 +1920,9 @@
   <data name="WindowSettingsControlAlwaysHideNowPlayingBar.Header" xml:space="preserve">
     <value>إخفاء شريط التحكم في الوسائط دائمًا إلى الشريط الأبيض السفلي</value>
   </data>
+  <data name="WindowSettingsControlColor.Text" xml:space="preserve">
+    <value>Color</value>
+  </data>
   <data name="WindowSettingsControlDebug.Text" xml:space="preserve">
     <value>التصحيح</value>
   </data>
@@ -1935,7 +1932,25 @@
   <data name="WindowSettingsControlNowPlayingBar.Text" xml:space="preserve">
     <value>لوحة التحكم في الوسائط</value>
   </data>
+  <data name="WindowSettingsControlRealTimePalette.Header" xml:space="preserve">
+    <value>Live Palette Preview</value>
+  </data>
+  <data name="WindowSettingsControlRealTimePaletteAccentColor1.Header" xml:space="preserve">
+    <value>Accent Color 1</value>
+  </data>
+  <data name="WindowSettingsControlRealTimePaletteAccentColor2.Header" xml:space="preserve">
+    <value>Accent Color 2</value>
+  </data>
+  <data name="WindowSettingsControlRealTimePaletteAccentColor3.Header" xml:space="preserve">
+    <value>Accent Color 3</value>
+  </data>
+  <data name="WindowSettingsControlRealTimePaletteAccentColor4.Header" xml:space="preserve">
+    <value>Accent Color 4</value>
+  </data>
   <data name="WindowSettingsControlRemoveBorder.Header" xml:space="preserve">
     <value>إزالة الحدود عند قفلها</value>
+  </data>
+  <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
+    <value>Window Theme</value>
   </data>
 </root>

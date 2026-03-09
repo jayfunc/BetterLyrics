@@ -861,9 +861,6 @@
   <data name="SettingsPageAbout.Content" xml:space="preserve">
     <value>Tentang</value>
   </data>
-  <data name="SettingsPageAdaptEnvColor.Description" xml:space="preserve">
-    <value>Menghidupkan ini akan menimpa tetapan tema dalam tetapan latar belakang lirik</value>
-  </data>
   <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
     <value>Sesuaikan dengan Warna Persekitaran</value>
   </data>
@@ -1755,9 +1752,6 @@
   <data name="SettingsPageThanksList.Header" xml:space="preserve">
     <value>Senarai Penghargaan</value>
   </data>
-  <data name="SettingsPageTheme.Header" xml:space="preserve">
-    <value>Tema Latar Belakang Lirik</value>
-  </data>
   <data name="SettingsPageTitle" xml:space="preserve">
     <value>Tetapan - BetterLyrics</value>
   </data>
@@ -1926,6 +1920,9 @@
   <data name="WindowSettingsControlAlwaysHideNowPlayingBar.Header" xml:space="preserve">
     <value>Sentiasa sembunyikan bar kawalan media ke bar putih bawah</value>
   </data>
+  <data name="WindowSettingsControlColor.Text" xml:space="preserve">
+    <value>Color</value>
+  </data>
   <data name="WindowSettingsControlDebug.Text" xml:space="preserve">
     <value>Nyapepijat</value>
   </data>
@@ -1935,7 +1932,25 @@
   <data name="WindowSettingsControlNowPlayingBar.Text" xml:space="preserve">
     <value>Panel Kawalan Media</value>
   </data>
+  <data name="WindowSettingsControlRealTimePalette.Header" xml:space="preserve">
+    <value>Live Palette Preview</value>
+  </data>
+  <data name="WindowSettingsControlRealTimePaletteAccentColor1.Header" xml:space="preserve">
+    <value>Accent Color 1</value>
+  </data>
+  <data name="WindowSettingsControlRealTimePaletteAccentColor2.Header" xml:space="preserve">
+    <value>Accent Color 2</value>
+  </data>
+  <data name="WindowSettingsControlRealTimePaletteAccentColor3.Header" xml:space="preserve">
+    <value>Accent Color 3</value>
+  </data>
+  <data name="WindowSettingsControlRealTimePaletteAccentColor4.Header" xml:space="preserve">
+    <value>Accent Color 4</value>
+  </data>
   <data name="WindowSettingsControlRemoveBorder.Header" xml:space="preserve">
     <value>Alih keluar sempadan apabila dikunci</value>
+  </data>
+  <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
+    <value>Window Theme</value>
   </data>
 </root>

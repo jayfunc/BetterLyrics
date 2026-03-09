@@ -37,7 +37,8 @@ namespace BetterLyrics.WinUI3.Views
         IRecipient<PropertyChangedMessage<int>>,
         IRecipient<PropertyChangedMessage<bool>>,
         IRecipient<PropertyChangedMessage<string>>,
-        IRecipient<PropertyChangedMessage<MappedSongSearchQuery?>>
+        IRecipient<PropertyChangedMessage<MappedSongSearchQuery?>>,
+        IRecipient<PropertyChangedMessage<NowPlayingPalette>>
     {
         private readonly IGSMTCService _gsmtcService = Ioc.Default.GetRequiredService<IGSMTCService>();
         private readonly ISongSearchMapService _songSearchMapService = Ioc.Default.GetRequiredService<ISongSearchMapService>();
@@ -56,15 +57,6 @@ namespace BetterLyrics.WinUI3.Views
         public static readonly DependencyProperty LyricsWindowStatusProperty =
             DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus), typeof(NowPlayingPage), new PropertyMetadata(null, OnDependencyPropertyChanged));
 
-        public NowPlayingPalette AlbumArtThemeColors
-        {
-            get { return (NowPlayingPalette)GetValue(AlbumArtThemeColorsProperty); }
-            set { SetValue(AlbumArtThemeColorsProperty, value); }
-        }
-
-        public static readonly DependencyProperty AlbumArtThemeColorsProperty =
-            DependencyProperty.Register(nameof(AlbumArtThemeColors), typeof(NowPlayingPalette), typeof(NowPlayingPage), new PropertyMetadata(new NowPlayingPalette(), OnDependencyPropertyChanged));
-
         public NowPlayingPage()
         {
             this.InitializeComponent();
@@ -81,10 +73,6 @@ namespace BetterLyrics.WinUI3.Views
                 if (e.Property == LyricsWindowStatusProperty)
                 {
                     page.OnLayoutChanged();
-                    _ = page.RenderSongInfoAsync();
-                }
-                else if (e.Property == AlbumArtThemeColorsProperty)
-                {
                     _ = page.RenderSongInfoAsync();
                 }
             }
@@ -105,7 +93,7 @@ namespace BetterLyrics.WinUI3.Views
                 sender.Inlines.Add(new Run { Text = $"{ch}", FontFamily = new FontFamily(fontFamilyName) });
             }
             sender.FontSize = (int)fontSize;
-            sender.Foreground = new SolidColorBrush(AlbumArtThemeColors.NonCurrentLineFillColor);
+            sender.Foreground = new SolidColorBrush(LyricsWindowStatus.WindowPalette.NonCurrentLineFillColor);
         }
 
         private async Task RenderSongInfoAsync()
@@ -765,6 +753,17 @@ namespace BetterLyrics.WinUI3.Views
                 if (message.PropertyName == nameof(LyricsSearchControlViewModel.MappedSongSearchQuery))
                 {
                     _ = RefreshSongInfoAsync();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<NowPlayingPalette> message)
+        {
+            if (message.Sender is LyricsWindowStatus)
+            {
+                if (message.PropertyName == nameof(LyricsWindowStatus.WindowPalette))
+                {
+                    _ = RenderSongInfoAsync();
                 }
             }
         }
