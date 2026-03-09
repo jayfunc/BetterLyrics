@@ -1,5 +1,8 @@
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Hooks;
+using BetterLyrics.WinUI3.Models.Settings;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 
@@ -11,13 +14,17 @@ namespace BetterLyrics.WinUI3.Views
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class LyricsSearchWindow : Window
+    public sealed partial class LyricsSearchWindow : Window,
+        IRecipient<PropertyChangedMessage<ElementTheme>>
     {
         public LyricsSearchWindow()
         {
             InitializeComponent();
 
+            WeakReferenceMessenger.Default.RegisterAll(this);
+
             this.Init("LyricsSearchPageTitle");
+            this.SyncTheme();
 
             AppWindow.Closing += AppWindow_Closing;
         }
@@ -25,6 +32,17 @@ namespace BetterLyrics.WinUI3.Views
         private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
         {
             this.CloseWindow();
+        }
+
+        public void Receive(PropertyChangedMessage<ElementTheme> message)
+        {
+            if (message.Sender is GeneralSettings)
+            {
+                if (message.PropertyName == nameof(GeneralSettings.AppTheme))
+                {
+                    this.SyncTheme();
+                }
+            }
         }
 
     }

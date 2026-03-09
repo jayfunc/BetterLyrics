@@ -3,6 +3,9 @@ using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
+using BetterLyrics.WinUI3.Models.Settings;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Vanara.PInvoke;
@@ -17,7 +20,8 @@ namespace BetterLyrics.WinUI3.Views
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class ToastOverlayWindow : Window
+    public sealed partial class ToastOverlayWindow : Window,
+        IRecipient<PropertyChangedMessage<ElementTheme>>
     {
         private OverlayInputHelper? _overlayInputHelper;
         public InAppNotificationStack Stack => NotificationStack;
@@ -25,11 +29,12 @@ namespace BetterLyrics.WinUI3.Views
         public ToastOverlayWindow()
         {
             this.InitializeComponent();
-
+            WeakReferenceMessenger.Default.RegisterAll(this);
             this.Init(titleBarHeightOption: TitleBarHeightOption.Collapsed, backdropType: BackdropType.Transparent);
             this.SetWindowStyle(WindowStyle.Popup | WindowStyle.Visible);
             AppWindow.IsShownInSwitchers = false;
             WindowHook.SetIsClickThrough(this, true);
+            this.SyncTheme();
         }
 
         public void ShowOverlay(Microsoft.UI.Windowing.DisplayArea displayArea)
@@ -73,5 +78,17 @@ namespace BetterLyrics.WinUI3.Views
         {
             _overlayInputHelper = null;
         }
+
+        public void Receive(PropertyChangedMessage<ElementTheme> message)
+        {
+            if (message.Sender is GeneralSettings)
+            {
+                if (message.PropertyName == nameof(GeneralSettings.AppTheme))
+                {
+                    this.SyncTheme();
+                }
+            }
+        }
+
     }
 }

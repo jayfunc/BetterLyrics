@@ -10,7 +10,5 @@
     xmlns:media="using:CommunityToolkit.WinUI.Media"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}" Opacity="0.85">
-        <controls:LyricsSearchControl />
-    </Grid>
+    <controls:LyricsSearchControl />
 </Window>

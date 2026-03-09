@@ -69,6 +69,7 @@
 		<None Remove="Controls\StatsDashboardControl.xaml" />
 		<None Remove="Controls\SystemTray.xaml" />
 		<None Remove="Controls\WindowSettingsControl.xaml" />
+		<None Remove="Themes\DefaultListViewItemStyle.xaml" />
 		<None Remove="Themes\DefaultStyles.xaml" />
 		<None Remove="Themes\FluentAccentButtonStyle.xaml" />
 		<None Remove="Themes\FluentButtonStyle.xaml" />
@@ -481,6 +482,11 @@
 	  <Content Update="Assets\Banner.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Themes\DefaultListViewItemStyle.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Themes\FluentListViewItemStyle.xaml">

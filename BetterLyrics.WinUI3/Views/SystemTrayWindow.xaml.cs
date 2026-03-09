@@ -25,7 +25,8 @@ namespace BetterLyrics.WinUI3.Views;
 public sealed partial class SystemTrayWindow : Window,
     IRecipient<PropertyChangedMessage<List<string>>>,
     IRecipient<PropertyChangedMessage<bool>>,
-    IRecipient<PropertyChangedMessage<WindowStatus>>
+    IRecipient<PropertyChangedMessage<WindowStatus>>,
+    IRecipient<PropertyChangedMessage<ElementTheme>>
 {
     private ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
     private readonly IGSMTCService _gsmtcService = Ioc.Default.GetRequiredService<IGSMTCService>();
@@ -36,6 +37,7 @@ public sealed partial class SystemTrayWindow : Window,
     {
         InitializeComponent();
         SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(BackdropType.Transparent);
+        this.SyncTheme();
 
         _wmm = new WindowMessageMonitor(this);
         _wmm.WindowMessageReceived += Wmm_WindowMessageReceived;
@@ -208,4 +210,16 @@ public sealed partial class SystemTrayWindow : Window,
             }
         }
     }
+
+    public void Receive(PropertyChangedMessage<ElementTheme> message)
+    {
+        if (message.Sender is GeneralSettings)
+        {
+            if (message.PropertyName == nameof(GeneralSettings.AppTheme))
+            {
+                this.SyncTheme();
+            }
+        }
+    }
+
 }
