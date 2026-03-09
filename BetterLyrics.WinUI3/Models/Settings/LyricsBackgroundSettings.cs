@@ -9,8 +9,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
 {
     public partial class LyricsBackgroundSettings : ObservableRecipient, ICloneable
     {
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial ElementTheme LyricsBackgroundTheme { get; set; } = ElementTheme.Dark;
-
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsPureColorOverlayEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int PureColorOverlayOpacity { get; set; } = 100; // 100 % = 1.0
 
@@ -23,7 +21,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsFluidOverlayEnabled { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int FluidOverlayOpacity { get; set; } = 100;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial PaletteGeneratorType PaletteGeneratorType { get; set; } = PaletteGeneratorType.MedianCut;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsFluidOverlayBrethingEffectEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int FluidOverlayBreathingIntensity { get; set; } = 80;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsFluidOverlayLightWaveEnabled { get; set; } = false;
@@ -57,8 +54,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
         {
             return new LyricsBackgroundSettings
             {
-                LyricsBackgroundTheme = this.LyricsBackgroundTheme,
-
                 IsPureColorOverlayEnabled = this.IsPureColorOverlayEnabled,
                 PureColorOverlayOpacity = this.PureColorOverlayOpacity,
 
@@ -71,7 +66,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
                 IsFluidOverlayEnabled = this.IsFluidOverlayEnabled,
                 FluidOverlayOpacity = this.FluidOverlayOpacity,
-                PaletteGeneratorType = this.PaletteGeneratorType,
                 FluidOverlayBreathingIntensity = this.FluidOverlayBreathingIntensity,
                 IsFluidOverlayBrethingEffectEnabled = this.IsFluidOverlayBrethingEffectEnabled,
                 IsFluidOverlayLightWaveEnabled = this.IsFluidOverlayLightWaveEnabled,

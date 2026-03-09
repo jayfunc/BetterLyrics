@@ -52,7 +52,7 @@ namespace BetterLyrics.WinUI3.Views
             RootGrid.RequestedTheme = ViewModel.AppSettings.GeneralSettings.AppTheme;
             if (NowPlayingPage.Opacity == 1)
             {
-                NowPlayingBar.RequestedTheme = NowPlayingPage.AlbumArtThemeColors.ThemeType;
+                NowPlayingBar.RequestedTheme = ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.WindowPalette.ThemeType;
             }
             else
             {
@@ -66,7 +66,7 @@ namespace BetterLyrics.WinUI3.Views
             var result = await _gsmtcService.CalculateAlbumArtThemeColorsAsync(
                 ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus, Colors.Transparent);
 
-            NowPlayingPage.AlbumArtThemeColors = result;
+            NowPlayingPage.LyricsWindowStatus?.WindowPalette = result;
             NowPlayingPage.RequestedTheme = result.ThemeType;
 
             UpdateTheme();
@@ -149,9 +149,9 @@ namespace BetterLyrics.WinUI3.Views
 
         public void Receive(PropertyChangedMessage<ElementTheme> message)
         {
-            if (message.Sender == ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.LyricsBackgroundSettings)
+            if (message.Sender == ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus)
             {
-                if (message.PropertyName == nameof(LyricsBackgroundSettings.LyricsBackgroundTheme))
+                if (message.PropertyName == nameof(LyricsWindowStatus.WindowTheme))
                 {
                     _ = UpdateAlbumArtThemeColorsAsync();
                 }
@@ -167,9 +167,9 @@ namespace BetterLyrics.WinUI3.Views
 
         public void Receive(PropertyChangedMessage<PaletteGeneratorType> message)
         {
-            if (message.Sender == ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.LyricsBackgroundSettings)
+            if (message.Sender == ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus)
             {
-                if (message.PropertyName == nameof(LyricsBackgroundSettings.PaletteGeneratorType))
+                if (message.PropertyName == nameof(LyricsWindowStatus.PaletteGeneratorType))
                 {
                     _ = UpdateAlbumArtThemeColorsAsync();
                 }

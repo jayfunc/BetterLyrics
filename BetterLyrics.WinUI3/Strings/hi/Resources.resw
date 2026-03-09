@@ -861,9 +861,6 @@
   <data name="SettingsPageAbout.Content" xml:space="preserve">
     <value>के बारे में</value>
   </data>
-  <data name="SettingsPageAdaptEnvColor.Description" xml:space="preserve">
-    <value>इसे चालू करने से बोल पृष्ठभूमि सेटिंग्स में थीम सेटिंग ओवरराइड हो जाएगी</value>
-  </data>
   <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
     <value>पर्यावरण के रंग के अनुकूल बनें</value>
   </data>
@@ -1755,9 +1752,6 @@
   <data name="SettingsPageThanksList.Header" xml:space="preserve">
     <value>आभार सूची</value>
   </data>
-  <data name="SettingsPageTheme.Header" xml:space="preserve">
-    <value>बोल पृष्ठभूमि थीम</value>
-  </data>
   <data name="SettingsPageTitle" xml:space="preserve">
     <value>सेटिंग्स - BetterLyrics</value>
   </data>
@@ -1926,6 +1920,9 @@
   <data name="WindowSettingsControlAlwaysHideNowPlayingBar.Header" xml:space="preserve">
     <value>मीडिया कंट्रोल बार को हमेशा नीचे वाली सफ़ेद बार में छिपाएँ</value>
   </data>
+  <data name="WindowSettingsControlColor.Text" xml:space="preserve">
+    <value>Color</value>
+  </data>
   <data name="WindowSettingsControlDebug.Text" xml:space="preserve">
     <value>डिबग</value>
   </data>
@@ -1935,7 +1932,25 @@
   <data name="WindowSettingsControlNowPlayingBar.Text" xml:space="preserve">
     <value>मीडिया नियंत्रण पैनल</value>
   </data>
+  <data name="WindowSettingsControlRealTimePalette.Header" xml:space="preserve">
+    <value>Live Palette Preview</value>
+  </data>
+  <data name="WindowSettingsControlRealTimePaletteAccentColor1.Header" xml:space="preserve">
+    <value>Accent Color 1</value>
+  </data>
+  <data name="WindowSettingsControlRealTimePaletteAccentColor2.Header" xml:space="preserve">
+    <value>Accent Color 2</value>
+  </data>
+  <data name="WindowSettingsControlRealTimePaletteAccentColor3.Header" xml:space="preserve">
+    <value>Accent Color 3</value>
+  </data>
+  <data name="WindowSettingsControlRealTimePaletteAccentColor4.Header" xml:space="preserve">
+    <value>Accent Color 4</value>
+  </data>
   <data name="WindowSettingsControlRemoveBorder.Header" xml:space="preserve">
     <value>लॉक होने पर बॉर्डर हटाएँ</value>
+  </data>
+  <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
+    <value>Window Theme</value>
   </data>
 </root>

@@ -176,7 +176,7 @@ namespace BetterLyrics.WinUI3.Views
         {
             var result = await _gsmtcService.CalculateAlbumArtThemeColorsAsync(LyricsWindowStatus, _backdropAccentColor);
 
-            NowPlayingPage.AlbumArtThemeColors = result;
+            NowPlayingPage.LyricsWindowStatus?.WindowPalette = result;
             RootGrid.RequestedTheme = result.ThemeType;
         }
 
@@ -669,9 +669,9 @@ namespace BetterLyrics.WinUI3.Views
 
         public void Receive(PropertyChangedMessage<ElementTheme> message)
         {
-            if (message.Sender == LyricsWindowStatus.LyricsBackgroundSettings)
+            if (message.Sender == LyricsWindowStatus)
             {
-                if (message.PropertyName == nameof(LyricsWindowStatus.LyricsBackgroundSettings.LyricsBackgroundTheme))
+                if (message.PropertyName == nameof(LyricsWindowStatus.WindowTheme))
                 {
                     _ = UpdateAlbumArtThemeColorsAsync();
                 }
@@ -759,9 +759,9 @@ namespace BetterLyrics.WinUI3.Views
 
         public void Receive(PropertyChangedMessage<PaletteGeneratorType> message)
         {
-            if (message.Sender == LyricsWindowStatus.LyricsBackgroundSettings)
+            if (message.Sender == LyricsWindowStatus)
             {
-                if (message.PropertyName == nameof(LyricsWindowStatus.LyricsBackgroundSettings.PaletteGeneratorType))
+                if (message.PropertyName == nameof(LyricsWindowStatus.PaletteGeneratorType))
                 {
                     _ = UpdateAlbumArtThemeColorsAsync();
                 }

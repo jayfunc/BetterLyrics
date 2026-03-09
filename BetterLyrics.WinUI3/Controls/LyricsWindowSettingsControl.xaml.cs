@@ -142,7 +142,6 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void ConfigButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowSegmentedItem.IsEnabled = LayoutSegmentedItem.IsEnabled = true;
             ConfigNavView.SelectedItem = WindowSegmentedItem;
             LyricsWindowStatus = (LyricsWindowStatus)((Button)sender).DataContext;
             ViewModel.OpenConfigPanel();
@@ -150,8 +149,7 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void EmbeddedConfigButton_Click(object sender, RoutedEventArgs e)
         {
-            WindowSegmentedItem.IsEnabled = LayoutSegmentedItem.IsEnabled = false;
-            ConfigNavView.SelectedItem = AlbumArtStyleSegmentedItem;
+            ConfigNavView.SelectedItem = WindowSegmentedItem;
             LyricsWindowStatus = _settingsService.AppSettings.MusicGallerySettings.LyricsWindowStatus;
             ViewModel.OpenConfigPanel();
         }

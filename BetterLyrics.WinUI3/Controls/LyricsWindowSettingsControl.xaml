@@ -210,10 +210,10 @@
                         <NavigationViewItem x:Name="WindowSegmentedItem" Tag="Window">
                             <TextBlock x:Uid="AppSettingsControlGeneral" />
                         </NavigationViewItem>
-                        <NavigationViewItem x:Name="LayoutSegmentedItem" Tag="Layout">
+                        <NavigationViewItem Tag="Layout">
                             <TextBlock x:Uid="SettingsPageLayout" />
                         </NavigationViewItem>
-                        <NavigationViewItem x:Name="AlbumArtStyleSegmentedItem" Tag="AlbumArtStyle">
+                        <NavigationViewItem Tag="AlbumArtStyle">
                             <TextBlock x:Uid="SettingsPageAlbumStyle" />
                         </NavigationViewItem>
                         <NavigationViewItem Tag="AlbumArtEffect">

@@ -6,6 +6,8 @@
     xmlns:cwc="using:CommunityToolkit.WinUI.Converters">
 
     <cwc:ColorToDisplayNameConverter x:Key="ColorToDisplayNameConverter" />
+    <bwc:ColorToHexConverter x:Key="ColorToHexConverter" />
+
     <cwc:CollectionVisibilityConverter x:Key="CollectionVisibilityConverter" />
 
     <bwc:AlbumArtSearchProviderToDisplayNameConverter x:Key="AlbumArtSearchProviderToDisplayNameConverter" />
