@@ -165,6 +165,9 @@
   <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
     <value>Window</value>
   </data>
+  <data name="AppSettingsControlTheme.Header" xml:space="preserve">
+    <value>App Theme</value>
+  </data>
   <data name="AppUpdateServiceNewVersionAvailable" xml:space="preserve">
     <value>A new version of BetterLyrics is available</value>
   </data>

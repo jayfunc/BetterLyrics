@@ -13,6 +13,7 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System.Threading.Tasks;
+using static SkiaSharp.HarfBuzz.SKShaper;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -46,15 +47,30 @@ namespace BetterLyrics.WinUI3.Views
             _ = UpdateAlbumArtThemeColorsAsync();
         }
 
+        private void UpdateTheme()
+        {
+            RootGrid.RequestedTheme = ViewModel.AppSettings.GeneralSettings.AppTheme;
+            if (NowPlayingPage.Opacity == 1)
+            {
+                NowPlayingBar.RequestedTheme = NowPlayingPage.AlbumArtThemeColors.ThemeType;
+            }
+            else
+            {
+                NowPlayingBar.RequestedTheme = ViewModel.AppSettings.GeneralSettings.AppTheme;
+            }
+            AppWindow.TitleBar.PreferredTheme = NowPlayingBar.RequestedTheme.ToTitleBarTheme();
+        }
+
         private async Task UpdateAlbumArtThemeColorsAsync()
         {
             var result = await _gsmtcService.CalculateAlbumArtThemeColorsAsync(
                 ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus, Colors.Transparent);
 
             NowPlayingPage.AlbumArtThemeColors = result;
-            RootGrid.RequestedTheme = result.ThemeType;
-        }
+            NowPlayingPage.RequestedTheme = result.ThemeType;
 
+            UpdateTheme();
+        }
 
         private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
         {
@@ -75,6 +91,7 @@ namespace BetterLyrics.WinUI3.Views
             NowPlayingBar.IsAutoHideEnabled = true;
             NowPlayingPage.Visibility = Visibility.Visible;
             NowPlayingPage.Opacity = 1;
+            UpdateTheme();
         }
 
         private async void NowPlayingBar_TimeTapped(object sender, System.EventArgs e)
@@ -85,6 +102,7 @@ namespace BetterLyrics.WinUI3.Views
             NowPlayingPage.Opacity = 0;
             await Task.Delay(Constants.Time.AnimationDuration);
             NowPlayingPage.Visibility = Visibility.Collapsed;
+            UpdateTheme();
         }
 
         private void RootGrid_Loaded(object sender, RoutedEventArgs e)
@@ -136,6 +154,13 @@ namespace BetterLyrics.WinUI3.Views
                 if (message.PropertyName == nameof(LyricsBackgroundSettings.LyricsBackgroundTheme))
                 {
                     _ = UpdateAlbumArtThemeColorsAsync();
+                }
+            }
+            else if (message.Sender is GeneralSettings)
+            {
+                if (message.PropertyName == nameof(GeneralSettings.AppTheme))
+                {
+                    UpdateTheme();
                 }
             }
         }

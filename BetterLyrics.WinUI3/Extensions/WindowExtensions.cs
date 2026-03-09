@@ -1,6 +1,8 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.LocalizationService;
+using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -9,8 +11,6 @@ namespace BetterLyrics.WinUI3.Extensions
 {
     public static class WindowExtensions
     {
-        private static readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
-
         extension(Window window)
         {
             public void Init(
@@ -19,9 +19,11 @@ namespace BetterLyrics.WinUI3.Extensions
                 TitleBarHeightOption titleBarHeightOption = TitleBarHeightOption.Standard,
                 BackdropType backdropType = BackdropType.DesktopAcrylic)
             {
+                var localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
+
                 if (titleKey != "")
                 {
-                    window.Title = _localizationService.GetLocalizedString(titleKey);
+                    window.Title = localizationService.GetLocalizedString(titleKey);
                 }
                 if (title != "")
                 {
@@ -34,6 +36,16 @@ namespace BetterLyrics.WinUI3.Extensions
                 window.AppWindow.TitleBar.PreferredHeightOption = titleBarHeightOption;
 
                 window.SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(backdropType);
+            }
+
+            public void SyncTheme()
+            {
+                var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+                if (settingsService == null || window == null || window.Content == null) return;
+
+                var appTheme = settingsService.AppSettings.GeneralSettings.AppTheme;
+                window.AppWindow.TitleBar.PreferredTheme = appTheme.ToTitleBarTheme();
+                ((FrameworkElement)window.Content).RequestedTheme = appTheme;
             }
 
         }

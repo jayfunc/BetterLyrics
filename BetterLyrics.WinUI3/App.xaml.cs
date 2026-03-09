@@ -45,6 +45,9 @@ namespace BetterLyrics.WinUI3
 
         protected override async void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
+            // 必须，加上此行以防止 SyncTheme 时线程被阻塞（原因未明）
+            _ = Ioc.Default.GetRequiredService<ISettingsService>();
+
             var splashWindow = WindowHook.OpenOrShowWindow<SplashWindow>();
             GlobalToastManager.Initialize();
 

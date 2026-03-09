@@ -23,6 +23,14 @@
 
                     <TextBlock x:Uid="SettingsPageAppAppearance" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
+                    <controls:SettingsCard x:Uid="AppSettingsControlTheme" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE790;}">
+                        <ComboBox x:Name="ThemeComboBox" SelectedIndex="{x:Bind ViewModel.AppSettings.GeneralSettings.AppTheme, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                            <ComboBoxItem x:Uid="SettingsPageFollowSystem" />
+                            <ComboBoxItem x:Uid="SettingsPageLight" />
+                            <ComboBoxItem x:Uid="SettingsPageDark" />
+                        </ComboBox>
+                    </controls:SettingsCard>
+
                     <controls:SettingsExpander
                         x:Uid="SettingsPageLanguage"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
