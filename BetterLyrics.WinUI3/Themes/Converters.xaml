@@ -8,6 +8,8 @@
     <cwc:ColorToDisplayNameConverter x:Key="ColorToDisplayNameConverter" />
     <bwc:ColorToHexConverter x:Key="ColorToHexConverter" />
 
+    <bwc:BrushToPaintConverter x:Key="BrushToPaintConverter" />
+
     <cwc:CollectionVisibilityConverter x:Key="CollectionVisibilityConverter" />
 
     <bwc:AlbumArtSearchProviderToDisplayNameConverter x:Key="AlbumArtSearchProviderToDisplayNameConverter" />

@@ -5,7 +5,9 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:globalization="using:Windows.Globalization"
     xmlns:local="using:BetterLyrics.WinUI3"
-    xmlns:media="using:CommunityToolkit.WinUI.Media">
+    xmlns:media="using:CommunityToolkit.WinUI.Media"
+    xmlns:painting="using:LiveChartsCore.SkiaSharpView.Painting"
+    xmlns:skiasharp="using:SkiaSharp">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

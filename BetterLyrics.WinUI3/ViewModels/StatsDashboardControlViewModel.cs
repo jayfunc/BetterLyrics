@@ -1,12 +1,15 @@
 ﻿using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.Entities;
+using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Models.Stats;
 using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
 using BetterLyrics.WinUI3.Services.GSMTCService;
 using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.PlayHistoryService;
+using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
@@ -15,21 +18,30 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using CommunityToolkit.WinUI;
 using LiveChartsCore;
 using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Painting;
+using LiveChartsCore.SkiaSharpView.Painting.ImageFilters;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
+using Microsoft.UI.Xaml;
+using SkiaSharp;
+using SkiaSharp.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.UI;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class StatsDashboardControlViewModel : BaseViewModel, IRecipient<PropertyChangedMessage<bool>>
+    public partial class StatsDashboardControlViewModel : BaseViewModel,
+        IRecipient<PropertyChangedMessage<bool>>,
+        IRecipient<PropertyChangedMessage<ElementTheme>>
     {
         private readonly IPlayHistoryService _playHistoryService;
         private readonly ILocalizationService _localizationService;
         private readonly IAlbumArtSearchService _albumArtSearchService;
+        private readonly ISettingsService _settingsService;
         private readonly ILogger<StatsDashboardControlViewModel> _logger;
 
         private string _localizedTimesValue;
@@ -59,24 +71,25 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty] public partial string PeakHourText { get; set; } = "--:--";
         [ObservableProperty] public partial string QuietHourText { get; set; } = "--:--";
 
-        // 歌手
         [ObservableProperty] public partial ObservableCollection<ArtistPlayCount> TopArtists { get; set; } = new();
-
-        // 播放源
         [ObservableProperty] public partial ObservableCollection<ISeries> SourceSeries { get; set; } = new();
-
-        // 歌曲
         [ObservableProperty] public partial ObservableCollection<SongPlayCount> TopSongs { get; set; } = new();
+
+        [ObservableProperty] public partial SolidColorPaint SecondaryTextPaint { get; set; } = new();
+        [ObservableProperty] public partial SolidColorPaint PrimaryTextPaint { get; set; } = new();
+        [ObservableProperty] public partial SolidColorPaint BackgroundPaint { get; set; } = new();
 
         public StatsDashboardControlViewModel(
             IPlayHistoryService playHistoryService,
             ILocalizationService localizationService,
             IAlbumArtSearchService albumArtSearchService,
-            IGSMTCService gsmtcService)
+            IGSMTCService gsmtcService,
+            ISettingsService settingsService)
         {
             _playHistoryService = playHistoryService;
             _localizationService = localizationService;
             _albumArtSearchService = albumArtSearchService;
+            _settingsService = settingsService;
             GSMTCService = gsmtcService;
 
             _logger = Ioc.Default.GetRequiredService<ILogger<StatsDashboardControlViewModel>>();
@@ -86,6 +99,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             _timer = DispatcherQueueHelper.GetUIDispatcherQueue()?.CreateTimer();
 
             UpdateDateRange();
+            UpdatePaints();
         }
 
         partial void OnSelectedTimeRangeChanged(StatsRange value)
@@ -257,6 +271,33 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
+        private void UpdatePaints()
+        {
+            bool isDark = false;
+
+            switch (_settingsService.AppSettings.GeneralSettings.AppTheme)
+            {
+                case ElementTheme.Default:
+                    isDark = App.Current.RequestedTheme == ApplicationTheme.Dark;
+                    break;
+                case ElementTheme.Dark:
+                    isDark = true;
+                    break;
+                default:
+                    break;
+            }
+
+            var primaryTextColor = isDark ? Color.FromArgb(255, 255, 255, 255) : Color.FromArgb(255, 26, 26, 26);
+            var secondaryTextColor = isDark ? Color.FromArgb(255, 204, 204, 204) : Color.FromArgb(255, 93, 93, 93);
+            var backgroundColor = isDark ? Color.FromArgb(255, 39, 39, 39) : Color.FromArgb(255, 244, 244, 244);
+            var shadowColor = isDark ? Color.FromArgb(150, 0, 0, 0) : Color.FromArgb(40, 0, 0, 0);
+
+            PrimaryTextPaint = primaryTextColor.ToPaint();
+            SecondaryTextPaint = secondaryTextColor.ToPaint();
+            BackgroundPaint = backgroundColor.ToPaint();
+            BackgroundPaint.ImageFilter = new DropShadow(2, 2, 3, 3, shadowColor.ToSKColor());
+        }
+
         [RelayCommand]
         private void RefreshData()
         {
@@ -299,5 +340,17 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
             }
         }
+
+        public void Receive(PropertyChangedMessage<ElementTheme> message)
+        {
+            if (message.Sender is GeneralSettings)
+            {
+                if (message.PropertyName == nameof(GeneralSettings.AppTheme))
+                {
+                    UpdatePaints();
+                }
+            }
+        }
+
     }
 }

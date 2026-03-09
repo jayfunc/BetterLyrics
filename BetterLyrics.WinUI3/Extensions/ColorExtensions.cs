@@ -1,4 +1,6 @@
-﻿using System;
+﻿using LiveChartsCore.SkiaSharpView.Painting;
+using SkiaSharp;
+using System;
 using System.Numerics;
 using Windows.UI;
 
@@ -33,6 +35,12 @@ namespace BetterLyrics.WinUI3.Extensions
             public Vector3 ToVector3RGB()
             {
                 return new Vector3((float)color.R / 0xff, (float)color.G / 0xff, (float)color.B / 0xff);
+            }
+
+            public SolidColorPaint ToPaint()
+            {
+                var skColor = new SKColor(color.R, color.G, color.B, color.A);
+                return new SolidColorPaint(skColor);
             }
 
         }
