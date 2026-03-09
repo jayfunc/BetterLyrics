@@ -236,11 +236,16 @@
                             Height="180"
                             Margin="0,8,0,0"
                             Background="Transparent"
-                            TooltipPosition="Top">
+                            TooltipBackgroundPaint="{x:Bind ViewModel.BackgroundPaint, Mode=OneWay}"
+                            TooltipPosition="Top"
+                            TooltipTextPaint="{x:Bind ViewModel.PrimaryTextPaint, Mode=OneWay}">
 
                             <lvc:CartesianChart.XAxes>
                                 <lvc:AxesCollection>
-                                    <lvc:XamlAxis Labels="{x:Bind ViewModel.HourlyXAxisLabels, Mode=OneWay}" TextSize="{StaticResource BodyTextBlockFontSize}" />
+                                    <lvc:XamlAxis
+                                        Labels="{x:Bind ViewModel.HourlyXAxisLabels, Mode=OneWay}"
+                                        LabelsPaint="{x:Bind ViewModel.SecondaryTextPaint, Mode=OneWay}"
+                                        TextSize="{StaticResource BodyTextBlockFontSize}" />
                                 </lvc:AxesCollection>
                             </lvc:CartesianChart.XAxes>
 
@@ -248,6 +253,8 @@
                                 <lvc:AxesCollection>
                                     <lvc:XamlAxis
                                         x:Uid="StatsDashboardControlTrackCountAxis"
+                                        LabelsPaint="{x:Bind ViewModel.SecondaryTextPaint, Mode=OneWay}"
+                                        NamePaint="{x:Bind ViewModel.SecondaryTextPaint, Mode=OneWay}"
                                         NameTextSize="{StaticResource BodyTextBlockFontSize}"
                                         ShowSeparatorLines="False"
                                         TextSize="{StaticResource BodyTextBlockFontSize}" />
@@ -393,9 +400,12 @@
                             MinHeight="250"
                             Background="Transparent"
                             LegendPosition="Bottom"
+                            LegendTextPaint="{x:Bind ViewModel.SecondaryTextPaint, Mode=OneWay}"
                             LegendTextSize="{StaticResource BodyTextBlockFontSize}"
                             Series="{x:Bind ViewModel.SourceSeries, Mode=OneWay}"
-                            TooltipPosition="Center" />
+                            TooltipBackgroundPaint="{x:Bind ViewModel.BackgroundPaint, Mode=OneWay}"
+                            TooltipPosition="Center"
+                            TooltipTextPaint="{x:Bind ViewModel.PrimaryTextPaint, Mode=OneWay}" />
 
                     </Grid>
                 </Border>
