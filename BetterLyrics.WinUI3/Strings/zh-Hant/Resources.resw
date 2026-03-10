@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -166,7 +166,7 @@
     <value>視窗</value>
   </data>
   <data name="AppSettingsControlTheme.Header" xml:space="preserve">
-    <value>App Theme</value>
+    <value>應用程式主題</value>
   </data>
   <data name="AppUpdateServiceNewVersionAvailable" xml:space="preserve">
     <value>新版本的 BetterLyrics 已推出</value>
@@ -1921,7 +1921,7 @@
     <value>永遠將媒體控制列隱藏到最下方的小白條中</value>
   </data>
   <data name="WindowSettingsControlColor.Text" xml:space="preserve">
-    <value>Color</value>
+    <value>顏色</value>
   </data>
   <data name="WindowSettingsControlDebug.Text" xml:space="preserve">
     <value>偵錯</value>
@@ -1933,24 +1933,24 @@
     <value>媒體控制面板</value>
   </data>
   <data name="WindowSettingsControlRealTimePalette.Header" xml:space="preserve">
-    <value>Live Palette Preview</value>
+    <value>即時調色板預覽</value>
   </data>
   <data name="WindowSettingsControlRealTimePaletteAccentColor1.Header" xml:space="preserve">
-    <value>Accent Color 1</value>
+    <value>重點顏色 1</value>
   </data>
   <data name="WindowSettingsControlRealTimePaletteAccentColor2.Header" xml:space="preserve">
-    <value>Accent Color 2</value>
+    <value>重點顏色 2</value>
   </data>
   <data name="WindowSettingsControlRealTimePaletteAccentColor3.Header" xml:space="preserve">
-    <value>Accent Color 3</value>
+    <value>重點顏色 3</value>
   </data>
   <data name="WindowSettingsControlRealTimePaletteAccentColor4.Header" xml:space="preserve">
-    <value>Accent Color 4</value>
+    <value>重點顏色 4</value>
   </data>
   <data name="WindowSettingsControlRemoveBorder.Header" xml:space="preserve">
     <value>鎖定時移除窗口邊框</value>
   </data>
   <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
-    <value>Window Theme</value>
+    <value>視窗主題</value>
   </data>
 </root>
