@@ -133,6 +133,7 @@ namespace BetterLyrics.WinUI3
             // 预加载系统字体列表
             await FontHelper.GetSystemFontFamiliesAsync();
 
+            // 启动周期更新检测
             var appUpdateService = Ioc.Default.GetRequiredService<IAppUpdateService>();
             appUpdateService.StartDailyCheck();
         }

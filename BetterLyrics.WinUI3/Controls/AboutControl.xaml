@@ -93,7 +93,10 @@
                                 <controls:SettingsCard.Header>
                                     <TextBlock x:Uid="AboutControlLastCheckTime" />
                                 </controls:SettingsCard.Header>
-                                <Button x:Uid="AboutControlCheckUpdate" Command="{x:Bind ViewModel.CheckAppUpdateCommand}" />
+                                <Button
+                                    x:Uid="AboutControlCheckUpdate"
+                                    Command="{x:Bind ViewModel.CheckAppUpdateCommand}"
+                                    IsEnabled="{x:Bind ViewModel.AppUpdateService.IsChecking, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
                             </controls:SettingsCard>
                         </controls:SettingsExpander.Items>
                         <controls:SettingsExpander.ItemsHeader>
@@ -122,6 +125,7 @@
                                     Severity="Error"
                                     Visibility="{x:Bind ViewModel.AppUpdateService.AppUpdateStatus, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}" />
                                 <ProgressBar
+                                    Margin="0,2,0,0"
                                     VerticalAlignment="Top"
                                     IsIndeterminate="True"
                                     Visibility="{x:Bind ViewModel.AppUpdateService.IsChecking, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
