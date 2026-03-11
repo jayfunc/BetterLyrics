@@ -6,6 +6,7 @@
     xmlns:const="using:BetterLyrics.WinUI3.Constants"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:enums="using:BetterLyrics.WinUI3.Enums"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -21,55 +22,19 @@
             x:Name="NavView"
             IsBackButtonVisible="Collapsed"
             IsSettingsVisible="False"
-            SelectionChanged="NavView_SelectionChanged">
-            <NavigationView.MenuItems>
+            MenuItemsSource="{x:Bind ViewModel.MenuItems}"
+            SelectedItem="{x:Bind ViewModel.SelectedMenuItem, Mode=TwoWay}">
+            <NavigationView.MenuItemTemplate>
+                <DataTemplate x:DataType="models:NavMenuItem">
+                    <NavigationViewItem Content="{x:Bind Label}">
+                        <NavigationViewItem.Icon>
+                            <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="{x:Bind Glyph}" />
+                        </NavigationViewItem.Icon>
+                    </NavigationViewItem>
+                </DataTemplate>
+            </NavigationView.MenuItemTemplate>
 
-                <NavigationViewItem
-                    x:Uid="SettingsPageApp"
-                    Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                       Glyph=&#xECAA;}"
-                    IsSelected="True"
-                    Tag="App" />
-
-                <NavigationViewItem
-                    x:Uid="SettingsPageLyricsWindowMgr"
-                    Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                       Glyph=&#xE61F;}"
-                    Tag="LyricsWindowMgr" />
-
-                <NavigationViewItem
-                    x:Uid="SettingsPageMediaLib"
-                    Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                       Glyph=&#xE8B7;}"
-                    Tag="MediaLib" />
-
-                <NavigationViewItem
-                    x:Uid="SettingsPagePlaybackLib"
-                    Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                       Glyph=&#xEA69;}"
-                    Tag="PlaybackLib" />
-
-                <NavigationViewItem
-                    x:Uid="SettingsPageStats"
-                    Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                       Glyph=&#xE9D2;}"
-                    Tag="Stats" />
-
-                <NavigationViewItem
-                    x:Uid="SettingsPagePlugins"
-                    Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                       Glyph=&#xE74C;}"
-                    Tag="Plugins" />
-
-                <NavigationViewItem
-                    x:Uid="SettingsPageAbout"
-                    Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                       Glyph=&#xE946;}"
-                    Tag="About" />
-
-            </NavigationView.MenuItems>
-
-            <controls:SwitchPresenter Value="{x:Bind ViewModel.NavViewSelectedItemTag, Mode=OneWay}">
+            <controls:SwitchPresenter Value="{x:Bind ViewModel.SelectedMenuItem.Section, Mode=OneWay}">
                 <controls:SwitchPresenter.ContentTransitions>
                     <TransitionCollection>
                         <PopupThemeTransition />
@@ -77,37 +42,37 @@
                 </controls:SwitchPresenter.ContentTransitions>
 
                 <!--  App appearance and behavior  -->
-                <controls:Case Value="App">
+                <controls:Case Value="{x:Bind enums:SettingsSection.App}">
                     <uc:AppSettingsControl />
                 </controls:Case>
 
                 <!--  Lyrics window manager  -->
-                <controls:Case Value="LyricsWindowMgr">
+                <controls:Case Value="{x:Bind enums:SettingsSection.LyricsWindowMgr}">
                     <uc:LyricsWindowSettingsControl />
                 </controls:Case>
 
                 <!--  Playback sources  -->
-                <controls:Case Value="PlaybackLib">
+                <controls:Case Value="{x:Bind enums:SettingsSection.PlaybackLib}">
                     <uc:PlaybackSettingsControl />
                 </controls:Case>
 
                 <!--  Media lib  -->
-                <controls:Case Value="MediaLib">
+                <controls:Case Value="{x:Bind enums:SettingsSection.MediaLib}">
                     <uc:MediaSettingsControl />
                 </controls:Case>
 
                 <!--  Stats  -->
-                <controls:Case Value="Stats">
+                <controls:Case Value="{x:Bind enums:SettingsSection.Stats}">
                     <uc:StatsDashboardControl />
                 </controls:Case>
 
                 <!--  Plugins  -->
-                <controls:Case Value="Plugins">
+                <controls:Case Value="{x:Bind enums:SettingsSection.Plugins}">
                     <uc:PluginManagerControl />
                 </controls:Case>
 
                 <!--  About  -->
-                <controls:Case Value="About">
+                <controls:Case Value="{x:Bind enums:SettingsSection.About}">
                     <uc:AboutControl />
                 </controls:Case>
 

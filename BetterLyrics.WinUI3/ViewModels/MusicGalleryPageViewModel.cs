@@ -359,7 +359,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             WindowHook.OpenOrShowWindow<SettingsWindow>();
             var settingsPageViewModel = Ioc.Default.GetRequiredService<SettingsPageViewModel>();
-            settingsPageViewModel.NavViewSelectedItemTag = "MediaLib";
+            settingsPageViewModel.NavigateToSection(SettingsSection.MediaLib);
         }
 
         [RelayCommand]

@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -384,6 +384,9 @@
   <data name="LyricsSearchControlConvertToKanji.Text" xml:space="preserve">
     <value>Tukar Romaji yang dipilih kepada Kanji</value>
   </data>
+  <data name="LyricsSearchControlCopySearchLink.Content" xml:space="preserve">
+    <value>Copy search link</value>
+  </data>
   <data name="LyricsSearchControlDurauion.Header" xml:space="preserve">
     <value>Tempoh</value>
   </data>
@@ -396,7 +399,7 @@
   <data name="LyricsSearchControlMappedAs.Text" xml:space="preserve">
     <value>Dipetakan sebagai</value>
   </data>
-  <data name="LyricsSearchControlMarkAsPureMusic.Content" xml:space="preserve">
+  <data name="LyricsSearchControlMarkAsPureMusic.Header" xml:space="preserve">
     <value>Tandakan sebagai Muzik Tulen</value>
   </data>
   <data name="LyricsSearchControlNotFound.Text" xml:space="preserve">
@@ -858,7 +861,7 @@
   <data name="SettingsPage3DLyricsDepth.Header" xml:space="preserve">
     <value>Kedalaman</value>
   </data>
-  <data name="SettingsPageAbout.Content" xml:space="preserve">
+  <data name="SettingsPageAbout" xml:space="preserve">
     <value>Tentang</value>
   </data>
   <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
@@ -909,7 +912,7 @@
   <data name="SettingsPageAOT.Header" xml:space="preserve">
     <value>Kekalkan Tetingkap Lirik di Atas</value>
   </data>
-  <data name="SettingsPageApp.Content" xml:space="preserve">
+  <data name="SettingsPageApp" xml:space="preserve">
     <value>Rupa dan Kelakuan Aplikasi</value>
   </data>
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
@@ -1428,7 +1431,7 @@
   <data name="SettingsPageLyricsWindow.Text" xml:space="preserve">
     <value>Tetingkap Lirik</value>
   </data>
-  <data name="SettingsPageLyricsWindowMgr.Content" xml:space="preserve">
+  <data name="SettingsPageLyricsWindowMgr" xml:space="preserve">
     <value>Pengurus Tetingkap Lirik</value>
   </data>
   <data name="SettingsPageLyricsWindowSwitchHotKey.Header" xml:space="preserve">
@@ -1452,7 +1455,7 @@
   <data name="SettingsPageMatchingThreshold.Header" xml:space="preserve">
     <value>Ambang Padanan Minimum</value>
   </data>
-  <data name="SettingsPageMediaLib.Content" xml:space="preserve">
+  <data name="SettingsPageMediaLib" xml:space="preserve">
     <value>Pustaka Media</value>
   </data>
   <data name="SettingsPageMedianCut.Content" xml:space="preserve">
@@ -1533,7 +1536,7 @@
   <data name="SettingsPagePinyin.Content" xml:space="preserve">
     <value>Pinyin (Mandarin)</value>
   </data>
-  <data name="SettingsPagePlaybackLib.Content" xml:space="preserve">
+  <data name="SettingsPagePlaybackLib" xml:space="preserve">
     <value>Sumber Main Semula dan Pemprosesan Lirik</value>
   </data>
   <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
@@ -1560,7 +1563,7 @@
   <data name="SettingsPagePlayOrPauseSongHotKey.Header" xml:space="preserve">
     <value>Pintasan Main dan Jeda</value>
   </data>
-  <data name="SettingsPagePlugins.Content" xml:space="preserve">
+  <data name="SettingsPagePlugins" xml:space="preserve">
     <value>Plug-in</value>
   </data>
   <data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
@@ -1728,7 +1731,7 @@
   <data name="SettingsPageStartup.Text" xml:space="preserve">
     <value>Permulaan</value>
   </data>
-  <data name="SettingsPageStats.Content" xml:space="preserve">
+  <data name="SettingsPageStats" xml:space="preserve">
     <value>Statistik</value>
   </data>
   <data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">

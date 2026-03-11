@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Extensions;
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Lyrics;
@@ -11,8 +12,11 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using Microsoft.UI.Xaml.Controls;
+using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -203,6 +207,28 @@ namespace BetterLyrics.WinUI3.ViewModels
         private void ResetMappedAlbum()
         {
             MappedSongSearchQuery?.MappedAlbum = MappedSongSearchQuery?.OriginalAlbum ?? string.Empty;
+        }
+
+        [RelayCommand]
+        private void CopySearchLink()
+        {
+            var uri = new Uri($"betterlyrics://lyrics/search/" +
+                $"title={MappedSongSearchQuery?.MappedTitle}&" +
+                $"artist={MappedSongSearchQuery?.MappedArtist}&" +
+                $"album={MappedSongSearchQuery?.MappedAlbum}");
+            try
+            {
+                DataPackage dataPackage = new();
+                dataPackage.SetUri(uri);
+                Clipboard.SetContent(dataPackage);
+
+                GlobalToastManager.Show("ActionCompleted", null, InfoBarSeverity.Success);
+            }
+            catch (Exception ex)
+            {
+                GlobalToastManager.Show("Error", ex.Message, InfoBarSeverity.Error);
+                return;
+            }
         }
 
         partial void OnSelectedLyricsSearchResultChanged(LyricsCacheItem? value)

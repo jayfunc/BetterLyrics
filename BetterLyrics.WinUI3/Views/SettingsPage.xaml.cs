@@ -3,6 +3,7 @@
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
+using System.Linq;
 
 namespace BetterLyrics.WinUI3.Views
 {
@@ -16,12 +17,5 @@ namespace BetterLyrics.WinUI3.Views
 
         public SettingsPageViewModel ViewModel => (SettingsPageViewModel)DataContext;
 
-        private void NavView_SelectionChanged(
-            NavigationView sender,
-            NavigationViewSelectionChangedEventArgs args
-        )
-        {
-            ViewModel.NavViewSelectedItemTag = (args.SelectedItem as NavigationViewItem)!.Tag;
-        }
     }
 }
