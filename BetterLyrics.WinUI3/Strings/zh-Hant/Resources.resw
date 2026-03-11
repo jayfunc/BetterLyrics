@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -385,7 +385,7 @@
     <value>將選定的羅馬字轉換為漢字</value>
   </data>
   <data name="LyricsSearchControlCopySearchLink.Content" xml:space="preserve">
-    <value>Copy search link</value>
+    <value>複製搜尋連結</value>
   </data>
   <data name="LyricsSearchControlDurauion.Header" xml:space="preserve">
     <value>時長</value>
@@ -400,7 +400,7 @@
     <value>對應為</value>
   </data>
   <data name="LyricsSearchControlMarkAsPureMusic.Header" xml:space="preserve">
-    <value>標記為純音樂</value>
+    <value>標記為工具</value>
   </data>
   <data name="LyricsSearchControlNotFound.Text" xml:space="preserve">
     <value>未找到</value>
@@ -913,7 +913,7 @@
     <value>將歌詞視窗置於頂層</value>
   </data>
   <data name="SettingsPageApp" xml:space="preserve">
-    <value>應用程式外觀和行為</value>
+    <value>應用程式外觀與行為</value>
   </data>
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>應用程式外觀</value>
@@ -1432,7 +1432,7 @@
     <value>歌詞視窗</value>
   </data>
   <data name="SettingsPageLyricsWindowMgr" xml:space="preserve">
-    <value>歌詞視窗管理器</value>
+    <value>歌詞視窗管理員</value>
   </data>
   <data name="SettingsPageLyricsWindowSwitchHotKey.Header" xml:space="preserve">
     <value>歌詞視窗狀態切換快速鍵</value>
@@ -1456,7 +1456,7 @@
     <value>最小符合閾值</value>
   </data>
   <data name="SettingsPageMediaLib" xml:space="preserve">
-    <value>媒體櫃</value>
+    <value>媒體圖書館</value>
   </data>
   <data name="SettingsPageMedianCut.Content" xml:space="preserve">
     <value>保守</value>

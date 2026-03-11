@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -385,7 +385,7 @@
     <value>चुने हुए रोमाजी को कांजी में बदलें</value>
   </data>
   <data name="LyricsSearchControlCopySearchLink.Content" xml:space="preserve">
-    <value>Copy search link</value>
+    <value>खोज लिंक कॉपी करें</value>
   </data>
   <data name="LyricsSearchControlDurauion.Header" xml:space="preserve">
     <value>अवधि</value>
@@ -400,7 +400,7 @@
     <value>के रूप में मैप किया गया</value>
   </data>
   <data name="LyricsSearchControlMarkAsPureMusic.Header" xml:space="preserve">
-    <value>शुद्ध संगीत के रूप में चिह्नित करें</value>
+    <value>वाद्य के रूप में चिह्नित करें</value>
   </data>
   <data name="LyricsSearchControlNotFound.Text" xml:space="preserve">
     <value>नहीं मिला</value>
@@ -862,7 +862,7 @@
     <value>गहराई</value>
   </data>
   <data name="SettingsPageAbout" xml:space="preserve">
-    <value>के बारे में</value>
+    <value>जानकारी</value>
   </data>
   <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
     <value>पर्यावरण के रंग के अनुकूल बनें</value>
@@ -913,7 +913,7 @@
     <value>बोल विंडो को सबसे ऊपर रखें</value>
   </data>
   <data name="SettingsPageApp" xml:space="preserve">
-    <value>एप्लिकेशन का रूप और व्यवहार</value>
+    <value>ऐप का स्वरूप और व्यवहार</value>
   </data>
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>ऐप का रूप</value>
@@ -1432,7 +1432,7 @@
     <value>बोल विंडो</value>
   </data>
   <data name="SettingsPageLyricsWindowMgr" xml:space="preserve">
-    <value>बोल विंडो प्रबंधक</value>
+    <value>गीत विंडो प्रबंधक</value>
   </data>
   <data name="SettingsPageLyricsWindowSwitchHotKey.Header" xml:space="preserve">
     <value>बोल विंडो स्थिति स्विच शॉर्टकट</value>
@@ -1924,7 +1924,7 @@
     <value>मीडिया कंट्रोल बार को हमेशा नीचे वाली सफ़ेद बार में छिपाएँ</value>
   </data>
   <data name="WindowSettingsControlColor.Text" xml:space="preserve">
-    <value>Color</value>
+    <value>रंग</value>
   </data>
   <data name="WindowSettingsControlDebug.Text" xml:space="preserve">
     <value>डिबग</value>
@@ -1936,24 +1936,24 @@
     <value>मीडिया नियंत्रण पैनल</value>
   </data>
   <data name="WindowSettingsControlRealTimePalette.Header" xml:space="preserve">
-    <value>Live Palette Preview</value>
+    <value>लाइव पैलेट पूर्वावलोकन</value>
   </data>
   <data name="WindowSettingsControlRealTimePaletteAccentColor1.Header" xml:space="preserve">
-    <value>Accent Color 1</value>
+    <value>एक्सेंट रंग 1</value>
   </data>
   <data name="WindowSettingsControlRealTimePaletteAccentColor2.Header" xml:space="preserve">
-    <value>Accent Color 2</value>
+    <value>एक्सेंट रंग 2</value>
   </data>
   <data name="WindowSettingsControlRealTimePaletteAccentColor3.Header" xml:space="preserve">
-    <value>Accent Color 3</value>
+    <value>एक्सेंट रंग 3</value>
   </data>
   <data name="WindowSettingsControlRealTimePaletteAccentColor4.Header" xml:space="preserve">
-    <value>Accent Color 4</value>
+    <value>एक्सेंट रंग 4</value>
   </data>
   <data name="WindowSettingsControlRemoveBorder.Header" xml:space="preserve">
     <value>लॉक होने पर बॉर्डर हटाएँ</value>
   </data>
   <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
-    <value>Window Theme</value>
+    <value>विंडो थीम</value>
   </data>
 </root>
