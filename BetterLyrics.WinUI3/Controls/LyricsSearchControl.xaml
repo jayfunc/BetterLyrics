@@ -153,16 +153,28 @@
                             <local:PropertyRow x:Uid="LyricsSearchControlDurauion" Value="{x:Bind ViewModel.GSMTCService.CurrentSongInfo.Duration, Converter={StaticResource SecondsToFormattedTimeConverter}, TargetNullValue=N/A, Mode=OneWay}" />
                         </Grid>
 
-                        <controls:SettingsCard>
-                            <CheckBox x:Uid="LyricsSearchControlMarkAsPureMusic" IsChecked="{x:Bind ViewModel.MappedSongSearchQuery.IsMarkedAsPureMusic, Mode=TwoWay}" />
-                        </controls:SettingsCard>
+                        <Grid ColumnSpacing="6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Button
+                                x:Uid="LyricsSearchControlCopySearchLink"
+                                Grid.Column="0"
+                                HorizontalAlignment="Stretch"
+                                Command="{x:Bind ViewModel.CopySearchLinkCommand}" />
+                            <Button
+                                x:Uid="LyricsSearchControlSearch"
+                                Grid.Column="1"
+                                HorizontalAlignment="Stretch"
+                                Command="{x:Bind ViewModel.SearchCommand}"
+                                IsEnabled="{x:Bind ViewModel.IsSearching, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+                                Style="{ThemeResource AccentButtonStyle}" />
+                        </Grid>
 
-                        <Button
-                            x:Uid="LyricsSearchControlSearch"
-                            HorizontalAlignment="Stretch"
-                            Command="{x:Bind ViewModel.SearchCommand}"
-                            IsEnabled="{x:Bind ViewModel.IsSearching, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
-                            Style="{ThemeResource AccentButtonStyle}" />
+                        <controls:SettingsCard x:Uid="LyricsSearchControlMarkAsPureMusic">
+                            <CheckBox MinWidth="20" IsChecked="{x:Bind ViewModel.MappedSongSearchQuery.IsMarkedAsPureMusic, Mode=TwoWay}" />
+                        </controls:SettingsCard>
 
                         <controls:SettingsCard x:Uid="LyricsSearchControlIgnoreCache">
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.IgnoreCacheWhenSearching, Mode=TwoWay}" />

@@ -1,5 +1,6 @@
 ﻿// https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/applifecycle/applifecycle-single-instance
 
+using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.DbContext;
@@ -38,6 +39,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
+using Windows.Foundation;
 using Windows.Storage;
 
 namespace BetterLyrics.WinUI3
@@ -66,6 +68,9 @@ namespace BetterLyrics.WinUI3
                     _logger = Ioc.Default.GetRequiredService<ILogger<Program>>();
 
                     _ = new App();
+
+                    var args = AppInstance.GetCurrent().GetActivatedEventArgs();
+                    HandleActivation(args, true);
                 });
             }
 
@@ -94,22 +99,27 @@ namespace BetterLyrics.WinUI3
 
         private static void OnActivated(object? sender, AppActivationArguments args)
         {
-            ExtendedActivationKind kind = args.Kind;
-            App.SystemTrayWindow.DispatcherQueue.TryEnqueue(() =>
+            DispatcherQueueHelper.GetUIDispatcherQueue()?.TryEnqueue(() =>
             {
-                if (kind == ExtendedActivationKind.File)
-                {
-                    _ = HandleFileActivationAsync(args);
-                }
-                else if (kind == ExtendedActivationKind.Protocol)
-                {
-                    _ = HandleProtocolActivationAsync(args);
-                }
-                else
-                {
-                    WindowHook.OpenOrShowWindow<LyricsWindowSwitchWindow>();
-                }
+                HandleActivation(args);
             });
+        }
+
+        private static void HandleActivation(AppActivationArguments args, bool init = false)
+        {
+            var kind = args.Kind;
+            if (kind == ExtendedActivationKind.File)
+            {
+                _ = HandleFileActivationAsync(args);
+            }
+            else if (kind == ExtendedActivationKind.Protocol)
+            {
+                _ = HandleProtocolActivationAsync(args);
+            }
+            else if (!init)
+            {
+                WindowHook.OpenOrShowWindow<LyricsWindowSwitchWindow>();
+            }
         }
 
         private static async Task HandleFileActivationAsync(AppActivationArguments args)
@@ -138,6 +148,42 @@ namespace BetterLyrics.WinUI3
                     var lastFMService = Ioc.Default.GetRequiredService<ILastFMService>();
                     await lastFMService.ConfirmAuthAsync(protocolArgs.Uri.Query.Replace("?token=", string.Empty));
                     WindowHook.OpenOrShowWindow<SettingsWindow>();
+                }
+                else if (protocolArgs.Uri.Host == "settings")
+                {
+                    var targetSegment = protocolArgs.Uri.Segments.LastOrDefault()?.Trim('/');
+                    if (!string.IsNullOrEmpty(targetSegment) && Enum.TryParse<SettingsSection>(targetSegment, true, out var section))
+                    {
+                        _ = WindowHook.OpenOrShowWindow<SettingsWindow>();
+                        var settingsPageViewModel = Ioc.Default.GetRequiredService<SettingsPageViewModel>();
+                        settingsPageViewModel.NavigateToSection(section);
+                    }
+                }
+                else if (protocolArgs.Uri.Host == "lyrics")
+                {
+                    var targetSegment = protocolArgs.Uri.Segments.LastOrDefault()?.Trim('/');
+                    if (targetSegment == "card")
+                    {
+                        WindowHook.OpenOrShowWindow<LyricsShareWindow>();
+                    }
+                    else if (targetSegment == "search")
+                    {
+                        WindowHook.OpenOrShowWindow<LyricsSearchWindow>();
+
+                        var decoder = new WwwFormUrlDecoder(protocolArgs.Uri.Query);
+                        var title = decoder.FirstOrDefault(p => p.Name == "title")?.Value ?? "";
+                        var artist = decoder.FirstOrDefault(p => p.Name == "artist")?.Value ?? "";
+                        var album = decoder.FirstOrDefault(p => p.Name == "album")?.Value ?? "";
+
+                        var lyricsSearchControlViewModel = Ioc.Default.GetRequiredService<LyricsSearchControlViewModel>();
+                        lyricsSearchControlViewModel.MappedSongSearchQuery?.MappedTitle = title;
+                        lyricsSearchControlViewModel.MappedSongSearchQuery?.MappedArtist = artist;
+                        lyricsSearchControlViewModel.MappedSongSearchQuery?.MappedAlbum = album;
+                        if (!lyricsSearchControlViewModel.IsSearching)
+                        {
+                            lyricsSearchControlViewModel.SearchCommand.Execute(null);
+                        }
+                    }
                 }
             }
         }
