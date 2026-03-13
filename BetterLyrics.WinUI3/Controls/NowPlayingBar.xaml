@@ -34,6 +34,8 @@
 
                         <StackPanel
                             x:Name="SongInfoStackPanel"
+                            Margin="-16"
+                            Padding="16"
                             VerticalAlignment="Center"
                             CornerRadius="4"
                             Opacity="{x:Bind ShowSongInfo, Mode=OneWay, Converter={StaticResource BoolToOpacityConverter}}"
@@ -75,7 +77,10 @@
 
                         <StackPanel
                             x:Name="TimeStackPanel"
+                            Margin="-24"
+                            Padding="24"
                             VerticalAlignment="Center"
+                            CornerRadius="4"
                             Opacity="{x:Bind ShowTime, Mode=OneWay, Converter={StaticResource BoolToOpacityConverter}}"
                             Orientation="Horizontal"
                             Spacing="2"

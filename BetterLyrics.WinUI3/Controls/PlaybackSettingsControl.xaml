@@ -433,7 +433,7 @@
                                                 <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" />
                                                 <controls:SettingsExpander.Items>
                                                     <controls:SettingsCard x:Uid="LyricsSearchControlIgnoreCache">
-                                                        <CheckBox IsChecked="{Binding IgnoreCacheWhenSearching, Mode=TwoWay}" />
+                                                        <CheckBox MinWidth="20" IsChecked="{Binding IgnoreCacheWhenSearching, Mode=TwoWay}" />
                                                     </controls:SettingsCard>
                                                     <controls:SettingsCard x:Uid="SettingsPageOverwriteMatchingThreshold">
                                                         <ToggleSwitch IsOn="{Binding IsMatchingThresholdOverwritten, Mode=TwoWay}" />

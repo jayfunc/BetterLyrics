@@ -76,7 +76,7 @@
                                                     Click="SyncNowButton_Click"
                                                     IsEnabled="{x:Bind IsEnabled, Mode=OneWay}">
                                                     <SplitButton.Flyout>
-                                                        <Flyout>
+                                                        <Flyout ShouldConstrainToRootBounds="False">
                                                             <StackPanel MaxWidth="250" Spacing="10">
                                                                 <TextBlock x:Uid="MediaSettingsControlAdvOpt" />
 

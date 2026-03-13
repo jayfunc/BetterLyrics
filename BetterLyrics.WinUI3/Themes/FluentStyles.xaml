@@ -6,6 +6,7 @@
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Themes/FluentAccentButtonStyle.xaml" />
+        <ResourceDictionary Source="/Themes/FluentAccentSplitButtonStyle.xaml" />
         <ResourceDictionary Source="/Themes/FluentButtonStyle.xaml" />
         <ResourceDictionary Source="/Themes/FluentComboBoxItemStyle.xaml" />
         <ResourceDictionary Source="/Themes/FluentHyperlinkButtonStyle.xaml" />
@@ -39,6 +40,12 @@
         <Setter Property="Padding" Value="8" />
         <Setter Property="Background" Value="Transparent" />
     </Style>
+
+    <!--  SplitButton Styles  -->
+    <Style
+        x:Key="AccentSplitButtonStyle"
+        BasedOn="{StaticResource FluentAccentSplitButtonStyle}"
+        TargetType="SplitButton" />
 
     <!--  HyperlinkButton Styles  -->
     <Style BasedOn="{StaticResource FluentHyperlinkButtonStyle}" TargetType="HyperlinkButton" />
