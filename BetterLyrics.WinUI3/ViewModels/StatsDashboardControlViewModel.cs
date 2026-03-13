@@ -23,7 +23,6 @@ using LiveChartsCore.SkiaSharpView.Painting.ImageFilters;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
-using SkiaSharp;
 using SkiaSharp.Views.Windows;
 using System;
 using System.Collections.Generic;

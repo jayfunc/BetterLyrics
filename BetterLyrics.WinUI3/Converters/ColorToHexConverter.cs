@@ -1,8 +1,6 @@
 ﻿using CommunityToolkit.WinUI.Helpers;
 using Microsoft.UI.Xaml.Data;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Converters

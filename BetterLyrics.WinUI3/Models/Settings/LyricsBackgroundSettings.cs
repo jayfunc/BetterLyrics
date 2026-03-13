@@ -1,7 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI;
-using Microsoft.UI.Xaml;
 using System;
 using Windows.UI;
 

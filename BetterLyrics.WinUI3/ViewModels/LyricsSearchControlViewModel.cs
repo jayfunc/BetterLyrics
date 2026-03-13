@@ -15,7 +15,6 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.ObjectModel;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 

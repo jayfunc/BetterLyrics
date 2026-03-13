@@ -20,8 +20,6 @@ namespace BetterLyrics.WinUI3.Controls
             this.InitializeComponent();
             _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
         }
-
-        #region Dependency Properties
         public string SelectedFontId
         {
             get => (string)GetValue(SelectedFontIdProperty);
@@ -37,8 +35,6 @@ namespace BetterLyrics.WinUI3.Controls
             var control = (FontPicker)d;
             _ = control.UpdateDisplayAsync((string)e.NewValue);
         }
-
-        #endregion
 
         private async Task UpdateDisplayAsync(string fontIdString)
         {
