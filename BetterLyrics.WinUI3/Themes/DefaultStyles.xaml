@@ -2,6 +2,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="/Themes/DefaultAccentSplitButtonStyle.xaml" />
         <ResourceDictionary Source="/Themes/DefaultListViewItemStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
@@ -48,6 +49,12 @@
         <Setter Property="Padding" Value="8" />
         <Setter Property="Background" Value="Transparent" />
     </Style>
+
+    <!--  SplitButton Styles  -->
+    <Style
+        x:Key="AccentSplitButtonStyle"
+        BasedOn="{StaticResource DefaultAccentSplitButtonStyle}"
+        TargetType="SplitButton" />
 
     <!--  ListViewItem Styles  -->
     <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem" />

@@ -70,9 +70,11 @@
 		<None Remove="Controls\StatsDashboardControl.xaml" />
 		<None Remove="Controls\SystemTray.xaml" />
 		<None Remove="Controls\WindowSettingsControl.xaml" />
+		<None Remove="Themes\DefaultAccentSplitButtonStyle.xaml" />
 		<None Remove="Themes\DefaultListViewItemStyle.xaml" />
 		<None Remove="Themes\DefaultStyles.xaml" />
 		<None Remove="Themes\FluentAccentButtonStyle.xaml" />
+		<None Remove="Themes\FluentAccentSplitButtonStyle.xaml" />
 		<None Remove="Themes\FluentButtonStyle.xaml" />
 		<None Remove="Themes\FluentComboBoxItemStyle.xaml" />
 		<None Remove="Themes\FluentHyperlinkButtonStyle.xaml" />
@@ -483,6 +485,16 @@
 	  <Content Update="Assets\Banner.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Themes\FluentAccentSplitButtonStyle.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Themes\DefaultAccentSplitButtonStyle.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Controls\PaletteItemControl.xaml">
