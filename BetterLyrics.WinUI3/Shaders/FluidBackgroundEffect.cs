@@ -17,6 +17,7 @@ namespace BetterLyrics.WinUI3.Shaders
     /// <param name="randomValue3"></param>
     /// <param name="useHSVBlending"></param>
     /// <param name="enableLightWave"></param>
+    /// <param name="enableDithering"></param>
     [D2DInputCount(0)]
     [D2DRequiresScenePosition]
     [D2DShaderProfile(D2D1ShaderProfile.PixelShader50)]
@@ -25,7 +26,7 @@ namespace BetterLyrics.WinUI3.Shaders
         float2 resolution, float time,
         float3 color1, float3 color2, float3 color3, float3 color4,
         float randomValue1, float randomValue2, float randomValue3,
-        bool useHSVBlending, bool enableLightWave) : ID2D1PixelShader
+        bool useHSVBlending, bool enableLightWave, bool enableDithering = true) : ID2D1PixelShader
     {
         private float2 Rotate(float2 p, float a)
         {
@@ -152,7 +153,7 @@ namespace BetterLyrics.WinUI3.Shaders
             float amplitude = 25.0f;
             float speed = time * 0.75f;
 
-            float3 diter = ScreenSpaceDither(scene, time);
+            float3 diter = enableDithering ? ScreenSpaceDither(scene, time) : new float3(0.0f, 0.0f, 0.0f);
 
             tuv.X += Hlsl.Sin((tuv.Y * frequency) + speed) / amplitude;
             tuv.Y += Hlsl.Sin(((tuv.X * frequency) * 1.5f) + speed) / (amplitude * 0.5f);
