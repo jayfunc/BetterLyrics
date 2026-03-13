@@ -1788,6 +1788,9 @@
   <data name="SettingsPageVersion.Text" xml:space="preserve">
     <value>Version</value>
   </data>
+  <data name="SettingsPageWallpaperMode.Text" xml:space="preserve">
+    <value>Wallpaper Mode</value>
+  </data>
   <data name="SettingsPageWesternChar.Header" xml:space="preserve">
     <value>Latin Characters</value>
   </data>
@@ -1919,6 +1922,9 @@
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>User Guide</value>
+  </data>
+  <data name="WallpaperMode" xml:space="preserve">
+    <value>Wallpaper Mode</value>
   </data>
   <data name="WindowSettingsControlAlwaysHideNowPlayingBar.Header" xml:space="preserve">
     <value>Always hide the media control bar to the bottom white bar</value>

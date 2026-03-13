@@ -20,6 +20,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsAlwaysOnTop { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsAlwaysOnTopPolling { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsShownInSwitchers { get; set; } = true;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsWallpaper { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLocked { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsBorderlessWhenLocked { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsAlwaysHideUnlockButton { get; set; } = false;
@@ -212,6 +213,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 IsAlwaysOnTop = this.IsAlwaysOnTop,
                 IsAlwaysOnTopPolling = this.IsAlwaysOnTopPolling,
                 IsShownInSwitchers = this.IsShownInSwitchers,
+                IsWallpaper = this.IsWallpaper,
                 IsLocked = this.IsLocked,
                 IsBorderlessWhenLocked = this.IsBorderlessWhenLocked,
                 IsAlwaysHideUnlockButton = this.IsAlwaysHideUnlockButton,

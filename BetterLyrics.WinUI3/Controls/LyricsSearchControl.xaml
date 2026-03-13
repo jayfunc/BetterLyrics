@@ -58,7 +58,7 @@
                                         Click="ConvertMappedTitleToKanjiButton_Click"
                                         Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                               FontSize=12,
-                                                              Glyph=&#xE7DE;}"
+                                                              Glyph=&#xE8AB;}"
                                         Style="{ThemeResource GhostButtonStyle}">
                                         <ToolTipService.ToolTip>
                                             <ToolTip>
@@ -106,7 +106,7 @@
                                         Click="ConvertMappedArtistToKanjiButton_Click"
                                         Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                               FontSize=12,
-                                                              Glyph=&#xE7DE;}"
+                                                              Glyph=&#xE8AB;}"
                                         Style="{ThemeResource GhostButtonStyle}">
                                         <ToolTipService.ToolTip>
                                             <ToolTip>
@@ -155,7 +155,7 @@
                                         Click="ConvertMappedAlbumToKanjiButton_Click"
                                         Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                               FontSize=12,
-                                                              Glyph=&#xE7DE;}"
+                                                              Glyph=&#xE8AB;}"
                                         Style="{ThemeResource GhostButtonStyle}">
                                         <ToolTipService.ToolTip>
                                             <ToolTip>

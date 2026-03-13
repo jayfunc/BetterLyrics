@@ -135,5 +135,31 @@ namespace BetterLyrics.WinUI3.Extensions
                 }
             };
         }
+
+        public static LyricsWindowStatus WallpaperMode(Window? window = null)
+        {
+            window ??= WindowHook.GetWindow<SystemTrayWindow>();
+            return new LyricsWindowStatus(window)
+            {
+                Name = _localizationService.GetLocalizedString("WallpaperMode"),
+                LyricsDisplayType = LyricsDisplayType.LyricsOnly,
+                WindowBounds = new Rect(100, 100, 600, 250),
+                IsWallpaper = true,
+                IsAlwaysOnTop = true,
+                IsAlwaysOnTopPolling = true,
+                IsAdaptToEnvironment = true,
+                IsShownInSwitchers = false,
+                EnvironmentSampleMode = WindowPixelSampleMode.WindowEdge,
+                LyricsStyleSettings = new()
+                {
+                    LyricsAlignmentType = TextAlignmentType.Center,
+                },
+                LyricsBackgroundSettings = new LyricsBackgroundSettings
+                {
+                    IsFluidOverlayEnabled = false,
+                }
+            };
+        }
+
     }
 }

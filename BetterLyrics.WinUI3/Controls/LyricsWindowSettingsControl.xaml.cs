@@ -181,6 +181,7 @@ namespace BetterLyrics.WinUI3.Controls
                     clonedData.IsPinToTaskbar = false;
                     clonedData.IsWorkArea = false;
                     clonedData.IsLocked = false;
+                    clonedData.IsWallpaper = false;
 
                     clonedData.Name = _localizationService.GetLocalizedString(to);
                     switch (to)
@@ -201,6 +202,9 @@ namespace BetterLyrics.WinUI3.Controls
                         case "TaskbarMode":
                             clonedData.IsPinToTaskbar = true;
                             clonedData.IsLocked = true;
+                            break;
+                        case "WallpaperMode":
+                            clonedData.IsWallpaper = true;
                             break;
                         default:
                             break;
