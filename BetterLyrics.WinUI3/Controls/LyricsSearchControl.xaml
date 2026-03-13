@@ -41,6 +41,7 @@
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock
                                         x:Uid="LyricsSearchControlMappedAs"
@@ -50,15 +51,23 @@
                                         x:Name="MappedTitleTextBox"
                                         Grid.Column="1"
                                         Text="{x:Bind ViewModel.MappedSongSearchQuery.MappedTitle, Mode=TwoWay}"
-                                        TextWrapping="Wrap">
-                                        <TextBox.ContextFlyout>
-                                            <MenuFlyout>
-                                                <MenuFlyoutItem x:Uid="LyricsSearchControlConvertToKanji" Click="ConvertMappedTitleToKanjiMenuFlyoutItem_Click" />
-                                            </MenuFlyout>
-                                        </TextBox.ContextFlyout>
-                                    </TextBox>
+                                        TextWrapping="Wrap" />
                                     <Button
                                         Grid.Column="2"
+                                        VerticalAlignment="Center"
+                                        Click="ConvertMappedTitleToKanjiButton_Click"
+                                        Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                              FontSize=12,
+                                                              Glyph=&#xE7DE;}"
+                                        Style="{ThemeResource GhostButtonStyle}">
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip>
+                                                <TextBlock x:Uid="LyricsSearchControlConvertToKanji" />
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
+                                    </Button>
+                                    <Button
+                                        Grid.Column="3"
                                         VerticalAlignment="Center"
                                         Command="{x:Bind ViewModel.ResetMappedTitleCommand}"
                                         Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
@@ -80,6 +89,7 @@
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <TextBlock
                                         x:Uid="LyricsSearchControlMappedAs"
@@ -89,15 +99,23 @@
                                         x:Name="MappedArtistTextBox"
                                         Grid.Column="1"
                                         Text="{x:Bind ViewModel.MappedSongSearchQuery.MappedArtist, Mode=TwoWay}"
-                                        TextWrapping="Wrap">
-                                        <TextBox.ContextFlyout>
-                                            <MenuFlyout>
-                                                <MenuFlyoutItem x:Uid="LyricsSearchControlConvertToKanji" Click="ConvertMappedArtistToKanjiMenuFlyoutItem_Click" />
-                                            </MenuFlyout>
-                                        </TextBox.ContextFlyout>
-                                    </TextBox>
+                                        TextWrapping="Wrap" />
                                     <Button
                                         Grid.Column="2"
+                                        VerticalAlignment="Center"
+                                        Click="ConvertMappedArtistToKanjiButton_Click"
+                                        Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                              FontSize=12,
+                                                              Glyph=&#xE7DE;}"
+                                        Style="{ThemeResource GhostButtonStyle}">
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip>
+                                                <TextBlock x:Uid="LyricsSearchControlConvertToKanji" />
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
+                                    </Button>
+                                    <Button
+                                        Grid.Column="3"
                                         VerticalAlignment="Center"
                                         Command="{x:Bind ViewModel.ResetMappedArtistCommand}"
                                         Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
@@ -119,6 +137,7 @@
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
 
                                     <TextBlock
@@ -129,15 +148,23 @@
                                         x:Name="MappedAlbumTextBox"
                                         Grid.Column="1"
                                         Text="{x:Bind ViewModel.MappedSongSearchQuery.MappedAlbum, Mode=TwoWay}"
-                                        TextWrapping="Wrap">
-                                        <TextBox.ContextFlyout>
-                                            <MenuFlyout>
-                                                <MenuFlyoutItem x:Uid="LyricsSearchControlConvertToKanji" Click="ConvertMappedAlbumToKanjiMenuFlyoutItem_Click" />
-                                            </MenuFlyout>
-                                        </TextBox.ContextFlyout>
-                                    </TextBox>
+                                        TextWrapping="Wrap" />
                                     <Button
                                         Grid.Column="2"
+                                        VerticalAlignment="Center"
+                                        Click="ConvertMappedAlbumToKanjiButton_Click"
+                                        Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                              FontSize=12,
+                                                              Glyph=&#xE7DE;}"
+                                        Style="{ThemeResource GhostButtonStyle}">
+                                        <ToolTipService.ToolTip>
+                                            <ToolTip>
+                                                <TextBlock x:Uid="LyricsSearchControlConvertToKanji" />
+                                            </ToolTip>
+                                        </ToolTipService.ToolTip>
+                                    </Button>
+                                    <Button
+                                        Grid.Column="3"
                                         VerticalAlignment="Center"
                                         Command="{x:Bind ViewModel.ResetMappedAlbumCommand}"
                                         Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},

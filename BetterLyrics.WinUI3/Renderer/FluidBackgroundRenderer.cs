@@ -21,6 +21,7 @@ namespace BetterLyrics.WinUI3.Renderer
         public double Opacity { get; set; } = 1.0;
         public bool EnableLightWave { get; set; } = true;
         public bool UseHSVBlending { get; set; } = false;
+        public bool EnableDithering { get; set; } = true;
 
         private float _rnd1 = 0, _rnd2 = 0, _rnd3 = 0;
 
@@ -62,7 +63,8 @@ namespace BetterLyrics.WinUI3.Renderer
                 _c1, _c2, _c3, _c4,
                 _rnd1, _rnd2, _rnd3,
                 UseHSVBlending,
-                EnableLightWave
+                EnableLightWave,
+                EnableDithering
             );
 
             var center = new Vector2((float)control.Size.Width / 2, (float)control.Size.Height / 2);

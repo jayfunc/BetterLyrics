@@ -38,17 +38,17 @@ namespace BetterLyrics.WinUI3.Controls
             ViewModel.PlayLyricsLine(lyricsLine);
         }
 
-        private void ConvertMappedAlbumToKanjiMenuFlyoutItem_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        private void ConvertMappedAlbumToKanjiButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             ConvertRomajiToKanji(MappedAlbumTextBox);
         }
 
-        private void ConvertMappedArtistToKanjiMenuFlyoutItem_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        private void ConvertMappedArtistToKanjiButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             ConvertRomajiToKanji(MappedArtistTextBox);
         }
 
-        private void ConvertMappedTitleToKanjiMenuFlyoutItem_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        private void ConvertMappedTitleToKanjiButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             ConvertRomajiToKanji(MappedTitleTextBox);
         }

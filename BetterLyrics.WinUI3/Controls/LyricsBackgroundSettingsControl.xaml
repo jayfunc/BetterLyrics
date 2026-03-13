@@ -124,6 +124,10 @@
                                     Value="{x:Bind LyricsBackgroundSettings.FluidOverlayBreathingIntensity, Mode=TwoWay}" />
                             </controls:SettingsCard>
 
+                            <controls:SettingsCard Header="Enable Color Dithering">
+                                <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsColorDitheringEnabled, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
 
