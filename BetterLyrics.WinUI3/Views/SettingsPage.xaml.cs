@@ -3,7 +3,6 @@
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml.Controls;
-using System.Linq;
 
 namespace BetterLyrics.WinUI3.Views
 {

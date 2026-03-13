@@ -6,7 +6,6 @@ using BetterLyrics.WinUI3.Services.LocalizationService;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Linq;
-using TagLib.Riff;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {

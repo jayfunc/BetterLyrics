@@ -33,7 +33,6 @@ public static class LangGenerator
 
     private static void SyncTargetLanguage(SortedDictionary<string, string> codeMap, string filePath)
     {
-        // 读取现有人工翻译 (如果文件不存在，返回空字典)
         var currentMap = ReadJson(filePath);
         var newMap = new SortedDictionary<string, string>();
 
@@ -44,13 +43,10 @@ public static class LangGenerator
 
             if (currentMap.TryGetValue(key, out var existingVal) && !string.IsNullOrWhiteSpace(existingVal))
             {
-                // ✅ 情况A：已存在且有值 -> 保留人工翻译
                 newMap[key] = existingVal;
             }
             else
             {
-                // 🆕 情况B：文件不存在 或 新增配置 -> 填入占位符
-                // 自动生成文件时，这里会全部变成 [TODO]
                 newMap[key] = $"[TODO] {defaultVal}";
             }
         }
@@ -65,11 +61,10 @@ public static class LangGenerator
 
         foreach (var prop in props)
         {
-            if (!prop.CanWrite) continue; // 忽略只读属性
+            if (!prop.CanWrite) continue;
 
             string baseKey = $"Settings.{prop.Name}";
 
-            // 获取 Attribute
             var attr = prop.GetCustomAttribute<DisplayAttribute>();
             string label = attr?.Name ?? SplitCamelCase(prop.Name);
             string desc = attr?.Description ?? "";
@@ -77,7 +72,6 @@ public static class LangGenerator
             dict[$"{baseKey}.Label"] = label;
             dict[$"{baseKey}.Desc"] = desc;
 
-            // 处理 Enum 选项
             if (prop.PropertyType.IsEnum)
             {
                 foreach (string name in Enum.GetNames(prop.PropertyType))
