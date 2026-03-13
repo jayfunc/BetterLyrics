@@ -114,9 +114,9 @@ namespace BetterLyrics.WinUI3.Views
             this.MoveAndResize(LyricsWindowStatus.WindowBounds);
             OnIsShownInSwitchersChanged();
             OnIsAlwaysOnTopChanged();
-            OnIsLockedChanged();
             OnAutoShowOrHideWindowChanged();
             OnTitleBarAreaChanged();
+            OnIsLockedChanged();
             OnIsPinToTaskbarChanged();
             OnIsAlwaysHideUnlockButtonChanged();
             OnIsWorkAreaChanged();
@@ -213,15 +213,38 @@ namespace BetterLyrics.WinUI3.Views
             if (LyricsWindowStatus.IsLocked)
             {
                 LockToggleButtonContainer.Visibility = Visibility.Visible;
-                RestartOverlayInputHelper();
+                if (LyricsWindowStatus.IsWallpaper)
+                {
+                    WorkerWHook.PinToDesktop(this);
+                }
+                else
+                {
+                    RestartOverlayInputHelper();
+                }
             }
             else
             {
                 LockToggleButtonContainer.Visibility = Visibility.Collapsed;
                 UnlockButton.Opacity = 0;
-                StopOverlayInputHelper();
+                if (LyricsWindowStatus.IsWallpaper)
+                {
+                    WorkerWHook.UnpinFromDesktop(this);
+                }
+                else
+                {
+                    StopOverlayInputHelper();
+                }
             }
-            this.SetIsLocked(LyricsWindowStatus.IsLocked, LyricsWindowStatus.IsBorderlessWhenLocked);
+
+            if (LyricsWindowStatus.IsBorderlessWhenLocked)
+            {
+                this.SetIsBorderless(LyricsWindowStatus.IsLocked);
+            }
+
+            if (!LyricsWindowStatus.IsWallpaper)
+            {
+                this.SetIsClickThrough(LyricsWindowStatus.IsLocked);
+            }
         }
 
         private void OnIsPinToTaskbarChanged()
@@ -352,6 +375,8 @@ namespace BetterLyrics.WinUI3.Views
         {
             if (args.DidPositionChange || args.DidSizeChange)
             {
+                if (AppWindow == null) return;
+
                 var size = AppWindow.Size;
                 var rect = AppWindow.Position;
 

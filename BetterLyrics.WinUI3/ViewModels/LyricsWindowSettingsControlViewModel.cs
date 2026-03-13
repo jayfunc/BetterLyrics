@@ -75,6 +75,12 @@ namespace BetterLyrics.WinUI3.ViewModels
             AppSettings.WindowBoundsRecords.Add(LyricsWindowStatusExtensions.TaskbarMode());
         }
 
+        [RelayCommand]
+        private void CreateWallpaperLyricsWindowStatus()
+        {
+            AppSettings.WindowBoundsRecords.Add(LyricsWindowStatusExtensions.WallpaperMode());
+        }
+
         public void OpenConfigPanel()
         {
             IsConfigPanelOpened = true;

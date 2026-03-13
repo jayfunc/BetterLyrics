@@ -44,6 +44,7 @@
                                         <MenuFlyoutItem x:Uid="SettingsPageFullscreenMode" Command="{x:Bind ViewModel.CreateFullLyricsWindowStatusCommand}" />
                                         <MenuFlyoutItem x:Uid="SettingsPageNarrowMode" Command="{x:Bind ViewModel.CreateNarrowLyricsWindowStatusCommand}" />
                                         <MenuFlyoutItem x:Uid="SettingsPageTaskbarMode" Command="{x:Bind ViewModel.CreateTaskbarLyricsWindowStatusCommand}" />
+                                        <MenuFlyoutItem x:Uid="SettingsPageWallpaperMode" Command="{x:Bind ViewModel.CreateWallpaperLyricsWindowStatusCommand}" />
                                     </MenuFlyout>
                                 </Button.Flyout>
                             </Button>
@@ -130,6 +131,10 @@
                                                             x:Uid="SettingsPageTaskbarMode"
                                                             Click="CopyAndTransformMenuFlyoutItem_Click"
                                                             Tag="TaskbarMode" />
+                                                        <MenuFlyoutItem
+                                                            x:Uid="SettingsPageWallpaperMode"
+                                                            Click="CopyAndTransformMenuFlyoutItem_Click"
+                                                            Tag="WallpaperMode" />
                                                     </MenuFlyoutSubItem>
                                                     <MenuFlyoutItem x:Uid="LyricsWindowSettingsControlShare" Click="ShareMenuFlyoutItem_Click" />
                                                     <MenuFlyoutItem
