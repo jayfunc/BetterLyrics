@@ -133,16 +133,16 @@
 		<PackageReference Include="Interop.UIAutomationClient" Version="10.19041.0" />
 		<PackageReference Include="LiteFM" Version="1.0.2" />
 		<PackageReference Include="LiveChartsCore.SkiaSharpView.WinUI" Version="2.0.0-rc6.1" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.3" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="10.0.3" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.3" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.3" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.3">
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="10.0.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.5">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.3" />
-		<PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.3" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.5" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.5" />
 		<PackageReference Include="Microsoft.Graphics.Win2D" Version="1.3.2" />
 		<PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.14.15">
 		  <PrivateAssets>all</PrivateAssets>
@@ -150,23 +150,23 @@
 		</PackageReference>
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.7705" />
 		<PackageReference Include="Microsoft.WindowsAppSDK" Version="1.8.260209005" />
-		<PackageReference Include="NAudio.Wasapi" Version="2.2.1" />
+		<PackageReference Include="NAudio.Wasapi" Version="2.3.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
 		<PackageReference Include="NTextCat" Version="0.3.65" />
 		<PackageReference Include="QRCoder" Version="1.7.0" />
 		<PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0" />
 		<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
-		<PackageReference Include="SMBLibrary" Version="1.5.5.2" />
-		<PackageReference Include="SpoutDx.Net.Interop" Version="0.2.0" />
-		<PackageReference Include="System.Drawing.Common" Version="10.0.3" />
-		<PackageReference Include="System.IO.Hashing" Version="10.0.3" />
+		<PackageReference Include="SMBLibrary" Version="1.5.6" />
+		<PackageReference Include="SpoutDx.Net.Interop.MultiPlatform" Version="0.1.0" />
+		<PackageReference Include="System.Drawing.Common" Version="10.0.5" />
+		<PackageReference Include="System.IO.Hashing" Version="10.0.5" />
 		<PackageReference Include="TagLibSharp" Version="2.3.0" />
 		<PackageReference Include="Ude.NetStandard" Version="1.2.0" />
-		<PackageReference Include="Vanara.PInvoke.DwmApi" Version="5.0.0" />
-		<PackageReference Include="Vanara.PInvoke.Gdi32" Version="5.0.0" />
-		<PackageReference Include="Vanara.PInvoke.Shell32" Version="5.0.0" />
-		<PackageReference Include="Vanara.PInvoke.User32" Version="5.0.0" />
-		<PackageReference Include="Vanara.Windows.Shell" Version="5.0.0" />
+		<PackageReference Include="Vanara.PInvoke.DwmApi" Version="5.0.1" />
+		<PackageReference Include="Vanara.PInvoke.Gdi32" Version="5.0.1" />
+		<PackageReference Include="Vanara.PInvoke.Shell32" Version="5.0.1" />
+		<PackageReference Include="Vanara.PInvoke.User32" Version="5.0.1" />
+		<PackageReference Include="Vanara.Windows.Shell" Version="5.0.1" />
 		<PackageReference Include="VCollab.DiscordRichPresence" Version="1.7.0" />
 		<PackageReference Include="Vortice.Direct3D11" Version="3.8.3" />
 		<PackageReference Include="WanaKana-net" Version="1.0.0" />

@@ -6,7 +6,7 @@ using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Renderer
 {
-    public class CompositionRenderer : IDisposable
+    public partial class CompositionRenderer : IDisposable
     {
         private CanvasRenderTarget? _renderTarget;
 

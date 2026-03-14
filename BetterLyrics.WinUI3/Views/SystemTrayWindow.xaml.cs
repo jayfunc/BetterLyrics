@@ -85,6 +85,7 @@ public sealed partial class SystemTrayWindow : Window,
             records.Add(LyricsWindowStatusExtensions.NarrowMode(this));
             records.Add(LyricsWindowStatusExtensions.FullscreenMode(this));
             records.Add(LyricsWindowStatusExtensions.TaskbarMode(this));
+            records.Add(LyricsWindowStatusExtensions.WallpaperMode(this));
         }
     }
 

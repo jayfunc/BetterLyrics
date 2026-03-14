@@ -145,6 +145,7 @@ namespace BetterLyrics.WinUI3.Extensions
                 LyricsDisplayType = LyricsDisplayType.LyricsOnly,
                 WindowBounds = new Rect(100, 100, 600, 250),
                 IsWallpaper = true,
+                IsLocked = true,
                 IsAlwaysOnTop = true,
                 IsAlwaysOnTopPolling = true,
                 IsAdaptToEnvironment = true,
