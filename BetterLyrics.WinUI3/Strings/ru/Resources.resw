@@ -945,6 +945,9 @@
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>Степень размытия</value>
   </data>
+  <data name="WindowSettingsControlEdgeFeatheringBottom.Header" xml:space="preserve">
+    <value>Дно</value>
+  </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>Включая файлы журналов, кэш онлайновых текстов песен</value>
   </data>
@@ -1252,6 +1255,9 @@
     <value>Вертикальная</value>
   </data>
   <data name="SettingsPageLeft.Content" xml:space="preserve">
+    <value>Слева</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringLeft.Header" xml:space="preserve">
     <value>Слева</value>
   </data>
   <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
@@ -1935,6 +1941,9 @@
   <data name="WindowSettingsControlDebug.Text" xml:space="preserve">
     <value>Отладка</value>
   </data>
+  <data name="WindowSettingsControlEdgeFeathering.Header" xml:space="preserve">
+    <value>Порыв края</value>
+  </data>
   <data name="WindowSettingsControlLockAndUnlock.Text" xml:space="preserve">
     <value>Блокировка и разблокировка</value>
   </data>
@@ -1961,5 +1970,11 @@
   </data>
   <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
     <value>Оконная тема</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringTop.Header" xml:space="preserve">
+    <value>Топ</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringRight.Header" xml:space="preserve">
+    <value>Справа</value>
   </data>
 </root>

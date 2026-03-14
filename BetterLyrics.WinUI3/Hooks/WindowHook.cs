@@ -193,7 +193,6 @@ namespace BetterLyrics.WinUI3.Hooks
             {
                 var castedWindow = (Window)window;
                 castedWindow.Activate();
-                castedWindow.AppWindow.MoveInZOrderAtTop();
             }
 
             if (typeof(T) == typeof(NowPlayingWindow))

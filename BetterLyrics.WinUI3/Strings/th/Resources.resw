@@ -945,6 +945,9 @@
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>ปริมาณความเบลอ</value>
   </data>
+  <data name="WindowSettingsControlEdgeFeatheringBottom.Header" xml:space="preserve">
+    <value>ด้านล่าง</value>
+  </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>รวมถึงไฟล์บันทึก, แคชเนื้อเพลงออนไลน์</value>
   </data>
@@ -1252,6 +1255,9 @@
     <value>แนวตั้ง</value>
   </data>
   <data name="SettingsPageLeft.Content" xml:space="preserve">
+    <value>ซ้าย</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringLeft.Header" xml:space="preserve">
     <value>ซ้าย</value>
   </data>
   <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
@@ -1935,6 +1941,9 @@
   <data name="WindowSettingsControlDebug.Text" xml:space="preserve">
     <value>การแก้ไขข้อผิดพลาด</value>
   </data>
+  <data name="WindowSettingsControlEdgeFeathering.Header" xml:space="preserve">
+    <value>การไล่เฉดขอบ</value>
+  </data>
   <data name="WindowSettingsControlLockAndUnlock.Text" xml:space="preserve">
     <value>ล็อกและปลดล็อก</value>
   </data>
@@ -1961,5 +1970,11 @@
   </data>
   <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
     <value>ธีมหน้าต่าง</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringTop.Header" xml:space="preserve">
+    <value>ด้านบน</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringRight.Header" xml:space="preserve">
+    <value>ถูกต้อง</value>
   </data>
 </root>

@@ -945,6 +945,9 @@
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>Blur Amount</value>
   </data>
+  <data name="WindowSettingsControlEdgeFeatheringBottom.Header" xml:space="preserve">
+    <value>Bottom</value>
+  </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>Includes log files, online lyrics cache</value>
   </data>
@@ -1252,6 +1255,9 @@
     <value>Vertical</value>
   </data>
   <data name="SettingsPageLeft.Content" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringLeft.Header" xml:space="preserve">
     <value>Left</value>
   </data>
   <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
@@ -1935,6 +1941,9 @@
   <data name="WindowSettingsControlDebug.Text" xml:space="preserve">
     <value>Debug</value>
   </data>
+  <data name="WindowSettingsControlEdgeFeathering.Header" xml:space="preserve">
+    <value>Edge Feathering</value>
+  </data>
   <data name="WindowSettingsControlLockAndUnlock.Text" xml:space="preserve">
     <value>Lock and Unlock</value>
   </data>
@@ -1961,5 +1970,11 @@
   </data>
   <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
     <value>Window Theme</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringTop.Header" xml:space="preserve">
+    <value>Top</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringRight.Header" xml:space="preserve">
+    <value>Right</value>
   </data>
 </root>

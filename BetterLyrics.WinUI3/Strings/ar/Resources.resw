@@ -945,6 +945,9 @@
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>كمية الضبابية (Blur)</value>
   </data>
+  <data name="WindowSettingsControlEdgeFeatheringBottom.Header" xml:space="preserve">
+    <value>القاع</value>
+  </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>يتضمن ملفات السجلات، وذاكرة التخزين المؤقت للكلمات عبر الإنترنت</value>
   </data>
@@ -1252,6 +1255,9 @@
     <value>عمودي</value>
   </data>
   <data name="SettingsPageLeft.Content" xml:space="preserve">
+    <value>يسار</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringLeft.Header" xml:space="preserve">
     <value>يسار</value>
   </data>
   <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
@@ -1935,6 +1941,9 @@
   <data name="WindowSettingsControlDebug.Text" xml:space="preserve">
     <value>التصحيح</value>
   </data>
+  <data name="WindowSettingsControlEdgeFeathering.Header" xml:space="preserve">
+    <value>ميزة الحافة</value>
+  </data>
   <data name="WindowSettingsControlLockAndUnlock.Text" xml:space="preserve">
     <value>قفل وفتح القفل</value>
   </data>
@@ -1961,5 +1970,11 @@
   </data>
   <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
     <value>سمة النافذة</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringTop.Header" xml:space="preserve">
+    <value>أعلى</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringRight.Header" xml:space="preserve">
+    <value>صحيح</value>
   </data>
 </root>

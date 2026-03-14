@@ -121,34 +121,38 @@
                         </ComboBox>
                     </controls:SettingsCard>
                     <!--  边缘羽化  -->
-                    <controls:SettingsExpander Header="Edge Feathering" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE950;}">
+                    <controls:SettingsExpander x:Uid="WindowSettingsControlEdgeFeathering" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE950;}">
                         <controls:SettingsExpander.Items>
-                            <controls:SettingsCard Header="Left">
+                            <controls:SettingsCard x:Uid="WindowSettingsControlEdgeFeatheringLeft">
                                 <local:ExtendedSlider
                                     Default="0"
                                     Maximum="100"
                                     Minimum="0"
+                                    Unit="%"
                                     Value="{x:Bind LyricsWindowStatus.EdgeFeatheringLeft, Mode=TwoWay}" />
                             </controls:SettingsCard>
-                            <controls:SettingsCard Header="Top">
+                            <controls:SettingsCard x:Uid="WindowSettingsControlEdgeFeatheringTop">
                                 <local:ExtendedSlider
                                     Default="0"
                                     Maximum="100"
                                     Minimum="0"
+                                    Unit="%"
                                     Value="{x:Bind LyricsWindowStatus.EdgeFeatheringTop, Mode=TwoWay}" />
                             </controls:SettingsCard>
-                            <controls:SettingsCard Header="Right">
+                            <controls:SettingsCard x:Uid="WindowSettingsControlEdgeFeatheringRight">
                                 <local:ExtendedSlider
                                     Default="0"
                                     Maximum="100"
                                     Minimum="0"
+                                    Unit="%"
                                     Value="{x:Bind LyricsWindowStatus.EdgeFeatheringRight, Mode=TwoWay}" />
                             </controls:SettingsCard>
-                            <controls:SettingsCard Header="Bottom">
+                            <controls:SettingsCard x:Uid="WindowSettingsControlEdgeFeatheringBottom">
                                 <local:ExtendedSlider
                                     Default="0"
                                     Maximum="100"
                                     Minimum="0"
+                                    Unit="%"
                                     Value="{x:Bind LyricsWindowStatus.EdgeFeatheringBottom, Mode=TwoWay}" />
                             </controls:SettingsCard>
                         </controls:SettingsExpander.Items>

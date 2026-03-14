@@ -945,6 +945,9 @@
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>Bulanıklık Miktarı</value>
   </data>
+  <data name="WindowSettingsControlEdgeFeatheringBottom.Header" xml:space="preserve">
+    <value>Alt</value>
+  </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>Günlük dosyalarını, çevrimiçi şarkı sözü önbelleğini içerir</value>
   </data>
@@ -1252,6 +1255,9 @@
     <value>Dikey</value>
   </data>
   <data name="SettingsPageLeft.Content" xml:space="preserve">
+    <value>Sol</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringLeft.Header" xml:space="preserve">
     <value>Sol</value>
   </data>
   <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
@@ -1935,6 +1941,9 @@
   <data name="WindowSettingsControlDebug.Text" xml:space="preserve">
     <value>Hata Ayıklama</value>
   </data>
+  <data name="WindowSettingsControlEdgeFeathering.Header" xml:space="preserve">
+    <value>Kenar Tüylendirme</value>
+  </data>
   <data name="WindowSettingsControlLockAndUnlock.Text" xml:space="preserve">
     <value>Kilitleme ve Kilit Açma</value>
   </data>
@@ -1961,5 +1970,11 @@
   </data>
   <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
     <value>Pencere Teması</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringTop.Header" xml:space="preserve">
+    <value>Üst</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringRight.Header" xml:space="preserve">
+    <value>Doğru.</value>
   </data>
 </root>

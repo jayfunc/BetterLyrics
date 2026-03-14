@@ -22,8 +22,13 @@ namespace BetterLyrics.WinUI3.Renderer
         public CanvasImageBrush? Brush => _maskBrush;
 
         public void Update(ICanvasResourceCreator resourceCreator, float width, float height,
-            float fadeLeft, float fadeTop, float fadeRight, float fadeBottom)
+            float fadeLeftPercentage, float fadeTopPercentage, float fadeRightPercentage, float fadeBottomPercentage)
         {
+            float fadeLeft = (fadeLeftPercentage / 100f) * (width / 2f);
+            float fadeTop = (fadeTopPercentage / 100f) * (height / 2f);
+            float fadeRight = (fadeRightPercentage / 100f) * (width / 2f);
+            float fadeBottom = (fadeBottomPercentage / 100f) * (height / 2f);
+
             if (Math.Abs(_lastWidth - width) < 0.1f && Math.Abs(_lastHeight - height) < 0.1f &&
                 Math.Abs(_lastTop - fadeTop) < 0.1f && Math.Abs(_lastBottom - fadeBottom) < 0.1f &&
                 Math.Abs(_lastLeft - fadeLeft) < 0.1f && Math.Abs(_lastRight - fadeRight) < 0.1f &&

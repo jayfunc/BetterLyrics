@@ -945,6 +945,9 @@
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>धुंधलापन मात्रा</value>
   </data>
+  <data name="WindowSettingsControlEdgeFeatheringBottom.Header" xml:space="preserve">
+    <value>तल</value>
+  </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>लॉग फ़ाइलें, ऑनलाइन लिरिक्स कैश शामिल हैं</value>
   </data>
@@ -1253,6 +1256,9 @@
   </data>
   <data name="SettingsPageLeft.Content" xml:space="preserve">
     <value>बायां</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringLeft.Header" xml:space="preserve">
+    <value>बाएं</value>
   </data>
   <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
     <value>सर्वर पता</value>
@@ -1935,6 +1941,9 @@
   <data name="WindowSettingsControlDebug.Text" xml:space="preserve">
     <value>डिबग</value>
   </data>
+  <data name="WindowSettingsControlEdgeFeathering.Header" xml:space="preserve">
+    <value>किनारे पर पंख लगाना</value>
+  </data>
   <data name="WindowSettingsControlLockAndUnlock.Text" xml:space="preserve">
     <value>लॉक और अनलॉक</value>
   </data>
@@ -1961,5 +1970,11 @@
   </data>
   <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
     <value>विंडो थीम</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringTop.Header" xml:space="preserve">
+    <value>ऊपर</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringRight.Header" xml:space="preserve">
+    <value>दाएँ</value>
   </data>
 </root>
