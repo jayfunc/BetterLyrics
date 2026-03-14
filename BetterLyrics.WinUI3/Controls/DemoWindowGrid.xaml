@@ -93,7 +93,11 @@
                 TextWrapping="Wrap" />
         </Grid>
 
-        <Grid Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}" Opacity="0">
+        <Grid
+            Padding="6"
+            Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
+            Opacity="0"
+            RowSpacing="6">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
@@ -111,7 +115,6 @@
             </interactivity:Interaction.Behaviors>
             <Grid
                 Grid.Row="0"
-                Margin="6,6,6,0"
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Stretch"
                 ColumnSpacing="6">
@@ -145,14 +148,46 @@
                     </ToolTipService.ToolTip>
                 </Button>
             </Grid>
-            <ToggleButton
-                Grid.Row="1"
-                Margin="6"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Bottom"
-                IsChecked="{x:Bind LyricsWindowStatus.IsDefault, Mode=TwoWay}">
-                <TextBlock x:Uid="LyricsWindowSettingsControlSetDefault" />
-            </ToggleButton>
+            <Grid Grid.Row="1" ColumnSpacing="6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <ToggleButton
+                    Grid.Column="0"
+                    HorizontalAlignment="Stretch"
+                    Content="{ui:FontIcon FontSize=16,
+                                          FontFamily={StaticResource SegoeFluentIcons},
+                                          Glyph=&#xE80F;}"
+                    IsChecked="{x:Bind LyricsWindowStatus.IsDefault, Mode=TwoWay}">
+                    <ToolTipService.ToolTip>
+                        <TextBlock x:Uid="LyricsWindowSettingsControlSetDefault" />
+                    </ToolTipService.ToolTip>
+                </ToggleButton>
+                <ToggleButton
+                    Grid.Column="1"
+                    HorizontalAlignment="Stretch"
+                    Content="{ui:FontIcon FontSize=16,
+                                          FontFamily={StaticResource SegoeFluentIcons},
+                                          Glyph=&#xE72E;}"
+                    IsChecked="{x:Bind LyricsWindowStatus.IsLocked, Mode=TwoWay}" />
+                <ToggleButton
+                    Grid.Column="2"
+                    HorizontalAlignment="Stretch"
+                    IsChecked="{x:Bind LyricsWindowStatus.IsAlwaysOnTop, Mode=TwoWay}">
+                    <Grid>
+                        <FontIcon
+                            FontFamily="{StaticResource SegoeFluentIcons}"
+                            FontSize="16"
+                            Glyph="&#xE840;" />
+                        <FontIcon
+                            FontFamily="{StaticResource SegoeFluentIcons}"
+                            FontSize="16"
+                            Glyph="&#xE841;" />
+                    </Grid>
+                </ToggleButton>
+            </Grid>
         </Grid>
 
         <Border
