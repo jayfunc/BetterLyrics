@@ -1,0 +1,68 @@
+﻿using Microsoft.Graphics.Canvas;
+using SpoutDx.Net.Interop;
+using System;
+using Vanara.PInvoke;
+using Vortice.Direct3D11;
+using WinRT;
+
+namespace BetterLyrics.WinUI3.Hooks
+{
+    /// <summary>
+    /// Co-author:
+    /// 1) <see href="https://github.com/cnbluefire"/>
+    /// 2) <see href="https://github.com/Raspberry-Monster"/>
+    /// </summary>
+    public partial class SpoutTextureHook : IDisposable
+    {
+        private SpoutSender? _sender;
+        private bool _isDisposed;
+
+        private static readonly Guid DxgiInterfaceAccessGuid = new Guid("A9B3D012-3DF2-4EE3-B8D1-8695F457D3C1");
+
+        public string SenderName { get; private set; }
+
+        public void Initialize(CanvasDevice device, string senderName)
+        {
+            if (device == null) return;
+
+            var deviceObject = device.As<IWinRTObject>();
+            HRESULT result = deviceObject.NativeObject.TryAs(DxgiInterfaceAccessGuid, out var pointer);
+
+            if (result == HRESULT.S_OK)
+            {
+                using var access = new IDirect3DDxgiInterfaceAccess(pointer);
+                var d3dDevice = access.GetInterface<ID3D11Device>();
+
+                _sender = new SpoutSender(d3dDevice.NativePointer)
+                {
+                    Name = senderName
+                };
+                SenderName = senderName;
+            }
+        }
+
+        public void SendTexture(CanvasRenderTarget renderTarget)
+        {
+            if (_sender == null || renderTarget == null) return;
+
+            HRESULT success = renderTarget.As<IWinRTObject>().NativeObject.TryAs(DxgiInterfaceAccessGuid, out var pointer);
+
+            if (success == HRESULT.S_OK)
+            {
+                using var access = new IDirect3DDxgiInterfaceAccess(pointer);
+                using var texture = access.GetInterface<ID3D11Texture2D>();
+                _sender.SendTexture(texture.NativePointer);
+            }
+        }
+
+        public void Dispose()
+        {
+            if (_isDisposed) return;
+
+            _sender?.Dispose();
+            _sender = null;
+
+            _isDisposed = true;
+        }
+    }
+}

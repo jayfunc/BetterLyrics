@@ -3,6 +3,7 @@
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Helper.Lyrics;
+using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.Models.Settings;
@@ -13,19 +14,25 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using SpoutDx.Net.Interop;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
+using Vanara.PInvoke;
+using Vortice.Direct3D11;
 using Windows.Foundation;
 using Windows.Storage.Streams;
 using Windows.UI;
+using WinRT;
+using static CommunityToolkit.WinUI.Animations.Expressions.ExpressionValues;
 
 namespace BetterLyrics.WinUI3.Controls
 {
@@ -98,6 +105,9 @@ namespace BetterLyrics.WinUI3.Controls
             EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
             defaultTotalDuration: 0.3f
         );
+
+        private CompositionRenderer _compositionRenderer = new CompositionRenderer();
+        private SpoutTextureHook _spoutHook = new SpoutTextureHook();
 
         private TimeSpan _songPositionWithOffset;
         private TimeSpan _songPosition; // µ±Ç°¸èÇúÊ±¿Ì
@@ -358,68 +368,81 @@ namespace BetterLyrics.WinUI3.Controls
 
             if (_edgeFadeMaskRenderer.Brush != null)
             {
-                using (args.DrawingSession.CreateLayer(_edgeFadeMaskRenderer.Brush))
-                {
-                    PureColorBackgroundRenderer.Draw(
-                        args.DrawingSession,
-                        bounds,
-                        overlayColor,
-                        finalOpacity,
-                        lyricsBg.IsPureColorOverlayEnabled
-                    );
-
-                    _coverRenderer.Draw(sender, args.DrawingSession, lyricsBg.IsCoverOverlayBrethingEffectEnabled);
-
-                    _fluidRenderer.Draw(sender, args.DrawingSession, lyricsBg.IsFluidOverlayBrethingEffectEnabled);
-
-                    if (_spectrumAnalyzer.IsCapturing)
+                var finalTexture = _compositionRenderer.Render(
+                    sender,
+                    sender.Size,
+                    sender.Dpi,
+                    Colors.Transparent,
+                    (ds) =>
                     {
-                        _spectrumRenderer.Draw(
-                            resourceCreator: sender,
-                            ds: args.DrawingSession,
-                            spectrumData: _spectrumAnalyzer?.SmoothSpectrum,
-                            barCount: _spectrumAnalyzer?.BarCount ?? 1,
-                            isEnabled: lyricsBg.IsSpectrumOverlayEnabled,
-                            isGlowEffectEnabled: lyricsBg.IsSpectrumGlowEffectEnabled,
-                            isBreathingEffectEnabled: lyricsBg.IsSpectrumBrethingEffectEnabled,
-                            opacity: lyricsBg.SpectrumOpacity / 100.0f,
-                            placement: lyricsBg.SpectrumPlacement,
-                            style: lyricsBg.SpectrumStyle,
-                            canvasWidth: sender.Size.Width,
-                            canvasHeight: sender.Size.Height,
-                            fillColor: _lyricsWindowStatus.WindowPalette.SpectrumColor,
-                            albumRect: _albumArtRect,
-                            cornerRadiusPercentage: albumStyle.CoverImageRadius
-                        );
-                    }
+                        using (ds.CreateLayer(_edgeFadeMaskRenderer.Brush))
+                            {
+                                PureColorBackgroundRenderer.Draw(
+                                    ds,
+                                    bounds,
+                                    overlayColor,
+                                    finalOpacity,
+                                    lyricsBg.IsPureColorOverlayEnabled
+                                );
 
-                    _snowRenderer.Draw(sender, args.DrawingSession, lyricsBg.IsSnowFlakeOverlayBrethingEffectEnabled);
+                                _coverRenderer.Draw(sender, ds, lyricsBg.IsCoverOverlayBrethingEffectEnabled);
 
-                    _fogRenderer.Draw(sender, args.DrawingSession, lyricsBg.IsFogOverlayBrethingEffectEnabled);
+                                _fluidRenderer.Draw(sender, ds, lyricsBg.IsFluidOverlayBrethingEffectEnabled);
 
-                    _lyricsRenderer.Draw(
-                        control: sender,
-                        ds: args.DrawingSession,
-                        lines: _renderLyricsLines,
-                        mouseHoverLineIndex: _mouseHoverLineIndex,
-                        isMousePressing: _isMousePressing,
-                        startVisibleIndex: _visibleRange.Start,
-                        endVisibleIndex: _visibleRange.End,
-                        lyricsX: _renderLyricsStartX,
-                        lyricsY: _renderLyricsStartY,
-                        lyricsWidth: _renderLyricsWidth,
-                        lyricsHeight: _renderLyricsHeight,
-                        userScrollOffset: _mouseYScrollTransition.Value,
-                        lyricsOpacity: _renderLyricsOpacity,
-                        playingLineTopOffsetFactor: lyricsStyle.PlayingLineTopOffset / 100.0,
-                        windowStatus: _lyricsWindowStatus,
-                        currentProgressMs: _songPositionWithOffset.TotalMilliseconds);
-                }
+                                if (_spectrumAnalyzer.IsCapturing)
+                                {
+                                    _spectrumRenderer.Draw(
+                                        resourceCreator: sender,
+                                        ds: ds,
+                                        spectrumData: _spectrumAnalyzer?.SmoothSpectrum,
+                                        barCount: _spectrumAnalyzer?.BarCount ?? 1,
+                                        isEnabled: lyricsBg.IsSpectrumOverlayEnabled,
+                                        isGlowEffectEnabled: lyricsBg.IsSpectrumGlowEffectEnabled,
+                                        isBreathingEffectEnabled: lyricsBg.IsSpectrumBrethingEffectEnabled,
+                                        opacity: lyricsBg.SpectrumOpacity / 100.0f,
+                                        placement: lyricsBg.SpectrumPlacement,
+                                        style: lyricsBg.SpectrumStyle,
+                                        canvasWidth: sender.Size.Width,
+                                        canvasHeight: sender.Size.Height,
+                                        fillColor: _lyricsWindowStatus.WindowPalette.SpectrumColor,
+                                        albumRect: _albumArtRect,
+                                        cornerRadiusPercentage: albumStyle.CoverImageRadius
+                                    );
+                                }
+
+                                _snowRenderer.Draw(sender, ds, lyricsBg.IsSnowFlakeOverlayBrethingEffectEnabled);
+
+                                _fogRenderer.Draw(sender, ds, lyricsBg.IsFogOverlayBrethingEffectEnabled);
+
+                                _lyricsRenderer.Draw(
+                                    control: sender,
+                                    ds: ds,
+                                    lines: _renderLyricsLines,
+                                    mouseHoverLineIndex: _mouseHoverLineIndex,
+                                    isMousePressing: _isMousePressing,
+                                    startVisibleIndex: _visibleRange.Start,
+                                    endVisibleIndex: _visibleRange.End,
+                                    lyricsX: _renderLyricsStartX,
+                                    lyricsY: _renderLyricsStartY,
+                                    lyricsWidth: _renderLyricsWidth,
+                                    lyricsHeight: _renderLyricsHeight,
+                                    userScrollOffset: _mouseYScrollTransition.Value,
+                                    lyricsOpacity: _renderLyricsOpacity,
+                                    playingLineTopOffsetFactor: lyricsStyle.PlayingLineTopOffset / 100.0,
+                                    windowStatus: _lyricsWindowStatus,
+                                    currentProgressMs: _songPositionWithOffset.TotalMilliseconds);
+                            }
+                    });
+
+                args.DrawingSession.DrawImage(finalTexture);
+
+                _spoutHook?.SendTexture(finalTexture);
             }
 
             if (_lyricsWindowStatus.ShowDebugOverlay)
             {
                 string debugText =
+                    $"Spout Sender : {_spoutHook?.SenderName ?? "Disabled"}\n" +
                     $"FPS          : {(1.0 / args.Timing.ElapsedTime.TotalSeconds):00.0} (Avg: {args.Timing.UpdateCount / args.Timing.TotalTime.TotalSeconds:00.0})\n" +
                     $"----------------------------------------\n" +
                     $"Render Pos   : [{(int)_renderLyricsStartX}, {(int)_renderLyricsStartY}]\n" +
@@ -626,6 +649,8 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void Canvas_CreateResources(CanvasAnimatedControl sender, Microsoft.Graphics.Canvas.UI.CanvasCreateResourcesEventArgs args)
         {
+            _compositionRenderer?.Reset();
+
             var tasks = new Task[]
             {
                 ReloadCoverBackgroundResourcesAsync()
@@ -637,6 +662,7 @@ namespace BetterLyrics.WinUI3.Controls
             _fogRenderer.LoadResources();
 
             InitSpectrumAnalyzer();
+            InitSpoutHook(sender);
 
             _isLayoutChanged = true;
             TriggerRelayout();
@@ -667,9 +693,19 @@ namespace BetterLyrics.WinUI3.Controls
             DisposeSpectrumAnalyzer();
 
             _edgeFadeMaskRenderer.Dispose();
+
+            _compositionRenderer?.Dispose();
+            _spoutHook?.Dispose();
         }
 
         // ====
+
+        private void InitSpoutHook(CanvasAnimatedControl sender)
+        {
+            _spoutHook?.Dispose();
+            _spoutHook = new SpoutTextureHook();
+            _spoutHook.Initialize(sender.Device, $"BetterLyrics ({_lyricsWindowStatus?.GetHashCode()})");
+        }
 
         private void InitSpectrumAnalyzer()
         {
