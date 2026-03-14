@@ -8,6 +8,9 @@ using WinRT.Interop;
 
 namespace BetterLyrics.WinUI3.Hooks
 {
+    /// <summary>
+    /// Ref <see href="https://blog.cast1e.top/posts/windeskchange/wdc/"/>
+    /// </summary>
     public class WorkerWHook
     {
         /// <summary>
