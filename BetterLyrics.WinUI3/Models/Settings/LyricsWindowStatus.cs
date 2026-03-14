@@ -17,13 +17,17 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty] public partial bool IsDefault { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string MonitorDeviceName { get; set; } = string.Empty;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsWorkArea { get; set; } = false;
+
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsAlwaysOnTop { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsAlwaysOnTopPolling { get; set; } = false;
+
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsShownInSwitchers { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsWallpaper { get; set; } = false;
+
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLocked { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsBorderlessWhenLocked { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsAlwaysHideUnlockButton { get; set; } = false;
+
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool KeepNowPlayingBarInteractiveWhenLocked { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsTimelineLyricsPreviewEnabled { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsAlwaysHidePlayingBar { get; set; } = false;
@@ -57,6 +61,11 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int AutoShowOrHideWindowDelay { get; set; } = 250; // 250ms
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TitleBarArea TitleBarArea { get; set; } = TitleBarArea.Top;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsKeepScreenOpen { get; set; } = false;
+
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int EdgeFeatheringLeft { get; set; } = 0;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int EdgeFeatheringTop { get; set; } = 0;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int EdgeFeatheringRight { get; set; } = 0;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int EdgeFeatheringBottom { get; set; } = 0;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial FPS FPS { get; set; } = FPS.Hz60;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowDebugOverlay { get; set; } = false;
@@ -249,6 +258,11 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 AutoShowOrHideWindowDelay = this.AutoShowOrHideWindowDelay,
                 TitleBarArea = this.TitleBarArea,
                 IsKeepScreenOpen = this.IsKeepScreenOpen,
+
+                EdgeFeatheringLeft = this.EdgeFeatheringLeft,
+                EdgeFeatheringTop = this.EdgeFeatheringTop,
+                EdgeFeatheringRight = this.EdgeFeatheringRight,
+                EdgeFeatheringBottom = this.EdgeFeatheringBottom,
 
                 FPS = this.FPS,
                 ShowDebugOverlay = this.ShowDebugOverlay,

@@ -50,6 +50,11 @@ namespace BetterLyrics.WinUI3.Hooks
                     _activeAppBars.Remove(window);
                     UnregisterAppBar(hwnd);
                 }
+                if (nowPlayingWindow.LyricsWindowStatus.IsWallpaper)
+                {
+                    // 先取消固定至桌面以防后续关闭该窗口时报错
+                    WorkerWHook.UnpinFromDesktop(window);
+                }
                 nowPlayingWindow.LyricsWindowStatus.WindowStatus = WindowStatus.Closed;
             }
             _activeWindows.Remove(window);
@@ -188,7 +193,7 @@ namespace BetterLyrics.WinUI3.Hooks
             {
                 var castedWindow = (Window)window;
                 castedWindow.Activate();
-                //castedWindow.AppWindow.MoveInZOrderAtTop();
+                castedWindow.AppWindow.MoveInZOrderAtTop();
             }
 
             if (typeof(T) == typeof(NowPlayingWindow))

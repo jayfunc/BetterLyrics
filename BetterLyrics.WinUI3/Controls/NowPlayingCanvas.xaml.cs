@@ -51,6 +51,7 @@ namespace BetterLyrics.WinUI3.Controls
         private readonly SnowRenderer _snowRenderer = new();
         private readonly FogRenderer _fogRenderer = new();
         private readonly SpectrumRenderer _spectrumRenderer = new();
+        private readonly EdgeFadeMaskRenderer _edgeFadeMaskRenderer = new();
 
         private readonly LyricsSynchronizer _synchronizer = new();
         private readonly LyricsAnimator _animator = new();
@@ -329,8 +330,6 @@ namespace BetterLyrics.WinUI3.Controls
         {
             if (_lyricsWindowStatus == null) return;
 
-            var bounds = new Rect(0, 0, sender.Size.Width, sender.Size.Height);
-
             var albumArtLayout = _lyricsWindowStatus.AlbumArtLayoutSettings;
             var lyricsBg = _lyricsWindowStatus.LyricsBackgroundSettings;
             var lyricsStyle = _lyricsWindowStatus.LyricsStyleSettings;
@@ -341,6 +340,8 @@ namespace BetterLyrics.WinUI3.Controls
 
             Color overlayColor;
             double finalOpacity;
+
+            var bounds = new Rect(0, 0, sender.Size.Width, sender.Size.Height);
 
             if (_lyricsWindowStatus.IsAdaptToEnvironment)
             {
@@ -355,60 +356,66 @@ namespace BetterLyrics.WinUI3.Controls
                 finalOpacity = lyricsBg.PureColorOverlayOpacity / 100.0;
             }
 
-            PureColorBackgroundRenderer.Draw(
-                args.DrawingSession,
-                bounds,
-                overlayColor,
-                finalOpacity,
-                lyricsBg.IsPureColorOverlayEnabled
-            );
-
-            _coverRenderer.Draw(sender, args.DrawingSession, lyricsBg.IsCoverOverlayBrethingEffectEnabled);
-
-            _fluidRenderer.Draw(sender, args.DrawingSession, lyricsBg.IsFluidOverlayBrethingEffectEnabled);
-
-            if (_spectrumAnalyzer.IsCapturing)
+            if (_edgeFadeMaskRenderer.Brush != null)
             {
-                _spectrumRenderer.Draw(
-                    resourceCreator: sender,
-                    ds: args.DrawingSession,
-                    spectrumData: _spectrumAnalyzer?.SmoothSpectrum,
-                    barCount: _spectrumAnalyzer?.BarCount ?? 1,
-                    isEnabled: lyricsBg.IsSpectrumOverlayEnabled,
-                    isGlowEffectEnabled: lyricsBg.IsSpectrumGlowEffectEnabled,
-                    isBreathingEffectEnabled: lyricsBg.IsSpectrumBrethingEffectEnabled,
-                    opacity: lyricsBg.SpectrumOpacity / 100.0f,
-                    placement: lyricsBg.SpectrumPlacement,
-                    style: lyricsBg.SpectrumStyle,
-                    canvasWidth: sender.Size.Width,
-                    canvasHeight: sender.Size.Height,
-                    fillColor: _lyricsWindowStatus.WindowPalette.SpectrumColor,
-                    albumRect: _albumArtRect,
-                    cornerRadiusPercentage: albumStyle.CoverImageRadius
-                );
+                using (args.DrawingSession.CreateLayer(_edgeFadeMaskRenderer.Brush))
+                {
+                    PureColorBackgroundRenderer.Draw(
+                        args.DrawingSession,
+                        bounds,
+                        overlayColor,
+                        finalOpacity,
+                        lyricsBg.IsPureColorOverlayEnabled
+                    );
+
+                    _coverRenderer.Draw(sender, args.DrawingSession, lyricsBg.IsCoverOverlayBrethingEffectEnabled);
+
+                    _fluidRenderer.Draw(sender, args.DrawingSession, lyricsBg.IsFluidOverlayBrethingEffectEnabled);
+
+                    if (_spectrumAnalyzer.IsCapturing)
+                    {
+                        _spectrumRenderer.Draw(
+                            resourceCreator: sender,
+                            ds: args.DrawingSession,
+                            spectrumData: _spectrumAnalyzer?.SmoothSpectrum,
+                            barCount: _spectrumAnalyzer?.BarCount ?? 1,
+                            isEnabled: lyricsBg.IsSpectrumOverlayEnabled,
+                            isGlowEffectEnabled: lyricsBg.IsSpectrumGlowEffectEnabled,
+                            isBreathingEffectEnabled: lyricsBg.IsSpectrumBrethingEffectEnabled,
+                            opacity: lyricsBg.SpectrumOpacity / 100.0f,
+                            placement: lyricsBg.SpectrumPlacement,
+                            style: lyricsBg.SpectrumStyle,
+                            canvasWidth: sender.Size.Width,
+                            canvasHeight: sender.Size.Height,
+                            fillColor: _lyricsWindowStatus.WindowPalette.SpectrumColor,
+                            albumRect: _albumArtRect,
+                            cornerRadiusPercentage: albumStyle.CoverImageRadius
+                        );
+                    }
+
+                    _snowRenderer.Draw(sender, args.DrawingSession, lyricsBg.IsSnowFlakeOverlayBrethingEffectEnabled);
+
+                    _fogRenderer.Draw(sender, args.DrawingSession, lyricsBg.IsFogOverlayBrethingEffectEnabled);
+
+                    _lyricsRenderer.Draw(
+                        control: sender,
+                        ds: args.DrawingSession,
+                        lines: _renderLyricsLines,
+                        mouseHoverLineIndex: _mouseHoverLineIndex,
+                        isMousePressing: _isMousePressing,
+                        startVisibleIndex: _visibleRange.Start,
+                        endVisibleIndex: _visibleRange.End,
+                        lyricsX: _renderLyricsStartX,
+                        lyricsY: _renderLyricsStartY,
+                        lyricsWidth: _renderLyricsWidth,
+                        lyricsHeight: _renderLyricsHeight,
+                        userScrollOffset: _mouseYScrollTransition.Value,
+                        lyricsOpacity: _renderLyricsOpacity,
+                        playingLineTopOffsetFactor: lyricsStyle.PlayingLineTopOffset / 100.0,
+                        windowStatus: _lyricsWindowStatus,
+                        currentProgressMs: _songPositionWithOffset.TotalMilliseconds);
+                }
             }
-
-            _snowRenderer.Draw(sender, args.DrawingSession, lyricsBg.IsSnowFlakeOverlayBrethingEffectEnabled);
-
-            _fogRenderer.Draw(sender, args.DrawingSession, lyricsBg.IsFogOverlayBrethingEffectEnabled);
-
-            _lyricsRenderer.Draw(
-                control: sender,
-                ds: args.DrawingSession,
-                lines: _renderLyricsLines,
-                mouseHoverLineIndex: _mouseHoverLineIndex,
-                isMousePressing: _isMousePressing,
-                startVisibleIndex: _visibleRange.Start,
-                endVisibleIndex: _visibleRange.End,
-                lyricsX: _renderLyricsStartX,
-                lyricsY: _renderLyricsStartY,
-                lyricsWidth: _renderLyricsWidth,
-                lyricsHeight: _renderLyricsHeight,
-                userScrollOffset: _mouseYScrollTransition.Value,
-                lyricsOpacity: _renderLyricsOpacity,
-                playingLineTopOffsetFactor: lyricsStyle.PlayingLineTopOffset / 100.0,
-                windowStatus: _lyricsWindowStatus,
-                currentProgressMs: _songPositionWithOffset.TotalMilliseconds);
 
             if (_lyricsWindowStatus.ShowDebugOverlay)
             {
@@ -575,6 +582,16 @@ namespace BetterLyrics.WinUI3.Controls
                 _spectrumAnalyzer.UpdateSmoothSpectrum();
             }
 
+            _edgeFadeMaskRenderer.Update(
+                sender,
+                (float)sender.Size.Width,
+                (float)sender.Size.Height,
+                _lyricsWindowStatus.EdgeFeatheringLeft,
+                _lyricsWindowStatus.EdgeFeatheringTop,
+                _lyricsWindowStatus.EdgeFeatheringRight,
+                _lyricsWindowStatus.EdgeFeatheringBottom
+            );
+
             _fluidRenderer.IsEnabled = lyricsBg.IsFluidOverlayEnabled;
             _fluidRenderer.EnableLightWave = lyricsBg.IsFluidOverlayLightWaveEnabled;
             _fluidRenderer.EnableDithering = lyricsBg.IsColorDitheringEnabled;
@@ -648,6 +665,8 @@ namespace BetterLyrics.WinUI3.Controls
 
             DisposeRenderLyricsLines();
             DisposeSpectrumAnalyzer();
+
+            _edgeFadeMaskRenderer.Dispose();
         }
 
         // ====
