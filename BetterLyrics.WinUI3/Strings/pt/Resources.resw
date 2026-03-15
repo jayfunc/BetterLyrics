@@ -945,9 +945,6 @@
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>Quantidade de Desfoque</value>
   </data>
-  <data name="WindowSettingsControlEdgeFeatheringBottom.Header" xml:space="preserve">
-    <value>Fundo</value>
-  </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>Inclui ficheiros de registo, cache de letras online</value>
   </data>
@@ -1255,9 +1252,6 @@
     <value>Vertical</value>
   </data>
   <data name="SettingsPageLeft.Content" xml:space="preserve">
-    <value>Esquerda</value>
-  </data>
-  <data name="WindowSettingsControlEdgeFeatheringLeft.Header" xml:space="preserve">
     <value>Esquerda</value>
   </data>
   <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
@@ -1944,6 +1938,18 @@
   <data name="WindowSettingsControlEdgeFeathering.Header" xml:space="preserve">
     <value>Espessura do Edge</value>
   </data>
+  <data name="WindowSettingsControlEdgeFeatheringBottom.Header" xml:space="preserve">
+    <value>Fundo</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringLeft.Header" xml:space="preserve">
+    <value>Esquerda</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringRight.Header" xml:space="preserve">
+    <value>Certo</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringTop.Header" xml:space="preserve">
+    <value>Topo</value>
+  </data>
   <data name="WindowSettingsControlLockAndUnlock.Text" xml:space="preserve">
     <value>Bloquear e desbloquear</value>
   </data>
@@ -1968,13 +1974,10 @@
   <data name="WindowSettingsControlRemoveBorder.Header" xml:space="preserve">
     <value>Remover margens quando bloqueadas</value>
   </data>
+  <data name="WindowSettingsControlSpoutOutput.Header" xml:space="preserve">
+    <value>Saída do bico</value>
+  </data>
   <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
     <value>Tema da janela</value>
-  </data>
-  <data name="WindowSettingsControlEdgeFeatheringTop.Header" xml:space="preserve">
-    <value>Topo</value>
-  </data>
-  <data name="WindowSettingsControlEdgeFeatheringRight.Header" xml:space="preserve">
-    <value>Certo</value>
   </data>
 </root>

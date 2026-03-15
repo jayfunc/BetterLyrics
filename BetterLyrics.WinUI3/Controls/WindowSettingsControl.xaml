@@ -121,9 +121,14 @@
                         </ComboBox>
                     </controls:SettingsCard>
                     <!--  边缘羽化  -->
-                    <controls:SettingsExpander x:Uid="WindowSettingsControlEdgeFeathering" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE950;}">
+                    <controls:SettingsExpander
+                        x:Uid="WindowSettingsControlEdgeFeathering"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                 Glyph=&#xE65C;}"
+                        IsExpanded="{x:Bind LyricsWindowStatus.IsEdgeFeatheringEnabled, Mode=OneWay}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsEdgeFeatheringEnabled, Mode=TwoWay}" />
                         <controls:SettingsExpander.Items>
-                            <controls:SettingsCard x:Uid="WindowSettingsControlEdgeFeatheringLeft">
+                            <controls:SettingsCard x:Uid="WindowSettingsControlEdgeFeatheringLeft" IsEnabled="{x:Bind LyricsWindowStatus.IsEdgeFeatheringEnabled, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="0"
                                     Maximum="100"
@@ -131,7 +136,7 @@
                                     Unit="%"
                                     Value="{x:Bind LyricsWindowStatus.EdgeFeatheringLeft, Mode=TwoWay}" />
                             </controls:SettingsCard>
-                            <controls:SettingsCard x:Uid="WindowSettingsControlEdgeFeatheringTop">
+                            <controls:SettingsCard x:Uid="WindowSettingsControlEdgeFeatheringTop" IsEnabled="{x:Bind LyricsWindowStatus.IsEdgeFeatheringEnabled, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="0"
                                     Maximum="100"
@@ -139,7 +144,7 @@
                                     Unit="%"
                                     Value="{x:Bind LyricsWindowStatus.EdgeFeatheringTop, Mode=TwoWay}" />
                             </controls:SettingsCard>
-                            <controls:SettingsCard x:Uid="WindowSettingsControlEdgeFeatheringRight">
+                            <controls:SettingsCard x:Uid="WindowSettingsControlEdgeFeatheringRight" IsEnabled="{x:Bind LyricsWindowStatus.IsEdgeFeatheringEnabled, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="0"
                                     Maximum="100"
@@ -147,7 +152,7 @@
                                     Unit="%"
                                     Value="{x:Bind LyricsWindowStatus.EdgeFeatheringRight, Mode=TwoWay}" />
                             </controls:SettingsCard>
-                            <controls:SettingsCard x:Uid="WindowSettingsControlEdgeFeatheringBottom">
+                            <controls:SettingsCard x:Uid="WindowSettingsControlEdgeFeatheringBottom" IsEnabled="{x:Bind LyricsWindowStatus.IsEdgeFeatheringEnabled, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="0"
                                     Maximum="100"
@@ -157,6 +162,10 @@
                             </controls:SettingsCard>
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
+
+                    <controls:SettingsCard x:Uid="WindowSettingsControlSpoutOutput" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8AD;}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsSpoutOutputEnabled, Mode=TwoWay}" />
+                    </controls:SettingsCard>
 
                     <TextBlock x:Uid="WindowSettingsControlColor" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 

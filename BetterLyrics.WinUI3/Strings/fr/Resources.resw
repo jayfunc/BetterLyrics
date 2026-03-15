@@ -945,9 +945,6 @@
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>Quantité de flou</value>
   </data>
-  <data name="WindowSettingsControlEdgeFeatheringBottom.Header" xml:space="preserve">
-    <value>Le fond</value>
-  </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>Inclut les fichiers journaux, le cache des paroles en ligne</value>
   </data>
@@ -1255,9 +1252,6 @@
     <value>Vertical</value>
   </data>
   <data name="SettingsPageLeft.Content" xml:space="preserve">
-    <value>Gauche</value>
-  </data>
-  <data name="WindowSettingsControlEdgeFeatheringLeft.Header" xml:space="preserve">
     <value>Gauche</value>
   </data>
   <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
@@ -1944,6 +1938,18 @@
   <data name="WindowSettingsControlEdgeFeathering.Header" xml:space="preserve">
     <value>Plume des bords</value>
   </data>
+  <data name="WindowSettingsControlEdgeFeatheringBottom.Header" xml:space="preserve">
+    <value>Le fond</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringLeft.Header" xml:space="preserve">
+    <value>Gauche</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringRight.Header" xml:space="preserve">
+    <value>Droit</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringTop.Header" xml:space="preserve">
+    <value>Haut de page</value>
+  </data>
   <data name="WindowSettingsControlLockAndUnlock.Text" xml:space="preserve">
     <value>Verrouiller et déverrouiller</value>
   </data>
@@ -1968,13 +1974,10 @@
   <data name="WindowSettingsControlRemoveBorder.Header" xml:space="preserve">
     <value>Retirer les bordures lorsqu'elles sont verrouillées</value>
   </data>
+  <data name="WindowSettingsControlSpoutOutput.Header" xml:space="preserve">
+    <value>Sortie du bec</value>
+  </data>
   <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
     <value>Thème de la fenêtre</value>
-  </data>
-  <data name="WindowSettingsControlEdgeFeatheringTop.Header" xml:space="preserve">
-    <value>Haut de page</value>
-  </data>
-  <data name="WindowSettingsControlEdgeFeatheringRight.Header" xml:space="preserve">
-    <value>Droit</value>
   </data>
 </root>

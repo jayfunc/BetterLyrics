@@ -945,9 +945,6 @@
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>Cantidad de desenfoque</value>
   </data>
-  <data name="WindowSettingsControlEdgeFeatheringBottom.Header" xml:space="preserve">
-    <value>Fondo</value>
-  </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>Incluye archivos de registro, caché de letras en línea</value>
   </data>
@@ -1255,9 +1252,6 @@
     <value>Vertical</value>
   </data>
   <data name="SettingsPageLeft.Content" xml:space="preserve">
-    <value>Izquierda</value>
-  </data>
-  <data name="WindowSettingsControlEdgeFeatheringLeft.Header" xml:space="preserve">
     <value>Izquierda</value>
   </data>
   <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
@@ -1944,6 +1938,18 @@
   <data name="WindowSettingsControlEdgeFeathering.Header" xml:space="preserve">
     <value>Calentamiento del borde</value>
   </data>
+  <data name="WindowSettingsControlEdgeFeatheringBottom.Header" xml:space="preserve">
+    <value>Fondo</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringLeft.Header" xml:space="preserve">
+    <value>Izquierda</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringRight.Header" xml:space="preserve">
+    <value>Derecha</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringTop.Header" xml:space="preserve">
+    <value>Top</value>
+  </data>
   <data name="WindowSettingsControlLockAndUnlock.Text" xml:space="preserve">
     <value>Bloqueo y desbloqueo</value>
   </data>
@@ -1968,13 +1974,10 @@
   <data name="WindowSettingsControlRemoveBorder.Header" xml:space="preserve">
     <value>Eliminar bordes al bloquear</value>
   </data>
+  <data name="WindowSettingsControlSpoutOutput.Header" xml:space="preserve">
+    <value>Salida de caño</value>
+  </data>
   <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
     <value>Tema de la ventana</value>
-  </data>
-  <data name="WindowSettingsControlEdgeFeatheringTop.Header" xml:space="preserve">
-    <value>Top</value>
-  </data>
-  <data name="WindowSettingsControlEdgeFeatheringRight.Header" xml:space="preserve">
-    <value>Derecha</value>
   </data>
 </root>

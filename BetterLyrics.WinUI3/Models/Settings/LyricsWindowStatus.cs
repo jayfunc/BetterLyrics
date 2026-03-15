@@ -62,10 +62,13 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TitleBarArea TitleBarArea { get; set; } = TitleBarArea.Top;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsKeepScreenOpen { get; set; } = false;
 
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsEdgeFeatheringEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int EdgeFeatheringLeft { get; set; } = 0;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int EdgeFeatheringTop { get; set; } = 0;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int EdgeFeatheringRight { get; set; } = 0;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int EdgeFeatheringBottom { get; set; } = 0;
+
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsSpoutOutputEnabled { get; set; } = false;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial FPS FPS { get; set; } = FPS.Hz60;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowDebugOverlay { get; set; } = false;
@@ -259,10 +262,13 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 TitleBarArea = this.TitleBarArea,
                 IsKeepScreenOpen = this.IsKeepScreenOpen,
 
+                IsEdgeFeatheringEnabled = this.IsEdgeFeatheringEnabled,
                 EdgeFeatheringLeft = this.EdgeFeatheringLeft,
                 EdgeFeatheringTop = this.EdgeFeatheringTop,
                 EdgeFeatheringRight = this.EdgeFeatheringRight,
                 EdgeFeatheringBottom = this.EdgeFeatheringBottom,
+
+                IsSpoutOutputEnabled = this.IsSpoutOutputEnabled,
 
                 FPS = this.FPS,
                 ShowDebugOverlay = this.ShowDebugOverlay,
