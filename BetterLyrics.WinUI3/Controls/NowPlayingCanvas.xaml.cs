@@ -558,15 +558,18 @@ namespace BetterLyrics.WinUI3.Controls
                 _spectrumAnalyzer.UpdateSmoothSpectrum();
             }
 
-            _edgeFadeMaskRenderer.Update(
-                sender,
-                (float)sender.Size.Width,
-                (float)sender.Size.Height,
-                _lyricsWindowStatus.EdgeFeatheringLeft,
-                _lyricsWindowStatus.EdgeFeatheringTop,
-                _lyricsWindowStatus.EdgeFeatheringRight,
-                _lyricsWindowStatus.EdgeFeatheringBottom
-            );
+            if (_lyricsWindowStatus.IsEdgeFeatheringEnabled)
+            {
+                _edgeFadeMaskRenderer.Update(
+                    sender,
+                    (float)sender.Size.Width,
+                    (float)sender.Size.Height,
+                    _lyricsWindowStatus.EdgeFeatheringLeft,
+                    _lyricsWindowStatus.EdgeFeatheringTop,
+                    _lyricsWindowStatus.EdgeFeatheringRight,
+                    _lyricsWindowStatus.EdgeFeatheringBottom
+                );
+            }
 
             _fluidRenderer.IsEnabled = lyricsBg.IsFluidOverlayEnabled;
             _fluidRenderer.EnableLightWave = lyricsBg.IsFluidOverlayLightWaveEnabled;
@@ -602,7 +605,7 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void Canvas_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
         {
-            _compositionRenderer?.Reset();
+            _compositionRenderer?.Dispose();
 
             var tasks = new Task[]
             {

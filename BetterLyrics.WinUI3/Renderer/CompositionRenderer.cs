@@ -42,12 +42,6 @@ namespace BetterLyrics.WinUI3.Renderer
             return _renderTarget;
         }
 
-        public void Reset()
-        {
-            _renderTarget?.Dispose();
-            _renderTarget = null;
-        }
-
         public void Dispose()
         {
             _renderTarget?.Dispose();
