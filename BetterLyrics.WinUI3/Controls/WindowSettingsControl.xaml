@@ -124,7 +124,7 @@
                     <controls:SettingsExpander
                         x:Uid="WindowSettingsControlEdgeFeathering"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                                 Glyph=&#xE65C;}"
+                                                 Glyph=&#xE950;}"
                         IsExpanded="{x:Bind LyricsWindowStatus.IsEdgeFeatheringEnabled, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsEdgeFeatheringEnabled, Mode=TwoWay}" />
                         <controls:SettingsExpander.Items>
