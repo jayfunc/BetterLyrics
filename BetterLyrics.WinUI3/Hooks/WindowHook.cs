@@ -60,7 +60,6 @@ namespace BetterLyrics.WinUI3.Hooks
             _activeWindows.Remove(window);
         }
 
-
         public static void CloseWindow(this Window window)
         {
             window.PrepareWindowClosing();
