@@ -945,9 +945,6 @@
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>Độ mờ</value>
   </data>
-  <data name="WindowSettingsControlEdgeFeatheringBottom.Header" xml:space="preserve">
-    <value>Phần dưới</value>
-  </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>Gồm các tệp nhật ký và bộ nhớ đệm lời bài hát trực tuyến.</value>
   </data>
@@ -1256,9 +1253,6 @@
   </data>
   <data name="SettingsPageLeft.Content" xml:space="preserve">
     <value>Trái</value>
-  </data>
-  <data name="WindowSettingsControlEdgeFeatheringLeft.Header" xml:space="preserve">
-    <value>Bên trái</value>
   </data>
   <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
     <value>Địa chỉ máy chủ</value>
@@ -1944,6 +1938,18 @@
   <data name="WindowSettingsControlEdgeFeathering.Header" xml:space="preserve">
     <value>Hiệu ứng mờ viền</value>
   </data>
+  <data name="WindowSettingsControlEdgeFeatheringBottom.Header" xml:space="preserve">
+    <value>Phần dưới</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringLeft.Header" xml:space="preserve">
+    <value>Bên trái</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringRight.Header" xml:space="preserve">
+    <value>Phải</value>
+  </data>
+  <data name="WindowSettingsControlEdgeFeatheringTop.Header" xml:space="preserve">
+    <value>Hàng đầu</value>
+  </data>
   <data name="WindowSettingsControlLockAndUnlock.Text" xml:space="preserve">
     <value>Khóa và Mở khóa</value>
   </data>
@@ -1968,13 +1974,10 @@
   <data name="WindowSettingsControlRemoveBorder.Header" xml:space="preserve">
     <value>Loại bỏ viền khi bị khóa</value>
   </data>
+  <data name="WindowSettingsControlSpoutOutput.Header" xml:space="preserve">
+    <value>Đầu ra vòi</value>
+  </data>
   <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
     <value>Giao diện cửa sổ</value>
-  </data>
-  <data name="WindowSettingsControlEdgeFeatheringTop.Header" xml:space="preserve">
-    <value>Hàng đầu</value>
-  </data>
-  <data name="WindowSettingsControlEdgeFeatheringRight.Header" xml:space="preserve">
-    <value>Phải</value>
   </data>
 </root>
