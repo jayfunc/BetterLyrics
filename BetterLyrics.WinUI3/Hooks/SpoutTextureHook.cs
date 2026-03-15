@@ -17,9 +17,9 @@ namespace BetterLyrics.WinUI3.Hooks
         private SpoutSender? _sender;
         private bool _isDisposed;
 
-        private static readonly Guid DxgiInterfaceAccessGuid = new Guid("A9B3D012-3DF2-4EE3-B8D1-8695F457D3C1");
+        private static readonly Guid DxgiInterfaceAccessGuid = new("A9B3D012-3DF2-4EE3-B8D1-8695F457D3C1");
 
-        public string SenderName { get; private set; }
+        public string SenderName { get; private set; } = "BetterLyrics (Disabled)";
 
         public void Initialize(CanvasDevice device, string senderName)
         {
@@ -31,7 +31,7 @@ namespace BetterLyrics.WinUI3.Hooks
             if (result == HRESULT.S_OK)
             {
                 using var access = new IDirect3DDxgiInterfaceAccess(pointer);
-                var d3dDevice = access.GetInterface<ID3D11Device>();
+                using var d3dDevice = access.GetInterface<ID3D11Device>();
 
                 _sender = new SpoutSender(d3dDevice.NativePointer)
                 {
