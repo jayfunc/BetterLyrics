@@ -31,8 +31,7 @@ namespace BetterLyrics.WinUI3.Helper
                 if (display == null) continue;
 
                 var window = new ToastOverlayWindow();
-                window.ShowOverlay(display);
-                window.Hide();
+                window.Init(display);
                 _overlayWindows.Add(window);
 
                 window.Closed += (s, e) => _overlayWindows.Remove(window);
@@ -51,7 +50,6 @@ namespace BetterLyrics.WinUI3.Helper
             foreach (var window in _overlayWindows)
             {
                 User32.ShowWindow(WindowNative.GetWindowHandle(window), ShowWindowCommand.SW_SHOWNOACTIVATE);
-                WindowHook.SetIsAlwaysOnTop(window, true);
             }
 
             TimeSpan actualDuration;
@@ -63,7 +61,7 @@ namespace BetterLyrics.WinUI3.Helper
             {
                 if (severity == InfoBarSeverity.Error)
                 {
-                    actualDuration = TimeSpan.Zero;
+                    actualDuration = TimeSpan.FromSeconds(3);
                 }
                 else
                 {
@@ -75,7 +73,7 @@ namespace BetterLyrics.WinUI3.Helper
             {
                 window.DispatcherQueue.TryEnqueue(() =>
                 {
-                    window.Stack.Show(_localizationService.GetLocalizedString(localizedTitleKey), message, severity, actualDuration);
+                    window.Stack.Show(_localizationService.GetLocalizedString(localizedTitleKey), message, severity, actualDuration, false);
                 });
             }
         }
