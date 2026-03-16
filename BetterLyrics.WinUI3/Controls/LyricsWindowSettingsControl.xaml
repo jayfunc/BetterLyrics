@@ -81,6 +81,7 @@
                             <ListView.ItemContainerStyle>
                                 <Style BasedOn="{StaticResource ListViewCardStyle}" TargetType="ListViewItem">
                                     <Setter Property="Margin" Value="8" />
+                                    <Setter Property="VerticalAlignment" Value="Center" />
                                 </Style>
                             </ListView.ItemContainerStyle>
                             <ListView.ItemsPanel>

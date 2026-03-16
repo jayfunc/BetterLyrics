@@ -556,13 +556,15 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                     if (key == "ncmMusicId" && valueArr.GetArrayLength() > 0) ncmMusicId = valueArr[0].GetString();
                 }
 
+                var matchedById = ncmMusicId == songInfo.SongId && PlayerIdHelper.IsNeteaseFamily(songInfo.PlayerId);
+
                 int score = MetadataComparer.CalculateScore(songInfo, new LyricsCacheItem
                 {
                     Title = title,
                     Artist = artist,
                     Album = album,
                 });
-                if (score > lyricsSearchResult.MatchPercentage)
+                if (matchedById || score > lyricsSearchResult.MatchPercentage)
                 {
                     if (root.TryGetProperty("rawLyricFile", out var rawLyricFileProp))
                     {
@@ -572,6 +574,10 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
                         lyricsSearchResult.Artist = artist;
                         lyricsSearchResult.Album = album;
                         lyricsSearchResult.MatchPercentage = score;
+                    }
+                    if (matchedById)
+                    {
+                        break;
                     }
                 }
             }
