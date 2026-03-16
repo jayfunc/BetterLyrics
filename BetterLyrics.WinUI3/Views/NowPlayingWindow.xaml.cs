@@ -518,13 +518,13 @@ namespace BetterLyrics.WinUI3.Views
             _overlayInputHelper.Start();
         }
 
-        private void StopOverlayInputHelper()
+        public void StopOverlayInputHelper()
         {
             _overlayInputHelper?.Stop();
             _overlayInputHelper = null;
         }
 
-        private void RestartOverlayInputHelper()
+        public void RestartOverlayInputHelper()
         {
             StopOverlayInputHelper();
             StartOverlayInputHelper();
