@@ -172,7 +172,6 @@ namespace BetterLyrics.WinUI3.Hooks
 
                 castedWindow.Restore();
                 castedWindow.Activate();
-                castedWindow.AppWindow.MoveInZOrderAtTop();
 
                 if (typeof(T) == typeof(SystemTrayWindow))
                 {
@@ -289,13 +288,11 @@ namespace BetterLyrics.WinUI3.Hooks
         {
             if (_defaultExtendedWindowStyle is ExtendedWindowStyle style)
             {
-                if (enable)
+                var currentStyle = window.GetExtendedWindowStyle();
+                var targetStyle = enable ? style | ExtendedWindowStyle.Layered | ExtendedWindowStyle.Transparent : style;
+                if (targetStyle != currentStyle)
                 {
-                    window.SetExtendedWindowStyle(style | ExtendedWindowStyle.Layered | ExtendedWindowStyle.Transparent);
-                }
-                else
-                {
-                    window.SetExtendedWindowStyle(style);
+                    window.SetExtendedWindowStyle(targetStyle);
                 }
             }
         }
@@ -304,13 +301,11 @@ namespace BetterLyrics.WinUI3.Hooks
         {
             if (_defaultWindowStyle is WindowStyle style)
             {
-                if (enable)
+                var currentStyle = window.GetWindowStyle();
+                var targetStyle = enable ? WindowStyle.Popup | WindowStyle.Visible : style;
+                if (targetStyle != currentStyle)
                 {
-                    window.SetWindowStyle(WindowStyle.Popup | WindowStyle.Visible);
-                }
-                else
-                {
-                    window.SetWindowStyle(style);
+                    window.SetWindowStyle(targetStyle);
                 }
             }
         }

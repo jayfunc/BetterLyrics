@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using System;
 using Vanara.PInvoke;
 using WinRT.Interop;
 using WinUIEx;
@@ -37,15 +38,14 @@ namespace BetterLyrics.WinUI3.Views
             this.SyncTheme();
         }
 
-        public void ShowOverlay(Microsoft.UI.Windowing.DisplayArea displayArea)
+        public void Init(Microsoft.UI.Windowing.DisplayArea displayArea, int targetWidth = 592)
         {
-            var hWnd = WindowNative.GetWindowHandle(this);
-            var appWindow = this.AppWindow;
-
-            appWindow.MoveAndResize(displayArea.OuterBounds);
-
-            // 显示窗口不抢占焦点
-            User32.ShowWindow(hWnd, ShowWindowCommand.SW_SHOWNOACTIVATE);
+            var targetRect = displayArea.OuterBounds;
+            var xMargin = (int)((targetRect.Width - targetWidth) / 2.0);
+            xMargin = Math.Max(xMargin, 0);
+            targetRect.X += xMargin;
+            targetRect.Width -= xMargin * 2;
+            this.AppWindow.MoveAndResize(targetRect);
 
             WindowHook.SetIsAlwaysOnTop(this, true);
         }
