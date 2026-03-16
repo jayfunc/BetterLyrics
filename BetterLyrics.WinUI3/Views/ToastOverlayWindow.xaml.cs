@@ -38,7 +38,7 @@ namespace BetterLyrics.WinUI3.Views
             this.SyncTheme();
         }
 
-        public void Init(Microsoft.UI.Windowing.DisplayArea displayArea, int targetWidth = 592)
+        public void Init(DisplayArea displayArea, int targetWidth = 592)
         {
             var targetRect = displayArea.OuterBounds;
             var xMargin = (int)((targetRect.Width - targetWidth) / 2.0);
@@ -46,8 +46,13 @@ namespace BetterLyrics.WinUI3.Views
             targetRect.X += xMargin;
             targetRect.Width -= xMargin * 2;
             this.AppWindow.MoveAndResize(targetRect);
-
             WindowHook.SetIsAlwaysOnTop(this, true);
+            this.Hide();
+        }
+
+        public void StartOverlayInputHelper()
+        {
+            _overlayInputHelper?.Start();
         }
 
         private void NotificationStack_Loaded(object sender, RoutedEventArgs e)
@@ -59,6 +64,7 @@ namespace BetterLyrics.WinUI3.Views
                     if (NotificationStack.Notifications.Count == 0)
                     {
                         this.Hide();
+                        _overlayInputHelper?.Stop();
                     }
                 }
             };
@@ -71,7 +77,6 @@ namespace BetterLyrics.WinUI3.Views
             };
             _overlayInputHelper.Register(RootGrid);
             _overlayInputHelper.Register(NotificationStack);
-            _overlayInputHelper.Start();
         }
 
         private void NotificationStack_Unloaded(object sender, RoutedEventArgs e)

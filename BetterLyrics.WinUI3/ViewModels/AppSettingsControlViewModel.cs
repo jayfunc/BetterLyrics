@@ -15,45 +15,16 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 
-        [ObservableProperty] public partial bool IsAutoStartupEnabled { get; set; } = false;
-
         public AppSettingsControlViewModel(ISettingsService settingsService)
         {
             _settingsService = settingsService;
             AppSettings = _settingsService.AppSettings;
-            _ = DetectIsAutoStartupEnabledAsync();
         }
 
-        public async Task ToggleAutoStartupAsync(bool target)
+        [RelayCommand]
+        private static async Task OpenTaskMgrStartupAppsAsync()
         {
-            StartupTask startupTask = await StartupTask.GetAsync(Constants.App.AutoStartupTaskId);
-            if (target)
-            {
-                await startupTask.RequestEnableAsync();
-            }
-            else
-            {
-                startupTask.Disable();
-            }
-            await DetectIsAutoStartupEnabledAsync();
-        }
-
-        private async Task DetectIsAutoStartupEnabledAsync()
-        {
-            bool result = false;
-            var startupTask = await StartupTask.GetAsync(Constants.App.AutoStartupTaskId);
-            switch (startupTask.State)
-            {
-                case StartupTaskState.Disabled:
-                case StartupTaskState.DisabledByUser:
-                case StartupTaskState.DisabledByPolicy:
-                    result = false;
-                    break;
-                case StartupTaskState.Enabled:
-                    result = true;
-                    break;
-            }
-            IsAutoStartupEnabled = result;
+            await Windows.System.Launcher.LaunchUriAsync(new Uri("ms-settings:startupapps"));
         }
 
         [RelayCommand]

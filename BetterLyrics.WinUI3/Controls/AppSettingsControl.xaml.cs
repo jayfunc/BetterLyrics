@@ -17,9 +17,5 @@ namespace BetterLyrics.WinUI3.Controls
             DataContext = Ioc.Default.GetRequiredService<AppSettingsControlViewModel>();
         }
 
-        private void AutoStartupToggleSwitch_Tapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            _ = ViewModel.ToggleAutoStartupAsync(AutoStartupToggleSwitch.IsOn);
-        }
     }
 }

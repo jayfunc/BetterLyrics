@@ -16,7 +16,7 @@ namespace BetterLyrics.WinUI3.Helper
     {
         private static readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
 
-        private static List<ToastOverlayWindow> _overlayWindows = new List<ToastOverlayWindow>();
+        private static List<ToastOverlayWindow> _overlayWindows = [];
         private static bool _isInitialized = false;
 
         public static void Initialize()
@@ -33,8 +33,6 @@ namespace BetterLyrics.WinUI3.Helper
                 var window = new ToastOverlayWindow();
                 window.Init(display);
                 _overlayWindows.Add(window);
-
-                window.Closed += (s, e) => _overlayWindows.Remove(window);
             }
 
             _isInitialized = true;
@@ -74,6 +72,7 @@ namespace BetterLyrics.WinUI3.Helper
                 window.DispatcherQueue.TryEnqueue(() =>
                 {
                     window.Stack.Show(_localizationService.GetLocalizedString(localizedTitleKey), message, severity, actualDuration, false);
+                    window.StartOverlayInputHelper();
                 });
             }
         }

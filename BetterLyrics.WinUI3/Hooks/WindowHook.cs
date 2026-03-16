@@ -485,15 +485,20 @@ namespace BetterLyrics.WinUI3.Hooks
                         if (status.IsWorkArea)
                         {
                             window.SetIsWorkArea(true);
-                        }
-                        if (status.IsWorkArea)
-                        {
                             window.MoveAndResize(status.GetWindowBoundsWhenWorkArea());
+                        }
+                        if (status.IsLocked)
+                        {
+                            if (!status.IsWallpaper)
+                            {
+                                window.RestartOverlayInputHelper();
+                            }
                         }
                     }
                     else
                     {
                         window.HideWindow(false);
+                        window.StopOverlayInputHelper();
                     }
                 }
             }, TimeSpan.FromMilliseconds(window.LyricsWindowStatus.AutoShowOrHideWindowDelay));

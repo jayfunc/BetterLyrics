@@ -74,12 +74,12 @@
 
                     <TextBlock x:Uid="SettingsPageStartup" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <controls:SettingsCard x:Uid="SettingsPageAutoStart" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xF71C;}">
-                        <ToggleSwitch
-                            x:Name="AutoStartupToggleSwitch"
-                            IsOn="{x:Bind ViewModel.IsAutoStartupEnabled, Mode=OneWay}"
-                            Tapped="AutoStartupToggleSwitch_Tapped" />
-                    </controls:SettingsCard>
+                    <controls:SettingsCard
+                        x:Uid="SettingsPageAutoStart"
+                        Command="{x:Bind ViewModel.OpenTaskMgrStartupAppsCommand}"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                 Glyph=&#xF71C;}"
+                        IsClickEnabled="True" />
 
                     <controls:SettingsCard x:Uid="SettingsPageAutoOpenMusicGalleryWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8F1;}">
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.MusicGallerySettings.AutoOpen, Mode=TwoWay}" />
