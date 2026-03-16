@@ -57,4 +57,8 @@ public sealed partial class DemoWindowGrid : UserControl
         }
     }
 
+    private void UserControl_Loaded(object sender, RoutedEventArgs e)
+    {
+        LyricsWindowStatus.UpdateDemoWindowAndMonitorBounds();
+    }
 }

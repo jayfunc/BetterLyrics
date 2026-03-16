@@ -178,8 +178,10 @@ namespace BetterLyrics.WinUI3.Models.Settings
             );
         }
 
-        public void UpdateDemoWindowAndMonitorBounds(double factor = 0.1)
+        public void UpdateDemoWindowAndMonitorBounds(double targetWidth = 200)
         {
+            var factor = targetWidth / MonitorBounds.Width;
+
             DemoWindowBounds = new Rect(
                 (WindowBounds.X - MonitorBounds.Left) * factor,
                 (WindowBounds.Y - MonitorBounds.Top) * factor,
