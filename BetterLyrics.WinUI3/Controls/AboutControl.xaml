@@ -266,6 +266,7 @@
                             <TextBlock x:Uid="SettingsPagePatrons" />
                         </Expander.Header>
                         <controls:WrapPanel Orientation="Horizontal">
+                            <uc:PatronControl Date="Mar 16, 2026" PatronName="&lt;Anon/匿名&gt;" />
                             <uc:PatronControl Date="Mar 4, 2026" PatronName="你的秋乔呐" />
                             <uc:PatronControl Date="Mar 3, 2026" PatronName="Aureliano" />
                             <uc:PatronControl Date="Feb 27, 2026" PatronName="Andrews Consulting" />
