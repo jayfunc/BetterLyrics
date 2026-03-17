@@ -6,5 +6,6 @@
         AboveWindow,
         WindowArea,
         WindowEdge,
+        Wallpaper,
     }
 }

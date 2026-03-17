@@ -1128,6 +1128,9 @@
   <data name="SettingsPageEnvColorSampleInner.Content" xml:space="preserve">
     <value>विंडो के अंदर</value>
   </data>
+  <data name="SettingsPageEnvColorSampleWallpaper.Content" xml:space="preserve">
+    <value>Wallpaper</value>
+  </data>
   <data name="SettingsPageExitOnGalleryWindowClosed.Header" xml:space="preserve">
     <value>संगीत गैलरी विंडो बंद होने पर बाहर निकलें</value>
   </data>
