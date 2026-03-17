@@ -198,6 +198,7 @@
                                     <ComboBoxItem x:Uid="SettingsPageEnvColorSampleAbove" />
                                     <ComboBoxItem x:Uid="SettingsPageEnvColorSampleInner" />
                                     <ComboBoxItem x:Uid="SettingsPageEnvColorSampleEdge" />
+                                    <ComboBoxItem x:Uid="SettingsPageEnvColorSampleWallpaper" Visibility="Collapsed" />
                                 </ComboBox>
                             </controls:SettingsCard>
                         </controls:SettingsExpander.Items>
@@ -255,7 +256,7 @@
                         x:Uid="SettingsPageKeepNowPlayingBarInteractive"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xE76F;}"
-                        IsEnabled="{x:Bind LyricsWindowStatus.IsLocked, Mode=OneWay}">
+                        IsEnabled="{x:Bind LyricsWindowStatus.IsWallpaper, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.KeepNowPlayingBarInteractiveWhenLocked, Mode=TwoWay}" />
                     </controls:SettingsCard>
                     <!--  进度条歌词预览  -->

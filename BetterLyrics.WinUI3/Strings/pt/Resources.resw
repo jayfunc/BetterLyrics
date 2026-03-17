@@ -1128,6 +1128,9 @@
   <data name="SettingsPageEnvColorSampleInner.Content" xml:space="preserve">
     <value>Dentro da Janela</value>
   </data>
+  <data name="SettingsPageEnvColorSampleWallpaper.Content" xml:space="preserve">
+    <value>Wallpaper</value>
+  </data>
   <data name="SettingsPageExitOnGalleryWindowClosed.Header" xml:space="preserve">
     <value>Sair do programa ao fechar a janela da galeria de música</value>
   </data>

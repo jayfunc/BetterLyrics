@@ -150,7 +150,7 @@ namespace BetterLyrics.WinUI3.Extensions
                 IsAlwaysOnTopPolling = true,
                 IsAdaptToEnvironment = true,
                 IsShownInSwitchers = false,
-                EnvironmentSampleMode = WindowPixelSampleMode.WindowEdge,
+                EnvironmentSampleMode = WindowPixelSampleMode.Wallpaper,
                 LyricsStyleSettings = new()
                 {
                     LyricsAlignmentType = TextAlignmentType.Center,

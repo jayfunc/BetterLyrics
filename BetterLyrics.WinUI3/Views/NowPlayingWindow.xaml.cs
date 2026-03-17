@@ -624,7 +624,13 @@ namespace BetterLyrics.WinUI3.Views
                 }
                 else if (message.PropertyName == nameof(LyricsWindowStatus.KeepNowPlayingBarInteractiveWhenLocked))
                 {
-                    RestartOverlayInputHelper();
+                    if (LyricsWindowStatus.IsLocked)
+                    {
+                        if (!LyricsWindowStatus.IsWallpaper)
+                        {
+                            RestartOverlayInputHelper();
+                        }
+                    }
                 }
                 else if (message.PropertyName == nameof(LyricsWindowStatus.IsAlwaysHidePlayingBar))
                 {

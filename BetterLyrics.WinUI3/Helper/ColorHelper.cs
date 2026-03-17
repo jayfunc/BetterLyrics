@@ -136,9 +136,35 @@ namespace BetterLyrics.WinUI3.Helper
                             (byte)(b / edgeColors.Count)
                         );
                     }
+                case WindowPixelSampleMode.Wallpaper:
+
                 default:
                     return Colors.Transparent;
             }
+        }
+
+        private static string GetCurrentWallpaper()
+        {
+            try
+            {
+                var desktopWallpaper = (Shell32.IDesktopWallpaper)new Shell32.DesktopWallpaper();
+
+                // 获取第一个显示器的 ID (通常索引为 0)
+                // 如果你有多个显示器，可以遍历 GetMonitorDevicePathCount
+                if (desktopWallpaper.GetMonitorDevicePathAt(0, out string? monitorId) == HRESULT.S_OK)
+                {
+                    // 获取该显示器的壁纸路径
+                    if (desktopWallpaper.GetWallpaper(monitorId, out string wallpaperPath) == HRESULT.S_OK)
+                    {
+                        return wallpaperPath;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"获取壁纸失败: {ex.Message}");
+            }
+            return string.Empty;
         }
 
         private static Color GetAverageColorFromScreenRegion(int x, int y, int width, int height)

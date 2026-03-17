@@ -1128,6 +1128,9 @@
   <data name="SettingsPageEnvColorSampleInner.Content" xml:space="preserve">
     <value>Intérieur de la fenêtre</value>
   </data>
+  <data name="SettingsPageEnvColorSampleWallpaper.Content" xml:space="preserve">
+    <value>Wallpaper</value>
+  </data>
   <data name="SettingsPageExitOnGalleryWindowClosed.Header" xml:space="preserve">
     <value>Quitter l'app à la fermeture de la Galerie</value>
   </data>
