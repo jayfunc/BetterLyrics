@@ -96,7 +96,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                 if (isLayoutChanged || isPrimaryPlayingLineChanged || isMouseScrollingChanged || isSecondaryLinePlayingChanged || isArtThemeColorsChanged)
                 {
                     int lineCountDelta = i - primaryPlayingLineIndex;
-                    double distanceFromPlayingLine = Math.Abs(line.PrimaryPosition.Y - primaryPlayingLine.PrimaryPosition.Y);
+                    double distanceFromPlayingLine = Math.Abs(line.TopLeftPosition.Y - primaryPlayingLine.TopLeftPosition.Y);
 
                     double distanceFactor;
                     if (lineCountDelta < 0)

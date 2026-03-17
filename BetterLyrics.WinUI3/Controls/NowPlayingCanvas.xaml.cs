@@ -327,12 +327,13 @@ namespace BetterLyrics.WinUI3.Controls
                 }
                 else if (e.Property == IsMouseScrollingProperty)
                 {
-                    var value = (bool)e.NewValue;
-                    if (canvas._isMouseScrolling != value)
+                    var newValue = (bool)e.NewValue;
+                    var oldValue = (bool)e.OldValue;
+                    canvas._isMouseScrolling = newValue;
+                    if (newValue != oldValue)
                     {
                         canvas._isMouseScrollingChanged = true;
                     }
-                    canvas._isMouseScrolling = value;
                 }
             }
         }
