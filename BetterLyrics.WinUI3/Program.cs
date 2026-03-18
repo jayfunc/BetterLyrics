@@ -185,6 +185,10 @@ namespace BetterLyrics.WinUI3
                         }
                     }
                 }
+                else if (protocolArgs.Uri.Host == "player")
+                {
+                    WindowHook.OpenOrShowWindow<MusicGalleryWindow>();
+                }
             }
         }
 

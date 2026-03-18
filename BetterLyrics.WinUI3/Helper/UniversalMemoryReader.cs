@@ -6,51 +6,65 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
+using System.Timers;
 using Vanara.InteropServices;
 using Vanara.PInvoke;
 using static Vanara.PInvoke.Kernel32;
 
 namespace BetterLyrics.WinUI3.Helper
 {
-    public class UniversalMemoryReader
+    public class UniversalMemoryReader : IDisposable
     {
         private readonly MemoryReaderConfig _config;
-        private readonly DispatcherTimer _timer;
+        private readonly System.Timers.Timer _timer; // 切换为 System.Timers.Timer
+        private readonly object _lock = new();
 
         public event Action<double, double>? OnProgressChanged;
 
         public UniversalMemoryReader(MemoryReaderConfig config)
         {
             _config = config ?? throw new ArgumentNullException(nameof(config));
-            _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromMilliseconds(100);
-            _timer.Tick += Timer_Tick;
+
+            _timer = new();
+            _timer.Interval = 100;
+            _timer.Elapsed += Timer_Elapsed;
+            _timer.AutoReset = true;
         }
 
-        private void Timer_Tick(object? sender, object e)
+        private void Timer_Elapsed(object? sender, ElapsedEventArgs e)
         {
-            var process = Process.GetProcessesByName(_config.ProcessName).FirstOrDefault();
-            if (process == null) return;
+            if (!Monitor.TryEnter(_lock)) return;
 
-            var access = ACCESS_MASK.GENERIC_ALL;
-            using SafeHPROCESS hProcess = OpenProcess(access, false, (uint)process.Id);
-            if (hProcess.IsInvalid) return;
-
-            // 1. 读取当前进度
-            double currentTime = ReadValueFromConfig(hProcess, _config.CurrentTime);
-
-            // 2. 读取总时长
-            double totalDuration = ReadValueFromConfig(hProcess, _config.TotalDuration);
-
-            // 3. 触发事件 (过滤无效值)
-            if (currentTime >= 0 && totalDuration > 0)
+            try
             {
-                OnProgressChanged?.Invoke(currentTime, totalDuration);
+                var process = Process.GetProcessesByName(_config.ProcessName).FirstOrDefault();
+                if (process == null) return;
+
+                var access = ACCESS_MASK.GENERIC_ALL;
+                using SafeHPROCESS hProcess = OpenProcess(access, false, (uint)process.Id);
+                if (hProcess.IsInvalid) return;
+
+                // 1. 读取当前进度
+                double currentTime = ReadValueFromConfig(hProcess, _config.CurrentTime);
+
+                // 2. 读取总时长
+                double totalDuration = ReadValueFromConfig(hProcess, _config.TotalDuration);
+
+                // 3. 触发事件 (过滤无效值)
+                if (currentTime >= 0 && totalDuration > 0)
+                {
+                    OnProgressChanged?.Invoke(currentTime, totalDuration);
+                }
+                else if (currentTime >= 0)
+                {
+                    // 如果获取不到总时长，至少返回当前进度
+                    OnProgressChanged?.Invoke(currentTime, 0);
+                }
             }
-            else if (currentTime >= 0)
+            finally
             {
-                // 如果获取不到总时长，至少返回当前进度
-                OnProgressChanged?.Invoke(currentTime, 0);
+                Monitor.Exit(_lock);
             }
         }
 
@@ -204,5 +218,11 @@ namespace BetterLyrics.WinUI3.Helper
 
         public void Start() => _timer.Start();
         public void Stop() => _timer.Stop();
+
+        public void Dispose()
+        {
+            _timer.Stop();
+            _timer.Dispose();
+        }
     }
 }

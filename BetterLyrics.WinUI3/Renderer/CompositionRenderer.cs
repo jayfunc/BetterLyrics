@@ -29,7 +29,7 @@ namespace BetterLyrics.WinUI3.Renderer
                 _renderTarget.SizeInPixels.Height != heightInPixels)
             {
                 _renderTarget?.Dispose();
-                _renderTarget = new CanvasRenderTarget(sender, width, height, dpi);
+                _renderTarget = new CanvasRenderTarget(sender, width, height, dpi, Windows.Graphics.DirectX.DirectXPixelFormat.B8G8R8A8UIntNormalized, CanvasAlphaMode.Premultiplied);
             }
 
             using (var ds = _renderTarget.CreateDrawingSession())

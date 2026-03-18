@@ -659,6 +659,8 @@ namespace BetterLyrics.WinUI3.Controls
             Rect bounds, Color overlayColor, double finalOpacity,
             LyricsStyleSettings lyricsStyle, AlbumArtAreaStyleSettings albumStyle, LyricsBackgroundSettings lyricsBg)
         {
+            if (_lyricsWindowStatus == null) return;
+
             PureColorBackgroundRenderer.Draw(
                 ds,
                 bounds,
@@ -719,6 +721,8 @@ namespace BetterLyrics.WinUI3.Controls
             Rect bounds, Color overlayColor, double finalOpacity,
             LyricsStyleSettings lyricsStyle, AlbumArtAreaStyleSettings albumStyle, LyricsBackgroundSettings lyricsBg)
         {
+            if (_lyricsWindowStatus == null) return;
+
             if (_lyricsWindowStatus.IsEdgeFeatheringEnabled && _edgeFadeMaskRenderer.Brush != null)
             {
                 using (ds.CreateLayer(_edgeFadeMaskRenderer.Brush))
