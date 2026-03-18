@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -1129,7 +1129,7 @@
     <value>Bên trong cửa sổ</value>
   </data>
   <data name="SettingsPageEnvColorSampleWallpaper.Content" xml:space="preserve">
-    <value>Wallpaper</value>
+    <value>Hình nền</value>
   </data>
   <data name="SettingsPageExitOnGalleryWindowClosed.Header" xml:space="preserve">
     <value>Thoát chương trình khi đóng cửa sổ thư viện nhạc</value>
@@ -1959,6 +1959,21 @@
   <data name="WindowSettingsControlNowPlayingBar.Text" xml:space="preserve">
     <value>Bảng điều khiển phương tiện truyền thông</value>
   </data>
+  <data name="WindowSettingsControlPadding.Header" xml:space="preserve">
+    <value>Đệm cửa sổ</value>
+  </data>
+  <data name="WindowSettingsControlPaddingBottom.Header" xml:space="preserve">
+    <value>Lớp đệm phía dưới</value>
+  </data>
+  <data name="WindowSettingsControlPaddingLeft.Header" xml:space="preserve">
+    <value>Khoảng cách lề trái</value>
+  </data>
+  <data name="WindowSettingsControlPaddingRight.Header" xml:space="preserve">
+    <value>Lề phải</value>
+  </data>
+  <data name="WindowSettingsControlPaddingTop.Header" xml:space="preserve">
+    <value>Lớp đệm trên cùng</value>
+  </data>
   <data name="WindowSettingsControlRealTimePalette.Header" xml:space="preserve">
     <value>Xem trước bảng màu trực tiếp</value>
   </data>
@@ -1974,8 +1989,17 @@
   <data name="WindowSettingsControlRealTimePaletteAccentColor4.Header" xml:space="preserve">
     <value>Màu nhấn 4</value>
   </data>
+  <data name="WindowSettingsControlRealTimePaletteUnderlayColor.Header" xml:space="preserve">
+    <value>Màu nền</value>
+  </data>
   <data name="WindowSettingsControlRemoveBorder.Header" xml:space="preserve">
     <value>Loại bỏ viền khi bị khóa</value>
+  </data>
+  <data name="WindowSettingsControlSplitViewRatio.Header" xml:space="preserve">
+    <value>Phân bổ bố cục</value>
+  </data>
+  <data name="WindowSettingsControlSplitViewSwitch.Header" xml:space="preserve">
+    <value>Thay đổi bố cục</value>
   </data>
   <data name="WindowSettingsControlSpoutOutput.Header" xml:space="preserve">
     <value>Đầu ra vòi</value>

@@ -37,8 +37,12 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsMaximized { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsFullscreen { get; set; } = false;
+
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsLayoutOrientation LyricsLayoutOrientation { get; set; } = LyricsLayoutOrientation.Horizontal;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsDisplayType LyricsDisplayType { get; set; } = LyricsDisplayType.SplitView;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool SwitchLyricsDisplayTypeSplitView { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsDisplayTypeSplitViewRatio { get; set; } = 50; // 50%
+
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial Rect WindowBounds { get; set; } = new Rect(100, 100, 800, 500);
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial double DockHeight { get; set; } = 64;
         [ObservableProperty] public partial Rect DemoWindowBounds { get; set; }
@@ -67,6 +71,11 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int EdgeFeatheringTop { get; set; } = 0;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int EdgeFeatheringRight { get; set; } = 0;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int EdgeFeatheringBottom { get; set; } = 0;
+
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int PaddingLeft { get; set; } = 0;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int PaddingTop { get; set; } = 0;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int PaddingRight { get; set; } = 0;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int PaddingBottom { get; set; } = 0;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsSpoutOutputEnabled { get; set; } = false;
 
@@ -240,6 +249,9 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
                 LyricsLayoutOrientation = this.LyricsLayoutOrientation,
                 LyricsDisplayType = this.LyricsDisplayType,
+                SwitchLyricsDisplayTypeSplitView = this.SwitchLyricsDisplayTypeSplitView,
+                LyricsDisplayTypeSplitViewRatio = this.LyricsDisplayTypeSplitViewRatio,
+
                 WindowBounds = this.WindowBounds,
                 DockHeight = this.DockHeight,
                 DemoWindowBounds = this.DemoWindowBounds,
@@ -269,6 +281,11 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 EdgeFeatheringTop = this.EdgeFeatheringTop,
                 EdgeFeatheringRight = this.EdgeFeatheringRight,
                 EdgeFeatheringBottom = this.EdgeFeatheringBottom,
+
+                PaddingLeft = this.PaddingLeft,
+                PaddingTop = this.PaddingTop,
+                PaddingRight = this.PaddingRight,
+                PaddingBottom = this.PaddingBottom,
 
                 IsSpoutOutputEnabled = this.IsSpoutOutputEnabled,
 

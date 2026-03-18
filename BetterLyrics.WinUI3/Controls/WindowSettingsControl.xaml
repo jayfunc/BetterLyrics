@@ -120,6 +120,43 @@
                             <ComboBoxItem x:Uid="SettingsPageTitleBarAreaWhole" />
                         </ComboBox>
                     </controls:SettingsCard>
+                    <!--  内边距  -->
+                    <controls:SettingsExpander x:Uid="WindowSettingsControlPadding" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE9A6;}">
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="WindowSettingsControlPaddingLeft">
+                                <local:ExtendedSlider
+                                    Default="0"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Unit="%"
+                                    Value="{x:Bind LyricsWindowStatus.PaddingLeft, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="WindowSettingsControlPaddingTop">
+                                <local:ExtendedSlider
+                                    Default="0"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Unit="%"
+                                    Value="{x:Bind LyricsWindowStatus.PaddingTop, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="WindowSettingsControlPaddingRight">
+                                <local:ExtendedSlider
+                                    Default="0"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Unit="%"
+                                    Value="{x:Bind LyricsWindowStatus.PaddingRight, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="WindowSettingsControlPaddingBottom">
+                                <local:ExtendedSlider
+                                    Default="0"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Unit="%"
+                                    Value="{x:Bind LyricsWindowStatus.PaddingBottom, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
                     <!--  边缘羽化  -->
                     <controls:SettingsExpander
                         x:Uid="WindowSettingsControlEdgeFeathering"
@@ -167,6 +204,39 @@
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsSpoutOutputEnabled, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
+                    <TextBlock x:Uid="SettingsPageLayout" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                    <controls:SettingsExpander
+                        x:Uid="SettingsPageDisplayTypeSwitcher"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                 Glyph=&#xE746;}"
+                        IsExpanded="True">
+                        <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.LyricsDisplayType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                            <ComboBoxItem x:Uid="MainPageAlbumArtOnly" />
+                            <ComboBoxItem x:Uid="MainPageLyriscOnly" />
+                            <ComboBoxItem x:Uid="MainPageSplitView" />
+                        </ComboBox>
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="SettingsPageLayoutOrientation">
+                                <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.LyricsLayoutOrientation, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                    <ComboBoxItem x:Uid="SettingsPageLayoutOrientationHorizontal" />
+                                    <ComboBoxItem x:Uid="SettingsPageLayoutOrientationVertical" />
+                                </ComboBox>
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="WindowSettingsControlSplitViewRatio" IsEnabled="{x:Bind LyricsWindowStatus.LyricsDisplayType, Mode=OneWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=2}">
+                                <local:ExtendedSlider
+                                    Default="50"
+                                    Maximum="100"
+                                    Minimum="0"
+                                    Unit="%"
+                                    Value="{x:Bind LyricsWindowStatus.LyricsDisplayTypeSplitViewRatio, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="WindowSettingsControlSplitViewSwitch" IsEnabled="{x:Bind LyricsWindowStatus.LyricsDisplayType, Mode=OneWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=2}">
+                                <CheckBox MinWidth="0" IsChecked="{x:Bind LyricsWindowStatus.SwitchLyricsDisplayTypeSplitView, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
+
                     <TextBlock x:Uid="WindowSettingsControlColor" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <!--  窗口主题色  -->
@@ -198,7 +268,7 @@
                                     <ComboBoxItem x:Uid="SettingsPageEnvColorSampleAbove" />
                                     <ComboBoxItem x:Uid="SettingsPageEnvColorSampleInner" />
                                     <ComboBoxItem x:Uid="SettingsPageEnvColorSampleEdge" />
-                                    <ComboBoxItem x:Uid="SettingsPageEnvColorSampleWallpaper" Visibility="Collapsed" />
+                                    <ComboBoxItem x:Uid="SettingsPageEnvColorSampleWallpaper" />
                                 </ComboBox>
                             </controls:SettingsCard>
                         </controls:SettingsExpander.Items>
@@ -226,6 +296,9 @@
                             </controls:SettingsCard>
                             <controls:SettingsCard x:Uid="WindowSettingsControlRealTimePaletteAccentColor4">
                                 <local:PaletteItemControl Color="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor4, Mode=OneWay}" />
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="WindowSettingsControlRealTimePaletteUnderlayColor">
+                                <local:PaletteItemControl Color="{x:Bind LyricsWindowStatus.WindowPalette.UnderlayColor, Mode=OneWay}" />
                             </controls:SettingsCard>
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>

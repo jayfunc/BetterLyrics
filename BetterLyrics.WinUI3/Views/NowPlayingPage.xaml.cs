@@ -169,9 +169,13 @@ namespace BetterLyrics.WinUI3.Views
         {
             if (LyricsWindowStatus == null) return;
 
+            bool isSwapped = LyricsWindowStatus.SwitchLyricsDisplayTypeSplitView;
+
             switch (LyricsWindowStatus.LyricsDisplayType)
             {
                 case LyricsDisplayType.AlbumArtOnly:
+                    Grid.SetRow(TrackSummaryGrid, 0);
+                    Grid.SetColumn(TrackSummaryGrid, 1);
                     Grid.SetRowSpan(TrackSummaryGrid, 3);
                     Grid.SetColumnSpan(TrackSummaryGrid, 3);
                     break;
@@ -181,11 +185,15 @@ namespace BetterLyrics.WinUI3.Views
                     switch (LyricsWindowStatus.LyricsLayoutOrientation)
                     {
                         case LyricsLayoutOrientation.Horizontal:
+                            Grid.SetRow(TrackSummaryGrid, 0);
                             Grid.SetRowSpan(TrackSummaryGrid, 3);
+                            Grid.SetColumn(TrackSummaryGrid, isSwapped ? 3 : 1);
                             Grid.SetColumnSpan(TrackSummaryGrid, 1);
                             break;
                         case LyricsLayoutOrientation.Vertical:
+                            Grid.SetRow(TrackSummaryGrid, isSwapped ? 2 : 0);
                             Grid.SetRowSpan(TrackSummaryGrid, 1);
+                            Grid.SetColumn(TrackSummaryGrid, 1);
                             Grid.SetColumnSpan(TrackSummaryGrid, 3);
                             break;
                         default:
@@ -226,6 +234,8 @@ namespace BetterLyrics.WinUI3.Views
         {
             if (LyricsWindowStatus == null) return;
 
+            bool isSwapped = LyricsWindowStatus.SwitchLyricsDisplayTypeSplitView;
+
             switch (LyricsWindowStatus.LyricsDisplayType)
             {
                 case LyricsDisplayType.AlbumArtOnly:
@@ -242,7 +252,7 @@ namespace BetterLyrics.WinUI3.Views
                         case LyricsLayoutOrientation.Horizontal:
                             Grid.SetRow(LyricsPlaceholder, 0);
                             Grid.SetRowSpan(LyricsPlaceholder, 3);
-                            Grid.SetColumn(LyricsPlaceholder, 3);
+                            Grid.SetColumn(LyricsPlaceholder, isSwapped ? 1 : 3);
                             Grid.SetColumnSpan(LyricsPlaceholder, 1);
                             break;
                         case LyricsLayoutOrientation.Vertical:
@@ -309,6 +319,8 @@ namespace BetterLyrics.WinUI3.Views
         {
             if (LyricsWindowStatus == null) return;
 
+            bool isSwapped = LyricsWindowStatus.SwitchLyricsDisplayTypeSplitView;
+
             switch (LyricsWindowStatus.LyricsDisplayType)
             {
                 case LyricsDisplayType.AlbumArtOnly:
@@ -316,23 +328,31 @@ namespace BetterLyrics.WinUI3.Views
                 case LyricsDisplayType.LyricsOnly:
                     LyricsCanvas.LyricsStartX = LeftGapDef.ActualWidth;
                     LyricsCanvas.LyricsStartY = 0;
-                    LyricsCanvas.LyricsWidth = TrackSummaryColDef.ActualWidth + MiddleGapColDef.ActualWidth + LyricsColDef.ActualWidth;
-                    LyricsCanvas.LyricsHeight = TrackSummaryRowDef.ActualHeight + MiddleGapRowDef.ActualHeight + LyricsRowDef.ActualHeight;
+                    LyricsCanvas.LyricsWidth = Part1ColDef.ActualWidth + MiddleGapColDef.ActualWidth + Part2ColDef.ActualWidth;
+                    LyricsCanvas.LyricsHeight = Part1RowDef.ActualHeight + MiddleGapRowDef.ActualHeight + Part2RowDef.ActualHeight;
                     break;
                 case LyricsDisplayType.SplitView:
                     switch (LyricsWindowStatus.LyricsLayoutOrientation)
                     {
                         case LyricsLayoutOrientation.Horizontal:
-                            LyricsCanvas.LyricsStartX = LeftGapDef.ActualWidth + TrackSummaryColDef.ActualWidth + MiddleGapColDef.ActualWidth;
+                            if (!isSwapped)
+                            {
+                                LyricsCanvas.LyricsStartX = LeftGapDef.ActualWidth + Part1ColDef.ActualWidth + MiddleGapColDef.ActualWidth;
+                                LyricsCanvas.LyricsWidth = Part2ColDef.ActualWidth;
+                            }
+                            else
+                            {
+                                LyricsCanvas.LyricsStartX = LeftGapDef.ActualWidth;
+                                LyricsCanvas.LyricsWidth = Part1ColDef.ActualWidth;
+                            }
                             LyricsCanvas.LyricsStartY = 0;
-                            LyricsCanvas.LyricsWidth = LyricsColDef.ActualWidth;
-                            LyricsCanvas.LyricsHeight = TrackSummaryRowDef.ActualHeight + MiddleGapRowDef.ActualHeight + LyricsRowDef.ActualHeight;
+                            LyricsCanvas.LyricsHeight = Part1RowDef.ActualHeight + MiddleGapRowDef.ActualHeight + Part2RowDef.ActualHeight;
                             break;
                         case LyricsLayoutOrientation.Vertical:
                             LyricsCanvas.LyricsStartX = LeftGapDef.ActualWidth;
                             LyricsCanvas.LyricsStartY = 0;
-                            LyricsCanvas.LyricsWidth = TrackSummaryColDef.ActualWidth + MiddleGapColDef.ActualWidth + LyricsColDef.ActualWidth;
-                            LyricsCanvas.LyricsHeight = TrackSummaryRowDef.ActualHeight + MiddleGapRowDef.ActualHeight + LyricsRowDef.ActualHeight;
+                            LyricsCanvas.LyricsWidth = Part1ColDef.ActualWidth + MiddleGapColDef.ActualWidth + Part2ColDef.ActualWidth;
+                            LyricsCanvas.LyricsHeight = Part1RowDef.ActualHeight + MiddleGapRowDef.ActualHeight + Part2RowDef.ActualHeight;
                             break;
                         default:
                             break;
@@ -446,9 +466,36 @@ namespace BetterLyrics.WinUI3.Views
             TrackSummaryGridRow4.Height = new(yMargin);
             LeftGapDef.Width = RightGapDef.Width = new(xMargin);
 
-            TrackSummaryRowDef.Height = new(trackSummaryRowHeight);
+            Part1RowDef.Height = new(trackSummaryRowHeight);
 
             TrackSummaryGridCol1.Width = TrackSummaryGridRow2.Height = new(gapBetweenAlbumArtAndSongInfo);
+
+            // 布局权重应用
+            if (LyricsWindowStatus.LyricsDisplayType == LyricsDisplayType.SplitView)
+            {
+                bool isSwapped = LyricsWindowStatus.SwitchLyricsDisplayTypeSplitView;
+
+                double ratioAlbum = LyricsWindowStatus.LyricsDisplayTypeSplitViewRatio;
+                if (ratioAlbum <= 0) ratioAlbum = 50;
+                double ratioLyrics = 100.0 - ratioAlbum;
+                if (ratioLyrics <= 0) ratioLyrics = 50;
+
+                if (LyricsWindowStatus.LyricsLayoutOrientation == LyricsLayoutOrientation.Horizontal)
+                {
+                    Part1ColDef.Width = new GridLength(isSwapped ? ratioLyrics : ratioAlbum, GridUnitType.Star);
+                    Part2ColDef.Width = new GridLength(isSwapped ? ratioAlbum : ratioLyrics, GridUnitType.Star);
+                }
+                else
+                {
+                    Part1ColDef.Width = new GridLength(1, GridUnitType.Star);
+                    Part2ColDef.Width = new GridLength(1, GridUnitType.Star);
+                }
+            }
+            else
+            {
+                Part1ColDef.Width = new GridLength(1, GridUnitType.Star);
+                Part2ColDef.Width = new GridLength(1, GridUnitType.Star);
+            }
         }
 
         private void OnLayoutChanged()
@@ -685,7 +732,14 @@ namespace BetterLyrics.WinUI3.Views
 
         public void Receive(PropertyChangedMessage<int> message)
         {
-            if (message.Sender == LyricsWindowStatus?.AlbumArtLayoutSettings)
+            if (message.Sender == LyricsWindowStatus)
+            {
+                if (message.PropertyName == nameof(LyricsWindowStatus.LyricsDisplayTypeSplitViewRatio))
+                {
+                    OnLayoutChanged();
+                }
+            }
+            else if (message.Sender == LyricsWindowStatus?.AlbumArtLayoutSettings)
             {
                 if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.SongInfoFontSize))
                 {
@@ -700,7 +754,14 @@ namespace BetterLyrics.WinUI3.Views
 
         public void Receive(PropertyChangedMessage<bool> message)
         {
-            if (message.Sender == LyricsWindowStatus?.AlbumArtLayoutSettings)
+            if (message.Sender == LyricsWindowStatus)
+            {
+                if (message.PropertyName == nameof(LyricsWindowStatus.SwitchLyricsDisplayTypeSplitView))
+                {
+                    OnLayoutChanged();
+                }
+            }
+            else if (message.Sender == LyricsWindowStatus?.AlbumArtLayoutSettings)
             {
                 if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.IsAutoSongInfoFontSize))
                 {
@@ -765,6 +826,5 @@ namespace BetterLyrics.WinUI3.Views
                 }
             }
         }
-
     }
 }

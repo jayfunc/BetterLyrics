@@ -14,7 +14,7 @@ using static Vanara.PInvoke.Kernel32;
 
 namespace BetterLyrics.WinUI3.Helper
 {
-    public class UniversalMemoryReader : IDisposable
+    public partial class UniversalMemoryReader : IDisposable
     {
         private readonly MemoryReaderConfig _config;
         private readonly System.Timers.Timer _timer; // 切换为 System.Timers.Timer

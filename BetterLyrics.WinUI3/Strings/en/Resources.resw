@@ -1959,6 +1959,21 @@
   <data name="WindowSettingsControlNowPlayingBar.Text" xml:space="preserve">
     <value>Media Control Panel</value>
   </data>
+  <data name="WindowSettingsControlPadding.Header" xml:space="preserve">
+    <value>Window Padding</value>
+  </data>
+  <data name="WindowSettingsControlPaddingBottom.Header" xml:space="preserve">
+    <value>Bottom Padding</value>
+  </data>
+  <data name="WindowSettingsControlPaddingLeft.Header" xml:space="preserve">
+    <value>Left Padding</value>
+  </data>
+  <data name="WindowSettingsControlPaddingRight.Header" xml:space="preserve">
+    <value>Right Padding</value>
+  </data>
+  <data name="WindowSettingsControlPaddingTop.Header" xml:space="preserve">
+    <value>Top Padding</value>
+  </data>
   <data name="WindowSettingsControlRealTimePalette.Header" xml:space="preserve">
     <value>Live Palette Preview</value>
   </data>
@@ -1974,8 +1989,17 @@
   <data name="WindowSettingsControlRealTimePaletteAccentColor4.Header" xml:space="preserve">
     <value>Accent Color 4</value>
   </data>
+  <data name="WindowSettingsControlRealTimePaletteUnderlayColor.Header" xml:space="preserve">
+    <value>Underlay Color</value>
+  </data>
   <data name="WindowSettingsControlRemoveBorder.Header" xml:space="preserve">
     <value>Remove borders when locked</value>
+  </data>
+  <data name="WindowSettingsControlSplitViewRatio.Header" xml:space="preserve">
+    <value>Layout Allocation</value>
+  </data>
+  <data name="WindowSettingsControlSplitViewSwitch.Header" xml:space="preserve">
+    <value>Swap Layout</value>
   </data>
   <data name="WindowSettingsControlSpoutOutput.Header" xml:space="preserve">
     <value>Spout Output</value>

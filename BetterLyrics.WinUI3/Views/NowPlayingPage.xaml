@@ -29,15 +29,15 @@
 
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition x:Name="TrackSummaryRowDef" Height="0" />
+                <RowDefinition x:Name="Part1RowDef" Height="0" />
                 <RowDefinition x:Name="MiddleGapRowDef" Height="0" />
-                <RowDefinition x:Name="LyricsRowDef" Height="*" />
+                <RowDefinition x:Name="Part2RowDef" Height="*" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="LeftGapDef" Width="0" />
-                <ColumnDefinition x:Name="TrackSummaryColDef" Width="*" />
+                <ColumnDefinition x:Name="Part1ColDef" Width="*" />
                 <ColumnDefinition x:Name="MiddleGapColDef" Width="0" />
-                <ColumnDefinition x:Name="LyricsColDef" Width="*" />
+                <ColumnDefinition x:Name="Part2ColDef" Width="*" />
                 <ColumnDefinition x:Name="RightGapDef" Width="0" />
             </Grid.ColumnDefinitions>
 
