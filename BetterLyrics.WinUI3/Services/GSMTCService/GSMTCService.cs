@@ -393,8 +393,8 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             HandleLXMusicIfDetected(sessionId);
 
             // 总是先回收 _memoryReader
-            _memoryReader?.Stop();
             _memoryReader?.OnProgressChanged -= UniversalMemoryReader_OnProgressChanged;
+            _memoryReader?.Dispose();
             _memoryReader = null;
             // 注册
             if (currentMediaSourceProviderInfo?.IsMemoryReaderEnabled == true)

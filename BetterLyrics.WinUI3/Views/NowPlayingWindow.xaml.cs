@@ -384,7 +384,7 @@ namespace BetterLyrics.WinUI3.Views
                 {
                     return;
                 }
-                else if (LyricsWindowStatus.IsMaximized || LyricsWindowStatus.IsFullscreen)
+                else if (!LyricsWindowStatus.IsWallpaper && (LyricsWindowStatus.IsMaximized || LyricsWindowStatus.IsFullscreen))
                 {
                     return;
                 }
@@ -613,6 +613,7 @@ namespace BetterLyrics.WinUI3.Views
                 else if (message.PropertyName == nameof(LyricsWindowStatus.IsAdaptToEnvironment))
                 {
                     OnIsAdaptToEnvironmentChanged();
+                    _ = UpdateAlbumArtThemeColorsAsync();
                 }
                 else if (message.PropertyName == nameof(LyricsWindowStatus.IsPinToTaskbar))
                 {
