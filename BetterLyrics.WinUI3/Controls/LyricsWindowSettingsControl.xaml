@@ -227,9 +227,6 @@
                         <NavigationViewItem x:Name="WindowSegmentedItem" Tag="Window">
                             <TextBlock x:Uid="AppSettingsControlGeneral" />
                         </NavigationViewItem>
-                        <NavigationViewItem Tag="Layout">
-                            <TextBlock x:Uid="SettingsPageLayout" />
-                        </NavigationViewItem>
                         <NavigationViewItem Tag="AlbumArtStyle">
                             <TextBlock x:Uid="SettingsPageAlbumStyle" />
                         </NavigationViewItem>
@@ -260,35 +257,6 @@
                 <!--  Window  -->
                 <controls:Case Value="Window">
                     <uc:WindowSettingsControl LyricsWindowStatus="{x:Bind LyricsWindowStatus, Mode=OneWay}" />
-                </controls:Case>
-
-                <!--  Layout  -->
-                <controls:Case Value="Layout">
-                    <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
-                        <Grid Style="{StaticResource SettingsGridStyle}">
-                            <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
-
-                                <TextBlock x:Uid="SettingsPageLayout" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-
-                                <controls:SettingsExpander x:Uid="SettingsPageDisplayTypeSwitcher" IsExpanded="True">
-                                    <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.LyricsDisplayType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                        <ComboBoxItem x:Uid="MainPageAlbumArtOnly" />
-                                        <ComboBoxItem x:Uid="MainPageLyriscOnly" />
-                                        <ComboBoxItem x:Uid="MainPageSplitView" />
-                                    </ComboBox>
-                                    <controls:SettingsExpander.Items>
-                                        <controls:SettingsCard x:Uid="SettingsPageLayoutOrientation">
-                                            <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.LyricsLayoutOrientation, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                                <ComboBoxItem x:Uid="SettingsPageLayoutOrientationHorizontal" />
-                                                <ComboBoxItem x:Uid="SettingsPageLayoutOrientationVertical" />
-                                            </ComboBox>
-                                        </controls:SettingsCard>
-                                    </controls:SettingsExpander.Items>
-                                </controls:SettingsExpander>
-
-                            </StackPanel>
-                        </Grid>
-                    </ScrollViewer>
                 </controls:Case>
 
                 <!--  Album art area style  -->

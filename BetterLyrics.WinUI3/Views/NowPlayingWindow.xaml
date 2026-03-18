@@ -14,7 +14,10 @@
     Closed="Window_Closed"
     mc:Ignorable="d">
 
-    <Grid x:Name="RootGrid" SizeChanged="RootGrid_SizeChanged">
+    <Grid
+        x:Name="RootGrid"
+        Loaded="RootGrid_Loaded"
+        SizeChanged="RootGrid_SizeChanged">
 
         <Grid
             x:Name="PlaceholderGrid"

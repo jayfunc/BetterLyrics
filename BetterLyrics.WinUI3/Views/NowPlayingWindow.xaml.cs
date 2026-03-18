@@ -33,6 +33,7 @@ namespace BetterLyrics.WinUI3.Views
         IRecipient<PropertyChangedMessage<bool>>,
         IRecipient<PropertyChangedMessage<double>>,
         IRecipient<PropertyChangedMessage<string>>,
+        IRecipient<PropertyChangedMessage<int>>,
         IRecipient<PropertyChangedMessage<DockPlacement>>,
         IRecipient<PropertyChangedMessage<TitleBarArea>>,
         IRecipient<PropertyChangedMessage<ElementTheme>>,
@@ -42,12 +43,10 @@ namespace BetterLyrics.WinUI3.Views
         IRecipient<PropertyChangedMessage<TaskbarPlacement>>,
         IRecipient<PropertyChangedMessage<PaletteGeneratorType>>
     {
-        private ForegroundWindowHook? _fgWindowWatcher = null;
+        private SimpleTimer? _simpleTimer = null;
         private OverlayInputHelper? _overlayInputHelper;
         private TaskbarHook? _taskbarHook;
         private WindowMessageMonitor? _wmm;
-
-        private DispatcherQueueTimer? _fgWindowWatcherTimer = null;
 
         private Color _backdropAccentColor = Colors.Transparent;
 
@@ -61,8 +60,6 @@ namespace BetterLyrics.WinUI3.Views
             this.InitializeComponent();
             _wmm = new WindowMessageMonitor(this);
             _wmm.WindowMessageReceived += Wmm_WindowMessageReceived;
-
-            _fgWindowWatcherTimer = DispatcherQueue.CreateTimer();
 
             LyricsWindowStatus = status;
             NowPlayingPage.LyricsWindowStatus = LyricsWindowStatus;
@@ -145,26 +142,23 @@ namespace BetterLyrics.WinUI3.Views
         {
             var hwnd = WindowNative.GetWindowHandle(this);
 
-            _fgWindowWatcher = new ForegroundWindowHook(
-                hwnd,
-                fgHwnd =>
+            _simpleTimer = new(() =>
+            {
+                DispatcherQueueHelper.GetUIDispatcherQueue()?.TryEnqueue(() =>
                 {
-                    _fgWindowWatcherTimer?.Debounce(() =>
+                    if (LyricsWindowStatus.IsAlwaysOnTop &&
+                    LyricsWindowStatus.IsAlwaysOnTopPolling &&
+                    this.AppWindow != null &&
+                    this.AppWindow.Presenter is OverlappedPresenter presenter)
                     {
-                        if (LyricsWindowStatus.IsAlwaysOnTop &&
-                            LyricsWindowStatus.IsAlwaysOnTopPolling &&
-                            this.AppWindow != null &&
-                            this.AppWindow.Presenter is OverlappedPresenter presenter)
-                        {
-                            presenter.IsAlwaysOnTop = true;
-                        }
-                        if (LyricsWindowStatus.IsAdaptToEnvironment)
-                        {
-                            UpdateBackdropAccentColor(hwnd);
-                        }
-                    }, TimeSpan.FromSeconds(1));
-                }
-            );
+                        presenter.IsAlwaysOnTop = true;
+                    }
+                    if (LyricsWindowStatus.IsAdaptToEnvironment)
+                    {
+                        UpdateBackdropAccentColor(hwnd);
+                    }
+                });
+            });
             if (LyricsWindowStatus.IsAdaptToEnvironment)
             {
                 UpdateBackdropAccentColor(hwnd);
@@ -292,10 +286,10 @@ namespace BetterLyrics.WinUI3.Views
 
         private void OnIsAdaptToEnvironmentChanged()
         {
-            _fgWindowWatcher?.Stop();
+            _simpleTimer?.Stop();
             if (LyricsWindowStatus.IsAdaptToEnvironment)
             {
-                _fgWindowWatcher?.Start();
+                _simpleTimer?.Start();
             }
         }
 
@@ -361,11 +355,8 @@ namespace BetterLyrics.WinUI3.Views
             _wmm?.Dispose();
             _wmm = null;
 
-            _fgWindowWatcherTimer?.Stop();
-            _fgWindowWatcherTimer = null;
-
-            _fgWindowWatcher?.Stop();
-            _fgWindowWatcher = null;
+            _simpleTimer?.Dispose();
+            _simpleTimer = null;
 
             _taskbarHook?.Dispose();
             _taskbarHook = null;
@@ -569,6 +560,16 @@ namespace BetterLyrics.WinUI3.Views
         private void MaximizeButton_Click(object sender, RoutedEventArgs e)
         {
             LyricsWindowStatus.IsMaximized = !LyricsWindowStatus.IsMaximized;
+        }
+
+        private void RootGrid_Loaded(object sender, RoutedEventArgs e)
+        {
+            RootGrid.Margin = new(
+                (int)((LyricsWindowStatus.PaddingLeft / 100.0) * (RootGrid.ActualWidth / 2)),
+                (int)((LyricsWindowStatus.PaddingTop / 100.0) * (RootGrid.ActualHeight / 2)),
+                (int)((LyricsWindowStatus.PaddingRight / 100.0) * (RootGrid.ActualWidth / 2)),
+                (int)((LyricsWindowStatus.PaddingBottom / 100.0) * (RootGrid.ActualHeight / 2))
+            );
         }
 
         public void Receive(PropertyChangedMessage<bool> message)
@@ -796,6 +797,29 @@ namespace BetterLyrics.WinUI3.Views
                 if (message.PropertyName == nameof(LyricsWindowStatus.PaletteGeneratorType))
                 {
                     _ = UpdateAlbumArtThemeColorsAsync();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<int> message)
+        {
+            if (message.Sender == LyricsWindowStatus)
+            {
+                if (message.PropertyName == nameof(LyricsWindowStatus.PaddingLeft))
+                {
+                    RootGrid.Margin = RootGrid.Margin.WithLeft((int)((message.NewValue / 100.0) * (RootGrid.ActualWidth / 2)));
+                }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.PaddingTop))
+                {
+                    RootGrid.Margin = RootGrid.Margin.WithTop((int)((message.NewValue / 100.0) * (RootGrid.ActualHeight / 2)));
+                }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.PaddingRight))
+                {
+                    RootGrid.Margin = RootGrid.Margin.WithRight((int)((message.NewValue / 100.0) * (RootGrid.ActualWidth / 2)));
+                }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.PaddingBottom))
+                {
+                    RootGrid.Margin = RootGrid.Margin.WithBottom((int)((message.NewValue / 100.0) * (RootGrid.ActualHeight / 2)));
                 }
             }
         }

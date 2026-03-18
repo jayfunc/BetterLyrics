@@ -7,7 +7,9 @@ using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
+using System.Linq;
 using System.Numerics;
+using System.Threading.Tasks;
 using Vanara.PInvoke;
 using Windows.UI;
 
@@ -15,16 +17,6 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public static class ColorHelper
     {
-        public static Color GetSystemAccentColor()
-        {
-            if (Application.Current.Resources.TryGetValue("SystemAccentColor", out var resource) &&
-                resource is Color uiColor)
-            {
-                return uiColor;
-            }
-            return Color.FromArgb(255, 0, 120, 215);
-        }
-
         public static ElementTheme GetElementThemeFromBackgroundColor(Color backgroundColor)
         {
             // 计算亮度（YIQ公式）
@@ -72,74 +64,172 @@ namespace BetterLyrics.WinUI3.Helper
             );
         }
 
-        public static Color GetRandomColor()
-        {
-            return Color.FromArgb(255, (byte)Random.Shared.Next(0, 256), (byte)Random.Shared.Next(0, 256), (byte)Random.Shared.Next(0, 256));
-        }
-
         public static Color GetAccentColor(IntPtr myHwnd, string monitorDeviceName, WindowPixelSampleMode mode)
         {
             if (!User32.GetWindowRect(myHwnd, out RECT myRect)) return Colors.Transparent;
 
             var monitorInfo = MonitorHook.GetMonitorInfoExFromDeviceName(monitorDeviceName);
             int screenWidth = monitorInfo.rcMonitor.Width;
+
             switch (mode)
             {
                 case WindowPixelSampleMode.BelowWindow:
-                    return GetAverageColorFromScreenRegion(myRect.Left, myRect.Bottom + 2, screenWidth, 1);
+                    using (var bmp = CaptureScreenRegion(myRect.Left, myRect.Bottom + 2, screenWidth, 1))
+                        return ComputeDominantColor(bmp);
+
                 case WindowPixelSampleMode.AboveWindow:
-                    return GetAverageColorFromScreenRegion(myRect.Left, myRect.Top - 2, screenWidth, 1);
+                    using (var bmp = CaptureScreenRegion(myRect.Left, myRect.Top - 2, screenWidth, 1))
+                        return ComputeDominantColor(bmp);
+
                 case WindowPixelSampleMode.WindowArea:
                     {
                         int width = myRect.Right - myRect.Left;
                         int height = myRect.Bottom - myRect.Top;
                         if (width <= 0 || height <= 0) return Colors.Transparent;
-                        // 采集窗口区域的平均色
-                        return GetAverageColorFromScreenRegion(myRect.Left, myRect.Top, width, height);
+
+                        int inset = 10;
+
+                        if (width <= inset * 2 || height <= inset * 2)
+                        {
+                            using var bmp = CaptureScreenRegion(myRect.Left, myRect.Top, width, height);
+                            return ComputeDominantColor(bmp);
+                        }
+
+                        List<System.Drawing.Bitmap> innerBmps = [];
+                        try
+                        {
+                            innerBmps.Add(CaptureScreenRegion(myRect.Left, myRect.Top, width, inset));
+                            innerBmps.Add(CaptureScreenRegion(myRect.Left, myRect.Bottom - inset, width, inset));
+                            innerBmps.Add(CaptureScreenRegion(myRect.Left, myRect.Top + inset, inset, height - 2 * inset));
+                            innerBmps.Add(CaptureScreenRegion(myRect.Right - inset, myRect.Top + inset, inset, height - 2 * inset));
+
+                            return ComputeDominantColor([.. innerBmps]);
+                        }
+                        finally
+                        {
+                            foreach (var bmp in innerBmps) bmp.Dispose();
+                        }
                     }
+
                 case WindowPixelSampleMode.WindowEdge:
                     {
                         int width = myRect.Right - myRect.Left;
                         int height = myRect.Bottom - myRect.Top;
-                        if (width <= 0 || height <= 0)
-                            return Colors.Transparent;
+                        if (width <= 0 || height <= 0) return Colors.Transparent;
 
                         var edgeThickness = new Thickness(36, 36, 36, 36);
-                        List<Color> edgeColors = [];
+                        List<System.Drawing.Bitmap> edgeBmps = [];
 
-                        // Top edge
-                        if (edgeThickness.Top > 0)
-                            edgeColors.Add(GetAverageColorFromScreenRegion(myRect.Left, myRect.Top - (int)edgeThickness.Top, width, (int)edgeThickness.Top));
-                        // Bottom edge
-                        if (edgeThickness.Bottom > 0)
-                            edgeColors.Add(GetAverageColorFromScreenRegion(myRect.Left, myRect.Bottom, width, (int)edgeThickness.Bottom));
-                        // Left edge
-                        if (edgeThickness.Left > 0)
-                            edgeColors.Add(GetAverageColorFromScreenRegion(myRect.Left - (int)edgeThickness.Left, myRect.Top, (int)edgeThickness.Left, height));
-                        // Right edge
-                        if (edgeThickness.Right > 0)
-                            edgeColors.Add(GetAverageColorFromScreenRegion(myRect.Right, myRect.Top, (int)edgeThickness.Right, height));
-
-                        // 合并四边平均色
-                        if (edgeColors.Count == 0) return Colors.Transparent;
-                        long r = 0, g = 0, b = 0;
-                        foreach (var c in edgeColors)
+                        try
                         {
-                            r += c.R;
-                            g += c.G;
-                            b += c.B;
-                        }
-                        return Color.FromArgb(
-                            255,
-                            (byte)(r / edgeColors.Count),
-                            (byte)(g / edgeColors.Count),
-                            (byte)(b / edgeColors.Count)
-                        );
-                    }
-                case WindowPixelSampleMode.Wallpaper:
+                            if (edgeThickness.Top > 0)
+                                edgeBmps.Add(CaptureScreenRegion(myRect.Left, myRect.Top - (int)edgeThickness.Top, width, (int)edgeThickness.Top));
+                            if (edgeThickness.Bottom > 0)
+                                edgeBmps.Add(CaptureScreenRegion(myRect.Left, myRect.Bottom, width, (int)edgeThickness.Bottom));
+                            if (edgeThickness.Left > 0)
+                                edgeBmps.Add(CaptureScreenRegion(myRect.Left - (int)edgeThickness.Left, myRect.Top, (int)edgeThickness.Left, height));
+                            if (edgeThickness.Right > 0)
+                                edgeBmps.Add(CaptureScreenRegion(myRect.Right, myRect.Top, (int)edgeThickness.Right, height));
 
+                            return ComputeDominantColor([.. edgeBmps]);
+                        }
+                        finally
+                        {
+                            foreach (var bmp in edgeBmps) bmp.Dispose();
+                        }
+                    }
+
+                case WindowPixelSampleMode.Wallpaper:
+                    {
+                        string wallpaperPath = GetCurrentWallpaper();
+                        return GetDominantColorFromImage(wallpaperPath);
+                    }
                 default:
                     return Colors.Transparent;
+            }
+        }
+
+        private static Color ComputeDominantColor(params System.Drawing.Bitmap[] bmps)
+        {
+            if (bmps == null || bmps.Length == 0) return Colors.Transparent;
+
+            Dictionary<int, int> colorFrequencies = [];
+            int dominantColorRgb = 0;
+            int maxFrequency = 0;
+
+            long fallbackR = 0, fallbackG = 0, fallbackB = 0;
+            int totalCount = 0;
+
+            foreach (var bmp in bmps)
+            {
+                for (int y = 0; y < bmp.Height; y++)
+                {
+                    for (int x = 0; x < bmp.Width; x++)
+                    {
+                        System.Drawing.Color pixel = bmp.GetPixel(x, y);
+
+                        // 用于兜底的平均色统计
+                        fallbackR += pixel.R;
+                        fallbackG += pixel.G;
+                        fallbackB += pixel.B;
+                        totalCount++;
+
+                        int max = Math.Max(pixel.R, Math.Max(pixel.G, pixel.B));
+                        int min = Math.Min(pixel.R, Math.Min(pixel.G, pixel.B));
+                        int saturation = max == 0 ? 0 : (max - min) * 255 / max;
+
+                        // 过滤低饱和度或极端亮度的像素
+                        if (saturation < 30 || max < 30 || max > 240)
+                            continue;
+
+                        // 颜色量化
+                        int r = pixel.R & 0xF0;
+                        int g = pixel.G & 0xF0;
+                        int b = pixel.B & 0xF0;
+                        int rgb = (r << 16) | (g << 8) | b;
+
+                        if (colorFrequencies.TryGetValue(rgb, out int count))
+                            colorFrequencies[rgb] = count + 1;
+                        else
+                            colorFrequencies[rgb] = 1;
+
+                        if (colorFrequencies[rgb] > maxFrequency)
+                        {
+                            maxFrequency = colorFrequencies[rgb];
+                            dominantColorRgb = rgb;
+                        }
+                    }
+                }
+            }
+
+            if (maxFrequency == 0)
+            {
+                if (totalCount == 0) return Colors.Transparent;
+                return Color.FromArgb(255, (byte)(fallbackR / totalCount), (byte)(fallbackG / totalCount), (byte)(fallbackB / totalCount));
+            }
+
+            byte finalR = (byte)Math.Min(255, ((dominantColorRgb >> 16) & 0xFF) + 8);
+            byte finalG = (byte)Math.Min(255, ((dominantColorRgb >> 8) & 0xFF) + 8);
+            byte finalB = (byte)Math.Min(255, (dominantColorRgb & 0xFF) + 8);
+
+            return Color.FromArgb(255, finalR, finalG, finalB);
+        }
+
+        private static Color GetDominantColorFromImage(string imagePath)
+        {
+            if (string.IsNullOrEmpty(imagePath) || !System.IO.File.Exists(imagePath))
+                return Colors.Transparent;
+
+            try
+            {
+                using var originalBmp = new System.Drawing.Bitmap(imagePath);
+                using var bmp = new System.Drawing.Bitmap(originalBmp, new System.Drawing.Size(64, 64));
+                return ComputeDominantColor(bmp);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"读取壁纸提取主题色失败: {ex.Message}");
+                return Colors.Transparent;
             }
         }
 
@@ -167,41 +257,25 @@ namespace BetterLyrics.WinUI3.Helper
             return string.Empty;
         }
 
-        private static Color GetAverageColorFromScreenRegion(int x, int y, int width, int height)
+        private static System.Drawing.Bitmap CaptureScreenRegion(int x, int y, int width, int height)
         {
-            using System.Drawing.Bitmap bmp = new(width, height, PixelFormat.Format32bppArgb);
+            int sampleWidth = Math.Min(width, 64);
+            int sampleHeight = Math.Min(height, 64);
+            sampleWidth = Math.Max(1, sampleWidth);
+            sampleHeight = Math.Max(1, sampleHeight);
+
+            var bmp = new System.Drawing.Bitmap(sampleWidth, sampleHeight, PixelFormat.Format32bppArgb);
             using var gDest = System.Drawing.Graphics.FromImage(bmp);
 
             IntPtr hdcDest = gDest.GetHdc();
-            IntPtr hdcSrc = (nint)User32.GetDC(IntPtr.Zero); // Entire screen
+            IntPtr hdcSrc = (nint)User32.GetDC(IntPtr.Zero);
 
-            Gdi32.BitBlt(hdcDest, 0, 0, width, height, hdcSrc, x, y, Gdi32.RasterOperationMode.SRCCOPY);
+            Gdi32.StretchBlt(hdcDest, 0, 0, sampleWidth, sampleHeight, hdcSrc, x, y, width, height, Gdi32.RasterOperationMode.SRCCOPY);
 
             gDest.ReleaseHdc(hdcDest);
             User32.ReleaseDC(IntPtr.Zero, hdcSrc);
 
-            return ComputeAverageColor(bmp);
-        }
-
-        private static Color ComputeAverageColor(System.Drawing.Bitmap bmp)
-        {
-            long r = 0, g = 0, b = 0;
-            int count = 0;
-
-            for (int y = 0; y < bmp.Height; y++)
-            {
-                for (int x = 0; x < bmp.Width; x++)
-                {
-                    System.Drawing.Color pixel = bmp.GetPixel(x, y);
-                    r += pixel.R;
-                    g += pixel.G;
-                    b += pixel.B;
-                    count++;
-                }
-            }
-
-            if (count == 0) return Colors.Transparent;
-            return Color.FromArgb(255, (byte)(r / count), (byte)(g / count), (byte)(b / count));
+            return bmp;
         }
 
         public static Color FromVector3(Vector3 vector3) => Color.FromArgb(255, (byte)vector3.X, (byte)vector3.Y, (byte)vector3.Z);
