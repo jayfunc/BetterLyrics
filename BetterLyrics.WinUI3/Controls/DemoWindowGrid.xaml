@@ -27,7 +27,7 @@
                         Margin="{x:Bind LyricsWindowStatus.WindowBounds, Converter={StaticResource RectToMarginConverter}, Mode=OneWay}"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
-                        Background="{ThemeResource AccentAAFillColorDefaultBrush}"
+                        Background="{ThemeResource AccentAcrylicBackgroundFillColorDefaultBrush}"
                         CornerRadius="32" />
                 </Grid>
             </Viewbox>
