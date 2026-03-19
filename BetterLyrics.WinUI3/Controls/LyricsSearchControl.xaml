@@ -29,7 +29,20 @@
                 <ScrollViewer Padding="8,0">
                     <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
-                        <TextBlock x:Uid="LyricsSearchControlSongInfoMapping" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock x:Uid="LyricsSearchControlSongInfoMapping" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                            <Button
+                                Margin="6,26,0,0"
+                                Command="{x:Bind ViewModel.CopySearchLinkCommand}"
+                                Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                      FontSize=16,
+                                                      Glyph=&#xE71B;}"
+                                Style="{ThemeResource GhostButtonStyle}">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip x:Uid="LyricsSearchControlCopySearchLink" />
+                                </ToolTipService.ToolTip>
+                            </Button>
+                        </StackPanel>
 
                         <Grid Padding="16" Style="{StaticResource CardGridStyle}">
                             <StackPanel Spacing="6">
@@ -180,26 +193,12 @@
                             <local:PropertyRow x:Uid="LyricsSearchControlDurauion" Value="{x:Bind ViewModel.GSMTCService.CurrentSongInfo.Duration, Converter={StaticResource SecondsToFormattedTimeConverter}, TargetNullValue=N/A, Mode=OneWay}" />
                         </Grid>
 
-                        <SplitButton
+                        <Button
                             x:Uid="LyricsSearchControlSearch"
                             HorizontalAlignment="Stretch"
                             Command="{x:Bind ViewModel.SearchCommand}"
                             IsEnabled="{x:Bind ViewModel.IsSearching, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
-                            Style="{ThemeResource AccentSplitButtonStyle}">
-                            <SplitButton.Flyout>
-                                <Flyout
-                                    FlyoutPresenterStyle="{StaticResource FlyoutGhostStyle}"
-                                    Placement="Right"
-                                    ShouldConstrainToRootBounds="False">
-                                    <HyperlinkButton
-                                        x:Uid="LyricsSearchControlCopySearchLink"
-                                        Command="{x:Bind ViewModel.CopySearchLinkCommand}"
-                                        Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                                              FontSize=16,
-                                                              Glyph=&#xE71B;}" />
-                                </Flyout>
-                            </SplitButton.Flyout>
-                        </SplitButton>
+                            Style="{ThemeResource AccentButtonStyle}" />
 
                         <controls:SettingsCard x:Uid="LyricsSearchControlMarkAsPureMusic">
                             <CheckBox MinWidth="20" IsChecked="{x:Bind ViewModel.MappedSongSearchQuery.IsMarkedAsPureMusic, Mode=TwoWay}" />
