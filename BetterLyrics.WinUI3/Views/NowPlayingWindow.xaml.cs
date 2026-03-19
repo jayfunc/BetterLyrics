@@ -119,8 +119,6 @@ namespace BetterLyrics.WinUI3.Views
             OnIsWorkAreaChanged();
             OnIsMaximizedChanged();
             OnIsFullscreenChanged();
-
-            LyricsWindowStatus.UpdateDemoWindowAndMonitorBounds();
         }
 
         public void UpdateBackdropAccentColor(nint hwnd)
