@@ -375,7 +375,14 @@ namespace BetterLyrics.WinUI3.Views
                 {
                     return;
                 }
+                // 仅非壁纸模式才忽略最大化全屏化
+                // 壁纸模式将记忆最大化全屏化之后的坐标以便正确固定到桌面
                 else if (!LyricsWindowStatus.IsWallpaper && (LyricsWindowStatus.IsMaximized || LyricsWindowStatus.IsFullscreen))
+                {
+                    return;
+                }
+                // 忽略壁纸模式+已锁定状态防止在固定到桌面的过程中由于坐标系变换导致的错误的坐标被记忆
+                else if (LyricsWindowStatus.IsWallpaper && LyricsWindowStatus.IsLocked)
                 {
                     return;
                 }
