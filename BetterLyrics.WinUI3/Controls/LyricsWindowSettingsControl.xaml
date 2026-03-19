@@ -80,14 +80,12 @@
                             <ListView.ItemContainerStyle>
                                 <Style BasedOn="{StaticResource ListViewCardStyle}" TargetType="ListViewItem">
                                     <Setter Property="VerticalAlignment" Value="Center" />
+                                    <Setter Property="Margin" Value="4" />
                                 </Style>
                             </ListView.ItemContainerStyle>
                             <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <controls:WrapPanel
-                                        HorizontalSpacing="8"
-                                        Orientation="Horizontal"
-                                        VerticalSpacing="8" />
+                                    <ItemsWrapGrid Orientation="Horizontal" />
                                 </ItemsPanelTemplate>
                             </ListView.ItemsPanel>
                             <ListView.ItemTemplate>

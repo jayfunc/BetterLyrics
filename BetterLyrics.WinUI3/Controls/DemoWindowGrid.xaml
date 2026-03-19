@@ -8,22 +8,30 @@
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
-    Loaded="UserControl_Loaded"
     mc:Ignorable="d">
 
-    <Grid
-        Width="{x:Bind LyricsWindowStatus.DemoMonitorBounds.Width, Mode=OneWay}"
-        Height="{x:Bind LyricsWindowStatus.DemoMonitorBounds.Height, Mode=OneWay}"
-        Background="{ThemeResource AcrylicBackgroundFillColorBaseBrush}"
-        CornerRadius="4">
-        <Grid
-            Width="{x:Bind LyricsWindowStatus.DemoWindowBounds.Width, Mode=OneWay}"
-            Height="{x:Bind LyricsWindowStatus.DemoWindowBounds.Height, Mode=OneWay}"
-            Margin="{x:Bind LyricsWindowStatus.DemoWindowBounds, Converter={StaticResource RectToMarginConverter}, Mode=OneWay}"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Top"
-            Background="{ThemeResource AccentAcrylicBackgroundFillColorDefaultBrush}"
-            CornerRadius="4" />
+    <Grid Background="{ThemeResource AcrylicBackgroundFillColorBaseBrush}" CornerRadius="4">
+        <Border Margin="16">
+            <Viewbox
+                Width="200"
+                Height="100"
+                Stretch="Uniform">
+                <Grid
+                    Width="{x:Bind LyricsWindowStatus.MonitorBounds.Width, Mode=OneWay}"
+                    Height="{x:Bind LyricsWindowStatus.MonitorBounds.Height, Mode=OneWay}"
+                    Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
+                    CornerRadius="32">
+                    <Grid
+                        Width="{x:Bind LyricsWindowStatus.WindowBounds.Width, Mode=OneWay}"
+                        Height="{x:Bind LyricsWindowStatus.WindowBounds.Height, Mode=OneWay}"
+                        Margin="{x:Bind LyricsWindowStatus.WindowBounds, Converter={StaticResource RectToMarginConverter}, Mode=OneWay}"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Background="{ThemeResource AccentAAFillColorDefaultBrush}"
+                        CornerRadius="32" />
+                </Grid>
+            </Viewbox>
+        </Border>
         <!--  Is default  -->
         <Grid
             Margin="4"
@@ -94,6 +102,7 @@
                 TextWrapping="Wrap" />
         </Grid>
 
+        <!--  命令区域  -->
         <Grid
             Padding="6"
             Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"

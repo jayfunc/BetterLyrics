@@ -56,9 +56,4 @@ public sealed partial class DemoWindowGrid : UserControl
             WindowHook.OpenOrShowWindow<NowPlayingWindow>(status);
         }
     }
-
-    private void UserControl_Loaded(object sender, RoutedEventArgs e)
-    {
-        LyricsWindowStatus.UpdateDemoWindowAndMonitorBounds();
-    }
 }

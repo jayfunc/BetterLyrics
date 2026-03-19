@@ -45,9 +45,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial Rect WindowBounds { get; set; } = new Rect(100, 100, 800, 500);
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial double DockHeight { get; set; } = 64;
-        [ObservableProperty] public partial Rect DemoWindowBounds { get; set; }
         [ObservableProperty] public partial Rect MonitorBounds { get; set; }
-        [ObservableProperty] public partial Rect DemoMonitorBounds { get; set; }
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial DockPlacement DockPlacement { get; set; } = DockPlacement.Top;
         [ObservableProperty] public partial LyricsStyleSettings LyricsStyleSettings { get; set; } = new();
         [ObservableProperty] public partial LyricsEffectSettings LyricsEffectSettings { get; set; } = new(500, 500, 500, EasingType.Quad);
@@ -97,7 +95,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
         public LyricsWindowStatus(Window? targetWindow = null) : this()
         {
             UpdateMonitorNameAndBounds(targetWindow);
-            UpdateDemoWindowAndMonitorBounds();
         }
 
         partial void OnLyricsStyleSettingsChanged(LyricsStyleSettings oldValue, LyricsStyleSettings newValue)
@@ -158,7 +155,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
         partial void OnWindowBoundsChanged(Rect value)
         {
             UpdateMonitorNameAndBounds();
-            UpdateDemoWindowAndMonitorBounds();
         }
 
         private void UpdateMonitorNameAndBounds(Window? targetWindow = null)
@@ -184,24 +180,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 mointor.rcMonitor.Top,
                 mointor.rcMonitor.Width,
                 mointor.rcMonitor.Height
-            );
-        }
-
-        public void UpdateDemoWindowAndMonitorBounds(double targetWidth = 200)
-        {
-            var factor = targetWidth / MonitorBounds.Width;
-
-            DemoWindowBounds = new Rect(
-                (WindowBounds.X - MonitorBounds.Left) * factor,
-                (WindowBounds.Y - MonitorBounds.Top) * factor,
-                WindowBounds.Width * factor,
-                WindowBounds.Height * factor
-            );
-            DemoMonitorBounds = new Rect(
-                MonitorBounds.Left * factor,
-                MonitorBounds.Top * factor,
-                MonitorBounds.Width * factor,
-                MonitorBounds.Height * factor
             );
         }
 
@@ -254,9 +232,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
                 WindowBounds = this.WindowBounds,
                 DockHeight = this.DockHeight,
-                DemoWindowBounds = this.DemoWindowBounds,
                 MonitorBounds = this.MonitorBounds,
-                DemoMonitorBounds = this.DemoMonitorBounds,
                 DockPlacement = this.DockPlacement,
 
                 LyricsStyleSettings = (LyricsStyleSettings)this.LyricsStyleSettings.Clone(),
