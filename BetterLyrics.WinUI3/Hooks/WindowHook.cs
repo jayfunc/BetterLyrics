@@ -53,7 +53,7 @@ namespace BetterLyrics.WinUI3.Hooks
                 if (nowPlayingWindow.LyricsWindowStatus.IsWallpaper)
                 {
                     // 先取消固定至桌面以防后续关闭该窗口时报错
-                    WorkerWHook.UnpinFromDesktop(window);
+                    WorkerWHook.UnpinFromDesktop(nowPlayingWindow);
                 }
                 nowPlayingWindow.LyricsWindowStatus.WindowStatus = WindowStatus.Closed;
             }

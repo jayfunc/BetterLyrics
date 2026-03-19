@@ -76,17 +76,18 @@
                             CornerRadius="4"
                             DragItemsCompleted="WindowStatusListView_DragItemsCompleted"
                             ItemsSource="{x:Bind ViewModel.AppSettings.WindowBoundsRecords, Mode=OneWay}"
-                            SelectionMode="None"
-                            Visibility="{Binding ElementName=LyricsWindowManagerExpander, Path=IsExpanded, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                            SelectionMode="None">
                             <ListView.ItemContainerStyle>
                                 <Style BasedOn="{StaticResource ListViewCardStyle}" TargetType="ListViewItem">
-                                    <Setter Property="Margin" Value="8" />
                                     <Setter Property="VerticalAlignment" Value="Center" />
                                 </Style>
                             </ListView.ItemContainerStyle>
                             <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <ItemsWrapGrid Orientation="Horizontal" />
+                                    <controls:WrapPanel
+                                        HorizontalSpacing="8"
+                                        Orientation="Horizontal"
+                                        VerticalSpacing="8" />
                                 </ItemsPanelTemplate>
                             </ListView.ItemsPanel>
                             <ListView.ItemTemplate>
