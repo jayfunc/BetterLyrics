@@ -466,8 +466,6 @@ namespace BetterLyrics.WinUI3.Views
             TrackSummaryGridRow4.Height = new(yMargin);
             LeftGapDef.Width = RightGapDef.Width = new(xMargin);
 
-            Part1RowDef.Height = new(trackSummaryRowHeight);
-
             TrackSummaryGridCol1.Width = TrackSummaryGridRow2.Height = new(gapBetweenAlbumArtAndSongInfo);
 
             // 布局权重应用
@@ -476,19 +474,28 @@ namespace BetterLyrics.WinUI3.Views
                 bool isSwapped = LyricsWindowStatus.SwitchLyricsDisplayTypeSplitView;
 
                 double ratioAlbum = LyricsWindowStatus.LyricsDisplayTypeSplitViewRatio;
-                if (ratioAlbum <= 0) ratioAlbum = 50;
                 double ratioLyrics = 100.0 - ratioAlbum;
-                if (ratioLyrics <= 0) ratioLyrics = 50;
 
                 if (LyricsWindowStatus.LyricsLayoutOrientation == LyricsLayoutOrientation.Horizontal)
                 {
-                    Part1ColDef.Width = new GridLength(isSwapped ? ratioLyrics : ratioAlbum, GridUnitType.Star);
-                    Part2ColDef.Width = new GridLength(isSwapped ? ratioAlbum : ratioLyrics, GridUnitType.Star);
+                    Part1ColDef.Width = new(isSwapped ? ratioLyrics : ratioAlbum, GridUnitType.Star);
+                    Part2ColDef.Width = new(isSwapped ? ratioAlbum : ratioLyrics, GridUnitType.Star);
                 }
                 else
                 {
-                    Part1ColDef.Width = new GridLength(1, GridUnitType.Star);
-                    Part2ColDef.Width = new GridLength(1, GridUnitType.Star);
+                    Part1ColDef.Width = new(1, GridUnitType.Star);
+                    Part2ColDef.Width = new(1, GridUnitType.Star);
+
+                    if (isSwapped)
+                    {
+                        Part1RowDef.Height = new(1, GridUnitType.Star);
+                        Part2RowDef.Height = new(trackSummaryRowHeight);
+                    }
+                    else
+                    {
+                        Part1RowDef.Height = new(trackSummaryRowHeight);
+                        Part2RowDef.Height = new(1, GridUnitType.Star);
+                    }
                 }
             }
             else

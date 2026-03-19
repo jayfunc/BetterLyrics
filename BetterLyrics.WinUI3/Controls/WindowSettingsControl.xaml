@@ -223,7 +223,7 @@
                                     <ComboBoxItem x:Uid="SettingsPageLayoutOrientationVertical" />
                                 </ComboBox>
                             </controls:SettingsCard>
-                            <controls:SettingsCard x:Uid="WindowSettingsControlSplitViewRatio" IsEnabled="{x:Bind LyricsWindowStatus.LyricsDisplayType, Mode=OneWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=2}">
+                            <controls:SettingsCard x:Uid="WindowSettingsControlSplitViewRatio" IsEnabled="{x:Bind LyricsWindowStatus.LyricsLayoutOrientation, Mode=OneWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=0}">
                                 <local:ExtendedSlider
                                     Default="50"
                                     Maximum="100"
