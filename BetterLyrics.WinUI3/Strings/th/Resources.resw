@@ -678,8 +678,14 @@
   <data name="MusicGalleryPageRemoveFromPlayingQueue.Text" xml:space="preserve">
     <value>ลบออกจากคิวการเล่น</value>
   </data>
+  <data name="MusicGalleryPageRepeatAll.Content" xml:space="preserve">
+    <value>ทำซ้ำทั้งหมด</value>
+  </data>
   <data name="MusicGalleryPageScrollToPlayingItem.Text" xml:space="preserve">
     <value>เลื่อนไปยังรายการที่เล่นอยู่</value>
+  </data>
+  <data name="MusicGalleryPageShufflePlay.Content" xml:space="preserve">
+    <value>สับ</value>
   </data>
   <data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve">
     <value>วนซ้ำเพลงเดียว</value>

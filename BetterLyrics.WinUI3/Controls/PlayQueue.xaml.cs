@@ -79,6 +79,11 @@ namespace BetterLyrics.WinUI3.Controls
             await ViewModel.SMTCService.PlayTrackAtAsync(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex);
         }
 
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            ScrollToPlayingItem();
+        }
+
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             WeakReferenceMessenger.Default.UnregisterAll(this);

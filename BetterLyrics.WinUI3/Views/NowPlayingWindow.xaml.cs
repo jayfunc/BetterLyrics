@@ -17,12 +17,15 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media.Imaging;
+using Microsoft.Win32;
 using System;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Vanara.PInvoke;
 using Windows.Foundation;
 using Windows.UI;
+using Windows.UI.ViewManagement;
+using Windows.UI.ViewManagement.Core;
 using WinRT.Interop;
 using WinUIEx.Messaging;
 using static Vanara.PInvoke.User32;
@@ -92,6 +95,21 @@ namespace BetterLyrics.WinUI3.Views
 
                     e.Result = IntPtr.Zero;
                     e.Handled = true;
+                }
+            }
+            else if (msg == WindowMessage.WM_SETTINGCHANGE)
+            {
+                string? changedSetting = Marshal.PtrToStringUni(e.Message.LParam);
+                if (changedSetting == "Desktop")
+                {
+                    if (LyricsWindowStatus.IsWallpaper)
+                    {
+                        DispatcherQueueHelper.GetUIDispatcherQueue()?.TryEnqueue(() =>
+                        {
+                            WorkerWHook.UnpinFromDesktop(this);
+                            WorkerWHook.PinToDesktop(this);
+                        });
+                    }
                 }
             }
         }

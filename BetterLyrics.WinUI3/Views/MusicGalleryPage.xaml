@@ -21,14 +21,200 @@
     Loaded="Page_Loaded"
     Unloaded="Page_Unloaded"
     mc:Ignorable="d">
+
     <Page.Resources>
+
         <CollectionViewSource
             x:Name="GroupedTracksCVS"
             IsSourceGrouped="True"
             Source="{x:Bind ViewModel.GroupedTracks, Mode=OneWay}" />
+
+        <DataTemplate x:Key="TitleSortTemplate" x:DataType="models:ExtendedTrack">
+            <Grid
+                Padding="12"
+                Background="Transparent"
+                ColumnSpacing="12"
+                DoubleTapped="SongListViewItem_DoubleTapped">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Text="{x:Bind Title}"
+                    TextWrapping="Wrap" />
+                <HyperlinkButton Grid.Column="1" Click="ArtistHyperlibkButton_Click">
+                    <TextBlock Text="{x:Bind Artist}" TextWrapping="Wrap" />
+                </HyperlinkButton>
+                <HyperlinkButton Grid.Column="2" Click="AlbumHyperlibkButton_Click">
+                    <TextBlock Text="{x:Bind Album}" TextWrapping="Wrap" />
+                </HyperlinkButton>
+                <TextBlock
+                    Grid.Column="3"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
+                    TextWrapping="Wrap" />
+                <Button
+                    Grid.Column="4"
+                    HorizontalAlignment="Right"
+                    Click="SongListViewItemMoreButton_Click"
+                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                          FontSize=12,
+                                          Glyph=&#xE712;}"
+                    Style="{ThemeResource GhostButtonStyle}" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="ArtistSortTemplate" x:DataType="models:ExtendedTrack">
+            <Grid
+                Padding="12"
+                Background="Transparent"
+                ColumnSpacing="12"
+                DoubleTapped="SongListViewItem_DoubleTapped">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <HyperlinkButton Grid.Column="0" Click="ArtistHyperlibkButton_Click">
+                    <TextBlock Text="{x:Bind Artist}" TextWrapping="Wrap" />
+                </HyperlinkButton>
+                <TextBlock
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Text="{x:Bind Title}"
+                    TextWrapping="Wrap" />
+                <HyperlinkButton Grid.Column="2" Click="AlbumHyperlibkButton_Click">
+                    <TextBlock Text="{x:Bind Album}" TextWrapping="Wrap" />
+                </HyperlinkButton>
+                <TextBlock
+                    Grid.Column="3"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
+                    TextWrapping="Wrap" />
+                <Button
+                    Grid.Column="4"
+                    HorizontalAlignment="Right"
+                    Click="SongListViewItemMoreButton_Click"
+                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                          FontSize=12,
+                                          Glyph=&#xE712;}"
+                    Style="{ThemeResource GhostButtonStyle}" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="AlbumSortTemplate" x:DataType="models:ExtendedTrack">
+            <Grid
+                Padding="12"
+                Background="Transparent"
+                ColumnSpacing="12"
+                DoubleTapped="SongListViewItem_DoubleTapped">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Grid
+                    Grid.Column="0"
+                    Width="48"
+                    Height="48"
+                    CornerRadius="4">
+                    <Image
+                        Height="48"
+                        Source="{x:Bind LocalAlbumArtPath, Mode=OneWay, Converter={StaticResource PathToImageConverter}}"
+                        Stretch="Uniform" />
+                </Grid>
+                <HyperlinkButton Grid.Column="1" Click="AlbumHyperlibkButton_Click">
+                    <TextBlock Text="{x:Bind Album}" TextWrapping="Wrap" />
+                </HyperlinkButton>
+                <TextBlock
+                    Grid.Column="2"
+                    VerticalAlignment="Center"
+                    Text="{x:Bind Title}"
+                    TextWrapping="Wrap" />
+                <HyperlinkButton Grid.Column="3" Click="ArtistHyperlibkButton_Click">
+                    <TextBlock Text="{x:Bind Artist}" TextWrapping="Wrap" />
+                </HyperlinkButton>
+                <TextBlock
+                    Grid.Column="4"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
+                    TextWrapping="Wrap" />
+                <Button
+                    Grid.Column="5"
+                    HorizontalAlignment="Right"
+                    Click="SongListViewItemMoreButton_Click"
+                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                          FontSize=12,
+                                          Glyph=&#xE712;}"
+                    Style="{ThemeResource GhostButtonStyle}" />
+            </Grid>
+        </DataTemplate>
+        <DataTemplate x:Key="FolderSortTemplate" x:DataType="models:ExtendedTrack">
+            <Grid
+                Padding="12"
+                Background="Transparent"
+                ColumnSpacing="12"
+                DoubleTapped="SongListViewItem_DoubleTapped">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+                    Grid.Column="0"
+                    VerticalAlignment="Center"
+                    Text="{x:Bind ParentFolderName}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Grid.Column="1"
+                    VerticalAlignment="Center"
+                    Text="{x:Bind Title}"
+                    TextWrapping="Wrap" />
+                <HyperlinkButton Grid.Column="2" Click="ArtistHyperlibkButton_Click">
+                    <TextBlock Text="{x:Bind Artist}" TextWrapping="Wrap" />
+                </HyperlinkButton>
+                <HyperlinkButton Grid.Column="3" Click="AlbumHyperlibkButton_Click">
+                    <TextBlock Text="{x:Bind Album}" TextWrapping="Wrap" />
+                </HyperlinkButton>
+                <TextBlock
+                    Grid.Column="4"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
+                    TextWrapping="Wrap" />
+                <Button
+                    Grid.Column="5"
+                    HorizontalAlignment="Right"
+                    Click="SongListViewItemMoreButton_Click"
+                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                          FontSize=12,
+                                          Glyph=&#xE712;}"
+                    Style="{ThemeResource GhostButtonStyle}" />
+            </Grid>
+        </DataTemplate>
+
     </Page.Resources>
 
     <Grid>
+
         <Grid Padding="12,4,12,68" ColumnSpacing="12">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
@@ -281,41 +467,60 @@
                     IsOpen="{x:Bind ViewModel.IsDataSyncError, Mode=OneWay}"
                     Severity="Error" />
 
-                <!--  命令览  -->
+                <!--  命令栏  -->
                 <Grid Grid.Row="1" ColumnSpacing="6">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-
-                    <!--  切换选择模式  -->
-                    <ToggleButton
-                        x:Name="SongListViewSelectionModeToggleButton"
-                        Grid.Column="0"
-                        Command="{x:Bind ViewModel.ToggleSongListViewSelectionModeCommand}"
-                        Content="{ui:FontIcon FontSize=16,
-                                              FontFamily={StaticResource SegoeFluentIcons},
-                                              Glyph=&#xE762;}"
-                        Style="{ThemeResource GhostToggleButtonStyle}" />
-
-                    <!--  为多选模式保留  -->
-                    <Grid Grid.Column="1">
+                    <!--  播放  -->
+                    <Grid Grid.Column="0" ColumnSpacing="6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Button
+                            x:Uid="MusicGalleryPageShufflePlay"
+                            Grid.Column="0"
+                            Command="{x:Bind ViewModel.ShuffleCommand}"
+                            Style="{ThemeResource AccentButtonStyle}" />
+                        <Button
+                            x:Uid="MusicGalleryPageRepeatAll"
+                            Grid.Column="1"
+                            Command="{x:Bind ViewModel.RepeatAllCommand}" />
+                    </Grid>
+                    <!--  多选  -->
+                    <Grid
+                        Grid.Column="1"
+                        Padding="0,0,12,0"
+                        Style="{StaticResource CardGridStyle}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition />
                             <ColumnDefinition />
+                            <ColumnDefinition />
                         </Grid.ColumnDefinitions>
+                        <!--  切换选择模式  -->
+                        <ToggleButton
+                            x:Name="SongListViewSelectionModeToggleButton"
+                            Grid.Column="0"
+                            Command="{x:Bind ViewModel.ToggleSongListViewSelectionModeCommand}"
+                            Content="{ui:FontIcon FontSize=16,
+                                                  FontFamily={StaticResource SegoeFluentIcons},
+                                                  Glyph=&#xE762;}"
+                            Style="{ThemeResource GhostToggleButtonStyle}" />
+                        <!--  为多选模式保留  -->
                         <CheckBox
                             x:Name="SelectAllCheckBox"
-                            Grid.Column="0"
-                            MinWidth="20"
+                            Grid.Column="1"
+                            MinWidth="0"
+                            Margin="6,0,0,0"
                             VerticalAlignment="Center"
                             Checked="SelectAllCheckBox_Checked"
                             Unchecked="SelectAllCheckBox_Unchecked"
                             Visibility="{Binding ElementName=SongListViewSelectionModeToggleButton, Path=IsChecked, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
-                        <RichTextBlock Grid.Column="1" VerticalAlignment="Center">
+                        <RichTextBlock Grid.Column="2" VerticalAlignment="Center">
                             <Paragraph>
                                 <Run Text="{x:Bind ViewModel.SelectedTracks.Count, Mode=OneWay}" />
                                 <Run Text="/" />
@@ -323,31 +528,9 @@
                                 <Run Text="{x:Bind ViewModel.SelectedTracksTotalDuration, Mode=OneWay, Converter={StaticResource SecondsToFormattedTimeConverter}}" />
                             </Paragraph>
                         </RichTextBlock>
-
                     </Grid>
-
-                    <AppBarSeparator Grid.Column="2" />
-
-                    <!--  排序选择  -->
-                    <Grid Grid.Column="3" ColumnSpacing="12">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock
-                            x:Uid="MusicGalleryPageSortType"
-                            Grid.Column="0"
-                            VerticalAlignment="Center"
-                            Style="{StaticResource BodyStrongTextBlockStyle}" />
-                        <ComboBox Grid.Column="1" SelectedIndex="{x:Bind ViewModel.SongOrderType, Converter={StaticResource EnumToIntConverter}, Mode=TwoWay}">
-                            <ComboBoxItem x:Uid="MusicGalleryPageSortByTitle" />
-                            <ComboBoxItem x:Uid="MusicGalleryPageSortByAlbum" />
-                            <ComboBoxItem x:Uid="MusicGalleryPageSortByArtist" />
-                            <ComboBoxItem x:Uid="MusicGalleryPageSortByFolder" />
-                        </ComboBox>
-                    </Grid>
-
-                    <Grid Grid.Column="4">
+                    <!--  搜索  -->
+                    <Grid Grid.Column="2">
                         <AutoSuggestBox
                             x:Name="SongSearchBox"
                             x:Uid="MusicGalleryPageSongSearchBox"
@@ -356,7 +539,33 @@
                             QueryIcon="Find"
                             Text="{x:Bind ViewModel.SongSearchQuery, Mode=TwoWay}" />
                     </Grid>
-
+                    <!--  排序  -->
+                    <Grid
+                        Grid.Column="3"
+                        Padding="12,0,0,0"
+                        ColumnSpacing="12"
+                        Style="{StaticResource CardGridStyle}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock
+                            x:Uid="MusicGalleryPageSortType"
+                            Grid.Column="0"
+                            Margin="0,0,0,2"
+                            VerticalAlignment="Center" />
+                        <ComboBox
+                            Grid.Column="1"
+                            Background="Transparent"
+                            BorderBrush="Transparent"
+                            SelectedIndex="{x:Bind ViewModel.SongOrderType, Converter={StaticResource EnumToIntConverter}, Mode=TwoWay}"
+                            SelectionChanged="SortComboBox_SelectionChanged">
+                            <ComboBoxItem x:Uid="MusicGalleryPageSortByTitle" />
+                            <ComboBoxItem x:Uid="MusicGalleryPageSortByAlbum" />
+                            <ComboBoxItem x:Uid="MusicGalleryPageSortByArtist" />
+                            <ComboBoxItem x:Uid="MusicGalleryPageSortByFolder" />
+                        </ComboBox>
+                    </Grid>
                 </Grid>
 
                 <NavigationViewItemSeparator Grid.Row="2" />
@@ -365,6 +574,7 @@
                     <SemanticZoom.ZoomedInView>
                         <ListView
                             x:Name="SongListView"
+                            ItemTemplate="{StaticResource TitleSortTemplate}"
                             ItemsSource="{x:Bind GroupedTracksCVS.View, Mode=OneWay}"
                             SelectionChanged="SongListView_SelectionChanged"
                             SelectionMode="{x:Bind ViewModel.SongListViewSelectionMode, Mode=TwoWay}">
@@ -380,71 +590,6 @@
                                         IsEnabled="{x:Bind ViewModel.SelectedTracks.Count, Mode=OneWay, Converter={StaticResource IntToBoolConverter}}" />
                                 </MenuBarItemFlyout>
                             </ListView.ContextFlyout>
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="models:ExtendedTrack">
-                                    <Grid
-                                        Padding="12"
-                                        Background="Transparent"
-                                        ColumnSpacing="12"
-                                        DoubleTapped="SongListViewItem_DoubleTapped">
-
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="2*" />
-                                            <ColumnDefinition Width="2*" />
-                                            <ColumnDefinition Width="2*" />
-                                            <ColumnDefinition Width="1*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-
-                                        <!--  标题  -->
-                                        <Grid Grid.Column="0">
-                                            <TextBlock
-                                                VerticalAlignment="Center"
-                                                Text="{x:Bind Title}"
-                                                TextWrapping="Wrap" />
-                                        </Grid>
-
-                                        <!--  艺术家  -->
-                                        <Grid Grid.Column="1">
-                                            <HyperlinkButton Click="ArtistHyperlibkButton_Click">
-                                                <ToolTipService.ToolTip>
-                                                    <TextBlock x:Uid="MusicGalleryPageAddToCustomList" />
-                                                </ToolTipService.ToolTip>
-                                                <TextBlock Text="{x:Bind Artist}" TextWrapping="Wrap" />
-                                            </HyperlinkButton>
-                                        </Grid>
-
-                                        <!--  专辑  -->
-                                        <Grid Grid.Column="2">
-                                            <HyperlinkButton Click="AlbumHyperlibkButton_Click">
-                                                <ToolTipService.ToolTip>
-                                                    <TextBlock x:Uid="MusicGalleryPageAddToCustomList" />
-                                                </ToolTipService.ToolTip>
-                                                <TextBlock Text="{x:Bind Album}" TextWrapping="Wrap" />
-                                            </HyperlinkButton>
-                                        </Grid>
-
-                                        <!--  歌曲时长  -->
-                                        <TextBlock
-                                            Grid.Column="3"
-                                            VerticalAlignment="Center"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Text="{x:Bind Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
-                                            TextWrapping="Wrap" />
-
-                                        <!--  更多  -->
-                                        <Button
-                                            Grid.Column="4"
-                                            HorizontalAlignment="Right"
-                                            Click="SongListViewItemMoreButton_Click"
-                                            Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                                                  FontSize=12,
-                                                                  Glyph=&#xE712;}"
-                                            Style="{ThemeResource GhostButtonStyle}" />
-
-                                    </Grid>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
                             <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
                                     <ItemsStackPanel AreStickyGroupHeadersEnabled="True" />

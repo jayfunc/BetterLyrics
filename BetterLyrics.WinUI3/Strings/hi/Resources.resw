@@ -678,8 +678,14 @@
   <data name="MusicGalleryPageRemoveFromPlayingQueue.Text" xml:space="preserve">
     <value>प्लेइंग कतार से हटाएं</value>
   </data>
+  <data name="MusicGalleryPageRepeatAll.Content" xml:space="preserve">
+    <value>सभी को दोहराएं</value>
+  </data>
   <data name="MusicGalleryPageScrollToPlayingItem.Text" xml:space="preserve">
     <value>प्लेइंग आइटम पर स्क्रॉल करें</value>
+  </data>
+  <data name="MusicGalleryPageShufflePlay.Content" xml:space="preserve">
+    <value>शफल करें</value>
   </data>
   <data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve">
     <value>एकल लूप</value>

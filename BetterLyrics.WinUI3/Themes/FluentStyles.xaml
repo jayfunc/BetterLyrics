@@ -104,7 +104,7 @@
         BasedOn="{StaticResource FluentButtonStyle}"
         TargetType="Button">
         <Setter Property="VerticalAlignment" Value="Stretch" />
-        <Setter Property="Padding" Value="8" />
+        <Setter Property="Padding" Value="5,5,5,6" />
         <Setter Property="CornerRadius" Value="4" />
         <Setter Property="BorderThickness" Value="0" />
         <Setter Property="Background" Value="Transparent" />

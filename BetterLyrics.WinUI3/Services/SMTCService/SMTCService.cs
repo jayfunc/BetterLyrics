@@ -146,10 +146,10 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
             };
         }
 
-        private void PlayNextTrack()
+        public void PlayNextTrack()
         {
             var musicGallerySettings = _settingsService.AppSettings.MusicGallerySettings;
-            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
+            _dispatcherQueue.TryEnqueue(async () =>
             {
                 switch (musicGallerySettings.PlaybackOrder)
                 {

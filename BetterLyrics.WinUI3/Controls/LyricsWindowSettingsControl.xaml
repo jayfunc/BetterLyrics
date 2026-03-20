@@ -141,6 +141,7 @@
                                                         x:Uid="SettingsPageDelete"
                                                         Click="DeleteMenuFlyoutItem_Click"
                                                         IsEnabled="{Binding IsDefault, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+                                                    <MenuFlyoutItem x:Uid="SystemTrayResetWindowPosition" Click="ResetPositionMenuFlyoutItem_Click" />
                                                 </MenuBarItemFlyout>
                                             </StackPanel.ContextFlyout>
                                             <uc:DemoWindowGrid LyricsWindowStatus="{Binding}" />

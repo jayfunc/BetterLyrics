@@ -678,8 +678,14 @@
   <data name="MusicGalleryPageRemoveFromPlayingQueue.Text" xml:space="preserve">
     <value>Aus Warteschlange entfernen</value>
   </data>
+  <data name="MusicGalleryPageRepeatAll.Content" xml:space="preserve">
+    <value>Wiederholen Sie alle</value>
+  </data>
   <data name="MusicGalleryPageScrollToPlayingItem.Text" xml:space="preserve">
     <value>Zum aktuellen Titel scrollen</value>
+  </data>
+  <data name="MusicGalleryPageShufflePlay.Content" xml:space="preserve">
+    <value>Mischen</value>
   </data>
   <data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve">
     <value>Einzeltitel wiederholen</value>

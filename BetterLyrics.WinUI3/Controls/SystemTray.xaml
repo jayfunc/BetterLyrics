@@ -56,12 +56,6 @@
                                        Glyph=&#xE713;}" />
                 <MenuFlyoutSeparator />
                 <MenuFlyoutItem
-                    x:Uid="SystemTrayResetWindowPosition"
-                    Command="{x:Bind ViewModel.ResetWindowPositionCommand}"
-                    Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                       Glyph=&#xE923;}" />
-                <MenuFlyoutSeparator />
-                <MenuFlyoutItem
                     x:Uid="SystemTrayRestart"
                     Command="{x:Bind ViewModel.RestartAppCommand}"
                     Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},

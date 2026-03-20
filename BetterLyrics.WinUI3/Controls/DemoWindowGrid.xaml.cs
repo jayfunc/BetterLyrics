@@ -33,7 +33,7 @@ public sealed partial class DemoWindowGrid : UserControl
     private void CloseButton_Click(object sender, RoutedEventArgs e)
     {
         var data = (LyricsWindowStatus)(((FrameworkElement)sender).DataContext);
-        var window = WindowHook.GetWindows<NowPlayingWindow>().FirstOrDefault(x => x.LyricsWindowStatus == data);
+        var window = WindowHook.GetNowPlayingWindow(data);
         window?.CloseWindow();
     }
 

@@ -25,13 +25,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         }
 
         [RelayCommand]
-        private static void ResetWindowPosition()
-        {
-            var lyricsWindow = WindowHook.GetWindow<NowPlayingWindow>();
-            lyricsWindow?.MoveAndResize(100, 100, 800, 500);
-        }
-
-        [RelayCommand]
         private static void OpenSettings()
         {
             WindowHook.OpenOrShowWindow<SettingsWindow>();

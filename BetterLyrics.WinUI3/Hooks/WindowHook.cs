@@ -10,6 +10,7 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using Vanara.PInvoke;
 using Windows.ApplicationModel.Core;
@@ -81,6 +82,11 @@ namespace BetterLyrics.WinUI3.Hooks
                 }
             }
             return default;
+        }
+
+        public static NowPlayingWindow? GetNowPlayingWindow(LyricsWindowStatus status)
+        {
+            return (NowPlayingWindow?)GetWindows<NowPlayingWindow>().FirstOrDefault(x => x.LyricsWindowStatus == status);
         }
 
         public static List<T> GetWindows<T>()
