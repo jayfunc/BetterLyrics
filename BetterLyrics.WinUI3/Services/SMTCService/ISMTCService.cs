@@ -12,6 +12,8 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
         public ObservableCollection<PlayQueueItem> TrackPlayingQueue { get; set; }
         public ExtendedTrack? PlayingTrack { get; set; }
 
+        public void PlayNextTrack();
+
         Task PlayTrackAsync(PlayQueueItem? playQueueItem);
         Task PlayTrackAtAsync(int index);
     }

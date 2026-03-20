@@ -18,12 +18,14 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             CornerRadiusAmount="{x:Bind CornerRadiusAmount, Mode=OneWay}"
-            ShadowAmount="{x:Bind ShadowAmount, Mode=OneWay}" />
+            ShadowAmount="{x:Bind ShadowAmount, Mode=OneWay}"
+            Stretch="{x:Bind Stretch, Mode=OneWay}" />
         <local:ShadowImage
             x:Name="AlbumArtImage"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             CornerRadiusAmount="{x:Bind CornerRadiusAmount, Mode=OneWay}"
-            ShadowAmount="{x:Bind ShadowAmount, Mode=OneWay}" />
+            ShadowAmount="{x:Bind ShadowAmount, Mode=OneWay}"
+            Stretch="{x:Bind Stretch, Mode=OneWay}" />
     </Grid>
 </UserControl>

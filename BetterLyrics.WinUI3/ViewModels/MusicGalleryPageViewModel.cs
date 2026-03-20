@@ -48,6 +48,8 @@ namespace BetterLyrics.WinUI3.ViewModels
         private List<ExtendedTrack> _middleTracks = [];
         // Filtered songs based on search query for current playlist
         private List<ExtendedTrack> _filteredTracks = [];
+        // Sorted songs based on filtered songs
+        private List<ExtendedTrack> _sortedTracks = [];
 
         [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 
@@ -59,6 +61,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty] public partial ObservableCollection<GroupInfoList> GroupedTracks { get; set; } = [];
 
         [ObservableProperty] public partial List<ExtendedTrack> SelectedTracks { get; set; } = [];
+        [ObservableProperty] public partial ExtendedTrack? SelectedFirstTrack { get; set; }
 
         [ObservableProperty] public partial int SelectedTracksTotalDuration { get; set; } = 0;
 
@@ -244,6 +247,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     );
                     break;
             }
+            _sortedTracks = GroupedTracks.SelectMany(x => x.Cast<ExtendedTrack>()).ToList();
         }
 
         private void RefreshTreeView()
@@ -319,6 +323,27 @@ namespace BetterLyrics.WinUI3.ViewModels
                 Icon = "\uE7BC",
                 Name = file.Name
             });
+        }
+
+        [RelayCommand]
+        private void Shuffle()
+        {
+            AppSettings.MusicGallerySettings.PlaybackOrder = PlaybackOrder.Shuffle;
+
+            SMTCService.TrackPlayingQueue.Clear();
+            SMTCService.TrackPlayingQueue.InsertRange(0, _sortedTracks.Select(x => new PlayQueueItem(x)));
+            SMTCService.PlayNextTrack();
+        }
+
+        [RelayCommand]
+        private void RepeatAll(ExtendedTrack? invokedTrack = null)
+        {
+            AppSettings.MusicGallerySettings.PlaybackOrder = PlaybackOrder.RepeatAll;
+            AppSettings.MusicGallerySettings.PlayQueueIndex = invokedTrack == null ? -1 : (_sortedTracks.IndexOf(invokedTrack) - 1);
+
+            SMTCService.TrackPlayingQueue.Clear();
+            SMTCService.TrackPlayingQueue.InsertRange(0, _sortedTracks.Select(x => new PlayQueueItem(x)));
+            SMTCService.PlayNextTrack();
         }
 
         [RelayCommand]

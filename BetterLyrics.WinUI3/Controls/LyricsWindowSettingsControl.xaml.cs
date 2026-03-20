@@ -219,5 +219,12 @@ namespace BetterLyrics.WinUI3.Controls
         {
             ViewModel.AppSettings.WindowBoundsRecords?.Refresh();
         }
+
+        private void ResetPositionMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            var status = (LyricsWindowStatus)((FrameworkElement)sender).DataContext;
+            var window = WindowHook.GetNowPlayingWindow(status);
+            window?.MoveAndResize(new(100, 100, 800, 500));
+        }
     }
 }

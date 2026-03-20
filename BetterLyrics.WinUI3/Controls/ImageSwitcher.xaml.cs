@@ -37,6 +37,15 @@ public sealed partial class ImageSwitcher : UserControl
     public static readonly DependencyProperty SourceProperty =
         DependencyProperty.Register(nameof(Source), typeof(ImageSource), typeof(ImageSwitcher), new PropertyMetadata(null, OnDependencyPropertyChanged));
 
+    public Stretch Stretch
+    {
+        get { return (Stretch)GetValue(StretchProperty); }
+        set { SetValue(StretchProperty, value); }
+    }
+
+    public static readonly DependencyProperty StretchProperty =
+        DependencyProperty.Register(nameof(Stretch), typeof(Stretch), typeof(ImageSwitcher), new PropertyMetadata(Stretch.Uniform));
+
     public ImageSwitchType SwitchType
     {
         get { return (ImageSwitchType)GetValue(SwitchTypeProperty); }

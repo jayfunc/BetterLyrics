@@ -67,6 +67,7 @@ namespace BetterLyrics.WinUI3.Views
         private void SongListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             ViewModel.SelectedTracks = SongListView.SelectedItems.Cast<ExtendedTrack>().ToList();
+            ViewModel.SelectedFirstTrack = ViewModel.SelectedTracks.FirstOrDefault();
             ViewModel.SelectedTracksTotalDuration = ViewModel.SelectedTracks.Select(x => x.Duration).Sum();
             if (SelectAllCheckBox != null)
             {
@@ -168,16 +169,8 @@ namespace BetterLyrics.WinUI3.Views
 
         private void SongListViewItem_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
-            var displayedTracks = SongListView.Items.Cast<ExtendedTrack>();
             var track = (ExtendedTrack)((FrameworkElement)sender).DataContext;
-
-            // Play all the songs
-            _smtcService.TrackPlayingQueue.Clear();
-            ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex = -1;
-
-            _smtcService.TrackPlayingQueue.InsertRange(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex + 1, displayedTracks.Select(x => new PlayQueueItem(x)));
-            ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex = displayedTracks.ToList().IndexOf(track);
-            _ = _smtcService.PlayTrackAtAsync(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex);
+            ViewModel.RepeatAllCommand.Execute(track);
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
@@ -246,6 +239,27 @@ namespace BetterLyrics.WinUI3.Views
                     menuFlyoutItem.Click += ToBeAddedPlaylistsMenuFlyoutItem_Click;
                     AddToCustomListMenuFlyoutSubItem.Items.Add(menuFlyoutItem);
                 }
+            }
+        }
+
+        private void SortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (SongListView == null) return;
+
+            if (sender is ComboBox comboBox)
+            {
+                SongListView.ItemTemplate = comboBox.SelectedIndex switch
+                {
+                    // 标题
+                    0 => (DataTemplate)Resources["TitleSortTemplate"],
+                    // 专辑
+                    1 => (DataTemplate)Resources["AlbumSortTemplate"],
+                    // 艺术家
+                    2 => (DataTemplate)Resources["ArtistSortTemplate"],
+                    // 文件夹
+                    3 => (DataTemplate)Resources["FolderSortTemplate"],
+                    _ => (DataTemplate)Resources["TitleSortTemplate"],
+                };
             }
         }
 
