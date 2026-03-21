@@ -275,6 +275,7 @@ public sealed partial class NowPlayingBar : UserControl
 
     private void BottomCommandGrid_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
     {
+        LyricsOpenHintGrid.Opacity = 1;
         ViewModel.UpdateVolume();
         _isPointerInBottomCommandGrid = true;
         if (IsAutoHideEnabled && BottomCommandGrid.Children.Count != 0)
@@ -286,6 +287,7 @@ public sealed partial class NowPlayingBar : UserControl
 
     private void BottomCommandGrid_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
     {
+        LyricsOpenHintGrid.Opacity = 0;
         _isPointerInBottomCommandGrid = false;
         if (IsAutoHideEnabled && BottomCommandGrid.Children.Count != 0)
         {
