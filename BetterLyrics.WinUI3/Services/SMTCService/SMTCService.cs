@@ -65,6 +65,8 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
 
                 DispatcherQueueHelper.GetUIDispatcherQueue()?.TryEnqueue(() =>
                 {
+                    int savedIndex = _settingsService.AppSettings.MusicGallerySettings.PlayQueueIndex;
+
                     TrackPlayingQueue = [.. playQueue];
 
                     foreach (var item in TrackPlayingQueue)
@@ -74,6 +76,11 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
 
                     TrackPlayingQueue.CollectionChanged += TrackPlayingQueue_CollectionChanged;
                     ApplyPlaybackOrder(_settingsService.AppSettings.MusicGallerySettings.PlaybackOrder);
+
+                    if (savedIndex > 0 && savedIndex < _playbackList.Items.Count)
+                    {
+                        _playbackList.MoveTo((uint)savedIndex);
+                    }
                 });
             });
         }
@@ -82,6 +89,7 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
         {
             if (args.Button == SystemMediaTransportControlsButton.Stop)
             {
+                PlayTrackAt(-1);
                 PlayTrackAt(-1);
             }
         }
@@ -102,10 +110,12 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
         {
             try
             {
+                var session = _mediaPlayer.PlaybackSession;
+
                 _mediaPlayer.SystemMediaTransportControls.UpdateTimelineProperties(new SystemMediaTransportControlsTimelineProperties
                 {
-                    Position = _mediaPlayer.PlaybackSession.Position,
-                    EndTime = _mediaPlayer.PlaybackSession.NaturalDuration
+                    Position = session.Position,
+                    EndTime = session.NaturalDuration
                 });
             }
             catch
@@ -303,6 +313,7 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
         {
             if (index >= 0 && index < _playbackList.Items.Count)
             {
+                _mediaPlayer.SystemMediaTransportControls.IsEnabled = true;
                 _playbackList.MoveTo((uint)index);
                 _mediaPlayer.Play();
             }
