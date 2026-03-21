@@ -56,27 +56,37 @@
 
 ## 🌟 Highlighted Features
 
-- 🎨 **Stunning Visuals & UI**
-  - **Elegant Design:** Smooth, highly personalized style powered by WinUI3 & Win2D.
-  - **Immersive Effects:** Fluid backgrounds, 3D/Fan-shaped lyrics, snowflake particles, and more.
-  - **Deep Customization:** Configure animations, fonts, and behaviors to your taste.
+- 🎨 **Stunning Visuals & Expressive Lyrics**
+  - **Buttery-Smooth UI:** A modern experience powered by WinUI 3 & Win2D, featuring fluid animations and extensive personalization.
+  - **Advanced Lyric Motion:** Every word breathes with the music. Includes **per-syllable highlighting**, **long-note duration glows**, and **perspective-based fading** for distant lines.
+  - **Total Visual Control:** Beyond presets, you have full control to fine-tune lyric animations, fonts, and individual visual behaviors to match your unique taste.
+  - **Immersive Backgrounds:** Beautiful visual effects including Dynamic Fluid, Blur, Fog, and Snowflake particles.
+  - **Audio Visualizer:** Built-in real-time spectrum analyzer that brings your music to life.
+  - **Lyrics Cards:** Generate and share gorgeous lyric cards with 10+ artistic themes (Vinyl, CD, Polaroid, Cyberpunk, and more).
 
-- 🎧 **Versatile Playback & Connectivity**
-  - **Built-in Player:** Play from **Local Drives** or stream via **Network Protocols** (SMB, WebDAV).
-  - **External Integration:** Visualizes music from Spotify, Apple Music, NetEase, and [many others](https://betterlyrics.github.io/player-cfg).
+- 🎧 **Smart Playback & Library Management**
+  - **Versatile Player:** Play from **Local Drives** or stream via **SMB, WebDav, and FTP**. Features **playback memory** to resume where you left off.
+  - **Live Library Sync:** A high-performance media library that stays in sync with your local folder changes in real-time.
+  - **Universal Integration:** Seamlessly visualizes music from Spotify, Apple Music, NetEase, and [many other players](https://betterlyrics.github.io/player-cfg).
+  - **Social Presence:** Show what you're looping with **Discord Rich Presence** and sync your journey via **Last.fm** scrobbling.
 
-- 🌐 **Advanced Lyrics System**
-  - **Offline Translation:** Privacy-focused local machine translation (30+ languages).
-  - **Comprehensive Sources:** .lrc (Standard/Enhanced), .eslrc, .ttml, embedded tags, and online sources (QQ Music, NetEase, LRCLIB).
-  - **Apple Music:** Supports lyrics fetching (Requires token configuration).
+- 🌐 **Precision Lyrics & Plugin System**
+  - **Smart Matching:** Accurate matching with **customizable thresholds**, manual metadata mapping, and persistent source memory.
+  - **Lyrics Refinement:** Features **noise reduction** (filters non-lyric content) and **Simplified/Traditional Chinese conversion**.
+  - **Modular Architecture:** A plugin system for community-driven expansion of lyric sources, translation engines, and transliteration tools (e.g., Romaji).
+  - **Translation & AI Ready:** Built-in offline translation with a framework ready for **Local LLM** (AI) integration via plugins.
+  - **Core Support:** Native handling of `.lrc` (Standard/Enhanced), `.eslrc`, and `.ttml` formats.
 
-- 🪟 **Display Modes for Every Scenario**
-  - **Standard:** Full immersive experience.
-  - **Docked:** A sleek bar attached to your screen edge.
-  - **Desktop Overlay:** Lyrics floating above all apps.
+- 🪟 **Adaptive Modes for Every Setup**
+  - **Standard / Full Screen:** For a pure, immersive focus on the music.
+  - **Desktop / Wallpaper:** Floating "Always-on-Top" window or **embedded behind icons**—perfect for creative **Wallpaper Engine** setups.
+  - **Docked:** A dedicated, sleek Appbar that snaps to the top or bottom edge of your screen.
+  - **Narrow:** Optimized for vertical layouts, featuring track info at the top and a massive, high-density lyric area.
+  - **Taskbar:** Save your desktop real estate by living directly inside the Windows Taskbar.
 
-- 🧠 **Smart Behaviors**
-  - Auto-hides when music pauses.
+- 🧠 **Intelligence & Analytics**
+  - **Smart Automation:** Automatically stays out of your way by hiding when the music stops.
+  - **Stats Dashboard:** A beautiful analytics hub to track your play history and rediscover your top artists and tracks.
 
 ## 🖼️ Screenshots
 
