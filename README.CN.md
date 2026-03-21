@@ -66,7 +66,7 @@
 - 🎧 **智能播放与媒体库管理**
   - **全能播放器：** 支持播放**本地驱动器**或通过 **SMB、WebDav、FTP** 协议远程串流。支持**断点续播**，自动回到上次停止的位置。
   - **媒体库实时同步：** 高性能媒体库能够实时监控并同步本地文件夹的所有变更。
-  - **广泛的外部集成：** 适配并可视化来自 Spotify、Apple Music、网易云音乐及 [众多主流播放器](https://betterlyrics.github.io/player-cfg) 的音频。
+  - **广泛的外部集成：** 适配并可视化来自 Spotify、Apple Music、网易云音乐及 [众多主流播放器](https://betterlyrics.github.io/zh-cn/player-cfg) 的音频。
   - **社交状态展示：** 支持 **Discord Rich Presence** 实时展示听歌状态，并支持 **Last.fm** 数据上报。
 
 - 🌐 **精准歌词与插件系统**
