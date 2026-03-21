@@ -1,5 +1,7 @@
-﻿using BetterLyrics.WinUI3.Models;
+﻿using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Models;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Services.SMTCService
@@ -7,14 +9,15 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
     /// <summary>
     /// Interface for SystemMediaTransportControlsSession Service
     /// </summary>
-    public interface ISMTCService
+    public interface ISMTCService : INotifyPropertyChanged
     {
         public ObservableCollection<PlayQueueItem> TrackPlayingQueue { get; set; }
         public ExtendedTrack? PlayingTrack { get; set; }
 
-        public void PlayNextTrack();
+        void ApplyPlaybackOrder(PlaybackOrder order);
 
-        Task PlayTrackAsync(PlayQueueItem? playQueueItem);
-        Task PlayTrackAtAsync(int index);
+        Task PlayNextTrackAsync();
+        void PlayTrack(PlayQueueItem? playQueueItem);
+        void PlayTrackAt(int index);
     }
 }

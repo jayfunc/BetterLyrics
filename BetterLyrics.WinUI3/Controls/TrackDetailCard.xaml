@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.TrackDetailCard"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:BetterLyrics.WinUI3.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Style="{StaticResource CardGridStyle}">
+        <ScrollViewer>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <controls:OpacityMaskView Grid.Row="0">
+                    <controls:OpacityMaskView.OpacityMask>
+                        <Rectangle>
+                            <Rectangle.Fill>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Offset="0" Color="White" />
+                                    <GradientStop Offset="1" Color="Transparent" />
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </controls:OpacityMaskView.OpacityMask>
+                    <Grid CornerRadius="4">
+                        <local:ImageSwitcher Source="{x:Bind ExtendedTrack.LocalAlbumArtPath, Converter={StaticResource PathToImageConverter}, Mode=OneWay}" Stretch="Uniform" />
+                    </Grid>
+                </controls:OpacityMaskView>
+                <StackPanel
+                    Grid.Row="1"
+                    Padding="12"
+                    Spacing="6">
+                    <local:PropertyRow x:Uid="MusicGalleryPageFileInfoTitle" Value="{x:Bind ExtendedTrack.Title, Mode=OneWay}" />
+                    <local:PropertyRow x:Uid="MusicGalleryPageFileArtist" Value="{x:Bind ExtendedTrack.Artist, Mode=OneWay}" />
+                    <local:PropertyRow x:Uid="MusicGalleryPageFileAlbum" Value="{x:Bind ExtendedTrack.Album, Mode=OneWay}" />
+                    <local:PropertyRow x:Uid="MusicGalleryPageFileInfoYear" Value="{x:Bind ExtendedTrack.Year, Mode=OneWay}" />
+                    <local:PropertyRow x:Uid="MusicGalleryPageFileInfoDuration" Value="{x:Bind ExtendedTrack.Duration, Converter={StaticResource SecondsToFormattedTimeConverter}, Mode=OneWay}" />
+                    <local:PropertyRow x:Uid="MusicGalleryPageFileInfoBitrate" Value="{x:Bind ExtendedTrack.Bitrate, Mode=OneWay}" />
+                    <local:PropertyRow x:Uid="MusicGalleryPageFileInfoSampleRate" Value="{x:Bind ExtendedTrack.SampleRate, Mode=OneWay}" />
+                    <local:PropertyRow x:Uid="MusicGalleryPageFileInfoBitDepth" Value="{x:Bind ExtendedTrack.BitDepth, Mode=OneWay}" />
+                    <local:PropertyRow x:Uid="MusicGalleryPageFileInfoFormat" Value="{x:Bind ExtendedTrack.AudioFormatName, Mode=OneWay}" />
+                    <local:PropertyRow x:Uid="MusicGalleryPageFileInfoEncoder" Value="{x:Bind ExtendedTrack.Encoder, Mode=OneWay}" />
+                    <local:PropertyRow
+                        x:Uid="MusicGalleryPageFileInfoPath"
+                        Link="{x:Bind ExtendedTrack.Uri, Converter={StaticResource UriStringToDecodedAbsoluteUri}, Mode=OneWay}"
+                        Value="{x:Bind ExtendedTrack.Uri, Converter={StaticResource UriStringToDecodedAbsoluteUri}, Mode=OneWay}" />
+                    <local:PropertyRow x:Uid="MusicGalleryPageFileInfoLyrics" Value="{x:Bind ExtendedTrack.RawLyrics, Mode=OneWay}" />
+                </StackPanel>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

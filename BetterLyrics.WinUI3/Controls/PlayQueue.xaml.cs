@@ -41,42 +41,30 @@ namespace BetterLyrics.WinUI3.Controls
             ScrollToPlayingItem();
         }
 
-        private async void PlayingQueueListVireItemGrid_Tapped(object sender, TappedRoutedEventArgs e)
+        private void PlayingQueueListVireItemGrid_Tapped(object sender, TappedRoutedEventArgs e)
         {
             var item = (PlayQueueItem)((FrameworkElement)sender).DataContext;
-            await ViewModel.SMTCService.PlayTrackAsync(item);
+            ViewModel.SMTCService.PlayTrack(item);
         }
 
-        private async void RemoveFromPlayingQueueButton_Click(object sender, RoutedEventArgs e)
+        private void RemoveFromPlayingQueueButton_Click(object sender, RoutedEventArgs e)
         {
-            bool playNext = false;
             var item = (PlayQueueItem)((FrameworkElement)sender).DataContext;
-            int index = ViewModel.SMTCService.TrackPlayingQueue.IndexOf(item);
-            if (item == PlayingQueueListView.SelectedItem)
-            {
-                playNext = true;
-            }
+
             ViewModel.SMTCService.TrackPlayingQueue.Remove(item);
-            if (playNext)
+
+            if (ViewModel.SMTCService.TrackPlayingQueue.Count == 0)
             {
-                if (ViewModel.SMTCService.TrackPlayingQueue.Count == 0)
-                {
-                    index = -1;
-                }
-                else if (index >= ViewModel.SMTCService.TrackPlayingQueue.Count)
-                {
-                    index = ViewModel.SMTCService.TrackPlayingQueue.Count - 1;
-                }
-                ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex = index;
-                await ViewModel.SMTCService.PlayTrackAtAsync(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex);
+                ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex = -1;
+                ViewModel.SMTCService.PlayTrackAt(-1); // 停止
             }
         }
 
-        private async void EmptyPlayingQueueButton_Click(object sender, RoutedEventArgs e)
+        private void EmptyPlayingQueueButton_Click(object sender, RoutedEventArgs e)
         {
-            ViewModel.SMTCService.TrackPlayingQueue.Clear();
+            ViewModel.SMTCService.TrackPlayingQueue.Clear(); // Reset
             ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex = -1;
-            await ViewModel.SMTCService.PlayTrackAtAsync(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex);
+            ViewModel.SMTCService.PlayTrackAt(-1); // 停止
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)

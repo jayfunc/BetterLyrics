@@ -670,6 +670,11 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             await _currentDesiredSession?.ControlSession?.TryPauseAsync();
         }
 
+        public async Task StopAsync()
+        {
+            await _currentDesiredSession?.ControlSession?.TryStopAsync();
+        }
+
         public async Task PreviousAsync()
         {
             await _currentDesiredSession?.ControlSession?.TrySkipPreviousAsync();

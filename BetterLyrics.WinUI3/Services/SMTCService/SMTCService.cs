@@ -8,32 +8,26 @@ using BetterLyrics.WinUI3.Services.FileSystemService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
 using Windows.Media;
 using Windows.Media.Core;
 using Windows.Media.Playback;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using System.Timers;
 
 namespace BetterLyrics.WinUI3.Services.SMTCService
 {
     public partial class SMTCService : BaseViewModel, ISMTCService
     {
         private readonly MediaPlayer _mediaPlayer;
-        private readonly MediaTimelineController _timelineController;
-        private readonly SystemMediaTransportControls _smtc;
-
-        private IRandomAccessStream? _currentStream;
-        private Stream? _currentNetStream;
-        private IUnifiedFileSystem? _currentProvider;
-
+        private readonly MediaPlaybackList _playbackList;
+        private readonly Timer _positionTimer;
         private readonly ISettingsService _settingsService;
         private readonly IFileSystemService _fileSystemService;
 
@@ -46,20 +40,17 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
             _fileSystemService = fileSystemService;
 
             _mediaPlayer = new MediaPlayer();
-            _mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
-            _mediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
-            _mediaPlayer.CommandManager.IsEnabled = false;
+            _playbackList = new MediaPlaybackList();
+            _playbackList.CurrentItemChanged += PlaybackList_CurrentItemChanged;
 
-            _timelineController = _mediaPlayer.TimelineController = new();
-            _timelineController.PositionChanged += TimelineController_PositionChanged;
+            _mediaPlayer.Source = _playbackList;
+            _mediaPlayer.SystemMediaTransportControls.IsStopEnabled = true;
+            _mediaPlayer.SystemMediaTransportControls.ButtonPressed += SystemMediaTransportControls_ButtonPressed;
 
-            _smtc = _mediaPlayer.SystemMediaTransportControls;
-            _smtc.IsPlayEnabled = true;
-            _smtc.IsPauseEnabled = true;
-            _smtc.IsNextEnabled = true;
-            _smtc.IsPreviousEnabled = true;
-            _smtc.ButtonPressed += Smtc_ButtonPressed;
-            _smtc.PlaybackPositionChangeRequested += Smtc_PlaybackPositionChangeRequested;
+            _positionTimer = new Timer(1000);
+            _positionTimer.Elapsed += PositionTimer_Elapsed;
+
+            _mediaPlayer.PlaybackSession.PlaybackStateChanged += PlaybackSession_PlaybackStateChanged;
 
             _ = Task.Run(async () =>
             {
@@ -71,69 +62,209 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
                         var encodedUri = new Uri(x).AbsoluteUri;
                         return new PlayQueueItem(new ExtendedTrack(parsedFiles.FirstOrDefault(y => y.Uri == encodedUri)));
                     });
-                _dispatcherQueue.TryEnqueue(() =>
+
+                DispatcherQueueHelper.GetUIDispatcherQueue()?.TryEnqueue(() =>
                 {
                     TrackPlayingQueue = [.. playQueue];
+
+                    foreach (var item in TrackPlayingQueue)
+                    {
+                        _playbackList.Items.Add(CreatePlaybackItem(item));
+                    }
+
                     TrackPlayingQueue.CollectionChanged += TrackPlayingQueue_CollectionChanged;
+                    ApplyPlaybackOrder(_settingsService.AppSettings.MusicGallerySettings.PlaybackOrder);
                 });
             });
         }
 
-        private void Smtc_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
+        private void SystemMediaTransportControls_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
         {
-            switch (args.Button)
+            if (args.Button == SystemMediaTransportControlsButton.Stop)
             {
-                case SystemMediaTransportControlsButton.Play:
-                    _smtc.PlaybackStatus = MediaPlaybackStatus.Playing;
-                    _timelineController.Resume();
+                PlayTrackAt(-1);
+            }
+        }
+
+        private void PlaybackSession_PlaybackStateChanged(MediaPlaybackSession sender, object args)
+        {
+            if (sender.PlaybackState == MediaPlaybackState.Playing)
+            {
+                _positionTimer.Start();
+            }
+            else
+            {
+                _positionTimer.Stop();
+            }
+        }
+
+        private void PositionTimer_Elapsed(object? sender, ElapsedEventArgs e)
+        {
+            try
+            {
+                _mediaPlayer.SystemMediaTransportControls.UpdateTimelineProperties(new SystemMediaTransportControlsTimelineProperties
+                {
+                    Position = _mediaPlayer.PlaybackSession.Position,
+                    EndTime = _mediaPlayer.PlaybackSession.NaturalDuration
+                });
+            }
+            catch
+            {
+            }
+        }
+
+        public void ApplyPlaybackOrder(PlaybackOrder order)
+        {
+            switch (order)
+            {
+                case PlaybackOrder.Shuffle:
+                    _mediaPlayer.IsLoopingEnabled = false;
+                    _playbackList.AutoRepeatEnabled = true;
+                    _playbackList.ShuffleEnabled = true;
                     break;
-                case SystemMediaTransportControlsButton.Pause:
-                    _smtc.PlaybackStatus = MediaPlaybackStatus.Paused;
-                    _timelineController.Pause();
+                case PlaybackOrder.RepeatAll:
+                    _mediaPlayer.IsLoopingEnabled = false;
+                    _playbackList.AutoRepeatEnabled = true;
+                    _playbackList.ShuffleEnabled = false;
                     break;
-                case SystemMediaTransportControlsButton.Next:
-                    PlayNextTrack();
-                    break;
-                case SystemMediaTransportControlsButton.Previous:
-                    PlayPreviousTrack();
+                case PlaybackOrder.RepeatOne:
+                    _mediaPlayer.IsLoopingEnabled = true;
+                    _playbackList.AutoRepeatEnabled = false;
+                    _playbackList.ShuffleEnabled = false;
                     break;
             }
         }
 
-        private void Smtc_PlaybackPositionChangeRequested(SystemMediaTransportControls sender, PlaybackPositionChangeRequestedEventArgs args)
+        private void PlaybackList_CurrentItemChanged(MediaPlaybackList sender, CurrentMediaPlaybackItemChangedEventArgs args)
         {
-            _timelineController.Position = args.RequestedPlaybackPosition;
-        }
-
-        private void MediaPlayer_MediaOpened(MediaPlayer sender, object args)
-        {
-            _timelineController.Start();
-            _smtc.PlaybackStatus = MediaPlaybackStatus.Playing;
-        }
-
-        private void MediaPlayer_MediaEnded(MediaPlayer sender, object args)
-        {
-            PlayNextTrack();
-        }
-
-        private void TimelineController_PositionChanged(MediaTimelineController sender, object args)
-        {
-            _smtc.UpdateTimelineProperties(new SystemMediaTransportControlsTimelineProperties()
+            var newItem = args.NewItem;
+            DispatcherQueueHelper.GetUIDispatcherQueue()?.TryEnqueue(() =>
             {
-                Position = sender.Position,
-                EndTime = _mediaPlayer.PlaybackSession.NaturalDuration
+                if (newItem != null && newItem.Source.CustomProperties.TryGetValue("QueueItem", out var obj) && obj is PlayQueueItem queueItem)
+                {
+                    PlayingTrack = queueItem.Track;
+                    _settingsService.AppSettings.MusicGallerySettings.PlayQueueIndex = (int)sender.CurrentItemIndex;
+                }
+                else
+                {
+                    PlayingTrack = null;
+                }
             });
         }
 
         private void TrackPlayingQueue_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             _settingsService.AppSettings.MusicGallerySettings.PlayQueuePaths = [.. TrackPlayingQueue.Select(x => x.Track.Uri.ToDecodedAbsoluteUri())];
+
+            switch (e.Action)
+            {
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Add:
+                    if (e.NewItems != null)
+                    {
+                        for (int i = 0; i < e.NewItems.Count; i++)
+                        {
+                            var item = (PlayQueueItem)e.NewItems[i];
+                            _playbackList.Items.Insert(e.NewStartingIndex + i, CreatePlaybackItem(item));
+                        }
+                    }
+                    break;
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Remove:
+                    if (e.OldItems != null)
+                    {
+                        foreach (var _ in e.OldItems)
+                        {
+                            _playbackList.Items.RemoveAt(e.OldStartingIndex);
+                        }
+                    }
+                    break;
+                case System.Collections.Specialized.NotifyCollectionChangedAction.Reset:
+                    _playbackList.Items.Clear();
+                    foreach (var item in TrackPlayingQueue)
+                    {
+                        _playbackList.Items.Add(CreatePlaybackItem(item));
+                    }
+                    break;
+            }
+        }
+
+        private MediaPlaybackItem CreatePlaybackItem(PlayQueueItem queueItem)
+        {
+            var track = queueItem.Track;
+            var binder = new MediaBinder { Token = track.Uri };
+            binder.Binding += Binder_Binding;
+
+            var source = MediaSource.CreateFromMediaBinder(binder);
+            source.CustomProperties["QueueItem"] = queueItem;
+
+            var item = new MediaPlaybackItem(source);
+            var props = item.GetDisplayProperties();
+
+            props.Type = MediaPlaybackType.Music;
+            props.MusicProperties.Title = track.Title ?? track.FileName;
+            props.MusicProperties.Artist = track.Artist ?? "";
+            props.MusicProperties.AlbumTitle = track.Album ?? "";
+            props.MusicProperties.Genres.Add($"{ExtendedGenreFiled.FileName}{Path.GetFileNameWithoutExtension(track.FileName)}");
+
+            if (!string.IsNullOrEmpty(track.LocalAlbumArtPath) && File.Exists(track.LocalAlbumArtPath))
+            {
+                _ = Task.Run(async () =>
+                {
+                    var storageFile = await StorageFile.GetFileFromPathAsync(track.LocalAlbumArtPath);
+                    props.Thumbnail = RandomAccessStreamReference.CreateFromFile(storageFile);
+                    DispatcherQueueHelper.GetUIDispatcherQueue()?.TryEnqueue(() => item.ApplyDisplayProperties(props));
+                });
+            }
+
+            item.ApplyDisplayProperties(props);
+            return item;
+        }
+
+        private async void Binder_Binding(MediaBinder sender, MediaBindingEventArgs args)
+        {
+            var deferral = args.GetDeferral();
+            try
+            {
+                var uri = sender.Token;
+                var track = TrackPlayingQueue.FirstOrDefault(x => x.Track.Uri == uri)?.Track;
+                if (track == null) throw new FileNotFoundException("Track not found in queue", uri);
+
+                var targetFolder = _settingsService.AppSettings.LocalMediaFolders.FirstOrDefault(f =>
+                    track.Uri.StartsWith(f.GetStandardUri().AbsoluteUri, StringComparison.OrdinalIgnoreCase));
+                if (targetFolder == null) throw new FileNotFoundException(null, track.Uri.ToDecodedAbsoluteUri());
+
+                var provider = targetFolder.CreateFileSystem();
+                if (provider == null) return;
+                await provider.ConnectAsync();
+
+                var fileCacheStub = new FilesIndexItem { Uri = uri };
+                var sourceStream = await _fileSystemService.OpenFileAsync(provider, fileCacheStub);
+                if (sourceStream == null) throw new FileNotFoundException(null, uri);
+
+                if (!sourceStream.CanSeek)
+                {
+                    var memStream = new MemoryStream();
+                    await sourceStream.CopyToAsync(memStream);
+                    memStream.Position = 0;
+                    sourceStream.Dispose();
+                    sourceStream = memStream;
+                }
+
+                args.SetStream(sourceStream.AsRandomAccessStream(), GetMimeType(track.FileName));
+            }
+            catch (Exception ex)
+            {
+                DispatcherQueueHelper.GetUIDispatcherQueue()?.TryEnqueue(() =>
+                    GlobalToastManager.Show("Error", ex.Message, InfoBarSeverity.Error));
+            }
+            finally
+            {
+                deferral.Complete();
+            }
         }
 
         private string GetMimeType(string path)
         {
-            var ext = Path.GetExtension(path).ToLower();
-            return ext switch
+            return Path.GetExtension(path).ToLower() switch
             {
                 ".mp3" => "audio/mpeg",
                 ".flac" => "audio/flac",
@@ -146,182 +277,40 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
             };
         }
 
-        public void PlayNextTrack()
+        public async Task PlayNextTrackAsync()
         {
-            var musicGallerySettings = _settingsService.AppSettings.MusicGallerySettings;
-            _dispatcherQueue.TryEnqueue(async () =>
-            {
-                switch (musicGallerySettings.PlaybackOrder)
-                {
-                    case PlaybackOrder.RepeatAll:
-                        if (musicGallerySettings.PlayQueueIndex < TrackPlayingQueue.Count - 1)
-                        {
-                            musicGallerySettings.PlayQueueIndex++;
-                        }
-                        else
-                        {
-                            musicGallerySettings.PlayQueueIndex = 0;
-                        }
-                        break;
-                    case PlaybackOrder.RepeatOne:
-                        //_timelineController.Position = TimeSpan.Zero;
-                        break;
-                    case PlaybackOrder.Shuffle:
-                        if (TrackPlayingQueue.Count > 0)
-                        {
-                            musicGallerySettings.PlayQueueIndex = new Random().Next(0, TrackPlayingQueue.Count);
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                await PlayTrackAtAsync(musicGallerySettings.PlayQueueIndex);
-            });
+            _playbackList.MoveNext();
+            await Task.CompletedTask;
         }
 
-        private void PlayPreviousTrack()
+        public async Task PlayPreviousTrackAsync()
         {
-            var musicGallerySettings = _settingsService.AppSettings.MusicGallerySettings;
-            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
-            {
-                switch (musicGallerySettings.PlaybackOrder)
-                {
-                    case PlaybackOrder.RepeatAll:
-                        if (musicGallerySettings.PlayQueueIndex > 0)
-                        {
-                            musicGallerySettings.PlayQueueIndex--;
-                        }
-                        else
-                        {
-                            musicGallerySettings.PlayQueueIndex = TrackPlayingQueue.Count - 1;
-                        }
-                        break;
-                    case PlaybackOrder.RepeatOne:
-                        //_timelineController.Position = TimeSpan.Zero;
-                        break;
-                    case PlaybackOrder.Shuffle:
-                        if (TrackPlayingQueue.Count > 0)
-                        {
-                            musicGallerySettings.PlayQueueIndex = new Random().Next(0, TrackPlayingQueue.Count);
-                        }
-                        break;
-                    default:
-                        break;
-                }
-                await PlayTrackAtAsync(musicGallerySettings.PlayQueueIndex);
-            });
+            _playbackList.MovePrevious();
+            await Task.CompletedTask;
         }
 
-        public async Task PlayTrackAsync(PlayQueueItem? playQueueItem)
+        public void PlayTrack(PlayQueueItem? playQueueItem)
         {
-            _timelineController.Pause();
-            _mediaPlayer.Source = null;
-
-            // 清理旧资源
-            _currentStream?.Dispose();
-            _currentNetStream?.Dispose();
-            _currentStream = null;
-            _currentNetStream = null;
-
-            if (playQueueItem == null)
+            if (playQueueItem == null) return;
+            var index = TrackPlayingQueue.IndexOf(playQueueItem);
+            if (index >= 0)
             {
-                _smtc.IsEnabled = false;
-                _smtc.DisplayUpdater.ClearAll();
-            }
-            else
-            {
-                PlayingTrack = playQueueItem.Track;
-                _smtc.IsEnabled = true;
-
-                try
-                {
-                    var targetFolder = _settingsService.AppSettings.LocalMediaFolders.FirstOrDefault(f =>
-                    {
-                        var fUri = f.GetStandardUri().AbsoluteUri;
-                        return PlayingTrack.Uri.StartsWith(fUri, StringComparison.OrdinalIgnoreCase);
-                    });
-
-                    if (targetFolder == null)
-                    {
-                        throw new FileNotFoundException(null, PlayingTrack.Uri.ToDecodedAbsoluteUri());
-                    }
-
-                    _currentProvider = targetFolder.CreateFileSystem();
-                    if (_currentProvider == null) return;
-
-                    await _currentProvider.ConnectAsync();
-
-                    var fileCacheStub = new FilesIndexItem
-                    {
-                        Uri = PlayingTrack.Uri
-                    };
-
-                    var sourceStream = await _fileSystemService.OpenFileAsync(_currentProvider, fileCacheStub);
-
-                    if (sourceStream == null)
-                    {
-                        throw new FileNotFoundException(null, fileCacheStub.Uri);
-                    }
-
-                    if (sourceStream.CanSeek)
-                    {
-                        _currentNetStream = sourceStream;
-                    }
-                    else
-                    {
-                        var memStream = new MemoryStream();
-
-                        await sourceStream.CopyToAsync(memStream);
-                        memStream.Position = 0;
-
-                        sourceStream.Dispose();
-
-                        _currentNetStream = memStream;
-                    }
-
-                    _currentStream = _currentNetStream.AsRandomAccessStream();
-
-                    string contentType = GetMimeType(PlayingTrack.FileName);
-                    var mediaSource = MediaSource.CreateFromStream(_currentStream, contentType);
-
-                    _mediaPlayer.Source = mediaSource;
-
-                    var updater = _smtc.DisplayUpdater;
-                    updater.Type = MediaPlaybackType.Music;
-
-                    updater.MusicProperties.Title = PlayingTrack.Title ?? PlayingTrack.FileName;
-                    updater.MusicProperties.Artist = PlayingTrack.Artist ?? "";
-                    updater.MusicProperties.AlbumTitle = PlayingTrack.Album ?? "";
-
-                    updater.MusicProperties.Genres.Clear();
-                    updater.MusicProperties.Genres.Add($"{ExtendedGenreFiled.FileName}{Path.GetFileNameWithoutExtension(PlayingTrack.FileName)}");
-
-                    updater.AppMediaId = Package.Current.Id.FullName;
-
-                    if (!string.IsNullOrEmpty(PlayingTrack.LocalAlbumArtPath) && File.Exists(PlayingTrack.LocalAlbumArtPath))
-                    {
-                        var storageFile = await StorageFile.GetFileFromPathAsync(PlayingTrack.LocalAlbumArtPath);
-                        updater.Thumbnail = RandomAccessStreamReference.CreateFromFile(storageFile);
-                    }
-                    else
-                    {
-                        updater.Thumbnail = null;
-                    }
-
-                    updater.Update();
-                }
-                catch (Exception ex)
-                {
-                    GlobalToastManager.Show("Error", ex.Message, InfoBarSeverity.Error);
-                    _timelineController.Pause();
-                }
+                PlayTrackAt(index);
             }
         }
 
-        public async Task PlayTrackAtAsync(int index)
+        public void PlayTrackAt(int index)
         {
-            await PlayTrackAsync(TrackPlayingQueue.ElementAtOrDefault(index));
+            if (index >= 0 && index < _playbackList.Items.Count)
+            {
+                _playbackList.MoveTo((uint)index);
+                _mediaPlayer.Play();
+            }
+            else if (index == -1) // 停止播放
+            {
+                _mediaPlayer.Pause();
+                _mediaPlayer.SystemMediaTransportControls.IsEnabled = false;
+            }
         }
-
     }
 }

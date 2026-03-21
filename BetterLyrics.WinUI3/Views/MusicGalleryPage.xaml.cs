@@ -39,18 +39,18 @@ namespace BetterLyrics.WinUI3.Views
             await LauncherHelper.SelectAndShowFileAsync(((ExtendedTrack)((HyperlinkButton)sender).DataContext).Uri.ToDecodedAbsoluteUri());
         }
 
-        private async void AddSongToQueueNextMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        private void AddSongToQueueNextMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             bool startPlaying = _smtcService.TrackPlayingQueue.Count == 0;
             _smtcService.TrackPlayingQueue.InsertRange(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex + 1, SongListView.SelectedItems.Cast<ExtendedTrack>().Select(x => new PlayQueueItem(x)));
             if (startPlaying)
             {
                 ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex = ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex + 1;
-                await _smtcService.PlayTrackAtAsync(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex);
+                _smtcService.PlayTrackAt(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex);
             }
         }
 
-        private async void AddSongToQueueEndMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        private void AddSongToQueueEndMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             bool startPlaying = _smtcService.TrackPlayingQueue.Count == 0;
             foreach (var item in SongListView.SelectedItems.Cast<ExtendedTrack>().Select(x => new PlayQueueItem(x)))
@@ -60,7 +60,7 @@ namespace BetterLyrics.WinUI3.Views
             if (startPlaying)
             {
                 ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex = ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex + 1;
-                await _smtcService.PlayTrackAtAsync(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex);
+                _smtcService.PlayTrackAt(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex);
             }
         }
 
@@ -148,12 +148,6 @@ namespace BetterLyrics.WinUI3.Views
             ViewModel.ApplyPlaylist();
         }
 
-        private void SongListViewItemMoreButton_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel.TrackRightTapped = (ExtendedTrack)((FrameworkElement)sender).DataContext;
-            SongFileInfoFlyout.ShowAt(sender as FrameworkElement);
-        }
-
         private void SelectAllCheckBox_Checked(object sender, RoutedEventArgs e)
         {
             if (ViewModel.SongListViewSelectionMode == ListViewSelectionMode.Multiple)
@@ -181,7 +175,7 @@ namespace BetterLyrics.WinUI3.Views
                 _ = Task.Run(async () =>
                 {
                     await Task.Delay(1000);
-                    _ = _smtcService.PlayTrackAtAsync(settings.PlayQueueIndex);
+                    _smtcService.PlayTrackAt(settings.PlayQueueIndex);
                 });
             }
         }
@@ -263,5 +257,24 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
+        private void SongListView_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            var managedElement = (FrameworkElement)e.OriginalSource;
+            var clickedItem = managedElement.DataContext;
+
+            if (clickedItem == null) return;
+
+            if (SongListView.SelectionMode == ListViewSelectionMode.Single)
+            {
+                SongListView.SelectedItem = clickedItem;
+            }
+            else if (SongListView.SelectionMode == ListViewSelectionMode.Multiple)
+            {
+                if (!SongListView.SelectedItems.Contains(clickedItem))
+                {
+                    SongListView.SelectedItems.Add(clickedItem);
+                }
+            }
+        }
     }
 }

@@ -32,7 +32,8 @@ namespace BetterLyrics.WinUI3.ViewModels
     public partial class MusicGalleryPageViewModel : BaseViewModel,
         IRecipient<PropertyChangedMessage<DateTime?>>,
         IRecipient<PropertyChangedMessage<bool>>,
-        IRecipient<PropertyChangedMessage<string>>
+        IRecipient<PropertyChangedMessage<string>>,
+        IRecipient<PropertyChangedMessage<PlaybackOrder>>
     {
         private readonly ISettingsService _settingsService;
         private readonly ILocalizationService _localizationService;
@@ -73,8 +74,6 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty] public partial bool IsDataSyncing { get; set; } = false;
         [ObservableProperty] public partial bool IsDataSyncError { get; set; } = false;
-
-        [ObservableProperty] public partial ExtendedTrack TrackRightTapped { get; set; } = new();
 
         [ObservableProperty] public partial string SongSearchQuery { get; set; } = string.Empty;
 
@@ -212,9 +211,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     t.Title.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
                     t.Artist.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
                     t.Album.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
-                    // 文件名（包含后缀）
                     t.FileName.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
-                    // 文件所在文件夹的路径
                     t.ParentFolderPath.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
         }
 
@@ -330,20 +327,45 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             AppSettings.MusicGallerySettings.PlaybackOrder = PlaybackOrder.Shuffle;
 
-            SMTCService.TrackPlayingQueue.Clear();
-            SMTCService.TrackPlayingQueue.InsertRange(0, _sortedTracks.Select(x => new PlayQueueItem(x)));
-            SMTCService.PlayNextTrack();
+            if (SMTCService.TrackPlayingQueue.Count == 0)
+            {
+                SMTCService.TrackPlayingQueue.Clear(); // Reset
+                foreach (var track in _sortedTracks)
+                {
+                    SMTCService.TrackPlayingQueue.Add(new PlayQueueItem(track));
+                }
+            }
+
+            int queueCount = SMTCService.TrackPlayingQueue.Count;
+            int startIndex = queueCount > 0 ? Random.Shared.Next(0, queueCount) : -1;
+
+            SMTCService.PlayTrackAt(startIndex);
         }
 
         [RelayCommand]
         private void RepeatAll(ExtendedTrack? invokedTrack = null)
         {
             AppSettings.MusicGallerySettings.PlaybackOrder = PlaybackOrder.RepeatAll;
-            AppSettings.MusicGallerySettings.PlayQueueIndex = invokedTrack == null ? -1 : (_sortedTracks.IndexOf(invokedTrack) - 1);
 
-            SMTCService.TrackPlayingQueue.Clear();
-            SMTCService.TrackPlayingQueue.InsertRange(0, _sortedTracks.Select(x => new PlayQueueItem(x)));
-            SMTCService.PlayNextTrack();
+            if (SMTCService.TrackPlayingQueue.Count == 0)
+            {
+                SMTCService.TrackPlayingQueue.Clear();
+                foreach (var track in _sortedTracks)
+                {
+                    SMTCService.TrackPlayingQueue.Add(new PlayQueueItem(track));
+                }
+            }
+
+            if (invokedTrack != null)
+            {
+                var target = SMTCService.TrackPlayingQueue.FirstOrDefault(x => x.Track == invokedTrack);
+                int index = SMTCService.TrackPlayingQueue.IndexOf(target);
+                if (index != -1) SMTCService.PlayTrackAt(index);
+            }
+            else
+            {
+                SMTCService.PlayTrackAt(0);
+            }
         }
 
         [RelayCommand]
@@ -374,9 +396,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         }
 
         [RelayCommand]
-        private async Task StopTrackAsync()
+        private void StopTrack()
         {
-            await SMTCService.PlayTrackAtAsync(-1);
+            SMTCService.PlayTrackAt(-1);
         }
 
         [RelayCommand]
@@ -429,6 +451,17 @@ namespace BetterLyrics.WinUI3.ViewModels
                 if (message.PropertyName == nameof(MediaFolder.Name))
                 {
                     RefreshTreeView();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<PlaybackOrder> message)
+        {
+            if (message.Sender is MusicGallerySettings)
+            {
+                if (message.PropertyName == nameof(MusicGallerySettings.PlaybackOrder))
+                {
+                    SMTCService.ApplyPlaybackOrder(message.NewValue);
                 }
             }
         }
