@@ -663,6 +663,9 @@
   <data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
     <value>Antrean putar kosong</value>
   </data>
+  <data name="MusicGalleryPagePlayingTrackDetail.Content" xml:space="preserve">
+    <value>Informasi tentang trek yang sedang diputar</value>
+  </data>
   <data name="MusicGalleryPagePlaylist.Text" xml:space="preserve">
     <value>Daftar putar</value>
   </data>
@@ -683,6 +686,9 @@
   </data>
   <data name="MusicGalleryPageScrollToPlayingItem.Text" xml:space="preserve">
     <value>Gulir ke item yang diputar</value>
+  </data>
+  <data name="MusicGalleryPageSelectedTrackDetail.Content" xml:space="preserve">
+    <value>Informasi tentang trek yang sedang dipilih</value>
   </data>
   <data name="MusicGalleryPageShufflePlay.Content" xml:space="preserve">
     <value>Kocok</value>

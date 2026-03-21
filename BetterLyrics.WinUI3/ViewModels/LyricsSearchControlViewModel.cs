@@ -219,7 +219,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             try
             {
                 DataPackage dataPackage = new();
-                dataPackage.SetText(Uri.EscapeDataString(uriString));
+                dataPackage.SetUri(new Uri(uriString));
                 Clipboard.SetContent(dataPackage);
 
                 GlobalToastManager.Show("ActionCompleted", null, InfoBarSeverity.Success);

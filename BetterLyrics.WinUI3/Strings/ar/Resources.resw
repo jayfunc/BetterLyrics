@@ -663,6 +663,9 @@
   <data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
     <value>قائمة الانتظار فارغة</value>
   </data>
+  <data name="MusicGalleryPagePlayingTrackDetail.Content" xml:space="preserve">
+    <value>معلومات عن المسار الذي يتم تشغيله حالياً</value>
+  </data>
   <data name="MusicGalleryPagePlaylist.Text" xml:space="preserve">
     <value>قوائم التشغيل</value>
   </data>
@@ -683,6 +686,9 @@
   </data>
   <data name="MusicGalleryPageScrollToPlayingItem.Text" xml:space="preserve">
     <value>التمرير إلى العنصر المشغل</value>
+  </data>
+  <data name="MusicGalleryPageSelectedTrackDetail.Content" xml:space="preserve">
+    <value>معلومات عن المسار المحدد حالياً</value>
   </data>
   <data name="MusicGalleryPageShufflePlay.Content" xml:space="preserve">
     <value>خلط الورق</value>

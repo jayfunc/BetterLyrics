@@ -12,7 +12,7 @@
     Unloaded="UserControl_Unloaded"
     mc:Ignorable="d">
 
-    <Grid>
+    <Grid Style="{StaticResource CardGridStyle}">
         <Grid.TranslationTransition>
             <Vector3Transition />
         </Grid.TranslationTransition>

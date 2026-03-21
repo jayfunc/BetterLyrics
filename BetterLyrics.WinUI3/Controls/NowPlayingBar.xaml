@@ -237,19 +237,6 @@
                         Orientation="Horizontal"
                         Spacing="3">
 
-                        <!--  Stop media session  -->
-                        <Button
-                            Command="{x:Bind ViewModel.StopTrackCommand}"
-                            Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                                  FontSize=16,
-                                                  Glyph=&#xE71A;}"
-                            Style="{ThemeResource GhostButtonStyle}"
-                            Visibility="{x:Bind ShowStopButton, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <ToolTipService.ToolTip>
-                                <TextBlock x:Uid="MusicGalleryPageStopTrack" />
-                            </ToolTipService.ToolTip>
-                        </Button>
-
                         <!--  Volume  -->
                         <Button
                             x:Name="VolumeButton"
@@ -364,6 +351,20 @@
                                         Value="{x:Bind ViewModel.Volume, Mode=TwoWay}" />
                                 </Flyout>
                             </Button.ContextFlyout>
+                        </Button>
+
+                        <!--  Stop media session  -->
+                        <Button
+                            Command="{x:Bind ViewModel.StopTrackCommand}"
+                            Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                  FontSize=16,
+                                                  FontWeight=Bold,
+                                                  Glyph=&#xE7E8;}"
+                            Style="{ThemeResource GhostButtonStyle}"
+                            Visibility="{x:Bind ShowStopButton, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                            <ToolTipService.ToolTip>
+                                <TextBlock x:Uid="MusicGalleryPageStopTrack" />
+                            </ToolTipService.ToolTip>
                         </Button>
 
                         <!--  More  -->

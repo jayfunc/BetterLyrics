@@ -663,6 +663,9 @@
   <data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
     <value>प्लेइंग कतार खाली है</value>
   </data>
+  <data name="MusicGalleryPagePlayingTrackDetail.Content" xml:space="preserve">
+    <value>अभी चल रहे ट्रैक की जानकारी</value>
+  </data>
   <data name="MusicGalleryPagePlaylist.Text" xml:space="preserve">
     <value>प्लेलिस्ट</value>
   </data>
@@ -683,6 +686,9 @@
   </data>
   <data name="MusicGalleryPageScrollToPlayingItem.Text" xml:space="preserve">
     <value>प्लेइंग आइटम पर स्क्रॉल करें</value>
+  </data>
+  <data name="MusicGalleryPageSelectedTrackDetail.Content" xml:space="preserve">
+    <value>अभी चुने गए ट्रैक की जानकारी</value>
   </data>
   <data name="MusicGalleryPageShufflePlay.Content" xml:space="preserve">
     <value>शफल करें</value>

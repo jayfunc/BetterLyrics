@@ -663,6 +663,9 @@
   <data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
     <value>คิวการเล่นว่างเปล่า</value>
   </data>
+  <data name="MusicGalleryPagePlayingTrackDetail.Content" xml:space="preserve">
+    <value>ข้อมูลเกี่ยวกับเพลงที่กำลังเล่นอยู่ในขณะนี้</value>
+  </data>
   <data name="MusicGalleryPagePlaylist.Text" xml:space="preserve">
     <value>เพลย์ลิสต์</value>
   </data>
@@ -683,6 +686,9 @@
   </data>
   <data name="MusicGalleryPageScrollToPlayingItem.Text" xml:space="preserve">
     <value>เลื่อนไปยังรายการที่เล่นอยู่</value>
+  </data>
+  <data name="MusicGalleryPageSelectedTrackDetail.Content" xml:space="preserve">
+    <value>ข้อมูลเกี่ยวกับเส้นทางที่เลือกในปัจจุบัน</value>
   </data>
   <data name="MusicGalleryPageShufflePlay.Content" xml:space="preserve">
     <value>สับ</value>

@@ -15,7 +15,6 @@ namespace BetterLyrics.WinUI3.ViewModels
     public partial class NowPlayingBarViewModel : BaseViewModel
     {
         private readonly IGSMTCService _gsmtcService;
-        private readonly ISMTCService _smtcService;
         private readonly ISettingsService _settingsService;
 
         [ObservableProperty] public partial AppSettings AppSettings { get; set; }
@@ -28,10 +27,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty] public partial double TimelineSliderThumbSeconds { get; set; } = 0;
 
-        public NowPlayingBarViewModel(IGSMTCService mediaSessionsService, ISMTCService smtcService, ISettingsService settingsService)
+        public NowPlayingBarViewModel(IGSMTCService mediaSessionsService, ISettingsService settingsService)
         {
             _gsmtcService = mediaSessionsService;
-            _smtcService = smtcService;
             _settingsService = settingsService;
 
             AppSettings = _settingsService.AppSettings;
@@ -77,7 +75,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private async Task StopTrackAsync()
         {
-            await _smtcService.PlayTrackAtAsync(-1);
+            await _gsmtcService.StopAsync();
         }
 
         [RelayCommand]

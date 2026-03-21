@@ -12,6 +12,7 @@ using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media.Imaging;
+using System.Numerics;
 using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -116,13 +117,16 @@ namespace BetterLyrics.WinUI3.Views
 
         private void NowPlayingBar_PlayingQueueClick(object sender, System.EventArgs e)
         {
-            if (PlayQueueFlyout.IsOpen)
+            if (NowPlayingPage.Visibility == Visibility.Visible)
             {
-                PlayQueueFlyout.Hide();
-            }
-            else
-            {
-                PlayQueueFlyout.ShowAt(NowPlayingBar);
+                if (PlayQueueFlyout.IsOpen)
+                {
+                    PlayQueueFlyout.Hide();
+                }
+                else
+                {
+                    PlayQueueFlyout.ShowAt(NowPlayingBar);
+                }
             }
         }
 

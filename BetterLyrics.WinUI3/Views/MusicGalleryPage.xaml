@@ -6,6 +6,7 @@
     xmlns:atl="using:ATL"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:enums="using:BetterLyrics.WinUI3.Enums"
     xmlns:ext="using:BetterLyrics.WinUI3.Extensions"
     xmlns:helper="using:BetterLyrics.WinUI3.Helper"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
@@ -40,7 +41,6 @@
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
                 <TextBlock
@@ -60,14 +60,6 @@
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Text="{x:Bind Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
                     TextWrapping="Wrap" />
-                <Button
-                    Grid.Column="4"
-                    HorizontalAlignment="Right"
-                    Click="SongListViewItemMoreButton_Click"
-                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                          FontSize=12,
-                                          Glyph=&#xE712;}"
-                    Style="{ThemeResource GhostButtonStyle}" />
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="ArtistSortTemplate" x:DataType="models:ExtendedTrack">
@@ -81,7 +73,6 @@
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
                 <HyperlinkButton Grid.Column="0" Click="ArtistHyperlibkButton_Click">
@@ -101,14 +92,6 @@
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Text="{x:Bind Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
                     TextWrapping="Wrap" />
-                <Button
-                    Grid.Column="4"
-                    HorizontalAlignment="Right"
-                    Click="SongListViewItemMoreButton_Click"
-                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                          FontSize=12,
-                                          Glyph=&#xE712;}"
-                    Style="{ThemeResource GhostButtonStyle}" />
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="AlbumSortTemplate" x:DataType="models:ExtendedTrack">
@@ -123,13 +106,13 @@
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
                 <Grid
                     Grid.Column="0"
                     Width="48"
                     Height="48"
+                    HorizontalAlignment="Left"
                     CornerRadius="4">
                     <Image
                         Height="48"
@@ -153,14 +136,6 @@
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Text="{x:Bind Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
                     TextWrapping="Wrap" />
-                <Button
-                    Grid.Column="5"
-                    HorizontalAlignment="Right"
-                    Click="SongListViewItemMoreButton_Click"
-                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                          FontSize=12,
-                                          Glyph=&#xE712;}"
-                    Style="{ThemeResource GhostButtonStyle}" />
             </Grid>
         </DataTemplate>
         <DataTemplate x:Key="FolderSortTemplate" x:DataType="models:ExtendedTrack">
@@ -175,7 +150,6 @@
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="1*" />
-                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
                 <TextBlock
@@ -200,14 +174,6 @@
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Text="{x:Bind Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
                     TextWrapping="Wrap" />
-                <Button
-                    Grid.Column="5"
-                    HorizontalAlignment="Right"
-                    Click="SongListViewItemMoreButton_Click"
-                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                          FontSize=12,
-                                          Glyph=&#xE712;}"
-                    Style="{ThemeResource GhostButtonStyle}" />
             </Grid>
         </DataTemplate>
 
@@ -215,11 +181,11 @@
 
     <Grid>
 
-        <Grid Padding="12,4,12,68" ColumnSpacing="12">
+        <Grid Padding="0,0,0,66" ColumnSpacing="6">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
 
             <ScrollViewer x:Name="LeftSidePanel" Grid.Column="0">
@@ -235,8 +201,8 @@
                     <TextBlock
                         x:Uid="MusicGalleryPagePlaylist"
                         Grid.Row="0"
-                        Margin="1,8,0,6"
-                        Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        Margin="12"
+                        Style="{StaticResource BodyStrongTextBlockStyle}" />
 
                     <Grid Grid.Row="1">
                         <Grid.RowDefinitions>
@@ -350,12 +316,10 @@
 
                     <StackPanel
                         Grid.Row="3"
+                        Margin="12"
                         Orientation="Horizontal"
                         Spacing="3">
-                        <TextBlock
-                            x:Uid="MusicGalleryPageFolder"
-                            Margin="1,4,0,6"
-                            Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <TextBlock x:Uid="MusicGalleryPageFolder" Style="{StaticResource BodyStrongTextBlockStyle}" />
                         <Button
                             Command="{x:Bind ViewModel.OpenMediaSettingsCommand}"
                             Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
@@ -380,10 +344,21 @@
                                     Background="Transparent"
                                     IsExpanded="{x:Bind IsExpanded, Mode=TwoWay}"
                                     ItemsSource="{x:Bind SubFolders}">
-                                    <StackPanel Orientation="Horizontal" Spacing="10">
-                                        <FontIcon FontSize="16" Glyph="{x:Bind SourceType, Converter={StaticResource FileSourceTypeToIconConverter}}" />
-                                        <TextBlock VerticalAlignment="Center" Text="{x:Bind FolderName}" />
-                                    </StackPanel>
+                                    <Grid ColumnSpacing="10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <FontIcon
+                                            Grid.Column="0"
+                                            FontSize="16"
+                                            Glyph="{x:Bind SourceType, Converter={StaticResource FileSourceTypeToIconConverter}}" />
+                                        <TextBlock
+                                            Grid.Column="1"
+                                            VerticalAlignment="Center"
+                                            Text="{x:Bind FolderName}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
                                 </TreeViewItem>
                             </DataTemplate>
                         </TreeView.ItemTemplate>
@@ -392,11 +367,9 @@
                 </Grid>
             </ScrollViewer>
 
-            <controls:ContentSizer Grid.Column="1" TargetControl="{x:Bind LeftSidePanel}" />
-
             <Grid
                 x:Name="SongViewer"
-                Grid.Column="2"
+                Grid.Column="1"
                 RowSpacing="3">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" MinHeight="34" />
@@ -404,55 +377,6 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
-                <Grid.Tag>
-                    <Flyout
-                        x:Name="SongFileInfoFlyout"
-                        FlyoutPresenterStyle="{StaticResource FlyoutGhostStyle}"
-                        Placement="Bottom"
-                        ShouldConstrainToRootBounds="False">
-                        <ScrollViewer MaxWidth="300" MaxHeight="600">
-                            <Grid>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="*" />
-                                </Grid.RowDefinitions>
-                                <controls:OpacityMaskView Grid.Row="0" MaxHeight="300">
-                                    <controls:OpacityMaskView.OpacityMask>
-                                        <Rectangle>
-                                            <Rectangle.Fill>
-                                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                                                    <GradientStop Offset="0" Color="White" />
-                                                    <GradientStop Offset="1" Color="Transparent" />
-                                                </LinearGradientBrush>
-                                            </Rectangle.Fill>
-                                        </Rectangle>
-                                    </controls:OpacityMaskView.OpacityMask>
-                                    <Image Source="{x:Bind ViewModel.TrackRightTapped.LocalAlbumArtPath, Mode=OneWay, Converter={StaticResource PathToImageConverter}}" Stretch="Uniform" />
-                                </controls:OpacityMaskView>
-                                <StackPanel
-                                    Grid.Row="1"
-                                    Padding="12"
-                                    Spacing="6">
-                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoTitle" Value="{x:Bind ViewModel.TrackRightTapped.Title, Mode=OneWay}" />
-                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileArtist" Value="{x:Bind ViewModel.TrackRightTapped.Artist, Mode=OneWay}" />
-                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileAlbum" Value="{x:Bind ViewModel.TrackRightTapped.Album, Mode=OneWay}" />
-                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoYear" Value="{x:Bind ViewModel.TrackRightTapped.Year, Mode=OneWay}" />
-                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoDuration" Value="{x:Bind ViewModel.TrackRightTapped.Duration, Converter={StaticResource SecondsToFormattedTimeConverter}, Mode=OneWay}" />
-                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoBitrate" Value="{x:Bind ViewModel.TrackRightTapped.Bitrate, Mode=OneWay}" />
-                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoSampleRate" Value="{x:Bind ViewModel.TrackRightTapped.SampleRate, Mode=OneWay}" />
-                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoBitDepth" Value="{x:Bind ViewModel.TrackRightTapped.BitDepth, Mode=OneWay}" />
-                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoFormat" Value="{x:Bind ViewModel.TrackRightTapped.AudioFormatName, Mode=OneWay}" />
-                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoEncoder" Value="{x:Bind ViewModel.TrackRightTapped.Encoder, Mode=OneWay}" />
-                                    <uc:PropertyRow
-                                        x:Uid="MusicGalleryPageFileInfoPath"
-                                        Link="{x:Bind ViewModel.TrackRightTapped.Uri, Mode=OneWay, Converter={StaticResource UriStringToDecodedAbsoluteUri}}"
-                                        Value="{x:Bind ViewModel.TrackRightTapped.Uri, Mode=OneWay, Converter={StaticResource UriStringToDecodedAbsoluteUri}}" />
-                                    <uc:PropertyRow x:Uid="MusicGalleryPageFileInfoLyrics" Value="{x:Bind ViewModel.TrackRightTapped.RawLyrics, Mode=OneWay}" />
-                                </StackPanel>
-                            </Grid>
-                        </ScrollViewer>
-                    </Flyout>
-                </Grid.Tag>
 
                 <InfoBar
                     x:Uid="MusicGalleryPageDataSync"
@@ -468,7 +392,10 @@
                     Severity="Error" />
 
                 <!--  命令栏  -->
-                <Grid Grid.Row="1" ColumnSpacing="6">
+                <Grid
+                    Grid.Row="1"
+                    Margin="6,0"
+                    ColumnSpacing="6">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" />
@@ -576,6 +503,7 @@
                             x:Name="SongListView"
                             ItemTemplate="{StaticResource TitleSortTemplate}"
                             ItemsSource="{x:Bind GroupedTracksCVS.View, Mode=OneWay}"
+                            RightTapped="SongListView_RightTapped"
                             SelectionChanged="SongListView_SelectionChanged"
                             SelectionMode="{x:Bind ViewModel.SongListViewSelectionMode, Mode=TwoWay}">
                             <ListView.ContextFlyout>
@@ -607,6 +535,9 @@
                                     </GroupStyle.HeaderTemplate>
                                 </GroupStyle>
                             </ListView.GroupStyle>
+                            <ListView.ItemContainerStyle>
+                                <Style BasedOn="{StaticResource ListViewStretchedItemContainerStyle}" TargetType="ListViewItem" />
+                            </ListView.ItemContainerStyle>
                         </ListView>
                     </SemanticZoom.ZoomedInView>
 
@@ -638,6 +569,45 @@
                     </StackPanel>
                 </Grid>
 
+            </Grid>
+
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <controls:SwitchPresenter Value="{x:Bind ViewModel.AppSettings.MusicGallerySettings.TrackInfoDisplayTarget, Mode=OneWay}">
+                        <controls:SwitchPresenter.ContentTransitions>
+                            <TransitionCollection>
+                                <AddDeleteThemeTransition />
+                            </TransitionCollection>
+                        </controls:SwitchPresenter.ContentTransitions>
+                        <controls:Case Value="{x:Bind enums:TrackInfoDisplayTarget.SelectedItem}">
+                            <uc:TrackDetailCard ExtendedTrack="{x:Bind ViewModel.SelectedFirstTrack, Mode=OneWay}" />
+                        </controls:Case>
+                        <controls:Case Value="{x:Bind enums:TrackInfoDisplayTarget.PlayingItem}">
+                            <uc:TrackDetailCard ExtendedTrack="{x:Bind ViewModel.SMTCService.PlayingTrack, Mode=OneWay}" />
+                        </controls:Case>
+                    </controls:SwitchPresenter>
+                    <controls:Segmented
+                        Margin="12"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Bottom"
+                        SelectedIndex="{x:Bind ViewModel.AppSettings.MusicGallerySettings.TrackInfoDisplayTarget, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                        <controls:SegmentedItem Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE962;}">
+                            <ToolTipService.ToolTip>
+                                <ToolTip x:Uid="MusicGalleryPageSelectedTrackDetail" />
+                            </ToolTipService.ToolTip>
+                        </controls:SegmentedItem>
+                        <controls:SegmentedItem Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEC4F;}">
+                            <ToolTipService.ToolTip>
+                                <ToolTip x:Uid="MusicGalleryPagePlayingTrackDetail" />
+                            </ToolTipService.ToolTip>
+                        </controls:SegmentedItem>
+                    </controls:Segmented>
+                </Grid>
+                <uc:PlayQueue x:Name="PlayQueue" Grid.Row="1" />
             </Grid>
 
         </Grid>

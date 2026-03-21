@@ -663,6 +663,9 @@
   <data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
     <value>Oynatma kuyruğu boş</value>
   </data>
+  <data name="MusicGalleryPagePlayingTrackDetail.Content" xml:space="preserve">
+    <value>Çalmakta olan parça hakkında bilgi</value>
+  </data>
   <data name="MusicGalleryPagePlaylist.Text" xml:space="preserve">
     <value>Çalma Listeleri</value>
   </data>
@@ -683,6 +686,9 @@
   </data>
   <data name="MusicGalleryPageScrollToPlayingItem.Text" xml:space="preserve">
     <value>Oynatılan öğeye kaydırın</value>
+  </data>
+  <data name="MusicGalleryPageSelectedTrackDetail.Content" xml:space="preserve">
+    <value>O anda seçili olan parça hakkında bilgi</value>
   </data>
   <data name="MusicGalleryPageShufflePlay.Content" xml:space="preserve">
     <value>Karıştır</value>

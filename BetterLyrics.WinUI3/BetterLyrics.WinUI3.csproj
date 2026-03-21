@@ -69,6 +69,7 @@
 		<None Remove="Controls\ShortcutTextBox.xaml" />
 		<None Remove="Controls\StatsDashboardControl.xaml" />
 		<None Remove="Controls\SystemTray.xaml" />
+		<None Remove="Controls\TrackDetailCard.xaml" />
 		<None Remove="Controls\WindowSettingsControl.xaml" />
 		<None Remove="Themes\DefaultAccentSplitButtonStyle.xaml" />
 		<None Remove="Themes\DefaultListViewItemStyle.xaml" />
@@ -487,6 +488,11 @@
 	  <Content Update="Assets\Banner.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Controls\TrackDetailCard.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Themes\FluentAccentSplitButtonStyle.xaml">

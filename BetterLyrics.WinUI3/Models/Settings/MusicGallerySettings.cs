@@ -7,6 +7,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
     public partial class MusicGallerySettings : ObservableRecipient
     {
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial PlaybackOrder PlaybackOrder { get; set; } = PlaybackOrder.RepeatAll;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial TrackInfoDisplayTarget TrackInfoDisplayTarget { get; set; } = TrackInfoDisplayTarget.PlayingItem;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial ObservableCollection<string> PlayQueuePaths { get; set; } = [];
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int PlayQueueIndex { get; set; } = -1;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool AutoOpen { get; set; } = false;
