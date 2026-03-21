@@ -42,7 +42,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         LyricsData? CurrentLyricsData { get; }
 
         BitmapImage? AlbumArtBitmapImage { get; }
-        IRandomAccessStream? AlbumArtBitmapStream { get; }
+        byte[]? AlbumArtBytes { get; }
 
         Task<NowPlayingPalette> CalculateAlbumArtThemeColorsAsync(LyricsWindowStatus lyricsWindowStatus, Color backdropAccentColor, CancellationToken token = default);
         Task<List<Color>> GetAlbumArtAccentColorsAsync(PaletteGeneratorType paletteGeneratorType, bool isDark, CancellationToken token = default);

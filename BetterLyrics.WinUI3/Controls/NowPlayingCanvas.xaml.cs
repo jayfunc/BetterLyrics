@@ -49,7 +49,7 @@ namespace BetterLyrics.WinUI3.Controls
         IRecipient<PropertyChangedMessage<TextAlignmentType>>,
         IRecipient<PropertyChangedMessage<LyricsFontWeight>>,
         IRecipient<PropertyChangedMessage<string>>,
-        IRecipient<PropertyChangedMessage<IRandomAccessStream?>>,
+        IRecipient<PropertyChangedMessage<byte[]?>>,
         IRecipient<PropertyChangedMessage<NowPlayingPalette>>
     {
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
@@ -806,14 +806,17 @@ namespace BetterLyrics.WinUI3.Controls
 
             try
             {
-                var originalStream = _gsmtcService.AlbumArtBitmapStream;
-                if (originalStream == null) return;
+                // 直接获取缓存的纯字节数组
+                var imageBytes = _gsmtcService.AlbumArtBytes;
+                if (imageBytes == null || imageBytes.Length == 0) return;
 
                 using (var localMemoryStream = new InMemoryRandomAccessStream())
                 {
-                    originalStream.Seek(0);
-
-                    await RandomAccessStream.CopyAsync(originalStream, localMemoryStream);
+                    using (var writer = new DataWriter(localMemoryStream.GetOutputStreamAt(0)))
+                    {
+                        writer.WriteBytes(imageBytes);
+                        await writer.StoreAsync();
+                    }
 
                     localMemoryStream.Seek(0);
 
@@ -825,7 +828,7 @@ namespace BetterLyrics.WinUI3.Controls
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"ReloadCoverBackgroundResourcesAsync: {ex.Message}");
+                System.Diagnostics.Debug.WriteLine($"ReloadCoverBackgroundResourcesAsync: {ex}");
             }
         }
 
@@ -1076,11 +1079,11 @@ namespace BetterLyrics.WinUI3.Controls
             }
         }
 
-        public void Receive(PropertyChangedMessage<IRandomAccessStream?> message)
+        public void Receive(PropertyChangedMessage<byte[]?> message)
         {
             if (message.Sender is IGSMTCService)
             {
-                if (message.PropertyName == nameof(IGSMTCService.AlbumArtBitmapStream))
+                if (message.PropertyName == nameof(IGSMTCService.AlbumArtBytes))
                 {
                     _ = ReloadCoverBackgroundResourcesAsync();
                 }

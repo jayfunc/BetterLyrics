@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Windows.Graphics.Imaging;
 using Windows.Storage.Streams;
 using Windows.UI;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace BetterLyrics.WinUI3.Services.GSMTCService
 {
@@ -25,7 +26,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         private BitmapDecoder? _albumArtBitmapDecoder = null;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial BitmapImage? AlbumArtBitmapImage { get; set; }
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial IRandomAccessStream? AlbumArtBitmapStream { get; set; }
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial byte[]? AlbumArtBytes { get; set; }
 
         private void UpdateAlbumArt(bool ignoreCache = false)
         {
@@ -64,7 +65,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             token.ThrowIfCancellationRequested();
 
             AlbumArtBitmapImage = bitmapImage;
-            AlbumArtBitmapStream = ImageHelper.ToIRandomAccessStream(buffer);
+            AlbumArtBytes = buffer.ToArray();
         }
 
         public async Task<NowPlayingPalette> CalculateAlbumArtThemeColorsAsync(LyricsWindowStatus lyricsWindowStatus, Color backdropAccentColor, CancellationToken token = default)

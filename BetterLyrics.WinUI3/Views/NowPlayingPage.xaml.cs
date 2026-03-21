@@ -651,8 +651,9 @@ namespace BetterLyrics.WinUI3.Views
 
         private async void SaveAlbumArtButton_Click(object sender, RoutedEventArgs e)
         {
-            var sourceStream = ViewModel.MediaSessionsService.AlbumArtBitmapStream;
-            if (sourceStream == null) return;
+            var imageBytes = ViewModel.MediaSessionsService.AlbumArtBytes;
+
+            if (imageBytes == null || imageBytes.Length == 0) return;
 
             var window = WindowHook.GetWindows<NowPlayingWindow>().FirstOrDefault(x => x.LyricsWindowStatus == LyricsWindowStatus);
             if (window == null) return;
@@ -667,16 +668,17 @@ namespace BetterLyrics.WinUI3.Views
 
             if (file != null)
             {
-                using (IRandomAccessStream destStream = await file.OpenAsync(FileAccessMode.ReadWrite))
+                try
                 {
-                    sourceStream.Seek(0);
-                    await RandomAccessStream.CopyAsync(sourceStream, destStream);
-                    await destStream.FlushAsync();
+                    await FileIO.WriteBytesAsync(file, imageBytes);
 
                     GlobalToastManager.Show("ActionCompleted", null, InfoBarSeverity.Success);
                 }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"SaveAlbumArtButton_Click: {ex}");
+                }
             }
-
         }
 
         private void Page_Unloaded(object sender, RoutedEventArgs e)
