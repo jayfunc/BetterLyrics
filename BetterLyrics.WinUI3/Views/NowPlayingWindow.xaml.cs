@@ -46,7 +46,8 @@ namespace BetterLyrics.WinUI3.Views
         IRecipient<PropertyChangedMessage<TaskbarPlacement>>,
         IRecipient<PropertyChangedMessage<PaletteGeneratorType>>
     {
-        private SimpleTimer? _simpleTimer = null;
+        private SimpleTimer? _alwaysOnTopPollingTimer = null;
+        private SimpleTimer? _underlayColorTimer = null;
         private OverlayInputHelper? _overlayInputHelper;
         private TaskbarHook? _taskbarHook;
         private WindowMessageMonitor? _wmm;
@@ -133,17 +134,16 @@ namespace BetterLyrics.WinUI3.Views
             OnTitleBarAreaChanged();
             OnIsLockedChanged();
             OnIsPinToTaskbarChanged();
-            OnIsAlwaysHideUnlockButtonChanged();
             OnIsWorkAreaChanged();
             OnIsMaximizedChanged();
             OnIsFullscreenChanged();
         }
 
-        public void UpdateBackdropAccentColor(nint hwnd)
+        public void UpdateBackdropAccentColor()
         {
             var oldValue = _backdropAccentColor;
             var newValue = Helper.ColorHelper.GetAccentColor(
-                hwnd,
+                WindowNative.GetWindowHandle(this),
                 LyricsWindowStatus.MonitorDeviceName,
                 LyricsWindowStatus.EnvironmentSampleMode);
             // 防止不必要刷新导致界面不流畅
@@ -154,31 +154,24 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        public void InitFgWindowWatcher()
+        public void InitTimers()
         {
-            var hwnd = WindowNative.GetWindowHandle(this);
-
-            _simpleTimer = new(() =>
+            _alwaysOnTopPollingTimer = new(() =>
             {
-                DispatcherQueueHelper.GetUIDispatcherQueue()?.TryEnqueue(() =>
+                DispatcherQueue.TryEnqueue(() =>
                 {
-                    if (LyricsWindowStatus.IsAlwaysOnTop &&
-                    LyricsWindowStatus.IsAlwaysOnTopPolling &&
-                    this.AppWindow != null &&
-                    this.AppWindow.Presenter is OverlappedPresenter presenter)
-                    {
-                        presenter.IsAlwaysOnTop = true;
-                    }
-                    if (LyricsWindowStatus.IsAdaptToEnvironment)
-                    {
-                        UpdateBackdropAccentColor(hwnd);
-                    }
+                    this.SetIsAlwaysOnTop(true);
                 });
             });
-            if (LyricsWindowStatus.IsAdaptToEnvironment)
+            OnIsAlwaysOnTopPollingChanged();
+
+            _underlayColorTimer = new(() =>
             {
-                UpdateBackdropAccentColor(hwnd);
-            }
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    UpdateBackdropAccentColor();
+                });
+            });
             OnIsAdaptToEnvironmentChanged();
         }
 
@@ -198,7 +191,7 @@ namespace BetterLyrics.WinUI3.Views
             if (LyricsWindowStatus.IsWorkArea)
             {
                 LyricsWindowStatus.IsLocked = true;
-                this.UpdateBackdropAccentColor(WindowNative.GetWindowHandle(this));
+                UpdateBackdropAccentColor();
             }
             else
             {
@@ -216,10 +209,26 @@ namespace BetterLyrics.WinUI3.Views
         {
             this.SetIsAlwaysOnTop(LyricsWindowStatus.IsAlwaysOnTop);
             PinFillFontIcon.Opacity = LyricsWindowStatus.IsAlwaysOnTop ? 1 : 0;
+            OnIsAlwaysOnTopPollingChanged();
+        }
+
+        private void OnIsAlwaysOnTopPollingChanged()
+        {
+            _alwaysOnTopPollingTimer?.Stop();
+            LyricsWindowStatus.IsAlwaysOnTopPollingTimerRunning = false;
+
+            if (LyricsWindowStatus.IsAlwaysOnTop && LyricsWindowStatus.IsAlwaysOnTopPolling)
+            {
+                _alwaysOnTopPollingTimer?.Start();
+                LyricsWindowStatus.IsAlwaysOnTopPollingTimerRunning = true;
+            }
         }
 
         private void OnIsLockedChanged()
         {
+            UnlockButton.Visibility = LyricsWindowStatus.IsAlwaysHideUnlockButton ? Visibility.Collapsed : Visibility.Visible;
+            StopOverlayInputHelper();
+
             if (LyricsWindowStatus.IsLocked)
             {
                 LockToggleButtonContainer.Visibility = Visibility.Visible;
@@ -227,9 +236,9 @@ namespace BetterLyrics.WinUI3.Views
                 {
                     WorkerWHook.PinToDesktop(this);
                 }
-                else
+                else if (!LyricsWindowStatus.IsAlwaysHideUnlockButton)
                 {
-                    RestartOverlayInputHelper();
+                    StartOverlayInputHelper();
                 }
             }
             else
@@ -239,10 +248,6 @@ namespace BetterLyrics.WinUI3.Views
                 if (LyricsWindowStatus.IsWallpaper)
                 {
                     WorkerWHook.UnpinFromDesktop(this);
-                }
-                else
-                {
-                    StopOverlayInputHelper();
                 }
             }
 
@@ -266,11 +271,6 @@ namespace BetterLyrics.WinUI3.Views
             {
                 _taskbarHook = new(LyricsWindowStatus.TaskbarPlacement, OnTaskbarFreeBoundsChanged);
             }
-        }
-
-        private void OnIsAlwaysHideUnlockButtonChanged()
-        {
-            UnlockButton.Visibility = LyricsWindowStatus.IsAlwaysHideUnlockButton ? Visibility.Collapsed : Visibility.Visible;
         }
 
         private void OnIsFullscreenChanged()
@@ -302,10 +302,17 @@ namespace BetterLyrics.WinUI3.Views
 
         private void OnIsAdaptToEnvironmentChanged()
         {
-            _simpleTimer?.Stop();
+            _underlayColorTimer?.Stop();
+            LyricsWindowStatus.IsUnderlayColorTimerRunning = false;
+
             if (LyricsWindowStatus.IsAdaptToEnvironment)
             {
-                _simpleTimer?.Start();
+                _underlayColorTimer?.Start();
+                LyricsWindowStatus.IsUnderlayColorTimerRunning = true;
+            }
+            else
+            {
+                UpdateBackdropAccentColor();
             }
         }
 
@@ -371,8 +378,11 @@ namespace BetterLyrics.WinUI3.Views
             _wmm?.Dispose();
             _wmm = null;
 
-            _simpleTimer?.Dispose();
-            _simpleTimer = null;
+            _alwaysOnTopPollingTimer?.Dispose();
+            _alwaysOnTopPollingTimer = null;
+
+            _underlayColorTimer?.Dispose();
+            _underlayColorTimer = null;
 
             _taskbarHook?.Dispose();
             _taskbarHook = null;
@@ -530,12 +540,14 @@ namespace BetterLyrics.WinUI3.Views
                 UnlockButton.Opacity = 0;
             };
             _overlayInputHelper.Start();
+            LyricsWindowStatus.IsOverlayInputHelperRunning = true;
         }
 
         public void StopOverlayInputHelper()
         {
             _overlayInputHelper?.Stop();
             _overlayInputHelper = null;
+            LyricsWindowStatus.IsOverlayInputHelperRunning = false;
         }
 
         public void RestartOverlayInputHelper()
@@ -618,6 +630,10 @@ namespace BetterLyrics.WinUI3.Views
                 {
                     OnIsAlwaysOnTopChanged();
                 }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.IsAlwaysOnTopPolling))
+                {
+                    OnIsAlwaysOnTopPollingChanged();
+                }
                 else if (message.PropertyName == nameof(LyricsWindowStatus.IsLocked))
                 {
                     OnIsLockedChanged();
@@ -645,7 +661,7 @@ namespace BetterLyrics.WinUI3.Views
                 }
                 else if (message.PropertyName == nameof(LyricsWindowStatus.IsAlwaysHideUnlockButton))
                 {
-                    OnIsAlwaysHideUnlockButtonChanged();
+                    OnIsLockedChanged();
                 }
                 else if (message.PropertyName == nameof(LyricsWindowStatus.KeepNowPlayingBarInteractiveWhenLocked))
                 {

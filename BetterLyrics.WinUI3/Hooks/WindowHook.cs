@@ -190,7 +190,7 @@ namespace BetterLyrics.WinUI3.Hooks
                 {
                     var lyricsWindow = (NowPlayingWindow)window;
                     lyricsWindow.InitStatus();
-                    lyricsWindow.InitFgWindowWatcher();
+                    lyricsWindow.InitTimers();
                 }
             }
             else
@@ -493,12 +493,9 @@ namespace BetterLyrics.WinUI3.Hooks
                             window.SetIsWorkArea(true);
                             window.MoveAndResize(status.GetWindowBoundsWhenWorkArea());
                         }
-                        if (status.IsLocked)
+                        if (status.IsLocked && !status.IsAlwaysHideUnlockButton && status.IsWallpaper)
                         {
-                            if (!status.IsWallpaper)
-                            {
-                                window.RestartOverlayInputHelper();
-                            }
+                            window.RestartOverlayInputHelper();
                         }
                     }
                     else
