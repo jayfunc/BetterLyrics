@@ -453,6 +453,9 @@
   <data name="LyricsSharePageGroupClassic" xml:space="preserve">
     <value>Conception classique</value>
   </data>
+  <data name="LyricsSharePageGroupModernVision" xml:space="preserve">
+    <value>Vision moderne</value>
+  </data>
   <data name="LyricsSharePageGroupPhysical" xml:space="preserve">
     <value>Physique</value>
   </data>
@@ -756,11 +759,17 @@
   <data name="Pinyin" xml:space="preserve">
     <value>Pinyin (Mandarin)</value>
   </data>
+  <data name="PlaybackSettingsControlBetterLyricsRunningInBackground.Message" xml:space="preserve">
+    <value>Le lecteur intégré de BetterLyrics fonctionne toujours en arrière-plan et le logiciel ignore les autres sources de lecture. Pour écouter d'autres sources de lecture, allez dans la Galerie musicale et cliquez sur le bouton d'arrêt dans le coin inférieur droit.</value>
+  </data>
   <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
     <value>Charge des configurations externes pour lire la progression de la lecture directement à partir de la mémoire du processus cible. À utiliser avec précaution ; le développeur n'est pas responsable de la sécurité des configurations tierces.</value>
   </data>
   <data name="PlaybackSettingsControlMemoryReader.Header" xml:space="preserve">
     <value>Adaptateur de lecteur de mémoire</value>
+  </data>
+  <data name="PlaybackSettingsControlStopBetterLyricsPlayer.Content" xml:space="preserve">
+    <value>Arrêtez maintenant</value>
   </data>
   <data name="PlaylistViewFailed" xml:space="preserve">
     <value>Impossible d'afficher les pistes car le chemin n'existe pas</value>

@@ -96,6 +96,13 @@ namespace BetterLyrics.WinUI3.ViewModels
         }
 
         [RelayCommand]
+        private async Task StopTrackAsync()
+        {
+            // 该方法应仅在针对内置播放器的 InfoBar 打开时调用
+            await GSMTCService.StopAsync();
+        }
+
+        [RelayCommand]
         private async Task ImportMemoryReaderConfigAsync()
         {
             string[] fileTypeFilter = [".json"];

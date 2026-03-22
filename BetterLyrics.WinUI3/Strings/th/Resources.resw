@@ -453,6 +453,9 @@
   <data name="LyricsSharePageGroupClassic" xml:space="preserve">
     <value>ดีไซน์คลาสสิก</value>
   </data>
+  <data name="LyricsSharePageGroupModernVision" xml:space="preserve">
+    <value>วิสัยทัศน์สมัยใหม่</value>
+  </data>
   <data name="LyricsSharePageGroupPhysical" xml:space="preserve">
     <value>กายภาพ</value>
   </data>
@@ -756,11 +759,17 @@
   <data name="Pinyin" xml:space="preserve">
     <value>พินอิน (จีนกลาง)</value>
   </data>
+  <data name="PlaybackSettingsControlBetterLyricsRunningInBackground.Message" xml:space="preserve">
+    <value>ผู้เล่นในตัวของ BetterLyrics ยังคงทำงานอยู่ในพื้นหลัง และซอฟต์แวร์จะละเลยแหล่งเล่นอื่น ๆ หากต้องการฟังแหล่งเล่นอื่น ๆ ให้ไปที่แกลเลอรีเพลง และคลิกที่ปุ่มหยุดที่มุมขวาล่าง</value>
+  </data>
   <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
     <value>โหลดการกำหนดค่าภายนอกเพื่ออ่านความคืบหน้าการเล่นโดยตรงจากหน่วยความจำของกระบวนการเป้าหมาย โปรดใช้ด้วยความระมัดระวัง; ผู้พัฒนาไม่รับผิดชอบต่อความปลอดภัยของการกำหนดค่าของบุคคลที่สาม</value>
   </data>
   <data name="PlaybackSettingsControlMemoryReader.Header" xml:space="preserve">
     <value>อะแดปเตอร์สำหรับอ่านหน่วยความจำ</value>
+  </data>
+  <data name="PlaybackSettingsControlStopBetterLyricsPlayer.Content" xml:space="preserve">
+    <value>หยุดเดี๋ยวนี้</value>
   </data>
   <data name="PlaylistViewFailed" xml:space="preserve">
     <value>ไม่สามารถดูแทร็กได้เนื่องจากเส้นทางไม่มีอยู่</value>

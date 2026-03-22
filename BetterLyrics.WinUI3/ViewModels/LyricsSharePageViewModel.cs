@@ -52,7 +52,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private void LoadStyleData()
         {
-            // 经典
+            // 经典设计
             var classicGroup = new StyleGroup(_localizationService.GetLocalizedString("LyricsSharePageGroupClassic"), new[]
             {
                 new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleMinimal"), StyleKey = "LyricsCardMinimalStyle", IsChecked = true },
@@ -60,7 +60,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleMagazine"), StyleKey = "LyricsCardMagazineStyle" }
             });
 
-            // 实体
+            // 实体质感
             var physicalGroup = new StyleGroup(_localizationService.GetLocalizedString("LyricsSharePageGroupPhysical"), new[]
             {
                 new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleVinyl"), StyleKey = "LyricsCardVinylStyle" },
@@ -70,7 +70,14 @@ namespace BetterLyrics.WinUI3.ViewModels
                 new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleReceipt"), StyleKey = "LyricsCardReceiptStyle" }
             });
 
-            // 复古
+            // 时光印记
+            var tracesOfTimeGroup = new StyleGroup(_localizationService.GetLocalizedString("LyricsSharePageGroupTracesOfTime"), new[]
+            {
+                new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleJournal"), StyleKey = "LyricsCardJournalStyle" },
+                new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleStickyNote"), StyleKey = "LyricsCardStickyNoteStyle" }
+            });
+
+            // 数码怀旧
             var retroGroup = new StyleGroup(_localizationService.GetLocalizedString("LyricsSharePageGroupRetro"), new[]
             {
                 new StyleItem { DisplayText = "iPod", StyleKey = "LyricsCardPodStyle" },
@@ -79,14 +86,24 @@ namespace BetterLyrics.WinUI3.ViewModels
                 new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleRetroMSN"), StyleKey = "LyricsCardRetroMSNStyle" }
             });
 
-            // 氛围
+            // 现代视窗
+            var modernGroup = new StyleGroup(_localizationService.GetLocalizedString("LyricsSharePageGroupModernVision"), new[]
+            {
+                new StyleItem { DisplayText = "QQ", StyleKey = "LyricsCardQQStyle" },
+                new StyleItem { DisplayText = "微信", StyleKey = "LyricsCardWeChatStyle" },
+                new StyleItem { DisplayText = "WhatsApp", StyleKey = "LyricsCardWhatsAppStyle" },
+                new StyleItem { DisplayText = "Telegram", StyleKey = "LyricsCardTelegramStyle" },
+                new StyleItem { DisplayText = "LINE", StyleKey = "LyricsCardLINEStyle" },
+            });
+
+            // 氛围创意
             var atmosphereGroup = new StyleGroup(_localizationService.GetLocalizedString("LyricsSharePageGroupAtmosphere"), new[]
             {
                 new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleCinematic"), StyleKey = "LyricsCardCinematicStyle" },
                 new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleCyberpunk"), StyleKey = "LyricsCardCyberpunkStyle" }
             });
 
-            // 国风
+            // 国风雅韵
             var chineseEleganceGroup = new StyleGroup(_localizationService.GetLocalizedString("LyricsSharePageGroupChineseElegance"), new[]
             {
                 new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleInkWash"), StyleKey = "LyricsCardInkWashStyle" },
@@ -95,21 +112,15 @@ namespace BetterLyrics.WinUI3.ViewModels
                 new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleDunhuang"), StyleKey = "LyricsCardDunhuangStyle" }
             });
 
-            // 岁月
-            var tracesOfTimeGroup = new StyleGroup(_localizationService.GetLocalizedString("LyricsSharePageGroupTracesOfTime"), new[]
-            {
-                new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleJournal"), StyleKey = "LyricsCardJournalStyle" },
-                new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleStickyNote"), StyleKey = "LyricsCardStickyNoteStyle" }
-            });
-
             StyleGroups = new ObservableCollection<StyleGroup>
             {
                 classicGroup,
                 physicalGroup,
+                tracesOfTimeGroup,
                 retroGroup,
+                modernGroup,
                 atmosphereGroup,
                 chineseEleganceGroup,
-                tracesOfTimeGroup
             };
 
             SwitchStyle(classicGroup[0]);

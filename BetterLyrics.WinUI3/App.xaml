@@ -31,17 +31,22 @@
                 <ResourceDictionary Source="/Themes/LyricsCardDunhuangStyle.xaml" />
                 <ResourceDictionary Source="/Themes/LyricsCardInkWashStyle.xaml" />
                 <ResourceDictionary Source="/Themes/LyricsCardJournalStyle.xaml" />
+                <ResourceDictionary Source="/Themes/LyricsCardLINEStyle.xaml" />
                 <ResourceDictionary Source="/Themes/LyricsCardMagazineStyle.xaml" />
                 <ResourceDictionary Source="/Themes/LyricsCardMinimalStyle.xaml" />
                 <ResourceDictionary Source="/Themes/LyricsCardPodStyle.xaml" />
                 <ResourceDictionary Source="/Themes/LyricsCardPolaroidStyle.xaml" />
+                <ResourceDictionary Source="/Themes/LyricsCardQQStyle.xaml" />
                 <ResourceDictionary Source="/Themes/LyricsCardReceiptStyle.xaml" />
                 <ResourceDictionary Source="/Themes/LyricsCardRetroMSNStyle.xaml" />
                 <ResourceDictionary Source="/Themes/LyricsCardRetroQQStyle.xaml" />
                 <ResourceDictionary Source="/Themes/LyricsCardStickyNoteStyle.xaml" />
                 <ResourceDictionary Source="/Themes/LyricsCardSwissStyle.xaml" />
+                <ResourceDictionary Source="/Themes/LyricsCardTelegramStyle.xaml" />
                 <ResourceDictionary Source="/Themes/LyricsCardTicketStyle.xaml" />
                 <ResourceDictionary Source="/Themes/LyricsCardVinylStyle.xaml" />
+                <ResourceDictionary Source="/Themes/LyricsCardWeChatStyle.xaml" />
+                <ResourceDictionary Source="/Themes/LyricsCardWhatsAppStyle.xaml" />
                 <ResourceDictionary Source="/Themes/LyricsCardWindowsPhoneStyle.xaml" />
 
             </ResourceDictionary.MergedDictionaries>

@@ -453,6 +453,9 @@
   <data name="LyricsSharePageGroupClassic" xml:space="preserve">
     <value>क्लासिक डिज़ाइन</value>
   </data>
+  <data name="LyricsSharePageGroupModernVision" xml:space="preserve">
+    <value>आधुनिक दृष्टि</value>
+  </data>
   <data name="LyricsSharePageGroupPhysical" xml:space="preserve">
     <value>शारीरिक</value>
   </data>
@@ -756,11 +759,17 @@
   <data name="Pinyin" xml:space="preserve">
     <value>पिनयिन (मंडारिन)</value>
   </data>
+  <data name="PlaybackSettingsControlBetterLyricsRunningInBackground.Message" xml:space="preserve">
+    <value>BetterLyrics का बिल्ट-इन प्लेयर अभी भी बैकग्राउंड में चल रहा है, और सॉफ्टवेयर दूसरे प्लेबैक सोर्स को इग्नोर कर देगा। दूसरे प्लेबैक सोर्स सुनने के लिए, म्यूज़िक गैलरी में जाएं और नीचे दाएं कोने में स्टॉप बटन पर क्लिक करें</value>
+  </data>
   <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
     <value>टारगेट प्रोसेस मेमोरी से सीधे प्लेबैक प्रोग्रेस पढ़ने के लिए एक्सटर्नल कॉन्फ़िगरेशन लोड करता है। कृपया सावधानी से इस्तेमाल करें; डेवलपर थर्ड-पार्टी कॉन्फ़िगरेशन की सुरक्षा के लिए ज़िम्मेदार नहीं है।</value>
   </data>
   <data name="PlaybackSettingsControlMemoryReader.Header" xml:space="preserve">
     <value>मेमोरी रीडर एडाप्टर</value>
+  </data>
+  <data name="PlaybackSettingsControlStopBetterLyricsPlayer.Content" xml:space="preserve">
+    <value>तुरंत रुकें</value>
   </data>
   <data name="PlaylistViewFailed" xml:space="preserve">
     <value>ट्रैक देखने में असमर्थ क्योंकि पथ मौजूद नहीं है</value>

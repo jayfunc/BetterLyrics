@@ -453,6 +453,9 @@
   <data name="LyricsSharePageGroupClassic" xml:space="preserve">
     <value>クラシック</value>
   </data>
+  <data name="LyricsSharePageGroupModernVision" xml:space="preserve">
+    <value>現代のビジョン</value>
+  </data>
   <data name="LyricsSharePageGroupPhysical" xml:space="preserve">
     <value>フィジカル</value>
   </data>
@@ -756,11 +759,17 @@
   <data name="Pinyin" xml:space="preserve">
     <value>ピンイン (中国語)</value>
   </data>
+  <data name="PlaybackSettingsControlBetterLyricsRunningInBackground.Message" xml:space="preserve">
+    <value>BetterLyrics内蔵プレーヤーはバックグラウンドで動作しており、他の再生ソースは無視されます。他の再生ソースを聴くには、ミュージック・ギャラリーに行き、右下の停止ボタンをクリックしてください。</value>
+  </data>
   <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
     <value>外部設定を読み込み、対象プロセスのメモリから直接再生進捗を読み取ります。使用には十分ご注意ください。サードパーティ製設定の安全性に関して、開発者は一切の責任を負いません。</value>
   </data>
   <data name="PlaybackSettingsControlMemoryReader.Header" xml:space="preserve">
     <value>メモリーリーダーアダプター</value>
+  </data>
+  <data name="PlaybackSettingsControlStopBetterLyricsPlayer.Content" xml:space="preserve">
+    <value>今すぐやめる</value>
   </data>
   <data name="PlaylistViewFailed" xml:space="preserve">
     <value>パスが存在しないため、曲を表示できません</value>

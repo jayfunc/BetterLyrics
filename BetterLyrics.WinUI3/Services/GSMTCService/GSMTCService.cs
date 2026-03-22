@@ -212,21 +212,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         private bool IsMediaSourceEnabled(string id)
         {
             var found = _settingsService.AppSettings.MediaSourceProvidersInfo.FirstOrDefault(s => s.Provider == id);
-            if (_settingsService.AppSettings.MusicGallerySettings.LyricsWindowStatus.WindowStatus == WindowStatus.Opened)
-            {
-                if (PlayerIdHelper.IsBetterLyrics(found?.Provider))
-                {
-                    return found?.IsEnabled ?? true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            else
-            {
-                return found?.IsEnabled ?? true;
-            }
+            return found?.IsEnabled ?? true;
         }
 
         private bool IsMediaSourceTimelineSyncEnabled(string? id)
@@ -460,6 +446,22 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
         private MediaManager.MediaSession? GetCurrentDesiredSession()
         {
+            // 检查内置播放器会话是否存在
+            var selfSession = _mediaManager.CurrentMediaSessions.FirstOrDefault(x => PlayerIdHelper.IsBetterLyrics(x.Key));
+            var selfSessionKey = selfSession.Key;
+            // 合法且设置中处于启用状态则
+            if (!string.IsNullOrEmpty(selfSessionKey) && IsMediaSourceEnabled(selfSessionKey))
+            {
+                // 直接返回，即使当前聚焦的会话非内置播放器
+                return selfSession.Value;
+            }
+
+            // 若音乐库处于开启状态且未开启内置播放源会话
+            if (_settingsService.AppSettings.MusicGallerySettings.LyricsWindowStatus.WindowStatus == WindowStatus.Opened)
+            {
+                return null;
+            }
+
             var focusedSession = _mediaManager.GetFocusedSession();
             if (focusedSession != null && IsMediaSourceEnabled(focusedSession.Id))
             {
