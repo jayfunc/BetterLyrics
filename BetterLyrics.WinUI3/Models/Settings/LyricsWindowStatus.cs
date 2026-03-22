@@ -79,6 +79,9 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial FPS FPS { get; set; } = FPS.Hz60;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowDebugOverlay { get; set; } = false;
+        [JsonIgnore][ObservableProperty] public partial bool IsOverlayInputHelperRunning { get; set; } = false;
+        [JsonIgnore][ObservableProperty] public partial bool IsAlwaysOnTopPollingTimerRunning { get; set; } = false;
+        [JsonIgnore][ObservableProperty] public partial bool IsUnderlayColorTimerRunning { get; set; } = false;
 
         [JsonIgnore][ObservableProperty][NotifyPropertyChangedRecipients] public partial WindowStatus WindowStatus { get; set; } = WindowStatus.Closed;
         [JsonIgnore] public DispatcherQueueTimer? VisibilityTimer { get; set; }

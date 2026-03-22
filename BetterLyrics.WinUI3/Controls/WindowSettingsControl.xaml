@@ -362,6 +362,18 @@
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.ShowDebugOverlay, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
+                    <Expander
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch"
+                        Header="Timers"
+                        IsExpanded="True">
+                        <StackPanel>
+                            <local:PropertyRow Header="IsOverlayInputHelperRunning" Value="{x:Bind LyricsWindowStatus.IsOverlayInputHelperRunning, Mode=OneWay}" />
+                            <local:PropertyRow Header="IsAlwaysOnTopPollingTimerRunning" Value="{x:Bind LyricsWindowStatus.IsAlwaysOnTopPollingTimerRunning, Mode=OneWay}" />
+                            <local:PropertyRow Header="IsUnderlayColorTimerRunning" Value="{x:Bind LyricsWindowStatus.IsUnderlayColorTimerRunning, Mode=OneWay}" />
+                        </StackPanel>
+                    </Expander>
+
                 </StackPanel>
             </Grid>
         </ScrollViewer>
