@@ -9,13 +9,11 @@
         <Grid
             x:Name="QQCardRoot"
             Background="WhiteSmoke"
-            CornerRadius="8">
+            CornerRadius="8,8,0,0">
             <Grid
                 Width="450"
                 MinHeight="600"
-                Margin="20"
-                Background="#0055e4"
-                CornerRadius="8,8,0,0">
+                Background="#0055e4">
                 <Border
                     Background="#dfdfdf"
                     BorderBrush="#0055e4"

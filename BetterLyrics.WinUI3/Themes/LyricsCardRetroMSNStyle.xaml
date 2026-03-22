@@ -11,12 +11,9 @@
             Width="450"
             MinHeight="600"
             Background="WhiteSmoke"
-            CornerRadius="8">
+            CornerRadius="8,8,0,0">
 
-            <Grid
-                Margin="20"
-                Background="#EBF3FA"
-                CornerRadius="8,8,0,0">
+            <Grid Background="#EBF3FA">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30" />
                     <RowDefinition Height="24" />

@@ -453,6 +453,9 @@
   <data name="LyricsSharePageGroupClassic" xml:space="preserve">
     <value>Desain Klasik</value>
   </data>
+  <data name="LyricsSharePageGroupModernVision" xml:space="preserve">
+    <value>Visi Modern</value>
+  </data>
   <data name="LyricsSharePageGroupPhysical" xml:space="preserve">
     <value>Fisik</value>
   </data>
@@ -756,11 +759,17 @@
   <data name="Pinyin" xml:space="preserve">
     <value>Pinyin (Mandarin)</value>
   </data>
+  <data name="PlaybackSettingsControlBetterLyricsRunningInBackground.Message" xml:space="preserve">
+    <value>Pemutar bawaan BetterLyrics masih berjalan di latar belakang, dan perangkat lunak akan mengabaikan sumber pemutaran lainnya. Untuk mendengarkan sumber pemutaran lain, buka Galeri Musik dan klik tombol berhenti di sudut kanan bawah</value>
+  </data>
   <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
     <value>Memuat konfigurasi eksternal untuk membaca kemajuan pemutaran secara langsung dari memori proses target. Harap gunakan dengan hati-hati; pengembang tidak bertanggung jawab atas keamanan konfigurasi pihak ketiga.</value>
   </data>
   <data name="PlaybackSettingsControlMemoryReader.Header" xml:space="preserve">
     <value>Adaptor Pembaca Memori</value>
+  </data>
+  <data name="PlaybackSettingsControlStopBetterLyricsPlayer.Content" xml:space="preserve">
+    <value>Berhenti sekarang.</value>
   </data>
   <data name="PlaylistViewFailed" xml:space="preserve">
     <value>Tidak dapat melihat trek karena jalur tidak ada</value>

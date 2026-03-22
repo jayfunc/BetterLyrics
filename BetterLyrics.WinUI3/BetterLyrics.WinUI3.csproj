@@ -89,6 +89,7 @@
 		<None Remove="Themes\InteractiveListViewHeaderStyle.xaml" />
 		<None Remove="Themes\LyricsCardInkWashStyle.xaml" />
 		<None Remove="Themes\LyricsCardMinimalStyle.xaml" />
+		<None Remove="Themes\LyricsCardQQStyle.xaml" />
 		<None Remove="Views\LyricsSearchWindow.xaml" />
 		<None Remove="Views\LyricsSharePage.xaml" />
 		<None Remove="Views\LyricsShareWindow.xaml" />
@@ -325,6 +326,15 @@
 		<Page Update="Styles\LyricsCardPolaroidStyle.xaml">
 		  <SubType>Designer</SubType>
 		</Page>
+		<Page Update="Themes\LyricsCardLINEStyle.xaml">
+		  <SubType>Designer</SubType>
+		</Page>
+		<Page Update="Themes\LyricsCardTelegramStyle.xaml">
+		  <SubType>Designer</SubType>
+		</Page>
+		<Page Update="Themes\LyricsCardWhatsAppStyle.xaml">
+		  <SubType>Designer</SubType>
+		</Page>
 	</ItemGroup>
 	<ItemGroup>
 		<Page Update="Views\LyricsWindowSwitchWindow.xaml">
@@ -488,6 +498,11 @@
 	  <Content Update="Assets\Banner.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Themes\LyricsCardQQStyle.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Controls\TrackDetailCard.xaml">

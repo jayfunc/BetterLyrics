@@ -453,6 +453,9 @@
   <data name="LyricsSharePageGroupClassic" xml:space="preserve">
     <value>經典設計</value>
   </data>
+  <data name="LyricsSharePageGroupModernVision" xml:space="preserve">
+    <value>現代視野</value>
+  </data>
   <data name="LyricsSharePageGroupPhysical" xml:space="preserve">
     <value>實體質感</value>
   </data>
@@ -756,11 +759,17 @@
   <data name="Pinyin" xml:space="preserve">
     <value>漢語拼音</value>
   </data>
+  <data name="PlaybackSettingsControlBetterLyricsRunningInBackground.Message" xml:space="preserve">
+    <value>BetterLyrics 內建播放器仍在背景中執行，軟體會忽略其他播放來源。若要聆聽其他播放來源，請前往音樂圖庫，然後按一下右下角的停止按鈕</value>
+  </data>
   <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
     <value>載入外部配置以直接從目標軟體記憶體讀取播放進度。請謹慎使用，開發者不對第三方配置的安全性負責。</value>
   </data>
   <data name="PlaybackSettingsControlMemoryReader.Header" xml:space="preserve">
     <value>記憶體讀取適配器</value>
+  </data>
+  <data name="PlaybackSettingsControlStopBetterLyricsPlayer.Content" xml:space="preserve">
+    <value>立即停止</value>
   </data>
   <data name="PlaylistViewFailed" xml:space="preserve">
     <value>無法檢視曲目，因為路徑不存在</value>

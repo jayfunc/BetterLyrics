@@ -453,6 +453,9 @@
   <data name="LyricsSharePageGroupClassic" xml:space="preserve">
     <value>Klasik Tasarım</value>
   </data>
+  <data name="LyricsSharePageGroupModernVision" xml:space="preserve">
+    <value>Modern Vizyon</value>
+  </data>
   <data name="LyricsSharePageGroupPhysical" xml:space="preserve">
     <value>Fiziksel</value>
   </data>
@@ -756,11 +759,17 @@
   <data name="Pinyin" xml:space="preserve">
     <value>Pinyin (Mandarin)</value>
   </data>
+  <data name="PlaybackSettingsControlBetterLyricsRunningInBackground.Message" xml:space="preserve">
+    <value>BetterLyrics yerleşik oynatıcı arka planda çalışmaya devam eder ve yazılım diğer oynatma kaynaklarını göz ardı eder. Diğer oynatma kaynaklarını dinlemek için Müzik Galerisi'ne gidin ve sağ alt köşedeki durdur düğmesine tıklayın</value>
+  </data>
   <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
     <value>Oynatma ilerlemesini doğrudan hedef işlem belleğinden okumak için harici yapılandırmaları yükler. Lütfen dikkatli kullanın; geliştirici üçüncü taraf yapılandırmalarının güvenliğinden sorumlu değildir.</value>
   </data>
   <data name="PlaybackSettingsControlMemoryReader.Header" xml:space="preserve">
     <value>Bellek Okuyucu Adaptörü</value>
+  </data>
+  <data name="PlaybackSettingsControlStopBetterLyricsPlayer.Content" xml:space="preserve">
+    <value>Dur artık.</value>
   </data>
   <data name="PlaylistViewFailed" xml:space="preserve">
     <value>Yol mevcut olmadığı için izler görüntülenemiyor</value>

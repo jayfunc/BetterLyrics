@@ -50,7 +50,7 @@ namespace BetterLyrics.WinUI3.Views
                 {
                     StorageFile? file = await PickerHelper.PickSaveFileAsync<LyricsShareWindow>(
                         new Dictionary<string, IList<string>> { { "PNG Image", new List<string> { ".png" } } },
-                        $"BetterLyrics_Share_{DateTime.Now:MMddHHmm}.png"
+                        $"BetterLyrics_{ViewModel.SelectedStyleItem.StyleKey}_{DateTime.Now:yyyyMMdd_HHmmss_fff}.png"
                     );
 
                     if (file != null)

@@ -453,6 +453,9 @@
   <data name="LyricsSharePageGroupClassic" xml:space="preserve">
     <value>Классический дизайн</value>
   </data>
+  <data name="LyricsSharePageGroupModernVision" xml:space="preserve">
+    <value>Современное видение</value>
+  </data>
   <data name="LyricsSharePageGroupPhysical" xml:space="preserve">
     <value>Физическая</value>
   </data>
@@ -756,11 +759,17 @@
   <data name="Pinyin" xml:space="preserve">
     <value>Пиньинь (Мандарин)</value>
   </data>
+  <data name="PlaybackSettingsControlBetterLyricsRunningInBackground.Message" xml:space="preserve">
+    <value>Встроенный плеер BetterLyrics работает в фоновом режиме, и программа будет игнорировать другие источники воспроизведения. Чтобы прослушать другие источники воспроизведения, перейдите в раздел "Музыкальная галерея" и нажмите кнопку "Стоп" в правом нижнем углу.</value>
+  </data>
   <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
     <value>Загружает внешние конфигурации для чтения прогресса воспроизведения непосредственно из памяти целевого процесса. Пожалуйста, используйте с осторожностью; разработчик не несет ответственности за безопасность сторонних конфигураций.</value>
   </data>
   <data name="PlaybackSettingsControlMemoryReader.Header" xml:space="preserve">
     <value>Адаптер для чтения памяти</value>
+  </data>
+  <data name="PlaybackSettingsControlStopBetterLyricsPlayer.Content" xml:space="preserve">
+    <value>Остановись сейчас</value>
   </data>
   <data name="PlaylistViewFailed" xml:space="preserve">
     <value>Невозможно просмотреть треки, так как путь не существует</value>

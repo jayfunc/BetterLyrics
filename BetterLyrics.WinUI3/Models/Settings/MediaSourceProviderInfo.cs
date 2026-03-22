@@ -42,6 +42,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial FullyObservableCollection<AlbumArtSearchProviderInfo> AlbumArtSearchProvidersInfo { get; set; } = [.. Enum.GetValues<AlbumArtSearchProvider>().Select(p => new AlbumArtSearchProviderInfo(p, true))];
 
         [JsonIgnore] public bool IsLXMusic => PlayerIdHelper.IsLXMusic(Provider);
+        [JsonIgnore] public bool IsBetterLyrics => PlayerIdHelper.IsBetterLyrics(Provider);
         [JsonIgnore][ObservableProperty] public partial bool IsNowPlaying { get; set; } = false;
 
         public MediaSourceProviderInfo()
