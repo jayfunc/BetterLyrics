@@ -15,7 +15,7 @@ namespace BetterLyrics.WinUI3.Extensions
 
         public static LyricsWindowStatus DesktopMode(Window? window = null)
         {
-            window ??= WindowHook.GetWindow<SystemTrayWindow>();
+            window ??= WindowHook.GetWindow<LyricsWindowSwitchWindow>();
             return new LyricsWindowStatus(window)
             {
                 Name = _localizationService.GetLocalizedString("DesktopMode"),
@@ -40,7 +40,7 @@ namespace BetterLyrics.WinUI3.Extensions
 
         public static LyricsWindowStatus DockedMode(Window? window = null)
         {
-            window ??= WindowHook.GetWindow<SystemTrayWindow>();
+            window ??= WindowHook.GetWindow<LyricsWindowSwitchWindow>();
             var status = new LyricsWindowStatus(window)
             {
                 Name = _localizationService.GetLocalizedString("DockedMode"),
@@ -69,7 +69,7 @@ namespace BetterLyrics.WinUI3.Extensions
 
         public static LyricsWindowStatus FullscreenMode(Window? window = null)
         {
-            window ??= WindowHook.GetWindow<SystemTrayWindow>();
+            window ??= WindowHook.GetWindow<LyricsWindowSwitchWindow>();
             var status = new LyricsWindowStatus(window)
             {
                 Name = _localizationService.GetLocalizedString("FullscreenMode"),
@@ -91,7 +91,7 @@ namespace BetterLyrics.WinUI3.Extensions
 
         public static LyricsWindowStatus StandardMode(Window? window = null)
         {
-            window ??= WindowHook.GetWindow<SystemTrayWindow>();
+            window ??= WindowHook.GetWindow<LyricsWindowSwitchWindow>();
             return new LyricsWindowStatus(window)
             {
                 Name = _localizationService.GetLocalizedString("StandardMode"),
@@ -100,7 +100,7 @@ namespace BetterLyrics.WinUI3.Extensions
 
         public static LyricsWindowStatus NarrowMode(Window? window = null)
         {
-            window ??= WindowHook.GetWindow<SystemTrayWindow>();
+            window ??= WindowHook.GetWindow<LyricsWindowSwitchWindow>();
             return new LyricsWindowStatus(window)
             {
                 Name = _localizationService.GetLocalizedString("NarrowMode"),
@@ -111,7 +111,7 @@ namespace BetterLyrics.WinUI3.Extensions
 
         public static LyricsWindowStatus TaskbarMode(Window? window = null)
         {
-            window ??= WindowHook.GetWindow<SystemTrayWindow>();
+            window ??= WindowHook.GetWindow<LyricsWindowSwitchWindow>();
             return new LyricsWindowStatus(window)
             {
                 Name = _localizationService.GetLocalizedString("TaskbarMode"),
@@ -138,7 +138,7 @@ namespace BetterLyrics.WinUI3.Extensions
 
         public static LyricsWindowStatus WallpaperMode(Window? window = null)
         {
-            window ??= WindowHook.GetWindow<SystemTrayWindow>();
+            window ??= WindowHook.GetWindow<LyricsWindowSwitchWindow>();
             return new LyricsWindowStatus(window)
             {
                 Name = _localizationService.GetLocalizedString("WallpaperMode"),

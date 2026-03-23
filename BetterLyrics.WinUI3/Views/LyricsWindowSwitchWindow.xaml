@@ -21,5 +21,6 @@
             HorizontalAlignment="Left"
             VerticalAlignment="Top" />
         <uc:LyricsWindowSwitchControl />
+        <uc:SystemTray />
     </Grid>
 </Window>

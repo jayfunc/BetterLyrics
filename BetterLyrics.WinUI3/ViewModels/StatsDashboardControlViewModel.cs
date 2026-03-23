@@ -95,7 +95,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             _localizedTimesValue = _localizationService.GetLocalizedString("StatsDashboardControlTimes");
 
-            _timer = DispatcherQueueHelper.GetUIDispatcherQueue()?.CreateTimer();
+            _timer = DispatcherQueueHelper.Instance?.CreateTimer();
 
             UpdateDateRange();
             UpdatePaints();

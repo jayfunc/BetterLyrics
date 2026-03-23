@@ -32,7 +32,7 @@ namespace BetterLyrics.WinUI3.Views
             this.InitializeComponent();
             WeakReferenceMessenger.Default.RegisterAll(this);
             this.Init(titleBarHeightOption: TitleBarHeightOption.Collapsed, backdropType: BackdropType.Transparent);
-            this.SetWindowStyle(WindowStyle.Popup | WindowStyle.Visible);
+            this.SetIsBorderless(true);
             AppWindow.IsShownInSwitchers = false;
             WindowHook.SetIsClickThrough(this, true);
             this.SyncTheme();
@@ -46,7 +46,7 @@ namespace BetterLyrics.WinUI3.Views
             targetRect.X += xMargin;
             targetRect.Width -= xMargin * 2;
             this.AppWindow.MoveAndResize(targetRect);
-            WindowHook.SetIsAlwaysOnTop(this, true);
+            this.SetIsAlwaysOnTop(true);
             this.Hide();
         }
 

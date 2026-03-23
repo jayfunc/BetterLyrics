@@ -10,6 +10,7 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Vanara.PInvoke;
@@ -25,11 +26,13 @@ namespace BetterLyrics.WinUI3.Hooks
         private static List<object> _activeWindows = [];
         private static List<object> _activeAppBars = [];
 
-        private static WindowStyle? _defaultWindowStyle;
-        private static ExtendedWindowStyle? _defaultExtendedWindowStyle;
-
-        public static void HideWindow(this Window window, bool hiddenByUser = true)
+        public static void HideWindow(this Window window, WindowStatus hiddenBy = WindowStatus.HiddenByUser)
         {
+            if (hiddenBy is WindowStatus.Closed or WindowStatus.Opened)
+            {
+                throw new ArgumentOutOfRangeException(nameof(hiddenBy));
+            }
+
             if (window is NowPlayingWindow nowPlayingWindow)
             {
                 if (nowPlayingWindow.LyricsWindowStatus.IsWorkArea && GetWindowHandle(window) is IntPtr hwnd)
@@ -37,7 +40,7 @@ namespace BetterLyrics.WinUI3.Hooks
                     _activeAppBars.Remove(window);
                     UnregisterAppBar(hwnd);
                 }
-                nowPlayingWindow.LyricsWindowStatus.WindowStatus = hiddenByUser ? WindowStatus.HiddenByUser : WindowStatus.HiddenBySystem;
+                nowPlayingWindow.LyricsWindowStatus.WindowStatus = hiddenBy;
             }
             window.Hide();
         }
@@ -156,14 +159,6 @@ namespace BetterLyrics.WinUI3.Hooks
                 {
                     window = new LyricsWindowSwitchWindow();
                 }
-                else if (typeof(T) == typeof(SystemTrayWindow))
-                {
-                    window = new SystemTrayWindow();
-                }
-                else if (typeof(T) == typeof(SplashWindow))
-                {
-                    window = new SplashWindow();
-                }
                 else if (typeof(T) == typeof(LyricsShareWindow))
                 {
                     window = new LyricsShareWindow();
@@ -174,34 +169,31 @@ namespace BetterLyrics.WinUI3.Hooks
                 }
 
                 TrackWindow(window);
-                var castedWindow = (Window)window;
-
-                castedWindow.Restore();
-                castedWindow.Activate();
-
-                if (typeof(T) == typeof(SystemTrayWindow))
-                {
-                    _defaultWindowStyle = castedWindow.GetWindowStyle();
-                    _defaultExtendedWindowStyle = castedWindow.GetExtendedWindowStyle();
-                    castedWindow.HideWindow();
-                }
 
                 if (typeof(T) == typeof(NowPlayingWindow))
                 {
-                    var lyricsWindow = (NowPlayingWindow)window;
-                    lyricsWindow.InitStatus();
-                    lyricsWindow.InitTimers();
+                    var nowPlayingWindow = (NowPlayingWindow)window;
+                    nowPlayingWindow.LyricsWindowStatus.WindowStatus = WindowStatus.Opened;
+                    nowPlayingWindow.InitStatus();
+                }
+
+                var castedWindow = (Window)window;
+
+                if (typeof(T) != typeof(LyricsWindowSwitchWindow))
+                {
+                    castedWindow.Activate();
                 }
             }
             else
             {
+                if (typeof(T) == typeof(NowPlayingWindow))
+                {
+                    ((NowPlayingWindow)window).LyricsWindowStatus.WindowStatus = WindowStatus.Opened;
+                }
+
                 var castedWindow = (Window)window;
                 castedWindow.Activate();
-            }
-
-            if (typeof(T) == typeof(NowPlayingWindow))
-            {
-                ((NowPlayingWindow)window).LyricsWindowStatus.WindowStatus = WindowStatus.Opened;
+                castedWindow.SetForegroundWindow();
             }
 
             return (T)window;
@@ -281,44 +273,44 @@ namespace BetterLyrics.WinUI3.Hooks
             }
         }
 
-        public static void SetIsLocked(this Window window, bool enable, bool removeBorder)
-        {
-            if (removeBorder)
-            {
-                SetIsBorderless(window, enable);
-            }
-            SetIsClickThrough(window, enable);
-        }
-
         public static void SetIsClickThrough(this Window window, bool enable)
         {
-            if (_defaultExtendedWindowStyle is ExtendedWindowStyle style)
+            nint hwnd = window.GetWindowHandle();
+            int style = User32.GetWindowLong(hwnd, User32.WindowLongFlags.GWL_EXSTYLE);
+
+            if (enable)
             {
-                var currentStyle = window.GetExtendedWindowStyle();
-                var targetStyle = enable ? style | ExtendedWindowStyle.Layered | ExtendedWindowStyle.Transparent : style;
-                if (targetStyle != currentStyle)
-                {
-                    window.SetExtendedWindowStyle(targetStyle);
-                }
+                style |= (int)(ExtendedWindowStyle.Layered | ExtendedWindowStyle.Transparent);
             }
+            else
+            {
+                style &= ~(int)(ExtendedWindowStyle.Layered | ExtendedWindowStyle.Transparent);
+            }
+
+            User32.SetWindowLong(hwnd, User32.WindowLongFlags.GWL_EXSTYLE, style);
         }
 
         public static void SetIsBorderless(this Window window, bool enable)
         {
-            if (_defaultWindowStyle is WindowStyle style)
+            nint hwnd = WindowNative.GetWindowHandle(window);
+            int style = User32.GetWindowLong(hwnd, User32.WindowLongFlags.GWL_STYLE);
+
+            if (enable)
             {
-                var currentStyle = window.GetWindowStyle();
-                var targetStyle = enable ? WindowStyle.Popup | WindowStyle.Visible : style;
-                if (targetStyle != currentStyle)
-                {
-                    window.SetWindowStyle(targetStyle);
-                }
+                style &= ~(int)(User32.WindowStyles.WS_CAPTION | User32.WindowStyles.WS_THICKFRAME);
             }
+            else
+            {
+                style |= (int)(User32.WindowStyles.WS_CAPTION | User32.WindowStyles.WS_THICKFRAME);
+            }
+
+            User32.SetWindowLong(hwnd, User32.WindowLongFlags.GWL_STYLE, style);
         }
 
-        public static bool SetIsFullscreen(this Window window, bool enable, bool defaultExtendsContentIntoTitleBar = true)
+        public static void SetIsFullscreen(this Window window, bool enable, bool defaultExtendsContentIntoTitleBar = true)
         {
-            if (window.AppWindow == null) return false;
+            if (window == null) return;
+            if (window.AppWindow == null) return;
 
             if (enable)
             {
@@ -330,13 +322,11 @@ namespace BetterLyrics.WinUI3.Hooks
                 window.ExtendsContentIntoTitleBar = defaultExtendsContentIntoTitleBar;
                 window.AppWindow.SetPresenter(AppWindowPresenterKind.Overlapped);
             }
-
-            return true;
         }
 
-        public static bool SetIsMaximized(this Window window, bool enable)
+        public static void SetIsMaximized(this Window window, bool enable)
         {
-            if (window.AppWindow == null) return false;
+            if (window == null) return;
 
             if (enable)
             {
@@ -346,29 +336,11 @@ namespace BetterLyrics.WinUI3.Hooks
             {
                 window.Restore();
             }
-
-            return true;
-        }
-
-        public static void SetIsShowInSwitchers(this Window window, bool enable)
-        {
-            if (window.AppWindow == null) return;
-
-            window.AppWindow.IsShownInSwitchers = enable;
-        }
-
-        public static void SetIsAlwaysOnTop(this Window window, bool enable)
-        {
-            if (window.AppWindow == null) return;
-
-            if (window.AppWindow.Presenter is OverlappedPresenter presenter)
-            {
-                presenter.IsAlwaysOnTop = enable;
-            }
         }
 
         public static void MoveAndResize(this Window window, Rect rect)
         {
+            if (window == null) return;
             if (window.AppWindow == null) return;
 
             window.AppWindow.Move(new Windows.Graphics.PointInt32((int)rect.X, (int)rect.Y));
@@ -470,41 +442,6 @@ namespace BetterLyrics.WinUI3.Hooks
 
             Shell32.SHAppBarMessage(Shell32.ABM.ABM_QUERYPOS, ref abd);
             Shell32.SHAppBarMessage(Shell32.ABM.ABM_SETPOS, ref abd);
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="dispatcherQueue">请确保此参数指向同一个对象，建议传值 BaseViewModel._dispatcherQueue</param>
-        public static void SetLyricsWindowVisibilityByPlayingStatus(this NowPlayingWindow window, bool isPlaying, DispatcherQueue dispatcherQueue)
-        {
-            var status = window.LyricsWindowStatus;
-
-            status.VisibilityTimer ??= dispatcherQueue.CreateTimer();
-            status.VisibilityTimer?.Debounce(() =>
-            {
-                if (status.AutoShowOrHideWindow && status.WindowStatus is WindowStatus.Opened or WindowStatus.HiddenBySystem)
-                {
-                    if (isPlaying)
-                    {
-                        OpenOrShowWindow<NowPlayingWindow>(status);
-                        if (status.IsWorkArea)
-                        {
-                            window.SetIsWorkArea(true);
-                            window.MoveAndResize(status.GetWindowBoundsWhenWorkArea());
-                        }
-                        if (status.IsLocked && !status.IsAlwaysHideUnlockButton && status.IsWallpaper)
-                        {
-                            window.RestartOverlayInputHelper();
-                        }
-                    }
-                    else
-                    {
-                        window.HideWindow(false);
-                        window.StopOverlayInputHelper();
-                    }
-                }
-            }, TimeSpan.FromMilliseconds(window.LyricsWindowStatus.AutoShowOrHideWindowDelay));
         }
 
     }
