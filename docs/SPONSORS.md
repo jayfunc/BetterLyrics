@@ -6,7 +6,7 @@ Special thanks to the following people for their support!
   <tbody>
     <tr>
       <td></td>
-      <td></td>
+      <td>Mar 23, 2026 Leon</td>
       <td>Mar 16, 2026 &lt;Anon/匿名&gt;</td>
       <td>Mar 4, 2026 你的秋乔呐</td>
     </tr>
@@ -48,6 +48,16 @@ Special thanks to the following people for their support!
     </tr>
   </tbody>
 </table>
+
+
+> [!NOTE]
+> Notes on the list
+> 
+> 名单说明
+> 
+> To protect donor privacy and prevent tracking, supporters are listed only by the date of their first contribution. Multiple donations will not be listed separately, and the list is not sorted by amount or frequency.
+> 
+> 为保护个人隐私并防止信息追踪，本名单仅记录首次支持的时间。多次支持将不再重复列出，且排序与捐赠金额及次数无关。
 
 > *List is updated manually. If you donated but don't see your name here, please contact me.*
 > 
