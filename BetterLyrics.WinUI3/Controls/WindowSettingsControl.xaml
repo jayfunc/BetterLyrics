@@ -365,12 +365,13 @@
                     <Expander
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Stretch"
-                        Header="Timers"
+                        Header="Status"
                         IsExpanded="True">
                         <StackPanel>
                             <local:PropertyRow Header="IsOverlayInputHelperRunning" Value="{x:Bind LyricsWindowStatus.IsOverlayInputHelperRunning, Mode=OneWay}" />
                             <local:PropertyRow Header="IsAlwaysOnTopPollingTimerRunning" Value="{x:Bind LyricsWindowStatus.IsAlwaysOnTopPollingTimerRunning, Mode=OneWay}" />
                             <local:PropertyRow Header="IsUnderlayColorTimerRunning" Value="{x:Bind LyricsWindowStatus.IsUnderlayColorTimerRunning, Mode=OneWay}" />
+                            <local:PropertyRow Header="WindowStatus" Value="{x:Bind LyricsWindowStatus.WindowStatus, Mode=OneWay}" />
                         </StackPanel>
                     </Expander>
 

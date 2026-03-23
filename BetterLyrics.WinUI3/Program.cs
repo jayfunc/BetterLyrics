@@ -41,6 +41,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Storage;
+using WinUIEx;
 
 namespace BetterLyrics.WinUI3
 {
@@ -99,7 +100,7 @@ namespace BetterLyrics.WinUI3
 
         private static void OnActivated(object? sender, AppActivationArguments args)
         {
-            DispatcherQueueHelper.GetUIDispatcherQueue()?.TryEnqueue(() =>
+            DispatcherQueueHelper.Instance?.TryEnqueue(() =>
             {
                 HandleActivation(args);
             });

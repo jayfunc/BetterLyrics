@@ -292,24 +292,43 @@
                     Grid.Row="2"
                     Margin="0,0,16,12"
                     HorizontalAlignment="Right"
-                    IsHitTestVisible="False"
                     Orientation="Horizontal"
                     Spacing="6">
-                    <Button
+                    <Border
                         BorderBrush="LightGray"
-                        CornerRadius="8"
-                        Foreground="#333333">
+                        BorderThickness="1"
+                        CornerRadius="8">
                         <TextBlock
-                            Margin="8,0"
+                            Margin="16,6"
+                            VerticalAlignment="Center"
                             FontSize="13"
+                            Foreground="#333333"
                             Text="关闭" />
-                    </Button>
-                    <SplitButton
+                    </Border>
+                    <Border
                         Background="#0099FF"
-                        CornerRadius="8"
-                        Foreground="#3eb2ff">
-                        <TextBlock FontSize="13" Text="发送" />
-                    </SplitButton>
+                        BorderThickness="1"
+                        CornerRadius="8">
+                        <StackPanel
+                            Padding="16,6,12,6"
+                            Orientation="Horizontal"
+                            Spacing="10">
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                FontSize="13"
+                                Foreground="#3eb2ff"
+                                Text="发送" />
+                            <Grid
+                                Width="1"
+                                VerticalAlignment="Stretch"
+                                Background="#12a0ff" />
+                            <FontIcon
+                                FontFamily="{StaticResource SegoeFluentIcons}"
+                                FontSize="10"
+                                Foreground="#c5e8ff"
+                                Glyph="&#xE70D;" />
+                        </StackPanel>
+                    </Border>
                 </StackPanel>
             </Grid>
         </Grid>

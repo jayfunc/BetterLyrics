@@ -63,7 +63,7 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
                         return new PlayQueueItem(new ExtendedTrack(parsedFiles.FirstOrDefault(y => y.Uri == encodedUri)));
                     });
 
-                DispatcherQueueHelper.GetUIDispatcherQueue()?.TryEnqueue(() =>
+                DispatcherQueueHelper.Instance?.TryEnqueue(() =>
                 {
                     int savedIndex = _settingsService.AppSettings.MusicGallerySettings.PlayQueueIndex;
 
@@ -148,7 +148,7 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
         private void PlaybackList_CurrentItemChanged(MediaPlaybackList sender, CurrentMediaPlaybackItemChangedEventArgs args)
         {
             var newItem = args.NewItem;
-            DispatcherQueueHelper.GetUIDispatcherQueue()?.TryEnqueue(() =>
+            DispatcherQueueHelper.Instance?.TryEnqueue(() =>
             {
                 if (newItem != null && newItem.Source.CustomProperties.TryGetValue("QueueItem", out var obj) && obj is PlayQueueItem queueItem)
                 {
@@ -221,7 +221,7 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
                 {
                     var storageFile = await StorageFile.GetFileFromPathAsync(track.LocalAlbumArtPath);
                     props.Thumbnail = RandomAccessStreamReference.CreateFromFile(storageFile);
-                    DispatcherQueueHelper.GetUIDispatcherQueue()?.TryEnqueue(() => item.ApplyDisplayProperties(props));
+                    DispatcherQueueHelper.Instance?.TryEnqueue(() => item.ApplyDisplayProperties(props));
                 });
             }
 
@@ -263,7 +263,7 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
             }
             catch (Exception ex)
             {
-                DispatcherQueueHelper.GetUIDispatcherQueue()?.TryEnqueue(() =>
+                DispatcherQueueHelper.Instance?.TryEnqueue(() =>
                     GlobalToastManager.Show("Error", ex.Message, InfoBarSeverity.Error));
             }
             finally

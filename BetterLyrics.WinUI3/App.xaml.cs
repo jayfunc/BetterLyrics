@@ -19,20 +19,22 @@ using System;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using WinUIEx;
 
 namespace BetterLyrics.WinUI3
 {
     public partial class App : Application
     {
         private Window? m_window;
+        private SimpleSplashScreen? _splashScreen;
         private readonly ILogger<App> _logger;
         public static new App Current => (App)Application.Current;
-        public static Window SystemTrayWindow { get; private set; }
 
         public App()
         {
             this.InitializeComponent();
 
+            _splashScreen = SimpleSplashScreen.ShowDefaultSplashScreen();
             _logger = Ioc.Default.GetRequiredService<ILogger<App>>();
 
             // 注册全局异常捕获
@@ -47,24 +49,22 @@ namespace BetterLyrics.WinUI3
             // 必须，加上此行以防止 SyncTheme 时线程被阻塞（原因未明）
             _ = Ioc.Default.GetRequiredService<ISettingsService>();
 
-            var splashWindow = WindowHook.OpenOrShowWindow<SplashWindow>();
             GlobalToastManager.Initialize();
 
-            await Task.Delay(100);
             await InitAppServicesAsync();
 
             HandleNormalLaunch();
-
-            WindowHook.CloseWindow(splashWindow);
         }
 
         private void HandleNormalLaunch()
         {
             var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
-            // 初始化系统托盘
-            m_window = WindowHook.OpenOrShowWindow<SystemTrayWindow>();
-            SystemTrayWindow = m_window;
+            // 初始化歌词切换窗口（包括系统托盘）
+            m_window = WindowHook.OpenOrShowWindow<LyricsWindowSwitchWindow>();
+            DispatcherQueueHelper.Init(m_window);
+
+            _splashScreen?.Hide(TimeSpan.FromSeconds(1));
 
             // 自动打开歌词窗口逻辑
             if (settingsService.AppSettings.GeneralSettings.AutoStartLyricsWindow)

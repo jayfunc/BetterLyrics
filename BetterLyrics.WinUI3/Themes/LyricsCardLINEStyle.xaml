@@ -10,8 +10,7 @@
             x:Name="LINECardRoot"
             Width="460"
             MinHeight="500"
-            Background="#8BA5C7"
-            CornerRadius="8">
+            Background="#8cabd9">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -21,8 +20,7 @@
             <Grid
                 Grid.Row="0"
                 Height="56"
-                Background="#FFFFFF"
-                CornerRadius="8,8,0,0">
+                Background="#FFFFFF">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
@@ -33,12 +31,12 @@
                     Grid.Column="0"
                     Margin="16,0,12,0"
                     VerticalAlignment="Center"
-                    Orientation="Horizontal">
-                    <Ellipse Width="36" Height="36">
-                        <Ellipse.Fill>
-                            <ImageBrush ImageSource="{Binding CoverImage}" Stretch="UniformToFill" />
-                        </Ellipse.Fill>
-                    </Ellipse>
+                    Orientation="Horizontal"
+                    Spacing="6">
+                    <FontIcon
+                        FontFamily="{StaticResource SegoeFluentIcons}"
+                        Foreground="#111111"
+                        Glyph="&#xE76B;" />
                 </StackPanel>
 
                 <StackPanel Grid.Column="1" VerticalAlignment="Center">
@@ -49,6 +47,10 @@
                         Foreground="#111111"
                         Text="{Binding Artist}"
                         TextTrimming="CharacterEllipsis" />
+                    <TextBlock
+                        FontSize="12"
+                        Foreground="#939393"
+                        Text="自動で返信しています" />
                 </StackPanel>
 
                 <StackPanel
@@ -60,18 +62,13 @@
                     <FontIcon
                         FontFamily="{StaticResource SegoeFluentIcons}"
                         FontSize="16"
-                        Foreground="#555555"
+                        Foreground="#111111"
                         Glyph="&#xE721;" />
                     <FontIcon
                         FontFamily="{StaticResource SegoeFluentIcons}"
                         FontSize="16"
-                        Foreground="#555555"
-                        Glyph="&#xE70B;" />
-                    <FontIcon
-                        FontFamily="{StaticResource SegoeFluentIcons}"
-                        FontSize="16"
-                        Foreground="#555555"
-                        Glyph="&#xE712;" />
+                        Foreground="#111111"
+                        Glyph="&#xE700;" />
                 </StackPanel>
             </Grid>
 
@@ -79,7 +76,7 @@
 
                 <Border
                     Margin="0,0,0,20"
-                    Padding="16,4"
+                    Padding="12,8"
                     HorizontalAlignment="Center"
                     Background="#33000000"
                     CornerRadius="12">
@@ -90,7 +87,7 @@
                 </Border>
 
                 <Grid
-                    Margin="16,0,16,16"
+                    Margin="12,0,16,16"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top">
                     <Grid.ColumnDefinitions>
@@ -108,30 +105,35 @@
                         </Ellipse.Fill>
                     </Ellipse>
 
-                    <StackPanel
-                        Grid.Column="1"
-                        Margin="10,0,0,0"
-                        HorizontalAlignment="Left">
+                    <StackPanel Grid.Column="1" HorizontalAlignment="Left">
 
                         <StackPanel Orientation="Horizontal">
                             <Path
-                                Margin="0,12,-1,0"
                                 VerticalAlignment="Top"
                                 Data="M 8 0 L 0 4 L 8 8 Z"
-                                Fill="#FFFFFF" />
+                                Fill="#FFFFFF"
+                                RenderTransformOrigin="0.5,0.5">
+                                <Path.RenderTransform>
+                                    <TransformGroup>
+                                        <RotateTransform Angle="45" />
+                                        <TranslateTransform X="7" Y="-2" />
+                                    </TransformGroup>
+                                </Path.RenderTransform>
+                            </Path>
 
                             <Border
                                 MaxWidth="280"
                                 Padding="14,10"
                                 Background="#FFFFFF"
-                                CornerRadius="12">
+                                CornerRadius="16">
                                 <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
                                     <Border
                                         Width="30"
                                         Height="30"
                                         Margin="0,0,10,0"
-                                        Background="#F0F0F0"
-                                        CornerRadius="15">
+                                        BorderBrush="#F0F0F0"
+                                        BorderThickness="1"
+                                        CornerRadius="4">
                                         <FontIcon
                                             FontFamily="{StaticResource SegoeFluentIcons}"
                                             FontSize="14"
@@ -139,6 +141,7 @@
                                             Glyph="&#xE8D6;" />
                                     </Border>
                                     <TextBlock
+                                        MaxWidth="200"
                                         VerticalAlignment="Center"
                                         FontSize="15"
                                         Foreground="#111111"
@@ -148,10 +151,10 @@
                             </Border>
 
                             <TextBlock
-                                Margin="6,0,0,0"
+                                Margin="6,0,0,6"
                                 VerticalAlignment="Bottom"
                                 FontSize="10"
-                                Foreground="#E0E0E0"
+                                Foreground="#445975"
                                 Text="10:05" />
                         </StackPanel>
                     </StackPanel>
@@ -163,7 +166,7 @@
                             <StackPanel Margin="0,0,0,16">
 
                                 <Grid
-                                    Margin="16,0,16,4"
+                                    Margin="12,0,16,4"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Top">
                                     <Grid.ColumnDefinitions>
@@ -181,23 +184,27 @@
                                         </Ellipse.Fill>
                                     </Ellipse>
 
-                                    <StackPanel
-                                        Grid.Column="1"
-                                        Margin="10,0,0,0"
-                                        HorizontalAlignment="Left">
+                                    <StackPanel Grid.Column="1" HorizontalAlignment="Left">
 
                                         <StackPanel Orientation="Horizontal">
                                             <Path
-                                                Margin="0,12,-1,0"
                                                 VerticalAlignment="Top"
                                                 Data="M 8 0 L 0 4 L 8 8 Z"
-                                                Fill="#FFFFFF" />
+                                                Fill="#FFFFFF"
+                                                RenderTransformOrigin="0.5,0.5">
+                                                <Path.RenderTransform>
+                                                    <TransformGroup>
+                                                        <RotateTransform Angle="45" />
+                                                        <TranslateTransform X="7" Y="-2" />
+                                                    </TransformGroup>
+                                                </Path.RenderTransform>
+                                            </Path>
 
                                             <Border
                                                 MaxWidth="280"
                                                 Padding="14,10"
                                                 Background="#FFFFFF"
-                                                CornerRadius="12">
+                                                CornerRadius="16">
                                                 <TextBlock
                                                     FontSize="15"
                                                     Foreground="#111111"
@@ -207,17 +214,17 @@
                                             </Border>
 
                                             <TextBlock
-                                                Margin="6,0,0,0"
+                                                Margin="6,0,0,6"
                                                 VerticalAlignment="Bottom"
                                                 FontSize="10"
-                                                Foreground="#E0E0E0"
+                                                Foreground="#445975"
                                                 Text="10:06" />
                                         </StackPanel>
                                     </StackPanel>
                                 </Grid>
 
                                 <StackPanel
-                                    Margin="16,16,16,0"
+                                    Margin="16,16,4,0"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Top"
                                     Orientation="Horizontal"
@@ -227,21 +234,21 @@
                                         <TextBlock
                                             HorizontalAlignment="Right"
                                             FontSize="10"
-                                            Foreground="#EAEAEA"
+                                            Foreground="#445975"
                                             Text="既読" />
                                         <TextBlock
-                                            Margin="0,2,0,0"
+                                            Margin="0,2,0,6"
                                             HorizontalAlignment="Right"
                                             FontSize="10"
-                                            Foreground="#EAEAEA"
+                                            Foreground="#445975"
                                             Text="10:07" />
                                     </StackPanel>
 
                                     <Border
                                         MaxWidth="320"
                                         Padding="14,10"
-                                        Background="#8CE053"
-                                        CornerRadius="12">
+                                        Background="#9de694"
+                                        CornerRadius="16">
                                         <TextBlock
                                             FontSize="15"
                                             Foreground="#111111"
@@ -251,10 +258,18 @@
                                     </Border>
 
                                     <Path
-                                        Margin="-1,12,0,0"
                                         VerticalAlignment="Top"
                                         Data="M 0 0 L 8 4 L 0 8 Z"
-                                        Fill="#8CE053" />
+                                        Fill="#9de694"
+                                        RenderTransformOrigin="0.5,0.5">
+                                        <Path.RenderTransform>
+                                            <TransformGroup>
+                                                <RotateTransform Angle="-45" />
+                                                <TranslateTransform X="-7" Y="-2" />
+                                            </TransformGroup>
+                                        </Path.RenderTransform>
+                                    </Path>
+
                                 </StackPanel>
 
                             </StackPanel>
@@ -267,10 +282,7 @@
             <Grid
                 Grid.Row="2"
                 Height="60"
-                Background="#FFFFFF"
-                BorderBrush="#D6D6D6"
-                BorderThickness="0,1,0,0"
-                CornerRadius="0,0,8,8">
+                Background="#FFFFFF">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
@@ -286,13 +298,18 @@
                     <FontIcon
                         FontFamily="{StaticResource SegoeFluentIcons}"
                         FontSize="20"
-                        Foreground="#555555"
-                        Glyph="&#xE11D;" />
+                        Foreground="#111111"
+                        Glyph="&#xE710;" />
                     <FontIcon
                         FontFamily="{StaticResource SegoeFluentIcons}"
                         FontSize="20"
-                        Foreground="#555555"
-                        Glyph="&#xE710;" />
+                        Foreground="#111111"
+                        Glyph="&#xE722;" />
+                    <FontIcon
+                        FontFamily="{StaticResource SegoeFluentIcons}"
+                        FontSize="20"
+                        Foreground="#111111"
+                        Glyph="&#xE8B9;" />
                 </StackPanel>
 
                 <Border
@@ -308,6 +325,15 @@
                         Text="BetterLyrics" />
                 </Border>
 
+                <FontIcon
+                    Grid.Column="1"
+                    Margin="0,0,16,0"
+                    HorizontalAlignment="Right"
+                    FontFamily="{StaticResource SegoeFluentIcons}"
+                    FontSize="20"
+                    Foreground="#707070"
+                    Glyph="&#xE11D;" />
+
                 <StackPanel
                     Grid.Column="2"
                     Margin="12,0,16,0"
@@ -317,12 +343,7 @@
                     <FontIcon
                         FontFamily="{StaticResource SegoeFluentIcons}"
                         FontSize="20"
-                        Foreground="#555555"
-                        Glyph="&#xE8B7;" />
-                    <FontIcon
-                        FontFamily="{StaticResource SegoeFluentIcons}"
-                        FontSize="20"
-                        Foreground="#555555"
+                        Foreground="#111111"
                         Glyph="&#xE720;" />
                 </StackPanel>
             </Grid>

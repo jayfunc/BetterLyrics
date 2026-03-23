@@ -145,13 +145,13 @@
                                         FontWeight="SemiBold"
                                         Foreground="#FFFFFF"
                                         Text="{Binding Title}"
-                                        TextTrimming="CharacterEllipsis" />
+                                        TextWrapping="Wrap" />
                                     <TextBlock
                                         Margin="0,2,0,0"
                                         FontSize="13"
                                         Foreground="#7B8DA1"
                                         Text="{Binding Artist}"
-                                        TextTrimming="CharacterEllipsis" />
+                                        TextWrapping="Wrap" />
                                 </StackPanel>
                             </Grid>
 

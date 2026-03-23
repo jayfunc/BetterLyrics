@@ -35,7 +35,7 @@ namespace BetterLyrics.WinUI3.Hooks
         {
             _automation = new UIA3Automation();
             _onLayoutChanged = onLayoutChanged;
-            _dispatcherQueue = DispatcherQueueHelper.GetUIDispatcherQueue();
+            _dispatcherQueue = DispatcherQueueHelper.Instance;
             _updateTaskRunner = new();
 
             _currentPlacement = placement;

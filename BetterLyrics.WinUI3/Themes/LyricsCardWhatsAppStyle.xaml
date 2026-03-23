@@ -11,8 +11,7 @@
             MinHeight="500"
             Background="#EFEAE2"
             BorderBrush="#D1D7DB"
-            BorderThickness="1"
-            CornerRadius="8">
+            BorderThickness="1">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -24,8 +23,7 @@
                 Height="60"
                 Background="#ffffff"
                 BorderBrush="#D1D7DB"
-                BorderThickness="0,0,0,1"
-                CornerRadius="8,8,0,0">
+                BorderThickness="0,0,0,1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
@@ -239,7 +237,7 @@
                 Margin="12"
                 Background="#ffffff"
                 ColumnSpacing="6"
-                CornerRadius="31">
+                CornerRadius="32">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
