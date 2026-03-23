@@ -49,6 +49,16 @@ Special thanks to the following people for their support!
   </tbody>
 </table>
 
+
+> [!NOTE]
+> Notes on the list
+> 
+> 名单说明
+> 
+> To protect donor privacy and prevent tracking, supporters are listed only by the date of their first contribution. Multiple donations will not be listed separately, and the list is not sorted by amount or frequency.
+> 
+> 为保护个人隐私并防止信息追踪，本名单仅记录首次支持的时间。多次支持将不再重复列出，且排序与捐赠金额及次数无关。
+
 > *List is updated manually. If you donated but don't see your name here, please contact me.*
 > 
 > *名单手动更新。如果您已捐赠但未在此看到您的名字，请联系我。*
