@@ -5,6 +5,7 @@ using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.DbContext;
 using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
+using BetterLyrics.WinUI3.Services.AppLifecycleService;
 using BetterLyrics.WinUI3.Services.AppUpdateService;
 using BetterLyrics.WinUI3.Services.DiscordService;
 using BetterLyrics.WinUI3.Services.FileSystemService;
@@ -14,6 +15,7 @@ using BetterLyrics.WinUI3.Services.LastFMService;
 using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.LyricsCacheService;
 using BetterLyrics.WinUI3.Services.LyricsSearchService;
+using BetterLyrics.WinUI3.Services.NavigationService;
 using BetterLyrics.WinUI3.Services.PlayHistoryService;
 using BetterLyrics.WinUI3.Services.PluginService;
 using BetterLyrics.WinUI3.Services.SettingsService;
@@ -234,6 +236,8 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<IPluginService, PluginService>()
                     .AddSingleton<IFileWatchService, FileWatchService>()
                     .AddSingleton<IAppUpdateService, AppUpdateService>()
+                    .AddSingleton<INavigationService, NavigationService>()
+                    .AddSingleton<IAppLifecycleService, AppLifecycleService>()
 
                     // ViewModels
                     .AddSingleton<AppSettingsControlViewModel>()
@@ -255,7 +259,6 @@ namespace BetterLyrics.WinUI3
 
                     .AddTransient<NowPlayingPageViewModel>()
                     .AddTransient<NowPlayingBarViewModel>()
-
 
                     .BuildServiceProvider()
             );

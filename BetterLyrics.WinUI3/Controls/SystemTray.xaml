@@ -15,10 +15,11 @@
         x:Name="TrayIcon"
         x:FieldModifier="public"
         ContextMenuMode="SecondWindow"
+        DoubleClickCommand="{x:Bind ViewModel.TrayIconDoubleClickedCommand}"
         IconSource="ms-appx:///Assets/Logo.ico"
-        LeftClickCommand="{x:Bind ViewModel.OpenLyricsWindowSwitchCommand}"
-        NoLeftClickDelay="True"
-        ToolTipText="{x:Bind ViewModel.ToolTipText, Mode=OneWay}">
+        LeftClickCommand="{x:Bind ViewModel.TrayIconClickedCommand}"
+        MiddleClickCommand="{x:Bind ViewModel.TrayIconMiddleClickedCommand}"
+        ToolTipText="{x:Bind consts:App.AppName}">
         <tb:TaskbarIcon.ContextFlyout>
             <MenuFlyout
                 AreOpenCloseAnimationsEnabled="True"
@@ -29,42 +30,51 @@
                         <Setter Property="MinWidth" Value="600" />
                     </Style>
                 </MenuFlyout.MenuFlyoutPresenterStyle>
+
                 <MenuFlyoutItem
                     x:Uid="SystemTraySwitch"
-                    Command="{x:Bind ViewModel.OpenLyricsWindowSwitchCommand}"
+                    Command="{x:Bind ViewModel.NavigationService.OpenLyricsWindowSwitchWindowCommand}"
                     Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                        Glyph=&#xE8AB;}" />
                 <MenuFlyoutItem
                     x:Uid="SystemTraySearch"
-                    Command="{x:Bind ViewModel.OpenLyricsSearchWindowCommand}"
+                    Command="{x:Bind ViewModel.NavigationService.OpenLyricsSearchWindowCommand}"
                     Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                        Glyph=&#xE721;}" />
                 <MenuFlyoutItem
                     x:Uid="SystemTrayMusicGallery"
-                    Command="{x:Bind ViewModel.OpenMusicGalleryCommand}"
+                    Command="{x:Bind ViewModel.NavigationService.OpenMusicGalleryWindowCommand}"
                     Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                        Glyph=&#xE8F1;}" />
                 <MenuFlyoutItem
+                    x:Uid="SystemTrayStats"
+                    Command="{x:Bind ViewModel.NavigationService.OpenStatsDashboardWindowCommand}"
+                    Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                       Glyph=&#xE9D2;}" />
+                <MenuFlyoutItem
                     x:Uid="LyricsPageLyricsCard"
-                    Command="{x:Bind ViewModel.OpenLyricsShareWindowCommand}"
+                    Command="{x:Bind ViewModel.NavigationService.OpenLyricsShareWindowCommand}"
                     Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                        Glyph=&#xE70B;}" />
                 <MenuFlyoutItem
                     x:Uid="SystemTraySettings"
-                    Command="{x:Bind ViewModel.OpenSettingsCommand}"
+                    Command="{x:Bind ViewModel.NavigationService.OpenSettingsWindowCommand}"
                     Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                        Glyph=&#xE713;}" />
+
                 <MenuFlyoutSeparator />
+
                 <MenuFlyoutItem
                     x:Uid="SystemTrayRestart"
-                    Command="{x:Bind ViewModel.RestartAppCommand}"
+                    Command="{x:Bind ViewModel.AppLifecycleService.RestartAppCommand}"
                     Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                        Glyph=&#xE777;}" />
                 <MenuFlyoutItem
                     x:Uid="SystemTrayExit"
-                    Command="{x:Bind ViewModel.ExitAppCommand}"
+                    Command="{x:Bind ViewModel.AppLifecycleService.ExitAppCommand}"
                     Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                        Glyph=&#xE7E8;}" />
+
             </MenuFlyout>
         </tb:TaskbarIcon.ContextFlyout>
     </tb:TaskbarIcon>

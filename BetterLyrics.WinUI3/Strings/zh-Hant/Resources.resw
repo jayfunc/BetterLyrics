@@ -124,16 +124,16 @@
     <value>檢查更新時發生錯誤</value>
   </data>
   <data name="AboutControlLastCheckTime.Text" xml:space="preserve">
-    <value>最後檢查時間</value>
+    <value>前次檢查時間</value>
   </data>
   <data name="AboutControlOpenAppStorePage.Content" xml:space="preserve">
-    <value>在 Microsoft 商店更新</value>
+    <value>前往 Microsoft Store 更新</value>
   </data>
   <data name="AboutControlUpdateAvailable.Title" xml:space="preserve">
     <value>新版本的 BetterLyrics 已推出</value>
   </data>
   <data name="AboutControlUpToDate.Title" xml:space="preserve">
-    <value>BetterLyrics 是最新的</value>
+    <value>BetterLyrics 已是最新</value>
   </data>
   <data name="ActionCompleted" xml:space="preserve">
     <value>操作完成</value>
@@ -160,10 +160,43 @@
     <value>音樂播放器</value>
   </data>
   <data name="AppSettingsControlEnhanceControlAnimations.Header" xml:space="preserve">
-    <value>增強控制互動動畫</value>
+    <value>控制項增強互動動畫</value>
   </data>
   <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
     <value>視窗</value>
+  </data>
+  <data name="AppSettingsControlSystemTray.Text" xml:space="preserve">
+    <value>系統匣</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackLyricsCardWindow.Content" xml:space="preserve">
+    <value>歌詞卡片</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackLyricsSearchWindow.Content" xml:space="preserve">
+    <value>歌詞搜尋視窗</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackLyricsWindowSwitchWindow.Content" xml:space="preserve">
+    <value>歌詞視窗切換器</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackMusicGalleryWindow.Content" xml:space="preserve">
+    <value>音樂庫</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackNone.Content" xml:space="preserve">
+    <value>無</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackSettingsWindow.Content" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackStatsWindow.Content" xml:space="preserve">
+    <value>統計資料</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayClickCallback.Header" xml:space="preserve">
+    <value>按一下回撥</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayDoubleClickCallback.Header" xml:space="preserve">
+    <value>雙擊回呼</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayMiddleClickCallback.Header" xml:space="preserve">
+    <value>中點擊回呼</value>
   </data>
   <data name="AppSettingsControlTheme.Header" xml:space="preserve">
     <value>應用程式主題</value>
@@ -172,10 +205,10 @@
     <value>新版本的 BetterLyrics 已推出</value>
   </data>
   <data name="AppUpdateServiceUpdateAvailable" xml:space="preserve">
-    <value>可更新</value>
+    <value>有可用的更新檔</value>
   </data>
   <data name="AppUpdateServiceUpdateMS" xml:space="preserve">
-    <value>在 Microsoft 商店更新</value>
+    <value>在 Microsoft Store 更新</value>
   </data>
   <data name="ArtistsSplitHint.Text" xml:space="preserve">
     <value>輸入多位演出者時，請使用以下其中一種分隔符號進行分隔（請勿混合使用）</value>
@@ -400,7 +433,7 @@
     <value>對應為</value>
   </data>
   <data name="LyricsSearchControlMarkAsPureMusic.Header" xml:space="preserve">
-    <value>標記為工具</value>
+    <value>標記為純音樂</value>
   </data>
   <data name="LyricsSearchControlNotFound.Text" xml:space="preserve">
     <value>未找到</value>
@@ -454,7 +487,7 @@
     <value>經典設計</value>
   </data>
   <data name="LyricsSharePageGroupModernVision" xml:space="preserve">
-    <value>現代視野</value>
+    <value>現代視窗</value>
   </data>
   <data name="LyricsSharePageGroupPhysical" xml:space="preserve">
     <value>實體質感</value>
@@ -685,16 +718,16 @@
     <value>從播放佇列刪除</value>
   </data>
   <data name="MusicGalleryPageRepeatAll.Content" xml:space="preserve">
-    <value>重複所有</value>
+    <value>全部循環</value>
   </data>
   <data name="MusicGalleryPageScrollToPlayingItem.Text" xml:space="preserve">
     <value>捲動到播放項</value>
   </data>
   <data name="MusicGalleryPageSelectedTrackDetail.Content" xml:space="preserve">
-    <value>目前所選軌的資訊</value>
+    <value>目前選擇的曲目資訊</value>
   </data>
   <data name="MusicGalleryPageShufflePlay.Content" xml:space="preserve">
-    <value>洗牌</value>
+    <value>隨機播放</value>
   </data>
   <data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve">
     <value>單曲循環</value>
@@ -934,7 +967,7 @@
     <value>將歌詞視窗置於頂層</value>
   </data>
   <data name="SettingsPageApp" xml:space="preserve">
-    <value>應用程式外觀與行為</value>
+    <value>應用程式外觀和行為</value>
   </data>
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>應用程式外觀</value>
@@ -1456,7 +1489,7 @@
     <value>歌詞視窗</value>
   </data>
   <data name="SettingsPageLyricsWindowMgr" xml:space="preserve">
-    <value>歌詞視窗管理員</value>
+    <value>歌詞視窗管理器</value>
   </data>
   <data name="SettingsPageLyricsWindowSwitchHotKey.Header" xml:space="preserve">
     <value>歌詞視窗狀態切換快速鍵</value>
@@ -1480,7 +1513,7 @@
     <value>最小符合閾值</value>
   </data>
   <data name="SettingsPageMediaLib" xml:space="preserve">
-    <value>媒體圖書館</value>
+    <value>媒體櫃</value>
   </data>
   <data name="SettingsPageMedianCut.Content" xml:space="preserve">
     <value>保守</value>
@@ -1926,6 +1959,9 @@
   <data name="SystemTraySettings.Text" xml:space="preserve">
     <value>開啟設定</value>
   </data>
+  <data name="SystemTrayStats.Text" xml:space="preserve">
+    <value>統計資料</value>
+  </data>
   <data name="SystemTraySwitch.Text" xml:space="preserve">
     <value>歌詞視窗切換器</value>
   </data>
@@ -1960,19 +1996,19 @@
     <value>偵錯</value>
   </data>
   <data name="WindowSettingsControlEdgeFeathering.Header" xml:space="preserve">
-    <value>邊緣起毛</value>
+    <value>邊緣羽化效果</value>
   </data>
   <data name="WindowSettingsControlEdgeFeatheringBottom.Header" xml:space="preserve">
     <value>底部</value>
   </data>
   <data name="WindowSettingsControlEdgeFeatheringLeft.Header" xml:space="preserve">
-    <value>左邊</value>
+    <value>靠左</value>
   </data>
   <data name="WindowSettingsControlEdgeFeatheringRight.Header" xml:space="preserve">
-    <value>對</value>
+    <value>靠右</value>
   </data>
   <data name="WindowSettingsControlEdgeFeatheringTop.Header" xml:space="preserve">
-    <value>回頂端</value>
+    <value>頂部</value>
   </data>
   <data name="WindowSettingsControlLockAndUnlock.Text" xml:space="preserve">
     <value>鎖定與解鎖</value>
@@ -1981,19 +2017,19 @@
     <value>媒體控制面板</value>
   </data>
   <data name="WindowSettingsControlPadding.Header" xml:space="preserve">
-    <value>窗口襯墊</value>
+    <value>視窗內邊距</value>
   </data>
   <data name="WindowSettingsControlPaddingBottom.Header" xml:space="preserve">
-    <value>底部襯墊</value>
+    <value>底部邊距</value>
   </data>
   <data name="WindowSettingsControlPaddingLeft.Header" xml:space="preserve">
-    <value>左填充</value>
+    <value>左邊距</value>
   </data>
   <data name="WindowSettingsControlPaddingRight.Header" xml:space="preserve">
-    <value>右側襯墊</value>
+    <value>右邊距</value>
   </data>
   <data name="WindowSettingsControlPaddingTop.Header" xml:space="preserve">
-    <value>頂部襯墊</value>
+    <value>頂部邊距</value>
   </data>
   <data name="WindowSettingsControlRealTimePalette.Header" xml:space="preserve">
     <value>即時調色板預覽</value>
@@ -2023,7 +2059,7 @@
     <value>交換佈局</value>
   </data>
   <data name="WindowSettingsControlSpoutOutput.Header" xml:space="preserve">
-    <value>噴嘴輸出</value>
+    <value>Spout 輸出</value>
   </data>
   <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
     <value>視窗主題</value>

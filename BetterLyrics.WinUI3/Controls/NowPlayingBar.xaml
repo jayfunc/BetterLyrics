@@ -369,7 +369,7 @@
                                     <!--  Lyrics search window  -->
                                     <MenuFlyoutItem
                                         x:Uid="LyricsPageLyricsSearch"
-                                        Command="{x:Bind ViewModel.OpenLyricsSearchWindowCommand}"
+                                        Command="{x:Bind ViewModel.NavigationService.OpenLyricsSearchWindowCommand}"
                                         Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                            Glyph=&#xE721;}" />
                                     <!--  Lyrics window manager shortcut settings  -->
@@ -404,13 +404,13 @@
                                     </MenuFlyoutItem>
                                     <MenuFlyoutItem
                                         x:Uid="LyricsPageLyricsCard"
-                                        Command="{x:Bind ViewModel.OpenLyricsShareWindowCommand}"
+                                        Command="{x:Bind ViewModel.NavigationService.OpenLyricsShareWindowCommand}"
                                         Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                            Glyph=&#xE70B;}" />
                                     <!--  Settings  -->
                                     <MenuFlyoutItem
                                         x:Uid="LyricsPageSettings"
-                                        Command="{x:Bind ViewModel.OpenSettingsWindowCommand}"
+                                        Command="{x:Bind ViewModel.NavigationService.OpenSettingsWindowCommand}"
                                         Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                            Glyph=&#xE713;}" />
                                 </MenuFlyout>

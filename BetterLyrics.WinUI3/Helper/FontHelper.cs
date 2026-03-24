@@ -17,17 +17,17 @@ namespace BetterLyrics.WinUI3.Helper
         {
             if (_fontCache != null) return _fontCache;
 
-            var rawData = await GetRawDataOnUIThreadAsync();
+            var (EnglishNames, LocalNames) = await GetRawDataOnUIThreadAsync();
 
-            if (rawData.EnglishNames == null || rawData.LocalNames == null)
+            if (EnglishNames == null || LocalNames == null)
             {
-                return new List<ExtendedFontFamily>();
+                return [];
             }
 
             _fontCache = await Task.Run(() =>
             {
-                var list = rawData.EnglishNames
-                    .Zip(rawData.LocalNames, (en, loc) => new ExtendedFontFamily
+                var list = EnglishNames
+                    .Zip(LocalNames, (en, loc) => new ExtendedFontFamily
                     {
                         FontFamily = en,
                         LocalizedFontFamily = loc,

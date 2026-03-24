@@ -5,6 +5,7 @@ using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.FileSystemService;
 using BetterLyrics.WinUI3.Services.LocalizationService;
+using BetterLyrics.WinUI3.Services.NavigationService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -25,14 +26,20 @@ namespace BetterLyrics.WinUI3.ViewModels
         private readonly ILocalizationService _localizationService;
         private readonly IFileSystemService _fileSystemService;
 
+        public INavigationService NavigationService { get; }
         [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 
-        public MediaSettingsControlViewModel(ISettingsService settingsService, ILocalizationService localizationService, IFileSystemService fileSystemService)
+        public MediaSettingsControlViewModel(
+            ISettingsService settingsService, 
+            ILocalizationService localizationService, 
+            IFileSystemService fileSystemService,
+            INavigationService navigationService)
         {
             _localizationService = localizationService;
             _settingsService = settingsService;
             _fileSystemService = fileSystemService;
 
+            NavigationService = navigationService;
             AppSettings = _settingsService.AppSettings;
         }
 
@@ -231,12 +238,6 @@ namespace BetterLyrics.WinUI3.ViewModels
             };
 
             await dialog.ShowAsync();
-        }
-
-        [RelayCommand]
-        private void OpenMusicGalleryWindow()
-        {
-            WindowHook.OpenOrShowWindow<MusicGalleryWindow>();
         }
 
     }

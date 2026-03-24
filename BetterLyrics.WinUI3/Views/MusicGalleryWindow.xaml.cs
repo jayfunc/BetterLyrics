@@ -12,7 +12,6 @@ using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media.Imaging;
-using System.Numerics;
 using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,

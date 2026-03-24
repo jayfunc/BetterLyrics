@@ -165,6 +165,39 @@
   <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
     <value>창</value>
   </data>
+  <data name="AppSettingsControlSystemTray.Text" xml:space="preserve">
+    <value>시스템 트레이</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackLyricsCardWindow.Content" xml:space="preserve">
+    <value>가사 카드</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackLyricsSearchWindow.Content" xml:space="preserve">
+    <value>가사 검색 창</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackLyricsWindowSwitchWindow.Content" xml:space="preserve">
+    <value>가사 창 전환기</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackMusicGalleryWindow.Content" xml:space="preserve">
+    <value>음악 갤러리</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackNone.Content" xml:space="preserve">
+    <value>없음</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackSettingsWindow.Content" xml:space="preserve">
+    <value>설정</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackStatsWindow.Content" xml:space="preserve">
+    <value>통계</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayClickCallback.Header" xml:space="preserve">
+    <value>콜백을 클릭합니다.</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayDoubleClickCallback.Header" xml:space="preserve">
+    <value>더블 클릭 콜백</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayMiddleClickCallback.Header" xml:space="preserve">
+    <value>가운데 클릭 콜백</value>
+  </data>
   <data name="AppSettingsControlTheme.Header" xml:space="preserve">
     <value>앱 테마</value>
   </data>
@@ -1925,6 +1958,9 @@
   </data>
   <data name="SystemTraySettings.Text" xml:space="preserve">
     <value>설정 열기</value>
+  </data>
+  <data name="SystemTrayStats.Text" xml:space="preserve">
+    <value>통계</value>
   </data>
   <data name="SystemTraySwitch.Text" xml:space="preserve">
     <value>가사 창 전환기</value>

@@ -137,6 +137,46 @@
                         <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.PreviousSongShortcut, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
+                    <!--  System tray  -->
+
+                    <TextBlock x:Uid="AppSettingsControlSystemTray" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                    <controls:SettingsCard x:Uid="AppSettingsControlSystemTrayClickCallback" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8B0;}">
+                        <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.SystemTraySettings.SystemTrayClickCallback, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackNone" />
+                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsWindowSwitchWindow" />
+                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsSearchWindow" />
+                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackMusicGalleryWindow" />
+                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackStatsWindow" />
+                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsCardWindow" />
+                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackSettingsWindow" />
+                        </ComboBox>
+                    </controls:SettingsCard>
+
+                    <controls:SettingsCard x:Uid="AppSettingsControlSystemTrayDoubleClickCallback" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE7C4;}">
+                        <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.SystemTraySettings.SystemTrayDoubleClickCallback, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackNone" />
+                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsWindowSwitchWindow" />
+                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsSearchWindow" />
+                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackMusicGalleryWindow" />
+                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackStatsWindow" />
+                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsCardWindow" />
+                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackSettingsWindow" />
+                        </ComboBox>
+                    </controls:SettingsCard>
+
+                    <controls:SettingsCard x:Uid="AppSettingsControlSystemTrayMiddleClickCallback" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE962;}">
+                        <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.SystemTraySettings.SystemTrayMiddleClickCallback, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackNone" />
+                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsWindowSwitchWindow" />
+                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsSearchWindow" />
+                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackMusicGalleryWindow" />
+                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackStatsWindow" />
+                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsCardWindow" />
+                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackSettingsWindow" />
+                        </ComboBox>
+                    </controls:SettingsCard>
+
                 </StackPanel>
             </Grid>
         </ScrollViewer>

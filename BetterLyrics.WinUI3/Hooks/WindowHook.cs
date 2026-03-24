@@ -163,6 +163,10 @@ namespace BetterLyrics.WinUI3.Hooks
                 {
                     window = new LyricsShareWindow();
                 }
+                else if (typeof(T) == typeof(StatsDashboardWindow))
+                {
+                    window = new StatsDashboardWindow();
+                }
                 else
                 {
                     throw new ArgumentException("Unsupported window type", nameof(T));

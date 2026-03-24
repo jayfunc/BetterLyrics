@@ -97,6 +97,7 @@
 		<None Remove="Views\MusicGalleryPage.xaml" />
 		<None Remove="Views\MusicGalleryWindow.xaml" />
 		<None Remove="Views\SettingsWindow.xaml" />
+		<None Remove="Views\StatsDashboardWindow.xaml" />
 		<None Remove="Views\ToastOverlayWindow.xaml" />
 	</ItemGroup>
 	<ItemGroup>
@@ -491,6 +492,11 @@
 	  <Content Update="Assets\Banner.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <Page Update="Views\StatsDashboardWindow.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Themes\LyricsCardQQStyle.xaml">

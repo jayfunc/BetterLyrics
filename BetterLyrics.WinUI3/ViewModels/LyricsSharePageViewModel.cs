@@ -34,8 +34,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty] public partial string ConfigNavViewSelectedItemTag { get; set; } = "Style";
         [ObservableProperty] public partial LyricsCardData CardData { get; set; } = new();
         [ObservableProperty] public partial DataTemplate? CardDataTemplate { get; set; }
-        [ObservableProperty] public partial ObservableCollection<StyleGroup> StyleGroups { get; set; }
-        [ObservableProperty] public partial StyleItem SelectedStyleItem { get; set; }
+        [ObservableProperty] public partial ObservableCollection<LyricsCardStyleGroup> StyleGroups { get; set; }
+        [ObservableProperty] public partial LyricsCardStyleItem SelectedStyleItem { get; set; }
+        [ObservableProperty] public partial int SelectedStyleDisplayTypeIndex { get; set; } = 1;
 
         public LyricsSharePageViewModel(IGSMTCService gsmtcService, ISongSearchMapService songSearchMapService, ISettingsService settingsService, ILocalizationService localizationService)
         {
@@ -53,66 +54,66 @@ namespace BetterLyrics.WinUI3.ViewModels
         private void LoadStyleData()
         {
             // 经典设计
-            var classicGroup = new StyleGroup(_localizationService.GetLocalizedString("LyricsSharePageGroupClassic"), new[]
+            var classicGroup = new LyricsCardStyleGroup(_localizationService.GetLocalizedString("LyricsSharePageGroupClassic"), new[]
             {
-                new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleMinimal"), StyleKey = "LyricsCardMinimalStyle", IsChecked = true },
-                new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleSwiss"), StyleKey = "LyricsCardSwissStyle" },
-                new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleMagazine"), StyleKey = "LyricsCardMagazineStyle" }
+                new LyricsCardStyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleMinimal"), StyleKey = "LyricsCardMinimalStyle", IsChecked = true },
+                new LyricsCardStyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleSwiss"), StyleKey = "LyricsCardSwissStyle" },
+                new LyricsCardStyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleMagazine"), StyleKey = "LyricsCardMagazineStyle" }
             });
 
             // 实体质感
-            var physicalGroup = new StyleGroup(_localizationService.GetLocalizedString("LyricsSharePageGroupPhysical"), new[]
+            var physicalGroup = new LyricsCardStyleGroup(_localizationService.GetLocalizedString("LyricsSharePageGroupPhysical"), new[]
             {
-                new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleVinyl"), StyleKey = "LyricsCardVinylStyle" },
-                new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleCD"), StyleKey = "LyricsCardCDStyle" },
-                new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStylePolaroid"), StyleKey = "LyricsCardPolaroidStyle" },
-                new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleTicket"), StyleKey = "LyricsCardTicketStyle" },
-                new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleReceipt"), StyleKey = "LyricsCardReceiptStyle" }
+                new LyricsCardStyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleVinyl"), StyleKey = "LyricsCardVinylStyle" },
+                new LyricsCardStyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleCD"), StyleKey = "LyricsCardCDStyle" },
+                new LyricsCardStyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStylePolaroid"), StyleKey = "LyricsCardPolaroidStyle" },
+                new LyricsCardStyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleTicket"), StyleKey = "LyricsCardTicketStyle" },
+                new LyricsCardStyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleReceipt"), StyleKey = "LyricsCardReceiptStyle" }
             });
 
             // 时光印记
-            var tracesOfTimeGroup = new StyleGroup(_localizationService.GetLocalizedString("LyricsSharePageGroupTracesOfTime"), new[]
+            var tracesOfTimeGroup = new LyricsCardStyleGroup(_localizationService.GetLocalizedString("LyricsSharePageGroupTracesOfTime"), new[]
             {
-                new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleJournal"), StyleKey = "LyricsCardJournalStyle" },
-                new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleStickyNote"), StyleKey = "LyricsCardStickyNoteStyle" }
+                new LyricsCardStyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleJournal"), StyleKey = "LyricsCardJournalStyle" },
+                new LyricsCardStyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleStickyNote"), StyleKey = "LyricsCardStickyNoteStyle" }
             });
 
             // 数码怀旧
-            var retroGroup = new StyleGroup(_localizationService.GetLocalizedString("LyricsSharePageGroupRetro"), new[]
+            var retroGroup = new LyricsCardStyleGroup(_localizationService.GetLocalizedString("LyricsSharePageGroupRetro"), new[]
             {
-                new StyleItem { DisplayText = "iPod", StyleKey = "LyricsCardPodStyle" },
-                new StyleItem { DisplayText = "Windows Phone", StyleKey = "LyricsCardWindowsPhoneStyle" },
-                new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleRetroQQ"), StyleKey = "LyricsCardRetroQQStyle" },
-                new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleRetroMSN"), StyleKey = "LyricsCardRetroMSNStyle" }
+                new LyricsCardStyleItem { DisplayText = "iPod", StyleKey = "LyricsCardPodStyle" },
+                new LyricsCardStyleItem { DisplayText = "Windows Phone", StyleKey = "LyricsCardWindowsPhoneStyle" },
+                new LyricsCardStyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleRetroQQ"), StyleKey = "LyricsCardRetroQQStyle" },
+                new LyricsCardStyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleRetroMSN"), StyleKey = "LyricsCardRetroMSNStyle" }
             });
 
             // 现代视窗
-            var modernGroup = new StyleGroup(_localizationService.GetLocalizedString("LyricsSharePageGroupModernVision"), new[]
+            var modernGroup = new LyricsCardStyleGroup(_localizationService.GetLocalizedString("LyricsSharePageGroupModernVision"), new[]
             {
-                new StyleItem { DisplayText = "QQ", StyleKey = "LyricsCardQQStyle" },
-                new StyleItem { DisplayText = "微信", StyleKey = "LyricsCardWeChatStyle" },
-                new StyleItem { DisplayText = "WhatsApp", StyleKey = "LyricsCardWhatsAppStyle" },
-                new StyleItem { DisplayText = "Telegram", StyleKey = "LyricsCardTelegramStyle" },
-                new StyleItem { DisplayText = "LINE", StyleKey = "LyricsCardLINEStyle" },
+                new LyricsCardStyleItem { DisplayText = "QQ", StyleKey = "LyricsCardQQStyle" },
+                new LyricsCardStyleItem { DisplayText = "微信", StyleKey = "LyricsCardWeChatStyle" },
+                new LyricsCardStyleItem { DisplayText = "WhatsApp", StyleKey = "LyricsCardWhatsAppStyle" },
+                new LyricsCardStyleItem { DisplayText = "Telegram", StyleKey = "LyricsCardTelegramStyle" },
+                new LyricsCardStyleItem { DisplayText = "LINE", StyleKey = "LyricsCardLINEStyle" },
             });
 
             // 氛围创意
-            var atmosphereGroup = new StyleGroup(_localizationService.GetLocalizedString("LyricsSharePageGroupAtmosphere"), new[]
+            var atmosphereGroup = new LyricsCardStyleGroup(_localizationService.GetLocalizedString("LyricsSharePageGroupAtmosphere"), new[]
             {
-                new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleCinematic"), StyleKey = "LyricsCardCinematicStyle" },
-                new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleCyberpunk"), StyleKey = "LyricsCardCyberpunkStyle" }
+                new LyricsCardStyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleCinematic"), StyleKey = "LyricsCardCinematicStyle" },
+                new LyricsCardStyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleCyberpunk"), StyleKey = "LyricsCardCyberpunkStyle" }
             });
 
             // 国风雅韵
-            var chineseEleganceGroup = new StyleGroup(_localizationService.GetLocalizedString("LyricsSharePageGroupChineseElegance"), new[]
+            var chineseEleganceGroup = new LyricsCardStyleGroup(_localizationService.GetLocalizedString("LyricsSharePageGroupChineseElegance"), new[]
             {
-                new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleInkWash"), StyleKey = "LyricsCardInkWashStyle" },
-                new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleAncientBook"), StyleKey = "LyricsCardAncientBookStyle" },
-                new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleBambooSlips"), StyleKey = "LyricsCardBambooSlipsStyle" },
-                new StyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleDunhuang"), StyleKey = "LyricsCardDunhuangStyle" }
+                new LyricsCardStyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleInkWash"), StyleKey = "LyricsCardInkWashStyle" },
+                new LyricsCardStyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleAncientBook"), StyleKey = "LyricsCardAncientBookStyle" },
+                new LyricsCardStyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleBambooSlips"), StyleKey = "LyricsCardBambooSlipsStyle" },
+                new LyricsCardStyleItem { DisplayText = _localizationService.GetLocalizedString("LyricsSharePageStyleDunhuang"), StyleKey = "LyricsCardDunhuangStyle" }
             });
 
-            StyleGroups = new ObservableCollection<StyleGroup>
+            StyleGroups = new ObservableCollection<LyricsCardStyleGroup>
             {
                 classicGroup,
                 physicalGroup,
@@ -126,7 +127,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             SwitchStyle(classicGroup[0]);
         }
 
-        public void SwitchStyle(StyleItem styleItem)
+        public void SwitchStyle(LyricsCardStyleItem styleItem)
         {
             foreach (var styleGroup in StyleGroups)
             {
@@ -220,9 +221,20 @@ namespace BetterLyrics.WinUI3.ViewModels
             CardData.Config = found;
         }
 
-        partial void OnSelectedStyleItemChanged(StyleItem value)
+        partial void OnSelectedStyleItemChanged(LyricsCardStyleItem value)
         {
             SwitchStyle(value);
+        }
+
+        partial void OnSelectedStyleDisplayTypeIndexChanged(int value)
+        {
+            foreach (var group in StyleGroups)
+            {
+                foreach (var style in group)
+                {
+                    style.IsExpanded = value != 0;
+                }
+            }
         }
 
         public void Receive(PropertyChangedMessage<BitmapImage?> message)
@@ -247,24 +259,4 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
     }
-
-    public partial class StyleItem : ObservableObject
-    {
-        public string DisplayText { get; set; }
-        public string StyleKey { get; set; }
-        public DataTemplate CardDataTemplate => (DataTemplate)App.Current.Resources[StyleKey];
-        public LyricsCardData CardData => LyricsCardDataExtensions.DemoLyricsCardData;
-        [ObservableProperty] public partial bool IsChecked { get; set; } = false;
-    }
-
-    public class StyleGroup : ObservableCollection<StyleItem>
-    {
-        public string GroupTitle { get; set; }
-
-        public StyleGroup(string title, IEnumerable<StyleItem> items) : base(items)
-        {
-            GroupTitle = title;
-        }
-    }
-
 }

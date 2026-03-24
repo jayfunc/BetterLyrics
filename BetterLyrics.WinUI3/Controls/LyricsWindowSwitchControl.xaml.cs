@@ -1,4 +1,5 @@
 using BetterLyrics.WinUI3.Hooks;
+using BetterLyrics.WinUI3.Services.NavigationService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
@@ -16,8 +17,6 @@ namespace BetterLyrics.WinUI3.Controls
     public sealed partial class LyricsWindowSwitchControl : UserControl
     {
         public LyricsWindowSwitchControlViewModel ViewModel => (LyricsWindowSwitchControlViewModel)DataContext;
-
-        private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
         public LyricsWindowSwitchControl()
         {

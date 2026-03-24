@@ -1,57 +1,56 @@
-﻿using BetterLyrics.WinUI3.Hooks;
+﻿using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Hooks;
+using BetterLyrics.WinUI3.Services.AppLifecycleService;
+using BetterLyrics.WinUI3.Services.NavigationService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using WinUIEx;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
-    public partial class SystemTrayViewModel(ISettingsService settingsService) : BaseViewModel
+    public partial class SystemTrayViewModel(INavigationService navigationService, IAppLifecycleService appLifecycleService, ISettingsService settingsService) : BaseViewModel
     {
-        [ObservableProperty]
-        public partial string ToolTipText { get; set; } = Constants.App.AppName;
+        public INavigationService NavigationService { get; } = navigationService;
+        public IAppLifecycleService AppLifecycleService { get; } = appLifecycleService;
 
-        [RelayCommand]
-        private static void ExitApp()
+        private readonly ISettingsService _settingsService = settingsService;
+
+        private static void TrayIconClickedCallback(SystemTrayClickCallback callback)
         {
-            WindowHook.ExitApp();
+            switch (callback)
+            {
+                case SystemTrayClickCallback.None:
+                    break;
+                case SystemTrayClickCallback.LyricsWindowSwitchWindow:
+                    WindowHook.OpenOrShowWindow<LyricsWindowSwitchWindow>();
+                    break;
+                case SystemTrayClickCallback.LyricsSearchWindow:
+                    WindowHook.OpenOrShowWindow<LyricsSearchWindow>();
+                    break;
+                case SystemTrayClickCallback.MusicGalleryWindow:
+                    WindowHook.OpenOrShowWindow<MusicGalleryWindow>();
+                    break;
+                case SystemTrayClickCallback.StatsWindow:
+                    WindowHook.OpenOrShowWindow<StatsDashboardWindow>();
+                    break;
+                case SystemTrayClickCallback.LyricsCardWindow:
+                    WindowHook.OpenOrShowWindow<LyricsShareWindow>();
+                    break;
+                case SystemTrayClickCallback.SettingsWindow:
+                    WindowHook.OpenOrShowWindow<SettingsWindow>();
+                    break;
+                default:
+                    break;
+            }
         }
 
         [RelayCommand]
-        private static void RestartApp()
-        {
-            WindowHook.RestartApp();
-        }
+        private void TrayIconClicked() => TrayIconClickedCallback(_settingsService.AppSettings.SystemTraySettings.SystemTrayClickCallback);
 
         [RelayCommand]
-        private static void OpenSettings()
-        {
-            WindowHook.OpenOrShowWindow<SettingsWindow>();
-        }
+        private void TrayIconDoubleClicked() => TrayIconClickedCallback(_settingsService.AppSettings.SystemTraySettings.SystemTrayDoubleClickCallback);
 
         [RelayCommand]
-        private static void OpenMusicGallery()
-        {
-            WindowHook.OpenOrShowWindow<MusicGalleryWindow>();
-        }
-
-        [RelayCommand]
-        private static void OpenLyricsWindowSwitch()
-        {
-            WindowHook.OpenOrShowWindow<LyricsWindowSwitchWindow>();
-        }
-
-        [RelayCommand]
-        private static void OpenLyricsSearchWindow()
-        {
-            WindowHook.OpenOrShowWindow<LyricsSearchWindow>();
-        }
-
-        [RelayCommand]
-        private static void OpenLyricsShareWindow()
-        {
-            WindowHook.OpenOrShowWindow<LyricsShareWindow>();
-        }
+        private void TrayIconMiddleClicked()=> TrayIconClickedCallback(_settingsService.AppSettings.SystemTraySettings.SystemTrayMiddleClickCallback);
     }
 }

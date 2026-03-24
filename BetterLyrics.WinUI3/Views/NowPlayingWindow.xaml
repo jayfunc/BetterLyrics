@@ -142,12 +142,17 @@
                                 x:Name="EnterFullscreenFontIcon"
                                 FontFamily="{StaticResource SegoeFluentIcons}"
                                 FontSize="12"
-                                Glyph="&#xE740;" />
+                                Glyph="&#xE740;">
+                                <FontIcon.OpacityTransition>
+                                    <ScalarTransition />
+                                </FontIcon.OpacityTransition>
+                            </FontIcon>
                             <FontIcon
                                 x:Name="ExitFullscreenFontIcon"
                                 FontFamily="{StaticResource SegoeFluentIcons}"
                                 FontSize="12"
-                                Glyph="&#xE73F;">
+                                Glyph="&#xE73F;"
+                                Opacity="0">
                                 <FontIcon.OpacityTransition>
                                     <ScalarTransition />
                                 </FontIcon.OpacityTransition>
@@ -183,7 +188,8 @@
                                 x:Name="ExitMaximizeFontIcon"
                                 FontFamily="{StaticResource SegoeFluentIcons}"
                                 FontSize="12"
-                                Glyph="&#xE744;">
+                                Glyph="&#xE744;"
+                                Opacity="0">
                                 <FontIcon.OpacityTransition>
                                     <ScalarTransition />
                                 </FontIcon.OpacityTransition>

@@ -23,27 +23,34 @@
                 <ThemeShadow x:Name="Shadow" />
             </Border.Shadow>
         </Border>
-        <Grid Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}" CornerRadius="12">
-            <TextBlock
-                x:Uid="SystemTraySwitch"
-                Margin="20"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Top" />
-            <Button
-                Margin="12"
-                HorizontalAlignment="Right"
-                VerticalAlignment="Top"
-                Click="Button_Click"
-                Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                      Glyph=&#xE73C;}"
-                Style="{ThemeResource GhostButtonStyle}">
-                <Button.KeyboardAccelerators>
-                    <KeyboardAccelerator Key="Escape" />
-                </Button.KeyboardAccelerators>
-            </Button>
+        <Grid
+            Padding="24"
+            Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
+            CornerRadius="12"
+            RowSpacing="12">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0">
+                <TextBlock x:Uid="SystemTraySwitch" />
+                <Button
+                    HorizontalAlignment="Right"
+                    Click="Button_Click"
+                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                          Glyph=&#xE73C;}"
+                    Style="{ThemeResource GhostButtonStyle}">
+                    <Button.KeyboardAccelerators>
+                        <KeyboardAccelerator Key="Escape" />
+                    </Button.KeyboardAccelerators>
+                </Button>
+            </Grid>
 
             <ListView
-                Margin="48,56"
+                Grid.Row="1"
+                Margin="36,0"
                 ItemContainerStyle="{ThemeResource ListViewStretchedItemContainerStyle}"
                 ItemsSource="{x:Bind ViewModel.AppSettings.WindowBoundsRecords, Mode=OneWay}"
                 SelectionMode="None">
@@ -61,18 +68,14 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <StackPanel
-                Margin="20"
-                HorizontalAlignment="Left"
-                VerticalAlignment="Bottom"
-                Orientation="Horizontal"
-                Spacing="6">
+            <Grid Grid.Row="2">
                 <HyperlinkButton Click="SettingsHypelinkButton_Click">
                     <HyperlinkButton.Content>
                         <TextBlock x:Uid="LyricsWindowSwitchWindowHelp" />
                     </HyperlinkButton.Content>
                 </HyperlinkButton>
-            </StackPanel>
+            </Grid>
+
         </Grid>
     </Grid>
 

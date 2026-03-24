@@ -165,6 +165,39 @@
   <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
     <value>Окно</value>
   </data>
+  <data name="AppSettingsControlSystemTray.Text" xml:space="preserve">
+    <value>Системный лоток</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackLyricsCardWindow.Content" xml:space="preserve">
+    <value>Карточка с лирикой</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackLyricsSearchWindow.Content" xml:space="preserve">
+    <value>Окно поиска лирики</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackLyricsWindowSwitchWindow.Content" xml:space="preserve">
+    <value>Переключатель окон лирики</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackMusicGalleryWindow.Content" xml:space="preserve">
+    <value>Музыкальная галерея</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackNone.Content" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackSettingsWindow.Content" xml:space="preserve">
+    <value>Настройки</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackStatsWindow.Content" xml:space="preserve">
+    <value>Статистика</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayClickCallback.Header" xml:space="preserve">
+    <value>Нажмите кнопку Обратный вызов</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayDoubleClickCallback.Header" xml:space="preserve">
+    <value>Обратный вызов при двойном щелчке</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayMiddleClickCallback.Header" xml:space="preserve">
+    <value>Обратный вызов по среднему щелчку</value>
+  </data>
   <data name="AppSettingsControlTheme.Header" xml:space="preserve">
     <value>Тема приложения</value>
   </data>
@@ -1925,6 +1958,9 @@
   </data>
   <data name="SystemTraySettings.Text" xml:space="preserve">
     <value>Открыть настройки</value>
+  </data>
+  <data name="SystemTrayStats.Text" xml:space="preserve">
+    <value>Статистика</value>
   </data>
   <data name="SystemTraySwitch.Text" xml:space="preserve">
     <value>Переключатель окна текста</value>

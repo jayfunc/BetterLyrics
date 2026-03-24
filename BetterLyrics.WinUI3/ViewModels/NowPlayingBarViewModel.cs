@@ -3,6 +3,7 @@ using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.GSMTCService;
+using BetterLyrics.WinUI3.Services.NavigationService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Services.SMTCService;
 using BetterLyrics.WinUI3.Views;
@@ -16,6 +17,7 @@ namespace BetterLyrics.WinUI3.ViewModels
     {
         private readonly IGSMTCService _gsmtcService;
         private readonly ISettingsService _settingsService;
+        public INavigationService NavigationService { get; }
 
         [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 
@@ -27,11 +29,12 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty] public partial double TimelineSliderThumbSeconds { get; set; } = 0;
 
-        public NowPlayingBarViewModel(IGSMTCService mediaSessionsService, ISettingsService settingsService)
+        public NowPlayingBarViewModel(IGSMTCService mediaSessionsService, ISettingsService settingsService, INavigationService navigationService)
         {
             _gsmtcService = mediaSessionsService;
             _settingsService = settingsService;
 
+            NavigationService = navigationService;
             AppSettings = _settingsService.AppSettings;
 
             UpdateVolume();
@@ -76,24 +79,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         private async Task StopTrackAsync()
         {
             await _gsmtcService.StopAsync();
-        }
-
-        [RelayCommand]
-        private static void OpenSettingsWindow()
-        {
-            WindowHook.OpenOrShowWindow<SettingsWindow>();
-        }
-
-        [RelayCommand]
-        private static void OpenLyricsSearchWindow()
-        {
-            WindowHook.OpenOrShowWindow<LyricsSearchWindow>();
-        }
-
-        [RelayCommand]
-        private static void OpenLyricsShareWindow()
-        {
-            WindowHook.OpenOrShowWindow<LyricsShareWindow>();
         }
 
     }
