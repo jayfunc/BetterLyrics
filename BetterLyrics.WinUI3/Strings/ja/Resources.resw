@@ -165,6 +165,39 @@
   <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
     <value>ウィンドウ</value>
   </data>
+  <data name="AppSettingsControlSystemTray.Text" xml:space="preserve">
+    <value>システムトレイ</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackLyricsCardWindow.Content" xml:space="preserve">
+    <value>歌詞カード生成</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackLyricsSearchWindow.Content" xml:space="preserve">
+    <value>歌詞検索ウィンドウ</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackLyricsWindowSwitchWindow.Content" xml:space="preserve">
+    <value>歌詞ウィンドウスイッチャー</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackMusicGalleryWindow.Content" xml:space="preserve">
+    <value>ミュージックギャラリー</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackNone.Content" xml:space="preserve">
+    <value>なし</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackSettingsWindow.Content" xml:space="preserve">
+    <value>設定</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackStatsWindow.Content" xml:space="preserve">
+    <value>ミュージックレポート</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayClickCallback.Header" xml:space="preserve">
+    <value>コールバックをクリック</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayDoubleClickCallback.Header" xml:space="preserve">
+    <value>ダブルクリックコールバック</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayMiddleClickCallback.Header" xml:space="preserve">
+    <value>ミドル・クリック・コールバック</value>
+  </data>
   <data name="AppSettingsControlTheme.Header" xml:space="preserve">
     <value>アプリのテーマ</value>
   </data>
@@ -454,7 +487,7 @@
     <value>クラシック</value>
   </data>
   <data name="LyricsSharePageGroupModernVision" xml:space="preserve">
-    <value>現代のビジョン</value>
+    <value>モダンビジョン</value>
   </data>
   <data name="LyricsSharePageGroupPhysical" xml:space="preserve">
     <value>フィジカル</value>
@@ -685,7 +718,7 @@
     <value>再生キューから削除</value>
   </data>
   <data name="MusicGalleryPageRepeatAll.Content" xml:space="preserve">
-    <value>すべて選択</value>
+    <value>全曲リピート</value>
   </data>
   <data name="MusicGalleryPageScrollToPlayingItem.Text" xml:space="preserve">
     <value>再生中の項目にスクロール</value>
@@ -760,7 +793,7 @@
     <value>ピンイン (中国語)</value>
   </data>
   <data name="PlaybackSettingsControlBetterLyricsRunningInBackground.Message" xml:space="preserve">
-    <value>BetterLyrics内蔵プレーヤーはバックグラウンドで動作しており、他の再生ソースは無視されます。他の再生ソースを聴くには、ミュージック・ギャラリーに行き、右下の停止ボタンをクリックしてください。</value>
+    <value>BetterLyrics の内蔵プレーヤーがバックグラウンドで動作中のため、他の再生ソースは無視されます。他の再生ソースを聴くには、「ミュージックギャラリー」へ移動し、右下の「停止」ボタンをクリックしてください</value>
   </data>
   <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
     <value>外部設定を読み込み、対象プロセスのメモリから直接再生進捗を読み取ります。使用には十分ご注意ください。サードパーティ製設定の安全性に関して、開発者は一切の責任を負いません。</value>
@@ -769,7 +802,7 @@
     <value>メモリーリーダーアダプター</value>
   </data>
   <data name="PlaybackSettingsControlStopBetterLyricsPlayer.Content" xml:space="preserve">
-    <value>今すぐやめる</value>
+    <value>再生を直ちに停止</value>
   </data>
   <data name="PlaylistViewFailed" xml:space="preserve">
     <value>パスが存在しないため、曲を表示できません</value>
@@ -1925,6 +1958,9 @@
   </data>
   <data name="SystemTraySettings.Text" xml:space="preserve">
     <value>設定を開く</value>
+  </data>
+  <data name="SystemTrayStats.Text" xml:space="preserve">
+    <value>ミュージックレポート</value>
   </data>
   <data name="SystemTraySwitch.Text" xml:space="preserve">
     <value>歌詞ウィンドウスイッチャー</value>

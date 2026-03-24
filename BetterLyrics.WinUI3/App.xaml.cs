@@ -53,6 +53,8 @@ namespace BetterLyrics.WinUI3
 
             await InitAppServicesAsync();
 
+            _splashScreen?.Dispose();
+
             HandleNormalLaunch();
         }
 
@@ -63,8 +65,6 @@ namespace BetterLyrics.WinUI3
             // 初始化歌词切换窗口（包括系统托盘）
             m_window = WindowHook.OpenOrShowWindow<LyricsWindowSwitchWindow>();
             DispatcherQueueHelper.Init(m_window);
-
-            _splashScreen?.Hide(TimeSpan.FromSeconds(1));
 
             // 自动打开歌词窗口逻辑
             if (settingsService.AppSettings.GeneralSettings.AutoStartLyricsWindow)

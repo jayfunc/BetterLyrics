@@ -165,6 +165,39 @@
   <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
     <value>विंडो</value>
   </data>
+  <data name="AppSettingsControlSystemTray.Text" xml:space="preserve">
+    <value>System Tray</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackLyricsCardWindow.Content" xml:space="preserve">
+    <value>गीत कार्ड</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackLyricsSearchWindow.Content" xml:space="preserve">
+    <value>गीत खोज विंडो</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackLyricsWindowSwitchWindow.Content" xml:space="preserve">
+    <value>Lyrics Window Switcher</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackMusicGalleryWindow.Content" xml:space="preserve">
+    <value>संगीत गैलरी</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackNone.Content" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackSettingsWindow.Content" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayCallbackStatsWindow.Content" xml:space="preserve">
+    <value>Statistics</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayClickCallback.Header" xml:space="preserve">
+    <value>क्लिक कॉलबैक</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayDoubleClickCallback.Header" xml:space="preserve">
+    <value>डबल क्लिक कॉलबैक</value>
+  </data>
+  <data name="AppSettingsControlSystemTrayMiddleClickCallback.Header" xml:space="preserve">
+    <value>मिडिल क्लिक कॉलबैक</value>
+  </data>
   <data name="AppSettingsControlTheme.Header" xml:space="preserve">
     <value>एप थीम</value>
   </data>
@@ -1925,6 +1958,9 @@
   </data>
   <data name="SystemTraySettings.Text" xml:space="preserve">
     <value>सेटिंग्स खोलें</value>
+  </data>
+  <data name="SystemTrayStats.Text" xml:space="preserve">
+    <value>आंकड़े</value>
   </data>
   <data name="SystemTraySwitch.Text" xml:space="preserve">
     <value>बोल विंडो स्विचर</value>
