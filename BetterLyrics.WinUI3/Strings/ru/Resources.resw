@@ -501,6 +501,9 @@
   <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
     <value>Качество изображения</value>
   </data>
+  <data name="LyricsSharePagePinLyricsCardHint.Text" xml:space="preserve">
+    <value>Перетащите лирическую карту в окно лирики, чтобы закрепить ее. Чтобы открепить карту, щелкните ее правой кнопкой мыши и выберите в меню пункт "Удалить".</value>
+  </data>
   <data name="LyricsSharePageSaveImage.Content" xml:space="preserve">
     <value>Сохранить изображение</value>
   </data>

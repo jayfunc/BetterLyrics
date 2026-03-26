@@ -501,6 +501,9 @@
   <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
     <value>Qualité de l'image</value>
   </data>
+  <data name="LyricsSharePagePinLyricsCardHint.Text" xml:space="preserve">
+    <value>Faites glisser une carte lyrique dans la fenêtre lyrique pour l'épingler. Pour la retirer, cliquez avec le bouton droit de la souris sur la carte épinglée et sélectionnez "Supprimer" dans le menu.</value>
+  </data>
   <data name="LyricsSharePageSaveImage.Content" xml:space="preserve">
     <value>Enregistrer l'image</value>
   </data>

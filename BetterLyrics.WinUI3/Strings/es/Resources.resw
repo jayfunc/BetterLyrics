@@ -501,6 +501,9 @@
   <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
     <value>Calidad de imagen</value>
   </data>
+  <data name="LyricsSharePagePinLyricsCardHint.Text" xml:space="preserve">
+    <value>Arrastre una tarjeta a la ventana de letras para anclarla. Para desanclarla, haz clic con el botón derecho en la tarjeta anclada y selecciona "Eliminar" en el menú.</value>
+  </data>
   <data name="LyricsSharePageSaveImage.Content" xml:space="preserve">
     <value>Guardar imagen</value>
   </data>

@@ -127,13 +127,29 @@ namespace BetterLyrics.WinUI3.ViewModels
                         .Where(f => f.IsEnabled)
                         .Select(f => f.Id)
                         .ToList();
-
                     var cachedFiles = await _fileSystemService.GetParsedFilesAsync(enabledFolderIds);
                     cachedFiles = cachedFiles.Where(x => FileHelper.MusicExtensions.Contains(Path.GetExtension(x.FileName))).ToList();
 
                     var newTrackList = cachedFiles
                         .Select(x => new ExtendedTrack(x))
                         .ToList();
+                    var sourceDict = newTrackList.ToDictionary(s => s.Uri, s => s);
+
+                    var playQueue = _settingsService.AppSettings.MusicGallerySettings.PlayQueuePaths
+                        .Where(x => !string.IsNullOrWhiteSpace(x))
+                        .Select(x =>
+                        {
+                            var encodedUri = new Uri(x).AbsoluteUri;
+                            if (sourceDict.TryGetValue(encodedUri, out var found))
+                            {
+                                return new PlayQueueItem(found);
+                            }
+                            else
+                            {
+                                return null;
+                            }
+                        })
+                        .Where(x => x != null);
 
                     _dispatcherQueue.TryEnqueue(() =>
                     {
@@ -149,6 +165,8 @@ namespace BetterLyrics.WinUI3.ViewModels
                         IsLocalMediaNotFound = !_filteredTracks.Any();
 
                         ApplySongOrderType();
+
+                        SMTCService.UpdatePlaybackList(playQueue);
                     });
                 });
             }, Time.DebounceTimeout);

@@ -1,194 +1,206 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:lyricsmodels="using:BetterLyrics.WinUI3.Models.Lyrics"
-    xmlns:models="using:BetterLyrics.WinUI3.Models">
+    xmlns:models="using:BetterLyrics.WinUI3.Models"
+    xmlns:uc="using:BetterLyrics.WinUI3.Controls">
 
-    <DataTemplate x:Key="LyricsCardReceiptStyle">
-        <Grid
-            Width="380"
-            MinHeight="600"
-            Background="#FFFDF8">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+    <Style x:Key="LyricsCardReceiptStyle" TargetType="uc:LyricsCard">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="uc:LyricsCard">
+                    <Grid
+                        Width="380"
+                        Height="{TemplateBinding LyricsAreaSize}"
+                        MinHeight="600"
+                        Background="#FFFDF8">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
 
-            <StackPanel
-                Grid.Row="0"
-                Margin="0,30,0,20"
-                HorizontalAlignment="Center"
-                Spacing="5">
-                <Image
-                    Width="60"
-                    Height="60"
-                    Margin="0,0,0,10"
-                    Source="{Binding CoverImage}" />
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    FontFamily="{Binding Config.FontFamily}"
-                    FontSize="16"
-                    FontWeight="Bold"
-                    Foreground="#333"
-                    Text="OFFICIAL RECEIPT" />
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    FontFamily="{Binding Config.FontFamily}"
-                    FontSize="12"
-                    Foreground="#555"
-                    Text="BETTERLYRICS STORE" />
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    FontFamily="{Binding Config.FontFamily}"
-                    Foreground="#999"
-                    Text="--------------------------------------" />
-                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
-                    <TextBlock
-                        FontFamily="{Binding Config.FontFamily}"
-                        FontSize="10"
-                        Foreground="#555"
-                        Text="DATE: " />
-                    <TextBlock
-                        FontFamily="{Binding Config.FontFamily}"
-                        FontSize="10"
-                        Foreground="#555"
-                        Text="{Binding DateShort}" />
-                    <TextBlock
-                        Margin="20,0,0,0"
-                        FontFamily="{Binding Config.FontFamily}"
-                        FontSize="10"
-                        Foreground="#555"
-                        Text="TIME: " />
-                    <TextBlock
-                        FontFamily="{Binding Config.FontFamily}"
-                        FontSize="10"
-                        Foreground="#555"
-                        Text="{Binding TimeShort}" />
-                </StackPanel>
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    FontFamily="{Binding Config.FontFamily}"
-                    Foreground="#999"
-                    Text="--------------------------------------" />
-            </StackPanel>
-
-            <StackPanel Grid.Row="1" Margin="30,0">
-                <TextBlock
-                    Margin="0,0,0,10"
-                    FontFamily="{Binding Config.FontFamily}"
-                    FontSize="10"
-                    Foreground="#777"
-                    Text="ITEM: MUSIC MEMORY" />
-
-                <Grid Margin="0,0,0,20">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-
-                    <StackPanel Grid.Column="0" Margin="0,0,10,0">
-                        <TextBlock
-                            FontFamily="{Binding Config.FontFamily}"
-                            FontSize="18"
-                            FontWeight="Bold"
-                            Foreground="Black"
-                            Text="{Binding Title}"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap" />
-                        <TextBlock
-                            FontFamily="{Binding Config.FontFamily}"
-                            FontSize="12"
-                            Foreground="#555"
-                            Text="{Binding Artist}"
-                            TextTrimming="CharacterEllipsis"
-                            TextWrapping="NoWrap" />
-                    </StackPanel>
-
-                    <StackPanel
-                        Grid.Column="1"
-                        VerticalAlignment="Top"
-                        Orientation="Horizontal">
-                        <TextBlock
-                            FontFamily="{Binding Config.FontFamily}"
-                            FontSize="18"
-                            Foreground="Black"
-                            Text=" x 1" />
-                        <TextBlock
-                            Margin="20,0,0,0"
-                            FontFamily="{Binding Config.FontFamily}"
-                            FontSize="18"
-                            Foreground="Black"
-                            Text="$9.99" />
-                    </StackPanel>
-                </Grid>
-
-                <ItemsControl FontFamily="{Binding Config.FontFamily}" ItemsSource="{Binding SelectedLyrics}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="0,0,0,16">
-
+                        <StackPanel
+                            Grid.Row="0"
+                            Margin="0,30,0,0"
+                            HorizontalAlignment="Center"
+                            Spacing="5">
+                            <Image
+                                Width="60"
+                                Height="60"
+                                Margin="0,0,0,10"
+                                Source="{Binding CoverImage, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                FontSize="16"
+                                FontWeight="Bold"
+                                Foreground="#333"
+                                Text="OFFICIAL RECEIPT" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                FontSize="12"
+                                Foreground="#555"
+                                Text="BETTERLYRICS STORE" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                Foreground="#999"
+                                Text="--------------------------------------" />
+                            <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                                 <TextBlock
-                                    FontSize="14"
-                                    Foreground="#333"
-                                    Text="{Binding Text}"
-                                    TextWrapping="Wrap" />
-
+                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    FontSize="10"
+                                    Foreground="#555"
+                                    Text="DATE: " />
                                 <TextBlock
-                                    Margin="0,2,0,0"
-                                    FontSize="11"
-                                    Foreground="#888"
-                                    Text="{Binding SecondaryText}"
-                                    TextWrapping="Wrap"
-                                    Visibility="{Binding SecondaryText, Converter={StaticResource StringToVisibilityConverter}, FallbackValue=Visible}" />
+                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    FontSize="10"
+                                    Foreground="#555"
+                                    Text="{Binding DateShort, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                                <TextBlock
+                                    Margin="20,0,0,0"
+                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    FontSize="10"
+                                    Foreground="#555"
+                                    Text="TIME: " />
+                                <TextBlock
+                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    FontSize="10"
+                                    Foreground="#555"
+                                    Text="{Binding TimeShort, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                             </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </StackPanel>
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                Foreground="#999"
+                                Text="--------------------------------------" />
+                        </StackPanel>
 
-            <StackPanel
-                Grid.Row="2"
-                Margin="30,20,30,30"
-                Spacing="8">
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    FontFamily="{Binding Config.FontFamily}"
-                    Foreground="#999"
-                    Text="**************************************" />
-                <TextBlock
-                    HorizontalAlignment="Right"
-                    FontFamily="{Binding Config.FontFamily}"
-                    FontSize="16"
-                    FontWeight="Bold"
-                    Foreground="Black"
-                    Text="TOTAL: PRICELESS" />
-                <TextBlock
-                    Margin="0,10,0,0"
-                    HorizontalAlignment="Center"
-                    FontFamily="{Binding Config.FontFamily}"
-                    FontSize="10"
-                    Foreground="#555"
-                    Text="THANK YOU FOR LISTENING!" />
+                        <ScrollViewer Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                            <StackPanel Margin="30,20,30,20">
+                                <TextBlock
+                                    Margin="0,0,0,10"
+                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    FontSize="10"
+                                    Foreground="#777"
+                                    Text="ITEM: MUSIC MEMORY" />
 
-                <TextBlock
-                    Height="40"
-                    Margin="0,10,0,0"
-                    HorizontalAlignment="Center"
-                    FontSize="36"
-                    FontWeight="Light"
-                    Foreground="Black"
-                    Opacity="0.8"
-                    Text="||| |||| | ||| || |||| ||" />
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    FontFamily="{Binding Config.FontFamily}"
-                    FontSize="10"
-                    Foreground="Black"
-                    Text="0 12345 67890 5" />
-            </StackPanel>
-        </Grid>
-    </DataTemplate>
+                                <Grid Margin="0,0,0,20">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                        <TextBlock
+                                            FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                            FontSize="18"
+                                            FontWeight="Bold"
+                                            Foreground="Black"
+                                            Text="{Binding Title, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="NoWrap" />
+                                        <TextBlock
+                                            FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                            FontSize="12"
+                                            Foreground="#555"
+                                            Text="{Binding Artist, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="NoWrap" />
+                                    </StackPanel>
+
+                                    <StackPanel
+                                        Grid.Column="1"
+                                        VerticalAlignment="Top"
+                                        Orientation="Horizontal">
+                                        <TextBlock
+                                            FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                            FontSize="18"
+                                            Foreground="Black"
+                                            Text=" x 1" />
+                                        <TextBlock
+                                            Margin="20,0,0,0"
+                                            FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                            FontSize="18"
+                                            Foreground="Black"
+                                            Text="$9.99" />
+                                    </StackPanel>
+                                </Grid>
+
+                                <ItemsControl
+                                    x:Name="PART_LyricsItemsControl"
+                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    ItemsSource="{Binding LyricsLines, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Margin="0,0,0,16">
+
+                                                <TextBlock
+                                                    FontSize="14"
+                                                    Foreground="#333"
+                                                    Text="{Binding Text}"
+                                                    TextWrapping="Wrap" />
+
+                                                <TextBlock
+                                                    Margin="0,2,0,0"
+                                                    FontSize="11"
+                                                    Foreground="#888"
+                                                    Text="{Binding SecondaryText}"
+                                                    TextWrapping="Wrap"
+                                                    Visibility="{Binding SecondaryText, Converter={StaticResource StringToVisibilityConverter}, FallbackValue=Visible}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </ScrollViewer>
+
+                        <StackPanel
+                            Grid.Row="2"
+                            Margin="30,0,30,30"
+                            Spacing="8">
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                Foreground="#999"
+                                Text="**************************************" />
+                            <TextBlock
+                                HorizontalAlignment="Right"
+                                FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                FontSize="16"
+                                FontWeight="Bold"
+                                Foreground="Black"
+                                Text="TOTAL: PRICELESS" />
+                            <TextBlock
+                                Margin="0,10,0,0"
+                                HorizontalAlignment="Center"
+                                FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                FontSize="10"
+                                Foreground="#555"
+                                Text="THANK YOU FOR LISTENING!" />
+
+                            <TextBlock
+                                Height="40"
+                                Margin="0,10,0,0"
+                                HorizontalAlignment="Center"
+                                FontSize="36"
+                                FontWeight="Light"
+                                Foreground="Black"
+                                Opacity="0.8"
+                                Text="||| |||| | ||| || |||| ||" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                FontSize="10"
+                                Foreground="Black"
+                                Text="0 12345 67890 5" />
+                        </StackPanel>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
 </ResourceDictionary>

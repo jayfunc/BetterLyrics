@@ -166,7 +166,7 @@
     <value>विंडो</value>
   </data>
   <data name="AppSettingsControlSystemTray.Text" xml:space="preserve">
-    <value>System Tray</value>
+    <value>सिस्टम ट्रे</value>
   </data>
   <data name="AppSettingsControlSystemTrayCallbackLyricsCardWindow.Content" xml:space="preserve">
     <value>गीत कार्ड</value>
@@ -175,19 +175,19 @@
     <value>गीत खोज विंडो</value>
   </data>
   <data name="AppSettingsControlSystemTrayCallbackLyricsWindowSwitchWindow.Content" xml:space="preserve">
-    <value>Lyrics Window Switcher</value>
+    <value>लिरिक्स विंडो स्विचर</value>
   </data>
   <data name="AppSettingsControlSystemTrayCallbackMusicGalleryWindow.Content" xml:space="preserve">
     <value>संगीत गैलरी</value>
   </data>
   <data name="AppSettingsControlSystemTrayCallbackNone.Content" xml:space="preserve">
-    <value>None</value>
+    <value>कोई नहीं</value>
   </data>
   <data name="AppSettingsControlSystemTrayCallbackSettingsWindow.Content" xml:space="preserve">
-    <value>Settings</value>
+    <value>सेटिंग्स</value>
   </data>
   <data name="AppSettingsControlSystemTrayCallbackStatsWindow.Content" xml:space="preserve">
-    <value>Statistics</value>
+    <value>आंकड़े</value>
   </data>
   <data name="AppSettingsControlSystemTrayClickCallback.Header" xml:space="preserve">
     <value>क्लिक कॉलबैक</value>
@@ -500,6 +500,9 @@
   </data>
   <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
     <value>छवि गुणवत्ता</value>
+  </data>
+  <data name="LyricsSharePagePinLyricsCardHint.Text" xml:space="preserve">
+    <value>लिरिक कार्ड को पिन करने के लिए उसे लिरिक विंडो में ड्रैग करें। अनपिन करने के लिए, पिन किए गए कार्ड पर राइट-क्लिक करें और मेनू से 'डिलीट' चुनें।</value>
   </data>
   <data name="LyricsSharePageSaveImage.Content" xml:space="preserve">
     <value>छवि सहेजें</value>

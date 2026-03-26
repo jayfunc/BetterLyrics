@@ -22,7 +22,12 @@
     Unloaded="Page_Unloaded"
     mc:Ignorable="d">
 
-    <Grid x:Name="RootGrid" SizeChanged="RootGrid_SizeChanged">
+    <Grid
+        x:Name="RootGrid"
+        AllowDrop="True"
+        DragOver="RootGrid_DragOver"
+        Drop="RootGrid_Drop"
+        SizeChanged="RootGrid_SizeChanged">
 
         <!--  Win2D drawing area  -->
         <uc:NowPlayingCanvas x:Name="LyricsCanvas" LyricsWindowStatus="{x:Bind LyricsWindowStatus, Mode=OneWay}" />
@@ -53,6 +58,25 @@
                     VerticalScrollBarVisibility="Hidden">
                     <Grid />
                 </ScrollViewer>
+                <Viewbox x:Name="LyricsCardViewBox" Visibility="{x:Bind LyricsWindowStatus.ShowLyricsCard, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <Viewbox.ContextFlyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem
+                                x:Uid="SettingsPageDelete"
+                                Click="DeleteLyricsCardMenuFlyoutItem_Click"
+                                Icon="Delete" />
+                        </MenuFlyout>
+                    </Viewbox.ContextFlyout>
+                    <uc:LyricsCard
+                        x:Name="LyricsCard"
+                        CoverAccentColor="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor1, Mode=OneWay}"
+                        CoverImage="{x:Bind ViewModel.MediaSessionsService.AlbumArtBitmapImage, Mode=OneWay}"
+                        IsAutoScrollEnabled="True"
+                        IsScrollable="True"
+                        LyricsLines="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsData.LyricsLines, Mode=OneWay}"
+                        PlaybackPosition="{x:Bind ViewModel.MediaSessionsService.CurrentPosition, Mode=OneWay}"
+                        StyleKey="{x:Bind LyricsWindowStatus.LyricsCardStyleKey, Mode=OneWay}" />
+                </Viewbox>
             </Grid>
 
             <!--  Album art and song info area  -->

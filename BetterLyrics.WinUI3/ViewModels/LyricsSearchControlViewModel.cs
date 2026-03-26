@@ -15,6 +15,8 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.ObjectModel;
+using System.Net;
+using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 
@@ -213,13 +215,13 @@ namespace BetterLyrics.WinUI3.ViewModels
         private void CopySearchLink()
         {
             var uriString = $"betterlyrics://lyrics/search/" +
-                $"title={MappedSongSearchQuery?.MappedTitle}&" +
-                $"artist={MappedSongSearchQuery?.MappedArtist}&" +
-                $"album={MappedSongSearchQuery?.MappedAlbum}";
+                $"title={WebUtility.UrlEncode(MappedSongSearchQuery?.MappedTitle)}&" +
+                $"artist={WebUtility.UrlEncode(MappedSongSearchQuery?.MappedArtist)}&" +
+                $"album={WebUtility.UrlEncode(MappedSongSearchQuery?.MappedAlbum)}";
             try
             {
                 DataPackage dataPackage = new();
-                dataPackage.SetUri(new Uri(uriString));
+                dataPackage.SetText(uriString);
                 Clipboard.SetContent(dataPackage);
 
                 GlobalToastManager.Show("ActionCompleted", null, InfoBarSeverity.Success);

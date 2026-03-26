@@ -193,6 +193,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<TrimmerRootDescriptor Include="PluginConfigs\**\*_TrimmerRoots.xml" />
+		<Page Remove="Themes\Generic.xaml" />
 		<TrimmerRootDescriptor Include="Core_TrimmerRoots.xml" />
 	</ItemGroup>
 	<ItemGroup>
@@ -492,6 +493,11 @@
 	  <Content Update="Assets\Banner.png">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	</ItemGroup>
+	<ItemGroup>
+	  <None Update="Themes\Generic.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </None>
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Views\StatsDashboardWindow.xaml">

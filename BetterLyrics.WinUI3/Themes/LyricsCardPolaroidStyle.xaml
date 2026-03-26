@@ -1,111 +1,122 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:lyricsmodels="using:BetterLyrics.WinUI3.Models.Lyrics"
-    xmlns:models="using:BetterLyrics.WinUI3.Models">
+    xmlns:models="using:BetterLyrics.WinUI3.Models"
+    xmlns:uc="using:BetterLyrics.WinUI3.Controls">
 
-    <DataTemplate x:Key="LyricsCardPolaroidStyle">
-        <Grid
-            Width="400"
-            MinHeight="550"
-            Margin="0,25"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Background="White">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="360" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+    <Style x:Key="LyricsCardPolaroidStyle" TargetType="uc:LyricsCard">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="uc:LyricsCard">
+                    <Grid
+                        Width="400"
+                        Height="{TemplateBinding LyricsAreaSize}"
+                        MinHeight="600"
+                        Margin="0,25"
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Background="White">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="360" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
 
-            <Border
-                Grid.Row="0"
-                Margin="20,20,20,0"
-                Background="#EEE">
-                <Image Source="{Binding CoverImage}" Stretch="UniformToFill" />
-            </Border>
+                        <Border
+                            Grid.Row="0"
+                            Margin="20,20,20,0"
+                            Background="#EEE">
+                            <Image Source="{Binding CoverImage, RelativeSource={RelativeSource Mode=TemplatedParent}}" Stretch="UniformToFill" />
+                        </Border>
 
-            <Grid Grid.Row="1" Padding="24,20,24,24">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+                        <Grid Grid.Row="1" Padding="24,0,24,24">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
 
-                <ItemsControl
-                    Grid.Row="0"
-                    Margin="0,0,0,20"
-                    FontFamily="{Binding Config.FontFamily}"
-                    ItemsSource="{Binding SelectedLyrics}">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Margin="0,0,0,16">
+                            <ScrollViewer
+                                Grid.Row="0"
+                                Margin="0,10"
+                                ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                <ItemsControl
+                                    x:Name="PART_LyricsItemsControl"
+                                    Margin="0,20,0,10"
+                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    ItemsSource="{Binding LyricsLines, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Margin="0,0,0,16">
+                                                <TextBlock
+                                                    CharacterSpacing="10"
+                                                    FontSize="20"
+                                                    FontWeight="Bold"
+                                                    Foreground="#2B2B2B"
+                                                    LineHeight="28"
+                                                    Text="{Binding Text}"
+                                                    TextAlignment="Center"
+                                                    TextWrapping="Wrap" />
+                                                <TextBlock
+                                                    Margin="0,2,0,0"
+                                                    FontSize="16"
+                                                    FontStyle="Italic"
+                                                    Foreground="#666666"
+                                                    LineHeight="22"
+                                                    Text="{Binding SecondaryText}"
+                                                    TextAlignment="Center"
+                                                    TextWrapping="Wrap"
+                                                    Visibility="{Binding SecondaryText, Converter={StaticResource StringToVisibilityConverter}, FallbackValue=Visible}" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="16" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
 
                                 <TextBlock
-                                    CharacterSpacing="10"
-                                    FontSize="20"
-                                    FontWeight="Bold"
-                                    Foreground="#2B2B2B"
-                                    LineHeight="28"
-                                    Text="{Binding Text}"
-                                    TextAlignment="Center"
-                                    TextWrapping="Wrap" />
-
-                                <TextBlock
-                                    Margin="0,2,0,0"
+                                    Grid.Column="0"
+                                    VerticalAlignment="Bottom"
+                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                     FontSize="16"
-                                    FontStyle="Italic"
-                                    Foreground="#666666"
-                                    LineHeight="22"
-                                    Text="{Binding SecondaryText}"
-                                    TextAlignment="Center"
-                                    TextWrapping="Wrap"
-                                    Visibility="{Binding SecondaryText, Converter={StaticResource StringToVisibilityConverter}, FallbackValue=Visible}" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                                    FontWeight="Bold"
+                                    Foreground="#333"
+                                    Opacity="0.4"
+                                    Text="#BetterLyrics">
+                                    <TextBlock.RenderTransform>
+                                        <RotateTransform Angle="-2" />
+                                    </TextBlock.RenderTransform>
+                                </TextBlock>
 
-                <Grid Grid.Row="1" Margin="0,10,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="16" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                                <TextBlock
+                                    Grid.Column="2"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    FontSize="14"
+                                    Foreground="#555"
+                                    Opacity="0.6"
+                                    TextAlignment="Right"
+                                    TextTrimming="CharacterEllipsis"
+                                    TextWrapping="NoWrap">
 
-                    <TextBlock
-                        Grid.Column="0"
-                        VerticalAlignment="Bottom"
-                        FontFamily="{Binding Config.FontFamily}"
-                        FontSize="16"
-                        FontWeight="Bold"
-                        Foreground="#333"
-                        Opacity="0.4"
-                        Text="#BetterLyrics">
-                        <TextBlock.RenderTransform>
-                            <RotateTransform Angle="-2" />
-                        </TextBlock.RenderTransform>
-                    </TextBlock>
+                                    <Run Text="{Binding Title, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                                    <Run Text=" - " />
+                                    <Run Text="{Binding Artist, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
 
-                    <TextBlock
-                        Grid.Column="2"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Bottom"
-                        FontFamily="{Binding Config.FontFamily}"
-                        FontSize="14"
-                        Foreground="#555"
-                        Opacity="0.6"
-                        TextAlignment="Right"
-                        TextTrimming="CharacterEllipsis"
-                        TextWrapping="NoWrap">
-
-                        <Run Text="{Binding Title, Mode=OneWay}" />
-                        <Run Text=" - " />
-                        <Run Text="{Binding Artist, Mode=OneWay}" />
-
-                    </TextBlock>
-                </Grid>
-            </Grid>
-        </Grid>
-    </DataTemplate>
+                                </TextBlock>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
 </ResourceDictionary>

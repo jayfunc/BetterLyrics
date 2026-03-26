@@ -7,14 +7,13 @@ namespace BetterLyrics.WinUI3.Extensions
     {
         public readonly static LyricsCardData DemoLyricsCardData = new()
         {
-            SelectedLyrics =
+            Lyrics =
             {
                 new LyricsLine { PrimaryText = "曲拨心弦，词落云笺。" },
                 new LyricsLine { PrimaryText = "Strums the Heartstrings, Graces the Wordscapes." },
             },
             Title = "BetterLyrics",
             Artist = "BetterLyrics",
-            Config = new Models.Settings.LyricsCardConfig { FontFamily = "Segoe UI" },
         };
     }
 }

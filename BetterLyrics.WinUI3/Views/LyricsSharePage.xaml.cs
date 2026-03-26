@@ -166,10 +166,10 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        private void ConfigNavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+        private void PreviewCardContainer_DragStarting(UIElement sender, DragStartingEventArgs args)
         {
-            ViewModel.ConfigNavViewSelectedItemTag = $"{((NavigationViewItem)sender.SelectedItem).Tag}";
+            args.Data.Properties.Add("LyricsCardStyleKey", ViewModel.SelectedStyleItem.StyleKey);
+            args.Data.RequestedOperation = DataPackageOperation.Copy;
         }
-
     }
 }

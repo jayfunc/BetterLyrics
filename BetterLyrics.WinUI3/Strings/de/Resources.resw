@@ -501,6 +501,9 @@
   <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
     <value>Bildqualität</value>
   </data>
+  <data name="LyricsSharePagePinLyricsCardHint.Text" xml:space="preserve">
+    <value>Ziehen Sie eine Liedtextkarte in das Liedtextfenster, um sie anzuheften. Um die Anheftung aufzuheben, klicken Sie mit der rechten Maustaste auf die angeheftete Karte und wählen Sie "Löschen" aus dem Menü.</value>
+  </data>
   <data name="LyricsSharePageSaveImage.Content" xml:space="preserve">
     <value>Bild speichern</value>
   </data>

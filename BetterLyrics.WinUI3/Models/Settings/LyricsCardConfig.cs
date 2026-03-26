@@ -8,5 +8,4 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty] public partial string FontFamily { get; set; } = "Segoe UI";
     }
 
-
 }

@@ -1,6 +1,7 @@
 ﻿using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Lyrics;
+using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.GSMTCService;
 using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.SettingsService;
@@ -30,10 +31,9 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public IGSMTCService GSMTCService { get; private set; }
 
-        [ObservableProperty] public partial string SelectedStyleResourceKey { get; set; } = "LyricsSharePageStyleMinimal";
-        [ObservableProperty] public partial string ConfigNavViewSelectedItemTag { get; set; } = "Style";
+        [ObservableProperty] public partial AppSettings AppSettings { get; set; }
         [ObservableProperty] public partial LyricsCardData CardData { get; set; } = new();
-        [ObservableProperty] public partial DataTemplate? CardDataTemplate { get; set; }
+        [ObservableProperty] public partial LyricsCardConfig CardConfig { get; set; } = new();
         [ObservableProperty] public partial ObservableCollection<LyricsCardStyleGroup> StyleGroups { get; set; }
         [ObservableProperty] public partial LyricsCardStyleItem SelectedStyleItem { get; set; }
         [ObservableProperty] public partial int SelectedStyleDisplayTypeIndex { get; set; } = 1;
@@ -44,6 +44,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             _settingsService = settingsService;
             _localizationService = localizationService;
 
+            AppSettings = settingsService.AppSettings; 
             GSMTCService = gsmtcService;
 
             _ = RefreshCardDataAsync();
@@ -131,54 +132,17 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             foreach (var styleGroup in StyleGroups)
             {
-                foreach (var style in styleGroup)
+                foreach (var item in styleGroup)
                 {
-                    style.IsChecked = false;
+                    item.IsChecked = false;
                 }
             }
             SelectedStyleItem = styleItem;
-            var styleKey = styleItem.StyleKey;
-            if (App.Current.Resources.TryGetValue(styleKey, out object template))
-            {
-                SelectedStyleResourceKey = styleKey;
-                CardDataTemplate = (DataTemplate)template;
-            }
         }
 
         public void UpdateSelectedLyrics(List<LyricsLine> lyrics)
         {
-            CardData.SelectedLyrics = lyrics;
-        }
-
-        private async Task<Brush> GetOverlayBrushAsync()
-        {
-            var dominantColor = (await GSMTCService.GetAlbumArtAccentColorsAsync(Enums.PaletteGeneratorType.Auto, true)).First();
-
-            LinearGradientBrush gradientBrush = new LinearGradientBrush
-            {
-                StartPoint = new Windows.Foundation.Point(0, 0),
-                EndPoint = new Windows.Foundation.Point(0, 1)
-            };
-
-            gradientBrush.GradientStops.Add(new GradientStop
-            {
-                Color = Color.FromArgb(180, dominantColor.R, dominantColor.G, dominantColor.B),
-                Offset = 0.0
-            });
-
-            gradientBrush.GradientStops.Add(new GradientStop
-            {
-                Color = Color.FromArgb(220, (byte)(dominantColor.R / 2), (byte)(dominantColor.G / 2), (byte)(dominantColor.B / 2)),
-                Offset = 0.6
-            });
-
-            gradientBrush.GradientStops.Add(new GradientStop
-            {
-                Color = Colors.Black,
-                Offset = 1.0
-            });
-
-            return gradientBrush;
+            CardData.Lyrics = lyrics;
         }
 
         private async Task RefreshCardDataAsync()
@@ -187,8 +151,9 @@ namespace BetterLyrics.WinUI3.ViewModels
             CardData.Title = mappedTitle;
             CardData.Artist = mappedArtist;
             CardData.CoverImage = GSMTCService.AlbumArtBitmapImage;
-            CardData.OverlayBrush = await GetOverlayBrushAsync();
-            CardData.SelectedLyrics = [];
+            CardData.AccentCoverColor = (await GSMTCService.GetAlbumArtAccentColorsAsync(Enums.PaletteGeneratorType.Auto, true)).First();
+
+            CardData.Lyrics = [];
         }
 
         private void ActivateCardDataForBinding()
@@ -196,34 +161,24 @@ namespace BetterLyrics.WinUI3.ViewModels
             _ = CardData.Title;
             _ = CardData.Artist;
             _ = CardData.CoverImage;
-            _ = CardData.OverlayBrush;
-            _ = CardData.SelectedLyrics;
+            _ = CardData.AccentCoverColor;
+            _ = CardData.Lyrics;
 
-            _ = CardData.DateLong;
-            _ = CardData.DateShort;
-
-            _ = CardData.TimeShort;
-            _ = CardData.TimeWithSeconds;
-            _ = CardData.TimeWithSecondsReply;
-
-            _ = CardData.Config;
-            _ = CardData.Config.FontFamily;
-        }
-
-        partial void OnSelectedStyleResourceKeyChanged(string value)
-        {
-            var found = _settingsService.AppSettings.LyricsCardConfigs.FirstOrDefault(c => c.ResourceKey == value);
-            if (found == null)
-            {
-                found = LyricsCardConfigExtensions.GetDefaultLyricsCardConfig(value);
-                _settingsService.AppSettings.LyricsCardConfigs.Add(found);
-            }
-            CardData.Config = found;
+            _ = CardConfig;
+            _ = CardConfig.FontFamily;
         }
 
         partial void OnSelectedStyleItemChanged(LyricsCardStyleItem value)
         {
             SwitchStyle(value);
+
+            var found = _settingsService.AppSettings.LyricsCardConfigs.FirstOrDefault(c => c.ResourceKey == value.StyleKey);
+            if (found == null)
+            {
+                found = LyricsCardConfigExtensions.GetDefaultLyricsCardConfig(value.StyleKey);
+                _settingsService.AppSettings.LyricsCardConfigs.Add(found);
+            }
+            CardConfig = found;
         }
 
         partial void OnSelectedStyleDisplayTypeIndexChanged(int value)
