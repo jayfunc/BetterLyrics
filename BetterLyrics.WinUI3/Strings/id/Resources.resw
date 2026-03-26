@@ -501,6 +501,9 @@
   <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
     <value>Kualitas Gambar</value>
   </data>
+  <data name="LyricsSharePagePinLyricsCardHint.Text" xml:space="preserve">
+    <value>Seret kartu lirik ke jendela lirik untuk menyematkannya. Untuk melepas pin, klik kanan kartu yang disematkan dan pilih 'Hapus' dari menu.</value>
+  </data>
   <data name="LyricsSharePageSaveImage.Content" xml:space="preserve">
     <value>Simpan Gambar</value>
   </data>

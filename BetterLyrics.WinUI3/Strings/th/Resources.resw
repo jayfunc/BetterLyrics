@@ -501,6 +501,9 @@
   <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
     <value>คุณภาพของภาพ</value>
   </data>
+  <data name="LyricsSharePagePinLyricsCardHint.Text" xml:space="preserve">
+    <value>ลากการ์ดเนื้อเพลงไปยังหน้าต่างเนื้อเพลงเพื่อปักหมุด หากต้องการยกเลิกการปักหมุด ให้คลิกขวาที่การ์ดที่ปักหมุดไว้แล้วเลือก 'ลบ' จากเมนู</value>
+  </data>
   <data name="LyricsSharePageSaveImage.Content" xml:space="preserve">
     <value>บันทึกภาพ</value>
   </data>

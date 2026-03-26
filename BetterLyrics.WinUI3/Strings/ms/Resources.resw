@@ -166,7 +166,7 @@
     <value>Tetingkap</value>
   </data>
   <data name="AppSettingsControlSystemTray.Text" xml:space="preserve">
-    <value>System Tray</value>
+    <value>Talam Sistem</value>
   </data>
   <data name="AppSettingsControlSystemTrayCallbackLyricsCardWindow.Content" xml:space="preserve">
     <value>Kad Lirik</value>
@@ -175,19 +175,19 @@
     <value>Tetingkap Carian Lirik</value>
   </data>
   <data name="AppSettingsControlSystemTrayCallbackLyricsWindowSwitchWindow.Content" xml:space="preserve">
-    <value>Lyrics Window Switcher</value>
+    <value>Penukar Tetingkap Lirik</value>
   </data>
   <data name="AppSettingsControlSystemTrayCallbackMusicGalleryWindow.Content" xml:space="preserve">
     <value>Galeri Muzik</value>
   </data>
   <data name="AppSettingsControlSystemTrayCallbackNone.Content" xml:space="preserve">
-    <value>None</value>
+    <value>Tiada</value>
   </data>
   <data name="AppSettingsControlSystemTrayCallbackSettingsWindow.Content" xml:space="preserve">
-    <value>Settings</value>
+    <value>Tetapan</value>
   </data>
   <data name="AppSettingsControlSystemTrayCallbackStatsWindow.Content" xml:space="preserve">
-    <value>Statistics</value>
+    <value>Statistik</value>
   </data>
   <data name="AppSettingsControlSystemTrayClickCallback.Header" xml:space="preserve">
     <value>Klik Panggil Balik</value>
@@ -500,6 +500,9 @@
   </data>
   <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
     <value>Kualiti gambar</value>
+  </data>
+  <data name="LyricsSharePagePinLyricsCardHint.Text" xml:space="preserve">
+    <value>Seret kad lirik ke dalam tetingkap lirik untuk menyematkannya. Untuk menyahsemat, klik kanan kad yang disematkan dan pilih 'Padam' daripada menu.</value>
   </data>
   <data name="LyricsSharePageSaveImage.Content" xml:space="preserve">
     <value>Simpan imej</value>

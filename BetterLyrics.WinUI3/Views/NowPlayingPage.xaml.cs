@@ -1,5 +1,6 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using BetterLyrics.WinUI3.Controls;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Helper.Lyrics;
@@ -23,6 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 using Windows.Storage.Streams;
 
@@ -107,6 +109,9 @@ namespace BetterLyrics.WinUI3.Views
             var albumFontSize = albumArtLayoutSettings.IsAutoSongInfoFontSize ? lyricsLayoutMetrics.AlbumNameSize : albumArtLayoutSettings.SongInfoFontSize * 0.8;
 
             (string mappedTitle, string mappedArtist, string mappedAlbum) = await _songSearchMapService.GetMappingAsync(_gsmtcService.CurrentSongInfo);
+
+            LyricsCard.Title = mappedTitle;
+            LyricsCard.Artist = mappedArtist;
 
             RenderTextBlock(TitleTextBlock, mappedTitle, titleFontSize);
             RenderTextBlock(ArtistsTextBlock, mappedArtist, artistsFontSize);
@@ -834,6 +839,32 @@ namespace BetterLyrics.WinUI3.Views
                     _ = RenderSongInfoAsync();
                 }
             }
+        }
+
+        private void RootGrid_DragOver(object sender, DragEventArgs e)
+        {
+            if (e.DataView.Properties.ContainsKey("LyricsCardStyleKey"))
+            {
+                e.AcceptedOperation = DataPackageOperation.Copy;
+            }
+            else
+            {
+                e.AcceptedOperation = DataPackageOperation.None;
+            }
+        }
+
+        private void RootGrid_Drop(object sender, DragEventArgs e)
+        {
+            if (e.DataView.Properties.TryGetValue("LyricsCardStyleKey", out object styleKey))
+            {
+                LyricsWindowStatus?.ShowLyricsCard = true;
+                LyricsWindowStatus?.LyricsCardStyleKey = (string)styleKey;
+            }
+        }
+
+        private void DeleteLyricsCardMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            LyricsWindowStatus?.ShowLyricsCard = false;
         }
     }
 }

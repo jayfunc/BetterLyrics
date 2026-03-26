@@ -1,152 +1,161 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:lyricsmodels="using:BetterLyrics.WinUI3.Models.Lyrics"
-    xmlns:models="using:BetterLyrics.WinUI3.Models">
+    xmlns:models="using:BetterLyrics.WinUI3.Models"
+    xmlns:uc="using:BetterLyrics.WinUI3.Controls">
 
-    <DataTemplate x:Key="LyricsCardCDStyle">
-        <Grid
-            Width="450"
-            MinHeight="600"
-            Background="WhiteSmoke"
-            CornerRadius="8">
-            <Grid
-                Margin="20"
-                Background="White"
-                BorderBrush="#D1D1D6"
-                BorderThickness="1"
-                CornerRadius="4">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="140" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <Grid Grid.Column="0" Background="#E5E5E5">
-                    <Image
-                        Opacity="0.5"
-                        Source="{Binding CoverImage}"
-                        Stretch="UniformToFill" />
-
+    <Style x:Key="LyricsCardCDStyle" TargetType="uc:LyricsCard">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="uc:LyricsCard">
                     <Grid
-                        Width="40"
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Stretch"
-                        Background="#CC0000"
-                        CornerRadius="4,0,0,4">
-                        <TextBlock
-                            Margin="0,10"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Top"
-                            FontSize="10"
-                            Foreground="White"
-                            Text="限定盤" />
-                        <TextBlock
-                            Margin="0,0,0,10"
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Bottom"
-                            FontSize="10"
-                            Foreground="White"
-                            Text="STEREO">
-                            <TextBlock.RenderTransform>
-                                <RotateTransform Angle="-90" />
-                            </TextBlock.RenderTransform>
-                        </TextBlock>
-                    </Grid>
+                        Width="450"
+                        Height="{TemplateBinding LyricsAreaSize}"
+                        MinHeight="600"
+                        Background="WhiteSmoke"
+                        CornerRadius="8">
+                        <Grid
+                            Margin="20"
+                            Background="White"
+                            BorderBrush="#D1D1D6"
+                            BorderThickness="1"
+                            CornerRadius="4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="140" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
 
-                    <Rectangle
-                        Width="2"
-                        HorizontalAlignment="Right"
-                        Fill="#000"
-                        Opacity="0.1" />
-                </Grid>
+                            <Grid Grid.Column="0" Background="#E5E5E5">
+                                <Image
+                                    Opacity="0.5"
+                                    Source="{Binding CoverImage, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    Stretch="UniformToFill" />
 
-                <TextBlock
-                    Grid.ColumnSpan="2"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    FontSize="16"
-                    FontWeight="Bold"
-                    Foreground="White"
-                    Text="{Binding Artist}"
-                    TextTrimming="CharacterEllipsis">
-                    <TextBlock.RenderTransform>
-                        <RotateTransform Angle="-90" />
-                    </TextBlock.RenderTransform>
-                </TextBlock>
-
-                <Grid Grid.Column="1" Padding="24">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-
-                    <StackPanel Grid.Row="0" Margin="0,0,0,20">
-                        <TextBlock
-                            FontSize="22"
-                            FontWeight="Bold"
-                            Foreground="Black"
-                            Text="{Binding Title}"
-                            TextWrapping="Wrap" />
-                        <TextBlock
-                            Margin="0,4,0,0"
-                            FontSize="14"
-                            Foreground="#888"
-                            Text="{Binding Artist}" />
-                        <Rectangle
-                            Height="1"
-                            Margin="0,12,0,0"
-                            Fill="#EEE" />
-                    </StackPanel>
-
-                    <ItemsControl
-                        Grid.Row="1"
-                        FontFamily="{Binding Config.FontFamily}"
-                        ItemsSource="{Binding SelectedLyrics}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Margin="0,0,0,16">
-
+                                <Grid
+                                    Width="40"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Stretch"
+                                    Background="#CC0000"
+                                    CornerRadius="4,0,0,4">
                                     <TextBlock
-                                        FontSize="15"
-                                        Foreground="#333"
-                                        LineHeight="24"
-                                        Text="{Binding Text}"
-                                        TextWrapping="Wrap" />
+                                        Margin="0,10"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Top"
+                                        FontSize="10"
+                                        Foreground="White"
+                                        Text="限定盤" />
+                                    <TextBlock
+                                        Margin="0,0,0,10"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Bottom"
+                                        FontSize="10"
+                                        Foreground="White"
+                                        Text="STEREO">
+                                        <TextBlock.RenderTransform>
+                                            <RotateTransform Angle="-90" />
+                                        </TextBlock.RenderTransform>
+                                    </TextBlock>
+                                </Grid>
 
+                                <Rectangle
+                                    Width="2"
+                                    HorizontalAlignment="Right"
+                                    Fill="#000"
+                                    Opacity="0.1" />
+                            </Grid>
+
+                            <TextBlock
+                                Grid.ColumnSpan="2"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                FontSize="16"
+                                FontWeight="Bold"
+                                Foreground="White"
+                                Text="{Binding Artist, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                TextTrimming="CharacterEllipsis">
+                                <TextBlock.RenderTransform>
+                                    <RotateTransform Angle="-90" />
+                                </TextBlock.RenderTransform>
+                            </TextBlock>
+
+                            <Grid Grid.Column="1" Padding="24">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Margin="0,0,0,20">
+                                    <TextBlock
+                                        FontSize="22"
+                                        FontWeight="Bold"
+                                        Foreground="Black"
+                                        Text="{Binding Title, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                        TextWrapping="Wrap" />
                                     <TextBlock
                                         Margin="0,4,0,0"
-                                        FontSize="13.5"
-                                        Foreground="#777"
-                                        LineHeight="20"
-                                        Text="{Binding SecondaryText}"
-                                        TextWrapping="Wrap"
-                                        Visibility="{Binding SecondaryText, Converter={StaticResource StringToVisibilityConverter}}" />
+                                        FontSize="14"
+                                        Foreground="#888"
+                                        Text="{Binding Artist, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                                    <Rectangle
+                                        Height="1"
+                                        Margin="0,12,0,0"
+                                        Fill="#EEE" />
                                 </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
 
-                    <StackPanel
-                        Grid.Row="2"
-                        HorizontalAlignment="Right"
-                        Opacity="0.6"
-                        Orientation="Horizontal">
-                        <Ellipse
-                            Width="6"
-                            Height="6"
-                            Margin="0,0,4,0"
-                            Fill="Black" />
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontSize="8"
-                            Foreground="Black"
-                            Text="BetterLyrics Disc Digital Audio" />
-                    </StackPanel>
-                </Grid>
-            </Grid>
-        </Grid>
-    </DataTemplate>
+                                <ScrollViewer Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                    <ItemsControl
+                                        x:Name="PART_LyricsItemsControl"
+                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                        ItemsSource="{Binding LyricsLines, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="0,0,0,16">
+
+                                                    <TextBlock
+                                                        FontSize="15"
+                                                        Foreground="#333"
+                                                        LineHeight="24"
+                                                        Text="{Binding Text}"
+                                                        TextWrapping="Wrap" />
+
+                                                    <TextBlock
+                                                        Margin="0,4,0,0"
+                                                        FontSize="13.5"
+                                                        Foreground="#777"
+                                                        LineHeight="20"
+                                                        Text="{Binding SecondaryText}"
+                                                        TextWrapping="Wrap"
+                                                        Visibility="{Binding SecondaryText, Converter={StaticResource StringToVisibilityConverter}}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+
+                                <StackPanel
+                                    Grid.Row="2"
+                                    HorizontalAlignment="Right"
+                                    Opacity="0.6"
+                                    Orientation="Horizontal">
+                                    <Ellipse
+                                        Width="6"
+                                        Height="6"
+                                        Margin="0,0,4,0"
+                                        Fill="Black" />
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontSize="8"
+                                        Foreground="Black"
+                                        Text="BetterLyrics Disc Digital Audio" />
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
 </ResourceDictionary>

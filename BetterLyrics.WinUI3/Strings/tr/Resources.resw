@@ -501,6 +501,9 @@
   <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
     <value>Görüntü Kalitesi</value>
   </data>
+  <data name="LyricsSharePagePinLyricsCardHint.Text" xml:space="preserve">
+    <value>Bir lirik kartını sabitlemek için lirik penceresine sürükleyin. Sabitlemeyi kaldırmak için sabitlenmiş karta sağ tıklayın ve menüden 'Sil'i seçin.</value>
+  </data>
   <data name="LyricsSharePageSaveImage.Content" xml:space="preserve">
     <value>Resmi Kaydet</value>
   </data>

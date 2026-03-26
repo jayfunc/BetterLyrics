@@ -501,6 +501,9 @@
   <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
     <value>جودة الصورة</value>
   </data>
+  <data name="LyricsSharePagePinLyricsCardHint.Text" xml:space="preserve">
+    <value>اسحب بطاقة غنائية إلى نافذة الأغاني لتثبيتها. لإلغاء التثبيت، انقر بزر الماوس الأيمن فوق البطاقة المثبتة واختر "حذف" من القائمة.</value>
+  </data>
   <data name="LyricsSharePageSaveImage.Content" xml:space="preserve">
     <value>حفظ الصورة</value>
   </data>

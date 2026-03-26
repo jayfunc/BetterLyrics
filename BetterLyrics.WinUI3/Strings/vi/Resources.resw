@@ -501,6 +501,9 @@
   <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
     <value>Chất lượng hình ảnh</value>
   </data>
+  <data name="LyricsSharePagePinLyricsCardHint.Text" xml:space="preserve">
+    <value>Kéo thẻ lời bài hát vào cửa sổ lời bài hát để ghim nó lại. Để bỏ ghim, nhấp chuột phải vào thẻ đã ghim và chọn 'Xóa' từ menu.</value>
+  </data>
   <data name="LyricsSharePageSaveImage.Content" xml:space="preserve">
     <value>Lưu hình ảnh</value>
   </data>

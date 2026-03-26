@@ -75,6 +75,9 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int PaddingRight { get; set; } = 0;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int PaddingBottom { get; set; } = 0;
 
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowLyricsCard { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LyricsCardStyleKey { get; set; } = "";
+
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsSpoutOutputEnabled { get; set; } = false;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial FPS FPS { get; set; } = FPS.Hz60;
@@ -265,6 +268,9 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 PaddingTop = this.PaddingTop,
                 PaddingRight = this.PaddingRight,
                 PaddingBottom = this.PaddingBottom,
+
+                ShowLyricsCard = this.ShowLyricsCard,
+                LyricsCardStyleKey = this.LyricsCardStyleKey,
 
                 IsSpoutOutputEnabled = this.IsSpoutOutputEnabled,
 

@@ -1,140 +1,150 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:lyricsmodels="using:BetterLyrics.WinUI3.Models.Lyrics"
-    xmlns:models="using:BetterLyrics.WinUI3.Models">
+    xmlns:models="using:BetterLyrics.WinUI3.Models"
+    xmlns:uc="using:BetterLyrics.WinUI3.Controls">
 
-    <DataTemplate x:Key="LyricsCardSwissStyle">
-        <Grid
-            Width="450"
-            MinHeight="600"
-            Background="#F0F0F0">
-            <Grid
-                Margin="20"
-                BorderBrush="Black"
-                BorderThickness="4">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+    <Style x:Key="LyricsCardSwissStyle" TargetType="uc:LyricsCard">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="uc:LyricsCard">
+                    <Grid
+                        Width="450"
+                        Height="{TemplateBinding LyricsAreaSize}"
+                        MinHeight="600"
+                        Background="#F0F0F0">
+                        <Grid
+                            Margin="20"
+                            BorderBrush="Black"
+                            BorderThickness="4">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
 
-                <Grid
-                    Grid.Row="0"
-                    Padding="20"
-                    Background="White">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <StackPanel>
-                        <TextBlock
-                            FontFamily="{Binding Config.FontFamily}"
-                            FontSize="48"
-                            FontWeight="Black"
-                            Foreground="Black"
-                            LineHeight="40"
-                            Text="{Binding Title}"
-                            TextWrapping="Wrap" />
-                        <TextBlock
-                            Margin="0,10,0,0"
-                            FontFamily="{Binding Config.FontFamily}"
-                            FontSize="20"
-                            FontWeight="Bold"
-                            Foreground="Black"
-                            Text="{Binding Artist}"
-                            TextTrimming="CharacterEllipsis" />
-                    </StackPanel>
-                    <TextBlock
-                        Grid.Column="1"
-                        Margin="10,-20,-10,0"
-                        VerticalAlignment="Top"
-                        FontFamily="{Binding Config.FontFamily}"
-                        FontSize="80"
-                        FontWeight="Bold"
-                        Foreground="#EEE"
-                        Text="01" />
-                </Grid>
-
-                <Rectangle
-                    Grid.Row="1"
-                    Height="4"
-                    Fill="Black" />
-
-                <Grid Grid.Row="2" Background="{Binding OverlayBrush}">
-                    <Rectangle Fill="White" Opacity="0.8" />
-
-                    <ItemsControl
-                        Margin="20,30"
-                        FontFamily="{Binding Config.FontFamily}"
-                        ItemsSource="{Binding SelectedLyrics}">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Margin="0,0,0,24">
-
+                            <Grid
+                                Grid.Row="0"
+                                Padding="20"
+                                Background="White">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
                                     <TextBlock
-                                        FontSize="24"
+                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                        FontSize="48"
                                         FontWeight="Black"
                                         Foreground="Black"
-                                        LineHeight="28"
-                                        Text="{Binding Text}"
-                                        TextAlignment="Left"
+                                        LineHeight="40"
+                                        Text="{Binding Title, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                         TextWrapping="Wrap" />
-
                                     <TextBlock
-                                        Margin="0,4,0,0"
-                                        FontSize="16"
-                                        FontWeight="Normal"
-                                        Foreground="#444444"
-                                        LineHeight="22"
-                                        Text="{Binding SecondaryText}"
-                                        TextAlignment="Left"
-                                        TextWrapping="Wrap"
-                                        Visibility="{Binding SecondaryText, Converter={StaticResource StringToVisibilityConverter}, FallbackValue=Visible}" />
+                                        Margin="0,10,0,0"
+                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                        FontSize="20"
+                                        FontWeight="Bold"
+                                        Foreground="Black"
+                                        Text="{Binding Artist, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                        TextTrimming="CharacterEllipsis" />
                                 </StackPanel>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </Grid>
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Margin="10,-20,-10,0"
+                                    VerticalAlignment="Top"
+                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    FontSize="80"
+                                    FontWeight="Bold"
+                                    Foreground="#EEE"
+                                    Text="01" />
+                            </Grid>
 
-                <Grid
-                    Grid.Row="3"
-                    Padding="20,15"
-                    Background="Black"
-                    BorderBrush="Black"
-                    BorderThickness="0,4,0,0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <StackPanel Orientation="Horizontal" Spacing="10">
-                        <Border
-                            Width="40"
-                            Height="40"
-                            Background="White"
-                            CornerRadius="20">
-                            <Image Source="{Binding CoverImage}" />
-                        </Border>
-                        <TextBlock
-                            VerticalAlignment="Center"
-                            FontFamily="{Binding Config.FontFamily}"
-                            FontWeight="Bold"
-                            Foreground="White"
-                            Text="NOW PLAYING" />
-                    </StackPanel>
-                    <TextBlock
-                        Grid.Column="1"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        FontFamily="{Binding Config.FontFamily}"
-                        Foreground="White"
-                        Opacity="0.5"
-                        Text="BetterLyrics" />
-                </Grid>
-            </Grid>
-        </Grid>
-    </DataTemplate>
+                            <Rectangle
+                                Grid.Row="1"
+                                Height="4"
+                                Fill="Black" />
+
+                            <Grid Grid.Row="2" Background="{TemplateBinding OverlayBrush}">
+                                <Rectangle Fill="White" Opacity="0.8" />
+
+                                <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Hidden">
+                                    <ItemsControl
+                                        x:Name="PART_LyricsItemsControl"
+                                        Margin="20,30"
+                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                        ItemsSource="{Binding LyricsLines, RelativeSource={RelativeSource Mode=TemplatedParent}}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate>
+                                                <StackPanel Margin="0,0,0,24">
+
+                                                    <TextBlock
+                                                        FontSize="24"
+                                                        FontWeight="Black"
+                                                        Foreground="Black"
+                                                        LineHeight="28"
+                                                        Text="{Binding Text}"
+                                                        TextAlignment="Left"
+                                                        TextWrapping="Wrap" />
+
+                                                    <TextBlock
+                                                        Margin="0,4,0,0"
+                                                        FontSize="16"
+                                                        FontWeight="Normal"
+                                                        Foreground="#444444"
+                                                        LineHeight="22"
+                                                        Text="{Binding SecondaryText}"
+                                                        TextAlignment="Left"
+                                                        TextWrapping="Wrap"
+                                                        Visibility="{Binding SecondaryText, Converter={StaticResource StringToVisibilityConverter}, FallbackValue=Visible}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </Grid>
+
+                            <Grid
+                                Grid.Row="3"
+                                Padding="20,15"
+                                Background="Black"
+                                BorderBrush="Black"
+                                BorderThickness="0,4,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <Border
+                                        Width="40"
+                                        Height="40"
+                                        Background="White"
+                                        CornerRadius="20">
+                                        <Image Source="{Binding CoverImage, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
+                                    </Border>
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                        FontWeight="Bold"
+                                        Foreground="White"
+                                        Text="NOW PLAYING" />
+                                </StackPanel>
+                                <TextBlock
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                    Foreground="White"
+                                    Opacity="0.5"
+                                    Text="BetterLyrics" />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
 </ResourceDictionary>

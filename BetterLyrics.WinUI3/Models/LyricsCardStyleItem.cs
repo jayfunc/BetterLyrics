@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Extensions;
+using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
@@ -15,8 +16,8 @@ namespace BetterLyrics.WinUI3.Models
     {
         public string DisplayText { get; set; }
         public string StyleKey { get; set; }
-        public DataTemplate CardDataTemplate => (DataTemplate)App.Current.Resources[StyleKey];
         public LyricsCardData CardData => LyricsCardDataExtensions.DemoLyricsCardData;
+
         [ObservableProperty] public partial bool IsChecked { get; set; } = false;
         [ObservableProperty] public partial bool IsExpanded { get; set; } = true;
 

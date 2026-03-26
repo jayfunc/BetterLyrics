@@ -190,13 +190,13 @@
     <value>ミュージックレポート</value>
   </data>
   <data name="AppSettingsControlSystemTrayClickCallback.Header" xml:space="preserve">
-    <value>コールバックをクリック</value>
+    <value>クリックコールバック</value>
   </data>
   <data name="AppSettingsControlSystemTrayDoubleClickCallback.Header" xml:space="preserve">
     <value>ダブルクリックコールバック</value>
   </data>
   <data name="AppSettingsControlSystemTrayMiddleClickCallback.Header" xml:space="preserve">
-    <value>ミドル・クリック・コールバック</value>
+    <value>ミドルクリックコールバック</value>
   </data>
   <data name="AppSettingsControlTheme.Header" xml:space="preserve">
     <value>アプリのテーマ</value>
@@ -500,6 +500,9 @@
   </data>
   <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
     <value>画像品質</value>
+  </data>
+  <data name="LyricsSharePagePinLyricsCardHint.Text" xml:space="preserve">
+    <value>歌詞カードを歌詞ウィンドウにドラッグしてピン留めします。ピン留めを解除するには、ピン留めしたカードを右クリックし、メニューから「削除」を選択します。</value>
   </data>
   <data name="LyricsSharePageSaveImage.Content" xml:space="preserve">
     <value>画像を保存</value>

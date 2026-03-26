@@ -501,6 +501,9 @@
   <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
     <value>이미지 품질</value>
   </data>
+  <data name="LyricsSharePagePinLyricsCardHint.Text" xml:space="preserve">
+    <value>가사 카드를 가사 창으로 드래그하여 고정합니다. 고정을 해제하려면 고정된 카드를 마우스 오른쪽 버튼으로 클릭하고 메뉴에서 '삭제'를 선택합니다.</value>
+  </data>
   <data name="LyricsSharePageSaveImage.Content" xml:space="preserve">
     <value>이미지 저장</value>
   </data>

@@ -542,15 +542,18 @@ namespace BetterLyrics.WinUI3.Controls
             _isMouseScrollingChanged = false;
             _isNowPlayingPaletteChanged = false;
 
-            _lyricsRenderer.CalculateLyrics3DMatrix(
-                lyricsStyle: lyricsStyle,
-                lyricsEffect: lyricsEffect,
-                lyricsX: _renderLyricsStartX,
-                lyricsY: _renderLyricsStartY,
-                lyricsWidth: _renderLyricsWidth,
-                lyricsHeight: _renderLyricsHeight,
-                _isLayoutChanged
-            );
+            if (!_lyricsWindowStatus.ShowLyricsCard)
+            {
+                _lyricsRenderer.CalculateLyrics3DMatrix(
+                    lyricsStyle: lyricsStyle,
+                    lyricsEffect: lyricsEffect,
+                    lyricsX: _renderLyricsStartX,
+                    lyricsY: _renderLyricsStartY,
+                    lyricsWidth: _renderLyricsWidth,
+                    lyricsHeight: _renderLyricsHeight,
+                    _isLayoutChanged
+                );
+            }
 
             _isLayoutChanged = false;
 
@@ -601,7 +604,10 @@ namespace BetterLyrics.WinUI3.Controls
 
             _spectrumRenderer.Update(_spectrumAnalyzer.CurrentBassEnergy, lyricsBg.SpectrumBreathingIntensity);
 
-            _lyricsRenderer.Update(_spectrumAnalyzer.CurrentBassEnergy, lyricsEffect.LyricsBreathingIntensity);
+            if (!_lyricsWindowStatus.ShowLyricsCard)
+            {
+                _lyricsRenderer.Update(_spectrumAnalyzer.CurrentBassEnergy, lyricsEffect.LyricsBreathingIntensity);
+            }
         }
 
         private void Canvas_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
@@ -698,23 +704,26 @@ namespace BetterLyrics.WinUI3.Controls
 
             _fogRenderer.Draw(sender, ds, lyricsBg.IsFogOverlayBrethingEffectEnabled);
 
-            _lyricsRenderer.Draw(
-                control: sender,
-                ds: ds,
-                lines: _renderLyricsLines,
-                mouseHoverLineIndex: _mouseHoverLineIndex,
-                isMousePressing: _isMousePressing,
-                startVisibleIndex: _visibleRange.Start,
-                endVisibleIndex: _visibleRange.End,
-                lyricsX: _renderLyricsStartX,
-                lyricsY: _renderLyricsStartY,
-                lyricsWidth: _renderLyricsWidth,
-                lyricsHeight: _renderLyricsHeight,
-                userScrollOffset: _mouseYScrollTransition.Value,
-                lyricsOpacity: _renderLyricsOpacity,
-                playingLineTopOffsetFactor: lyricsStyle.PlayingLineTopOffset / 100.0,
-                windowStatus: _lyricsWindowStatus,
-                currentProgressMs: _songPositionWithOffset.TotalMilliseconds);
+            if (!_lyricsWindowStatus.ShowLyricsCard)
+            {
+                _lyricsRenderer.Draw(
+                    control: sender,
+                    ds: ds,
+                    lines: _renderLyricsLines,
+                    mouseHoverLineIndex: _mouseHoverLineIndex,
+                    isMousePressing: _isMousePressing,
+                    startVisibleIndex: _visibleRange.Start,
+                    endVisibleIndex: _visibleRange.End,
+                    lyricsX: _renderLyricsStartX,
+                    lyricsY: _renderLyricsStartY,
+                    lyricsWidth: _renderLyricsWidth,
+                    lyricsHeight: _renderLyricsHeight,
+                    userScrollOffset: _mouseYScrollTransition.Value,
+                    lyricsOpacity: _renderLyricsOpacity,
+                    playingLineTopOffsetFactor: lyricsStyle.PlayingLineTopOffset / 100.0,
+                    windowStatus: _lyricsWindowStatus,
+                    currentProgressMs: _songPositionWithOffset.TotalMilliseconds);
+            }
         }
 
         private void DrawCoreWithEdgeFeatheringHandled(ICanvasAnimatedControl sender, CanvasDrawingSession ds,

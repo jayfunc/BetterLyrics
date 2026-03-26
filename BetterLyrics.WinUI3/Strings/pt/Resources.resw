@@ -501,6 +501,9 @@
   <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
     <value>Qualidade da imagem</value>
   </data>
+  <data name="LyricsSharePagePinLyricsCardHint.Text" xml:space="preserve">
+    <value>Arraste um cartão da letra de música para a janela da letra de música para o fixar. Para retirar a fixação, clique com o botão direito do rato no cartão fixado e selecione "Eliminar" no menu.</value>
+  </data>
   <data name="LyricsSharePageSaveImage.Content" xml:space="preserve">
     <value>Guardar imagem</value>
   </data>

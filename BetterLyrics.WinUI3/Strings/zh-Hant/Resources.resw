@@ -190,13 +190,13 @@
     <value>統計資料</value>
   </data>
   <data name="AppSettingsControlSystemTrayClickCallback.Header" xml:space="preserve">
-    <value>按一下回撥</value>
+    <value>點擊回呼</value>
   </data>
   <data name="AppSettingsControlSystemTrayDoubleClickCallback.Header" xml:space="preserve">
     <value>雙擊回呼</value>
   </data>
   <data name="AppSettingsControlSystemTrayMiddleClickCallback.Header" xml:space="preserve">
-    <value>中點擊回呼</value>
+    <value>中鍵回呼</value>
   </data>
   <data name="AppSettingsControlTheme.Header" xml:space="preserve">
     <value>應用程式主題</value>
@@ -500,6 +500,9 @@
   </data>
   <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
     <value>圖像品質</value>
+  </data>
+  <data name="LyricsSharePagePinLyricsCardHint.Text" xml:space="preserve">
+    <value>拖曳抒情卡到抒情視窗以釘住它。若要取消釘選，請用滑鼠右鍵按一下釘選的卡片，然後從功能表中選擇「刪除」。</value>
   </data>
   <data name="LyricsSharePageSaveImage.Content" xml:space="preserve">
     <value>儲存圖像</value>
