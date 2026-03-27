@@ -98,7 +98,7 @@
                         <TextBlock x:Uid="LyricsSharePageImageQuality" />
                     </DropDownButton.Content>
                     <DropDownButton.Flyout>
-                        <Flyout FlyoutPresenterStyle="{StaticResource FlyoutGhostStyle}">
+                        <Flyout>
                             <uc:ExtendedSlider
                                 x:Name="ImageQualitySlider"
                                 Default="100"

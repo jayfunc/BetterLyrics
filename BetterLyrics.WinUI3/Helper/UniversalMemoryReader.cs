@@ -17,7 +17,7 @@ namespace BetterLyrics.WinUI3.Helper
     public partial class UniversalMemoryReader : IDisposable
     {
         private readonly MemoryReaderConfig _config;
-        private readonly System.Timers.Timer _timer; // 切换为 System.Timers.Timer
+        private readonly System.Timers.Timer _timer;
         private readonly object _lock = new();
 
         public event Action<double, double>? OnProgressChanged;
@@ -45,20 +45,16 @@ namespace BetterLyrics.WinUI3.Helper
                 using SafeHPROCESS hProcess = OpenProcess(access, false, (uint)process.Id);
                 if (hProcess.IsInvalid) return;
 
-                // 1. 读取当前进度
                 double currentTime = ReadValueFromConfig(hProcess, _config.CurrentTime);
 
-                // 2. 读取总时长
                 double totalDuration = ReadValueFromConfig(hProcess, _config.TotalDuration);
 
-                // 3. 触发事件 (过滤无效值)
                 if (currentTime >= 0 && totalDuration > 0)
                 {
                     OnProgressChanged?.Invoke(currentTime, totalDuration);
                 }
                 else if (currentTime >= 0)
                 {
-                    // 如果获取不到总时长，至少返回当前进度
                     OnProgressChanged?.Invoke(currentTime, 0);
                 }
             }
@@ -68,9 +64,6 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
-        /// <summary>
-        /// 根据配置读取并计算最终数值
-        /// </summary>
         private double ReadValueFromConfig(SafeHPROCESS hProcess, MemoryAddressDefinition def)
         {
             if (string.IsNullOrEmpty(def.ModuleName)) return -1;
@@ -118,9 +111,6 @@ namespace BetterLyrics.WinUI3.Helper
             return rawValue * def.UnitScale;
         }
 
-        /// <summary>
-        /// 指针链遍历核心逻辑
-        /// </summary>
         private IntPtr GetAddressFromPointerChain(SafeHPROCESS hProcess, IntPtr baseAddress, int[] offsets)
         {
             IntPtr currentPtr = baseAddress;
@@ -171,7 +161,6 @@ namespace BetterLyrics.WinUI3.Helper
 
             return IntPtr.Zero;
         }
-        // === 基础内存读取方法 ===
 
         private int ReadInt32(SafeHPROCESS hProcess, IntPtr address) => ReadStruct<int>(hProcess, address);
         private long ReadInt64(SafeHPROCESS hProcess, IntPtr address) => ReadStruct<long>(hProcess, address);

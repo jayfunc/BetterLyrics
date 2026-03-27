@@ -502,7 +502,7 @@
     <value>画像品質</value>
   </data>
   <data name="LyricsSharePagePinLyricsCardHint.Text" xml:space="preserve">
-    <value>歌詞カードを歌詞ウィンドウにドラッグしてピン留めします。ピン留めを解除するには、ピン留めしたカードを右クリックし、メニューから「削除」を選択します。</value>
+    <value>歌詞カードを歌詞ウィンドウにドラッグすると固定されます。固定を解除するには、固定されたカードを右クリックし、メニューから「削除」を選択してください。</value>
   </data>
   <data name="LyricsSharePageSaveImage.Content" xml:space="preserve">
     <value>画像を保存</value>

@@ -297,6 +297,17 @@ namespace Lyricify.Lyrics.Providers.Web.QQMusic
                 {
                     decompressText = Decrypter.Qrc.Decrypter.DecryptLyrics(text) ?? "";
                 }
+                catch (FormatException)
+                {
+                    if (Helpers.TypeHelper.IsLyricsType(text, Models.LyricsTypes.Lrc))
+                    {
+                        decompressText = text ?? "";
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
                 catch
                 {
                     continue;

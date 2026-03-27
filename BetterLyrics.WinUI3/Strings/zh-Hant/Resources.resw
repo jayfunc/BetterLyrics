@@ -502,7 +502,7 @@
     <value>圖像品質</value>
   </data>
   <data name="LyricsSharePagePinLyricsCardHint.Text" xml:space="preserve">
-    <value>拖曳抒情卡到抒情視窗以釘住它。若要取消釘選，請用滑鼠右鍵按一下釘選的卡片，然後從功能表中選擇「刪除」。</value>
+    <value>拖曳歌詞卡片到歌詞視窗以釘住它。若要取消釘選，請用滑鼠右鍵按一下釘選的卡片，然後從功能表中選擇「刪除」。</value>
   </data>
   <data name="LyricsSharePageSaveImage.Content" xml:space="preserve">
     <value>儲存圖像</value>
