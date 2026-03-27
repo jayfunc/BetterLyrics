@@ -46,9 +46,7 @@ namespace BetterLyrics.WinUI3.Views
     {
         private readonly SimpleTimer _alwaysOnTopPollingTimer;
         private readonly SimpleTimer _underlayColorTimer;
-
         private readonly DispatcherQueueTimer _visibilityTimer;
-
         private OverlayInputHelper? _overlayInputHelper;
         private TaskbarHook? _taskbarHook;
         private WindowMessageMonitor? _wmm;
@@ -125,7 +123,7 @@ namespace BetterLyrics.WinUI3.Views
                 string? changedSetting = Marshal.PtrToStringUni(e.Message.LParam);
                 if (changedSetting == "Desktop")
                 {
-                    if (LyricsWindowStatus.IsWallpaper)
+                    if (LyricsWindowStatus.IsWallpaper && LyricsWindowStatus.IsLocked)
                     {
                         DispatcherQueueHelper.Instance?.TryEnqueue(() =>
                         {
