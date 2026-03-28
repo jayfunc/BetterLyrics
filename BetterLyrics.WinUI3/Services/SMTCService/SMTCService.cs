@@ -57,7 +57,7 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
             _mediaPlayer.PlaybackSession.PlaybackStateChanged += PlaybackSession_PlaybackStateChanged;
         }
 
-        public void UpdatePlaybackList(IEnumerable<PlayQueueItem> playQueue, bool allowAutoPlay = false)
+        public void UpdatePlaybackList(IEnumerable<PlayQueueItem> playQueue, bool recoverPlaybackPosition = false, bool allowAutoPlay = false)
         {
             var musicGallerySettings = _settingsService.AppSettings.MusicGallerySettings;
             int savedIndex = musicGallerySettings.PlayQueueIndex;
@@ -77,7 +77,10 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
             if (savedIndex > 0 && savedIndex < _playbackList.Items.Count)
             {
                 _playbackList.MoveTo((uint)savedIndex);
-                _mediaPlayer.Position = musicGallerySettings.PlaybackPosition;
+                if (recoverPlaybackPosition)
+                {
+                    _mediaPlayer.Position = musicGallerySettings.PlaybackPosition;
+                }
                 if (allowAutoPlay && _settingsService.AppSettings.MusicGallerySettings.AutoPlay)
                 {
                     _mediaPlayer.Play();
