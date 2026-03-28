@@ -164,20 +164,7 @@ namespace BetterLyrics.WinUI3.Views
         private void SongListViewItem_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
             var track = (ExtendedTrack)((FrameworkElement)sender).DataContext;
-            ViewModel.RepeatAllCommand.Execute(track);
-        }
-
-        private void Page_Loaded(object sender, RoutedEventArgs e)
-        {
-            var settings = ViewModel.AppSettings.MusicGallerySettings;
-            if (settings.AutoPlay)
-            {
-                _ = Task.Run(async () =>
-                {
-                    await Task.Delay(1000);
-                    _smtcService.PlayTrackAt(settings.PlayQueueIndex);
-                });
-            }
+            ViewModel.PlayCommand.Execute(track);
         }
 
         private void FolderTreeView_ItemInvoked(TreeView sender, TreeViewItemInvokedEventArgs args)

@@ -45,7 +45,7 @@ namespace BetterLyrics.WinUI3.Hooks
             {
                 using var appsFolder = new ShellFolder(KNOWNFOLDERID.FOLDERID_AppsFolder);
                 var found = appsFolder.FirstOrDefault(x =>
-                    x.ParsingName?.EndsWith(id, StringComparison.OrdinalIgnoreCase) == true ||
+                    x.ParsingName?.Equals(id, StringComparison.OrdinalIgnoreCase) == true ||
                     x.Name?.Equals(id, StringComparison.OrdinalIgnoreCase) == true);
 
                 if (found != null) return found;
@@ -126,7 +126,7 @@ namespace BetterLyrics.WinUI3.Hooks
         }
 
         /// <summary>
-        /// 通过 AUMID 获取 BitmapImage (自动处理 UI 线程切换)
+        /// 通过 AUMID 获取 BitmapImage
         /// </summary>
         public static async Task<BitmapImage?> GetIconByAumidAsync(string aumid, DispatcherQueue dispatcherQueue)
         {

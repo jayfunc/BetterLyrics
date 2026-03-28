@@ -1,27 +1,29 @@
-﻿using BetterLyrics.WinUI3.Constants;
+﻿using BetterLyrics.WinUI3.Collections;
+using BetterLyrics.WinUI3.Constants;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Entities;
+using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.FileSystemService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml.Controls;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Timers;
 using Windows.Media;
 using Windows.Media.Core;
 using Windows.Media.Playback;
 using Windows.Storage;
 using Windows.Storage.Streams;
-using System.Timers;
-using System.Collections;
-using System.Collections.Generic;
 
 namespace BetterLyrics.WinUI3.Services.SMTCService
 {
@@ -55,36 +57,40 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
             _mediaPlayer.PlaybackSession.PlaybackStateChanged += PlaybackSession_PlaybackStateChanged;
         }
 
-        public void UpdatePlaybackList(IEnumerable<PlayQueueItem> playQueue)
+        public void UpdatePlaybackList(IEnumerable<PlayQueueItem> playQueue, bool allowAutoPlay = false)
         {
             var musicGallerySettings = _settingsService.AppSettings.MusicGallerySettings;
-
-            _playbackList.Items.Clear();
-
             int savedIndex = musicGallerySettings.PlayQueueIndex;
 
+            TrackPlayingQueue.CollectionChanged -= TrackPlayingQueue_CollectionChanged;
             TrackPlayingQueue = [.. playQueue];
+            TrackPlayingQueue.CollectionChanged += TrackPlayingQueue_CollectionChanged;
 
-            foreach (var item in TrackPlayingQueue)
+            _settingsService.AppSettings.MusicGallerySettings.PlayQueuePaths = [.. TrackPlayingQueue.Select(x => x.Track.Uri.ToDecodedAbsoluteUri())];
+
+            _playbackList.Items.Clear();
+            foreach (var item in playQueue)
             {
                 _playbackList.Items.Add(CreatePlaybackItem(item));
             }
-
-            TrackPlayingQueue.CollectionChanged += TrackPlayingQueue_CollectionChanged;
-            ApplyPlaybackOrder(musicGallerySettings.PlaybackOrder);
 
             if (savedIndex > 0 && savedIndex < _playbackList.Items.Count)
             {
                 _playbackList.MoveTo((uint)savedIndex);
                 _mediaPlayer.Position = musicGallerySettings.PlaybackPosition;
+                if (allowAutoPlay && _settingsService.AppSettings.MusicGallerySettings.AutoPlay)
+                {
+                    _mediaPlayer.Play();
+                }
             }
+
+            ApplyPlaybackOrder(musicGallerySettings.PlaybackOrder);
         }
 
         private void SystemMediaTransportControls_ButtonPressed(SystemMediaTransportControls sender, SystemMediaTransportControlsButtonPressedEventArgs args)
         {
             if (args.Button == SystemMediaTransportControlsButton.Stop)
             {
-                PlayTrackAt(-1);
                 PlayTrackAt(-1);
             }
         }
@@ -173,8 +179,11 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
                     {
                         for (int i = 0; i < e.NewItems.Count; i++)
                         {
-                            var item = (PlayQueueItem)e.NewItems[i];
-                            _playbackList.Items.Insert(e.NewStartingIndex + i, CreatePlaybackItem(item));
+                            var item = (PlayQueueItem?)e.NewItems[i];
+                            if (item != null)
+                            {
+                                _playbackList.Items.Insert(e.NewStartingIndex + i, CreatePlaybackItem(item));
+                            }
                         }
                     }
                     break;
@@ -287,16 +296,14 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
             };
         }
 
-        public async Task PlayNextTrackAsync()
+        public void PlayNextTrack()
         {
             _playbackList.MoveNext();
-            await Task.CompletedTask;
         }
 
-        public async Task PlayPreviousTrackAsync()
+        public void PlayPreviousTrack()
         {
             _playbackList.MovePrevious();
-            await Task.CompletedTask;
         }
 
         public void PlayTrack(PlayQueueItem? playQueueItem)
@@ -309,16 +316,22 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
             }
         }
 
-        public void PlayTrackAt(int index)
+        public void PlayTrackAt(int index, bool recoverPlaybackPosition = false)
         {
             if (index >= 0 && index < _playbackList.Items.Count)
             {
                 _mediaPlayer.SystemMediaTransportControls.IsEnabled = true;
                 _playbackList.MoveTo((uint)index);
+                if (recoverPlaybackPosition)
+                {
+                    _mediaPlayer.Position = _settingsService.AppSettings.MusicGallerySettings.PlaybackPosition;
+                }
                 _mediaPlayer.Play();
             }
             else if (index == -1) // 停止播放
             {
+                _mediaPlayer.Pause();
+                _mediaPlayer.SystemMediaTransportControls.IsEnabled = false;
                 _mediaPlayer.Pause();
                 _mediaPlayer.SystemMediaTransportControls.IsEnabled = false;
             }

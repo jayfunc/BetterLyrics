@@ -1,5 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Collections;
 using BetterLyrics.WinUI3.Constants;
+using BetterLyrics.WinUI3.Controls;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
@@ -41,7 +42,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty] public partial ISMTCService SMTCService { get; set; }
 
-        private readonly DispatcherQueueTimer _refreshSongsTimer;
+        private readonly DispatcherQueueTimer? _refreshSongsTimer;
 
         // All songs
         private List<ExtendedTrack> _allTracks = [];
@@ -92,12 +93,12 @@ namespace BetterLyrics.WinUI3.ViewModels
             _fileSystemService = fileSystemService;
             SMTCService = smtcService;
 
-            _refreshSongsTimer = _dispatcherQueue.CreateTimer();
+            _refreshSongsTimer = DispatcherQueueHelper.Instance?.CreateTimer();
 
             _settingsService = settingsService;
             AppSettings = _settingsService.AppSettings;
 
-            RefreshSongs();
+            RefreshSongs(true);
 
             _settingsService.AppSettings.LocalMediaFolders.CollectionChanged += LocalMediaFolders_CollectionChanged;
             _settingsService.AppSettings.LocalMediaFolders.ItemPropertyChanged += LocalMediaFolders_ItemPropertyChanged;
@@ -117,9 +118,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
         }
 
-        public void RefreshSongs()
+        public void RefreshSongs(bool allowAutoPlay = false)
         {
-            _refreshSongsTimer.Debounce(() =>
+            _refreshSongsTimer?.Debounce(() =>
             {
                 _ = Task.Run(async () =>
                 {
@@ -151,7 +152,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                         })
                         .Where(x => x != null);
 
-                    _dispatcherQueue.TryEnqueue(() =>
+                    DispatcherQueueHelper.Instance?.TryEnqueue(() =>
                     {
                         _allTracks = newTrackList;
 
@@ -166,7 +167,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                         ApplySongOrderType();
 
-                        SMTCService.UpdatePlaybackList(playQueue);
+                        SMTCService.UpdatePlaybackList(playQueue, allowAutoPlay);
                     });
                 });
             }, Time.DebounceTimeout);
@@ -345,44 +346,40 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             AppSettings.MusicGallerySettings.PlaybackOrder = PlaybackOrder.Shuffle;
 
-            if (SMTCService.TrackPlayingQueue.Count == 0)
-            {
-                SMTCService.TrackPlayingQueue.Clear(); // Reset
-                foreach (var track in _sortedTracks)
-                {
-                    SMTCService.TrackPlayingQueue.Add(new PlayQueueItem(track));
-                }
-            }
+            var playQueue = _sortedTracks.Select(x => new PlayQueueItem(x));
+            SMTCService.UpdatePlaybackList(playQueue, false);
 
-            int queueCount = SMTCService.TrackPlayingQueue.Count;
+            int queueCount = playQueue.Count();
             int startIndex = queueCount > 0 ? Random.Shared.Next(0, queueCount) : -1;
 
             SMTCService.PlayTrackAt(startIndex);
         }
 
         [RelayCommand]
-        private void RepeatAll(ExtendedTrack? invokedTrack = null)
+        private void RepeatAll()
         {
             AppSettings.MusicGallerySettings.PlaybackOrder = PlaybackOrder.RepeatAll;
 
-            if (SMTCService.TrackPlayingQueue.Count == 0)
-            {
-                SMTCService.TrackPlayingQueue.Clear();
-                foreach (var track in _sortedTracks)
-                {
-                    SMTCService.TrackPlayingQueue.Add(new PlayQueueItem(track));
-                }
-            }
+            var playQueue = _sortedTracks.Select(x => new PlayQueueItem(x));
+            SMTCService.UpdatePlaybackList(playQueue, false);
 
-            if (invokedTrack != null)
+            SMTCService.PlayTrackAt(0);
+        }
+
+        [RelayCommand]
+        private void Play(ExtendedTrack invokedTrack)
+        {
+            var playQueue = _sortedTracks.Select(x => new PlayQueueItem(x));
+            SMTCService.UpdatePlaybackList(playQueue, false);
+
+            var target = SMTCService.TrackPlayingQueue.FirstOrDefault(x => x.Track == invokedTrack);
+            if (target != null)
             {
-                var target = SMTCService.TrackPlayingQueue.FirstOrDefault(x => x.Track == invokedTrack);
                 int index = SMTCService.TrackPlayingQueue.IndexOf(target);
-                if (index != -1) SMTCService.PlayTrackAt(index);
-            }
-            else
-            {
-                SMTCService.PlayTrackAt(0);
+                if (index != -1)
+                {
+                    SMTCService.PlayTrackAt(index);
+                }
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using BetterLyrics.WinUI3.Enums;
+﻿using BetterLyrics.WinUI3.Collections;
+using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,11 +16,11 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
         public ObservableCollection<PlayQueueItem> TrackPlayingQueue { get; set; }
         public ExtendedTrack? PlayingTrack { get; set; }
 
-        void UpdatePlaybackList(IEnumerable<PlayQueueItem> source);
+        void UpdatePlaybackList(IEnumerable<PlayQueueItem> source, bool allowAutoPlay = false);
         void ApplyPlaybackOrder(PlaybackOrder order);
 
-        Task PlayNextTrackAsync();
+        void PlayNextTrack();
         void PlayTrack(PlayQueueItem? playQueueItem);
-        void PlayTrackAt(int index);
+        void PlayTrackAt(int index, bool recoverPlaybackPosition = false);
     }
 }
