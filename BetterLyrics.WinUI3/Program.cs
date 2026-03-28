@@ -1,4 +1,4 @@
-﻿// https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/applifecycle/applifecycle-single-instance
+// https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/applifecycle/applifecycle-single-instance
 
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
@@ -55,7 +55,16 @@ namespace BetterLyrics.WinUI3
         static int Main(string[] args)
         {
             WinRT.ComWrappersSupport.InitializeComWrappers();
-            bool isRedirect = DecideRedirection();
+            bool isRedirect = false;
+            
+            try
+            {
+                isRedirect = DecideRedirection();
+            }
+            catch (Exception)
+            {
+                isRedirect = false;
+            }
 
             if (!isRedirect)
             {
@@ -72,8 +81,15 @@ namespace BetterLyrics.WinUI3
 
                     _ = new App();
 
-                    var args = AppInstance.GetCurrent().GetActivatedEventArgs();
-                    HandleActivation(args, true);
+                    try
+                    {
+                        var activatedArgs = AppInstance.GetCurrent().GetActivatedEventArgs();
+                        HandleActivation(activatedArgs, true);
+                    }
+                    catch (Exception)
+                    {
+                        HandleActivation(null, true);
+                    }
                 });
             }
 
@@ -83,18 +99,25 @@ namespace BetterLyrics.WinUI3
         private static bool DecideRedirection()
         {
             bool isRedirect = false;
-            AppActivationArguments args = AppInstance.GetCurrent().GetActivatedEventArgs();
-            ExtendedActivationKind kind = args.Kind;
-            AppInstance keyInstance = AppInstance.FindOrRegisterForKey("MySingleInstanceApp");
+            try
+            {
+                AppActivationArguments args = AppInstance.GetCurrent().GetActivatedEventArgs();
+                ExtendedActivationKind kind = args.Kind;
+                AppInstance keyInstance = AppInstance.FindOrRegisterForKey("MySingleInstanceApp");
 
-            if (keyInstance.IsCurrent)
-            {
-                keyInstance.Activated += OnActivated;
+                if (keyInstance.IsCurrent)
+                {
+                    keyInstance.Activated += OnActivated;
+                }
+                else
+                {
+                    isRedirect = true;
+                    RedirectActivationTo(args, keyInstance);
+                }
             }
-            else
+            catch (Exception)
             {
-                isRedirect = true;
-                RedirectActivationTo(args, keyInstance);
+                isRedirect = false;
             }
 
             return isRedirect;
@@ -108,20 +131,23 @@ namespace BetterLyrics.WinUI3
             });
         }
 
-        private static void HandleActivation(AppActivationArguments args, bool init = false)
+        private static void HandleActivation(AppActivationArguments? args, bool init = false)
         {
-            var kind = args.Kind;
-            if (kind == ExtendedActivationKind.File)
+            if (args != null)
             {
-                _ = HandleFileActivationAsync(args);
-            }
-            else if (kind == ExtendedActivationKind.Protocol)
-            {
-                _ = HandleProtocolActivationAsync(args);
-            }
-            else if (!init)
-            {
-                WindowHook.OpenOrShowWindow<LyricsWindowSwitchWindow>();
+                var kind = args.Kind;
+                if (kind == ExtendedActivationKind.File)
+                {
+                    _ = HandleFileActivationAsync(args);
+                }
+                else if (kind == ExtendedActivationKind.Protocol)
+                {
+                    _ = HandleProtocolActivationAsync(args);
+                }
+                else if (!init)
+                {
+                    WindowHook.OpenOrShowWindow<LyricsWindowSwitchWindow>();
+                }
             }
         }
 
@@ -205,20 +231,17 @@ namespace BetterLyrics.WinUI3
 
             Ioc.Default.ConfigureServices(
                 new ServiceCollection()
-                    // 数据库工厂
                     .AddDbContextFactory<PlayHistoryDbContext>(options => options.UseSqlite($"Data Source={PathHelper.PlayHistoryPath}"))
                     .AddDbContextFactory<FilesIndexDbContext>(options => options.UseSqlite($"Data Source={PathHelper.FilesIndexPath}"))
                     .AddDbContextFactory<LyricsCacheDbContext>(options => options.UseSqlite($"Data Source={PathHelper.LyricsCachePath}"))
                     .AddDbContextFactory<SongSearchMapDbContext>(options => options.UseSqlite($"Data Source={PathHelper.SongSearchMapPath}"))
 
-                    // 日志
                     .AddLogging(loggingBuilder =>
                     {
                         loggingBuilder.ClearProviders();
                         loggingBuilder.AddSerilog();
                     })
 
-                    // Services
                     .AddSingleton<ISettingsService, SettingsService>()
                     .AddSingleton<ISMTCService, SMTCService>()
                     .AddSingleton<IGSMTCService, GSMTCService>()
@@ -239,7 +262,6 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<INavigationService, NavigationService>()
                     .AddSingleton<IAppLifecycleService, AppLifecycleService>()
 
-                    // ViewModels
                     .AddSingleton<AppSettingsControlViewModel>()
                     .AddSingleton<PlaybackSettingsControlViewModel>()
                     .AddSingleton<MediaSettingsControlViewModel>()
@@ -282,8 +304,6 @@ namespace BetterLyrics.WinUI3
 
         private static IntPtr redirectEventHandle = IntPtr.Zero;
 
-        // Do the redirection on another thread, and use a non-blocking
-        // wait method to wait for the redirection to complete.
         public static void RedirectActivationTo(AppActivationArguments args, AppInstance keyInstance)
         {
             redirectEventHandle = CreateEvent(IntPtr.Zero, true, false, null);
@@ -299,7 +319,6 @@ namespace BetterLyrics.WinUI3
                CWMO_DEFAULT, INFINITE, 1,
                [redirectEventHandle], out uint handleIndex);
 
-            // Bring the window to the foreground
             Process process = Process.GetProcessById((int)keyInstance.ProcessId);
             SetForegroundWindow(process.MainWindowHandle);
         }

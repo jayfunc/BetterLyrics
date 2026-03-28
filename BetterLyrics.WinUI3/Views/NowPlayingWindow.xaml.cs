@@ -89,7 +89,7 @@ namespace BetterLyrics.WinUI3.Views
             NowPlayingPage.LyricsWindowStatus = LyricsWindowStatus;
             NowPlayingBar.LyricsWindowStatus = LyricsWindowStatus;
 
-            this.Init(title: $"{status.Name} - {Constants.App.AppName}", titleBarHeightOption: TitleBarHeightOption.Collapsed, backdropType: BackdropType.Transparent);
+            this.Init(title: $"{status.Name} - {Constants.App.AppName}", titleBarHeightOption: TitleBarHeightOption.Collapsed, backdropType: BackdropType.Transparent, isBorderless: true);
 
             AppWindow.Changed += AppWindow_Changed;
             AppWindow.Closing += AppWindow_Closing;
@@ -187,7 +187,7 @@ namespace BetterLyrics.WinUI3.Views
                 WindowNative.GetWindowHandle(this),
                 LyricsWindowStatus.MonitorDeviceName,
                 LyricsWindowStatus.EnvironmentSampleMode);
-            // ·ÀÖ¹²»±ØÒªË¢ÐÂµ¼ÖÂ½çÃæ²»Á÷³©
+            // ï¿½ï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ÒªË¢ï¿½Âµï¿½ï¿½Â½ï¿½ï¿½æ²»ï¿½ï¿½ï¿½ï¿½
             if (newValue != oldValue)
             {
                 _backdropAccentColor = newValue;
@@ -215,7 +215,7 @@ namespace BetterLyrics.WinUI3.Views
             }
             else
             {
-                // Ç¿ÖÆ´¥·¢Ò»´Î¸üÐÂ£¬Ë¢ÐÂ½âËøÍ¼±ê¿É¼ûÐÔ×´Ì¬
+                // Ç¿ï¿½Æ´ï¿½ï¿½ï¿½Ò»ï¿½Î¸ï¿½ï¿½Â£ï¿½Ë¢ï¿½Â½ï¿½ï¿½ï¿½Í¼ï¿½ï¿½É¼ï¿½ï¿½ï¿½×´Ì¬
                 OnIsLockedChanged();
             }
         }
@@ -271,10 +271,7 @@ namespace BetterLyrics.WinUI3.Views
                 }
             }
 
-            if (LyricsWindowStatus.IsBorderlessWhenLocked)
-            {
-                this.SetIsBorderless(LyricsWindowStatus.IsLocked);
-            }
+            this.SetIsBorderless(true);
 
             if (!LyricsWindowStatus.IsWallpaper)
             {
@@ -446,13 +443,13 @@ namespace BetterLyrics.WinUI3.Views
                 {
                     return;
                 }
-                // ½ö·Ç±ÚÖ½Ä£Ê½²ÅºöÂÔ×î´ó»¯È«ÆÁ»¯
-                // ±ÚÖ½Ä£Ê½½«¼ÇÒä×î´ó»¯È«ÆÁ»¯Ö®ºóµÄ×ø±êÒÔ±ãÕýÈ·¹Ì¶¨µ½×ÀÃæ
+                // ï¿½ï¿½ï¿½Ç±ï¿½Ö½Ä£Ê½ï¿½Åºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½
+                // ï¿½ï¿½Ö½Ä£Ê½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È«ï¿½ï¿½ï¿½ï¿½Ö®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô±ï¿½ï¿½ï¿½È·ï¿½Ì¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                 else if (!LyricsWindowStatus.IsWallpaper && (LyricsWindowStatus.IsMaximized || LyricsWindowStatus.IsFullscreen))
                 {
                     return;
                 }
-                // ºöÂÔ±ÚÖ½Ä£Ê½+ÒÑËø¶¨×´Ì¬·ÀÖ¹ÔÚ¹Ì¶¨µ½×ÀÃæµÄ¹ý³ÌÖÐÓÉÓÚ×ø±êÏµ±ä»»µ¼ÖÂµÄ´íÎóµÄ×ø±ê±»¼ÇÒä
+                // ï¿½ï¿½ï¿½Ô±ï¿½Ö½Ä£Ê½+ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½Ö¹ï¿½Ú¹Ì¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ä»»ï¿½ï¿½ï¿½ÂµÄ´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê±»ï¿½ï¿½ï¿½ï¿½
                 else if (LyricsWindowStatus.IsWallpaper && LyricsWindowStatus.IsLocked)
                 {
                     return;

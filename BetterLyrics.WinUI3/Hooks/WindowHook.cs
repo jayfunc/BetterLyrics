@@ -1,4 +1,4 @@
-﻿// 2025/6/23 by Zhe Fang
+// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
@@ -309,6 +309,17 @@ namespace BetterLyrics.WinUI3.Hooks
             }
 
             User32.SetWindowLong(hwnd, User32.WindowLongFlags.GWL_STYLE, style);
+            
+            User32.SetWindowPos(
+                (HWND)hwnd,
+                HWND.NULL,
+                0, 0, 0, 0,
+                User32.SetWindowPosFlags.SWP_NOMOVE |
+                User32.SetWindowPosFlags.SWP_NOSIZE |
+                User32.SetWindowPosFlags.SWP_NOZORDER |
+                User32.SetWindowPosFlags.SWP_NOACTIVATE |
+                User32.SetWindowPosFlags.SWP_FRAMECHANGED
+            );
         }
 
         public static void SetIsFullscreen(this Window window, bool enable, bool defaultExtendsContentIntoTitleBar = true)

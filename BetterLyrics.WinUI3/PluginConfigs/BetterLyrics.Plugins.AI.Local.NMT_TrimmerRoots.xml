@@ -10,6 +10,7 @@
   <assembly fullname="System.ObjectModel" preserve="all" />
   <assembly fullname="System.Runtime" preserve="all" />
   <assembly fullname="System.Runtime.CompilerServices.Unsafe" preserve="all" />
+  <assembly fullname="System.Runtime.InteropServices" preserve="all" />
   <assembly fullname="System.Runtime.Intrinsics" preserve="all" />
   <assembly fullname="System.Text.Encoding.Extensions" preserve="all" />
   <assembly fullname="System.Text.Json" preserve="all" />
