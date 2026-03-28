@@ -1,6 +1,4 @@
 using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Services.NavigationService;
-using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;

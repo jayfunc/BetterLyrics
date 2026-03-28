@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Timers;
-using Vanara.PInvoke;
 
 namespace BetterLyrics.WinUI3.Helper
 {

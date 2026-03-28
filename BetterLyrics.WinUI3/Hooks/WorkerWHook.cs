@@ -1,14 +1,12 @@
 ﻿using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Views;
 using Microsoft.UI.Dispatching;
-using Microsoft.UI.Xaml;
 using System;
-using System.Diagnostics;
 using System.Threading.Tasks;
 using Vanara.PInvoke;
 using WinRT.Interop;
+using static Vanara.PInvoke.ComCtl32;
 using static Vanara.PInvoke.User32;
-using static Vanara.PInvoke.ComCtl32; // 引入 Vanara 的 ComCtl32
 
 namespace BetterLyrics.WinUI3.Hooks
 {

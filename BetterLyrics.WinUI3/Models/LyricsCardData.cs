@@ -1,8 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Models.Lyrics;
-using BetterLyrics.WinUI3.Models.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml.Media;
-using System;
 using System.Collections.Generic;
 using Windows.UI;
 

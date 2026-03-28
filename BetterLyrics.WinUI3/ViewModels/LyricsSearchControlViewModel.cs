@@ -16,7 +16,6 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.ObjectModel;
 using System.Net;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 

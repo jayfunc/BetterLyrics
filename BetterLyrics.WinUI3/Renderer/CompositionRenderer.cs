@@ -1,6 +1,6 @@
-﻿using System;
-using Microsoft.Graphics.Canvas;
+﻿using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Xaml;
+using System;
 using Windows.Foundation;
 using Windows.UI;
 
