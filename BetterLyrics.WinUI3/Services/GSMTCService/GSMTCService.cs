@@ -295,7 +295,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             });
         }
 
-        private void MediaManager_OnAnyMediaPropertyChanged(MediaSession mediaSession, GlobalSystemMediaTransportControlsSessionMediaProperties mediaProperties)
+        private void MediaManager_OnAnyMediaPropertyChanged(MediaSession? mediaSession, GlobalSystemMediaTransportControlsSessionMediaProperties? mediaProperties)
         {
             _onMediaPropsChangedTimer?.Debounce(() =>
             {
@@ -508,7 +508,12 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                 MediaManager_OnAnyMediaPropertyChanged(_currentDesiredSession, mediaProps);
                 MediaManager_OnAnyPlaybackStateChanged(_currentDesiredSession, playbackInfo);
             }
-            catch (Exception) { }
+            catch (Exception) 
+            {
+                MediaManager_OnAnyTimelinePropertyChanged(_currentDesiredSession, null);
+                MediaManager_OnAnyMediaPropertyChanged(_currentDesiredSession, null);
+                MediaManager_OnAnyPlaybackStateChanged(_currentDesiredSession, null);
+            }
         }
 
         // LX Music
@@ -634,7 +639,11 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
         public async Task StopAsync()
         {
-            await _currentDesiredSession?.ControlSession?.TryStopAsync();
+            try
+            {
+                await _currentDesiredSession?.ControlSession?.TryStopAsync();
+            }
+            catch (Exception) { }
         }
 
         public async Task PreviousAsync()
