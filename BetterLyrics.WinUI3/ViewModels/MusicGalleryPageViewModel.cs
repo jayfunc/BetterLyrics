@@ -111,7 +111,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private void LocalMediaFolders_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            RefreshSongs();
+            RefreshSongs(true);
         }
 
         public void CancelRefreshSongs()
@@ -439,7 +439,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 if (message.PropertyName == nameof(MediaFolder.LastSyncTime))
                 {
-                    RefreshSongs();
+                    RefreshSongs(true);
                 }
             }
         }
@@ -450,7 +450,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 if (message.PropertyName == nameof(MediaFolder.IsEnabled))
                 {
-                    RefreshSongs();
+                    RefreshSongs(true);
                 }
                 else if (message.PropertyName == nameof(MediaFolder.IsProcessing))
                 {
