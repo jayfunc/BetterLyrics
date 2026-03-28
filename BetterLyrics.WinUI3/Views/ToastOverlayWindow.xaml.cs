@@ -10,7 +10,6 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using System;
 using Vanara.PInvoke;
-using WinRT.Interop;
 using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,

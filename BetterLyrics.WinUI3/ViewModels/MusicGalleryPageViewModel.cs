@@ -1,6 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Collections;
 using BetterLyrics.WinUI3.Constants;
-using BetterLyrics.WinUI3.Controls;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;

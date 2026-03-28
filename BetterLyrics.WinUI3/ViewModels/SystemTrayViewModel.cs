@@ -51,6 +51,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         private void TrayIconDoubleClicked() => TrayIconClickedCallback(_settingsService.AppSettings.SystemTraySettings.SystemTrayDoubleClickCallback);
 
         [RelayCommand]
-        private void TrayIconMiddleClicked()=> TrayIconClickedCallback(_settingsService.AppSettings.SystemTraySettings.SystemTrayMiddleClickCallback);
+        private void TrayIconMiddleClicked() => TrayIconClickedCallback(_settingsService.AppSettings.SystemTraySettings.SystemTrayMiddleClickCallback);
     }
 }

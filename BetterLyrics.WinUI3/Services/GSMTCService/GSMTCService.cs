@@ -508,7 +508,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                 MediaManager_OnAnyMediaPropertyChanged(_currentDesiredSession, mediaProps);
                 MediaManager_OnAnyPlaybackStateChanged(_currentDesiredSession, playbackInfo);
             }
-            catch (Exception) 
+            catch (Exception)
             {
                 MediaManager_OnAnyTimelinePropertyChanged(_currentDesiredSession, null);
                 MediaManager_OnAnyMediaPropertyChanged(_currentDesiredSession, null);

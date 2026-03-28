@@ -30,8 +30,8 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 
         public MediaSettingsControlViewModel(
-            ISettingsService settingsService, 
-            ILocalizationService localizationService, 
+            ISettingsService settingsService,
+            ILocalizationService localizationService,
             IFileSystemService fileSystemService,
             INavigationService navigationService)
         {
