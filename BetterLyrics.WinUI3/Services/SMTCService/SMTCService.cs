@@ -57,21 +57,34 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
             _mediaPlayer.PlaybackSession.PlaybackStateChanged += PlaybackSession_PlaybackStateChanged;
         }
 
-        public void UpdatePlaybackList(IEnumerable<PlayQueueItem> playQueue, bool recoverPlaybackPosition = false, bool allowAutoPlay = false)
+        public async Task UpdatePlaybackListAsync(IEnumerable<PlayQueueItem> playQueue, bool recoverPlaybackPosition = false, bool allowAutoPlay = false)
         {
             var musicGallerySettings = _settingsService.AppSettings.MusicGallerySettings;
             int savedIndex = musicGallerySettings.PlayQueueIndex;
 
+            var playQueueList = playQueue.ToList();
+
             TrackPlayingQueue.CollectionChanged -= TrackPlayingQueue_CollectionChanged;
-            TrackPlayingQueue = [.. playQueue];
+            TrackPlayingQueue = [.. playQueueList];
             TrackPlayingQueue.CollectionChanged += TrackPlayingQueue_CollectionChanged;
 
             _settingsService.AppSettings.MusicGallerySettings.PlayQueuePaths = [.. TrackPlayingQueue.Select(x => x.Track.Uri.ToDecodedAbsoluteUri())];
 
             _playbackList.Items.Clear();
-            foreach (var item in playQueue)
+
+            var playbackItems = await Task.Run(() =>
             {
-                _playbackList.Items.Add(CreatePlaybackItem(item));
+                var items = new List<MediaPlaybackItem>(playQueueList.Count);
+                foreach (var item in playQueueList)
+                {
+                    items.Add(CreatePlaybackItem(item));
+                }
+                return items;
+            });
+
+            foreach (var item in playbackItems)
+            {
+                _playbackList.Items.Add(item);
             }
 
             if (savedIndex > 0 && savedIndex < _playbackList.Items.Count)
@@ -227,13 +240,20 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
             props.MusicProperties.AlbumTitle = track.Album ?? "";
             props.MusicProperties.Genres.Add($"{ExtendedGenreFiled.FileName}{Path.GetFileNameWithoutExtension(track.FileName)}");
 
-            if (!string.IsNullOrEmpty(track.LocalAlbumArtPath) && File.Exists(track.LocalAlbumArtPath))
+            if (!string.IsNullOrEmpty(track.LocalAlbumArtPath))
             {
                 _ = Task.Run(async () =>
                 {
-                    var storageFile = await StorageFile.GetFileFromPathAsync(track.LocalAlbumArtPath);
-                    props.Thumbnail = RandomAccessStreamReference.CreateFromFile(storageFile);
-                    DispatcherQueueHelper.Instance?.TryEnqueue(() => item.ApplyDisplayProperties(props));
+                    if (File.Exists(track.LocalAlbumArtPath))
+                    {
+                        var storageFile = await StorageFile.GetFileFromPathAsync(track.LocalAlbumArtPath);
+                        props.Thumbnail = RandomAccessStreamReference.CreateFromFile(storageFile);
+
+                        DispatcherQueueHelper.Instance?.TryEnqueue(() =>
+                        {
+                            item.ApplyDisplayProperties(props);
+                        });
+                    }
                 });
             }
 

@@ -16,7 +16,7 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
         public ObservableCollection<PlayQueueItem> TrackPlayingQueue { get; set; }
         public ExtendedTrack? PlayingTrack { get; set; }
 
-        void UpdatePlaybackList(IEnumerable<PlayQueueItem> source, bool recoverPlaybackPosition = false, bool allowAutoPlay = false);
+        Task UpdatePlaybackListAsync(IEnumerable<PlayQueueItem> source, bool recoverPlaybackPosition = false, bool allowAutoPlay = false);
         void ApplyPlaybackOrder(PlaybackOrder order);
 
         void PlayNextTrack();
