@@ -150,9 +150,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         }
 
         [RelayCommand]
-        private void CheckAppUpdate()
+        private async Task CheckAppUpdateAsync()
         {
-            _ = AppUpdateService.UpdateAvailabilityAsync();
+            await AppUpdateService.UpdateAvailabilityAsync();
         }
 
     }

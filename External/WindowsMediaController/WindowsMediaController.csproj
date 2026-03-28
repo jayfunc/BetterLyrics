@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
+		<RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+		<PackageId>Dubya.WindowsMediaController</PackageId>
+		<Version>2.5.6</Version>
+		<Authors>DubyaDude</Authors>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageProjectUrl>https://github.com/DubyaDude/WindowsMediaController</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/DubyaDude/WindowsMediaController/</RepositoryUrl>
+		<RepositoryType>Git</RepositoryType>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<Description>
+			Provides a wrapper for developers to more easily get information from and interact with the Windows 10/11 OS media interface (Also referred to Windows System Media Transport Controls (SMTC)).
+			Allows Playback Control on individual Media Sessions (Spotify, Chrome etc), Getting media information of currently playing (Song, Author, Thumbnail etc), and more
+		</Description>
+		<PackageTags>music;audio;media;controller;windows;windows10;windows11;smtc;mtc</PackageTags>
+
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<IncludeSymbols>true</IncludeSymbols>
+		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+	</PropertyGroup>
+	<PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true'">
+		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Include="..\README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789.`))' == 'net' or '$(TargetFramework.TrimEnd(`0123456789.`))' == 'netcoreapp'">
+		<PackageReference Include="Microsoft.Windows.SDK.Contracts" Version="10.0.17763.1000" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="3.1.22" />
+	</ItemGroup>
+	<PropertyGroup Condition="'$(TargetFramework.TrimEnd(`0123456789.`))' == 'netcoreapp'">
+		<RestoreEnablePackagePruning>false</RestoreEnablePackagePruning>
+	</PropertyGroup>
+	<ItemGroup Condition="'$(TargetFramework.TrimEnd(`0123456789.`))' != 'net' and '$(TargetFramework.TrimEnd(`0123456789.`))' != 'netcoreapp'">
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.0" />
+	</ItemGroup>
+	<ItemGroup>
+		<Reference Update="System">
+			<Private>False</Private>
+		</Reference>
+	</ItemGroup>
+</Project>
