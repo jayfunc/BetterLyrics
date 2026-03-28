@@ -256,7 +256,7 @@ namespace BetterLyrics.WinUI3.Views
                 {
                     WorkerWHook.PinToDesktop(this);
                 }
-                else if (!LyricsWindowStatus.IsAlwaysHideUnlockButton)
+                else if (!LyricsWindowStatus.IsAlwaysHideUnlockButton || LyricsWindowStatus.KeepNowPlayingBarInteractiveWhenLocked)
                 {
                     StartOverlayInputHelper();
                 }
@@ -326,7 +326,7 @@ namespace BetterLyrics.WinUI3.Views
                                 this.SetIsWorkArea(true);
                                 this.MoveAndResize(status.GetWindowBoundsWhenWorkArea());
                             }
-                            if (status.IsLocked && !status.IsAlwaysHideUnlockButton && status.IsWallpaper)
+                            if (status.IsLocked && status.IsWallpaper && (!status.IsAlwaysHideUnlockButton || status.KeepNowPlayingBarInteractiveWhenLocked))
                             {
                                 RestartOverlayInputHelper();
                             }
@@ -422,9 +422,11 @@ namespace BetterLyrics.WinUI3.Views
 
             _alwaysOnTopPollingTimer.Stop();
             _alwaysOnTopPollingTimer.Dispose();
+            LyricsWindowStatus.IsAlwaysOnTopPollingTimerRunning = false;
 
             _underlayColorTimer.Stop();
             _underlayColorTimer.Dispose();
+            LyricsWindowStatus.IsUnderlayColorTimerRunning = false;
 
             _taskbarHook?.Dispose();
             _taskbarHook = null;
@@ -707,13 +709,7 @@ namespace BetterLyrics.WinUI3.Views
                 }
                 else if (message.PropertyName == nameof(LyricsWindowStatus.KeepNowPlayingBarInteractiveWhenLocked))
                 {
-                    if (LyricsWindowStatus.IsLocked)
-                    {
-                        if (!LyricsWindowStatus.IsWallpaper)
-                        {
-                            RestartOverlayInputHelper();
-                        }
-                    }
+                    OnIsLockedChanged();
                 }
                 else if (message.PropertyName == nameof(LyricsWindowStatus.IsAlwaysHidePlayingBar))
                 {

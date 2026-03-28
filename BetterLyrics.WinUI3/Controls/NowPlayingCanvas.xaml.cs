@@ -13,29 +13,20 @@ using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
-using LiveChartsCore.Measure;
-using Lyricify.Lyrics.Providers.Web.Netease;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using SpoutDx.Net.Interop;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
-using Vanara.PInvoke;
-using Vortice.Direct3D11;
 using Windows.Foundation;
 using Windows.Storage.Streams;
 using Windows.UI;
-using WinRT;
-using static ATL.LyricsInfo;
-using static CommunityToolkit.WinUI.Animations.Expressions.ExpressionValues;
 
 namespace BetterLyrics.WinUI3.Controls
 {

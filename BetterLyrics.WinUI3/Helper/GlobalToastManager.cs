@@ -1,5 +1,4 @@
-﻿using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Services.LocalizationService;
+﻿using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Windowing;
@@ -8,7 +7,6 @@ using System;
 using System.Collections.Generic;
 using Vanara.PInvoke;
 using WinRT.Interop;
-using WinUIEx;
 
 namespace BetterLyrics.WinUI3.Helper
 {

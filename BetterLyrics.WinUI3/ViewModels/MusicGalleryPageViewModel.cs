@@ -1,6 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Collections;
 using BetterLyrics.WinUI3.Constants;
-using BetterLyrics.WinUI3.Controls;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
@@ -111,7 +110,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private void LocalMediaFolders_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            RefreshSongs();
+            RefreshSongs(true);
         }
 
         public void CancelRefreshSongs()
@@ -150,9 +149,10 @@ namespace BetterLyrics.WinUI3.ViewModels
                                 return null;
                             }
                         })
-                        .Where(x => x != null);
+                        .Where(x => x != null)
+                        .ToList();
 
-                    DispatcherQueueHelper.Instance?.TryEnqueue(() =>
+                    DispatcherQueueHelper.Instance?.TryEnqueue(async () =>
                     {
                         _allTracks = newTrackList;
 
@@ -167,7 +167,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                         ApplySongOrderType();
 
-                        SMTCService.UpdatePlaybackList(playQueue, recoverPlaybackPosition, allowAutoPlay);
+                        await SMTCService.UpdatePlaybackListAsync(playQueue, recoverPlaybackPosition, allowAutoPlay);
                     });
                 });
             }, Time.DebounceTimeout);
@@ -342,12 +342,12 @@ namespace BetterLyrics.WinUI3.ViewModels
         }
 
         [RelayCommand]
-        private void Shuffle()
+        private async Task ShuffleAsync()
         {
             AppSettings.MusicGallerySettings.PlaybackOrder = PlaybackOrder.Shuffle;
 
             var playQueue = _sortedTracks.Select(x => new PlayQueueItem(x));
-            SMTCService.UpdatePlaybackList(playQueue);
+            await SMTCService.UpdatePlaybackListAsync(playQueue);
 
             int queueCount = playQueue.Count();
             int startIndex = queueCount > 0 ? Random.Shared.Next(0, queueCount) : -1;
@@ -356,21 +356,21 @@ namespace BetterLyrics.WinUI3.ViewModels
         }
 
         [RelayCommand]
-        private void RepeatAll()
+        private async Task RepeatAllAsync()
         {
             AppSettings.MusicGallerySettings.PlaybackOrder = PlaybackOrder.RepeatAll;
 
             var playQueue = _sortedTracks.Select(x => new PlayQueueItem(x));
-            SMTCService.UpdatePlaybackList(playQueue);
+            await SMTCService.UpdatePlaybackListAsync(playQueue);
 
             SMTCService.PlayTrackAt(0);
         }
 
         [RelayCommand]
-        private void Play(ExtendedTrack invokedTrack)
+        private async Task PlayAsync(ExtendedTrack invokedTrack)
         {
             var playQueue = _sortedTracks.Select(x => new PlayQueueItem(x));
-            SMTCService.UpdatePlaybackList(playQueue);
+            await SMTCService.UpdatePlaybackListAsync(playQueue);
 
             var target = SMTCService.TrackPlayingQueue.FirstOrDefault(x => x.Track == invokedTrack);
             if (target != null)
@@ -439,7 +439,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 if (message.PropertyName == nameof(MediaFolder.LastSyncTime))
                 {
-                    RefreshSongs();
+                    RefreshSongs(true);
                 }
             }
         }
@@ -450,7 +450,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 if (message.PropertyName == nameof(MediaFolder.IsEnabled))
                 {
-                    RefreshSongs();
+                    RefreshSongs(true);
                 }
                 else if (message.PropertyName == nameof(MediaFolder.IsProcessing))
                 {

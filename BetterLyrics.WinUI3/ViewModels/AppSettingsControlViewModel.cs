@@ -5,7 +5,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {

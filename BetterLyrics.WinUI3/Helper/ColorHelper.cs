@@ -7,9 +7,7 @@ using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
-using System.Linq;
 using System.Numerics;
-using System.Threading.Tasks;
 using Vanara.PInvoke;
 using Windows.UI;
 

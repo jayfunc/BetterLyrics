@@ -94,9 +94,9 @@
                                     <TextBlock x:Uid="AboutControlLastCheckTime" />
                                 </controls:SettingsCard.Header>
                                 <Button
+                                    x:Name="CheckUpdateButton"
                                     x:Uid="AboutControlCheckUpdate"
-                                    Command="{x:Bind ViewModel.CheckAppUpdateCommand}"
-                                    IsEnabled="{x:Bind ViewModel.AppUpdateService.IsChecking, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+                                    Command="{x:Bind ViewModel.CheckAppUpdateCommand}" />
                             </controls:SettingsCard>
                         </controls:SettingsExpander.Items>
                         <controls:SettingsExpander.ItemsHeader>
@@ -128,7 +128,7 @@
                                     Margin="0,2,0,0"
                                     VerticalAlignment="Top"
                                     IsIndeterminate="True"
-                                    Visibility="{x:Bind ViewModel.AppUpdateService.IsChecking, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                    Visibility="{Binding IsEnabled, ElementName=CheckUpdateButton, Mode=OneWay, Converter={StaticResource BoolNegationToVisibilityConverter}}" />
                             </Grid>
                         </controls:SettingsExpander.ItemsHeader>
                     </controls:SettingsExpander>
@@ -266,6 +266,8 @@
                             <TextBlock x:Uid="SettingsPagePatrons" />
                         </Expander.Header>
                         <controls:WrapPanel Orientation="Horizontal">
+                            <uc:PatronControl Date="Mar 28, 2026" PatronName="**东" />
+                            <uc:PatronControl Date="Mar 28, 2026" PatronName="**卓" />
                             <uc:PatronControl Date="Mar 23, 2026" PatronName="Leon" />
                             <uc:PatronControl Date="Mar 16, 2026" PatronName="&lt;Anon/匿名&gt;" />
                             <uc:PatronControl Date="Mar 4, 2026" PatronName="你的秋乔呐" />

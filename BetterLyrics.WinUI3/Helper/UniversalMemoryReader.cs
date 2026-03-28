@@ -1,6 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models;
-using Microsoft.UI.Xaml;
 using System;
 using System.Diagnostics;
 using System.Linq;

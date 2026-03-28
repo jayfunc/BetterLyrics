@@ -9,15 +9,11 @@ using BetterLyrics.WinUI3.Services.SongSearchMapService;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
-using Microsoft.UI;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.UI;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -44,7 +40,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             _settingsService = settingsService;
             _localizationService = localizationService;
 
-            AppSettings = settingsService.AppSettings; 
+            AppSettings = settingsService.AppSettings;
             GSMTCService = gsmtcService;
 
             _ = RefreshCardDataAsync();
