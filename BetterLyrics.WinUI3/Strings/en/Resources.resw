@@ -1086,6 +1086,9 @@
   <data name="SettingsPageDelete.Text" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="SettingsPageDensity.Header" xml:space="preserve">
+    <value>Density</value>
+  </data>
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>Desktop Mode (Transparent)</value>
   </data>
@@ -1319,6 +1322,9 @@
   </data>
   <data name="SettingsPageLight.Content" xml:space="preserve">
     <value>Light</value>
+  </data>
+  <data name="SettingsPageLightAngle.Header" xml:space="preserve">
+    <value>Light Angle</value>
   </data>
   <data name="SettingsPageLightWaveEffect.Header" xml:space="preserve">
     <value>Lightwave</value>
@@ -1632,6 +1638,9 @@
   <data name="SettingsPagePureLayer.Header" xml:space="preserve">
     <value>Solid Color Layer</value>
   </data>
+  <data name="SettingsPageRaindropLayer.Header" xml:space="preserve">
+    <value>Raindrop Layer</value>
+  </data>
   <data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
     <value>Real-time Status</value>
   </data>
@@ -1698,6 +1707,9 @@
   <data name="SettingsPageSettingsPlayHistory.Header" xml:space="preserve">
     <value>Play History</value>
   </data>
+  <data name="SettingsPageShadowIntensity.Header" xml:space="preserve">
+    <value>Shadow Intensity</value>
+  </data>
   <data name="SettingsPageShareHub.Content" xml:space="preserve">
     <value>Browse Online Share Hub</value>
   </data>
@@ -1727,6 +1739,9 @@
   </data>
   <data name="SettingsPageShowTitle.Header" xml:space="preserve">
     <value>Show Title</value>
+  </data>
+  <data name="SettingsPageSize.Header" xml:space="preserve">
+    <value>Size</value>
   </data>
   <data name="SettingsPageSlide.Content" xml:space="preserve">
     <value>Slide</value>
