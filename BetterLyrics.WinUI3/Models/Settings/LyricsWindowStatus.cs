@@ -198,14 +198,14 @@ namespace BetterLyrics.WinUI3.Models.Settings
                     DockPlacement.Top => MonitorBounds.Top,
                     DockPlacement.Bottom => MonitorBounds.Bottom - DockHeight,
                     _ => MonitorBounds.Top,
-                } - 1,
+                },
                 MonitorBounds.Width,
                 DockPlacement switch
                 {
                     DockPlacement.Top => DockHeight,
                     DockPlacement.Bottom => DockHeight,
                     _ => DockHeight,
-                } + 1
+                }
             );
         }
 
