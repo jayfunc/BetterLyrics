@@ -385,7 +385,7 @@ namespace BetterLyrics.WinUI3.Views
             switch (titleBarArea)
             {
                 case TitleBarArea.None:
-                    AppWindow.TitleBar.SetDragRectangles(Array.Empty<Windows.Graphics.RectInt32>());
+                    AppWindow.TitleBar.SetDragRectangles([new Windows.Graphics.RectInt32(0, 0, 0, 0)]);
                     break;
 
                 case TitleBarArea.Top:
