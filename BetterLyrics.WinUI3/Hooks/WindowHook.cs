@@ -348,11 +348,6 @@ namespace BetterLyrics.WinUI3.Hooks
             window.AppWindow.Resize(new Windows.Graphics.SizeInt32((int)rect.Width, (int)rect.Height));
         }
 
-        public static void SetTitleBarArea(this NowPlayingWindow window, TitleBarArea titleBarArea)
-        {
-            window.SetTitleBarArea(titleBarArea);
-        }
-
         /// <summary>
         /// 注册应用栏
         /// </summary>
