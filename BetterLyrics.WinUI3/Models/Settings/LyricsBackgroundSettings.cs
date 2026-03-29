@@ -47,6 +47,14 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsFogOverlayBrethingEffectEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int FogOverlayBreathingIntensity { get; set; } = 80;
 
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsRaindropOverlayEnabled { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int RaindropSpeed { get; set; } = 100; // 100%
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int RaindropSize { get; set; } = 100; // 100%
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int RaindropDensity { get; set; } = 40; // 40%
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int RaindropLightAngle { get; set; } = 135; // 135 degree
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int RaindropShadowIntensity { get; set; } = 0; // 0%
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsRaindropOverlayBrethingEffectEnabled { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int RaindropOverlayBreathingIntensity { get; set; } = 80;
 
         public LyricsBackgroundSettings() { }
 
@@ -69,6 +77,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 FluidOverlayBreathingIntensity = this.FluidOverlayBreathingIntensity,
                 IsFluidOverlayBrethingEffectEnabled = this.IsFluidOverlayBrethingEffectEnabled,
                 IsFluidOverlayLightWaveEnabled = this.IsFluidOverlayLightWaveEnabled,
+                IsColorDitheringEnabled = this.IsColorDitheringEnabled,
 
                 IsSpectrumOverlayEnabled = this.IsSpectrumOverlayEnabled,
                 SpectrumPlacement = this.SpectrumPlacement,
@@ -91,6 +100,15 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 IsFogOverlayEnabled = this.IsFogOverlayEnabled,
                 FogOverlayBreathingIntensity = this.FogOverlayBreathingIntensity,
                 IsFogOverlayBrethingEffectEnabled = this.IsFogOverlayBrethingEffectEnabled,
+
+                IsRaindropOverlayEnabled = this.IsRaindropOverlayEnabled,
+                RaindropSpeed = this.RaindropSpeed,
+                RaindropSize = this.RaindropSize,
+                RaindropDensity = this.RaindropDensity,
+                RaindropLightAngle = this.RaindropLightAngle,
+                RaindropShadowIntensity = this.RaindropShadowIntensity,
+                RaindropOverlayBreathingIntensity = this.RaindropOverlayBreathingIntensity,
+                IsRaindropOverlayBrethingEffectEnabled = this.IsRaindropOverlayBrethingEffectEnabled,
             };
         }
     }

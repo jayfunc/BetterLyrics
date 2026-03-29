@@ -3,333 +3,272 @@ using ComputeSharp.D2D1;
 
 namespace BetterLyrics.WinUI3.Shaders
 {
-    [D2DInputCount(1)]
+    /// <summary>
+    /// Ported and modified from <see href="https://www.shadertoy.com/view/ltffzl"/>.
+    /// Credit/Copyright to the original author.
+    /// </summary>
+    [D2DInputCount(0)]
     [D2DShaderProfile(D2D1ShaderProfile.PixelShader50)]
     [D2DGeneratedPixelShaderDescriptor]
     [D2DRequiresScenePosition]
-    public readonly partial struct RaindropEffect(float time, float2 dispatchSize) : ID2D1PixelShader
+    public readonly partial struct RaindropEffect(
+        float time,
+        float2 dispatchSize,
+        float speed,
+        float size,
+        float density,
+        float lightAngle,
+        float shadowIntensity) : ID2D1PixelShader
     {
-        private static readonly float RandomSeed = 4.3315f;
-        private static readonly float NumberScaleOfStaticRaindrops = 0.35f;
-        private static readonly float NumberScaleOfRollingRaindrops = 0.35f;
-        private static readonly float StaticRaindropUVScale = 20.0f;
-        private static readonly float RollingRaindropUVScaleLayer01 = 2.25f;
-        private static readonly float RollingRaindropUVScaleLayer02 = 2.25f;
+        private static readonly float _randomSeed = 4.3315f;
 
-        private static readonly Float3x3 OrthonormalMap = new Float3x3(
+        private static readonly Float3x3 _orthonormalMap = new Float3x3(
             0.788675134594813f, -0.211324865405187f, -0.577350269189626f,
            -0.211324865405187f, 0.788675134594813f, -0.577350269189626f,
             0.577350269189626f, 0.577350269189626f, 0.577350269189626f
         );
 
-        private static Float4 Permute(Float4 t)
-        {
-            return t * ((t * 34.0f) + 133.0f);
-        }
+        private static Float4 Permute(Float4 t) { return t * ((t * 34.0f) + 133.0f); }
 
         private static Float3 Grad(float hash)
         {
             Float3 cube = (Hlsl.Floor(hash / new Float3(1.0f, 2.0f, 4.0f)) % 2.0f) * 2.0f - 1.0f;
-
             Float3 cuboct = cube;
-
             int index = (int)(hash / 16.0f);
             if (index == 0) cuboct.X = 0.0f;
             else if (index == 1) cuboct.Y = 0.0f;
             else cuboct.Z = 0.0f;
-
             float type = Hlsl.Floor(hash / 8.0f) % 2.0f;
             Float3 rhomb = (1.0f - type) * cube + type * (cuboct + Hlsl.Cross(cube, cuboct));
-
             Float3 grad = cuboct * 1.22474487139f + rhomb;
-
             grad *= (1.0f - 0.042942436724648037f * type) * 3.5946317686139184f;
-
             return grad;
         }
 
-        private static Float4 Os2NoiseWithDerivativesPart(Float3 X)
+        private static Float4 Os2NoiseWithDerivativesPart(Float3 x)
         {
-            Float3 b = Hlsl.Floor(X);
-            Float4 i4 = new Float4(X - b, 2.5f);
-
+            Float3 b = Hlsl.Floor(x);
+            Float4 i4 = new Float4(x - b, 2.5f);
             Float3 v1 = b + Hlsl.Floor(Hlsl.Dot(i4, (Float4)0.25f));
             Float3 v2 = b + new Float3(1.0f, 0.0f, 0.0f) + new Float3(-1.0f, 1.0f, 1.0f) * Hlsl.Floor(Hlsl.Dot(i4, new Float4(-0.25f, 0.25f, 0.25f, 0.35f)));
             Float3 v3 = b + new Float3(0.0f, 1.0f, 0.0f) + new Float3(1.0f, -1.0f, 1.0f) * Hlsl.Floor(Hlsl.Dot(i4, new Float4(0.25f, -0.25f, 0.25f, 0.35f)));
             Float3 v4 = b + new Float3(0.0f, 0.0f, 1.0f) + new Float3(1.0f, 1.0f, -1.0f) * Hlsl.Floor(Hlsl.Dot(i4, new Float4(0.25f, 0.25f, -0.25f, 0.35f)));
-
             Float4 hashes = Permute(new Float4(v1.X, v2.X, v3.X, v4.X) % 289.0f);
             hashes = Permute(hashes + new Float4(v1.Y, v2.Y, v3.Y, v4.Y) % 289.0f);
             hashes = Permute(hashes + new Float4(v1.Z, v2.Z, v3.Z, v4.Z) % 289.0f) % 48.0f;
-
-            Float3 d1 = X - v1; Float3 d2 = X - v2; Float3 d3 = X - v3; Float3 d4 = X - v4;
+            Float3 d1 = x - v1; Float3 d2 = x - v2; Float3 d3 = x - v3; Float3 d4 = x - v4;
             Float4 a = Hlsl.Max(0.75f - new Float4(Hlsl.Dot(d1, d1), Hlsl.Dot(d2, d2), Hlsl.Dot(d3, d3), Hlsl.Dot(d4, d4)), 0.0f);
             Float4 aa = a * a; Float4 aaaa = aa * aa;
             Float3 g1 = Grad(hashes.X); Float3 g2 = Grad(hashes.Y);
             Float3 g3 = Grad(hashes.Z); Float3 g4 = Grad(hashes.W);
             Float4 extrapolations = new Float4(Hlsl.Dot(d1, g1), Hlsl.Dot(d2, g2), Hlsl.Dot(d3, g3), Hlsl.Dot(d4, g4));
-
-            Float3x4 m1 = new Float3x4(
-                d1.X, d2.X, d3.X, d4.X,
-                d1.Y, d2.Y, d3.Y, d4.Y,
-                d1.Z, d2.Z, d3.Z, d4.Z
-            );
-
-            Float3x4 m2 = new Float3x4(
-                g1.X, g2.X, g3.X, g4.X,
-                g1.Y, g2.Y, g3.Y, g4.Y,
-                g1.Z, g2.Z, g3.Z, g4.Z
-            );
-            Float3 derivative = -8.0f * Hlsl.Mul(m1, (aa * a * extrapolations))
-                                + Hlsl.Mul(m2, aaaa);
-
+            Float3x4 m1 = new Float3x4(d1.X, d2.X, d3.X, d4.X, d1.Y, d2.Y, d3.Y, d4.Y, d1.Z, d2.Z, d3.Z, d4.Z);
+            Float3x4 m2 = new Float3x4(g1.X, g2.X, g3.X, g4.X, g1.Y, g2.Y, g3.Y, g4.Y, g1.Z, g2.Z, g3.Z, g4.Z);
+            Float3 derivative = -8.0f * Hlsl.Mul(m1, (aa * a * extrapolations)) + Hlsl.Mul(m2, aaaa);
             return new Float4(derivative, Hlsl.Dot(aaaa, extrapolations));
         }
 
-        private static Float4 Os2NoiseWithDerivatives_ImproveXY(Float3 X)
+        private static Float4 Os2NoiseWithDerivativesImproveXy(Float3 x)
         {
-            X = Hlsl.Mul(OrthonormalMap, X);
-            Float4 result = Os2NoiseWithDerivativesPart(X) + Os2NoiseWithDerivativesPart(X + 144.5f);
-
-            return new Float4(Hlsl.Mul(result.XYZ, OrthonormalMap), result.W);
+            x = Hlsl.Mul(_orthonormalMap, x);
+            Float4 result = Os2NoiseWithDerivativesPart(x) + Os2NoiseWithDerivativesPart(x + 144.5f);
+            return new Float4(Hlsl.Mul(result.XYZ, _orthonormalMap), result.W);
         }
 
-        private static float GradientWave(float b, float t)
+        private static float GradientWave(float b, float t) { return Hlsl.SmoothStep(0.0f, b, t) * Hlsl.SmoothStep(1.0f, b, t); }
+        private static float Random(Float2 uv, float seed) { return Hlsl.Frac(Hlsl.Sin(Hlsl.Dot(uv * 13.235f, new Float2(12.9898f, 78.233f)) * 0.000001f) * 43758.5453123f * seed); }
+        private static Float3 RandomVec3(Float2 uv, float seed) { return new Float3(Random(uv, seed), Random(uv * 2.0f, seed), Random(uv * 3.0f, seed)); }
+        private static float MapToRange(float edge0, float edge1, float x) { return Hlsl.Clamp((x - edge0) / (edge1 - edge0), 0.0f, 1.0f); }
+        private static float ProportionalMapToRange(float edge0, float edge1, float x) { return edge0 + (edge1 - edge0) * x; }
+
+        private static Float3 RaindropSurface(Float2 xy, float distanceScale, float zScale)
         {
-            return Hlsl.SmoothStep(0.0f, b, t) * Hlsl.SmoothStep(1.0f, b, t);
+            float a = distanceScale; float x = xy.X; float y = xy.Y;
+            float n = 1.5f; float m = 0.5f; float s = zScale;
+            float tempZ = 1.0f - Hlsl.Pow(x / a, 2.0f) - Hlsl.Pow(y / a, 2.0f);
+            float z = Hlsl.Pow(Hlsl.Max(0.0f, tempZ), a / 2.0f);
+            float zInMAndN = (z - m) / (n - m);
+            float t = Hlsl.Min(Hlsl.Max(zInMAndN, 0.0f), 1.0f);
+            float height = s * t * t * (3.0f - 2.0f * t);
+            float part01 = s * (6.0f * t - 8.0f * t * t);
+            float part02 = 1.0f / (n - m);
+            float part03 = -1.0f / a * Hlsl.Pow(Hlsl.Max(0.0f, tempZ), a / 2.0f - 1.0f);
+            float tempValue = (zInMAndN > 0.0f && zInMAndN < 1.0f) ? (part01 * part02) : 0.0f;
+            Float2 partialDerivative = height > 0.0f ? new Float2(tempValue * (x * part03), tempValue * (y * part03)) : Float2.Zero;
+            return new Float3(height, partialDerivative);
         }
 
-        private static float Random(Float2 UV, float Seed)
+        private static Float3 StaticRaindrops(Float2 uv, float time, float uvScale, float density)
         {
-            return Hlsl.Frac(Hlsl.Sin(Hlsl.Dot(UV * 13.235f, new Float2(12.9898f, 78.233f)) * 0.000001f) * 43758.5453123f * Seed);
+            Float2 tempUv = uv * uvScale;
+            Float2 id = Hlsl.Floor(tempUv);
+            Float3 randomValue = RandomVec3(new Float2(id.X * 470.15f, id.Y * 653.58f), _randomSeed);
+            tempUv = Hlsl.Frac(tempUv) - 0.5f;
+            Float2 randomPoint = (randomValue.XY - 0.5f) * 0.25f;
+            Float2 xy = randomPoint - tempUv;
+            float distance = Hlsl.Length(tempUv - randomPoint);
+
+            Float3 noiseInput = new Float3(new Float2(tempUv.X * 305.0f * 0.02f, tempUv.Y * 305.0f * 0.02f), 1.8660254037844386f);
+            Float4 noiseResult = Os2NoiseWithDerivativesImproveXy(noiseInput);
+            float edgeRandomCurveAdjust = noiseResult.W * Hlsl.Lerp(0.02f, 0.175f, Hlsl.Frac(randomValue.X));
+
+            distance = edgeRandomCurveAdjust * 0.5f + distance;
+            distance = distance * Hlsl.Clamp(Hlsl.Lerp(1.0f, 55.0f, randomPoint.X), 1.0f, 3.0f);
+            float gradientFade = GradientWave(0.0005f, Hlsl.Frac(time * 0.02f + randomValue.Z));
+            float distanceMaxRange = 1.45f * gradientFade;
+            Float2 direction = tempUv - randomPoint;
+
+            float theta = 3.141592653f - Hlsl.Acos(Hlsl.Dot(Hlsl.Normalize(direction), new Float2(0.0f, 1.0f)));
+            theta = theta * randomValue.Z;
+            float distanceScale = 0.2f / (1.0f - 0.8f * Hlsl.Cos(theta - 3.141593f / 2.0f - 1.6f));
+            float yDistance = Hlsl.Length(new Float2(0.0f, tempUv.Y) - new Float2(0.0f, randomPoint.Y));
+
+            float scale = 1.65f * (0.2f + distanceScale * 1.0f) * distanceMaxRange * Hlsl.Lerp(1.5f, 0.5f, randomValue.X);
+            Float2 tempXy = new Float2(xy.X * 1.0f, xy.Y) * 4.0f;
+            float randomScale = ProportionalMapToRange(0.85f, 1.35f, randomValue.Z);
+            tempXy.X = randomScale * Hlsl.Lerp(tempXy.X, tempXy.X / Hlsl.SmoothStep(1.0f, 0.4f, yDistance * randomValue.Z), Hlsl.SmoothStep(1.0f, 0.0f, randomValue.X));
+            tempXy = tempXy + edgeRandomCurveAdjust * 1.0f;
+            Float3 heightAndNormal = RaindropSurface(tempXy, scale, 1.0f);
+            heightAndNormal.YZ = -heightAndNormal.YZ;
+
+            float randomVisible = (Hlsl.Frac(randomValue.Z * 10.0f * _randomSeed) < density ? 1.0f : 0.0f);
+            heightAndNormal.YZ = heightAndNormal.YZ * randomVisible;
+            heightAndNormal.X = Hlsl.SmoothStep(0.0f, 1.0f, heightAndNormal.X) * randomVisible;
+
+            return heightAndNormal;
         }
 
-        private static Float3 RandomVec3(Float2 UV, float Seed)
+        private static Float4 RollingRaindrops(Float2 uv, float time, float uvScale, float density)
         {
-            return new Float3(Random(UV, Seed), Random(UV * 2.0f, Seed), Random(UV * 3.0f, Seed));
+            Float2 localUv = uv * uvScale;
+            Float2 tempUv = localUv;
+            Float2 constantA = new Float2(6.0f, 1.0f);
+            Float2 gridNum = constantA * 2.0f;
+            Float2 gridId = Hlsl.Floor(localUv * gridNum);
+
+            float randomFloat = Random(new Float2(gridId.X * 131.26f, gridId.X * 101.81f), _randomSeed);
+            float timeMovingY = time * 0.85f * ProportionalMapToRange(0.1f, 0.25f, randomFloat);
+            localUv.Y += timeMovingY + randomFloat;
+
+            Float2 scaledUv = localUv * gridNum;
+            gridId = Hlsl.Floor(scaledUv);
+            Float3 randomVec3 = RandomVec3(new Float2(gridId.X * 17.32f, gridId.Y * 2217.54f), _randomSeed);
+            Float2 gridUv = Hlsl.Frac(scaledUv) - new Float2(0.5f, 0.0f);
+
+            float swingX = randomVec3.X - 0.5f;
+            float swingY = tempUv.Y * 20.0f;
+            float swingPosition = Hlsl.Sin(swingY + Hlsl.Sin(gridId.Y * randomVec3.Z + swingY) + gridId.Y * randomVec3.Z);
+            swingX += swingPosition * (0.5f - Hlsl.Abs(swingX)) * (randomVec3.Z - 0.5f);
+            swingX *= 0.65f;
+            float randomNormalizedTime = Hlsl.Frac(timeMovingY + randomVec3.Z) * 1.0f;
+            swingY = Hlsl.Clamp((GradientWave(0.87f, randomNormalizedTime) - 0.5f) * 0.9f + 0.5f, 0.15f, 0.85f);
+            Float2 position = new Float2(swingX, swingY);
+
+            Float2 xy = position - gridUv;
+            Float2 direction = (gridUv - position) * constantA.YX;
+            float distance = Hlsl.Length(direction);
+
+            Float3 noiseInput = new Float3(new Float2(tempUv.X * 513.20f * 0.02f, tempUv.Y * 779.40f * 0.02f), 2.1660251037743386f);
+            Float4 noiseResult = Os2NoiseWithDerivativesImproveXy(noiseInput);
+            float edgeRandomCurveAdjust = noiseResult.W * Hlsl.Lerp(0.02f, 0.175f, Hlsl.Frac(randomVec3.Y));
+
+            distance = edgeRandomCurveAdjust + distance;
+            float theta = 3.141592653f - Hlsl.Acos(Hlsl.Dot(Hlsl.Normalize(direction), new Float2(0.0f, 1.0f)));
+            theta = theta * randomVec3.Z;
+            float distanceScale = 0.2f / (1.0f - 0.8f * Hlsl.Cos(theta - 3.141593f / 2.0f - 1.6f));
+            float scale = 1.65f * (0.2f + distanceScale * 1.0f) * 1.45f * Hlsl.Lerp(1.0f, 0.25f, randomVec3.X * 1.0f);
+            Float2 tempXy = new Float2(xy.X * 1.0f, xy.Y) * 4.0f;
+            tempXy = tempXy * new Float2(1.0f, 4.2f) + edgeRandomCurveAdjust * 0.85f;
+            Float3 heightAndNormal = RaindropSurface(tempXy, scale, 1.0f);
+
+            float trailY = Hlsl.Pow(Hlsl.SmoothStep(1.0f, swingY, gridUv.Y), 0.5f);
+            float trailX = Hlsl.Abs(gridUv.X - swingX) * Hlsl.Lerp(0.8f, 4.0f, Hlsl.SmoothStep(0.0f, 1.0f, randomVec3.X));
+            float trail = Hlsl.SmoothStep(0.25f * trailY, 0.15f * trailY * trailY, trailX);
+            float trailClamp = Hlsl.SmoothStep(-0.02f, 0.02f, gridUv.Y - swingY);
+            trail *= trailClamp * trailY;
+
+            float signOfTrailX = Hlsl.Sign(gridUv.X - swingX);
+            Float3 trailNoiseInput = new Float3(new Float2(tempUv.X * 513.20f * 0.02f * signOfTrailX, tempUv.Y * 779.40f * 0.02f), 2.1660251037743386f);
+            Float4 trailNoiseResult = Os2NoiseWithDerivativesImproveXy(trailNoiseInput);
+            float trailEdgeRandomCurveAdjust = trailNoiseResult.W * Hlsl.Lerp(0.002f, 0.175f, Hlsl.Frac(randomVec3.Y));
+            float trailXDistance = MapToRange(0.0f, 0.1f, trailEdgeRandomCurveAdjust * 0.5f + trailX);
+            Float2 trailDirection = signOfTrailX * new Float2(1.0f, 0.0f) + new Float2(0.0f, 1.0f) * Hlsl.SmoothStep(1.0f, 0.0f, trail) * 0.5f;
+            Float2 trailXy = trailDirection * 1.0f * trailXDistance;
+
+            Float3 trailHeightAndNormal = RaindropSurface(trailXy, 1.0f, 1.0f);
+            trailHeightAndNormal = trailHeightAndNormal * Hlsl.Pow(trail * randomVec3.Y, 2.0f);
+            trailHeightAndNormal.X = Hlsl.SmoothStep(0.0f, 1.0f, trailHeightAndNormal.X);
+
+            swingY = tempUv.Y;
+            float remainTrail = Hlsl.SmoothStep(0.2f * trailY, 0.0f, trailX);
+            float remainDroplet = Hlsl.Max(0.0f, (Hlsl.Sin(swingY * (1.0f - swingY) * 120.0f) - gridUv.Y)) * remainTrail * trailClamp * randomVec3.Z;
+            swingY = Hlsl.Frac(swingY * 10.0f) + (gridUv.Y - 0.5f);
+            Float2 remainDropletXy = gridUv - new Float2(swingX, swingY);
+            remainDropletXy = remainDropletXy * new Float2(1.2f, 0.8f) + edgeRandomCurveAdjust * 0.85f;
+            Float3 remainDropletHeightAndNormal = RaindropSurface(remainDropletXy, 2.0f * remainDroplet, 1.0f);
+            remainDropletHeightAndNormal.X = Hlsl.SmoothStep(0.0f, 1.0f, remainDropletHeightAndNormal.X);
+            remainDropletHeightAndNormal = trailHeightAndNormal.X > 0.0f ? Float3.Zero : remainDropletHeightAndNormal;
+
+            Float4 returnValue = new Float4();
+            returnValue.X = heightAndNormal.X + trailHeightAndNormal.X * trailY * trailClamp + remainDropletHeightAndNormal.X * trailY * trailClamp;
+            returnValue.YZ = heightAndNormal.YZ + trailHeightAndNormal.YZ + remainDropletHeightAndNormal.YZ;
+            returnValue.W = trail;
+
+            float randomVisible = (Hlsl.Frac(randomVec3.Z * 20.0f * _randomSeed) < density ? 1.0f : 0.0f);
+            returnValue *= randomVisible;
+            return returnValue;
         }
 
-        private static Float3 RaindropSurface(Float2 XY, float DistanceScale, float ZScale)
+        private static Float4 Raindrops(Float2 uv, float time, float staticScale, float rollingScale, float density)
         {
-            float A = DistanceScale;
-            float x = XY.X;
-            float y = XY.Y;
-            float N = 1.5f;
-            float M = 0.5f;
-            float S = ZScale;
+            Float3 staticRaindrop = StaticRaindrops(uv, time, staticScale, density);
+            Float4 rollingRaindrop01 = RollingRaindrops(uv, time, rollingScale, density);
 
-            float TempZ = 1.0f - Hlsl.Pow(x / A, 2.0f) - Hlsl.Pow(y / A, 2.0f);
-            float Z = Hlsl.Pow(Hlsl.Max(0.0f, TempZ), A / 2.0f);
-            float ZInMAndN = (Z - M) / (N - M);
-            float t = Hlsl.Min(Hlsl.Max(ZInMAndN, 0.0f), 1.0f);
+            float height = staticRaindrop.X + rollingRaindrop01.X;
+            Float2 normal = staticRaindrop.YZ + rollingRaindrop01.YZ;
+            float trail = rollingRaindrop01.W;
 
-            float Height = S * t * t * (3.0f - 2.0f * t);
-
-            float Part01 = S * (6.0f * t - 8.0f * t * t);
-            float Part02 = 1.0f / (N - M);
-            float Part03 = -1.0f / A * Hlsl.Pow(Hlsl.Max(0.0f, TempZ), A / 2.0f - 1.0f);
-
-            float Part03OfX = x * Part03;
-            float Part03OfY = y * Part03;
-
-            float TempValue = (ZInMAndN > 0.0f && ZInMAndN < 1.0f) ? (Part01 * Part02) : 0.0f;
-
-            float PartialDerivativeX = TempValue * Part03OfX;
-            float PartialDerivativeY = TempValue * Part03OfY;
-            Float2 PartialDerivative = Height > 0.0f ? new Float2(PartialDerivativeX, PartialDerivativeY) : Float2.Zero;
-
-            return new Float3(Height, PartialDerivative);
-        }
-
-        private static float MapToRange(float edge0, float edge1, float x)
-        {
-            float t = Hlsl.Clamp((x - edge0) / (edge1 - edge0), 0.0f, 1.0f);
-            return t;
-        }
-
-        private static float ProportionalMapToRange(float edge0, float edge1, float x)
-        {
-            float t = edge0 + (edge1 - edge0) * x;
-            return t;
-        }
-
-        private static Float3 StaticRaindrops(Float2 UV, float Time, float UVScale)
-        {
-            Float2 TempUV = UV;
-            TempUV *= UVScale; //15.0
-
-            Float2 ID = Hlsl.Floor(TempUV);
-            Float3 RandomValue = RandomVec3(new Float2(ID.X * 470.15f, ID.Y * 653.58f), RandomSeed);
-            TempUV = Hlsl.Frac(TempUV) - 0.5f;
-            Float2 RandomPoint = (RandomValue.XY - 0.5f) * 0.25f;
-            Float2 XY = RandomPoint - TempUV;
-            float Distance = Hlsl.Length(TempUV - RandomPoint);
-
-            Float3 X = new Float3(new Float2(TempUV.X * 305.0f * 0.02f, TempUV.Y * 305.0f * 0.02f), 1.8660254037844386f);
-            Float4 noiseResult = Os2NoiseWithDerivatives_ImproveXY(X);
-            float EdgeRandomCurveAdjust = noiseResult.W * Hlsl.Lerp(0.02f, 0.175f, Hlsl.Frac(RandomValue.X));
-
-            Distance = EdgeRandomCurveAdjust * 0.5f + Distance;
-            Distance = Distance * Hlsl.Clamp(Hlsl.Lerp(1.0f, 55.0f, RandomPoint.X), 1.0f, 3.0f);
-
-            float GradientFade = GradientWave(0.0005f, Hlsl.Frac(Time * 0.02f + RandomValue.Z));
-
-            float DistanceMaxRange = 1.45f * GradientFade;
-            Float2 Direction = (TempUV - RandomPoint);
-
-            float Theta = 3.141592653f - Hlsl.Acos(Hlsl.Dot(Hlsl.Normalize(Direction), new Float2(0.0f, 1.0f)));
-            Theta = Theta * RandomValue.Z;
-            float DistanceScale = 0.2f / (1.0f - 0.8f * Hlsl.Cos(Theta - 3.141593f / 2.0f - 1.6f));
-            float YDistance = Hlsl.Length(new Float2(0.0f, TempUV.Y) - new Float2(0.0f, RandomPoint.Y));
-
-            float Scale = 1.65f * (0.2f + DistanceScale * 1.0f) * DistanceMaxRange * Hlsl.Lerp(1.5f, 0.5f, RandomValue.X);
-            Float2 TempXY = new Float2(XY.X * 1.0f, XY.Y) * 4.0f;
-            float RandomScale = ProportionalMapToRange(0.85f, 1.35f, RandomValue.Z);
-            TempXY.X = RandomScale * Hlsl.Lerp(TempXY.X, TempXY.X / Hlsl.SmoothStep(1.0f, 0.4f, YDistance * RandomValue.Z), Hlsl.SmoothStep(1.0f, 0.0f, RandomValue.X));
-            TempXY = TempXY + EdgeRandomCurveAdjust * 1.0f;
-            Float3 HeightAndNormal = RaindropSurface(TempXY, Scale, 1.0f);
-            HeightAndNormal.YZ = -HeightAndNormal.YZ;
-
-            float RandomVisible = (Hlsl.Frac(RandomValue.Z * 10.0f * RandomSeed) < NumberScaleOfStaticRaindrops ? 1.0f : 0.0f);
-            HeightAndNormal.YZ = HeightAndNormal.YZ * RandomVisible;
-            HeightAndNormal.X = Hlsl.SmoothStep(0.0f, 1.0f, HeightAndNormal.X) * RandomVisible;
-
-            return HeightAndNormal;
-        }
-
-        private static Float4 RollingRaindrops(Float2 UV, float Time, float UVScale)
-        {
-            Float2 LocalUV = UV * UVScale;
-            Float2 TempUV = LocalUV;
-
-            Float2 ConstantA = new Float2(6.0f, 1.0f);
-            Float2 GridNum = ConstantA * 2.0f;
-            Float2 GridID = Hlsl.Floor(LocalUV * GridNum);
-
-            float RandomFloat = Random(new Float2(GridID.X * 131.26f, GridID.X * 101.81f), RandomSeed);
-
-            float TimeMovingY = Time * 0.85f * ProportionalMapToRange(0.1f, 0.25f, RandomFloat); //Time
-            LocalUV.Y += TimeMovingY;
-            float YShift = RandomFloat;
-            LocalUV.Y += YShift;
-
-
-            Float2 ScaledUV = LocalUV * GridNum;
-            GridID = Hlsl.Floor(ScaledUV);
-            Float3 randomVec3 = RandomVec3(new Float2(GridID.X * 17.32f, GridID.Y * 2217.54f), RandomSeed);
-
-            Float2 GridUV = Hlsl.Frac(ScaledUV) - new Float2(0.5f, 0.0f);
-
-
-            float SwingX = randomVec3.X - 0.5f;
-
-            float SwingY = TempUV.Y * 20.0f;
-            float SwingPosition = Hlsl.Sin(SwingY + Hlsl.Sin(GridID.Y * randomVec3.Z + SwingY) + GridID.Y * randomVec3.Z);
-            SwingX += SwingPosition * (0.5f - Hlsl.Abs(SwingX)) * (randomVec3.Z - 0.5f);
-            SwingX *= 0.65f;
-            float RandomNormalizedTime = Hlsl.Frac(TimeMovingY + randomVec3.Z) * 1.0f; // Time
-            SwingY = (GradientWave(0.87f, RandomNormalizedTime) - 0.5f) * 0.9f + 0.5f;
-            SwingY = Hlsl.Clamp(SwingY, 0.15f, 0.85f);
-            Float2 Position = new Float2(SwingX, SwingY);
-
-
-            Float2 XY = Position - GridUV;
-            Float2 Direction = (GridUV - Position) * ConstantA.YX;
-            float Distance = Hlsl.Length(Direction);
-
-            Float3 X = new Float3(new Float2(TempUV.X * 513.20f * 0.02f, TempUV.Y * 779.40f * 0.02f), 2.1660251037743386f);
-            Float4 NoiseResult = Os2NoiseWithDerivatives_ImproveXY(X);
-            float EdgeRandomCurveAdjust = NoiseResult.W * Hlsl.Lerp(0.02f, 0.175f, Hlsl.Frac(randomVec3.Y));
-
-            Distance = EdgeRandomCurveAdjust + Distance;
-
-            float DistanceMaxRange = 1.45f;
-
-            float Theta = 3.141592653f - Hlsl.Acos(Hlsl.Dot(Hlsl.Normalize(Direction), new Float2(0.0f, 1.0f)));
-            Theta = Theta * randomVec3.Z;
-            float DistanceScale = 0.2f / (1.0f - 0.8f * Hlsl.Cos(Theta - 3.141593f / 2.0f - 1.6f));
-            float Scale = 1.65f * (0.2f + DistanceScale * 1.0f) * DistanceMaxRange * Hlsl.Lerp(1.0f, 0.25f, randomVec3.X * 1.0f);
-            Float2 TempXY = new Float2(XY.X * 1.0f, XY.Y) * 4.0f;
-            TempXY = TempXY * new Float2(1.0f, 4.2f) + EdgeRandomCurveAdjust * 0.85f;
-            Float3 HeightAndNormal = RaindropSurface(TempXY, Scale, 1.0f);
-
-            float TrailY = Hlsl.Pow(Hlsl.SmoothStep(1.0f, SwingY, GridUV.Y), 0.5f);
-            float TrailX = Hlsl.Abs(GridUV.X - SwingX) * Hlsl.Lerp(0.8f, 4.0f, Hlsl.SmoothStep(0.0f, 1.0f, randomVec3.X));
-            float Trail = Hlsl.SmoothStep(0.25f * TrailY, 0.15f * TrailY * TrailY, TrailX);
-            float TrailClamp = Hlsl.SmoothStep(-0.02f, 0.02f, GridUV.Y - SwingY);
-            Trail *= TrailClamp * TrailY;
-
-            float SignOfTrailX = Hlsl.Sign(GridUV.X - SwingX);
-            Float3 NoiseInput = new Float3(new Float2(TempUV.X * 513.20f * 0.02f * SignOfTrailX, TempUV.Y * 779.40f * 0.02f), 2.1660251037743386f);
-            Float4 TrailNoiseResult = Os2NoiseWithDerivatives_ImproveXY(NoiseInput);
-            float TrailEdgeRandomCurveAdjust = TrailNoiseResult.W * Hlsl.Lerp(0.002f, 0.175f, Hlsl.Frac(randomVec3.Y));
-            float TrailXDistance = MapToRange(0.0f, 0.1f, TrailEdgeRandomCurveAdjust * 0.5f + TrailX);
-            Float2 TrailDirection = SignOfTrailX * new Float2(1.0f, 0.0f) + new Float2(0.0f, 1.0f) * Hlsl.SmoothStep(1.0f, 0.0f, Trail) * 0.5f;
-            Float2 TrailXY = TrailDirection * 1.0f * TrailXDistance;
-
-            Float3 TrailHeightAndNormal = RaindropSurface(TrailXY, 1.0f, 1.0f);
-
-            TrailHeightAndNormal = TrailHeightAndNormal * Hlsl.Pow(Trail * randomVec3.Y, 2.0f);
-            TrailHeightAndNormal.X = Hlsl.SmoothStep(0.0f, 1.0f, TrailHeightAndNormal.X);
-
-            SwingY = TempUV.Y;
-            float RemainTrail = Hlsl.SmoothStep(0.2f * TrailY, 0.0f, TrailX);
-            float RemainDroplet = Hlsl.Max(0.0f, (Hlsl.Sin(SwingY * (1.0f - SwingY) * 120.0f) - GridUV.Y)) * RemainTrail * TrailClamp * randomVec3.Z;
-            SwingY = Hlsl.Frac(SwingY * 10.0f) + (GridUV.Y - 0.5f);
-            Float2 RemainDropletXY = GridUV - new Float2(SwingX, SwingY);
-            RemainDropletXY = RemainDropletXY * new Float2(1.2f, 0.8f);
-
-            RemainDropletXY = RemainDropletXY + EdgeRandomCurveAdjust * 0.85f;
-            Float3 RemainDropletHeightAndNormal = RaindropSurface(RemainDropletXY, 2.0f * RemainDroplet, 1.0f);
-
-            RemainDropletHeightAndNormal.X = Hlsl.SmoothStep(0.0f, 1.0f, RemainDropletHeightAndNormal.X);
-            RemainDropletHeightAndNormal = TrailHeightAndNormal.X > 0.0f ? Float3.Zero : RemainDropletHeightAndNormal;
-
-
-            Float4 ReturnValue = new();
-
-            ReturnValue.X = HeightAndNormal.X + TrailHeightAndNormal.X * TrailY * TrailClamp + RemainDropletHeightAndNormal.X * TrailY * TrailClamp;
-            ReturnValue.YZ = HeightAndNormal.YZ + TrailHeightAndNormal.YZ + RemainDropletHeightAndNormal.YZ;
-            ReturnValue.W = Trail;
-
-
-            float RandomVisible = (Hlsl.Frac(randomVec3.Z * 20.0f * RandomSeed) < NumberScaleOfRollingRaindrops ? 1.0f : 0.0f);
-            ReturnValue *= RandomVisible;
-            return ReturnValue;
-        }
-
-        private static Float4 Raindrops(Float2 UV, float Time, float UVScale00, float UVScale01, float UVScale02)
-        {
-            Float3 StaticRaindrop = StaticRaindrops(UV, Time, UVScale00);
-            Float4 RollingRaindrop01 = RollingRaindrops(UV, Time, UVScale01);
-
-            float Height = StaticRaindrop.X + RollingRaindrop01.X;
-            Float2 Normal = StaticRaindrop.YZ + RollingRaindrop01.YZ;
-            float Trail = RollingRaindrop01.W;
-
-            return new Float4(Height, Normal, Trail);
+            return new Float4(height, normal, trail);
         }
 
         public Float4 Execute()
         {
-            float Time = time;
+            float scaledTime = time * speed;
             Float2 scenePos = D2D.GetScenePosition().XY;
-
-            Float4 backgroundColor = D2D.GetInput(0);
-
-            return backgroundColor;
-
             Float2 fragCoord = new Float2(scenePos.X, dispatchSize.Y - scenePos.Y);
-            Float2 LocalUV = (fragCoord - (0.5f * dispatchSize)) / dispatchSize.Y;
+            Float2 localUv = (fragCoord - (0.5f * dispatchSize)) / dispatchSize.Y;
 
-            Float4 Raindrop = Raindrops(LocalUV, Time,
-                StaticRaindropUVScale,
-                RollingRaindropUVScaleLayer01,
-                RollingRaindropUVScaleLayer02);
+            float staticUvScale = 20.0f / Hlsl.Max(0.1f, size);
+            float rollingUvScale = 2.25f / Hlsl.Max(0.1f, size);
 
-            float alpha = Hlsl.Saturate(Raindrop.X);
+            Float4 raindrop = Raindrops(localUv, scaledTime, staticUvScale, rollingUvScale, density);
 
-            return new Float4(alpha, alpha, alpha, alpha);
+            float height = raindrop.X;
+            Float2 normal = raindrop.YZ;
+
+            float dropMask = Hlsl.SmoothStep(0.02f, 0.15f, height);
+
+            float lightX = Hlsl.Cos(lightAngle);
+            float lightY = Hlsl.Sin(lightAngle);
+            Float3 lightDir = Hlsl.Normalize(new Float3(lightX, lightY, 1.5f));
+
+            Float3 surfaceNormal = Hlsl.Normalize(new Float3(normal.X, normal.Y, 1.0f - height));
+
+            float specular = Hlsl.Max(0.0f, Hlsl.Dot(surfaceNormal, lightDir));
+            specular = Hlsl.Pow(specular, 24.0f);
+
+            float edgeShadow = Hlsl.SmoothStep(0.2f, 1.0f, Hlsl.Length(normal)) * shadowIntensity;
+
+            float baseBrightness = Hlsl.Saturate((0.15f * height) + specular - edgeShadow);
+
+            float alpha = dropMask * Hlsl.Saturate(0.25f + specular);
+
+            return new Float4(
+                baseBrightness,
+                baseBrightness,
+                baseBrightness,
+                alpha
+            );
         }
     }
 }

@@ -51,6 +51,7 @@ namespace BetterLyrics.WinUI3.Controls
         private readonly CoverBackgroundRenderer _coverRenderer = new();
         private readonly SnowRenderer _snowRenderer = new();
         private readonly FogRenderer _fogRenderer = new();
+        private readonly RaindropRenderer _raindropRenderer = new();
         private readonly SpectrumRenderer _spectrumRenderer = new();
         private readonly EdgeFadeMaskRenderer _edgeFadeMaskRenderer = new();
 
@@ -593,6 +594,14 @@ namespace BetterLyrics.WinUI3.Controls
             _fogRenderer.IsEnabled = lyricsBg.IsFogOverlayEnabled;
             _fogRenderer.Update(elapsedTime.TotalSeconds, _spectrumAnalyzer.CurrentBassEnergy, lyricsBg.FogOverlayBreathingIntensity);
 
+            _raindropRenderer.IsEnabled = lyricsBg.IsRaindropOverlayEnabled;
+            _raindropRenderer.RainSpeed = lyricsBg.RaindropSpeed / 100f;
+            _raindropRenderer.RainSize = lyricsBg.RaindropSize / 100f;
+            _raindropRenderer.RainDensity = lyricsBg.RaindropDensity / 100f;
+            _raindropRenderer.LightAngle = MathF.PI * lyricsBg.RaindropLightAngle / 180f;
+            _raindropRenderer.ShadowIntensity = lyricsBg.RaindropShadowIntensity / 100f;
+            _raindropRenderer.Update(elapsedTime.TotalSeconds, _spectrumAnalyzer.CurrentBassEnergy, lyricsBg.RaindropOverlayBreathingIntensity);
+
             _spectrumRenderer.Update(_spectrumAnalyzer.CurrentBassEnergy, lyricsBg.SpectrumBreathingIntensity);
 
             if (!_lyricsWindowStatus.ShowLyricsCard)
@@ -614,6 +623,7 @@ namespace BetterLyrics.WinUI3.Controls
             _fluidRenderer.LoadResources();
             _snowRenderer.LoadResources();
             _fogRenderer.LoadResources();
+            _raindropRenderer.LoadResources();
 
             InitSpectrumAnalyzer();
             InitSpoutHook(sender);
@@ -639,6 +649,7 @@ namespace BetterLyrics.WinUI3.Controls
             _coverRenderer.Dispose();
             _snowRenderer.Dispose();
             _fogRenderer.Dispose();
+            _raindropRenderer.Dispose();
             _spectrumRenderer.Dispose();
 
             DisposeRenderLyricsLines();
@@ -694,6 +705,8 @@ namespace BetterLyrics.WinUI3.Controls
             _snowRenderer.Draw(sender, ds, lyricsBg.IsSnowFlakeOverlayBrethingEffectEnabled);
 
             _fogRenderer.Draw(sender, ds, lyricsBg.IsFogOverlayBrethingEffectEnabled);
+
+            _raindropRenderer.Draw(sender, ds, lyricsBg.IsRaindropOverlayBrethingEffectEnabled);
 
             if (!_lyricsWindowStatus.ShowLyricsCard)
             {

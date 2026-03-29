@@ -372,6 +372,7 @@
                             <local:PropertyRow Header="IsAlwaysOnTopPollingTimerRunning" Value="{x:Bind LyricsWindowStatus.IsAlwaysOnTopPollingTimerRunning, Mode=OneWay}" />
                             <local:PropertyRow Header="IsUnderlayColorTimerRunning" Value="{x:Bind LyricsWindowStatus.IsUnderlayColorTimerRunning, Mode=OneWay}" />
                             <local:PropertyRow Header="WindowStatus" Value="{x:Bind LyricsWindowStatus.WindowStatus, Mode=OneWay}" />
+                            <local:PropertyRow Header="WindowTheme" Value="{Binding ActualTheme, Converter={StaticResource EnumToIntConverter}, Mode=OneWay, RelativeSource={RelativeSource Mode=Self}}" />
                         </StackPanel>
                     </Expander>
 
