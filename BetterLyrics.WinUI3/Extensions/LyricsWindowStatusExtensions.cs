@@ -82,9 +82,9 @@ namespace BetterLyrics.WinUI3.Extensions
             };
             status.WindowBounds = new Rect(
                 status.MonitorBounds.X,
-                status.MonitorBounds.Y - 1,
+                status.MonitorBounds.Y,
                 status.MonitorBounds.Width,
-                status.MonitorBounds.Height + 1
+                status.MonitorBounds.Height
             );
             return status;
         }
