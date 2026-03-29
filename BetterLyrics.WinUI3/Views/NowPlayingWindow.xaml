@@ -19,13 +19,6 @@
         Loaded="RootGrid_Loaded"
         SizeChanged="RootGrid_SizeChanged">
 
-        <Grid
-            x:Name="PlaceholderGrid"
-            Width="1"
-            Height="1"
-            HorizontalAlignment="Left"
-            VerticalAlignment="Bottom" />
-
         <local:NowPlayingPage x:Name="NowPlayingPage" />
 
         <!--  Top command  -->

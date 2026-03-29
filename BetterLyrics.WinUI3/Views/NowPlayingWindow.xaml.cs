@@ -373,24 +373,43 @@ namespace BetterLyrics.WinUI3.Views
 
         private void OnTitleBarAreaChanged()
         {
-            this.SetTitleBarArea(LyricsWindowStatus.TitleBarArea);
+            SetTitleBarArea(LyricsWindowStatus.TitleBarArea);
         }
 
         // ====
 
         public void SetTitleBarArea(TitleBarArea titleBarArea)
         {
+            double scale = RootGrid.XamlRoot?.RasterizationScale ?? 1.0;
+
             switch (titleBarArea)
             {
                 case TitleBarArea.None:
-                    SetTitleBar(PlaceholderGrid);
+                    AppWindow.TitleBar.SetDragRectangles(Array.Empty<Windows.Graphics.RectInt32>());
                     break;
+
                 case TitleBarArea.Top:
-                    SetTitleBar(TopCommandGrid);
+                    AppWindow.TitleBar.SetDragRectangles([
+                        new Windows.Graphics.RectInt32(
+                            0,
+                            0,
+                            (int)(TopCommandGrid.ActualWidth * scale),
+                            (int)(TopCommandGrid.ActualHeight * scale)
+                        )
+                    ]);
                     break;
+
                 case TitleBarArea.Whole:
-                    SetTitleBar(RootGrid);
+                    AppWindow.TitleBar.SetDragRectangles([
+                        new Windows.Graphics.RectInt32(
+                            0,
+                            0,
+                            (int)(RootGrid.ActualWidth * scale),
+                            (int)(RootGrid.ActualHeight * scale)
+                        )
+                    ]);
                     break;
+
                 default:
                     break;
             }
@@ -415,6 +434,8 @@ namespace BetterLyrics.WinUI3.Views
             WeakReferenceMessenger.Default.UnregisterAll(this);
 
             StopOverlayInputHelper();
+
+            RootGrid.XamlRoot?.Changed -= XamlRoot_Changed;
 
             AppWindow.Changed -= AppWindow_Changed;
             AppWindow.Closing -= AppWindow_Closing;
@@ -512,6 +533,7 @@ namespace BetterLyrics.WinUI3.Views
         {
             UpdateNowPlayingBarStatus();
             UpdateTopCommandGridStatus();
+            OnTitleBarAreaChanged();
         }
 
         private void UpdateNowPlayingBarStatus()
@@ -652,6 +674,13 @@ namespace BetterLyrics.WinUI3.Views
                 (int)((LyricsWindowStatus.PaddingRight / 100.0) * (RootGrid.ActualWidth / 2)),
                 (int)((LyricsWindowStatus.PaddingBottom / 100.0) * (RootGrid.ActualHeight / 2))
             );
+            RootGrid.XamlRoot?.Changed += XamlRoot_Changed;
+            OnTitleBarAreaChanged();
+        }
+
+        private void XamlRoot_Changed(XamlRoot sender, XamlRootChangedEventArgs args)
+        {
+            OnTitleBarAreaChanged();
         }
 
         public void Receive(PropertyChangedMessage<bool> message)

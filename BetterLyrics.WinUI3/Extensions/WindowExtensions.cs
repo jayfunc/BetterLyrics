@@ -3,8 +3,10 @@ using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using WinUIEx;
 
 namespace BetterLyrics.WinUI3.Extensions
 {
@@ -28,13 +30,17 @@ namespace BetterLyrics.WinUI3.Extensions
                 {
                     window.Title = title;
                 }
-                window.AppWindow.TitleBar.PreferredTheme = TitleBarTheme.UseDefaultAppMode;
-                window.AppWindow.SetIcons();
-
-                window.ExtendsContentIntoTitleBar = true;
-                window.AppWindow.TitleBar.PreferredHeightOption = titleBarHeightOption;
 
                 window.SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(backdropType);
+
+                var appWindow = window.AppWindow;
+                appWindow.SetIcons();
+
+                var titleBar = appWindow.TitleBar;
+                titleBar.PreferredTheme = TitleBarTheme.UseDefaultAppMode;
+                titleBar.ExtendsContentIntoTitleBar = true;
+                titleBar.PreferredHeightOption = titleBarHeightOption;
+                window.SetTitleBarBackgroundColors(Colors.Transparent);
             }
 
             public void SyncTheme()
