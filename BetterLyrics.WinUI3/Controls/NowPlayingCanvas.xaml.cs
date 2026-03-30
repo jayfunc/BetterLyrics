@@ -385,6 +385,10 @@ namespace BetterLyrics.WinUI3.Controls
                 DrawCoreWithEdgeFeatheringHandled(sender, ds, bounds, overlayColor, finalOpacity, lyricsStyle, albumStyle, lyricsBg);
             }
 
+#if DEBUG
+            ds.DrawLine(new Vector2(0, (float)sender.Size.Height / 2), new Vector2((float)sender.Size.Width, (float)sender.Size.Height / 2), Colors.Cyan);
+#endif
+
             if (_lyricsWindowStatus.ShowDebugOverlay)
             {
                 string debugText =

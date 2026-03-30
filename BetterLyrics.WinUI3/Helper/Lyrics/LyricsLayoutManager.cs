@@ -139,12 +139,10 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
             if (lines == null || lines.Count == 0) return null;
 
             var currentLine = lines.ElementAtOrDefault(playingLineIndex);
-            var firstLine = lines.FirstOrDefault();
 
-            if (currentLine?.PrimaryTextLayout == null || firstLine == null) return null;
+            if (currentLine?.PrimaryTextLayout == null) return null;
 
-            return -currentLine.PrimaryPosition.Y + firstLine.PrimaryPosition.Y
-                - (currentLine.BottomRightPosition.Y - currentLine.TopLeftPosition.Y) / 2.0;
+            return -currentLine.CenterPosition.Y;
         }
 
         /// <summary>
