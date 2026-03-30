@@ -59,7 +59,7 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
         /// <summary>
         /// 中心坐标（相对于坐标原点）
         /// </summary>
-        public Vector2 CenterPosition { get; private set; }
+        public Vector2 CenterPosition { get; set; }
         /// <summary>
         /// 底部坐标（相对于坐标原点）
         /// </summary>
@@ -164,24 +164,6 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
             SecondaryText = lyricsLine.SecondaryText;
             PrimaryRenderSyllables = lyricsLine.PrimarySyllables.Select(x => new RenderLyricsSyllable(x)).ToList();
             IsPrimaryHasRealSyllableInfo = lyricsLine.IsPrimaryHasRealSyllableInfo;
-        }
-
-        public void UpdateCenterPosition(double maxWidth, TextAlignmentType type)
-        {
-            if (PrimaryTextLayout == null)
-            {
-                return;
-            }
-
-            double centerY = (TopLeftPosition.Y + BottomRightPosition.Y) / 2;
-
-            CenterPosition = type switch
-            {
-                TextAlignmentType.Left => new Vector2(0, (float)centerY),
-                TextAlignmentType.Center => new Vector2((float)(0 + maxWidth / 2.0), (float)centerY),
-                TextAlignmentType.Right => new Vector2((float)(0 + maxWidth), (float)centerY),
-                _ => throw new System.ArgumentOutOfRangeException(nameof(type), type, null),
-            };
         }
 
         public void DisposeTextLayout()

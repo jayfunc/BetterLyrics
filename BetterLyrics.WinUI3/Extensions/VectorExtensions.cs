@@ -15,6 +15,16 @@ namespace BetterLyrics.WinUI3.Extensions
             {
                 return new Vector2(vector2.X, y);
             }
+
+            public Vector2 AddX(float x)
+            {
+                return new Vector2(vector2.X + x, vector2.Y);
+            }
+
+            public Vector2 AddY(float y)
+            {
+                return new Vector2(vector2.X, vector2.Y + y);
+            }
         }
     }
 }

@@ -1,6 +1,7 @@
 // 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Helper.Lyrics;
 using BetterLyrics.WinUI3.Hooks;
@@ -386,6 +387,7 @@ namespace BetterLyrics.WinUI3.Controls
             }
 
 #if DEBUG
+            ds.DrawRectangle(new Rect(_renderLyricsStartX, _renderLyricsStartY, _renderLyricsWidth, _renderLyricsHeight), Colors.Cyan, 1f);
             ds.DrawLine(new Vector2(0, (float)sender.Size.Height / 2), new Vector2((float)sender.Size.Width, (float)sender.Size.Height / 2), Colors.Cyan);
 #endif
 
@@ -436,6 +438,10 @@ namespace BetterLyrics.WinUI3.Controls
                 }
             }
 
+#if DEBUG
+            ds.DrawCircle(_mousePosition.ToVector2().AddX((float)_renderLyricsStartX).AddY((float)_renderLyricsStartY), 1f, Colors.Cyan);
+            ds.DrawCircle(_mousePosition.ToVector2().AddX((float)_renderLyricsStartX).AddY((float)_renderLyricsStartY), 1f, Colors.Cyan);
+#endif
         }
 
         private void Canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
@@ -498,7 +504,6 @@ namespace BetterLyrics.WinUI3.Controls
                 _isMouseInLyricsArea,
                 _mousePosition,
                 _canvasYScrollTransition.Value + _mouseYScrollTransition.Value,
-                _renderLyricsStartY,
                 _renderLyricsHeight,
                 lyricsStyle.PlayingLineTopOffset / 100.0
             );
