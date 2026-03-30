@@ -172,8 +172,9 @@ namespace BetterLyrics.WinUI3.Renderer
                 }
 
 #if DEBUG
-                ds.DrawLine(new Vector2(0, line.CenterPosition.Y), new Vector2((float)lyricsWidth, line.CenterPosition.Y), Colors.Cyan);
-                ds.DrawText($"({line.CenterPosition.X}, {line.CenterPosition.Y})", line.CenterPosition, Colors.Cyan);
+                ds.DrawRectangle(new Windows.Foundation.Rect(line.TopLeftPosition.ToPoint(), line.BottomRightPosition.ToPoint()), Colors.Cyan);
+                ds.DrawLine(new Vector2(line.TopLeftPosition.X, line.CenterPosition.Y), new Vector2(line.BottomRightPosition.X, line.CenterPosition.Y), Colors.Cyan);
+                //ds.DrawText($"({line.CenterPosition.X}, {line.CenterPosition.Y})", line.CenterPosition, Colors.Cyan);
 #endif
 
                 ds.Transform = Matrix3x2.Identity;

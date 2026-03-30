@@ -44,6 +44,13 @@ namespace BetterLyrics.WinUI3.Extensions
                 rect.Height
             );
 
+            public Rect AddX(double x) => new(
+                rect.X + x,
+                rect.Y,
+                rect.Width,
+                rect.Height
+            );
+
             public Rect AddY(double y) => new(
                 rect.X,
                 rect.Y + y,

@@ -1,4 +1,6 @@
-﻿using BetterLyrics.WinUI3.Models.Lyrics;
+﻿using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Extensions;
+using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.Models.Settings;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
@@ -57,11 +59,12 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
 
             // 排版
             double currentY = 0;
-            double actualWidth = 0;
 
             foreach (var line in lines)
             {
                 if (line == null) continue;
+
+                double actualWidth = 0;
 
                 line.RecreateTextLayout(
                     resourceCreator,
@@ -122,8 +125,32 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                     currentY += (line.PrimaryTextLayout.LayoutBounds.Height / line.PrimaryTextLayout.LineCount) * style.LyricsLineSpacingFactor;
                 }
 
+                line.TopLeftPosition = style.LyricsAlignmentType switch
+                {
+                    TextAlignmentType.Left => line.TopLeftPosition,
+                    TextAlignmentType.Center => line.TopLeftPosition.AddX((float)((lyricsWidth - actualWidth) / 2)),
+                    TextAlignmentType.Right => line.TopLeftPosition.AddX((float)(lyricsWidth - actualWidth)),
+                    _ => line.TopLeftPosition
+                };
+
+                line.BottomRightPosition = style.LyricsAlignmentType switch
+                {
+                    TextAlignmentType.Left => line.BottomRightPosition,
+                    TextAlignmentType.Center => line.BottomRightPosition.AddX((float)((lyricsWidth - actualWidth) / 2)),
+                    TextAlignmentType.Right => line.BottomRightPosition.AddX((float)(lyricsWidth - actualWidth)),
+                    _ => line.BottomRightPosition
+                };
+
                 // 更新中心点
-                line.UpdateCenterPosition(lyricsWidth, style.LyricsAlignmentType);
+                double centerY = (line.TopLeftPosition.Y + line.BottomRightPosition.Y) / 2;
+
+                line.CenterPosition = style.LyricsAlignmentType switch
+                {
+                    TextAlignmentType.Left => new Vector2(0, (float)centerY),
+                    TextAlignmentType.Center => new Vector2((float)(lyricsWidth / 2), (float)centerY),
+                    TextAlignmentType.Right => new Vector2((float)(lyricsWidth), (float)centerY),
+                    _ => line.CenterPosition,
+                };
 
                 line.RecreateRenderChars(style.LyricsFontStrokeWidth);
             }
@@ -224,7 +251,6 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
             bool isMouseInLyricsArea,
             Point mousePosition,
             double currentScrollOffset,
-            double lyricsY,
             double lyricsHeight,
             double playingLineTopOffsetFactor
         )
@@ -233,7 +259,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
 
             if (lines == null || lines.Count == 0) return -1;
 
-            double offset = currentScrollOffset + lyricsY + lyricsHeight * playingLineTopOffsetFactor;
+            double yOffset = currentScrollOffset + lyricsHeight * playingLineTopOffsetFactor;
 
             int left = 0, right = lines.Count - 1, result = -1;
             while (left <= right)
@@ -241,16 +267,22 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                 int mid = (left + right) / 2;
                 var line = lines[mid];
                 if (line.PrimaryTextLayout == null) break;
-                double value = offset + line.BottomRightPosition.Y;
-                if (value >= mousePosition.Y) { result = mid; right = mid - 1; }
+                double lineBottomY = yOffset + line.BottomRightPosition.Y;
+                if (lineBottomY >= mousePosition.Y)
+                {
+                    result = mid;
+                    right = mid - 1;
+                }
                 else { left = mid + 1; }
             }
 
             if (result != -1)
             {
                 var line = lines[result];
-                double lineTopY = offset + line.TopLeftPosition.Y;
-                if (mousePosition.Y < lineTopY)
+                double lineLeftX = line.TopLeftPosition.X;
+                double lineRightX = line.BottomRightPosition.X;
+                double lineTopY = yOffset + line.TopLeftPosition.Y;
+                if (mousePosition.X < lineLeftX || mousePosition.X > lineRightX || mousePosition.Y < lineTopY)
                 {
                     result = -1;
                 }
