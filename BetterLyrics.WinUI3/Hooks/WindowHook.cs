@@ -171,13 +171,6 @@ namespace BetterLyrics.WinUI3.Hooks
 
                 TrackWindow(window);
 
-                if (typeof(T) == typeof(NowPlayingWindow))
-                {
-                    var nowPlayingWindow = (NowPlayingWindow)window;
-                    nowPlayingWindow.LyricsWindowStatus.WindowStatus = WindowStatus.Opened;
-                    nowPlayingWindow.InitStatus();
-                }
-
                 var castedWindow = (Window)window;
 
                 if (typeof(T) != typeof(LyricsWindowSwitchWindow))
@@ -306,37 +299,6 @@ namespace BetterLyrics.WinUI3.Hooks
             }
 
             User32.SetWindowLong(hwnd, User32.WindowLongFlags.GWL_STYLE, style);
-        }
-
-        public static void SetIsFullscreen(this Window window, bool enable, bool defaultExtendsContentIntoTitleBar = true)
-        {
-            if (window == null) return;
-            if (window.AppWindow == null) return;
-
-            if (enable)
-            {
-                window.ExtendsContentIntoTitleBar = false;
-                window.AppWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
-            }
-            else
-            {
-                window.ExtendsContentIntoTitleBar = defaultExtendsContentIntoTitleBar;
-                window.AppWindow.SetPresenter(AppWindowPresenterKind.Overlapped);
-            }
-        }
-
-        public static void SetIsMaximized(this Window window, bool enable)
-        {
-            if (window == null) return;
-
-            if (enable)
-            {
-                window.Maximize();
-            }
-            else
-            {
-                window.Restore();
-            }
         }
 
         public static void MoveAndResize(this Window window, Rect rect)
