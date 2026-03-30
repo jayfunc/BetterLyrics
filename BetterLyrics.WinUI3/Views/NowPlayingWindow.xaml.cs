@@ -91,12 +91,14 @@ namespace BetterLyrics.WinUI3.Views
 
             this.Init(title: $"{status.Name} - {Constants.App.AppName}", titleBarHeightOption: TitleBarHeightOption.Collapsed, backdropType: BackdropType.Transparent);
 
-            AppWindow.Changed += AppWindow_Changed;
             AppWindow.Closing += AppWindow_Closing;
 
             WeakReferenceMessenger.Default.RegisterAll(this);
 
             _ = UpdateAlbumArtThemeColorsAsync();
+
+            LyricsWindowStatus.WindowStatus = WindowStatus.Opened;
+            InitStatus();
         }
 
         private void Wmm_WindowMessageReceived(object? sender, WindowMessageEventArgs e)
@@ -143,18 +145,24 @@ namespace BetterLyrics.WinUI3.Views
             });
         }
 
-        public void InitStatus()
+        private void InitStatus()
         {
             OnIsShownInSwitchersChanged();
             OnIsAlwaysOnTopChanged();
             OnTitleBarAreaChanged();
             OnIsAdaptToEnvironmentChanged();
 
+            if (LyricsWindowStatus.IsWallpaper)
+            {
+                AppWindow.Changed += AppWindow_Changed;
+            }
+
             OnIsLockedChanged();
 
             if (LyricsWindowStatus.IsPinToTaskbar)
             {
                 OnIsPinToTaskbarChanged();
+                AppWindow.Changed += AppWindow_Changed;
             }
             else if (LyricsWindowStatus.IsWallpaper)
             {
@@ -162,17 +170,19 @@ namespace BetterLyrics.WinUI3.Views
             else if (LyricsWindowStatus.IsWorkArea)
             {
                 OnIsWorkAreaChanged();
+                AppWindow.Changed += AppWindow_Changed;
             }
             else
             {
                 this.MoveAndResize(LyricsWindowStatus.WindowBounds);
+                AppWindow.Changed += AppWindow_Changed;
                 if (LyricsWindowStatus.IsMaximized)
                 {
-                    OnIsMaximizedChanged();
+                    MaximizeButton_Click(null, null);
                 }
                 if (LyricsWindowStatus.IsFullscreen)
                 {
-                    OnIsFullscreenChanged();
+                    FullscreenButton_Click(null, null);
                 }
             }
 
@@ -293,24 +303,6 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        private void OnIsFullscreenChanged()
-        {
-            this.SetIsFullscreen(LyricsWindowStatus.IsFullscreen);
-            EnterFullscreenFontIcon.Opacity = LyricsWindowStatus.IsFullscreen ? 0 : 1;
-            ExitFullscreenFontIcon.Opacity = LyricsWindowStatus.IsFullscreen ? 1 : 0;
-            MaximizeButton.Visibility = LyricsWindowStatus.IsFullscreen ? Visibility.Collapsed : Visibility.Visible;
-            AOTButton.Visibility = LyricsWindowStatus.IsFullscreen ? Visibility.Collapsed : Visibility.Visible;
-            MinimizeButton.Visibility = LyricsWindowStatus.IsFullscreen ? Visibility.Collapsed : Visibility.Visible;
-            LockButton.Visibility = LyricsWindowStatus.IsFullscreen ? Visibility.Collapsed : Visibility.Visible;
-        }
-
-        private void OnIsMaximizedChanged()
-        {
-            this.SetIsMaximized(LyricsWindowStatus.IsMaximized);
-            EnterMaximizeFontIcon.Opacity = LyricsWindowStatus.IsMaximized ? 0 : 1;
-            ExitMaximizeFontIcon.Opacity = LyricsWindowStatus.IsMaximized ? 1 : 0;
-        }
-
         private void OnAutoShowOrHideWindowChanged()
         {
             var status = LyricsWindowStatus;
@@ -380,6 +372,8 @@ namespace BetterLyrics.WinUI3.Views
 
         public void SetTitleBarArea(TitleBarArea titleBarArea)
         {
+            if (AppWindow == null) return;
+
             double scale = RootGrid.XamlRoot?.RasterizationScale ?? 1.0;
 
             switch (titleBarArea)
@@ -458,31 +452,76 @@ namespace BetterLyrics.WinUI3.Views
 
         private void AppWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
         {
-            if (args.DidPositionChange || args.DidSizeChange)
+            if (args.DidPositionChange || args.DidSizeChange || args.DidPresenterChange)
             {
                 if (AppWindow == null) return;
 
-                var size = AppWindow.Size;
-                var rect = AppWindow.Position;
+                var presenter = AppWindow.Presenter;
 
-                if (rect.X < 0 && rect.Y < 0 && rect.X + size.Width < 0 && rect.Y + size.Height < 0)
+                if (presenter is OverlappedPresenter overlappedPresenter)
                 {
-                    return;
+                    if (overlappedPresenter.State == OverlappedPresenterState.Restored)
+                    {
+                        EnterMaximizeFontIcon.Opacity = 1;
+                        ExitMaximizeFontIcon.Opacity = 0;
+                        LyricsWindowStatus.IsMaximized = false;
+                    }
+                    else if (overlappedPresenter.State == OverlappedPresenterState.Maximized)
+                    {
+                        EnterMaximizeFontIcon.Opacity = 0;
+                        ExitMaximizeFontIcon.Opacity = 1;
+                        LyricsWindowStatus.IsMaximized = true;
+                    }
+
+                    EnterFullscreenFontIcon.Opacity = 1;
+                    ExitFullscreenFontIcon.Opacity = 0;
+                    MaximizeButton.Visibility = Visibility.Visible;
+                    AOTButton.Visibility = Visibility.Visible;
+                    MinimizeButton.Visibility = Visibility.Visible;
+                    LockButton.Visibility = Visibility.Visible;
+
+                    LyricsWindowStatus.IsFullscreen = false;
                 }
-                // 仅非壁纸模式才忽略最大化全屏化
-                // 壁纸模式将记忆最大化全屏化之后的坐标以便正确固定到桌面
-                else if (!LyricsWindowStatus.IsWallpaper && (LyricsWindowStatus.IsMaximized || LyricsWindowStatus.IsFullscreen))
+                else if (presenter is FullScreenPresenter fullScreenPresenter)
                 {
-                    return;
+                    EnterMaximizeFontIcon.Opacity = 0;
+                    ExitMaximizeFontIcon.Opacity = 0;
+
+                    EnterFullscreenFontIcon.Opacity = 0;
+                    ExitFullscreenFontIcon.Opacity = 1;
+                    MaximizeButton.Visibility = Visibility.Collapsed;
+                    AOTButton.Visibility = Visibility.Collapsed;
+                    MinimizeButton.Visibility = Visibility.Collapsed;
+                    LockButton.Visibility = Visibility.Collapsed;
+
+                    LyricsWindowStatus.IsMaximized = false;
+                    LyricsWindowStatus.IsFullscreen = true;
                 }
-                // 忽略壁纸模式+已锁定状态防止在固定到桌面的过程中由于坐标系变换导致的错误的坐标被记忆
-                else if (LyricsWindowStatus.IsWallpaper && LyricsWindowStatus.IsLocked)
+
+                if (args.DidPositionChange || args.DidSizeChange)
                 {
-                    return;
-                }
-                else
-                {
-                    LyricsWindowStatus.WindowBounds = new Rect(rect.X, rect.Y, size.Width, size.Height);
+                    var size = AppWindow.Size;
+                    var rect = AppWindow.Position;
+
+                    if (rect.X < 0 && rect.Y < 0 && rect.X + size.Width < 0 && rect.Y + size.Height < 0)
+                    {
+                        return;
+                    }
+                    // 仅非壁纸模式才忽略最大化全屏化
+                    // 壁纸模式将记忆最大化全屏化之后的坐标以便正确固定到桌面
+                    else if (!LyricsWindowStatus.IsWallpaper && (LyricsWindowStatus.IsMaximized || LyricsWindowStatus.IsFullscreen))
+                    {
+                        return;
+                    }
+                    // 忽略壁纸模式+已锁定状态防止在固定到桌面的过程中由于坐标系变换导致的错误的坐标被记忆
+                    else if (LyricsWindowStatus.IsWallpaper && LyricsWindowStatus.IsLocked)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        LyricsWindowStatus.WindowBounds = new Rect(rect.X, rect.Y, size.Width, size.Height);
+                    }
                 }
             }
         }
@@ -658,12 +697,26 @@ namespace BetterLyrics.WinUI3.Views
 
         private void FullscreenButton_Click(object sender, RoutedEventArgs e)
         {
-            LyricsWindowStatus.IsFullscreen = !LyricsWindowStatus.IsFullscreen;
+            if (EnterFullscreenFontIcon.Opacity == 1)
+            {
+                AppWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
+            }
+            else if (ExitFullscreenFontIcon.Opacity == 1)
+            {
+                AppWindow.SetPresenter(AppWindowPresenterKind.Overlapped);
+            }
         }
 
         private void MaximizeButton_Click(object sender, RoutedEventArgs e)
         {
-            LyricsWindowStatus.IsMaximized = !LyricsWindowStatus.IsMaximized;
+            if (EnterMaximizeFontIcon.Opacity == 1)
+            {
+                this.Maximize();
+            }
+            else if (ExitMaximizeFontIcon.Opacity == 1)
+            {
+                this.Restore();
+            }
         }
 
         private void RootGrid_Loaded(object sender, RoutedEventArgs e)
@@ -713,14 +766,6 @@ namespace BetterLyrics.WinUI3.Views
                 else if (message.PropertyName == nameof(LyricsWindowStatus.IsLocked))
                 {
                     OnIsLockedChanged();
-                }
-                else if (message.PropertyName == nameof(LyricsWindowStatus.IsFullscreen))
-                {
-                    OnIsFullscreenChanged();
-                }
-                else if (message.PropertyName == nameof(LyricsWindowStatus.IsMaximized))
-                {
-                    OnIsMaximizedChanged();
                 }
                 else if (message.PropertyName == nameof(LyricsWindowStatus.AutoShowOrHideWindow))
                 {
