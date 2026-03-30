@@ -4,6 +4,7 @@ using BetterLyrics.WinUI3.Models.Settings;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
+using Microsoft.UI;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
@@ -166,9 +167,14 @@ namespace BetterLyrics.WinUI3.Renderer
                     byte opacity = isMousePressing ? (byte)32 : (byte)16;
                     double scale = isMousePressing ? 1.09 : 1.10;
                     ds.FillRoundedRectangle(
-                        new Windows.Foundation.Rect(line.TopLeftPosition.ToPoint().WithX(0), line.BottomRightPosition.ToPoint().WithX(lyricsWidth)).Scale(scale),
+                        new Windows.Foundation.Rect(line.TopLeftPosition.ToPoint(), line.BottomRightPosition.ToPoint()).Scale(scale),
                         8, 8, Color.FromArgb(opacity, 255, 255, 255));
                 }
+
+#if DEBUG
+                ds.DrawLine(new Vector2(0, line.CenterPosition.Y), new Vector2((float)lyricsWidth, line.CenterPosition.Y), Colors.Cyan);
+                ds.DrawText($"({line.CenterPosition.X}, {line.CenterPosition.Y})", line.CenterPosition, Colors.Cyan);
+#endif
 
                 ds.Transform = Matrix3x2.Identity;
             }
