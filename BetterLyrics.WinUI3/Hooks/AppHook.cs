@@ -44,8 +44,16 @@ namespace BetterLyrics.WinUI3.Hooks
             try
             {
                 using var appsFolder = new ShellFolder(KNOWNFOLDERID.FOLDERID_AppsFolder);
+
+                //Debug.WriteLine("== Enumerating AppsFolder ==");
+                //var tmp = appsFolder.EnumerateChildren(FolderItemFilter.NonFolders);
+                //foreach (var item in tmp)
+                //{
+                //    Debug.WriteLine($"Found app: {item.Name}, ParsingName: {item.ParsingName}");
+                //}
+
                 var found = appsFolder.FirstOrDefault(x =>
-                    x.ParsingName?.Equals(id, StringComparison.OrdinalIgnoreCase) == true ||
+                    Path.GetFileName(x.ParsingName)?.Equals(id, StringComparison.OrdinalIgnoreCase) == true ||
                     x.Name?.Equals(id, StringComparison.OrdinalIgnoreCase) == true);
 
                 if (found != null) return found;
