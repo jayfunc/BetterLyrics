@@ -567,6 +567,9 @@
   <data name="LyricsSharePageStyleVinyl" xml:space="preserve">
     <value>ไวนิล</value>
   </data>
+  <data name="LyricsSharePageTitle" xml:space="preserve">
+    <value>บัตรเนื้อเพลง</value>
+  </data>
   <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
     <value>การกำหนดค่า</value>
   </data>
@@ -996,6 +999,9 @@
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>เริ่มทำงานอัตโนมัติ</value>
   </data>
+  <data name="SettingsPageAutoWrap.Header" xml:space="preserve">
+    <value>ออโต้แรป</value>
+  </data>
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>พื้นหลังเนื้อเพลง</value>
   </data>
@@ -1087,7 +1093,7 @@
     <value>ลบ</value>
   </data>
   <data name="SettingsPageDensity.Header" xml:space="preserve">
-    <value>Density</value>
+    <value>ความหนาแน่น</value>
   </data>
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>โหมดเดสก์ท็อป (โปร่งใส)</value>
@@ -1324,7 +1330,7 @@
     <value>สว่าง</value>
   </data>
   <data name="SettingsPageLightAngle.Header" xml:space="preserve">
-    <value>Light Angle</value>
+    <value>มุมแสง</value>
   </data>
   <data name="SettingsPageLightWaveEffect.Header" xml:space="preserve">
     <value>ไลท์เวฟ</value>
@@ -1639,7 +1645,7 @@
     <value>เลเยอร์สีทึบ</value>
   </data>
   <data name="SettingsPageRaindropLayer.Header" xml:space="preserve">
-    <value>Raindrop Layer</value>
+    <value>ชั้นน้ำค้างหยด</value>
   </data>
   <data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
     <value>สถานะเรียลไทม์</value>
@@ -1708,7 +1714,7 @@
     <value>ประวัติการเล่น</value>
   </data>
   <data name="SettingsPageShadowIntensity.Header" xml:space="preserve">
-    <value>Shadow Intensity</value>
+    <value>ความเข้มของเงา</value>
   </data>
   <data name="SettingsPageShareHub.Content" xml:space="preserve">
     <value>เรียกดูศูนย์แบ่งปันทรัพยากรออนไลน์</value>
@@ -1741,7 +1747,7 @@
     <value>แสดงชื่อเพลง</value>
   </data>
   <data name="SettingsPageSize.Header" xml:space="preserve">
-    <value>Size</value>
+    <value>ขนาด</value>
   </data>
   <data name="SettingsPageSlide.Content" xml:space="preserve">
     <value>เลื่อน (Slide)</value>
@@ -1831,7 +1837,7 @@
     <value>รายชื่อผู้ขอบคุณ</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
-    <value>การตั้งค่า - BetterLyrics</value>
+    <value>การตั้งค่า</value>
   </data>
   <data name="SettingsPageTitleBarAreaNone.Content" xml:space="preserve">
     <value>ไม่มี</value>
@@ -1988,6 +1994,9 @@
   </data>
   <data name="TermsOfService.Content" xml:space="preserve">
     <value>ข้อกำหนดการให้บริการ</value>
+  </data>
+  <data name="ToastOverlayTitle" xml:space="preserve">
+    <value>โทสต์โอเวอร์เลย์</value>
   </data>
   <data name="TracksAddToPlaylistFailed" xml:space="preserve">
     <value>ไม่สามารถเพิ่มแทร็กได้เนื่องจากเส้นทางไม่มีอยู่</value>

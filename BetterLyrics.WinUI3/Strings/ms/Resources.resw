@@ -567,6 +567,9 @@
   <data name="LyricsSharePageStyleVinyl" xml:space="preserve">
     <value>Vinil</value>
   </data>
+  <data name="LyricsSharePageTitle" xml:space="preserve">
+    <value>Kad Lirik</value>
+  </data>
   <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
     <value>Konfigurasi</value>
   </data>
@@ -996,6 +999,9 @@
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>Mula Automatik</value>
   </data>
+  <data name="SettingsPageAutoWrap.Header" xml:space="preserve">
+    <value>Balut Automatik</value>
+  </data>
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>Latar Belakang Lirik</value>
   </data>
@@ -1087,7 +1093,7 @@
     <value>Padam</value>
   </data>
   <data name="SettingsPageDensity.Header" xml:space="preserve">
-    <value>Density</value>
+    <value>Ketumpatan</value>
   </data>
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>Mod Desktop (Lut Sinar)</value>
@@ -1324,7 +1330,7 @@
     <value>Terang</value>
   </data>
   <data name="SettingsPageLightAngle.Header" xml:space="preserve">
-    <value>Light Angle</value>
+    <value>Sudut Cahaya</value>
   </data>
   <data name="SettingsPageLightWaveEffect.Header" xml:space="preserve">
     <value>Gelombang Cahaya</value>
@@ -1639,7 +1645,7 @@
     <value>Lapisan Warna Pepejal</value>
   </data>
   <data name="SettingsPageRaindropLayer.Header" xml:space="preserve">
-    <value>Raindrop Layer</value>
+    <value>Lapisan Titisan Hujan</value>
   </data>
   <data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
     <value>Status Masa Nyata</value>
@@ -1708,7 +1714,7 @@
     <value>Sejarah Main</value>
   </data>
   <data name="SettingsPageShadowIntensity.Header" xml:space="preserve">
-    <value>Shadow Intensity</value>
+    <value>Keamatan Bayangan</value>
   </data>
   <data name="SettingsPageShareHub.Content" xml:space="preserve">
     <value>Layari Hab Perkongsian Sumber Dalam Talian</value>
@@ -1741,7 +1747,7 @@
     <value>Tunjukkan Tajuk</value>
   </data>
   <data name="SettingsPageSize.Header" xml:space="preserve">
-    <value>Size</value>
+    <value>Saiz</value>
   </data>
   <data name="SettingsPageSlide.Content" xml:space="preserve">
     <value>Gelongsor (Slide)</value>
@@ -1831,7 +1837,7 @@
     <value>Senarai Penghargaan</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Tetapan - BetterLyrics</value>
+    <value>Tetapan</value>
   </data>
   <data name="SettingsPageTitleBarAreaNone.Content" xml:space="preserve">
     <value>Tiada</value>
@@ -1988,6 +1994,9 @@
   </data>
   <data name="TermsOfService.Content" xml:space="preserve">
     <value>Syarat Perkhidmatan</value>
+  </data>
+  <data name="ToastOverlayTitle" xml:space="preserve">
+    <value>Lapisan Roti Bakar</value>
   </data>
   <data name="TracksAddToPlaylistFailed" xml:space="preserve">
     <value>Tidak dapat menambah trek kerana laluan tidak wujud</value>

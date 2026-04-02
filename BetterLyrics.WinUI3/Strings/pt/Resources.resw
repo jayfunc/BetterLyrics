@@ -567,6 +567,9 @@
   <data name="LyricsSharePageStyleVinyl" xml:space="preserve">
     <value>Vinil</value>
   </data>
+  <data name="LyricsSharePageTitle" xml:space="preserve">
+    <value>Cartão de letras</value>
+  </data>
   <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
     <value>Configuração</value>
   </data>
@@ -996,6 +999,9 @@
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>Arranque Automático</value>
   </data>
+  <data name="SettingsPageAutoWrap.Header" xml:space="preserve">
+    <value>Envolvimento automóvel</value>
+  </data>
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>Fundo da Letra</value>
   </data>
@@ -1087,7 +1093,7 @@
     <value>Eliminar</value>
   </data>
   <data name="SettingsPageDensity.Header" xml:space="preserve">
-    <value>Density</value>
+    <value>Densidade</value>
   </data>
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>Modo de Ambiente de Trabalho (Transparente)</value>
@@ -1324,7 +1330,7 @@
     <value>Claro</value>
   </data>
   <data name="SettingsPageLightAngle.Header" xml:space="preserve">
-    <value>Light Angle</value>
+    <value>Ângulo de luz</value>
   </data>
   <data name="SettingsPageLightWaveEffect.Header" xml:space="preserve">
     <value>Onda luminosa</value>
@@ -1639,7 +1645,7 @@
     <value>Camada de Cor Sólida</value>
   </data>
   <data name="SettingsPageRaindropLayer.Header" xml:space="preserve">
-    <value>Raindrop Layer</value>
+    <value>Camada de gotas de chuva</value>
   </data>
   <data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
     <value>Estado em Tempo Real</value>
@@ -1708,7 +1714,7 @@
     <value>História do jogo</value>
   </data>
   <data name="SettingsPageShadowIntensity.Header" xml:space="preserve">
-    <value>Shadow Intensity</value>
+    <value>Intensidade da sombra</value>
   </data>
   <data name="SettingsPageShareHub.Content" xml:space="preserve">
     <value>Explorar o Centro de Partilha de Recursos Online</value>
@@ -1741,7 +1747,7 @@
     <value>Mostrar Título</value>
   </data>
   <data name="SettingsPageSize.Header" xml:space="preserve">
-    <value>Size</value>
+    <value>Tamanho</value>
   </data>
   <data name="SettingsPageSlide.Content" xml:space="preserve">
     <value>Deslizar</value>
@@ -1831,7 +1837,7 @@
     <value>Lista de Agradecimentos</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Definições - BetterLyrics</value>
+    <value>Definições</value>
   </data>
   <data name="SettingsPageTitleBarAreaNone.Content" xml:space="preserve">
     <value>Nenhum</value>
@@ -1988,6 +1994,9 @@
   </data>
   <data name="TermsOfService.Content" xml:space="preserve">
     <value>Termos de Serviço</value>
+  </data>
+  <data name="ToastOverlayTitle" xml:space="preserve">
+    <value>Sobreposição de torradas</value>
   </data>
   <data name="TracksAddToPlaylistFailed" xml:space="preserve">
     <value>Não foi possível adicionar faixas porque o caminho não existe</value>

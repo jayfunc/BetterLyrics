@@ -20,12 +20,20 @@
 
                     <TextBlock x:Uid="SettingsPageLyricsStyle" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsAlignment" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8E3;}">
+                    <controls:SettingsCard
+                        x:Uid="SettingsPageLyricsAlignment"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                 Glyph=&#xE8E3;}"
+                        IsEnabled="{x:Bind LyricsStyleSettings.AutoWrap, Mode=OneWay}">
                         <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsAlignmentType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageLeft" />
                             <ComboBoxItem x:Uid="SettingsPageCenter" />
                             <ComboBoxItem x:Uid="SettingsPageRight" />
                         </ComboBox>
+                    </controls:SettingsCard>
+
+                    <controls:SettingsCard x:Uid="SettingsPageAutoWrap" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xF465;}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsStyleSettings.AutoWrap, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
                     <controls:SettingsCard x:Uid="SettingsPageLyricsCenterTopOffset" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE78A;}">

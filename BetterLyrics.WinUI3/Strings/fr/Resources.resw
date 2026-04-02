@@ -567,6 +567,9 @@
   <data name="LyricsSharePageStyleVinyl" xml:space="preserve">
     <value>Vinyle</value>
   </data>
+  <data name="LyricsSharePageTitle" xml:space="preserve">
+    <value>Carte des paroles</value>
+  </data>
   <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
     <value>Configuration</value>
   </data>
@@ -996,6 +999,9 @@
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>Démarrage automatique</value>
   </data>
+  <data name="SettingsPageAutoWrap.Header" xml:space="preserve">
+    <value>Auto Wrap</value>
+  </data>
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>Arrière-plan des paroles</value>
   </data>
@@ -1087,7 +1093,7 @@
     <value>Supprimer</value>
   </data>
   <data name="SettingsPageDensity.Header" xml:space="preserve">
-    <value>Density</value>
+    <value>Densité</value>
   </data>
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>Mode Bureau (Transparent)</value>
@@ -1324,7 +1330,7 @@
     <value>Clair</value>
   </data>
   <data name="SettingsPageLightAngle.Header" xml:space="preserve">
-    <value>Light Angle</value>
+    <value>Angle d'éclairage</value>
   </data>
   <data name="SettingsPageLightWaveEffect.Header" xml:space="preserve">
     <value>Ondes lumineuses</value>
@@ -1639,7 +1645,7 @@
     <value>Couche de couleur unie</value>
   </data>
   <data name="SettingsPageRaindropLayer.Header" xml:space="preserve">
-    <value>Raindrop Layer</value>
+    <value>Couche de pluie</value>
   </data>
   <data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
     <value>Statut en temps réel</value>
@@ -1708,7 +1714,7 @@
     <value>Histoire du jeu</value>
   </data>
   <data name="SettingsPageShadowIntensity.Header" xml:space="preserve">
-    <value>Shadow Intensity</value>
+    <value>Intensité de l'ombre</value>
   </data>
   <data name="SettingsPageShareHub.Content" xml:space="preserve">
     <value>Parcourir le Hub de partage en ligne</value>
@@ -1741,7 +1747,7 @@
     <value>Afficher le titre</value>
   </data>
   <data name="SettingsPageSize.Header" xml:space="preserve">
-    <value>Size</value>
+    <value>Taille</value>
   </data>
   <data name="SettingsPageSlide.Content" xml:space="preserve">
     <value>Glisser</value>
@@ -1831,7 +1837,7 @@
     <value>Crédits</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Paramètres - BetterLyrics</value>
+    <value>Paramètres</value>
   </data>
   <data name="SettingsPageTitleBarAreaNone.Content" xml:space="preserve">
     <value>Aucun</value>
@@ -1988,6 +1994,9 @@
   </data>
   <data name="TermsOfService.Content" xml:space="preserve">
     <value>Conditions d'utilisation</value>
+  </data>
+  <data name="ToastOverlayTitle" xml:space="preserve">
+    <value>Superposition de toasts</value>
   </data>
   <data name="TracksAddToPlaylistFailed" xml:space="preserve">
     <value>Impossible d'ajouter les pistes car le chemin n'existe pas</value>

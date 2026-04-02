@@ -19,7 +19,7 @@ namespace BetterLyrics.WinUI3.Views
         {
             InitializeComponent();
             WeakReferenceMessenger.Default.RegisterAll(this);
-            this.Init();
+            this.Init("LyricsSharePageTitle");
             this.SyncTheme();
         }
 

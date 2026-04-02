@@ -18,7 +18,7 @@ namespace BetterLyrics.WinUI3.Views
         public StatsDashboardWindow()
         {
             InitializeComponent();
-            this.Init();
+            this.Init("SettingsPageStats");
             this.SyncTheme();
         }
 
