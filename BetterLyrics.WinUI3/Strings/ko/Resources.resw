@@ -567,6 +567,9 @@
   <data name="LyricsSharePageStyleVinyl" xml:space="preserve">
     <value>비닐</value>
   </data>
+  <data name="LyricsSharePageTitle" xml:space="preserve">
+    <value>가사 카드</value>
+  </data>
   <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
     <value>구성</value>
   </data>
@@ -996,6 +999,9 @@
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>자동 시작</value>
   </data>
+  <data name="SettingsPageAutoWrap.Header" xml:space="preserve">
+    <value>자동 랩</value>
+  </data>
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>가사 배경</value>
   </data>
@@ -1087,7 +1093,7 @@
     <value>삭제</value>
   </data>
   <data name="SettingsPageDensity.Header" xml:space="preserve">
-    <value>Density</value>
+    <value>밀도</value>
   </data>
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>데스크톱 모드 (투명)</value>
@@ -1324,7 +1330,7 @@
     <value>라이트</value>
   </data>
   <data name="SettingsPageLightAngle.Header" xml:space="preserve">
-    <value>Light Angle</value>
+    <value>조명 각도</value>
   </data>
   <data name="SettingsPageLightWaveEffect.Header" xml:space="preserve">
     <value>라이트웨이브</value>
@@ -1639,7 +1645,7 @@
     <value>단색 레이어</value>
   </data>
   <data name="SettingsPageRaindropLayer.Header" xml:space="preserve">
-    <value>Raindrop Layer</value>
+    <value>빗방울 레이어</value>
   </data>
   <data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
     <value>실시간 상태</value>
@@ -1708,7 +1714,7 @@
     <value>플레이 기록</value>
   </data>
   <data name="SettingsPageShadowIntensity.Header" xml:space="preserve">
-    <value>Shadow Intensity</value>
+    <value>그림자 강도</value>
   </data>
   <data name="SettingsPageShareHub.Content" xml:space="preserve">
     <value>온라인 공유 허브 탐색</value>
@@ -1741,7 +1747,7 @@
     <value>제목 표시</value>
   </data>
   <data name="SettingsPageSize.Header" xml:space="preserve">
-    <value>Size</value>
+    <value>크기</value>
   </data>
   <data name="SettingsPageSlide.Content" xml:space="preserve">
     <value>슬라이드</value>
@@ -1831,7 +1837,7 @@
     <value>크레딧</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
-    <value>설정 - BetterLyrics</value>
+    <value>설정</value>
   </data>
   <data name="SettingsPageTitleBarAreaNone.Content" xml:space="preserve">
     <value>없음</value>
@@ -1988,6 +1994,9 @@
   </data>
   <data name="TermsOfService.Content" xml:space="preserve">
     <value>서비스 약관</value>
+  </data>
+  <data name="ToastOverlayTitle" xml:space="preserve">
+    <value>토스트 오버레이</value>
   </data>
   <data name="TracksAddToPlaylistFailed" xml:space="preserve">
     <value>경로가 존재하지 않아 트랙을 추가할 수 없습니다</value>

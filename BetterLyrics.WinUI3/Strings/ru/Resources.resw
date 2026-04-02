@@ -567,6 +567,9 @@
   <data name="LyricsSharePageStyleVinyl" xml:space="preserve">
     <value>Винил</value>
   </data>
+  <data name="LyricsSharePageTitle" xml:space="preserve">
+    <value>Карточка с лирикой</value>
+  </data>
   <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
     <value>Конфигурация</value>
   </data>
@@ -996,6 +999,9 @@
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>Автозагрузка</value>
   </data>
+  <data name="SettingsPageAutoWrap.Header" xml:space="preserve">
+    <value>Автообертывание</value>
+  </data>
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>Фон текста</value>
   </data>
@@ -1087,7 +1093,7 @@
     <value>Удалить</value>
   </data>
   <data name="SettingsPageDensity.Header" xml:space="preserve">
-    <value>Density</value>
+    <value>Плотность</value>
   </data>
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>Режим рабочего стола (прозрачный)</value>
@@ -1324,7 +1330,7 @@
     <value>Светлая</value>
   </data>
   <data name="SettingsPageLightAngle.Header" xml:space="preserve">
-    <value>Light Angle</value>
+    <value>Угол света</value>
   </data>
   <data name="SettingsPageLightWaveEffect.Header" xml:space="preserve">
     <value>Lightwave</value>
@@ -1639,7 +1645,7 @@
     <value>Сплошной цвет</value>
   </data>
   <data name="SettingsPageRaindropLayer.Header" xml:space="preserve">
-    <value>Raindrop Layer</value>
+    <value>Слой дождевых капель</value>
   </data>
   <data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
     <value>Статус в реальном времени</value>
@@ -1708,7 +1714,7 @@
     <value>История игры</value>
   </data>
   <data name="SettingsPageShadowIntensity.Header" xml:space="preserve">
-    <value>Shadow Intensity</value>
+    <value>Интенсивность тени</value>
   </data>
   <data name="SettingsPageShareHub.Content" xml:space="preserve">
     <value>Просмотреть онлайн-центр обмена</value>
@@ -1741,7 +1747,7 @@
     <value>Показывать название</value>
   </data>
   <data name="SettingsPageSize.Header" xml:space="preserve">
-    <value>Size</value>
+    <value>Размер</value>
   </data>
   <data name="SettingsPageSlide.Content" xml:space="preserve">
     <value>Слайд</value>
@@ -1831,7 +1837,7 @@
     <value>Благодарности</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Настройки - BetterLyrics</value>
+    <value>Настройки</value>
   </data>
   <data name="SettingsPageTitleBarAreaNone.Content" xml:space="preserve">
     <value>Нет</value>
@@ -1988,6 +1994,9 @@
   </data>
   <data name="TermsOfService.Content" xml:space="preserve">
     <value>Условия использования</value>
+  </data>
+  <data name="ToastOverlayTitle" xml:space="preserve">
+    <value>Наложение тостов</value>
   </data>
   <data name="TracksAddToPlaylistFailed" xml:space="preserve">
     <value>Невозможно добавить треки, так как путь не существует</value>

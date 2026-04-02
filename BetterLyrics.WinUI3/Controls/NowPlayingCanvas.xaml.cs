@@ -387,8 +387,8 @@ namespace BetterLyrics.WinUI3.Controls
             }
 
 #if DEBUG
-            ds.DrawRectangle(new Rect(_renderLyricsStartX, _renderLyricsStartY, _renderLyricsWidth, _renderLyricsHeight), Colors.Cyan, 1f);
-            ds.DrawLine(new Vector2(0, (float)sender.Size.Height / 2), new Vector2((float)sender.Size.Width, (float)sender.Size.Height / 2), Colors.Cyan);
+            //ds.DrawRectangle(new Rect(_renderLyricsStartX, _renderLyricsStartY, _renderLyricsWidth, _renderLyricsHeight), Colors.Cyan, 1f);
+            //ds.DrawLine(new Vector2(0, (float)sender.Size.Height / 2), new Vector2((float)sender.Size.Width, (float)sender.Size.Height / 2), Colors.Cyan);
 #endif
 
             if (_lyricsWindowStatus.ShowDebugOverlay)
@@ -439,8 +439,7 @@ namespace BetterLyrics.WinUI3.Controls
             }
 
 #if DEBUG
-            ds.DrawCircle(_mousePosition.ToVector2().AddX((float)_renderLyricsStartX).AddY((float)_renderLyricsStartY), 1f, Colors.Cyan);
-            ds.DrawCircle(_mousePosition.ToVector2().AddX((float)_renderLyricsStartX).AddY((float)_renderLyricsStartY), 1f, Colors.Cyan);
+            //ds.DrawCircle(_mousePosition.ToVector2().AddX((float)_renderLyricsStartX).AddY((float)_renderLyricsStartY), 1f, Colors.Cyan);
 #endif
         }
 
@@ -524,7 +523,8 @@ namespace BetterLyrics.WinUI3.Controls
                 _isMouseScrolling ? maxRange.Start : _visibleRange.Start,
                 _isMouseScrolling ? maxRange.End : _visibleRange.End,
                 _primaryPlayingLineIndex,
-                sender.Size.Height,
+                _renderLyricsWidth,
+                _renderLyricsHeight,
                 _canvasTargetScrollOffset,
                 lyricsStyle.PlayingLineTopOffset / 100.0,
                 _lyricsWindowStatus.LyricsStyleSettings,
@@ -545,15 +545,7 @@ namespace BetterLyrics.WinUI3.Controls
 
             if (!_lyricsWindowStatus.ShowLyricsCard)
             {
-                _lyricsRenderer.CalculateLyrics3DMatrix(
-                    lyricsStyle: lyricsStyle,
-                    lyricsEffect: lyricsEffect,
-                    lyricsX: _renderLyricsStartX,
-                    lyricsY: _renderLyricsStartY,
-                    lyricsWidth: _renderLyricsWidth,
-                    lyricsHeight: _renderLyricsHeight,
-                    _isLayoutChanged
-                );
+                _lyricsRenderer.CalculateLyrics3DMatrix(_isLayoutChanged);
             }
 
             _isLayoutChanged = false;
@@ -615,7 +607,21 @@ namespace BetterLyrics.WinUI3.Controls
 
             if (!_lyricsWindowStatus.ShowLyricsCard)
             {
-                _lyricsRenderer.Update(_spectrumAnalyzer.CurrentBassEnergy, lyricsEffect.LyricsBreathingIntensity);
+                _lyricsRenderer.MouseHoverLineIndex = _mouseHoverLineIndex;
+                _lyricsRenderer.IsMousePressing = _isMousePressing;
+                _lyricsRenderer.StartVisibleLineIndex = _visibleRange.Start;
+                _lyricsRenderer.EndVisibleLineIndex = _visibleRange.End;
+                _lyricsRenderer.UserScrollOffset = _mouseYScrollTransition.Value;
+                _lyricsRenderer.LyricsX = _renderLyricsStartX;
+                _lyricsRenderer.LyricsY = _renderLyricsStartY;
+                _lyricsRenderer.LyricsWidth = _renderLyricsWidth;
+                _lyricsRenderer.LyricsHeight = _renderLyricsHeight;
+                _lyricsRenderer.LyricsOpacity = _renderLyricsOpacity;
+                _lyricsRenderer.PlayingLineTopOffsetFactor = lyricsStyle.PlayingLineTopOffset / 100.0;
+                _lyricsRenderer.CurrentProgressMs = _songPositionWithOffset.TotalMilliseconds;
+                _lyricsRenderer.LyricsWindowStatus = _lyricsWindowStatus;
+                _lyricsRenderer.RenderLyricsLines = _renderLyricsLines;
+                _lyricsRenderer.Update(sender, _spectrumAnalyzer.CurrentBassEnergy, lyricsEffect.LyricsBreathingIntensity);
             }
         }
 
@@ -654,6 +660,7 @@ namespace BetterLyrics.WinUI3.Controls
             Canvas.RemoveFromVisualTree();
             Canvas = null;
 
+            _lyricsRenderer.Dispose();
             _fluidRenderer.Dispose();
             _coverRenderer.Dispose();
             _snowRenderer.Dispose();
@@ -719,23 +726,7 @@ namespace BetterLyrics.WinUI3.Controls
 
             if (!_lyricsWindowStatus.ShowLyricsCard)
             {
-                _lyricsRenderer.Draw(
-                    control: sender,
-                    ds: ds,
-                    lines: _renderLyricsLines,
-                    mouseHoverLineIndex: _mouseHoverLineIndex,
-                    isMousePressing: _isMousePressing,
-                    startVisibleIndex: _visibleRange.Start,
-                    endVisibleIndex: _visibleRange.End,
-                    lyricsX: _renderLyricsStartX,
-                    lyricsY: _renderLyricsStartY,
-                    lyricsWidth: _renderLyricsWidth,
-                    lyricsHeight: _renderLyricsHeight,
-                    userScrollOffset: _mouseYScrollTransition.Value,
-                    lyricsOpacity: _renderLyricsOpacity,
-                    playingLineTopOffsetFactor: lyricsStyle.PlayingLineTopOffset / 100.0,
-                    windowStatus: _lyricsWindowStatus,
-                    currentProgressMs: _songPositionWithOffset.TotalMilliseconds);
+                _lyricsRenderer.Draw(sender, ds);
             }
         }
 
@@ -1058,6 +1049,10 @@ namespace BetterLyrics.WinUI3.Controls
             else if (message.Sender == LyricsWindowStatus?.LyricsStyleSettings)
             {
                 if (message.PropertyName == nameof(LyricsStyleSettings.IsDynamicLyricsFontSize))
+                {
+                    _isLayoutChanged = true;
+                }
+                else if (message.PropertyName == nameof(LyricsStyleSettings.AutoWrap))
                 {
                     _isLayoutChanged = true;
                 }

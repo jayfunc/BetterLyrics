@@ -12,123 +12,113 @@ using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Renderer
 {
-    public class LyricsRenderer : BreathingRendererBase
+    public partial class LyricsRenderer : BreathingRendererBase, IDisposable
     {
         private Matrix4x4 _threeDimMatrix = Matrix4x4.Identity;
+        private EdgeFadeMaskRenderer _edgeFadeMaskRenderer = new();
 
-        public void Draw(
-            ICanvasAnimatedControl control,
-            CanvasDrawingSession ds,
-            IList<RenderLyricsLine>? lines,
-            int mouseHoverLineIndex,
-            bool isMousePressing,
-            int startVisibleIndex,
-            int endVisibleIndex,
-            double lyricsX,
-            double lyricsY,
-            double lyricsWidth,
-            double lyricsHeight,
-            double userScrollOffset,
-            double lyricsOpacity,
-            double playingLineTopOffsetFactor,
-            LyricsWindowStatus windowStatus,
-            double currentProgressMs)
+        public int MouseHoverLineIndex { get; set; } = -1;
+        public bool IsMousePressing { get; set; } = false;
+
+        public int StartVisibleLineIndex { get; set; } = 0;
+        public int EndVisibleLineIndex { get; set; } = 0;
+
+        public double UserScrollOffset { get; set; } = 0;
+
+        public double LyricsX { get; set; }
+        public double LyricsY { get; set; }
+
+        public double LyricsWidth { get; set; }
+        public double LyricsHeight { get; set; }
+
+        public double LyricsOpacity { get; set; } = 1;
+        public double PlayingLineTopOffsetFactor { get; set; }
+
+        public double CurrentProgressMs { get; set; }
+
+        public LyricsWindowStatus? LyricsWindowStatus { get; set; }
+
+        public IList<RenderLyricsLine>? RenderLyricsLines { get; set; }
+
+        public void Draw(ICanvasAnimatedControl control, CanvasDrawingSession ds)
         {
-            if (lyricsOpacity == 0) return;
+            if (LyricsOpacity == 0) return;
 
-            if (windowStatus.LyricsEffectSettings.Is3DLyricsEnabled)
+            if (LyricsWindowStatus == null) return;
+            if (LyricsWindowStatus.LyricsEffectSettings.Is3DLyricsEnabled)
             {
-                using (var layer = new CanvasCommandList(control))
+                using var layer = new CanvasCommandList(control);
+                using (var layerDs = layer.CreateDrawingSession())
                 {
-                    using (var layerDs = layer.CreateDrawingSession())
-                    {
-                        DrawLyrics(
-                            control,
-                            layerDs,
-                            lines,
-                            mouseHoverLineIndex,
-                            isMousePressing,
-                            startVisibleIndex,
-                            endVisibleIndex,
-                            lyricsX,
-                            lyricsY,
-                            lyricsWidth,
-                            lyricsHeight,
-                            userScrollOffset,
-                            playingLineTopOffsetFactor,
-                            windowStatus,
-                            currentProgressMs);
-                    }
+                    DrawLyricsWithEdgeFadeHandled(control, layerDs);
+                }
 
-                    ds.DrawImage(new Transform3DEffect
-                    {
-                        Source = layer,
-                        TransformMatrix = _threeDimMatrix
-                    });
+                ds.DrawImage(new Transform3DEffect
+                {
+                    Source = layer,
+                    TransformMatrix = _threeDimMatrix
+                });
+            }
+            else
+            {
+                DrawLyricsWithEdgeFadeHandled(control, ds);
+            }
+        }
+
+        private void DrawLyricsWithEdgeFadeHandled(ICanvasAnimatedControl control, CanvasDrawingSession ds)
+        {
+            if (LyricsWindowStatus == null) return;
+            if (_edgeFadeMaskRenderer.Brush != null && !LyricsWindowStatus.LyricsStyleSettings.AutoWrap)
+            {
+                using (ds.CreateLayer(_edgeFadeMaskRenderer.Brush))
+                {
+                    DrawLyrics(control, ds);
                 }
             }
             else
             {
-                DrawLyrics(
-                    control,
-                    ds,
-                    lines,
-                    mouseHoverLineIndex,
-                    isMousePressing,
-                    startVisibleIndex,
-                    endVisibleIndex,
-                    lyricsX,
-                    lyricsY,
-                    lyricsWidth,
-                    lyricsHeight,
-                    userScrollOffset,
-                    playingLineTopOffsetFactor,
-                    windowStatus,
-                    currentProgressMs);
+                DrawLyrics(control, ds);
             }
         }
 
-        private void DrawLyrics(
-            ICanvasAnimatedControl control,
-            CanvasDrawingSession ds,
-            IList<RenderLyricsLine>? lines,
-            int mouseHoverLineIndex,
-            bool isMousePressing,
-            int startVisibleIndex,
-            int endVisibleIndex,
-            double lyricsX,
-            double lyricsY,
-            double lyricsWidth,
-            double lyricsHeight,
-            double userScrollOffset,
-            double playingLineTopOffsetFactor,
-            LyricsWindowStatus windowStatus,
-            double currentProgressMs)
+        private void DrawLyrics(ICanvasAnimatedControl control, CanvasDrawingSession ds)
         {
-            if (lines == null) return;
+            if (RenderLyricsLines == null) return;
+            if (LyricsWindowStatus == null) return;
 
-            var effectSettings = windowStatus.LyricsEffectSettings;
-            var styleSettings = windowStatus.LyricsStyleSettings;
-            var isBreathingEnabled = windowStatus.LyricsEffectSettings.IsLyricsBrethingEffectEnabled;
+            var effectSettings = LyricsWindowStatus.LyricsEffectSettings;
+            var styleSettings = LyricsWindowStatus.LyricsStyleSettings;
+            var isBreathingEnabled = LyricsWindowStatus.LyricsEffectSettings.IsLyricsBrethingEffectEnabled;
 
-            var rotationX = effectSettings.FanLyricsAngle < 0 ? lyricsWidth : 0;
-            rotationX += lyricsWidth / 2 * (effectSettings.FanLyricsAngle < 0 ? 1 : -1);
+            var rotationX = effectSettings.FanLyricsAngle < 0 ? LyricsWidth : 0;
+            rotationX += LyricsWidth / 2 * (effectSettings.FanLyricsAngle < 0 ? 1 : -1);
 
-            var yOffsetBase = userScrollOffset + lyricsY + lyricsHeight * playingLineTopOffsetFactor;
+            var yOffsetBase = UserScrollOffset + LyricsY + LyricsHeight * PlayingLineTopOffsetFactor;
 
-            for (int i = startVisibleIndex; i <= endVisibleIndex; i++)
+            for (int i = StartVisibleLineIndex; i <= EndVisibleLineIndex; i++)
             {
-                if (i < 0 || i >= lines.Count) continue;
-                var line = lines[i];
+                if (i < 0 || i >= RenderLyricsLines.Count) continue;
+                var line = RenderLyricsLines[i];
 
                 if (line == null) continue;
                 if (line.PrimaryTextLayout == null) continue;
                 if (line.PrimaryTextLayout.LayoutBounds.Width <= 0) continue;
 
-                double xOffset = lyricsX;
+                double xOffset = LyricsX;
                 double yOffset = line.YOffsetTransition.Value + yOffsetBase;
 
-                bool isPlaying = line.GetIsPlaying(currentProgressMs);
+                bool isPlaying = line.GetIsPlaying(CurrentProgressMs);
+
+                LyricsLineRenderer lineRenderer = new()
+                {
+                    IsPlaying = isPlaying,
+                    StrokeWidth = styleSettings.LyricsFontStrokeWidth,
+                    CurrentProgressMs = CurrentProgressMs,
+                    LyricsWidth = LyricsWidth,
+                    LyricsHeight = LyricsHeight,
+                    Line = line,
+                    LyricsWindowStatus = LyricsWindowStatus
+                };
 
                 if (isPlaying)
                 {
@@ -139,7 +129,7 @@ namespace BetterLyrics.WinUI3.Renderer
 
                 if (effectSettings.IsFanLyricsEnabled)
                 {
-                    xOffset += Math.Abs(line.AngleTransition.Value) / (Math.PI / 2) * lyricsWidth / 2 * (effectSettings.FanLyricsAngle < 0 ? 1 : -1);
+                    xOffset += Math.Abs(line.AngleTransition.Value) / (Math.PI / 2) * LyricsWidth / 2 * (effectSettings.FanLyricsAngle < 0 ? 1 : -1);
                     var rotationY = line.CenterPosition.Y;
                     ds.Transform *= Matrix3x2.CreateRotation((float)line.AngleTransition.Value, new Vector2((float)rotationX, rotationY));
                 }
@@ -153,27 +143,20 @@ namespace BetterLyrics.WinUI3.Renderer
                 line.UnplayedFillTint.Color = line.UnplayedFillColorTransition.Value;
                 line.UnplayedStrokeTint.Color = line.UnplayedStrokeColorTransition.Value;
 
-                if (isPlaying)
-                {
-                    PlayingLineRenderer.Draw(control, ds, styleSettings.LyricsFontStrokeWidth, line.CachedStroke, line.CachedFill, line.UnplayedComposite, line, currentProgressMs, effectSettings);
-                }
-                else
-                {
-                    UnplayingLineRenderer.Draw(ds, line.UnplayedComposite, styleSettings.LyricsFontStrokeWidth, line);
-                }
+                lineRenderer.Draw(control, ds);
 
-                if (i == mouseHoverLineIndex)
+                if (i == MouseHoverLineIndex)
                 {
-                    byte opacity = isMousePressing ? (byte)32 : (byte)16;
-                    double scale = isMousePressing ? 1.09 : 1.10;
+                    byte opacity = IsMousePressing ? (byte)32 : (byte)16;
+                    double scale = IsMousePressing ? 1.09 : 1.10;
                     ds.FillRoundedRectangle(
                         new Windows.Foundation.Rect(line.TopLeftPosition.ToPoint(), line.BottomRightPosition.ToPoint()).Scale(scale),
                         8, 8, Color.FromArgb(opacity, 255, 255, 255));
                 }
 
 #if DEBUG
-                ds.DrawRectangle(new Windows.Foundation.Rect(line.TopLeftPosition.ToPoint(), line.BottomRightPosition.ToPoint()), Colors.Cyan);
-                ds.DrawLine(new Vector2(line.TopLeftPosition.X, line.CenterPosition.Y), new Vector2(line.BottomRightPosition.X, line.CenterPosition.Y), Colors.Cyan);
+                //ds.DrawRectangle(new Windows.Foundation.Rect(line.TopLeftPosition.ToPoint(), line.BottomRightPosition.ToPoint()), Colors.Cyan);
+                //ds.DrawLine(new Vector2(line.TopLeftPosition.X, line.CenterPosition.Y), new Vector2(line.BottomRightPosition.X, line.CenterPosition.Y), Colors.Cyan);
                 //ds.DrawText($"({line.CenterPosition.X}, {line.CenterPosition.Y})", line.CenterPosition, Colors.Cyan);
 #endif
 
@@ -181,21 +164,21 @@ namespace BetterLyrics.WinUI3.Renderer
             }
         }
 
-        public void CalculateLyrics3DMatrix(
-            LyricsStyleSettings lyricsStyle, LyricsEffectSettings lyricsEffect,
-            double lyricsX, double lyricsY,
-            double lyricsWidth, double lyricsHeight,
-            bool isLayoutChanged
-        )
+        public void CalculateLyrics3DMatrix(bool isLayoutChanged)
         {
             if (!isLayoutChanged) return;
+
+            if (LyricsWindowStatus == null) return;
+            var lyricsStyle = LyricsWindowStatus.LyricsStyleSettings;
+            var lyricsEffect = LyricsWindowStatus.LyricsEffectSettings;
+
             if (!lyricsEffect.Is3DLyricsEnabled) return;
 
             var playingLineTopOffsetFactor = lyricsStyle.PlayingLineTopOffset / 100.0;
 
             Vector3 center = new(
-                (float)(lyricsX + lyricsWidth / 2),
-                (float)(lyricsY + lyricsHeight * playingLineTopOffsetFactor),
+                (float)(LyricsX + LyricsWidth / 2),
+                (float)(LyricsY + LyricsHeight * playingLineTopOffsetFactor),
                 0);
 
             float rotationX = (float)(Math.PI * lyricsEffect.Lyrics3DXAngle / 180.0);
@@ -221,9 +204,19 @@ namespace BetterLyrics.WinUI3.Renderer
                 Matrix4x4.CreateTranslation(center);
         }
 
-        public void Update(float bassEnergy, int breathingIntensity)
+        public void Update(ICanvasAnimatedControl sender, float bassEnergy, int breathingIntensity)
         {
             base.UpdateBreathing(bassEnergy, breathingIntensity);
+            _edgeFadeMaskRenderer.Update(
+                sender,
+                new Windows.Foundation.Rect(LyricsX - 16, LyricsY, LyricsWidth + 32, LyricsHeight),
+                16, 0, 16, 0
+            );
+        }
+
+        public void Dispose()
+        {
+            _edgeFadeMaskRenderer.Dispose();
         }
 
     }

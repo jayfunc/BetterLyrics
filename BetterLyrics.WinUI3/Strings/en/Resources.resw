@@ -567,6 +567,9 @@
   <data name="LyricsSharePageStyleVinyl" xml:space="preserve">
     <value>Vinyl</value>
   </data>
+  <data name="LyricsSharePageTitle" xml:space="preserve">
+    <value>Lyrics Card</value>
+  </data>
   <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
     <value>Configuration</value>
   </data>
@@ -995,6 +998,9 @@
   </data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>Auto Start</value>
+  </data>
+  <data name="SettingsPageAutoWrap.Header" xml:space="preserve">
+    <value>Auto Wrap</value>
   </data>
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>Lyrics Background</value>
@@ -1831,7 +1837,7 @@
     <value>Credits</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Settings - BetterLyrics</value>
+    <value>Settings</value>
   </data>
   <data name="SettingsPageTitleBarAreaNone.Content" xml:space="preserve">
     <value>None</value>
@@ -1988,6 +1994,9 @@
   </data>
   <data name="TermsOfService.Content" xml:space="preserve">
     <value>Terms of Service</value>
+  </data>
+  <data name="ToastOverlayTitle" xml:space="preserve">
+    <value>Toast Overlay</value>
   </data>
   <data name="TracksAddToPlaylistFailed" xml:space="preserve">
     <value>Unable to add tracks because the path does not exist</value>

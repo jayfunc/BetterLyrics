@@ -24,12 +24,19 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
 
         public ValueTransition<double> AngleTransition { get; set; }
         public ValueTransition<double> BlurAmountTransition { get; set; }
-        public ValueTransition<double> PhoneticOpacityTransition { get; set; }
+        public ValueTransition<double> ScaleTransition { get; set; }
+
         public ValueTransition<double> PlayedPrimaryOpacityTransition { get; set; }
         public ValueTransition<double> UnplayedPrimaryOpacityTransition { get; set; }
-        public ValueTransition<double> TranslatedOpacityTransition { get; set; }
-        public ValueTransition<double> ScaleTransition { get; set; }
+        public ValueTransition<double> SecondaryOpacityTransition { get; set; }
+        public ValueTransition<double> TertiaryOpacityTransition { get; set; }
+
+        public ValueTransition<double> PrimaryXOffsetTransition { get; set; }
+        public ValueTransition<double> SecondaryXOffsetTransition { get; set; }
+        public ValueTransition<double> TertiaryXOffsetTransition { get; set; }
+
         public ValueTransition<double> YOffsetTransition { get; set; }
+        
         public ValueTransition<Color> PlayedFillColorTransition { get; set; }
         public ValueTransition<Color> UnplayedFillColorTransition { get; set; }
         public ValueTransition<Color> PlayedStrokeColorTransition { get; set; }
@@ -106,7 +113,7 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
                  EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
                  defaultTotalDuration: AnimationDuration
              );
-            PhoneticOpacityTransition = new(
+            TertiaryOpacityTransition = new(
                 initialValue: 0,
                 EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
                 defaultTotalDuration: AnimationDuration
@@ -121,12 +128,27 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
                 EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
                 defaultTotalDuration: AnimationDuration
             );
-            TranslatedOpacityTransition = new(
+            SecondaryOpacityTransition = new(
                 initialValue: 0,
                 EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
                 defaultTotalDuration: AnimationDuration
             );
             ScaleTransition = new(
+                initialValue: 0,
+                EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
+                defaultTotalDuration: AnimationDuration
+            );
+            PrimaryXOffsetTransition = new(
+                initialValue: 0,
+                EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
+                defaultTotalDuration: AnimationDuration
+            );
+            SecondaryXOffsetTransition = new(
+                initialValue: 0,
+                EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
+                defaultTotalDuration: AnimationDuration
+            );
+            TertiaryXOffsetTransition = new(
                 initialValue: 0,
                 EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
                 defaultTotalDuration: AnimationDuration
@@ -184,7 +206,7 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
             int phoneticTextFontSize, int originalTextFontSize, int translatedTextFontSize,
             LyricsFontWeight fontWeight,
             string fontFamilyCJK, string fontFamilyWestern,
-            double maxWidth, double maxHeight, TextAlignmentType type)
+            double maxWidth, double maxHeight, TextAlignmentType type, bool autoWrap)
         {
             DisposeTextLayout();
 
@@ -197,6 +219,7 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
                     VerticalAlignment = CanvasVerticalAlignment.Top,
                     FontSize = phoneticTextFontSize,
                     FontWeight = fontWeight.ToFontWeight(),
+                    WordWrapping = autoWrap ? CanvasWordWrapping.Wrap : CanvasWordWrapping.NoWrap,
                 }, (float)maxWidth, (float)maxHeight)
                 {
                     HorizontalAlignment = type.ToCanvasHorizontalAlignment(),
@@ -212,6 +235,7 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
                 VerticalAlignment = CanvasVerticalAlignment.Top,
                 FontSize = originalTextFontSize,
                 FontWeight = fontWeight.ToFontWeight(),
+                WordWrapping = autoWrap ? CanvasWordWrapping.Wrap : CanvasWordWrapping.NoWrap,
             }, (float)maxWidth, (float)maxHeight)
             {
                 HorizontalAlignment = type.ToCanvasHorizontalAlignment(),
@@ -229,6 +253,7 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
                     VerticalAlignment = CanvasVerticalAlignment.Top,
                     FontSize = translatedTextFontSize,
                     FontWeight = fontWeight.ToFontWeight(),
+                    WordWrapping = autoWrap ? CanvasWordWrapping.Wrap : CanvasWordWrapping.NoWrap,
                 }, (float)maxWidth, (float)maxHeight)
                 {
                     HorizontalAlignment = type.ToCanvasHorizontalAlignment(),
@@ -400,11 +425,17 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
             AngleTransition.Update(elapsedTime);
             ScaleTransition.Update(elapsedTime);
             BlurAmountTransition.Update(elapsedTime);
-            PhoneticOpacityTransition.Update(elapsedTime);
+            
             PlayedPrimaryOpacityTransition.Update(elapsedTime);
             UnplayedPrimaryOpacityTransition.Update(elapsedTime);
-            TranslatedOpacityTransition.Update(elapsedTime);
+            SecondaryOpacityTransition.Update(elapsedTime);
+            TertiaryOpacityTransition.Update(elapsedTime);
+
+            PrimaryXOffsetTransition.Update(elapsedTime);
+            SecondaryXOffsetTransition.Update(elapsedTime);
+            TertiaryXOffsetTransition.Update(elapsedTime);
             YOffsetTransition.Update(elapsedTime);
+            
             PlayedFillColorTransition.Update(elapsedTime);
             UnplayedFillColorTransition.Update(elapsedTime);
             PlayedStrokeColorTransition.Update(elapsedTime);

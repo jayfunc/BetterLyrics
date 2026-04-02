@@ -89,7 +89,7 @@ namespace BetterLyrics.WinUI3.Views
             NowPlayingPage.LyricsWindowStatus = LyricsWindowStatus;
             NowPlayingBar.LyricsWindowStatus = LyricsWindowStatus;
 
-            this.Init(title: $"{status.Name} - {Constants.App.AppName}", titleBarHeightOption: TitleBarHeightOption.Collapsed, backdropType: BackdropType.Transparent);
+            this.Init(title: status.Name, titleBarHeightOption: TitleBarHeightOption.Collapsed, backdropType: BackdropType.Transparent);
 
             AppWindow.Closing += AppWindow_Closing;
 
@@ -217,7 +217,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void OnIsWorkAreaChanged()
         {
-            this.SetIsWorkArea(LyricsWindowStatus.IsWorkArea);
+            this.SetIsAppBar(LyricsWindowStatus.IsWorkArea);
             if (LyricsWindowStatus.IsWorkArea)
             {
                 LyricsWindowStatus.IsLocked = true;
@@ -318,7 +318,7 @@ namespace BetterLyrics.WinUI3.Views
                             WindowHook.OpenOrShowWindow<NowPlayingWindow>(status);
                             if (status.IsWorkArea)
                             {
-                                this.SetIsWorkArea(true);
+                                this.SetIsAppBar(true);
                                 this.MoveAndResize(status.GetWindowBoundsWhenWorkArea());
                             }
                             if (status.IsLocked && status.IsWallpaper && (!status.IsAlwaysHideUnlockButton || status.KeepNowPlayingBarInteractiveWhenLocked))

@@ -567,6 +567,9 @@
   <data name="LyricsSharePageStyleVinyl" xml:space="preserve">
     <value>黑膠唱片</value>
   </data>
+  <data name="LyricsSharePageTitle" xml:space="preserve">
+    <value>歌詞卡片</value>
+  </data>
   <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
     <value>配置</value>
   </data>
@@ -995,6 +998,9 @@
   </data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>自動啟動</value>
+  </data>
+  <data name="SettingsPageAutoWrap.Header" xml:space="preserve">
+    <value>自動換行</value>
   </data>
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>歌詞背景</value>
@@ -1831,7 +1837,7 @@
     <value>致謝名單</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
-    <value>設定 - BetterLyrics</value>
+    <value>設定</value>
   </data>
   <data name="SettingsPageTitleBarAreaNone.Content" xml:space="preserve">
     <value>無</value>
@@ -1988,6 +1994,9 @@
   </data>
   <data name="TermsOfService.Content" xml:space="preserve">
     <value>服務條款</value>
+  </data>
+  <data name="ToastOverlayTitle" xml:space="preserve">
+    <value>通知覆蓋層</value>
   </data>
   <data name="TracksAddToPlaylistFailed" xml:space="preserve">
     <value>由於路徑不存在，無法新增曲目</value>

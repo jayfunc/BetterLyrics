@@ -30,7 +30,7 @@ namespace BetterLyrics.WinUI3.Views
         {
             this.InitializeComponent();
             WeakReferenceMessenger.Default.RegisterAll(this);
-            this.Init(titleBarHeightOption: TitleBarHeightOption.Collapsed, backdropType: BackdropType.Transparent);
+            this.Init("ToastOverlayTitle", titleBarHeightOption: TitleBarHeightOption.Collapsed, backdropType: BackdropType.Transparent);
             this.SetIsBorderless(true);
             AppWindow.IsShownInSwitchers = false;
             WindowHook.SetIsClickThrough(this, true);

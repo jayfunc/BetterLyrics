@@ -567,6 +567,9 @@
   <data name="LyricsSharePageStyleVinyl" xml:space="preserve">
     <value>विनाइल</value>
   </data>
+  <data name="LyricsSharePageTitle" xml:space="preserve">
+    <value>गीत कार्ड</value>
+  </data>
   <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
     <value>कॉन्फ़िगरेशन</value>
   </data>
@@ -996,6 +999,9 @@
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>ऑटो स्टार्ट</value>
   </data>
+  <data name="SettingsPageAutoWrap.Header" xml:space="preserve">
+    <value>ऑटो रैप</value>
+  </data>
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>बोल पृष्ठभूमि</value>
   </data>
@@ -1087,7 +1093,7 @@
     <value>हटाएं</value>
   </data>
   <data name="SettingsPageDensity.Header" xml:space="preserve">
-    <value>Density</value>
+    <value>घनत्व</value>
   </data>
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>डेस्कटॉप मोड (पारदर्शी)</value>
@@ -1324,7 +1330,7 @@
     <value>लाइट</value>
   </data>
   <data name="SettingsPageLightAngle.Header" xml:space="preserve">
-    <value>Light Angle</value>
+    <value>प्रकाश कोण</value>
   </data>
   <data name="SettingsPageLightWaveEffect.Header" xml:space="preserve">
     <value>प्रकाश तरंग</value>
@@ -1639,7 +1645,7 @@
     <value>ठोस रंग परत</value>
   </data>
   <data name="SettingsPageRaindropLayer.Header" xml:space="preserve">
-    <value>Raindrop Layer</value>
+    <value>वर्षा की बूंद परत</value>
   </data>
   <data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
     <value>वास्तविक समय स्थिति</value>
@@ -1708,7 +1714,7 @@
     <value>प्ले इतिहास</value>
   </data>
   <data name="SettingsPageShadowIntensity.Header" xml:space="preserve">
-    <value>Shadow Intensity</value>
+    <value>छाया की तीव्रता</value>
   </data>
   <data name="SettingsPageShareHub.Content" xml:space="preserve">
     <value>ऑनलाइन संसाधन शेयरिंग हब ब्राउज़ करें</value>
@@ -1741,7 +1747,7 @@
     <value>शीर्षक दिखाएं</value>
   </data>
   <data name="SettingsPageSize.Header" xml:space="preserve">
-    <value>Size</value>
+    <value>आकार</value>
   </data>
   <data name="SettingsPageSlide.Content" xml:space="preserve">
     <value>स्लाइड</value>
@@ -1831,7 +1837,7 @@
     <value>आभार सूची</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
-    <value>सेटिंग्स - BetterLyrics</value>
+    <value>सेटिंग्स</value>
   </data>
   <data name="SettingsPageTitleBarAreaNone.Content" xml:space="preserve">
     <value>कोई नहीं</value>
@@ -1988,6 +1994,9 @@
   </data>
   <data name="TermsOfService.Content" xml:space="preserve">
     <value>सेवा की शर्तें</value>
+  </data>
+  <data name="ToastOverlayTitle" xml:space="preserve">
+    <value>टोस्ट ओवरले</value>
   </data>
   <data name="TracksAddToPlaylistFailed" xml:space="preserve">
     <value>ट्रैक जोड़ने में असमर्थ क्योंकि पथ मौजूद नहीं है</value>

@@ -73,7 +73,8 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                     phoneticFontSize, originalFontSize, translatedFontSize,
                     fontWeight,
                     style.LyricsCJKFontFamily, style.LyricsWesternFontFamily,
-                    lyricsWidth, lyricsHeight, style.LyricsAlignmentType
+                    lyricsWidth, lyricsHeight,
+                    style.LyricsAlignmentType, style.AutoWrap
                 );
 
                 line.RecreateTextGeometry();

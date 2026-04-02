@@ -567,6 +567,9 @@
   <data name="LyricsSharePageStyleVinyl" xml:space="preserve">
     <value>ヴァイナル</value>
   </data>
+  <data name="LyricsSharePageTitle" xml:space="preserve">
+    <value>歌詞カード生成</value>
+  </data>
   <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
     <value>構成</value>
   </data>
@@ -995,6 +998,9 @@
   </data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>自動起動</value>
+  </data>
+  <data name="SettingsPageAutoWrap.Header" xml:space="preserve">
+    <value>自動折り返し</value>
   </data>
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>歌詞の背景</value>
@@ -1831,7 +1837,7 @@
     <value>謝辞</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
-    <value>設定 - BetterLyrics</value>
+    <value>設定</value>
   </data>
   <data name="SettingsPageTitleBarAreaNone.Content" xml:space="preserve">
     <value>なし</value>
@@ -1988,6 +1994,9 @@
   </data>
   <data name="TermsOfService.Content" xml:space="preserve">
     <value>利用規約</value>
+  </data>
+  <data name="ToastOverlayTitle" xml:space="preserve">
+    <value>トーストオーバーレイ</value>
   </data>
   <data name="TracksAddToPlaylistFailed" xml:space="preserve">
     <value>パスが存在しないため、トラックを追加できません</value>

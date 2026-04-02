@@ -251,7 +251,7 @@ namespace BetterLyrics.WinUI3.Hooks
             MemoryLeakDetector.ScheduleCheck(4000);
         }
 
-        public static void SetIsWorkArea(this NowPlayingWindow window, bool enable)
+        public static void SetIsAppBar(this NowPlayingWindow window, bool enable)
         {
             if (window == null) return;
 

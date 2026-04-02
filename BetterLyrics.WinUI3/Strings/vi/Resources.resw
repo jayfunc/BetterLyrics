@@ -567,6 +567,9 @@
   <data name="LyricsSharePageStyleVinyl" xml:space="preserve">
     <value>Vinyl</value>
   </data>
+  <data name="LyricsSharePageTitle" xml:space="preserve">
+    <value>Thẻ lời bài hát</value>
+  </data>
   <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
     <value>Cấu hình</value>
   </data>
@@ -996,6 +999,9 @@
   <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>Tự động khởi động</value>
   </data>
+  <data name="SettingsPageAutoWrap.Header" xml:space="preserve">
+    <value>Tự động bao bọc</value>
+  </data>
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>Nền lời bài hát</value>
   </data>
@@ -1087,7 +1093,7 @@
     <value>Xóa</value>
   </data>
   <data name="SettingsPageDensity.Header" xml:space="preserve">
-    <value>Density</value>
+    <value>Mật độ</value>
   </data>
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>Chế độ màn hình (Trong suốt)</value>
@@ -1324,7 +1330,7 @@
     <value>Sáng</value>
   </data>
   <data name="SettingsPageLightAngle.Header" xml:space="preserve">
-    <value>Light Angle</value>
+    <value>Góc chiếu sáng</value>
   </data>
   <data name="SettingsPageLightWaveEffect.Header" xml:space="preserve">
     <value>Sóng ánh sáng</value>
@@ -1639,7 +1645,7 @@
     <value>Lớp màu thuần</value>
   </data>
   <data name="SettingsPageRaindropLayer.Header" xml:space="preserve">
-    <value>Raindrop Layer</value>
+    <value>Lớp Giọt Mưa</value>
   </data>
   <data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
     <value>Trạng thái thời gian thực</value>
@@ -1708,7 +1714,7 @@
     <value>Lịch sử chơi</value>
   </data>
   <data name="SettingsPageShadowIntensity.Header" xml:space="preserve">
-    <value>Shadow Intensity</value>
+    <value>Độ đậm của bóng</value>
   </data>
   <data name="SettingsPageShareHub.Content" xml:space="preserve">
     <value>Duyệt trung tâm chia sẻ tài nguyên trực tuyến</value>
@@ -1741,7 +1747,7 @@
     <value>Hiển thị tiêu đề</value>
   </data>
   <data name="SettingsPageSize.Header" xml:space="preserve">
-    <value>Size</value>
+    <value>Kích thước</value>
   </data>
   <data name="SettingsPageSlide.Content" xml:space="preserve">
     <value>Trượt</value>
@@ -1831,7 +1837,7 @@
     <value>Danh sách cảm ơn</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
-    <value>Cài đặt - BetterLyrics</value>
+    <value>Cài đặt</value>
   </data>
   <data name="SettingsPageTitleBarAreaNone.Content" xml:space="preserve">
     <value>Không</value>
@@ -1988,6 +1994,9 @@
   </data>
   <data name="TermsOfService.Content" xml:space="preserve">
     <value>Điều khoản dịch vụ</value>
+  </data>
+  <data name="ToastOverlayTitle" xml:space="preserve">
+    <value>Lớp phủ bánh mì nướng</value>
   </data>
   <data name="TracksAddToPlaylistFailed" xml:space="preserve">
     <value>Không thể thêm bài hát do đường dẫn không tồn tại</value>

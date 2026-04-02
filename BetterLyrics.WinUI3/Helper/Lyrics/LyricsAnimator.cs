@@ -2,6 +2,7 @@
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.Models.Settings;
+using Microsoft.UI.Xaml.Shapes;
 using System;
 using System.Collections.Generic;
 
@@ -17,7 +18,8 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
             int startIndex,
             int endIndex,
             int primaryPlayingLineIndex,
-            double canvasHeight,
+            double lyricsWidth,
+            double lyricsHeight,
             double targetYScrollOffset,
             double playingLineTopOffsetFactor,
             LyricsStyleSettings lyricsStyle,
@@ -38,12 +40,14 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
             if (primaryPlayingLineIndex < 0 || primaryPlayingLineIndex >= lines.Count) return;
             var primaryPlayingLine = lines[primaryPlayingLineIndex];
 
+            var autoWrap = lyricsStyle.AutoWrap;
+
             var phoneticOpacity = lyricsStyle.PhoneticLyricsOpacity / 100.0;
             var originalOpacity = lyricsStyle.UnplayedOriginalLyricsOpacity / 100.0;
             var translatedOpacity = lyricsStyle.TranslatedLyricsOpacity / 100.0;
 
-            double topHeightFactor = canvasHeight * playingLineTopOffsetFactor;
-            double bottomHeightFactor = canvasHeight * (1 - playingLineTopOffsetFactor);
+            double topHeightFactor = lyricsHeight * playingLineTopOffsetFactor;
+            double bottomHeightFactor = lyricsHeight * (1 - playingLineTopOffsetFactor);
 
             double scrollTopDurationSec = lyricsEffect.LyricsScrollTopDuration / 1000.0;
             double scrollTopDelaySec = lyricsEffect.LyricsScrollTopDelay / 1000.0;
@@ -91,6 +95,8 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                 bool isSecondaryLinePlaying = line.GetIsPlaying(currentPositionMs);
                 bool isSecondaryLinePlayingChanged = line.IsPlayingLastFrame != isSecondaryLinePlaying;
                 line.IsPlayingLastFrame = isSecondaryLinePlaying;
+
+                var playProgress = line.GetPlayProgress(currentPositionMs);
 
                 // 行动画
                 if (isLayoutChanged || isPrimaryPlayingLineChanged || isMouseScrollingChanged || isSecondaryLinePlayingChanged || isArtThemeColorsChanged)
@@ -145,9 +151,9 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                         (_highlightedScale - distanceFactor * (_highlightedScale - _defaultScale)) :
                         _highlightedScale));
 
-                    line.PhoneticOpacityTransition.SetDuration(yScrollDuration);
-                    line.PhoneticOpacityTransition.SetDelay(yScrollDelay);
-                    line.PhoneticOpacityTransition.Start(
+                    line.TertiaryOpacityTransition.SetDuration(yScrollDuration);
+                    line.TertiaryOpacityTransition.SetDelay(yScrollDelay);
+                    line.TertiaryOpacityTransition.Start(
                         isSecondaryLinePlaying ? phoneticOpacity :
                         CalculateTargetOpacity(phoneticOpacity, phoneticOpacity, distanceFactor, isMouseScrolling, lyricsEffect));
 
@@ -164,9 +170,9 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                         isSecondaryLinePlaying ? originalOpacity :
                         CalculateTargetOpacity(originalOpacity, originalOpacity, distanceFactor, isMouseScrolling, lyricsEffect));
 
-                    line.TranslatedOpacityTransition.SetDuration(yScrollDuration);
-                    line.TranslatedOpacityTransition.SetDelay(yScrollDelay);
-                    line.TranslatedOpacityTransition.Start(
+                    line.SecondaryOpacityTransition.SetDuration(yScrollDuration);
+                    line.SecondaryOpacityTransition.SetDelay(yScrollDelay);
+                    line.SecondaryOpacityTransition.Start(
                         isSecondaryLinePlaying ? translatedOpacity :
                         CalculateTargetOpacity(translatedOpacity, translatedOpacity, distanceFactor, isMouseScrolling, lyricsEffect));
 
@@ -327,6 +333,25 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                     }
                 }
 
+                if (!autoWrap)
+                {
+                    if (isSecondaryLinePlaying)
+                    {
+                        line.PrimaryXOffsetTransition.JumpTo(CalculateTargetXOffset(line.PrimaryTextLayout?.LayoutBounds.Width ?? 0, lyricsWidth, playProgress));
+                        line.SecondaryXOffsetTransition.JumpTo(CalculateTargetXOffset(line.SecondaryTextLayout?.LayoutBounds.Width ?? 0, lyricsWidth, playProgress));
+                        line.TertiaryXOffsetTransition.JumpTo(CalculateTargetXOffset(line.TertiaryTextLayout?.LayoutBounds.Width ?? 0, lyricsWidth, playProgress));
+                    }
+                    if (isSecondaryLinePlayingChanged)
+                    {
+                        if (!isSecondaryLinePlaying)
+                        {
+                            line.PrimaryXOffsetTransition.Start(0);
+                            line.SecondaryXOffsetTransition.Start(0);
+                            line.TertiaryXOffsetTransition.Start(0);
+                        }
+                    }
+                }
+
                 line.Update(elapsedTime);
             }
         }
@@ -357,6 +382,13 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                 }
             }
             return targetOpacity;
+        }
+
+        private static double CalculateTargetXOffset(double actualWidth, double lyricsWidth, double progress)
+        {
+            var progressStartToScroll = lyricsWidth * 0.5 / actualWidth;
+            var progressEndToScroll = 1 - progressStartToScroll;
+            return -Math.Max((Math.Min(progress, progressEndToScroll) - progressStartToScroll), 0) * actualWidth;
         }
 
         private static (double InDuration, double OutDuration) CalculateSegmentDuration(double desiredDuration, double maxDuration)

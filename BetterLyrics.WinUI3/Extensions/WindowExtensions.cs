@@ -30,6 +30,7 @@ namespace BetterLyrics.WinUI3.Extensions
                 {
                     window.Title = title;
                 }
+                window.Title += $" - {Constants.App.AppName}";
 
                 window.SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(backdropType);
 
