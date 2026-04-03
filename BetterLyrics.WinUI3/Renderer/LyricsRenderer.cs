@@ -2,6 +2,7 @@
 using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.Models.Settings;
 using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
@@ -207,11 +208,40 @@ namespace BetterLyrics.WinUI3.Renderer
         public void Update(ICanvasAnimatedControl sender, float bassEnergy, int breathingIntensity)
         {
             base.UpdateBreathing(bassEnergy, breathingIntensity);
-            _edgeFadeMaskRenderer.Update(
-                sender,
-                new Windows.Foundation.Rect(LyricsX - 16, LyricsY, LyricsWidth + 32, LyricsHeight),
-                16, 0, 16, 0
-            );
+            switch (LyricsWindowStatus?.LyricsStyleSettings.LyricsLineContentOrientation)
+            {
+                case Enums.LyricsLineContentOrientation.Horizontal:
+                    var stops = new CanvasGradientStop[]
+                    {
+                        new() { Position = 0.00f, Color = Colors.Transparent },
+
+                        new() { Position = 0.05f, Color = Colors.White },
+                        new() { Position = 0.45f, Color = Colors.White },
+                        
+                        new() { Position = 0.50f, Color = Colors.Transparent },
+
+                        new() { Position = 0.55f, Color = Colors.White },
+                        new() { Position = 0.95f, Color = Colors.White },
+
+                        new() { Position = 1.00f, Color = Colors.Transparent }
+                    };
+                    _edgeFadeMaskRenderer.Update(
+                        sender,
+                        new Windows.Foundation.Rect(LyricsX - 16, LyricsY, LyricsWidth + 32, LyricsHeight),
+                        stops,
+                        false
+                    );
+                    break;
+                case Enums.LyricsLineContentOrientation.Vertical:
+                    _edgeFadeMaskRenderer.Update(
+                        sender,
+                        new Windows.Foundation.Rect(LyricsX - 16, LyricsY, LyricsWidth + 32, LyricsHeight),
+                        16, 0, 16, 0
+                    );
+                    break;
+                default:
+                    break;
+            }
         }
 
         public void Dispose()

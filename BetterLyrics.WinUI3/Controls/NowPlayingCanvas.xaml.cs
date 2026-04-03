@@ -42,7 +42,8 @@ namespace BetterLyrics.WinUI3.Controls
         IRecipient<PropertyChangedMessage<LyricsFontWeight>>,
         IRecipient<PropertyChangedMessage<string>>,
         IRecipient<PropertyChangedMessage<byte[]?>>,
-        IRecipient<PropertyChangedMessage<NowPlayingPalette>>
+        IRecipient<PropertyChangedMessage<NowPlayingPalette>>,
+        IRecipient<PropertyChangedMessage<LyricsLineContentOrientation>>
     {
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
         private readonly IGSMTCService _gsmtcService = Ioc.Default.GetRequiredService<IGSMTCService>();
@@ -1114,6 +1115,17 @@ namespace BetterLyrics.WinUI3.Controls
                 if (message.PropertyName == nameof(LyricsWindowStatus.WindowPalette))
                 {
                     UpdatePalette();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<LyricsLineContentOrientation> message)
+        {
+            if (message.Sender == LyricsWindowStatus?.LyricsStyleSettings)
+            {
+                if (message.PropertyName == nameof(LyricsStyleSettings.LyricsLineContentOrientation))
+                {
+                    _isLayoutChanged = true;
                 }
             }
         }

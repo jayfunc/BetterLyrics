@@ -2,6 +2,7 @@
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.Models.Settings;
+using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
             var fontWeight = style.LyricsFontWeight;
 
             // 排版
+            double currentX = 0;
             double currentY = 0;
 
             foreach (var line in lines)
@@ -74,7 +76,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                     fontWeight,
                     style.LyricsCJKFontFamily, style.LyricsWesternFontFamily,
                     lyricsWidth, lyricsHeight,
-                    style.LyricsAlignmentType, style.AutoWrap
+                    style.LyricsAlignmentType, style.AutoWrap, style.LyricsLineContentOrientation
                 );
 
                 line.RecreateTextGeometry();
@@ -82,43 +84,53 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                 line.DisposeCaches();
 
                 // 左上角坐标
-                line.TopLeftPosition = new Vector2(0, (float)currentY);
+                line.TopLeftPosition = new Vector2((float)currentX, (float)currentY);
                 // 注音层
                 line.TertiaryPosition = line.TopLeftPosition;
                 if (line.TertiaryTextLayout != null)
                 {
                     currentY += line.TertiaryTextLayout.LayoutBounds.Height;
-                    // 间距
-                    currentY += (line.TertiaryTextLayout.LayoutBounds.Height / line.TertiaryTextLayout.LineCount) * 0.1;
-
+                    currentY += (line.TertiaryTextLayout.LayoutBounds.Height / line.TertiaryTextLayout.LineCount) * 0.1; // 间距
                     actualWidth = Math.Max(actualWidth, line.TertiaryTextLayout.LayoutBounds.Width);
                 }
 
                 // 原文层
-                line.PrimaryPosition = new Vector2(0, (float)currentY);
+                line.PrimaryPosition = new Vector2((float)currentX, (float)currentY);
                 if (line.PrimaryTextLayout != null)
                 {
                     currentY += line.PrimaryTextLayout.LayoutBounds.Height;
-
                     actualWidth = Math.Max(actualWidth, line.PrimaryTextLayout.LayoutBounds.Width);
                 }
 
-                // 翻译层
-                if (line.PrimaryTextLayout != null && line.SecondaryTextLayout != null)
+                switch (status.LyricsStyleSettings.LyricsLineContentOrientation)
                 {
-                    // 间距
-                    currentY += (line.SecondaryTextLayout.LayoutBounds.Height / line.SecondaryTextLayout.LineCount) * 0.1;
-                }
-                line.SecondaryPosition = new Vector2(0, (float)currentY);
-                if (line.SecondaryTextLayout != null)
-                {
-                    currentY += line.SecondaryTextLayout.LayoutBounds.Height;
-
-                    actualWidth = Math.Max(actualWidth, line.SecondaryTextLayout.LayoutBounds.Width);
+                    case LyricsLineContentOrientation.Horizontal:
+                        // 翻译层
+                        line.SecondaryPosition = new Vector2(
+                            (float)(currentX + lyricsWidth / 2),
+                            (float)(line.TertiaryPosition.Y + (currentY - line.TertiaryPosition.Y) / 2 - (line.SecondaryTextLayout?.LayoutBounds.Height ?? 0) / 2));
+                        if (line.SecondaryTextLayout != null)
+                        {
+                            currentY = Math.Max(line.SecondaryPosition.Y + line.SecondaryTextLayout.LayoutBounds.Height, currentY);
+                            actualWidth += line.SecondaryTextLayout.LayoutBounds.Width;
+                        }
+                        break;
+                    case LyricsLineContentOrientation.Vertical:
+                        // 翻译层
+                        currentY += (line.SecondaryTextLayout?.LayoutBounds.Height ?? 0) / (line.SecondaryTextLayout?.LineCount ?? 1) * 0.1; // 间距
+                        line.SecondaryPosition = new Vector2((float)currentX, (float)currentY);
+                        if (line.SecondaryTextLayout != null)
+                        {
+                            currentY += line.SecondaryTextLayout.LayoutBounds.Height;
+                            actualWidth = Math.Max(actualWidth, line.SecondaryTextLayout.LayoutBounds.Width);
+                        }
+                        break;
+                    default:
+                        break;
                 }
 
                 // 右下角坐标
-                line.BottomRightPosition = new Vector2(0 + (float)actualWidth, (float)currentY);
+                line.BottomRightPosition = new Vector2((float)currentX + (float)actualWidth, (float)currentY);
 
                 // 行间距
                 if (line.PrimaryTextLayout != null && line.PrimaryTextLayout != null)
@@ -126,30 +138,30 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                     currentY += (line.PrimaryTextLayout.LayoutBounds.Height / line.PrimaryTextLayout.LineCount) * style.LyricsLineSpacingFactor;
                 }
 
-                line.TopLeftPosition = style.LyricsAlignmentType switch
+                line.TopLeftPosition = line.PrimaryTextLayout?.HorizontalAlignment switch
                 {
-                    TextAlignmentType.Left => line.TopLeftPosition,
-                    TextAlignmentType.Center => line.TopLeftPosition.AddX((float)((lyricsWidth - actualWidth) / 2)),
-                    TextAlignmentType.Right => line.TopLeftPosition.AddX((float)(lyricsWidth - actualWidth)),
+                    CanvasHorizontalAlignment.Left => line.TopLeftPosition,
+                    CanvasHorizontalAlignment.Center => line.TopLeftPosition.AddX((float)((lyricsWidth - actualWidth) / 2)),
+                    CanvasHorizontalAlignment.Right => line.TopLeftPosition.AddX((float)(lyricsWidth - actualWidth)),
                     _ => line.TopLeftPosition
                 };
 
-                line.BottomRightPosition = style.LyricsAlignmentType switch
+                line.BottomRightPosition = line.PrimaryTextLayout?.HorizontalAlignment switch
                 {
-                    TextAlignmentType.Left => line.BottomRightPosition,
-                    TextAlignmentType.Center => line.BottomRightPosition.AddX((float)((lyricsWidth - actualWidth) / 2)),
-                    TextAlignmentType.Right => line.BottomRightPosition.AddX((float)(lyricsWidth - actualWidth)),
+                    CanvasHorizontalAlignment.Left => line.BottomRightPosition,
+                    CanvasHorizontalAlignment.Center => line.BottomRightPosition.AddX((float)((lyricsWidth - actualWidth) / 2)),
+                    CanvasHorizontalAlignment.Right => line.BottomRightPosition.AddX((float)(lyricsWidth - actualWidth)),
                     _ => line.BottomRightPosition
                 };
 
                 // 更新中心点
                 double centerY = (line.TopLeftPosition.Y + line.BottomRightPosition.Y) / 2;
 
-                line.CenterPosition = style.LyricsAlignmentType switch
+                line.CenterPosition = line.PrimaryTextLayout?.HorizontalAlignment switch
                 {
-                    TextAlignmentType.Left => new Vector2(0, (float)centerY),
-                    TextAlignmentType.Center => new Vector2((float)(lyricsWidth / 2), (float)centerY),
-                    TextAlignmentType.Right => new Vector2((float)(lyricsWidth), (float)centerY),
+                    CanvasHorizontalAlignment.Left => new Vector2(0, (float)centerY),
+                    CanvasHorizontalAlignment.Center => new Vector2((float)(lyricsWidth / 2), (float)centerY),
+                    CanvasHorizontalAlignment.Right => new Vector2((float)(lyricsWidth), (float)centerY),
                     _ => line.CenterPosition,
                 };
 

@@ -32,6 +32,17 @@
                         </ComboBox>
                     </controls:SettingsCard>
 
+                    <controls:SettingsCard
+                        x:Uid="SettingsPageLyricsContentOrientation"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                 Glyph=&#xE80A;}"
+                        Visibility="Collapsed">
+                        <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsLineContentOrientation, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                            <ComboBoxItem x:Uid="SettingsPageLayoutOrientationHorizontal" />
+                            <ComboBoxItem x:Uid="SettingsPageLayoutOrientationVertical" />
+                        </ComboBox>
+                    </controls:SettingsCard>
+
                     <controls:SettingsCard x:Uid="SettingsPageAutoWrap" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xF465;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsStyleSettings.AutoWrap, Mode=TwoWay}" />
                     </controls:SettingsCard>
