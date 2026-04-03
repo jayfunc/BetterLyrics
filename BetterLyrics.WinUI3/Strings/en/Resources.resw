@@ -1374,6 +1374,9 @@
   <data name="SettingsPageLyricsCenterTopOffset.Header" xml:space="preserve">
     <value>Current Line Position</value>
   </data>
+  <data name="SettingsPageLyricsContentOrientation.Header" xml:space="preserve">
+    <value>Lyrics Content Layout</value>
+  </data>
   <data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
     <value>Lyrics Effect</value>
   </data>

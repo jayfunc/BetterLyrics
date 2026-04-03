@@ -20,6 +20,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int TranslatedLyricsOpacity { get; set; } = 60; // 60 %
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TextAlignmentType LyricsAlignmentType { get; set; } = TextAlignmentType.Left;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsLineContentOrientation LyricsLineContentOrientation { get; set; } = LyricsLineContentOrientation.Vertical;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool AutoWrap { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsFontStrokeWidth { get; set; } = 0;
 
@@ -89,6 +90,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 TranslatedLyricsOpacity = this.TranslatedLyricsOpacity,
 
                 LyricsAlignmentType = this.LyricsAlignmentType,
+                LyricsLineContentOrientation = this.LyricsLineContentOrientation,
                 AutoWrap = this.AutoWrap,
                 LyricsFontStrokeWidth = this.LyricsFontStrokeWidth,
                 LyricsCustomBgFontColor = this.LyricsCustomBgFontColor,

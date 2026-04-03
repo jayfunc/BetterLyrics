@@ -36,7 +36,7 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
         public ValueTransition<double> TertiaryXOffsetTransition { get; set; }
 
         public ValueTransition<double> YOffsetTransition { get; set; }
-        
+
         public ValueTransition<Color> PlayedFillColorTransition { get; set; }
         public ValueTransition<Color> UnplayedFillColorTransition { get; set; }
         public ValueTransition<Color> PlayedStrokeColorTransition { get; set; }
@@ -206,23 +206,36 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
             int phoneticTextFontSize, int originalTextFontSize, int translatedTextFontSize,
             LyricsFontWeight fontWeight,
             string fontFamilyCJK, string fontFamilyWestern,
-            double maxWidth, double maxHeight, TextAlignmentType type, bool autoWrap)
+            double maxWidth, double maxHeight,
+            TextAlignmentType type, bool autoWrap, LyricsLineContentOrientation orientation)
         {
             DisposeTextLayout();
 
+            var wordWrapping = autoWrap ? CanvasWordWrapping.Wrap : CanvasWordWrapping.NoWrap;
+            var horizontalAlignment = autoWrap ? type.ToCanvasHorizontalAlignment() : CanvasHorizontalAlignment.Left;
+
+            bool phoneticVisible = createPhonetic && !string.IsNullOrWhiteSpace(TertiaryText);
+            bool translatedVisible = createTranslated && !string.IsNullOrWhiteSpace(SecondaryText);
+
+            double requestedWidth = orientation switch
+            {
+                LyricsLineContentOrientation.Horizontal => maxWidth / (1 + (translatedVisible ? 1 : 0)),
+                _ => maxWidth
+            };
+            var verticalAlignment = CanvasVerticalAlignment.Top;
+
             // 音译
-            if (createPhonetic && !string.IsNullOrWhiteSpace(TertiaryText))
+            if (phoneticVisible)
             {
                 TertiaryTextLayout = new CanvasTextLayout(control, TertiaryText, new CanvasTextFormat
                 {
-                    HorizontalAlignment = CanvasHorizontalAlignment.Left,
-                    VerticalAlignment = CanvasVerticalAlignment.Top,
+                    VerticalAlignment = verticalAlignment,
                     FontSize = phoneticTextFontSize,
                     FontWeight = fontWeight.ToFontWeight(),
-                    WordWrapping = autoWrap ? CanvasWordWrapping.Wrap : CanvasWordWrapping.NoWrap,
-                }, (float)maxWidth, (float)maxHeight)
+                    WordWrapping = wordWrapping,
+                }, (float)requestedWidth, (float)maxHeight)
                 {
-                    HorizontalAlignment = type.ToCanvasHorizontalAlignment(),
+                    HorizontalAlignment = horizontalAlignment,
                     Options = CanvasDrawTextOptions.NoPixelSnap,
                 };
                 TertiaryTextLayout.SetFontFamily(TertiaryText, fontFamilyCJK, fontFamilyWestern);
@@ -231,32 +244,30 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
             // 原文
             PrimaryTextLayout = new CanvasTextLayout(control, PrimaryText, new CanvasTextFormat
             {
-                HorizontalAlignment = CanvasHorizontalAlignment.Left,
-                VerticalAlignment = CanvasVerticalAlignment.Top,
+                VerticalAlignment = verticalAlignment,
                 FontSize = originalTextFontSize,
                 FontWeight = fontWeight.ToFontWeight(),
-                WordWrapping = autoWrap ? CanvasWordWrapping.Wrap : CanvasWordWrapping.NoWrap,
-            }, (float)maxWidth, (float)maxHeight)
+                WordWrapping = wordWrapping,
+            }, (float)requestedWidth, (float)maxHeight)
             {
-                HorizontalAlignment = type.ToCanvasHorizontalAlignment(),
+                HorizontalAlignment = horizontalAlignment,
                 Options = CanvasDrawTextOptions.NoPixelSnap,
             };
             PrimaryTextLayout.SetFontFamily(PrimaryText, fontFamilyCJK, fontFamilyWestern);
             PrimaryTextRegions = PrimaryTextLayout.GetCharacterRegions(0, PrimaryText.Length);
 
             // 翻译
-            if (createTranslated && !string.IsNullOrWhiteSpace(SecondaryText))
+            if (translatedVisible)
             {
                 SecondaryTextLayout = new CanvasTextLayout(control, SecondaryText, new CanvasTextFormat
                 {
-                    HorizontalAlignment = CanvasHorizontalAlignment.Left,
-                    VerticalAlignment = CanvasVerticalAlignment.Top,
+                    VerticalAlignment = verticalAlignment,
                     FontSize = translatedTextFontSize,
                     FontWeight = fontWeight.ToFontWeight(),
-                    WordWrapping = autoWrap ? CanvasWordWrapping.Wrap : CanvasWordWrapping.NoWrap,
-                }, (float)maxWidth, (float)maxHeight)
+                    WordWrapping = wordWrapping,
+                }, (float)requestedWidth, (float)maxHeight)
                 {
-                    HorizontalAlignment = type.ToCanvasHorizontalAlignment(),
+                    HorizontalAlignment = horizontalAlignment,
                     Options = CanvasDrawTextOptions.NoPixelSnap,
                 };
                 SecondaryTextLayout.SetFontFamily(SecondaryText, fontFamilyCJK, fontFamilyWestern);
@@ -425,7 +436,7 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
             AngleTransition.Update(elapsedTime);
             ScaleTransition.Update(elapsedTime);
             BlurAmountTransition.Update(elapsedTime);
-            
+
             PlayedPrimaryOpacityTransition.Update(elapsedTime);
             UnplayedPrimaryOpacityTransition.Update(elapsedTime);
             SecondaryOpacityTransition.Update(elapsedTime);
@@ -435,7 +446,7 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
             SecondaryXOffsetTransition.Update(elapsedTime);
             TertiaryXOffsetTransition.Update(elapsedTime);
             YOffsetTransition.Update(elapsedTime);
-            
+
             PlayedFillColorTransition.Update(elapsedTime);
             UnplayedFillColorTransition.Update(elapsedTime);
             PlayedStrokeColorTransition.Update(elapsedTime);

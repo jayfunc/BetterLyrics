@@ -181,9 +181,9 @@ namespace BetterLyrics.WinUI3.Models
 
             this.AlbumArtByteArray = null;
 
-            if (track.EmbeddedPictures != null && track.EmbeddedPictures.Count > 0)
+            try
             {
-                try
+                if (track.EmbeddedPictures != null && track.EmbeddedPictures.Count > 0)
                 {
                     var validPics = track.EmbeddedPictures.Where(p => p != null).ToList();
 
@@ -199,8 +199,8 @@ namespace BetterLyrics.WinUI3.Models
                         this.AlbumArtByteArray = cover.PictureData;
                     }
                 }
-                catch (Exception) { }
             }
+            catch (Exception) { }
         }
 
         private void SetRawLyrics(StreamFileAbstraction streamFileAbstraction)
