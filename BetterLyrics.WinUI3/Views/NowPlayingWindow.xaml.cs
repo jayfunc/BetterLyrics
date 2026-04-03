@@ -11,6 +11,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using CommunityToolkit.WinUI;
+using Microsoft.Extensions.Logging;
 using Microsoft.UI;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
@@ -50,6 +51,7 @@ namespace BetterLyrics.WinUI3.Views
         private OverlayInputHelper? _overlayInputHelper;
         private TaskbarHook? _taskbarHook;
         private WindowMessageMonitor? _wmm;
+        private readonly ILogger<NowPlayingWindow> _logger = Ioc.Default.GetRequiredService<ILogger<NowPlayingWindow>>();
 
         private Color _backdropAccentColor = Colors.Transparent;
 
@@ -178,11 +180,11 @@ namespace BetterLyrics.WinUI3.Views
                 AppWindow.Changed += AppWindow_Changed;
                 if (LyricsWindowStatus.IsMaximized)
                 {
-                    MaximizeButton_Click(null, null);
+                    this.Maximize();
                 }
                 if (LyricsWindowStatus.IsFullscreen)
                 {
-                    FullscreenButton_Click(null, null);
+                    this.SetWindowPresenter(AppWindowPresenterKind.FullScreen);
                 }
             }
 
@@ -458,31 +460,42 @@ namespace BetterLyrics.WinUI3.Views
 
                 var presenter = AppWindow.Presenter;
 
-                if (presenter is OverlappedPresenter overlappedPresenter)
+                //_logger.LogInformation(
+                //    "AppWindow changed: " +
+                //    "PositionChanged={PositionChanged}, " +
+                //    "SizeChanged={SizeChanged}, " +
+                //    "PresenterChanged={PresenterChanged}, " +
+                //    "CurrentPresenter={CurrentPresenter}, PresenterType={PresenterType}",
+                //    args.DidPositionChange, args.DidSizeChange, args.DidPresenterChange, presenter?.GetType().Name, presenter?.Kind.ToString());
+
+                if (presenter?.Kind == AppWindowPresenterKind.Overlapped)
                 {
-                    if (overlappedPresenter.State == OverlappedPresenterState.Restored)
+                    if (presenter is OverlappedPresenter overlappedPresenter)
                     {
-                        EnterMaximizeFontIcon.Opacity = 1;
-                        ExitMaximizeFontIcon.Opacity = 0;
-                        LyricsWindowStatus.IsMaximized = false;
-                    }
-                    else if (overlappedPresenter.State == OverlappedPresenterState.Maximized)
-                    {
-                        EnterMaximizeFontIcon.Opacity = 0;
-                        ExitMaximizeFontIcon.Opacity = 1;
-                        LyricsWindowStatus.IsMaximized = true;
-                    }
+                        if (overlappedPresenter.State == OverlappedPresenterState.Restored)
+                        {
+                            EnterMaximizeFontIcon.Opacity = 1;
+                            ExitMaximizeFontIcon.Opacity = 0;
+                            LyricsWindowStatus.IsMaximized = false;
+                        }
+                        else if (overlappedPresenter.State == OverlappedPresenterState.Maximized)
+                        {
+                            EnterMaximizeFontIcon.Opacity = 0;
+                            ExitMaximizeFontIcon.Opacity = 1;
+                            LyricsWindowStatus.IsMaximized = true;
+                        }
 
-                    EnterFullscreenFontIcon.Opacity = 1;
-                    ExitFullscreenFontIcon.Opacity = 0;
-                    MaximizeButton.Visibility = Visibility.Visible;
-                    AOTButton.Visibility = Visibility.Visible;
-                    MinimizeButton.Visibility = Visibility.Visible;
-                    LockButton.Visibility = Visibility.Visible;
+                        EnterFullscreenFontIcon.Opacity = 1;
+                        ExitFullscreenFontIcon.Opacity = 0;
+                        MaximizeButton.Visibility = Visibility.Visible;
+                        AOTButton.Visibility = Visibility.Visible;
+                        MinimizeButton.Visibility = Visibility.Visible;
+                        LockButton.Visibility = Visibility.Visible;
 
-                    LyricsWindowStatus.IsFullscreen = false;
+                        LyricsWindowStatus.IsFullscreen = false;
+                    }
                 }
-                else if (presenter is FullScreenPresenter fullScreenPresenter)
+                else if (presenter?.Kind == AppWindowPresenterKind.FullScreen)
                 {
                     EnterMaximizeFontIcon.Opacity = 0;
                     ExitMaximizeFontIcon.Opacity = 0;
@@ -699,11 +712,11 @@ namespace BetterLyrics.WinUI3.Views
         {
             if (EnterFullscreenFontIcon.Opacity == 1)
             {
-                AppWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
+                this.SetWindowPresenter(AppWindowPresenterKind.FullScreen);
             }
             else if (ExitFullscreenFontIcon.Opacity == 1)
             {
-                AppWindow.SetPresenter(AppWindowPresenterKind.Overlapped);
+                this.SetWindowPresenter(AppWindowPresenterKind.Overlapped);
             }
         }
 
@@ -721,6 +734,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void RootGrid_Loaded(object sender, RoutedEventArgs e)
         {
+            InitStatus();
             RootGrid.Margin = new(
                 (int)((LyricsWindowStatus.PaddingLeft / 100.0) * (RootGrid.ActualWidth / 2)),
                 (int)((LyricsWindowStatus.PaddingTop / 100.0) * (RootGrid.ActualHeight / 2)),
