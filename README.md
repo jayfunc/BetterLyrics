@@ -50,7 +50,7 @@
 | :---: | :---: |
 | <a href="https://apps.microsoft.com/detail/9P1WCD1P597R?referrer=appbadge&mode=direct"><img src="https://get.microsoft.com/images/en-us%20dark.svg" width="160"/></a><br>Unlimited free trial (Same as paid) | [**📦 Latest Release (.zip)**](https://github.com/jayfunc/BetterLyrics/releases/latest)<br>See [Installation Guide](https://betterlyrics.github.io/get-started/install) |
 
-[📖 Docs](https://betterlyrics.github.io) | [🔒 Privacy Policy](docs/PRIVACY_POLICY.md) | [⚖️ Terms of Service](docs/TERMS_OF_SERVICE.md)
+[📖 Docs](https://betterlyrics.github.io) | [🧩 Plugin Store](https://betterlyrics.github.io/plugins-store) | [🔒 Privacy Policy](docs/PRIVACY_POLICY.md) | [⚖️ Terms of Service](docs/TERMS_OF_SERVICE.md)
 
 </div>
 
