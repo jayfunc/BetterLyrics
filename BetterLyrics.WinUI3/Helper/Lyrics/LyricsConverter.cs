@@ -100,14 +100,14 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
         {
             TimeSpan ts = TimeSpan.FromMilliseconds(milliseconds);
 
-            return $"[{(int)ts.TotalMinutes:D2}:{ts.Seconds:D2}.{ts.Milliseconds:D2}]";
+            return $"[{(int)ts.TotalMinutes:D2}:{ts.Seconds:D2}.{ts.Milliseconds:D3}]";
         }
 
         public static string FormatToSyllableTimestamp(double milliseconds)
         {
             TimeSpan ts = TimeSpan.FromMilliseconds(milliseconds);
 
-            return $"<{(int)ts.TotalMinutes:D2}:{ts.Seconds:D2}.{ts.Milliseconds:D2}>";
+            return $"<{(int)ts.TotalMinutes:D2}:{ts.Seconds:D2}.{ts.Milliseconds:D3}>";
         }
     }
 }
