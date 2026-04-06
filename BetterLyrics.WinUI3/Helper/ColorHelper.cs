@@ -62,21 +62,18 @@ namespace BetterLyrics.WinUI3.Helper
             );
         }
 
-        public static Color GetAccentColor(IntPtr myHwnd, string monitorDeviceName, WindowPixelSampleMode mode)
+        public static Color GetAccentColor(IntPtr myHwnd, WindowPixelSampleMode mode)
         {
             if (!User32.GetWindowRect(myHwnd, out RECT myRect)) return Colors.Transparent;
-
-            var monitorInfo = MonitorHook.GetMonitorInfoExFromDeviceName(monitorDeviceName);
-            int screenWidth = monitorInfo.rcMonitor.Width;
 
             switch (mode)
             {
                 case WindowPixelSampleMode.BelowWindow:
-                    using (var bmp = CaptureScreenRegion(myRect.Left, myRect.Bottom + 2, screenWidth, 1))
+                    using (var bmp = CaptureScreenRegion(myRect.Left, myRect.Bottom + 1, myRect.Width, 1))
                         return ComputeDominantColor(bmp);
 
                 case WindowPixelSampleMode.AboveWindow:
-                    using (var bmp = CaptureScreenRegion(myRect.Left, myRect.Top - 2, screenWidth, 1))
+                    using (var bmp = CaptureScreenRegion(myRect.Left, myRect.Top - 2, myRect.Width, 1))
                         return ComputeDominantColor(bmp);
 
                 case WindowPixelSampleMode.WindowArea:

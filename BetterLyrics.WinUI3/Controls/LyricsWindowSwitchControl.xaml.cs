@@ -49,6 +49,8 @@ namespace BetterLyrics.WinUI3.Controls
         {
             await HideAsync();
             WindowHook.OpenOrShowWindow<SettingsWindow>();
+            var settingsPageViewModel = Ioc.Default.GetRequiredService<SettingsPageViewModel>();
+            settingsPageViewModel.NavigateToSection(Enums.SettingsSection.LyricsWindowMgr);
         }
     }
 }

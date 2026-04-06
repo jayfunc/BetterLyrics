@@ -168,14 +168,14 @@ namespace BetterLyrics.WinUI3.Hooks
 
             HWND windowHandle = (HWND)WindowNative.GetWindowHandle(_pinnedWindow);
 
-            var windowBounds = _pinnedWindow.LyricsWindowStatus.WindowBounds.ToRectInt32();
-            POINT pt = new() { X = windowBounds.X, Y = windowBounds.Y };
+            User32.GetWindowRect(windowHandle, out RECT windowRect);
+            POINT pt = new() { X = windowRect.X, Y = windowRect.Y };
 
             User32.ScreenToClient(_hWorkerW, ref pt);
 
             User32.SetWindowPos(windowHandle, HWND.NULL,
                 pt.X, pt.Y,
-                windowBounds.Width, windowBounds.Height,
+                windowRect.Width, windowRect.Height,
                 User32.SetWindowPosFlags.SWP_NOZORDER | User32.SetWindowPosFlags.SWP_NOACTIVATE);
         }
     }

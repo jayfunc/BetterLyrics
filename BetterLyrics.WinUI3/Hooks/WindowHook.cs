@@ -173,7 +173,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
                 var castedWindow = (Window)window;
 
-                if (typeof(T) != typeof(LyricsWindowSwitchWindow))
+                if (typeof(T) != typeof(LyricsWindowSwitchWindow) && typeof(T) != typeof(NowPlayingWindow))
                 {
                     castedWindow.Activate();
                 }
@@ -299,6 +299,33 @@ namespace BetterLyrics.WinUI3.Hooks
             }
 
             User32.SetWindowLong(hwnd, User32.WindowLongFlags.GWL_STYLE, style);
+        }
+
+        public static void SetIsChildWindow(this Window window, bool enable)
+        {
+            nint hwnd = WindowNative.GetWindowHandle(window);
+            int style = User32.GetWindowLong(hwnd, User32.WindowLongFlags.GWL_STYLE);
+
+            if (enable)
+            {
+                style &= ~unchecked((int)User32.WindowStyles.WS_POPUP);
+                style |= (int)User32.WindowStyles.WS_CHILD;
+            }
+            else
+            {
+                style |= unchecked((int)User32.WindowStyles.WS_POPUP);
+                style &= ~(int)User32.WindowStyles.WS_CHILD;
+            }
+
+            User32.SetWindowLong(hwnd, User32.WindowLongFlags.GWL_STYLE, style);
+        }
+
+        public static void SetIsAlwaysOnTop(this NowPlayingWindow window, bool enable)
+        {
+            if (window.AppWindow is AppWindow appWindow && appWindow.Presenter.Kind == AppWindowPresenterKind.Overlapped)
+            {
+                ((Window)window).SetIsAlwaysOnTop(enable);
+            }
         }
 
         public static void MoveAndResize(this Window window, Rect rect)

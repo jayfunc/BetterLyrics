@@ -1893,6 +1893,9 @@
   <data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
     <value>正在使用本軟體的您</value>
   </data>
+  <data name="SLyricsWindowSettingsControlShareMoveToMonitor.Text" xml:space="preserve">
+    <value>Move to monitor</value>
+  </data>
   <data name="StandardMode" xml:space="preserve">
     <value>標準模式</value>
   </data>

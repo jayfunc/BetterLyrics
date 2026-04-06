@@ -24,7 +24,7 @@
                     <Grid
                         Width="{x:Bind LyricsWindowStatus.WindowBounds.Width, Mode=OneWay}"
                         Height="{x:Bind LyricsWindowStatus.WindowBounds.Height, Mode=OneWay}"
-                        Margin="{x:Bind LyricsWindowStatus.WindowBounds, Converter={StaticResource RectToMarginConverter}, Mode=OneWay}"
+                        Margin="{x:Bind LyricsWindowStatus.DemoWindowMargin, Mode=OneWay}"
                         HorizontalAlignment="Left"
                         VerticalAlignment="Top"
                         Background="{ThemeResource AccentAcrylicBackgroundFillColorDefaultBrush}"

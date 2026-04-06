@@ -1,3 +1,4 @@
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.Settings;
@@ -7,13 +8,17 @@ using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.Storage;
+using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -225,6 +230,89 @@ namespace BetterLyrics.WinUI3.Controls
             var status = (LyricsWindowStatus)((FrameworkElement)sender).DataContext;
             var window = WindowHook.GetNowPlayingWindow(status);
             window?.MoveAndResize(new(100, 100, 800, 500));
+        }
+
+        private Rect MapToMonitor(Rect monitorRectBefore, Rect monitorRectAfter, Rect windowRectBefore)
+        {
+            var xRatio = monitorRectAfter.Width / monitorRectBefore.Width;
+            var yRatio = monitorRectAfter.Height / monitorRectBefore.Height;
+            var newX = monitorRectAfter.X + (windowRectBefore.X - monitorRectBefore.X) * xRatio;
+            var newY = monitorRectAfter.Y + (windowRectBefore.Y - monitorRectBefore.Y) * yRatio;
+            var newWidth = windowRectBefore.Width * xRatio;
+            var newHeight = windowRectBefore.Height * yRatio;
+            return new Rect(newX, newY, newWidth, newHeight);
+        }
+
+        private void MenuBarItemFlyout_Opened(object sender, object e)
+        {
+            var menuFlyout = (MenuFlyout)sender;
+            var menuFlyoutSubItem = (MenuFlyoutSubItem)menuFlyout.Items.Last();
+            var status = (LyricsWindowStatus)menuFlyoutSubItem.DataContext;
+            menuFlyoutSubItem.IsEnabled = status.WindowStatus == Enums.WindowStatus.Opened;
+
+            var window = WindowHook.GetNowPlayingWindow(status);
+            if (window == null) return;
+
+            var monitorRectBefore = status.MonitorBounds;
+            var windowRectBefore = status.WindowBounds;
+
+            menuFlyoutSubItem.Items.Clear();
+            var names = MonitorHook.GetAllMonitorDeviceNames();
+            foreach (var name in names)
+            {
+                var menuFlyoutItem = new MenuFlyoutItem() { Text = name };
+                menuFlyoutItem.Click += async (s, args) =>
+                {
+                    var monitorInfoEx = MonitorHook.GetMonitorInfoExFromDeviceName(name);
+                    var monitorRectAfter = monitorInfoEx.rcMonitor.ToRect();
+                    var windowRectAfter = MapToMonitor(monitorRectBefore, monitorRectAfter, windowRectBefore);
+
+                    status.MonitorDeviceName = name;
+                    status.MonitorBounds = monitorRectAfter;
+
+                    if (status.IsWallpaper)
+                    {
+                        window.LyricsWindowStatus.IsLocked = false;
+                        await Task.Delay(500);
+
+                        window.MoveAndResize(windowRectAfter);
+                        await Task.Delay(500);
+                        
+                        window.LyricsWindowStatus.IsLocked = true;
+                    }
+                    else if (status.IsPinToTaskbar)
+                    {
+                        window.LyricsWindowStatus.IsLocked = false;
+                        await Task.Delay(500);
+
+                        window.MoveAndResize(windowRectAfter);
+                        await Task.Delay(500);
+
+                        window.LyricsWindowStatus.IsLocked = true;
+                    }
+                    else if (status.IsWorkArea)
+                    {
+                        window.MoveAndResize(status.GetAppBarBounds());
+                    }
+                    else if (status.IsFullscreen)
+                    {
+                        window.SetWindowPresenter(AppWindowPresenterKind.Overlapped);
+                        window.MoveAndResize(windowRectAfter);
+                        window.SetWindowPresenter(AppWindowPresenterKind.FullScreen);
+                    }
+                    else if (status.IsMaximized)
+                    {
+                        window.Restore();
+                        window.MoveAndResize(windowRectAfter);
+                        window.Maximize();
+                    }
+                    else
+                    {
+                        window.MoveAndResize(windowRectAfter);
+                    }
+                };
+                menuFlyoutSubItem.Items.Add(menuFlyoutItem);
+            }
         }
     }
 }

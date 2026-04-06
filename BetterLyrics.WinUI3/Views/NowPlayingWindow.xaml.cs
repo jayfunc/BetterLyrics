@@ -19,6 +19,8 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
+using System.Diagnostics;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Vanara.PInvoke;
@@ -100,7 +102,6 @@ namespace BetterLyrics.WinUI3.Views
             _ = UpdateAlbumArtThemeColorsAsync();
 
             LyricsWindowStatus.WindowStatus = WindowStatus.Opened;
-            InitStatus();
         }
 
         private void Wmm_WindowMessageReceived(object? sender, WindowMessageEventArgs e)
@@ -111,7 +112,7 @@ namespace BetterLyrics.WinUI3.Views
                 if (LyricsWindowStatus.IsWorkArea)
                 {
                     var pos = Marshal.PtrToStructure<WINDOWPOS>(e.Message.LParam);
-                    var bounds = LyricsWindowStatus.GetWindowBoundsWhenWorkArea();
+                    var bounds = LyricsWindowStatus.GetAppBarBounds();
                     pos.x = (int)bounds.X;
                     pos.y = (int)bounds.Y;
                     pos.cx = (int)bounds.Width;
@@ -139,14 +140,6 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        private void OnTaskbarFreeBoundsChanged(Events.TaskbarFreeBoundsChangedEventArgs obj)
-        {
-            DispatcherQueue.TryEnqueue(() =>
-            {
-                this.MoveAndResize(obj.TaskbarFreeBounds);
-            });
-        }
-
         private void InitStatus()
         {
             OnIsShownInSwitchersChanged();
@@ -154,41 +147,48 @@ namespace BetterLyrics.WinUI3.Views
             OnTitleBarAreaChanged();
             OnIsAdaptToEnvironmentChanged();
 
-            if (LyricsWindowStatus.IsWallpaper)
-            {
-                AppWindow.Changed += AppWindow_Changed;
-            }
-
-            OnIsLockedChanged();
-
             if (LyricsWindowStatus.IsPinToTaskbar)
             {
-                OnIsPinToTaskbarChanged();
                 AppWindow.Changed += AppWindow_Changed;
+                this.MoveAndResize(LyricsWindowStatus.WindowBounds);
+                OnIsLockedChanged();
+                this.Activate();
             }
             else if (LyricsWindowStatus.IsWallpaper)
             {
+                AppWindow.Changed += AppWindow_Changed;
+                this.MoveAndResize(LyricsWindowStatus.WindowBounds);
+                OnIsLockedChanged();
+                this.Activate();
             }
             else if (LyricsWindowStatus.IsWorkArea)
             {
                 OnIsWorkAreaChanged();
+                OnIsLockedChanged();
                 AppWindow.Changed += AppWindow_Changed;
+                this.Activate();
             }
             else
             {
                 this.MoveAndResize(LyricsWindowStatus.WindowBounds);
+                OnIsLockedChanged();
                 AppWindow.Changed += AppWindow_Changed;
-                if (LyricsWindowStatus.IsMaximized)
-                {
-                    this.Maximize();
-                }
                 if (LyricsWindowStatus.IsFullscreen)
                 {
+                    this.Activate();
                     this.SetWindowPresenter(AppWindowPresenterKind.FullScreen);
+                }
+                else if (LyricsWindowStatus.IsMaximized)
+                {
+                    this.Maximize();
+                    this.Activate();
+                }
+                else
+                {
+                    this.Activate();
                 }
             }
 
-            LyricsWindowStatus.UpdateMonitorBounds();
             OnAutoShowOrHideWindowChanged();
         }
 
@@ -197,7 +197,6 @@ namespace BetterLyrics.WinUI3.Views
             var oldValue = _backdropAccentColor;
             var newValue = Helper.ColorHelper.GetAccentColor(
                 WindowNative.GetWindowHandle(this),
-                LyricsWindowStatus.MonitorDeviceName,
                 LyricsWindowStatus.EnvironmentSampleMode);
             // 防止不必要刷新导致界面不流畅
             if (newValue != oldValue)
@@ -213,6 +212,13 @@ namespace BetterLyrics.WinUI3.Views
 
             NowPlayingPage.LyricsWindowStatus?.WindowPalette = result;
             RootGrid.RequestedTheme = result.ThemeType;
+        }
+
+        private void UpdateMonitorNameAndBounds()
+        {
+            var mointor = MonitorHook.GetMonitorInfoExFromWindow(this);
+            LyricsWindowStatus.MonitorDeviceName = mointor.szDevice;
+            LyricsWindowStatus.MonitorBounds = mointor.rcMonitor.ToRect();
         }
 
         // ====
@@ -258,6 +264,16 @@ namespace BetterLyrics.WinUI3.Views
 
         private void OnIsLockedChanged()
         {
+            if (LyricsWindowStatus.IsBorderlessWhenLocked)
+            {
+                this.SetIsBorderless(LyricsWindowStatus.IsLocked);
+            }
+
+            if (!LyricsWindowStatus.IsWallpaper)
+            {
+                this.SetIsClickThrough(LyricsWindowStatus.IsLocked);
+            }
+
             UnlockButton.Visibility = LyricsWindowStatus.IsAlwaysHideUnlockButton ? Visibility.Collapsed : Visibility.Visible;
             StopOverlayInputHelper();
 
@@ -268,9 +284,16 @@ namespace BetterLyrics.WinUI3.Views
                 {
                     WorkerWHook.PinToDesktop(this);
                 }
-                else if (!LyricsWindowStatus.IsAlwaysHideUnlockButton || LyricsWindowStatus.KeepNowPlayingBarInteractiveWhenLocked)
+                else
                 {
-                    StartOverlayInputHelper();
+                    if (LyricsWindowStatus.IsPinToTaskbar)
+                    {
+                        PinToTaskbar();
+                    }
+                    if (!LyricsWindowStatus.IsAlwaysHideUnlockButton || LyricsWindowStatus.KeepNowPlayingBarInteractiveWhenLocked)
+                    {
+                        StartOverlayInputHelper();
+                    }
                 }
             }
             else
@@ -281,28 +304,20 @@ namespace BetterLyrics.WinUI3.Views
                 {
                     WorkerWHook.UnpinFromDesktop(this);
                 }
-            }
-
-            if (LyricsWindowStatus.IsBorderlessWhenLocked)
-            {
-                this.SetIsBorderless(LyricsWindowStatus.IsLocked);
-            }
-
-            if (!LyricsWindowStatus.IsWallpaper)
-            {
-                this.SetIsClickThrough(LyricsWindowStatus.IsLocked);
+                else if (LyricsWindowStatus.IsPinToTaskbar)
+                {
+                    _taskbarHook?.Dispose();
+                    _taskbarHook = null;
+                }
             }
         }
 
-        private void OnIsPinToTaskbarChanged()
+        private void PinToTaskbar()
         {
             _taskbarHook?.Dispose();
             _taskbarHook = null;
 
-            if (LyricsWindowStatus.IsPinToTaskbar)
-            {
-                _taskbarHook = new(LyricsWindowStatus.TaskbarPlacement, OnTaskbarFreeBoundsChanged);
-            }
+            _taskbarHook = new(this, LyricsWindowStatus.TaskbarPlacement, LyricsWindowStatus.MonitorBounds.ToRectangle());
         }
 
         private void OnAutoShowOrHideWindowChanged()
@@ -321,7 +336,7 @@ namespace BetterLyrics.WinUI3.Views
                             if (status.IsWorkArea)
                             {
                                 this.SetIsAppBar(true);
-                                this.MoveAndResize(status.GetWindowBoundsWhenWorkArea());
+                                this.MoveAndResize(status.GetAppBarBounds());
                             }
                             if (status.IsLocked && status.IsWallpaper && (!status.IsAlwaysHideUnlockButton || status.KeepNowPlayingBarInteractiveWhenLocked))
                             {
@@ -357,7 +372,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void OnWorkAreaChanged()
         {
-            LyricsWindowStatus.UpdateMonitorBounds();
+            UpdateMonitorNameAndBounds();
             if (LyricsWindowStatus.IsWorkArea)
             {
                 this.UpdateAppBar();
@@ -433,8 +448,8 @@ namespace BetterLyrics.WinUI3.Views
 
             RootGrid.XamlRoot?.Changed -= XamlRoot_Changed;
 
-            AppWindow.Changed -= AppWindow_Changed;
-            AppWindow.Closing -= AppWindow_Closing;
+            AppWindow?.Changed -= AppWindow_Changed;
+            AppWindow?.Closing -= AppWindow_Closing;
 
             _wmm?.WindowMessageReceived -= Wmm_WindowMessageReceived;
             _wmm?.Dispose();
@@ -460,13 +475,13 @@ namespace BetterLyrics.WinUI3.Views
 
                 var presenter = AppWindow.Presenter;
 
-                //_logger.LogInformation(
-                //    "AppWindow changed: " +
-                //    "PositionChanged={PositionChanged}, " +
-                //    "SizeChanged={SizeChanged}, " +
-                //    "PresenterChanged={PresenterChanged}, " +
-                //    "CurrentPresenter={CurrentPresenter}, PresenterType={PresenterType}",
-                //    args.DidPositionChange, args.DidSizeChange, args.DidPresenterChange, presenter?.GetType().Name, presenter?.Kind.ToString());
+                Debug.WriteLine(
+                    "AppWindow changed: " +
+                    "PositionChanged={0}, " +
+                    "SizeChanged={1}, " +
+                    "PresenterChanged={2}, " +
+                    "CurrentPresenter={3}, PresenterType={4}",
+                    args.DidPositionChange, args.DidSizeChange, args.DidPresenterChange, presenter?.GetType().Name, presenter?.Kind.ToString());
 
                 if (presenter?.Kind == AppWindowPresenterKind.Overlapped)
                 {
@@ -518,22 +533,20 @@ namespace BetterLyrics.WinUI3.Views
 
                     if (rect.X < 0 && rect.Y < 0 && rect.X + size.Width < 0 && rect.Y + size.Height < 0)
                     {
-                        return;
                     }
                     // 仅非壁纸模式才忽略最大化全屏化
                     // 壁纸模式将记忆最大化全屏化之后的坐标以便正确固定到桌面
                     else if (!LyricsWindowStatus.IsWallpaper && (LyricsWindowStatus.IsMaximized || LyricsWindowStatus.IsFullscreen))
                     {
-                        return;
                     }
                     // 忽略壁纸模式+已锁定状态防止在固定到桌面的过程中由于坐标系变换导致的错误的坐标被记忆
                     else if (LyricsWindowStatus.IsWallpaper && LyricsWindowStatus.IsLocked)
                     {
-                        return;
                     }
                     else
                     {
                         LyricsWindowStatus.WindowBounds = new Rect(rect.X, rect.Y, size.Width, size.Height);
+                        UpdateMonitorNameAndBounds();
                     }
                 }
             }
@@ -789,10 +802,6 @@ namespace BetterLyrics.WinUI3.Views
                 {
                     OnIsAdaptToEnvironmentChanged();
                     _ = UpdateAlbumArtThemeColorsAsync();
-                }
-                else if (message.PropertyName == nameof(LyricsWindowStatus.IsPinToTaskbar))
-                {
-                    OnIsPinToTaskbarChanged();
                 }
                 else if (message.PropertyName == nameof(LyricsWindowStatus.IsAlwaysHideUnlockButton))
                 {
