@@ -2,7 +2,6 @@
 using BetterLyrics.WinUI3.Helper;
 using CommunityToolkit.WinUI;
 using FlaUI.Core.AutomationElements;
-using FlaUI.Core.Definitions;
 using FlaUI.UIA3;
 using Microsoft.UI.Dispatching;
 using System;
@@ -24,7 +23,6 @@ namespace BetterLyrics.WinUI3.Hooks
         private readonly IntPtr _targetHwnd;
         private IntPtr _taskbarHwnd;
 
-        private TaskbarPlacement _lastAutoPlacement = TaskbarPlacement.Right;
         private TaskbarPlacement _currentPlacement;
         private Rectangle _targetMonitorRect;
 
@@ -334,7 +332,7 @@ namespace BetterLyrics.WinUI3.Hooks
             if (bestLeft == Rectangle.Empty && bestRight != Rectangle.Empty) bestLeft = bestRight;
             if (bestRight == Rectangle.Empty && bestLeft != Rectangle.Empty) bestRight = bestLeft;
 
-            // 全局最宽的空白（用于 Center 偏好）
+            // 全局最宽的空白（用于 Center / Auto 偏好）
             Rectangle widestOverall = voids.OrderByDescending(v => v.Width).First();
 
             switch (placement)
@@ -346,35 +344,9 @@ namespace BetterLyrics.WinUI3.Hooks
                     return bestRight != Rectangle.Empty ? bestRight : widestOverall;
 
                 case TaskbarPlacement.Center:
-                    // 居中模式直接返回全局最长的那个空白段
-                    return widestOverall;
-
                 case TaskbarPlacement.Auto:
                 default:
-                    int threshold = 50;
-                    int minRequiredWidth = 100;
-
-                    // 平滑切换防抖逻辑
-                    if (_lastAutoPlacement == TaskbarPlacement.Left)
-                    {
-                        // 如果左侧最优解不够宽，或者右侧最优解比左侧长出太多，则切换到右侧
-                        if (bestLeft.Width < minRequiredWidth || bestRight.Width > bestLeft.Width + threshold)
-                        {
-                            _lastAutoPlacement = TaskbarPlacement.Right;
-                            return bestRight;
-                        }
-                        return bestLeft;
-                    }
-                    else
-                    {
-                        // 反之同理
-                        if (bestRight.Width < minRequiredWidth || bestLeft.Width > bestRight.Width + threshold)
-                        {
-                            _lastAutoPlacement = TaskbarPlacement.Left;
-                            return bestLeft;
-                        }
-                        return bestRight;
-                    }
+                    return widestOverall;
             }
         }
 
