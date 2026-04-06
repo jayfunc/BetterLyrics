@@ -65,15 +65,16 @@ namespace BetterLyrics.WinUI3.Views
             var records = _settingsService.AppSettings.WindowBoundsRecords;
             if (records.Count == 0)
             {
-                var defaultStatus = LyricsWindowStatusExtensions.StandardMode(this);
-                defaultStatus.IsDefault = true;
-                records.Add(defaultStatus);
-                records.Add(LyricsWindowStatusExtensions.DesktopMode(this));
-                records.Add(LyricsWindowStatusExtensions.DockedMode(this));
-                records.Add(LyricsWindowStatusExtensions.NarrowMode(this));
-                records.Add(LyricsWindowStatusExtensions.FullscreenMode(this));
-                records.Add(LyricsWindowStatusExtensions.TaskbarMode(this));
-                records.Add(LyricsWindowStatusExtensions.WallpaperMode(this));
+                records.Add(new LyricsWindowStatus(LyricsWindowMode.Standard)
+                {
+                    IsDefault = true
+                });
+                records.Add(new LyricsWindowStatus(LyricsWindowMode.Desktop));
+                records.Add(new LyricsWindowStatus(LyricsWindowMode.Docked));
+                records.Add(new LyricsWindowStatus(LyricsWindowMode.Narrow));
+                records.Add(new LyricsWindowStatus(LyricsWindowMode.Fullscreen));
+                records.Add(new LyricsWindowStatus(LyricsWindowMode.Taskbar));
+                records.Add(new LyricsWindowStatus(LyricsWindowMode.Wallpaper));
             }
         }
 

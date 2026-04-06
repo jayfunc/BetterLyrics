@@ -1,4 +1,5 @@
-﻿using BetterLyrics.WinUI3.Extensions;
+﻿using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.SettingsService;
@@ -40,45 +41,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         }
 
         [RelayCommand]
-        private void CreateStandardLyricsWindowStatus()
+        private void CreateLyricsWindowStatus(LyricsWindowMode mode)
         {
-            AppSettings.WindowBoundsRecords.Add(LyricsWindowStatusExtensions.StandardMode());
-        }
-
-        [RelayCommand]
-        private void CreateTransparentLyricsWindowStatus()
-        {
-            AppSettings.WindowBoundsRecords.Add(LyricsWindowStatusExtensions.DesktopMode());
-        }
-
-        [RelayCommand]
-        private void CreateDockedLyricsWindowStatus()
-        {
-            AppSettings.WindowBoundsRecords.Add(LyricsWindowStatusExtensions.DockedMode());
-        }
-
-        [RelayCommand]
-        private void CreateFullLyricsWindowStatus()
-        {
-            AppSettings.WindowBoundsRecords.Add(LyricsWindowStatusExtensions.FullscreenMode());
-        }
-
-        [RelayCommand]
-        private void CreateNarrowLyricsWindowStatus()
-        {
-            AppSettings.WindowBoundsRecords.Add(LyricsWindowStatusExtensions.NarrowMode());
-        }
-
-        [RelayCommand]
-        private void CreateTaskbarLyricsWindowStatus()
-        {
-            AppSettings.WindowBoundsRecords.Add(LyricsWindowStatusExtensions.TaskbarMode());
-        }
-
-        [RelayCommand]
-        private void CreateWallpaperLyricsWindowStatus()
-        {
-            AppSettings.WindowBoundsRecords.Add(LyricsWindowStatusExtensions.WallpaperMode());
+            AppSettings.WindowBoundsRecords.Add(new LyricsWindowStatus(mode));
         }
 
         public void OpenConfigPanel()

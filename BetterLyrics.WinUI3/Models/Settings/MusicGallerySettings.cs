@@ -14,7 +14,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TimeSpan PlaybackPosition { get; set; } = TimeSpan.Zero;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool AutoOpen { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool AutoPlay { get; set; } = false;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsWindowStatus LyricsWindowStatus { get; set; } = new();
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsWindowStatus LyricsWindowStatus { get; set; } = new(LyricsWindowMode.Standard);
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ExitOnWindowClosed { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool StopOnWindowClosed { get; set; } = false;
 

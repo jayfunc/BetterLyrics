@@ -1,4 +1,6 @@
-﻿using System.Numerics;
+﻿using System;
+using System.Drawing;
+using System.Numerics;
 using Vanara.PInvoke;
 using Windows.Foundation;
 using Windows.Graphics;
@@ -10,6 +12,13 @@ namespace BetterLyrics.WinUI3.Extensions
         extension(Rect rect)
         {
             public RectInt32 ToRectInt32() => new(
+                (int)rect.X,
+                (int)rect.Y,
+                (int)rect.Width,
+                (int)rect.Height
+            );
+
+            public Rectangle ToRectangle() => new(
                 (int)rect.X,
                 (int)rect.Y,
                 (int)rect.Width,
@@ -88,6 +97,22 @@ namespace BetterLyrics.WinUI3.Extensions
             }
 
             public Vector2 Center => new((float)(rect.X + rect.Width / 2), (float)(rect.Y + rect.Height / 2));
+
+            public Rect ToCenterPart(double nX, double nY)
+            {
+                if (nX <= 0 || nY <= 0) return Rect.Empty;
+                if (rect.IsEmpty) return Rect.Empty;
+
+                double targetWidth = rect.Width / nX;
+                double targetHeight = rect.Height / nY;
+
+                double offsetX = rect.X + (rect.Width - targetWidth) / 2.0;
+                double offsetY = rect.Y + (rect.Height - targetHeight) / 2.0;
+
+                return new Rect(offsetX, offsetY, targetWidth, targetHeight);
+            }
+
+            public Rect ToCenterPart(double n) => rect.ToCenterPart(n, n);
         }
 
         extension(RECT rect)

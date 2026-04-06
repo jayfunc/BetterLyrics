@@ -6,6 +6,7 @@
     xmlns:constants="using:BetterLyrics.WinUI3.Constants"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:enums="using:BetterLyrics.WinUI3.Enums"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
@@ -38,13 +39,34 @@
                                 </ToolTipService.ToolTip>
                                 <Button.Flyout>
                                     <MenuFlyout>
-                                        <MenuFlyoutItem x:Uid="SettingsPageStandardMode" Command="{x:Bind ViewModel.CreateStandardLyricsWindowStatusCommand}" />
-                                        <MenuFlyoutItem x:Uid="SettingsPageDesktopMode" Command="{x:Bind ViewModel.CreateTransparentLyricsWindowStatusCommand}" />
-                                        <MenuFlyoutItem x:Uid="SettingsPageDockedMode" Command="{x:Bind ViewModel.CreateDockedLyricsWindowStatusCommand}" />
-                                        <MenuFlyoutItem x:Uid="SettingsPageFullscreenMode" Command="{x:Bind ViewModel.CreateFullLyricsWindowStatusCommand}" />
-                                        <MenuFlyoutItem x:Uid="SettingsPageNarrowMode" Command="{x:Bind ViewModel.CreateNarrowLyricsWindowStatusCommand}" />
-                                        <MenuFlyoutItem x:Uid="SettingsPageTaskbarMode" Command="{x:Bind ViewModel.CreateTaskbarLyricsWindowStatusCommand}" />
-                                        <MenuFlyoutItem x:Uid="SettingsPageWallpaperMode" Command="{x:Bind ViewModel.CreateWallpaperLyricsWindowStatusCommand}" />
+                                        <MenuFlyoutItem
+                                            x:Uid="SettingsPageStandardMode"
+                                            Command="{x:Bind ViewModel.CreateLyricsWindowStatusCommand}"
+                                            CommandParameter="{x:Bind enums:LyricsWindowMode.Standard}" />
+                                        <MenuFlyoutItem
+                                            x:Uid="SettingsPageDesktopMode"
+                                            Command="{x:Bind ViewModel.CreateLyricsWindowStatusCommand}"
+                                            CommandParameter="{x:Bind enums:LyricsWindowMode.Desktop}" />
+                                        <MenuFlyoutItem
+                                            x:Uid="SettingsPageDockedMode"
+                                            Command="{x:Bind ViewModel.CreateLyricsWindowStatusCommand}"
+                                            CommandParameter="{x:Bind enums:LyricsWindowMode.Docked}" />
+                                        <MenuFlyoutItem
+                                            x:Uid="SettingsPageFullscreenMode"
+                                            Command="{x:Bind ViewModel.CreateLyricsWindowStatusCommand}"
+                                            CommandParameter="{x:Bind enums:LyricsWindowMode.Fullscreen}" />
+                                        <MenuFlyoutItem
+                                            x:Uid="SettingsPageNarrowMode"
+                                            Command="{x:Bind ViewModel.CreateLyricsWindowStatusCommand}"
+                                            CommandParameter="{x:Bind enums:LyricsWindowMode.Narrow}" />
+                                        <MenuFlyoutItem
+                                            x:Uid="SettingsPageTaskbarMode"
+                                            Command="{x:Bind ViewModel.CreateLyricsWindowStatusCommand}"
+                                            CommandParameter="{x:Bind enums:LyricsWindowMode.Taskbar}" />
+                                        <MenuFlyoutItem
+                                            x:Uid="SettingsPageWallpaperMode"
+                                            Command="{x:Bind ViewModel.CreateLyricsWindowStatusCommand}"
+                                            CommandParameter="{x:Bind enums:LyricsWindowMode.Wallpaper}" />
                                     </MenuFlyout>
                                 </Button.Flyout>
                             </Button>
@@ -104,7 +126,7 @@
                                         </Grid>
                                         <StackPanel Grid.Column="1" RightTapped="StackPanel_RightTapped">
                                             <StackPanel.ContextFlyout>
-                                                <MenuBarItemFlyout>
+                                                <MenuBarItemFlyout Opened="MenuBarItemFlyout_Opened">
                                                     <MenuFlyoutItem x:Uid="SettingsPageCreateFromCurrent" Click="CopyMenuFlyoutItem_Click" />
                                                     <MenuFlyoutSubItem x:Uid="SettingsPageCreateFromCurrentAndTransformTo">
                                                         <MenuFlyoutItem
@@ -141,7 +163,7 @@
                                                         x:Uid="SettingsPageDelete"
                                                         Click="DeleteMenuFlyoutItem_Click"
                                                         IsEnabled="{Binding IsDefault, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
-                                                    <MenuFlyoutItem x:Uid="SystemTrayResetWindowPosition" Click="ResetPositionMenuFlyoutItem_Click" />
+                                                    <MenuFlyoutSubItem x:Uid="SLyricsWindowSettingsControlShareMoveToMonitor" />
                                                 </MenuBarItemFlyout>
                                             </StackPanel.ContextFlyout>
                                             <uc:DemoWindowGrid LyricsWindowStatus="{Binding}" />

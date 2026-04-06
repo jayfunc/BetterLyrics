@@ -1893,6 +1893,9 @@
   <data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
     <value>Anda yang sedang menggunakan perisian ini</value>
   </data>
+  <data name="SLyricsWindowSettingsControlShareMoveToMonitor.Text" xml:space="preserve">
+    <value>Move to monitor</value>
+  </data>
   <data name="StandardMode" xml:space="preserve">
     <value>Mod Standard</value>
   </data>

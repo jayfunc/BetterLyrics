@@ -1,7 +1,10 @@
 ﻿using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Hooks;
+using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using System;
@@ -43,9 +46,9 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool SwitchLyricsDisplayTypeSplitView { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsDisplayTypeSplitViewRatio { get; set; } = 50; // 50%
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial Rect WindowBounds { get; set; } = new Rect(100, 100, 800, 500);
+        [ObservableProperty][NotifyPropertyChangedRecipients][NotifyPropertyChangedFor(nameof(DemoWindowMargin))] public partial Rect WindowBounds { get; set; } = new Rect(100, 100, 800, 500);
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial double DockHeight { get; set; } = 64;
-        [ObservableProperty] public partial Rect MonitorBounds { get; set; }
+        [ObservableProperty][NotifyPropertyChangedFor(nameof(DemoWindowMargin))] public partial Rect MonitorBounds { get; set; }
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial DockPlacement DockPlacement { get; set; } = DockPlacement.Top;
         [ObservableProperty] public partial LyricsStyleSettings LyricsStyleSettings { get; set; } = new();
         [ObservableProperty] public partial LyricsEffectSettings LyricsEffectSettings { get; set; } = new(500, 500, 500, EasingType.Quad);
@@ -82,12 +85,14 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial FPS FPS { get; set; } = FPS.Hz60;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowDebugOverlay { get; set; } = false;
+
         [JsonIgnore][ObservableProperty] public partial bool IsOverlayInputHelperRunning { get; set; } = false;
         [JsonIgnore][ObservableProperty] public partial bool IsAlwaysOnTopPollingTimerRunning { get; set; } = false;
         [JsonIgnore][ObservableProperty] public partial bool IsUnderlayColorTimerRunning { get; set; } = false;
 
         [JsonIgnore][ObservableProperty][NotifyPropertyChangedRecipients] public partial WindowStatus WindowStatus { get; set; } = WindowStatus.Closed;
         [JsonIgnore] public DispatcherQueueTimer? VisibilityTimer { get; set; }
+        [JsonIgnore] public Thickness DemoWindowMargin => new(WindowBounds.Left - MonitorBounds.Left, WindowBounds.Top - MonitorBounds.Top, 0, 0);
 
         public LyricsWindowStatus()
         {
@@ -96,11 +101,158 @@ namespace BetterLyrics.WinUI3.Models.Settings
             LyricsBackgroundSettings.PropertyChanged += LyricsBackgroundSettings_PropertyChanged;
             AlbumArtLayoutSettings.PropertyChanged += AlbumArtLayoutSettings_PropertyChanged;
             AlbumArtAreaEffectSettings.PropertyChanged += AlbumArtAreaEffectSettings_PropertyChanged;
+
+            var primaryMonitorInfoEx = MonitorHook.GetPrimaryMonitorInfoEx();
+            var monitorRect = primaryMonitorInfoEx.rcMonitor;
+
+            MonitorDeviceName = primaryMonitorInfoEx.szDevice;
+            MonitorBounds = monitorRect.ToRect();
         }
 
-        public LyricsWindowStatus(Window? targetWindow = null) : this()
+        public LyricsWindowStatus(LyricsWindowMode mode) : this()
         {
-            UpdateMonitorNameAndBounds(targetWindow);
+            ILocalizationService localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
+
+            switch (mode)
+            {
+                case LyricsWindowMode.Standard:
+                    InitStandardMode(localizationService);
+                    break;
+                case LyricsWindowMode.Narrow:
+                    InitNarrowMode(localizationService);
+                    break;
+                case LyricsWindowMode.Fullscreen:
+                    InitFullscreenMode(localizationService);
+                    break;
+                case LyricsWindowMode.Desktop:
+                    InitDesktopMode(localizationService);
+                    break;
+                case LyricsWindowMode.Docked:
+                    InitDockedMode(localizationService);
+                    break;
+                case LyricsWindowMode.Taskbar:
+                    InitTaskbarMode(localizationService);
+                    break;
+                case LyricsWindowMode.Wallpaper:
+                    InitWallpaperMode(localizationService);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void InitDesktopMode(ILocalizationService localizationService)
+        {
+            Name = localizationService.GetLocalizedString("DesktopMode");
+            LyricsDisplayType = LyricsDisplayType.LyricsOnly;
+            IsLocked = true;
+            IsAlwaysOnTop = true;
+            IsAlwaysOnTopPolling = true;
+            IsAdaptToEnvironment = true;
+            IsShownInSwitchers = false;
+            EnvironmentSampleMode = WindowPixelSampleMode.WindowEdge;
+            LyricsStyleSettings = new()
+            {
+                LyricsAlignmentType = TextAlignmentType.Center
+            };
+            LyricsBackgroundSettings = new LyricsBackgroundSettings
+            {
+                IsFluidOverlayEnabled = false
+            };
+            WindowBounds = MonitorBounds.ToCenterPart(3);
+        }
+
+        private void InitDockedMode(ILocalizationService localizationService)
+        {
+            Name = localizationService.GetLocalizedString("DockedMode");
+            IsWorkArea = true;
+            IsAlwaysOnTop = true;
+            IsAlwaysOnTopPolling = true;
+            IsAdaptToEnvironment = true;
+            IsShownInSwitchers = false;
+            LyricsDisplayType = LyricsDisplayType.LyricsOnly;
+            EnvironmentSampleMode = WindowPixelSampleMode.BelowWindow;
+            IsAlwaysHideUnlockButton = true;
+            KeepNowPlayingBarInteractiveWhenLocked = true;
+            LyricsStyleSettings = new LyricsStyleSettings
+            {
+                LyricsAlignmentType = TextAlignmentType.Center
+            };
+            LyricsBackgroundSettings = new LyricsBackgroundSettings
+            {
+                IsFluidOverlayEnabled = false,
+                IsPureColorOverlayEnabled = true
+            };
+            WindowBounds = this.GetAppBarBounds();
+        }
+
+        private void InitFullscreenMode(ILocalizationService localizationService)
+        {
+            Name = localizationService.GetLocalizedString("FullscreenMode");
+            LyricsLayoutOrientation = LyricsLayoutOrientation.Vertical;
+            LyricsStyleSettings = new LyricsStyleSettings
+            {
+                LyricsAlignmentType = TextAlignmentType.Center
+            };
+            IsFullscreen = true;
+            WindowBounds = MonitorBounds;
+        }
+
+        private void InitStandardMode(ILocalizationService localizationService)
+        {
+            Name = localizationService.GetLocalizedString("StandardMode");
+            WindowBounds = MonitorBounds.ToCenterPart(2);
+        }
+
+        private void InitNarrowMode(ILocalizationService localizationService)
+        {
+            Name = localizationService.GetLocalizedString("NarrowMode");
+            LyricsLayoutOrientation = LyricsLayoutOrientation.Vertical;
+            WindowBounds = MonitorBounds.ToCenterPart(4, 1.5);
+        }
+
+        private void InitTaskbarMode(ILocalizationService localizationService)
+        {
+            Name = localizationService.GetLocalizedString("TaskbarMode");
+            LyricsDisplayType = LyricsDisplayType.LyricsOnly;
+            IsPinToTaskbar = true;
+            IsLocked = true;
+            IsAdaptToEnvironment = true;
+            IsShownInSwitchers = false;
+            EnvironmentSampleMode = WindowPixelSampleMode.WindowEdge;
+            IsAlwaysHideUnlockButton = true;
+            KeepNowPlayingBarInteractiveWhenLocked = true;
+            LyricsStyleSettings = new()
+            {
+                LyricsAlignmentType = TextAlignmentType.Center
+            };
+            LyricsBackgroundSettings = new LyricsBackgroundSettings
+            {
+                IsFluidOverlayEnabled = false
+            };
+            WindowBounds = this.GetTaskbarDemoBounds();
+        }
+
+        private void InitWallpaperMode(ILocalizationService localizationService)
+        {
+            Name = localizationService.GetLocalizedString("WallpaperMode");
+            LyricsDisplayType = LyricsDisplayType.LyricsOnly;
+            IsWallpaper = true;
+            IsLocked = true;
+            IsAlwaysOnTop = true;
+            IsAlwaysOnTopPolling = true;
+            IsAdaptToEnvironment = true;
+            IsShownInSwitchers = false;
+            EnvironmentSampleMode = WindowPixelSampleMode.Wallpaper;
+            LyricsStyleSettings = new()
+            {
+                LyricsAlignmentType = TextAlignmentType.Center
+            };
+            LyricsBackgroundSettings = new LyricsBackgroundSettings
+            {
+                IsFluidOverlayEnabled = false
+            };
+            WindowBounds = MonitorBounds.ToCenterPart(3);
         }
 
         partial void OnLyricsStyleSettingsChanged(LyricsStyleSettings oldValue, LyricsStyleSettings newValue)
@@ -158,60 +310,9 @@ namespace BetterLyrics.WinUI3.Models.Settings
             OnPropertyChanged(nameof(AlbumArtAreaEffectSettings));
         }
 
-        partial void OnWindowBoundsChanged(Rect value)
-        {
-            UpdateMonitorNameAndBounds();
-        }
-
-        private void UpdateMonitorNameAndBounds(Window? targetWindow = null)
-        {
-            targetWindow ??= WindowHook.GetWindows<NowPlayingWindow>().FirstOrDefault(x => x.LyricsWindowStatus == this);
-            if (targetWindow == null) return;
-
-            var mointor = MonitorHook.GetMonitorInfoExFromWindow(targetWindow);
-            MonitorDeviceName = mointor.szDevice;
-            MonitorBounds = new Rect(
-                mointor.rcMonitor.Left,
-                mointor.rcMonitor.Top,
-                mointor.rcMonitor.Width,
-                mointor.rcMonitor.Height
-            );
-        }
-
-        public void UpdateMonitorBounds()
-        {
-            var mointor = MonitorHook.GetMonitorInfoExFromDeviceName(MonitorDeviceName);
-            MonitorBounds = new Rect(
-                mointor.rcMonitor.Left,
-                mointor.rcMonitor.Top,
-                mointor.rcMonitor.Width,
-                mointor.rcMonitor.Height
-            );
-        }
-
-        public Rect GetWindowBoundsWhenWorkArea()
-        {
-            return new Rect(
-                MonitorBounds.X,
-                DockPlacement switch
-                {
-                    DockPlacement.Top => MonitorBounds.Top,
-                    DockPlacement.Bottom => MonitorBounds.Bottom - DockHeight,
-                    _ => MonitorBounds.Top,
-                },
-                MonitorBounds.Width,
-                DockPlacement switch
-                {
-                    DockPlacement.Top => DockHeight,
-                    DockPlacement.Bottom => DockHeight,
-                    _ => DockHeight,
-                }
-            );
-        }
-
         public object Clone()
         {
-            return new LyricsWindowStatus(null)
+            return new LyricsWindowStatus()
             {
                 Name = this.Name,
                 IsDefault = this.IsDefault,
