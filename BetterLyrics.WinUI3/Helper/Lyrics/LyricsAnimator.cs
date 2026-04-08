@@ -205,9 +205,14 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                         line.YOffsetTransition.SetInterpolator(canvasYScrollTransition.Interpolator);
                         line.YOffsetTransition.SetDuration(yScrollDuration);
                         line.YOffsetTransition.SetDelay(yScrollDelay);
-                        // 设计之初是当 isLayoutChanged 为真时 jumpTo
-                        // 但考虑到动画视觉，强制使用动画
-                        line.YOffsetTransition.Start(targetYScrollOffset);
+                        if (isLayoutChanged)
+                        {
+                            line.YOffsetTransition.JumpTo(targetYScrollOffset);
+                        }
+                        else
+                        {
+                            line.YOffsetTransition.Start(targetYScrollOffset);
+                        }
                     }
                 }
 

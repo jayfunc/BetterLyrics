@@ -1,5 +1,6 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Models;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.WinUI;
 using FlaUI.Core.AutomationElements;
@@ -20,6 +21,7 @@ namespace BetterLyrics.WinUI3.Hooks
     public partial class TaskbarHook : IDisposable
     {
         private readonly ILogger<TaskbarHook> _logger = Ioc.Default.GetRequiredService<ILogger<TaskbarHook>>();
+        private readonly Dictionary<HWND, TrackedWindowInfo> _trackedThirdPartyWindows = new();
 
         private readonly UIA3Automation _automation;
         private AutomationElement? _taskbar;
@@ -135,7 +137,6 @@ namespace BetterLyrics.WinUI3.Hooks
                 }
 
                 _taskbarHwnd = _taskbar.Properties.NativeWindowHandle.ValueOrDefault;
-
                 if (_taskbarHwnd != IntPtr.Zero)
                 {
                     AttachToTaskbar(_taskbarHwnd);
@@ -227,6 +228,9 @@ namespace BetterLyrics.WinUI3.Hooks
                     return Rectangle.Empty;
                 }
 
+                int taskbarTop = taskbarRect.Top;
+                int taskbarBottom = taskbarRect.Bottom;
+
                 int taskbarCenter = taskbarRect.Left + taskbarRect.Width / 2;
                 List<(int Left, int Right)> occupiedSegments = new List<(int, int)>();
 
@@ -290,7 +294,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
                         var rect = child.BoundingRectangle;
                         //Debug.WriteLine($"FlaUI found child window: {className}, Rect: {rect}");
-                        if (rect.Width > 0 && rect.Height > 0)
+                        if (rect.Width > 0 && rect.Height > 0 && rect.Top >= taskbarTop && rect.Bottom <= taskbarBottom)
                         {
                             occupiedSegments.Add((rect.Left, rect.Right));
                         }
@@ -301,6 +305,7 @@ namespace BetterLyrics.WinUI3.Hooks
                 //_logger.LogInformation("=== Enumerating child windows of taskbar via Win32 API... ===");
                 //Debug.WriteLine("=== Enumerating child windows of taskbar via Win32 API... ===");
                 var subWindows = User32.EnumChildWindows(_taskbarHwnd);
+                HashSet<HWND> currentVisibleHwnds = [];
                 foreach (var hwnd in subWindows)
                 {
                     if (hwnd == _targetHwnd)
@@ -309,66 +314,132 @@ namespace BetterLyrics.WinUI3.Hooks
                     }
 
                     StringBuilder classNameBuilder = new(256);
-                    int length = User32.GetClassName(hwnd, classNameBuilder, classNameBuilder.Capacity);
-                    if (length > 0)
+                    _ = User32.GetClassName(hwnd, classNameBuilder, classNameBuilder.Capacity);
+                    string className = classNameBuilder.ToString();
+
+                    if (// 共有
+                        className == "InputNonClientPointerSource" ||
+                        className == "Microsoft.UI.Content.DesktopChildSiteBridge" ||
+                        className == "InputSiteWindowClass" ||
+                        className == "Start" ||
+                        className == "TrayDummySearchControl" ||
+                        className == "TrayNotifyWnd" ||
+                        className == "ReBarWindow32" ||
+                        className == "MSTaskSwWClass" ||
+                        className == "MSTaskListWClass" ||
+
+                        // Win 11
+                        className == "Windows.UI.Core.CoreWindow" ||
+                        className == "Windows.UI.Composition.DesktopWindowContentBridge" ||
+                        className == "Windows.UI.Input.InputSite.WindowClass" ||
+
+                        // Win 10
+                        className == "DynamicContent1" ||
+                        className == "Button" ||
+                        className == "Static" ||
+                        className == "ToolbarWindow32" ||
+                        className == "TrayButton" ||
+                        className == "DynamicContent2" ||
+                        className == "SysPager" ||
+                        className == "PenWorkspaceButton" ||
+                        className == "TrayInputIndicatorWClass" ||
+                        className == "IMEModeButton" ||
+                        className == "InputIndicatorButton" ||
+                        className == "TrayClockWClass" ||
+                        className == "TrayShowDesktopButtonWClass")
                     {
-                        string className = classNameBuilder.ToString();
-                        if (// 共有
-                            className == "InputNonClientPointerSource" ||
-                            className == "Microsoft.UI.Content.DesktopChildSiteBridge" ||
-                            className == "InputSiteWindowClass" ||
-                            className == "Start" ||
-                            className == "TrayDummySearchControl" ||
-                            className == "TrayNotifyWnd" ||
-                            className == "ReBarWindow32" ||
-                            className == "MSTaskSwWClass" ||
-                            className == "MSTaskListWClass" ||
+                        continue; // 跳过系统组件窗口
+                    }
 
-                            // Win 11
-                            className == "Windows.UI.Core.CoreWindow" ||
-                            className == "Windows.UI.Composition.DesktopWindowContentBridge" ||
-                            className == "Windows.UI.Input.InputSite.WindowClass" ||
+                    if (!User32.IsWindowVisible(hwnd))
+                    {
+                        continue; // 跳过不可见窗口
+                    }
 
-                            // Win 10
-                            className == "DynamicContent1" ||
-                            className == "Button" ||
-                            className == "Static" ||
-                            className == "ToolbarWindow32" ||
-                            className == "TrayButton" ||
-                            className == "DynamicContent2" ||
-                            className == "SysPager" ||
-                            className == "PenWorkspaceButton" ||
-                            className == "TrayInputIndicatorWClass" ||
-                            className == "IMEModeButton" ||
-                            className == "InputIndicatorButton" ||
-                            className == "TrayClockWClass" ||
-                            className == "TrayShowDesktopButtonWClass")
+                    if (User32.GetWindowRect(hwnd, out RECT rect))
+                    {
+                        int width = rect.Right - rect.Left;
+                        int height = rect.Bottom - rect.Top;
+                        //_logger.LogInformation("Found child window: {ClassName}", className);
+                        //Debug.WriteLine($"Found child window: {className}, Rect: {rect}");
+                        if (width > 0 && height > 0 && rect.Top >= taskbarTop && rect.Bottom <= taskbarBottom)
                         {
-                            continue; // 跳过系统组件窗口
-                        }
-
-                        if (!User32.IsWindowVisible(hwnd))
-                        {
-                            continue; // 跳过不可见窗口
-                        }
-
-                        if (User32.GetWindowRect(hwnd, out RECT rect))
-                        {
-                            int width = rect.Right - rect.Left;
-                            int height = rect.Bottom - rect.Top;
-                            //_logger.LogInformation("Found child window: {ClassName}", className);
-                            // Debug.WriteLine($"Found child window: {className}, Rect: {rect}");
-                            if (width > 0 && height > 0)
+                            occupiedSegments.Add((rect.Left, rect.Right));
+                            currentVisibleHwnds.Add(hwnd);
+                            _trackedThirdPartyWindows[hwnd] = new TrackedWindowInfo
                             {
-                                occupiedSegments.Add((rect.Left, rect.Right));
-                            }
+                                ClassName = className,
+                                LastRect = rect,
+                                LastSeen = DateTime.Now
+                            };
                         }
                     }
                 }
 
+                List<HWND> hwndsToRemove = [];
+                foreach (var kvp in _trackedThirdPartyWindows)
+                {
+                    HWND trackedHwnd = kvp.Key;
+                    TrackedWindowInfo info = kvp.Value;
+
+                    // 如果这个第三方窗口在这个周期里突然不在任务栏的可见子窗口列表里了
+                    if (!currentVisibleHwnds.Contains(trackedHwnd))
+                    {
+                        bool keepTracking = false;
+
+                        // 尝试全局追踪检查（它可能只是被取消了 WS_VISIBLE 或临时剥离了父级）
+                        // 只要句柄没被系统彻底销毁，GetWindowRect 通常能拿到它最后一次的物理坐标
+                        if (User32.IsWindow(trackedHwnd))
+                        {
+                            if (User32.GetWindowRect(trackedHwnd, out RECT globalRect))
+                            {
+                                int globalWidth = globalRect.Right - globalRect.Left;
+                                int globalHeight = globalRect.Bottom - globalRect.Top;
+
+                                // 只要物理坐标还在任务栏的 Y 轴高度范围内，就判定还在占位
+                                if (globalWidth > 0 && globalHeight > 0 && globalRect.Top >= taskbarTop && globalRect.Bottom <= taskbarBottom)
+                                {
+                                    occupiedSegments.Add((globalRect.Left, globalRect.Right));
+                                    info.LastRect = new Rectangle(globalRect.Left, globalRect.Top, globalWidth, globalHeight);
+                                    info.LastSeen = DateTime.Now; // 句柄仍存活着且坐标合理，刷新存活时间
+                                    keepTracking = true;
+                                }
+                            }
+                        }
+
+                        // 尝试幽灵滞留防抖（纯时间衰减）
+                        // 走到这里说明句柄真的被销毁了，或者坐标飞到了屏幕外（比如被移到了极坐标区隐藏）
+                        if (!keepTracking)
+                        {
+                            TimeSpan timeSinceLost = DateTime.Now - info.LastSeen;
+
+                            // 纯靠时间防抖
+                            // 哪怕用户一直开着开始菜单，只要上面的 IsWindow 策略没拦住，这里也能顶 2.5 秒不闪烁
+                            if (timeSinceLost.TotalSeconds < 2.5)
+                            {
+                                occupiedSegments.Add((info.LastRect.Left, info.LastRect.Right));
+                                keepTracking = true;
+                                // 这里不能更新 LastSeen，直到超时让它自然消亡
+                            }
+                        }
+
+                        // 超时放弃，彻底清理
+                        if (!keepTracking)
+                        {
+                            hwndsToRemove.Add(trackedHwnd);
+                        }
+                    }
+                }
+
+                // 清理那些已经离开超过 2.5 秒的僵尸句柄
+                foreach (var hwnd in hwndsToRemove)
+                {
+                    _trackedThirdPartyWindows.Remove(hwnd);
+                }
+
                 // 将所有被占用的区域按左边界排序并合并重叠部分
                 occupiedSegments = occupiedSegments.OrderBy(s => s.Left).ToList();
-                List<(int Left, int Right)> mergedSegments = new List<(int, int)>();
+                List<(int Left, int Right)> mergedSegments = [];
 
                 foreach (var seg in occupiedSegments)
                 {
