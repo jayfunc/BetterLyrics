@@ -134,7 +134,7 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
                 defaultTotalDuration: AnimationDuration
             );
             ScaleTransition = new(
-                initialValue: 0,
+                initialValue: 0.75,
                 EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
                 defaultTotalDuration: AnimationDuration
             );

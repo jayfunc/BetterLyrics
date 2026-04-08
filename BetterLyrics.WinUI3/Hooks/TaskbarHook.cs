@@ -1,11 +1,14 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.WinUI;
 using FlaUI.Core.AutomationElements;
 using FlaUI.UIA3;
+using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -16,6 +19,8 @@ namespace BetterLyrics.WinUI3.Hooks
 {
     public partial class TaskbarHook : IDisposable
     {
+        private readonly ILogger<TaskbarHook> _logger = Ioc.Default.GetRequiredService<ILogger<TaskbarHook>>();
+
         private readonly UIA3Automation _automation;
         private AutomationElement? _taskbar;
 
@@ -36,7 +41,7 @@ namespace BetterLyrics.WinUI3.Hooks
             _targetWindow = window;
             _targetHwnd = WinRT.Interop.WindowNative.GetWindowHandle(_targetWindow);
 
-            _automation = new UIA3Automation();
+            _automation = new();
             _dispatcherQueue = DispatcherQueueHelper.Instance;
 
             _debounceTimer = _dispatcherQueue?.CreateTimer();
@@ -65,31 +70,42 @@ namespace BetterLyrics.WinUI3.Hooks
 
         private AutomationElement? FindTargetTaskbar()
         {
-            var desktop = _automation.GetDesktop();
-            var primaryTaskbar = desktop.FindFirstChild(cf => cf.ByClassName("Shell_TrayWnd"));
-
-            // 如果外部还没传入显示器范围，默认使用主任务栏
-            if (_targetMonitorRect == Rectangle.Empty)
-                return primaryTaskbar;
-
-            // 检查主任务栏是否刚好在目标显示器上
-            if (primaryTaskbar != null && IsTaskbarOnMonitor(primaryTaskbar))
+            try
             {
-                return primaryTaskbar;
-            }
+                var desktop = _automation.GetDesktop();
+                var primaryTaskbar = desktop.FindFirstChild(x => x.ByClassName("Shell_TrayWnd"));
 
-            // 遍历所有的副屏任务栏
-            var secondaryTaskbars = desktop.FindAllChildren(cf => cf.ByClassName("Shell_SecondaryTrayWnd"));
-            foreach (var taskbar in secondaryTaskbars)
-            {
-                if (IsTaskbarOnMonitor(taskbar))
+                // 如果外部还没传入显示器范围，默认使用主任务栏
+                if (_targetMonitorRect == Rectangle.Empty)
                 {
-                    return taskbar;
+                    return primaryTaskbar;
                 }
-            }
 
-            // 如果都没匹配上，返回主任务栏防止崩溃
-            return primaryTaskbar;
+                // 检查主任务栏是否刚好在目标显示器上
+                if (primaryTaskbar != null && IsTaskbarOnMonitor(primaryTaskbar))
+                {
+                    return primaryTaskbar;
+                }
+
+                // 遍历所有的副屏任务栏
+                var secondaryTaskbars = desktop.FindAllChildren(cf => cf.ByClassName("Shell_SecondaryTrayWnd"));
+
+                foreach (var taskbar in secondaryTaskbars)
+                {
+                    if (IsTaskbarOnMonitor(taskbar))
+                    {
+                        return taskbar;
+                    }
+                }
+
+                // 如果都没匹配上，返回主任务栏防止崩溃
+                return primaryTaskbar;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while finding target taskbar.");
+                return null;
+            }
         }
 
         private bool IsTaskbarOnMonitor(AutomationElement taskbarElement)
@@ -100,8 +116,9 @@ namespace BetterLyrics.WinUI3.Hooks
                 // 只要任务栏和目标显示器有交集，就认为它属于该显示器
                 return rect.IntersectsWith(_targetMonitorRect);
             }
-            catch
+            catch (Exception ex)
             {
+                _logger.LogWarning(ex, "Failed to get BoundingRectangle for taskbar element to check monitor intersection.");
                 return false;
             }
         }
@@ -112,9 +129,13 @@ namespace BetterLyrics.WinUI3.Hooks
             {
                 _taskbar = FindTargetTaskbar();
 
-                if (_taskbar == null) return;
+                if (_taskbar == null)
+                {
+                    return;
+                }
 
                 _taskbarHwnd = _taskbar.Properties.NativeWindowHandle.ValueOrDefault;
+
                 if (_taskbarHwnd != IntPtr.Zero)
                 {
                     AttachToTaskbar(_taskbarHwnd);
@@ -126,7 +147,7 @@ namespace BetterLyrics.WinUI3.Hooks
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Hook Init Failed: {ex.Message}");
+                _logger.LogError(ex, "Hook Init Failed in StartHook!");
             }
         }
 
@@ -147,8 +168,9 @@ namespace BetterLyrics.WinUI3.Hooks
                         {
                             taskbarRect = _taskbar.BoundingRectangle;
                         }
-                        catch
+                        catch (Exception ex)
                         {
+                            _logger.LogWarning(ex, "Failed to get _taskbar.BoundingRectangle inside RequestUpdate. COM object might be disconnected.");
                             return;
                         }
 
@@ -159,7 +181,8 @@ namespace BetterLyrics.WinUI3.Hooks
                         {
                             if (!_isDisposed)
                             {
-                                User32.SetWindowPos((HWND)_targetHwnd, HWND.HWND_TOPMOST,
+                                User32.SetWindowPos(
+                                    (HWND)_targetHwnd, HWND.HWND_TOPMOST,
                                     relativeX, relativeY, voidRect.Width, voidRect.Height,
                                     User32.SetWindowPosFlags.SWP_NOACTIVATE | User32.SetWindowPosFlags.SWP_NOZORDER);
                             }
@@ -171,182 +194,264 @@ namespace BetterLyrics.WinUI3.Hooks
 
         private Rectangle CalculateVoidRect(TaskbarPlacement placement)
         {
-            if (_taskbar == null) return Rectangle.Empty;
-
-            try { var _ = _taskbar.BoundingRectangle; }
-            catch
+            try
             {
-                _taskbar = FindTargetTaskbar();
                 if (_taskbar == null)
                 {
                     return Rectangle.Empty;
                 }
 
-                _taskbarHwnd = _taskbar.Properties.NativeWindowHandle.ValueOrDefault;
-                if (_taskbarHwnd != IntPtr.Zero)
+                try
                 {
-                    AttachToTaskbar(_taskbarHwnd);
+                    var _ = _taskbar.BoundingRectangle;
                 }
-            }
-
-            Rectangle taskbarRect = _taskbar.BoundingRectangle;
-            if (taskbarRect.Width <= 0)
-            {
-                return Rectangle.Empty;
-            }
-
-            int taskbarCenter = taskbarRect.Left + taskbarRect.Width / 2;
-
-            List<(int Left, int Right)> occupiedSegments = new List<(int, int)>();
-
-            // 托盘区域 TrayNotifyWnd
-            var tray = _taskbar.FindFirstChild(cf => cf.ByClassName("TrayNotifyWnd"));
-            if (tray != null && !tray.IsOffscreen)
-            {
-                occupiedSegments.Add((tray.BoundingRectangle.Left, tray.BoundingRectangle.Right));
-            }
-
-            // 任务栏固定的按钮 TaskbarFrameAutomationPeer
-            var frames = _taskbar.FindAllDescendants(cf => cf.ByClassName("Taskbar.TaskbarFrameAutomationPeer"));
-            foreach (var frame in frames)
-            {
-                var children = frame.FindAllChildren();
-                foreach (var child in children)
+                catch (Exception ex)
                 {
-                    if (child.IsOffscreen) continue;
-                    var rect = child.BoundingRectangle;
-                    if (rect.Width > 0 && rect.Height > 0)
+                    _logger.LogWarning(ex, "Taskbar bounding rectangle access failed, attempting to re-find target taskbar...");
+                    _taskbar = FindTargetTaskbar();
+                    if (_taskbar == null)
                     {
-                        occupiedSegments.Add((rect.Left, rect.Right));
-                    }
-                }
-            }
-
-            // 独立窗口控件
-            if (_taskbarHwnd != IntPtr.Zero)
-            {
-                User32.EnumChildWindows((HWND)_taskbarHwnd, (hwnd, lParam) =>
-                {
-                    // 排除自身窗口
-                    if ((IntPtr)hwnd == _targetHwnd)
-                        return true;
-
-                    // 过滤掉不可见/隐藏的窗口
-                    if (!User32.IsWindowVisible(hwnd))
-                        return true;
-
-                    // 仅关注直接挂载在任务栏下的直接子窗口
-                    if ((IntPtr)User32.GetParent(hwnd) != _taskbarHwnd)
-                        return true;
-
-                    // 获取窗口类名进行过滤
-                    StringBuilder sb = new StringBuilder(256);
-                    User32.GetClassName(hwnd, sb, sb.Capacity);
-                    string className = sb.ToString();
-
-                    // 排除 Windows 任务栏自身的系统组件窗口
-                    if (className == "TrayNotifyWnd" ||
-                        className == "MSTaskSwWClass" ||
-                        className == "Windows.UI.Input.InputSite.WindowClass" ||
-                        className == "Windows.UI.Composition.DesktopWindowContentBridge" || // Win11 任务栏桥接层
-                        className == "ReBarWindow32" || // Win10 任务栏容器
-                        className == "SysPager")
-                    {
-                        return true; // 继续遍历下一个
+                        return Rectangle.Empty;
                     }
 
-                    // 获取第三方窗口的位置并记录占用的区域
-                    if (User32.GetWindowRect(hwnd, out var rect))
+                    _taskbarHwnd = _taskbar.Properties.NativeWindowHandle.ValueOrDefault;
+                    if (_taskbarHwnd != IntPtr.Zero)
                     {
+                        AttachToTaskbar(_taskbarHwnd);
+                    }
+                }
+
+                Rectangle taskbarRect = _taskbar.BoundingRectangle;
+                if (taskbarRect.Width <= 0)
+                {
+                    return Rectangle.Empty;
+                }
+
+                int taskbarCenter = taskbarRect.Left + taskbarRect.Width / 2;
+                List<(int Left, int Right)> occupiedSegments = new List<(int, int)>();
+
+                // 托盘区域
+                var tray = _taskbar.FindFirstChild(x => x.ByClassName("TrayNotifyWnd")); // Win 10/11
+                if (tray != null)
+                {
+                    var rect = tray.BoundingRectangle;
+                    occupiedSegments.Add((rect.Left, rect.Right));
+                }
+
+                // 任务栏固定的按钮
+                AutomationElement? pinned = null;
+                if (SystemHelper.IsWindows11OrGreater) // Win 11
+                {
+                    var inputSite = _taskbar.FindFirstChild(x => x.ByClassName("Windows.UI.Input.InputSite.WindowClass"));
+                    pinned = inputSite?.FindFirstChild(x => x.ByClassName("Taskbar.TaskbarFrameAutomationPeer"));
+                }
+                else // Win 10
+                {
+                    pinned = _taskbar.FindFirstChild(x => x.ByClassName("MSTaskListWClass"));
+                }
+
+                if (pinned != null)
+                {
+                    var children = pinned.FindAllChildren();
+                    foreach (var child in children)
+                    {
+                        var rect = child.BoundingRectangle;
                         if (rect.Width > 0 && rect.Height > 0)
                         {
-                            occupiedSegments.Add((rect.left, rect.right));
+                            occupiedSegments.Add((rect.Left, rect.Right));
                         }
                     }
-
-                    return true;
-                }, IntPtr.Zero);
-            }
-
-            // 将所有被占用的区域按左边界排序并合并重叠部分
-            occupiedSegments = occupiedSegments.OrderBy(s => s.Left).ToList();
-            List<(int Left, int Right)> mergedSegments = new List<(int, int)>();
-
-            foreach (var seg in occupiedSegments)
-            {
-                if (mergedSegments.Count == 0)
-                {
-                    mergedSegments.Add(seg);
                 }
-                else
+
+                // 直接子元素（via FlaUI3）
+                //Debug.WriteLine("=== Enumerating child windows of taskbar via FlaUI... ===");
+                var directChildrenByFlaUI = _taskbar.FindAllChildren();
+                foreach (var child in directChildrenByFlaUI)
                 {
-                    var last = mergedSegments[mergedSegments.Count - 1];
-                    if (seg.Left <= last.Right) // 有重叠或相连
+                    if (child.Properties.ClassName.TryGetValue(out var className))
                     {
-                        mergedSegments[mergedSegments.Count - 1] = (last.Left, Math.Max(last.Right, seg.Right));
+                        if (// Win 10/11
+                            className == "TrayNotifyWnd" ||
+                            // Win 10
+                            className == "MSTaskListWClass" ||
+                            // Win 11
+                            className == "MSTaskSwWClass" ||
+                            className == "Windows.UI.Input.InputSite.WindowClass")
+                        {
+                            continue; // 跳过系统组件窗口
+                            // 这里不对 ClassName 为 Start 或 TrayButton 的进行拦截
+                            // 因为在 Win 10 中，开始按钮、Cortana 等组件为任务栏的直接子元素，不包含在 MsTaskListWClass 中
+                        }
+
+                        if (child.Properties.NativeWindowHandle.ValueOrDefault == _targetHwnd)
+                        {
+                            continue; // 跳过自身窗口
+                        }
+
+                        var rect = child.BoundingRectangle;
+                        //Debug.WriteLine($"FlaUI found child window: {className}, Rect: {rect}");
+                        if (rect.Width > 0 && rect.Height > 0)
+                        {
+                            occupiedSegments.Add((rect.Left, rect.Right));
+                        }
                     }
-                    else
+                }
+
+                // 直接子元素（via Win32）
+                //_logger.LogInformation("=== Enumerating child windows of taskbar via Win32 API... ===");
+                //Debug.WriteLine("=== Enumerating child windows of taskbar via Win32 API... ===");
+                var subWindows = User32.EnumChildWindows(_taskbarHwnd);
+                foreach (var hwnd in subWindows)
+                {
+                    if (hwnd == _targetHwnd)
+                    {
+                        continue; // 跳过自身窗口
+                    }
+
+                    StringBuilder classNameBuilder = new(256);
+                    int length = User32.GetClassName(hwnd, classNameBuilder, classNameBuilder.Capacity);
+                    if (length > 0)
+                    {
+                        string className = classNameBuilder.ToString();
+                        if (// 共有
+                            className == "InputNonClientPointerSource" ||
+                            className == "Microsoft.UI.Content.DesktopChildSiteBridge" ||
+                            className == "InputSiteWindowClass" ||
+                            className == "Start" ||
+                            className == "TrayDummySearchControl" ||
+                            className == "TrayNotifyWnd" ||
+                            className == "ReBarWindow32" ||
+                            className == "MSTaskSwWClass" ||
+                            className == "MSTaskListWClass" ||
+
+                            // Win 11
+                            className == "Windows.UI.Core.CoreWindow" ||
+                            className == "Windows.UI.Composition.DesktopWindowContentBridge" ||
+                            className == "Windows.UI.Input.InputSite.WindowClass" ||
+
+                            // Win 10
+                            className == "DynamicContent1" ||
+                            className == "Button" ||
+                            className == "Static" ||
+                            className == "ToolbarWindow32" ||
+                            className == "TrayButton" ||
+                            className == "DynamicContent2" ||
+                            className == "SysPager" ||
+                            className == "PenWorkspaceButton" ||
+                            className == "TrayInputIndicatorWClass" ||
+                            className == "IMEModeButton" ||
+                            className == "InputIndicatorButton" ||
+                            className == "TrayClockWClass" ||
+                            className == "TrayShowDesktopButtonWClass")
+                        {
+                            continue; // 跳过系统组件窗口
+                        }
+
+                        if (!User32.IsWindowVisible(hwnd))
+                        {
+                            continue; // 跳过不可见窗口
+                        }
+
+                        if (User32.GetWindowRect(hwnd, out RECT rect))
+                        {
+                            int width = rect.Right - rect.Left;
+                            int height = rect.Bottom - rect.Top;
+                            //_logger.LogInformation("Found child window: {ClassName}", className);
+                            // Debug.WriteLine($"Found child window: {className}, Rect: {rect}");
+                            if (width > 0 && height > 0)
+                            {
+                                occupiedSegments.Add((rect.Left, rect.Right));
+                            }
+                        }
+                    }
+                }
+
+                // 将所有被占用的区域按左边界排序并合并重叠部分
+                occupiedSegments = occupiedSegments.OrderBy(s => s.Left).ToList();
+                List<(int Left, int Right)> mergedSegments = new List<(int, int)>();
+
+                foreach (var seg in occupiedSegments)
+                {
+                    if (mergedSegments.Count == 0)
                     {
                         mergedSegments.Add(seg);
                     }
+                    else
+                    {
+                        var last = mergedSegments[mergedSegments.Count - 1];
+                        if (seg.Left <= last.Right) // 有重叠或相连
+                        {
+                            mergedSegments[mergedSegments.Count - 1] = (last.Left, Math.Max(last.Right, seg.Right));
+                        }
+                        else
+                        {
+                            mergedSegments.Add(seg);
+                        }
+                    }
                 }
-            }
 
-            // 提取所有连续的空白区域
-            List<Rectangle> voids = new List<Rectangle>();
-            int currentX = taskbarRect.Left;
-            int padding = 0; // 左右边距
+                // 提取所有连续的空白区域
+                List<Rectangle> voids = new List<Rectangle>();
+                int currentX = taskbarRect.Left;
+                int padding = 0; // 左右边距
 
-            foreach (var seg in mergedSegments)
-            {
-                int gapWidth = seg.Left - currentX;
-                int actualWidth = gapWidth - (2 * padding);
-                if (actualWidth > 20) // 过滤掉太小的缝隙
+                foreach (var seg in mergedSegments)
                 {
-                    voids.Add(new Rectangle(currentX + padding, taskbarRect.Top, actualWidth, taskbarRect.Height));
+                    int gapWidth = seg.Left - currentX;
+                    int actualWidth = gapWidth - (2 * padding);
+                    if (actualWidth > 20) // 过滤掉太小的缝隙
+                    {
+                        voids.Add(new Rectangle(currentX + padding, taskbarRect.Top, actualWidth, taskbarRect.Height));
+                    }
+                    currentX = Math.Max(currentX, seg.Right);
                 }
-                currentX = Math.Max(currentX, seg.Right);
-            }
 
-            // 检查最后一个占用段到任务栏右边缘的空白
-            int finalGapWidth = taskbarRect.Right - currentX;
-            if (finalGapWidth - (2 * padding) > 20)
-            {
-                voids.Add(new Rectangle(currentX + padding, taskbarRect.Top, finalGapWidth - (2 * padding), taskbarRect.Height));
-            }
+                // 检查最后一个占用段到任务栏右边缘的空白
+                int finalGapWidth = taskbarRect.Right - currentX;
+                if (finalGapWidth - (2 * padding) > 20)
+                {
+                    voids.Add(new Rectangle(currentX + padding, taskbarRect.Top, finalGapWidth - (2 * padding), taskbarRect.Height));
+                }
 
-            if (voids.Count == 0)
+                if (voids.Count == 0)
+                {
+                    //_logger.LogWarning("No available voids found on the taskbar.");
+                    return Rectangle.Empty;
+                }
+
+                // 根据用户偏好和空白区域长度进行筛选
+                // 将空白区按中心点分类为 Left 和 Right，并按宽度降序排列
+                var leftVoids = voids.Where(v => (v.Left + v.Width / 2) < taskbarCenter).OrderByDescending(v => v.Width).ToList();
+                var rightVoids = voids.Where(v => (v.Left + v.Width / 2) >= taskbarCenter).OrderByDescending(v => v.Width).ToList();
+
+                Rectangle bestLeft = leftVoids.FirstOrDefault();
+                Rectangle bestRight = rightVoids.FirstOrDefault();
+
+                // 如果某一侧完全没有空白，则使用另一侧的最优空白
+                if (bestLeft == Rectangle.Empty && bestRight != Rectangle.Empty) bestLeft = bestRight;
+                if (bestRight == Rectangle.Empty && bestLeft != Rectangle.Empty) bestRight = bestLeft;
+
+                // 全局最宽的空白（用于 Center / Auto 偏好）
+                Rectangle widestOverall = voids.OrderByDescending(v => v.Width).First();
+
+                switch (placement)
+                {
+                    case TaskbarPlacement.Left:
+                        return bestLeft != Rectangle.Empty ? bestLeft : widestOverall;
+
+                    case TaskbarPlacement.Right:
+                        return bestRight != Rectangle.Empty ? bestRight : widestOverall;
+
+                    case TaskbarPlacement.Center:
+                    case TaskbarPlacement.Auto:
+                    default:
+                        return widestOverall;
+                }
+            }
+            catch (Exception ex)
             {
+                //_logger.LogError(ex, "Error calculating taskbar voids.");
                 return Rectangle.Empty;
-            }
-
-            // 根据用户偏好和空白区域长度进行筛选
-            // 将空白区按中心点分类为 Left 和 Right，并按宽度降序排列
-            var leftVoids = voids.Where(v => (v.Left + v.Width / 2) < taskbarCenter).OrderByDescending(v => v.Width).ToList();
-            var rightVoids = voids.Where(v => (v.Left + v.Width / 2) >= taskbarCenter).OrderByDescending(v => v.Width).ToList();
-
-            Rectangle bestLeft = leftVoids.FirstOrDefault();
-            Rectangle bestRight = rightVoids.FirstOrDefault();
-
-            // 如果某一侧完全没有空白，则使用另一侧的最优空白
-            if (bestLeft == Rectangle.Empty && bestRight != Rectangle.Empty) bestLeft = bestRight;
-            if (bestRight == Rectangle.Empty && bestLeft != Rectangle.Empty) bestRight = bestLeft;
-
-            // 全局最宽的空白（用于 Center / Auto 偏好）
-            Rectangle widestOverall = voids.OrderByDescending(v => v.Width).First();
-
-            switch (placement)
-            {
-                case TaskbarPlacement.Left:
-                    return bestLeft != Rectangle.Empty ? bestLeft : widestOverall;
-
-                case TaskbarPlacement.Right:
-                    return bestRight != Rectangle.Empty ? bestRight : widestOverall;
-
-                case TaskbarPlacement.Center:
-                case TaskbarPlacement.Auto:
-                default:
-                    return widestOverall;
             }
         }
 
@@ -355,13 +460,39 @@ namespace BetterLyrics.WinUI3.Hooks
             if (taskbarHwnd == IntPtr.Zero || _targetHwnd == IntPtr.Zero) return;
 
             _targetWindow.SetIsChildWindow(true);
-
             User32.SetParent((HWND)_targetHwnd, (HWND)taskbarHwnd);
+        }
+
+        private bool IsStartMenuFocused()
+        {
+            HWND foregroundWindow = User32.GetForegroundWindow();
+            if (foregroundWindow == HWND.NULL) return false;
+
+            if (User32.GetWindowThreadProcessId(foregroundWindow, out uint processId) == HRESULT.S_OK)
+            {
+                try
+                {
+                    Process process = Process.GetProcessById((int)processId);
+                    string processName = process.ProcessName;
+
+                    if (processName.Equals("StartMenuExperienceHost", StringComparison.OrdinalIgnoreCase) ||
+                        processName.Equals("ShellExperienceHost", StringComparison.OrdinalIgnoreCase))
+                    {
+                        return true;
+                    }
+                }
+                catch
+                {
+                }
+            }
+
+            return false;
         }
 
         public void Dispose()
         {
             if (_isDisposed) return;
+            //_logger.LogInformation("Disposing TaskbarHook...");
             _isDisposed = true;
 
             _pollingTimer?.Stop();
@@ -377,10 +508,11 @@ namespace BetterLyrics.WinUI3.Hooks
                 try
                 {
                     _automation?.Dispose();
+                    //_logger.LogInformation("FlaUI Automation disposed successfully.");
                 }
                 catch (Exception ex)
                 {
-                    System.Diagnostics.Debug.WriteLine($"Background Dispose Error: {ex.Message}");
+                    _logger.LogError(ex, "Background Dispose Error for FlaUI Automation.");
                 }
             });
         }
