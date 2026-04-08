@@ -36,7 +36,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsAlwaysHidePlayingBar { get; set; } = false;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsPinToTaskbar { get; set; } = false;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial TaskbarPlacement TaskbarPlacement { get; set; } = TaskbarPlacement.Auto;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial TaskbarPlacement TaskbarPlacement { get; set; } = TaskbarPlacement.Left;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsMaximized { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsFullscreen { get; set; } = false;

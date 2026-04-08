@@ -387,13 +387,11 @@ namespace BetterLyrics.WinUI3.Controls
                 DrawCoreWithEdgeFeatheringHandled(sender, ds, bounds, overlayColor, finalOpacity, lyricsStyle, albumStyle, lyricsBg);
             }
 
-#if DEBUG
-            //ds.DrawRectangle(new Rect(_renderLyricsStartX, _renderLyricsStartY, _renderLyricsWidth, _renderLyricsHeight), Colors.Cyan, 1f);
-            //ds.DrawLine(new Vector2(0, (float)sender.Size.Height / 2), new Vector2((float)sender.Size.Width, (float)sender.Size.Height / 2), Colors.Cyan);
-#endif
-
             if (_lyricsWindowStatus.ShowDebugOverlay)
             {
+                ds.DrawRectangle(new Rect(_renderLyricsStartX, _renderLyricsStartY, _renderLyricsWidth, _renderLyricsHeight), Colors.Cyan, 1f);
+                ds.DrawLine(new Vector2(0, (float)sender.Size.Height / 2), new Vector2((float)sender.Size.Width, (float)sender.Size.Height / 2), Colors.Cyan);
+
                 string debugText =
                     $"Spout Sender : {_spoutHook?.SenderName ?? "Disabled"}\n" +
                     $"FPS          : {(1.0 / args.Timing.ElapsedTime.TotalSeconds):00.0} (Avg: {args.Timing.UpdateCount / args.Timing.TotalTime.TotalSeconds:00.0})\n" +
@@ -437,11 +435,9 @@ namespace BetterLyrics.WinUI3.Controls
                     args.DrawingSession.DrawRectangle(bgRect, Colors.Cyan, 1.0f);
                     args.DrawingSession.DrawTextLayout(layout, new Vector2(xPos + padding, yPos + padding), Colors.GreenYellow);
                 }
-            }
 
-#if DEBUG
-            //ds.DrawCircle(_mousePosition.ToVector2().AddX((float)_renderLyricsStartX).AddY((float)_renderLyricsStartY), 1f, Colors.Cyan);
-#endif
+                ds.DrawCircle(_mousePosition.ToVector2().AddX((float)_renderLyricsStartX).AddY((float)_renderLyricsStartY), 1f, Colors.Cyan);
+            }
         }
 
         private void Canvas_Update(ICanvasAnimatedControl sender, CanvasAnimatedUpdateEventArgs args)
