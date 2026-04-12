@@ -217,7 +217,7 @@ namespace BetterLyrics.WinUI3.Renderer
 
                         new() { Position = 0.05f, Color = Colors.White },
                         new() { Position = 0.45f, Color = Colors.White },
-                        
+
                         new() { Position = 0.50f, Color = Colors.Transparent },
 
                         new() { Position = 0.55f, Color = Colors.White },

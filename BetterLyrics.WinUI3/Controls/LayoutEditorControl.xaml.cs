@@ -73,7 +73,7 @@ namespace BetterLyrics.WinUI3.Controls
 
         public LayoutEditorControl()
         {
-            this.InitializeComponent();            
+            this.InitializeComponent();
             DataContext = Ioc.Default.GetRequiredService<LayoutEditorControlViewModel>();
             ViewModel.LayoutRequiresRender += () =>
             {

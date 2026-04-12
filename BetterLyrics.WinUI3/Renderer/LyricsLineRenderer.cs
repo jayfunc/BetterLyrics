@@ -1,18 +1,12 @@
 ﻿using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.Models.Settings;
-using LiveChartsCore.Measure;
-using LiveChartsCore.SkiaSharpView.Painting.ImageFilters;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
-using Microsoft.Graphics.Canvas.Text;
-using Microsoft.UI.Xaml.Shapes;
-using SkiaSharp;
 using System;
 using System.Numerics;
 using Windows.Foundation;
-using static Vanara.PInvoke.Kernel32;
 
 namespace BetterLyrics.WinUI3.Renderer
 {
