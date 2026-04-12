@@ -1,5 +1,4 @@
-﻿using BetterLyrics.WinUI3.Extensions;
-using BetterLyrics.WinUI3.Views;
+﻿using BetterLyrics.WinUI3.Views;
 using Microsoft.UI.Dispatching;
 using System;
 using System.Threading.Tasks;

@@ -277,7 +277,7 @@ namespace BetterLyrics.WinUI3.Controls
 
                         window.MoveAndResize(windowRectAfter);
                         await Task.Delay(500);
-                        
+
                         window.LyricsWindowStatus.IsLocked = true;
                     }
                     else if (status.IsPinToTaskbar)
