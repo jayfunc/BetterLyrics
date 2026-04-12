@@ -216,6 +216,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancelar</value>
   </data>
+  <data name="Column" xml:space="preserve">
+    <value>Columna</value>
+  </data>
   <data name="Confirm" xml:space="preserve">
     <value>Confirme</value>
   </data>
@@ -323,6 +326,270 @@
   </data>
   <data name="LastFMRequestUnAuthTitle" xml:space="preserve">
     <value>Revocar el acceso de BetterLyrics a su cuenta de Last.fm</value>
+  </data>
+  <data name="LayoutEditorControlAddColButton.Content" xml:space="preserve">
+    <value>Añadir columna</value>
+  </data>
+  <data name="LayoutEditorControlAddRowButton.Content" xml:space="preserve">
+    <value>Añadir fila</value>
+  </data>
+  <data name="LayoutEditorControlAlignmentHeader.Text" xml:space="preserve">
+    <value>Alineación</value>
+  </data>
+  <data name="LayoutEditorControlAllPlacedMessage.Text" xml:space="preserve">
+    <value>Se han colocado todos los componentes.</value>
+  </data>
+  <data name="LayoutEditorControlCanvasNavigationHeader.Text" xml:space="preserve">
+    <value>Lienzo Navegación</value>
+  </data>
+  <data name="LayoutEditorControlCanvasPaddingTextBlock.Text" xml:space="preserve">
+    <value>Acolchado</value>
+  </data>
+  <data name="LayoutEditorControlCanvasSectionHeader.Text" xml:space="preserve">
+    <value>Lienzo</value>
+  </data>
+  <data name="LayoutEditorControlChangeComponentSpanHeader.Text" xml:space="preserve">
+    <value>Cambiar el tamaño del componente</value>
+  </data>
+  <data name="LayoutEditorControlChangeComponentSpanInfoTag.Text" xml:space="preserve">
+    <value>Teclas de flecha / WASD</value>
+  </data>
+  <data name="LayoutEditorControlColBox.Header" xml:space="preserve">
+    <value>Columna</value>
+  </data>
+  <data name="LayoutEditorControlColSpanBox.Header" xml:space="preserve">
+    <value>Extensión de columna</value>
+  </data>
+  <data name="LayoutEditorControlColumnHeader.Text" xml:space="preserve">
+    <value>Columna</value>
+  </data>
+  <data name="LayoutEditorControlComponentAlbumArt" xml:space="preserve">
+    <value>Arte del álbum</value>
+  </data>
+  <data name="LayoutEditorControlComponentLyrics" xml:space="preserve">
+    <value>Letra</value>
+  </data>
+  <data name="LayoutEditorControlComponentNone" xml:space="preserve">
+    <value>Ninguno</value>
+  </data>
+  <data name="LayoutEditorControlComponentOperationHeader.Text" xml:space="preserve">
+    <value>Operaciones de componentes (selección obligatoria)</value>
+  </data>
+  <data name="LayoutEditorControlComponentSongInfo" xml:space="preserve">
+    <value>Información sobre la canción</value>
+  </data>
+  <data name="LayoutEditorControlCopyHere" xml:space="preserve">
+    <value>Coloque aquí</value>
+  </data>
+  <data name="LayoutEditorControlDeleteBottomRow" xml:space="preserve">
+    <value>Suprimir la fila siguiente</value>
+  </data>
+  <data name="LayoutEditorControlDeleteCol.Text" xml:space="preserve">
+    <value>Borrar esta columna</value>
+  </data>
+  <data name="LayoutEditorControlDeleteComponentHeader.Text" xml:space="preserve">
+    <value>Eliminar componente</value>
+  </data>
+  <data name="LayoutEditorControlDeleteLeftColumn" xml:space="preserve">
+    <value>Borrar columna a la izquierda</value>
+  </data>
+  <data name="LayoutEditorControlDeleteRightColumn" xml:space="preserve">
+    <value>Borrar columna a la derecha</value>
+  </data>
+  <data name="LayoutEditorControlDeleteRow.Text" xml:space="preserve">
+    <value>Eliminar esta fila</value>
+  </data>
+  <data name="LayoutEditorControlDeleteTopRow" xml:space="preserve">
+    <value>Suprimir la fila anterior</value>
+  </data>
+  <data name="LayoutEditorControlGlobalColSpacingBox.Header" xml:space="preserve">
+    <value>Distancia entre columnas</value>
+  </data>
+  <data name="LayoutEditorControlGlobalPadBottomBox.Header" xml:space="preserve">
+    <value>Fondo</value>
+  </data>
+  <data name="LayoutEditorControlGlobalPadLeftBox.Header" xml:space="preserve">
+    <value>Izquierda</value>
+  </data>
+  <data name="LayoutEditorControlGlobalPadRightBox.Header" xml:space="preserve">
+    <value>Derecha</value>
+  </data>
+  <data name="LayoutEditorControlGlobalPadTopBox.Header" xml:space="preserve">
+    <value>Top</value>
+  </data>
+  <data name="LayoutEditorControlGlobalRowSpacingBox.Header" xml:space="preserve">
+    <value>Distancia entre hileras</value>
+  </data>
+  <data name="LayoutEditorControlHandToolToggle.Label" xml:space="preserve">
+    <value>Pan</value>
+  </data>
+  <data name="LayoutEditorControlHelpButton.Label" xml:space="preserve">
+    <value>Guía de atajos</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalAlignmentBox.Header" xml:space="preserve">
+    <value>Alineación horizontal</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalAlignmentCenter.Content" xml:space="preserve">
+    <value>Centro</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalAlignmentLeft.Content" xml:space="preserve">
+    <value>Izquierda</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalAlignmentRight.Content" xml:space="preserve">
+    <value>Derecha</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalAlignmentStretch.Content" xml:space="preserve">
+    <value>Estire</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalScrollHeader.Text" xml:space="preserve">
+    <value>Desplazamiento horizontal</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalScrollInfoTag.Text" xml:space="preserve">
+    <value>Rueda del ratón</value>
+  </data>
+  <data name="LayoutEditorControlInsertColAfter.Text" xml:space="preserve">
+    <value>Insertar columna a la derecha</value>
+  </data>
+  <data name="LayoutEditorControlInsertColBefore.Text" xml:space="preserve">
+    <value>Insertar columna a la izquierda</value>
+  </data>
+  <data name="LayoutEditorControlInsertColumn" xml:space="preserve">
+    <value>Insertar columna aquí</value>
+  </data>
+  <data name="LayoutEditorControlInsertRow" xml:space="preserve">
+    <value>Insertar fila aquí</value>
+  </data>
+  <data name="LayoutEditorControlInsertRowAfter.Text" xml:space="preserve">
+    <value>Insertar fila a continuación</value>
+  </data>
+  <data name="LayoutEditorControlInsertRowBefore.Text" xml:space="preserve">
+    <value>Insertar fila arriba</value>
+  </data>
+  <data name="LayoutEditorControlKeyboardShortcutsHeader.Text" xml:space="preserve">
+    <value>Atajos de teclado</value>
+  </data>
+  <data name="LayoutEditorControlMarginBottomBox.Header" xml:space="preserve">
+    <value>Fondo</value>
+  </data>
+  <data name="LayoutEditorControlMarginHeader.Text" xml:space="preserve">
+    <value>Margen</value>
+  </data>
+  <data name="LayoutEditorControlMarginLeftBox.Header" xml:space="preserve">
+    <value>Izquierda</value>
+  </data>
+  <data name="LayoutEditorControlMarginRightBox.Header" xml:space="preserve">
+    <value>Derecha</value>
+  </data>
+  <data name="LayoutEditorControlMarginTopBox.Header" xml:space="preserve">
+    <value>Top</value>
+  </data>
+  <data name="LayoutEditorControlMoveComponentHeader.Text" xml:space="preserve">
+    <value>Desplazar componente</value>
+  </data>
+  <data name="LayoutEditorControlMoveComponentInfoTag.Text" xml:space="preserve">
+    <value>Teclas de flecha / WASD</value>
+  </data>
+  <data name="LayoutEditorControlMoveHere" xml:space="preserve">
+    <value>Muévete aquí</value>
+  </data>
+  <data name="LayoutEditorControlNoSelection" xml:space="preserve">
+    <value>Seleccione un componente en la vista previa o en la lista de la izquierda para continuar.</value>
+  </data>
+  <data name="LayoutEditorControlPendingComponentsDescriptionTextBlock.Text" xml:space="preserve">
+    <value>Arrastre los componentes a la cuadrícula de la derecha para colocarlos. Una vez colocados, los componentes pueden moverse libremente dentro de la cuadrícula.</value>
+  </data>
+  <data name="LayoutEditorControlPendingComponentsTextBlock.Text" xml:space="preserve">
+    <value>Componente pendiente</value>
+  </data>
+  <data name="LayoutEditorControlPlacedComponentsDescriptionTextBlock.Text" xml:space="preserve">
+    <value>Seleccione aquí el componente si está oculto o no se puede seleccionar a la derecha.</value>
+  </data>
+  <data name="LayoutEditorControlPlacedComponentsTextBlock.Text" xml:space="preserve">
+    <value>Componentes colocados</value>
+  </data>
+  <data name="LayoutEditorControlRemoveButton.Content" xml:space="preserve">
+    <value>Quitar componente</value>
+  </data>
+  <data name="LayoutEditorControlRemoveColButton.Content" xml:space="preserve">
+    <value>Quitar columna</value>
+  </data>
+  <data name="LayoutEditorControlRemoveRowButton.Content" xml:space="preserve">
+    <value>Eliminar fila</value>
+  </data>
+  <data name="LayoutEditorControlRowBox.Header" xml:space="preserve">
+    <value>Fila</value>
+  </data>
+  <data name="LayoutEditorControlRowHeader.Text" xml:space="preserve">
+    <value>Fila</value>
+  </data>
+  <data name="LayoutEditorControlRowSpanBox.Header" xml:space="preserve">
+    <value>Extensión de fila</value>
+  </data>
+  <data name="LayoutEditorControlSelectedComponentLabel.Text" xml:space="preserve">
+    <value>Seleccione un componente en la vista previa o en la lista de la izquierda para continuar.</value>
+  </data>
+  <data name="LayoutEditorControlSelectedComponentPropertiesHeader.Text" xml:space="preserve">
+    <value>Propiedades</value>
+  </data>
+  <data name="LayoutEditorControlSetBottomRowToAuto" xml:space="preserve">
+    <value>Poner la fila de abajo en Auto</value>
+  </data>
+  <data name="LayoutEditorControlSetBottomRowToStar" xml:space="preserve">
+    <value>Poner la fila de abajo en Relleno</value>
+  </data>
+  <data name="LayoutEditorControlSetLeftColumnToAuto" xml:space="preserve">
+    <value>Columna izquierda en Auto</value>
+  </data>
+  <data name="LayoutEditorControlSetLeftColumnToStar" xml:space="preserve">
+    <value>Establecer la columna izquierda en Relleno</value>
+  </data>
+  <data name="LayoutEditorControlSetRightColumnToAuto" xml:space="preserve">
+    <value>Columna derecha en Auto</value>
+  </data>
+  <data name="LayoutEditorControlSetRightColumnToStar" xml:space="preserve">
+    <value>Columna derecha en Relleno</value>
+  </data>
+  <data name="LayoutEditorControlSetTopRowToAuto" xml:space="preserve">
+    <value>Poner la fila superior en Auto</value>
+  </data>
+  <data name="LayoutEditorControlSetTopRowToStar" xml:space="preserve">
+    <value>Establecer la fila superior en Relleno</value>
+  </data>
+  <data name="LayoutEditorControlTemporaryActivateHandHeader.Text" xml:space="preserve">
+    <value>Activar temporalmente Herramienta manual</value>
+  </data>
+  <data name="LayoutEditorControlTemporaryActivateHandInfoTag.Text" xml:space="preserve">
+    <value>Pulsación larga Espacio</value>
+  </data>
+  <data name="LayoutEditorControlVerticalAlignmentBottom.Content" xml:space="preserve">
+    <value>Fondo</value>
+  </data>
+  <data name="LayoutEditorControlVerticalAlignmentBox.Header" xml:space="preserve">
+    <value>Alineación vertical</value>
+  </data>
+  <data name="LayoutEditorControlVerticalAlignmentCenter.Content" xml:space="preserve">
+    <value>Centro</value>
+  </data>
+  <data name="LayoutEditorControlVerticalAlignmentStretch.Content" xml:space="preserve">
+    <value>Estire</value>
+  </data>
+  <data name="LayoutEditorControlVerticalAlignmentTop.Content" xml:space="preserve">
+    <value>Top</value>
+  </data>
+  <data name="LayoutEditorControlZoomCanvasHeader.Text" xml:space="preserve">
+    <value>Ampliar/reducir</value>
+  </data>
+  <data name="LayoutEditorControlZoomCanvasInfoTag.Text" xml:space="preserve">
+    <value>Rueda del ratón</value>
+  </data>
+  <data name="LayoutEditorControlZoomInButton.Label" xml:space="preserve">
+    <value>Ampliar</value>
+  </data>
+  <data name="LayoutEditorControlZoomOutButton.Label" xml:space="preserve">
+    <value>Alejar</value>
+  </data>
+  <data name="LayoutEditorControlZoomResetButton.Label" xml:space="preserve">
+    <value>Zoom para ajustar</value>
   </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>Error al solicitar traducción a LibreTranslate. Verifique la configuración o la configuración local de LibreTranslate</value>
@@ -887,6 +1154,9 @@
   </data>
   <data name="Romaji" xml:space="preserve">
     <value>Romaji</value>
+  </data>
+  <data name="Row" xml:space="preserve">
+    <value>Fila</value>
   </data>
   <data name="SetingsPageContributors.Text" xml:space="preserve">
     <value>Colaboradores</value>
@@ -1892,6 +2162,12 @@
   </data>
   <data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
     <value>Tú, que estás usando este software</value>
+  </data>
+  <data name="SetTo1Star" xml:space="preserve">
+    <value>Poner a 1*</value>
+  </data>
+  <data name="SetToAuto" xml:space="preserve">
+    <value>Auto</value>
   </data>
   <data name="SLyricsWindowSettingsControlShareMoveToMonitor.Text" xml:space="preserve">
     <value>Pasar a monitor</value>

@@ -1,7 +1,9 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using BetterLyrics.WinUI3.Collections;
 using BetterLyrics.WinUI3.Controls;
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Helper.Lyrics;
 using BetterLyrics.WinUI3.Hooks;
@@ -19,9 +21,11 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
+using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
@@ -31,13 +35,14 @@ namespace BetterLyrics.WinUI3.Views
 {
     public sealed partial class NowPlayingPage : Page,
         IRecipient<PropertyChangedMessage<SongInfo>>,
-        IRecipient<PropertyChangedMessage<LyricsLayoutOrientation>>,
-        IRecipient<PropertyChangedMessage<LyricsDisplayType>>,
         IRecipient<PropertyChangedMessage<int>>,
+        IRecipient<PropertyChangedMessage<double>>,
         IRecipient<PropertyChangedMessage<bool>>,
         IRecipient<PropertyChangedMessage<string>>,
         IRecipient<PropertyChangedMessage<MappedSongSearchQuery?>>,
-        IRecipient<PropertyChangedMessage<NowPlayingPalette>>
+        IRecipient<PropertyChangedMessage<NowPlayingPalette>>,
+        IRecipient<PropertyChangedMessage<FullyObservableCollection<ComponentPlacement>>>,
+        IRecipient<PropertyChangedMessage<ObservableCollection<string>>>
     {
         private readonly IGSMTCService _gsmtcService = Ioc.Default.GetRequiredService<IGSMTCService>();
         private readonly ISongSearchMapService _songSearchMapService = Ioc.Default.GetRequiredService<ISongSearchMapService>();
@@ -59,9 +64,7 @@ namespace BetterLyrics.WinUI3.Views
         public NowPlayingPage()
         {
             this.InitializeComponent();
-
             DataContext = Ioc.Default.GetRequiredService<NowPlayingPageViewModel>();
-
             WeakReferenceMessenger.Default.RegisterAll(this);
         }
 
@@ -77,7 +80,10 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        // ==== SongInfo
+        private void LayoutProfile_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            OnLayoutChanged();
+        }
 
         private void RenderTextBlock(TextBlock? sender, string? text, double fontSize)
         {
@@ -100,7 +106,6 @@ namespace BetterLyrics.WinUI3.Views
             if (LyricsWindowStatus == null) return;
 
             var lyricsLayoutMetrics = LyricsLayoutHelper.CalculateLayout(RootGrid.ActualWidth, RootGrid.ActualHeight);
-
             var albumArtLayoutSettings = LyricsWindowStatus.AlbumArtLayoutSettings;
 
             var titleFontSize = albumArtLayoutSettings.IsAutoSongInfoFontSize ? lyricsLayoutMetrics.SongTitleSize : albumArtLayoutSettings.SongInfoFontSize;
@@ -117,418 +122,150 @@ namespace BetterLyrics.WinUI3.Views
             RenderTextBlock(AlbumTextBlock, mappedAlbum, albumFontSize);
         }
 
-        private void UpdateSongInfoOpacity()
-        {
-            if (LyricsWindowStatus == null) return;
-
-            switch (LyricsWindowStatus.LyricsDisplayType)
-            {
-                case LyricsDisplayType.AlbumArtOnly:
-                    SongInfoStackPanel.Opacity = 1;
-                    break;
-                case LyricsDisplayType.LyricsOnly:
-                    SongInfoStackPanel.Opacity = 0;
-                    break;
-                case LyricsDisplayType.SplitView:
-                    SongInfoStackPanel.Opacity = 1;
-                    break;
-                default:
-                    break;
-            }
-        }
-
         private async Task RefreshSongInfoAsync()
         {
             SongInfoStackPanel.Opacity = 0;
             await Task.Delay(Constants.Time.AnimationDuration);
             await RenderSongInfoAsync();
             SongInfoStackPanel.Opacity = 1;
-            UpdateSongInfoOpacity();
         }
 
-        // ==== AlbumArt
-        private void UpdateAlbumArtOpacity()
+        private void ApplyLayoutProfile()
         {
-            if (LyricsWindowStatus == null) return;
+            var profile = LyricsWindowStatus?.LayoutProfile;
+            if (profile == null) return;
 
-            switch (LyricsWindowStatus.LyricsDisplayType)
+            DynamicLayoutGrid.RowDefinitions.Clear();
+            DynamicLayoutGrid.ColumnDefinitions.Clear();
+
+            foreach (var row in profile.RowDefinitions)
+                DynamicLayoutGrid.RowDefinitions.Add(new RowDefinition { Height = ParseGridLength(row) });
+
+            foreach (var col in profile.ColumnDefinitions)
+                DynamicLayoutGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = ParseGridLength(col) });
+
+            LyricsContainer.Visibility = Visibility.Collapsed;
+            AlbumArtGrid.Visibility = Visibility.Collapsed;
+            SongInfoStackPanel.Visibility = Visibility.Collapsed;
+
+            foreach (var placement in profile.Placements)
             {
-                case LyricsDisplayType.AlbumArtOnly:
-                    AlbumArtGrid.Opacity = 1;
-                    break;
-                case LyricsDisplayType.LyricsOnly:
-                    AlbumArtGrid.Opacity = 0;
-                    break;
-                case LyricsDisplayType.SplitView:
-                    AlbumArtGrid.Opacity = 1;
-                    break;
-                default:
-                    break;
+                FrameworkElement? targetElement = placement.ComponentType switch
+                {
+                    ComponentType.AlbumArt => AlbumArtGrid,
+                    ComponentType.Lyrics => LyricsContainer,
+                    ComponentType.SongInfo => SongInfoStackPanel,
+                    _ => null
+                };
+
+                if (targetElement != null)
+                {
+                    targetElement.Visibility = Visibility.Visible;
+
+                    Grid.SetRow(targetElement, placement.Row);
+                    Grid.SetColumn(targetElement, placement.Column);
+                    Grid.SetRowSpan(targetElement, placement.RowSpan);
+                    Grid.SetColumnSpan(targetElement, placement.ColumnSpan);
+
+                    targetElement.Margin = new Thickness(
+                        placement.MarginLeft,
+                        placement.MarginTop,
+                        placement.MarginRight,
+                        placement.MarginBottom);
+
+                    targetElement.HorizontalAlignment = placement.HorizontalAlignment;
+                    targetElement.VerticalAlignment = placement.VerticalAlignment;
+                }
             }
         }
 
-        // ====
-
-        private void UpdateTrackSummaryGridSpan()
+        private GridLength ParseGridLength(string lengthStr)
         {
-            if (LyricsWindowStatus == null) return;
+            if (string.Equals(lengthStr, "Auto", StringComparison.OrdinalIgnoreCase))
+                return new GridLength(1, GridUnitType.Auto);
 
-            bool isSwapped = LyricsWindowStatus.SwitchLyricsDisplayTypeSplitView;
+            if (lengthStr.EndsWith("*") && double.TryParse(lengthStr.TrimEnd('*'), out double starVal))
+                return new GridLength(starVal, GridUnitType.Star);
 
-            switch (LyricsWindowStatus.LyricsDisplayType)
-            {
-                case LyricsDisplayType.AlbumArtOnly:
-                    Grid.SetRow(TrackSummaryGrid, 0);
-                    Grid.SetColumn(TrackSummaryGrid, 1);
-                    Grid.SetRowSpan(TrackSummaryGrid, 3);
-                    Grid.SetColumnSpan(TrackSummaryGrid, 3);
-                    break;
-                case LyricsDisplayType.LyricsOnly:
-                    break;
-                case LyricsDisplayType.SplitView:
-                    switch (LyricsWindowStatus.LyricsLayoutOrientation)
-                    {
-                        case LyricsLayoutOrientation.Horizontal:
-                            Grid.SetRow(TrackSummaryGrid, 0);
-                            Grid.SetRowSpan(TrackSummaryGrid, 3);
-                            Grid.SetColumn(TrackSummaryGrid, isSwapped ? 3 : 1);
-                            Grid.SetColumnSpan(TrackSummaryGrid, 1);
-                            break;
-                        case LyricsLayoutOrientation.Vertical:
-                            Grid.SetRow(TrackSummaryGrid, isSwapped ? 2 : 0);
-                            Grid.SetRowSpan(TrackSummaryGrid, 1);
-                            Grid.SetColumn(TrackSummaryGrid, 1);
-                            Grid.SetColumnSpan(TrackSummaryGrid, 3);
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
+            if (double.TryParse(lengthStr, out double pixelVal))
+                return new GridLength(pixelVal, GridUnitType.Pixel);
 
-        // ====
-
-        private void UpdateSongInfoStackPanelSpan()
-        {
-            if (LyricsWindowStatus == null) return;
-
-            switch (LyricsWindowStatus.LyricsLayoutOrientation)
-            {
-                case LyricsLayoutOrientation.Horizontal:
-                    Grid.SetRow(SongInfoStackPanel, 3);
-                    Grid.SetRowSpan(SongInfoStackPanel, 1);
-                    Grid.SetColumn(SongInfoStackPanel, 0);
-                    Grid.SetColumnSpan(SongInfoStackPanel, 2);
-                    break;
-                case LyricsLayoutOrientation.Vertical:
-                    Grid.SetRow(SongInfoStackPanel, 1);
-                    Grid.SetRowSpan(SongInfoStackPanel, 3);
-                    Grid.SetColumn(SongInfoStackPanel, 2);
-                    Grid.SetColumnSpan(SongInfoStackPanel, 1);
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        private void UpdateLyricsPlaceholderSpan()
-        {
-            if (LyricsWindowStatus == null) return;
-
-            bool isSwapped = LyricsWindowStatus.SwitchLyricsDisplayTypeSplitView;
-
-            switch (LyricsWindowStatus.LyricsDisplayType)
-            {
-                case LyricsDisplayType.AlbumArtOnly:
-                    break;
-                case LyricsDisplayType.LyricsOnly:
-                    Grid.SetRow(LyricsPlaceholder, 0);
-                    Grid.SetRowSpan(LyricsPlaceholder, 3);
-                    Grid.SetColumn(LyricsPlaceholder, 1);
-                    Grid.SetColumnSpan(LyricsPlaceholder, 3);
-                    break;
-                case LyricsDisplayType.SplitView:
-                    switch (LyricsWindowStatus.LyricsLayoutOrientation)
-                    {
-                        case LyricsLayoutOrientation.Horizontal:
-                            Grid.SetRow(LyricsPlaceholder, 0);
-                            Grid.SetRowSpan(LyricsPlaceholder, 3);
-                            Grid.SetColumn(LyricsPlaceholder, isSwapped ? 1 : 3);
-                            Grid.SetColumnSpan(LyricsPlaceholder, 1);
-                            break;
-                        case LyricsLayoutOrientation.Vertical:
-                            Grid.SetRow(LyricsPlaceholder, 0);
-                            Grid.SetRowSpan(LyricsPlaceholder, 3);
-                            Grid.SetColumn(LyricsPlaceholder, 1);
-                            Grid.SetColumnSpan(LyricsPlaceholder, 3);
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        // ====
-
-        private void UpdateAlbumArtGridSpan()
-        {
-            if (LyricsWindowStatus == null) return;
-
-            switch (LyricsWindowStatus.LyricsLayoutOrientation)
-            {
-                case LyricsLayoutOrientation.Horizontal:
-                    Grid.SetRow(AlbumArtGrid, 1);
-                    Grid.SetRowSpan(AlbumArtGrid, 1);
-                    Grid.SetColumn(AlbumArtGrid, 0);
-                    Grid.SetColumnSpan(AlbumArtGrid, 2);
-                    break;
-                case LyricsLayoutOrientation.Vertical:
-                    Grid.SetRow(AlbumArtGrid, 1);
-                    Grid.SetRowSpan(AlbumArtGrid, 3);
-                    Grid.SetColumn(AlbumArtGrid, 0);
-                    Grid.SetColumnSpan(AlbumArtGrid, 1);
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        // ==== Lyrics
-
-        private void UpdateLyricsOpacity()
-        {
-            if (LyricsWindowStatus == null) return;
-
-            switch (LyricsWindowStatus.LyricsDisplayType)
-            {
-                case LyricsDisplayType.AlbumArtOnly:
-                    LyricsCanvas.LyricsOpacity = 0;
-                    break;
-                case LyricsDisplayType.LyricsOnly:
-                case LyricsDisplayType.SplitView:
-                    LyricsCanvas.LyricsOpacity = 1;
-                    break;
-                default:
-                    break;
-            }
+            return new GridLength(1, GridUnitType.Star);
         }
 
         private void UpdateLyricsLayout()
         {
+            if (RootGrid == null || LyricsContainer == null || LyricsCanvas == null) return;
             if (LyricsWindowStatus == null) return;
 
-            bool isSwapped = LyricsWindowStatus.SwitchLyricsDisplayTypeSplitView;
+            if (!LyricsContainer.IsLoaded || !RootGrid.IsLoaded) return;
 
-            switch (LyricsWindowStatus.LyricsDisplayType)
+            if (LyricsContainer.Visibility == Visibility.Collapsed)
             {
-                case LyricsDisplayType.AlbumArtOnly:
-                    break;
-                case LyricsDisplayType.LyricsOnly:
-                    LyricsCanvas.LyricsStartX = LeftGapDef.ActualWidth;
-                    LyricsCanvas.LyricsStartY = 0;
-                    LyricsCanvas.LyricsWidth = Part1ColDef.ActualWidth + MiddleGapColDef.ActualWidth + Part2ColDef.ActualWidth;
-                    LyricsCanvas.LyricsHeight = Part1RowDef.ActualHeight + MiddleGapRowDef.ActualHeight + Part2RowDef.ActualHeight;
-                    break;
-                case LyricsDisplayType.SplitView:
-                    switch (LyricsWindowStatus.LyricsLayoutOrientation)
-                    {
-                        case LyricsLayoutOrientation.Horizontal:
-                            if (!isSwapped)
-                            {
-                                LyricsCanvas.LyricsStartX = LeftGapDef.ActualWidth + Part1ColDef.ActualWidth + MiddleGapColDef.ActualWidth;
-                                LyricsCanvas.LyricsWidth = Part2ColDef.ActualWidth;
-                            }
-                            else
-                            {
-                                LyricsCanvas.LyricsStartX = LeftGapDef.ActualWidth;
-                                LyricsCanvas.LyricsWidth = Part1ColDef.ActualWidth;
-                            }
-                            LyricsCanvas.LyricsStartY = 0;
-                            LyricsCanvas.LyricsHeight = Part1RowDef.ActualHeight + MiddleGapRowDef.ActualHeight + Part2RowDef.ActualHeight;
-                            break;
-                        case LyricsLayoutOrientation.Vertical:
-                            LyricsCanvas.LyricsStartX = LeftGapDef.ActualWidth;
-                            LyricsCanvas.LyricsStartY = 0;
-                            LyricsCanvas.LyricsWidth = Part1ColDef.ActualWidth + MiddleGapColDef.ActualWidth + Part2ColDef.ActualWidth;
-                            LyricsCanvas.LyricsHeight = Part1RowDef.ActualHeight + MiddleGapRowDef.ActualHeight + Part2RowDef.ActualHeight;
-                            break;
-                        default:
-                            break;
-                    }
-                    break;
-                default:
-                    break;
+                LyricsCanvas.LyricsOpacity = 0;
             }
-
-            if (LyricsWindowStatus.LyricsEffectSettings.Lyrics3DAutoFitLayout)
+            else
             {
-                (LyricsCanvas.LyricsHeight, LyricsCanvas.LyricsWidth) = (LyricsCanvas.LyricsWidth, LyricsCanvas.LyricsHeight);
-                LyricsCanvas.LyricsStartX += (LyricsCanvas.LyricsHeight - LyricsCanvas.LyricsWidth) / 2;
-                LyricsCanvas.LyricsStartY += (LyricsCanvas.LyricsWidth - LyricsCanvas.LyricsHeight) / 2;
+                LyricsCanvas.LyricsOpacity = 1;
+
+                var transform = LyricsContainer.TransformToVisual(RootGrid);
+                var localRect = new Windows.Foundation.Rect(0, 0, LyricsCanvas.ActualWidth, LyricsCanvas.ActualHeight);
+                var relativeRect = transform.TransformBounds(localRect);
+
+                LyricsCanvas.LyricsStartX = relativeRect.X;
+                LyricsCanvas.LyricsStartY = relativeRect.Y;
+                LyricsCanvas.LyricsWidth = LyricsContainer.ActualWidth;
+                LyricsCanvas.LyricsHeight = LyricsContainer.ActualHeight;
+
+                if (LyricsWindowStatus.LyricsEffectSettings.Lyrics3DAutoFitLayout)
+                {
+                    (LyricsCanvas.LyricsHeight, LyricsCanvas.LyricsWidth) = (LyricsCanvas.LyricsWidth, LyricsCanvas.LyricsHeight);
+                    LyricsCanvas.LyricsStartX += (LyricsCanvas.LyricsHeight - LyricsCanvas.LyricsWidth) / 2;
+                    LyricsCanvas.LyricsStartY += (LyricsCanvas.LyricsWidth - LyricsCanvas.LyricsHeight) / 2;
+                }
             }
         }
 
-        // ====
-
-        private void UpdateGap()
+        private void UpdateAlbumArtLayout()
         {
-            if (LyricsWindowStatus == null) return;
+            if (RootGrid == null || AlbumArtGrid == null) return;
+            if (!AlbumArtGrid.IsLoaded || !RootGrid.IsLoaded) return;
 
-            var lyricsLayoutMetrics = LyricsLayoutHelper.CalculateLayout(RootGrid.ActualWidth, RootGrid.ActualHeight);
-
-            double height = RootGrid.ActualHeight;
-            double width = RootGrid.ActualWidth;
-
-            double minSize = Math.Min(width, height);
-
-            double gapBetweenTrackSummaryAndLyrics = 0;
-            double gapBetweenAlbumArtAndSongInfo = 0;
-            double trackSummaryRowHeight = 0;
-
-            double xMargin = 0;
-            double yMargin = 0;
-
-            switch (LyricsWindowStatus.LyricsLayoutOrientation)
-            {
-                case LyricsLayoutOrientation.Horizontal:
-                    if (width < 800)
-                    {
-                        xMargin = Math.Clamp(minSize * 0.15, 16, 128);
-                    }
-                    else
-                    {
-                        xMargin = Math.Clamp(minSize * 0.25, 16, 128);
-                    }
-                    yMargin = Math.Max(32, Math.Min(width, height) * 0.15);
-                    if (height < 100)
-                    {
-                        gapBetweenTrackSummaryAndLyrics = Math.Max(16, height * 0.1);
-                    }
-                    else
-                    {
-                        gapBetweenTrackSummaryAndLyrics = 0;
-                    }
-                    TrackSummaryGridCol0.Width = new(1, GridUnitType.Star);
-                    switch (LyricsWindowStatus.LyricsDisplayType)
-                    {
-                        case LyricsDisplayType.AlbumArtOnly:
-                            TrackSummaryGridCol2.Width = new(0);
-                            break;
-                        case LyricsDisplayType.LyricsOnly:
-                        case LyricsDisplayType.SplitView:
-                            TrackSummaryGridCol2.Width = new(xMargin);
-                            break;
-                        default:
-                            break;
-                    }
-                    TrackSummaryGridRow1.Height =
-                        LyricsWindowStatus.AlbumArtLayoutSettings.IsAutoCoverImageHeight ? new(1, GridUnitType.Star) : new(LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageHeight);
-                    break;
-                case LyricsLayoutOrientation.Vertical:
-                    xMargin = Math.Max(16, minSize * 0.05);
-                    yMargin = Math.Max(16, minSize * 0.05);
-                    trackSummaryRowHeight =
-                        LyricsWindowStatus.AlbumArtLayoutSettings.IsAutoCoverImageHeight ? Math.Max(64, minSize * 0.25) : LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageHeight;
-                    gapBetweenTrackSummaryAndLyrics = Math.Max(16, width * 0.15);
-                    TrackSummaryGridCol0.Width = new(1, GridUnitType.Auto);
-                    switch (LyricsWindowStatus.LyricsDisplayType)
-                    {
-                        case LyricsDisplayType.AlbumArtOnly:
-                            TrackSummaryGridCol2.Width = new(0);
-                            break;
-                        case LyricsDisplayType.LyricsOnly:
-                        case LyricsDisplayType.SplitView:
-                            TrackSummaryGridCol2.Width = new(1, GridUnitType.Star);
-                            break;
-                        default:
-                            break;
-                    }
-                    TrackSummaryGridRow1.Height = new(1, GridUnitType.Star);
-                    break;
-                default:
-                    break;
-            }
-
-            if (height < 100)
-            {
-                gapBetweenAlbumArtAndSongInfo = 0;
-            }
-            else
-            {
-                gapBetweenAlbumArtAndSongInfo = lyricsLayoutMetrics.SongTitleSize / 2;
-            }
-
-            MiddleGapColDef.Width = new(gapBetweenTrackSummaryAndLyrics);
-
-            TrackSummaryGridRow0.Height = new(yMargin);
-            TrackSummaryGridRow4.Height = new(yMargin);
-            LeftGapDef.Width = RightGapDef.Width = new(xMargin);
-
-            TrackSummaryGridCol1.Width = TrackSummaryGridRow2.Height = new(gapBetweenAlbumArtAndSongInfo);
-
-            // 布局权重应用
-            if (LyricsWindowStatus.LyricsDisplayType == LyricsDisplayType.SplitView)
-            {
-                bool isSwapped = LyricsWindowStatus.SwitchLyricsDisplayTypeSplitView;
-
-                double ratioAlbum = LyricsWindowStatus.LyricsDisplayTypeSplitViewRatio;
-                double ratioLyrics = 100.0 - ratioAlbum;
-
-                if (LyricsWindowStatus.LyricsLayoutOrientation == LyricsLayoutOrientation.Horizontal)
-                {
-                    Part1ColDef.Width = new(isSwapped ? ratioLyrics : ratioAlbum, GridUnitType.Star);
-                    Part2ColDef.Width = new(isSwapped ? ratioAlbum : ratioLyrics, GridUnitType.Star);
-                }
-                else
-                {
-                    Part1ColDef.Width = new(1, GridUnitType.Star);
-                    Part2ColDef.Width = new(1, GridUnitType.Star);
-
-                    if (isSwapped)
-                    {
-                        Part1RowDef.Height = new(1, GridUnitType.Star);
-                        Part2RowDef.Height = new(trackSummaryRowHeight);
-                    }
-                    else
-                    {
-                        Part1RowDef.Height = new(trackSummaryRowHeight);
-                        Part2RowDef.Height = new(1, GridUnitType.Star);
-                    }
-                }
-            }
-            else
-            {
-                Part1ColDef.Width = new GridLength(1, GridUnitType.Star);
-                Part2ColDef.Width = new GridLength(1, GridUnitType.Star);
-            }
+            var transform = AlbumArtGrid.TransformToVisual(RootGrid);
+            var localRect = new Windows.Foundation.Rect(0, 0, AlbumArtGrid.ActualWidth, AlbumArtGrid.ActualHeight);
+            LyricsCanvas.AlbumArtRect = transform.TransformBounds(localRect);
         }
 
         private void OnLayoutChanged()
         {
-            _layoutChangedTimer?.Debounce(() =>
+            _layoutChangedTimer?.Debounce(async () =>
             {
-                UpdateGap();
+                ApplyLayoutProfile();
 
-                UpdateSongInfoOpacity();
-                UpdateLyricsOpacity();
-                UpdateAlbumArtOpacity();
-
-                UpdateTrackSummaryGridSpan();
-                UpdateAlbumArtGridSpan();
-                UpdateSongInfoStackPanelSpan();
-                UpdateLyricsPlaceholderSpan();
+                // Ensure the layout is updated before calculating positions
+                await Task.Delay(100);
 
                 UpdateLyricsLayout();
-            }, Constants.Time.DebounceTimeout);
+                UpdateAlbumArtLayout();
+
+            }, TimeSpan.FromMilliseconds(250));
         }
 
-        // ====
+        private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            _ = RenderSongInfoAsync();
+            OnLayoutChanged();
+        }
+
+        private void LyricsContainer_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            UpdateLyricsLayout();
+        }
+
+        private void AlbumArtGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            UpdateAlbumArtLayout();
+        }
 
         private void UpdateAutoScrollViewIsPlaying(AutoScrollView element, bool isPointerEntered)
         {
@@ -542,63 +279,17 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            _ = RenderSongInfoAsync();
-            OnLayoutChanged();
-        }
+        private void TitleAutoScrollHoverEffectView_PointerCanceled(object sender, PointerRoutedEventArgs e) => UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, false);
+        private void TitleAutoScrollHoverEffectView_PointerEntered(object sender, PointerRoutedEventArgs e) => UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, true);
+        private void TitleAutoScrollHoverEffectView_PointerExited(object sender, PointerRoutedEventArgs e) => UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, false);
+        private void ArtistsAutoScrollHoverEffectView_PointerCanceled(object sender, PointerRoutedEventArgs e) => UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
+        private void ArtistsAutoScrollHoverEffectView_PointerEntered(object sender, PointerRoutedEventArgs e) => UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, true);
+        private void ArtistsAutoScrollHoverEffectView_PointerExited(object sender, PointerRoutedEventArgs e) => UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
+        private void AlbumAutoScrollHoverEffectView_PointerCanceled(object sender, PointerRoutedEventArgs e) => UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
+        private void AlbumAutoScrollHoverEffectView_PointerEntered(object sender, PointerRoutedEventArgs e) => UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, true);
+        private void AlbumAutoScrollHoverEffectView_PointerExited(object sender, PointerRoutedEventArgs e) => UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
 
-        private void TitleAutoScrollHoverEffectView_PointerCanceled(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, false);
-        }
-
-        private void TitleAutoScrollHoverEffectView_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, true);
-        }
-
-        private void TitleAutoScrollHoverEffectView_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, false);
-        }
-
-        private void ArtistsAutoScrollHoverEffectView_PointerCanceled(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
-        }
-
-        private void ArtistsAutoScrollHoverEffectView_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, true);
-        }
-
-        private void ArtistsAutoScrollHoverEffectView_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
-        }
-
-        private void AlbumAutoScrollHoverEffectView_PointerCanceled(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
-        }
-
-        private void AlbumAutoScrollHoverEffectView_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, true);
-        }
-
-        private void AlbumAutoScrollHoverEffectView_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
-        }
-
-        private void LyricsPlaceholder_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            OnLayoutChanged();
-        }
-
-        private void LyricsScrollViewer_PointerWheelChanged(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        private void LyricsScrollViewer_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
         {
             LyricsCanvas.IsMouseScrolling = true;
 
@@ -606,12 +297,10 @@ namespace BetterLyrics.WinUI3.Views
             int mouseWheelDelta = pointerPoint.Properties.MouseWheelDelta;
 
             var value = LyricsCanvas.MouseScrollOffset + mouseWheelDelta;
-            // 阻止向上滚动超过歌词最大边界
             if (value > 0)
             {
                 value = Math.Min(-LyricsCanvas.CurrentCanvasYScroll, value);
             }
-            // 阻止向下滚动超过歌词最大边界
             else
             {
                 value = Math.Max(-LyricsCanvas.CurrentCanvasYScroll - LyricsCanvas.ActualLyricsHeight, value);
@@ -625,30 +314,29 @@ namespace BetterLyrics.WinUI3.Views
             }, TimeSpan.FromSeconds(3));
         }
 
-        private void LyricsScrollViewer_PointerMoved(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        private void LyricsScrollViewer_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
             var pointerPoint = e.GetCurrentPoint(LyricsScrollViewer);
-
             LyricsCanvas.MousePosition = pointerPoint.Position;
         }
 
-        private void LyricsScrollViewer_PointerReleased(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        private void LyricsScrollViewer_PointerReleased(object sender, PointerRoutedEventArgs e)
         {
             LyricsCanvas.IsMousePressing = false;
             _ = _gsmtcService.ChangeLyricsLineAsync(LyricsCanvas.CurrentHoveringLineIndex);
         }
 
-        private void LyricsScrollViewer_PointerExited(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        private void LyricsScrollViewer_PointerExited(object sender, PointerRoutedEventArgs e)
         {
             LyricsCanvas.IsMouseInLyricsArea = false;
         }
 
-        private void LyricsScrollViewer_PointerEntered(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        private void LyricsScrollViewer_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
             LyricsCanvas.IsMouseInLyricsArea = true;
         }
 
-        private void LyricsScrollViewer_PointerPressed(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
+        private void LyricsScrollViewer_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
             LyricsCanvas.IsMousePressing = true;
         }
@@ -675,7 +363,6 @@ namespace BetterLyrics.WinUI3.Views
                 try
                 {
                     await FileIO.WriteBytesAsync(file, imageBytes);
-
                     GlobalToastManager.Show("ActionCompleted", null, InfoBarSeverity.Success);
                 }
                 catch (Exception ex)
@@ -698,91 +385,72 @@ namespace BetterLyrics.WinUI3.Views
             DataContext = null;
         }
 
-        private void AlbumArtGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void RootGrid_DragOver(object sender, DragEventArgs e)
         {
-            var transform = AlbumArtGrid.TransformToVisual(RootGrid);
-            var localRect = new Windows.Foundation.Rect(0, 0, AlbumArtGrid.ActualWidth, AlbumArtGrid.ActualHeight);
-            LyricsCanvas.AlbumArtRect = transform.TransformBounds(localRect);
+            if (e.DataView.Properties.ContainsKey("LyricsCardStyleKey"))
+                e.AcceptedOperation = DataPackageOperation.Copy;
+            else
+                e.AcceptedOperation = DataPackageOperation.None;
         }
 
-        // ====
+        private void RootGrid_Drop(object sender, DragEventArgs e)
+        {
+            if (e.DataView.Properties.TryGetValue("LyricsCardStyleKey", out object styleKey))
+            {
+                if (LyricsWindowStatus != null)
+                {
+                    LyricsWindowStatus.ShowLyricsCard = true;
+                    LyricsWindowStatus.LyricsCardStyleKey = (string)styleKey;
+                }
+            }
+        }
+
+        private void DeleteLyricsCardMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (LyricsWindowStatus != null)
+            {
+                LyricsWindowStatus.ShowLyricsCard = false;
+            }
+        }
+
+        private void DynamicLayoutGrid_Loaded(object sender, RoutedEventArgs e)
+        {
+            DynamicLayoutGrid.Padding = new Thickness(
+                LyricsWindowStatus?.LayoutProfile.PaddingLeft ?? 0,
+                LyricsWindowStatus?.LayoutProfile.PaddingTop ?? 0,
+                LyricsWindowStatus?.LayoutProfile.PaddingRight ?? 0,
+                LyricsWindowStatus?.LayoutProfile.PaddingBottom ?? 0);
+        }
 
         public void Receive(PropertyChangedMessage<SongInfo> message)
         {
-            if (message.Sender is IGSMTCService)
+            if (message.Sender is IGSMTCService && message.PropertyName == nameof(IGSMTCService.CurrentSongInfo))
             {
-                if (message.PropertyName == nameof(IGSMTCService.CurrentSongInfo))
-                {
-                    _ = RefreshSongInfoAsync();
-                    UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, false);
-                    UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
-                    UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
-                }
-            }
-        }
-
-        public void Receive(PropertyChangedMessage<LyricsLayoutOrientation> message)
-        {
-            if (message.Sender == LyricsWindowStatus)
-            {
-                if (message.PropertyName == nameof(LyricsWindowStatus.LyricsLayoutOrientation))
-                {
-                    OnLayoutChanged();
-                }
-            }
-        }
-
-        public void Receive(PropertyChangedMessage<LyricsDisplayType> message)
-        {
-            if (message.Sender == LyricsWindowStatus)
-            {
-                if (message.PropertyName == nameof(LyricsWindowStatus.LyricsDisplayType))
-                {
-                    OnLayoutChanged();
-                }
+                _ = RefreshSongInfoAsync();
+                UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, false);
+                UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
+                UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
             }
         }
 
         public void Receive(PropertyChangedMessage<int> message)
         {
-            if (message.Sender == LyricsWindowStatus)
-            {
-                if (message.PropertyName == nameof(LyricsWindowStatus.LyricsDisplayTypeSplitViewRatio))
-                {
-                    OnLayoutChanged();
-                }
-            }
-            else if (message.Sender == LyricsWindowStatus?.AlbumArtLayoutSettings)
+            if (message.Sender == LyricsWindowStatus?.AlbumArtLayoutSettings)
             {
                 if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.SongInfoFontSize))
                 {
                     _ = RenderSongInfoAsync();
-                }
-                else if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.CoverImageHeight))
-                {
-                    OnLayoutChanged();
                 }
             }
         }
 
         public void Receive(PropertyChangedMessage<bool> message)
         {
-            if (message.Sender == LyricsWindowStatus)
-            {
-                if (message.PropertyName == nameof(LyricsWindowStatus.SwitchLyricsDisplayTypeSplitView))
-                {
-                    OnLayoutChanged();
-                }
-            }
-            else if (message.Sender == LyricsWindowStatus?.AlbumArtLayoutSettings)
+            if (message.Sender == LyricsWindowStatus?.AlbumArtLayoutSettings)
             {
                 if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.IsAutoSongInfoFontSize))
                 {
                     _ = RenderSongInfoAsync();
-                }
-                else if (message.PropertyName == nameof(AlbumArtAreaStyleSettings.IsAutoCoverImageHeight))
-                {
-                    OnLayoutChanged();
                 }
             }
             else if (message.Sender == LyricsWindowStatus?.AlbumArtAreaEffectSettings)
@@ -840,30 +508,57 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        private void RootGrid_DragOver(object sender, DragEventArgs e)
+        public void Receive(PropertyChangedMessage<FullyObservableCollection<ComponentPlacement>> message)
         {
-            if (e.DataView.Properties.ContainsKey("LyricsCardStyleKey"))
+            if (message.Sender == LyricsWindowStatus?.LayoutProfile)
             {
-                e.AcceptedOperation = DataPackageOperation.Copy;
-            }
-            else
-            {
-                e.AcceptedOperation = DataPackageOperation.None;
-            }
-        }
-
-        private void RootGrid_Drop(object sender, DragEventArgs e)
-        {
-            if (e.DataView.Properties.TryGetValue("LyricsCardStyleKey", out object styleKey))
-            {
-                LyricsWindowStatus?.ShowLyricsCard = true;
-                LyricsWindowStatus?.LyricsCardStyleKey = (string)styleKey;
+                if (message.PropertyName == nameof(LayoutProfile.Placements))
+                {
+                    OnLayoutChanged();
+                }
             }
         }
 
-        private void DeleteLyricsCardMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        public void Receive(PropertyChangedMessage<ObservableCollection<string>> message)
         {
-            LyricsWindowStatus?.ShowLyricsCard = false;
+            if (message.Sender == LyricsWindowStatus?.LayoutProfile)
+            {
+                if (message.PropertyName == nameof(LayoutProfile.RowDefinitions))
+                {
+                    OnLayoutChanged();
+                }
+                else if (message.PropertyName == nameof(LayoutProfile.ColumnDefinitions))
+                {
+                    OnLayoutChanged();
+                }
+            }
+        }
+
+        public void Receive(PropertyChangedMessage<double> message)
+        {
+            if (message.Sender == LyricsWindowStatus?.LayoutProfile)
+            {
+                if (message.PropertyName == nameof(LyricsWindowStatus.LayoutProfile.PaddingLeft))
+                {
+                    DynamicLayoutGrid.Padding = DynamicLayoutGrid.Padding.WithLeft(message.NewValue);
+                    OnLayoutChanged();
+                }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.LayoutProfile.PaddingTop))
+                {
+                    DynamicLayoutGrid.Padding = DynamicLayoutGrid.Padding.WithTop(message.NewValue);
+                    OnLayoutChanged();
+                }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.LayoutProfile.PaddingRight))
+                {
+                    DynamicLayoutGrid.Padding = DynamicLayoutGrid.Padding.WithRight(message.NewValue);
+                    OnLayoutChanged();
+                }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.LayoutProfile.PaddingBottom))
+                {
+                    DynamicLayoutGrid.Padding = DynamicLayoutGrid.Padding.WithBottom(message.NewValue);
+                    OnLayoutChanged();
+                }
+            }
         }
     }
 }

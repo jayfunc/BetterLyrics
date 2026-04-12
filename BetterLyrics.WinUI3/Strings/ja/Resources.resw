@@ -216,6 +216,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>キャンセル</value>
   </data>
+  <data name="Column" xml:space="preserve">
+    <value>列</value>
+  </data>
   <data name="Confirm" xml:space="preserve">
     <value>確定</value>
   </data>
@@ -323,6 +326,270 @@
   </data>
   <data name="LastFMRequestUnAuthTitle" xml:space="preserve">
     <value>Last.fm アカウントへの BetterLyrics のアクセス権を取り消す</value>
+  </data>
+  <data name="LayoutEditorControlAddColButton.Content" xml:space="preserve">
+    <value>列を追加</value>
+  </data>
+  <data name="LayoutEditorControlAddRowButton.Content" xml:space="preserve">
+    <value>行を追加</value>
+  </data>
+  <data name="LayoutEditorControlAlignmentHeader.Text" xml:space="preserve">
+    <value>配置設定</value>
+  </data>
+  <data name="LayoutEditorControlAllPlacedMessage.Text" xml:space="preserve">
+    <value>すべてのコンポーネントが配置されました。</value>
+  </data>
+  <data name="LayoutEditorControlCanvasNavigationHeader.Text" xml:space="preserve">
+    <value>キャンバス・ナビゲーション</value>
+  </data>
+  <data name="LayoutEditorControlCanvasPaddingTextBlock.Text" xml:space="preserve">
+    <value>余白</value>
+  </data>
+  <data name="LayoutEditorControlCanvasSectionHeader.Text" xml:space="preserve">
+    <value>キャンバス</value>
+  </data>
+  <data name="LayoutEditorControlChangeComponentSpanHeader.Text" xml:space="preserve">
+    <value>コンポーネントのサイズ変更</value>
+  </data>
+  <data name="LayoutEditorControlChangeComponentSpanInfoTag.Text" xml:space="preserve">
+    <value>矢印キー / WASD</value>
+  </data>
+  <data name="LayoutEditorControlColBox.Header" xml:space="preserve">
+    <value>列</value>
+  </data>
+  <data name="LayoutEditorControlColSpanBox.Header" xml:space="preserve">
+    <value>列のスパン</value>
+  </data>
+  <data name="LayoutEditorControlColumnHeader.Text" xml:space="preserve">
+    <value>列</value>
+  </data>
+  <data name="LayoutEditorControlComponentAlbumArt" xml:space="preserve">
+    <value>アルバムアート</value>
+  </data>
+  <data name="LayoutEditorControlComponentLyrics" xml:space="preserve">
+    <value>歌詞</value>
+  </data>
+  <data name="LayoutEditorControlComponentNone" xml:space="preserve">
+    <value>なし</value>
+  </data>
+  <data name="LayoutEditorControlComponentOperationHeader.Text" xml:space="preserve">
+    <value>コンポーネント・オペレーション（要選択）</value>
+  </data>
+  <data name="LayoutEditorControlComponentSongInfo" xml:space="preserve">
+    <value>楽曲情報</value>
+  </data>
+  <data name="LayoutEditorControlCopyHere" xml:space="preserve">
+    <value>ここに置く</value>
+  </data>
+  <data name="LayoutEditorControlDeleteBottomRow" xml:space="preserve">
+    <value>下の行を削除</value>
+  </data>
+  <data name="LayoutEditorControlDeleteCol.Text" xml:space="preserve">
+    <value>この列を削除する</value>
+  </data>
+  <data name="LayoutEditorControlDeleteComponentHeader.Text" xml:space="preserve">
+    <value>コンポーネントの削除</value>
+  </data>
+  <data name="LayoutEditorControlDeleteLeftColumn" xml:space="preserve">
+    <value>左側の列を削除</value>
+  </data>
+  <data name="LayoutEditorControlDeleteRightColumn" xml:space="preserve">
+    <value>右側の列を削除</value>
+  </data>
+  <data name="LayoutEditorControlDeleteRow.Text" xml:space="preserve">
+    <value>この行を削除する</value>
+  </data>
+  <data name="LayoutEditorControlDeleteTopRow" xml:space="preserve">
+    <value>上部の行を削除</value>
+  </data>
+  <data name="LayoutEditorControlGlobalColSpacingBox.Header" xml:space="preserve">
+    <value>列の間隔</value>
+  </data>
+  <data name="LayoutEditorControlGlobalPadBottomBox.Header" xml:space="preserve">
+    <value>下端</value>
+  </data>
+  <data name="LayoutEditorControlGlobalPadLeftBox.Header" xml:space="preserve">
+    <value>左端</value>
+  </data>
+  <data name="LayoutEditorControlGlobalPadRightBox.Header" xml:space="preserve">
+    <value>右端</value>
+  </data>
+  <data name="LayoutEditorControlGlobalPadTopBox.Header" xml:space="preserve">
+    <value>上端</value>
+  </data>
+  <data name="LayoutEditorControlGlobalRowSpacingBox.Header" xml:space="preserve">
+    <value>行の間隔</value>
+  </data>
+  <data name="LayoutEditorControlHandToolToggle.Label" xml:space="preserve">
+    <value>パン</value>
+  </data>
+  <data name="LayoutEditorControlHelpButton.Label" xml:space="preserve">
+    <value>ショートカットガイド</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalAlignmentBox.Header" xml:space="preserve">
+    <value>水平方向の配置</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalAlignmentCenter.Content" xml:space="preserve">
+    <value>中央揃え</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalAlignmentLeft.Content" xml:space="preserve">
+    <value>左揃え</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalAlignmentRight.Content" xml:space="preserve">
+    <value>右揃え</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalAlignmentStretch.Content" xml:space="preserve">
+    <value>ストレッチ</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalScrollHeader.Text" xml:space="preserve">
+    <value>横スクロール</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalScrollInfoTag.Text" xml:space="preserve">
+    <value>マウスホイール</value>
+  </data>
+  <data name="LayoutEditorControlInsertColAfter.Text" xml:space="preserve">
+    <value>右側に列を挿入</value>
+  </data>
+  <data name="LayoutEditorControlInsertColBefore.Text" xml:space="preserve">
+    <value>左側に列を挿入</value>
+  </data>
+  <data name="LayoutEditorControlInsertColumn" xml:space="preserve">
+    <value>ここに列を挿入</value>
+  </data>
+  <data name="LayoutEditorControlInsertRow" xml:space="preserve">
+    <value>ここに行を挿入</value>
+  </data>
+  <data name="LayoutEditorControlInsertRowAfter.Text" xml:space="preserve">
+    <value>下に行を挿入</value>
+  </data>
+  <data name="LayoutEditorControlInsertRowBefore.Text" xml:space="preserve">
+    <value>上の行を挿入</value>
+  </data>
+  <data name="LayoutEditorControlKeyboardShortcutsHeader.Text" xml:space="preserve">
+    <value>キーボードショートカット</value>
+  </data>
+  <data name="LayoutEditorControlMarginBottomBox.Header" xml:space="preserve">
+    <value>下端</value>
+  </data>
+  <data name="LayoutEditorControlMarginHeader.Text" xml:space="preserve">
+    <value>マージン</value>
+  </data>
+  <data name="LayoutEditorControlMarginLeftBox.Header" xml:space="preserve">
+    <value>左端</value>
+  </data>
+  <data name="LayoutEditorControlMarginRightBox.Header" xml:space="preserve">
+    <value>右端</value>
+  </data>
+  <data name="LayoutEditorControlMarginTopBox.Header" xml:space="preserve">
+    <value>上端</value>
+  </data>
+  <data name="LayoutEditorControlMoveComponentHeader.Text" xml:space="preserve">
+    <value>コンポーネントの移動</value>
+  </data>
+  <data name="LayoutEditorControlMoveComponentInfoTag.Text" xml:space="preserve">
+    <value>矢印キー / WASD</value>
+  </data>
+  <data name="LayoutEditorControlMoveHere" xml:space="preserve">
+    <value>ここに移動</value>
+  </data>
+  <data name="LayoutEditorControlNoSelection" xml:space="preserve">
+    <value>続行するには、プレビューまたは左側のリストからコンポーネントを選択してください。</value>
+  </data>
+  <data name="LayoutEditorControlPendingComponentsDescriptionTextBlock.Text" xml:space="preserve">
+    <value>コンポーネントを右側のグリッドへドラッグして配置します。配置したコンポーネントは、グリッド内で自由に移動できます。</value>
+  </data>
+  <data name="LayoutEditorControlPendingComponentsTextBlock.Text" xml:space="preserve">
+    <value>配置待ちのコンポーネント</value>
+  </data>
+  <data name="LayoutEditorControlPlacedComponentsDescriptionTextBlock.Text" xml:space="preserve">
+    <value>重なり等の理由によりコンポーネントがクリックできない場合は、こちらで選択してください。</value>
+  </data>
+  <data name="LayoutEditorControlPlacedComponentsTextBlock.Text" xml:space="preserve">
+    <value>配置されたコンポーネント</value>
+  </data>
+  <data name="LayoutEditorControlRemoveButton.Content" xml:space="preserve">
+    <value>コンポーネントを削除</value>
+  </data>
+  <data name="LayoutEditorControlRemoveColButton.Content" xml:space="preserve">
+    <value>列を削除</value>
+  </data>
+  <data name="LayoutEditorControlRemoveRowButton.Content" xml:space="preserve">
+    <value>行を削除</value>
+  </data>
+  <data name="LayoutEditorControlRowBox.Header" xml:space="preserve">
+    <value>行</value>
+  </data>
+  <data name="LayoutEditorControlRowHeader.Text" xml:space="preserve">
+    <value>行</value>
+  </data>
+  <data name="LayoutEditorControlRowSpanBox.Header" xml:space="preserve">
+    <value>行のスパン</value>
+  </data>
+  <data name="LayoutEditorControlSelectedComponentLabel.Text" xml:space="preserve">
+    <value>続行するには、プレビューまたは左側のリストからコンポーネントを選択してください。</value>
+  </data>
+  <data name="LayoutEditorControlSelectedComponentPropertiesHeader.Text" xml:space="preserve">
+    <value>プロパティ</value>
+  </data>
+  <data name="LayoutEditorControlSetBottomRowToAuto" xml:space="preserve">
+    <value>下の行を自動に設定</value>
+  </data>
+  <data name="LayoutEditorControlSetBottomRowToStar" xml:space="preserve">
+    <value>下の行をフィルに設定</value>
+  </data>
+  <data name="LayoutEditorControlSetLeftColumnToAuto" xml:space="preserve">
+    <value>左の列を自動に設定</value>
+  </data>
+  <data name="LayoutEditorControlSetLeftColumnToStar" xml:space="preserve">
+    <value>左の行をフィルに設定</value>
+  </data>
+  <data name="LayoutEditorControlSetRightColumnToAuto" xml:space="preserve">
+    <value>右の列を自動に設定</value>
+  </data>
+  <data name="LayoutEditorControlSetRightColumnToStar" xml:space="preserve">
+    <value>右の行をフィルに設定</value>
+  </data>
+  <data name="LayoutEditorControlSetTopRowToAuto" xml:space="preserve">
+    <value>上の行を自動に設定</value>
+  </data>
+  <data name="LayoutEditorControlSetTopRowToStar" xml:space="preserve">
+    <value>上の行をフィルに設定</value>
+  </data>
+  <data name="LayoutEditorControlTemporaryActivateHandHeader.Text" xml:space="preserve">
+    <value>ハンドツールを一時的にアクティブにする</value>
+  </data>
+  <data name="LayoutEditorControlTemporaryActivateHandInfoTag.Text" xml:space="preserve">
+    <value>スペース長押し</value>
+  </data>
+  <data name="LayoutEditorControlVerticalAlignmentBottom.Content" xml:space="preserve">
+    <value>下揃え</value>
+  </data>
+  <data name="LayoutEditorControlVerticalAlignmentBox.Header" xml:space="preserve">
+    <value>垂直方向の配置</value>
+  </data>
+  <data name="LayoutEditorControlVerticalAlignmentCenter.Content" xml:space="preserve">
+    <value>中央揃え</value>
+  </data>
+  <data name="LayoutEditorControlVerticalAlignmentStretch.Content" xml:space="preserve">
+    <value>ストレッチ</value>
+  </data>
+  <data name="LayoutEditorControlVerticalAlignmentTop.Content" xml:space="preserve">
+    <value>上揃え</value>
+  </data>
+  <data name="LayoutEditorControlZoomCanvasHeader.Text" xml:space="preserve">
+    <value>ズームイン/ズームアウト</value>
+  </data>
+  <data name="LayoutEditorControlZoomCanvasInfoTag.Text" xml:space="preserve">
+    <value>マウスホイール</value>
+  </data>
+  <data name="LayoutEditorControlZoomInButton.Label" xml:space="preserve">
+    <value>拡大表示</value>
+  </data>
+  <data name="LayoutEditorControlZoomOutButton.Label" xml:space="preserve">
+    <value>縮小表示</value>
+  </data>
+  <data name="LayoutEditorControlZoomResetButton.Label" xml:space="preserve">
+    <value>ズームして合わせる</value>
   </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>LibreTranslate への翻訳リクエストに失敗しました。設定またはローカルの LibreTranslate 構成を確認してください</value>
@@ -887,6 +1154,9 @@
   </data>
   <data name="Romaji" xml:space="preserve">
     <value>ローマ字</value>
+  </data>
+  <data name="Row" xml:space="preserve">
+    <value>行</value>
   </data>
   <data name="SetingsPageContributors.Text" xml:space="preserve">
     <value>サポーター</value>
@@ -1892,6 +2162,12 @@
   </data>
   <data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
     <value>このソフトウェアをご利用のあなた</value>
+  </data>
+  <data name="SetTo1Star" xml:space="preserve">
+    <value>1*に設定</value>
+  </data>
+  <data name="SetToAuto" xml:space="preserve">
+    <value>オートに設定</value>
   </data>
   <data name="SLyricsWindowSettingsControlShareMoveToMonitor.Text" xml:space="preserve">
     <value>モニターへ移動</value>

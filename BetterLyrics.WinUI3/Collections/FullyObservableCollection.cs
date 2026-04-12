@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Linq;
 
 namespace BetterLyrics.WinUI3.Collections
 {
@@ -85,6 +86,17 @@ namespace BetterLyrics.WinUI3.Collections
         public void Refresh()
         {
             OnCollectionChanged(new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset));
+        }
+
+        public void RemoveAll(Predicate<T> match)
+        {
+            for (int i = Count - 1; i >= 0; i--)
+            {
+                if (match(Items[i]))
+                {
+                    RemoveAt(i);
+                }
+            }
         }
     }
 

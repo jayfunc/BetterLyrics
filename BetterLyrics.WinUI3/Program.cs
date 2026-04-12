@@ -258,6 +258,7 @@ namespace BetterLyrics.WinUI3
 
                     .AddTransient<NowPlayingPageViewModel>()
                     .AddTransient<NowPlayingBarViewModel>()
+                    .AddTransient<LayoutEditorControlViewModel>()
 
                     .BuildServiceProvider()
             );

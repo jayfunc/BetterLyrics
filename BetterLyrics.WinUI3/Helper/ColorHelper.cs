@@ -4,6 +4,7 @@ using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Hooks;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;
@@ -274,5 +275,29 @@ namespace BetterLyrics.WinUI3.Helper
         }
 
         public static Color FromVector3(Vector3 vector3) => Color.FromArgb(255, (byte)vector3.X, (byte)vector3.Y, (byte)vector3.Z);
+
+        public static Color GetHarmoniousColor(Color color, double factor = 0.2)
+        {
+            if (color.A == 0) return Colors.Transparent;
+
+            double brightness = (0.299 * color.R + 0.587 * color.G + 0.114 * color.B);
+
+            byte r, g, b;
+
+            if (brightness > 128)
+            {
+                r = (byte)Math.Max(0, color.R * (1 - factor));
+                g = (byte)Math.Max(0, color.G * (1 - factor));
+                b = (byte)Math.Max(0, color.B * (1 - factor));
+            }
+            else
+            {
+                r = (byte)Math.Min(255, color.R + (255 - color.R) * factor);
+                g = (byte)Math.Min(255, color.G + (255 - color.G) * factor);
+                b = (byte)Math.Min(255, color.B + (255 - color.B) * factor);
+            }
+
+            return Color.FromArgb(color.A, r, g, b);
+        }
     }
 }

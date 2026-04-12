@@ -41,10 +41,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsMaximized { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsFullscreen { get; set; } = false;
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsLayoutOrientation LyricsLayoutOrientation { get; set; } = LyricsLayoutOrientation.Horizontal;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsDisplayType LyricsDisplayType { get; set; } = LyricsDisplayType.SplitView;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool SwitchLyricsDisplayTypeSplitView { get; set; } = false;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsDisplayTypeSplitViewRatio { get; set; } = 50; // 50%
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LayoutProfile LayoutProfile { get; set; } = new(LyricsWindowMode.Desktop);
 
         [ObservableProperty][NotifyPropertyChangedRecipients][NotifyPropertyChangedFor(nameof(DemoWindowMargin))] public partial Rect WindowBounds { get; set; } = new Rect(100, 100, 800, 500);
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial double DockHeight { get; set; } = 64;
@@ -73,11 +70,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int EdgeFeatheringRight { get; set; } = 0;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int EdgeFeatheringBottom { get; set; } = 0;
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int PaddingLeft { get; set; } = 0;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int PaddingTop { get; set; } = 0;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int PaddingRight { get; set; } = 0;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int PaddingBottom { get; set; } = 0;
-
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowLyricsCard { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LyricsCardStyleKey { get; set; } = "";
 
@@ -101,6 +93,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
             LyricsBackgroundSettings.PropertyChanged += LyricsBackgroundSettings_PropertyChanged;
             AlbumArtLayoutSettings.PropertyChanged += AlbumArtLayoutSettings_PropertyChanged;
             AlbumArtAreaEffectSettings.PropertyChanged += AlbumArtAreaEffectSettings_PropertyChanged;
+            LayoutProfile.PropertyChanged += LayoutProfile_PropertyChanged;
 
             var primaryMonitorInfoEx = MonitorHook.GetPrimaryMonitorInfoEx();
             var monitorRect = primaryMonitorInfoEx.rcMonitor;
@@ -112,6 +105,8 @@ namespace BetterLyrics.WinUI3.Models.Settings
         public LyricsWindowStatus(LyricsWindowMode mode) : this()
         {
             ILocalizationService localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
+
+            LayoutProfile = new(mode);
 
             switch (mode)
             {
@@ -144,7 +139,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
         private void InitDesktopMode(ILocalizationService localizationService)
         {
             Name = localizationService.GetLocalizedString("DesktopMode");
-            LyricsDisplayType = LyricsDisplayType.LyricsOnly;
             IsLocked = true;
             IsAlwaysOnTop = true;
             IsAlwaysOnTopPolling = true;
@@ -170,7 +164,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
             IsAlwaysOnTopPolling = true;
             IsAdaptToEnvironment = true;
             IsShownInSwitchers = false;
-            LyricsDisplayType = LyricsDisplayType.LyricsOnly;
             EnvironmentSampleMode = WindowPixelSampleMode.BelowWindow;
             IsAlwaysHideUnlockButton = true;
             KeepNowPlayingBarInteractiveWhenLocked = true;
@@ -189,7 +182,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
         private void InitFullscreenMode(ILocalizationService localizationService)
         {
             Name = localizationService.GetLocalizedString("FullscreenMode");
-            LyricsLayoutOrientation = LyricsLayoutOrientation.Vertical;
             LyricsStyleSettings = new LyricsStyleSettings
             {
                 LyricsAlignmentType = TextAlignmentType.Center
@@ -207,14 +199,12 @@ namespace BetterLyrics.WinUI3.Models.Settings
         private void InitNarrowMode(ILocalizationService localizationService)
         {
             Name = localizationService.GetLocalizedString("NarrowMode");
-            LyricsLayoutOrientation = LyricsLayoutOrientation.Vertical;
             WindowBounds = MonitorBounds.ToCenterPart(4, 1.5);
         }
 
         private void InitTaskbarMode(ILocalizationService localizationService)
         {
             Name = localizationService.GetLocalizedString("TaskbarMode");
-            LyricsDisplayType = LyricsDisplayType.LyricsOnly;
             IsPinToTaskbar = true;
             IsLocked = true;
             IsAdaptToEnvironment = true;
@@ -237,7 +227,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
         private void InitWallpaperMode(ILocalizationService localizationService)
         {
             Name = localizationService.GetLocalizedString("WallpaperMode");
-            LyricsDisplayType = LyricsDisplayType.LyricsOnly;
             IsWallpaper = true;
             IsLocked = true;
             IsAlwaysOnTop = true;
@@ -311,6 +300,17 @@ namespace BetterLyrics.WinUI3.Models.Settings
             OnPropertyChanged(nameof(AlbumArtAreaEffectSettings));
         }
 
+        partial void OnLayoutProfileChanged(LayoutProfile oldValue, LayoutProfile newValue)
+        {
+            oldValue.PropertyChanged -= LayoutProfile_PropertyChanged;
+            newValue.PropertyChanged += LayoutProfile_PropertyChanged;
+        }
+
+        private void LayoutProfile_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            OnPropertyChanged(nameof(LayoutProfile));
+        }
+
         public object Clone()
         {
             return new LyricsWindowStatus()
@@ -333,10 +333,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 IsMaximized = this.IsMaximized,
                 IsFullscreen = this.IsFullscreen,
 
-                LyricsLayoutOrientation = this.LyricsLayoutOrientation,
-                LyricsDisplayType = this.LyricsDisplayType,
-                SwitchLyricsDisplayTypeSplitView = this.SwitchLyricsDisplayTypeSplitView,
-                LyricsDisplayTypeSplitViewRatio = this.LyricsDisplayTypeSplitViewRatio,
+                LayoutProfile = (LayoutProfile)this.LayoutProfile.Clone(),
 
                 WindowBounds = this.WindowBounds,
                 DockHeight = this.DockHeight,
@@ -365,11 +362,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 EdgeFeatheringTop = this.EdgeFeatheringTop,
                 EdgeFeatheringRight = this.EdgeFeatheringRight,
                 EdgeFeatheringBottom = this.EdgeFeatheringBottom,
-
-                PaddingLeft = this.PaddingLeft,
-                PaddingTop = this.PaddingTop,
-                PaddingRight = this.PaddingRight,
-                PaddingBottom = this.PaddingBottom,
 
                 ShowLyricsCard = this.ShowLyricsCard,
                 LyricsCardStyleKey = this.LyricsCardStyleKey,
