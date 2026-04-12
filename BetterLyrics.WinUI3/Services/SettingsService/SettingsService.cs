@@ -19,7 +19,6 @@ using Windows.Globalization;
 
 namespace BetterLyrics.WinUI3.Services.SettingsService
 {
-    // 新建一个 AppSettings 类
     public partial class SettingsService : BaseViewModel, ISettingsService
     {
         private readonly DispatcherQueueTimer _writeAppSettingsTimer;

@@ -216,6 +216,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>İptal</value>
   </data>
+  <data name="Column" xml:space="preserve">
+    <value>Sütun</value>
+  </data>
   <data name="Confirm" xml:space="preserve">
     <value>Onaylayın</value>
   </data>
@@ -323,6 +326,270 @@
   </data>
   <data name="LastFMRequestUnAuthTitle" xml:space="preserve">
     <value>BetterLyrics'in Last.fm hesabınıza erişimini iptal edin</value>
+  </data>
+  <data name="LayoutEditorControlAddColButton.Content" xml:space="preserve">
+    <value>Sütun ekle</value>
+  </data>
+  <data name="LayoutEditorControlAddRowButton.Content" xml:space="preserve">
+    <value>Satır ekle</value>
+  </data>
+  <data name="LayoutEditorControlAlignmentHeader.Text" xml:space="preserve">
+    <value>Hizalama</value>
+  </data>
+  <data name="LayoutEditorControlAllPlacedMessage.Text" xml:space="preserve">
+    <value>Tüm bileşenler yerleştirildi.</value>
+  </data>
+  <data name="LayoutEditorControlCanvasNavigationHeader.Text" xml:space="preserve">
+    <value>Tuval Navigasyonu</value>
+  </data>
+  <data name="LayoutEditorControlCanvasPaddingTextBlock.Text" xml:space="preserve">
+    <value>Dolgu</value>
+  </data>
+  <data name="LayoutEditorControlCanvasSectionHeader.Text" xml:space="preserve">
+    <value>Tuval</value>
+  </data>
+  <data name="LayoutEditorControlChangeComponentSpanHeader.Text" xml:space="preserve">
+    <value>Bileşeni yeniden boyutlandırma</value>
+  </data>
+  <data name="LayoutEditorControlChangeComponentSpanInfoTag.Text" xml:space="preserve">
+    <value>Ok tuşları / WASD</value>
+  </data>
+  <data name="LayoutEditorControlColBox.Header" xml:space="preserve">
+    <value>Sütun</value>
+  </data>
+  <data name="LayoutEditorControlColSpanBox.Header" xml:space="preserve">
+    <value>Kolon Açıklığı</value>
+  </data>
+  <data name="LayoutEditorControlColumnHeader.Text" xml:space="preserve">
+    <value>Sütun</value>
+  </data>
+  <data name="LayoutEditorControlComponentAlbumArt" xml:space="preserve">
+    <value>Albüm resmi</value>
+  </data>
+  <data name="LayoutEditorControlComponentLyrics" xml:space="preserve">
+    <value>Şarkı Sözleri</value>
+  </data>
+  <data name="LayoutEditorControlComponentNone" xml:space="preserve">
+    <value>Hiçbiri</value>
+  </data>
+  <data name="LayoutEditorControlComponentOperationHeader.Text" xml:space="preserve">
+    <value>Bileşen Operasyonları (Seçim gereklidir)</value>
+  </data>
+  <data name="LayoutEditorControlComponentSongInfo" xml:space="preserve">
+    <value>Şarkı bilgisi</value>
+  </data>
+  <data name="LayoutEditorControlCopyHere" xml:space="preserve">
+    <value>Buraya yerleştirin</value>
+  </data>
+  <data name="LayoutEditorControlDeleteBottomRow" xml:space="preserve">
+    <value>Aşağıdaki satırı sil</value>
+  </data>
+  <data name="LayoutEditorControlDeleteCol.Text" xml:space="preserve">
+    <value>Bu sütunu silin</value>
+  </data>
+  <data name="LayoutEditorControlDeleteComponentHeader.Text" xml:space="preserve">
+    <value>Bileşeni sil</value>
+  </data>
+  <data name="LayoutEditorControlDeleteLeftColumn" xml:space="preserve">
+    <value>Soldaki sütunu sil</value>
+  </data>
+  <data name="LayoutEditorControlDeleteRightColumn" xml:space="preserve">
+    <value>Sağdaki sütunu sil</value>
+  </data>
+  <data name="LayoutEditorControlDeleteRow.Text" xml:space="preserve">
+    <value>Bu satırı sil</value>
+  </data>
+  <data name="LayoutEditorControlDeleteTopRow" xml:space="preserve">
+    <value>Yukarıdaki satırı sil</value>
+  </data>
+  <data name="LayoutEditorControlGlobalColSpacingBox.Header" xml:space="preserve">
+    <value>Kolon aralığı</value>
+  </data>
+  <data name="LayoutEditorControlGlobalPadBottomBox.Header" xml:space="preserve">
+    <value>Alt</value>
+  </data>
+  <data name="LayoutEditorControlGlobalPadLeftBox.Header" xml:space="preserve">
+    <value>Sol</value>
+  </data>
+  <data name="LayoutEditorControlGlobalPadRightBox.Header" xml:space="preserve">
+    <value>Doğru.</value>
+  </data>
+  <data name="LayoutEditorControlGlobalPadTopBox.Header" xml:space="preserve">
+    <value>Üst</value>
+  </data>
+  <data name="LayoutEditorControlGlobalRowSpacingBox.Header" xml:space="preserve">
+    <value>Sıra aralığı</value>
+  </data>
+  <data name="LayoutEditorControlHandToolToggle.Label" xml:space="preserve">
+    <value>Pan</value>
+  </data>
+  <data name="LayoutEditorControlHelpButton.Label" xml:space="preserve">
+    <value>Kısayollar Kılavuzu</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalAlignmentBox.Header" xml:space="preserve">
+    <value>Yatay Hizalama</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalAlignmentCenter.Content" xml:space="preserve">
+    <value>Merkez</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalAlignmentLeft.Content" xml:space="preserve">
+    <value>Sol</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalAlignmentRight.Content" xml:space="preserve">
+    <value>Doğru.</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalAlignmentStretch.Content" xml:space="preserve">
+    <value>Esneme</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalScrollHeader.Text" xml:space="preserve">
+    <value>Yatay kaydırma</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalScrollInfoTag.Text" xml:space="preserve">
+    <value>Fare Tekerleği</value>
+  </data>
+  <data name="LayoutEditorControlInsertColAfter.Text" xml:space="preserve">
+    <value>Sağa sütun ekle</value>
+  </data>
+  <data name="LayoutEditorControlInsertColBefore.Text" xml:space="preserve">
+    <value>Sola sütun ekle</value>
+  </data>
+  <data name="LayoutEditorControlInsertColumn" xml:space="preserve">
+    <value>Sütunu buraya ekleyin</value>
+  </data>
+  <data name="LayoutEditorControlInsertRow" xml:space="preserve">
+    <value>Satırı buraya ekleyin</value>
+  </data>
+  <data name="LayoutEditorControlInsertRowAfter.Text" xml:space="preserve">
+    <value>Aşağıdaki satırı ekleyin</value>
+  </data>
+  <data name="LayoutEditorControlInsertRowBefore.Text" xml:space="preserve">
+    <value>Yukarıdaki satırı ekleyin</value>
+  </data>
+  <data name="LayoutEditorControlKeyboardShortcutsHeader.Text" xml:space="preserve">
+    <value>Klavye Kısayolları</value>
+  </data>
+  <data name="LayoutEditorControlMarginBottomBox.Header" xml:space="preserve">
+    <value>Alt</value>
+  </data>
+  <data name="LayoutEditorControlMarginHeader.Text" xml:space="preserve">
+    <value>Marj</value>
+  </data>
+  <data name="LayoutEditorControlMarginLeftBox.Header" xml:space="preserve">
+    <value>Sol</value>
+  </data>
+  <data name="LayoutEditorControlMarginRightBox.Header" xml:space="preserve">
+    <value>Doğru.</value>
+  </data>
+  <data name="LayoutEditorControlMarginTopBox.Header" xml:space="preserve">
+    <value>Üst</value>
+  </data>
+  <data name="LayoutEditorControlMoveComponentHeader.Text" xml:space="preserve">
+    <value>Bileşeni taşı</value>
+  </data>
+  <data name="LayoutEditorControlMoveComponentInfoTag.Text" xml:space="preserve">
+    <value>Ok tuşları / WASD</value>
+  </data>
+  <data name="LayoutEditorControlMoveHere" xml:space="preserve">
+    <value>Buraya gel.</value>
+  </data>
+  <data name="LayoutEditorControlNoSelection" xml:space="preserve">
+    <value>Devam etmek için önizlemeden veya soldaki listeden bir bileşen seçin.</value>
+  </data>
+  <data name="LayoutEditorControlPendingComponentsDescriptionTextBlock.Text" xml:space="preserve">
+    <value>Bileşenleri yerleştirmek için sağ taraftaki ızgaraya sürükleyin. Bileşenler yerleştirildikten sonra ızgara içinde serbestçe hareket ettirilebilir.</value>
+  </data>
+  <data name="LayoutEditorControlPendingComponentsTextBlock.Text" xml:space="preserve">
+    <value>Bekleyen Bileşen</value>
+  </data>
+  <data name="LayoutEditorControlPlacedComponentsDescriptionTextBlock.Text" xml:space="preserve">
+    <value>Sağ tarafta gizli veya tıklanamaz durumdaysa bileşeni buradan seçin.</value>
+  </data>
+  <data name="LayoutEditorControlPlacedComponentsTextBlock.Text" xml:space="preserve">
+    <value>Yerleştirilen Bileşenler</value>
+  </data>
+  <data name="LayoutEditorControlRemoveButton.Content" xml:space="preserve">
+    <value>Bileşeni Kaldır</value>
+  </data>
+  <data name="LayoutEditorControlRemoveColButton.Content" xml:space="preserve">
+    <value>Sütunu kaldır</value>
+  </data>
+  <data name="LayoutEditorControlRemoveRowButton.Content" xml:space="preserve">
+    <value>Satırı kaldır</value>
+  </data>
+  <data name="LayoutEditorControlRowBox.Header" xml:space="preserve">
+    <value>Sıra</value>
+  </data>
+  <data name="LayoutEditorControlRowHeader.Text" xml:space="preserve">
+    <value>Sıra</value>
+  </data>
+  <data name="LayoutEditorControlRowSpanBox.Header" xml:space="preserve">
+    <value>Sıra Açıklığı</value>
+  </data>
+  <data name="LayoutEditorControlSelectedComponentLabel.Text" xml:space="preserve">
+    <value>Devam etmek için önizlemeden veya soldaki listeden bir bileşen seçin.</value>
+  </data>
+  <data name="LayoutEditorControlSelectedComponentPropertiesHeader.Text" xml:space="preserve">
+    <value>Özellikler</value>
+  </data>
+  <data name="LayoutEditorControlSetBottomRowToAuto" xml:space="preserve">
+    <value>Aşağıdaki satırı Otomatik olarak ayarlayın</value>
+  </data>
+  <data name="LayoutEditorControlSetBottomRowToStar" xml:space="preserve">
+    <value>Aşağıdaki satırı Doldur olarak ayarlayın</value>
+  </data>
+  <data name="LayoutEditorControlSetLeftColumnToAuto" xml:space="preserve">
+    <value>Sol sütunu Otomatik olarak ayarla</value>
+  </data>
+  <data name="LayoutEditorControlSetLeftColumnToStar" xml:space="preserve">
+    <value>Sol sütunu Doldur olarak ayarlayın</value>
+  </data>
+  <data name="LayoutEditorControlSetRightColumnToAuto" xml:space="preserve">
+    <value>Sağ sütunu Otomatik olarak ayarla</value>
+  </data>
+  <data name="LayoutEditorControlSetRightColumnToStar" xml:space="preserve">
+    <value>Sağ sütunu Doldur olarak ayarlayın</value>
+  </data>
+  <data name="LayoutEditorControlSetTopRowToAuto" xml:space="preserve">
+    <value>Üst satırı Otomatik olarak ayarla</value>
+  </data>
+  <data name="LayoutEditorControlSetTopRowToStar" xml:space="preserve">
+    <value>Üst satırı Doldur olarak ayarlayın</value>
+  </data>
+  <data name="LayoutEditorControlTemporaryActivateHandHeader.Text" xml:space="preserve">
+    <value>El aletini geçici olarak etkinleştirin</value>
+  </data>
+  <data name="LayoutEditorControlTemporaryActivateHandInfoTag.Text" xml:space="preserve">
+    <value>Boşluğa uzun basın</value>
+  </data>
+  <data name="LayoutEditorControlVerticalAlignmentBottom.Content" xml:space="preserve">
+    <value>Alt</value>
+  </data>
+  <data name="LayoutEditorControlVerticalAlignmentBox.Header" xml:space="preserve">
+    <value>Dikey Hizalama</value>
+  </data>
+  <data name="LayoutEditorControlVerticalAlignmentCenter.Content" xml:space="preserve">
+    <value>Merkez</value>
+  </data>
+  <data name="LayoutEditorControlVerticalAlignmentStretch.Content" xml:space="preserve">
+    <value>Esneme</value>
+  </data>
+  <data name="LayoutEditorControlVerticalAlignmentTop.Content" xml:space="preserve">
+    <value>Üst</value>
+  </data>
+  <data name="LayoutEditorControlZoomCanvasHeader.Text" xml:space="preserve">
+    <value>Yakınlaştırma/uzaklaştırma</value>
+  </data>
+  <data name="LayoutEditorControlZoomCanvasInfoTag.Text" xml:space="preserve">
+    <value>Fare Tekerleği</value>
+  </data>
+  <data name="LayoutEditorControlZoomInButton.Label" xml:space="preserve">
+    <value>Yakınlaştır</value>
+  </data>
+  <data name="LayoutEditorControlZoomOutButton.Label" xml:space="preserve">
+    <value>Uzaklaştır</value>
+  </data>
+  <data name="LayoutEditorControlZoomResetButton.Label" xml:space="preserve">
+    <value>Sığdırmak için Yakınlaştır</value>
   </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>LibreTranslate'ten çeviri talep edilemedi. Lütfen ayarları veya yerel LibreTranslate yapılandırmasını kontrol edin</value>
@@ -887,6 +1154,9 @@
   </data>
   <data name="Romaji" xml:space="preserve">
     <value>Romaji</value>
+  </data>
+  <data name="Row" xml:space="preserve">
+    <value>Sıra</value>
   </data>
   <data name="SetingsPageContributors.Text" xml:space="preserve">
     <value>Katkıda Bulunanlar</value>
@@ -1892,6 +2162,12 @@
   </data>
   <data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
     <value>Bu yazılımı kullanan siz</value>
+  </data>
+  <data name="SetTo1Star" xml:space="preserve">
+    <value>1* olarak ayarlayın</value>
+  </data>
+  <data name="SetToAuto" xml:space="preserve">
+    <value>Otomatik olarak ayarla</value>
   </data>
   <data name="SLyricsWindowSettingsControlShareMoveToMonitor.Text" xml:space="preserve">
     <value>Monitöre geç</value>

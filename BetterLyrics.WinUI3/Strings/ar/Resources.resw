@@ -216,6 +216,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>إلغاء</value>
   </data>
+  <data name="Column" xml:space="preserve">
+    <value>العمود</value>
+  </data>
   <data name="Confirm" xml:space="preserve">
     <value>تأكيد</value>
   </data>
@@ -323,6 +326,270 @@
   </data>
   <data name="LastFMRequestUnAuthTitle" xml:space="preserve">
     <value>إلغاء وصول BetterLyrics إلى حساب Last.fm الخاص بك</value>
+  </data>
+  <data name="LayoutEditorControlAddColButton.Content" xml:space="preserve">
+    <value>إضافة عمود</value>
+  </data>
+  <data name="LayoutEditorControlAddRowButton.Content" xml:space="preserve">
+    <value>إضافة صف</value>
+  </data>
+  <data name="LayoutEditorControlAlignmentHeader.Text" xml:space="preserve">
+    <value>المحاذاة</value>
+  </data>
+  <data name="LayoutEditorControlAllPlacedMessage.Text" xml:space="preserve">
+    <value>تم وضع جميع المكونات.</value>
+  </data>
+  <data name="LayoutEditorControlCanvasNavigationHeader.Text" xml:space="preserve">
+    <value>الملاحة القماشية</value>
+  </data>
+  <data name="LayoutEditorControlCanvasPaddingTextBlock.Text" xml:space="preserve">
+    <value>الحشو</value>
+  </data>
+  <data name="LayoutEditorControlCanvasSectionHeader.Text" xml:space="preserve">
+    <value>اللوحة القماشية</value>
+  </data>
+  <data name="LayoutEditorControlChangeComponentSpanHeader.Text" xml:space="preserve">
+    <value>تغيير حجم المكون</value>
+  </data>
+  <data name="LayoutEditorControlChangeComponentSpanInfoTag.Text" xml:space="preserve">
+    <value>مفاتيح الأسهم / WASD</value>
+  </data>
+  <data name="LayoutEditorControlColBox.Header" xml:space="preserve">
+    <value>العمود</value>
+  </data>
+  <data name="LayoutEditorControlColSpanBox.Header" xml:space="preserve">
+    <value>امتداد العمود</value>
+  </data>
+  <data name="LayoutEditorControlColumnHeader.Text" xml:space="preserve">
+    <value>العمود</value>
+  </data>
+  <data name="LayoutEditorControlComponentAlbumArt" xml:space="preserve">
+    <value>صورة الألبوم</value>
+  </data>
+  <data name="LayoutEditorControlComponentLyrics" xml:space="preserve">
+    <value>كلمات</value>
+  </data>
+  <data name="LayoutEditorControlComponentNone" xml:space="preserve">
+    <value>لا يوجد</value>
+  </data>
+  <data name="LayoutEditorControlComponentOperationHeader.Text" xml:space="preserve">
+    <value>عمليات المكونات (الاختيار مطلوب)</value>
+  </data>
+  <data name="LayoutEditorControlComponentSongInfo" xml:space="preserve">
+    <value>معلومات الأغنية</value>
+  </data>
+  <data name="LayoutEditorControlCopyHere" xml:space="preserve">
+    <value>ضع هنا</value>
+  </data>
+  <data name="LayoutEditorControlDeleteBottomRow" xml:space="preserve">
+    <value>حذف الصف أدناه</value>
+  </data>
+  <data name="LayoutEditorControlDeleteCol.Text" xml:space="preserve">
+    <value>حذف هذا العمود</value>
+  </data>
+  <data name="LayoutEditorControlDeleteComponentHeader.Text" xml:space="preserve">
+    <value>حذف المكون</value>
+  </data>
+  <data name="LayoutEditorControlDeleteLeftColumn" xml:space="preserve">
+    <value>حذف العمود إلى اليسار</value>
+  </data>
+  <data name="LayoutEditorControlDeleteRightColumn" xml:space="preserve">
+    <value>حذف العمود إلى اليمين</value>
+  </data>
+  <data name="LayoutEditorControlDeleteRow.Text" xml:space="preserve">
+    <value>احذف هذا الصف</value>
+  </data>
+  <data name="LayoutEditorControlDeleteTopRow" xml:space="preserve">
+    <value>حذف الصف أعلاه</value>
+  </data>
+  <data name="LayoutEditorControlGlobalColSpacingBox.Header" xml:space="preserve">
+    <value>تباعد الأعمدة</value>
+  </data>
+  <data name="LayoutEditorControlGlobalPadBottomBox.Header" xml:space="preserve">
+    <value>القاع</value>
+  </data>
+  <data name="LayoutEditorControlGlobalPadLeftBox.Header" xml:space="preserve">
+    <value>يسار</value>
+  </data>
+  <data name="LayoutEditorControlGlobalPadRightBox.Header" xml:space="preserve">
+    <value>صحيح</value>
+  </data>
+  <data name="LayoutEditorControlGlobalPadTopBox.Header" xml:space="preserve">
+    <value>أعلى</value>
+  </data>
+  <data name="LayoutEditorControlGlobalRowSpacingBox.Header" xml:space="preserve">
+    <value>تباعد الصفوف</value>
+  </data>
+  <data name="LayoutEditorControlHandToolToggle.Label" xml:space="preserve">
+    <value>بان</value>
+  </data>
+  <data name="LayoutEditorControlHelpButton.Label" xml:space="preserve">
+    <value>دليل الاختصارات</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalAlignmentBox.Header" xml:space="preserve">
+    <value>محاذاة أفقية</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalAlignmentCenter.Content" xml:space="preserve">
+    <value>المركز</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalAlignmentLeft.Content" xml:space="preserve">
+    <value>يسار</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalAlignmentRight.Content" xml:space="preserve">
+    <value>صحيح</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalAlignmentStretch.Content" xml:space="preserve">
+    <value>التمدد</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalScrollHeader.Text" xml:space="preserve">
+    <value>تمرير أفقي</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalScrollInfoTag.Text" xml:space="preserve">
+    <value>عجلة الماوس</value>
+  </data>
+  <data name="LayoutEditorControlInsertColAfter.Text" xml:space="preserve">
+    <value>إدراج عمود إلى اليمين</value>
+  </data>
+  <data name="LayoutEditorControlInsertColBefore.Text" xml:space="preserve">
+    <value>إدراج عمود إلى اليسار</value>
+  </data>
+  <data name="LayoutEditorControlInsertColumn" xml:space="preserve">
+    <value>أدخل العمود هنا</value>
+  </data>
+  <data name="LayoutEditorControlInsertRow" xml:space="preserve">
+    <value>أدخل الصف هنا</value>
+  </data>
+  <data name="LayoutEditorControlInsertRowAfter.Text" xml:space="preserve">
+    <value>إدراج الصف أدناه</value>
+  </data>
+  <data name="LayoutEditorControlInsertRowBefore.Text" xml:space="preserve">
+    <value>إدراج صف أعلاه</value>
+  </data>
+  <data name="LayoutEditorControlKeyboardShortcutsHeader.Text" xml:space="preserve">
+    <value>اختصارات لوحة المفاتيح</value>
+  </data>
+  <data name="LayoutEditorControlMarginBottomBox.Header" xml:space="preserve">
+    <value>القاع</value>
+  </data>
+  <data name="LayoutEditorControlMarginHeader.Text" xml:space="preserve">
+    <value>الهامش</value>
+  </data>
+  <data name="LayoutEditorControlMarginLeftBox.Header" xml:space="preserve">
+    <value>يسار</value>
+  </data>
+  <data name="LayoutEditorControlMarginRightBox.Header" xml:space="preserve">
+    <value>صحيح</value>
+  </data>
+  <data name="LayoutEditorControlMarginTopBox.Header" xml:space="preserve">
+    <value>أعلى</value>
+  </data>
+  <data name="LayoutEditorControlMoveComponentHeader.Text" xml:space="preserve">
+    <value>نقل المكوّن</value>
+  </data>
+  <data name="LayoutEditorControlMoveComponentInfoTag.Text" xml:space="preserve">
+    <value>مفاتيح الأسهم / WASD</value>
+  </data>
+  <data name="LayoutEditorControlMoveHere" xml:space="preserve">
+    <value>انتقل إلى هنا</value>
+  </data>
+  <data name="LayoutEditorControlNoSelection" xml:space="preserve">
+    <value>حدد مكونًا في المعاينة أو القائمة اليسرى للمتابعة.</value>
+  </data>
+  <data name="LayoutEditorControlPendingComponentsDescriptionTextBlock.Text" xml:space="preserve">
+    <value>اسحب المكونات إلى الشبكة اليمنى لوضعها. بمجرد وضعها، يمكن نقل المكونات بحرية داخل الشبكة.</value>
+  </data>
+  <data name="LayoutEditorControlPendingComponentsTextBlock.Text" xml:space="preserve">
+    <value>المكوّن المعلق</value>
+  </data>
+  <data name="LayoutEditorControlPlacedComponentsDescriptionTextBlock.Text" xml:space="preserve">
+    <value>حدد المكون هنا إذا كان مخفيًا أو غير قابل للنقر على اليمين.</value>
+  </data>
+  <data name="LayoutEditorControlPlacedComponentsTextBlock.Text" xml:space="preserve">
+    <value>المكونات الموضوعة</value>
+  </data>
+  <data name="LayoutEditorControlRemoveButton.Content" xml:space="preserve">
+    <value>إزالة المكون</value>
+  </data>
+  <data name="LayoutEditorControlRemoveColButton.Content" xml:space="preserve">
+    <value>إزالة العمود</value>
+  </data>
+  <data name="LayoutEditorControlRemoveRowButton.Content" xml:space="preserve">
+    <value>إزالة الصف</value>
+  </data>
+  <data name="LayoutEditorControlRowBox.Header" xml:space="preserve">
+    <value>الصف</value>
+  </data>
+  <data name="LayoutEditorControlRowHeader.Text" xml:space="preserve">
+    <value>الصف</value>
+  </data>
+  <data name="LayoutEditorControlRowSpanBox.Header" xml:space="preserve">
+    <value>امتداد الصف</value>
+  </data>
+  <data name="LayoutEditorControlSelectedComponentLabel.Text" xml:space="preserve">
+    <value>حدد مكونًا في المعاينة أو القائمة اليسرى للمتابعة.</value>
+  </data>
+  <data name="LayoutEditorControlSelectedComponentPropertiesHeader.Text" xml:space="preserve">
+    <value>الخصائص</value>
+  </data>
+  <data name="LayoutEditorControlSetBottomRowToAuto" xml:space="preserve">
+    <value>تعيين الصف أدناه إلى تلقائي</value>
+  </data>
+  <data name="LayoutEditorControlSetBottomRowToStar" xml:space="preserve">
+    <value>اضبط الصف أدناه على ملء</value>
+  </data>
+  <data name="LayoutEditorControlSetLeftColumnToAuto" xml:space="preserve">
+    <value>تعيين العمود الأيسر على تلقائي</value>
+  </data>
+  <data name="LayoutEditorControlSetLeftColumnToStar" xml:space="preserve">
+    <value>تعيين العمود الأيسر على تعبئة</value>
+  </data>
+  <data name="LayoutEditorControlSetRightColumnToAuto" xml:space="preserve">
+    <value>تعيين العمود الأيمن على تلقائي</value>
+  </data>
+  <data name="LayoutEditorControlSetRightColumnToStar" xml:space="preserve">
+    <value>تعيين العمود الأيمن على تعبئة</value>
+  </data>
+  <data name="LayoutEditorControlSetTopRowToAuto" xml:space="preserve">
+    <value>تعيين الصف العلوي على تلقائي</value>
+  </data>
+  <data name="LayoutEditorControlSetTopRowToStar" xml:space="preserve">
+    <value>تعيين الصف العلوي على تعبئة</value>
+  </data>
+  <data name="LayoutEditorControlTemporaryActivateHandHeader.Text" xml:space="preserve">
+    <value>تفعيل الأداة اليدوية مؤقتاً</value>
+  </data>
+  <data name="LayoutEditorControlTemporaryActivateHandInfoTag.Text" xml:space="preserve">
+    <value>مساحة الضغط لفترة طويلة</value>
+  </data>
+  <data name="LayoutEditorControlVerticalAlignmentBottom.Content" xml:space="preserve">
+    <value>القاع</value>
+  </data>
+  <data name="LayoutEditorControlVerticalAlignmentBox.Header" xml:space="preserve">
+    <value>المحاذاة الرأسية</value>
+  </data>
+  <data name="LayoutEditorControlVerticalAlignmentCenter.Content" xml:space="preserve">
+    <value>المركز</value>
+  </data>
+  <data name="LayoutEditorControlVerticalAlignmentStretch.Content" xml:space="preserve">
+    <value>التمدد</value>
+  </data>
+  <data name="LayoutEditorControlVerticalAlignmentTop.Content" xml:space="preserve">
+    <value>أعلى</value>
+  </data>
+  <data name="LayoutEditorControlZoomCanvasHeader.Text" xml:space="preserve">
+    <value>التكبير/التصغير</value>
+  </data>
+  <data name="LayoutEditorControlZoomCanvasInfoTag.Text" xml:space="preserve">
+    <value>عجلة الماوس</value>
+  </data>
+  <data name="LayoutEditorControlZoomInButton.Label" xml:space="preserve">
+    <value>تكبير الصورة</value>
+  </data>
+  <data name="LayoutEditorControlZoomOutButton.Label" xml:space="preserve">
+    <value>تصغير</value>
+  </data>
+  <data name="LayoutEditorControlZoomResetButton.Label" xml:space="preserve">
+    <value>تكبير لملاءمة</value>
   </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>فشل طلب الترجمة من LibreTranslate، يرجى التحقق من الإعدادات أو تكوين LibreTranslate المحلي</value>
@@ -887,6 +1154,9 @@
   </data>
   <data name="Romaji" xml:space="preserve">
     <value>روماجي</value>
+  </data>
+  <data name="Row" xml:space="preserve">
+    <value>الصف</value>
   </data>
   <data name="SetingsPageContributors.Text" xml:space="preserve">
     <value>المساهمون</value>
@@ -1892,6 +2162,12 @@
   </data>
   <data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
     <value>أنت، من تستخدم هذا البرنامج الآن</value>
+  </data>
+  <data name="SetTo1Star" xml:space="preserve">
+    <value>تعيين إلى 1*</value>
+  </data>
+  <data name="SetToAuto" xml:space="preserve">
+    <value>تعيين إلى تلقائي</value>
   </data>
   <data name="SLyricsWindowSettingsControlShareMoveToMonitor.Text" xml:space="preserve">
     <value>الانتقال إلى المراقبة</value>

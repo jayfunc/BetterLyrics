@@ -22,6 +22,7 @@
         <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
 
             <FontIcon
+                Margin="0,0,4,0"
                 FontFamily="{StaticResource SegoeFluentIcons}"
                 FontSize="10"
                 Foreground="{StaticResource TextFillColorTertiaryBrush}"
@@ -29,7 +30,6 @@
                 Visibility="{x:Bind HasIcon, Mode=OneWay}" />
 
             <TextBlock
-                Margin="4,0,0,0"
                 FontWeight="SemiBold"
                 Foreground="{StaticResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource CaptionTextBlockStyle}"

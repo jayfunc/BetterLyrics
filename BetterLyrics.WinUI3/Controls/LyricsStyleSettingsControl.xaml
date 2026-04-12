@@ -32,11 +32,7 @@
                         </ComboBox>
                     </controls:SettingsCard>
 
-                    <controls:SettingsCard
-                        x:Uid="SettingsPageLyricsContentOrientation"
-                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                                 Glyph=&#xE80A;}"
-                        Visibility="Collapsed">
+                    <controls:SettingsCard x:Uid="SettingsPageLyricsContentOrientation" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE80A;}">
                         <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsLineContentOrientation, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageLayoutOrientationHorizontal" />
                             <ComboBoxItem x:Uid="SettingsPageLayoutOrientationVertical" />

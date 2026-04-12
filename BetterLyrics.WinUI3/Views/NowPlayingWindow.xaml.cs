@@ -37,7 +37,6 @@ namespace BetterLyrics.WinUI3.Views
         IRecipient<PropertyChangedMessage<bool>>,
         IRecipient<PropertyChangedMessage<double>>,
         IRecipient<PropertyChangedMessage<string>>,
-        IRecipient<PropertyChangedMessage<int>>,
         IRecipient<PropertyChangedMessage<DockPlacement>>,
         IRecipient<PropertyChangedMessage<TitleBarArea>>,
         IRecipient<PropertyChangedMessage<ElementTheme>>,
@@ -748,12 +747,6 @@ namespace BetterLyrics.WinUI3.Views
         private void RootGrid_Loaded(object sender, RoutedEventArgs e)
         {
             InitStatus();
-            RootGrid.Margin = new(
-                (int)((LyricsWindowStatus.PaddingLeft / 100.0) * (RootGrid.ActualWidth / 2)),
-                (int)((LyricsWindowStatus.PaddingTop / 100.0) * (RootGrid.ActualHeight / 2)),
-                (int)((LyricsWindowStatus.PaddingRight / 100.0) * (RootGrid.ActualWidth / 2)),
-                (int)((LyricsWindowStatus.PaddingBottom / 100.0) * (RootGrid.ActualHeight / 2))
-            );
             RootGrid.XamlRoot?.Changed += XamlRoot_Changed;
             OnTitleBarAreaChanged();
         }
@@ -974,29 +967,6 @@ namespace BetterLyrics.WinUI3.Views
                 if (message.PropertyName == nameof(LyricsWindowStatus.PaletteGeneratorType))
                 {
                     _ = UpdateAlbumArtThemeColorsAsync();
-                }
-            }
-        }
-
-        public void Receive(PropertyChangedMessage<int> message)
-        {
-            if (message.Sender == LyricsWindowStatus)
-            {
-                if (message.PropertyName == nameof(LyricsWindowStatus.PaddingLeft))
-                {
-                    RootGrid.Margin = RootGrid.Margin.WithLeft((int)((message.NewValue / 100.0) * (RootGrid.ActualWidth / 2)));
-                }
-                else if (message.PropertyName == nameof(LyricsWindowStatus.PaddingTop))
-                {
-                    RootGrid.Margin = RootGrid.Margin.WithTop((int)((message.NewValue / 100.0) * (RootGrid.ActualHeight / 2)));
-                }
-                else if (message.PropertyName == nameof(LyricsWindowStatus.PaddingRight))
-                {
-                    RootGrid.Margin = RootGrid.Margin.WithRight((int)((message.NewValue / 100.0) * (RootGrid.ActualWidth / 2)));
-                }
-                else if (message.PropertyName == nameof(LyricsWindowStatus.PaddingBottom))
-                {
-                    RootGrid.Margin = RootGrid.Margin.WithBottom((int)((message.NewValue / 100.0) * (RootGrid.ActualHeight / 2)));
                 }
             }
         }

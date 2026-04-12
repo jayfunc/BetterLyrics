@@ -249,6 +249,9 @@
                         <NavigationViewItem x:Name="WindowSegmentedItem" Tag="Window">
                             <TextBlock x:Uid="AppSettingsControlGeneral" />
                         </NavigationViewItem>
+                        <NavigationViewItem Tag="Layout">
+                            <TextBlock x:Uid="SettingsPageLayout" />
+                        </NavigationViewItem>
                         <NavigationViewItem Tag="AlbumArtStyle">
                             <TextBlock x:Uid="SettingsPageAlbumStyle" />
                         </NavigationViewItem>
@@ -279,6 +282,11 @@
                 <!--  Window  -->
                 <controls:Case Value="Window">
                     <uc:WindowSettingsControl LyricsWindowStatus="{x:Bind LyricsWindowStatus, Mode=OneWay}" />
+                </controls:Case>
+
+                <!--  Layout  -->
+                <controls:Case Value="Layout">
+                    <uc:LayoutEditorControl LyricsWindowStatus="{x:Bind LyricsWindowStatus, Mode=OneWay}" />
                 </controls:Case>
 
                 <!--  Album art area style  -->

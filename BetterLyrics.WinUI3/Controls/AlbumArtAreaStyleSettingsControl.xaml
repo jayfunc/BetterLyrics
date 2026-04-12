@@ -15,37 +15,7 @@
             <Grid Style="{StaticResource SettingsGridStyle}">
                 <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
-                    <TextBlock x:Uid="SettingsPageAlbumStyle" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-
-                    <!--  整体对齐  -->
-                    <controls:SettingsCard x:Uid="SettingsPageAlignment" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8E3;}">
-                        <ComboBox SelectedIndex="{x:Bind AlbumArtLayoutSettings.SongInfoAlignmentType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                            <ComboBoxItem x:Uid="SettingsPageLeft" />
-                            <ComboBoxItem x:Uid="SettingsPageCenter" />
-                            <ComboBoxItem x:Uid="SettingsPageRight" />
-                        </ComboBox>
-                    </controls:SettingsCard>
-
                     <TextBlock x:Uid="SettingsPageAlbumArt" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-
-                    <!--  专辑高度  -->
-                    <controls:SettingsExpander
-                        x:Uid="SettingsPageAlbumArtHeight"
-                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                                 Glyph=&#xE784;}"
-                        IsExpanded="True">
-                        <controls:SettingsExpander.Items>
-                            <controls:SettingsCard x:Uid="SettingsPageAutoAdjust">
-                                <ToggleSwitch IsOn="{x:Bind AlbumArtLayoutSettings.IsAutoCoverImageHeight, Mode=TwoWay}" />
-                            </controls:SettingsCard>
-                            <controls:SettingsCard IsEnabled="{x:Bind AlbumArtLayoutSettings.IsAutoCoverImageHeight, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}">
-                                <NumberBox
-                                    Minimum="0"
-                                    SpinButtonPlacementMode="Inline"
-                                    Value="{x:Bind AlbumArtLayoutSettings.CoverImageHeight, Mode=TwoWay}" />
-                            </controls:SettingsCard>
-                        </controls:SettingsExpander.Items>
-                    </controls:SettingsExpander>
 
                     <!--  专辑圆角  -->
                     <controls:SettingsCard x:Uid="SettingsPageAlbumRadius" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEA3A;}">

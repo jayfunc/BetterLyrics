@@ -216,6 +216,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>취소</value>
   </data>
+  <data name="Column" xml:space="preserve">
+    <value>칼럼</value>
+  </data>
   <data name="Confirm" xml:space="preserve">
     <value>확인</value>
   </data>
@@ -323,6 +326,270 @@
   </data>
   <data name="LastFMRequestUnAuthTitle" xml:space="preserve">
     <value>Last.fm 계정에 대한 BetterLyrics 액세스 권한 취소</value>
+  </data>
+  <data name="LayoutEditorControlAddColButton.Content" xml:space="preserve">
+    <value>열 추가</value>
+  </data>
+  <data name="LayoutEditorControlAddRowButton.Content" xml:space="preserve">
+    <value>행 추가</value>
+  </data>
+  <data name="LayoutEditorControlAlignmentHeader.Text" xml:space="preserve">
+    <value>정렬</value>
+  </data>
+  <data name="LayoutEditorControlAllPlacedMessage.Text" xml:space="preserve">
+    <value>모든 구성 요소가 배치되었습니다.</value>
+  </data>
+  <data name="LayoutEditorControlCanvasNavigationHeader.Text" xml:space="preserve">
+    <value>캔버스 탐색</value>
+  </data>
+  <data name="LayoutEditorControlCanvasPaddingTextBlock.Text" xml:space="preserve">
+    <value>패딩</value>
+  </data>
+  <data name="LayoutEditorControlCanvasSectionHeader.Text" xml:space="preserve">
+    <value>캔버스</value>
+  </data>
+  <data name="LayoutEditorControlChangeComponentSpanHeader.Text" xml:space="preserve">
+    <value>컴포넌트 크기 조정</value>
+  </data>
+  <data name="LayoutEditorControlChangeComponentSpanInfoTag.Text" xml:space="preserve">
+    <value>화살표 키 / WASD</value>
+  </data>
+  <data name="LayoutEditorControlColBox.Header" xml:space="preserve">
+    <value>칼럼</value>
+  </data>
+  <data name="LayoutEditorControlColSpanBox.Header" xml:space="preserve">
+    <value>열 스팬</value>
+  </data>
+  <data name="LayoutEditorControlColumnHeader.Text" xml:space="preserve">
+    <value>칼럼</value>
+  </data>
+  <data name="LayoutEditorControlComponentAlbumArt" xml:space="preserve">
+    <value>앨범 아트</value>
+  </data>
+  <data name="LayoutEditorControlComponentLyrics" xml:space="preserve">
+    <value>가사</value>
+  </data>
+  <data name="LayoutEditorControlComponentNone" xml:space="preserve">
+    <value>없음</value>
+  </data>
+  <data name="LayoutEditorControlComponentOperationHeader.Text" xml:space="preserve">
+    <value>구성 요소 작업(선택 필요)</value>
+  </data>
+  <data name="LayoutEditorControlComponentSongInfo" xml:space="preserve">
+    <value>노래 정보</value>
+  </data>
+  <data name="LayoutEditorControlCopyHere" xml:space="preserve">
+    <value>여기에 배치</value>
+  </data>
+  <data name="LayoutEditorControlDeleteBottomRow" xml:space="preserve">
+    <value>아래 행 삭제</value>
+  </data>
+  <data name="LayoutEditorControlDeleteCol.Text" xml:space="preserve">
+    <value>이 열 삭제</value>
+  </data>
+  <data name="LayoutEditorControlDeleteComponentHeader.Text" xml:space="preserve">
+    <value>구성 요소 삭제</value>
+  </data>
+  <data name="LayoutEditorControlDeleteLeftColumn" xml:space="preserve">
+    <value>왼쪽 열 삭제</value>
+  </data>
+  <data name="LayoutEditorControlDeleteRightColumn" xml:space="preserve">
+    <value>오른쪽 열 삭제</value>
+  </data>
+  <data name="LayoutEditorControlDeleteRow.Text" xml:space="preserve">
+    <value>이 행 삭제</value>
+  </data>
+  <data name="LayoutEditorControlDeleteTopRow" xml:space="preserve">
+    <value>위 행 삭제</value>
+  </data>
+  <data name="LayoutEditorControlGlobalColSpacingBox.Header" xml:space="preserve">
+    <value>열 간격</value>
+  </data>
+  <data name="LayoutEditorControlGlobalPadBottomBox.Header" xml:space="preserve">
+    <value>하단</value>
+  </data>
+  <data name="LayoutEditorControlGlobalPadLeftBox.Header" xml:space="preserve">
+    <value>왼쪽</value>
+  </data>
+  <data name="LayoutEditorControlGlobalPadRightBox.Header" xml:space="preserve">
+    <value>오른쪽</value>
+  </data>
+  <data name="LayoutEditorControlGlobalPadTopBox.Header" xml:space="preserve">
+    <value>Top</value>
+  </data>
+  <data name="LayoutEditorControlGlobalRowSpacingBox.Header" xml:space="preserve">
+    <value>행 간격</value>
+  </data>
+  <data name="LayoutEditorControlHandToolToggle.Label" xml:space="preserve">
+    <value>팬</value>
+  </data>
+  <data name="LayoutEditorControlHelpButton.Label" xml:space="preserve">
+    <value>바로 가기 가이드</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalAlignmentBox.Header" xml:space="preserve">
+    <value>수평 정렬</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalAlignmentCenter.Content" xml:space="preserve">
+    <value>센터</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalAlignmentLeft.Content" xml:space="preserve">
+    <value>왼쪽</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalAlignmentRight.Content" xml:space="preserve">
+    <value>오른쪽</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalAlignmentStretch.Content" xml:space="preserve">
+    <value>Stretch</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalScrollHeader.Text" xml:space="preserve">
+    <value>가로 스크롤</value>
+  </data>
+  <data name="LayoutEditorControlHorizontalScrollInfoTag.Text" xml:space="preserve">
+    <value>마우스 휠</value>
+  </data>
+  <data name="LayoutEditorControlInsertColAfter.Text" xml:space="preserve">
+    <value>오른쪽에 열 삽입</value>
+  </data>
+  <data name="LayoutEditorControlInsertColBefore.Text" xml:space="preserve">
+    <value>왼쪽에 열 삽입</value>
+  </data>
+  <data name="LayoutEditorControlInsertColumn" xml:space="preserve">
+    <value>여기에 열 삽입</value>
+  </data>
+  <data name="LayoutEditorControlInsertRow" xml:space="preserve">
+    <value>여기에 행 삽입</value>
+  </data>
+  <data name="LayoutEditorControlInsertRowAfter.Text" xml:space="preserve">
+    <value>아래 행 삽입</value>
+  </data>
+  <data name="LayoutEditorControlInsertRowBefore.Text" xml:space="preserve">
+    <value>위에 행 삽입</value>
+  </data>
+  <data name="LayoutEditorControlKeyboardShortcutsHeader.Text" xml:space="preserve">
+    <value>키보드 단축키</value>
+  </data>
+  <data name="LayoutEditorControlMarginBottomBox.Header" xml:space="preserve">
+    <value>하단</value>
+  </data>
+  <data name="LayoutEditorControlMarginHeader.Text" xml:space="preserve">
+    <value>마진</value>
+  </data>
+  <data name="LayoutEditorControlMarginLeftBox.Header" xml:space="preserve">
+    <value>왼쪽</value>
+  </data>
+  <data name="LayoutEditorControlMarginRightBox.Header" xml:space="preserve">
+    <value>오른쪽</value>
+  </data>
+  <data name="LayoutEditorControlMarginTopBox.Header" xml:space="preserve">
+    <value>Top</value>
+  </data>
+  <data name="LayoutEditorControlMoveComponentHeader.Text" xml:space="preserve">
+    <value>컴포넌트 이동</value>
+  </data>
+  <data name="LayoutEditorControlMoveComponentInfoTag.Text" xml:space="preserve">
+    <value>화살표 키 / WASD</value>
+  </data>
+  <data name="LayoutEditorControlMoveHere" xml:space="preserve">
+    <value>여기로 이동</value>
+  </data>
+  <data name="LayoutEditorControlNoSelection" xml:space="preserve">
+    <value>계속하려면 미리 보기 또는 왼쪽 목록에서 컴포넌트를 선택합니다.</value>
+  </data>
+  <data name="LayoutEditorControlPendingComponentsDescriptionTextBlock.Text" xml:space="preserve">
+    <value>컴포넌트를 오른쪽 그리드로 드래그하여 배치합니다. 컴포넌트를 배치한 후에는 그리드 내에서 자유롭게 이동할 수 있습니다.</value>
+  </data>
+  <data name="LayoutEditorControlPendingComponentsTextBlock.Text" xml:space="preserve">
+    <value>보류 중인 구성 요소</value>
+  </data>
+  <data name="LayoutEditorControlPlacedComponentsDescriptionTextBlock.Text" xml:space="preserve">
+    <value>오른쪽에 숨겨져 있거나 클릭할 수 없는 경우 여기에서 컴포넌트를 선택합니다.</value>
+  </data>
+  <data name="LayoutEditorControlPlacedComponentsTextBlock.Text" xml:space="preserve">
+    <value>배치된 구성 요소</value>
+  </data>
+  <data name="LayoutEditorControlRemoveButton.Content" xml:space="preserve">
+    <value>구성 요소 제거</value>
+  </data>
+  <data name="LayoutEditorControlRemoveColButton.Content" xml:space="preserve">
+    <value>열 제거</value>
+  </data>
+  <data name="LayoutEditorControlRemoveRowButton.Content" xml:space="preserve">
+    <value>행 제거</value>
+  </data>
+  <data name="LayoutEditorControlRowBox.Header" xml:space="preserve">
+    <value>행</value>
+  </data>
+  <data name="LayoutEditorControlRowHeader.Text" xml:space="preserve">
+    <value>행</value>
+  </data>
+  <data name="LayoutEditorControlRowSpanBox.Header" xml:space="preserve">
+    <value>행 스팬</value>
+  </data>
+  <data name="LayoutEditorControlSelectedComponentLabel.Text" xml:space="preserve">
+    <value>계속하려면 미리 보기 또는 왼쪽 목록에서 컴포넌트를 선택합니다.</value>
+  </data>
+  <data name="LayoutEditorControlSelectedComponentPropertiesHeader.Text" xml:space="preserve">
+    <value>속성</value>
+  </data>
+  <data name="LayoutEditorControlSetBottomRowToAuto" xml:space="preserve">
+    <value>아래 행을 자동으로 설정합니다.</value>
+  </data>
+  <data name="LayoutEditorControlSetBottomRowToStar" xml:space="preserve">
+    <value>아래 행을 채우기로 설정</value>
+  </data>
+  <data name="LayoutEditorControlSetLeftColumnToAuto" xml:space="preserve">
+    <value>왼쪽 열을 자동으로 설정</value>
+  </data>
+  <data name="LayoutEditorControlSetLeftColumnToStar" xml:space="preserve">
+    <value>왼쪽 열을 채우기로 설정</value>
+  </data>
+  <data name="LayoutEditorControlSetRightColumnToAuto" xml:space="preserve">
+    <value>오른쪽 열을 자동으로 설정</value>
+  </data>
+  <data name="LayoutEditorControlSetRightColumnToStar" xml:space="preserve">
+    <value>오른쪽 열을 채우기로 설정</value>
+  </data>
+  <data name="LayoutEditorControlSetTopRowToAuto" xml:space="preserve">
+    <value>맨 위 행을 자동으로 설정</value>
+  </data>
+  <data name="LayoutEditorControlSetTopRowToStar" xml:space="preserve">
+    <value>맨 위 행을 채우기로 설정</value>
+  </data>
+  <data name="LayoutEditorControlTemporaryActivateHandHeader.Text" xml:space="preserve">
+    <value>일시적으로 손 도구 활성화</value>
+  </data>
+  <data name="LayoutEditorControlTemporaryActivateHandInfoTag.Text" xml:space="preserve">
+    <value>스페이스 키를 길게 누릅니다.</value>
+  </data>
+  <data name="LayoutEditorControlVerticalAlignmentBottom.Content" xml:space="preserve">
+    <value>하단</value>
+  </data>
+  <data name="LayoutEditorControlVerticalAlignmentBox.Header" xml:space="preserve">
+    <value>수직 정렬</value>
+  </data>
+  <data name="LayoutEditorControlVerticalAlignmentCenter.Content" xml:space="preserve">
+    <value>센터</value>
+  </data>
+  <data name="LayoutEditorControlVerticalAlignmentStretch.Content" xml:space="preserve">
+    <value>Stretch</value>
+  </data>
+  <data name="LayoutEditorControlVerticalAlignmentTop.Content" xml:space="preserve">
+    <value>Top</value>
+  </data>
+  <data name="LayoutEditorControlZoomCanvasHeader.Text" xml:space="preserve">
+    <value>확대/축소</value>
+  </data>
+  <data name="LayoutEditorControlZoomCanvasInfoTag.Text" xml:space="preserve">
+    <value>마우스 휠</value>
+  </data>
+  <data name="LayoutEditorControlZoomInButton.Label" xml:space="preserve">
+    <value>줌인</value>
+  </data>
+  <data name="LayoutEditorControlZoomOutButton.Label" xml:space="preserve">
+    <value>줌아웃</value>
+  </data>
+  <data name="LayoutEditorControlZoomResetButton.Label" xml:space="preserve">
+    <value>맞춤 확대/축소</value>
   </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>LibreTranslate에 번역 요청 실패. 설정 또는 로컬 LibreTranslate 구성을 확인하세요</value>
@@ -887,6 +1154,9 @@
   </data>
   <data name="Romaji" xml:space="preserve">
     <value>로마자</value>
+  </data>
+  <data name="Row" xml:space="preserve">
+    <value>행</value>
   </data>
   <data name="SetingsPageContributors.Text" xml:space="preserve">
     <value>기여자</value>
@@ -1892,6 +2162,12 @@
   </data>
   <data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
     <value>이 소프트웨어를 사용 중인 당신</value>
+  </data>
+  <data name="SetTo1Star" xml:space="preserve">
+    <value>1*로 설정</value>
+  </data>
+  <data name="SetToAuto" xml:space="preserve">
+    <value>자동으로 설정</value>
   </data>
   <data name="SLyricsWindowSettingsControlShareMoveToMonitor.Text" xml:space="preserve">
     <value>모니터로 이동</value>
