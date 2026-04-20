@@ -6,29 +6,41 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid x:Name="SizingWrapper">
+    <Grid
+        x:Name="SizingWrapper"
+        HorizontalAlignment="Stretch"
+        VerticalAlignment="Stretch">
+
+        <Rectangle
+            x:Name="SpanHighlightBorder"
+            HorizontalAlignment="Stretch"
+            VerticalAlignment="Stretch"
+            RadiusX="4"
+            RadiusY="4"
+            StrokeDashArray="4 4"
+            StrokeThickness="2"
+            Visibility="Collapsed" />
         <Border
             x:Name="MainBorder"
+            MinWidth="4"
+            MinHeight="4"
             x:FieldModifier="public"
+            Background="#10FFFFFF"
+            BorderThickness="1"
             CanDrag="True"
             CornerRadius="4">
-            <TextBlock
-                x:Name="TitleBlock"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Foreground="White" />
+            <Grid x:Name="ContentHost" />
         </Border>
 
         <Border
             x:Name="RightHandle"
             Width="12"
             Height="12"
-            Margin="0,0,-4,0"
+            Margin="0,0,-6,0"
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
             x:FieldModifier="public"
             Background="White"
-            BorderBrush="{Binding BorderBrush, ElementName=MainBorder, Mode=OneWay}"
             BorderThickness="2"
             CornerRadius="6" />
 
@@ -36,12 +48,11 @@
             x:Name="BottomHandle"
             Width="12"
             Height="12"
-            Margin="0,0,0,-4"
+            Margin="0,0,0,-6"
             HorizontalAlignment="Center"
             VerticalAlignment="Bottom"
             x:FieldModifier="public"
             Background="White"
-            BorderBrush="{Binding BorderBrush, ElementName=MainBorder, Mode=OneWay}"
             BorderThickness="2"
             CornerRadius="6" />
 
@@ -49,12 +60,11 @@
             x:Name="CornerHandle"
             Width="12"
             Height="12"
-            Margin="0,0,-4,-4"
+            Margin="0,0,-6,-6"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
             x:FieldModifier="public"
             Background="White"
-            BorderBrush="{Binding BorderBrush, ElementName=MainBorder, Mode=OneWay}"
             BorderThickness="2"
             CornerRadius="6" />
     </Grid>

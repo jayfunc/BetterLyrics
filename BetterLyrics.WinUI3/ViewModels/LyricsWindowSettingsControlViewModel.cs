@@ -26,12 +26,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial bool IsConfigPanelOpened { get; set; } = false;
 
-        [ObservableProperty]
-        public partial Vector3 ConfigPanelTranslation { get; set; } = new();
-
-        [ObservableProperty]
-        public partial double DisplayPanelHeight { get; set; } = 0;
-
         public LyricsWindowSettingsControlViewModel(ISettingsService settingsService)
         {
             _settingsService = settingsService;
@@ -48,26 +42,12 @@ namespace BetterLyrics.WinUI3.ViewModels
         public void OpenConfigPanel()
         {
             IsConfigPanelOpened = true;
-            ConfigPanelTranslation = new();
         }
 
         [RelayCommand]
         private void CloseConfigPanel()
         {
             IsConfigPanelOpened = false;
-            ConfigPanelTranslation = new(0, (float)DisplayPanelHeight, 0);
-        }
-
-        partial void OnDisplayPanelHeightChanged(double value)
-        {
-            if (IsConfigPanelOpened)
-            {
-                OpenConfigPanel();
-            }
-            else
-            {
-                CloseConfigPanel();
-            }
         }
 
         public void Receive(PropertyChangedMessage<bool> message)

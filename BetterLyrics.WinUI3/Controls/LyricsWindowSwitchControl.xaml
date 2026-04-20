@@ -51,18 +51,26 @@
             <ListView
                 Grid.Row="1"
                 Margin="36,0"
-                ItemContainerStyle="{ThemeResource ListViewStretchedItemContainerStyle}"
+                ItemContainerStyle="{ThemeResource ListViewCardStyle}"
                 ItemsSource="{x:Bind ViewModel.AppSettings.WindowBoundsRecords, Mode=OneWay}"
                 SelectionMode="None">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <controls:WrapPanel HorizontalSpacing="32" VerticalSpacing="32" />
+                        <controls:WrapPanel />
                     </ItemsPanelTemplate>
                 </ItemsControl.ItemsPanel>
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Grid Tapped="Grid_Tapped">
-                            <uc:DemoWindowGrid LyricsWindowStatus="{Binding}" />
+                        <Grid
+                            Padding="6"
+                            RowSpacing="6"
+                            Tapped="Grid_Tapped">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <TextBlock Text="{Binding Name, Mode=OneWay}" TextAlignment="Center" />
+                            <uc:DemoWindowGrid Grid.Row="1" LyricsWindowStatus="{Binding}" />
                         </Grid>
                     </DataTemplate>
                 </ListView.ItemTemplate>

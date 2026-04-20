@@ -90,7 +90,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                 if (line.TertiaryTextLayout != null)
                 {
                     currentY += line.TertiaryTextLayout.LayoutBounds.Height;
-                    currentY += (line.TertiaryTextLayout.LayoutBounds.Height / line.TertiaryTextLayout.LineCount) * 0.1; // 间距
+                    currentY += (line.TertiaryTextLayout.LayoutBounds.Height / line.TertiaryTextLayout.LineCount) * style.LyricsLineInnerSpacingFactor; // 间距
                     actualWidth = Math.Max(actualWidth, line.TertiaryTextLayout.LayoutBounds.Width);
                 }
 
@@ -117,7 +117,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                         break;
                     case LyricsLineContentOrientation.Vertical:
                         // 翻译层
-                        currentY += (line.SecondaryTextLayout?.LayoutBounds.Height ?? 0) / (line.SecondaryTextLayout?.LineCount ?? 1) * 0.1; // 间距
+                        currentY += (line.SecondaryTextLayout?.LayoutBounds.Height ?? 0) / (line.SecondaryTextLayout?.LineCount ?? 1) * style.LyricsLineInnerSpacingFactor; // 间距
                         line.SecondaryPosition = new Vector2((float)currentX, (float)currentY);
                         if (line.SecondaryTextLayout != null)
                         {
@@ -135,7 +135,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                 // 行间距
                 if (line.PrimaryTextLayout != null && line.PrimaryTextLayout != null)
                 {
-                    currentY += (line.PrimaryTextLayout.LayoutBounds.Height / line.PrimaryTextLayout.LineCount) * style.LyricsLineSpacingFactor;
+                    currentY += (line.PrimaryTextLayout.LayoutBounds.Height / line.PrimaryTextLayout.LineCount) * style.LyricsLineOverallSpacingFactor;
                 }
 
                 line.TopLeftPosition = line.PrimaryTextLayout?.HorizontalAlignment switch

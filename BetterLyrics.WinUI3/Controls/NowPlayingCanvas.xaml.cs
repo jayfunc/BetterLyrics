@@ -544,7 +544,7 @@ namespace BetterLyrics.WinUI3.Controls
             _isMouseScrollingChanged = false;
             _isNowPlayingPaletteChanged = false;
 
-            if (!_lyricsWindowStatus.ShowLyricsCard)
+            if (_renderLyricsOpacity == 1)
             {
                 _lyricsRenderer.CalculateLyrics3DMatrix(_isLayoutChanged);
             }
@@ -606,7 +606,7 @@ namespace BetterLyrics.WinUI3.Controls
 
             _spectrumRenderer.Update(_spectrumAnalyzer.CurrentBassEnergy, lyricsBg.SpectrumBreathingIntensity);
 
-            if (!_lyricsWindowStatus.ShowLyricsCard)
+            if (_renderLyricsOpacity == 1)
             {
                 _lyricsRenderer.MouseHoverLineIndex = _mouseHoverLineIndex;
                 _lyricsRenderer.IsMousePressing = _isMousePressing;
@@ -725,7 +725,7 @@ namespace BetterLyrics.WinUI3.Controls
 
             _raindropRenderer.Draw(sender, ds, lyricsBg.IsRaindropOverlayBrethingEffectEnabled);
 
-            if (!_lyricsWindowStatus.ShowLyricsCard)
+            if (_renderLyricsOpacity == 1)
             {
                 _lyricsRenderer.Draw(sender, ds);
             }
@@ -1027,7 +1027,11 @@ namespace BetterLyrics.WinUI3.Controls
         {
             if (message.Sender == LyricsWindowStatus?.LyricsStyleSettings)
             {
-                if (message.PropertyName == nameof(LyricsStyleSettings.LyricsLineSpacingFactor))
+                if (message.PropertyName == nameof(LyricsStyleSettings.LyricsLineOverallSpacingFactor))
+                {
+                    RequestRelayout();
+                }
+                else if (message.PropertyName == nameof(LyricsStyleSettings.LyricsLineInnerSpacingFactor))
                 {
                     RequestRelayout();
                 }

@@ -1,5 +1,8 @@
 ﻿using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
+using Microsoft.UI.Xaml;
+using System;
 using Windows.Foundation;
 
 namespace BetterLyrics.WinUI3.Extensions
@@ -27,6 +30,20 @@ namespace BetterLyrics.WinUI3.Extensions
                 status.MonitorBounds
                 .WithY(status.MonitorBounds.Bottom - 64)
                 .WithHeight(64);
+
+            public NowPlayingLayoutMode GetDefaultLayoutProfileMode()
+            {
+                if (status.IsPinToTaskbar) return NowPlayingLayoutMode.LeftAlbumArtRightLyricsCompact;
+                else if (status.IsWallpaper) return NowPlayingLayoutMode.LyricsOnly;
+                else if (status.IsWorkArea) return NowPlayingLayoutMode.LyricsOnly;
+                else if (status.IsFullscreen) return NowPlayingLayoutMode.TopAlbumArtBottomLyrics;
+                else if (!status.LyricsBackgroundSettings.IsPureColorOverlayEnabled &&
+                    !status.LyricsBackgroundSettings.IsCoverOverlayEnabled &&
+                    !status.LyricsBackgroundSettings.IsFluidOverlayEnabled) return NowPlayingLayoutMode.LyricsOnly;
+                else if (status.WindowBounds.Width > status.WindowBounds.Height) return NowPlayingLayoutMode.LeftAlbumArtRightLyrics;
+                else return NowPlayingLayoutMode.TopAlbumArtBottomLyricsCompact;
+            }
+
         }
     }
 }

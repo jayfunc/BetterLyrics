@@ -165,11 +165,5 @@ namespace BetterLyrics.WinUI3.Views
                 LyricsListView.SelectedItems.Clear();
             }
         }
-
-        private void PreviewCardContainer_DragStarting(UIElement sender, DragStartingEventArgs args)
-        {
-            args.Data.Properties.Add("LyricsCardStyleKey", ViewModel.SelectedStyleItem.StyleKey);
-            args.Data.RequestedOperation = DataPackageOperation.Copy;
-        }
     }
 }

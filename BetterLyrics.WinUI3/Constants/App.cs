@@ -9,5 +9,9 @@
 
         public const string AutoStartupTaskId = "AutoStartup";
         public const string StoreId = "9p1wcd1p597r";
+
+        public const string SloganCN = "曲拨心弦，词落云笺。";
+        public const string SloganJP = "琴線に響くメロディ、雲箋に綴るフレーズ。";
+        public const string SloganEN = "Strums the Heartstrings, Graces the Wordscapes.";
     }
 }

@@ -86,11 +86,7 @@
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
                     <!--  隐藏窗口  -->
-                    <controls:SettingsExpander
-                        x:Uid="SettingsPageHideWindow"
-                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                                 Glyph=&#xED1A;}"
-                        IsExpanded="{x:Bind LyricsWindowStatus.AutoShowOrHideWindow, Mode=OneWay}">
+                    <controls:SettingsExpander x:Uid="SettingsPageHideWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xED1A;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.AutoShowOrHideWindow, Mode=TwoWay}" />
                         <controls:SettingsExpander.Items>
                             <controls:SettingsCard x:Uid="SettingsPageHideWindowDelay" IsEnabled="{x:Bind LyricsWindowStatus.AutoShowOrHideWindow, Mode=OneWay}">
@@ -121,11 +117,7 @@
                         </ComboBox>
                     </controls:SettingsCard>
                     <!--  边缘羽化  -->
-                    <controls:SettingsExpander
-                        x:Uid="WindowSettingsControlEdgeFeathering"
-                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                                 Glyph=&#xE950;}"
-                        IsExpanded="{x:Bind LyricsWindowStatus.IsEdgeFeatheringEnabled, Mode=OneWay}">
+                    <controls:SettingsExpander x:Uid="WindowSettingsControlEdgeFeathering" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE950;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsEdgeFeatheringEnabled, Mode=TwoWay}" />
                         <controls:SettingsExpander.Items>
                             <controls:SettingsCard x:Uid="WindowSettingsControlEdgeFeatheringLeft" IsEnabled="{x:Bind LyricsWindowStatus.IsEdgeFeatheringEnabled, Mode=OneWay}">
@@ -182,11 +174,7 @@
                         </ComboBox>
                     </controls:SettingsCard>
                     <!--  适应环境颜色  -->
-                    <controls:SettingsExpander
-                        x:Uid="SettingsPageAdaptEnvColor"
-                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                                 Glyph=&#xE88F;}"
-                        IsExpanded="{x:Bind LyricsWindowStatus.IsAdaptToEnvironment, Mode=OneWay}">
+                    <controls:SettingsExpander x:Uid="SettingsPageAdaptEnvColor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE88F;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAdaptToEnvironment, Mode=TwoWay}" />
                         <controls:SettingsExpander.Items>
                             <controls:SettingsCard
@@ -295,8 +283,7 @@
                     <Expander
                         HorizontalAlignment="Stretch"
                         HorizontalContentAlignment="Stretch"
-                        Header="Status"
-                        IsExpanded="True">
+                        Header="Status">
                         <StackPanel>
                             <local:PropertyRow Header="IsOverlayInputHelperRunning" Value="{x:Bind LyricsWindowStatus.IsOverlayInputHelperRunning, Mode=OneWay}" />
                             <local:PropertyRow Header="IsAlwaysOnTopPollingTimerRunning" Value="{x:Bind LyricsWindowStatus.IsAlwaysOnTopPollingTimerRunning, Mode=OneWay}" />

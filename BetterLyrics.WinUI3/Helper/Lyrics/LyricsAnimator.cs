@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Constants;
+using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.Models.Settings;
@@ -341,17 +342,17 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                 {
                     if (isSecondaryLinePlaying)
                     {
-                        line.PrimaryXOffsetTransition.JumpTo(CalculateTargetXOffset(line.PrimaryTextLayout?.LayoutBounds.Width ?? 0, lyricsWidth, playProgress));
-                        line.SecondaryXOffsetTransition.JumpTo(CalculateTargetXOffset(line.SecondaryTextLayout?.LayoutBounds.Width ?? 0, lyricsWidth, playProgress));
-                        line.TertiaryXOffsetTransition.JumpTo(CalculateTargetXOffset(line.TertiaryTextLayout?.LayoutBounds.Width ?? 0, lyricsWidth, playProgress));
+                        line.PrimaryXOffsetTransition.JumpTo(CalculateTargetXOffset(lyricsStyle.LyricsAlignmentType, line.PrimaryTextLayout?.LayoutBounds.Width ?? 0, lyricsWidth, playProgress));
+                        line.SecondaryXOffsetTransition.JumpTo(CalculateTargetXOffset(lyricsStyle.LyricsAlignmentType, line.SecondaryTextLayout?.LayoutBounds.Width ?? 0, lyricsWidth, playProgress));
+                        line.TertiaryXOffsetTransition.JumpTo(CalculateTargetXOffset(lyricsStyle.LyricsAlignmentType, line.TertiaryTextLayout?.LayoutBounds.Width ?? 0, lyricsWidth, playProgress));
                     }
                     if (isSecondaryLinePlayingChanged)
                     {
                         if (!isSecondaryLinePlaying)
                         {
-                            line.PrimaryXOffsetTransition.Start(0);
-                            line.SecondaryXOffsetTransition.Start(0);
-                            line.TertiaryXOffsetTransition.Start(0);
+                            line.PrimaryXOffsetTransition.Start(CalculateTargetXOffset(lyricsStyle.LyricsAlignmentType, line.PrimaryTextLayout?.LayoutBounds.Width ?? 0, lyricsWidth, 0));
+                            line.SecondaryXOffsetTransition.Start(CalculateTargetXOffset(lyricsStyle.LyricsAlignmentType, line.SecondaryTextLayout?.LayoutBounds.Width ?? 0, lyricsWidth, 0));
+                            line.TertiaryXOffsetTransition.Start(CalculateTargetXOffset(lyricsStyle.LyricsAlignmentType, line.TertiaryTextLayout?.LayoutBounds.Width ?? 0, lyricsWidth, 0));
                         }
                     }
                 }
@@ -388,11 +389,18 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
             return targetOpacity;
         }
 
-        private static double CalculateTargetXOffset(double actualWidth, double lyricsWidth, double progress)
+        private static double CalculateTargetXOffset(TextAlignmentType textAlignmentType, double actualWidth, double lyricsWidth, double progress)
         {
+            var offset = textAlignmentType switch
+            {
+                TextAlignmentType.Center => (lyricsWidth - actualWidth) / 2,
+                TextAlignmentType.Right => lyricsWidth - actualWidth,
+                _ => 0,
+            };
+            offset = -Math.Min(0, offset);
             var progressStartToScroll = lyricsWidth * 0.5 / actualWidth;
             var progressEndToScroll = 1 - progressStartToScroll;
-            return -Math.Max((Math.Min(progress, progressEndToScroll) - progressStartToScroll), 0) * actualWidth;
+            return -Math.Max((Math.Min(progress, progressEndToScroll) - progressStartToScroll), 0) * actualWidth + offset;
         }
 
         private static (double InDuration, double OutDuration) CalculateSegmentDuration(double desiredDuration, double maxDuration)

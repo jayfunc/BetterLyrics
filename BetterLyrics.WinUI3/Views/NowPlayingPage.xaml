@@ -22,20 +22,11 @@
     Unloaded="Page_Unloaded"
     mc:Ignorable="d">
 
-    <Grid
-        x:Name="RootGrid"
-        AllowDrop="True"
-        DragOver="RootGrid_DragOver"
-        Drop="RootGrid_Drop"
-        SizeChanged="RootGrid_SizeChanged">
+    <Grid x:Name="RootGrid" SizeChanged="RootGrid_SizeChanged">
 
         <uc:NowPlayingCanvas x:Name="LyricsCanvas" LyricsWindowStatus="{x:Bind LyricsWindowStatus, Mode=OneWay}" />
 
-        <Grid
-            x:Name="DynamicLayoutGrid"
-            ColumnSpacing="{x:Bind LyricsWindowStatus.LayoutProfile.ColumnSpacing, Mode=OneWay}"
-            Loaded="DynamicLayoutGrid_Loaded"
-            RowSpacing="{x:Bind LyricsWindowStatus.LayoutProfile.RowSpacing, Mode=OneWay}">
+        <Grid x:Name="DynamicLayoutGrid" Loaded="DynamicLayoutGrid_Loaded">
 
             <Grid x:Name="LyricsContainer" SizeChanged="LyricsContainer_SizeChanged">
                 <ScrollViewer
@@ -49,32 +40,21 @@
                     VerticalScrollBarVisibility="Hidden">
                     <Grid />
                 </ScrollViewer>
-                <Viewbox x:Name="LyricsCardViewBox" Visibility="{x:Bind LyricsWindowStatus.ShowLyricsCard, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                    <Viewbox.ContextFlyout>
-                        <MenuFlyout>
-                            <MenuFlyoutItem
-                                x:Uid="SettingsPageDelete"
-                                Click="DeleteLyricsCardMenuFlyoutItem_Click"
-                                Icon="Delete" />
-                        </MenuFlyout>
-                    </Viewbox.ContextFlyout>
-                    <uc:LyricsCard
-                        x:Name="LyricsCard"
-                        CoverAccentColor="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor1, Mode=OneWay}"
-                        CoverImage="{x:Bind ViewModel.MediaSessionsService.AlbumArtBitmapImage, Mode=OneWay}"
-                        IsAutoScrollEnabled="True"
-                        IsScrollable="True"
-                        LyricsLines="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsData.LyricsLines, Mode=OneWay}"
-                        PlaybackPosition="{x:Bind ViewModel.MediaSessionsService.CurrentPosition, Mode=OneWay}"
-                        StyleKey="{x:Bind LyricsWindowStatus.LyricsCardStyleKey, Mode=OneWay}" />
-                </Viewbox>
             </Grid>
 
-            <Grid
-                x:Name="AlbumArtGrid"
-                HorizontalAlignment="Stretch"
-                VerticalAlignment="Stretch"
-                SizeChanged="AlbumArtGrid_SizeChanged">
+            <Viewbox x:Name="LyricsCardContainer">
+                <uc:LyricsCard
+                    x:Name="LyricsCard"
+                    CoverAccentColor="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor1, Mode=OneWay}"
+                    CoverImage="{x:Bind ViewModel.MediaSessionsService.AlbumArtBitmapImage, Mode=OneWay}"
+                    IsAutoScrollEnabled="True"
+                    IsScrollable="True"
+                    LyricsLines="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsData.LyricsLines, Mode=OneWay}"
+                    PlaybackPosition="{x:Bind ViewModel.MediaSessionsService.CurrentPosition, Mode=OneWay}"
+                    StyleKey="{x:Bind LyricsWindowStatus.LyricsCardStyleKey, Mode=OneWay}" />
+            </Viewbox>
+
+            <Grid x:Name="AlbumArtGrid" SizeChanged="AlbumArtGrid_SizeChanged">
                 <Grid.OpacityTransition>
                     <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
                 </Grid.OpacityTransition>
@@ -107,12 +87,11 @@
                 </Grid.ContextFlyout>
             </Grid>
 
-            <StackPanel x:Name="SongInfoStackPanel">
-                <StackPanel.OpacityTransition>
+            <Grid x:Name="SongTitleContainer">
+                <Grid.OpacityTransition>
                     <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
-                </StackPanel.OpacityTransition>
-
-                <controls:OpacityMaskView HorizontalAlignment="{Binding HorizontalAlignment, ElementName=SongInfoStackPanel, Mode=OneWay}">
+                </Grid.OpacityTransition>
+                <controls:OpacityMaskView>
                     <controls:OpacityMaskView.OpacityMask>
                         <Rectangle>
                             <Rectangle.Fill>
@@ -136,12 +115,16 @@
                             x:Name="TitleTextBlock"
                             Padding="2,0"
                             FontWeight="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
-                            TextTrimming="None"
-                            Visibility="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.ShowTitle, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            TextTrimming="None" />
                     </dev:AutoScrollView>
                 </controls:OpacityMaskView>
+            </Grid>
 
-                <controls:OpacityMaskView HorizontalAlignment="{Binding HorizontalAlignment, ElementName=SongInfoStackPanel, Mode=OneWay}">
+            <Grid x:Name="SongArtistContainer">
+                <Grid.OpacityTransition>
+                    <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
+                </Grid.OpacityTransition>
+                <controls:OpacityMaskView>
                     <controls:OpacityMaskView.OpacityMask>
                         <Rectangle>
                             <Rectangle.Fill>
@@ -166,12 +149,16 @@
                             Padding="2,0"
                             FontWeight="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
                             Opacity="0.6"
-                            TextTrimming="None"
-                            Visibility="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.ShowArtists, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            TextTrimming="None" />
                     </dev:AutoScrollView>
                 </controls:OpacityMaskView>
+            </Grid>
 
-                <controls:OpacityMaskView HorizontalAlignment="{Binding HorizontalAlignment, ElementName=SongInfoStackPanel, Mode=OneWay}">
+            <Grid x:Name="SongAlbumContainer">
+                <Grid.OpacityTransition>
+                    <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
+                </Grid.OpacityTransition>
+                <controls:OpacityMaskView>
                     <controls:OpacityMaskView.OpacityMask>
                         <Rectangle>
                             <Rectangle.Fill>
@@ -196,11 +183,10 @@
                             Padding="2,0"
                             FontWeight="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
                             Opacity="0.3"
-                            TextTrimming="None"
-                            Visibility="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.ShowAlbum, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            TextTrimming="None" />
                     </dev:AutoScrollView>
                 </controls:OpacityMaskView>
-            </StackPanel>
+            </Grid>
 
         </Grid>
     </Grid>

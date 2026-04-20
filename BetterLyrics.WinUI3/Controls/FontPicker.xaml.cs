@@ -20,6 +20,7 @@ namespace BetterLyrics.WinUI3.Controls
             this.InitializeComponent();
             _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
         }
+
         public string SelectedFontId
         {
             get => (string)GetValue(SelectedFontIdProperty);
@@ -30,10 +31,35 @@ namespace BetterLyrics.WinUI3.Controls
             DependencyProperty.Register(nameof(SelectedFontId), typeof(string), typeof(FontPicker),
                 new PropertyMetadata(string.Empty, OnSelectedFontIdChanged));
 
+        public bool AllowMultipleSelection
+        {
+            get => (bool)GetValue(AllowMultipleSelectionProperty);
+            set => SetValue(AllowMultipleSelectionProperty, value);
+        }
+
+        public static readonly DependencyProperty AllowMultipleSelectionProperty =
+            DependencyProperty.Register(nameof(AllowMultipleSelection), typeof(bool), typeof(FontPicker),
+                new PropertyMetadata(true, OnAllowMultipleSelectionChanged));
+
         private static void OnSelectedFontIdChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var control = (FontPicker)d;
             _ = control.UpdateDisplayAsync((string)e.NewValue);
+        }
+
+        private static void OnAllowMultipleSelectionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var control = (FontPicker)d;
+            bool isMultiAllowed = (bool)e.NewValue;
+
+            if (!isMultiAllowed && !string.IsNullOrWhiteSpace(control.SelectedFontId))
+            {
+                var fontIds = control.SelectedFontId.Split(',', StringSplitOptions.RemoveEmptyEntries);
+                if (fontIds.Length > 1)
+                {
+                    control.SelectedFontId = fontIds[0].Trim();
+                }
+            }
         }
 
         private async Task UpdateDisplayAsync(string fontIdString)
@@ -59,9 +85,11 @@ namespace BetterLyrics.WinUI3.Controls
             var fonts = await FontHelper.GetSystemFontFamiliesAsync();
             var displayItems = new List<ExtendedFontFamily>();
 
+            var idsToProcess = AllowMultipleSelection ? fontIds : fontIds.Take(1);
+
             if (fontIds.Count != 0)
             {
-                foreach (var fontId in fontIds)
+                foreach (var fontId in idsToProcess)
                 {
                     var matchedFont = fonts.FirstOrDefault(f => f.FontFamily == fontId);
 
@@ -100,7 +128,7 @@ namespace BetterLyrics.WinUI3.Controls
                     .Select(s => s.Trim())
                     .ToList();
 
-            var dialog = new FontPickerDialog(currentFontsList)
+            var dialog = new FontPickerDialog(currentFontsList, AllowMultipleSelection)
             {
                 XamlRoot = this.XamlRoot,
                 PrimaryButtonText = _localizationService.GetLocalizedString("Confirm"),

@@ -3,7 +3,9 @@
 using BetterLyrics.Core.Enums;
 using BetterLyrics.WinUI3.Collections;
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Serialization;
 using BetterLyrics.WinUI3.Services.LocalizationService;
@@ -63,12 +65,17 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
             AppSettings.LyricsCardConfigs.CollectionChanged += AppSettings_CollectionChanged;
             AppSettings.LyricsCardConfigs.ItemPropertyChanged += AppSettings_ItemPropertyChanged;
 
+            AppSettings.LayoutProfiles.CollectionChanged += AppSettings_CollectionChanged;
+            AppSettings.LayoutProfiles.ItemPropertyChanged += AppSettings_ItemPropertyChanged;
+
             AppSettings.MusicGallerySettings.PlayQueuePaths.CollectionChanged += AppSettings_CollectionChanged;
 
             AppSettings.Version = MetadataHelper.AppVersion;
 
             EnsureMediaSourceProvidersInfo();
             EnsureStarredPlaylists();
+            EnsureLayoutProfiles();
+            EnsureLyricsWindowStatus();
         }
 
         private void EnsureMediaSourceProvidersInfo()
@@ -88,6 +95,57 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
                     p => p.Provider,
                     p => new AlbumArtSearchProviderInfo(p, true)
                 );
+            }
+        }
+
+        private void EnsureLyricsWindowStatus()
+        {
+            var records = AppSettings.WindowBoundsRecords;
+            var layoutProfiles = AppSettings.LayoutProfiles;
+            if (records.Count == 0)
+            {
+                foreach (var mode in Enum.GetValues<LyricsWindowMode>().Cast<LyricsWindowMode>())
+                {
+                    records.Add(new LyricsWindowStatus(mode)
+                    {
+                        IsDefault = mode == LyricsWindowMode.Standard,
+                    });
+                }
+            }
+
+            foreach (var item in records)
+            {
+                if (item.LayoutProfileId == Guid.Empty)
+                {
+                    var mode = item.GetDefaultLayoutProfileMode();
+                    var layoutProfile = layoutProfiles.FirstOrDefault(p => p.Mode == mode);
+                    if (layoutProfile != null)
+                    {
+                        item.LayoutProfileId = layoutProfile.Id;
+                    }
+                }
+            }
+
+            var playerLyricsWindowStatus = AppSettings.MusicGallerySettings.LyricsWindowStatus;
+            if (playerLyricsWindowStatus.LayoutProfileId == Guid.Empty)
+            {
+                var layoutProfile = layoutProfiles.FirstOrDefault(p => p.Mode == NowPlayingLayoutMode.LeftAlbumArtRightLyrics);
+                if (layoutProfile != null)
+                {
+                    playerLyricsWindowStatus.LayoutProfileId = layoutProfile.Id;
+                }
+            }
+        }
+
+        private void EnsureLayoutProfiles()
+        {
+            foreach (var mode in Enum.GetValues<NowPlayingLayoutMode>().Cast<NowPlayingLayoutMode>())
+            {
+                if (mode == NowPlayingLayoutMode.Custom) continue;
+                if (!AppSettings.LayoutProfiles.Any(p => p.Mode == mode))
+                {
+                    AppSettings.LayoutProfiles.Add(new LayoutProfile(mode));
+                }
             }
         }
 

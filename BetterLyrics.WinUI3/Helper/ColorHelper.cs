@@ -3,6 +3,7 @@
 using BetterLyrics.WinUI3.Enums;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Imaging;

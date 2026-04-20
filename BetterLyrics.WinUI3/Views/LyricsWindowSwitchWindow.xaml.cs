@@ -2,6 +2,7 @@ using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
+using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.GSMTCService;
 using BetterLyrics.WinUI3.Services.SettingsService;
@@ -11,6 +12,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Vanara.PInvoke;
@@ -46,7 +48,6 @@ namespace BetterLyrics.WinUI3.Views
             _wmm.WindowMessageReceived += Wmm_WindowMessageReceived;
 
             InitShortcuts();
-            EnsureLyricsWindowStatus();
 
             this.Init(title: "LyricsWindowSwitchWindowTitle", titleBarHeightOption: TitleBarHeightOption.Collapsed, backdropType: BackdropType.Transparent);
             this.SyncTheme();
@@ -58,24 +59,6 @@ namespace BetterLyrics.WinUI3.Views
             this.SetIsAlwaysOnTop(true);
 
             AppWindow.Changed += AppWindow_Changed;
-        }
-
-        private void EnsureLyricsWindowStatus()
-        {
-            var records = _settingsService.AppSettings.WindowBoundsRecords;
-            if (records.Count == 0)
-            {
-                records.Add(new LyricsWindowStatus(LyricsWindowMode.Standard)
-                {
-                    IsDefault = true
-                });
-                records.Add(new LyricsWindowStatus(LyricsWindowMode.Desktop));
-                records.Add(new LyricsWindowStatus(LyricsWindowMode.Docked));
-                records.Add(new LyricsWindowStatus(LyricsWindowMode.Narrow));
-                records.Add(new LyricsWindowStatus(LyricsWindowMode.Fullscreen));
-                records.Add(new LyricsWindowStatus(LyricsWindowMode.Taskbar));
-                records.Add(new LyricsWindowStatus(LyricsWindowMode.Wallpaper));
-            }
         }
 
         private void InitShortcuts()

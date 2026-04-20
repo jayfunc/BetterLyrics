@@ -39,7 +39,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsMaximized { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsFullscreen { get; set; } = false;
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LayoutProfile LayoutProfile { get; set; } = new(LyricsWindowMode.Desktop);
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial Guid LayoutProfileId { get; set; } = Guid.Empty;
 
         [ObservableProperty][NotifyPropertyChangedRecipients][NotifyPropertyChangedFor(nameof(DemoWindowMargin))] public partial Rect WindowBounds { get; set; } = new Rect(100, 100, 800, 500);
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial double DockHeight { get; set; } = 64;
@@ -68,8 +68,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int EdgeFeatheringRight { get; set; } = 0;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int EdgeFeatheringBottom { get; set; } = 0;
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowLyricsCard { get; set; } = false;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LyricsCardStyleKey { get; set; } = "";
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LyricsCardStyleKey { get; set; } = "LyricsCardStickyNoteStyle";
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsSpoutOutputEnabled { get; set; } = false;
 
@@ -91,7 +90,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
             LyricsBackgroundSettings.PropertyChanged += LyricsBackgroundSettings_PropertyChanged;
             AlbumArtLayoutSettings.PropertyChanged += AlbumArtLayoutSettings_PropertyChanged;
             AlbumArtAreaEffectSettings.PropertyChanged += AlbumArtAreaEffectSettings_PropertyChanged;
-            LayoutProfile.PropertyChanged += LayoutProfile_PropertyChanged;
 
             var primaryMonitorInfoEx = MonitorHook.GetPrimaryMonitorInfoEx();
             var monitorRect = primaryMonitorInfoEx.rcMonitor;
@@ -103,8 +101,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
         public LyricsWindowStatus(LyricsWindowMode mode) : this()
         {
             ILocalizationService localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
-
-            LayoutProfile = new(mode);
 
             switch (mode)
             {
@@ -298,17 +294,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
             OnPropertyChanged(nameof(AlbumArtAreaEffectSettings));
         }
 
-        partial void OnLayoutProfileChanged(LayoutProfile oldValue, LayoutProfile newValue)
-        {
-            oldValue.PropertyChanged -= LayoutProfile_PropertyChanged;
-            newValue.PropertyChanged += LayoutProfile_PropertyChanged;
-        }
-
-        private void LayoutProfile_PropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
-        {
-            OnPropertyChanged(nameof(LayoutProfile));
-        }
-
         public object Clone()
         {
             return new LyricsWindowStatus()
@@ -330,8 +315,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
                 IsMaximized = this.IsMaximized,
                 IsFullscreen = this.IsFullscreen,
-
-                LayoutProfile = (LayoutProfile)this.LayoutProfile.Clone(),
 
                 WindowBounds = this.WindowBounds,
                 DockHeight = this.DockHeight,
@@ -361,7 +344,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 EdgeFeatheringRight = this.EdgeFeatheringRight,
                 EdgeFeatheringBottom = this.EdgeFeatheringBottom,
 
-                ShowLyricsCard = this.ShowLyricsCard,
                 LyricsCardStyleKey = this.LyricsCardStyleKey,
 
                 IsSpoutOutputEnabled = this.IsSpoutOutputEnabled,

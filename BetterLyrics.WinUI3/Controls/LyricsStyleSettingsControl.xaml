@@ -20,11 +20,7 @@
 
                     <TextBlock x:Uid="SettingsPageLyricsStyle" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <controls:SettingsCard
-                        x:Uid="SettingsPageLyricsAlignment"
-                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                                 Glyph=&#xE8E3;}"
-                        IsEnabled="{x:Bind LyricsStyleSettings.AutoWrap, Mode=OneWay}">
+                    <controls:SettingsCard x:Uid="SettingsPageLyricsAlignment" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8E3;}">
                         <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsAlignmentType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageLeft" />
                             <ComboBoxItem x:Uid="SettingsPageCenter" />
@@ -32,7 +28,11 @@
                         </ComboBox>
                     </controls:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsContentOrientation" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE80A;}">
+                    <controls:SettingsCard
+                        x:Uid="SettingsPageLyricsContentOrientation"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                 Glyph=&#xE80A;}"
+                        Visibility="Collapsed">
                         <ComboBox SelectedIndex="{x:Bind LyricsStyleSettings.LyricsLineContentOrientation, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageLayoutOrientationHorizontal" />
                             <ComboBoxItem x:Uid="SettingsPageLayoutOrientationVertical" />
@@ -52,37 +52,38 @@
                             Value="{x:Bind LyricsStyleSettings.PlayingLineTopOffset, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsLineSpacingFactor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xF579;}">
-                        <local:ExtendedSlider
-                            x:Uid="SettingsPageLyricsLineSpacingFactorSlider"
-                            Default="0.5"
-                            Frequency="0.1"
-                            Maximum="2"
-                            Minimum="0"
-                            Unit="x"
-                            Value="{x:Bind LyricsStyleSettings.LyricsLineSpacingFactor, Mode=TwoWay}" />
-                    </controls:SettingsCard>
-
-                    <controls:SettingsExpander
-                        x:Uid="SettingsPageLyricsFontFamily"
-                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                                 Glyph=&#xE8D2;}"
-                        IsExpanded="True">
+                    <controls:SettingsExpander x:Uid="SettingsPageLyricsLineSpacingFactor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xF579;}">
                         <controls:SettingsExpander.Items>
-                            <controls:SettingsCard x:Uid="SettingsPageCJK">
-                                <local:FontPicker SelectedFontId="{x:Bind LyricsStyleSettings.LyricsCJKFontFamily, Mode=TwoWay}" />
+                            <controls:SettingsCard x:Uid="SettingsPageLyricsLineOverallSpacingFactor">
+                                <local:ExtendedSlider
+                                    Default="0.5"
+                                    Frequency="0.1"
+                                    Maximum="2"
+                                    Minimum="0"
+                                    Unit="x"
+                                    Value="{x:Bind LyricsStyleSettings.LyricsLineOverallSpacingFactor, Mode=TwoWay}" />
                             </controls:SettingsCard>
-                            <controls:SettingsCard x:Uid="SettingsPageWesternChar">
-                                <local:FontPicker SelectedFontId="{x:Bind LyricsStyleSettings.LyricsWesternFontFamily, Mode=TwoWay}" />
+                            <controls:SettingsCard x:Uid="SettingsPageLyricsLineInnerSpacingFactor">
+                                <local:ExtendedSlider
+                                    Default="0.5"
+                                    Frequency="0.1"
+                                    Maximum="2"
+                                    Minimum="0"
+                                    Unit="x"
+                                    Value="{x:Bind LyricsStyleSettings.LyricsLineInnerSpacingFactor, Mode=TwoWay}" />
                             </controls:SettingsCard>
                         </controls:SettingsExpander.Items>
-                        <controls:SettingsExpander.ItemsFooter>
-                            <InfoBar
-                                x:Uid="SettingsPageOneFontFamilyOnly"
-                                IsClosable="False"
-                                IsOpen="True"
-                                Severity="Warning" />
-                        </controls:SettingsExpander.ItemsFooter>
+                    </controls:SettingsExpander>
+
+                    <controls:SettingsExpander x:Uid="SettingsPageLyricsFontFamily" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8D2;}">
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="SettingsPageCJK">
+                                <local:FontPicker AllowMultipleSelection="False" SelectedFontId="{x:Bind LyricsStyleSettings.LyricsCJKFontFamily, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="SettingsPageWesternChar">
+                                <local:FontPicker AllowMultipleSelection="False" SelectedFontId="{x:Bind LyricsStyleSettings.LyricsWesternFontFamily, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
 
                     <controls:SettingsCard x:Uid="SettingsPageLyricsFontWeight" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8DD;}">

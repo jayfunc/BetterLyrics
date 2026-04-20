@@ -6,9 +6,6 @@ namespace BetterLyrics.WinUI3.Models
     public class ToolboxItem
     {
         public ComponentType ComponentType { get; set; }
-
-        public SolidColorBrush ColorBrush => ComponentType.GetSolidColorBrush();
-
         public string DisplayName => ComponentType.GetDisplayName();
     }
 }

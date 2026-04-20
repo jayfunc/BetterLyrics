@@ -55,7 +55,8 @@
 		<None Remove="Controls\InAppNotificationStack.xaml" />
 		<None Remove="Controls\InfoTag.xaml" />
 		<None Remove="Controls\LayoutEditorControl.xaml" />
-		<None Remove="Controls\LyricsPreviewCanvas.xaml" />
+		<None Remove="Controls\LayoutPreviewControl.xaml" />
+		<None Remove="Controls\LayoutSettingsControl.xaml" />
 		<None Remove="Controls\LyricsSearchControl.xaml" />
 		<None Remove="Controls\LyricsStyleSettingsControl.xaml" />
 		<None Remove="Controls\LyricsWindowSettingsControl.xaml" />
@@ -511,6 +512,12 @@
 	  <Page Update="Controls\DragVisualControl.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>
+	  <Page Update="Controls\LayoutPreviewControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Controls\LayoutSettingsControl.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	  <None Update="Themes\Generic.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </None>
@@ -612,11 +619,6 @@
 	</ItemGroup>
 	<ItemGroup>
 	  <Page Update="Controls\ContributorCard.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </Page>
-	</ItemGroup>
-	<ItemGroup>
-	  <Page Update="Controls\LyricsPreviewCanvas.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>
 	</ItemGroup>

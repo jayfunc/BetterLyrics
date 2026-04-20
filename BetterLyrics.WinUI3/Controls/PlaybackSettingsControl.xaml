@@ -93,6 +93,7 @@
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />
                                                 <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
                                             <ToolTipService.ToolTip>
@@ -126,25 +127,8 @@
                                                     Text="{Binding Provider}"
                                                     TextTrimming="CharacterEllipsis" />
                                             </StackPanel>
-                                        </Grid>
-                                        <local:DragIndicator Width="32" />
-                                        <Grid
-                                            Margin="32,0,0,0"
-                                            Padding="12"
-                                            Background="Transparent"
-                                            Opacity="0">
-                                            <Grid.OpacityTransition>
-                                                <ScalarTransition />
-                                            </Grid.OpacityTransition>
-                                            <interactivity:Interaction.Behaviors>
-                                                <interactivity:EventTriggerBehavior EventName="PointerEntered">
-                                                    <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
-                                                </interactivity:EventTriggerBehavior>
-                                                <interactivity:EventTriggerBehavior EventName="PointerExited">
-                                                    <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
-                                                </interactivity:EventTriggerBehavior>
-                                            </interactivity:Interaction.Behaviors>
                                             <StackPanel
+                                                Grid.Column="3"
                                                 HorizontalAlignment="Right"
                                                 Orientation="Horizontal"
                                                 Spacing="6">
@@ -162,6 +146,7 @@
                                                                           Glyph=&#xE74D;}" />
                                             </StackPanel>
                                         </Grid>
+                                        <local:DragIndicator Width="32" />
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
@@ -300,7 +285,7 @@
                     </controls:SettingsCard>
 
                     <!--  时间轴相关配置  -->
-                    <controls:SettingsExpander x:Uid="SettingsPageLyricsTimeline" IsExpanded="True">
+                    <controls:SettingsExpander x:Uid="SettingsPageLyricsTimeline">
                         <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsTimelineSyncEnabled, Mode=TwoWay}" />
                         <controls:SettingsExpander.Items>
                             <controls:SettingsCard x:Uid="SettingsPageLyricsTimelineThreshold" IsEnabled="{x:Bind ViewModel.SelectedMediaSourceProvider.IsTimelineSyncEnabled, Mode=OneWay}">
@@ -314,7 +299,7 @@
                             </controls:SettingsCard>
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
-                    <controls:SettingsExpander x:Uid="MainPagePositionOffsetSlider" IsExpanded="True">
+                    <controls:SettingsExpander x:Uid="MainPagePositionOffsetSlider">
                         <local:ExtendedSlider
                             x:Uid="SettingsPagePositionOffsetReset"
                             Default="0"
