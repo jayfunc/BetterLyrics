@@ -3,8 +3,11 @@
     public enum ComponentType
     {
         None,
-        AlbumArt,
         Lyrics,
-        SongInfo
+        LyricsCard,
+        AlbumArt,
+        SongTitle,
+        SongArtist,
+        SongAlbum,
     }
 }

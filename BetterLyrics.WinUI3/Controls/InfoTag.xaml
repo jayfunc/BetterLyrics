@@ -11,8 +11,8 @@
     <Border
         x:Name="BadgeBorder"
         Padding="6,2"
-        Background="{StaticResource CardBackgroundFillColorDefaultBrush}"
-        BorderBrush="{StaticResource CardStrokeColorDefaultBrush}"
+        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
         BorderThickness="1"
         CornerRadius="4"
         PointerEntered="OnPointerEntered"
@@ -25,13 +25,13 @@
                 Margin="0,0,4,0"
                 FontFamily="{StaticResource SegoeFluentIcons}"
                 FontSize="10"
-                Foreground="{StaticResource TextFillColorTertiaryBrush}"
+                Foreground="{ThemeResource TextFillColorTertiaryBrush}"
                 Glyph="{x:Bind Glyph, Mode=OneWay}"
                 Visibility="{x:Bind HasIcon, Mode=OneWay}" />
 
             <TextBlock
                 FontWeight="SemiBold"
-                Foreground="{StaticResource TextFillColorSecondaryBrush}"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource CaptionTextBlockStyle}"
                 Text="{x:Bind Text, Mode=OneWay}"
                 Visibility="{x:Bind HasText, Mode=OneWay}" />

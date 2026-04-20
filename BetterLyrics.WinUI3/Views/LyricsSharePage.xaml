@@ -74,7 +74,6 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
             <controls:WrapPanel
@@ -113,11 +112,7 @@
 
             </controls:WrapPanel>
 
-            <Viewbox
-                x:Name="PreviewCardContainer"
-                Grid.Row="1"
-                CanDrag="True"
-                DragStarting="PreviewCardContainer_DragStarting">
+            <Viewbox x:Name="PreviewCardContainer" Grid.Row="1">
                 <uc:LyricsCard
                     x:Name="PreviewCard"
                     Title="{x:Bind ViewModel.CardData.Title, Mode=OneWay}"
@@ -135,13 +130,6 @@
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource CaptionTextBlockStyle}"
                 Text="{x:Bind ViewModel.SelectedStyleItem.DisplayText, Mode=OneWay}" />
-            <TextBlock
-                x:Uid="LyricsSharePagePinLyricsCardHint"
-                Grid.Row="3"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Top"
-                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                Style="{StaticResource CaptionTextBlockStyle}" />
         </Grid>
 
         <Grid

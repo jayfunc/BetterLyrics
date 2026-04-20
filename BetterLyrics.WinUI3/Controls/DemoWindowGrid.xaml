@@ -67,39 +67,20 @@
                 Glyph="&#xE841;"
                 Visibility="{x:Bind LyricsWindowStatus.IsAlwaysOnTopPolling, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
         </Grid>
-        <!--  Moniter name  -->
+        <!--  Is locked  -->
         <Grid
             Margin="4"
             Padding="6,3"
-            HorizontalAlignment="Left"
+            HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
             Background="{ThemeResource AcrylicBackgroundFillColorBaseBrush}"
             CornerRadius="4"
-            Opacity="0.7">
-            <StackPanel Orientation="Horizontal">
-                <TextBlock
-                    Margin="0,0,3,0"
-                    FontSize="12"
-                    Text="{x:Bind LyricsWindowStatus.MonitorDeviceName, Mode=OneWay}"
-                    TextWrapping="Wrap" />
-                <TextBlock FontSize="12" Text="[" />
-                <TextBlock FontSize="12" Text="{x:Bind LyricsWindowStatus.MonitorBounds.Width, Mode=OneWay}" />
-                <TextBlock FontSize="12" Text="×" />
-                <TextBlock FontSize="12" Text="{x:Bind LyricsWindowStatus.MonitorBounds.Height, Mode=OneWay}" />
-                <TextBlock FontSize="12" Text="]" />
-            </StackPanel>
-        </Grid>
-        <!--  Config name  -->
-        <Grid
-            Padding="6,3"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            CornerRadius="4"
-            Opacity="0.7">
-            <TextBlock
-                FontWeight="ExtraBlack"
-                Text="{x:Bind LyricsWindowStatus.Name, Mode=OneWay}"
-                TextWrapping="Wrap" />
+            Opacity="0.7"
+            Visibility="{x:Bind LyricsWindowStatus.IsLocked, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+            <FontIcon
+                FontFamily="{StaticResource SegoeFluentIcons}"
+                FontSize="12"
+                Glyph="&#xE72E;" />
         </Grid>
 
         <!--  命令区域  -->

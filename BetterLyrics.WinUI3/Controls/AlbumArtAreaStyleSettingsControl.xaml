@@ -36,39 +36,6 @@
                             Value="{x:Bind AlbumArtLayoutSettings.CoverImageShadowAmount, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
-                    <TextBlock x:Uid="SettingsPageSongInfo" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-
-                    <controls:SettingsExpander
-                        x:Uid="SettingsPageLyricsFontSize"
-                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                                 Glyph=&#xE8E9;}"
-                        IsExpanded="True">
-                        <controls:SettingsExpander.Items>
-                            <controls:SettingsCard x:Uid="SettingsPageAutoAdjust">
-                                <ToggleSwitch IsOn="{x:Bind AlbumArtLayoutSettings.IsAutoSongInfoFontSize, Mode=TwoWay}" />
-                            </controls:SettingsCard>
-                            <controls:SettingsCard>
-                                <local:ExtendedSlider
-                                    Default="18"
-                                    Frequency="2"
-                                    IsEnabled="{x:Bind AlbumArtLayoutSettings.IsAutoSongInfoFontSize, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
-                                    Maximum="72"
-                                    Minimum="8"
-                                    Value="{x:Bind AlbumArtLayoutSettings.SongInfoFontSize, Mode=TwoWay}" />
-                            </controls:SettingsCard>
-                        </controls:SettingsExpander.Items>
-                    </controls:SettingsExpander>
-
-                    <controls:SettingsCard x:Uid="SettingsPageShowTitle" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEF3D;}">
-                        <ToggleSwitch IsOn="{x:Bind AlbumArtLayoutSettings.ShowTitle, Mode=TwoWay}" />
-                    </controls:SettingsCard>
-                    <controls:SettingsCard x:Uid="SettingsPageShowArtists" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEF3D;}">
-                        <ToggleSwitch IsOn="{x:Bind AlbumArtLayoutSettings.ShowArtists, Mode=TwoWay}" />
-                    </controls:SettingsCard>
-                    <controls:SettingsCard x:Uid="SettingsPageShowAlbum" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEF3D;}">
-                        <ToggleSwitch IsOn="{x:Bind AlbumArtLayoutSettings.ShowAlbum, Mode=TwoWay}" />
-                    </controls:SettingsCard>
-
                 </StackPanel>
             </Grid>
         </ScrollViewer>

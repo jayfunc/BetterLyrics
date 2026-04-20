@@ -18,9 +18,12 @@ namespace BetterLyrics.WinUI3.Controls
 
         public List<string> SelectedFontIds { get; private set; } = new();
 
-        public FontPickerDialog(List<string> currentFontIds)
+        public bool AllowMultipleSelection { get; private set; }
+
+        public FontPickerDialog(List<string> currentFontIds, bool allowMultipleSelection = true)
         {
             this.InitializeComponent();
+            AllowMultipleSelection = allowMultipleSelection;
             SelectedFontsListView.ItemsSource = _selectedFonts;
             _ = InitializeFontsAsync(currentFontIds);
         }
@@ -36,7 +39,9 @@ namespace BetterLyrics.WinUI3.Controls
 
             if (currentFontIds != null && currentFontIds.Count != 0)
             {
-                foreach (var id in currentFontIds)
+                var idsToProcess = AllowMultipleSelection ? currentFontIds : currentFontIds.Take(1);
+
+                foreach (var id in idsToProcess)
                 {
                     var match = _allFontsReference.FirstOrDefault(f => f.FontFamily == id);
                     if (match != null)
@@ -70,6 +75,11 @@ namespace BetterLyrics.WinUI3.Controls
         {
             if (FontListView.SelectedItem is ExtendedFontFamily selected)
             {
+                if (!AllowMultipleSelection)
+                {
+                    _selectedFonts.Clear();
+                }
+
                 if (!_selectedFonts.Contains(selected))
                 {
                     _selectedFonts.Add(selected);

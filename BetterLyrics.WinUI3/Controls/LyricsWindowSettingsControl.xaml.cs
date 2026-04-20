@@ -71,14 +71,15 @@ namespace BetterLyrics.WinUI3.Controls
                     {
                         { "JSON", new List<string>() { ".json" } }
                     };
+                    var suggestedFileName = $"BetterLyrics_LyricsWindow_{data.Name}.json";
                     StorageFile? file;
                     if (this.Parent is FlyoutPresenter)
                     {
-                        file = await PickerHelper.PickSaveFileAsync<NowPlayingWindow>(fileTypeChoices);
+                        file = await PickerHelper.PickSaveFileAsync<NowPlayingWindow>(fileTypeChoices, suggestedFileName);
                     }
                     else
                     {
-                        file = await PickerHelper.PickSaveFileAsync<SettingsWindow>(fileTypeChoices);
+                        file = await PickerHelper.PickSaveFileAsync<SettingsWindow>(fileTypeChoices, suggestedFileName);
                     }
                     if (file != null)
                     {
@@ -105,17 +106,6 @@ namespace BetterLyrics.WinUI3.Controls
             }
         }
 
-        private void StackPanel_RightTapped(object sender, RightTappedRoutedEventArgs e)
-        {
-            if (sender is StackPanel stackPanel)
-            {
-                if (stackPanel.DataContext is MenuBarItemFlyout menuBarItemFlyout)
-                {
-                    menuBarItemFlyout.ShowAt(stackPanel);
-                }
-            }
-        }
-
         private async void ImportButton_Click(object sender, RoutedEventArgs e)
         {
             string[] fileTypeFilter = [".json"];
@@ -138,11 +128,6 @@ namespace BetterLyrics.WinUI3.Controls
                     GlobalToastManager.Show("ImportSettingsSuccess", null, InfoBarSeverity.Success);
                 }
             }
-        }
-
-        private void DisplayGrid_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            ViewModel.DisplayPanelHeight = e.NewSize.Height;
         }
 
         private void ConfigButton_Click(object sender, RoutedEventArgs e)
@@ -314,5 +299,6 @@ namespace BetterLyrics.WinUI3.Controls
                 menuFlyoutSubItem.Items.Add(menuFlyoutItem);
             }
         }
+
     }
 }

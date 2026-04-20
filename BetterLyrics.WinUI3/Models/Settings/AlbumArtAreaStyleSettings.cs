@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using BetterLyrics.WinUI3.Enums;
+using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 
 namespace BetterLyrics.WinUI3.Models.Settings
@@ -8,13 +9,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int CoverImageRadius { get; set; } = 12; // 12 % of the cover image size
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int CoverImageShadowAmount { get; set; } = 12;
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsAutoSongInfoFontSize { get; set; } = true;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int SongInfoFontSize { get; set; } = 18;
-
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowTitle { get; set; } = true;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowArtists { get; set; } = true;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool ShowAlbum { get; set; } = false;
-
         public AlbumArtAreaStyleSettings() { }
 
         public object Clone()
@@ -23,13 +17,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
             {
                 CoverImageRadius = this.CoverImageRadius,
                 CoverImageShadowAmount = this.CoverImageShadowAmount,
-
-                IsAutoSongInfoFontSize = this.IsAutoSongInfoFontSize,
-                SongInfoFontSize = this.SongInfoFontSize,
-
-                ShowTitle = this.ShowTitle,
-                ShowArtists = this.ShowArtists,
-                ShowAlbum = this.ShowAlbum,
             };
         }
     }

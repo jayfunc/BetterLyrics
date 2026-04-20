@@ -147,6 +147,9 @@
   <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Header" xml:space="preserve">
     <value>Auto-scroll Song Info</value>
   </data>
+  <data name="AlbumArtOnlyLayout" xml:space="preserve">
+    <value>Album Art Only Layout</value>
+  </data>
   <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
     <value>Local music files</value>
   </data>
@@ -333,11 +336,23 @@
   <data name="LayoutEditorControlAddRowButton.Content" xml:space="preserve">
     <value>Add row</value>
   </data>
+  <data name="LayoutEditorControlAdjustColumnWidth.Text" xml:space="preserve">
+    <value>Adjust Column Width</value>
+  </data>
+  <data name="LayoutEditorControlAdjustRowHeight.Text" xml:space="preserve">
+    <value>Adjust Row Height</value>
+  </data>
   <data name="LayoutEditorControlAlignmentHeader.Text" xml:space="preserve">
     <value>Alignment</value>
   </data>
   <data name="LayoutEditorControlAllPlacedMessage.Text" xml:space="preserve">
     <value>All components have been placed.</value>
+  </data>
+  <data name="LayoutEditorControlApplySizeButton.Content" xml:space="preserve">
+    <value>Apply</value>
+  </data>
+  <data name="LayoutEditorControlAutoDescription.Text" xml:space="preserve">
+    <value>Automatically sizes based on the content of internal components</value>
   </data>
   <data name="LayoutEditorControlCanvasNavigationHeader.Text" xml:space="preserve">
     <value>Canvas Navigation</value>
@@ -369,14 +384,26 @@
   <data name="LayoutEditorControlComponentLyrics" xml:space="preserve">
     <value>Lyrics</value>
   </data>
+  <data name="LayoutEditorControlComponentLyricsCard" xml:space="preserve">
+    <value>Lyrics Card</value>
+  </data>
   <data name="LayoutEditorControlComponentNone" xml:space="preserve">
     <value>None</value>
   </data>
   <data name="LayoutEditorControlComponentOperationHeader.Text" xml:space="preserve">
     <value>Component Operations (Selection required)</value>
   </data>
+  <data name="LayoutEditorControlComponentSongAlbum" xml:space="preserve">
+    <value>Song album</value>
+  </data>
+  <data name="LayoutEditorControlComponentSongArtist" xml:space="preserve">
+    <value>Song artist</value>
+  </data>
   <data name="LayoutEditorControlComponentSongInfo" xml:space="preserve">
     <value>Song info</value>
+  </data>
+  <data name="LayoutEditorControlComponentSongTitle" xml:space="preserve">
+    <value>Song title</value>
   </data>
   <data name="LayoutEditorControlCopyHere" xml:space="preserve">
     <value>Place here</value>
@@ -401,6 +428,9 @@
   </data>
   <data name="LayoutEditorControlDeleteTopRow" xml:space="preserve">
     <value>Delete row above</value>
+  </data>
+  <data name="LayoutEditorControlFocusComponentHeader.Text" xml:space="preserve">
+    <value>Focus on selected component</value>
   </data>
   <data name="LayoutEditorControlGlobalColSpacingBox.Header" xml:space="preserve">
     <value>Column spacing</value>
@@ -493,19 +523,22 @@
     <value>Move here</value>
   </data>
   <data name="LayoutEditorControlNoSelection" xml:space="preserve">
-    <value>Select a component in the preview or the left list to continue.</value>
+    <value>Select a component in the preview or the left list to continue</value>
   </data>
   <data name="LayoutEditorControlPendingComponentsDescriptionTextBlock.Text" xml:space="preserve">
-    <value>Drag components to the right-hand grid to place them. Once placed, components can be moved freely within the grid.</value>
+    <value>Drag components to the right-hand grid to place them. Once placed, components can be moved freely within the grid</value>
   </data>
   <data name="LayoutEditorControlPendingComponentsTextBlock.Text" xml:space="preserve">
     <value>Pending Component</value>
   </data>
   <data name="LayoutEditorControlPlacedComponentsDescriptionTextBlock.Text" xml:space="preserve">
-    <value>Select the component here if it is hidden or unclickable on the right.</value>
+    <value>Select the component here if it is hidden or unclickable on the right</value>
   </data>
   <data name="LayoutEditorControlPlacedComponentsTextBlock.Text" xml:space="preserve">
     <value>Placed Components</value>
+  </data>
+  <data name="LayoutEditorControlPxDescription.Text" xml:space="preserve">
+    <value>Fixed to the specified absolute pixel width/height</value>
   </data>
   <data name="LayoutEditorControlRemoveButton.Content" xml:space="preserve">
     <value>Remove Component</value>
@@ -526,10 +559,16 @@
     <value>Row Span</value>
   </data>
   <data name="LayoutEditorControlSelectedComponentLabel.Text" xml:space="preserve">
-    <value>Select a component in the preview or the left list to continue.</value>
+    <value>Select a component in the preview or the left list to continue</value>
   </data>
   <data name="LayoutEditorControlSelectedComponentPropertiesHeader.Text" xml:space="preserve">
     <value>Properties</value>
+  </data>
+  <data name="LayoutEditorControlSelectNextComponentHeader.Text" xml:space="preserve">
+    <value>Select next component</value>
+  </data>
+  <data name="LayoutEditorControlSelectPrevComponentHeader.Text" xml:space="preserve">
+    <value>Select previous component</value>
   </data>
   <data name="LayoutEditorControlSetBottomRowToAuto" xml:space="preserve">
     <value>Set row below to Auto</value>
@@ -554,6 +593,12 @@
   </data>
   <data name="LayoutEditorControlSetTopRowToStar" xml:space="preserve">
     <value>Set top row to Fill</value>
+  </data>
+  <data name="LayoutEditorControlSizeHeader.Text" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="LayoutEditorControlStarDescription.Text" xml:space="preserve">
+    <value>Distributes the remaining space proportionally based on the value entered</value>
   </data>
   <data name="LayoutEditorControlTemporaryActivateHandHeader.Text" xml:space="preserve">
     <value>Temporarily activate Hand tool</value>
@@ -591,6 +636,33 @@
   <data name="LayoutEditorControlZoomResetButton.Label" xml:space="preserve">
     <value>Zoom to Fit</value>
   </data>
+  <data name="LayoutSettingsControlCustomProfiles.Text" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="LayoutSettingsControlCustomProfilesEmpty.Text" xml:space="preserve">
+    <value>No custom layouts found. Create from a template or import an existing layout</value>
+  </data>
+  <data name="LayoutSettingsControlLayoutNameTextBox.PlaceholderText" xml:space="preserve">
+    <value>Enter a name for this layout to help distinguish it</value>
+  </data>
+  <data name="LayoutSettingsControlNoLyricsWindow" xml:space="preserve">
+    <value>No lyrics windows are using this layout</value>
+  </data>
+  <data name="LayoutSettingsControlSystemProfiles.Text" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="LayoutSettingsControlViewAppliedLyricsWindow.Text" xml:space="preserve">
+    <value>View the lyrics windows using this layout</value>
+  </data>
+  <data name="LeftAlbumArtRightLyricsCompactLayout" xml:space="preserve">
+    <value>Left Album Art Right Lyrics Layout (Compact)</value>
+  </data>
+  <data name="LeftAlbumArtRightLyricsLayout" xml:space="preserve">
+    <value>Left Album Art Right Lyrics Layout</value>
+  </data>
+  <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve">
+    <value>Left Lyrics Right Album Art Layout (Compact)</value>
+  </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>Failed to request translation from LibreTranslate. Please check settings or local LibreTranslate configuration</value>
   </data>
@@ -605,6 +677,9 @@
   </data>
   <data name="LyricsNotFound" xml:space="preserve">
     <value>Lyrics not found</value>
+  </data>
+  <data name="LyricsOnlyLayout" xml:space="preserve">
+    <value>Lyrics Only Layout</value>
   </data>
   <data name="LyricsPageCachePath.Header" xml:space="preserve">
     <value>Cache Path</value>
@@ -691,7 +766,7 @@
     <value>Duration</value>
   </data>
   <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
-    <value>* Changes take effect immediately after saving, and subsequent song lyrics will be retrieved using mapping info and target lyrics; marking as Instrumental will directly revert to Instrumental placeholder lyrics. Resetting will restore original data retrieval.</value>
+    <value>* Changes take effect immediately after saving, and subsequent song lyrics will be retrieved using mapping info and target lyrics; marking as Instrumental will directly revert to Instrumental placeholder lyrics. Resetting will restore original data retrieval</value>
   </data>
   <data name="LyricsSearchControlIgnoreCache.Header" xml:space="preserve">
     <value>Ignore cache when searching</value>
@@ -769,7 +844,7 @@
     <value>Image Quality</value>
   </data>
   <data name="LyricsSharePagePinLyricsCardHint.Text" xml:space="preserve">
-    <value>Drag a lyric card into the lyric window to pin it. To unpin, right-click the pinned card and select 'Delete' from the menu.</value>
+    <value>Drag a lyric card into the lyric window to pin it. To unpin, right-click the pinned card and select 'Delete' from the menu</value>
   </data>
   <data name="LyricsSharePageSaveImage.Content" xml:space="preserve">
     <value>Save Image</value>
@@ -837,6 +912,9 @@
   <data name="LyricsSharePageTitle" xml:space="preserve">
     <value>Lyrics Card</value>
   </data>
+  <data name="LyricsWindowSettingsControlConfigMusicGalleryLyrics.Text" xml:space="preserve">
+    <value>Config Music Gallery embedded lyrics window</value>
+  </data>
   <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
     <value>Configuration</value>
   </data>
@@ -892,7 +970,7 @@
     <value>Perform forced sync</value>
   </data>
   <data name="MediaSettingsForceSyncHint.Text" xml:space="preserve">
-    <value>This option will force a re-resolution of metadata from the remote database. This option is helpful when there are problems with the local database, or when a full refresh is required for some reason.</value>
+    <value>This option will force a re-resolution of metadata from the remote database. This option is helpful when there are problems with the local database, or when a full refresh is required for some reason</value>
   </data>
   <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
     <value>Add to playlist</value>
@@ -1069,7 +1147,7 @@
     <value>BetterLyrics built-in player is still running in the background, and the software will ignore other playback sources. To listen to other playback sources, go to Music Gallery and click the stop button in the lower right corner</value>
   </data>
   <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
-    <value>Loads external configurations to read playback progress directly from target process memory. Please use with caution; the developer is not responsible for the safety of third-party configurations.</value>
+    <value>Loads external configurations to read playback progress directly from target process memory. Please use with caution; the developer is not responsible for the safety of third-party configurations</value>
   </data>
   <data name="PlaybackSettingsControlMemoryReader.Header" xml:space="preserve">
     <value>Memory Reader Adapter</value>
@@ -1581,6 +1659,9 @@
   <data name="SettingsPageLayout.Text" xml:space="preserve">
     <value>Layout</value>
   </data>
+  <data name="SettingsPageLayoutConfigShareHint.Text" xml:space="preserve">
+    <value>Note: Layout configurations are shared globally. A single layout can be applied to lyrics windows in different modes. Any modification or deletion will affect all windows currently using this layout</value>
+  </data>
   <data name="SettingsPageLayoutOrientation.Header" xml:space="preserve">
     <value>Layout Orientation</value>
   </data>
@@ -1704,6 +1785,12 @@
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
     <value>Light</value>
   </data>
+  <data name="SettingsPageLyricsLineInnerSpacingFactor.Header" xml:space="preserve">
+    <value>Inner Line Spacing</value>
+  </data>
+  <data name="SettingsPageLyricsLineOverallSpacingFactor.Header" xml:space="preserve">
+    <value>Overall Line Spacing</value>
+  </data>
   <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
     <value>Line Spacing</value>
   </data>
@@ -1812,7 +1899,7 @@
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
     <value>Play Test Music</value>
   </data>
-  <data name="SettingsPageMultiNowPlayingWindows.Header" xml:space="preserve">
+  <data name="SettingsPageMultiNowPlayingWindows.Text" xml:space="preserve">
     <value>Multi-Window Mode</value>
   </data>
   <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
@@ -2279,6 +2366,12 @@
   </data>
   <data name="ToastOverlayTitle" xml:space="preserve">
     <value>Toast Overlay</value>
+  </data>
+  <data name="TopAlbumArtBottomLyricsCompactLayout" xml:space="preserve">
+    <value>Top Album Art Bottom Lyrics Layout (Compact)</value>
+  </data>
+  <data name="TopAlbumArtBottomLyricsLayout" xml:space="preserve">
+    <value>Top Album Art Bottom Lyrics Layout</value>
   </data>
   <data name="TracksAddToPlaylistFailed" xml:space="preserve">
     <value>Unable to add tracks because the path does not exist</value>

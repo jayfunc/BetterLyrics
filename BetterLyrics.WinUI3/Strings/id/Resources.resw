@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -146,6 +146,9 @@
   </data>
   <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Header" xml:space="preserve">
     <value>Info Lagu Gulir otomatis</value>
+  </data>
+  <data name="AlbumArtOnlyLayout" xml:space="preserve">
+    <value>Tata Letak Hanya Seni Album</value>
   </data>
   <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
     <value>File musik lokal</value>
@@ -333,11 +336,23 @@
   <data name="LayoutEditorControlAddRowButton.Content" xml:space="preserve">
     <value>Tambahkan baris</value>
   </data>
+  <data name="LayoutEditorControlAdjustColumnWidth.Text" xml:space="preserve">
+    <value>Sesuaikan Lebar Kolom</value>
+  </data>
+  <data name="LayoutEditorControlAdjustRowHeight.Text" xml:space="preserve">
+    <value>Sesuaikan Tinggi Baris</value>
+  </data>
   <data name="LayoutEditorControlAlignmentHeader.Text" xml:space="preserve">
     <value>Penjajaran</value>
   </data>
   <data name="LayoutEditorControlAllPlacedMessage.Text" xml:space="preserve">
     <value>Semua komponen telah ditempatkan.</value>
+  </data>
+  <data name="LayoutEditorControlApplySizeButton.Content" xml:space="preserve">
+    <value>Menerapkan</value>
+  </data>
+  <data name="LayoutEditorControlAutoDescription.Text" xml:space="preserve">
+    <value>Secara otomatis menyesuaikan ukuran berdasarkan isi komponen internal</value>
   </data>
   <data name="LayoutEditorControlCanvasNavigationHeader.Text" xml:space="preserve">
     <value>Navigasi Kanvas</value>
@@ -369,14 +384,26 @@
   <data name="LayoutEditorControlComponentLyrics" xml:space="preserve">
     <value>Lirik</value>
   </data>
+  <data name="LayoutEditorControlComponentLyricsCard" xml:space="preserve">
+    <value>Kartu Lirik</value>
+  </data>
   <data name="LayoutEditorControlComponentNone" xml:space="preserve">
     <value>Tidak ada</value>
   </data>
   <data name="LayoutEditorControlComponentOperationHeader.Text" xml:space="preserve">
     <value>Pengoperasian Komponen (Diperlukan pemilihan)</value>
   </data>
+  <data name="LayoutEditorControlComponentSongAlbum" xml:space="preserve">
+    <value>Album lagu</value>
+  </data>
+  <data name="LayoutEditorControlComponentSongArtist" xml:space="preserve">
+    <value>Artis lagu</value>
+  </data>
   <data name="LayoutEditorControlComponentSongInfo" xml:space="preserve">
     <value>Info lagu</value>
+  </data>
+  <data name="LayoutEditorControlComponentSongTitle" xml:space="preserve">
+    <value>Judul lagu</value>
   </data>
   <data name="LayoutEditorControlCopyHere" xml:space="preserve">
     <value>Tempatkan di sini</value>
@@ -401,6 +428,9 @@
   </data>
   <data name="LayoutEditorControlDeleteTopRow" xml:space="preserve">
     <value>Hapus baris di atas</value>
+  </data>
+  <data name="LayoutEditorControlFocusComponentHeader.Text" xml:space="preserve">
+    <value>Fokus pada komponen yang dipilih</value>
   </data>
   <data name="LayoutEditorControlGlobalColSpacingBox.Header" xml:space="preserve">
     <value>Jarak kolom</value>
@@ -507,6 +537,9 @@
   <data name="LayoutEditorControlPlacedComponentsTextBlock.Text" xml:space="preserve">
     <value>Komponen yang Ditempatkan</value>
   </data>
+  <data name="LayoutEditorControlPxDescription.Text" xml:space="preserve">
+    <value>Diperbaiki ke lebar/tinggi piksel absolut yang ditentukan</value>
+  </data>
   <data name="LayoutEditorControlRemoveButton.Content" xml:space="preserve">
     <value>Menghapus Komponen</value>
   </data>
@@ -531,6 +564,12 @@
   <data name="LayoutEditorControlSelectedComponentPropertiesHeader.Text" xml:space="preserve">
     <value>Properti</value>
   </data>
+  <data name="LayoutEditorControlSelectNextComponentHeader.Text" xml:space="preserve">
+    <value>Pilih komponen berikutnya</value>
+  </data>
+  <data name="LayoutEditorControlSelectPrevComponentHeader.Text" xml:space="preserve">
+    <value>Pilih komponen sebelumnya</value>
+  </data>
   <data name="LayoutEditorControlSetBottomRowToAuto" xml:space="preserve">
     <value>Atur baris di bawah ini ke Otomatis</value>
   </data>
@@ -554,6 +593,12 @@
   </data>
   <data name="LayoutEditorControlSetTopRowToStar" xml:space="preserve">
     <value>Atur baris atas ke Isi</value>
+  </data>
+  <data name="LayoutEditorControlSizeHeader.Text" xml:space="preserve">
+    <value>Ukuran</value>
+  </data>
+  <data name="LayoutEditorControlStarDescription.Text" xml:space="preserve">
+    <value>Mendistribusikan ruang yang tersisa secara proporsional berdasarkan nilai yang dimasukkan</value>
   </data>
   <data name="LayoutEditorControlTemporaryActivateHandHeader.Text" xml:space="preserve">
     <value>Mengaktifkan alat tangan untuk sementara waktu</value>
@@ -591,6 +636,33 @@
   <data name="LayoutEditorControlZoomResetButton.Label" xml:space="preserve">
     <value>Perbesar agar Sesuai</value>
   </data>
+  <data name="LayoutSettingsControlCustomProfiles.Text" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="LayoutSettingsControlCustomProfilesEmpty.Text" xml:space="preserve">
+    <value>No custom layouts found. Create from a template or import an existing layout</value>
+  </data>
+  <data name="LayoutSettingsControlLayoutNameTextBox.PlaceholderText" xml:space="preserve">
+    <value>Masukkan nama untuk tata letak ini untuk membantu membedakannya</value>
+  </data>
+  <data name="LayoutSettingsControlNoLyricsWindow" xml:space="preserve">
+    <value>Tidak ada jendela lirik yang menggunakan tata letak ini</value>
+  </data>
+  <data name="LayoutSettingsControlSystemProfiles.Text" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="LayoutSettingsControlViewAppliedLyricsWindow.Text" xml:space="preserve">
+    <value>Melihat jendela lirik menggunakan tata letak ini</value>
+  </data>
+  <data name="LeftAlbumArtRightLyricsCompactLayout" xml:space="preserve">
+    <value>Tata Letak Seni Album Kiri Tata Letak Lirik Kanan (Ringkas)</value>
+  </data>
+  <data name="LeftAlbumArtRightLyricsLayout" xml:space="preserve">
+    <value>Seni Album Kiri Tata Letak Lirik Kanan</value>
+  </data>
+  <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve">
+    <value>Left Lyrics Right Album Art Layout (Compact)</value>
+  </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>Permintaan terjemahan ke LibreTranslate gagal, silakan periksa pengaturan atau konfigurasi LibreTranslate lokal</value>
   </data>
@@ -605,6 +677,9 @@
   </data>
   <data name="LyricsNotFound" xml:space="preserve">
     <value>Lirik tidak ditemukan</value>
+  </data>
+  <data name="LyricsOnlyLayout" xml:space="preserve">
+    <value>Tata Letak Hanya Lirik</value>
   </data>
   <data name="LyricsPageCachePath.Header" xml:space="preserve">
     <value>Jalur Cache</value>
@@ -836,6 +911,9 @@
   </data>
   <data name="LyricsSharePageTitle" xml:space="preserve">
     <value>Kartu Lirik</value>
+  </data>
+  <data name="LyricsWindowSettingsControlConfigMusicGalleryLyrics.Text" xml:space="preserve">
+    <value>Jendela lirik yang disematkan Galeri Musik Config</value>
   </data>
   <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
     <value>Konfigurasi</value>
@@ -1581,6 +1659,9 @@
   <data name="SettingsPageLayout.Text" xml:space="preserve">
     <value>Tata Letak</value>
   </data>
+  <data name="SettingsPageLayoutConfigShareHint.Text" xml:space="preserve">
+    <value>Catatan: Konfigurasi tata letak dibagikan secara global. Satu tata letak dapat diterapkan ke jendela lirik dalam mode yang berbeda. Modifikasi atau penghapusan apa pun akan memengaruhi semua jendela yang saat ini menggunakan tata letak ini</value>
+  </data>
   <data name="SettingsPageLayoutOrientation.Header" xml:space="preserve">
     <value>Orientasi Tata Letak</value>
   </data>
@@ -1704,6 +1785,12 @@
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
     <value>Tipis</value>
   </data>
+  <data name="SettingsPageLyricsLineInnerSpacingFactor.Header" xml:space="preserve">
+    <value>Inner Line Spacing</value>
+  </data>
+  <data name="SettingsPageLyricsLineOverallSpacingFactor.Header" xml:space="preserve">
+    <value>Overall Line Spacing</value>
+  </data>
   <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
     <value>Spasi Baris</value>
   </data>
@@ -1812,8 +1899,8 @@
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
     <value>Putar Musik Uji</value>
   </data>
-  <data name="SettingsPageMultiNowPlayingWindows.Header" xml:space="preserve">
-    <value>Mode Koeksistensi Multi-Jendela</value>
+  <data name="SettingsPageMultiNowPlayingWindows.Text" xml:space="preserve">
+    <value>Mode Multi-Jendela</value>
   </data>
   <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
     <value>Galeri Musik</value>
@@ -2279,6 +2366,12 @@
   </data>
   <data name="ToastOverlayTitle" xml:space="preserve">
     <value>Hamparan Roti Panggang</value>
+  </data>
+  <data name="TopAlbumArtBottomLyricsCompactLayout" xml:space="preserve">
+    <value>Tata Letak Lirik Atas Album Art Bawah (Ringkas)</value>
+  </data>
+  <data name="TopAlbumArtBottomLyricsLayout" xml:space="preserve">
+    <value>Tata Letak Lirik Atas Seni Album Bawah Tata Letak Lirik Bawah</value>
   </data>
   <data name="TracksAddToPlaylistFailed" xml:space="preserve">
     <value>Tidak dapat menambahkan trek karena jalur tidak ada</value>

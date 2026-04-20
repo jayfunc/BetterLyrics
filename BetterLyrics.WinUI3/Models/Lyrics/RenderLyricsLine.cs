@@ -212,7 +212,7 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
             DisposeTextLayout();
 
             var wordWrapping = autoWrap ? CanvasWordWrapping.Wrap : CanvasWordWrapping.NoWrap;
-            var horizontalAlignment = autoWrap ? type.ToCanvasHorizontalAlignment() : CanvasHorizontalAlignment.Left;
+            var horizontalAlignment = type.ToCanvasHorizontalAlignment();
 
             bool phoneticVisible = createPhonetic && !string.IsNullOrWhiteSpace(TertiaryText);
             bool translatedVisible = createTranslated && !string.IsNullOrWhiteSpace(SecondaryText);

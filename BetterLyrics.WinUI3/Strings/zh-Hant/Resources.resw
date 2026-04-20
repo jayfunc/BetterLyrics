@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -146,6 +146,9 @@
   </data>
   <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Header" xml:space="preserve">
     <value>自動捲動歌曲資訊</value>
+  </data>
+  <data name="AlbumArtOnlyLayout" xml:space="preserve">
+    <value>僅專輯封面佈局</value>
   </data>
   <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
     <value>本機音樂檔案</value>
@@ -217,7 +220,7 @@
     <value>取消</value>
   </data>
   <data name="Column" xml:space="preserve">
-    <value>列</value>
+    <value>欄</value>
   </data>
   <data name="Confirm" xml:space="preserve">
     <value>確認</value>
@@ -333,14 +336,26 @@
   <data name="LayoutEditorControlAddRowButton.Content" xml:space="preserve">
     <value>新增列</value>
   </data>
+  <data name="LayoutEditorControlAdjustColumnWidth.Text" xml:space="preserve">
+    <value>調整欄寬</value>
+  </data>
+  <data name="LayoutEditorControlAdjustRowHeight.Text" xml:space="preserve">
+    <value>調整列高</value>
+  </data>
   <data name="LayoutEditorControlAlignmentHeader.Text" xml:space="preserve">
     <value>對齊方式</value>
   </data>
   <data name="LayoutEditorControlAllPlacedMessage.Text" xml:space="preserve">
     <value>所有元件均已放置。</value>
   </data>
+  <data name="LayoutEditorControlApplySizeButton.Content" xml:space="preserve">
+    <value>套用</value>
+  </data>
+  <data name="LayoutEditorControlAutoDescription.Text" xml:space="preserve">
+    <value>根據內部元件的內容自動調整大小</value>
+  </data>
   <data name="LayoutEditorControlCanvasNavigationHeader.Text" xml:space="preserve">
-    <value>帆布導覽</value>
+    <value>畫布導覽</value>
   </data>
   <data name="LayoutEditorControlCanvasPaddingTextBlock.Text" xml:space="preserve">
     <value>內間距</value>
@@ -352,7 +367,7 @@
     <value>調整元件大小</value>
   </data>
   <data name="LayoutEditorControlChangeComponentSpanInfoTag.Text" xml:space="preserve">
-    <value>方向鍵 / WASD</value>
+    <value>方向鍵 / WASD鍵</value>
   </data>
   <data name="LayoutEditorControlColBox.Header" xml:space="preserve">
     <value>列</value>
@@ -361,7 +376,7 @@
     <value>跨欄數</value>
   </data>
   <data name="LayoutEditorControlColumnHeader.Text" xml:space="preserve">
-    <value>列</value>
+    <value>欄</value>
   </data>
   <data name="LayoutEditorControlComponentAlbumArt" xml:space="preserve">
     <value>專輯封面</value>
@@ -369,14 +384,26 @@
   <data name="LayoutEditorControlComponentLyrics" xml:space="preserve">
     <value>歌詞</value>
   </data>
+  <data name="LayoutEditorControlComponentLyricsCard" xml:space="preserve">
+    <value>歌詞卡</value>
+  </data>
   <data name="LayoutEditorControlComponentNone" xml:space="preserve">
     <value>無</value>
   </data>
   <data name="LayoutEditorControlComponentOperationHeader.Text" xml:space="preserve">
-    <value>組件作業（需選擇）</value>
+    <value>操作元件（需選擇）</value>
+  </data>
+  <data name="LayoutEditorControlComponentSongAlbum" xml:space="preserve">
+    <value>歌曲專輯</value>
+  </data>
+  <data name="LayoutEditorControlComponentSongArtist" xml:space="preserve">
+    <value>歌曲創作者</value>
   </data>
   <data name="LayoutEditorControlComponentSongInfo" xml:space="preserve">
     <value>歌曲資訊</value>
+  </data>
+  <data name="LayoutEditorControlComponentSongTitle" xml:space="preserve">
+    <value>歌曲名稱</value>
   </data>
   <data name="LayoutEditorControlCopyHere" xml:space="preserve">
     <value>放在這裡</value>
@@ -385,7 +412,7 @@
     <value>刪除下面的列</value>
   </data>
   <data name="LayoutEditorControlDeleteCol.Text" xml:space="preserve">
-    <value>刪除此列</value>
+    <value>刪除此欄</value>
   </data>
   <data name="LayoutEditorControlDeleteComponentHeader.Text" xml:space="preserve">
     <value>刪除元件</value>
@@ -397,10 +424,13 @@
     <value>刪除右側的欄</value>
   </data>
   <data name="LayoutEditorControlDeleteRow.Text" xml:space="preserve">
-    <value>刪除此行</value>
+    <value>刪除此列</value>
   </data>
   <data name="LayoutEditorControlDeleteTopRow" xml:space="preserve">
     <value>删除上方列</value>
+  </data>
+  <data name="LayoutEditorControlFocusComponentHeader.Text" xml:space="preserve">
+    <value>專注於選定的元件</value>
   </data>
   <data name="LayoutEditorControlGlobalColSpacingBox.Header" xml:space="preserve">
     <value>欄間距</value>
@@ -460,13 +490,13 @@
     <value>在此处插入列</value>
   </data>
   <data name="LayoutEditorControlInsertRowAfter.Text" xml:space="preserve">
-    <value>在下面插入一行</value>
+    <value>在下面插入一列</value>
   </data>
   <data name="LayoutEditorControlInsertRowBefore.Text" xml:space="preserve">
-    <value>在上方插入行</value>
+    <value>在上方插入列</value>
   </data>
   <data name="LayoutEditorControlKeyboardShortcutsHeader.Text" xml:space="preserve">
-    <value>鍵盤捷徑</value>
+    <value>鍵盤快速鍵</value>
   </data>
   <data name="LayoutEditorControlMarginBottomBox.Header" xml:space="preserve">
     <value>底部</value>
@@ -487,7 +517,7 @@
     <value>移動元件</value>
   </data>
   <data name="LayoutEditorControlMoveComponentInfoTag.Text" xml:space="preserve">
-    <value>方向鍵 / WASD</value>
+    <value>方向鍵 / WASD鍵</value>
   </data>
   <data name="LayoutEditorControlMoveHere" xml:space="preserve">
     <value>移動至此處</value>
@@ -507,6 +537,9 @@
   <data name="LayoutEditorControlPlacedComponentsTextBlock.Text" xml:space="preserve">
     <value>已經放置的元件</value>
   </data>
+  <data name="LayoutEditorControlPxDescription.Text" xml:space="preserve">
+    <value>固定為指定的絕對像素寬度/高度</value>
+  </data>
   <data name="LayoutEditorControlRemoveButton.Content" xml:space="preserve">
     <value>移除元件</value>
   </data>
@@ -520,7 +553,7 @@
     <value>行</value>
   </data>
   <data name="LayoutEditorControlRowHeader.Text" xml:space="preserve">
-    <value>行</value>
+    <value>列</value>
   </data>
   <data name="LayoutEditorControlRowSpanBox.Header" xml:space="preserve">
     <value>跨列數</value>
@@ -530,6 +563,12 @@
   </data>
   <data name="LayoutEditorControlSelectedComponentPropertiesHeader.Text" xml:space="preserve">
     <value>属性</value>
+  </data>
+  <data name="LayoutEditorControlSelectNextComponentHeader.Text" xml:space="preserve">
+    <value>選擇下一個元件</value>
+  </data>
+  <data name="LayoutEditorControlSelectPrevComponentHeader.Text" xml:space="preserve">
+    <value>選擇上一個元件</value>
   </data>
   <data name="LayoutEditorControlSetBottomRowToAuto" xml:space="preserve">
     <value>將底部列設定為自動</value>
@@ -554,6 +593,12 @@
   </data>
   <data name="LayoutEditorControlSetTopRowToStar" xml:space="preserve">
     <value>將頂部列設定為填充</value>
+  </data>
+  <data name="LayoutEditorControlSizeHeader.Text" xml:space="preserve">
+    <value>尺寸</value>
+  </data>
+  <data name="LayoutEditorControlStarDescription.Text" xml:space="preserve">
+    <value>根據輸入的值按比例分配剩餘空間</value>
   </data>
   <data name="LayoutEditorControlTemporaryActivateHandHeader.Text" xml:space="preserve">
     <value>暫時啟動手動工具</value>
@@ -591,6 +636,33 @@
   <data name="LayoutEditorControlZoomResetButton.Label" xml:space="preserve">
     <value>缩放以适应</value>
   </data>
+  <data name="LayoutSettingsControlCustomProfiles.Text" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="LayoutSettingsControlCustomProfilesEmpty.Text" xml:space="preserve">
+    <value>No custom layouts found. Create from a template or import an existing layout</value>
+  </data>
+  <data name="LayoutSettingsControlLayoutNameTextBox.PlaceholderText" xml:space="preserve">
+    <value>輸入此佈局的名稱，以便區分它</value>
+  </data>
+  <data name="LayoutSettingsControlNoLyricsWindow" xml:space="preserve">
+    <value>沒有歌詞視窗使用此佈局</value>
+  </data>
+  <data name="LayoutSettingsControlSystemProfiles.Text" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="LayoutSettingsControlViewAppliedLyricsWindow.Text" xml:space="preserve">
+    <value>使用此佈局檢視歌詞視窗</value>
+  </data>
+  <data name="LeftAlbumArtRightLyricsCompactLayout" xml:space="preserve">
+    <value>左側專輯封面 右側歌詞版面 (Compact)</value>
+  </data>
+  <data name="LeftAlbumArtRightLyricsLayout" xml:space="preserve">
+    <value>左側專輯封面 右側歌詞版面</value>
+  </data>
+  <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve">
+    <value>Left Lyrics Right Album Art Layout (Compact)</value>
+  </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>向 LibreTranslate 請求翻譯失敗，請檢查設定或本機 LibreTranslate 配置</value>
   </data>
@@ -605,6 +677,9 @@
   </data>
   <data name="LyricsNotFound" xml:space="preserve">
     <value>未找到歌詞</value>
+  </data>
+  <data name="LyricsOnlyLayout" xml:space="preserve">
+    <value>僅歌詞版面</value>
   </data>
   <data name="LyricsPageCachePath.Header" xml:space="preserve">
     <value>快取路徑</value>
@@ -836,6 +911,9 @@
   </data>
   <data name="LyricsSharePageTitle" xml:space="preserve">
     <value>歌詞卡片</value>
+  </data>
+  <data name="LyricsWindowSettingsControlConfigMusicGalleryLyrics.Text" xml:space="preserve">
+    <value>配置音樂庫內嵌歌詞視窗</value>
   </data>
   <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
     <value>配置</value>
@@ -1156,7 +1234,7 @@
     <value>羅馬音</value>
   </data>
   <data name="Row" xml:space="preserve">
-    <value>行</value>
+    <value>列</value>
   </data>
   <data name="SetingsPageContributors.Text" xml:space="preserve">
     <value>貢獻者</value>
@@ -1581,6 +1659,9 @@
   <data name="SettingsPageLayout.Text" xml:space="preserve">
     <value>版面配置</value>
   </data>
+  <data name="SettingsPageLayoutConfigShareHint.Text" xml:space="preserve">
+    <value>注意：版面配置是全局共用的。單一配置可應用於不同模式的歌詞視窗。任何修改或刪除都會影響目前使用此配置的所有視窗</value>
+  </data>
   <data name="SettingsPageLayoutOrientation.Header" xml:space="preserve">
     <value>版面配置方向</value>
   </data>
@@ -1704,6 +1785,12 @@
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
     <value>細體</value>
   </data>
+  <data name="SettingsPageLyricsLineInnerSpacingFactor.Header" xml:space="preserve">
+    <value>Inner Line Spacing</value>
+  </data>
+  <data name="SettingsPageLyricsLineOverallSpacingFactor.Header" xml:space="preserve">
+    <value>Overall Line Spacing</value>
+  </data>
   <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
     <value>行間距</value>
   </data>
@@ -1812,7 +1899,7 @@
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
     <value>播放測試音樂</value>
   </data>
-  <data name="SettingsPageMultiNowPlayingWindows.Header" xml:space="preserve">
+  <data name="SettingsPageMultiNowPlayingWindows.Text" xml:space="preserve">
     <value>多視窗共存模式</value>
   </data>
   <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
@@ -2279,6 +2366,12 @@
   </data>
   <data name="ToastOverlayTitle" xml:space="preserve">
     <value>通知覆蓋層</value>
+  </data>
+  <data name="TopAlbumArtBottomLyricsCompactLayout" xml:space="preserve">
+    <value>頂部專輯封面 底部歌詞版面 (精簡型)</value>
+  </data>
+  <data name="TopAlbumArtBottomLyricsLayout" xml:space="preserve">
+    <value>頂部專輯封面 底部歌詞版面</value>
   </data>
   <data name="TracksAddToPlaylistFailed" xml:space="preserve">
     <value>由於路徑不存在，無法新增曲目</value>

@@ -71,7 +71,7 @@ namespace BetterLyrics.WinUI3.Controls
         {
             if (HasLink)
             {
-                BadgeBorder.Background = (Brush)Application.Current.Resources["CardBackgroundFillColorSecondaryBrush"];
+                BadgeBorder.Background = (Brush)Resources["CardBackgroundFillColorSecondaryBrush"];
             }
         }
 
@@ -79,7 +79,7 @@ namespace BetterLyrics.WinUI3.Controls
         {
             if (HasLink)
             {
-                BadgeBorder.Background = (Brush)Application.Current.Resources["CardBackgroundFillColorDefaultBrush"];
+                BadgeBorder.Background = (Brush)Resources["CardBackgroundFillColorDefaultBrush"];
             }
         }
 

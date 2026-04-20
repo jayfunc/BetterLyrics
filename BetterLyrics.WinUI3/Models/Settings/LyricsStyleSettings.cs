@@ -66,7 +66,11 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsFontWeight LyricsFontWeight { get; set; } = LyricsFontWeight.Bold;
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double LyricsLineSpacingFactor { get; set; } = 0.5;
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        [JsonPropertyName("LyricsLineSpacingFactor")]
+        public partial double LyricsLineOverallSpacingFactor { get; set; } = 0.5;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial double LyricsLineInnerSpacingFactor { get; set; } = 0.1;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LyricsCJKFontFamily { get; set; } = "Arial";
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial string LyricsWesternFontFamily { get; set; } = "Arial";
@@ -104,7 +108,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 LyricsPlayedStrokeFontColorType = this.LyricsPlayedStrokeFontColorType,
                 LyricsUnplayedStrokeFontColorType = this.LyricsUnplayedStrokeFontColorType,
                 LyricsFontWeight = this.LyricsFontWeight,
-                LyricsLineSpacingFactor = this.LyricsLineSpacingFactor,
+                LyricsLineOverallSpacingFactor = this.LyricsLineOverallSpacingFactor,
                 LyricsCJKFontFamily = this.LyricsCJKFontFamily,
                 LyricsWesternFontFamily = this.LyricsWesternFontFamily,
 

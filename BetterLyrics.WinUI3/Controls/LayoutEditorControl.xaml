@@ -2,11 +2,12 @@
     x:Class="BetterLyrics.WinUI3.Controls.LayoutEditorControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
-    x:Name="Root"
+    xmlns:ui="using:CommunityToolkit.WinUI"
     IsTabStop="True"
     PreviewKeyDown="UserControl_PreviewKeyDown"
     PreviewKeyUp="UserControl_PreviewKeyUp"
@@ -15,649 +16,332 @@
     <UserControl.Resources>
 
         <DataTemplate x:Key="RowHeaderTemplate" x:DataType="models:HeaderItemModel">
-            <Grid
-                Height="{x:Bind ItemSize, Mode=OneWay}"
-                PointerEntered="Gutter_PointerEntered"
-                PointerExited="Gutter_PointerExited"
-                Style="{ThemeResource CardGridStyle}"
-                Tapped="Gutter_Tapped">
-                <FlyoutBase.AttachedFlyout>
-                    <MenuFlyout>
-                        <MenuFlyoutItem
-                            x:Uid="LayoutEditorControlInsertRowBefore"
-                            Command="{x:Bind Parent.InsertRowActionCommand}"
-                            CommandParameter="{x:Bind Index}">
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="&#xE109;" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid
+                    Grid.Row="0"
+                    Height="{x:Bind ItemSize, Mode=OneWay}"
+                    Style="{ThemeResource CardGridStyle}"
+                    Tapped="Gutter_Tapped">
+                    <FlyoutBase.AttachedFlyout>
+                        <Flyout Placement="Bottom" ShouldConstrainToRootBounds="False">
+                            <Flyout.FlyoutPresenterStyle>
+                                <Style TargetType="FlyoutPresenter">
+                                    <Setter Property="CornerRadius" Value="8" />
+                                </Style>
+                            </Flyout.FlyoutPresenterStyle>
 
-                        <MenuFlyoutItem
-                            x:Uid="LayoutEditorControlInsertRowAfter"
-                            Command="{x:Bind Parent.InsertRowAfterActionCommand}"
-                            CommandParameter="{x:Bind Index}">
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="&#xE109;" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
+                            <StackPanel Width="250" Spacing="4">
 
-                        <MenuFlyoutSeparator />
+                                <StackPanel Spacing="4">
 
-                        <MenuFlyoutItem
-                            x:Uid="LayoutEditorControlDeleteRow"
-                            Command="{x:Bind Parent.DeleteRowActionCommand}"
-                            CommandParameter="{x:Bind Index}"
-                            IsEnabled="{x:Bind CanDelete}">
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="&#xE107;" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
+                                    <Button
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{x:Bind Parent.InsertRowActionCommand}"
+                                        CommandParameter="{x:Bind Index}"
+                                        Style="{ThemeResource GhostButtonStyle}">
+                                        <StackPanel Orientation="Horizontal" Spacing="12">
+                                            <FontIcon FontSize="16" Glyph="&#xE109;" />
+                                            <TextBlock x:Uid="LayoutEditorControlInsertRowBefore" />
+                                        </StackPanel>
+                                    </Button>
 
-                        <MenuFlyoutItem
-                            Command="{x:Bind Parent.ToggleRowStarActionCommand}"
-                            CommandParameter="{x:Bind Index}"
-                            Text="{x:Bind ToggleText, Mode=OneWay}">
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="{x:Bind ToggleIcon}" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
-                    </MenuFlyout>
-                </FlyoutBase.AttachedFlyout>
+                                    <Button
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{x:Bind Parent.InsertRowAfterActionCommand}"
+                                        CommandParameter="{x:Bind Index}"
+                                        Style="{ThemeResource GhostButtonStyle}">
+                                        <StackPanel Orientation="Horizontal" Spacing="12">
+                                            <FontIcon FontSize="16" Glyph="&#xE109;" />
+                                            <TextBlock x:Uid="LayoutEditorControlInsertRowAfter" />
+                                        </StackPanel>
+                                    </Button>
 
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Text="{x:Bind Index}" />
+                                    <Button
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{x:Bind Parent.DeleteRowActionCommand}"
+                                        CommandParameter="{x:Bind Index}"
+                                        IsEnabled="{x:Bind CanDelete}"
+                                        Style="{ThemeResource GhostButtonStyle}">
+                                        <StackPanel Orientation="Horizontal" Spacing="12">
+                                            <FontIcon FontSize="16" Glyph="&#xE107;" />
+                                            <TextBlock x:Uid="LayoutEditorControlDeleteRow" />
+                                        </StackPanel>
+                                    </Button>
+
+                                </StackPanel>
+
+                                <Border
+                                    Height="1"
+                                    Margin="-12,0,-12,0"
+                                    Background="{ThemeResource DividerStrokeColorDefaultBrush}" />
+
+                                <StackPanel Padding="4" Spacing="4">
+                                    <TextBlock
+                                        x:Uid="LayoutEditorControlAdjustRowHeight"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}" />
+                                    <Grid
+                                        x:Name="SizeEditorGrid"
+                                        ColumnSpacing="4"
+                                        Loaded="SizeEditorGrid_Loaded">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="80" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <NumberBox
+                                            x:Name="SizeInputBox"
+                                            Grid.Column="0"
+                                            VerticalAlignment="Center"
+                                            Minimum="0"
+                                            PlaceholderText="1" />
+                                        <ComboBox
+                                            x:Name="SizeTypeBox"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Center"
+                                            SelectionChanged="SizeTypeBox_SelectionChanged">
+                                            <ComboBoxItem Content="Auto" Tag="Auto" />
+                                            <ComboBoxItem Content="*" Tag="*" />
+                                            <ComboBoxItem Content="px" Tag="px" />
+                                        </ComboBox>
+                                    </Grid>
+
+                                    <Button
+                                        x:Uid="LayoutEditorControlApplySizeButton"
+                                        HorizontalAlignment="Stretch"
+                                        Click="ApplySizeFlyout_Click"
+                                        Style="{ThemeResource AccentButtonStyle}" />
+
+                                    <RichTextBlock
+                                        FontSize="12"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        TextWrapping="Wrap">
+                                        <Paragraph>
+                                            <Run FontWeight="SemiBold">Auto</Run>
+                                            <Run x:Uid="LayoutEditorControlAutoDescription" />
+                                            <LineBreak />
+                                            <Run FontWeight="SemiBold">*</Run>
+                                            <Run x:Uid="LayoutEditorControlStarDescription" />
+                                            <LineBreak />
+                                            <Run FontWeight="SemiBold">px</Run>
+                                            <Run x:Uid="LayoutEditorControlPxDescription" />
+                                        </Paragraph>
+                                    </RichTextBlock>
+
+                                </StackPanel>
+
+                            </StackPanel>
+                        </Flyout>
+                    </FlyoutBase.AttachedFlyout>
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind Index}" />
+                    </ToolTipService.ToolTip>
+
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Text="{x:Bind Index}" />
+                </Grid>
+                <Grid
+                    Grid.Row="1"
+                    Height="{x:Bind FollowingSpacing, Mode=OneWay}"
+                    Background="Transparent" />
             </Grid>
         </DataTemplate>
 
         <DataTemplate x:Key="ColumnHeaderTemplate" x:DataType="models:HeaderItemModel">
-            <Grid
-                Width="{x:Bind ItemSize, Mode=OneWay}"
-                PointerEntered="Gutter_PointerEntered"
-                PointerExited="Gutter_PointerExited"
-                Style="{ThemeResource CardGridStyle}"
-                Tapped="Gutter_Tapped">
-                <FlyoutBase.AttachedFlyout>
-                    <MenuFlyout>
-                        <MenuFlyoutItem
-                            x:Uid="LayoutEditorControlInsertColBefore"
-                            Command="{x:Bind Parent.InsertColActionCommand}"
-                            CommandParameter="{x:Bind Index}">
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="&#xE109;" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid
+                    Grid.Column="0"
+                    Width="{x:Bind ItemSize, Mode=OneWay}"
+                    Style="{ThemeResource CardGridStyle}"
+                    Tapped="Gutter_Tapped">
+                    <FlyoutBase.AttachedFlyout>
+                        <Flyout Placement="Right" ShouldConstrainToRootBounds="False">
+                            <Flyout.FlyoutPresenterStyle>
+                                <Style TargetType="FlyoutPresenter">
+                                    <Setter Property="CornerRadius" Value="8" />
+                                </Style>
+                            </Flyout.FlyoutPresenterStyle>
 
-                        <MenuFlyoutItem
-                            x:Uid="LayoutEditorControlInsertColAfter"
-                            Command="{x:Bind Parent.InsertColAfterActionCommand}"
-                            CommandParameter="{x:Bind Index}">
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="&#xE109;" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
+                            <StackPanel Width="250" Spacing="4">
 
-                        <MenuFlyoutSeparator />
+                                <StackPanel Spacing="4">
 
-                        <MenuFlyoutItem
-                            x:Uid="LayoutEditorControlDeleteCol"
-                            Command="{x:Bind Parent.DeleteColActionCommand}"
-                            CommandParameter="{x:Bind Index}"
-                            IsEnabled="{x:Bind CanDelete}">
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="&#xE107;" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
-                        <MenuFlyoutItem
-                            Command="{x:Bind Parent.ToggleColStarActionCommand}"
-                            CommandParameter="{x:Bind Index}"
-                            Text="{x:Bind ToggleText, Mode=OneWay}">
-                            <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="{x:Bind ToggleIcon}" />
-                            </MenuFlyoutItem.Icon>
-                        </MenuFlyoutItem>
-                    </MenuFlyout>
-                </FlyoutBase.AttachedFlyout>
+                                    <Button
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{x:Bind Parent.InsertColActionCommand}"
+                                        CommandParameter="{x:Bind Index}"
+                                        Style="{ThemeResource GhostButtonStyle}">
+                                        <StackPanel Orientation="Horizontal" Spacing="12">
+                                            <FontIcon FontSize="16" Glyph="&#xE109;" />
+                                            <TextBlock x:Uid="LayoutEditorControlInsertColBefore" />
+                                        </StackPanel>
+                                    </Button>
 
-                <TextBlock
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center"
-                    Text="{x:Bind Index}" />
+                                    <Button
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{x:Bind Parent.InsertColAfterActionCommand}"
+                                        CommandParameter="{x:Bind Index}"
+                                        Style="{ThemeResource GhostButtonStyle}">
+                                        <StackPanel Orientation="Horizontal" Spacing="12">
+                                            <FontIcon FontSize="16" Glyph="&#xE109;" />
+                                            <TextBlock x:Uid="LayoutEditorControlInsertColAfter" />
+                                        </StackPanel>
+                                    </Button>
+
+                                    <Button
+                                        HorizontalAlignment="Stretch"
+                                        HorizontalContentAlignment="Left"
+                                        Command="{x:Bind Parent.DeleteColActionCommand}"
+                                        CommandParameter="{x:Bind Index}"
+                                        IsEnabled="{x:Bind CanDelete}"
+                                        Style="{ThemeResource GhostButtonStyle}">
+                                        <StackPanel Orientation="Horizontal" Spacing="12">
+                                            <FontIcon FontSize="16" Glyph="&#xE107;" />
+                                            <TextBlock x:Uid="LayoutEditorControlDeleteCol" />
+                                        </StackPanel>
+                                    </Button>
+
+                                </StackPanel>
+
+                                <Border
+                                    Height="1"
+                                    Margin="-12,0,-12,0"
+                                    Background="{ThemeResource DividerStrokeColorDefaultBrush}" />
+
+                                <StackPanel Padding="4" Spacing="4">
+
+                                    <TextBlock
+                                        x:Uid="LayoutEditorControlAdjustColumnWidth"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{StaticResource CaptionTextBlockStyle}" />
+                                    <Grid
+                                        x:Name="SizeEditorGrid"
+                                        ColumnSpacing="4"
+                                        Loaded="SizeEditorGrid_Loaded">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="80" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <NumberBox
+                                            x:Name="SizeInputBox"
+                                            Grid.Column="0"
+                                            VerticalAlignment="Center"
+                                            Minimum="0"
+                                            PlaceholderText="1" />
+                                        <ComboBox
+                                            x:Name="SizeTypeBox"
+                                            Grid.Column="1"
+                                            HorizontalAlignment="Stretch"
+                                            VerticalAlignment="Center"
+                                            SelectionChanged="SizeTypeBox_SelectionChanged">
+                                            <ComboBoxItem Content="Auto" Tag="Auto" />
+                                            <ComboBoxItem Content="*" Tag="*" />
+                                            <ComboBoxItem Content="px" Tag="px" />
+                                        </ComboBox>
+                                    </Grid>
+
+                                    <Button
+                                        x:Uid="LayoutEditorControlApplySizeButton"
+                                        HorizontalAlignment="Stretch"
+                                        Click="ApplySizeFlyout_Click"
+                                        Style="{ThemeResource AccentButtonStyle}" />
+
+                                    <RichTextBlock
+                                        FontSize="12"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        TextWrapping="Wrap">
+                                        <Paragraph>
+                                            <Run FontWeight="SemiBold">Auto</Run>
+                                            <Run x:Uid="LayoutEditorControlAutoDescription" />
+                                            <LineBreak />
+                                            <Run FontWeight="SemiBold">*</Run>
+                                            <Run x:Uid="LayoutEditorControlStarDescription" />
+                                            <LineBreak />
+                                            <Run FontWeight="SemiBold">px</Run>
+                                            <Run x:Uid="LayoutEditorControlPxDescription" />
+                                        </Paragraph>
+                                    </RichTextBlock>
+
+                                </StackPanel>
+
+                            </StackPanel>
+                        </Flyout>
+                    </FlyoutBase.AttachedFlyout>
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="{x:Bind Index}" />
+                    </ToolTipService.ToolTip>
+
+                    <TextBlock
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Text="{x:Bind Index}" />
+                </Grid>
+                <Grid
+                    Grid.Column="1"
+                    Width="{x:Bind FollowingSpacing, Mode=OneWay}"
+                    Background="Transparent" />
             </Grid>
         </DataTemplate>
 
     </UserControl.Resources>
 
-    <Grid>
+    <Grid
+        Margin="36,0,36,36"
+        ColumnSpacing="4"
+        RowSpacing="4">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*" />
-            <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="2*" />
+            <ColumnDefinition MaxWidth="250" />
+            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
-        <ScrollViewer
-            Grid.Column="0"
-            ScrollViewer.VerticalScrollBarVisibility="Hidden"
-            Style="{StaticResource SettingsScrollViewerStyle}">
-            <Grid Style="{StaticResource SettingsGridStyle}">
-                <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
-
-                    <TextBlock x:Uid="LayoutEditorControlCanvasSectionHeader" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-
-                    <Grid Style="{StaticResource CardGridStyle}">
-                        <StackPanel Margin="16" Spacing="{StaticResource SettingsCardSpacing}">
-
-                            <Grid ColumnSpacing="4">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Button
-                                    x:Uid="LayoutEditorControlAddRowButton"
-                                    Grid.Column="0"
-                                    HorizontalAlignment="Stretch"
-                                    Command="{x:Bind ViewModel.AddRowCommand}" />
-                                <Button
-                                    x:Uid="LayoutEditorControlRemoveRowButton"
-                                    Grid.Column="1"
-                                    HorizontalAlignment="Stretch"
-                                    Command="{x:Bind ViewModel.RemoveRowCommand}" />
-                            </Grid>
-                            <Grid ColumnSpacing="4">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <Button
-                                    x:Uid="LayoutEditorControlAddColButton"
-                                    Grid.Column="0"
-                                    HorizontalAlignment="Stretch"
-                                    Command="{x:Bind ViewModel.AddColCommand}" />
-                                <Button
-                                    x:Uid="LayoutEditorControlRemoveColButton"
-                                    Grid.Column="1"
-                                    HorizontalAlignment="Stretch"
-                                    Command="{x:Bind ViewModel.RemoveColCommand}" />
-                            </Grid>
-
-                            <Grid ColumnSpacing="4">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-                                <NumberBox
-                                    x:Uid="LayoutEditorControlGlobalRowSpacingBox"
-                                    Grid.Column="0"
-                                    Value="{x:Bind ViewModel.WindowStatus.LayoutProfile.RowSpacing, Mode=TwoWay}" />
-                                <NumberBox
-                                    x:Uid="LayoutEditorControlGlobalColSpacingBox"
-                                    Grid.Column="1"
-                                    Value="{x:Bind ViewModel.WindowStatus.LayoutProfile.ColumnSpacing, Mode=TwoWay}" />
-                            </Grid>
-
-                            <TextBlock
-                                x:Uid="LayoutEditorControlCanvasPaddingTextBlock"
-                                Margin="0,16,0,0"
-                                FontWeight="SemiBold" />
-                            <Grid
-                                HorizontalAlignment="Center"
-                                ColumnSpacing="4"
-                                RowSpacing="4">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                    <RowDefinition Height="Auto" />
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-
-                                <NumberBox
-                                    x:Uid="LayoutEditorControlGlobalPadLeftBox"
-                                    Grid.Row="1"
-                                    Grid.Column="0"
-                                    Width="72"
-                                    Value="{x:Bind ViewModel.WindowStatus.LayoutProfile.PaddingLeft, Mode=TwoWay}" />
-
-                                <NumberBox
-                                    x:Uid="LayoutEditorControlGlobalPadTopBox"
-                                    Grid.Row="0"
-                                    Grid.Column="1"
-                                    Width="72"
-                                    Value="{x:Bind ViewModel.WindowStatus.LayoutProfile.PaddingTop, Mode=TwoWay}" />
-
-                                <NumberBox
-                                    x:Uid="LayoutEditorControlGlobalPadRightBox"
-                                    Grid.Row="1"
-                                    Grid.Column="2"
-                                    Width="72"
-                                    Value="{x:Bind ViewModel.WindowStatus.LayoutProfile.PaddingRight, Mode=TwoWay}" />
-
-                                <NumberBox
-                                    x:Uid="LayoutEditorControlGlobalPadBottomBox"
-                                    Grid.Row="2"
-                                    Grid.Column="1"
-                                    Width="72"
-                                    Value="{x:Bind ViewModel.WindowStatus.LayoutProfile.PaddingBottom, Mode=TwoWay}" />
-                            </Grid>
-
-                        </StackPanel>
-                    </Grid>
-
-                    <TextBlock x:Uid="LayoutEditorControlPendingComponentsTextBlock" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-                    <TextBlock
-                        x:Uid="LayoutEditorControlPendingComponentsDescriptionTextBlock"
-                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                        Style="{ThemeResource CaptionTextBlockStyle}"
-                        TextWrapping="Wrap" />
-
-                    <Grid Style="{StaticResource CardGridStyle}">
-                        <ListView
-                            x:Name="ToolboxList"
-                            ItemContainerStyle="{StaticResource ListViewCardStyle}"
-                            ItemsSource="{x:Bind ViewModel.AvailableToolboxItems, Mode=OneWay}">
-                            <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="models:ToolboxItem">
-                                    <Border
-                                        Background="{x:Bind ColorBrush}"
-                                        CanDrag="True"
-                                        DragStarting="ToolboxItem_DragStarting"
-                                        DropCompleted="Common_DropCompleted">
-                                        <TextBlock
-                                            Margin="16,0,0,0"
-                                            VerticalAlignment="Center"
-                                            Foreground="WhiteSmoke"
-                                            Text="{x:Bind DisplayName}" />
-                                    </Border>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </Grid>
-
-                    <TextBlock x:Uid="LayoutEditorControlPlacedComponentsTextBlock" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-                    <TextBlock
-                        x:Uid="LayoutEditorControlPlacedComponentsDescriptionTextBlock"
-                        Margin="0,0,0,8"
-                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                        Style="{ThemeResource CaptionTextBlockStyle}"
-                        TextWrapping="Wrap" />
-
-                    <ListView
-                        x:Name="LayerListView"
-                        ItemContainerStyle="{StaticResource ListViewCardStyle}"
-                        SelectionChanged="LayerListView_SelectionChanged"
-                        SelectionMode="Single">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel
-                                    Background="{Binding ColorBrush}"
-                                    Orientation="Horizontal"
-                                    Spacing="8">
-                                    <TextBlock
-                                        Margin="16,0"
-                                        VerticalAlignment="Center"
-                                        Foreground="WhiteSmoke"
-                                        Text="{Binding DisplayName}" />
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-
-                </StackPanel>
-            </Grid>
-        </ScrollViewer>
-
-        <Grid Grid.Column="1" Margin="0,30,0,36">
+        <Grid Grid.RowSpan="2" RowSpacing="4">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <CommandBar
+            <controls:Segmented
+                x:Name="PropertyTabSegmented"
                 Grid.Row="0"
-                BorderThickness="1"
-                CornerRadius="4"
-                DefaultLabelPosition="Right">
-                <AppBarToggleButton
-                    x:Name="HandToolToggle"
-                    x:Uid="LayoutEditorControlHandToolToggle"
-                    Click="HandToolToggle_Click">
-                    <AppBarToggleButton.Icon>
-                        <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xECE9;" />
-                    </AppBarToggleButton.Icon>
-                </AppBarToggleButton>
-                <AppBarSeparator />
-                <AppBarButton x:Uid="LayoutEditorControlZoomInButton" Click="ZoomIn_Click">
-                    <AppBarButton.Icon>
-                        <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE8A3;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton x:Uid="LayoutEditorControlZoomOutButton" Click="ZoomOut_Click">
-                    <AppBarButton.Icon>
-                        <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE71F;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
-                <AppBarButton x:Uid="LayoutEditorControlZoomResetButton" Click="ZoomReset_Click">
-                    <AppBarButton.Icon>
-                        <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE740;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
+                HorizontalAlignment="Stretch"
+                SelectedIndex="{x:Bind SelectedPropertyTabIndex, Mode=TwoWay}">
+                <controls:SegmentedItem Tag="Canvas">
+                    <controls:SegmentedItem.Content>
+                        <TextBlock x:Uid="LayoutEditorControlCanvasSectionHeader" />
+                    </controls:SegmentedItem.Content>
+                </controls:SegmentedItem>
+                <controls:SegmentedItem Tag="Component">
+                    <controls:SegmentedItem.Content>
+                        <TextBlock x:Uid="LayoutEditorControlSelectedComponentPropertiesHeader" />
+                    </controls:SegmentedItem.Content>
+                </controls:SegmentedItem>
+            </controls:Segmented>
 
-                <AppBarSeparator />
-
-                <AppBarButton x:Name="HelpButton" x:Uid="LayoutEditorControlHelpButton">
-                    <AppBarButton.Icon>
-                        <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE897;" />
-                    </AppBarButton.Icon>
-                    <AppBarButton.Flyout>
-                        <Flyout Placement="BottomEdgeAlignedRight" ShouldConstrainToRootBounds="False">
-                            <Flyout.FlyoutPresenterStyle>
-                                <Style TargetType="FlyoutPresenter">
-                                    <Setter Property="Padding" Value="20" />
-                                    <Setter Property="CornerRadius" Value="8" />
-                                </Style>
-                            </Flyout.FlyoutPresenterStyle>
-
-                            <StackPanel Spacing="16">
-                                <TextBlock
-                                    x:Uid="LayoutEditorControlKeyboardShortcutsHeader"
-                                    FontSize="16"
-                                    FontWeight="Bold" />
-
-                                <TextBlock
-                                    x:Uid="LayoutEditorControlCanvasNavigationHeader"
-                                    Margin="0,0,0,-8"
-                                    FontSize="12"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-
-                                <Grid ColumnSpacing="16" RowSpacing="12">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-
-                                    <TextBlock
-                                        x:Uid="LayoutEditorControlTemporaryActivateHandHeader"
-                                        Grid.Row="0"
-                                        Grid.Column="0"
-                                        VerticalAlignment="Center" />
-                                    <uc:InfoTag
-                                        x:Uid="LayoutEditorControlTemporaryActivateHandInfoTag"
-                                        Grid.Row="0"
-                                        Grid.Column="1"
-                                        HorizontalAlignment="Right" />
-
-                                    <TextBlock
-                                        x:Uid="LayoutEditorControlHorizontalScrollHeader"
-                                        Grid.Row="1"
-                                        Grid.Column="0"
-                                        VerticalAlignment="Center" />
-                                    <StackPanel
-                                        Grid.Row="1"
-                                        Grid.Column="1"
-                                        Orientation="Horizontal"
-                                        Spacing="4">
-                                        <uc:InfoTag Text="Shift" />
-                                        <TextBlock
-                                            VerticalAlignment="Center"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Text="+" />
-                                        <uc:InfoTag x:Uid="LayoutEditorControlHorizontalScrollInfoTag" />
-                                    </StackPanel>
-
-                                    <TextBlock
-                                        x:Uid="LayoutEditorControlZoomCanvasHeader"
-                                        Grid.Row="2"
-                                        Grid.Column="0"
-                                        VerticalAlignment="Center" />
-                                    <StackPanel
-                                        Grid.Row="2"
-                                        Grid.Column="1"
-                                        HorizontalAlignment="Right"
-                                        Orientation="Horizontal"
-                                        Spacing="4">
-                                        <uc:InfoTag Text="Ctrl" />
-                                        <TextBlock
-                                            VerticalAlignment="Center"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Text="+" />
-                                        <uc:InfoTag x:Uid="LayoutEditorControlZoomCanvasInfoTag" />
-                                    </StackPanel>
-                                </Grid>
-
-                                <MenuFlyoutSeparator Margin="-20,0" />
-
-                                <TextBlock
-                                    x:Uid="LayoutEditorControlComponentOperationHeader"
-                                    Margin="0,0,0,-8"
-                                    FontSize="12"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-
-                                <Grid ColumnSpacing="16" RowSpacing="12">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                        <RowDefinition Height="Auto" />
-                                    </Grid.RowDefinitions>
-
-                                    <TextBlock
-                                        x:Uid="LayoutEditorControlMoveComponentHeader"
-                                        Grid.Row="0"
-                                        Grid.Column="0"
-                                        VerticalAlignment="Center" />
-                                    <uc:InfoTag
-                                        x:Uid="LayoutEditorControlMoveComponentInfoTag"
-                                        Grid.Row="0"
-                                        Grid.Column="1"
-                                        HorizontalAlignment="Right" />
-
-                                    <TextBlock
-                                        x:Uid="LayoutEditorControlChangeComponentSpanHeader"
-                                        Grid.Row="1"
-                                        Grid.Column="0"
-                                        VerticalAlignment="Center" />
-                                    <StackPanel
-                                        Grid.Row="1"
-                                        Grid.Column="1"
-                                        Orientation="Horizontal"
-                                        Spacing="4">
-                                        <uc:InfoTag Text="Shift" />
-                                        <TextBlock
-                                            VerticalAlignment="Center"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Text="+" />
-                                        <uc:InfoTag x:Uid="LayoutEditorControlChangeComponentSpanInfoTag" />
-                                    </StackPanel>
-
-                                    <TextBlock
-                                        x:Uid="LayoutEditorControlDeleteComponentHeader"
-                                        Grid.Row="2"
-                                        Grid.Column="0"
-                                        VerticalAlignment="Center" />
-                                    <uc:InfoTag
-                                        Grid.Row="2"
-                                        Grid.Column="1"
-                                        HorizontalAlignment="Right"
-                                        Text="Delete" />
-                                </Grid>
-
-                            </StackPanel>
-                        </Flyout>
-                    </AppBarButton.Flyout>
-                </AppBarButton>
-            </CommandBar>
-
-            <Grid
-                Grid.Row="1"
-                ColumnSpacing="6"
-                RowSpacing="6">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <Grid
-                    Grid.Row="0"
-                    Grid.Column="0"
-                    Style="{ThemeResource CardGridStyle}">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-
-                    <TextBlock
-                        x:Uid="LayoutEditorControlColumnHeader"
-                        Grid.Row="0"
-                        Margin="4"
-                        HorizontalAlignment="Right"
-                        FontSize="12"
-                        TextWrapping="Wrap">
-                        <TextBlock.RenderTransform>
-                            <TransformGroup>
-                                <RotateTransform Angle="45" />
-                                <TranslateTransform X="20" Y="-10" />
-                            </TransformGroup>
-                        </TextBlock.RenderTransform>
-                    </TextBlock>
-                    <TextBlock
-                        x:Uid="LayoutEditorControlRowHeader"
-                        Grid.Row="1"
-                        Margin="4"
-                        VerticalAlignment="Bottom"
-                        FontSize="12"
-                        TextWrapping="Wrap">
-                        <TextBlock.RenderTransform>
-                            <TransformGroup>
-                                <RotateTransform Angle="45" />
-                                <TranslateTransform X="10" Y="-10" />
-                            </TransformGroup>
-                        </TextBlock.RenderTransform>
-                    </TextBlock>
-
-                    <Line
-                        Grid.Row="0"
-                        Grid.RowSpan="2"
-                        Stretch="Fill"
-                        Stroke="{ThemeResource CardStrokeColorDefault}"
-                        StrokeThickness="1"
-                        X1="0"
-                        X2="1"
-                        Y1="0"
-                        Y2="1" />
-                </Grid>
-
-                <ScrollViewer
-                    Grid.Row="0"
-                    Grid.Column="1"
-                    HorizontalScrollBarVisibility="Hidden"
-                    HorizontalScrollMode="Disabled"
-                    VerticalScrollBarVisibility="Hidden"
-                    VerticalScrollMode="Disabled">
-                    <ItemsControl
-                        x:Name="ColHeadersItemsControl"
-                        Margin="{x:Bind ViewModel.ScaledColPadding, Mode=OneWay}"
-                        ItemTemplate="{StaticResource ColumnHeaderTemplate}"
-                        ItemsSource="{x:Bind ViewModel.ColumnHeaderItems, Mode=OneWay}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Horizontal" Spacing="{Binding ElementName=Root, Path=ViewModel.ScaledColSpacing}" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>
-                </ScrollViewer>
-
-                <ScrollViewer
-                    Grid.Row="1"
-                    Grid.Column="0"
-                    HorizontalScrollBarVisibility="Hidden"
-                    HorizontalScrollMode="Disabled"
-                    VerticalScrollBarVisibility="Hidden"
-                    VerticalScrollMode="Disabled">
-                    <ItemsControl
-                        x:Name="RowHeadersItemsControl"
-                        Margin="{x:Bind ViewModel.ScaledRowPadding, Mode=OneWay}"
-                        ItemTemplate="{StaticResource RowHeaderTemplate}"
-                        ItemsSource="{x:Bind ViewModel.RowHeaderItems, Mode=OneWay}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <StackPanel Orientation="Vertical" Spacing="{Binding ElementName=Root, Path=ViewModel.ScaledRowSpacing}" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                    </ItemsControl>
-                </ScrollViewer>
-
-                <ScrollViewer
-                    x:Name="PreviewScrollViewer"
-                    Grid.Row="1"
-                    Grid.Column="1"
-                    Padding="0,0,12,12"
-                    HorizontalScrollBarVisibility="Auto"
-                    HorizontalScrollMode="Enabled"
-                    MaxZoomFactor="5.0"
-                    MinZoomFactor="0.5"
-                    PointerCanceled="PreviewScrollViewer_PointerReleased"
-                    PointerMoved="PreviewScrollViewer_PointerMoved"
-                    PointerPressed="PreviewScrollViewer_PointerPressed"
-                    PointerReleased="PreviewScrollViewer_PointerReleased"
-                    SizeChanged="PreviewContainer_SizeChanged"
-                    VerticalScrollBarVisibility="Auto"
-                    VerticalScrollMode="Enabled"
-                    ViewChanged="PreviewScrollViewer_ViewChanged"
-                    ZoomMode="Enabled">
-
-                    <Grid
-                        HorizontalAlignment="Left"
-                        VerticalAlignment="Top"
-                        Background="Transparent"
-                        PointerWheelChanged="WheelInterceptor_PointerWheelChanged">
-
-                        <Grid
-                            x:Name="PreviewGrid"
-                            AllowDrop="True"
-                            DragOver="Common_DragOver"
-                            Drop="Common_Drop"
-                            LayoutUpdated="PreviewGrid_LayoutUpdated"
-                            Style="{ThemeResource CardGridStyle}" />
-
-                    </Grid>
-
-                </ScrollViewer>
-            </Grid>
-
-        </Grid>
-
-        <ScrollViewer Grid.Column="2" Style="{StaticResource SettingsScrollViewerStyle}">
-            <Grid Style="{StaticResource SettingsGridStyle}">
-                <StackPanel x:Name="PropertiesPanel" Spacing="{StaticResource SettingsCardSpacing}">
-                    <TextBlock x:Uid="LayoutEditorControlSelectedComponentPropertiesHeader" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-                    <TextBlock
-                        x:Name="SelectedComponentLabel"
-                        x:Uid="LayoutEditorControlSelectedComponentLabel"
-                        Margin="0,0,0,4"
-                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                        Style="{ThemeResource CaptionTextBlockStyle}" />
-
-                    <ContentControl
-                        x:Name="PropertiesContentContainer"
-                        HorizontalContentAlignment="Stretch"
-                        IsEnabled="{x:Bind ViewModel.HasSelection, Mode=OneWay}">
+            <controls:SwitchPresenter Grid.Row="1" Value="{Binding SelectedItem.Tag, ElementName=PropertyTabSegmented}">
+                <controls:Case Value="Canvas">
+                    <ScrollViewer>
                         <Grid Style="{StaticResource CardGridStyle}">
                             <StackPanel Margin="16" Spacing="{StaticResource SettingsCardSpacing}">
 
@@ -667,42 +351,16 @@
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <NumberBox
-                                        x:Uid="LayoutEditorControlRowBox"
+                                        x:Uid="LayoutEditorControlGlobalRowSpacingBox"
                                         Grid.Column="0"
-                                        Maximum="{x:Bind ViewModel.MaxRowIndex, Mode=OneWay}"
-                                        Minimum="0"
-                                        Value="{x:Bind ViewModel.SelectedPlacement.Row, Mode=TwoWay}" />
+                                        Value="{x:Bind LayoutProfile.RowSpacing, Mode=TwoWay}" />
                                     <NumberBox
-                                        x:Uid="LayoutEditorControlColBox"
+                                        x:Uid="LayoutEditorControlGlobalColSpacingBox"
                                         Grid.Column="1"
-                                        Maximum="{x:Bind ViewModel.MaxColIndex, Mode=OneWay}"
-                                        Minimum="0"
-                                        Value="{x:Bind ViewModel.SelectedPlacement.Column, Mode=TwoWay}" />
+                                        Value="{x:Bind LayoutProfile.ColumnSpacing, Mode=TwoWay}" />
                                 </Grid>
 
-                                <Grid ColumnSpacing="4">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <NumberBox
-                                        x:Uid="LayoutEditorControlRowSpanBox"
-                                        Grid.Column="0"
-                                        Maximum="{x:Bind ViewModel.MaxRowSpan, Mode=OneWay}"
-                                        Minimum="1"
-                                        Value="{x:Bind ViewModel.SelectedPlacement.RowSpan, Mode=TwoWay}" />
-                                    <NumberBox
-                                        x:Uid="LayoutEditorControlColSpanBox"
-                                        Grid.Column="1"
-                                        Maximum="{x:Bind ViewModel.MaxColSpan, Mode=OneWay}"
-                                        Minimum="1"
-                                        Value="{x:Bind ViewModel.SelectedPlacement.ColumnSpan, Mode=TwoWay}" />
-                                </Grid>
-
-                                <TextBlock
-                                    x:Uid="LayoutEditorControlMarginHeader"
-                                    Margin="0,8,0,0"
-                                    FontWeight="SemiBold" />
+                                <TextBlock x:Uid="LayoutEditorControlCanvasPaddingTextBlock" Margin="0,8,0,0" />
                                 <Grid
                                     HorizontalAlignment="Center"
                                     ColumnSpacing="4"
@@ -717,71 +375,738 @@
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
+
                                     <NumberBox
-                                        x:Uid="LayoutEditorControlMarginLeftBox"
+                                        x:Uid="LayoutEditorControlGlobalPadLeftBox"
                                         Grid.Row="1"
                                         Grid.Column="0"
-                                        Value="{x:Bind ViewModel.SelectedPlacement.MarginLeft, Mode=TwoWay}" />
+                                        Value="{x:Bind LayoutProfile.PaddingLeft, Mode=TwoWay}" />
+
                                     <NumberBox
-                                        x:Uid="LayoutEditorControlMarginTopBox"
+                                        x:Uid="LayoutEditorControlGlobalPadTopBox"
                                         Grid.Row="0"
                                         Grid.Column="1"
-                                        Value="{x:Bind ViewModel.SelectedPlacement.MarginTop, Mode=TwoWay}" />
+                                        Value="{x:Bind LayoutProfile.PaddingTop, Mode=TwoWay}" />
+
                                     <NumberBox
-                                        x:Uid="LayoutEditorControlMarginRightBox"
+                                        x:Uid="LayoutEditorControlGlobalPadRightBox"
                                         Grid.Row="1"
                                         Grid.Column="2"
-                                        Value="{x:Bind ViewModel.SelectedPlacement.MarginRight, Mode=TwoWay}" />
+                                        Value="{x:Bind LayoutProfile.PaddingRight, Mode=TwoWay}" />
+
                                     <NumberBox
-                                        x:Uid="LayoutEditorControlMarginBottomBox"
+                                        x:Uid="LayoutEditorControlGlobalPadBottomBox"
                                         Grid.Row="2"
                                         Grid.Column="1"
-                                        Value="{x:Bind ViewModel.SelectedPlacement.MarginBottom, Mode=TwoWay}" />
+                                        Value="{x:Bind LayoutProfile.PaddingBottom, Mode=TwoWay}" />
                                 </Grid>
 
                                 <TextBlock
-                                    x:Uid="LayoutEditorControlAlignmentHeader"
+                                    x:Uid="LayoutEditorControlPendingComponentsTextBlock"
                                     Margin="0,8,0,0"
-                                    FontWeight="SemiBold" />
-                                <Grid ColumnSpacing="4">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-                                    <ComboBox
-                                        x:Uid="LayoutEditorControlHorizontalAlignmentBox"
-                                        Grid.Column="0"
-                                        HorizontalAlignment="Stretch"
-                                        SelectedIndex="{x:Bind ViewModel.SelectedPlacement.HorizontalAlignment, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                        <ComboBoxItem x:Uid="LayoutEditorControlHorizontalAlignmentLeft" Tag="Left" />
-                                        <ComboBoxItem x:Uid="LayoutEditorControlHorizontalAlignmentCenter" Tag="Center" />
-                                        <ComboBoxItem x:Uid="LayoutEditorControlHorizontalAlignmentRight" Tag="Right" />
-                                        <ComboBoxItem x:Uid="LayoutEditorControlHorizontalAlignmentStretch" Tag="Stretch" />
-                                    </ComboBox>
-                                    <ComboBox
-                                        x:Uid="LayoutEditorControlVerticalAlignmentBox"
-                                        Grid.Column="1"
-                                        HorizontalAlignment="Stretch"
-                                        SelectedIndex="{x:Bind ViewModel.SelectedPlacement.VerticalAlignment, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                        <ComboBoxItem x:Uid="LayoutEditorControlVerticalAlignmentTop" Tag="Top" />
-                                        <ComboBoxItem x:Uid="LayoutEditorControlVerticalAlignmentCenter" Tag="Center" />
-                                        <ComboBoxItem x:Uid="LayoutEditorControlVerticalAlignmentBottom" Tag="Bottom" />
-                                        <ComboBoxItem x:Uid="LayoutEditorControlVerticalAlignmentStretch" Tag="Stretch" />
-                                    </ComboBox>
-                                </Grid>
+                                    TextWrapping="Wrap" />
+                                <TextBlock
+                                    x:Uid="LayoutEditorControlPendingComponentsDescriptionTextBlock"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Style="{ThemeResource CaptionTextBlockStyle}"
+                                    TextWrapping="Wrap" />
+                                <ListView
+                                    x:Name="ToolboxList"
+                                    ItemContainerStyle="{StaticResource ListViewCardStyle}"
+                                    ItemsSource="{x:Bind AvailableToolboxItems, Mode=OneWay}">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="models:ToolboxItem">
+                                            <Grid
+                                                Margin="12,8"
+                                                CanDrag="True"
+                                                ColumnSpacing="8"
+                                                DragStarting="ToolboxItem_DragStarting"
+                                                DropCompleted="Common_DropCompleted">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <FontIcon
+                                                    Grid.Column="0"
+                                                    FontFamily="{StaticResource SegoeFluentIcons}"
+                                                    FontSize="16"
+                                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                    Glyph="{Binding ComponentType, Converter={StaticResource ComponentTypeToIconConverter}}" />
+                                                <TextBlock
+                                                    Grid.Column="1"
+                                                    VerticalAlignment="Center"
+                                                    Text="{Binding DisplayName}"
+                                                    TextWrapping="Wrap" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
 
-                                <Button
-                                    x:Uid="LayoutEditorControlRemoveButton"
-                                    Margin="0,16,0,0"
-                                    HorizontalAlignment="Stretch"
-                                    Command="{x:Bind ViewModel.RemoveSelectedCommand}"
-                                    Style="{ThemeResource AccentButtonStyle}" />
                             </StackPanel>
                         </Grid>
-                    </ContentControl>
-                </StackPanel>
+                    </ScrollViewer>
+                </controls:Case>
+                <controls:Case Value="Component">
+                    <ScrollViewer>
+                        <Grid Style="{StaticResource CardGridStyle}">
+                            <StackPanel
+                                x:Name="PropertiesPanel"
+                                Margin="16"
+                                Spacing="{StaticResource SettingsCardSpacing}">
+                                <TextBlock
+                                    x:Name="SelectedComponentLabel"
+                                    x:Uid="LayoutEditorControlSelectedComponentLabel"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Style="{ThemeResource CaptionTextBlockStyle}" />
+
+                                <ContentControl
+                                    x:Name="PropertiesContentContainer"
+                                    HorizontalContentAlignment="Stretch"
+                                    IsEnabled="{x:Bind HasSelection, Mode=OneWay}">
+                                    <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+
+                                        <Grid ColumnSpacing="4">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <NumberBox
+                                                x:Name="PropRowBox"
+                                                x:Uid="LayoutEditorControlRowBox"
+                                                Grid.Column="0"
+                                                Maximum="{x:Bind MaxRowIndex, Mode=OneWay}"
+                                                Minimum="0"
+                                                Value="{x:Bind SelectedPlacement.Row, Mode=TwoWay}" />
+                                            <NumberBox
+                                                x:Name="PropColBox"
+                                                x:Uid="LayoutEditorControlColBox"
+                                                Grid.Column="1"
+                                                Maximum="{x:Bind MaxColIndex, Mode=OneWay}"
+                                                Minimum="0"
+                                                Value="{x:Bind SelectedPlacement.Column, Mode=TwoWay}" />
+                                        </Grid>
+
+                                        <Grid ColumnSpacing="4">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <NumberBox
+                                                x:Name="PropRowSpanBox"
+                                                x:Uid="LayoutEditorControlRowSpanBox"
+                                                Grid.Column="0"
+                                                Maximum="{x:Bind MaxRowSpan, Mode=OneWay}"
+                                                Minimum="1"
+                                                Value="{x:Bind SelectedPlacement.RowSpan, Mode=TwoWay}" />
+                                            <NumberBox
+                                                x:Name="PropColSpanBox"
+                                                x:Uid="LayoutEditorControlColSpanBox"
+                                                Grid.Column="1"
+                                                Maximum="{x:Bind MaxColSpan, Mode=OneWay}"
+                                                Minimum="1"
+                                                Value="{x:Bind SelectedPlacement.ColumnSpan, Mode=TwoWay}" />
+                                        </Grid>
+
+                                        <TextBlock x:Uid="LayoutEditorControlMarginHeader" Margin="0,8,0,0" />
+                                        <Grid
+                                            HorizontalAlignment="Center"
+                                            ColumnSpacing="4"
+                                            RowSpacing="4">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <NumberBox
+                                                x:Uid="LayoutEditorControlMarginLeftBox"
+                                                Grid.Row="1"
+                                                Grid.Column="0"
+                                                Value="{x:Bind SelectedPlacement.MarginLeft, Mode=TwoWay}" />
+                                            <NumberBox
+                                                x:Uid="LayoutEditorControlMarginTopBox"
+                                                Grid.Row="0"
+                                                Grid.Column="1"
+                                                Value="{x:Bind SelectedPlacement.MarginTop, Mode=TwoWay}" />
+                                            <NumberBox
+                                                x:Uid="LayoutEditorControlMarginRightBox"
+                                                Grid.Row="1"
+                                                Grid.Column="2"
+                                                Value="{x:Bind SelectedPlacement.MarginRight, Mode=TwoWay}" />
+                                            <NumberBox
+                                                x:Uid="LayoutEditorControlMarginBottomBox"
+                                                Grid.Row="2"
+                                                Grid.Column="1"
+                                                Value="{x:Bind SelectedPlacement.MarginBottom, Mode=TwoWay}" />
+                                        </Grid>
+
+                                        <TextBlock x:Uid="LayoutEditorControlSizeHeader" Margin="0,8,0,0" />
+                                        <Grid ColumnSpacing="4">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <NumberBox
+                                                x:Name="PropWidthBox"
+                                                x:Uid="SettingsPageWidth"
+                                                Grid.Column="0"
+                                                Minimum="0"
+                                                Value="{x:Bind SelectedPlacement.Width, Mode=TwoWay}" />
+                                            <ComboBox
+                                                x:Name="PropWidthTypeBox"
+                                                Grid.Column="1"
+                                                Width="80"
+                                                VerticalAlignment="Bottom"
+                                                SelectionChanged="PropWidthTypeBox_SelectionChanged">
+                                                <ComboBoxItem Content="Auto" Tag="Auto" />
+                                                <ComboBoxItem Content="px" Tag="px" />
+                                            </ComboBox>
+                                        </Grid>
+                                        <Grid ColumnSpacing="4">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <NumberBox
+                                                x:Name="PropHeightBox"
+                                                x:Uid="SettingsPageHeight"
+                                                Grid.Column="0"
+                                                Minimum="0"
+                                                Value="{x:Bind SelectedPlacement.Height, Mode=TwoWay}" />
+                                            <ComboBox
+                                                x:Name="PropHeightTypeBox"
+                                                Grid.Column="1"
+                                                Width="80"
+                                                VerticalAlignment="Bottom"
+                                                SelectionChanged="PropHeightTypeBox_SelectionChanged">
+                                                <ComboBoxItem Content="Auto" Tag="Auto" />
+                                                <ComboBoxItem Content="px" Tag="px" />
+                                            </ComboBox>
+                                        </Grid>
+
+                                        <TextBlock x:Uid="LayoutEditorControlAlignmentHeader" Margin="0,8,0,0" />
+                                        <Grid ColumnSpacing="4">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <ComboBox
+                                                x:Uid="LayoutEditorControlHorizontalAlignmentBox"
+                                                Grid.Column="0"
+                                                HorizontalAlignment="Stretch"
+                                                SelectedIndex="{x:Bind SelectedPlacement.HorizontalAlignment, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                                <ComboBoxItem x:Uid="LayoutEditorControlHorizontalAlignmentLeft" Tag="Left" />
+                                                <ComboBoxItem x:Uid="LayoutEditorControlHorizontalAlignmentCenter" Tag="Center" />
+                                                <ComboBoxItem x:Uid="LayoutEditorControlHorizontalAlignmentRight" Tag="Right" />
+                                                <ComboBoxItem x:Uid="LayoutEditorControlHorizontalAlignmentStretch" Tag="Stretch" />
+                                            </ComboBox>
+                                            <ComboBox
+                                                x:Uid="LayoutEditorControlVerticalAlignmentBox"
+                                                Grid.Column="1"
+                                                HorizontalAlignment="Stretch"
+                                                SelectedIndex="{x:Bind SelectedPlacement.VerticalAlignment, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                                <ComboBoxItem x:Uid="LayoutEditorControlVerticalAlignmentTop" Tag="Top" />
+                                                <ComboBoxItem x:Uid="LayoutEditorControlVerticalAlignmentCenter" Tag="Center" />
+                                                <ComboBoxItem x:Uid="LayoutEditorControlVerticalAlignmentBottom" Tag="Bottom" />
+                                                <ComboBoxItem x:Uid="LayoutEditorControlVerticalAlignmentStretch" Tag="Stretch" />
+                                            </ComboBox>
+                                        </Grid>
+
+                                        <Button
+                                            x:Uid="LayoutEditorControlRemoveButton"
+                                            Margin="0,16,0,0"
+                                            HorizontalAlignment="Stretch"
+                                            Command="{x:Bind RemoveSelectedCommand}"
+                                            Style="{ThemeResource AccentButtonStyle}" />
+                                    </StackPanel>
+                                </ContentControl>
+                            </StackPanel>
+                        </Grid>
+                    </ScrollViewer>
+                </controls:Case>
+            </controls:SwitchPresenter>
+        </Grid>
+
+        <CommandBar
+            Grid.Column="1"
+            Margin="0,0,42,0"
+            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="4"
+            DefaultLabelPosition="Right">
+            <AppBarToggleButton
+                x:Name="HandToolToggle"
+                x:Uid="LayoutEditorControlHandToolToggle"
+                Click="HandToolToggle_Click">
+                <AppBarToggleButton.Icon>
+                    <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xECE9;" />
+                </AppBarToggleButton.Icon>
+            </AppBarToggleButton>
+            <AppBarSeparator />
+            <AppBarButton x:Uid="LayoutEditorControlZoomInButton" Click="ZoomIn_Click">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE8A3;" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton x:Uid="LayoutEditorControlZoomOutButton" Click="ZoomOut_Click">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE71F;" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton x:Uid="LayoutEditorControlZoomResetButton" Click="ZoomReset_Click">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE740;" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarElementContainer Width="48" VerticalAlignment="Center">
+                <TextBlock Margin="4,0,0,2" Text="{x:Bind FormatZoom(CurrentZoom), Mode=OneWay}" />
+            </AppBarElementContainer>
+
+            <AppBarSeparator />
+
+            <AppBarButton x:Name="HelpButton" x:Uid="LayoutEditorControlHelpButton">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE897;" />
+                </AppBarButton.Icon>
+                <AppBarButton.Flyout>
+                    <Flyout Placement="Bottom" ShouldConstrainToRootBounds="False">
+                        <Flyout.FlyoutPresenterStyle>
+                            <Style TargetType="FlyoutPresenter">
+                                <Setter Property="Padding" Value="20" />
+                                <Setter Property="CornerRadius" Value="8" />
+                            </Style>
+                        </Flyout.FlyoutPresenterStyle>
+
+                        <StackPanel Spacing="16">
+                            <TextBlock
+                                x:Uid="LayoutEditorControlKeyboardShortcutsHeader"
+                                FontSize="16"
+                                FontWeight="Bold" />
+
+                            <TextBlock
+                                x:Uid="LayoutEditorControlCanvasNavigationHeader"
+                                Margin="0,0,0,-8"
+                                FontSize="12"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+
+                            <Grid ColumnSpacing="16" RowSpacing="12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <TextBlock
+                                    x:Uid="LayoutEditorControlTemporaryActivateHandHeader"
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center" />
+                                <uc:InfoTag
+                                    x:Uid="LayoutEditorControlTemporaryActivateHandInfoTag"
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Right" />
+
+                                <TextBlock
+                                    x:Uid="LayoutEditorControlHorizontalScrollHeader"
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center" />
+                                <StackPanel
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Orientation="Horizontal"
+                                    Spacing="4">
+                                    <uc:InfoTag Text="Shift" />
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Text="+" />
+                                    <uc:InfoTag x:Uid="LayoutEditorControlHorizontalScrollInfoTag" />
+                                </StackPanel>
+
+                                <TextBlock
+                                    x:Uid="LayoutEditorControlZoomCanvasHeader"
+                                    Grid.Row="2"
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center" />
+                                <StackPanel
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Right"
+                                    Orientation="Horizontal"
+                                    Spacing="4">
+                                    <uc:InfoTag Text="Ctrl" />
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Text="+" />
+                                    <uc:InfoTag x:Uid="LayoutEditorControlZoomCanvasInfoTag" />
+                                </StackPanel>
+
+                                <TextBlock
+                                    x:Uid="LayoutEditorControlFocusComponentHeader"
+                                    Grid.Row="3"
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center" />
+                                <uc:InfoTag
+                                    Grid.Row="3"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Right"
+                                    Text="F" />
+                            </Grid>
+
+                            <MenuFlyoutSeparator Margin="-20,0" />
+
+                            <TextBlock
+                                x:Uid="LayoutEditorControlComponentOperationHeader"
+                                Margin="0,0,0,-8"
+                                FontSize="12"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+
+                            <Grid ColumnSpacing="16" RowSpacing="12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <TextBlock
+                                    x:Uid="LayoutEditorControlSelectNextComponentHeader"
+                                    Grid.Row="0"
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center" />
+                                <uc:InfoTag
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Right"
+                                    Text="Tab" />
+
+                                <TextBlock
+                                    x:Uid="LayoutEditorControlSelectPrevComponentHeader"
+                                    Grid.Row="1"
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center" />
+                                <StackPanel
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Right"
+                                    Orientation="Horizontal"
+                                    Spacing="4">
+                                    <uc:InfoTag Text="Shift" />
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Text="+" />
+                                    <uc:InfoTag Text="Tab" />
+                                </StackPanel>
+
+                                <TextBlock
+                                    x:Uid="LayoutEditorControlMoveComponentHeader"
+                                    Grid.Row="2"
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center" />
+                                <uc:InfoTag
+                                    x:Uid="LayoutEditorControlMoveComponentInfoTag"
+                                    Grid.Row="2"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Right" />
+
+                                <TextBlock
+                                    x:Uid="LayoutEditorControlChangeComponentSpanHeader"
+                                    Grid.Row="3"
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center" />
+                                <StackPanel
+                                    Grid.Row="3"
+                                    Grid.Column="1"
+                                    Orientation="Horizontal"
+                                    Spacing="4">
+                                    <uc:InfoTag Text="Shift" />
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Text="+" />
+                                    <uc:InfoTag x:Uid="LayoutEditorControlChangeComponentSpanInfoTag" />
+                                </StackPanel>
+
+                                <TextBlock
+                                    x:Uid="LayoutEditorControlDeleteComponentHeader"
+                                    Grid.Row="4"
+                                    Grid.Column="0"
+                                    VerticalAlignment="Center" />
+                                <StackPanel
+                                    Grid.Row="4"
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Right"
+                                    Orientation="Horizontal">
+                                    <uc:InfoTag Text="Delete / Backspace" />
+                                </StackPanel>
+                            </Grid>
+
+                        </StackPanel>
+                    </Flyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
+        </CommandBar>
+
+        <Grid
+            Grid.Row="1"
+            Grid.Column="1"
+            ColumnSpacing="4"
+            RowSpacing="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid
+                Grid.Row="0"
+                Grid.Column="0"
+                Style="{ThemeResource CardGridStyle}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+                    x:Uid="LayoutEditorControlColumnHeader"
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="4"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    x:Uid="LayoutEditorControlRowHeader"
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="4"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                    TextWrapping="Wrap" />
+
+                <Line
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Stretch="Fill"
+                    Stroke="{ThemeResource CardStrokeColorDefault}"
+                    StrokeThickness="1"
+                    X1="0"
+                    X2="1"
+                    Y1="0"
+                    Y2="1" />
             </Grid>
-        </ScrollViewer>
+
+            <ScrollViewer
+                Grid.Row="0"
+                Grid.Column="1"
+                HorizontalScrollBarVisibility="Hidden"
+                HorizontalScrollMode="Disabled"
+                VerticalScrollBarVisibility="Hidden"
+                VerticalScrollMode="Disabled">
+                <ItemsControl
+                    x:Name="ColHeadersItemsControl"
+                    Margin="{x:Bind ScaledColPadding, Mode=OneWay}"
+                    ItemTemplate="{StaticResource ColumnHeaderTemplate}"
+                    ItemsSource="{x:Bind ColumnHeaderItems, Mode=OneWay}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <ScrollViewer
+                Grid.Row="1"
+                Grid.Column="0"
+                HorizontalScrollBarVisibility="Hidden"
+                HorizontalScrollMode="Disabled"
+                VerticalScrollBarVisibility="Hidden"
+                VerticalScrollMode="Disabled">
+                <ItemsControl
+                    x:Name="RowHeadersItemsControl"
+                    Margin="{x:Bind ScaledRowPadding, Mode=OneWay}"
+                    ItemTemplate="{StaticResource RowHeaderTemplate}"
+                    ItemsSource="{x:Bind RowHeaderItems, Mode=OneWay}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Vertical" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                </ItemsControl>
+            </ScrollViewer>
+
+            <ScrollViewer
+                x:Name="PreviewScrollViewer"
+                Grid.Row="1"
+                Grid.Column="1"
+                HorizontalScrollBarVisibility="Auto"
+                HorizontalScrollMode="Enabled"
+                MaxZoomFactor="5.0"
+                MinZoomFactor="0.5"
+                PointerCanceled="PreviewScrollViewer_PointerReleased"
+                PointerMoved="PreviewScrollViewer_PointerMoved"
+                PointerPressed="PreviewScrollViewer_PointerPressed"
+                PointerReleased="PreviewScrollViewer_PointerReleased"
+                SizeChanged="PreviewContainer_SizeChanged"
+                VerticalScrollBarVisibility="Auto"
+                VerticalScrollMode="Enabled"
+                ViewChanged="PreviewScrollViewer_ViewChanged"
+                ZoomMode="Enabled">
+
+                <Grid
+                    HorizontalAlignment="Left"
+                    VerticalAlignment="Top"
+                    Background="Transparent"
+                    PointerWheelChanged="WheelInterceptor_PointerWheelChanged">
+
+                    <Grid
+                        x:Name="PreviewGrid"
+                        AllowDrop="True"
+                        DragOver="Common_DragOver"
+                        Drop="Common_Drop"
+                        Style="{ThemeResource CardGridStyle}" />
+
+                </Grid>
+
+            </ScrollViewer>
+
+            <Border
+                x:Name="MinimapContainer"
+                Grid.RowSpan="2"
+                Grid.ColumnSpan="2"
+                Width="160"
+                Height="160"
+                Margin="12"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Bottom"
+                Visibility="Collapsed">
+                <Viewbox Stretch="Uniform">
+                    <Canvas
+                        x:Name="MinimapCanvas"
+                        Width="100"
+                        Height="100"
+                        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                        PointerCanceled="MinimapCanvas_PointerCanceled"
+                        PointerMoved="MinimapCanvas_PointerMoved"
+                        PointerPressed="MinimapCanvas_PointerPressed"
+                        PointerReleased="MinimapCanvas_PointerReleased">
+
+                        <Rectangle
+                            x:Name="MinimapViewportBox"
+                            Fill="{ThemeResource SystemAccentColor}"
+                            Opacity="0.3"
+                            Stroke="{ThemeResource SystemAccentColor}"
+                            StrokeThickness="2" />
+                    </Canvas>
+                </Viewbox>
+            </Border>
+        </Grid>
+
+        <Grid
+            Grid.Row="2"
+            Grid.ColumnSpan="2"
+            Padding="16,8"
+            ColumnSpacing="4"
+            Style="{ThemeResource CardGridStyle}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" VerticalAlignment="Center">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <TextBlock
+                    x:Uid="LayoutEditorControlPlacedComponentsTextBlock"
+                    Grid.Row="0"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    x:Uid="LayoutEditorControlPlacedComponentsDescriptionTextBlock"
+                    Grid.Row="1"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    TextWrapping="Wrap" />
+            </Grid>
+            <ComboBox
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                ItemsSource="{x:Bind LayoutProfile.Placements, Mode=OneWay}"
+                SelectedItem="{x:Bind SelectedPlacement, Mode=TwoWay}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <Grid ColumnSpacing="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <FontIcon
+                                Grid.Column="0"
+                                FontFamily="{StaticResource SegoeFluentIcons}"
+                                FontSize="16"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                Glyph="{Binding ComponentType, Converter={StaticResource ComponentTypeToIconConverter}}" />
+                            <TextBlock
+                                Grid.Column="1"
+                                VerticalAlignment="Center"
+                                Text="{Binding DisplayName}"
+                                TextWrapping="Wrap" />
+                        </Grid>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <TextBlock
+                Grid.Column="3"
+                Margin="0,0,4,2"
+                VerticalAlignment="Center"
+                Text="{x:Bind LayoutProfile.Name, Mode=OneWay}" />
+            <Button
+                Grid.Column="4"
+                Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                      FontSize=16,
+                                      Glyph=&#xE8AC;}"
+                Style="{ThemeResource GhostButtonStyle}">
+                <Button.Flyout>
+                    <Flyout>
+                        <TextBox x:Uid="LayoutSettingsControlLayoutNameTextBox" Text="{x:Bind LayoutProfile.Name, Mode=TwoWay}" />
+                    </Flyout>
+                </Button.Flyout>
+            </Button>
+        </Grid>
 
     </Grid>
 </UserControl>

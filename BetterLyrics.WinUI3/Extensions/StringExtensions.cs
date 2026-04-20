@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Enums;
+using Microsoft.UI.Xaml;
 using System;
 using System.Linq;
 
@@ -86,6 +87,28 @@ namespace BetterLyrics.WinUI3.Extensions
                     return u.IsFile ? u.LocalPath : System.Net.WebUtility.UrlDecode(u.AbsoluteUri);
                 }
                 catch { return str; }
+            }
+
+            public GridLength ParseGridLength(double scale = 1.0)
+            {
+                if (string.IsNullOrWhiteSpace(str)) return new GridLength(1, GridUnitType.Star);
+                if (str.Equals("Auto", StringComparison.OrdinalIgnoreCase)) return new GridLength(1, GridUnitType.Auto);
+
+                if (str.EndsWith("*"))
+                {
+                    string starStr = str.TrimEnd('*');
+                    if (string.IsNullOrEmpty(starStr)) return new GridLength(1, GridUnitType.Star);
+                    if (double.TryParse(starStr, out double starValue))
+                        return new GridLength(starValue, GridUnitType.Star);
+                }
+
+                string pxValue = str.EndsWith("px", StringComparison.OrdinalIgnoreCase) ? str.Substring(0, str.Length - 2) : str;
+                if (double.TryParse(pxValue, out double absoluteValue))
+                {
+                    return new GridLength(absoluteValue * scale, GridUnitType.Pixel);
+                }
+
+                return new GridLength(1, GridUnitType.Star);
             }
 
         }

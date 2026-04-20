@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -146,6 +146,9 @@
   </data>
   <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Header" xml:space="preserve">
     <value>Автопрокрутка Информация о песне</value>
+  </data>
+  <data name="AlbumArtOnlyLayout" xml:space="preserve">
+    <value>Макет с изображением только альбома</value>
   </data>
   <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
     <value>Локальные музыкальные файлы</value>
@@ -333,11 +336,23 @@
   <data name="LayoutEditorControlAddRowButton.Content" xml:space="preserve">
     <value>Добавить ряд</value>
   </data>
+  <data name="LayoutEditorControlAdjustColumnWidth.Text" xml:space="preserve">
+    <value>Настройка ширины столбца</value>
+  </data>
+  <data name="LayoutEditorControlAdjustRowHeight.Text" xml:space="preserve">
+    <value>Регулировка высоты рядов</value>
+  </data>
   <data name="LayoutEditorControlAlignmentHeader.Text" xml:space="preserve">
     <value>Выравнивание</value>
   </data>
   <data name="LayoutEditorControlAllPlacedMessage.Text" xml:space="preserve">
     <value>Все компоненты размещены.</value>
+  </data>
+  <data name="LayoutEditorControlApplySizeButton.Content" xml:space="preserve">
+    <value>Применить</value>
+  </data>
+  <data name="LayoutEditorControlAutoDescription.Text" xml:space="preserve">
+    <value>Автоматическое определение размеров на основе содержимого внутренних компонентов</value>
   </data>
   <data name="LayoutEditorControlCanvasNavigationHeader.Text" xml:space="preserve">
     <value>Навигация по холсту</value>
@@ -369,14 +384,26 @@
   <data name="LayoutEditorControlComponentLyrics" xml:space="preserve">
     <value>Лирика</value>
   </data>
+  <data name="LayoutEditorControlComponentLyricsCard" xml:space="preserve">
+    <value>Карточка с лирикой</value>
+  </data>
   <data name="LayoutEditorControlComponentNone" xml:space="preserve">
     <value>Нет</value>
   </data>
   <data name="LayoutEditorControlComponentOperationHeader.Text" xml:space="preserve">
     <value>Операции с компонентами (требуется отбор)</value>
   </data>
+  <data name="LayoutEditorControlComponentSongAlbum" xml:space="preserve">
+    <value>Альбом песен</value>
+  </data>
+  <data name="LayoutEditorControlComponentSongArtist" xml:space="preserve">
+    <value>Исполнитель песни</value>
+  </data>
   <data name="LayoutEditorControlComponentSongInfo" xml:space="preserve">
     <value>Информация о песне</value>
+  </data>
+  <data name="LayoutEditorControlComponentSongTitle" xml:space="preserve">
+    <value>Название песни</value>
   </data>
   <data name="LayoutEditorControlCopyHere" xml:space="preserve">
     <value>Место здесь</value>
@@ -401,6 +428,9 @@
   </data>
   <data name="LayoutEditorControlDeleteTopRow" xml:space="preserve">
     <value>Удалить строку выше</value>
+  </data>
+  <data name="LayoutEditorControlFocusComponentHeader.Text" xml:space="preserve">
+    <value>Сосредоточьтесь на выбранном компоненте</value>
   </data>
   <data name="LayoutEditorControlGlobalColSpacingBox.Header" xml:space="preserve">
     <value>Расстояние между колоннами</value>
@@ -507,6 +537,9 @@
   <data name="LayoutEditorControlPlacedComponentsTextBlock.Text" xml:space="preserve">
     <value>Размещенные компоненты</value>
   </data>
+  <data name="LayoutEditorControlPxDescription.Text" xml:space="preserve">
+    <value>Фиксируется на указанной абсолютной ширине/высоте пикселя</value>
+  </data>
   <data name="LayoutEditorControlRemoveButton.Content" xml:space="preserve">
     <value>Удалить компонент</value>
   </data>
@@ -531,6 +564,12 @@
   <data name="LayoutEditorControlSelectedComponentPropertiesHeader.Text" xml:space="preserve">
     <value>Свойства</value>
   </data>
+  <data name="LayoutEditorControlSelectNextComponentHeader.Text" xml:space="preserve">
+    <value>Выберите следующий компонент</value>
+  </data>
+  <data name="LayoutEditorControlSelectPrevComponentHeader.Text" xml:space="preserve">
+    <value>Выберите предыдущий компонент</value>
+  </data>
   <data name="LayoutEditorControlSetBottomRowToAuto" xml:space="preserve">
     <value>Установите для ряда ниже значение Авто</value>
   </data>
@@ -554,6 +593,12 @@
   </data>
   <data name="LayoutEditorControlSetTopRowToStar" xml:space="preserve">
     <value>Установите верхний ряд на "Заполнить</value>
+  </data>
+  <data name="LayoutEditorControlSizeHeader.Text" xml:space="preserve">
+    <value>Размер</value>
+  </data>
+  <data name="LayoutEditorControlStarDescription.Text" xml:space="preserve">
+    <value>Пропорционально распределяет оставшееся пространство в зависимости от введенного значения</value>
   </data>
   <data name="LayoutEditorControlTemporaryActivateHandHeader.Text" xml:space="preserve">
     <value>Временно активировать ручной инструмент</value>
@@ -591,6 +636,33 @@
   <data name="LayoutEditorControlZoomResetButton.Label" xml:space="preserve">
     <value>Увеличить масштаб</value>
   </data>
+  <data name="LayoutSettingsControlCustomProfiles.Text" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="LayoutSettingsControlCustomProfilesEmpty.Text" xml:space="preserve">
+    <value>No custom layouts found. Create from a template or import an existing layout</value>
+  </data>
+  <data name="LayoutSettingsControlLayoutNameTextBox.PlaceholderText" xml:space="preserve">
+    <value>Введите имя для этого макета, чтобы его можно было отличить.</value>
+  </data>
+  <data name="LayoutSettingsControlNoLyricsWindow" xml:space="preserve">
+    <value>Ни одно окно с текстом не использует эту раскладку</value>
+  </data>
+  <data name="LayoutSettingsControlSystemProfiles.Text" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="LayoutSettingsControlViewAppliedLyricsWindow.Text" xml:space="preserve">
+    <value>Просматривайте окна с текстами песен, используя эту схему</value>
+  </data>
+  <data name="LeftAlbumArtRightLyricsCompactLayout" xml:space="preserve">
+    <value>Левая обложка альбома Правая обложка лирики (компакт)</value>
+  </data>
+  <data name="LeftAlbumArtRightLyricsLayout" xml:space="preserve">
+    <value>Слева обложка альбома Справа макет лирики</value>
+  </data>
+  <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve">
+    <value>Left Lyrics Right Album Art Layout (Compact)</value>
+  </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>Не удалось запросить перевод у LibreTranslate, проверьте настройки или конфигурацию локального LibreTranslate</value>
   </data>
@@ -605,6 +677,9 @@
   </data>
   <data name="LyricsNotFound" xml:space="preserve">
     <value>Текст песни не найден</value>
+  </data>
+  <data name="LyricsOnlyLayout" xml:space="preserve">
+    <value>Макет только для лирики</value>
   </data>
   <data name="LyricsPageCachePath.Header" xml:space="preserve">
     <value>Путь к кэшу</value>
@@ -836,6 +911,9 @@
   </data>
   <data name="LyricsSharePageTitle" xml:space="preserve">
     <value>Карточка с лирикой</value>
+  </data>
+  <data name="LyricsWindowSettingsControlConfigMusicGalleryLyrics.Text" xml:space="preserve">
+    <value>Настройка встроенного окна текстов песен в музыкальной галерее</value>
   </data>
   <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
     <value>Конфигурация</value>
@@ -1581,6 +1659,9 @@
   <data name="SettingsPageLayout.Text" xml:space="preserve">
     <value>Макет</value>
   </data>
+  <data name="SettingsPageLayoutConfigShareHint.Text" xml:space="preserve">
+    <value>Примечание: Конфигурации макетов разделяются глобально. Один макет может применяться к окнам текстов песен в разных режимах. Любое изменение или удаление затронет все окна, использующие данный макет.</value>
+  </data>
   <data name="SettingsPageLayoutOrientation.Header" xml:space="preserve">
     <value>Ориентация макета</value>
   </data>
@@ -1704,6 +1785,12 @@
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
     <value>Тонкий (Light)</value>
   </data>
+  <data name="SettingsPageLyricsLineInnerSpacingFactor.Header" xml:space="preserve">
+    <value>Inner Line Spacing</value>
+  </data>
+  <data name="SettingsPageLyricsLineOverallSpacingFactor.Header" xml:space="preserve">
+    <value>Overall Line Spacing</value>
+  </data>
   <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
     <value>Межстрочный интервал</value>
   </data>
@@ -1812,7 +1899,7 @@
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
     <value>Воспроизвести тестовую музыку</value>
   </data>
-  <data name="SettingsPageMultiNowPlayingWindows.Header" xml:space="preserve">
+  <data name="SettingsPageMultiNowPlayingWindows.Text" xml:space="preserve">
     <value>Многооконный режим</value>
   </data>
   <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
@@ -2279,6 +2366,12 @@
   </data>
   <data name="ToastOverlayTitle" xml:space="preserve">
     <value>Наложение тостов</value>
+  </data>
+  <data name="TopAlbumArtBottomLyricsCompactLayout" xml:space="preserve">
+    <value>Верхняя часть обложки альбома Нижняя часть лирики (компакт)</value>
+  </data>
+  <data name="TopAlbumArtBottomLyricsLayout" xml:space="preserve">
+    <value>Верхняя обложка альбома Нижняя раскладка лирики</value>
   </data>
   <data name="TracksAddToPlaylistFailed" xml:space="preserve">
     <value>Невозможно добавить треки, так как путь не существует</value>

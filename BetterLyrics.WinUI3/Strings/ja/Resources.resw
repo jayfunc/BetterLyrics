@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -146,6 +146,9 @@
   </data>
   <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Header" xml:space="preserve">
     <value>楽曲情報の自動スクロール</value>
+  </data>
+  <data name="AlbumArtOnlyLayout" xml:space="preserve">
+    <value>アルバム・アートのみのレイアウト</value>
   </data>
   <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
     <value>ローカルミュージックファイル</value>
@@ -333,14 +336,26 @@
   <data name="LayoutEditorControlAddRowButton.Content" xml:space="preserve">
     <value>行を追加</value>
   </data>
+  <data name="LayoutEditorControlAdjustColumnWidth.Text" xml:space="preserve">
+    <value>列の幅を調整</value>
+  </data>
+  <data name="LayoutEditorControlAdjustRowHeight.Text" xml:space="preserve">
+    <value>列の高さを調整</value>
+  </data>
   <data name="LayoutEditorControlAlignmentHeader.Text" xml:space="preserve">
     <value>配置設定</value>
   </data>
   <data name="LayoutEditorControlAllPlacedMessage.Text" xml:space="preserve">
     <value>すべてのコンポーネントが配置されました。</value>
   </data>
+  <data name="LayoutEditorControlApplySizeButton.Content" xml:space="preserve">
+    <value>適用</value>
+  </data>
+  <data name="LayoutEditorControlAutoDescription.Text" xml:space="preserve">
+    <value>内部コンポーネントのコンテンツに応じてサイズを自動調整します</value>
+  </data>
   <data name="LayoutEditorControlCanvasNavigationHeader.Text" xml:space="preserve">
-    <value>キャンバス・ナビゲーション</value>
+    <value>キャンバスナビゲーション</value>
   </data>
   <data name="LayoutEditorControlCanvasPaddingTextBlock.Text" xml:space="preserve">
     <value>余白</value>
@@ -352,7 +367,7 @@
     <value>コンポーネントのサイズ変更</value>
   </data>
   <data name="LayoutEditorControlChangeComponentSpanInfoTag.Text" xml:space="preserve">
-    <value>矢印キー / WASD</value>
+    <value>矢印キー / WASDキー</value>
   </data>
   <data name="LayoutEditorControlColBox.Header" xml:space="preserve">
     <value>列</value>
@@ -369,14 +384,26 @@
   <data name="LayoutEditorControlComponentLyrics" xml:space="preserve">
     <value>歌詞</value>
   </data>
+  <data name="LayoutEditorControlComponentLyricsCard" xml:space="preserve">
+    <value>歌詞カード</value>
+  </data>
   <data name="LayoutEditorControlComponentNone" xml:space="preserve">
     <value>なし</value>
   </data>
   <data name="LayoutEditorControlComponentOperationHeader.Text" xml:space="preserve">
-    <value>コンポーネント・オペレーション（要選択）</value>
+    <value>コンポーネント操作 (選択が必要)</value>
+  </data>
+  <data name="LayoutEditorControlComponentSongAlbum" xml:space="preserve">
+    <value>ソング・アルバム</value>
+  </data>
+  <data name="LayoutEditorControlComponentSongArtist" xml:space="preserve">
+    <value>ソング・アーティスト</value>
   </data>
   <data name="LayoutEditorControlComponentSongInfo" xml:space="preserve">
     <value>楽曲情報</value>
+  </data>
+  <data name="LayoutEditorControlComponentSongTitle" xml:space="preserve">
+    <value>曲名</value>
   </data>
   <data name="LayoutEditorControlCopyHere" xml:space="preserve">
     <value>ここに置く</value>
@@ -401,6 +428,9 @@
   </data>
   <data name="LayoutEditorControlDeleteTopRow" xml:space="preserve">
     <value>上部の行を削除</value>
+  </data>
+  <data name="LayoutEditorControlFocusComponentHeader.Text" xml:space="preserve">
+    <value>選択されたコンポーネントに焦点を当てる</value>
   </data>
   <data name="LayoutEditorControlGlobalColSpacingBox.Header" xml:space="preserve">
     <value>列の間隔</value>
@@ -487,7 +517,7 @@
     <value>コンポーネントの移動</value>
   </data>
   <data name="LayoutEditorControlMoveComponentInfoTag.Text" xml:space="preserve">
-    <value>矢印キー / WASD</value>
+    <value>矢印キー / WASDキー</value>
   </data>
   <data name="LayoutEditorControlMoveHere" xml:space="preserve">
     <value>ここに移動</value>
@@ -506,6 +536,9 @@
   </data>
   <data name="LayoutEditorControlPlacedComponentsTextBlock.Text" xml:space="preserve">
     <value>配置されたコンポーネント</value>
+  </data>
+  <data name="LayoutEditorControlPxDescription.Text" xml:space="preserve">
+    <value>指定した絶対ピクセルの幅と高さに固定します</value>
   </data>
   <data name="LayoutEditorControlRemoveButton.Content" xml:space="preserve">
     <value>コンポーネントを削除</value>
@@ -531,6 +564,12 @@
   <data name="LayoutEditorControlSelectedComponentPropertiesHeader.Text" xml:space="preserve">
     <value>プロパティ</value>
   </data>
+  <data name="LayoutEditorControlSelectNextComponentHeader.Text" xml:space="preserve">
+    <value>次のコンポーネントを選択</value>
+  </data>
+  <data name="LayoutEditorControlSelectPrevComponentHeader.Text" xml:space="preserve">
+    <value>前のコンポーネントを選択</value>
+  </data>
   <data name="LayoutEditorControlSetBottomRowToAuto" xml:space="preserve">
     <value>下の行を自動に設定</value>
   </data>
@@ -555,6 +594,12 @@
   <data name="LayoutEditorControlSetTopRowToStar" xml:space="preserve">
     <value>上の行をフィルに設定</value>
   </data>
+  <data name="LayoutEditorControlSizeHeader.Text" xml:space="preserve">
+    <value>サイズ</value>
+  </data>
+  <data name="LayoutEditorControlStarDescription.Text" xml:space="preserve">
+    <value>入力された値に基づいて、残りのスペースを比率に応じて配分します</value>
+  </data>
   <data name="LayoutEditorControlTemporaryActivateHandHeader.Text" xml:space="preserve">
     <value>ハンドツールを一時的にアクティブにする</value>
   </data>
@@ -577,7 +622,7 @@
     <value>上揃え</value>
   </data>
   <data name="LayoutEditorControlZoomCanvasHeader.Text" xml:space="preserve">
-    <value>ズームイン/ズームアウト</value>
+    <value>拡大/縮小</value>
   </data>
   <data name="LayoutEditorControlZoomCanvasInfoTag.Text" xml:space="preserve">
     <value>マウスホイール</value>
@@ -590,6 +635,33 @@
   </data>
   <data name="LayoutEditorControlZoomResetButton.Label" xml:space="preserve">
     <value>ズームして合わせる</value>
+  </data>
+  <data name="LayoutSettingsControlCustomProfiles.Text" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="LayoutSettingsControlCustomProfilesEmpty.Text" xml:space="preserve">
+    <value>No custom layouts found. Create from a template or import an existing layout</value>
+  </data>
+  <data name="LayoutSettingsControlLayoutNameTextBox.PlaceholderText" xml:space="preserve">
+    <value>このレイアウトの区別に役立つ名前を入力してください</value>
+  </data>
+  <data name="LayoutSettingsControlNoLyricsWindow" xml:space="preserve">
+    <value>このレイアウトを使用している歌詞ウィンドウはありません</value>
+  </data>
+  <data name="LayoutSettingsControlSystemProfiles.Text" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="LayoutSettingsControlViewAppliedLyricsWindow.Text" xml:space="preserve">
+    <value>このレイアウトで歌詞ウィンドウを表示する</value>
+  </data>
+  <data name="LeftAlbumArtRightLyricsCompactLayout" xml:space="preserve">
+    <value>左 アルバムアート 右 歌詞レイアウト（コンパクト）</value>
+  </data>
+  <data name="LeftAlbumArtRightLyricsLayout" xml:space="preserve">
+    <value>左 アルバム・アート 右 歌詞レイアウト</value>
+  </data>
+  <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve">
+    <value>Left Lyrics Right Album Art Layout (Compact)</value>
   </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>LibreTranslate への翻訳リクエストに失敗しました。設定またはローカルの LibreTranslate 構成を確認してください</value>
@@ -605,6 +677,9 @@
   </data>
   <data name="LyricsNotFound" xml:space="preserve">
     <value>歌詞が見つかりません</value>
+  </data>
+  <data name="LyricsOnlyLayout" xml:space="preserve">
+    <value>歌詞のみレイアウト</value>
   </data>
   <data name="LyricsPageCachePath.Header" xml:space="preserve">
     <value>キャッシュパス</value>
@@ -836,6 +911,9 @@
   </data>
   <data name="LyricsSharePageTitle" xml:space="preserve">
     <value>歌詞カード生成</value>
+  </data>
+  <data name="LyricsWindowSettingsControlConfigMusicGalleryLyrics.Text" xml:space="preserve">
+    <value>ミュージックギャラリー埋め込み歌詞ウィンドウの設定</value>
   </data>
   <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
     <value>構成</value>
@@ -1581,6 +1659,9 @@
   <data name="SettingsPageLayout.Text" xml:space="preserve">
     <value>レイアウト</value>
   </data>
+  <data name="SettingsPageLayoutConfigShareHint.Text" xml:space="preserve">
+    <value>注意：レイアウト設定は全般で共有されます。単一のレイアウトを異なるモードの歌詞ウィンドウに適用できるため、変更や削除を行うと、現在このレイアウトを使用しているすべてのウィンドウに反映されます</value>
+  </data>
   <data name="SettingsPageLayoutOrientation.Header" xml:space="preserve">
     <value>レイアウトの向き</value>
   </data>
@@ -1704,6 +1785,12 @@
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
     <value>ライト</value>
   </data>
+  <data name="SettingsPageLyricsLineInnerSpacingFactor.Header" xml:space="preserve">
+    <value>Inner Line Spacing</value>
+  </data>
+  <data name="SettingsPageLyricsLineOverallSpacingFactor.Header" xml:space="preserve">
+    <value>Overall Line Spacing</value>
+  </data>
   <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
     <value>行間隔</value>
   </data>
@@ -1812,7 +1899,7 @@
   <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
     <value>テストミュージックを再生</value>
   </data>
-  <data name="SettingsPageMultiNowPlayingWindows.Header" xml:space="preserve">
+  <data name="SettingsPageMultiNowPlayingWindows.Text" xml:space="preserve">
     <value>マルチウィンドウモード</value>
   </data>
   <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
@@ -2167,7 +2254,7 @@
     <value>1*に設定</value>
   </data>
   <data name="SetToAuto" xml:space="preserve">
-    <value>オートに設定</value>
+    <value>自動に設定</value>
   </data>
   <data name="SLyricsWindowSettingsControlShareMoveToMonitor.Text" xml:space="preserve">
     <value>モニターへ移動</value>
@@ -2279,6 +2366,12 @@
   </data>
   <data name="ToastOverlayTitle" xml:space="preserve">
     <value>トーストオーバーレイ</value>
+  </data>
+  <data name="TopAlbumArtBottomLyricsCompactLayout" xml:space="preserve">
+    <value>トップ・アルバム・アート ボトム・歌詞レイアウト（コンパクト）</value>
+  </data>
+  <data name="TopAlbumArtBottomLyricsLayout" xml:space="preserve">
+    <value>上段 アルバム・アート 下段 歌詞レイアウト</value>
   </data>
   <data name="TracksAddToPlaylistFailed" xml:space="preserve">
     <value>パスが存在しないため、トラックを追加できません</value>

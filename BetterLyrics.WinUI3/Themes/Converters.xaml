@@ -61,6 +61,9 @@
     <bwc:EnumToIntConverter x:Key="EnumToIntConverter" />
     <bwc:EnumToOpacityConverter x:Key="EnumToOpacityConverter" />
     <bwc:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
+    <bwc:EnumNegationToVisibilityConverter x:Key="EnumNegationToVisibilityConverter" />
     <bwc:EnumToBoolConverter x:Key="EnumToBoolConverter" />
+
+    <bwc:ComponentTypeToIconConverter x:Key="ComponentTypeToIconConverter" />
 
 </ResourceDictionary>

@@ -9,12 +9,15 @@ namespace BetterLyrics.WinUI3.Controls
 {
     public sealed partial class DragVisualControl : UserControl
     {
-        public DragVisualControl(string displayName, Brush background, double width, double height)
+        public DragVisualControl(string displayName, Brush? background, double width, double height)
         {
             this.InitializeComponent();
             TitleBlock.Text = displayName;
             RootBorder.Background = background;
-            RootBorder.BorderBrush = new SolidColorBrush(ColorHelper.GetHarmoniousColor(((SolidColorBrush)background).Color));
+            if (background is SolidColorBrush solidColorBrush)
+            {
+                RootBorder.BorderBrush = new SolidColorBrush(ColorHelper.GetHarmoniousColor(solidColorBrush.Color));
+            }
             this.Width = width;
             this.Height = height;
         }

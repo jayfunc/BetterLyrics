@@ -1,6 +1,8 @@
 ﻿using BetterLyrics.WinUI3.Collections;
 using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Services.LocalizationService;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.ObjectModel;
@@ -9,8 +11,14 @@ namespace BetterLyrics.WinUI3.Models
 {
     public partial class LayoutProfile : ObservableRecipient, ICloneable
     {
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial ObservableCollection<string> RowDefinitions { get; set; } = new() { "1*", "1*" };
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial ObservableCollection<string> ColumnDefinitions { get; set; } = new() { "1*", "1*" };
+        public Guid Id { get; set; } = Guid.NewGuid();
+
+        public NowPlayingLayoutMode Mode { get; set; } = NowPlayingLayoutMode.Custom;
+
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial string Name { get; set; } = "";
+
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial ObservableCollection<string> RowDefinitions { get; set; } = new() { "1*" };
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial ObservableCollection<string> ColumnDefinitions { get; set; } = new() { "1*" };
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial double RowSpacing { get; set; } = 16;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial double ColumnSpacing { get; set; } = 16;
@@ -30,78 +38,343 @@ namespace BetterLyrics.WinUI3.Models
             Placements.ItemPropertyChanged += Placements_ItemPropertyChanged;
         }
 
-        public LayoutProfile(LyricsWindowMode mode) : this()
+        public LayoutProfile(NowPlayingLayoutMode mode) : this()
         {
+            ILocalizationService localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
+
+            Mode = mode;
+            Name = localizationService.GetLocalizedString($"{mode}Layout");
+
             switch (mode)
             {
-                case LyricsWindowMode.Standard:
-                    InitStandardMode();
+                case NowPlayingLayoutMode.LyricsOnly:
+                    InitLyricsOnlyMode();
                     break;
-                case LyricsWindowMode.Narrow:
-                    InitNarrowMode();
+                case NowPlayingLayoutMode.AlbumArtOnly:
+                    InitAlbumArtOnlyMode();
                     break;
-                case LyricsWindowMode.Fullscreen:
-                    InitFullscreenMode();
+                case NowPlayingLayoutMode.LeftAlbumArtRightLyrics:
+                    InitLeftAlbumArtRightLyricsMode();
                     break;
-                case LyricsWindowMode.Desktop:
-                    InitDesktopMode();
+                case NowPlayingLayoutMode.LeftAlbumArtRightLyricsCompact:
+                    InitLeftAlbumArtRightLyricsCompactMode();
                     break;
-                case LyricsWindowMode.Docked:
-                    InitDockedMode();
+                case NowPlayingLayoutMode.LeftLyricsRightAlbumArtCompact:
+                    InitLeftLyricsRightAlbumArtCompactMode();
                     break;
-                case LyricsWindowMode.Taskbar:
-                    InitTaskbarMode();
+                case NowPlayingLayoutMode.TopAlbumArtBottomLyrics:
+                    InitTopAlbumArtBottomLyricsMode();
                     break;
-                case LyricsWindowMode.Wallpaper:
-                    InitWallpaperMode();
+                case NowPlayingLayoutMode.TopAlbumArtBottomLyricsCompact:
+                    InitTopAlbumArtBottomLyricsCompactMode();
                     break;
                 default:
                     break;
             }
         }
 
-        private void InitStandardMode()
+        private void InitLyricsOnlyMode()
         {
-            RowDefinitions = ["1*", "1*", "1*", "1*", "1*"];
-            ColumnDefinitions = ["1*", "1*"];
+            RowDefinitions = ["1*"];
+            ColumnDefinitions = ["1*"];
 
-            RowSpacing = 16;
-            ColumnSpacing = 16;
+            RowSpacing = 0;
+            ColumnSpacing = 0;
 
-            PaddingLeft = 16;
-            PaddingTop = 16;
-            PaddingRight = 16;
-            PaddingBottom = 16;
+            PaddingLeft = 0;
+            PaddingTop = 0;
+            PaddingRight = 0;
+            PaddingBottom = 0;
 
             Placements =
             [
                 new()
                 {
-                    ComponentType = ComponentType.SongInfo,
-                    Row = 3,
+                    ComponentType = ComponentType.Lyrics,
+                    Row = 0,
                     Column = 0,
                     RowSpan = 1,
                     ColumnSpan = 1,
-                    MarginLeft = 32,
-                    MarginTop = 0,
-                    MarginRight = 32,
-                    MarginBottom = 0,
-                    HorizontalAlignment = HorizontalAlignment.Right,
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
                     VerticalAlignment = VerticalAlignment.Stretch,
+                }
+            ];
+        }
+
+        private void InitAlbumArtOnlyMode()
+        {
+            RowDefinitions = ["2*", "8*", "0.5*", "1.2*", "1*", "1*", "2*"];
+            ColumnDefinitions = ["1*", "10*", "1*"];
+
+            RowSpacing = 0;
+            ColumnSpacing = 0;
+
+            PaddingLeft = 0;
+            PaddingTop = 0;
+            PaddingRight = 0;
+            PaddingBottom = 0;
+
+            Placements =
+            [
+                new()
+                {
+                    ComponentType = ComponentType.AlbumArt,
+                    Row = 1,
+                    Column = 1,
+                    RowSpan = 1,
+                    ColumnSpan = 1,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Stretch,
+                },
+                new()
+                {
+                    ComponentType = ComponentType.SongTitle,
+                    Row = 3,
+                    Column = 1,
+                    RowSpan = 1,
+                    ColumnSpan = 1,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Stretch,
+                },
+                new()
+                {
+                    ComponentType = ComponentType.SongArtist,
+                    Row = 4,
+                    Column = 1,
+                    RowSpan = 1,
+                    ColumnSpan = 1,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Stretch,
+                },
+                new()
+                {
+                    ComponentType = ComponentType.SongAlbum,
+                    Row = 5,
+                    Column = 1,
+                    RowSpan = 1,
+                    ColumnSpan = 1,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Stretch,
+                },
+            ];
+        }
+
+        private void InitLeftAlbumArtRightLyricsMode()
+        {
+            RowDefinitions = ["1*", "5*", "0.2*", "0.6*", "0.5*", "0.5*", "1*"];
+            ColumnDefinitions = ["2*", "6*", "1*", "6*", "2*"];
+
+            RowSpacing = 0;
+            ColumnSpacing = 0;
+
+            PaddingLeft = 0;
+            PaddingTop = 0;
+            PaddingRight = 0;
+            PaddingBottom = 0;
+
+            Placements =
+            [
+                new()
+                {
+                    ComponentType = ComponentType.SongArtist,
+                    Row = 4,
+                    Column = 1,
+                    RowSpan = 1,
+                    ColumnSpan = 1,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Stretch,
+                    Width = double.NaN,
+                    Height = double.NaN
+                },
+                new()
+                {
+                    ComponentType = ComponentType.SongAlbum,
+                    Row = 5,
+                    Column = 1,
+                    RowSpan = 1,
+                    ColumnSpan = 1,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Stretch,
+                    Width = double.NaN,
+                    Height = double.NaN
                 },
                 new()
                 {
                     ComponentType = ComponentType.AlbumArt,
                     Row = 1,
-                    Column = 0,
-                    RowSpan = 2,
+                    Column = 1,
+                    RowSpan = 1,
                     ColumnSpan = 1,
-                    MarginLeft = 0,
-                    MarginTop = 0,
-                    MarginRight = 0,
-                    MarginBottom = 0,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Stretch,
+                    Width = double.NaN,
+                    Height = double.NaN
+                },
+                new()
+                {
+                    ComponentType = ComponentType.SongTitle,
+                    Row = 3,
+                    Column = 1,
+                    RowSpan = 1,
+                    ColumnSpan = 1,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Stretch,
+                    Width = double.NaN,
+                    Height = double.NaN
+                },
+                new()
+                {
+                    ComponentType = ComponentType.Lyrics,
+                    Row = 0,
+                    Column = 3,
+                    RowSpan = 7,
+                    ColumnSpan = 1,
                     HorizontalAlignment = HorizontalAlignment.Stretch,
                     VerticalAlignment = VerticalAlignment.Stretch,
+                    Width = double.NaN,
+                    Height = double.NaN
+                }
+            ];
+        }
+
+        private void InitLeftAlbumArtRightLyricsCompactMode()
+        {
+            RowDefinitions = ["1*"];
+            ColumnDefinitions = ["Auto", "1*"];
+
+            RowSpacing = 0;
+            ColumnSpacing = 12;
+
+            PaddingLeft = 12;
+            PaddingTop = 0;
+            PaddingRight = 12;
+            PaddingBottom = 0;
+
+            Placements =
+            [
+                new()
+                {
+                    ComponentType = ComponentType.AlbumArt,
+                    Row = 0,
+                    Column = 0,
+                    RowSpan = 1,
+                    ColumnSpan = 1,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Width = double.NaN,
+                    Height = double.NaN,
+                    MarginTop = 10,
+                    MarginBottom = 10,
+                },
+                new()
+                {
+                    ComponentType = ComponentType.Lyrics,
+                    Row = 0,
+                    Column = 1,
+                    RowSpan = 1,
+                    ColumnSpan = 1,
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    VerticalAlignment = VerticalAlignment.Stretch,
+                    Width = double.NaN,
+                    Height = double.NaN
+                }
+            ];
+        }
+
+        private void InitLeftLyricsRightAlbumArtCompactMode()
+        {
+            RowDefinitions = ["1*"];
+            ColumnDefinitions = ["1*", "Auto"];
+
+            RowSpacing = 0;
+            ColumnSpacing = 12;
+
+            PaddingLeft = 12;
+            PaddingTop = 0;
+            PaddingRight = 12;
+            PaddingBottom = 0;
+
+            Placements =
+            [
+                new()
+                {
+                    ComponentType = ComponentType.AlbumArt,
+                    Row = 0,
+                    Column = 1,
+                    RowSpan = 1,
+                    ColumnSpan = 1,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Width = double.NaN,
+                    Height = double.NaN,
+                    MarginTop = 10,
+                    MarginBottom = 10,
+                },
+                new()
+                {
+                    ComponentType = ComponentType.Lyrics,
+                    Row = 0,
+                    Column = 0,
+                    RowSpan = 1,
+                    ColumnSpan = 1,
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    VerticalAlignment = VerticalAlignment.Stretch,
+                    Width = double.NaN,
+                    Height = double.NaN
+                }
+            ];
+        }
+
+        private void InitTopAlbumArtBottomLyricsMode()
+        {
+            RowDefinitions = ["1*", "1*", "0.8*", "0.8*", "16*"];
+            ColumnDefinitions = ["0.5*", "Auto", "0.2*", "10*", "0.5*"];
+
+            RowSpacing = 0;
+            ColumnSpacing = 0;
+
+            PaddingLeft = 0;
+            PaddingTop = 0;
+            PaddingRight = 0;
+            PaddingBottom = 0;
+
+            Placements =
+            [
+                new()
+                {
+                    ComponentType = ComponentType.SongArtist,
+                    Row = 2,
+                    Column = 3,
+                    RowSpan = 1,
+                    ColumnSpan = 1,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Stretch,
+                    Width = double.NaN,
+                    Height = double.NaN
+                },
+                new()
+                {
+                    ComponentType = ComponentType.AlbumArt,
+                    Row = 1,
+                    Column = 1,
+                    RowSpan = 3,
+                    ColumnSpan = 1,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Stretch,
+                    Width = double.NaN,
+                    Height = double.NaN
+                },
+                new()
+                {
+                    ComponentType = ComponentType.SongTitle,
+                    Row = 1,
+                    Column = 3,
+                    RowSpan = 1,
+                    ColumnSpan = 1,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Stretch,
+                    Width = double.NaN,
+                    Height = double.NaN
                 },
                 new()
                 {
@@ -109,303 +382,101 @@ namespace BetterLyrics.WinUI3.Models
                     Row = 0,
                     Column = 1,
                     RowSpan = 5,
-                    ColumnSpan = 1,
-                    MarginLeft = 0,
-                    MarginTop = 0,
-                    MarginRight = 16,
-                    MarginBottom = 0,
+                    ColumnSpan = 3,
                     HorizontalAlignment = HorizontalAlignment.Stretch,
                     VerticalAlignment = VerticalAlignment.Stretch,
+                    Width = double.NaN,
+                    Height = double.NaN
+                },
+                new()
+                {
+                    ComponentType = ComponentType.SongAlbum,
+                    Row = 3,
+                    Column = 3,
+                    RowSpan = 1,
+                    ColumnSpan = 1,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Stretch,
+                    Width = double.NaN,
+                    Height = double.NaN
                 }
             ];
         }
 
-        private void InitNarrowMode()
+        private void InitTopAlbumArtBottomLyricsCompactMode()
         {
-            RowDefinitions = ["Auto", "1*"];
-            ColumnDefinitions = ["1*", "1*", "1*", "1*"];
+            RowDefinitions = ["0.8*", "1*", "0.8*", "0.8*", "16*"];
+            ColumnDefinitions = ["1*", "Auto", "0.5*", "10*", "1*"];
 
-            RowSpacing = 16;
-            ColumnSpacing = 16;
+            RowSpacing = 0;
+            ColumnSpacing = 0;
 
-            PaddingLeft = 16;
-            PaddingTop = 16;
-            PaddingRight = 16;
-            PaddingBottom = 16;
+            PaddingLeft = 0;
+            PaddingTop = 0;
+            PaddingRight = 0;
+            PaddingBottom = 0;
 
             Placements =
             [
                 new()
                 {
-                    ComponentType = ComponentType.SongInfo,
-                    Row = 0,
-                    Column = 1,
+                    ComponentType = ComponentType.SongArtist,
+                    Row = 2,
+                    Column = 3,
                     RowSpan = 1,
-                    ColumnSpan = 3,
-                    MarginLeft = 0,
-                    MarginTop = 0,
-                    MarginRight = 0,
-                    MarginBottom = 0,
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
-                    VerticalAlignment = VerticalAlignment.Center,
+                    ColumnSpan = 1,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Stretch,
+                    Width = double.NaN,
+                    Height = double.NaN
                 },
                 new()
                 {
                     ComponentType = ComponentType.AlbumArt,
-                    Row = 0,
-                    Column = 0,
-                    RowSpan = 1,
-                    ColumnSpan = 1,
-                    MarginLeft = 0,
-                    MarginTop = 0,
-                    MarginRight = 0,
-                    MarginBottom = 0,
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
-                    VerticalAlignment = VerticalAlignment.Stretch,
-                },
-                new()
-                {
-                    ComponentType = ComponentType.Lyrics,
                     Row = 1,
-                    Column = 0,
-                    RowSpan = 1,
-                    ColumnSpan = 4,
-                    MarginLeft = 0,
-                    MarginTop = 0,
-                    MarginRight = 0,
-                    MarginBottom = 0,
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
-                    VerticalAlignment = VerticalAlignment.Stretch,
-                }
-            ];
-        }
-
-        private void InitFullscreenMode()
-        {
-            RowDefinitions = ["1*", "1*", "1*", "1*", "1*"];
-            ColumnDefinitions = ["Auto", "1*", "1*", "1*"];
-
-            RowSpacing = 32;
-            ColumnSpacing = 32;
-
-            PaddingLeft = 32;
-            PaddingTop = 32;
-            PaddingRight = 32;
-            PaddingBottom = 32;
-
-            Placements =
-            [
-                new()
-                {
-                    ComponentType = ComponentType.SongInfo,
-                    Row = 0,
                     Column = 1,
-                    RowSpan = 1,
-                    ColumnSpan = 3,
-                    MarginLeft = 0,
-                    MarginTop = 0,
-                    MarginRight = 0,
-                    MarginBottom = 0,
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
-                    VerticalAlignment = VerticalAlignment.Center,
-                },
-                new()
-                {
-                    ComponentType = ComponentType.AlbumArt,
-                    Row = 0,
-                    Column = 0,
-                    RowSpan = 1,
+                    RowSpan = 3,
                     ColumnSpan = 1,
-                    MarginLeft = 0,
-                    MarginTop = 0,
-                    MarginRight = 0,
-                    MarginBottom = 0,
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Stretch,
+                    Width = double.NaN,
+                    Height = double.NaN
                 },
                 new()
                 {
-                    ComponentType = ComponentType.Lyrics,
+                    ComponentType = ComponentType.SongTitle,
                     Row = 1,
-                    Column = 0,
-                    RowSpan = 4,
-                    ColumnSpan = 4,
-                    MarginLeft = 0,
-                    MarginTop = 0,
-                    MarginRight = 0,
-                    MarginBottom = 0,
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
-                    VerticalAlignment = VerticalAlignment.Stretch,
-                }
-            ];
-        }
-
-        private void InitDesktopMode()
-        {
-            RowDefinitions = ["1*"];
-            ColumnDefinitions = ["1*"];
-
-            RowSpacing = 16;
-            ColumnSpacing = 16;
-
-            PaddingLeft = 0;
-            PaddingTop = 0;
-            PaddingRight = 0;
-            PaddingBottom = 0;
-
-            Placements =
-            [
-                new()
-                {
-                    ComponentType = ComponentType.Lyrics,
-                    Row = 0,
-                    Column = 0,
+                    Column = 3,
                     RowSpan = 1,
                     ColumnSpan = 1,
-                    MarginLeft = 0,
-                    MarginTop = 0,
-                    MarginRight = 0,
-                    MarginBottom = 0,
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Stretch,
-                }
-            ];
-        }
-
-        private void InitDockedMode()
-        {
-            RowDefinitions = ["1*"];
-            ColumnDefinitions = ["1*", "1*", "1*", "1*", "1*"];
-
-            RowSpacing = 16;
-            ColumnSpacing = 16;
-
-            PaddingLeft = 0;
-            PaddingTop = 0;
-            PaddingRight = 0;
-            PaddingBottom = 0;
-
-            Placements =
-            [
-                new()
-                {
-                    ComponentType = ComponentType.SongInfo,
-                    Row = 0,
-                    Column = 0,
-                    RowSpan = 1,
-                    ColumnSpan = 1,
-                    MarginLeft = 8,
-                    MarginTop = 8,
-                    MarginRight = 0,
-                    MarginBottom = 8,
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
-                    VerticalAlignment = VerticalAlignment.Stretch,
-                },
-                new()
-                {
-                    ComponentType = ComponentType.AlbumArt,
-                    Row = 0,
-                    Column = 4,
-                    RowSpan = 1,
-                    ColumnSpan = 1,
-                    MarginLeft = 0,
-                    MarginTop = 8,
-                    MarginRight = 8,
-                    MarginBottom = 8,
-                    HorizontalAlignment = HorizontalAlignment.Right,
-                    VerticalAlignment = VerticalAlignment.Stretch,
+                    Width = double.NaN,
+                    Height = double.NaN
                 },
                 new()
                 {
                     ComponentType = ComponentType.Lyrics,
                     Row = 0,
                     Column = 1,
-                    RowSpan = 1,
+                    RowSpan = 5,
                     ColumnSpan = 3,
-                    MarginLeft = 0,
-                    MarginTop = 0,
-                    MarginRight = 0,
-                    MarginBottom = 0,
                     HorizontalAlignment = HorizontalAlignment.Stretch,
                     VerticalAlignment = VerticalAlignment.Stretch,
-                }
-            ];
-        }
-
-        private void InitTaskbarMode()
-        {
-            RowDefinitions = ["1*"];
-            ColumnDefinitions = ["Auto", "1*"];
-
-            RowSpacing = 16;
-            ColumnSpacing = 16;
-
-            PaddingLeft = 0;
-            PaddingTop = 0;
-            PaddingRight = 0;
-            PaddingBottom = 0;
-
-            Placements =
-            [
-                new()
-                {
-                    ComponentType = ComponentType.AlbumArt,
-                    Row = 0,
-                    Column = 0,
-                    RowSpan = 1,
-                    ColumnSpan = 1,
-                    MarginLeft = 8,
-                    MarginTop = 10,
-                    MarginRight = 0,
-                    MarginBottom = 10,
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
-                    VerticalAlignment = VerticalAlignment.Stretch,
+                    Width = double.NaN,
+                    Height = double.NaN
                 },
                 new()
                 {
-                    ComponentType = ComponentType.Lyrics,
-                    Row = 0,
-                    Column = 1,
+                    ComponentType = ComponentType.SongAlbum,
+                    Row = 3,
+                    Column = 3,
                     RowSpan = 1,
                     ColumnSpan = 1,
-                    MarginLeft = 0,
-                    MarginTop = 0,
-                    MarginRight = 0,
-                    MarginBottom = 0,
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    HorizontalAlignment = HorizontalAlignment.Left,
                     VerticalAlignment = VerticalAlignment.Stretch,
-                }
-            ];
-        }
-
-        private void InitWallpaperMode()
-        {
-            RowDefinitions = ["1*"];
-            ColumnDefinitions = ["1*"];
-
-            RowSpacing = 16;
-            ColumnSpacing = 16;
-
-            PaddingLeft = 0;
-            PaddingTop = 0;
-            PaddingRight = 0;
-            PaddingBottom = 0;
-
-            Placements =
-            [
-                new()
-                {
-                    ComponentType = ComponentType.Lyrics,
-                    Row = 0,
-                    Column = 0,
-                    RowSpan = 1,
-                    ColumnSpan = 1,
-                    MarginLeft = 0,
-                    MarginTop = 0,
-                    MarginRight = 0,
-                    MarginBottom = 0,
-                    HorizontalAlignment = HorizontalAlignment.Stretch,
-                    VerticalAlignment = VerticalAlignment.Stretch,
+                    Width = double.NaN,
+                    Height = double.NaN
                 }
             ];
         }
@@ -459,11 +530,17 @@ namespace BetterLyrics.WinUI3.Models
         {
             return new LayoutProfile
             {
+                Name = this.Name,
+                Mode = NowPlayingLayoutMode.Custom,
+
                 RowDefinitions = new ObservableCollection<string>(this.RowDefinitions),
                 ColumnDefinitions = new ObservableCollection<string>(this.ColumnDefinitions),
+
                 RowSpacing = this.RowSpacing,
                 ColumnSpacing = this.ColumnSpacing,
+
                 Placements = new FullyObservableCollection<ComponentPlacement>(this.Placements),
+
                 PaddingLeft = this.PaddingLeft,
                 PaddingTop = this.PaddingTop,
                 PaddingRight = this.PaddingRight,
