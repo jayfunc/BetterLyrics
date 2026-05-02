@@ -107,11 +107,14 @@
                 </controls:Case.Value>
                 <Grid RowSpacing="4">
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
-                    <ScrollViewer Grid.Row="0">
+                    <Grid Grid.Row="0" />
+
+                    <ScrollViewer Grid.Row="1">
                         <StackPanel Padding="36,0">
                             <Expander
                                 HorizontalAlignment="Stretch"
@@ -184,7 +187,7 @@
                     </ScrollViewer>
 
                     <Grid
-                        Grid.Row="1"
+                        Grid.Row="2"
                         Margin="36,20"
                         ColumnSpacing="4">
                         <Grid.ColumnDefinitions>
@@ -229,7 +232,7 @@
                 <Grid>
                     <uc:LayoutEditorControl LayoutProfile="{x:Bind EditingLayoutProfile, Mode=OneWay}" LyricsWindowStatus="{x:Bind LyricsWindowStatus, Mode=OneWay}" />
                     <Button
-                        Height="48"
+                        Height="42"
                         Margin="0,0,36,0"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Top"

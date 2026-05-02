@@ -450,10 +450,10 @@
   <data name="LayoutEditorControlGlobalRowSpacingBox.Header" xml:space="preserve">
     <value>Espaçamento entre linhas</value>
   </data>
-  <data name="LayoutEditorControlHandToolToggle.Label" xml:space="preserve">
+  <data name="LayoutEditorControlHandToolToggle.Content" xml:space="preserve">
     <value>Panela</value>
   </data>
-  <data name="LayoutEditorControlHelpButton.Label" xml:space="preserve">
+  <data name="LayoutEditorControlHelpButton.Content" xml:space="preserve">
     <value>Guia de atalhos</value>
   </data>
   <data name="LayoutEditorControlHorizontalAlignmentBox.Header" xml:space="preserve">
@@ -627,13 +627,13 @@
   <data name="LayoutEditorControlZoomCanvasInfoTag.Text" xml:space="preserve">
     <value>Roda do rato</value>
   </data>
-  <data name="LayoutEditorControlZoomInButton.Label" xml:space="preserve">
+  <data name="LayoutEditorControlZoomInButton.Content" xml:space="preserve">
     <value>Ampliar</value>
   </data>
-  <data name="LayoutEditorControlZoomOutButton.Label" xml:space="preserve">
+  <data name="LayoutEditorControlZoomOutButton.Content" xml:space="preserve">
     <value>Reduzir o zoom</value>
   </data>
-  <data name="LayoutEditorControlZoomResetButton.Label" xml:space="preserve">
+  <data name="LayoutEditorControlZoomResetButton.Content" xml:space="preserve">
     <value>Zoom para ajustar</value>
   </data>
   <data name="LayoutSettingsControlCustomProfiles.Text" xml:space="preserve">
@@ -662,6 +662,9 @@
   </data>
   <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve">
     <value>Left Lyrics Right Album Art Layout (Compact)</value>
+  </data>
+  <data name="LeftLyricsRightAlbumArtLayout" xml:space="preserve">
+    <value>Left Lyrics Right Album Art Layout</value>
   </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>Falha ao solicitar tradução ao LibreTranslate. Verifique as definições ou a configuração local do LibreTranslate</value>
@@ -1721,6 +1724,9 @@
   </data>
   <data name="SettingsPageLyricsBold.Content" xml:space="preserve">
     <value>Negrito</value>
+  </data>
+  <data name="SettingsPageLyricsCardStyle.Text" xml:space="preserve">
+    <value>Lyrics Card Style</value>
   </data>
   <data name="SettingsPageLyricsCenterTopOffset.Header" xml:space="preserve">
     <value>Posição da Linha Atual</value>

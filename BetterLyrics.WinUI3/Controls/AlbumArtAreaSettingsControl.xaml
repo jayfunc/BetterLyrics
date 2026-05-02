@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <UserControl
-    x:Class="BetterLyrics.WinUI3.Controls.AlbumArtAreaStyleSettingsControl"
+    x:Class="BetterLyrics.WinUI3.Controls.AlbumArtAreaSettingsControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
@@ -15,7 +15,7 @@
             <Grid Style="{StaticResource SettingsGridStyle}">
                 <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
-                    <TextBlock x:Uid="SettingsPageAlbumArt" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                    <TextBlock x:Uid="SettingsPageAlbumStyle" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <!--  专辑圆角  -->
                     <controls:SettingsCard x:Uid="SettingsPageAlbumRadius" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEA3A;}">
@@ -24,7 +24,7 @@
                             Maximum="100"
                             Minimum="0"
                             Unit="%"
-                            Value="{x:Bind AlbumArtLayoutSettings.CoverImageRadius, Mode=TwoWay}" />
+                            Value="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageRadius, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
                     <!--  专辑阴影  -->
@@ -33,7 +33,22 @@
                             Default="12"
                             Maximum="64"
                             Minimum="0"
-                            Value="{x:Bind AlbumArtLayoutSettings.CoverImageShadowAmount, Mode=TwoWay}" />
+                            Value="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageShadowAmount, Mode=TwoWay}" />
+                    </controls:SettingsCard>
+
+                    <TextBlock x:Uid="SettingsPageAlbumEffect" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                    <controls:SettingsCard x:Uid="SettingsPageImageSwitchType" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8EB;}">
+                        <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.AlbumArtAreaEffectSettings.ImageSwitchType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                            <ComboBoxItem x:Uid="SettingsPageCrossfade" />
+                            <ComboBoxItem x:Uid="SettingsPageSlide" />
+                        </ComboBox>
+                    </controls:SettingsCard>
+
+                    <TextBlock x:Uid="SettingsPageSongInfoEffect" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                    <controls:SettingsCard x:Uid="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEC52;}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.AlbumArtAreaEffectSettings.SongInfoAutoScroll, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
                 </StackPanel>
