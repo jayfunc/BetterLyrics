@@ -6,8 +6,14 @@ Special thanks to the following people for their support!
   <tbody>
     <tr>
       <td></td>
+      <td></td>
+      <td></td>
+      <td>May 2, 2026 loikuan</td>
+    </tr>
+    <tr>
       <td>Apr 18, 2026 &lt;Anon/匿名&gt;</td>
       <td>Apr 10, 2026 &lt;Anon/匿名&gt;</td>
+      <td>Apr 8, 2026 **84e82</td>
       <td>Mar 28, 2026 **东</td>
     </tr>
     <tr>
