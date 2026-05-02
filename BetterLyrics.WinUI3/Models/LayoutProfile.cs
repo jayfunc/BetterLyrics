@@ -56,6 +56,9 @@ namespace BetterLyrics.WinUI3.Models
                 case NowPlayingLayoutMode.LeftAlbumArtRightLyrics:
                     InitLeftAlbumArtRightLyricsMode();
                     break;
+                case NowPlayingLayoutMode.LeftLyricsRightAlbumArt:
+                    InitLeftLyricsRightAlbumArtMode();
+                    break;
                 case NowPlayingLayoutMode.LeftAlbumArtRightLyricsCompact:
                     InitLeftAlbumArtRightLyricsCompactMode();
                     break;
@@ -227,6 +230,81 @@ namespace BetterLyrics.WinUI3.Models
                     ComponentType = ComponentType.Lyrics,
                     Row = 0,
                     Column = 3,
+                    RowSpan = 7,
+                    ColumnSpan = 1,
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    VerticalAlignment = VerticalAlignment.Stretch,
+                    Width = double.NaN,
+                    Height = double.NaN
+                }
+            ];
+        }
+
+        private void InitLeftLyricsRightAlbumArtMode()
+        {
+            RowDefinitions = ["1*", "5*", "0.2*", "0.6*", "0.5*", "0.5*", "1*"];
+            ColumnDefinitions = ["2*", "6*", "1*", "6*", "2*"];
+            RowSpacing = 0;
+            ColumnSpacing = 0;
+            PaddingLeft = 0;
+            PaddingTop = 0;
+            PaddingRight = 0;
+            PaddingBottom = 0;
+            Placements =
+            [
+                new()
+                {
+                    ComponentType = ComponentType.SongArtist,
+                    Row = 4,
+                    Column = 3,
+                    RowSpan = 1,
+                    ColumnSpan = 1,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Stretch,
+                    Width = double.NaN,
+                    Height = double.NaN
+                },
+                new()
+                {
+                    ComponentType = ComponentType.SongAlbum,
+                    Row = 5,
+                    Column = 3,
+                    RowSpan = 1,
+                    ColumnSpan = 1,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Stretch,
+                    Width = double.NaN,
+                    Height = double.NaN
+                },
+                new()
+                {
+                    ComponentType = ComponentType.AlbumArt,
+                    Row = 1,
+                    Column = 3,
+                    RowSpan = 1,
+                    ColumnSpan = 1,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Stretch,
+                    Width = double.NaN,
+                    Height = double.NaN
+                },
+                new()
+                {
+                    ComponentType = ComponentType.SongTitle,
+                    Row = 3,
+                    Column = 3,
+                    RowSpan = 1,
+                    ColumnSpan = 1,
+                    HorizontalAlignment = HorizontalAlignment.Left,
+                    VerticalAlignment = VerticalAlignment.Stretch,
+                    Width = double.NaN,
+                    Height = double.NaN
+                },
+                new()
+                {
+                    ComponentType = ComponentType.Lyrics,
+                    Row = 0,
+                    Column = 1,
                     RowSpan = 7,
                     ColumnSpan = 1,
                     HorizontalAlignment = HorizontalAlignment.Stretch,

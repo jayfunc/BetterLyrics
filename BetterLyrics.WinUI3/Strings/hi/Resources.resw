@@ -450,10 +450,10 @@
   <data name="LayoutEditorControlGlobalRowSpacingBox.Header" xml:space="preserve">
     <value>कतारों के बीच की दूरी</value>
   </data>
-  <data name="LayoutEditorControlHandToolToggle.Label" xml:space="preserve">
+  <data name="LayoutEditorControlHandToolToggle.Content" xml:space="preserve">
     <value>तवा</value>
   </data>
-  <data name="LayoutEditorControlHelpButton.Label" xml:space="preserve">
+  <data name="LayoutEditorControlHelpButton.Content" xml:space="preserve">
     <value>शॉर्टकट्स गाइड</value>
   </data>
   <data name="LayoutEditorControlHorizontalAlignmentBox.Header" xml:space="preserve">
@@ -627,13 +627,13 @@
   <data name="LayoutEditorControlZoomCanvasInfoTag.Text" xml:space="preserve">
     <value>माउस व्हील</value>
   </data>
-  <data name="LayoutEditorControlZoomInButton.Label" xml:space="preserve">
+  <data name="LayoutEditorControlZoomInButton.Content" xml:space="preserve">
     <value>ज़ूम इन</value>
   </data>
-  <data name="LayoutEditorControlZoomOutButton.Label" xml:space="preserve">
+  <data name="LayoutEditorControlZoomOutButton.Content" xml:space="preserve">
     <value>आउट करें</value>
   </data>
-  <data name="LayoutEditorControlZoomResetButton.Label" xml:space="preserve">
+  <data name="LayoutEditorControlZoomResetButton.Content" xml:space="preserve">
     <value>फिट करने के लिए ज़ूम करें</value>
   </data>
   <data name="LayoutSettingsControlCustomProfiles.Text" xml:space="preserve">
@@ -662,6 +662,9 @@
   </data>
   <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve">
     <value>Left Lyrics Right Album Art Layout (Compact)</value>
+  </data>
+  <data name="LeftLyricsRightAlbumArtLayout" xml:space="preserve">
+    <value>Left Lyrics Right Album Art Layout</value>
   </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>LibreTranslate से अनुवाद का अनुरोध विफल रहा, कृपया सेटिंग्स या स्थानीय LibreTranslate कॉन्फ़िगरेशन की जाँच करें</value>
@@ -1721,6 +1724,9 @@
   </data>
   <data name="SettingsPageLyricsBold.Content" xml:space="preserve">
     <value>बोल्ड</value>
+  </data>
+  <data name="SettingsPageLyricsCardStyle.Text" xml:space="preserve">
+    <value>Lyrics Card Style</value>
   </data>
   <data name="SettingsPageLyricsCenterTopOffset.Header" xml:space="preserve">
     <value>वर्तमान पंक्ति स्थिति</value>

@@ -316,7 +316,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.RowSpan="2" RowSpacing="4">
+        <Grid Grid.Row="1" RowSpacing="4">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -631,49 +631,126 @@
             </controls:SwitchPresenter>
         </Grid>
 
-        <CommandBar
-            Grid.Column="1"
+        <Grid
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
             Margin="0,0,42,0"
-            Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-            BorderThickness="1"
-            CornerRadius="4"
-            DefaultLabelPosition="Right">
-            <AppBarToggleButton
+            Padding="4"
+            Style="{ThemeResource CardGridStyle}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <FontIcon
+                    Grid.Column="0"
+                    Margin="8,0,0,0"
+                    FontFamily="{StaticResource SegoeFluentIcons}"
+                    FontSize="16"
+                    Glyph="&#xE8AC;" />
+                <TextBox
+                    x:Uid="LayoutSettingsControlLayoutNameTextBox"
+                    Grid.Column="1"
+                    Background="Transparent"
+                    BorderBrush="Transparent"
+                    Text="{x:Bind LayoutProfile.Name, Mode=TwoWay}" />
+            </Grid>
+
+            <AppBarSeparator Grid.Column="1" />
+
+            <ToggleButton
                 x:Name="HandToolToggle"
-                x:Uid="LayoutEditorControlHandToolToggle"
-                Click="HandToolToggle_Click">
-                <AppBarToggleButton.Icon>
-                    <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xECE9;" />
-                </AppBarToggleButton.Icon>
-            </AppBarToggleButton>
-            <AppBarSeparator />
-            <AppBarButton x:Uid="LayoutEditorControlZoomInButton" Click="ZoomIn_Click">
-                <AppBarButton.Icon>
-                    <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE8A3;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarButton x:Uid="LayoutEditorControlZoomOutButton" Click="ZoomOut_Click">
-                <AppBarButton.Icon>
-                    <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE71F;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarButton x:Uid="LayoutEditorControlZoomResetButton" Click="ZoomReset_Click">
-                <AppBarButton.Icon>
-                    <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE740;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
-            <AppBarElementContainer Width="48" VerticalAlignment="Center">
-                <TextBlock Margin="4,0,0,2" Text="{x:Bind FormatZoom(CurrentZoom), Mode=OneWay}" />
-            </AppBarElementContainer>
+                Grid.Column="2"
+                Click="HandToolToggle_Click"
+                Style="{ThemeResource GhostToggleButtonStyle}">
+                <ToggleButton.Content>
+                    <FontIcon
+                        FontFamily="{StaticResource SegoeFluentIcons}"
+                        FontSize="16"
+                        Glyph="&#xECE9;" />
+                </ToggleButton.Content>
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Uid="LayoutEditorControlHandToolToggle" />
+                </ToolTipService.ToolTip>
+            </ToggleButton>
 
-            <AppBarSeparator />
+            <Button
+                Grid.Column="3"
+                Click="ZoomIn_Click"
+                Style="{ThemeResource GhostButtonStyle}">
+                <Button.Content>
+                    <FontIcon
+                        FontFamily="{StaticResource SegoeFluentIcons}"
+                        FontSize="16"
+                        Glyph="&#xE8A3;" />
+                </Button.Content>
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Uid="LayoutEditorControlZoomInButton" />
+                </ToolTipService.ToolTip>
+            </Button>
+            <Button
+                Grid.Column="4"
+                Click="ZoomOut_Click"
+                Style="{ThemeResource GhostButtonStyle}">
+                <Button.Content>
+                    <FontIcon
+                        FontFamily="{StaticResource SegoeFluentIcons}"
+                        FontSize="16"
+                        Glyph="&#xE71F;" />
+                </Button.Content>
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Uid="LayoutEditorControlZoomOutButton" />
+                </ToolTipService.ToolTip>
+            </Button>
+            <Button
+                Grid.Column="5"
+                Click="ZoomReset_Click"
+                Style="{ThemeResource GhostButtonStyle}">
+                <Button.Content>
+                    <FontIcon
+                        FontFamily="{StaticResource SegoeFluentIcons}"
+                        FontSize="16"
+                        Glyph="&#xE740;" />
+                </Button.Content>
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Uid="LayoutEditorControlZoomResetButton" />
+                </ToolTipService.ToolTip>
+            </Button>
+            <TextBlock
+                Grid.Column="6"
+                Width="48"
+                Margin="4,0,0,2"
+                VerticalAlignment="Center"
+                Text="{x:Bind FormatZoom(CurrentZoom), Mode=OneWay}" />
 
-            <AppBarButton x:Name="HelpButton" x:Uid="LayoutEditorControlHelpButton">
-                <AppBarButton.Icon>
-                    <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE897;" />
-                </AppBarButton.Icon>
-                <AppBarButton.Flyout>
+            <AppBarSeparator Grid.Column="7" />
+
+            <Button
+                x:Name="HelpButton"
+                Grid.Column="8"
+                Style="{ThemeResource GhostButtonStyle}">
+                <Button.Content>
+                    <FontIcon
+                        FontFamily="{StaticResource SegoeFluentIcons}"
+                        FontSize="16"
+                        Glyph="&#xE897;" />
+                </Button.Content>
+                <ToolTipService.ToolTip>
+                    <ToolTip x:Uid="LayoutEditorControlHelpButton" />
+                </ToolTipService.ToolTip>
+                <Button.Flyout>
                     <Flyout Placement="Bottom" ShouldConstrainToRootBounds="False">
                         <Flyout.FlyoutPresenterStyle>
                             <Style TargetType="FlyoutPresenter">
@@ -862,9 +939,10 @@
 
                         </StackPanel>
                     </Flyout>
-                </AppBarButton.Flyout>
-            </AppBarButton>
-        </CommandBar>
+                </Button.Flyout>
+            </Button>
+
+        </Grid>
 
         <Grid
             Grid.Row="1"
@@ -1036,17 +1114,14 @@
         <Grid
             Grid.Row="2"
             Grid.ColumnSpan="2"
-            Padding="16,8"
+            Padding="4"
             ColumnSpacing="4"
             Style="{ThemeResource CardGridStyle}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Grid Grid.Column="0" VerticalAlignment="Center">
+            <Grid Grid.Column="0" Margin="8,0,0,0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -1062,12 +1137,20 @@
                     Style="{StaticResource CaptionTextBlockStyle}"
                     TextWrapping="Wrap" />
             </Grid>
-            <ComboBox
+            <ListView
                 Grid.Column="1"
-                VerticalAlignment="Center"
                 ItemsSource="{x:Bind LayoutProfile.Placements, Mode=OneWay}"
+                ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                ScrollViewer.HorizontalScrollMode="Enabled"
+                ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                ScrollViewer.VerticalScrollMode="Disabled"
                 SelectedItem="{x:Bind SelectedPlacement, Mode=TwoWay}">
-                <ComboBox.ItemTemplate>
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
+                <ListView.ItemTemplate>
                     <DataTemplate>
                         <Grid ColumnSpacing="8">
                             <Grid.ColumnDefinitions>
@@ -1087,25 +1170,8 @@
                                 TextWrapping="Wrap" />
                         </Grid>
                     </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-            <TextBlock
-                Grid.Column="3"
-                Margin="0,0,4,2"
-                VerticalAlignment="Center"
-                Text="{x:Bind LayoutProfile.Name, Mode=OneWay}" />
-            <Button
-                Grid.Column="4"
-                Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                      FontSize=16,
-                                      Glyph=&#xE8AC;}"
-                Style="{ThemeResource GhostButtonStyle}">
-                <Button.Flyout>
-                    <Flyout>
-                        <TextBox x:Uid="LayoutSettingsControlLayoutNameTextBox" Text="{x:Bind LayoutProfile.Name, Mode=TwoWay}" />
-                    </Flyout>
-                </Button.Flyout>
-            </Button>
+                </ListView.ItemTemplate>
+            </ListView>
         </Grid>
 
     </Grid>

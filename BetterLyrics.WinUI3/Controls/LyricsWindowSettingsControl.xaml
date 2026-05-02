@@ -319,11 +319,8 @@
                                 <NavigationViewItem Tag="Layout">
                                     <TextBlock x:Uid="SettingsPageLayout" />
                                 </NavigationViewItem>
-                                <NavigationViewItem Tag="AlbumArtStyle">
-                                    <TextBlock x:Uid="SettingsPageAlbumStyle" />
-                                </NavigationViewItem>
-                                <NavigationViewItem Tag="AlbumArtEffect">
-                                    <TextBlock x:Uid="SettingsPageAlbumEffect" />
+                                <NavigationViewItem Tag="AlbumArt">
+                                    <TextBlock x:Uid="SettingsPageAlbumArt" />
                                 </NavigationViewItem>
                                 <NavigationViewItem Tag="LyricsStyle">
                                     <TextBlock x:Uid="SettingsPageLyricsStyle" />
@@ -356,22 +353,17 @@
                             <uc:LayoutSettingsControl LayoutProfiles="{x:Bind ViewModel.AppSettings.LayoutProfiles, Mode=OneWay}" LyricsWindowStatus="{x:Bind LyricsWindowStatus, Mode=OneWay}" />
                         </controls:Case>
 
-                        <!--  Album art area style  -->
-                        <controls:Case Value="AlbumArtStyle">
-                            <uc:AlbumArtAreaStyleSettingsControl AlbumArtLayoutSettings="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings, Mode=OneWay}" />
-                        </controls:Case>
-
-                        <!--  Album art area effect  -->
-                        <controls:Case Value="AlbumArtEffect">
-                            <uc:AlbumArtAreaEffectSettingsControl AlbumArtAreaEffectSettings="{x:Bind LyricsWindowStatus.AlbumArtAreaEffectSettings, Mode=OneWay}" />
+                        <!--  Album art  -->
+                        <controls:Case Value="AlbumArt">
+                            <uc:AlbumArtAreaSettingsControl LyricsWindowStatus="{x:Bind LyricsWindowStatus, Mode=OneWay}" />
                         </controls:Case>
 
                         <!--  Lyrics style  -->
                         <controls:Case Value="LyricsStyle">
-                            <uc:LyricsStyleSettingsControl LyricsStyleSettings="{x:Bind LyricsWindowStatus.LyricsStyleSettings, Mode=OneWay}" />
+                            <uc:LyricsStyleSettingsControl LyricsWindowStatus="{x:Bind LyricsWindowStatus, Mode=OneWay}" />
                         </controls:Case>
 
-                        <!--  Lyrics  effect  -->
+                        <!--  Lyrics effect  -->
                         <controls:Case Value="LyricsEffect">
                             <uc:LyricsEffectSettingsControl LyricsEffectSettings="{x:Bind LyricsWindowStatus.LyricsEffectSettings, Mode=OneWay}" />
                         </controls:Case>

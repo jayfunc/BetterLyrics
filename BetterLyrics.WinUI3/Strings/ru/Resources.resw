@@ -450,10 +450,10 @@
   <data name="LayoutEditorControlGlobalRowSpacingBox.Header" xml:space="preserve">
     <value>Расстояние между рядами</value>
   </data>
-  <data name="LayoutEditorControlHandToolToggle.Label" xml:space="preserve">
+  <data name="LayoutEditorControlHandToolToggle.Content" xml:space="preserve">
     <value>Пан</value>
   </data>
-  <data name="LayoutEditorControlHelpButton.Label" xml:space="preserve">
+  <data name="LayoutEditorControlHelpButton.Content" xml:space="preserve">
     <value>Краткое руководство</value>
   </data>
   <data name="LayoutEditorControlHorizontalAlignmentBox.Header" xml:space="preserve">
@@ -627,13 +627,13 @@
   <data name="LayoutEditorControlZoomCanvasInfoTag.Text" xml:space="preserve">
     <value>Колесо мыши</value>
   </data>
-  <data name="LayoutEditorControlZoomInButton.Label" xml:space="preserve">
+  <data name="LayoutEditorControlZoomInButton.Content" xml:space="preserve">
     <value>Увеличить</value>
   </data>
-  <data name="LayoutEditorControlZoomOutButton.Label" xml:space="preserve">
+  <data name="LayoutEditorControlZoomOutButton.Content" xml:space="preserve">
     <value>Уменьшить масштаб</value>
   </data>
-  <data name="LayoutEditorControlZoomResetButton.Label" xml:space="preserve">
+  <data name="LayoutEditorControlZoomResetButton.Content" xml:space="preserve">
     <value>Увеличить масштаб</value>
   </data>
   <data name="LayoutSettingsControlCustomProfiles.Text" xml:space="preserve">
@@ -662,6 +662,9 @@
   </data>
   <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve">
     <value>Left Lyrics Right Album Art Layout (Compact)</value>
+  </data>
+  <data name="LeftLyricsRightAlbumArtLayout" xml:space="preserve">
+    <value>Left Lyrics Right Album Art Layout</value>
   </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>Не удалось запросить перевод у LibreTranslate, проверьте настройки или конфигурацию локального LibreTranslate</value>
@@ -1721,6 +1724,9 @@
   </data>
   <data name="SettingsPageLyricsBold.Content" xml:space="preserve">
     <value>Жирный</value>
+  </data>
+  <data name="SettingsPageLyricsCardStyle.Text" xml:space="preserve">
+    <value>Lyrics Card Style</value>
   </data>
   <data name="SettingsPageLyricsCenterTopOffset.Header" xml:space="preserve">
     <value>Положение текущей строки</value>

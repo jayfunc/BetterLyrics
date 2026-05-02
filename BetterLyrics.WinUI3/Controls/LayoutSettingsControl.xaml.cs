@@ -327,13 +327,16 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void RootLayoutSettings_Loaded(object sender, RoutedEventArgs e)
         {
-            foreach (var mode in Enum.GetValues<NowPlayingLayoutMode>().Cast<NowPlayingLayoutMode>())
+            if (CreateFromTemplatesMenuFlyout.Items.Count == 0)
             {
-                if (mode != NowPlayingLayoutMode.Custom)
+                foreach (var mode in Enum.GetValues<NowPlayingLayoutMode>().Cast<NowPlayingLayoutMode>())
                 {
-                    var item = new MenuFlyoutItem() { Text = _localizationService.GetLocalizedString($"{mode}Layout"), Tag = mode };
-                    item.Click += CreateFromTemplateMenuFlyoutItem_Click;
-                    CreateFromTemplatesMenuFlyout.Items.Add(item);
+                    if (mode != NowPlayingLayoutMode.Custom)
+                    {
+                        var item = new MenuFlyoutItem() { Text = _localizationService.GetLocalizedString($"{mode}Layout"), Tag = mode };
+                        item.Click += CreateFromTemplateMenuFlyoutItem_Click;
+                        CreateFromTemplatesMenuFlyout.Items.Add(item);
+                    }
                 }
             }
         }
