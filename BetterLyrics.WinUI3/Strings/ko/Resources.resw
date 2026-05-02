@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -637,10 +637,10 @@
     <value>맞춤 확대/축소</value>
   </data>
   <data name="LayoutSettingsControlCustomProfiles.Text" xml:space="preserve">
-    <value>Custom</value>
+    <value>사용자 지정</value>
   </data>
   <data name="LayoutSettingsControlCustomProfilesEmpty.Text" xml:space="preserve">
-    <value>No custom layouts found. Create from a template or import an existing layout</value>
+    <value>사용자 지정 레이아웃을 찾을 수 없습니다. 템플릿에서 만들거나 기존 레이아웃 가져오기</value>
   </data>
   <data name="LayoutSettingsControlLayoutNameTextBox.PlaceholderText" xml:space="preserve">
     <value>레이아웃을 구분할 수 있도록 이 레이아웃의 이름을 입력합니다.</value>
@@ -649,7 +649,7 @@
     <value>이 레이아웃을 사용하는 가사 창이 없습니다.</value>
   </data>
   <data name="LayoutSettingsControlSystemProfiles.Text" xml:space="preserve">
-    <value>Default</value>
+    <value>기본값</value>
   </data>
   <data name="LayoutSettingsControlViewAppliedLyricsWindow.Text" xml:space="preserve">
     <value>이 레이아웃을 사용하여 가사 창 보기</value>
@@ -661,10 +661,10 @@
     <value>왼쪽 앨범 아트 오른쪽 가사 레이아웃</value>
   </data>
   <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve">
-    <value>Left Lyrics Right Album Art Layout (Compact)</value>
+    <value>왼쪽 가사 오른쪽 앨범 아트 레이아웃(컴팩트)</value>
   </data>
   <data name="LeftLyricsRightAlbumArtLayout" xml:space="preserve">
-    <value>Left Lyrics Right Album Art Layout</value>
+    <value>왼쪽 가사 오른쪽 앨범 아트 레이아웃</value>
   </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>LibreTranslate에 번역 요청 실패. 설정 또는 로컬 LibreTranslate 구성을 확인하세요</value>
@@ -1726,7 +1726,7 @@
     <value>굵게</value>
   </data>
   <data name="SettingsPageLyricsCardStyle.Text" xml:space="preserve">
-    <value>Lyrics Card Style</value>
+    <value>가사 카드 스타일</value>
   </data>
   <data name="SettingsPageLyricsCenterTopOffset.Header" xml:space="preserve">
     <value>현재 행 위치</value>
@@ -1792,10 +1792,10 @@
     <value>라이트</value>
   </data>
   <data name="SettingsPageLyricsLineInnerSpacingFactor.Header" xml:space="preserve">
-    <value>Inner Line Spacing</value>
+    <value>내부 줄 간격</value>
   </data>
   <data name="SettingsPageLyricsLineOverallSpacingFactor.Header" xml:space="preserve">
-    <value>Overall Line Spacing</value>
+    <value>전체 줄 간격</value>
   </data>
   <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
     <value>줄 간격</value>

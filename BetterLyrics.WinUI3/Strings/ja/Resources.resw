@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -148,7 +148,7 @@
     <value>楽曲情報の自動スクロール</value>
   </data>
   <data name="AlbumArtOnlyLayout" xml:space="preserve">
-    <value>アルバム・アートのみのレイアウト</value>
+    <value>アルバムアートのみのレイアウト</value>
   </data>
   <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
     <value>ローカルミュージックファイル</value>
@@ -394,16 +394,16 @@
     <value>コンポーネント操作 (選択が必要)</value>
   </data>
   <data name="LayoutEditorControlComponentSongAlbum" xml:space="preserve">
-    <value>ソング・アルバム</value>
+    <value>ソングアルバム</value>
   </data>
   <data name="LayoutEditorControlComponentSongArtist" xml:space="preserve">
-    <value>ソング・アーティスト</value>
+    <value>ソングアーティスト</value>
   </data>
   <data name="LayoutEditorControlComponentSongInfo" xml:space="preserve">
     <value>楽曲情報</value>
   </data>
   <data name="LayoutEditorControlComponentSongTitle" xml:space="preserve">
-    <value>曲名</value>
+    <value>曲タイトル</value>
   </data>
   <data name="LayoutEditorControlCopyHere" xml:space="preserve">
     <value>ここに置く</value>
@@ -430,7 +430,7 @@
     <value>上部の行を削除</value>
   </data>
   <data name="LayoutEditorControlFocusComponentHeader.Text" xml:space="preserve">
-    <value>選択されたコンポーネントに焦点を当てる</value>
+    <value>選択したコンポーネントにフォーカス</value>
   </data>
   <data name="LayoutEditorControlGlobalColSpacingBox.Header" xml:space="preserve">
     <value>列の間隔</value>
@@ -628,19 +628,19 @@
     <value>マウスホイール</value>
   </data>
   <data name="LayoutEditorControlZoomInButton.Content" xml:space="preserve">
-    <value>拡大表示</value>
+    <value>ズームイン</value>
   </data>
   <data name="LayoutEditorControlZoomOutButton.Content" xml:space="preserve">
-    <value>縮小表示</value>
+    <value>ズームアウト</value>
   </data>
   <data name="LayoutEditorControlZoomResetButton.Content" xml:space="preserve">
-    <value>ズームして合わせる</value>
+    <value>ズーム・トゥ・フィット</value>
   </data>
   <data name="LayoutSettingsControlCustomProfiles.Text" xml:space="preserve">
-    <value>Custom</value>
+    <value>カスタム</value>
   </data>
   <data name="LayoutSettingsControlCustomProfilesEmpty.Text" xml:space="preserve">
-    <value>No custom layouts found. Create from a template or import an existing layout</value>
+    <value>カスタムレイアウトが見つかりません。テンプレートから作成するか、既存のレイアウトをインポートしてください</value>
   </data>
   <data name="LayoutSettingsControlLayoutNameTextBox.PlaceholderText" xml:space="preserve">
     <value>このレイアウトの区別に役立つ名前を入力してください</value>
@@ -649,22 +649,22 @@
     <value>このレイアウトを使用している歌詞ウィンドウはありません</value>
   </data>
   <data name="LayoutSettingsControlSystemProfiles.Text" xml:space="preserve">
-    <value>Default</value>
+    <value>デフォルト</value>
   </data>
   <data name="LayoutSettingsControlViewAppliedLyricsWindow.Text" xml:space="preserve">
     <value>このレイアウトで歌詞ウィンドウを表示する</value>
   </data>
   <data name="LeftAlbumArtRightLyricsCompactLayout" xml:space="preserve">
-    <value>左 アルバムアート 右 歌詞レイアウト（コンパクト）</value>
+    <value>左側アルバムアート 右側歌詞レイアウト（コンパクト）</value>
   </data>
   <data name="LeftAlbumArtRightLyricsLayout" xml:space="preserve">
-    <value>左 アルバム・アート 右 歌詞レイアウト</value>
+    <value>左側アルバムアート 右側歌詞レイアウト</value>
   </data>
   <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve">
-    <value>Left Lyrics Right Album Art Layout (Compact)</value>
+    <value>左 歌詞 右 アルバムアートレイアウト (コンパクト)</value>
   </data>
   <data name="LeftLyricsRightAlbumArtLayout" xml:space="preserve">
-    <value>Left Lyrics Right Album Art Layout</value>
+    <value>左 歌詞 右 アルバム・アート レイアウト</value>
   </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>LibreTranslate への翻訳リクエストに失敗しました。設定またはローカルの LibreTranslate 構成を確認してください</value>
@@ -1726,7 +1726,7 @@
     <value>太字</value>
   </data>
   <data name="SettingsPageLyricsCardStyle.Text" xml:space="preserve">
-    <value>Lyrics Card Style</value>
+    <value>歌詞カードスタイル</value>
   </data>
   <data name="SettingsPageLyricsCenterTopOffset.Header" xml:space="preserve">
     <value>現在の行の位置</value>
@@ -1792,10 +1792,10 @@
     <value>ライト</value>
   </data>
   <data name="SettingsPageLyricsLineInnerSpacingFactor.Header" xml:space="preserve">
-    <value>Inner Line Spacing</value>
+    <value>行内の間隔</value>
   </data>
   <data name="SettingsPageLyricsLineOverallSpacingFactor.Header" xml:space="preserve">
-    <value>Overall Line Spacing</value>
+    <value>全体の行間</value>
   </data>
   <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
     <value>行間隔</value>
@@ -2374,10 +2374,10 @@
     <value>トーストオーバーレイ</value>
   </data>
   <data name="TopAlbumArtBottomLyricsCompactLayout" xml:space="preserve">
-    <value>トップ・アルバム・アート ボトム・歌詞レイアウト（コンパクト）</value>
+    <value>上部アルバムアート 下部歌詞レイアウト（コンパクト）</value>
   </data>
   <data name="TopAlbumArtBottomLyricsLayout" xml:space="preserve">
-    <value>上段 アルバム・アート 下段 歌詞レイアウト</value>
+    <value>上部アルバムアート 下部歌詞レイアウト</value>
   </data>
   <data name="TracksAddToPlaylistFailed" xml:space="preserve">
     <value>パスが存在しないため、トラックを追加できません</value>

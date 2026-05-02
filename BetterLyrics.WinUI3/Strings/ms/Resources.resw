@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -637,10 +637,10 @@
     <value>Zum Sesuai</value>
   </data>
   <data name="LayoutSettingsControlCustomProfiles.Text" xml:space="preserve">
-    <value>Custom</value>
+    <value>Kustom</value>
   </data>
   <data name="LayoutSettingsControlCustomProfilesEmpty.Text" xml:space="preserve">
-    <value>No custom layouts found. Create from a template or import an existing layout</value>
+    <value>Tiada susun atur tersuai ditemui. Buat daripada templat atau import susun atur sedia ada.</value>
   </data>
   <data name="LayoutSettingsControlLayoutNameTextBox.PlaceholderText" xml:space="preserve">
     <value>Masukkan nama untuk susun atur ini bagi membantu membezakannya.</value>
@@ -649,7 +649,7 @@
     <value>Tiada tetingkap lirik menggunakan susun atur ini</value>
   </data>
   <data name="LayoutSettingsControlSystemProfiles.Text" xml:space="preserve">
-    <value>Default</value>
+    <value>Lalai</value>
   </data>
   <data name="LayoutSettingsControlViewAppliedLyricsWindow.Text" xml:space="preserve">
     <value>Lihat tetingkap lirik menggunakan susun atur ini</value>
@@ -661,10 +661,10 @@
     <value>Kiri Seni Album Kanan Susun Atur Lirik</value>
   </data>
   <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve">
-    <value>Left Lyrics Right Album Art Layout (Compact)</value>
+    <value>Lirik di Kiri, Seni Album di Kanan, Susun Atur (Padat)</value>
   </data>
   <data name="LeftLyricsRightAlbumArtLayout" xml:space="preserve">
-    <value>Left Lyrics Right Album Art Layout</value>
+    <value>Lirik di Kiri, Seni Album di Kanan: Susun Atur</value>
   </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>Permintaan terjemahan ke LibreTranslate gagal, sila semak tetapan atau konfigurasi LibreTranslate tempatan</value>
@@ -1726,7 +1726,7 @@
     <value>Tebal</value>
   </data>
   <data name="SettingsPageLyricsCardStyle.Text" xml:space="preserve">
-    <value>Lyrics Card Style</value>
+    <value>Gaya Kad Lirik</value>
   </data>
   <data name="SettingsPageLyricsCenterTopOffset.Header" xml:space="preserve">
     <value>Posisi Baris Semasa</value>
@@ -1792,10 +1792,10 @@
     <value>Nipis</value>
   </data>
   <data name="SettingsPageLyricsLineInnerSpacingFactor.Header" xml:space="preserve">
-    <value>Inner Line Spacing</value>
+    <value>Jarak baris dalam</value>
   </data>
   <data name="SettingsPageLyricsLineOverallSpacingFactor.Header" xml:space="preserve">
-    <value>Overall Line Spacing</value>
+    <value>Jarak baris keseluruhan</value>
   </data>
   <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
     <value>Jarak Baris</value>

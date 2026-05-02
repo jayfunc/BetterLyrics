@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -523,16 +523,16 @@
     <value>移至此处</value>
   </data>
   <data name="LayoutEditorControlNoSelection" xml:space="preserve">
-    <value>在预览或左侧列表中选择一个组件以继续。</value>
+    <value>在预览或左侧列表中选择一个组件以继续</value>
   </data>
   <data name="LayoutEditorControlPendingComponentsDescriptionTextBlock.Text" xml:space="preserve">
-    <value>拖动组件到右侧网格以放置。组件在网格内可自由移动。</value>
+    <value>拖动组件到右侧网格以放置。组件在网格内可自由移动</value>
   </data>
   <data name="LayoutEditorControlPendingComponentsTextBlock.Text" xml:space="preserve">
     <value>待放置的组件</value>
   </data>
   <data name="LayoutEditorControlPlacedComponentsDescriptionTextBlock.Text" xml:space="preserve">
-    <value>若组件因遮挡关系等原因无法点击，请在此处选择该组件。</value>
+    <value>若组件因遮挡关系等原因无法点击，请在此处选择该组件</value>
   </data>
   <data name="LayoutEditorControlPlacedComponentsTextBlock.Text" xml:space="preserve">
     <value>已放置的组件</value>
@@ -559,7 +559,7 @@
     <value>行跨越数</value>
   </data>
   <data name="LayoutEditorControlSelectedComponentLabel.Text" xml:space="preserve">
-    <value>在预览或左侧列表中选择一个组件以继续。</value>
+    <value>在预览或左侧列表中选择一个组件以继续</value>
   </data>
   <data name="LayoutEditorControlSelectedComponentPropertiesHeader.Text" xml:space="preserve">
     <value>属性</value>
@@ -637,10 +637,10 @@
     <value>适应</value>
   </data>
   <data name="LayoutSettingsControlCustomProfiles.Text" xml:space="preserve">
-    <value>Custom</value>
+    <value>自定义</value>
   </data>
   <data name="LayoutSettingsControlCustomProfilesEmpty.Text" xml:space="preserve">
-    <value>No custom layouts found. Create from a template or import an existing layout</value>
+    <value>未找到自定义布局。从模板创建或导入现有布局</value>
   </data>
   <data name="LayoutSettingsControlLayoutNameTextBox.PlaceholderText" xml:space="preserve">
     <value>输入此布局的名称以便对其进行区分</value>
@@ -649,7 +649,7 @@
     <value>没有歌词窗口使用此布局</value>
   </data>
   <data name="LayoutSettingsControlSystemProfiles.Text" xml:space="preserve">
-    <value>Default</value>
+    <value>默认</value>
   </data>
   <data name="LayoutSettingsControlViewAppliedLyricsWindow.Text" xml:space="preserve">
     <value>查看使用此布局的歌词窗口</value>
@@ -661,10 +661,10 @@
     <value>左侧专辑封面 右侧歌词布局</value>
   </data>
   <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve">
-    <value>Left Lyrics Right Album Art Layout (Compact)</value>
+    <value>左侧歌词 右侧专辑封面布局（紧凑型）</value>
   </data>
   <data name="LeftLyricsRightAlbumArtLayout" xml:space="preserve">
-    <value>Left Lyrics Right Album Art Layout</value>
+    <value>左侧歌词 右侧专辑封面布局</value>
   </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>向 LibreTranslate 请求翻译失败，请检查设置或本机 LibreTranslate 配置</value>
@@ -769,7 +769,7 @@
     <value>时长</value>
   </data>
   <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
-    <value>* 保存更改后立即生效，随后歌曲歌词将通过映射信息和目标歌词进行检索；标记为纯音乐将直接恢复为纯音乐占位符歌词。重置后将恢复原始数据检索。</value>
+    <value>* 保存更改后立即生效，随后歌曲歌词将通过映射信息和目标歌词进行检索；标记为纯音乐将直接恢复为纯音乐占位符歌词。重置后将恢复原始数据检索</value>
   </data>
   <data name="LyricsSearchControlIgnoreCache.Header" xml:space="preserve">
     <value>搜索时忽略缓存</value>
@@ -973,7 +973,7 @@
     <value>执行强力同步</value>
   </data>
   <data name="MediaSettingsForceSyncHint.Text" xml:space="preserve">
-    <value>该选项将强制从远端重新解析元数据。当本地数据库出现问题时，或由于某些原因需要全部刷新时，此选项将有所帮助。</value>
+    <value>该选项将强制从远端重新解析元数据。当本地数据库出现问题时，或由于某些原因需要全部刷新时，此选项将有所帮助</value>
   </data>
   <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
     <value>添加到播放列表</value>
@@ -1150,7 +1150,7 @@
     <value>BetterLyrics 内置播放器仍在后台运行，软件将忽略其他播放源。要监听其他播放源，请进入 “音乐库” 并点击右下角的 “停止” 按钮</value>
   </data>
   <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
-    <value>加载外部配置以直接从目标软件内存中读取播放进度。请谨慎使用，开发者不对第三方配置的安全性负责。</value>
+    <value>加载外部配置以直接从目标软件内存中读取播放进度。请谨慎使用，开发者不对第三方配置的安全性负责</value>
   </data>
   <data name="PlaybackSettingsControlMemoryReader.Header" xml:space="preserve">
     <value>内存读取适配器</value>
@@ -1726,7 +1726,7 @@
     <value>粗体</value>
   </data>
   <data name="SettingsPageLyricsCardStyle.Text" xml:space="preserve">
-    <value>Lyrics Card Style</value>
+    <value>歌词卡片风格</value>
   </data>
   <data name="SettingsPageLyricsCenterTopOffset.Header" xml:space="preserve">
     <value>当前行位置</value>
@@ -1792,10 +1792,10 @@
     <value>细体</value>
   </data>
   <data name="SettingsPageLyricsLineInnerSpacingFactor.Header" xml:space="preserve">
-    <value>Inner Line Spacing</value>
+    <value>内部行间距</value>
   </data>
   <data name="SettingsPageLyricsLineOverallSpacingFactor.Header" xml:space="preserve">
-    <value>Overall Line Spacing</value>
+    <value>整体行间距</value>
   </data>
   <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
     <value>行间距</value>

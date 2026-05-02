@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -637,10 +637,10 @@
     <value>Zoomer pour s'adapter</value>
   </data>
   <data name="LayoutSettingsControlCustomProfiles.Text" xml:space="preserve">
-    <value>Custom</value>
+    <value>Sur mesure</value>
   </data>
   <data name="LayoutSettingsControlCustomProfilesEmpty.Text" xml:space="preserve">
-    <value>No custom layouts found. Create from a template or import an existing layout</value>
+    <value>Aucune mise en page personnalisée n'a été trouvée. Créer à partir d'un modèle ou importer une mise en page existante</value>
   </data>
   <data name="LayoutSettingsControlLayoutNameTextBox.PlaceholderText" xml:space="preserve">
     <value>Saisissez un nom pour ce modèle afin de le distinguer.</value>
@@ -649,7 +649,7 @@
     <value>Aucune fenêtre de texte n'utilise cette disposition</value>
   </data>
   <data name="LayoutSettingsControlSystemProfiles.Text" xml:space="preserve">
-    <value>Default</value>
+    <value>Défaut</value>
   </data>
   <data name="LayoutSettingsControlViewAppliedLyricsWindow.Text" xml:space="preserve">
     <value>Visualiser les fenêtres de paroles en utilisant cette mise en page</value>
@@ -661,10 +661,10 @@
     <value>A gauche Album Art A droite Lyrics Layout</value>
   </data>
   <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve">
-    <value>Left Lyrics Right Album Art Layout (Compact)</value>
+    <value>Paroles à gauche Paroles à droite Disposition de la pochette d'album (Compact)</value>
   </data>
   <data name="LeftLyricsRightAlbumArtLayout" xml:space="preserve">
-    <value>Left Lyrics Right Album Art Layout</value>
+    <value>Paroles à gauche Paroles à droite Présentation de l'album</value>
   </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>Échec de la demande de traduction auprès de LibreTranslate. Veuillez vérifier les paramètres ou la configuration locale de LibreTranslate</value>
@@ -1726,7 +1726,7 @@
     <value>Gras</value>
   </data>
   <data name="SettingsPageLyricsCardStyle.Text" xml:space="preserve">
-    <value>Lyrics Card Style</value>
+    <value>Style de la carte des paroles</value>
   </data>
   <data name="SettingsPageLyricsCenterTopOffset.Header" xml:space="preserve">
     <value>Position de la ligne actuelle</value>
@@ -1792,10 +1792,10 @@
     <value>Léger</value>
   </data>
   <data name="SettingsPageLyricsLineInnerSpacingFactor.Header" xml:space="preserve">
-    <value>Inner Line Spacing</value>
+    <value>Espacement des lignes intérieures</value>
   </data>
   <data name="SettingsPageLyricsLineOverallSpacingFactor.Header" xml:space="preserve">
-    <value>Overall Line Spacing</value>
+    <value>Espacement global des lignes</value>
   </data>
   <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
     <value>Interligne</value>
