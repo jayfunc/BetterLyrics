@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -385,7 +385,7 @@
     <value>歌詞</value>
   </data>
   <data name="LayoutEditorControlComponentLyricsCard" xml:space="preserve">
-    <value>歌詞卡</value>
+    <value>歌詞卡片</value>
   </data>
   <data name="LayoutEditorControlComponentNone" xml:space="preserve">
     <value>無</value>
@@ -397,13 +397,13 @@
     <value>歌曲專輯</value>
   </data>
   <data name="LayoutEditorControlComponentSongArtist" xml:space="preserve">
-    <value>歌曲創作者</value>
+    <value>歌曲演出者</value>
   </data>
   <data name="LayoutEditorControlComponentSongInfo" xml:space="preserve">
     <value>歌曲資訊</value>
   </data>
   <data name="LayoutEditorControlComponentSongTitle" xml:space="preserve">
-    <value>歌曲名稱</value>
+    <value>歌曲標題</value>
   </data>
   <data name="LayoutEditorControlCopyHere" xml:space="preserve">
     <value>放在這裡</value>
@@ -430,7 +430,7 @@
     <value>删除上方列</value>
   </data>
   <data name="LayoutEditorControlFocusComponentHeader.Text" xml:space="preserve">
-    <value>專注於選定的元件</value>
+    <value>定位至選取元件</value>
   </data>
   <data name="LayoutEditorControlGlobalColSpacingBox.Header" xml:space="preserve">
     <value>欄間距</value>
@@ -595,7 +595,7 @@
     <value>將頂部列設定為填充</value>
   </data>
   <data name="LayoutEditorControlSizeHeader.Text" xml:space="preserve">
-    <value>尺寸</value>
+    <value>大小</value>
   </data>
   <data name="LayoutEditorControlStarDescription.Text" xml:space="preserve">
     <value>根據輸入的值按比例分配剩餘空間</value>
@@ -637,10 +637,10 @@
     <value>缩放以适应</value>
   </data>
   <data name="LayoutSettingsControlCustomProfiles.Text" xml:space="preserve">
-    <value>Custom</value>
+    <value>自訂</value>
   </data>
   <data name="LayoutSettingsControlCustomProfilesEmpty.Text" xml:space="preserve">
-    <value>No custom layouts found. Create from a template or import an existing layout</value>
+    <value>未找到自訂版面。從範本建立或匯入現有版面</value>
   </data>
   <data name="LayoutSettingsControlLayoutNameTextBox.PlaceholderText" xml:space="preserve">
     <value>輸入此佈局的名稱，以便區分它</value>
@@ -649,22 +649,22 @@
     <value>沒有歌詞視窗使用此佈局</value>
   </data>
   <data name="LayoutSettingsControlSystemProfiles.Text" xml:space="preserve">
-    <value>Default</value>
+    <value>預設</value>
   </data>
   <data name="LayoutSettingsControlViewAppliedLyricsWindow.Text" xml:space="preserve">
     <value>使用此佈局檢視歌詞視窗</value>
   </data>
   <data name="LeftAlbumArtRightLyricsCompactLayout" xml:space="preserve">
-    <value>左側專輯封面 右側歌詞版面 (Compact)</value>
+    <value>左側專輯封面 右側歌詞版面 (緊湊型)</value>
   </data>
   <data name="LeftAlbumArtRightLyricsLayout" xml:space="preserve">
     <value>左側專輯封面 右側歌詞版面</value>
   </data>
   <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve">
-    <value>Left Lyrics Right Album Art Layout (Compact)</value>
+    <value>左側歌詞 右側專輯封面佈局 (緊湊型)</value>
   </data>
   <data name="LeftLyricsRightAlbumArtLayout" xml:space="preserve">
-    <value>Left Lyrics Right Album Art Layout</value>
+    <value>左側歌詞 右側專輯封面佈局</value>
   </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>向 LibreTranslate 請求翻譯失敗，請檢查設定或本機 LibreTranslate 配置</value>
@@ -1726,7 +1726,7 @@
     <value>粗體</value>
   </data>
   <data name="SettingsPageLyricsCardStyle.Text" xml:space="preserve">
-    <value>Lyrics Card Style</value>
+    <value>歌詞卡片風格</value>
   </data>
   <data name="SettingsPageLyricsCenterTopOffset.Header" xml:space="preserve">
     <value>目前行位置</value>
@@ -1792,10 +1792,10 @@
     <value>細體</value>
   </data>
   <data name="SettingsPageLyricsLineInnerSpacingFactor.Header" xml:space="preserve">
-    <value>Inner Line Spacing</value>
+    <value>内部行間距</value>
   </data>
   <data name="SettingsPageLyricsLineOverallSpacingFactor.Header" xml:space="preserve">
-    <value>Overall Line Spacing</value>
+    <value>整體行間距</value>
   </data>
   <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
     <value>行間距</value>
@@ -2374,7 +2374,7 @@
     <value>通知覆蓋層</value>
   </data>
   <data name="TopAlbumArtBottomLyricsCompactLayout" xml:space="preserve">
-    <value>頂部專輯封面 底部歌詞版面 (精簡型)</value>
+    <value>頂部專輯封面 底部歌詞版面 (緊湊型)</value>
   </data>
   <data name="TopAlbumArtBottomLyricsLayout" xml:space="preserve">
     <value>頂部專輯封面 底部歌詞版面</value>
