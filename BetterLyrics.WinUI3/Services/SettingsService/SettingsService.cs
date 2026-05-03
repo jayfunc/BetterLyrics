@@ -142,9 +142,20 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
             foreach (var mode in Enum.GetValues<NowPlayingLayoutMode>().Cast<NowPlayingLayoutMode>())
             {
                 if (mode == NowPlayingLayoutMode.Custom) continue;
-                if (!AppSettings.LayoutProfiles.Any(p => p.Mode == mode))
+
+                var existing = AppSettings.LayoutProfiles.FirstOrDefault(p => p.Mode == mode);
+                if (existing == null)
                 {
                     AppSettings.LayoutProfiles.Add(new LayoutProfile(mode));
+                }
+                else
+                {
+                    var id = existing.Id;
+                    var index = AppSettings.LayoutProfiles.IndexOf(existing);
+                    AppSettings.LayoutProfiles[index] = new LayoutProfile(mode)
+                    {
+                        Id = id,
+                    };
                 }
             }
         }

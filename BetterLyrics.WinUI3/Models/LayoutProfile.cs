@@ -640,13 +640,13 @@ namespace BetterLyrics.WinUI3.Models
                 Name = this.Name,
                 Mode = NowPlayingLayoutMode.Custom,
 
-                RowDefinitions = [.. this.RowDefinitions.ToList()],
-                ColumnDefinitions = [.. this.ColumnDefinitions.ToList()],
+                RowDefinitions = new ObservableCollection<string>(this.RowDefinitions),
+                ColumnDefinitions = new ObservableCollection<string>(this.ColumnDefinitions),
 
                 RowSpacing = this.RowSpacing,
                 ColumnSpacing = this.ColumnSpacing,
 
-                Placements = [.. this.Placements.ToList()],
+                Placements = new FullyObservableCollection<ComponentPlacement>(this.Placements.Select(p => (ComponentPlacement)p.Clone())),
 
                 PaddingLeft = this.PaddingLeft,
                 PaddingTop = this.PaddingTop,
