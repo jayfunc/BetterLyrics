@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.SettingsService;
@@ -36,7 +37,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private void CreateLyricsWindowStatus(LyricsWindowMode mode)
         {
-            AppSettings.WindowBoundsRecords.Add(new LyricsWindowStatus(mode));
+            var status = new LyricsWindowStatus(mode);
+            status.LayoutProfileId = AppSettings.LayoutProfiles.First(x => x.Mode == status.GetDefaultLayoutProfileMode()).Id;
+            AppSettings.WindowBoundsRecords.Add(status);
         }
 
         public void OpenConfigPanel()

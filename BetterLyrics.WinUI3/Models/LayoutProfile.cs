@@ -6,6 +6,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 
 namespace BetterLyrics.WinUI3.Models
 {
@@ -70,6 +71,9 @@ namespace BetterLyrics.WinUI3.Models
                     break;
                 case NowPlayingLayoutMode.TopAlbumArtBottomLyricsCompact:
                     InitTopAlbumArtBottomLyricsCompactMode();
+                    break;
+                case NowPlayingLayoutMode.LyricsCardOnly:
+                    InitLyricsCardOnlyMode();
                     break;
                 default:
                     break;
@@ -559,6 +563,31 @@ namespace BetterLyrics.WinUI3.Models
             ];
         }
 
+        private void InitLyricsCardOnlyMode()
+        {
+            RowDefinitions = ["1*"];
+            ColumnDefinitions = ["1*"];
+            RowSpacing = 0;
+            ColumnSpacing = 0;
+            PaddingLeft = 0;
+            PaddingTop = 0;
+            PaddingRight = 0;
+            PaddingBottom = 0;
+            Placements =
+            [
+                new()
+                {
+                    ComponentType = ComponentType.LyricsCard,
+                    Row = 0,
+                    Column = 0,
+                    RowSpan = 1,
+                    ColumnSpan = 1,
+                    HorizontalAlignment = HorizontalAlignment.Stretch,
+                    VerticalAlignment = VerticalAlignment.Stretch,
+                }
+            ];
+        }
+
         partial void OnPlacementsChanged(FullyObservableCollection<ComponentPlacement> oldValue, FullyObservableCollection<ComponentPlacement> newValue)
         {
             oldValue.CollectionChanged -= Placements_CollectionChanged;
@@ -611,13 +640,13 @@ namespace BetterLyrics.WinUI3.Models
                 Name = this.Name,
                 Mode = NowPlayingLayoutMode.Custom,
 
-                RowDefinitions = new ObservableCollection<string>(this.RowDefinitions),
-                ColumnDefinitions = new ObservableCollection<string>(this.ColumnDefinitions),
+                RowDefinitions = [.. this.RowDefinitions.ToList()],
+                ColumnDefinitions = [.. this.ColumnDefinitions.ToList()],
 
                 RowSpacing = this.RowSpacing,
                 ColumnSpacing = this.ColumnSpacing,
 
-                Placements = new FullyObservableCollection<ComponentPlacement>(this.Placements),
+                Placements = [.. this.Placements.ToList()],
 
                 PaddingLeft = this.PaddingLeft,
                 PaddingTop = this.PaddingTop,

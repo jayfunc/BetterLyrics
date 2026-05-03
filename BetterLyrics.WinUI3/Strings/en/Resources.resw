@@ -672,6 +672,9 @@
   <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve">
     <value>e.g. http://localhost:5000</value>
   </data>
+  <data name="LyricsCardOnlyLayout" xml:space="preserve">
+    <value>Lyrics Card Only Layout</value>
+  </data>
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve">
     <value>Duration</value>
   </data>

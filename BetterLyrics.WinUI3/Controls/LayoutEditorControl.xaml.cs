@@ -142,10 +142,14 @@ namespace BetterLyrics.WinUI3.Controls
             if (d is LayoutEditorControl control)
             {
                 if (e.OldValue is INotifyPropertyChanged oldProfile)
+                {
                     oldProfile.PropertyChanged -= control.OnModelPropertyChanged;
+                }
 
                 if (e.NewValue is INotifyPropertyChanged newProfile)
+                {
                     newProfile.PropertyChanged += control.OnModelPropertyChanged;
+                }
 
                 control.UpdateToolbox();
                 control.UpdateHeaders();
