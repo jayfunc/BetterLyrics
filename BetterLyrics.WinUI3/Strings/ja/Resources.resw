@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -499,7 +499,7 @@
     <value>キーボードショートカット</value>
   </data>
   <data name="LayoutEditorControlLearnMoreLink.Content" xml:space="preserve">
-    <value>Learn more about Layout Editor</value>
+    <value>レイアウトエディターの詳細</value>
   </data>
   <data name="LayoutEditorControlMarginBottomBox.Header" xml:space="preserve">
     <value>下端</value>
@@ -631,13 +631,13 @@
     <value>マウスホイール</value>
   </data>
   <data name="LayoutEditorControlZoomInButton.Content" xml:space="preserve">
-    <value>ズームイン</value>
+    <value>拡大表示</value>
   </data>
   <data name="LayoutEditorControlZoomOutButton.Content" xml:space="preserve">
-    <value>ズームアウト</value>
+    <value>縮小表示</value>
   </data>
   <data name="LayoutEditorControlZoomResetButton.Content" xml:space="preserve">
-    <value>ズーム・トゥ・フィット</value>
+    <value>ズームして合わせる</value>
   </data>
   <data name="LayoutSettingsControlCustomProfiles.Text" xml:space="preserve">
     <value>カスタム</value>
@@ -664,10 +664,10 @@
     <value>左側アルバムアート 右側歌詞レイアウト</value>
   </data>
   <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve">
-    <value>左 歌詞 右 アルバムアートレイアウト (コンパクト)</value>
+    <value>左側歌詞 右側アルバムアート (コンパクト)</value>
   </data>
   <data name="LeftLyricsRightAlbumArtLayout" xml:space="preserve">
-    <value>左 歌詞 右 アルバム・アート レイアウト</value>
+    <value>左側歌詞 右側アルバムアート</value>
   </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>LibreTranslate への翻訳リクエストに失敗しました。設定またはローカルの LibreTranslate 構成を確認してください</value>
@@ -676,7 +676,7 @@
     <value>例: http://localhost:5000</value>
   </data>
   <data name="LyricsCardOnlyLayout" xml:space="preserve">
-    <value>Lyrics Card Only Layout</value>
+    <value>歌詞カードのみのレイアウト</value>
   </data>
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve">
     <value>持続時間</value>
@@ -2235,7 +2235,7 @@
   <data name="SettingsPageUnplayedStrokeFontColor.Header" xml:space="preserve">
     <value>縁取り（再生待ち）</value>
   </data>
-  <data name="SettingsPageUserWhoPurchased.PatronName" xml:space="preserve">
+  <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
     <value>そして BetterLyrics を購入したユーザー</value>
   </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">

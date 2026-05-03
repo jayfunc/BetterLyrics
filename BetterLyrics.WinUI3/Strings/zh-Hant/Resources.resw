@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -499,7 +499,7 @@
     <value>鍵盤快速鍵</value>
   </data>
   <data name="LayoutEditorControlLearnMoreLink.Content" xml:space="preserve">
-    <value>Learn more about Layout Editor</value>
+    <value>進一步了解佈局編輯器</value>
   </data>
   <data name="LayoutEditorControlMarginBottomBox.Header" xml:space="preserve">
     <value>底部</value>
@@ -664,10 +664,10 @@
     <value>左側專輯封面 右側歌詞版面</value>
   </data>
   <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve">
-    <value>左側歌詞 右側專輯封面佈局 (緊湊型)</value>
+    <value>左側歌詞 右側專輯封面版面 (緊湊型)</value>
   </data>
   <data name="LeftLyricsRightAlbumArtLayout" xml:space="preserve">
-    <value>左側歌詞 右側專輯封面佈局</value>
+    <value>左側歌詞 右側專輯封面版面</value>
   </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
     <value>向 LibreTranslate 請求翻譯失敗，請檢查設定或本機 LibreTranslate 配置</value>
@@ -676,7 +676,7 @@
     <value>例如 http://localhost:5000</value>
   </data>
   <data name="LyricsCardOnlyLayout" xml:space="preserve">
-    <value>Lyrics Card Only Layout</value>
+    <value>僅歌词卡片版面</value>
   </data>
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve">
     <value>時間長度</value>
@@ -2235,7 +2235,7 @@
   <data name="SettingsPageUnplayedStrokeFontColor.Header" xml:space="preserve">
     <value>描邊 (未播放)</value>
   </data>
-  <data name="SettingsPageUserWhoPurchased.PatronName" xml:space="preserve">
+  <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
     <value>以及購買支援 BetterLyrics 的使用者</value>
   </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">
