@@ -9,13 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid
-        Padding="16"
-        Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-        BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-        BorderThickness="1"
-        ColumnSpacing="16"
-        CornerRadius="4">
+    <Grid Padding="16" ColumnSpacing="16">
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -36,7 +30,14 @@
             Grid.Column="1"
             VerticalAlignment="Center"
             Spacing="2">
-            <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="{x:Bind Header, Mode=OneWay}" />
+
+            <StackPanel Orientation="Horizontal" Spacing="6">
+                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="{x:Bind Header, Mode=OneWay}" />
+                <TextBlock
+                    VerticalAlignment="Center"
+                    FontSize="12"
+                    Text="{x:Bind Badges, Mode=OneWay}" />
+            </StackPanel>
 
             <HyperlinkButton
                 MinWidth="0"
@@ -48,10 +49,5 @@
                 NavigateUri="{x:Bind Description, Mode=OneWay}" />
         </StackPanel>
 
-        <TextBlock
-            Grid.Column="2"
-            VerticalAlignment="Center"
-            FontSize="16"
-            Text="{x:Bind Badges, Mode=OneWay}" />
     </Grid>
 </UserControl>

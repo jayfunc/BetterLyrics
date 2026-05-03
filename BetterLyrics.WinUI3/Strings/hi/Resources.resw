@@ -2235,7 +2235,7 @@
   <data name="SettingsPageUnplayedStrokeFontColor.Header" xml:space="preserve">
     <value>स्ट्रोक (अनप्लेड)</value>
   </data>
-  <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
+  <data name="SettingsPageUserWhoPurchased.PatronName" xml:space="preserve">
     <value>और वे उपयोगकर्ता जिन्होंने BetterLyrics को खरीदा और समर्थन किया</value>
   </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">

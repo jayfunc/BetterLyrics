@@ -214,18 +214,14 @@
                         </StackPanel>
                     </Grid>
 
-                    <Expander
-                        Padding="0"
-                        HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Stretch"
-                        Background="Transparent">
+                    <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">
                         <Expander.Header>
                             <TextBlock x:Uid="SetingsPageContributors" />
                         </Expander.Header>
-                        <StackPanel>
+                        <controls:WrapPanel>
                             <local:ContributorCard
                                 AvatarSource="https://github.com/jayfunc.png"
-                                Badges="💻 🌐 🧪 📝"
+                                Badges="💻🌐🧪📝"
                                 Description="https://github.com/jayfunc"
                                 Header="jayfunc" />
                             <local:ContributorCard
@@ -244,13 +240,23 @@
                                 Description="https://github.com/ZHider"
                                 Header="ZHider" />
                             <local:ContributorCard
+                                AvatarSource="https://github.com/YUZU384.png"
+                                Badges="💻"
+                                Description="https://github.com/YUZU384"
+                                Header="YUZU384" />
+                            <local:ContributorCard
                                 AvatarSource="https://github.com/kusutori.png"
                                 Badges="💻"
                                 Description="https://github.com/kusutori"
                                 Header="kusutori" />
                             <local:ContributorCard
+                                AvatarSource="https://github.com/PiYuanZhouLv.png"
+                                Badges="💻"
+                                Description="https://github.com/PiYuanZhouLv"
+                                Header="PiYuanZhouLv" />
+                            <local:ContributorCard
                                 AvatarSource="https://crowdin-static.cf-downloads.crowdin.com/avatar/17495984/large/8ccabd161147e3f072cf116491cacbbd.png"
-                                Badges="🌐 🧪 📝"
+                                Badges="🌐🧪📝"
                                 Description="https://crowdin.com/profile/SuHeAndZl"
                                 Header="SuHeAndZl" />
                             <local:ContributorCard
@@ -258,7 +264,7 @@
                                 Badges="🌐"
                                 Description="https://crowdin.com/profile/borcolasky"
                                 Header="borcolasky" />
-                        </StackPanel>
+                        </controls:WrapPanel>
                     </Expander>
 
                     <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">
@@ -299,44 +305,7 @@
                             <uc:PatronControl Date="Nov 17, 2025" PatronName="SuHeAndZl" />
                             <uc:PatronControl Date="Nov 2, 2025" PatronName="借过" />
                             <uc:PatronControl Date="Aug 28, 2025" PatronName="**华" />
-                            <Border
-                                Width="500"
-                                Padding="16"
-                                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
-                                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                                BorderThickness="1"
-                                CornerRadius="{StaticResource ControlCornerRadius}">
-
-                                <Grid ColumnSpacing="16">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="*" />
-                                    </Grid.ColumnDefinitions>
-
-                                    <Grid
-                                        Width="40"
-                                        Height="40"
-                                        Background="{ThemeResource SystemControlBackgroundBaseLowBrush}"
-                                        CornerRadius="20">
-                                        <FontIcon
-                                            FontFamily="{ThemeResource SegoeFluentIcons}"
-                                            FontSize="16"
-                                            Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-                                            Glyph="&#xEB52;" />
-                                    </Grid>
-
-                                    <StackPanel
-                                        Grid.Column="1"
-                                        VerticalAlignment="Center"
-                                        Spacing="2">
-                                        <TextBlock
-                                            x:Uid="SettingsPageUserWhoPurchased"
-                                            Foreground="{ThemeResource TextFillColorPrimaryBrush}"
-                                            Style="{ThemeResource BodyStrongTextBlockStyle}"
-                                            TextTrimming="CharacterEllipsis" />
-                                    </StackPanel>
-                                </Grid>
-                            </Border>
+                            <uc:PatronControl x:Uid="SettingsPageUserWhoPurchased" />
                         </controls:WrapPanel>
                     </Expander>
 
