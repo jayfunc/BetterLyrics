@@ -2235,7 +2235,7 @@
   <data name="SettingsPageUnplayedStrokeFontColor.Header" xml:space="preserve">
     <value>ضربة (لم يتم لعبها)</value>
   </data>
-  <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
+  <data name="SettingsPageUserWhoPurchased.PatronName" xml:space="preserve">
     <value>والمستخدمين الذين اشتروا ودعموا BetterLyrics</value>
   </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">

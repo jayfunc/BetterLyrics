@@ -2235,7 +2235,7 @@
   <data name="SettingsPageUnplayedStrokeFontColor.Header" xml:space="preserve">
     <value>描邊 (未播放)</value>
   </data>
-  <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
+  <data name="SettingsPageUserWhoPurchased.PatronName" xml:space="preserve">
     <value>以及購買支援 BetterLyrics 的使用者</value>
   </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">

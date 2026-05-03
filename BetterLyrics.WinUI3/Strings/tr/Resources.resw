@@ -2235,7 +2235,7 @@
   <data name="SettingsPageUnplayedStrokeFontColor.Header" xml:space="preserve">
     <value>Vuruş (Oynanmamış)</value>
   </data>
-  <data name="SettingsPageUserWhoPurchased.Text" xml:space="preserve">
+  <data name="SettingsPageUserWhoPurchased.PatronName" xml:space="preserve">
     <value>Ve BetterLyrics satın alan kullanıcılar</value>
   </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">
