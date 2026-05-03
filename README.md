@@ -174,8 +174,10 @@ This project is licensed under the **GNU General Public License v3.0**.
 * [Raspberry-Monster](https://github.com/Raspberry-Monster) `💻`
 * [zxbmmmmmmmmm](https://github.com/zxbmmmmmmmmm) `💻`
 * [ZHider](https://github.com/ZHider) `💻`
+* [YUZU384](https://github.com/YUZU384) `💻`
 * [kusutori](https://github.com/kusutori) `💻`
-* [suheandzl](https://github.com/suheandzl) `🌐` `🧪` `📝`
+* [PiYuanZhouLv](https://github.com/PiYuanZhouLv) `💻`
+* [SuHeAndZl](https://crowdin.com/profile/SuHeAndZl) `🌐` `🧪` `📝`
 * [borcolasky](https://crowdin.com/profile/borcolasky) `🌐`
 
 > `💻` Code ╹ `🌐` i18n ╹ `🧪` QA ╹ `📝` Docs
