@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using BetterLyrics.WinUI3.Models;
+using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using BetterLyrics.WinUI3.Models;
 
 namespace BetterLyrics.WinUI3.Helper
 {

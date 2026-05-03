@@ -937,6 +937,13 @@
                                 </StackPanel>
                             </Grid>
 
+                            <MenuFlyoutSeparator Margin="-20,0" />
+
+                            <HyperlinkButton
+                                x:Uid="LayoutEditorControlLearnMoreLink"
+                                Padding="0"
+                                NavigateUri="https://betterlyrics.github.io/layout-editor" />
+
                         </StackPanel>
                     </Flyout>
                 </Button.Flyout>

@@ -23,8 +23,6 @@ using System.Linq;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.System;
-using Windows.UI;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace BetterLyrics.WinUI3.Controls
 {

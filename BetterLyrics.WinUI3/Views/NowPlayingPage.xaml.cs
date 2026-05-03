@@ -1,11 +1,9 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using BetterLyrics.WinUI3.Collections;
 using BetterLyrics.WinUI3.Controls;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Helper.Lyrics;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
@@ -27,10 +25,8 @@ using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.DataTransfer;
 using Windows.Storage;
 
 namespace BetterLyrics.WinUI3.Views
@@ -247,7 +243,7 @@ namespace BetterLyrics.WinUI3.Views
 
                 UpdateLyricsLayout();
                 UpdateAlbumArtLayout();
-                
+
                 await RenderSongInfoAsync();
             }, TimeSpan.FromMilliseconds(250));
         }

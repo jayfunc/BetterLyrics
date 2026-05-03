@@ -1,8 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
-using Microsoft.UI.Xaml;
-using System;
 using Windows.Foundation;
 
 namespace BetterLyrics.WinUI3.Extensions
