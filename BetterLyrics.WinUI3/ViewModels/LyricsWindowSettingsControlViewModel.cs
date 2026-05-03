@@ -9,7 +9,6 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using System.Linq;
-using System.Numerics;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {

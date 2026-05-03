@@ -498,6 +498,9 @@
   <data name="LayoutEditorControlKeyboardShortcutsHeader.Text" xml:space="preserve">
     <value>คีย์บอร์ดชอร์ตคัต</value>
   </data>
+  <data name="LayoutEditorControlLearnMoreLink.Content" xml:space="preserve">
+    <value>Learn more about Layout Editor</value>
+  </data>
   <data name="LayoutEditorControlMarginBottomBox.Header" xml:space="preserve">
     <value>ด้านล่าง</value>
   </data>
