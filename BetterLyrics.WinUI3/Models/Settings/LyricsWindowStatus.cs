@@ -2,11 +2,13 @@
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Services.LocalizationService;
+using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using System;
+using System.Linq;
 using System.Text.Json.Serialization;
 using Windows.Foundation;
 
@@ -315,6 +317,8 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
                 IsMaximized = this.IsMaximized,
                 IsFullscreen = this.IsFullscreen,
+
+                LayoutProfileId = this.LayoutProfileId,
 
                 WindowBounds = this.WindowBounds,
                 DockHeight = this.DockHeight,

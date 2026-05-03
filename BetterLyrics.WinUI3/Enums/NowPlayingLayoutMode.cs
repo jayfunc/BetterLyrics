@@ -14,6 +14,7 @@ namespace BetterLyrics.WinUI3.Enums
         LeftLyricsRightAlbumArtCompact, // Taskbar / Docked
         TopAlbumArtBottomLyrics, // Fullscreen
         TopAlbumArtBottomLyricsCompact, // Narrow
+        LyricsCardOnly,
         Custom = 999,
     }
 }

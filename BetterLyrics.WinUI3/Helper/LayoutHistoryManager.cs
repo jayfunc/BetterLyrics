@@ -7,28 +7,27 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public class LayoutHistoryManager
     {
-        private readonly Stack<string> _undoStack = new();
-        private readonly Stack<string> _redoStack = new();
+        private readonly Stack<string?> _undoStack = new();
+        private readonly Stack<string?> _redoStack = new();
         private string? _currentStateJson;
 
-        // JSON 序列化配置（解决之前遇到的 NaN/Infinity 问题，并允许循环引用如果存在的话）
         private readonly JsonSerializerOptions _jsonOptions = new()
         {
             NumberHandling = JsonNumberHandling.AllowNamedFloatingPointLiterals,
-            ReferenceHandler = ReferenceHandler.IgnoreCycles
+            ReferenceHandler = ReferenceHandler.IgnoreCycles,
+            TypeInfoResolver = Serialization.SourceGenerationContext.Default
         };
 
         public bool CanUndo => _undoStack.Count > 0;
         public bool CanRedo => _redoStack.Count > 0;
 
-        // 记录新的快照
         public void SaveSnapshot(LayoutProfile profile)
         {
             if (profile == null) return;
 
             string newJson = JsonSerializer.Serialize(profile, _jsonOptions);
 
-            // 只有当状态真正发生改变时才记录（防止无意义的连续点击存入相同状态）
+            // 防止无意义的连续点击存入相同状态
             if (_currentStateJson != null && _currentStateJson != newJson)
             {
                 _undoStack.Push(_currentStateJson);
@@ -38,26 +37,24 @@ namespace BetterLyrics.WinUI3.Helper
             _currentStateJson = newJson;
         }
 
-        // 撤销
         public LayoutProfile? Undo()
         {
             if (!CanUndo) return null;
 
-            _redoStack.Push(_currentStateJson); // 把当前状态压入重做栈
-            _currentStateJson = _undoStack.Pop(); // 取出上一个状态
+            _redoStack.Push(_currentStateJson);
+            _currentStateJson = _undoStack.Pop();
 
-            return JsonSerializer.Deserialize<LayoutProfile>(_currentStateJson, _jsonOptions);
+            return _currentStateJson == null ? null : JsonSerializer.Deserialize<LayoutProfile>(_currentStateJson, _jsonOptions);
         }
 
-        // 重做
-        public LayoutProfile Redo()
+        public LayoutProfile? Redo()
         {
             if (!CanRedo) return null;
 
-            _undoStack.Push(_currentStateJson); // 把当前状态压入撤销栈
-            _currentStateJson = _redoStack.Pop(); // 取出下一个状态
+            _undoStack.Push(_currentStateJson);
+            _currentStateJson = _redoStack.Pop();
 
-            return JsonSerializer.Deserialize<LayoutProfile>(_currentStateJson, _jsonOptions);
+            return _currentStateJson == null ? null : JsonSerializer.Deserialize<LayoutProfile>(_currentStateJson, _jsonOptions);
         }
 
         public void Clear()
