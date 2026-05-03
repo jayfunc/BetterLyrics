@@ -170,12 +170,14 @@
 #### 贡献者
 
 * [jayfunc](https://github.com/jayfunc) `💻` `🌐` `🧪` `📝`
-- [Raspberry-Monster](https://github.com/Raspberry-Monster) `💻`
-- [zxbmmmmmmmmm](https://github.com/zxbmmmmmmmmm) `💻`
-- [ZHider](https://github.com/ZHider) `💻`
-- [kusutori](https://github.com/kusutori) `💻`
-- [suheandzl](https://github.com/suheandzl) `🌐` `🧪` `📝`
-- [borcolasky](https://crowdin.com/profile/borcolasky) `🌐`
+* [Raspberry-Monster](https://github.com/Raspberry-Monster) `💻`
+* [zxbmmmmmmmmm](https://github.com/zxbmmmmmmmmm) `💻`
+* [ZHider](https://github.com/ZHider) `💻`
+* [YUZU384](https://github.com/YUZU384) `💻`
+* [kusutori](https://github.com/kusutori) `💻`
+* [PiYuanZhouLv](https://github.com/PiYuanZhouLv) `💻`
+* [SuHeAndZl](https://crowdin.com/profile/SuHeAndZl) `🌐` `🧪` `📝`
+* [borcolasky](https://crowdin.com/profile/borcolasky) `🌐`
 
 > `💻` Code ╹ `🌐` i18n ╹ `🧪` QA ╹ `📝` Docs
 
