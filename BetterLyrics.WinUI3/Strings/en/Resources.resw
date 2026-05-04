@@ -2235,9 +2235,6 @@
   <data name="SettingsPageUnplayedStrokeFontColor.Header" xml:space="preserve">
     <value>Stroke (Unplayed)</value>
   </data>
-  <data name="SettingsPageUserWhoPurchased.PatronName" xml:space="preserve">
-    <value>And users who purchased BetterLyrics</value>
-  </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">
     <value>Version</value>
   </data>
@@ -2477,5 +2474,8 @@
   </data>
   <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
     <value>Window Theme</value>
+  </data>
+  <data name="SettingsPageUserWhoPurchased.PatronName" xml:space="preserve">
+    <value>And users who purchased BetterLyrics</value>
   </data>
 </root>
