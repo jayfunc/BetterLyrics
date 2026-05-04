@@ -353,10 +353,12 @@
                                     <NumberBox
                                         x:Uid="LayoutEditorControlGlobalRowSpacingBox"
                                         Grid.Column="0"
+                                        Minimum="0"
                                         Value="{x:Bind LayoutProfile.RowSpacing, Mode=TwoWay}" />
                                     <NumberBox
                                         x:Uid="LayoutEditorControlGlobalColSpacingBox"
                                         Grid.Column="1"
+                                        Minimum="0"
                                         Value="{x:Bind LayoutProfile.ColumnSpacing, Mode=TwoWay}" />
                                 </Grid>
 
