@@ -1,6 +1,7 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
+using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.WinUI;
 using FlaUI.Core.AutomationElements;
@@ -24,9 +25,8 @@ namespace BetterLyrics.WinUI3.Hooks
         private readonly Dictionary<HWND, TrackedWindowInfo> _trackedThirdPartyWindows = new();
 
         private readonly UIA3Automation _automation;
-        private AutomationElement? _taskbar;
 
-        private readonly Microsoft.UI.Xaml.Window _targetWindow;
+        private readonly NowPlayingWindow _targetWindow;
         private readonly IntPtr _targetHwnd;
         private IntPtr _taskbarHwnd;
 
@@ -38,7 +38,7 @@ namespace BetterLyrics.WinUI3.Hooks
         private readonly DispatcherQueueTimer? _pollingTimer;
         private bool _isDisposed;
 
-        public TaskbarHook(Microsoft.UI.Xaml.Window window, TaskbarPlacement placement, Rectangle targetMonitorRect)
+        public TaskbarHook(NowPlayingWindow window, TaskbarPlacement placement, Rectangle targetMonitorRect)
         {
             _targetWindow = window;
             _targetHwnd = WinRT.Interop.WindowNative.GetWindowHandle(_targetWindow);
@@ -129,14 +129,14 @@ namespace BetterLyrics.WinUI3.Hooks
         {
             try
             {
-                _taskbar = FindTargetTaskbar();
+                var taskbar = FindTargetTaskbar();
 
-                if (_taskbar == null)
+                if (taskbar == null)
                 {
                     return;
                 }
 
-                _taskbarHwnd = _taskbar.Properties.NativeWindowHandle.ValueOrDefault;
+                _taskbarHwnd = taskbar.Properties.NativeWindowHandle.ValueOrDefault;
                 if (_taskbarHwnd != IntPtr.Zero)
                 {
                     AttachToTaskbar(_taskbarHwnd);
@@ -154,20 +154,23 @@ namespace BetterLyrics.WinUI3.Hooks
 
         private void RequestUpdate()
         {
-            if (_isDisposed || _taskbar == null) return;
+            if (_isDisposed) return;
+
+            var taskbar = FindTargetTaskbar();
+            if (taskbar == null) return;
 
             _debounceTimer?.Debounce(() =>
             {
                 _ = Task.Run(() =>
                 {
-                    Rectangle voidRect = CalculateVoidRect(_currentPlacement);
+                    Rectangle voidRect = CalculateVoidRect(taskbar, _currentPlacement);
 
                     if (!_isDisposed && voidRect != Rectangle.Empty)
                     {
                         Rectangle taskbarRect;
                         try
                         {
-                            taskbarRect = _taskbar.BoundingRectangle;
+                            taskbarRect = taskbar.BoundingRectangle;
                         }
                         catch (Exception ex)
                         {
@@ -193,36 +196,26 @@ namespace BetterLyrics.WinUI3.Hooks
             }, TimeSpan.FromMilliseconds(100));
         }
 
-        private Rectangle CalculateVoidRect(TaskbarPlacement placement)
+        private Rectangle CalculateVoidRect(AutomationElement? taskbar, TaskbarPlacement placement)
         {
             try
             {
-                if (_taskbar == null)
+                if (taskbar == null)
                 {
                     return Rectangle.Empty;
                 }
 
                 try
                 {
-                    var _ = _taskbar.BoundingRectangle;
+                    var _ = taskbar.BoundingRectangle;
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogWarning(ex, "Taskbar bounding rectangle access failed, attempting to re-find target taskbar...");
-                    _taskbar = FindTargetTaskbar();
-                    if (_taskbar == null)
-                    {
-                        return Rectangle.Empty;
-                    }
-
-                    _taskbarHwnd = _taskbar.Properties.NativeWindowHandle.ValueOrDefault;
-                    if (_taskbarHwnd != IntPtr.Zero)
-                    {
-                        AttachToTaskbar(_taskbarHwnd);
-                    }
+                    _logger.LogWarning(ex, "Taskbar bounding rectangle access failed");
+                    return Rectangle.Empty;
                 }
 
-                Rectangle taskbarRect = _taskbar.BoundingRectangle;
+                Rectangle taskbarRect = taskbar.BoundingRectangle;
                 if (taskbarRect.Width <= 0)
                 {
                     return Rectangle.Empty;
@@ -235,7 +228,7 @@ namespace BetterLyrics.WinUI3.Hooks
                 List<(int Left, int Right)> occupiedSegments = new List<(int, int)>();
 
                 // 托盘区域
-                var tray = _taskbar.FindFirstChild(x => x.ByClassName("TrayNotifyWnd")); // Win 10/11
+                var tray = taskbar.FindFirstChild(x => x.ByClassName("TrayNotifyWnd")); // Win 10/11
                 if (tray != null)
                 {
                     var rect = tray.BoundingRectangle;
@@ -246,12 +239,12 @@ namespace BetterLyrics.WinUI3.Hooks
                 AutomationElement? pinned = null;
                 if (SystemHelper.IsWindows11OrGreater) // Win 11
                 {
-                    var inputSite = _taskbar.FindFirstChild(x => x.ByClassName("Windows.UI.Input.InputSite.WindowClass"));
+                    var inputSite = taskbar.FindFirstChild(x => x.ByClassName("Windows.UI.Input.InputSite.WindowClass"));
                     pinned = inputSite?.FindFirstChild(x => x.ByClassName("Taskbar.TaskbarFrameAutomationPeer"));
                 }
                 else // Win 10
                 {
-                    pinned = _taskbar.FindFirstChild(x => x.ByClassName("MSTaskListWClass"));
+                    pinned = taskbar.FindFirstChild(x => x.ByClassName("MSTaskListWClass"));
                 }
 
                 if (pinned != null)
@@ -269,7 +262,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
                 // 直接子元素（via FlaUI3）
                 //Debug.WriteLine("=== Enumerating child windows of taskbar via FlaUI... ===");
-                var directChildrenByFlaUI = _taskbar.FindAllChildren();
+                var directChildrenByFlaUI = taskbar.FindAllChildren();
                 foreach (var child in directChildrenByFlaUI)
                 {
                     if (child.Properties.ClassName.TryGetValue(out var className))
@@ -303,7 +296,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
                 // 直接子元素（via Win32）
                 //_logger.LogInformation("=== Enumerating child windows of taskbar via Win32 API... ===");
-                //Debug.WriteLine("=== Enumerating child windows of taskbar via Win32 API... ===");
+                // Debug.WriteLine("=== Enumerating child windows of taskbar via Win32 API... ===");
                 var subWindows = User32.EnumChildWindows(_taskbarHwnd);
                 HashSet<HWND> currentVisibleHwnds = [];
                 foreach (var hwnd in subWindows)
@@ -361,7 +354,7 @@ namespace BetterLyrics.WinUI3.Hooks
                         int width = rect.Right - rect.Left;
                         int height = rect.Bottom - rect.Top;
                         //_logger.LogInformation("Found child window: {ClassName}", className);
-                        //Debug.WriteLine($"Found child window: {className}, Rect: {rect}");
+                        // Debug.WriteLine($"Found child window: {className}, Rect: {rect}");
                         if (width > 0 && height > 0 && rect.Top >= taskbarTop && rect.Bottom <= taskbarBottom)
                         {
                             occupiedSegments.Add((rect.Left, rect.Right));
@@ -534,32 +527,6 @@ namespace BetterLyrics.WinUI3.Hooks
             User32.SetParent((HWND)_targetHwnd, (HWND)taskbarHwnd);
         }
 
-        private bool IsStartMenuFocused()
-        {
-            HWND foregroundWindow = User32.GetForegroundWindow();
-            if (foregroundWindow == HWND.NULL) return false;
-
-            if (User32.GetWindowThreadProcessId(foregroundWindow, out uint processId) == HRESULT.S_OK)
-            {
-                try
-                {
-                    Process process = Process.GetProcessById((int)processId);
-                    string processName = process.ProcessName;
-
-                    if (processName.Equals("StartMenuExperienceHost", StringComparison.OrdinalIgnoreCase) ||
-                        processName.Equals("ShellExperienceHost", StringComparison.OrdinalIgnoreCase))
-                    {
-                        return true;
-                    }
-                }
-                catch
-                {
-                }
-            }
-
-            return false;
-        }
-
         public void Dispose()
         {
             if (_isDisposed) return;
@@ -570,8 +537,11 @@ namespace BetterLyrics.WinUI3.Hooks
 
             if (_targetHwnd != IntPtr.Zero)
             {
+                var windowBounds = _targetWindow.LyricsWindowStatus.WindowBounds;
+
                 User32.SetParent((HWND)_targetHwnd, HWND.NULL);
                 _targetWindow.SetIsChildWindow(false);
+                _targetWindow.MoveAndResize(windowBounds);
             }
 
             _ = Task.Run(() =>
