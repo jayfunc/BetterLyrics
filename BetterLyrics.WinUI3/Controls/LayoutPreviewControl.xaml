@@ -8,18 +8,23 @@
     mc:Ignorable="d">
 
     <Grid>
-        <Grid
-            x:Name="PreviewGrid"
-            Background="{ThemeResource AcrylicBackgroundFillColorBaseBrush}"
-            CornerRadius="4">
-            <TextBlock
-                x:Name="EmptyStateText"
-                x:Uid="LayoutPreviewEmptyText"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Foreground="{ThemeResource TextFillColorDisabledBrush}"
-                Text="暂无组件"
-                Visibility="Collapsed" />
-        </Grid>
+        <Viewbox
+            Width="200"
+            Height="100"
+            Stretch="Uniform">
+            <Grid
+                x:Name="PreviewGrid"
+                Background="{ThemeResource AcrylicBackgroundFillColorBaseBrush}"
+                CornerRadius="4">
+                <TextBlock
+                    x:Name="EmptyStateText"
+                    x:Uid="LayoutPreviewEmptyText"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorDisabledBrush}"
+                    Text="N/A"
+                    Visibility="Collapsed" />
+            </Grid>
+        </Viewbox>
     </Grid>
 </UserControl>
