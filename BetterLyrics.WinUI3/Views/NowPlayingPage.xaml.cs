@@ -17,6 +17,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using CommunityToolkit.WinUI;
 using DevWinUI;
+using Microsoft.UI;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -38,6 +39,7 @@ namespace BetterLyrics.WinUI3.Views
         IRecipient<PropertyChangedMessage<Guid>>,
         IRecipient<PropertyChangedMessage<MappedSongSearchQuery?>>,
         IRecipient<PropertyChangedMessage<NowPlayingPalette>>,
+        IRecipient<PropertyChangedMessage<Direction>>,
         IRecipient<LayoutChangedMessage>
     {
         private readonly IGSMTCService _gsmtcService = Ioc.Default.GetRequiredService<IGSMTCService>();
@@ -230,6 +232,9 @@ namespace BetterLyrics.WinUI3.Views
             var transform = AlbumArtGrid.TransformToVisual(RootGrid);
             var localRect = new Windows.Foundation.Rect(0, 0, AlbumArtGrid.ActualWidth, AlbumArtGrid.ActualHeight);
             LyricsCanvas.AlbumArtRect = transform.TransformBounds(localRect);
+
+            ToggleAlbumArtFadeOut();
+            UpdateAlbumArtFadeOutDirection();
         }
 
         private void OnLayoutChanged()
@@ -386,6 +391,36 @@ namespace BetterLyrics.WinUI3.Views
             OnLayoutChanged();
         }
 
+        private void UpdateAlbumArtFadeOutDirection()
+        {
+            switch (LyricsWindowStatus?.AlbumArtAreaEffectSettings.FadeOutDirection)
+            {
+                case Direction.Left:
+                    AlbumArtGradientBrush.StartPoint = new Windows.Foundation.Point(1, 0);
+                    AlbumArtGradientBrush.EndPoint = new Windows.Foundation.Point(0, 0);
+                    break;
+                case Direction.Up:
+                    AlbumArtGradientBrush.StartPoint = new Windows.Foundation.Point(0, 1);
+                    AlbumArtGradientBrush.EndPoint = new Windows.Foundation.Point(0, 0);
+                    break;
+                case Direction.Right:
+                    AlbumArtGradientBrush.StartPoint = new Windows.Foundation.Point(0, 0);
+                    AlbumArtGradientBrush.EndPoint = new Windows.Foundation.Point(1, 0);
+                    break;
+                case Direction.Down:
+                    AlbumArtGradientBrush.StartPoint = new Windows.Foundation.Point(0, 0);
+                    AlbumArtGradientBrush.EndPoint = new Windows.Foundation.Point(0, 1);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private void ToggleAlbumArtFadeOut()
+        {
+            AlbumArtGradientBrushEnd.Color = LyricsWindowStatus?.AlbumArtAreaEffectSettings.FadeOut == true ? Colors.Transparent : Colors.White;
+        }
+
         public void Receive(PropertyChangedMessage<SongInfo> message)
         {
             if (message.Sender is IGSMTCService && message.PropertyName == nameof(IGSMTCService.CurrentSongInfo))
@@ -406,6 +441,10 @@ namespace BetterLyrics.WinUI3.Views
                     UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, false);
                     UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
                     UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
+                }
+                else if (message.PropertyName == nameof(AlbumArtAreaEffectSettings.FadeOut))
+                {
+                    ToggleAlbumArtFadeOut();
                 }
             }
             else if (message.Sender == LyricsWindowStatus?.LyricsEffectSettings)
@@ -468,6 +507,17 @@ namespace BetterLyrics.WinUI3.Views
         public void Receive(LayoutChangedMessage message)
         {
             OnLayoutChanged();
+        }
+
+        public void Receive(PropertyChangedMessage<Direction> message)
+        {
+            if (message.Sender == LyricsWindowStatus?.AlbumArtAreaEffectSettings)
+            {
+                if (message.PropertyName == nameof(AlbumArtAreaEffectSettings.FadeOutDirection))
+                {
+                    UpdateAlbumArtFadeOutDirection();
+                }
+            }
         }
     }
 }

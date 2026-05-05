@@ -1544,14 +1544,18 @@ namespace BetterLyrics.WinUI3.Controls
             RestoreState(nextState);
         }
 
-        private void RestoreState(LayoutProfile restoredProfile)
+        private void RestoreState(LayoutProfile? restoredProfile)
         {
             if (restoredProfile == null) return;
 
             _isRestoringHistory = true;
 
             SelectedPlacement = null;
-            this.LayoutProfile = restoredProfile;
+
+            this.LayoutProfile.ApplyFrom(restoredProfile);
+
+            UpdateToolbox();
+            UpdateHeaders();
             RequestRender();
 
             _isRestoringHistory = false;

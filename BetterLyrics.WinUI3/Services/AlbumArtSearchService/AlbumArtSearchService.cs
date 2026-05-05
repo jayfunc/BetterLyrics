@@ -168,6 +168,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
             var allFiles = await _fileSystemService.GetParsedFilesAsync(enabledIds, token);
             allFiles = allFiles.Where(x => FileHelper.MusicExtensions.Contains(Path.GetExtension(x.FileName))).ToList();
 
+            int bestScore = 0;
             FilesIndexItem? bestMatch = null;
 
             foreach (var item in allFiles)
@@ -175,18 +176,11 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
                 var ext = Path.GetExtension(item.FileName).ToLower();
                 if (!FileHelper.MusicExtensions.Contains(ext)) continue;
 
-                bool isMetadataMatch = (item.Title == songInfo.Title && item.Artist == songInfo.Artist);
-
-                bool isFilenameMatch = StringHelper.IsSwitchableNormalizedMatch(
-                    Path.GetFileNameWithoutExtension(item.FileName),
-                    songInfo.Artist,
-                    songInfo.Title
-                );
-
-                if (isMetadataMatch || isFilenameMatch)
+                int score = MetadataComparer.CalculateScore(songInfo, item);
+                if (score > bestScore)
                 {
+                    bestScore = score;
                     bestMatch = item;
-                    break;
                 }
             }
 
