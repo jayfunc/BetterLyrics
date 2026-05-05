@@ -588,6 +588,26 @@ namespace BetterLyrics.WinUI3.Models
             ];
         }
 
+        public void ApplyFrom(LayoutProfile source)
+        {
+            RowSpacing = source.RowSpacing;
+            ColumnSpacing = source.ColumnSpacing;
+
+            PaddingLeft = source.PaddingLeft;
+            PaddingTop = source.PaddingTop;
+            PaddingRight = source.PaddingRight;
+            PaddingBottom = source.PaddingBottom;
+
+            RowDefinitions.Clear();
+            foreach (var r in source.RowDefinitions) RowDefinitions.Add(r);
+
+            ColumnDefinitions.Clear();
+            foreach (var c in source.ColumnDefinitions) ColumnDefinitions.Add(c);
+
+            Placements.Clear();
+            foreach (var p in source.Placements) Placements.Add(p);
+        }
+
         partial void OnPlacementsChanged(FullyObservableCollection<ComponentPlacement> oldValue, FullyObservableCollection<ComponentPlacement> newValue)
         {
             oldValue.CollectionChanged -= Placements_CollectionChanged;

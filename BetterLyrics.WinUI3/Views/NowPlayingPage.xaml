@@ -58,11 +58,23 @@
                 <Grid.OpacityTransition>
                     <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
                 </Grid.OpacityTransition>
-                <uc:ImageSwitcher
-                    CornerRadiusAmount="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageRadius, Mode=OneWay}"
-                    ShadowAmount="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageShadowAmount, Mode=OneWay}"
-                    Source="{x:Bind ViewModel.MediaSessionsService.AlbumArtBitmapImage, Mode=OneWay}"
-                    SwitchType="{x:Bind LyricsWindowStatus.AlbumArtAreaEffectSettings.ImageSwitchType, Mode=OneWay}" />
+                <controls:OpacityMaskView>
+                    <controls:OpacityMaskView.OpacityMask>
+                        <Rectangle>
+                            <Rectangle.Fill>
+                                <LinearGradientBrush x:Name="AlbumArtGradientBrush" StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Offset="0" Color="#FFFFFFFF" />
+                                    <GradientStop x:Name="AlbumArtGradientBrushEnd" Offset="1" Color="Transparent" />
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                    </controls:OpacityMaskView.OpacityMask>
+                    <uc:ImageSwitcher
+                        CornerRadiusAmount="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageRadius, Mode=OneWay}"
+                        ShadowAmount="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageShadowAmount, Mode=OneWay}"
+                        Source="{x:Bind ViewModel.MediaSessionsService.AlbumArtBitmapImage, Mode=OneWay}"
+                        SwitchType="{x:Bind LyricsWindowStatus.AlbumArtAreaEffectSettings.ImageSwitchType, Mode=OneWay}" />
+                </controls:OpacityMaskView>
                 <Grid.ContextFlyout>
                     <Flyout FlyoutPresenterStyle="{StaticResource FlyoutGhostStyle}">
                         <StackPanel>

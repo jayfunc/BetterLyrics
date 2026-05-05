@@ -473,13 +473,13 @@ namespace BetterLyrics.WinUI3.Views
 
                 var presenter = AppWindow.Presenter;
 
-                Debug.WriteLine(
-                    "AppWindow changed: " +
-                    "PositionChanged={0}, " +
-                    "SizeChanged={1}, " +
-                    "PresenterChanged={2}, " +
-                    "CurrentPresenter={3}, PresenterType={4}",
-                    args.DidPositionChange, args.DidSizeChange, args.DidPresenterChange, presenter?.GetType().Name, presenter?.Kind.ToString());
+                //Debug.WriteLine(
+                //    "AppWindow changed: " +
+                //    "PositionChanged={0}, " +
+                //    "SizeChanged={1}, " +
+                //    "PresenterChanged={2}, " +
+                //    "CurrentPresenter={3}, PresenterType={4}",
+                //    args.DidPositionChange, args.DidSizeChange, args.DidPresenterChange, presenter?.GetType().Name, presenter?.Kind.ToString());
 
                 if (presenter?.Kind == AppWindowPresenterKind.Overlapped)
                 {

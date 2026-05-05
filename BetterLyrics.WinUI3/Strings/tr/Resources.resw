@@ -2478,4 +2478,22 @@
   <data name="SettingsPageUserWhoPurchased.PatronName" xml:space="preserve">
     <value>Ve BetterLyrics satın alan kullanıcılar</value>
   </data>
+  <data name="SettingsPageDirectionTop.Content" xml:space="preserve">
+    <value>Yukarı doğru</value>
+  </data>
+  <data name="SettingsPageDirectionBottom.Content" xml:space="preserve">
+    <value>Aşağı doğru</value>
+  </data>
+  <data name="SettingsPageDirectionLeft.Content" xml:space="preserve">
+    <value>Sola doğru</value>
+  </data>
+  <data name="SettingsPageDirectionRight.Content" xml:space="preserve">
+    <value>Sağa doğru</value>
+  </data>
+  <data name="AlbumArtAreaSettingsControlFadeOut.Header" xml:space="preserve">
+    <value>Fade Out</value>
+  </data>
+  <data name="AlbumArtAreaSettingsControlFadeOutDirection.Header" xml:space="preserve">
+    <value>Yön</value>
+  </data>
 </root>

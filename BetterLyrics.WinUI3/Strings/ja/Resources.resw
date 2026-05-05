@@ -2478,4 +2478,22 @@
   <data name="SettingsPageUserWhoPurchased.PatronName" xml:space="preserve">
     <value>そして BetterLyrics を購入したユーザー</value>
   </data>
+  <data name="SettingsPageDirectionTop.Content" xml:space="preserve">
+    <value>上へ</value>
+  </data>
+  <data name="SettingsPageDirectionBottom.Content" xml:space="preserve">
+    <value>下へ</value>
+  </data>
+  <data name="SettingsPageDirectionLeft.Content" xml:space="preserve">
+    <value>左へ</value>
+  </data>
+  <data name="SettingsPageDirectionRight.Content" xml:space="preserve">
+    <value>右へ</value>
+  </data>
+  <data name="AlbumArtAreaSettingsControlFadeOut.Header" xml:space="preserve">
+    <value>フェードアウト</value>
+  </data>
+  <data name="AlbumArtAreaSettingsControlFadeOutDirection.Header" xml:space="preserve">
+    <value>向き</value>
+  </data>
 </root>

@@ -45,6 +45,20 @@
                         </ComboBox>
                     </controls:SettingsCard>
 
+                    <controls:SettingsExpander x:Uid="AlbumArtAreaSettingsControlFadeOut" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE727;}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.AlbumArtAreaEffectSettings.FadeOut, Mode=TwoWay}" />
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="AlbumArtAreaSettingsControlFadeOutDirection" IsEnabled="{x:Bind LyricsWindowStatus.AlbumArtAreaEffectSettings.FadeOut, Mode=OneWay}">
+                                <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.AlbumArtAreaEffectSettings.FadeOutDirection, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                    <ComboBoxItem x:Uid="SettingsPageDirectionLeft" />
+                                    <ComboBoxItem x:Uid="SettingsPageDirectionTop" />
+                                    <ComboBoxItem x:Uid="SettingsPageDirectionRight" />
+                                    <ComboBoxItem x:Uid="SettingsPageDirectionBottom" />
+                                </ComboBox>
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
+
                     <TextBlock x:Uid="SettingsPageSongInfoEffect" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <controls:SettingsCard x:Uid="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEC52;}">

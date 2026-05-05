@@ -2478,4 +2478,22 @@
   <data name="SettingsPageUserWhoPurchased.PatronName" xml:space="preserve">
     <value>Y los usuarios que compraron BetterLyrics</value>
   </data>
+  <data name="SettingsPageDirectionTop.Content" xml:space="preserve">
+    <value>Hacia arriba</value>
+  </data>
+  <data name="SettingsPageDirectionBottom.Content" xml:space="preserve">
+    <value>Hacia abajo</value>
+  </data>
+  <data name="SettingsPageDirectionLeft.Content" xml:space="preserve">
+    <value>A la izquierda</value>
+  </data>
+  <data name="SettingsPageDirectionRight.Content" xml:space="preserve">
+    <value>A la derecha</value>
+  </data>
+  <data name="AlbumArtAreaSettingsControlFadeOut.Header" xml:space="preserve">
+    <value>Desvanecimiento</value>
+  </data>
+  <data name="AlbumArtAreaSettingsControlFadeOutDirection.Header" xml:space="preserve">
+    <value>Dirección</value>
+  </data>
 </root>
