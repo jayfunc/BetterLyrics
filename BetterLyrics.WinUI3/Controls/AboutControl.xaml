@@ -50,10 +50,10 @@
                         <StackPanel
                             HorizontalAlignment="Center"
                             Orientation="Horizontal"
-                            Spacing="12">
+                            Spacing="16">
                             <Image
-                                Width="36"
-                                Height="36"
+                                Width="32"
+                                Height="32"
                                 Source="ms-appx:///Assets/Logo.png" />
                             <TextBlock
                                 FontFamily="{StaticResource SloganENFont}"

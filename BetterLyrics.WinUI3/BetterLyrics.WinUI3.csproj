@@ -232,6 +232,15 @@
 		<Content Update="Assets\Leaf.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
+		<Content Update="Assets\Logo.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\MusicWaveBlack.gif">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\MusicWaveWhite.gif">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 		<Content Update="Assets\Page.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
@@ -471,11 +480,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Content Update="Assets\Logo.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
-	<ItemGroup>
-		<Content Update="Assets\Logo.ico">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
