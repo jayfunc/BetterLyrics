@@ -36,7 +36,6 @@
 		<None Remove="Assets\Fonts\SloganENFont.ttf" />
 		<None Remove="Assets\Logo.ico" />
 		<None Remove="Assets\Logo.png" />
-		<None Remove="Assets\LogoPlugin.png" />
 		<None Remove="Assets\Segoe Fluent Icons.ttf" />
 		<None Remove="Assets\Wiki82.profile.xml" />
 		<None Remove="Controls\AboutControl.xaml" />
@@ -233,6 +232,9 @@
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Update="Assets\Logo.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\LogoPlugin.png">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Update="Assets\MusicWaveBlack.gif">
@@ -480,11 +482,6 @@
 	</ItemGroup>
 	<ItemGroup>
 		<Content Update="Assets\Logo.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
-	<ItemGroup>
-		<Content Update="Assets\LogoPlugin.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 	</ItemGroup>
