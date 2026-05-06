@@ -39,7 +39,7 @@ namespace BetterLyrics.WinUI3.Views
         IRecipient<PropertyChangedMessage<Guid>>,
         IRecipient<PropertyChangedMessage<MappedSongSearchQuery?>>,
         IRecipient<PropertyChangedMessage<NowPlayingPalette>>,
-        IRecipient<PropertyChangedMessage<Direction>>,
+        IRecipient<PropertyChangedMessage<float>>,
         IRecipient<LayoutChangedMessage>
     {
         private readonly IGSMTCService _gsmtcService = Ioc.Default.GetRequiredService<IGSMTCService>();
@@ -393,27 +393,11 @@ namespace BetterLyrics.WinUI3.Views
 
         private void UpdateAlbumArtFadeOutDirection()
         {
-            switch (LyricsWindowStatus?.AlbumArtAreaEffectSettings.FadeOutDirection)
-            {
-                case Direction.Left:
-                    AlbumArtGradientBrush.StartPoint = new Windows.Foundation.Point(1, 0);
-                    AlbumArtGradientBrush.EndPoint = new Windows.Foundation.Point(0, 0);
-                    break;
-                case Direction.Up:
-                    AlbumArtGradientBrush.StartPoint = new Windows.Foundation.Point(0, 1);
-                    AlbumArtGradientBrush.EndPoint = new Windows.Foundation.Point(0, 0);
-                    break;
-                case Direction.Right:
-                    AlbumArtGradientBrush.StartPoint = new Windows.Foundation.Point(0, 0);
-                    AlbumArtGradientBrush.EndPoint = new Windows.Foundation.Point(1, 0);
-                    break;
-                case Direction.Down:
-                    AlbumArtGradientBrush.StartPoint = new Windows.Foundation.Point(0, 0);
-                    AlbumArtGradientBrush.EndPoint = new Windows.Foundation.Point(0, 1);
-                    break;
-                default:
-                    break;
-            }
+            var settings = LyricsWindowStatus?.AlbumArtAreaEffectSettings;
+            if (settings == null) return;
+
+            AlbumArtGradientBrush.StartPoint = new Windows.Foundation.Point(settings.FadeOutStartPointX, settings.FadeOutStartPointY);
+            AlbumArtGradientBrush.EndPoint = new Windows.Foundation.Point(settings.FadeOutEndPointX, settings.FadeOutEndPointY);
         }
 
         private void ToggleAlbumArtFadeOut()
@@ -509,11 +493,23 @@ namespace BetterLyrics.WinUI3.Views
             OnLayoutChanged();
         }
 
-        public void Receive(PropertyChangedMessage<Direction> message)
+        public void Receive(PropertyChangedMessage<float> message)
         {
             if (message.Sender == LyricsWindowStatus?.AlbumArtAreaEffectSettings)
             {
-                if (message.PropertyName == nameof(AlbumArtAreaEffectSettings.FadeOutDirection))
+                if (message.PropertyName == nameof(AlbumArtAreaEffectSettings.FadeOutStartPointX))
+                {
+                    UpdateAlbumArtFadeOutDirection();
+                }
+                else if (message.PropertyName == nameof(AlbumArtAreaEffectSettings.FadeOutStartPointY))
+                {
+                    UpdateAlbumArtFadeOutDirection();
+                }
+                else if (message.PropertyName == nameof(AlbumArtAreaEffectSettings.FadeOutEndPointX))
+                {
+                    UpdateAlbumArtFadeOutDirection();
+                }
+                else if (message.PropertyName == nameof(AlbumArtAreaEffectSettings.FadeOutEndPointY))
                 {
                     UpdateAlbumArtFadeOutDirection();
                 }

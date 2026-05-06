@@ -62,7 +62,7 @@
                     <controls:OpacityMaskView.OpacityMask>
                         <Rectangle>
                             <Rectangle.Fill>
-                                <LinearGradientBrush x:Name="AlbumArtGradientBrush" StartPoint="0,0" EndPoint="1,0">
+                                <LinearGradientBrush x:Name="AlbumArtGradientBrush">
                                     <GradientStop Offset="0" Color="#FFFFFFFF" />
                                     <GradientStop x:Name="AlbumArtGradientBrushEnd" Offset="1" Color="Transparent" />
                                 </LinearGradientBrush>
