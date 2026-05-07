@@ -10,7 +10,7 @@
 		<Nullable>enable</Nullable>
 		<LangVersion>preview</LangVersion>
 		<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-		<AppxDefaultResourceQualifiers>Language=en;ar;de;es;fr;hi;id;ja;ko;ms;pt;ru;th;vi;zh-Hans;zh-Hant|Contrast=standard|Scale=200|HomeRegion=001|TargetSize=256|LayoutDirection=LTR|DXFeatureLevel=DX9|Configuration=|AlternateForm=</AppxDefaultResourceQualifiers>
+		<AppxDefaultResourceQualifiers>Language=en;ar;de;es;fr;hi;id;it;ja;ko;ms;pt;ru;th;vi;zh-Hans;zh-Hant|Contrast=standard|Scale=200|HomeRegion=001|TargetSize=256|LayoutDirection=LTR|DXFeatureLevel=DX9|Configuration=|AlternateForm=</AppxDefaultResourceQualifiers>
 	</PropertyGroup>
 	<PropertyGroup>
 		<DefineConstants>$(DefineConstants);DISABLE_XAML_GENERATED_MAIN</DefineConstants>
@@ -36,6 +36,7 @@
 		<None Remove="Assets\Fonts\SloganENFont.ttf" />
 		<None Remove="Assets\Logo.ico" />
 		<None Remove="Assets\Logo.png" />
+		<None Remove="Assets\LogoSystemTray.ico" />
 		<None Remove="Assets\Segoe Fluent Icons.ttf" />
 		<None Remove="Assets\Wiki82.profile.xml" />
 		<None Remove="Controls\AboutControl.xaml" />
@@ -512,6 +513,9 @@
 	  <Page Update="Controls\AlbumArtAreaSettingsControl.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>
+	  <Content Update="Assets\LogoSystemTray.ico">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
 	  <None Update="Themes\Generic.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </None>
