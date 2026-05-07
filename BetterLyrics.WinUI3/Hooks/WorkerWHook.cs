@@ -1,6 +1,8 @@
 ﻿using BetterLyrics.WinUI3.Views;
 using Microsoft.UI.Dispatching;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Vanara.PInvoke;
 using WinRT.Interop;
@@ -14,11 +16,18 @@ namespace BetterLyrics.WinUI3.Hooks
         private static User32.SafeHWINEVENTHOOK? _hLocationWinEventHook;
         private static User32.WinEventProc? _winEventDelegate;
         private static HWND _hWorkerW = HWND.NULL;
-        private static NowPlayingWindow? _pinnedWindow;
-        private static DispatcherQueueTimer? _debounceTimer;
+
+        // 追踪所有被固定的窗口
+        private static readonly Dictionary<HWND, NowPlayingWindow> _pinnedWindows = new();
+        private static readonly object _lock = new();
+
+        private static System.Timers.Timer? _debounceTimer;
 
         private static SUBCLASSPROC? _subclassDelegate;
         private static readonly nuint _subclassId = 027;
+
+        // 防止壁纸切换时多次触发重载
+        private static bool _isRepinning = false;
 
         public static void PinToDesktop(NowPlayingWindow window)
         {
@@ -26,29 +35,44 @@ namespace BetterLyrics.WinUI3.Hooks
 
             HWND windowHandle = (HWND)WindowNative.GetWindowHandle(window);
 
-            if (_subclassDelegate == null)
+            lock (_lock)
             {
-                _subclassDelegate = new SUBCLASSPROC(WindowSubclassProc);
-                ComCtl32.SetWindowSubclass(windowHandle, _subclassDelegate, _subclassId, IntPtr.Zero);
-            }
+                // 如果已经固定，则忽略
+                if (_pinnedWindows.ContainsKey(windowHandle)) return;
 
-            HWND hProgman = User32.FindWindow("Progman", null);
-            IntPtr _ = IntPtr.Zero;
+                // 如果这是第一个被固定的窗口，触发 WorkerW 生成并启动监听
+                if (_pinnedWindows.Count == 0)
+                {
+                    HWND hProgman = User32.FindWindow("Progman", null);
+                    IntPtr _ = IntPtr.Zero;
 
-            // 触发 WorkerW 生成
-            User32.SendMessageTimeout(hProgman, 0x052C, IntPtr.Zero, IntPtr.Zero, 0, 1000, ref _);
+                    // 触发 WorkerW 生成（只需要发一次）
+                    User32.SendMessageTimeout(hProgman, 0x052C, IntPtr.Zero, IntPtr.Zero, 0, 1000, ref _);
 
-            HWND hWorkerW = User32.FindWindowEx(hProgman, HWND.NULL, "WorkerW", null);
+                    _hWorkerW = User32.FindWindowEx(hProgman, HWND.NULL, "WorkerW", null);
 
-            if (hWorkerW != HWND.NULL)
-            {
-                _pinnedWindow = window;
-                _hWorkerW = hWorkerW;
+                    if (_hWorkerW != HWND.NULL)
+                    {
+                        StartListening();
+                    }
+                }
 
-                RepositionPinnedWindow();
-                User32.SetParent(windowHandle, hWorkerW);
+                // 绑定当前窗口到 WorkerW
+                if (_hWorkerW != HWND.NULL)
+                {
+                    _pinnedWindows[windowHandle] = window;
 
-                StartListening();
+                    if (_subclassDelegate == null)
+                    {
+                        _subclassDelegate = new SUBCLASSPROC(WindowSubclassProc);
+                    }
+
+                    // 为当前窗口挂载子类化
+                    ComCtl32.SetWindowSubclass(windowHandle, _subclassDelegate, _subclassId, IntPtr.Zero);
+
+                    RepositionWindow(windowHandle, window);
+                    User32.SetParent(windowHandle, _hWorkerW);
+                }
             }
         }
 
@@ -56,23 +80,32 @@ namespace BetterLyrics.WinUI3.Hooks
         {
             if (window == null) throw new ArgumentNullException(nameof(window));
 
-            StopListening();
-
             HWND windowHandle = (HWND)WindowNative.GetWindowHandle(window);
 
-            if (_subclassDelegate != null)
+            lock (_lock)
             {
-                ComCtl32.RemoveWindowSubclass(windowHandle, _subclassDelegate, _subclassId);
-                _subclassDelegate = null;
+                if (!_pinnedWindows.ContainsKey(windowHandle)) return;
+
+                if (_subclassDelegate != null)
+                {
+                    ComCtl32.RemoveWindowSubclass(windowHandle, _subclassDelegate, _subclassId);
+                }
+
+                var windowBounds = window.LyricsWindowStatus.WindowBounds;
+
+                User32.SetParent(windowHandle, HWND.NULL);
+                window.MoveAndResize(windowBounds);
+
+                _pinnedWindows.Remove(windowHandle);
+
+                // 如果所有窗口都解绑了，停止监听并清理 WorkerW 句柄
+                if (_pinnedWindows.Count == 0)
+                {
+                    StopListening();
+                    _hWorkerW = HWND.NULL;
+                    _subclassDelegate = null;
+                }
             }
-
-            var windowBounds = window.LyricsWindowStatus.WindowBounds;
-
-            User32.SetParent(windowHandle, HWND.NULL);
-            window.MoveAndResize(windowBounds);
-
-            _pinnedWindow = null;
-            _hWorkerW = HWND.NULL;
         }
 
         private static IntPtr WindowSubclassProc(HWND hWnd, uint uMsg, IntPtr wParam, IntPtr lParam, nuint uIdSubclass, IntPtr dwRefData)
@@ -81,22 +114,44 @@ namespace BetterLyrics.WinUI3.Hooks
             {
                 if (wParam.ToInt32() == (int)User32.SPI.SPI_SETDESKWALLPAPER)
                 {
-                    if (_pinnedWindow != null)
+                    // 防止多个窗口同时接收到壁纸更改消息导致多次重新固定
+                    if (!_isRepinning)
                     {
-                        var windowToSave = _pinnedWindow;
+                        _isRepinning = true;
 
-                        User32.SetParent(hWnd, HWND.NULL);
-
-                        _pinnedWindow.DispatcherQueue.TryEnqueue(async () =>
+                        NowPlayingWindow? triggerWindow = null;
+                        lock (_lock)
                         {
-                            StopListening();
-                            _pinnedWindow = null;
-                            _hWorkerW = HWND.NULL;
+                            _pinnedWindows.TryGetValue(hWnd, out triggerWindow);
+                        }
 
-                            await Task.Delay(800);
+                        if (triggerWindow != null)
+                        {
+                            triggerWindow.DispatcherQueue.TryEnqueue(async () =>
+                            {
+                                List<NowPlayingWindow> windowsToSave;
+                                lock (_lock)
+                                {
+                                    windowsToSave = _pinnedWindows.Values.ToList();
+                                }
 
-                            PinToDesktop(windowToSave);
-                        });
+                                // 卸载所有窗口
+                                foreach (var w in windowsToSave)
+                                {
+                                    UnpinFromDesktop(w);
+                                }
+
+                                await Task.Delay(800);
+
+                                // 重新固定所有窗口
+                                foreach (var w in windowsToSave)
+                                {
+                                    PinToDesktop(w);
+                                }
+
+                                _isRepinning = false;
+                            });
+                        }
                     }
                 }
             }
@@ -106,7 +161,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
         private static void StartListening()
         {
-            if (_pinnedWindow == null || _hWorkerW == HWND.NULL) return;
+            if (_hWorkerW == HWND.NULL) return;
 
             uint workerThreadId = User32.GetWindowThreadProcessId(_hWorkerW, out uint workerProcessId);
             _winEventDelegate = new User32.WinEventProc(WinEventCallback);
@@ -122,6 +177,26 @@ namespace BetterLyrics.WinUI3.Hooks
                     workerThreadId,
                     User32.WINEVENT.WINEVENT_OUTOFCONTEXT);
             }
+
+            _debounceTimer = new System.Timers.Timer(200);
+            _debounceTimer.AutoReset = false;
+            _debounceTimer.Elapsed += (s, e) =>
+            {
+                List<NowPlayingWindow> windowsToUpdate;
+                lock (_lock)
+                {
+                    windowsToUpdate = _pinnedWindows.Values.ToList();
+                }
+
+                foreach (var window in windowsToUpdate)
+                {
+                    window.DispatcherQueue.TryEnqueue(() =>
+                    {
+                        HWND handle = (HWND)WindowNative.GetWindowHandle(window);
+                        RepositionWindow(handle, window);
+                    });
+                }
+            };
         }
 
         private static void StopListening()
@@ -137,6 +212,7 @@ namespace BetterLyrics.WinUI3.Hooks
             if (_debounceTimer != null)
             {
                 _debounceTimer.Stop();
+                _debounceTimer.Dispose();
                 _debounceTimer = null;
             }
         }
@@ -145,27 +221,14 @@ namespace BetterLyrics.WinUI3.Hooks
         {
             if (hwnd == _hWorkerW && idObject == (int)User32.ObjectIdentifier.OBJID_WINDOW)
             {
-                if (_debounceTimer == null && _pinnedWindow != null)
-                {
-                    _debounceTimer = _pinnedWindow.DispatcherQueue.CreateTimer();
-                    _debounceTimer.Interval = TimeSpan.FromMilliseconds(200);
-                    _debounceTimer.Tick += (s, e) =>
-                    {
-                        _debounceTimer.Stop();
-                        RepositionPinnedWindow();
-                    };
-                }
-
                 _debounceTimer?.Stop();
                 _debounceTimer?.Start();
             }
         }
 
-        private static void RepositionPinnedWindow()
+        private static void RepositionWindow(HWND windowHandle, NowPlayingWindow window)
         {
-            if (_pinnedWindow == null || _hWorkerW == HWND.NULL) return;
-
-            HWND windowHandle = (HWND)WindowNative.GetWindowHandle(_pinnedWindow);
+            if (_hWorkerW == HWND.NULL) return;
 
             User32.GetWindowRect(windowHandle, out RECT windowRect);
             POINT pt = new() { X = windowRect.X, Y = windowRect.Y };

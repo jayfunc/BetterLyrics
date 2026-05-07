@@ -147,20 +147,13 @@ namespace BetterLyrics.WinUI3.Views
             foreach (var col in profile.ColumnDefinitions)
                 DynamicLayoutGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = col.ParseGridLength() });
 
-            LyricsContainer.Visibility = Visibility.Collapsed;
-            LyricsCardContainer.Visibility = Visibility.Collapsed;
-            AlbumArtGrid.Visibility = Visibility.Collapsed;
-            SongTitleContainer.Visibility = Visibility.Collapsed;
-            SongArtistContainer.Visibility = Visibility.Collapsed;
-            SongAlbumContainer.Visibility = Visibility.Collapsed;
-
             foreach (var placement in profile.Placements)
             {
                 FrameworkElement? targetElement = placement.ComponentType switch
                 {
                     ComponentType.Lyrics => LyricsContainer,
                     ComponentType.LyricsCard => LyricsCardContainer,
-                    ComponentType.AlbumArt => AlbumArtGrid,
+                    ComponentType.AlbumArt => AlbumArtContainer,
                     ComponentType.SongTitle => SongTitleContainer,
                     ComponentType.SongArtist => SongArtistContainer,
                     ComponentType.SongAlbum => SongAlbumContainer,
@@ -189,6 +182,41 @@ namespace BetterLyrics.WinUI3.Views
                     targetElement.VerticalAlignment = placement.VerticalAlignment;
                 }
             }
+        }
+
+        private void ShowContainers()
+        {
+            var profile = _settingsService.AppSettings.LayoutProfiles.FirstOrDefault(x => x.Id == LyricsWindowStatus?.LayoutProfileId);
+            if (profile == null) return;
+
+            foreach (var placement in profile.Placements)
+            {
+                FrameworkElement? targetElement = placement.ComponentType switch
+                {
+                    ComponentType.Lyrics => LyricsContainer,
+                    ComponentType.LyricsCard => LyricsCardContainer,
+                    ComponentType.AlbumArt => AlbumArtContainer,
+                    ComponentType.SongTitle => SongTitleContainer,
+                    ComponentType.SongArtist => SongArtistContainer,
+                    ComponentType.SongAlbum => SongAlbumContainer,
+                    _ => null
+                };
+
+                if (targetElement != null)
+                {
+                    targetElement.Visibility = Visibility.Visible;
+                }
+            }
+        }
+
+        private void HideContainers()
+        {
+            LyricsContainer.Visibility = Visibility.Collapsed;
+            LyricsCardContainer.Visibility = Visibility.Collapsed;
+            AlbumArtContainer.Visibility = Visibility.Collapsed;
+            SongTitleContainer.Visibility = Visibility.Collapsed;
+            SongArtistContainer.Visibility = Visibility.Collapsed;
+            SongAlbumContainer.Visibility = Visibility.Collapsed;
         }
 
         private void UpdateLyricsLayout()
@@ -226,11 +254,11 @@ namespace BetterLyrics.WinUI3.Views
 
         private void UpdateAlbumArtLayout()
         {
-            if (RootGrid == null || AlbumArtGrid == null) return;
-            if (!AlbumArtGrid.IsLoaded || !RootGrid.IsLoaded) return;
+            if (RootGrid == null || AlbumArtContainer == null) return;
+            if (!AlbumArtContainer.IsLoaded || !RootGrid.IsLoaded) return;
 
-            var transform = AlbumArtGrid.TransformToVisual(RootGrid);
-            var localRect = new Windows.Foundation.Rect(0, 0, AlbumArtGrid.ActualWidth, AlbumArtGrid.ActualHeight);
+            var transform = AlbumArtContainer.TransformToVisual(RootGrid);
+            var localRect = new Windows.Foundation.Rect(0, 0, AlbumArtContainer.ActualWidth, AlbumArtContainer.ActualHeight);
             LyricsCanvas.AlbumArtRect = transform.TransformBounds(localRect);
 
             ToggleAlbumArtFadeOut();
@@ -241,6 +269,8 @@ namespace BetterLyrics.WinUI3.Views
         {
             _layoutChangedTimer?.Debounce(async () =>
             {
+                HideContainers();
+
                 ApplyLayoutProfile();
 
                 // Ensure the layout is updated before calculating positions
@@ -250,6 +280,8 @@ namespace BetterLyrics.WinUI3.Views
                 UpdateAlbumArtLayout();
 
                 await RenderSongInfoAsync();
+
+                ShowContainers();
             }, TimeSpan.FromMilliseconds(250));
         }
 
@@ -263,7 +295,7 @@ namespace BetterLyrics.WinUI3.Views
             UpdateLyricsLayout();
         }
 
-        private void AlbumArtGrid_SizeChanged(object sender, SizeChangedEventArgs e)
+        private void AlbumArtContainer_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             UpdateAlbumArtLayout();
         }
