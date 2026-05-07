@@ -64,11 +64,12 @@ namespace BetterLyrics.WinUI3.Helper
             new ExtendedLanguage("ar"), new ExtendedLanguage("de"),
             new ExtendedLanguage("en"), new ExtendedLanguage("es"),
             new ExtendedLanguage("fr"), new ExtendedLanguage("hi"),
-            new ExtendedLanguage("id"), new ExtendedLanguage("ja"),
-            new ExtendedLanguage("ko"), new ExtendedLanguage("ms"),
-            new ExtendedLanguage("pt"), new ExtendedLanguage("ru"),
-            new ExtendedLanguage("th"), new ExtendedLanguage("vi"),
-            new ExtendedLanguage("zh-Hans"), new ExtendedLanguage("zh-Hant"),
+            new ExtendedLanguage("id"), new ExtendedLanguage("it"),
+            new ExtendedLanguage("ja"), new ExtendedLanguage("ko"),
+            new ExtendedLanguage("ms"), new ExtendedLanguage("pt"),
+            new ExtendedLanguage("ru"), new ExtendedLanguage("th"),
+            new ExtendedLanguage("vi"), new ExtendedLanguage("zh-Hans"),
+            new ExtendedLanguage("zh-Hant"),
         ];
 
         static LanguageHelper()
