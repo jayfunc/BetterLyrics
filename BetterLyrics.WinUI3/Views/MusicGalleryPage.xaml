@@ -244,18 +244,23 @@
                                                 Text="{x:Bind Name}"
                                                 TextWrapping="Wrap" />
                                         </Grid>
-                                        <!--  从播放列表移除  -->
                                         <Button
                                             Grid.Column="1"
-                                            Click="RemoveFromPlaylistButton_Click"
                                             Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                                   FontSize=16,
-                                                                  Glyph=&#xE738;}"
+                                                                  Glyph=&#xE712;}"
                                             Style="{ThemeResource GhostButtonStyle}"
                                             Visibility="{x:Bind IsDefault, Converter={StaticResource BoolNegationToVisibilityConverter}}">
-                                            <ToolTipService.ToolTip>
-                                                <TextBlock x:Uid="MusicGalleryPageRemoveFromCustomList" />
-                                            </ToolTipService.ToolTip>
+                                            <Button.Flyout>
+                                                <MenuFlyout>
+                                                    <!--  从播放列表移除  -->
+                                                    <MenuFlyoutItem x:Uid="MusicGalleryPageRemoveFromCustomList" Click="RemoveFromPlaylistMenuFlyoutItem_Click" />
+                                                    <MenuFlyoutItem
+                                                        x:Uid="MusicGalleryPageOpenInFileExplorer"
+                                                        Click="OpenPlaylistInFileExplorerMenuFlyoutItem_Click"
+                                                        Visibility="{x:Bind FilterProperty, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=4}" />
+                                                </MenuFlyout>
+                                            </Button.Flyout>
                                         </Button>
                                     </Grid>
                                 </DataTemplate>

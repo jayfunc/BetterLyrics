@@ -139,12 +139,18 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        private void RemoveFromPlaylistButton_Click(object sender, RoutedEventArgs e)
+        private void RemoveFromPlaylistMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             var playlist = (SongsTabInfo)((FrameworkElement)sender).DataContext;
             ViewModel.AppSettings.StarredPlaylists.Remove(playlist);
             ViewModel.SelectedSongsTabInfoIndex = 0;
             ViewModel.ApplyPlaylist();
+        }
+
+        private void OpenPlaylistInFileExplorerMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            var playlist = (SongsTabInfo)((FrameworkElement)sender).DataContext;
+            LauncherHelper.SelectAndShowFileAsync(playlist.FilterValue);
         }
 
         private void SelectAllCheckBox_Checked(object sender, RoutedEventArgs e)

@@ -28,7 +28,10 @@
 
         <Grid x:Name="DynamicLayoutGrid" Loaded="DynamicLayoutGrid_Loaded">
 
-            <Grid x:Name="LyricsContainer" SizeChanged="LyricsContainer_SizeChanged">
+            <Grid
+                x:Name="LyricsContainer"
+                SizeChanged="LyricsContainer_SizeChanged"
+                Visibility="Collapsed">
                 <ScrollViewer
                     x:Name="LyricsScrollViewer"
                     PointerEntered="LyricsScrollViewer_PointerEntered"
@@ -42,7 +45,7 @@
                 </ScrollViewer>
             </Grid>
 
-            <Viewbox x:Name="LyricsCardContainer">
+            <Viewbox x:Name="LyricsCardContainer" Visibility="Collapsed">
                 <uc:LyricsCard
                     x:Name="LyricsCard"
                     CoverAccentColor="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor1, Mode=OneWay}"
@@ -54,7 +57,10 @@
                     StyleKey="{x:Bind LyricsWindowStatus.LyricsCardStyleKey, Mode=OneWay}" />
             </Viewbox>
 
-            <Grid x:Name="AlbumArtGrid" SizeChanged="AlbumArtGrid_SizeChanged">
+            <Grid
+                x:Name="AlbumArtContainer"
+                SizeChanged="AlbumArtContainer_SizeChanged"
+                Visibility="Collapsed">
                 <Grid.OpacityTransition>
                     <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
                 </Grid.OpacityTransition>
@@ -99,7 +105,7 @@
                 </Grid.ContextFlyout>
             </Grid>
 
-            <Grid x:Name="SongTitleContainer">
+            <Grid x:Name="SongTitleContainer" Visibility="Collapsed">
                 <Grid.OpacityTransition>
                     <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
                 </Grid.OpacityTransition>
@@ -132,7 +138,7 @@
                 </controls:OpacityMaskView>
             </Grid>
 
-            <Grid x:Name="SongArtistContainer">
+            <Grid x:Name="SongArtistContainer" Visibility="Collapsed">
                 <Grid.OpacityTransition>
                     <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
                 </Grid.OpacityTransition>
@@ -166,7 +172,7 @@
                 </controls:OpacityMaskView>
             </Grid>
 
-            <Grid x:Name="SongAlbumContainer">
+            <Grid x:Name="SongAlbumContainer" Visibility="Collapsed">
                 <Grid.OpacityTransition>
                     <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
                 </Grid.OpacityTransition>

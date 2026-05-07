@@ -2502,4 +2502,7 @@
   <data name="AlbumArtAreaSettingsControlStartPoint.Header" xml:space="preserve">
     <value>Start Point</value>
   </data>
+  <data name="MusicGalleryPageOpenInFileExplorer.Text" xml:space="preserve">
+    <value>Open in File Explorer</value>
+  </data>
 </root>
