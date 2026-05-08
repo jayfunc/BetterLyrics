@@ -1,7 +1,7 @@
 {
   "Id": "f648d923-2989-4d93-a8b7-cac94695afd8",
   "Mode": 999,
-  "Name": "\u5DE6\u4FA7\u4E13\u8F91\u4FE1\u606F \u53F3\u4FA7\u6B4C\u8BCD\uFF08Leon\u6539\uFF09",
+  "Name": "Taskbar Triple View \u4EFB\u52A1\u680F\u4E09\u89C6\u56FE",
   "RowDefinitions": [
     "1*"
   ],
