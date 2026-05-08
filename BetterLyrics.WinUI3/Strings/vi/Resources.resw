@@ -147,6 +147,18 @@
   <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Header" xml:space="preserve">
     <value>Tự động cuộn thông tin bài hát</value>
   </data>
+  <data name="AlbumArtAreaSettingsControlEndPoint.Header" xml:space="preserve">
+    <value>Điểm cuối</value>
+  </data>
+  <data name="AlbumArtAreaSettingsControlFadeOut.Header" xml:space="preserve">
+    <value>Mờ dần</value>
+  </data>
+  <data name="AlbumArtAreaSettingsControlFadeOutDirection.Header" xml:space="preserve">
+    <value>Hướng dẫn</value>
+  </data>
+  <data name="AlbumArtAreaSettingsControlStartPoint.Header" xml:space="preserve">
+    <value>Điểm xuất phát</value>
+  </data>
   <data name="AlbumArtOnlyLayout" xml:space="preserve">
     <value>Bố cục chỉ hiển thị ảnh bìa album</value>
   </data>
@@ -1053,6 +1065,9 @@
   <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
     <value>Tạo danh sách phát</value>
   </data>
+  <data name="MusicGalleryPageOpenInFileExplorer.Text" xml:space="preserve">
+    <value>Open in File Explorer</value>
+  </data>
   <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
     <value>Hàng đợi phát</value>
   </data>
@@ -1281,6 +1296,9 @@
   <data name="SettingsPageAbout" xml:space="preserve">
     <value>Về</value>
   </data>
+  <data name="SettingsPageAdaptAlbumArtAccentColor.Header" xml:space="preserve">
+    <value>Adapt to the Album Art's Accent Color</value>
+  </data>
   <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
     <value>Thích ứng với màu môi trường</value>
   </data>
@@ -1454,6 +1472,18 @@
   </data>
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>Chế độ màn hình (Trong suốt)</value>
+  </data>
+  <data name="SettingsPageDirectionBottom.Content" xml:space="preserve">
+    <value>Hướng xuống</value>
+  </data>
+  <data name="SettingsPageDirectionLeft.Content" xml:space="preserve">
+    <value>Bên trái</value>
+  </data>
+  <data name="SettingsPageDirectionRight.Content" xml:space="preserve">
+    <value>Bên phải</value>
+  </data>
+  <data name="SettingsPageDirectionTop.Content" xml:space="preserve">
+    <value>Lên trên</value>
   </data>
   <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
     <value>Dự án này được cung cấp "nguyên trạng", không có bất kỳ bảo đảm nào. Tất cả lời bài hát, phông chữ, biểu tượng và các tài nguyên bên thứ ba khác là tài sản của chủ sở hữu bản quyền tương ứng. Tác giả của dự án này không tuyên bố quyền sở hữu đối với các tài nguyên đó. Đây là một dự án phi thương mại và không được sử dụng để vi phạm bất kỳ quyền nào. Người dùng chịu trách nhiệm đảm bảo việc sử dụng của họ tuân thủ các luật và giấy phép hiện hành.</value>
@@ -2235,6 +2265,9 @@
   <data name="SettingsPageUnplayedStrokeFontColor.Header" xml:space="preserve">
     <value>Đột quỵ (Chưa chơi)</value>
   </data>
+  <data name="SettingsPageUserWhoPurchased.PatronName" xml:space="preserve">
+    <value>Và những người dùng đã mua BetterLyrics</value>
+  </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">
     <value>Phiên bản</value>
   </data>
@@ -2474,35 +2507,5 @@
   </data>
   <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
     <value>Giao diện cửa sổ</value>
-  </data>
-  <data name="SettingsPageUserWhoPurchased.PatronName" xml:space="preserve">
-    <value>Và những người dùng đã mua BetterLyrics</value>
-  </data>
-  <data name="SettingsPageDirectionTop.Content" xml:space="preserve">
-    <value>Lên trên</value>
-  </data>
-  <data name="SettingsPageDirectionBottom.Content" xml:space="preserve">
-    <value>Hướng xuống</value>
-  </data>
-  <data name="SettingsPageDirectionLeft.Content" xml:space="preserve">
-    <value>Bên trái</value>
-  </data>
-  <data name="SettingsPageDirectionRight.Content" xml:space="preserve">
-    <value>Bên phải</value>
-  </data>
-  <data name="AlbumArtAreaSettingsControlFadeOut.Header" xml:space="preserve">
-    <value>Mờ dần</value>
-  </data>
-  <data name="AlbumArtAreaSettingsControlFadeOutDirection.Header" xml:space="preserve">
-    <value>Hướng dẫn</value>
-  </data>
-  <data name="AlbumArtAreaSettingsControlEndPoint.Header" xml:space="preserve">
-    <value>Điểm cuối</value>
-  </data>
-  <data name="AlbumArtAreaSettingsControlStartPoint.Header" xml:space="preserve">
-    <value>Điểm xuất phát</value>
-  </data>
-  <data name="MusicGalleryPageOpenInFileExplorer.Text" xml:space="preserve">
-    <value>Open in File Explorer</value>
   </data>
 </root>

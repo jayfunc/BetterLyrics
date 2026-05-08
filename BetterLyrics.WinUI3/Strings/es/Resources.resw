@@ -147,6 +147,18 @@
   <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Header" xml:space="preserve">
     <value>Desplazamiento automático Información de la canción</value>
   </data>
+  <data name="AlbumArtAreaSettingsControlEndPoint.Header" xml:space="preserve">
+    <value>Punto final</value>
+  </data>
+  <data name="AlbumArtAreaSettingsControlFadeOut.Header" xml:space="preserve">
+    <value>Desvanecimiento</value>
+  </data>
+  <data name="AlbumArtAreaSettingsControlFadeOutDirection.Header" xml:space="preserve">
+    <value>Dirección</value>
+  </data>
+  <data name="AlbumArtAreaSettingsControlStartPoint.Header" xml:space="preserve">
+    <value>Punto de partida</value>
+  </data>
   <data name="AlbumArtOnlyLayout" xml:space="preserve">
     <value>Diseño sólo de carátulas</value>
   </data>
@@ -1053,6 +1065,9 @@
   <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
     <value>Crear lista de reproducción</value>
   </data>
+  <data name="MusicGalleryPageOpenInFileExplorer.Text" xml:space="preserve">
+    <value>Open in File Explorer</value>
+  </data>
   <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
     <value>Cola de reproducción</value>
   </data>
@@ -1281,6 +1296,9 @@
   <data name="SettingsPageAbout" xml:space="preserve">
     <value>Acerca de</value>
   </data>
+  <data name="SettingsPageAdaptAlbumArtAccentColor.Header" xml:space="preserve">
+    <value>Adapt to the Album Art's Accent Color</value>
+  </data>
   <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
     <value>Adaptar al color del entorno</value>
   </data>
@@ -1454,6 +1472,18 @@
   </data>
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>Modo Escritorio (Transparente)</value>
+  </data>
+  <data name="SettingsPageDirectionBottom.Content" xml:space="preserve">
+    <value>Hacia abajo</value>
+  </data>
+  <data name="SettingsPageDirectionLeft.Content" xml:space="preserve">
+    <value>A la izquierda</value>
+  </data>
+  <data name="SettingsPageDirectionRight.Content" xml:space="preserve">
+    <value>A la derecha</value>
+  </data>
+  <data name="SettingsPageDirectionTop.Content" xml:space="preserve">
+    <value>Hacia arriba</value>
   </data>
   <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
     <value>Este proyecto se proporciona tal cual, sin garantía de ningún tipo. Todas las letras, fuentes, iconos y otros recursos de terceros son propiedad de sus respectivos titulares de derechos de autor. Los autores de este proyecto no reclaman la propiedad de dichos recursos. Este proyecto no es comercial y no debe usarse para infringir ningún derecho. Los usuarios son responsables de garantizar que su uso cumpla con las leyes y licencias aplicables.</value>
@@ -2235,6 +2265,9 @@
   <data name="SettingsPageUnplayedStrokeFontColor.Header" xml:space="preserve">
     <value>Golpe (sin jugar)</value>
   </data>
+  <data name="SettingsPageUserWhoPurchased.PatronName" xml:space="preserve">
+    <value>Y los usuarios que compraron BetterLyrics</value>
+  </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">
     <value>Versión</value>
   </data>
@@ -2474,35 +2507,5 @@
   </data>
   <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
     <value>Tema de la ventana</value>
-  </data>
-  <data name="SettingsPageUserWhoPurchased.PatronName" xml:space="preserve">
-    <value>Y los usuarios que compraron BetterLyrics</value>
-  </data>
-  <data name="SettingsPageDirectionTop.Content" xml:space="preserve">
-    <value>Hacia arriba</value>
-  </data>
-  <data name="SettingsPageDirectionBottom.Content" xml:space="preserve">
-    <value>Hacia abajo</value>
-  </data>
-  <data name="SettingsPageDirectionLeft.Content" xml:space="preserve">
-    <value>A la izquierda</value>
-  </data>
-  <data name="SettingsPageDirectionRight.Content" xml:space="preserve">
-    <value>A la derecha</value>
-  </data>
-  <data name="AlbumArtAreaSettingsControlFadeOut.Header" xml:space="preserve">
-    <value>Desvanecimiento</value>
-  </data>
-  <data name="AlbumArtAreaSettingsControlFadeOutDirection.Header" xml:space="preserve">
-    <value>Dirección</value>
-  </data>
-  <data name="AlbumArtAreaSettingsControlEndPoint.Header" xml:space="preserve">
-    <value>Punto final</value>
-  </data>
-  <data name="AlbumArtAreaSettingsControlStartPoint.Header" xml:space="preserve">
-    <value>Punto de partida</value>
-  </data>
-  <data name="MusicGalleryPageOpenInFileExplorer.Text" xml:space="preserve">
-    <value>Open in File Explorer</value>
   </data>
 </root>

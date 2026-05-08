@@ -147,6 +147,18 @@
   <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Header" xml:space="preserve">
     <value>楽曲情報の自動スクロール</value>
   </data>
+  <data name="AlbumArtAreaSettingsControlEndPoint.Header" xml:space="preserve">
+    <value>終点</value>
+  </data>
+  <data name="AlbumArtAreaSettingsControlFadeOut.Header" xml:space="preserve">
+    <value>フェードアウト</value>
+  </data>
+  <data name="AlbumArtAreaSettingsControlFadeOutDirection.Header" xml:space="preserve">
+    <value>向き</value>
+  </data>
+  <data name="AlbumArtAreaSettingsControlStartPoint.Header" xml:space="preserve">
+    <value>始点</value>
+  </data>
   <data name="AlbumArtOnlyLayout" xml:space="preserve">
     <value>アルバムアートのみのレイアウト</value>
   </data>
@@ -1053,6 +1065,9 @@
   <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
     <value>プレイリストを作成</value>
   </data>
+  <data name="MusicGalleryPageOpenInFileExplorer.Text" xml:space="preserve">
+    <value>Open in File Explorer</value>
+  </data>
   <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
     <value>再生キュー</value>
   </data>
@@ -1281,6 +1296,9 @@
   <data name="SettingsPageAbout" xml:space="preserve">
     <value>このアプリについて</value>
   </data>
+  <data name="SettingsPageAdaptAlbumArtAccentColor.Header" xml:space="preserve">
+    <value>Adapt to the Album Art's Accent Color</value>
+  </data>
   <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
     <value>環境の色に合わせる</value>
   </data>
@@ -1454,6 +1472,18 @@
   </data>
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>デスクトップモード（透明）</value>
+  </data>
+  <data name="SettingsPageDirectionBottom.Content" xml:space="preserve">
+    <value>下へ</value>
+  </data>
+  <data name="SettingsPageDirectionLeft.Content" xml:space="preserve">
+    <value>左へ</value>
+  </data>
+  <data name="SettingsPageDirectionRight.Content" xml:space="preserve">
+    <value>右へ</value>
+  </data>
+  <data name="SettingsPageDirectionTop.Content" xml:space="preserve">
+    <value>上へ</value>
   </data>
   <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
     <value>このプロジェクトは現状のまま提供されており、何の保証もありません。歌詞、フォント、アイコンなどの素材は、すべてそれぞれの権利者のものです。作者がそれらの権利を主張することはありません。これは非営利のプロジェクトです。権利を侵害するような使い方はしないでください。法律やライセンスを守って使うのは、利用する方の自己責任でお願いします。</value>
@@ -2235,6 +2265,9 @@
   <data name="SettingsPageUnplayedStrokeFontColor.Header" xml:space="preserve">
     <value>縁取り（再生待ち）</value>
   </data>
+  <data name="SettingsPageUserWhoPurchased.PatronName" xml:space="preserve">
+    <value>そして BetterLyrics を購入したユーザー</value>
+  </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">
     <value>バージョン</value>
   </data>
@@ -2474,35 +2507,5 @@
   </data>
   <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
     <value>ウィンドウのテーマ</value>
-  </data>
-  <data name="SettingsPageUserWhoPurchased.PatronName" xml:space="preserve">
-    <value>そして BetterLyrics を購入したユーザー</value>
-  </data>
-  <data name="SettingsPageDirectionTop.Content" xml:space="preserve">
-    <value>上へ</value>
-  </data>
-  <data name="SettingsPageDirectionBottom.Content" xml:space="preserve">
-    <value>下へ</value>
-  </data>
-  <data name="SettingsPageDirectionLeft.Content" xml:space="preserve">
-    <value>左へ</value>
-  </data>
-  <data name="SettingsPageDirectionRight.Content" xml:space="preserve">
-    <value>右へ</value>
-  </data>
-  <data name="AlbumArtAreaSettingsControlFadeOut.Header" xml:space="preserve">
-    <value>フェードアウト</value>
-  </data>
-  <data name="AlbumArtAreaSettingsControlFadeOutDirection.Header" xml:space="preserve">
-    <value>向き</value>
-  </data>
-  <data name="AlbumArtAreaSettingsControlEndPoint.Header" xml:space="preserve">
-    <value>終点</value>
-  </data>
-  <data name="AlbumArtAreaSettingsControlStartPoint.Header" xml:space="preserve">
-    <value>始点</value>
-  </data>
-  <data name="MusicGalleryPageOpenInFileExplorer.Text" xml:space="preserve">
-    <value>Open in File Explorer</value>
   </data>
 </root>

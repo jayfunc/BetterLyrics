@@ -1,0 +1,86 @@
+{
+  "Id": "f648d923-2989-4d93-a8b7-cac94695afd8",
+  "Mode": 999,
+  "Name": "\u5DE6\u4FA7\u4E13\u8F91\u4FE1\u606F \u53F3\u4FA7\u6B4C\u8BCD\uFF08Leon\u6539\uFF09",
+  "RowDefinitions": [
+    "1*"
+  ],
+  "ColumnDefinitions": [
+    "Auto",
+    "2*",
+    "4*"
+  ],
+  "RowSpacing": 0,
+  "ColumnSpacing": 12,
+  "Placements": [
+    {
+      "ComponentType": 3,
+      "Row": 0,
+      "Column": 0,
+      "RowSpan": 1,
+      "ColumnSpan": 1,
+      "MarginLeft": 0,
+      "MarginTop": 10,
+      "MarginRight": 0,
+      "MarginBottom": 10,
+      "HorizontalAlignment": 1,
+      "VerticalAlignment": 1,
+      "Width": "NaN",
+      "Height": "NaN",
+      "IsActive": false
+    },
+    {
+      "ComponentType": 1,
+      "Row": 0,
+      "Column": 2,
+      "RowSpan": 1,
+      "ColumnSpan": 1,
+      "MarginLeft": 0,
+      "MarginTop": 0,
+      "MarginRight": 0,
+      "MarginBottom": 0,
+      "HorizontalAlignment": 3,
+      "VerticalAlignment": 3,
+      "Width": "NaN",
+      "Height": "NaN",
+      "IsActive": false
+    },
+    {
+      "ComponentType": 4,
+      "Row": 0,
+      "Column": 1,
+      "RowSpan": 1,
+      "ColumnSpan": 1,
+      "MarginLeft": 0,
+      "MarginTop": 0,
+      "MarginRight": 0,
+      "MarginBottom": 15,
+      "HorizontalAlignment": 1,
+      "VerticalAlignment": 1,
+      "Width": "NaN",
+      "Height": 17,
+      "IsActive": false
+    },
+    {
+      "ComponentType": 5,
+      "Row": 0,
+      "Column": 1,
+      "RowSpan": 1,
+      "ColumnSpan": 1,
+      "MarginLeft": 0,
+      "MarginTop": 15,
+      "MarginRight": 0,
+      "MarginBottom": 0,
+      "HorizontalAlignment": 1,
+      "VerticalAlignment": 1,
+      "Width": "NaN",
+      "Height": 14,
+      "IsActive": false
+    }
+  ],
+  "PaddingLeft": 6,
+  "PaddingTop": 0,
+  "PaddingRight": 6,
+  "PaddingBottom": 0,
+  "IsActive": false
+}
