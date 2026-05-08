@@ -50,7 +50,18 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsBackgroundSettings LyricsBackgroundSettings { get; set; } = new();
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial AlbumArtAreaStyleSettings AlbumArtLayoutSettings { get; set; } = new();
         [ObservableProperty] public partial AlbumArtAreaEffectSettings AlbumArtAreaEffectSettings { get; set; } = new();
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsAdaptToEnvironment { get; set; } = false;
+        
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        [NotifyPropertyChangedFor(nameof(IsAdaptToAlbumArtAdjustable))]
+        [NotifyPropertyChangedFor(nameof(IsWindowThemeAdjustable))]
+        public partial bool IsAdaptToEnvironment { get; set; } = false;
+
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        [NotifyPropertyChangedFor(nameof(IsAdaptToEnvironmentAdjustable))]
+        [NotifyPropertyChangedFor(nameof(IsWindowThemeAdjustable))]
+        public partial bool IsAdaptToAlbumArt { get; set; } = false;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial WindowPixelSampleMode EnvironmentSampleMode { get; set; } = WindowPixelSampleMode.WindowEdge;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial ElementTheme WindowTheme { get; set; } = ElementTheme.Dark;
@@ -82,6 +93,9 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [JsonIgnore][ObservableProperty][NotifyPropertyChangedRecipients] public partial WindowStatus WindowStatus { get; set; } = WindowStatus.Closed;
         [JsonIgnore] public DispatcherQueueTimer? VisibilityTimer { get; set; }
         [JsonIgnore] public Thickness DemoWindowMargin => new(WindowBounds.Left - MonitorBounds.Left, WindowBounds.Top - MonitorBounds.Top, 0, 0);
+        [JsonIgnore] public bool IsWindowThemeAdjustable => !IsAdaptToEnvironment && !IsAdaptToAlbumArt;
+        [JsonIgnore] public bool IsAdaptToEnvironmentAdjustable => !IsAdaptToAlbumArt;
+        [JsonIgnore] public bool IsAdaptToAlbumArtAdjustable => !IsAdaptToEnvironment;
 
         public LyricsWindowStatus()
         {
@@ -329,6 +343,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 AlbumArtLayoutSettings = (AlbumArtAreaStyleSettings)this.AlbumArtLayoutSettings.Clone(),
                 AlbumArtAreaEffectSettings = (AlbumArtAreaEffectSettings)this.AlbumArtAreaEffectSettings.Clone(),
 
+                IsAdaptToAlbumArt = this.IsAdaptToAlbumArt,
                 IsAdaptToEnvironment = this.IsAdaptToEnvironment,
                 EnvironmentSampleMode = this.EnvironmentSampleMode,
                 WindowTheme = this.WindowTheme,

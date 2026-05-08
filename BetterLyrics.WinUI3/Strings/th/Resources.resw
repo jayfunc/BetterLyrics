@@ -147,6 +147,18 @@
   <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Header" xml:space="preserve">
     <value>ข้อมูลเพลงเลื่อนอัตโนมัติ</value>
   </data>
+  <data name="AlbumArtAreaSettingsControlEndPoint.Header" xml:space="preserve">
+    <value>จุดสิ้นสุด</value>
+  </data>
+  <data name="AlbumArtAreaSettingsControlFadeOut.Header" xml:space="preserve">
+    <value>จางหายไป</value>
+  </data>
+  <data name="AlbumArtAreaSettingsControlFadeOutDirection.Header" xml:space="preserve">
+    <value>ทิศทาง</value>
+  </data>
+  <data name="AlbumArtAreaSettingsControlStartPoint.Header" xml:space="preserve">
+    <value>จุดเริ่มต้น</value>
+  </data>
   <data name="AlbumArtOnlyLayout" xml:space="preserve">
     <value>รูปแบบเฉพาะภาพปกอัลบั้ม</value>
   </data>
@@ -1053,6 +1065,9 @@
   <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
     <value>สร้างเพลย์ลิสต์</value>
   </data>
+  <data name="MusicGalleryPageOpenInFileExplorer.Text" xml:space="preserve">
+    <value>Open in File Explorer</value>
+  </data>
   <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
     <value>คิวการเล่น</value>
   </data>
@@ -1281,6 +1296,9 @@
   <data name="SettingsPageAbout" xml:space="preserve">
     <value>เกี่ยวกับ</value>
   </data>
+  <data name="SettingsPageAdaptAlbumArtAccentColor.Header" xml:space="preserve">
+    <value>Adapt to the Album Art's Accent Color</value>
+  </data>
   <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
     <value>ปรับตามสีสภาพแวดล้อม</value>
   </data>
@@ -1454,6 +1472,18 @@
   </data>
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>โหมดเดสก์ท็อป (โปร่งใส)</value>
+  </data>
+  <data name="SettingsPageDirectionBottom.Content" xml:space="preserve">
+    <value>ลง</value>
+  </data>
+  <data name="SettingsPageDirectionLeft.Content" xml:space="preserve">
+    <value>ทางซ้าย</value>
+  </data>
+  <data name="SettingsPageDirectionRight.Content" xml:space="preserve">
+    <value>ไปทางขวา</value>
+  </data>
+  <data name="SettingsPageDirectionTop.Content" xml:space="preserve">
+    <value>ขึ้น</value>
   </data>
   <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
     <value>โปรเจกต์นี้จัดทำขึ้น "ตามสภาพ" โดยไม่มีการรับประกันใดๆ เนื้อเพลง แบบอักษร ไอคอน และทรัพยากรบุคคลที่สามอื่นๆ ทั้งหมดเป็นทรัพย์สินของผู้ถือลิขสิทธิ์แต่ละราย ผู้เขียนโปรเจกต์นี้ไม่อ้างสิทธิ์ความเป็นเจ้าของในทรัพยากรดังกล่าว นี่คือโปรเจกต์ที่ไม่ใช่เชิงพาณิชย์และห้ามนำไปใช้เพื่อละเมิดสิทธิ์ใดๆ ผู้ใช้ต้องรับผิดชอบในการตรวจสอบให้แน่ใจว่าการใช้งานของตนสอดคล้องกับกฎหมายและใบอนุญาตที่เกี่ยวข้อง</value>
@@ -2235,6 +2265,9 @@
   <data name="SettingsPageUnplayedStrokeFontColor.Header" xml:space="preserve">
     <value>จังหวะ (ไม่ได้เล่น)</value>
   </data>
+  <data name="SettingsPageUserWhoPurchased.PatronName" xml:space="preserve">
+    <value>และผู้ใช้ที่ซื้อ BetterLyrics</value>
+  </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">
     <value>เวอร์ชัน</value>
   </data>
@@ -2474,35 +2507,5 @@
   </data>
   <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
     <value>ธีมหน้าต่าง</value>
-  </data>
-  <data name="SettingsPageUserWhoPurchased.PatronName" xml:space="preserve">
-    <value>และผู้ใช้ที่ซื้อ BetterLyrics</value>
-  </data>
-  <data name="SettingsPageDirectionTop.Content" xml:space="preserve">
-    <value>ขึ้น</value>
-  </data>
-  <data name="SettingsPageDirectionBottom.Content" xml:space="preserve">
-    <value>ลง</value>
-  </data>
-  <data name="SettingsPageDirectionLeft.Content" xml:space="preserve">
-    <value>ทางซ้าย</value>
-  </data>
-  <data name="SettingsPageDirectionRight.Content" xml:space="preserve">
-    <value>ไปทางขวา</value>
-  </data>
-  <data name="AlbumArtAreaSettingsControlFadeOut.Header" xml:space="preserve">
-    <value>จางหายไป</value>
-  </data>
-  <data name="AlbumArtAreaSettingsControlFadeOutDirection.Header" xml:space="preserve">
-    <value>ทิศทาง</value>
-  </data>
-  <data name="AlbumArtAreaSettingsControlEndPoint.Header" xml:space="preserve">
-    <value>จุดสิ้นสุด</value>
-  </data>
-  <data name="AlbumArtAreaSettingsControlStartPoint.Header" xml:space="preserve">
-    <value>จุดเริ่มต้น</value>
-  </data>
-  <data name="MusicGalleryPageOpenInFileExplorer.Text" xml:space="preserve">
-    <value>Open in File Explorer</value>
   </data>
 </root>

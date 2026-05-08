@@ -166,7 +166,7 @@
                         x:Uid="WindowSettingsControlTheme"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xE790;}"
-                        IsEnabled="{x:Bind LyricsWindowStatus.IsAdaptToEnvironment, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
+                        IsEnabled="{x:Bind LyricsWindowStatus.IsWindowThemeAdjustable, Mode=OneWay}">
                         <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.WindowTheme, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageFollowSystem" />
                             <ComboBoxItem x:Uid="SettingsPageLight" />
@@ -174,7 +174,11 @@
                         </ComboBox>
                     </controls:SettingsCard>
                     <!--  适应环境颜色  -->
-                    <controls:SettingsExpander x:Uid="SettingsPageAdaptEnvColor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE88F;}">
+                    <controls:SettingsExpander
+                        x:Uid="SettingsPageAdaptEnvColor"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                 Glyph=&#xE88F;}"
+                        IsEnabled="{x:Bind LyricsWindowStatus.IsAdaptToEnvironmentAdjustable, Mode=OneWay}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAdaptToEnvironment, Mode=TwoWay}" />
                         <controls:SettingsExpander.Items>
                             <controls:SettingsCard
@@ -191,6 +195,14 @@
                             </controls:SettingsCard>
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
+                    <!--  适应专辑封面主题色  -->
+                    <controls:SettingsCard
+                        x:Uid="SettingsPageAdaptAlbumArtAccentColor"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                 Glyph=&#xE88F;}"
+                        IsEnabled="{x:Bind LyricsWindowStatus.IsAdaptToAlbumArtAdjustable, Mode=OneWay}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAdaptToAlbumArt, Mode=TwoWay}" />
+                    </controls:SettingsCard>
                     <!--  取色风格  -->
                     <controls:SettingsCard x:Uid="SettingsPagePaletteGeneratorType" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE771;}">
                         <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.PaletteGeneratorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">

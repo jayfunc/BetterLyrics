@@ -147,6 +147,18 @@
   <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Header" xml:space="preserve">
     <value>ऑटो-स्क्रॉल गीत जानकारी</value>
   </data>
+  <data name="AlbumArtAreaSettingsControlEndPoint.Header" xml:space="preserve">
+    <value>अंतिम बिंदु</value>
+  </data>
+  <data name="AlbumArtAreaSettingsControlFadeOut.Header" xml:space="preserve">
+    <value>धीरे-धीरे फीका पड़ना</value>
+  </data>
+  <data name="AlbumArtAreaSettingsControlFadeOutDirection.Header" xml:space="preserve">
+    <value>दिशा</value>
+  </data>
+  <data name="AlbumArtAreaSettingsControlStartPoint.Header" xml:space="preserve">
+    <value>आरंभ बिंदु</value>
+  </data>
   <data name="AlbumArtOnlyLayout" xml:space="preserve">
     <value>केवल एल्बम आर्ट लेआउट</value>
   </data>
@@ -1053,6 +1065,9 @@
   <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
     <value>प्लेलिस्ट बनायें</value>
   </data>
+  <data name="MusicGalleryPageOpenInFileExplorer.Text" xml:space="preserve">
+    <value>Open in File Explorer</value>
+  </data>
   <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
     <value>प्लेइंग कतार</value>
   </data>
@@ -1281,6 +1296,9 @@
   <data name="SettingsPageAbout" xml:space="preserve">
     <value>जानकारी</value>
   </data>
+  <data name="SettingsPageAdaptAlbumArtAccentColor.Header" xml:space="preserve">
+    <value>Adapt to the Album Art's Accent Color</value>
+  </data>
   <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
     <value>पर्यावरण के रंग के अनुकूल बनें</value>
   </data>
@@ -1454,6 +1472,18 @@
   </data>
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>डेस्कटॉप मोड (पारदर्शी)</value>
+  </data>
+  <data name="SettingsPageDirectionBottom.Content" xml:space="preserve">
+    <value>नीचे की ओर</value>
+  </data>
+  <data name="SettingsPageDirectionLeft.Content" xml:space="preserve">
+    <value>बाईं ओर</value>
+  </data>
+  <data name="SettingsPageDirectionRight.Content" xml:space="preserve">
+    <value>दाईं ओर</value>
+  </data>
+  <data name="SettingsPageDirectionTop.Content" xml:space="preserve">
+    <value>ऊपर की ओर</value>
   </data>
   <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
     <value>यह प्रोजेक्ट "जैसा है" के आधार पर प्रदान किया गया है, बिना किसी प्रकार की वारंटी के। सभी बोल, फ़ॉन्ट, आइकन और अन्य तृतीय-पक्ष संसाधन उनके संबंधित कॉपीराइट स्वामियों की संपत्ति हैं। इस प्रोजेक्ट के लेखक ऐसे संसाधनों पर स्वामित्व का दावा नहीं करते हैं। यह एक गैर-व्यावसायिक परियोजना है और इसका उपयोग किसी भी अधिकार का उल्लंघन करने के लिए नहीं किया जा सकता है। उपयोगकर्ता यह सुनिश्चित करने के लिए जिम्मेदार हैं कि उनका उपयोग लागू कानूनों और लाइसेंसों का अनुपालन करता है।</value>
@@ -2235,6 +2265,9 @@
   <data name="SettingsPageUnplayedStrokeFontColor.Header" xml:space="preserve">
     <value>स्ट्रोक (अनप्लेड)</value>
   </data>
+  <data name="SettingsPageUserWhoPurchased.PatronName" xml:space="preserve">
+    <value>और BetterLyrics खरीदार</value>
+  </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">
     <value>संस्करण</value>
   </data>
@@ -2474,35 +2507,5 @@
   </data>
   <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
     <value>विंडो थीम</value>
-  </data>
-  <data name="SettingsPageUserWhoPurchased.PatronName" xml:space="preserve">
-    <value>और BetterLyrics खरीदार</value>
-  </data>
-  <data name="SettingsPageDirectionTop.Content" xml:space="preserve">
-    <value>ऊपर की ओर</value>
-  </data>
-  <data name="SettingsPageDirectionBottom.Content" xml:space="preserve">
-    <value>नीचे की ओर</value>
-  </data>
-  <data name="SettingsPageDirectionLeft.Content" xml:space="preserve">
-    <value>बाईं ओर</value>
-  </data>
-  <data name="SettingsPageDirectionRight.Content" xml:space="preserve">
-    <value>दाईं ओर</value>
-  </data>
-  <data name="AlbumArtAreaSettingsControlFadeOut.Header" xml:space="preserve">
-    <value>धीरे-धीरे फीका पड़ना</value>
-  </data>
-  <data name="AlbumArtAreaSettingsControlFadeOutDirection.Header" xml:space="preserve">
-    <value>दिशा</value>
-  </data>
-  <data name="AlbumArtAreaSettingsControlEndPoint.Header" xml:space="preserve">
-    <value>अंतिम बिंदु</value>
-  </data>
-  <data name="AlbumArtAreaSettingsControlStartPoint.Header" xml:space="preserve">
-    <value>आरंभ बिंदु</value>
-  </data>
-  <data name="MusicGalleryPageOpenInFileExplorer.Text" xml:space="preserve">
-    <value>Open in File Explorer</value>
   </data>
 </root>
