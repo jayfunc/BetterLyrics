@@ -36,7 +36,6 @@
 		<None Remove="Assets\Fonts\SloganENFont.ttf" />
 		<None Remove="Assets\Logo.ico" />
 		<None Remove="Assets\Logo.png" />
-		<None Remove="Assets\LogoSystemTray.ico" />
 		<None Remove="Assets\Segoe Fluent Icons.ttf" />
 		<None Remove="Assets\Wiki82.profile.xml" />
 		<None Remove="Controls\AboutControl.xaml" />
@@ -106,7 +105,9 @@
 		<None Remove="Views\ToastOverlayWindow.xaml" />
 	</ItemGroup>
 	<ItemGroup>
-		<Content Include="Logo.ico" />
+		<Content Include="Logo.ico">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 	<ItemGroup>
 		<Manifest Include="$(ApplicationManifest)" />
@@ -236,6 +237,9 @@
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Update="Assets\LogoPlugin.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
+		<Content Update="Assets\LogoWhite.ico">
 		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Update="Assets\MusicWaveBlack.gif">
@@ -513,7 +517,7 @@
 	  <Page Update="Controls\AlbumArtAreaSettingsControl.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>
-	  <Content Update="Assets\LogoSystemTray.ico">
+	  <Content Update="Assets\LogoBlack.ico">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
 	  <None Update="Themes\Generic.xaml">

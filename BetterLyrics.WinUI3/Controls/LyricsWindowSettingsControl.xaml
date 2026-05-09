@@ -217,7 +217,7 @@
                             <HyperlinkButton
                                 x:Uid="SettingsPageShareHub"
                                 Grid.Column="2"
-                                NavigateUri="{x:Bind constants:Link.ShareHub}" />
+                                NavigateUri="{x:Bind constants:Link.ModesStore}" />
 
                             <!--  Create from templates  -->
                             <Button x:Uid="SettingsPageCreateFromTemplates" Grid.Column="3">

@@ -9,7 +9,7 @@ namespace Impressionist.Implementations
 {
     public static class AutoPaletteGenerator
     {
-        public static async Task<PaletteResult> CreatePalette(Dictionary<Vector3, int> sourceColor, int clusterCount, bool isDark, bool toLab = false, bool useKMeansPP = false)
+        public static async Task<PaletteResult> CreatePalette(Dictionary<Vector3, int> sourceColor, int clusterCount, bool? isDark, bool toLab = false, bool useKMeansPP = false)
         {
             var kmeansResult = await KMeansPaletteGenerator.CreatePaletteAsync(sourceColor, clusterCount, isDark, toLab, useKMeansPP);
             var octTreeResult = await OctTreePaletteGenerator.CreatePaletteAsync(sourceColor, clusterCount, isDark);

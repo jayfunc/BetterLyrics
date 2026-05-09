@@ -795,6 +795,10 @@ namespace BetterLyrics.WinUI3.Views
                     OnIsAdaptToEnvironmentChanged();
                     _ = UpdateAlbumArtThemeColorsAsync();
                 }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.IsAdaptToAlbumArt))
+                {
+                    _ = UpdateAlbumArtThemeColorsAsync();
+                }
                 else if (message.PropertyName == nameof(LyricsWindowStatus.IsAlwaysHideUnlockButton))
                 {
                     OnIsLockedChanged();

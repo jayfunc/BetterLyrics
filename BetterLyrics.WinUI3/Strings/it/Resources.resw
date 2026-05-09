@@ -207,6 +207,9 @@
   <data name="AppSettingsControlSystemTrayClickCallback.Header" xml:space="preserve">
     <value>Azione clic singolo</value>
   </data>
+  <data name="AppSettingsControlSystemTrayColorfulIcon.Header" xml:space="preserve">
+    <value>Colorful Icon</value>
+  </data>
   <data name="AppSettingsControlSystemTrayDoubleClickCallback.Header" xml:space="preserve">
     <value>Azione doppio clic</value>
   </data>

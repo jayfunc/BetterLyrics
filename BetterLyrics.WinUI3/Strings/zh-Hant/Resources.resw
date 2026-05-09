@@ -207,6 +207,9 @@
   <data name="AppSettingsControlSystemTrayClickCallback.Header" xml:space="preserve">
     <value>點擊回呼</value>
   </data>
+  <data name="AppSettingsControlSystemTrayColorfulIcon.Header" xml:space="preserve">
+    <value>Colorful Icon</value>
+  </data>
   <data name="AppSettingsControlSystemTrayDoubleClickCallback.Header" xml:space="preserve">
     <value>雙擊回呼</value>
   </data>
