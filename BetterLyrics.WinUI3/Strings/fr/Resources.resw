@@ -207,6 +207,9 @@
   <data name="AppSettingsControlSystemTrayClickCallback.Header" xml:space="preserve">
     <value>Cliquez sur Callback</value>
   </data>
+  <data name="AppSettingsControlSystemTrayColorfulIcon.Header" xml:space="preserve">
+    <value>Colorful Icon</value>
+  </data>
   <data name="AppSettingsControlSystemTrayDoubleClickCallback.Header" xml:space="preserve">
     <value>Rappel du double clic</value>
   </data>

@@ -207,6 +207,9 @@
   <data name="AppSettingsControlSystemTrayClickCallback.Header" xml:space="preserve">
     <value>콜백을 클릭합니다.</value>
   </data>
+  <data name="AppSettingsControlSystemTrayColorfulIcon.Header" xml:space="preserve">
+    <value>Colorful Icon</value>
+  </data>
   <data name="AppSettingsControlSystemTrayDoubleClickCallback.Header" xml:space="preserve">
     <value>더블 클릭 콜백</value>
   </data>

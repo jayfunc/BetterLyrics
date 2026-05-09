@@ -23,7 +23,7 @@ namespace BetterLyrics.WinUI3.Helper
             return stream;
         }
 
-        public static Task<PaletteResult> GetAccentColorsAsync(BitmapDecoder decoder, int count, PaletteGeneratorType generatorType, bool isDark)
+        public static Task<PaletteResult> GetAccentColorsAsync(BitmapDecoder decoder, int count, PaletteGeneratorType generatorType, bool? isDark)
         {
             return generatorType switch
             {

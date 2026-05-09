@@ -31,12 +31,15 @@ namespace Impressionist.Implementations
             return Task.FromResult(new ThemeColorResult(result, colorIsDark));
         }
 
-        public static async Task<PaletteResult> CreatePaletteAsync(Dictionary<Vector3, int> sourceColor, int clusterCount, bool isDark)
+        public static async Task<PaletteResult> CreatePaletteAsync(Dictionary<Vector3, int> sourceColor, int clusterCount, bool? isDark)
         {
             var quantizer = new PaletteQuantizer();
             var builder = sourceColor.AsEnumerable();
             var colorResult = await CreateThemeColorAsync(sourceColor);
-            builder = builder.Where(t => t.Key.RGBVectorLStarIsDark() == isDark);
+            if (isDark != null)
+            {
+                builder = builder.Where(t => t.Key.RGBVectorLStarIsDark() == isDark);
+            }
             var targetColor = builder.ToDictionary(t => t.Key, t => t.Value);
             foreach (var color in targetColor)
             {
@@ -45,14 +48,7 @@ namespace Impressionist.Implementations
             quantizer.Quantize(clusterCount);
             var index = targetColor.Keys.ToList();
             List<Vector3> quantizeResult;
-            if (isDark)
-            {
-                quantizeResult = quantizer.GetPaletteResult(clusterCount);
-            }
-            else
-            {
-                quantizeResult = quantizer.GetPaletteResult(clusterCount);
-            }
+            quantizeResult = quantizer.GetPaletteResult(clusterCount);
             List<Vector3> result;
             if (quantizeResult.Count < clusterCount)
             {

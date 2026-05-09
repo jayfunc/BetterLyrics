@@ -141,6 +141,10 @@
 
                     <TextBlock x:Uid="AppSettingsControlSystemTray" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
+                    <controls:SettingsCard x:Uid="AppSettingsControlSystemTrayColorfulIcon" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE790;}">
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.SystemTraySettings.ColorfulSystemTrayIcon, Mode=TwoWay}" />
+                    </controls:SettingsCard>
+
                     <controls:SettingsCard x:Uid="AppSettingsControlSystemTrayClickCallback" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8B0;}">
                         <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.SystemTraySettings.SystemTrayClickCallback, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackNone" />

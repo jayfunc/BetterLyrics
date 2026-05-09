@@ -34,7 +34,7 @@ namespace Impressionist.Implementations
             return Task.FromResult(new ThemeColorResult(colorVector, isDark));
         }
 
-        public static async Task<PaletteResult> CreatePaletteAsync(Dictionary<Vector3, int> sourceColor, int clusterCount, bool isDark, bool toLab = false, bool useKMeansPP = false)
+        public static async Task<PaletteResult> CreatePaletteAsync(Dictionary<Vector3, int> sourceColor, int clusterCount, bool? isDark, bool toLab = false, bool useKMeansPP = false)
         {
             if (sourceColor.Count == 1)
             {
@@ -42,7 +42,10 @@ namespace Impressionist.Implementations
             }
             var colorResult = await CreateThemeColorAsync(sourceColor, false, toLab);
             var builder = sourceColor.AsEnumerable();
-            builder = builder.Where(t => t.Key.RGBVectorLStarIsDark() == isDark);
+            if (isDark != null)
+            {
+                builder = builder.Where(t => t.Key.RGBVectorLStarIsDark() == isDark);
+            }
             if (toLab)
             {
                 builder = builder.Select(t => new KeyValuePair<Vector3, int>(t.Key.RGBVectorToLABVector(), t.Value));

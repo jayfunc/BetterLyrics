@@ -70,14 +70,20 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
         public async Task<NowPlayingPalette> CalculateAlbumArtThemeColorsAsync(LyricsWindowStatus lyricsWindowStatus, Color backdropAccentColor, CancellationToken token = default)
         {
-            var lightAccentColors = Enumerable.Repeat(Colors.Black, 4).ToList();
-            var darkAccentColors = Enumerable.Repeat(Colors.Black, 4).ToList();
+            var accentColors = Enumerable.Repeat(Colors.Transparent, 4).ToList();
+            var lightAccentColors = Enumerable.Repeat(Colors.Transparent, 4).ToList();
+            var darkAccentColors = Enumerable.Repeat(Colors.Transparent, 4).ToList();
 
             if (_albumArtBitmapDecoder != null)
             {
+                accentColors =
+                    (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, lyricsWindowStatus.PaletteGeneratorType, null))
+                    .Palette.Select(Helper.ColorHelper.FromVector3).ToList();
+                token.ThrowIfCancellationRequested();
+
                 lightAccentColors =
-                        (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, lyricsWindowStatus.PaletteGeneratorType, false))
-                        .Palette.Select(Helper.ColorHelper.FromVector3).ToList();
+                    (await ImageHelper.GetAccentColorsAsync(_albumArtBitmapDecoder, 4, lyricsWindowStatus.PaletteGeneratorType, false))
+                    .Palette.Select(Helper.ColorHelper.FromVector3).ToList();
                 token.ThrowIfCancellationRequested();
 
                 darkAccentColors =
@@ -93,6 +99,10 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             if (lyricsWindowStatus.IsAdaptToEnvironment)
             {
                 themeTypeSent = Helper.ColorHelper.GetElementThemeFromBackgroundColor(result.UnderlayColor);
+            }
+            else if (lyricsWindowStatus.IsAdaptToAlbumArt)
+            {
+                themeTypeSent = Helper.ColorHelper.GetElementThemeFromBackgroundColor(accentColors.First());
             }
             else
             {
