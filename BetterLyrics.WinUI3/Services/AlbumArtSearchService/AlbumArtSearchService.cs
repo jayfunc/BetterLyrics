@@ -166,7 +166,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
             if (enabledIds.Count == 0) return null;
 
             var allFiles = await _fileSystemService.GetParsedFilesAsync(enabledIds, token);
-            allFiles = allFiles.Where(x => FileHelper.MusicExtensions.Contains(Path.GetExtension(x.FileName))).ToList();
+            allFiles = allFiles.Where(x => FileHelper.MusicExtensions.Contains(Path.GetExtension(x.FileName).ToLower())).ToList();
 
             int bestScore = 0;
             FilesIndexItem? bestMatch = null;

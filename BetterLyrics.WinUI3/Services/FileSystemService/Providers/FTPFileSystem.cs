@@ -87,7 +87,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
                     // 只处理特定后缀文件
                     if (item.Type == FtpObjectType.File)
                     {
-                        string extension = Path.GetExtension(item.Name);
+                        string extension = Path.GetExtension(item.Name).ToLower();
                         if (string.IsNullOrEmpty(extension) || !FileHelper.AllSupportedExtensions.Contains(extension)) continue;
                     }
 

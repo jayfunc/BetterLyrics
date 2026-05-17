@@ -154,7 +154,7 @@ namespace BetterLyrics.WinUI3.Models
 
             if (stream != null)
             {
-                var track = new Track(stream, Path.GetExtension(FileName));
+                var track = new Track(stream, MimeMapping.MimeUtility.GetMimeMapping(FileName));
                 SetFromTrack(track);
                 SetRawLyrics(new StreamFileAbstraction(Uri, stream));
             }

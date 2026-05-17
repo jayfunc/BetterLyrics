@@ -85,7 +85,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
                     bool isDir = res.IsCollection;
                     if (!isDir)
                     {
-                        string extension = System.IO.Path.GetExtension(name);
+                        string extension = System.IO.Path.GetExtension(name).ToLower();
                         // 如果后缀为空或不在白名单，跳过
                         if (string.IsNullOrEmpty(extension) || !FileHelper.AllSupportedExtensions.Contains(extension)) continue;
                     }

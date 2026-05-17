@@ -432,7 +432,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             if (enabledIds.Count == 0) return lyricsSearchResult;
 
             var allFiles = await _fileSystemService.GetParsedFilesAsync(enabledIds, token);
-            allFiles = allFiles.Where(x => FileHelper.LyricExtensions.Contains(Path.GetExtension(x.FileName))).ToList();
+            allFiles = allFiles.Where(x => FileHelper.LyricExtensions.Contains(Path.GetExtension(x.FileName).ToLower())).ToList();
 
             foreach (var item in allFiles)
             {
@@ -481,7 +481,7 @@ namespace BetterLyrics.WinUI3.Services.LyricsSearchService
             if (enabledIds.Count == 0) return lyricsSearchResult;
 
             var allFiles = await _fileSystemService.GetParsedFilesAsync(enabledIds, token);
-            allFiles = allFiles.Where(x => FileHelper.MusicExtensions.Contains(Path.GetExtension(x.FileName))).ToList();
+            allFiles = allFiles.Where(x => FileHelper.MusicExtensions.Contains(Path.GetExtension(x.FileName).ToLower())).ToList();
 
             FilesIndexItem? bestFile = null;
             int maxScore = 0;

@@ -128,7 +128,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                         .Select(f => f.Id)
                         .ToList();
                     var cachedFiles = await _fileSystemService.GetParsedFilesAsync(enabledFolderIds);
-                    cachedFiles = cachedFiles.Where(x => FileHelper.MusicExtensions.Contains(Path.GetExtension(x.FileName))).ToList();
+                    cachedFiles = cachedFiles.Where(x => FileHelper.MusicExtensions.Contains(Path.GetExtension(x.FileName).ToLower())).ToList();
 
                     var newTrackList = cachedFiles
                         .Select(x => new ExtendedTrack(x))
