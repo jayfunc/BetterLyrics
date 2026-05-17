@@ -288,7 +288,7 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
                     sourceStream = memStream;
                 }
 
-                args.SetStream(sourceStream.AsRandomAccessStream(), GetMimeType(track.FileName));
+                args.SetStream(sourceStream.AsRandomAccessStream(), MimeMapping.MimeUtility.GetMimeMapping(track.FileName));
             }
             catch (Exception ex)
             {
@@ -299,21 +299,6 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
             {
                 deferral.Complete();
             }
-        }
-
-        private string GetMimeType(string path)
-        {
-            return Path.GetExtension(path).ToLower() switch
-            {
-                ".mp3" => "audio/mpeg",
-                ".flac" => "audio/flac",
-                ".wav" => "audio/wav",
-                ".m4a" => "audio/mp4",
-                ".aac" => "audio/aac",
-                ".ogg" => "audio/ogg",
-                ".wma" => "audio/x-ms-wma",
-                _ => "application/octet-stream"
-            };
         }
 
         public void PlayNextTrack()

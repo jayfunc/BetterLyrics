@@ -66,8 +66,9 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
 
                     if (!isDir)
                     {
+                        string ext = item.Extension.ToLower();
                         // 过滤后缀名
-                        if (string.IsNullOrEmpty(item.Extension) || !FileHelper.AllSupportedExtensions.Contains(item.Extension)) continue;
+                        if (string.IsNullOrEmpty(ext) || !FileHelper.AllSupportedExtensions.Contains(ext)) continue;
                     }
 
                     var itemUri = new Uri(item.FullName).AbsoluteUri;

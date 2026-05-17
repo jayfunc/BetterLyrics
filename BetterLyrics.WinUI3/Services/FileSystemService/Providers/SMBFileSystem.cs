@@ -114,7 +114,7 @@ namespace BetterLyrics.WinUI3.Services.FileSystemService.Providers
                         // 后缀名过滤
                         if (!isDir)
                         {
-                            string extension = Path.GetExtension(item.FileName);
+                            string extension = Path.GetExtension(item.FileName).ToLower();
                             if (string.IsNullOrEmpty(extension) || !FileHelper.AllSupportedExtensions.Contains(extension)) continue;
                         }
 
