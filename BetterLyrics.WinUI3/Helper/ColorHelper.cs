@@ -68,12 +68,12 @@ namespace BetterLyrics.WinUI3.Helper
             switch (mode)
             {
                 case WindowPixelSampleMode.BelowWindow:
-                    using (var bmp = CaptureScreenRegion(myRect.Left, myRect.Bottom + 1, myRect.Width, 1))
-                        return ComputeDominantColor(bmp);
+                    using (var bmp = CaptureScreenRegion(myRect.Left, myRect.Bottom + 2, myRect.Width, 1))
+                        return ComputeAverageColor(bmp);
 
                 case WindowPixelSampleMode.AboveWindow:
                     using (var bmp = CaptureScreenRegion(myRect.Left, myRect.Top - 2, myRect.Width, 1))
-                        return ComputeDominantColor(bmp);
+                        return ComputeAverageColor(bmp);
 
                 case WindowPixelSampleMode.WindowArea:
                     {
@@ -86,7 +86,7 @@ namespace BetterLyrics.WinUI3.Helper
                         if (width <= inset * 2 || height <= inset * 2)
                         {
                             using var bmp = CaptureScreenRegion(myRect.Left, myRect.Top, width, height);
-                            return ComputeDominantColor(bmp);
+                            return ComputeAverageColor(bmp);
                         }
 
                         List<System.Drawing.Bitmap> innerBmps = [];
@@ -97,7 +97,7 @@ namespace BetterLyrics.WinUI3.Helper
                             innerBmps.Add(CaptureScreenRegion(myRect.Left, myRect.Top + inset, inset, height - 2 * inset));
                             innerBmps.Add(CaptureScreenRegion(myRect.Right - inset, myRect.Top + inset, inset, height - 2 * inset));
 
-                            return ComputeDominantColor([.. innerBmps]);
+                            return ComputeAverageColor([.. innerBmps]);
                         }
                         finally
                         {
@@ -125,7 +125,7 @@ namespace BetterLyrics.WinUI3.Helper
                             if (edgeThickness.Right > 0)
                                 edgeBmps.Add(CaptureScreenRegion(myRect.Right, myRect.Top, (int)edgeThickness.Right, height));
 
-                            return ComputeDominantColor([.. edgeBmps]);
+                            return ComputeAverageColor([.. edgeBmps]);
                         }
                         finally
                         {
@@ -143,16 +143,12 @@ namespace BetterLyrics.WinUI3.Helper
             }
         }
 
-        private static Color ComputeDominantColor(params System.Drawing.Bitmap[] bmps)
+        private static Color ComputeAverageColor(params System.Drawing.Bitmap[] bmps)
         {
             if (bmps == null || bmps.Length == 0) return Colors.Transparent;
 
-            Dictionary<int, int> colorFrequencies = [];
-            int dominantColorRgb = 0;
-            int maxFrequency = 0;
-
-            long fallbackR = 0, fallbackG = 0, fallbackB = 0;
-            int totalCount = 0;
+            long totalR = 0, totalG = 0, totalB = 0;
+            long totalPixels = 0;
 
             foreach (var bmp in bmps)
             {
@@ -162,51 +158,23 @@ namespace BetterLyrics.WinUI3.Helper
                     {
                         System.Drawing.Color pixel = bmp.GetPixel(x, y);
 
-                        // 用于兜底的平均色统计
-                        fallbackR += pixel.R;
-                        fallbackG += pixel.G;
-                        fallbackB += pixel.B;
-                        totalCount++;
-
-                        int max = Math.Max(pixel.R, Math.Max(pixel.G, pixel.B));
-                        int min = Math.Min(pixel.R, Math.Min(pixel.G, pixel.B));
-                        int saturation = max == 0 ? 0 : (max - min) * 255 / max;
-
-                        // 过滤低饱和度或极端亮度的像素
-                        if (saturation < 30 || max < 30 || max > 240)
-                            continue;
-
-                        // 颜色量化
-                        int r = pixel.R & 0xF0;
-                        int g = pixel.G & 0xF0;
-                        int b = pixel.B & 0xF0;
-                        int rgb = (r << 16) | (g << 8) | b;
-
-                        if (colorFrequencies.TryGetValue(rgb, out int count))
-                            colorFrequencies[rgb] = count + 1;
-                        else
-                            colorFrequencies[rgb] = 1;
-
-                        if (colorFrequencies[rgb] > maxFrequency)
-                        {
-                            maxFrequency = colorFrequencies[rgb];
-                            dominantColorRgb = rgb;
-                        }
+                        // 纯粹的累加所有像素的 RGB
+                        totalR += pixel.R;
+                        totalG += pixel.G;
+                        totalB += pixel.B;
+                        totalPixels++;
                     }
                 }
             }
 
-            if (maxFrequency == 0)
-            {
-                if (totalCount == 0) return Colors.Transparent;
-                return Color.FromArgb(255, (byte)(fallbackR / totalCount), (byte)(fallbackG / totalCount), (byte)(fallbackB / totalCount));
-            }
+            if (totalPixels == 0) return Colors.Transparent;
 
-            byte finalR = (byte)Math.Min(255, ((dominantColorRgb >> 16) & 0xFF) + 8);
-            byte finalG = (byte)Math.Min(255, ((dominantColorRgb >> 8) & 0xFF) + 8);
-            byte finalB = (byte)Math.Min(255, (dominantColorRgb & 0xFF) + 8);
+            // 直接计算并返回平均值
+            byte avgR = (byte)(totalR / totalPixels);
+            byte avgG = (byte)(totalG / totalPixels);
+            byte avgB = (byte)(totalB / totalPixels);
 
-            return Color.FromArgb(255, finalR, finalG, finalB);
+            return Color.FromArgb(255, avgR, avgG, avgB);
         }
 
         private static Color GetDominantColorFromImage(string imagePath)
@@ -218,7 +186,7 @@ namespace BetterLyrics.WinUI3.Helper
             {
                 using var originalBmp = new System.Drawing.Bitmap(imagePath);
                 using var bmp = new System.Drawing.Bitmap(originalBmp, new System.Drawing.Size(64, 64));
-                return ComputeDominantColor(bmp);
+                return ComputeAverageColor(bmp);
             }
             catch (Exception ex)
             {
