@@ -53,9 +53,9 @@ namespace BetterLyrics.WinUI3.Helper
             return sb.ToString();
         }
 
-        public static byte[]? ReadAlbumArtCache(string album, string artist, string format, string cacheFolderPath)
+        public static byte[]? ReadAlbumArtCache(SongInfo songInfo, string format, string cacheFolderPath)
         {
-            var cacheFilePath = Path.Combine(cacheFolderPath, SanitizeFileName($"{artist} - {album}{format}"));
+            var cacheFilePath = Path.Combine(cacheFolderPath, SanitizeFileName($"{songInfo.ToSearchString()}{format}"));
             if (File.Exists(cacheFilePath))
             {
                 return File.ReadAllBytes(cacheFilePath);
@@ -65,7 +65,7 @@ namespace BetterLyrics.WinUI3.Helper
 
         public static void WriteAlbumArtCache(SongInfo songInfo, byte[] img, string format, string cacheFolderPath)
         {
-            var cacheFilePath = Path.Combine(cacheFolderPath, SanitizeFileName($"{songInfo.Artist} - {songInfo.Album}{format}"));
+            var cacheFilePath = Path.Combine(cacheFolderPath, SanitizeFileName($"{songInfo.ToSearchString()}{format}"));
             File.WriteAllBytes(cacheFilePath, img);
         }
 
