@@ -14,7 +14,7 @@ assignees: ''
 
 
 **BetterLyrics 版本**
-v1.2.XXX.0
+v1.3.XXX.0
 
 **日志**
 将日志以单文件形式上传到此处。你可以在此处找到日志文件 `%LocalAppData%\Packages\37412.BetterLyrics_rd1g0rsrrtxw8\LocalCache\logs`
