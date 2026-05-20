@@ -60,9 +60,9 @@ namespace BetterLyrics.WinUI3.Models
                 $"Linked file name: {LinkedFileName}.";
         }
 
-        public string ToFileName()
+        public string ToSearchString()
         {
-            return $"{Artist} - {Title} - {Album} - {Duration}";
+            return $"{Artist} {Title} {Album}".Trim();
         }
     }
 }

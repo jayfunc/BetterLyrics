@@ -63,7 +63,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
                         {
                             try
                             {
-                                var cachedAlbumArt = FileHelper.ReadAlbumArtCache(songInfo.Artist, songInfo.Album, format, providerInfo.Provider.GetCacheDirectory());
+                                var cachedAlbumArt = FileHelper.ReadAlbumArtCache(songInfo, format, providerInfo.Provider.GetCacheDirectory());
                                 if (cachedAlbumArt != null)
                                 {
                                     return cachedAlbumArt.AsBuffer();
@@ -209,8 +209,11 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
         {
             // Source: https://gist.github.com/mcworkaholic/82fbf203e3f1043bbe534b5b2974c0ce
 
+            string keyword = songInfo.ToSearchString();
+            if (string.IsNullOrWhiteSpace(keyword)) return null;
+
             // Build the iTunes API URL
-            string url = $"{Constants.iTunes.QueryPrefix}term=" + WebUtility.UrlEncode($"{songInfo.Artist} {songInfo.Album}").Replace("%20", "+") + "&country=" + countryCode + "&entity=album&media=music&limit=1";
+            string url = $"{Constants.iTunes.QueryPrefix}term=" + WebUtility.UrlEncode(keyword).Replace("%20", "+") + "&country=" + countryCode + "&entity=album&media=music&limit=1";
 
             // Make a request to the API
             using HttpResponseMessage response = await _iTunesHttpClinet.GetAsync(url, token);
@@ -241,8 +244,8 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
 
         private async Task<byte[]?> SearchKugouAsync(SongInfo songInfo, int size, CancellationToken token)
         {
-            string keyword = $"{songInfo.Title} {songInfo.Artist}".Trim();
-            if (string.IsNullOrEmpty(keyword)) return null;
+            string keyword = songInfo.ToSearchString();
+            if (string.IsNullOrWhiteSpace(keyword)) return null;
 
             string searchUrl = $"http://mobilecdn.kugou.com/api/v3/search/song?format=json&keyword={Uri.EscapeDataString(keyword)}&page=1&pagesize=1&showtype=1";
 
