@@ -8,6 +8,7 @@ using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Vanara.PInvoke;
@@ -355,6 +356,7 @@ namespace BetterLyrics.WinUI3.Hooks
             {
                 cbSize = (uint)Marshal.SizeOf<Shell32.APPBARDATA>(),
                 hWnd = hwnd,
+                uCallbackMessage = Constants.Message.WM_APPBAR_CALLBACK,
                 uEdge = uEdge,
                 rc = new RECT
                 {
@@ -365,7 +367,11 @@ namespace BetterLyrics.WinUI3.Hooks
                 },
             };
 
-            Shell32.SHAppBarMessage(Shell32.ABM.ABM_NEW, ref abd);
+            IntPtr result = Shell32.SHAppBarMessage(Shell32.ABM.ABM_NEW, ref abd);
+            if (result != IntPtr.Zero)
+            {
+                Debug.WriteLine("AppBar has been registered successfully.");
+            }
             Shell32.SHAppBarMessage(Shell32.ABM.ABM_QUERYPOS, ref abd);
             Shell32.SHAppBarMessage(Shell32.ABM.ABM_SETPOS, ref abd);
 
@@ -383,7 +389,8 @@ namespace BetterLyrics.WinUI3.Hooks
             Shell32.APPBARDATA abd = new()
             {
                 cbSize = (uint)Marshal.SizeOf<Shell32.APPBARDATA>(),
-                hWnd = hwnd
+                hWnd = hwnd,
+                uCallbackMessage = Constants.Message.WM_APPBAR_CALLBACK,
             };
 
             Shell32.SHAppBarMessage(Shell32.ABM.ABM_REMOVE, ref abd);
@@ -415,6 +422,7 @@ namespace BetterLyrics.WinUI3.Hooks
             {
                 cbSize = (uint)Marshal.SizeOf<Shell32.APPBARDATA>(),
                 hWnd = hwnd,
+                uCallbackMessage = Constants.Message.WM_APPBAR_CALLBACK,
                 uEdge = uEdge,
                 rc = new RECT
                 {

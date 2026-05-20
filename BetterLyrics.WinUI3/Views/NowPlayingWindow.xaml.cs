@@ -1,4 +1,4 @@
-// 2025/6/23 by Zhe Fang
+Ôªø// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
@@ -104,35 +104,48 @@ namespace BetterLyrics.WinUI3.Views
 
         private void Wmm_WindowMessageReceived(object? sender, WindowMessageEventArgs e)
         {
-            var msg = (WindowMessage)e.Message.MessageId;
-            if (msg == WindowMessage.WM_WINDOWPOSCHANGING)
+            var msgId = e.Message.MessageId;
+            if (msgId == Constants.Message.WM_APPBAR_CALLBACK)
             {
-                if (LyricsWindowStatus.IsWorkArea)
-                {
-                    var pos = Marshal.PtrToStructure<WINDOWPOS>(e.Message.LParam);
-                    var bounds = LyricsWindowStatus.GetAppBarBounds();
-                    pos.x = (int)bounds.X;
-                    pos.y = (int)bounds.Y;
-                    pos.cx = (int)bounds.Width;
-                    pos.cy = (int)bounds.Height;
-                    Marshal.StructureToPtr(pos, e.Message.LParam, false);
+                var notification = (Shell32.ABN)e.Message.WParam;
 
-                    e.Result = IntPtr.Zero;
-                    e.Handled = true;
-                }
-            }
-            else if (msg == WindowMessage.WM_SETTINGCHANGE)
-            {
-                string? changedSetting = Marshal.PtrToStringUni(e.Message.LParam);
-                if (changedSetting == "Desktop")
+                switch (notification)
                 {
-                    if (LyricsWindowStatus.IsWallpaper && LyricsWindowStatus.IsLocked)
+                    case Shell32.ABN.ABN_POSCHANGED:
+                        // ‰ΩçÁΩÆÂèëÁîüÂèòÂåñ
+                        this.MoveAndResize(LyricsWindowStatus.GetAppBarBounds());
+                        break;
+
+                    case Shell32.ABN.ABN_STATECHANGE:
+                        // Áä∂ÊÄÅÔºàËá™Âä®ÈöêËóè/ÁΩÆÈ°∂ÔºâÂèëÁîü‰∫ÜÊîπÂèò
+                        this.MoveAndResize(LyricsWindowStatus.GetAppBarBounds());
+                        break;
+
+                    case Shell32.ABN.ABN_FULLSCREENAPP:
+                        // ÊúâÂÖ∂‰ªñÁ™óÂè£ËøõÂÖ•ÊàñÈÄÄÂá∫‰∫ÜÂÖ®Â±èÁä∂ÊÄÅ
+                        // e.Message.LParam == 1 ‰ª£Ë°®ÊúâÁ™óÂè£ÂÖ®Â±è
+                        this.MoveAndResize(LyricsWindowStatus.GetAppBarBounds());
+                        break;
+                }
+
+                e.Handled = true;
+            }
+            else
+            {
+                var msg = (WindowMessage)msgId;
+                if (msg == WindowMessage.WM_SETTINGCHANGE)
+                {
+                    string? changedSetting = Marshal.PtrToStringUni(e.Message.LParam);
+                    if (changedSetting == "Desktop")
                     {
-                        DispatcherQueueHelper.Instance?.TryEnqueue(() =>
+                        if (LyricsWindowStatus.IsWallpaper && LyricsWindowStatus.IsLocked)
                         {
-                            WorkerWHook.UnpinFromDesktop(this);
-                            WorkerWHook.PinToDesktop(this);
-                        });
+                            DispatcherQueueHelper.Instance?.TryEnqueue(() =>
+                            {
+                                WorkerWHook.UnpinFromDesktop(this);
+                                WorkerWHook.PinToDesktop(this);
+                            });
+                        }
                     }
                 }
             }
@@ -161,7 +174,9 @@ namespace BetterLyrics.WinUI3.Views
             }
             else if (LyricsWindowStatus.IsWorkArea)
             {
-                OnIsWorkAreaChanged();
+                this.SetIsAppBar(true);
+                LyricsWindowStatus.IsLocked = true;
+                UpdateBackdropAccentColor();
                 OnIsLockedChanged();
                 AppWindow.Changed += AppWindow_Changed;
                 this.Activate();
@@ -196,7 +211,7 @@ namespace BetterLyrics.WinUI3.Views
             var newValue = Helper.ColorHelper.GetAccentColor(
                 WindowNative.GetWindowHandle(this),
                 LyricsWindowStatus.EnvironmentSampleMode);
-            // ∑¿÷π≤ª±ÿ“™À¢–¬µº÷¬ΩÁ√Ê≤ª¡˜≥©
+            // Èò≤Ê≠¢‰∏çÂøÖË¶ÅÂà∑Êñ∞ÂØºËá¥ÁïåÈù¢‰∏çÊµÅÁïÖ
             if (newValue != oldValue)
             {
                 _backdropAccentColor = newValue;
@@ -220,21 +235,6 @@ namespace BetterLyrics.WinUI3.Views
         }
 
         // ====
-
-        private void OnIsWorkAreaChanged()
-        {
-            this.SetIsAppBar(LyricsWindowStatus.IsWorkArea);
-            if (LyricsWindowStatus.IsWorkArea)
-            {
-                LyricsWindowStatus.IsLocked = true;
-                UpdateBackdropAccentColor();
-            }
-            else
-            {
-                // «ø÷∆¥•∑¢“ª¥Œ∏¸–¬£¨À¢–¬Ω‚À¯Õº±Íø…º˚–‘◊¥Ã¨
-                OnIsLockedChanged();
-            }
-        }
 
         private void OnIsShownInSwitchersChanged()
         {
@@ -532,12 +532,12 @@ namespace BetterLyrics.WinUI3.Views
                     if (rect.X < 0 && rect.Y < 0 && rect.X + size.Width < 0 && rect.Y + size.Height < 0)
                     {
                     }
-                    // Ωˆ∑«±⁄÷Ωƒ£ Ω≤≈∫ˆ¬‘◊Ó¥ÛªØ»´∆¡ªØ
-                    // ±⁄÷Ωƒ£ ΩΩ´º«“‰◊Ó¥ÛªØ»´∆¡ªØ÷Æ∫Ûµƒ◊¯±Í“‘±„’˝»∑πÃ∂®µΩ◊¿√Ê
+                    // ‰ªÖÈùûÂ£ÅÁ∫∏Ê®°ÂºèÊâçÂøΩÁï•ÊúÄÂ§ßÂåñÂÖ®Â±èÂåñ
+                    // Â£ÅÁ∫∏Ê®°ÂºèÂ∞ÜËÆ∞ÂøÜÊúÄÂ§ßÂåñÂÖ®Â±èÂåñ‰πãÂêéÁöÑÂùêÊ†á‰ª•‰æøÊ≠£Á°ÆÂõ∫ÂÆöÂà∞Ê°åÈù¢
                     else if (!LyricsWindowStatus.IsWallpaper && (LyricsWindowStatus.IsMaximized || LyricsWindowStatus.IsFullscreen))
                     {
                     }
-                    // ∫ˆ¬‘±⁄÷Ωƒ£ Ω+“—À¯∂®◊¥Ã¨∑¿÷π‘⁄πÃ∂®µΩ◊¿√Êµƒπ˝≥Ã÷–”…”⁄◊¯±Íœµ±‰ªªµº÷¬µƒ¥ÌŒÛµƒ◊¯±Í±ªº«“‰
+                    // ÂøΩÁï•Â£ÅÁ∫∏Ê®°Âºè+Â∑≤ÈîÅÂÆöÁä∂ÊÄÅÈò≤Ê≠¢Âú®Âõ∫ÂÆöÂà∞Ê°åÈù¢ÁöÑËøáÁ®ã‰∏≠Áî±‰∫éÂùêÊ†áÁ≥ªÂèòÊç¢ÂØºËá¥ÁöÑÈîôËØØÁöÑÂùêÊ†áË¢´ËÆ∞ÂøÜ
                     else if (LyricsWindowStatus.IsWallpaper && LyricsWindowStatus.IsLocked)
                     {
                     }
@@ -766,11 +766,7 @@ namespace BetterLyrics.WinUI3.Views
             }
             else if (message.Sender == LyricsWindowStatus)
             {
-                if (message.PropertyName == nameof(LyricsWindowStatus.IsWorkArea))
-                {
-                    OnIsWorkAreaChanged();
-                }
-                else if (message.PropertyName == nameof(LyricsWindowStatus.IsShownInSwitchers))
+                if (message.PropertyName == nameof(LyricsWindowStatus.IsShownInSwitchers))
                 {
                     OnIsShownInSwitchersChanged();
                 }
