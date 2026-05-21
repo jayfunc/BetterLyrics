@@ -41,3 +41,35 @@ Thank you for helping us make BetterLyrics better!
 * **贡献者致谢：** 代码合并后，我们会将您的 Crowdin 个人资料添加到下方的 **贡献者 (Contributors)** 列表中。
 
 感谢您帮助我们将 BetterLyrics 打造得更好！
+
+---
+
+### 📊 Status / 状态
+
+| Language / 语言 | Code | Translated / 已翻译 | Proofread / 已校对 | Contributors / 贡献者 |
+| --- | --- | --- | --- | --- |
+| English | en | 100% | 100% | jayfunc[^1] |
+| Arabic (العربية) | ar | 100% | 0% | - |
+| German (Deutsch) | de | 100% | 0% | - |
+| Spanish (Español) | es | 100% | 0% | - |
+| French (Français) | fr | 100% | 3% | - |
+| Hindi (हिन्दी) | hi | 100% | 0% | - |
+| Indonesian (Bahasa Indonesia) | id | 100% | 0% | - |
+| Italian (Italiano) | it | 100% | 99% | pascal-00[^2] |
+| Japanese (日本語) | ja | 100% | 100% | SuHeAndZl[^3] |
+| Korean (한국어) | ko | 100% | 0% | - |
+| Malay (Bahasa Melayu) | ms | 100% | 0% | - |
+| Portuguese (Português) | pt | 100% | 0% | - |
+| Russian (Русский) | ru | 100% | 0% | - |
+| Thai (ไทย) | th | 100% | 0% | - |
+| Vietnamese (Tiếng Việt) | vi | 100% | 0% | - |
+| Simplified Chinese (简体中文) | zh-Hans | 100% | 100% | jayfunc[^1] borcolasky[^4] |
+| Traditional Chinese (繁體中文) | zh-Hant | 100% | 100% | borcolasky[^4] SuHeAndZl[^3] |
+
+[^1]: [jayfunc](https://crowdin.com/profile/jayfunc)
+[^2]: [pascal-00](https://crowdin.com/profile/pascal-00)
+[^3]: [SuHeAndZl](https://crowdin.com/profile/SuHeAndZl)
+[^4]: [borcolasky](https://crowdin.com/profile/borcolasky)
+
+> 💡 **Note / 提示:** To keep the list concise, minor contributions (e.g., translating only a few strings) may not be explicitly listed in the table above, but we are deeply grateful for every helper!
+> 为了保持列表简洁，较小的贡献（如仅翻译/校对了个别词条）可能不会在上方表格中明确列出，但我们由衷感谢每一位热心帮助的朋友！
