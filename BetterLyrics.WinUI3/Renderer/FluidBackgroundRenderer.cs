@@ -15,7 +15,7 @@ namespace BetterLyrics.WinUI3.Renderer
         private PixelShaderEffect<FluidBackgroundEffect>? _fluidEffect;
         private float _timeAccumulator = 0f;
 
-        private float3 _c1 = 0, _c2 = 0, _c3 = 0, _c4 = 0;
+        private float3 _c1 = float3.Zero, _c2 = float3.Zero, _c3 = float3.Zero, _c4 = float3.Zero;
 
         public bool IsEnabled { get; set; } = false;
         public double Opacity { get; set; } = 1.0;

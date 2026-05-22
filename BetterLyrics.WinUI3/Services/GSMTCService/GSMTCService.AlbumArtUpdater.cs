@@ -70,9 +70,9 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
         public async Task<NowPlayingPalette> CalculateAlbumArtThemeColorsAsync(LyricsWindowStatus lyricsWindowStatus, Color backdropAccentColor, CancellationToken token = default)
         {
-            var accentColors = Enumerable.Repeat(Colors.Transparent, 4).ToList();
-            var lightAccentColors = Enumerable.Repeat(Colors.Transparent, 4).ToList();
-            var darkAccentColors = Enumerable.Repeat(Colors.Transparent, 4).ToList();
+            var accentColors = Enumerable.Repeat(Colors.Black, 4).ToList();
+            var lightAccentColors = Enumerable.Repeat(Colors.Black, 4).ToList();
+            var darkAccentColors = Enumerable.Repeat(Colors.Black, 4).ToList();
 
             if (_albumArtBitmapDecoder != null)
             {

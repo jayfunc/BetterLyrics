@@ -65,7 +65,7 @@ namespace BetterLyrics.WinUI3.Controls
         private readonly SpectrumAnalyzer _spectrumAnalyzer = new();
 
         private readonly ValueTransition<Color> _immersiveBgColorTransition = new(
-            initialValue: Colors.Transparent,
+            initialValue: Colors.Black,
             defaultTotalDuration: 0.3f,
             interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
         );
@@ -75,22 +75,22 @@ namespace BetterLyrics.WinUI3.Controls
             defaultTotalDuration: 0.3f
         );
         private readonly ValueTransition<Color> _accentColor1Transition = new(
-            initialValue: Colors.Transparent,
+            initialValue: Colors.Black,
             defaultTotalDuration: 0.3f,
             interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
         );
         private readonly ValueTransition<Color> _accentColor2Transition = new(
-            initialValue: Colors.Transparent,
+            initialValue: Colors.Black,
             defaultTotalDuration: 0.3f,
             interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
         );
         private readonly ValueTransition<Color> _accentColor3Transition = new(
-            initialValue: Colors.Transparent,
+            initialValue: Colors.Black,
             defaultTotalDuration: 0.3f,
             interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
         );
         private readonly ValueTransition<Color> _accentColor4Transition = new(
-            initialValue: Colors.Transparent,
+            initialValue: Colors.Black,
             defaultTotalDuration: 0.3f,
             interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
         );
