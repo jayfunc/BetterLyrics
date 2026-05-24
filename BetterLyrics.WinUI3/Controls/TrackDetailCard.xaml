@@ -38,7 +38,7 @@
                     <local:PropertyRow x:Uid="MusicGalleryPageFileInfoTitle" Value="{x:Bind ExtendedTrack.Title, Mode=OneWay}" />
                     <local:PropertyRow x:Uid="MusicGalleryPageFileArtist" Value="{x:Bind ExtendedTrack.Artist, Mode=OneWay}" />
                     <local:PropertyRow x:Uid="MusicGalleryPageFileAlbum" Value="{x:Bind ExtendedTrack.Album, Mode=OneWay}" />
-                    <local:PropertyRow x:Uid="MusicGalleryPageFileInfoYear" Value="{x:Bind ExtendedTrack.Year, Mode=OneWay, FallbackValue=-}" />
+                    <local:PropertyRow x:Uid="MusicGalleryPageFileInfoYear" Value="{x:Bind ExtendedTrack.Year, Mode=OneWay}" />
                     <local:PropertyRow x:Uid="MusicGalleryPageFileInfoDuration" Value="{x:Bind ExtendedTrack.Duration, Converter={StaticResource SecondsToFormattedTimeConverter}, Mode=OneWay}" />
                     <local:PropertyRow x:Uid="MusicGalleryPageFileInfoBitrate" Value="{x:Bind ExtendedTrack.Bitrate, Mode=OneWay}" />
                     <local:PropertyRow x:Uid="MusicGalleryPageFileInfoSampleRate" Value="{x:Bind ExtendedTrack.SampleRate, Mode=OneWay}" />
