@@ -34,6 +34,8 @@ namespace BetterLyrics.WinUI3
         {
             this.InitializeComponent();
 
+            ATL.Settings.NullAbsentValues = true;
+
             _splashScreen = SimpleSplashScreen.ShowDefaultSplashScreen();
             _logger = Ioc.Default.GetRequiredService<ILogger<App>>();
 
