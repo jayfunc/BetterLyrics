@@ -169,9 +169,13 @@ If you like BetterLyrics, please consider supporting it. Your support helps keep
 
 ## ⭐ Star History
 
-<div align="center">
-  <img src="https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date" width="100%">
-</div>
+<a href="https://www.star-history.com/jayfunc/betterlyrics#history">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/chart?repos=jayfunc/BetterLyrics&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/chart?repos=jayfunc/BetterLyrics&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/chart?repos=jayfunc/BetterLyrics&type=Date" />
+ </picture>
+</a>
 
 ## 📰 Media Mentions & Community Features
 
