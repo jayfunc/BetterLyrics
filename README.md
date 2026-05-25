@@ -28,21 +28,31 @@
   <br>
 
   <img src="docs/assets/promotion/banner.png" alt="Banner" width="100%" style="border-radius: 10px;">
+  
+  <br>
+
+  <div>
+    <a href="https://hellogithub.com/repository/jayfunc/BetterLyrics" target="_blank"><img src="https://abroad.hellogithub.com/v1/widgets/recommend.svg?rid=d2af74f0aea146ad8e4b2086982f5777&claim_uid=SgtQs9c54C8wjnv" alt="HelloGitHub" height="40"></a>
+  </div>
+
+  <div>
+    <a href="https://deepwiki.com/jayfunc/BetterLyrics" target="_blank"><img src="https://deepwiki.com/badge.svg" alt="DeepWiki"></a>
+    <a href="https://zread.ai/jayfunc/BetterLyrics" target="_blank"><img src="https://img.shields.io/badge/Ask_Zread-_.svg?style=flat&color=00b0aa&labelColor=000000&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTQuOTYxNTYgMS42MDAxSDIuMjQxNTZDMS44ODgxIDEuNjAwMSAxLjYwMTU2IDEuODg2NjQgMS42MDE1NiAyLjI0MDFWNC45NjAxQzEuNjAxNTYgNS4zMTM1NiAxLjg4QEkgNS42MDAxIDIuMjQxNTYgNS42MDAxSDQuOTYxNTZDNS4zMTUwMiA1LjYwMDEgNS42MDE1NiAxLjMxMzU2IDUuNjAxNTYgNC45NjAxVjIuMjQwMUM1LjYwMTU2IDEuODg2NjQgNS4zMTM1MiAxLjYwMDEgNC45NjE1NiAxLjYwMDFaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00Ljk2MTU2IDEwLjM5OTlIMi4yNDE1NkMxLjg4ODEgMTAuMzk5OSAxLjYwMTU2IDEwLjY4NjQgMS42MDE1NiAxMS4wMzk5VjEzLjc1OTlDMS42MDE1NiAxNC4xMTM0IDEuODg4MSAxNC4zOTk5IDIuMjQxNTYgMTQuMzk5OUg0Ljk2MTU2QzUuMzE1MDIgMTQuMzk5OSA1LjYwMTU2IDE0LjExMzQgNS42MDE1NiAxMy43NTk5VjExLjAzOTlDNS42MDE1NiAxMC42RHZ6IDUuMzE1MDIgMTAuMzk5OSA0Ljk2MTU2IDEwLjM5OTlaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik0xMy43NTg0IDEuNjAwMUgxMS4wMzg0QzEwLjY4NSAxLjYwMDEgMTAuMzk4NCAxLjg4NjY0IDEwLjM5ODQgMi4yNDAxVjQuOTkxMUMxMC4zOTg0IDUuMzEzNTYgMTAuNjg1IDUuNjAwMSAxMS4wMzg0IDUuNjAwMUgxMy43NTk5QzE0LjExMTkgNS42MDAxIDE0LjM5ODQgNS4zMTM1NiAxNC4zOTk5IDQuOTYwMVYyLjI0MDFDMTQuMzk5OCAxLjg4NjY0IDE0LjExMTkgMS42MDAxIDEzLjc1ODQgMS42MDAxWiIgZmlsbD0iI2ZmZiIvPgo8Y2F0aCBkPSJNNCAxMkwxMiA0TDQgMTJaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00IDEyTDEyIDQiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K&logoColor=ffffff" alt="Zread"></a>
+  </div>
+
+  <div>
+    <a href="https://trendshift.io/repositories/16452" target="_blank"><img src="https://trendshift.io/api/badge/repositories/16452" alt="jayfunc%2FBetterLyrics | Trendshift" style="width: 250px; height: 55px;" width="250" height="55"/></a>
+  </div>
 
 </div>
 
-<br>
-
-## 🔥 Featured & Community
+## 🔥 Community
 
 <div align="center">
 
-| Featured by HelloGitHub | Featured by SSPAI | 🤖 Ask AI |
-| :---: | :---: | :---: |
-| <a href="https://hellogithub.com/repository/jayfunc/BetterLyrics" target="_blank"><img src="https://abroad.hellogithub.com/v1/widgets/recommend.svg?rid=d2af74f0aea146ad8e4b2086982f5777&claim_uid=SgtQs9c54C8wjnv" alt="HelloGitHub" height="40"></a> | [**Read Self-Recommended Article**](https://sspai.com/post/101028) | [![DeepWiki](https://deepwiki.com/badge.svg)](https://deepwiki.com/jayfunc/BetterLyrics) <br> [![Zread](https://img.shields.io/badge/Ask_Zread-_.svg?style=flat&color=00b0aa&labelColor=000000&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTQuOTYxNTYgMS42MDAxSDIuMjQxNTZDMS44ODgxIDEuNjAwMSAxLjYwMTU2IDEuODg2NjQgMS42MDE1NiAyLjI0MDFWNC45NjAxQzEuNjAxNTYgNS4zMTM1NiAxLjg4ODEgNS42MDAxIDIuMjQxNTYgNS42MDAxSDQuOTYxNTZDNS4zMTUwMiA1LjYwMDEgNS42MDE1NiA1LjMxMzU2IDUuNjAxNTYgNC45NjAxVjIuMjQwMUM1LjYwMTU2IDEuODg2NjQgNS4zMTUwMiAxLjYwMDEgNC45NjE1NiAxLjYwMDFaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00Ljk2MTU2IDEwLjM5OTlIMi4yNDE1NkMxLjg4ODEgMTAuMzk5OSAxLjYwMTU2IDEwLjY4NjQgMS42MDE1NiAxMS4wMzk5VjEzLjc1OTlDMS42MDE1NiAxNC4xMTM0IDEuODg4MSAxNC4zOTk5IDIuMjQxNTYgMTQuMzk5OUg0Ljk2MTU2QzUuMzE1MDIgMTQuMzk5OSA1LjYwMTU2IDE0LjExMzQgNS42MDE1NiAxMy43NTk5VjExLjAzOTlDNS42MDE1NiAxMC42ODY0IDUuMzE1MDIgMTAuMzk5OSA0Ljk2MTU2IDEwLjM5OTlaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik0xMy43NTg0IDEuNjAwMUgxMS4wMzg0QzEwLjY4NSAxLjYwMDEgMTAuMzk4NCAxLjg4NjY0IDEwLjM5ODQgMi4yNDAxVjQuOTYwMUMxMC4zOTg0IDUuMzEzNTYgMTAuNjg1IDUuNjAwMSAxMS4wMzg0IDUuNjAwMUgxMy43NTk5QzE0LjExMTkgNS42MDAxIDE0LjM5ODQgNS4zMTM1NiAxNC4zOTg0IDQuOTYwMVYyLjI0MDFDMTQuMzk4NCAxLjg4NjY0IDE0LjExMTkgMS42MDAxIDEzLjc1ODQgMS42MDAxWiIgZmlsbD0iI2ZmZiIvPgo8cGF0aCBkPSJNNCAxMkwxMiA0TDQgMTJaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00IDEyTDEyIDQiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K&logoColor=ffffff)](https://zread.ai/jayfunc/BetterLyrics) |
-
-**Chat Groups:** 
-[QQ Group 1](https://qm.qq.com/q/yArcw3n8pq) (1054700388) | [QQ Group 2](https://qm.qq.com/q/27rzSjFXt6) (1076554669) | [QQ Channel (BetterLyrics4U)](https://pd.qq.com/s/1u1ntkyzr?b=9) | [Discord](https://discord.gg/5yAQPnyCKv) | [Telegram](https://t.me/+svhSLZ7awPsxNGY1)
+[QQ Group 1](https://qm.qq.com/q/yArcw3n8pq) (1054700388) | [QQ Group 2](https://qm.qq.com/q/27rzSjFXt6) (1076554669)
+[QQ Channel](https://pd.qq.com/s/1u1ntkyzr?b=9) (BetterLyrics4U)
+[Discord](https://discord.gg/5yAQPnyCKv) | [Telegram](https://t.me/+svhSLZ7awPsxNGY1)
 
 </div>
 
@@ -163,6 +173,36 @@ If you like BetterLyrics, please consider supporting it. Your support helps keep
 <div align="center">
   <img src="https://api.star-history.com/svg?repos=jayfunc/BetterLyrics&type=Date" width="100%">
 </div>
+
+## 📰 Media Mentions & Community Features
+
+> Special thanks to the following media outlets, open-source weeklies, and community developers for featuring and reviewing BetterLyrics!
+
+**Featured Reviews & Media Coverage**
+
+- [HelloGitHub] [Featured in HelloGitHub Monthly / Recommended Open-Source Project](https://hellogithub.com/repository/jayfunc/BetterLyrics)
+- [SSPAI] [BetterLyrics - An Immersive and Fluid Lyrics Visualizer Crafted for Windows](https://sspai.com/post/101028)
+- [LINUX DO] [Showcase: An Awesome Native Windows Lyrics App Developed in C# — BetterLyrics](https://linux.do/t/topic/1785379)
+
+**Curated Weeklies & App Directories**
+
+- [ireflux Weekly] [Featured in Weekly Share (Issue #342)](https://github.com/ireflux/weekly/blob/d1912dd15d33c7cefc8aa4d8fe65c8baf3678d76/weekly_2025/weekly_342.md?plain=1#L17)
+- [jishnu-kv] [WinUI-3-Apps-List (Curated Showcase of Outstanding WinUI 3 Apps)](https://github.com/jishnu-kv/WinUI-3-Apps-List#-music-players)
+- [Bajins' Digital Garden] [Curated Windows Software · Audio & Video Recommendations](https://www.bajins.com/System/Windows%E8%BD%AF%E4%BB%B6.html#%E9%9F%B3%E8%A7%86%E9%A2%91)
+- [xy Open-Source Bookmarks] [Curated Open-Source Project Directory](https://cqxy.qzz.io/xy-site/site/Bookmark/github/#github)
+
+**Developer Showcases & Tech Blogs**
+
+- [Johnwikix/original-sound-hq-player] [Original Sound HQ Player README — Code Reference & Attributed Credits](https://github.com/Johnwikix/original-sound-hq-player#%E4%BB%A3%E7%A0%81%E5%8F%82%E8%80%83)
+- [Kifranei/Ella] [Ella Open-Source Project README — Special Thanks](https://github.com/Kifranei/Ella#-%E8%87%B4%E8%B0%A2)
+- [LYlostyu] [TDX_BUS_DEMO Log (Page 37)](https://tdx-bus-demo.vercel.app/37)
+- [Chenshi Yujingxuan's Blog] [[Pinned] How to Live a Better Life (A Curated Essentials Guide)](https://blog.cyx2009.top/archives/better_life)
+- [Fengfeng] [How to Stream Localized & Indie Artists on Apple Music](https://wesley666.github.io/article/20c98ff0)
+- [Jinvic's Blog] [Personal Software Recommendations](https://github.com/Jinvic/personal-blog/blob/f67f6aabdc6a53648de71a574887a597d5626fce/content/posts/collection/%E4%B8%AA%E4%BA%BA%E5%90%91%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90.md?plain=1#L104)
+
+**Community Spotlights & Video Demos**
+
+- [Bilibili] [C-Pop Collection: "How on Earth Do You Translate Love"](https://www.bilibili.com/video/BV19eQ1B7EbY)
 
 ## 📄 License & Credits
 
