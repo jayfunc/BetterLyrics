@@ -30,6 +30,7 @@
   <img src="docs/assets/promotion/banner.png" alt="Banner" width="100%" style="border-radius: 10px;">
   
   <br>
+  <br>
 
   <div>
     <a href="https://hellogithub.com/repository/jayfunc/BetterLyrics" target="_blank"><img src="https://abroad.hellogithub.com/v1/widgets/recommend.svg?rid=d2af74f0aea146ad8e4b2086982f5777&claim_uid=SgtQs9c54C8wjnv" alt="HelloGitHub" height="40"></a>
@@ -50,9 +51,7 @@
 
 <div align="center">
 
-[QQ Group 1](https://qm.qq.com/q/yArcw3n8pq) (1054700388) | [QQ Group 2](https://qm.qq.com/q/27rzSjFXt6) (1076554669)
-[QQ Channel](https://pd.qq.com/s/1u1ntkyzr?b=9) (BetterLyrics4U)
-[Discord](https://discord.gg/5yAQPnyCKv) | [Telegram](https://t.me/+svhSLZ7awPsxNGY1)
+[QQ Group 1](https://qm.qq.com/q/yArcw3n8pq) (1054700388) | [QQ Group 2](https://qm.qq.com/q/27rzSjFXt6) (1076554669) | [QQ Channel](https://pd.qq.com/s/1u1ntkyzr?b=9) (BetterLyrics4U) | [Discord](https://discord.gg/5yAQPnyCKv) | [Telegram](https://t.me/+svhSLZ7awPsxNGY1)
 
 </div>
 
