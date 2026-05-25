@@ -16,9 +16,13 @@
     <img src="https://img.shields.io/badge/框架-WinUI%203-blue" alt="WinUI 3">
     <img src="https://img.shields.io/badge/许可证-GPL_v3.0-blue" alt="License">
     <a href="https://github.com/jayfunc/BetterLyrics/stargazers"><img src="https://img.shields.io/github/stars/jayfunc/BetterLyrics?label=%E6%98%9F%E6%A0%87%E6%95%B0" alt="Star"></a>
+  </div>
+
+  <div>
+    <a href="https://luizvbo.github.io/kstars/pages/language.html?lang=CSharp" target="_blank"><img src="https://img.shields.io/badge/GitHub%20%E6%8E%92%E5%90%8D-C%23%20%E5%89%8D%201000-purple" alt="GitHub C# 项目前 1000"></a>
     <a href="https://crowdin.com/project/betterlyrics"><img src="https://badges.crowdin.net/betterlyrics/localized.svg" alt="Crowdin"></a>
     <a href="https://betterlyrics.github.io"><img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/BetterLyrics/BetterLyrics.github.io/pages%2Fpages-build-deployment?label=%E5%AE%98%E7%BD%91"></a>
-    <a href="https://github.com/jayfunc/BetterLyrics/releases/latest"><img src="https://img.shields.io/github/downloads/jayfunc/BetterLyrics/total?label=%E4%B8%8B%E8%BD%BD%E9%87%8F"><a/>
+    <a href="https://github.com/jayfunc/BetterLyrics/releases/latest"><img src="https://img.shields.io/github/downloads/jayfunc/BetterLyrics/total?label=%E4%B8%8B%E8%BD%BD%E9%87%8F"></a>
   </div>
 
   <br>
