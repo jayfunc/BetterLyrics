@@ -16,6 +16,10 @@
     <img src="https://img.shields.io/badge/Framework-WinUI%203-blue" alt="WinUI 3">
     <img src="https://img.shields.io/badge/License-GPL_v3.0-blue" alt="License">
     <a href="https://github.com/jayfunc/BetterLyrics/stargazers"><img src="https://img.shields.io/github/stars/jayfunc/BetterLyrics" alt="Stars"></a>
+  </div>
+
+  <div>
+    <a href="https://luizvbo.github.io/kstars/pages/language.html?lang=CSharp" target="_blank"><img src="https://img.shields.io/badge/GitHub-Top%201000%20(C%23)-purple" alt="GitHub C# Top 1000"></a>
     <a href="https://crowdin.com/project/betterlyrics"><img src="https://badges.crowdin.net/betterlyrics/localized.svg" alt="Crowdin"></a>
     <a href="https://betterlyrics.github.io"><img alt="GitHub Actions Workflow Status" src="https://img.shields.io/github/actions/workflow/status/BetterLyrics/BetterLyrics.github.io/pages%2Fpages-build-deployment?label=Official%20Website"></a>
     <a href="https://github.com/jayfunc/BetterLyrics/releases/latest"><img src="https://img.shields.io/github/downloads/jayfunc/BetterLyrics/total?label=Downloads"></a>
