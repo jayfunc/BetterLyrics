@@ -5,9 +5,8 @@
     <Platform Name="x86" />
   </Configurations>
   <Folder Name="/External/">
-    <Project Path="External/ColorThief.WinUI3/ColorThief.WinUI3.csproj" />
     <Project Path="External/Impressionist/Impressionist/Impressionist.csproj" />
-    <Project Path="External/Lyricify.Lyrics.Helper/Lyricify.Lyrics.Helper.csproj" />
+    <Project Path="External/Lyricify-Lyrics-Helper/Lyricify.Lyrics.Helper/Lyricify.Lyrics.Helper.csproj" />
     <Project Path="External/WindowsMediaController/WindowsMediaController.csproj" />
   </Folder>
   <Folder Name="/Plugins/">

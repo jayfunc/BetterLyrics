@@ -1,5 +1,4 @@
 ﻿using Impressionist.Abstractions;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -9,40 +8,43 @@ namespace Impressionist.Implementations
 {
     public static class AutoPaletteGenerator
     {
-        public static async Task<PaletteResult> CreatePalette(Dictionary<Vector3, int> sourceColor, int clusterCount, bool? isDark, bool toLab = false, bool useKMeansPP = false)
+        public static async Task <PaletteResult> CreatePalette(Dictionary<Vector3, int> sourceColor, int clusterCount, bool ignoreWhite = false, bool toLab = false, bool useKMeansPP = false)
         {
-            var kmeansResult = await KMeansPaletteGenerator.CreatePaletteAsync(sourceColor, clusterCount, isDark, toLab, useKMeansPP);
-            var octTreeResult = await OctTreePaletteGenerator.CreatePaletteAsync(sourceColor, clusterCount, isDark);
-            var kMeansCentralPoint = Vector3.Zero;
-            var vectors = kmeansResult.Palette.Select(t => t.RGBVectorToLABVector()).ToList();
-            foreach (var vector in vectors)
+            var theme = KMeansPaletteGenerator.CreateThemeColor(sourceColor,ignoreWhite, toLab);
+            var kmeansTask = KMeansPaletteGenerator.CreatePalette(sourceColor, clusterCount, theme,ignoreWhite, toLab, useKMeansPP);
+            var octTreeTask = OctTreePaletteGenerator.CreatePalette(sourceColor, clusterCount, theme,ignoreWhite);
+
+            await Task.WhenAll(kmeansTask, octTreeTask);
+
+            var kmeansResult = kmeansTask.Result;
+            var octTreeResult = octTreeTask.Result;
+            var kMeansDiversity = CalculateSpatialDiversity(kmeansResult.Palette);
+            var octTreeDiversity = CalculateSpatialDiversity(octTreeResult.Palette);
+            if (kmeansResult.PaletteIsDark)
             {
-                kMeansCentralPoint += vector;
-            }
-            kMeansCentralPoint /= clusterCount;
-            var distances = vectors.Select(t => Vector3.Distance(t, kMeansCentralPoint)).ToList();
-            var avg = distances.Average();
-            var sum = distances.Sum(d => Math.Pow(d - avg, 2));
-            var kMeansVariance = sum / clusterCount;
-            var octTreeCentralPoint = Vector3.Zero;
-            vectors = octTreeResult.Palette.Select(t => t.RGBVectorToLABVector()).ToList();
-            foreach (var vector in vectors)
-            {
-                octTreeCentralPoint += vector;
-            }
-            octTreeCentralPoint /= clusterCount;
-            distances = vectors.Select(t => Vector3.Distance(t, octTreeCentralPoint)).ToList();
-            avg = distances.Average();
-            sum = distances.Sum(d => Math.Pow(d - avg, 2));
-            var octTreeVariance = sum / clusterCount;
-            if (kMeansVariance > octTreeVariance)
-            {
-                return kmeansResult;
+                return kMeansDiversity >= octTreeDiversity ? kmeansResult : octTreeResult;
             }
             else
             {
-                return octTreeResult;
+                return kMeansDiversity <= octTreeDiversity || octTreeDiversity == 0 ? kmeansResult : octTreeResult;
             }
+        }
+
+        private static double CalculateSpatialDiversity(List<Vector3> palette)
+        {
+            if (palette == null || palette.Count == 0) return 0;
+
+            var labVectors = palette.Select(t => t.RGBVectorToLABVector()).ToList();
+            var centroid = Vector3.Zero;
+            foreach (var vector in labVectors)
+            {
+                centroid += vector;
+            }
+            centroid /= labVectors.Count;
+
+            var sumSquaredDistances = labVectors.Sum(v => Vector3.DistanceSquared(v, centroid));
+
+            return sumSquaredDistances / labVectors.Count;
         }
     }
 }

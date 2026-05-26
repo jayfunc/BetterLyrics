@@ -185,7 +185,7 @@
 		<ProjectReference Include="..\BetterLyrics.Core\BetterLyrics.Core.csproj" />
 		<ProjectReference Include="..\External\ColorThief.WinUI3\ColorThief.WinUI3.csproj" />
 		<ProjectReference Include="..\External\Impressionist\Impressionist\Impressionist.csproj" />
-		<ProjectReference Include="..\External\Lyricify.Lyrics.Helper\Lyricify.Lyrics.Helper.csproj" />
+		<ProjectReference Include="..\External\Lyricify-Lyrics-Helper\Lyricify.Lyrics.Helper\Lyricify.Lyrics.Helper.csproj" />
 		<ProjectReference Include="..\External\WindowsMediaController\WindowsMediaController.csproj" />
 	</ItemGroup>
 	<ItemGroup>

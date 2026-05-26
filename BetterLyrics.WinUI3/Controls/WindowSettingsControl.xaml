@@ -207,7 +207,6 @@
                     <controls:SettingsCard x:Uid="SettingsPagePaletteGeneratorType" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE771;}">
                         <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.PaletteGeneratorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageAuto" />
-                            <ComboBoxItem Content="MedianCut" />
                             <ComboBoxItem Content="OctTree" />
                             <ComboBoxItem Content="KMeans" />
                         </ComboBox>

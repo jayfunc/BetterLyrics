@@ -7,282 +7,541 @@ using System.Threading.Tasks;
 
 namespace Impressionist.Implementations
 {
-    public class OctTreePaletteGenerator :
-        IThemeColorGenrator,
-        IPaletteGenrator
+    public static class OctTreePaletteGenerator
     {
-        private static Task<ThemeColorResult> CreateThemeColorAsync(Dictionary<Vector3, int> sourceColor, bool ignoreWhite = false)
+        public static Task<PaletteResult> CreatePalette(Dictionary<Vector3, int> sourceColor, int clusterCount, bool ignoreWhite = false)
         {
-            var quantizer = new PaletteQuantizer();
+            var colorResult = KMeansPaletteGenerator.CreateThemeColor(sourceColor, ignoreWhite, true);
+            return CreatePalette(sourceColor, clusterCount, colorResult, ignoreWhite);
+        }
+
+        public static Task<PaletteResult> CreatePalette(Dictionary<Vector3, int> sourceColor, int clusterCount, ThemeColorResult colorResult, bool ignoreWhite = false)
+        {
+            var quantizer = new OctreePaletteQuantizer();
+            if (sourceColor.Count == 1)
+            {
+                ignoreWhite = false;
+            }
             var builder = sourceColor.AsEnumerable();
-            if (ignoreWhite && sourceColor.Count > 1)
+            if (ignoreWhite)
             {
                 builder = builder.Where(t => t.Key.X <= 250 || t.Key.Y <= 250 || t.Key.Z <= 250);
             }
-            var targetColor = builder.ToDictionary(t => t.Key, t => t.Value);
-            foreach (var color in targetColor)
+            if (colorResult.ColorIsDark)
             {
-                quantizer.AddColorRange(color.Key, color.Value);
+                builder = builder.Where(t => t.Key.PaletteRGBVectorLStarIsDark());
             }
-            quantizer.Quantize(1);
-            var index = new List<Vector3>() { targetColor.Keys.FirstOrDefault() };
-            var result = quantizer.GetThemeResult();
-            var colorIsDark = result.RGBVectorLStarIsDark();
-            return Task.FromResult(new ThemeColorResult(result, colorIsDark));
-        }
-
-        public static async Task<PaletteResult> CreatePaletteAsync(Dictionary<Vector3, int> sourceColor, int clusterCount, bool? isDark)
-        {
-            var quantizer = new PaletteQuantizer();
-            var builder = sourceColor.AsEnumerable();
-            var colorResult = await CreateThemeColorAsync(sourceColor);
-            if (isDark != null)
+            else
             {
-                builder = builder.Where(t => t.Key.RGBVectorLStarIsDark() == isDark);
+                builder = builder.Where(t => t.Key.PaletteRGBVectorLStarIsLight());
             }
             var targetColor = builder.ToDictionary(t => t.Key, t => t.Value);
             foreach (var color in targetColor)
             {
-                quantizer.AddColorRange(color.Key, color.Value);
+                quantizer.AddColor(color.Key, color.Value);
             }
-            quantizer.Quantize(clusterCount);
-            var index = targetColor.Keys.ToList();
-            List<Vector3> quantizeResult;
-            quantizeResult = quantizer.GetPaletteResult(clusterCount);
+            quantizer.ReduceToColorCount(clusterCount);
+            List<Vector3> quantizeResult = quantizer.GetPalette(clusterCount);
             List<Vector3> result;
             if (quantizeResult.Count < clusterCount)
             {
                 var count = quantizeResult.Count;
                 result = new List<Vector3>();
-                for (int i = 0; i < clusterCount; i++)
+                if (count > 0)
                 {
-                    // You know, it is always hard to fullfill a palette when you have no enough colors. So please forgive me when placing the same color over and over again.
-                    result.Add(quantizeResult[i % count]);
+                    for (int i = 0; i < clusterCount; i++)
+                    {
+                        result.Add(quantizeResult[i % count]);
+                    }
+                }
+                else
+                {
+                    for (int i = 0; i < clusterCount; i++) result.Add(Vector3.Zero);
                 }
             }
             else
             {
                 result = quantizeResult;
             }
-            return new PaletteResult(result, isDark, colorResult);
+            return Task.FromResult(new PaletteResult(result, colorResult.ColorIsDark, colorResult));
         }
-
-        private class PaletteQuantizer
+        internal sealed class OctreePaletteQuantizer
         {
-            private readonly Node Root;
-            private IDictionary<int, List<Node>> levelNodes;
+            private const int MaxColorDepth = 8;
 
-            public PaletteQuantizer()
+            private readonly OctreeNode _rootNode;
+            private readonly List<OctreeNode>[] _nodesByDepth;
+
+            public OctreePaletteQuantizer()
             {
-                Root = new Node(this);
-                levelNodes = new Dictionary<int, List<Node>>();
-                for (int i = 0; i < 8; i++)
+                _rootNode = new OctreeNode(this, null, -1);
+                _nodesByDepth = new List<OctreeNode>[MaxColorDepth];
+
+                for (int depth = 0; depth < MaxColorDepth; depth++)
                 {
-                    levelNodes[i] = new List<Node>();
+                    _nodesByDepth[depth] = new List<OctreeNode>();
                 }
             }
 
             public void AddColor(Vector3 color)
             {
-                Root.AddColor(color, 0);
+                AddColor(color, 1);
             }
 
-            public void AddColorRange(Vector3 color, int count)
+            public void AddColor(Vector3 color, int sampleCount)
             {
-                Root.AddColorRange(color, 0, count);
+                if (sampleCount < 0)
+                    throw new ArgumentOutOfRangeException(nameof(sampleCount));
+
+                if (sampleCount == 0)
+                    return;
+
+                byte red = (byte)color.X;
+                byte green = (byte)color.Y;
+                byte blue = (byte)color.Z;
+
+                _rootNode.AddColor(red, green, blue, 0, sampleCount);
             }
 
-            public void AddLevelNode(Node node, int level)
+            public void AddColor(byte red, byte green, byte blue)
             {
-                levelNodes[level].Add(node);
+                _rootNode.AddColor(red, green, blue, 0, 1);
             }
 
-            public List<Vector3> GetPaletteResult()
+            public void AddColor(byte red, byte green, byte blue, int sampleCount)
             {
-                return Root.GetPaletteResult().Keys.ToList();
+                if (sampleCount < 0)
+                    throw new ArgumentOutOfRangeException(nameof(sampleCount));
+
+                if (sampleCount == 0)
+                    return;
+
+                _rootNode.AddColor(red, green, blue, 0, sampleCount);
             }
-            public List<Vector3> GetPaletteResult(int count)
+
+            internal void RegisterNodeAtDepth(OctreeNode node, int depth)
             {
-                return Root.GetPaletteResult().OrderByDescending(t => t.Value).Take(count).Select(t => t.Key).ToList();
+                _nodesByDepth[depth].Add(node);
             }
-            public Vector3 GetThemeResult()
+
+            public List<Vector3> GetPalette()
             {
-                return Root.GetThemeResult();
+                if (_rootNode.LeafNodeCount == 0)
+                    return new List<Vector3>();
+
+                List<Vector3> palette = new List<Vector3>(_rootNode.LeafNodeCount);
+                _rootNode.CollectColors(palette);
+                return palette;
             }
-            public void Quantize(int colorCount)
+
+            public List<Vector3> GetPalette(int maxColorCount)
             {
-                var nodesToRemove = levelNodes[7].Count - colorCount;
-                int level = 6;
-                var toBreak = false;
-                while (level >= 0 && nodesToRemove > 0)
+                if (maxColorCount <= 0 || _rootNode.LeafNodeCount == 0)
+                    return new List<Vector3>();
+
+                List<PaletteColor> paletteColors = new List<PaletteColor>(_rootNode.LeafNodeCount);
+                _rootNode.CollectPaletteColors(paletteColors);
+
+                if (paletteColors.Count <= maxColorCount)
                 {
-                    var leaves = levelNodes[level]
-                        .Where(n => n.ChildrenCount - 1 <= nodesToRemove)
-                        .OrderBy(n => n.ChildrenCount);
-                    foreach (var leaf in leaves)
+                    List<Vector3> palette = new List<Vector3>(paletteColors.Count);
+
+                    for (int i = 0; i < paletteColors.Count; i++)
                     {
-                        if (leaf.ChildrenCount > nodesToRemove)
-                        {
-                            toBreak = true;
-                            continue;
-                        }
-                        nodesToRemove -= (leaf.ChildrenCount - 1);
-                        leaf.Merge();
-                        if (nodesToRemove <= 0)
-                        {
-                            break;
-                        }
+                        palette.Add(paletteColors[i].Color);
                     }
-                    levelNodes.Remove(level + 1);
-                    level--;
-                    if (toBreak)
-                    {
-                        break;
-                    }
-                }
-            }
-        }
 
-        private class Node
-        {
-            private readonly PaletteQuantizer parent;
-            private Node[] Children = new Node[8];
-            private Vector3 Color { get; set; }
-            private int Count { get; set; } = 0;
+                    return palette;
+                }
 
-            public int ChildrenCount => Children.Count(c => c != null);
+                paletteColors.Sort(ComparePaletteColorsBySampleCountDescending);
 
-            public Node(PaletteQuantizer parent)
-            {
-                this.parent = parent;
-            }
+                int actualColorCount = Math.Min(maxColorCount, paletteColors.Count);
+                List<Vector3> result = new List<Vector3>(actualColorCount);
 
-            public void AddColor(Vector3 color, int level)
-            {
-                if (level < 8)
+                for (int i = 0; i < actualColorCount; i++)
                 {
-                    var index = GetIndex(color, level);
-                    if (Children[index] == null)
-                    {
-                        var newNode = new Node(parent);
-                        Children[index] = newNode;
-                        parent.AddLevelNode(newNode, level);
-                    }
-                    Children[index].AddColor(color, level + 1);
+                    result.Add(paletteColors[i].Color);
                 }
-                else
-                {
-                    Color = color;
-                    Count++;
-                }
-            }
-            public void AddColorRange(Vector3 color, int level, int count)
-            {
-                if (level < 8)
-                {
-                    var index = GetIndex(color, level);
-                    if (Children[index] == null)
-                    {
-                        var newNode = new Node(parent);
-                        Children[index] = newNode;
-                        parent.AddLevelNode(newNode, level);
-                    }
-                    Children[index].AddColorRange(color, level + 1, count);
-                }
-                else
-                {
-                    Color = color;
-                    Count += count;
-                }
-            }
 
-            public Vector3 GetColor(Vector3 color, int level)
-            {
-                if (ChildrenCount == 0)
-                {
-                    return Color;
-                }
-                else
-                {
-                    var index = GetIndex(color, level);
-                    return Children[index].GetColor(color, level + 1);
-                }
-            }
-            public Vector3 GetThemeResult()
-            {
-                var paletteResult = GetPaletteResult();
-                var sum = new Vector3(0, 0, 0);
-                var count = 0;
-                foreach (var item in paletteResult)
-                {
-                    sum += item.Key * item.Value;
-                    count += item.Value;
-                }
-                return sum / count;
-            }
-            public Dictionary<Vector3, int> GetPaletteResult()
-            {
-                var result = new Dictionary<Vector3, int>();
-                if (!Children.Any(t => t != null)) result[Color] = Count;
-                else
-                {
-                    foreach (var child in Children)
-                    {
-                        if (child != null)
-                        {
-                            child.NodeGetResult(result);
-                        }
-                    }
-                }
                 return result;
             }
-            private void NodeGetResult(Dictionary<Vector3, int> result)
+
+            public void ReduceToColorCount(int targetColorCount)
             {
-                if (!Children.Any(t => t != null)) result[Color] = Count;
-                else
+                if (targetColorCount <= 0)
+                    throw new ArgumentOutOfRangeException(nameof(targetColorCount));
+
+                int remainingLeafReduction = _rootNode.LeafNodeCount - targetColorCount;
+
+                if (remainingLeafReduction <= 0)
+                    return;
+
+                for (int depth = MaxColorDepth - 2; depth >= 0 && remainingLeafReduction > 0; depth--)
                 {
-                    foreach (var child in Children)
+                    List<OctreeNode> nodesAtDepth = _nodesByDepth[depth];
+
+                    nodesAtDepth.Sort(CompareMergeCandidates);
+
+                    for (int i = 0; i < nodesAtDepth.Count && remainingLeafReduction > 0; i++)
                     {
-                        if (child != null)
+                        OctreeNode candidate = nodesAtDepth[i];
+
+                        if (candidate.ChildCount == 0)
+                            continue;
+
+                        int leafReduction = candidate.LeafNodeCount - 1;
+
+                        if (leafReduction <= 0)
+                            continue;
+
+                        if (leafReduction > remainingLeafReduction)
+                            continue;
+
+                        remainingLeafReduction -= leafReduction;
+                        candidate.MergeChildrenIntoThisNode();
+                    }
+                }
+
+                while (_rootNode.LeafNodeCount > targetColorCount)
+                {
+                    OctreeNode candidate = FindBestMergeCandidate();
+
+                    if (candidate == null)
+                        break;
+
+                    candidate.MergeChildrenIntoThisNode();
+                }
+            }
+
+            private OctreeNode FindBestMergeCandidate()
+            {
+                OctreeNode bestCandidate = null;
+                int bestLeafReduction = int.MaxValue;
+                long bestSampleCount = long.MaxValue;
+
+                for (int depth = MaxColorDepth - 2; depth >= 0; depth--)
+                {
+                    List<OctreeNode> nodesAtDepth = _nodesByDepth[depth];
+
+                    for (int i = 0; i < nodesAtDepth.Count; i++)
+                    {
+                        OctreeNode candidate = nodesAtDepth[i];
+
+                        if (!candidate.IsAttachedToRoot())
+                            continue;
+
+                        if (candidate.ChildCount == 0)
+                            continue;
+
+                        int leafReduction = candidate.LeafNodeCount - 1;
+
+                        if (leafReduction <= 0)
+                            continue;
+
+                        if (leafReduction < bestLeafReduction ||
+                            leafReduction == bestLeafReduction && candidate.SampleCount < bestSampleCount)
                         {
-                            child.NodeGetResult(result);
+                            bestCandidate = candidate;
+                            bestLeafReduction = leafReduction;
+                            bestSampleCount = candidate.SampleCount;
                         }
                     }
                 }
-            }
-            private byte GetIndex(Vector3 color, int level)
-            {
-                byte ret = 0;
-                var mask = Convert.ToByte(0b10000000 >> level);
-                if (((byte)color.X & mask) != 0)
-                {
-                    ret |= 0b100;
-                }
-                if (((byte)color.Y & mask) != 0)
-                {
-                    ret |= 0b010;
-                }
-                if (((byte)color.Z & mask) != 0)
-                {
-                    ret |= 0b001;
-                }
-                return ret;
+
+                return bestCandidate;
             }
 
-            public void Merge()
+            private static int CompareMergeCandidates(OctreeNode left, OctreeNode right)
             {
-                Color = Average(Children.Where(c => c != null).Select(c => new Tuple<Vector3, int>(c.Color, c.Count)));
-                Count = Children.Sum(c => c?.Count ?? 0);
-                Children = new Node[8];
+                int leafCountCompare = left.LeafNodeCount.CompareTo(right.LeafNodeCount);
+
+                if (leafCountCompare != 0)
+                    return leafCountCompare;
+
+                return left.SampleCount.CompareTo(right.SampleCount);
             }
 
-            private static Vector3 Average(IEnumerable<Tuple<Vector3, int>> colors)
+            private static int ComparePaletteColorsBySampleCountDescending(PaletteColor left, PaletteColor right)
             {
-                var totals = colors.Sum(c => c.Item2);
-                return new Vector3(
-                    x: (int)colors.Sum(c => c.Item1.X * c.Item2) / totals,
-                    y: (int)colors.Sum(c => c.Item1.Y * c.Item2) / totals,
-                    z: (int)colors.Sum(c => c.Item1.Z * c.Item2) / totals);
+                int sampleCountCompare = right.SampleCount.CompareTo(left.SampleCount);
+
+                if (sampleCountCompare != 0)
+                    return sampleCountCompare;
+
+                int redCompare = left.Color.X.CompareTo(right.Color.X);
+
+                if (redCompare != 0)
+                    return redCompare;
+
+                int greenCompare = left.Color.Y.CompareTo(right.Color.Y);
+
+                if (greenCompare != 0)
+                    return greenCompare;
+
+                return left.Color.Z.CompareTo(right.Color.Z);
+            }
+
+            internal struct PaletteColor
+            {
+                public readonly Vector3 Color;
+                public readonly long SampleCount;
+
+                public PaletteColor(Vector3 color, long sampleCount)
+                {
+                    Color = color;
+                    SampleCount = sampleCount;
+                }
+            }
+
+            internal sealed class OctreeNode
+            {
+                private readonly OctreePaletteQuantizer _owner;
+                private readonly OctreeNode _parentNode;
+                private readonly int _indexInParent;
+
+                private OctreeNode _child0;
+                private OctreeNode _child1;
+                private OctreeNode _child2;
+                private OctreeNode _child3;
+                private OctreeNode _child4;
+                private OctreeNode _child5;
+                private OctreeNode _child6;
+                private OctreeNode _child7;
+
+                private int _childCount;
+                private int _leafNodeCount;
+
+                private long _sampleCount;
+                private long _redSum;
+                private long _greenSum;
+                private long _blueSum;
+
+                public OctreeNode(OctreePaletteQuantizer owner, OctreeNode parentNode, int indexInParent)
+                {
+                    _owner = owner;
+                    _parentNode = parentNode;
+                    _indexInParent = indexInParent;
+                }
+
+                public int ChildCount
+                {
+                    get { return _childCount; }
+                }
+
+                public int LeafNodeCount
+                {
+                    get { return _leafNodeCount; }
+                }
+
+                public long SampleCount
+                {
+                    get { return _sampleCount; }
+                }
+
+                private Vector3 AverageColor
+                {
+                    get
+                    {
+                        if (_sampleCount == 0)
+                            return Vector3.Zero;
+
+                        return new Vector3(
+                            (float)_redSum / _sampleCount,
+                            (float)_greenSum / _sampleCount,
+                            (float)_blueSum / _sampleCount);
+                    }
+                }
+
+                public void AddColor(byte red, byte green, byte blue, int depth, int sampleCount)
+                {
+                    _sampleCount += sampleCount;
+                    _redSum += (long)red * sampleCount;
+                    _greenSum += (long)green * sampleCount;
+                    _blueSum += (long)blue * sampleCount;
+
+                    if (depth == MaxColorDepth)
+                    {
+                        if (_leafNodeCount == 0)
+                            _leafNodeCount = 1;
+
+                        return;
+                    }
+
+                    int childIndex = GetChildIndex(red, green, blue, depth);
+                    OctreeNode childNode = GetChild(childIndex);
+
+                    if (childNode == null)
+                    {
+                        childNode = new OctreeNode(_owner, this, childIndex);
+                        SetChild(childIndex, childNode);
+                        _childCount++;
+
+                        _owner.RegisterNodeAtDepth(childNode, depth);
+                    }
+
+                    int previousLeafNodeCount = childNode._leafNodeCount;
+
+                    childNode.AddColor(red, green, blue, depth + 1, sampleCount);
+
+                    _leafNodeCount += childNode._leafNodeCount - previousLeafNodeCount;
+                }
+
+                public void CollectColors(List<Vector3> result)
+                {
+                    if (_leafNodeCount == 0)
+                        return;
+
+                    if (_childCount == 0)
+                    {
+                        result.Add(AverageColor);
+                        return;
+                    }
+
+                    if (_child0 != null) _child0.CollectColors(result);
+                    if (_child1 != null) _child1.CollectColors(result);
+                    if (_child2 != null) _child2.CollectColors(result);
+                    if (_child3 != null) _child3.CollectColors(result);
+                    if (_child4 != null) _child4.CollectColors(result);
+                    if (_child5 != null) _child5.CollectColors(result);
+                    if (_child6 != null) _child6.CollectColors(result);
+                    if (_child7 != null) _child7.CollectColors(result);
+                }
+
+                public void CollectPaletteColors(List<PaletteColor> result)
+                {
+                    if (_leafNodeCount == 0)
+                        return;
+
+                    if (_childCount == 0)
+                    {
+                        result.Add(new PaletteColor(AverageColor, _sampleCount));
+                        return;
+                    }
+
+                    if (_child0 != null) _child0.CollectPaletteColors(result);
+                    if (_child1 != null) _child1.CollectPaletteColors(result);
+                    if (_child2 != null) _child2.CollectPaletteColors(result);
+                    if (_child3 != null) _child3.CollectPaletteColors(result);
+                    if (_child4 != null) _child4.CollectPaletteColors(result);
+                    if (_child5 != null) _child5.CollectPaletteColors(result);
+                    if (_child6 != null) _child6.CollectPaletteColors(result);
+                    if (_child7 != null) _child7.CollectPaletteColors(result);
+                }
+
+                public void MergeChildrenIntoThisNode()
+                {
+                    if (_childCount == 0 || _leafNodeCount <= 1)
+                        return;
+
+                    int previousLeafNodeCount = _leafNodeCount;
+
+                    _child0 = null;
+                    _child1 = null;
+                    _child2 = null;
+                    _child3 = null;
+                    _child4 = null;
+                    _child5 = null;
+                    _child6 = null;
+                    _child7 = null;
+
+                    _childCount = 0;
+                    _leafNodeCount = _sampleCount > 0 ? 1 : 0;
+
+                    int leafReduction = previousLeafNodeCount - _leafNodeCount;
+
+                    OctreeNode parentNode = _parentNode;
+
+                    while (parentNode != null)
+                    {
+                        parentNode._leafNodeCount -= leafReduction;
+                        parentNode = parentNode._parentNode;
+                    }
+                }
+
+                public bool IsAttachedToRoot()
+                {
+                    OctreeNode currentNode = this;
+
+                    while (currentNode._parentNode != null)
+                    {
+                        if (!ReferenceEquals(
+                            currentNode._parentNode.GetChild(currentNode._indexInParent),
+                            currentNode))
+                        {
+                            return false;
+                        }
+
+                        currentNode = currentNode._parentNode;
+                    }
+
+                    return true;
+                }
+
+                private OctreeNode GetChild(int childIndex)
+                {
+                    switch (childIndex)
+                    {
+                        case 0:
+                            return _child0;
+                        case 1:
+                            return _child1;
+                        case 2:
+                            return _child2;
+                        case 3:
+                            return _child3;
+                        case 4:
+                            return _child4;
+                        case 5:
+                            return _child5;
+                        case 6:
+                            return _child6;
+                        case 7:
+                            return _child7;
+                        default:
+                            return null;
+                    }
+                }
+
+                private void SetChild(int childIndex, OctreeNode childNode)
+                {
+                    switch (childIndex)
+                    {
+                        case 0:
+                            _child0 = childNode;
+                            break;
+                        case 1:
+                            _child1 = childNode;
+                            break;
+                        case 2:
+                            _child2 = childNode;
+                            break;
+                        case 3:
+                            _child3 = childNode;
+                            break;
+                        case 4:
+                            _child4 = childNode;
+                            break;
+                        case 5:
+                            _child5 = childNode;
+                            break;
+                        case 6:
+                            _child6 = childNode;
+                            break;
+                        case 7:
+                            _child7 = childNode;
+                            break;
+                    }
+                }
+
+                private static int GetChildIndex(byte red, byte green, byte blue, int depth)
+                {
+                    int bitShift = 7 - depth;
+
+                    return (((red >> bitShift) & 1) << 2)
+                         | (((green >> bitShift) & 1) << 1)
+                         | ((blue >> bitShift) & 1);
+                }
             }
         }
     }
