@@ -1,6 +1,7 @@
 ﻿using Impressionist.Abstractions;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
@@ -8,11 +9,10 @@ using System.Threading.Tasks;
 namespace Impressionist.Implementations
 {
     // I'm really appreciate wieslawsoltes's PaletteGenerator. Which make this project possible.
-    public class KMeansPaletteGenerator :
-        IThemeColorGenrator,
-        IPaletteGenrator
+    public static class KMeansPaletteGenerator
     {
-        private static Task<ThemeColorResult> CreateThemeColorAsync(Dictionary<Vector3, int> sourceColor, bool ignoreWhite = false, bool toLab = false)
+        private static Random _random = new Random();
+        public static ThemeColorResult CreateThemeColor(Dictionary<Vector3, int> sourceColor, bool ignoreWhite = false, bool toLab = false)
         {
             var builder = sourceColor.AsEnumerable();
             if (ignoreWhite && sourceColor.Count > 1)
@@ -23,7 +23,8 @@ namespace Impressionist.Implementations
             {
                 builder = builder.Select(t => new KeyValuePair<Vector3, int>(t.Key.RGBVectorToLABVector(), t.Value));
             }
-            var targetColor = builder.ToDictionary(t => t.Key, t => t.Value);
+            var targetColor = builder.GroupBy(t => t.Key)
+                .ToDictionary(g => g.Key, g => g.Sum(x => x.Value));
             var clusters = KMeansCluster(targetColor, 1, false);
             var colorVector = clusters.First();
             if (toLab)
@@ -31,31 +32,43 @@ namespace Impressionist.Implementations
                 colorVector = clusters.First().LABVectorToRGBVector();
             }
             var isDark = colorVector.RGBVectorLStarIsDark();
-            return Task.FromResult(new ThemeColorResult(colorVector, isDark));
+            return new ThemeColorResult(colorVector, isDark);
+        }
+        public static Task<PaletteResult> CreatePalette(Dictionary<Vector3, int> sourceColor, int clusterCount, bool ignoreWhite = false, bool toLab = false, bool useKMeansPP = false)
+        {
+            var colorResult = CreateThemeColor(sourceColor, ignoreWhite, toLab);
+            return CreatePalette(sourceColor, clusterCount, colorResult, ignoreWhite, toLab);
         }
 
-        public static async Task<PaletteResult> CreatePaletteAsync(Dictionary<Vector3, int> sourceColor, int clusterCount, bool? isDark, bool toLab = false, bool useKMeansPP = false)
+        public static Task<PaletteResult> CreatePalette(Dictionary<Vector3, int> sourceColor, int clusterCount, ThemeColorResult colorResult, bool ignoreWhite = false, bool toLab = false, bool useKMeansPP = false)
         {
             if (sourceColor.Count == 1)
             {
+                ignoreWhite = false;
                 useKMeansPP = false;
             }
-            var colorResult = await CreateThemeColorAsync(sourceColor, false, toLab);
             var builder = sourceColor.AsEnumerable();
-            if (isDark != null)
+            var colorIsDark = colorResult.ColorIsDark;
+            if (colorIsDark)
             {
-                builder = builder.Where(t => t.Key.RGBVectorLStarIsDark() == isDark);
+                builder = builder.Where(t => t.Key.PaletteRGBVectorLStarIsDark());
+            }
+            else
+            {
+                if (!ignoreWhite)
+                {
+                    builder = builder.Where(t => t.Key.PaletteRGBVectorLStarIsLight());
+                }
+                else
+                {
+                    builder = builder.Where(t => t.Key.PaletteRGBVectorLStarIsLight() && (t.Key.X <= 250 || t.Key.Y <= 250 || t.Key.Z <= 250));
+                }
             }
             if (toLab)
             {
                 builder = builder.Select(t => new KeyValuePair<Vector3, int>(t.Key.RGBVectorToLABVector(), t.Value));
             }
             var targetColors = builder.ToDictionary(t => t.Key, t => t.Value);
-            // 解决除 0 异常（主要）
-            if (targetColors.Count == 0)
-            {
-                targetColors.Add(colorResult.Color, 1);
-            }
             var clusters = KMeansCluster(targetColors, clusterCount, useKMeansPP);
             var dominantColors = new List<Vector3>();
             foreach (var cluster in clusters)
@@ -69,23 +82,13 @@ namespace Impressionist.Implementations
             }
             var result = new List<Vector3>();
             var count = dominantColors.Count;
-            // 解决除 0 异常（可能需要）
-            if (count == 0)
-            {
-                for (int i = 0; i < clusterCount; i++)
-                {
-                    result.Add(colorResult.Color);
-                }
-                return new PaletteResult(result, isDark, colorResult);
-            }
             for (int i = 0; i < clusterCount; i++)
             {
                 // You know, it is always hard to fullfill a palette when you have no enough colors. So please forgive me when placing the same color over and over again.
                 result.Add(dominantColors[i % count]);
             }
-            return new PaletteResult(result, isDark, colorResult);
+            return Task.FromResult(new PaletteResult(result, colorIsDark, colorResult));
         }
-
         static Vector3[] KMeansCluster(Dictionary<Vector3, int> colors, int numClusters, bool useKMeansPP)
         {
             // Initialize the clusters, reduces the total number when total colors is less than clusters
@@ -100,7 +103,7 @@ namespace Impressionist.Implementations
             Vector3[] centers = null;
             if (!useKMeansPP)
             {
-                centers = colors.Keys.OrderByDescending(t => Guid.NewGuid()).Take(clusterCount).ToArray();
+                centers = colors.Keys.OrderByDescending(_ => _random.Next()).Take(clusterCount).ToArray();
             }
             else
             {
@@ -108,20 +111,33 @@ namespace Impressionist.Implementations
             }
             // Loop until the clusters stabilize
             var changed = true;
-            while (changed)
+            int iterations = 0;
+            while (changed && iterations < 250)
             {
                 changed = false;
+                iterations++;
+
+                foreach (var cluster in clusters)
+                {
+                    cluster.Clear();
+                }
+
                 // Assign each color to the nearest cluster center
                 foreach (var color in colors.Keys)
                 {
-                    var nearest = FindNearestCenter(color, centers);
-                    var clusterIndex = Array.IndexOf(centers, nearest);
+                    var clusterIndex = FindNearestCenterIndex(color, centers);
                     clusters[clusterIndex][color] = colors[color];
                 }
 
                 // Recompute the cluster centers
                 for (int i = 0; i < Math.Min(numClusters, clusterCount); i++)
                 {
+                    if (clusters[i].Count == 0)
+                    {
+                        centers[i] = FindFarthestColor(colors.Keys, centers);
+                        changed = true;
+                        continue;
+                    }
                     var sumX = 0f;
                     var sumY = 0f;
                     var sumZ = 0f;
@@ -134,19 +150,14 @@ namespace Impressionist.Implementations
                         count += colors[color];
                     }
 
-                    // 解决除 0 异常（可能需要）
-                    if (count > 0f)
+                    var x = (sumX / count);
+                    var y = (sumY / count);
+                    var z = (sumZ / count);
+                    var newCenter = new Vector3(x, y, z);
+                    if (newCenter != centers[i])
                     {
-                        var x = (sumX / count);
-                        var y = (sumY / count);
-                        var z = (sumZ / count);
-                        var newCenter = new Vector3(x, y, z);
-
-                        if (!newCenter.Equals(centers[i]))
-                        {
-                            centers[i] = newCenter;
-                            changed = true;
-                        }
+                        centers[i] = newCenter;
+                        changed = true;
                     }
                 }
             }
@@ -155,22 +166,41 @@ namespace Impressionist.Implementations
             return centers;
         }
 
-        static Vector3 FindNearestCenter(Vector3 color, Vector3[] centers)
+        static int FindNearestCenterIndex(Vector3 color, Vector3[] centers)
         {
-            var nearest = centers[0];
+            var nearestIndex = 0;
             var minDist = float.MaxValue;
 
-            foreach (var center in centers)
+            for (int i = 0; i < centers.Length; i++)
             {
-                var dist = Vector3.Distance(color, center); // The original version implemented a Distance method by wieslawsoltes himself, I changed that to Vector ones.
+                var dist = Vector3.DistanceSquared(color, centers[i]);
                 if (dist < minDist)
                 {
-                    nearest = center;
+                    nearestIndex = i;
                     minDist = dist;
                 }
             }
 
-            return nearest;
+            return nearestIndex;
+        }
+
+        static Vector3 FindFarthestColor(IEnumerable<Vector3> colors, Vector3[] centers)
+        {
+            Vector3 farthest = default;
+            var maxDistance = float.MinValue;
+
+            foreach (var color in colors)
+            {
+                var nearestDistance = centers.Min(c => Vector3.DistanceSquared(color, c));
+
+                if (nearestDistance > maxDistance)
+                {
+                    maxDistance = nearestDistance;
+                    farthest = color;
+                }
+            }
+
+            return farthest;
         }
 
         static List<Vector3> KMeansPlusPlusCluster(Dictionary<Vector3, int> colors, int numClusters)
@@ -183,27 +213,28 @@ namespace Impressionist.Implementations
             clusters.Add(targetColor[index]);
             for (int i = 1; i < clusterCount; i++)
             {
-                float accumulatedDistances = 0f;
-                float[] accDistances = new float[targetColor.Count];
+                float accumulatedDistanceSquareds = 0f;
+                float[] accDistanceSquareds = new float[targetColor.Count];
                 for (int vectorId = 0; vectorId < targetColor.Count; vectorId++)
                 {
-                    var minDistanceItem = clusters[0];
-                    var minDistance = Vector3.Distance(minDistanceItem, targetColor[vectorId]);
+                    var minDistanceSquaredItem = clusters[0];
+                    var minDistanceSquared = Vector3.DistanceSquared(minDistanceSquaredItem, targetColor[vectorId]);
                     for (int clusterIdx = 1; clusterIdx < i; clusterIdx++)
                     {
-                        float currentDistance = Vector3.Distance(clusters[clusterIdx], targetColor[vectorId]);
-                        if (currentDistance < minDistance)
+                        float currentDistanceSquared = Vector3.DistanceSquared(clusters[clusterIdx], targetColor[vectorId]);
+                        if (currentDistanceSquared < minDistanceSquared)
                         {
-                            minDistance = currentDistance;
-                        }
-                        accumulatedDistances += minDistance * minDistance;
-                        accDistances[vectorId] = accumulatedDistances;
+                            minDistanceSquared = currentDistanceSquared;
+                        } 
                     }
+                    var colorWeight = colors[targetColor[vectorId]];
+                    accumulatedDistanceSquareds += minDistanceSquared * colorWeight;
+                    accDistanceSquareds[vectorId] = accumulatedDistanceSquareds;
                 }
-                float targetPoint = (float)random.NextDouble() * accumulatedDistances;
+                float targetPoint = (float)random.NextDouble() * accumulatedDistanceSquareds;
                 for (int vectorId = 0; vectorId < targetColor.Count; vectorId++)
                 {
-                    if (accDistances[vectorId] >= targetPoint)
+                    if (accDistanceSquareds[vectorId] >= targetPoint)
                     {
                         clusters.Add(targetColor[vectorId]);
                         break;

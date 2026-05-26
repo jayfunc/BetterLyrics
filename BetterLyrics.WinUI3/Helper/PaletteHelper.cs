@@ -12,54 +12,54 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public static class PaletteHelper
     {
-        private readonly static ColorThief _colorThief = new();
-
         public static async Task<PaletteResult> OctTreeGetAccentColorsFromByteAsync(BitmapDecoder decoder, int count, bool? isDark)
         {
             var colors = await GetPixelColorAsync(decoder);
-            var palette = await OctTreePaletteGenerator.CreatePaletteAsync(colors, count, isDark);
+            if (isDark != null)
+            {
+                colors = colors
+                    .Where(x => x.Key.PaletteRGBVectorLStarIsDark() == isDark)
+                    .ToDictionary(x => x.Key, x => x.Value);
+                if (colors.Count == 0)
+                {
+                    colors.Add(isDark.Value ? Vector3.Zero : new Vector3(255, 255, 255), 1);
+                }
+            }
+            var palette = await OctTreePaletteGenerator.CreatePalette(colors, count);
             return palette;
         }
 
         public static async Task<PaletteResult> KMeansGetAccentColorsFromByteAsync(BitmapDecoder decoder, int count, bool? isDark)
         {
             var colors = await GetPixelColorAsync(decoder);
-            var palette = await KMeansPaletteGenerator.CreatePaletteAsync(colors, count, isDark);
+            if (isDark != null)
+            {
+                colors = colors
+                    .Where(x => x.Key.PaletteRGBVectorLStarIsDark() == isDark)
+                    .ToDictionary(x => x.Key, x => x.Value);
+                if (colors.Count == 0)
+                {
+                    colors.Add(isDark.Value ? Vector3.Zero : new Vector3(255, 255, 255), 1);
+                }
+            }
+            var palette = await KMeansPaletteGenerator.CreatePalette(colors, count);
             return palette;
-        }
-
-        public static async Task<PaletteResult> MedianCutGetAccentColorsFromByteAsync(BitmapDecoder decoder, int count, bool? isDark)
-        {
-            var mainColor = await _colorThief.GetColor(decoder, 10, false);
-            var theme = new ThemeColorResult(new Vector3(mainColor.Color.R, mainColor.Color.G, mainColor.Color.B), mainColor.IsDark);
-            var palette = await _colorThief.GetPalette(decoder, 255, 10, false);
-            List<Vector3>? topColors = null;
-            if (isDark == null)
-            {
-                topColors = palette
-                    .OrderByDescending(x => x.Population)
-                    .Select(x => new Vector3(x.Color.R, x.Color.G, x.Color.B))
-                    .Take(count)
-                    .ToList();
-            }
-            else
-            {
-                topColors = palette
-                    .Where(x => x.IsDark == isDark)
-                    .OrderByDescending(x => x.Population)
-                    .Select(x => new Vector3(x.Color.R, x.Color.G, x.Color.B))
-                    .Take(count)
-                    .ToList();
-            }
-            var paletteResult = new PaletteResult(topColors, mainColor.IsDark, theme);
-
-            return paletteResult;
         }
 
         public static async Task<PaletteResult> AutoGetAccentColorsFromByteAsync(BitmapDecoder decoder, int count, bool? isDark)
         {
             var colors = await GetPixelColorAsync(decoder);
-            var palette = await AutoPaletteGenerator.CreatePalette(colors, count, isDark);
+            if (isDark != null)
+            {
+                colors = colors
+                    .Where(x => x.Key.PaletteRGBVectorLStarIsDark() == isDark)
+                    .ToDictionary(x => x.Key, x => x.Value);
+                if (colors.Count == 0)
+                {
+                    colors.Add(isDark.Value ? Vector3.Zero : new Vector3(255, 255, 255), 1);
+                }
+            }
+            var palette = await AutoPaletteGenerator.CreatePalette(colors, count);
             return palette;
         }
 

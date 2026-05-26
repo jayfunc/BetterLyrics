@@ -28,7 +28,6 @@ namespace BetterLyrics.WinUI3.Helper
             return generatorType switch
             {
                 PaletteGeneratorType.OctTree => PaletteHelper.OctTreeGetAccentColorsFromByteAsync(decoder, count, isDark),
-                PaletteGeneratorType.MedianCut => PaletteHelper.MedianCutGetAccentColorsFromByteAsync(decoder, count, isDark),
                 PaletteGeneratorType.KMeans => PaletteHelper.KMeansGetAccentColorsFromByteAsync(decoder, count, isDark),
                 PaletteGeneratorType.Auto => PaletteHelper.AutoGetAccentColorsFromByteAsync(decoder, count, isDark),
                 _ => throw new ArgumentOutOfRangeException(nameof(generatorType)),

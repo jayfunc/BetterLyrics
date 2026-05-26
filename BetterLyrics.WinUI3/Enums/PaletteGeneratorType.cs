@@ -3,7 +3,6 @@
     public enum PaletteGeneratorType
     {
         Auto,
-        MedianCut,
         OctTree,
         KMeans
     }
