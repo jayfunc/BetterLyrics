@@ -12,11 +12,14 @@
 		<RepositoryType>Git</RepositoryType>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<ApplicationIcon>Icon.ico</ApplicationIcon>
 		<Description>
 			Provides a wrapper for developers to more easily get information from and interact with the Windows 10/11 OS media interface (Also referred to Windows System Media Transport Controls (SMTC)).
 			Allows Playback Control on individual Media Sessions (Spotify, Chrome etc), Getting media information of currently playing (Song, Author, Thumbnail etc), and more
 		</Description>
+		<PackageIcon>Icon.png</PackageIcon>
 		<PackageTags>music;audio;media;controller;windows;windows10;windows11;smtc;mtc</PackageTags>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 
 		<PublishRepositoryUrl>true</PublishRepositoryUrl>
 		<EmbedUntrackedSources>true</EmbedUntrackedSources>
@@ -27,6 +30,14 @@
 		<ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
 	</PropertyGroup>
 	<ItemGroup>
+		<Content Include="Icon.ico" />
+	</ItemGroup>
+	<ItemGroup>
+		<None Include="..\.editorconfig" Link=".editorconfig" />
+		<None Include="..\docs\images\Icon.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
 		<None Include="..\README.md">
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>

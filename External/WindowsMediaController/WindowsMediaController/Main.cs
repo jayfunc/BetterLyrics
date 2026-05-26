@@ -223,8 +223,10 @@ namespace WindowsMediaController
 
         private bool RemoveSource(MediaSession mediaSession)
         {
-            if (_CurrentMediaSessions.TryRemove(mediaSession.Id, out _))
+            if (_CurrentMediaSessions.ContainsKey(mediaSession.Id))
             {
+                _CurrentMediaSessions.Remove(mediaSession.Id, out _);
+
                 try
                 {
                     OnAnySessionClosed?.Invoke(mediaSession);
