@@ -50,7 +50,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsBackgroundSettings LyricsBackgroundSettings { get; set; } = new();
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial AlbumArtAreaStyleSettings AlbumArtLayoutSettings { get; set; } = new();
         [ObservableProperty] public partial AlbumArtAreaEffectSettings AlbumArtAreaEffectSettings { get; set; } = new();
-        
+
         [ObservableProperty]
         [NotifyPropertyChangedRecipients]
         [NotifyPropertyChangedFor(nameof(IsAdaptToAlbumArtAdjustable))]
