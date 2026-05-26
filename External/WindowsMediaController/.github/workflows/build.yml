@@ -1,0 +1,56 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: | 
+          3.0.x
+          3.1.x
+          6.0.x
+          7.0.x
+          8.0.x
+          9.0.x
+          10.0.x
+    - name: .NET Restore
+      run: dotnet restore
+
+    - name: Build WindowsMediaController
+      run: dotnet build WindowsMediaController --configuration Release
+    - name: Upload WindowsMediaController
+      uses: actions/upload-artifact@v4
+      with:
+        name: WindowsMediaController
+        path: .\WindowsMediaController\bin\Release\
+
+    - name: Build Sample.CMD
+      run: dotnet build Sample.CMD --configuration Debug
+    - name: Upload Sample.CMD
+      uses: actions/upload-artifact@v4
+      with:
+        name: Sample.CMD
+        path: .\Sample.CMD\bin\Debug\net472\
+
+    - name: Build Sample.UI
+      run: dotnet build Sample.UI --configuration Debug
+    - name: Upload Sample.UI
+      uses: actions/upload-artifact@v4
+      with:
+        name: Sample.UI
+        path: .\Sample.UI\bin\Debug\net10.0-windows10.0.26100.0\

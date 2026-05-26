@@ -7,7 +7,7 @@
   <Folder Name="/External/">
     <Project Path="External/Impressionist/Impressionist/Impressionist.csproj" />
     <Project Path="External/Lyricify-Lyrics-Helper/Lyricify.Lyrics.Helper/Lyricify.Lyrics.Helper.csproj" />
-    <Project Path="External/WindowsMediaController/WindowsMediaController.csproj" />
+    <Project Path="External/WindowsMediaController/WindowsMediaController/WindowsMediaController.csproj" />
   </Folder>
   <Folder Name="/Plugins/">
     <Project Path="Plugins/BetterLyrics.Plugins.AI.Local.LLM/BetterLyrics.Plugins.AI.Local.LLM.csproj" />
