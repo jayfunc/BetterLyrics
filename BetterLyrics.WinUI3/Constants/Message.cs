@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Vanara.PInvoke;
+﻿using Vanara.PInvoke;
 
 namespace BetterLyrics.WinUI3.Constants
 {

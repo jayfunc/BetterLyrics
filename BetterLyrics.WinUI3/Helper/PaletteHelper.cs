@@ -1,5 +1,4 @@
-﻿using ColorThiefDotNet;
-using Impressionist.Abstractions;
+﻿using Impressionist.Abstractions;
 using Impressionist.Implementations;
 using System;
 using System.Collections.Generic;

@@ -16,7 +16,7 @@
         public const string OfficialWebsite = $"https://betterlyrics.github.io";
         public const string UserGuide = $"{OfficialWebsite}";
         public const string PluginDevGuide = $"{OfficialWebsite}/plugin-dev/intro";
-        
+
         public const string LayoutsStore = $"{OfficialWebsite}/add-ons/layouts-store";
         public const string ModesStore = $"{OfficialWebsite}/add-ons/modes-store";
         public const string PluginsStore = $"{OfficialWebsite}/add-ons/plugins-store";
