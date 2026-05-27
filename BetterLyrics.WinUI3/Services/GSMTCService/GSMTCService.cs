@@ -325,8 +325,6 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
         private async Task OnAnyMediaPropertyChangedCoreAsync(MediaSession? mediaSession, GlobalSystemMediaTransportControlsSessionMediaProperties? mediaProperties)
         {
-            _logger.LogInformation("MediaManager_OnAnyMediaPropertyChanged {SongInfo}", CurrentSongInfo);
-
             if (mediaSession != _currentDesiredSession) return;
 
             string? sessionId = mediaSession?.Id;
@@ -423,6 +421,8 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
                 UpdateLyrics();
                 UpdateAlbumArt();
+
+                _logger.LogInformation("MediaManager_OnAnyMediaPropertyChanged {SongInfo}", CurrentSongInfo);
             });
 
         }

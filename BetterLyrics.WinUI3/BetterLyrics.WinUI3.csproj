@@ -210,6 +210,9 @@
 		<Content Update="Assets\Alipay.jpg">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
+		<Content Update="Assets\AlipayWeChatPay.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</Content>
 		<Content Update="Assets\Empty.png">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
@@ -258,8 +261,8 @@
 		<Content Update="Assets\Fonts\SegoeFluentIcons.ttf">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
-		<Content Update="Assets\WeChatReward.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		<Content Update="Assets\WeChatPay.png">
+		  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 		</Content>
 		<Content Update="Assets\Wiki82.profile.xml">
 			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
