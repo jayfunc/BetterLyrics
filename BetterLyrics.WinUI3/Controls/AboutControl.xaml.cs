@@ -17,14 +17,9 @@ namespace BetterLyrics.WinUI3.Controls
             DataContext = Ioc.Default.GetRequiredService<AboutControlViewModel>();
         }
 
-        private void WeChat_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        private void AlipayWeChatPayButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            WeChatFlyout.ShowAt(WeChatButton);
-        }
-
-        private void AlipayButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
-        {
-            AlipayFlyout.ShowAt(AlipayButton);
+            AlipayWeChatPayFlyout.ShowAt(AlipayWeChatPayButton);
         }
 
     }

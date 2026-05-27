@@ -159,9 +159,9 @@ If you like BetterLyrics, please consider supporting it. Your support helps keep
 
 <div align="center">
 
-| Web Platforms | Alipay (QR) | WeChat (QR) |
-| :---: | :---: | :---: |
-| [PayPal](https://paypal.me/zhefangpay)<br><br>[Buy Me a Coffee](https://buymeacoffee.com/founchoo)<br><br>[爱发电 (Afdian)](https://afdian.com/a/jayfunc) | <img src="docs/assets/donate/Alipay.jpg" width="150"> | <img src="docs/assets/donate/WeChatReward.png" width="150"> |
+| Web Platforms | Alipay/WeChat Pay |
+| :---: | :---: |
+| [PayPal](https://paypal.me/zhefangpay)<br><br>[Buy Me a Coffee](https://buymeacoffee.com/founchoo)<br><br>[爱发电 (Afdian)](https://afdian.com/a/jayfunc) | <img src="/BetterLyrics.WinUI3/Assets/AlipayWeChatPay.png" height="250"> |
 
 **[View the full Hall of Fame (Sponsors)](docs/SPONSORS.md)**
 

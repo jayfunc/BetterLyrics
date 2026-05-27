@@ -159,9 +159,9 @@
 
 <div align="center">
 
-| 网页平台 | 支付宝 (扫码) | 微信 (扫码) |
-| :---: | :---: | :---: |
-| [PayPal](https://paypal.me/zhefangpay)<br><br>[Buy Me a Coffee](https://buymeacoffee.com/founchoo)<br><br>[爱发电 (Afdian)](https://afdian.com/a/jayfunc) | <img src="docs/assets/donate/Alipay.jpg" width="150"> | <img src="docs/assets/donate/WeChatReward.png" width="150"> |
+| 网页平台 | 支付宝/微信支付 |
+| :---: | :---: |
+| [PayPal](https://paypal.me/zhefangpay)<br><br>[Buy Me a Coffee](https://buymeacoffee.com/founchoo)<br><br>[爱发电 (Afdian)](https://afdian.com/a/jayfunc) | <img src="/BetterLyrics.WinUI3/Assets/AlipayWeChatPay.png" height="240"> |
 
 [赞助者名单 (Hall of Fame)](docs/SPONSORS.md)
 

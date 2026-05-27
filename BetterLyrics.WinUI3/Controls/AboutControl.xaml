@@ -161,34 +161,18 @@
                                 <HyperlinkButton Content="Buy Me a Coffee" NavigateUri="{x:Bind const:Link.BuyMeACoffee}" />
                                 <HyperlinkButton Content="PayPal" NavigateUri="{x:Bind const:Link.PayPal}" />
                                 <HyperlinkButton
-                                    x:Name="AlipayButton"
-                                    Click="AlipayButton_Click"
-                                    Content="支付宝">
+                                    x:Name="AlipayWeChatPayButton"
+                                    Click="AlipayWeChatPayButton_Click"
+                                    Content="支付宝/微信支付">
                                     <HyperlinkButton.ContextFlyout>
-                                        <Flyout x:Name="AlipayFlyout">
+                                        <Flyout x:Name="AlipayWeChatPayFlyout">
                                             <Flyout.FlyoutPresenterStyle>
                                                 <Style TargetType="FlyoutPresenter">
                                                     <Setter Property="CornerRadius" Value="12" />
                                                     <Setter Property="Padding" Value="0" />
                                                 </Style>
                                             </Flyout.FlyoutPresenterStyle>
-                                            <Image Height="300" Source="/Assets/Alipay.jpg" />
-                                        </Flyout>
-                                    </HyperlinkButton.ContextFlyout>
-                                </HyperlinkButton>
-                                <HyperlinkButton
-                                    x:Name="WeChatButton"
-                                    Click="WeChat_Click"
-                                    Content="微信">
-                                    <HyperlinkButton.ContextFlyout>
-                                        <Flyout x:Name="WeChatFlyout">
-                                            <Flyout.FlyoutPresenterStyle>
-                                                <Style TargetType="FlyoutPresenter">
-                                                    <Setter Property="CornerRadius" Value="12" />
-                                                    <Setter Property="Padding" Value="0" />
-                                                </Style>
-                                            </Flyout.FlyoutPresenterStyle>
-                                            <Image Height="300" Source="/Assets/WeChatReward.png" />
+                                            <Image Height="280" Source="/Assets/AlipayWeChatPay.png" />
                                         </Flyout>
                                     </HyperlinkButton.ContextFlyout>
                                 </HyperlinkButton>
