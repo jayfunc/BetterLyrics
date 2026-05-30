@@ -49,7 +49,8 @@
     <AppxBundlePlatforms>x86|x64|arm64</AppxBundlePlatforms>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-    <PackageCertificateThumbprint>A014CF74C859DC3C06BCEF563C4CE86229AF1C21</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>B689B51FC2061612E930DC895372FCDD1349ED46</PackageCertificateThumbprint>
+    <PackageCertificateKeyFile>BetterLyrics.WinUI3 %28Package%29_TemporaryKey.pfx</PackageCertificateKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <AppxBundle>Always</AppxBundle>

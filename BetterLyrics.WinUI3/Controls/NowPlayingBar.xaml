@@ -402,6 +402,13 @@
                                                 ShouldConstrainToRootBounds="False" />
                                         </MenuFlyoutItem.ContextFlyout>
                                     </MenuFlyoutItem>
+                                    <!--  Stats  -->
+                                    <MenuFlyoutItem
+                                        x:Uid="SystemTrayStats"
+                                        Command="{x:Bind ViewModel.NavigationService.OpenStatsDashboardWindowCommand}"
+                                        Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                           Glyph=&#xE9D2;}" />
+                                    <!--  Lyrics Card  -->
                                     <MenuFlyoutItem
                                         x:Uid="LyricsPageLyricsCard"
                                         Command="{x:Bind ViewModel.NavigationService.OpenLyricsShareWindowCommand}"

@@ -11,8 +11,8 @@
 
 	<Identity
 	  Name="37412.BetterLyrics"
-	  Publisher="CN=Zhe"
-	  Version="1.3.443.0" />
+	  Publisher="CN=Jay"
+	  Version="1.3.445.0" />
 
 	<mp:PhoneIdentity PhoneProductId="ca4a4830-fc19-40d9-b823-53e2bff3d816" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
@@ -53,7 +53,7 @@
 		  EntryPoint="$targetentrypoint$">
 			<uap:VisualElements
 			  DisplayName="BetterLyrics"
-			  Description="BetterLyrics.WinUI3"
+			  Description="BetterLyrics"
 			  BackgroundColor="transparent"
 			  Square150x150Logo="Images\Square150x150Logo.png"
 			  Square44x44Logo="Images\Square44x44Logo.png">

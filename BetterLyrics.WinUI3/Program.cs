@@ -191,6 +191,10 @@ namespace BetterLyrics.WinUI3
                 {
                     WindowHook.OpenOrShowWindow<MusicGalleryWindow>();
                 }
+                else if (protocolArgs.Uri.Host == "stats")
+                {
+                    WindowHook.OpenOrShowWindow<StatsDashboardWindow>();
+                }
             }
         }
 

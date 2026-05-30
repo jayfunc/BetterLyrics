@@ -61,11 +61,6 @@
                     <uc:MediaSettingsControl />
                 </controls:Case>
 
-                <!--  Stats  -->
-                <controls:Case Value="{x:Bind enums:SettingsSection.Stats}">
-                    <uc:StatsDashboardControl />
-                </controls:Case>
-
                 <!--  Plugins  -->
                 <controls:Case Value="{x:Bind enums:SettingsSection.Plugins}">
                     <uc:PluginManagerControl />
