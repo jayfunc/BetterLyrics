@@ -2319,6 +2319,9 @@
   <data name="StatsDashboardControlEnd.Header" xml:space="preserve">
     <value>End</value>
   </data>
+  <data name="StatsDashboardControlHeatmap.Text" xml:space="preserve">
+    <value>Heatmap</value>
+  </data>
   <data name="StatsDashboardControlLeastActive.Text" xml:space="preserve">
     <value>Least Active</value>
   </data>

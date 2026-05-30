@@ -2,6 +2,7 @@
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
+using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Entities;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Models.Stats;
@@ -27,6 +28,7 @@ using SkiaSharp.Views.Windows;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.UI;
@@ -63,6 +65,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty] public partial TimeSpan TotalDuration { get; set; }
         [ObservableProperty] public partial int TotalTracksPlayed { get; set; }
         [ObservableProperty] public partial string TopPlayerName { get; set; } = "N/A";
+
+        // GitHub 热度图
+        [ObservableProperty] public partial ObservableCollection<HeatmapNode> HeatmapData { get; set; } = new();
+        [ObservableProperty] public partial ObservableCollection<MonthLabel> MonthLabels { get; set; } = new();
 
         // 时段分布
         [ObservableProperty] public partial ObservableCollection<int> HourlySeriesValues { get; set; } = new();
@@ -110,6 +116,106 @@ namespace BetterLyrics.WinUI3.ViewModels
         partial void OnCustomStartDateChanged(DateTimeOffset? value) => LoadData();
         partial void OnCustomStartTimeChanged(TimeSpan value) => LoadData();
         partial void OnCustomEndTimeChanged(TimeSpan value) => LoadData();
+
+        private void ProcessHeatmapStats(List<PlayHistoryItem> logs, DateTime start, DateTime end, CultureInfo culture = null)
+        {
+            culture ??= CultureInfo.CurrentUICulture;
+
+            if (logs == null || !logs.Any())
+            {
+                HeatmapData = new();
+                MonthLabels = new();
+                return;
+            }
+
+            var startDate = start.Date;
+            var endDate = end.Date;
+
+            var dailyCounts = logs
+                .GroupBy(x => x.StartedAt.ToLocalTime().Date)
+                .ToDictionary(g => g.Key, g => g.Count());
+
+            var maxCount = dailyCounts.Values.DefaultIfEmpty(0).Max();
+            var nodes = new List<HeatmapNode>();
+            var monthLabels = new List<MonthLabel>();
+
+            int startDayOfWeek = (int)culture.DateTimeFormat.FirstDayOfWeek;
+            for (int i = 0; i < startDayOfWeek; i++)
+            {
+                nodes.Add(new HeatmapNode { IsEmpty = true });
+            }
+
+            int currentMonth = startDate.Month;
+            int currentYear = startDate.Year;
+
+            if (DateTime.DaysInMonth(startDate.Year, startDate.Month) - startDate.Day >= 15)
+            {
+                monthLabels.Add(new MonthLabel
+                {
+                    Name = startDate.ToString("MMM", culture),
+                    Offset = 0
+                });
+            }
+
+            var days = (int)(endDate - startDate).TotalDays + 1;
+
+            for (int i = 0; i < days; i++)
+            {
+                var currentDate = startDate.AddDays(i);
+
+                if (currentDate.Month != currentMonth)
+                {
+                    currentMonth = currentDate.Month;
+
+                    int colIndex = nodes.Count / 7;
+                    double offset = colIndex * 18 + 2;
+
+                    string labelName;
+
+                    if (currentDate.Year != currentYear)
+                    {
+                        currentYear = currentDate.Year;
+                        labelName = currentDate.ToString("y", culture);
+                    }
+                    else
+                    {
+                        labelName = currentDate.ToString("MMM", culture);
+                    }
+
+                    monthLabels.Add(new MonthLabel
+                    {
+                        Name = labelName,
+                        Offset = offset
+                    });
+                }
+
+                var count = dailyCounts.TryGetValue(currentDate, out var c) ? c : 0;
+                int level = 0;
+                if (count > 0)
+                {
+                    if (maxCount <= 4) level = count;
+                    else
+                    {
+                        var ratio = (double)count / maxCount;
+                        if (ratio <= 0.25) level = 1;
+                        else if (ratio <= 0.5) level = 2;
+                        else if (ratio <= 0.75) level = 3;
+                        else level = 4;
+                    }
+                }
+
+                nodes.Add(new HeatmapNode
+                {
+                    Date = currentDate,
+                    PlayCount = count,
+                    Level = level,
+                    IsEmpty = false
+                });
+            }
+
+            HeatmapData = new ObservableCollection<HeatmapNode>(nodes);
+            MonthLabels = new ObservableCollection<MonthLabel>(monthLabels);
+        }
 
         private void ProcessHourlyStats(List<PlayHistoryItem> logs)
         {
@@ -257,6 +363,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                 TopArtists = [.. await topArtistsTask];
 
+                ProcessHeatmapStats(logs, start.Value, end.Value);
                 ProcessHourlyStats(logs);
             }
             catch (Exception ex)

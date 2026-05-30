@@ -12,13 +12,13 @@
     mc:Ignorable="d">
 
     <tb:TaskbarIcon
-        Loaded="TrayIcon_Loaded"
         x:Name="TrayIcon"
         x:FieldModifier="public"
         ContextMenuMode="SecondWindow"
         DoubleClickCommand="{x:Bind ViewModel.TrayIconDoubleClickedCommand}"
         IconSource="ms-appx:///Assets/LogoWhite.ico"
         LeftClickCommand="{x:Bind ViewModel.TrayIconClickedCommand}"
+        Loaded="TrayIcon_Loaded"
         MiddleClickCommand="{x:Bind ViewModel.TrayIconMiddleClickedCommand}"
         ToolTipText="{x:Bind consts:App.AppName}">
         <tb:TaskbarIcon.ContextFlyout>

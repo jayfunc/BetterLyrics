@@ -6,7 +6,6 @@
         LyricsWindowMgr,
         MediaLib,
         PlaybackLib,
-        Stats,
         Plugins,
         About
     }
