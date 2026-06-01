@@ -81,7 +81,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TimeSpan CurrentPosition { get; private set; } = TimeSpan.Zero;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial SongInfo CurrentSongInfo { get; private set; } = SongInfoExtensions.Placeholder;
 
-        [ObservableProperty] public partial MediaSourceProviderInfo? CurrentMediaSourceProviderInfo { get; set; }
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial MediaSourceProviderInfo? CurrentMediaSourceProviderInfo { get; set; }
 
         public GSMTCService(
             ISettingsService settingsService,
@@ -689,7 +689,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         {
             foreach (var item in _settingsService.AppSettings.MediaSourceProvidersInfo)
             {
-                item.IsNowPlaying = item.Provider == value?.Provider;
+                item.IsFocused = item.Provider == value?.Provider;
             }
         }
 

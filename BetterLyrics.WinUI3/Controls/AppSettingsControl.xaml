@@ -81,6 +81,10 @@
                                                  Glyph=&#xF71C;}"
                         IsClickEnabled="True" />
 
+                    <controls:SettingsCard x:Uid="SettingsPageAutoOpenSplashWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE786;}">
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.ShowSplashScreen, Mode=TwoWay}" />
+                    </controls:SettingsCard>
+
                     <controls:SettingsCard x:Uid="SettingsPageAutoOpenMusicGalleryWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8F1;}">
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.MusicGallerySettings.AutoOpen, Mode=TwoWay}" />
                     </controls:SettingsCard>

@@ -42,7 +42,8 @@ namespace BetterLyrics.WinUI3.Views
         IRecipient<PropertyChangedMessage<LyricsFontColorType>>,
         IRecipient<PropertyChangedMessage<Color>>,
         IRecipient<PropertyChangedMessage<TaskbarPlacement>>,
-        IRecipient<PropertyChangedMessage<PaletteGeneratorType>>
+        IRecipient<PropertyChangedMessage<PaletteGeneratorType>>,
+        IRecipient<PropertyChangedMessage<MediaSourceProviderInfo?>>
     {
         private readonly SimpleTimer _alwaysOnTopPollingTimer;
         private readonly SimpleTimer _underlayColorTimer;
@@ -321,29 +322,37 @@ namespace BetterLyrics.WinUI3.Views
         {
             var status = LyricsWindowStatus;
 
-            if (status.AutoShowOrHideWindow)
+            if (status.HideWindowWhenPaused || status.HideWindowWhenNullSession)
             {
                 _visibilityTimer.Debounce(() =>
                 {
                     DispatcherQueue.TryEnqueue(() =>
                     {
-                        if (_gsmtcService.CurrentIsPlaying && status.WindowStatus == WindowStatus.HiddenBySystem)
+                        if (status.WindowStatus == WindowStatus.HiddenBySystem)
                         {
-                            WindowHook.OpenOrShowWindow<NowPlayingWindow>(status);
-                            if (status.IsWorkArea)
+                            if ((status.HideWindowWhenPaused && _gsmtcService.CurrentIsPlaying)
+                                || (status.HideWindowWhenNullSession && _gsmtcService.CurrentMediaSourceProviderInfo != null))
                             {
-                                this.SetIsAppBar(true);
-                                this.MoveAndResize(status.GetAppBarBounds());
-                            }
-                            if (status.IsLocked && status.IsWallpaper && (!status.IsAlwaysHideUnlockButton || status.KeepNowPlayingBarInteractiveWhenLocked))
-                            {
-                                RestartOverlayInputHelper();
+                                WindowHook.OpenOrShowWindow<NowPlayingWindow>(status);
+                                if (status.IsWorkArea)
+                                {
+                                    this.SetIsAppBar(true);
+                                    this.MoveAndResize(status.GetAppBarBounds());
+                                }
+                                if (status.IsLocked && status.IsWallpaper && (!status.IsAlwaysHideUnlockButton || status.KeepNowPlayingBarInteractiveWhenLocked))
+                                {
+                                    RestartOverlayInputHelper();
+                                }
                             }
                         }
-                        else if (!_gsmtcService.CurrentIsPlaying && status.WindowStatus == WindowStatus.Opened)
+                        else if (status.WindowStatus == WindowStatus.Opened)
                         {
-                            this.HideWindow(WindowStatus.HiddenBySystem);
-                            StopOverlayInputHelper();
+                            if ((status.HideWindowWhenPaused && !_gsmtcService.CurrentIsPlaying)
+                                || (status.HideWindowWhenNullSession && _gsmtcService.CurrentMediaSourceProviderInfo == null))
+                            {
+                                this.HideWindow(WindowStatus.HiddenBySystem);
+                                StopOverlayInputHelper();
+                            }
                         }
                     });
                 }, TimeSpan.FromMilliseconds(LyricsWindowStatus.AutoShowOrHideWindowDelay));
@@ -781,7 +790,11 @@ namespace BetterLyrics.WinUI3.Views
                 {
                     OnIsLockedChanged();
                 }
-                else if (message.PropertyName == nameof(LyricsWindowStatus.AutoShowOrHideWindow))
+                else if (message.PropertyName == nameof(LyricsWindowStatus.HideWindowWhenPaused))
+                {
+                    OnAutoShowOrHideWindowChanged();
+                }
+                else if (message.PropertyName == nameof(LyricsWindowStatus.HideWindowWhenNullSession))
                 {
                     OnAutoShowOrHideWindowChanged();
                 }
@@ -969,5 +982,15 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
+        public void Receive(PropertyChangedMessage<MediaSourceProviderInfo?> message)
+        {
+            if (message.Sender is IGSMTCService)
+            {
+                if (message.PropertyName == nameof(IGSMTCService.CurrentMediaSourceProviderInfo))
+                {
+                    OnAutoShowOrHideWindowChanged();
+                }
+            }
+        }
     }
 }

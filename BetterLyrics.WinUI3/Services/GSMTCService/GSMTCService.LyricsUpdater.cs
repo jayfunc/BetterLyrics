@@ -3,7 +3,9 @@ using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Lyrics;
+using BetterLyrics.WinUI3.Services.LocalizationService;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using System.Threading;
 using System.Threading.Tasks;
 

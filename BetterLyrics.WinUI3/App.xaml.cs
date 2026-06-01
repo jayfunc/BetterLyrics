@@ -36,7 +36,6 @@ namespace BetterLyrics.WinUI3
 
             ATL.Settings.NullAbsentValues = true;
 
-            _splashScreen = SimpleSplashScreen.ShowDefaultSplashScreen();
             _logger = Ioc.Default.GetRequiredService<ILogger<App>>();
 
             // 注册全局异常捕获
@@ -49,7 +48,12 @@ namespace BetterLyrics.WinUI3
         protected override async void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
             // 必须，加上此行以防止 SyncTheme 时线程被阻塞（原因未明）
-            _ = Ioc.Default.GetRequiredService<ISettingsService>();
+            var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+
+            if (settingsService.AppSettings.GeneralSettings.ShowSplashScreen)
+            {
+                _splashScreen = SimpleSplashScreen.ShowDefaultSplashScreen();
+            }
 
             GlobalToastManager.Initialize();
 

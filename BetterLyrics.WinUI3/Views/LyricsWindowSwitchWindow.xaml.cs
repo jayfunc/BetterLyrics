@@ -47,7 +47,7 @@ namespace BetterLyrics.WinUI3.Views
 
             InitShortcuts();
 
-            this.Init(title: "LyricsWindowSwitchWindowTitle", titleBarHeightOption: TitleBarHeightOption.Collapsed, backdropType: BackdropType.Transparent);
+            this.Init("LyricsWindowSwitchWindowTitle", titleBarHeightOption: TitleBarHeightOption.Collapsed, backdropType: BackdropType.Transparent);
             this.SyncTheme();
 
             SetTitleBar(PlaceholderGrid);

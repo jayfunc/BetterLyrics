@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -1371,6 +1371,9 @@
   <data name="SettingsPageAutoOpenMusicGalleryWindow.Header" xml:space="preserve">
     <value>시작 시 음악 갤러리 창 열기</value>
   </data>
+  <data name="SettingsPageAutoOpenSplashWindow.Header" xml:space="preserve">
+    <value>시작 화면 표시</value>
+  </data>
   <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve">
     <value>음악 갤러리 창을 열 때 자동으로 재생 재개</value>
   </data>
@@ -1635,14 +1638,14 @@
   <data name="SettingsPageHelpUsTranslate.Content" xml:space="preserve">
     <value>이 애플리케이션 번역 돕기</value>
   </data>
-  <data name="SettingsPageHideWindow.Description" xml:space="preserve">
-    <value>음악 재생이 중지되면 자동으로 가사 창 숨기기/표시</value>
-  </data>
   <data name="SettingsPageHideWindow.Header" xml:space="preserve">
     <value>창 자동 숨기기/표시</value>
   </data>
   <data name="SettingsPageHideWindowDelay.Header" xml:space="preserve">
     <value>지연</value>
+  </data>
+  <data name="SettingsPageHideWindowWhenNullSession.Header" xml:space="preserve">
+    <value>미디어 세션이 없을 때 창 자동 숨기기</value>
   </data>
   <data name="SettingsPageHoldDragSort.Content" xml:space="preserve">
     <value>여기를 길게 눌러 드래그하여 정렬</value>
@@ -2320,7 +2323,7 @@
     <value>종료</value>
   </data>
   <data name="StatsDashboardControlHeatmap.Text" xml:space="preserve">
-    <value>Heatmap</value>
+    <value>히트맵</value>
   </data>
   <data name="StatsDashboardControlLeastActive.Text" xml:space="preserve">
     <value>최소 활성</value>
@@ -2501,6 +2504,9 @@
   </data>
   <data name="WindowSettingsControlRemoveBorder.Header" xml:space="preserve">
     <value>잠긴 경우 테두리 제거</value>
+  </data>
+  <data name="WindowSettingsControlShowAndHide.Text" xml:space="preserve">
+    <value>숨기기 및 표시</value>
   </data>
   <data name="WindowSettingsControlSplitViewRatio.Header" xml:space="preserve">
     <value>레이아웃 할당</value>

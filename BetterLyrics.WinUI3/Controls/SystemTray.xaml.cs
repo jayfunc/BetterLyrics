@@ -8,6 +8,7 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
+using Windows.UI.ViewManagement;
 
 namespace BetterLyrics.WinUI3.Controls
 {
@@ -16,18 +17,24 @@ namespace BetterLyrics.WinUI3.Controls
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
         public SystemTrayViewModel ViewModel => (SystemTrayViewModel)DataContext;
 
+        private readonly UISettings _uiSettings;
+
         public SystemTray()
         {
             InitializeComponent();
             WeakReferenceMessenger.Default.RegisterAll(this);
             DataContext = Ioc.Default.GetService<SystemTrayViewModel>();
-            SystemThemeHook.ThemeChanged += (mode) =>
+
+            _uiSettings = new UISettings();
+            _uiSettings.ColorValuesChanged += UiSettings_ColorValuesChanged;
+        }
+
+        private void UiSettings_ColorValuesChanged(UISettings sender, object args)
+        {
+            this.DispatcherQueue.TryEnqueue(() =>
             {
-                this.DispatcherQueue.TryEnqueue(() =>
-                {
-                    UpdateSystemTrayIcon();
-                });
-            };
+                UpdateSystemTrayIcon();
+            });
         }
 
         private void UpdateSystemTrayIcon()

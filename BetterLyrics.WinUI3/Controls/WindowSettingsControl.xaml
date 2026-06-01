@@ -85,21 +85,6 @@
                             </controls:SettingsCard>
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
-                    <!--  隐藏窗口  -->
-                    <controls:SettingsExpander x:Uid="SettingsPageHideWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xED1A;}">
-                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.AutoShowOrHideWindow, Mode=TwoWay}" />
-                        <controls:SettingsExpander.Items>
-                            <controls:SettingsCard x:Uid="SettingsPageHideWindowDelay" IsEnabled="{x:Bind LyricsWindowStatus.AutoShowOrHideWindow, Mode=OneWay}">
-                                <local:ExtendedSlider
-                                    Default="250"
-                                    Frequency="50"
-                                    Maximum="3000"
-                                    Minimum="250"
-                                    Unit="ms"
-                                    Value="{x:Bind LyricsWindowStatus.AutoShowOrHideWindowDelay, Mode=TwoWay}" />
-                            </controls:SettingsCard>
-                        </controls:SettingsExpander.Items>
-                    </controls:SettingsExpander>
                     <!--  保持屏幕常亮  -->
                     <controls:SettingsCard x:Uid="SettingsPageKeepScreenOpen" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEA80;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsKeepScreenOpen, Mode=TwoWay}" />
@@ -157,6 +142,26 @@
 
                     <controls:SettingsCard x:Uid="WindowSettingsControlSpoutOutput" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8AD;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsSpoutOutputEnabled, Mode=TwoWay}" />
+                    </controls:SettingsCard>
+
+                    <TextBlock x:Uid="WindowSettingsControlShowAndHide" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                    <!--  隐藏窗口（暂停时）  -->
+                    <controls:SettingsCard x:Uid="SettingsPageHideWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xED1A;}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.HideWindowWhenPaused, Mode=TwoWay}" />
+                    </controls:SettingsCard>
+                    <!--  隐藏窗口（媒体会话为空时）  -->
+                    <controls:SettingsCard x:Uid="SettingsPageHideWindowWhenNullSession" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xED1A;}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.HideWindowWhenNullSession, Mode=TwoWay}" />
+                    </controls:SettingsCard>
+                    <controls:SettingsCard x:Uid="SettingsPageHideWindowDelay" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xECC5;}">
+                        <local:ExtendedSlider
+                            Default="250"
+                            Frequency="50"
+                            Maximum="3000"
+                            Minimum="0"
+                            Unit="ms"
+                            Value="{x:Bind LyricsWindowStatus.AutoShowOrHideWindowDelay, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
                     <TextBlock x:Uid="WindowSettingsControlColor" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
