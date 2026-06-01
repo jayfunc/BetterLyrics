@@ -87,7 +87,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
         public static NowPlayingWindow? GetNowPlayingWindow(LyricsWindowStatus status)
         {
-            return (NowPlayingWindow?)GetWindows<NowPlayingWindow>().FirstOrDefault(x => x.LyricsWindowStatus == status);
+            return GetWindows<NowPlayingWindow>().FirstOrDefault(x => x.LyricsWindowStatus == status);
         }
 
         public static List<T> GetWindows<T>()

@@ -1,5 +1,7 @@
 ﻿using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models.Lyrics;
+using BetterLyrics.WinUI3.Services.LocalizationService;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +14,8 @@ namespace BetterLyrics.WinUI3.Extensions
         {
             public static LyricsData GetLoadingPlaceholder()
             {
+                var _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
+                var loadingText = _localizationService.GetLocalizedString("LyricsLoading");
                 return new LyricsData()
                 {
                     LyricsLines = [
@@ -19,8 +23,8 @@ namespace BetterLyrics.WinUI3.Extensions
                         {
                             StartMs = 0,
                             EndMs = (int)TimeSpan.FromSeconds(30).TotalMilliseconds,
-                            PrimaryText = "Loading...",
-                            PrimarySyllables = [new BaseLyrics { Text = "Loading...", StartMs = 0, EndMs = (int)TimeSpan.FromSeconds(30).TotalMilliseconds }],
+                            PrimaryText = loadingText,
+                            PrimarySyllables = [new BaseLyrics { Text = loadingText, StartMs = 0, EndMs = (int)TimeSpan.FromSeconds(30).TotalMilliseconds }],
                             IsPrimaryHasRealSyllableInfo = true,
                         },
                     ],
@@ -30,12 +34,14 @@ namespace BetterLyrics.WinUI3.Extensions
 
             public static LyricsData GetNotfoundPlaceholder()
             {
+                var _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
+                var notFoundText = _localizationService.GetLocalizedString("LyricsNotFound");
                 return new LyricsData([new LyricsLine
                 {
                     StartMs = 0,
                     EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds,
-                    PrimaryText = "Not Found",
-                    PrimarySyllables = [new BaseLyrics { Text = "Not Found", StartMs = 0, EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds }],
+                    PrimaryText = notFoundText,
+                    PrimarySyllables = [new BaseLyrics { Text = notFoundText, StartMs = 0, EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds }],
                 }]);
             }
 

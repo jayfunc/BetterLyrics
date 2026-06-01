@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -1371,6 +1371,9 @@
   <data name="SettingsPageAutoOpenMusicGalleryWindow.Header" xml:space="preserve">
     <value>فتح نافذة مكتبة الموسيقى عند بدء التشغيل</value>
   </data>
+  <data name="SettingsPageAutoOpenSplashWindow.Header" xml:space="preserve">
+    <value>إظهار شاشة العرض</value>
+  </data>
   <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve">
     <value>استئناف التشغيل تلقائياً عند فتح نافذة مكتبة الموسيقى</value>
   </data>
@@ -1635,14 +1638,14 @@
   <data name="SettingsPageHelpUsTranslate.Content" xml:space="preserve">
     <value>ساعدنا في ترجمة هذا التطبيق</value>
   </data>
-  <data name="SettingsPageHideWindow.Description" xml:space="preserve">
-    <value>إخفاء/إظهار نافذة الكلمات تلقائياً عند توقف الموسيقى</value>
-  </data>
   <data name="SettingsPageHideWindow.Header" xml:space="preserve">
     <value>إخفاء/إظهار النافذة تلقائياً</value>
   </data>
   <data name="SettingsPageHideWindowDelay.Header" xml:space="preserve">
     <value>التأخير</value>
+  </data>
+  <data name="SettingsPageHideWindowWhenNullSession.Header" xml:space="preserve">
+    <value>إخفاء النافذة تلقائياً عند عدم وجود جلسات وسائط</value>
   </data>
   <data name="SettingsPageHoldDragSort.Content" xml:space="preserve">
     <value>اضغط باستمرار هنا واسحب للترتيب</value>
@@ -2320,7 +2323,7 @@
     <value>النهاية</value>
   </data>
   <data name="StatsDashboardControlHeatmap.Text" xml:space="preserve">
-    <value>Heatmap</value>
+    <value>الخريطة الحرارية</value>
   </data>
   <data name="StatsDashboardControlLeastActive.Text" xml:space="preserve">
     <value>الأقل نشاطاً</value>
@@ -2501,6 +2504,9 @@
   </data>
   <data name="WindowSettingsControlRemoveBorder.Header" xml:space="preserve">
     <value>إزالة الحدود عند قفلها</value>
+  </data>
+  <data name="WindowSettingsControlShowAndHide.Text" xml:space="preserve">
+    <value>إخفاء وإظهار</value>
   </data>
   <data name="WindowSettingsControlSplitViewRatio.Header" xml:space="preserve">
     <value>تخصيص التخطيط</value>

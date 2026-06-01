@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -208,7 +208,7 @@
     <value>Azione clic singolo</value>
   </data>
   <data name="AppSettingsControlSystemTrayColorfulIcon.Header" xml:space="preserve">
-    <value>Icona Colorato</value>
+    <value>Icona colorata</value>
   </data>
   <data name="AppSettingsControlSystemTrayDoubleClickCallback.Header" xml:space="preserve">
     <value>Azione doppio clic</value>
@@ -1069,7 +1069,7 @@
     <value>Crea playlist</value>
   </data>
   <data name="MusicGalleryPageOpenInFileExplorer.Text" xml:space="preserve">
-    <value>Aprire in Esplora file</value>
+    <value>Apri in Esplora file</value>
   </data>
   <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
     <value>Coda di riproduzione</value>
@@ -1300,7 +1300,7 @@
     <value>Informazioni</value>
   </data>
   <data name="SettingsPageAdaptAlbumArtAccentColor.Header" xml:space="preserve">
-    <value>Adattamento al colore dell'accento dell'album</value>
+    <value>Adatta al colore principale della copertina dell’album</value>
   </data>
   <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
     <value>Adatta colore ambiente</value>
@@ -1370,6 +1370,9 @@
   </data>
   <data name="SettingsPageAutoOpenMusicGalleryWindow.Header" xml:space="preserve">
     <value>Apri la Galleria musicale all'avvio</value>
+  </data>
+  <data name="SettingsPageAutoOpenSplashWindow.Header" xml:space="preserve">
+    <value>Mostra schermata iniziale</value>
   </data>
   <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve">
     <value>Riprendi automaticamente la riproduzione all'apertura della Galleria musicale</value>
@@ -1635,14 +1638,14 @@
   <data name="SettingsPageHelpUsTranslate.Content" xml:space="preserve">
     <value>Aiutaci a tradurre questa applicazione</value>
   </data>
-  <data name="SettingsPageHideWindow.Description" xml:space="preserve">
-    <value>Nasconde/mostra automaticamente la finestra testi quando la riproduzione musicale si interrompe.</value>
-  </data>
   <data name="SettingsPageHideWindow.Header" xml:space="preserve">
     <value>Mostra/nascondi finestra automaticamente</value>
   </data>
   <data name="SettingsPageHideWindowDelay.Header" xml:space="preserve">
     <value>Ritardo</value>
+  </data>
+  <data name="SettingsPageHideWindowWhenNullSession.Header" xml:space="preserve">
+    <value>Nascondi automaticamente la finestra quando non ci sono sessioni multimediali</value>
   </data>
   <data name="SettingsPageHoldDragSort.Content" xml:space="preserve">
     <value>Tieni premuto qui e trascina per ordinare</value>
@@ -2320,7 +2323,7 @@
     <value>Fine</value>
   </data>
   <data name="StatsDashboardControlHeatmap.Text" xml:space="preserve">
-    <value>Heatmap</value>
+    <value>Mappa di calore</value>
   </data>
   <data name="StatsDashboardControlLeastActive.Text" xml:space="preserve">
     <value>Meno attivo</value>
@@ -2501,6 +2504,9 @@
   </data>
   <data name="WindowSettingsControlRemoveBorder.Header" xml:space="preserve">
     <value>Rimuovi bordi quando bloccata</value>
+  </data>
+  <data name="WindowSettingsControlShowAndHide.Text" xml:space="preserve">
+    <value>Nascondere e mostrare</value>
   </data>
   <data name="WindowSettingsControlSplitViewRatio.Header" xml:space="preserve">
     <value>Proporzione layout</value>

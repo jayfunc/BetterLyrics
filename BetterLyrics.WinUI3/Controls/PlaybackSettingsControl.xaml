@@ -116,8 +116,9 @@
                                                         TextWrapping="Wrap" />
                                                     <Image
                                                         Height="16"
+                                                        helper:GifHelper.IsPlaying="{Binding ElementName=MediaSourceProvidersListView, Path=ViewModel.GSMTCService.CurrentIsPlaying, Mode=OneWay}"
                                                         Source="{ThemeResource MusicWave}"
-                                                        Visibility="{Binding IsNowPlaying, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                        Visibility="{Binding IsFocused, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
                                                 </StackPanel>
                                                 <TextBlock
                                                     VerticalAlignment="Center"
@@ -220,8 +221,9 @@
                             Grid.Column="2"
                             Height="16"
                             Margin="0,26,0,0"
+                            helper:GifHelper.IsPlaying="{x:Bind ViewModel.GSMTCService.CurrentIsPlaying, Mode=OneWay}"
                             Source="{ThemeResource MusicWave}"
-                            Visibility="{x:Bind ViewModel.SelectedMediaSourceProvider.IsNowPlaying, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            Visibility="{x:Bind ViewModel.SelectedMediaSourceProvider.IsFocused, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
                         <Button
                             Grid.Column="4"
                             Margin="0,24,0,0"
@@ -469,8 +471,8 @@
                             HorizontalAlignment="Stretch"
                             HorizontalContentAlignment="Left">
                             <StackPanel Spacing="6">
-                                <local:PropertyRow x:Uid="SettingsPagePlaybackSource" helper:AppExtensions.Aumid="{x:Bind ViewModel.GSMTCService.CurrentMediaSourceProviderInfo.Provider, Mode=OneWay}" />
-                                <local:PropertyRow x:Uid="SettingsPagePlaybackSourceID" Value="{x:Bind ViewModel.GSMTCService.CurrentMediaSourceProviderInfo.Provider, TargetNullValue=N/A, Mode=OneWay}" />
+                                <local:PropertyRow x:Uid="SettingsPagePlaybackSource" helper:AppExtensions.Aumid="{x:Bind ViewModel.GSMTCService.CurrentMediaSourceProviderInfo.Provider, FallbackValue=N/A, TargetNullValue=N/A, Mode=OneWay}" />
+                                <local:PropertyRow x:Uid="SettingsPagePlaybackSourceID" Value="{x:Bind ViewModel.GSMTCService.CurrentMediaSourceProviderInfo.Provider, FallbackValue=N/A, TargetNullValue=N/A, Mode=OneWay}" />
                             </StackPanel>
                         </Expander>
 

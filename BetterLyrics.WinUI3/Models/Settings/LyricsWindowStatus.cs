@@ -68,8 +68,10 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial PaletteGeneratorType PaletteGeneratorType { get; set; } = PaletteGeneratorType.Auto;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial NowPlayingPalette WindowPalette { get; set; } = new();
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool AutoShowOrHideWindow { get; set; } = false;
+        [JsonPropertyName("AutoShowOrHideWindow")][ObservableProperty][NotifyPropertyChangedRecipients] public partial bool HideWindowWhenPaused { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool HideWindowWhenNullSession { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int AutoShowOrHideWindowDelay { get; set; } = 250; // 250ms
+
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TitleBarArea TitleBarArea { get; set; } = TitleBarArea.Top;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsKeepScreenOpen { get; set; } = false;
 
@@ -350,7 +352,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 PaletteGeneratorType = this.PaletteGeneratorType,
                 WindowPalette = this.WindowPalette,
 
-                AutoShowOrHideWindow = this.AutoShowOrHideWindow,
+                HideWindowWhenPaused = this.HideWindowWhenPaused,
                 AutoShowOrHideWindowDelay = this.AutoShowOrHideWindowDelay,
                 TitleBarArea = this.TitleBarArea,
                 IsKeepScreenOpen = this.IsKeepScreenOpen,

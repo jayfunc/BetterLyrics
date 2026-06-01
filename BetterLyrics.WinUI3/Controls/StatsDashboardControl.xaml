@@ -32,26 +32,6 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <!--  记录条  -->
-        <Grid Grid.Row="0" Visibility="{x:Bind ViewModel.GSMTCService.IsScrobbled, Mode=OneWay, Converter={StaticResource BoolNegationToVisibilityConverter}}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <InfoBar
-                x:Uid="StatsDashboardControlRecording"
-                Grid.Row="0"
-                IsClosable="False"
-                IsOpen="True"
-                Message="{x:Bind ViewModel.GSMTCService.CurrentSongInfo.Title, Mode=OneWay}" />
-            <ProgressBar
-                Grid.Row="1"
-                Background="Transparent"
-                Maximum="{x:Bind ViewModel.GSMTCService.TargetScrobbledDuration.TotalSeconds, Mode=OneWay}"
-                ShowPaused="{x:Bind ViewModel.GSMTCService.CurrentIsPlaying, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
-                Value="{x:Bind ViewModel.GSMTCService.ScrobbledDuration.TotalSeconds, Mode=OneWay}" />
-        </Grid>
-
         <!--  加载条  -->
         <ProgressBar
             Grid.Row="0"
@@ -115,6 +95,7 @@
         <ScrollViewer Grid.Row="2" Padding="36,0,32,0">
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
@@ -543,7 +524,30 @@
                     </Grid>
                 </Border>
 
-                <Grid Grid.Row="5" Height="32" />
+                <!--  记录条  -->
+                <Grid
+                    Grid.Row="5"
+                    Margin="0,0,4,0"
+                    Visibility="{x:Bind ViewModel.GSMTCService.IsScrobbled, Mode=OneWay, Converter={StaticResource BoolNegationToVisibilityConverter}}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <InfoBar
+                        x:Uid="StatsDashboardControlRecording"
+                        Grid.Row="0"
+                        IsClosable="False"
+                        IsOpen="True"
+                        Message="{x:Bind ViewModel.GSMTCService.CurrentSongInfo.Title, Mode=OneWay}" />
+                    <ProgressBar
+                        Grid.Row="1"
+                        Background="Transparent"
+                        Maximum="{x:Bind ViewModel.GSMTCService.TargetScrobbledDuration.TotalSeconds, Mode=OneWay}"
+                        ShowPaused="{x:Bind ViewModel.GSMTCService.CurrentIsPlaying, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+                        Value="{x:Bind ViewModel.GSMTCService.ScrobbledDuration.TotalSeconds, Mode=OneWay}" />
+                </Grid>
+
+                <Grid Grid.Row="6" Height="32" />
 
             </Grid>
         </ScrollViewer>
@@ -553,7 +557,8 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Bottom"
             Command="{x:Bind ViewModel.GenerateTestDataCommand}"
-            Content="TEST" />
+            Content="TEST"
+            Visibility="Collapsed" />
 
     </Grid>
 </UserControl>

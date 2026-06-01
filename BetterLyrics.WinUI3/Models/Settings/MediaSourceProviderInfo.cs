@@ -43,7 +43,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
         [JsonIgnore] public bool IsLXMusic => PlayerIdHelper.IsLXMusic(Provider);
         [JsonIgnore] public bool IsBetterLyrics => PlayerIdHelper.IsBetterLyrics(Provider);
-        [JsonIgnore][ObservableProperty] public partial bool IsNowPlaying { get; set; } = false;
+        [JsonIgnore][ObservableProperty] public partial bool IsFocused { get; set; } = false;
 
         public MediaSourceProviderInfo()
         {

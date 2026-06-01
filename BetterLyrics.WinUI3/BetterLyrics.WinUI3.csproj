@@ -114,7 +114,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="3v.EvtSource" Version="2.0.0" />
-		<PackageReference Include="CommunityToolkit.Labs.WinUI.Controls.OpacityMaskView" Version="0.1.260515-build.2617" />
+		<PackageReference Include="CommunityToolkit.Labs.WinUI.Controls.OpacityMaskView" Version="0.1.260529-build.2632" />
 		<PackageReference Include="CommunityToolkit.Labs.WinUI.MarqueeText" Version="0.1.250828-build.2223" />
 		<PackageReference Include="CommunityToolkit.Labs.WinUI.Shimmer" Version="0.1.250828-build.2223" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
@@ -134,7 +134,7 @@
 		<PackageReference Include="DevWinUI.Controls" Version="9.9.4" />
 		<PackageReference Include="F23.StringSimilarity" Version="7.0.1" />
 		<PackageReference Include="FlaUI.UIA3" Version="5.0.0" />
-		<PackageReference Include="FluentFTP" Version="54.1.2" />
+		<PackageReference Include="FluentFTP" Version="54.2.0" />
 		<PackageReference Include="H.NotifyIcon.WinUI" Version="2.4.1" />
 		<PackageReference Include="Interop.UIAutomationClient" Version="10.19041.0" />
 		<PackageReference Include="LiteFM" Version="1.0.3" />
@@ -178,8 +178,8 @@
 		<PackageReference Include="Vortice.Direct3D11" Version="3.8.3" />
 		<PackageReference Include="WanaKana-net" Version="1.0.0" />
 		<PackageReference Include="WebDav.Client" Version="2.9.0" />
-		<PackageReference Include="WinUIEx" Version="2.9.0" />
-		<PackageReference Include="z440.atl.core" Version="7.13.0" />
+		<PackageReference Include="WinUIEx" Version="2.9.1" />
+		<PackageReference Include="z440.atl.core" Version="7.15.3" />
 	</ItemGroup>
 	<ItemGroup>
 		<ProjectReference Include="..\BetterLyrics.Core\BetterLyrics.Core.csproj" />
