@@ -27,6 +27,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
         private readonly NowPlayingWindow _targetWindow;
         private readonly IntPtr _targetHwnd;
+        private AutomationElement? _cachedTaskbar;
         private IntPtr _taskbarHwnd;
 
         private TaskbarPlacement _currentPlacement;
@@ -71,36 +72,60 @@ namespace BetterLyrics.WinUI3.Hooks
 
         private AutomationElement? FindTargetTaskbar()
         {
+            if (_cachedTaskbar != null)
+            {
+                try
+                {
+                    // 简单访问一下属性测试对象是否存活（比如 explorer.exe 没有崩溃重启）
+                    var test = _cachedTaskbar.BoundingRectangle;
+                    return _cachedTaskbar;
+                }
+                catch
+                {
+                    // 对象已失效（例如 explorer.exe 重启了），清空缓存重新查找
+                    _cachedTaskbar = null;
+                }
+            }
+
             try
             {
+                AutomationElement? target = null;
+
                 var desktop = _automation.GetDesktop();
                 var primaryTaskbar = desktop.FindFirstChild(x => x.ByClassName("Shell_TrayWnd"));
 
                 // 如果外部还没传入显示器范围，默认使用主任务栏
                 if (_targetMonitorRect == Rectangle.Empty)
                 {
-                    return primaryTaskbar;
+                    target = primaryTaskbar;
                 }
-
                 // 检查主任务栏是否刚好在目标显示器上
-                if (primaryTaskbar != null && IsTaskbarOnMonitor(primaryTaskbar))
+                else if (primaryTaskbar != null && IsTaskbarOnMonitor(primaryTaskbar))
                 {
-                    return primaryTaskbar;
+                    target = primaryTaskbar;
                 }
-
-                // 遍历所有的副屏任务栏
-                var secondaryTaskbars = desktop.FindAllChildren(cf => cf.ByClassName("Shell_SecondaryTrayWnd"));
-
-                foreach (var taskbar in secondaryTaskbars)
+                else
                 {
-                    if (IsTaskbarOnMonitor(taskbar))
+                    // 遍历所有的副屏任务栏
+                    var secondaryTaskbars = desktop.FindAllChildren(cf => cf.ByClassName("Shell_SecondaryTrayWnd"));
+                    foreach (var taskbar in secondaryTaskbars)
                     {
-                        return taskbar;
+                        if (IsTaskbarOnMonitor(taskbar))
+                        {
+                            target = taskbar;
+                            break;
+                        }
                     }
                 }
 
-                // 如果都没匹配上，返回主任务栏防止崩溃
-                return primaryTaskbar;
+                // 如果都没匹配上，使用主任务栏
+                if (target == null)
+                {
+                    target = primaryTaskbar;
+                }
+
+                _cachedTaskbar = target; // 存入缓存
+                return target;
             }
             catch (Exception ex)
             {
