@@ -1266,9 +1266,6 @@
   <data name="SetingsPageContributors.Text" xml:space="preserve">
     <value>Contributors</value>
   </data>
-  <data name="SetingsPageDeps.Text" xml:space="preserve">
-    <value>Code References</value>
-  </data>
   <data name="SetingsPageDonation.Text" xml:space="preserve">
     <value>Donate</value>
   </data>
@@ -1280,9 +1277,6 @@
   </data>
   <data name="SetingsPageThanks.Text" xml:space="preserve">
     <value>If you like this project, please consider supporting it by donating. Your support helps keep the project alive and encourages further development.</value>
-  </data>
-  <data name="SetingsPageUIUXRef.Text" xml:space="preserve">
-    <value>UI/UX References</value>
   </data>
   <data name="SettingsPage3DLyrics.Header" xml:space="preserve">
     <value>[Experimental] Depth Effect</value>
@@ -2271,7 +2265,7 @@
   <data name="SettingsPageUnplayedStrokeFontColor.Header" xml:space="preserve">
     <value>Stroke (Unplayed)</value>
   </data>
-  <data name="SettingsPageUserWhoPurchased.PatronName" xml:space="preserve">
+  <data name="SettingsPageUserWhoPurchased" xml:space="preserve">
     <value>And users who purchased BetterLyrics</value>
   </data>
   <data name="SettingsPageVersion.Text" xml:space="preserve">

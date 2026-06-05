@@ -11,6 +11,8 @@
 
         public const string BetterLyricsGitHub = $"{AuthorGitHub}/BetterLyrics";
 
+        public const string ThirdPartyLibraries = $"{BetterLyricsGitHub}/network/dependencies";
+
         public const string TermsOfService = $"{BetterLyricsGitHub}/blob/dev/docs/TERMS_OF_SERVICE.md";
         public const string PrivacyPolicy = $"{BetterLyricsGitHub}/blob/dev/docs/PRIVACY_POLICY.md";
         public const string OfficialWebsite = $"https://betterlyrics.github.io";

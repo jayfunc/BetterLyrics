@@ -8,7 +8,8 @@ namespace BetterLyrics.WinUI3.Converters
     {
         public object Convert(object value, Type targetType, object parameter, string language)
         {
-            return value is int intVal && intVal != 0 ? Visibility.Visible : Visibility.Collapsed;
+            int threshold = int.Parse(parameter?.ToString() ?? "0");
+            return value is int intVal && intVal != threshold ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)

@@ -6,10 +6,12 @@
     xmlns:const="using:BetterLyrics.WinUI3.Constants"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:dev="using:DevWinUI"
     xmlns:helper="using:BetterLyrics.WinUI3.Helper"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:CommunityToolkit.WinUI.Media"
+    xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
@@ -85,7 +87,7 @@
 
                     <controls:SettingsExpander
                         Description="© Zhe Fang 2025-2026. Licensed under GPL-3.0."
-                        Header="BetterLyrics"
+                        Header="{x:Bind const:App.AppName}"
                         HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/Logo.png}">
                         <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind helper:MetadataHelper.AppVersion}" />
                         <controls:SettingsExpander.Items>
@@ -113,7 +115,7 @@
                                     IsOpen="True"
                                     Severity="Warning"
                                     Visibility="{x:Bind ViewModel.AppUpdateService.AppUpdateStatus, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=1}">
-                                    <HyperlinkButton
+                                    <uc:ExternalLinkButton
                                         x:Uid="AboutControlOpenAppStorePage"
                                         Margin="-12,0,0,12"
                                         Command="{x:Bind ViewModel.OpenAppStorePageCommand}" />
@@ -142,24 +144,25 @@
                         <StackPanel Margin="58,6" Spacing="6">
 
                             <controls:WrapPanel Orientation="Horizontal">
-                                <HyperlinkButton Command="{x:Bind ViewModel.OpenAppStorePageCommand}" Content="Microsoft Store" />
-                                <HyperlinkButton Content="GitHub" NavigateUri="{x:Bind const:Link.BetterLyricsGitHub}" />
-                                <HyperlinkButton x:Uid="UserGuide" NavigateUri="{x:Bind const:Link.UserGuide}" />
-                                <HyperlinkButton x:Uid="PrivacyPolicy" NavigateUri="{x:Bind const:Link.PrivacyPolicy}" />
-                                <HyperlinkButton x:Uid="TermsOfService" NavigateUri="{x:Bind const:Link.TermsOfService}" />
+                                <uc:ExternalLinkButton Command="{x:Bind ViewModel.OpenAppStorePageCommand}" Content="Microsoft Store" />
+                                <uc:ExternalLinkButton Content="GitHub" NavigateUri="{x:Bind const:Link.BetterLyricsGitHub}" />
+                                <uc:ExternalLinkButton Content="Dependencies" NavigateUri="{x:Bind const:Link.ThirdPartyLibraries}" />
+                                <uc:ExternalLinkButton Content="User Guide" NavigateUri="{x:Bind const:Link.UserGuide}" />
+                                <uc:ExternalLinkButton Content="Privacy Policy" NavigateUri="{x:Bind const:Link.PrivacyPolicy}" />
+                                <uc:ExternalLinkButton Content="Terms of Service" NavigateUri="{x:Bind const:Link.TermsOfService}" />
                             </controls:WrapPanel>
 
                             <TextBlock x:Uid="SetingsPageFeedback" />
                             <controls:WrapPanel Orientation="Horizontal">
-                                <HyperlinkButton Content="QQ 反馈交流群" NavigateUri="{x:Bind const:Link.QQGroup}" />
-                                <HyperlinkButton Content="Discord" NavigateUri="{x:Bind const:Link.Discord}" />
-                                <HyperlinkButton Content="Telegram" NavigateUri="{x:Bind const:Link.Telegram}" />
+                                <uc:ExternalLinkButton Content="QQ 反馈交流群" NavigateUri="{x:Bind const:Link.QQGroup}" />
+                                <uc:ExternalLinkButton Content="Discord" NavigateUri="{x:Bind const:Link.Discord}" />
+                                <uc:ExternalLinkButton Content="Telegram" NavigateUri="{x:Bind const:Link.Telegram}" />
                             </controls:WrapPanel>
 
                             <TextBlock x:Uid="SetingsPageDonation" />
                             <controls:WrapPanel Orientation="Horizontal">
-                                <HyperlinkButton Content="Buy Me a Coffee" NavigateUri="{x:Bind const:Link.BuyMeACoffee}" />
-                                <HyperlinkButton Content="PayPal" NavigateUri="{x:Bind const:Link.PayPal}" />
+                                <uc:ExternalLinkButton Content="Buy Me a Coffee" NavigateUri="{x:Bind const:Link.BuyMeACoffee}" />
+                                <uc:ExternalLinkButton Content="PayPal" NavigateUri="{x:Bind const:Link.PayPal}" />
                                 <HyperlinkButton
                                     x:Name="AlipayWeChatPayButton"
                                     Click="AlipayWeChatPayButton_Click"
@@ -176,7 +179,7 @@
                                         </Flyout>
                                     </HyperlinkButton.ContextFlyout>
                                 </HyperlinkButton>
-                                <HyperlinkButton Content="爱发电" NavigateUri="{x:Bind const:Link.Afdian}" />
+                                <uc:ExternalLinkButton Content="爱发电" NavigateUri="{x:Bind const:Link.Afdian}" />
                             </controls:WrapPanel>
                             <Grid ColumnSpacing="6">
                                 <Grid.ColumnDefinitions>
@@ -198,108 +201,51 @@
                         </StackPanel>
                     </Grid>
 
-                    <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">
+                    <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                         <Expander.Header>
                             <TextBlock x:Uid="SetingsPageContributors" />
                         </Expander.Header>
-                        <controls:WrapPanel>
-                            <local:ContributorCard
-                                AvatarSource="https://github.com/jayfunc.png"
-                                Badges="💻🌐🧪📝"
-                                Description="https://github.com/jayfunc"
-                                Header="jayfunc" />
-                            <local:ContributorCard
-                                AvatarSource="https://github.com/Raspberry-Monster.png"
-                                Badges="💻"
-                                Description="https://github.com/Raspberry-Monster"
-                                Header="Raspberry-Monster" />
-                            <local:ContributorCard
-                                AvatarSource="https://github.com/zxbmmmmmmmmm.png"
-                                Badges="💻"
-                                Description="https://github.com/zxbmmmmmmmmm"
-                                Header="zxbmmmmmmmmm" />
-                            <local:ContributorCard
-                                AvatarSource="https://github.com/ZHider.png"
-                                Badges="💻"
-                                Description="https://github.com/ZHider"
-                                Header="ZHider" />
-                            <local:ContributorCard
-                                AvatarSource="https://github.com/YUZU384.png"
-                                Badges="💻"
-                                Description="https://github.com/YUZU384"
-                                Header="YUZU384" />
-                            <local:ContributorCard
-                                AvatarSource="https://github.com/kusutori.png"
-                                Badges="💻"
-                                Description="https://github.com/kusutori"
-                                Header="kusutori" />
-                            <local:ContributorCard
-                                AvatarSource="https://github.com/PiYuanZhouLv.png"
-                                Badges="💻"
-                                Description="https://github.com/PiYuanZhouLv"
-                                Header="PiYuanZhouLv" />
-                            <local:ContributorCard
-                                AvatarSource="https://crowdin-static.cf-downloads.crowdin.com/avatar/17495984/large/8ccabd161147e3f072cf116491cacbbd.png"
-                                Badges="🌐🧪📝"
-                                Description="https://crowdin.com/profile/SuHeAndZl"
-                                Header="SuHeAndZl" />
-                            <local:ContributorCard
-                                AvatarSource="https://crowdin-static.cf-downloads.crowdin.com/avatar/17490908/large/2b2818952b68061b46051cc1c3cbe7fe_default.png"
-                                Badges="🌐"
-                                Description="https://crowdin.com/profile/borcolasky"
-                                Header="borcolasky" />
-                        </controls:WrapPanel>
+
+                        <ItemsControl ItemsSource="{x:Bind ViewModel.Contributors, Mode=OneWay}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <controls:WrapPanel HorizontalSpacing="1" VerticalSpacing="1" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="models:Contributor">
+                                    <local:ContributorCard
+                                        AvatarSource="{x:Bind AvatarSource}"
+                                        Badges="{x:Bind Badges}"
+                                        Description="{x:Bind Description}"
+                                        Header="{x:Bind Header}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
                     </Expander>
 
-                    <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Center">
+                    <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
                         <Expander.Header>
                             <TextBlock x:Uid="SettingsPagePatrons" />
                         </Expander.Header>
-                        <controls:WrapPanel Orientation="Horizontal">
-                            <uc:PatronControl Date="May 31, 2026" PatronName="**胜" />
-                            <uc:PatronControl Date="May 15, 2026" PatronName="帐篷" />
-                            <uc:PatronControl Date="May 13, 2026" PatronName="**序" />
-                            <uc:PatronControl Date="May 8, 2026" PatronName="**博" />
-                            <uc:PatronControl Date="May 2, 2026" PatronName="loikuan" />
-                            <uc:PatronControl Date="Apr 18, 2026" PatronName="&lt;Anon/匿名&gt;" />
-                            <uc:PatronControl Date="Apr 10, 2026" PatronName="&lt;Anon/匿名&gt;" />
-                            <uc:PatronControl Date="Apr 8, 2026" PatronName="**84e82" />
-                            <uc:PatronControl Date="Mar 28, 2026" PatronName="**东" />
-                            <uc:PatronControl Date="Mar 28, 2026" PatronName="**卓" />
-                            <uc:PatronControl Date="Mar 23, 2026" PatronName="Leon" />
-                            <uc:PatronControl Date="Mar 16, 2026" PatronName="&lt;Anon/匿名&gt;" />
-                            <uc:PatronControl Date="Mar 4, 2026" PatronName="你的秋乔呐" />
-                            <uc:PatronControl Date="Mar 3, 2026" PatronName="Aureliano" />
-                            <uc:PatronControl Date="Feb 27, 2026" PatronName="Andrews Consulting" />
-                            <uc:PatronControl Date="Feb 20, 2026" PatronName="Asane779" />
-                            <uc:PatronControl Date="Feb 18, 2026" PatronName="haitang000" />
-                            <uc:PatronControl Date="Feb 17, 2026" PatronName="AlexZhao" />
-                            <uc:PatronControl Date="Feb 16, 2026" PatronName="**昊" />
-                            <uc:PatronControl Date="Feb 13, 2026" PatronName="**鹏" />
-                            <uc:PatronControl Date="Jan 31, 2026" PatronName="wu" />
-                            <uc:PatronControl Date="Jan 29, 2026" PatronName="咯他ii" />
-                            <uc:PatronControl Date="Jan 29, 2026" PatronName="**林" />
-                            <uc:PatronControl Date="Jan 29, 2026" PatronName="**棋" />
-                            <uc:PatronControl Date="Jan 29, 2026" PatronName="**都" />
-                            <uc:PatronControl Date="Jan 29, 2026" PatronName="**成" />
-                            <uc:PatronControl Date="Jan 19, 2026" PatronName="**杭" />
-                            <uc:PatronControl Date="Jan 8, 2026" PatronName="Eureka-K_K" />
-                            <uc:PatronControl Date="Jan 3, 2026" PatronName="**轩" />
-                            <uc:PatronControl Date="Dec 13, 2025" PatronName="&lt;Anon/匿名&gt;" />
-                            <uc:PatronControl Date="Dec 3, 2025" PatronName="YE" />
-                            <uc:PatronControl Date="Dec 2, 2025" PatronName="&lt;Anon/匿名&gt;" />
-                            <uc:PatronControl Date="Nov 23, 2025" PatronName="**玄" />
-                            <uc:PatronControl Date="Nov 21, 2025" PatronName="**智" />
-                            <uc:PatronControl Date="Nov 17, 2025" PatronName="SuHeAndZl" />
-                            <uc:PatronControl Date="Nov 2, 2025" PatronName="借过" />
-                            <uc:PatronControl Date="Aug 28, 2025" PatronName="**华" />
-                            <uc:PatronControl x:Uid="SettingsPageUserWhoPurchased" />
-                        </controls:WrapPanel>
-                    </Expander>
 
-                    <controls:SettingsCard x:Uid="SettingsPageMockMusicPlaying">
-                        <HyperlinkButton x:Uid="SettingsPagePlayingMockMusicButton" NavigateUri="https://soundcloud.com/carlyraejepsen/cut-to-the-feeling" />
-                    </controls:SettingsCard>
+                        <ItemsControl ItemsSource="{x:Bind ViewModel.Donors, Mode=OneWay}">
+
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <controls:WrapPanel HorizontalSpacing="1" VerticalSpacing="1" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="models:Donor">
+                                    <uc:PatronControl Date="{x:Bind Date}" PatronName="{x:Bind PatronName}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+
+                        </ItemsControl>
+                    </Expander>
 
                     <controls:SettingsExpander x:Uid="SettingsPageCache" IsExpanded="True">
                         <Button x:Uid="SettingsPageOpenFolderButton" Command="{x:Bind ViewModel.OpenCacheFolderCommand}" />

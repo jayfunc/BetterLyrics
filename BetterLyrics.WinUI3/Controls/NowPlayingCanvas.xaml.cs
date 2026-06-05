@@ -113,7 +113,7 @@ namespace BetterLyrics.WinUI3.Controls
 
         private double _renderLyricsStartX = 0;
         private double _renderLyricsStartY = 0;
-        private double _renderLyricsWidth = 0;
+        private double _renderLyricsWidth = 9999;
         private double _renderLyricsHeight = 0;
         private double _renderLyricsOpacity = 0;
 
@@ -132,6 +132,7 @@ namespace BetterLyrics.WinUI3.Controls
         private bool _isLayoutChanged = false;
         private bool _isMouseScrollingChanged = false;
         private bool _isNowPlayingPaletteChanged = false;
+        private bool _isLyricsChanged = true;
 
         private int _primaryPlayingLineIndex;
         private (int Start, int End) _visibleRange;
@@ -779,25 +780,32 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void TriggerRelayout()
         {
-            if (!_isLayoutChanged || _lyricsWindowStatus == null) return;
+            if (_lyricsWindowStatus == null) return;
 
-            DisposeRenderLyricsLines();
-            _renderLyricsLines = _gsmtcService.CurrentLyricsData?.LyricsLines.Select(x => new RenderLyricsLine(x)).ToList();
+            if (_isLyricsChanged)
+            {
+                DisposeRenderLyricsLines();
+                _renderLyricsLines = _gsmtcService.CurrentLyricsData?.LyricsLines.Select(x => new RenderLyricsLine(x)).ToList();
+                _isLyricsChanged = false;
+                _isLayoutChanged = true;
+            }
 
             if (_renderLyricsLines == null) return;
 
-            LyricsLayoutManager.CalculateLanes(_renderLyricsLines);
-
-            LyricsLayoutManager.MeasureAndArrange(
-                resourceCreator: Canvas,
-                lines: _renderLyricsLines,
-                status: _lyricsWindowStatus,
-                appSettings: _settingsService.AppSettings,
-                canvasWidth: Canvas.Size.Width,
-                canvasHeight: Canvas.Size.Height,
-                lyricsWidth: _renderLyricsWidth,
-                lyricsHeight: _renderLyricsHeight
-            );
+            if (_isLayoutChanged)
+            {
+                LyricsLayoutManager.CalculateLanes(_renderLyricsLines);
+                LyricsLayoutManager.MeasureAndArrange(
+                    resourceCreator: Canvas,
+                    lines: _renderLyricsLines,
+                    status: _lyricsWindowStatus,
+                    appSettings: _settingsService.AppSettings,
+                    canvasWidth: Canvas.Size.Width,
+                    canvasHeight: Canvas.Size.Height,
+                    lyricsWidth: _renderLyricsWidth,
+                    lyricsHeight: _renderLyricsHeight
+                );
+            }
         }
 
         private void RequestRelayout()
@@ -914,7 +922,7 @@ namespace BetterLyrics.WinUI3.Controls
             {
                 if (message.PropertyName == nameof(IGSMTCService.CurrentLyricsData))
                 {
-                    RequestRelayout();
+                    _isLyricsChanged = true;
                 }
             }
         }

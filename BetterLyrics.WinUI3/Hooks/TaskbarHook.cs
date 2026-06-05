@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -181,6 +182,7 @@ namespace BetterLyrics.WinUI3.Hooks
             if (_isDisposed) return;
 
             var taskbar = FindTargetTaskbar();
+
             if (taskbar == null) return;
 
             _debounceTimer?.Debounce(() =>
@@ -188,6 +190,7 @@ namespace BetterLyrics.WinUI3.Hooks
                 _ = Task.Run(() =>
                 {
                     Rectangle voidRect = CalculateVoidRect(taskbar, _currentPlacement);
+                    //Debug.WriteLine($"Calculated void rectangle: {voidRect}");
 
                     if (!_isDisposed && voidRect != Rectangle.Empty)
                     {
@@ -195,6 +198,7 @@ namespace BetterLyrics.WinUI3.Hooks
                         try
                         {
                             taskbarRect = taskbar.BoundingRectangle;
+                            //Debug.WriteLine($"Taskbar Bounding Rectangle: {taskbarRect}");
                         }
                         catch (Exception ex)
                         {
@@ -297,7 +301,9 @@ namespace BetterLyrics.WinUI3.Hooks
                             className == "MSTaskListWClass" ||
                             // Win 11
                             className == "MSTaskSwWClass" ||
-                            className == "Windows.UI.Input.InputSite.WindowClass")
+                            className == "Windows.UI.Input.InputSite.WindowClass" ||
+                            // 待定
+                            className == "Xaml_WindowedPopupClass")
                         {
                             continue; // 跳过系统组件窗口
                             // 这里不对 ClassName 为 Start 或 TrayButton 的进行拦截

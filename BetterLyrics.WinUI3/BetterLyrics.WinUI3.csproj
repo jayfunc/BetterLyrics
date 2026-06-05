@@ -31,6 +31,8 @@
 	</ItemGroup>
 	<ItemGroup>
 		<None Remove="Assets\Banner.png" />
+		<None Remove="Assets\Contributors.csv" />
+		<None Remove="Assets\Donors.csv" />
 		<None Remove="Assets\Fonts\SegoeFluentIcons.ttf" />
 		<None Remove="Assets\Fonts\SloganCNFont.ttf" />
 		<None Remove="Assets\Fonts\SloganENFont.ttf" />
@@ -82,6 +84,7 @@
 		<None Remove="Themes\FluentAccentSplitButtonStyle.xaml" />
 		<None Remove="Themes\FluentButtonStyle.xaml" />
 		<None Remove="Themes\FluentComboBoxItemStyle.xaml" />
+		<None Remove="Themes\FluentExternalLinkButtonStyle.xaml" />
 		<None Remove="Themes\FluentHyperlinkButtonStyle.xaml" />
 		<None Remove="Themes\FluentListViewItemStyle.xaml" />
 		<None Remove="Themes\FluentMenuFlyoutItemStyle.xaml" />
@@ -523,6 +526,15 @@
 	  <Content Update="Assets\LogoBlack.ico">
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
+	  <Content Update="Assets\Donors.csv">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Content Update="Assets\Contributors.csv">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	  <Page Update="Themes\FluentExternalLinkButtonStyle.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
 	  <None Update="Themes\Generic.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </None>

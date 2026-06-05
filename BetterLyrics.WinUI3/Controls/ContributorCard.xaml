@@ -3,51 +3,55 @@
     x:Class="BetterLyrics.WinUI3.Controls.ContributorCard"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Padding="16" ColumnSpacing="16">
+    <Grid Padding="12" Style="{ThemeResource CardGridStyle}">
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="Auto" />
-        </Grid.ColumnDefinitions>
+        <Grid ColumnSpacing="12">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-        <Border
-            Grid.Column="0"
-            Width="36"
-            Height="36"
-            VerticalAlignment="Center"
-            CornerRadius="18">
-            <Image Source="{x:Bind AvatarSource, Mode=OneWay}" Stretch="UniformToFill" />
-        </Border>
+            <Border
+                Grid.Column="0"
+                Width="40"
+                Height="40"
+                VerticalAlignment="Center"
+                BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="20">
+                <Border.Background>
+                    <ImageBrush ImageSource="{x:Bind AvatarSource, Mode=OneWay}" Stretch="UniformToFill" />
+                </Border.Background>
+            </Border>
 
-        <StackPanel
-            Grid.Column="1"
-            VerticalAlignment="Center"
-            Spacing="2">
+            <StackPanel
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                Spacing="2">
 
-            <StackPanel Orientation="Horizontal" Spacing="6">
-                <TextBlock Style="{StaticResource BodyStrongTextBlockStyle}" Text="{x:Bind Header, Mode=OneWay}" />
-                <TextBlock
-                    VerticalAlignment="Center"
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                    <TextBlock
+                        Style="{StaticResource BodyStrongTextBlockStyle}"
+                        Text="{x:Bind Header, Mode=OneWay}"
+                        TextTrimming="CharacterEllipsis" />
+                    <TextBlock
+                        VerticalAlignment="Center"
+                        FontSize="14"
+                        Text="{x:Bind Badges, Mode=OneWay}" />
+                </StackPanel>
+
+                <local:ExternalLinkButton
+                    Padding="0"
+                    Content="{x:Bind Description, Mode=OneWay}"
                     FontSize="12"
-                    Text="{x:Bind Badges, Mode=OneWay}" />
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    NavigateUri="{x:Bind Description, Mode=OneWay}" />
             </StackPanel>
-
-            <HyperlinkButton
-                MinWidth="0"
-                MinHeight="0"
-                Padding="0"
-                HorizontalAlignment="Left"
-                Content="{x:Bind Description, Mode=OneWay}"
-                FontSize="12"
-                NavigateUri="{x:Bind Description, Mode=OneWay}" />
-        </StackPanel>
-
+        </Grid>
     </Grid>
 </UserControl>

@@ -1,8 +1,10 @@
 ﻿using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Helper.BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
+using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.AppUpdateService;
+using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Services.LyricsCacheService;
 using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
@@ -12,9 +14,12 @@ using Microsoft.Data.Sqlite;
 using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Compression;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Windows.Storage;
 using Windows.System;
 
 namespace BetterLyrics.WinUI3.ViewModels
@@ -23,18 +28,75 @@ namespace BetterLyrics.WinUI3.ViewModels
     {
         private readonly ISettingsService _settingsService;
         private readonly ILyricsCacheService _lyricsCacheService;
+        private readonly ILocalizationService _localizationService;
 
         [ObservableProperty] public partial IAppUpdateService AppUpdateService { get; set; }
 
         [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 
-        public AboutControlViewModel(ISettingsService settingsService, ILyricsCacheService lyricsCacheService, IAppUpdateService appUpdateService)
+        public ObservableCollection<Contributor> Contributors { get; set; } = new();
+        public ObservableCollection<Donor> Donors { get; set; } = new();
+
+        public AboutControlViewModel(ISettingsService settingsService, ILyricsCacheService lyricsCacheService, IAppUpdateService appUpdateService, ILocalizationService localizationService)
         {
             _settingsService = settingsService;
             _lyricsCacheService = lyricsCacheService;
+            _localizationService = localizationService;
             AppUpdateService = appUpdateService;
 
             AppSettings = _settingsService.AppSettings;
+            _ = LoadContributorsAsync();
+            _ = LoadDonorsAsync();
+        }
+
+        private async Task LoadContributorsAsync()
+        {
+            var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/contributors.csv"));
+            var lines = await FileIO.ReadLinesAsync(file);
+
+            for (int i = 1; i < lines.Count; i++)
+            {
+                var line = lines[i];
+                if (string.IsNullOrWhiteSpace(line)) continue;
+
+                var parts = Regex.Split(line, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+
+                if (parts.Length >= 4)
+                {
+                    Contributors.Add(new Contributor
+                    {
+                        Header = parts[0].Trim('"', ' '),
+                        AvatarSource = parts[1].Trim('"', ' '),
+                        Badges = parts[2].Trim('"', ' '),
+                        Description = parts[3].Trim('"', ' ')
+                    });
+                }
+            }
+        }
+
+        private async Task LoadDonorsAsync()
+        {
+            var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Donors.csv"));
+            var lines = await FileIO.ReadLinesAsync(file);
+
+            for (int i = 1; i < lines.Count; i++)
+            {
+                var line = lines[i];
+                if (string.IsNullOrWhiteSpace(line)) continue;
+
+                var parts = Regex.Split(line, ",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)");
+
+                if (parts.Length >= 2)
+                {
+                    Donors.Add(new Donor
+                    {
+                        Date = parts[0].Trim('"', ' '),
+                        PatronName = parts[1].Trim('"', ' ')
+                    });
+                }
+            }
+
+            Donors.Add(new Donor() { PatronName = _localizationService.GetLocalizedString("SettingsPageUserWhoPurchased") });
         }
 
         [RelayCommand]

@@ -222,7 +222,17 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
         private void InitMediaManager()
         {
-            _mediaManager.Start();
+            // 经反馈，某些用户环境下 MediaManager.Start() 会抛出异常，暂时捕获并提示，避免程序崩溃
+            try
+            {
+                _mediaManager.Start();
+            }
+            catch (Exception ex)
+            {
+                GlobalToastManager.Show("Error", ex.Message, InfoBarSeverity.Error);
+                return;
+            }
+
             _mediaManager.CurrentMediaSessions.ToList().ForEach(x => RecordMediaSession(x.Value.Id));
 
             _mediaManager.OnAnySessionOpened += MediaManager_OnAnySessionOpened;

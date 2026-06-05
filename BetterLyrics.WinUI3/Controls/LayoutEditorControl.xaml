@@ -96,12 +96,11 @@
                                             <ColumnDefinition Width="80" />
                                         </Grid.ColumnDefinitions>
 
-                                        <NumberBox
+                                        <uc:SafeNumberBox
                                             x:Name="SizeInputBox"
                                             Grid.Column="0"
                                             VerticalAlignment="Center"
-                                            Minimum="0"
-                                            PlaceholderText="1" />
+                                            Minimum="0" />
                                         <ComboBox
                                             x:Name="SizeTypeBox"
                                             Grid.Column="1"
@@ -239,12 +238,11 @@
                                             <ColumnDefinition Width="80" />
                                         </Grid.ColumnDefinitions>
 
-                                        <NumberBox
+                                        <uc:SafeNumberBox
                                             x:Name="SizeInputBox"
                                             Grid.Column="0"
                                             VerticalAlignment="Center"
-                                            Minimum="0"
-                                            PlaceholderText="1" />
+                                            Minimum="0" />
                                         <ComboBox
                                             x:Name="SizeTypeBox"
                                             Grid.Column="1"
@@ -350,15 +348,19 @@
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
-                                    <NumberBox
+                                    <uc:SafeNumberBox
                                         x:Uid="LayoutEditorControlGlobalRowSpacingBox"
                                         Grid.Column="0"
+                                        IsIntegerOnly="True"
                                         Minimum="0"
+                                        PlaceholderText="0"
                                         Value="{x:Bind LayoutProfile.RowSpacing, Mode=TwoWay}" />
-                                    <NumberBox
+                                    <uc:SafeNumberBox
                                         x:Uid="LayoutEditorControlGlobalColSpacingBox"
                                         Grid.Column="1"
+                                        IsIntegerOnly="True"
                                         Minimum="0"
+                                        PlaceholderText="0"
                                         Value="{x:Bind LayoutProfile.ColumnSpacing, Mode=TwoWay}" />
                                 </Grid>
 
@@ -378,28 +380,36 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
 
-                                    <NumberBox
+                                    <uc:SafeNumberBox
                                         x:Uid="LayoutEditorControlGlobalPadLeftBox"
                                         Grid.Row="1"
                                         Grid.Column="0"
+                                        IsIntegerOnly="True"
+                                        PlaceholderText="0"
                                         Value="{x:Bind LayoutProfile.PaddingLeft, Mode=TwoWay}" />
 
-                                    <NumberBox
+                                    <uc:SafeNumberBox
                                         x:Uid="LayoutEditorControlGlobalPadTopBox"
                                         Grid.Row="0"
                                         Grid.Column="1"
+                                        IsIntegerOnly="True"
+                                        PlaceholderText="0"
                                         Value="{x:Bind LayoutProfile.PaddingTop, Mode=TwoWay}" />
 
-                                    <NumberBox
+                                    <uc:SafeNumberBox
                                         x:Uid="LayoutEditorControlGlobalPadRightBox"
                                         Grid.Row="1"
                                         Grid.Column="2"
+                                        IsIntegerOnly="True"
+                                        PlaceholderText="0"
                                         Value="{x:Bind LayoutProfile.PaddingRight, Mode=TwoWay}" />
 
-                                    <NumberBox
+                                    <uc:SafeNumberBox
                                         x:Uid="LayoutEditorControlGlobalPadBottomBox"
                                         Grid.Row="2"
                                         Grid.Column="1"
+                                        IsIntegerOnly="True"
+                                        PlaceholderText="0"
                                         Value="{x:Bind LayoutProfile.PaddingBottom, Mode=TwoWay}" />
                                 </Grid>
 
@@ -472,19 +482,23 @@
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
-                                            <NumberBox
+                                            <uc:SafeNumberBox
                                                 x:Name="PropRowBox"
                                                 x:Uid="LayoutEditorControlRowBox"
                                                 Grid.Column="0"
+                                                IsIntegerOnly="True"
                                                 Maximum="{x:Bind MaxRowIndex, Mode=OneWay}"
                                                 Minimum="0"
+                                                PlaceholderText="0"
                                                 Value="{x:Bind SelectedPlacement.Row, Mode=TwoWay}" />
-                                            <NumberBox
+                                            <uc:SafeNumberBox
                                                 x:Name="PropColBox"
                                                 x:Uid="LayoutEditorControlColBox"
                                                 Grid.Column="1"
+                                                IsIntegerOnly="True"
                                                 Maximum="{x:Bind MaxColIndex, Mode=OneWay}"
                                                 Minimum="0"
+                                                PlaceholderText="0"
                                                 Value="{x:Bind SelectedPlacement.Column, Mode=TwoWay}" />
                                         </Grid>
 
@@ -493,19 +507,25 @@
                                                 <ColumnDefinition Width="*" />
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
-                                            <NumberBox
+                                            <uc:SafeNumberBox
                                                 x:Name="PropRowSpanBox"
                                                 x:Uid="LayoutEditorControlRowSpanBox"
                                                 Grid.Column="0"
+                                                DefaultValue="1"
+                                                IsIntegerOnly="True"
                                                 Maximum="{x:Bind MaxRowSpan, Mode=OneWay}"
                                                 Minimum="1"
+                                                PlaceholderText="1"
                                                 Value="{x:Bind SelectedPlacement.RowSpan, Mode=TwoWay}" />
-                                            <NumberBox
+                                            <uc:SafeNumberBox
                                                 x:Name="PropColSpanBox"
                                                 x:Uid="LayoutEditorControlColSpanBox"
                                                 Grid.Column="1"
+                                                DefaultValue="1"
+                                                IsIntegerOnly="True"
                                                 Maximum="{x:Bind MaxColSpan, Mode=OneWay}"
                                                 Minimum="1"
+                                                PlaceholderText="1"
                                                 Value="{x:Bind SelectedPlacement.ColumnSpan, Mode=TwoWay}" />
                                         </Grid>
 
@@ -524,25 +544,29 @@
                                                 <ColumnDefinition Width="Auto" />
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
-                                            <NumberBox
+                                            <uc:SafeNumberBox
                                                 x:Uid="LayoutEditorControlMarginLeftBox"
                                                 Grid.Row="1"
                                                 Grid.Column="0"
+                                                PlaceholderText="0"
                                                 Value="{x:Bind SelectedPlacement.MarginLeft, Mode=TwoWay}" />
-                                            <NumberBox
+                                            <uc:SafeNumberBox
                                                 x:Uid="LayoutEditorControlMarginTopBox"
                                                 Grid.Row="0"
                                                 Grid.Column="1"
+                                                PlaceholderText="0"
                                                 Value="{x:Bind SelectedPlacement.MarginTop, Mode=TwoWay}" />
-                                            <NumberBox
+                                            <uc:SafeNumberBox
                                                 x:Uid="LayoutEditorControlMarginRightBox"
                                                 Grid.Row="1"
                                                 Grid.Column="2"
+                                                PlaceholderText="0"
                                                 Value="{x:Bind SelectedPlacement.MarginRight, Mode=TwoWay}" />
-                                            <NumberBox
+                                            <uc:SafeNumberBox
                                                 x:Uid="LayoutEditorControlMarginBottomBox"
                                                 Grid.Row="2"
                                                 Grid.Column="1"
+                                                PlaceholderText="0"
                                                 Value="{x:Bind SelectedPlacement.MarginBottom, Mode=TwoWay}" />
                                         </Grid>
 
@@ -557,6 +581,7 @@
                                                 x:Uid="SettingsPageWidth"
                                                 Grid.Column="0"
                                                 Minimum="0"
+                                                PlaceholderText="0"
                                                 Value="{x:Bind SelectedPlacement.Width, Mode=TwoWay}" />
                                             <ComboBox
                                                 x:Name="PropWidthTypeBox"
@@ -578,6 +603,7 @@
                                                 x:Uid="SettingsPageHeight"
                                                 Grid.Column="0"
                                                 Minimum="0"
+                                                PlaceholderText="0"
                                                 Value="{x:Bind SelectedPlacement.Height, Mode=TwoWay}" />
                                             <ComboBox
                                                 x:Name="PropHeightTypeBox"
@@ -941,7 +967,7 @@
 
                             <MenuFlyoutSeparator Margin="-20,0" />
 
-                            <HyperlinkButton
+                            <uc:ExternalLinkButton
                                 x:Uid="LayoutEditorControlLearnMoreLink"
                                 Padding="0"
                                 NavigateUri="https://betterlyrics.github.io/layout-editor" />

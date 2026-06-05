@@ -52,7 +52,7 @@
                         </controls:SettingsExpander.Items>
                         <controls:SettingsExpander.ItemsFooter>
                             <InfoBar IsClosable="False" IsOpen="True">
-                                <HyperlinkButton x:Uid="SettingsPageHelpUsTranslate" NavigateUri="{x:Bind consts:Link.Crowdin}" />
+                                <local:ExternalLinkButton x:Uid="SettingsPageHelpUsTranslate" NavigateUri="{x:Bind consts:Link.Crowdin}" />
                             </InfoBar>
                         </controls:SettingsExpander.ItemsFooter>
                     </controls:SettingsExpander>

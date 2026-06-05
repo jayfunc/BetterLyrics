@@ -8,37 +8,25 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Border Padding="16">
+    <Grid Style="{ThemeResource CardGridStyle}">
 
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-
-            <FontIcon
-                Margin="0,0,12,0"
-                FontFamily="{ThemeResource SegoeFluentIcons}"
-                FontSize="16"
-                Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-                Glyph="&#xEB52;" />
+        <StackPanel
+            Margin="12,8"
+            Orientation="Horizontal"
+            Spacing="6">
 
             <TextBlock
-                Grid.Column="1"
-                Margin="0,0,6,0"
+                VerticalAlignment="Center"
                 Foreground="{ThemeResource TextFillColorPrimaryBrush}"
-                Style="{ThemeResource BodyStrongTextBlockStyle}"
+                Style="{ThemeResource BodyTextBlockStyle}"
                 Text="{x:Bind PatronName, Mode=OneWay}"
                 TextTrimming="CharacterEllipsis" />
 
             <TextBlock
-                Grid.Column="2"
-                VerticalAlignment="Bottom"
+                VerticalAlignment="Center"
+                FontSize="12"
                 Foreground="{ThemeResource TextFillColorTertiaryBrush}"
-                Style="{ThemeResource CaptionTextBlockStyle}"
                 Text="{x:Bind Date, Mode=OneWay}" />
-        </Grid>
-
-    </Border>
+        </StackPanel>
+    </Grid>
 </UserControl>

@@ -243,7 +243,7 @@
                             </controls:SettingsCard>
                             <controls:SettingsCard>
                                 <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <HyperlinkButton
+                                    <local:ExternalLinkButton
                                         Padding="6"
                                         Content="{ui:FontIcon FontSize=12,
                                                               FontFamily={StaticResource SegoeFluentIcons},
@@ -586,7 +586,7 @@
                                 </controls:SettingsCard>
                                 <controls:SettingsCard x:Uid="SettingsPageTranslationConfig" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=OneWay}">
                                     <controls:SettingsCard.Description>
-                                        <HyperlinkButton Content="https://github.com/LibreTranslate/LibreTranslate" NavigateUri="https://github.com/LibreTranslate/LibreTranslate" />
+                                        <local:ExternalLinkButton Content="https://github.com/LibreTranslate/LibreTranslate" NavigateUri="https://github.com/LibreTranslate/LibreTranslate" />
                                     </controls:SettingsCard.Description>
                                     <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsLibreTranslateEnabled, Mode=TwoWay}" />
                                 </controls:SettingsCard>
@@ -659,7 +659,7 @@
                             </StackPanel>
                             <controls:SettingsExpander.Items>
                                 <controls:SettingsCard x:Uid="SettingsPageLastFMUsername" IsEnabled="{x:Bind ViewModel.IsLastFMAuthenticated, Mode=OneWay}">
-                                    <HyperlinkButton
+                                    <local:ExternalLinkButton
                                         Padding="0"
                                         Content="{x:Bind ViewModel.LastFMUser.Name, Mode=OneWay}"
                                         NavigateUri="{x:Bind ViewModel.LastFMUser.Url, Mode=OneWay}" />
@@ -713,7 +713,7 @@
                                 PlaceholderText="media-user-token"
                                 Text="{x:Bind ViewModel.AppleMusicMediaUserToken, Mode=TwoWay}"
                                 TextWrapping="Wrap" />
-                            <HyperlinkButton
+                            <local:ExternalLinkButton
                                 Grid.Column="1"
                                 VerticalAlignment="Bottom"
                                 Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},

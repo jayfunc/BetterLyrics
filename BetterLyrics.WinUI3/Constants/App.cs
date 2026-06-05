@@ -1,11 +1,13 @@
-﻿namespace BetterLyrics.WinUI3.Constants
+﻿using Windows.ApplicationModel;
+
+namespace BetterLyrics.WinUI3.Constants
 {
     public static class App
     {
         public const string AppAuthor = "Zhe Fang";
         public const string AppAuthorNicknameEN = "jayfunc";
         public const string AppAuthorNicknameZH = "摘叶飞镖";
-        public const string AppName = "BetterLyrics";
+        public static string AppName = Package.Current.Id.FamilyName == "37412.BetterLyrics_rd1g0rsrrtxw8" ? "BetterLyrics" : "BetterLyrics (Dev)";
 
         public const string AutoStartupTaskId = "AutoStartup";
         public const string StoreId = "9p1wcd1p597r";

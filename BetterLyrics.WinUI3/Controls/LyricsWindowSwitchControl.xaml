@@ -77,11 +77,11 @@
             </ListView>
 
             <Grid Grid.Row="2">
-                <HyperlinkButton Click="SettingsHypelinkButton_Click">
-                    <HyperlinkButton.Content>
+                <uc:ExternalLinkButton Click="SettingsHypelinkButton_Click">
+                    <uc:ExternalLinkButton.Content>
                         <TextBlock x:Uid="LyricsWindowSwitchWindowHelp" />
-                    </HyperlinkButton.Content>
-                </HyperlinkButton>
+                    </uc:ExternalLinkButton.Content>
+                </uc:ExternalLinkButton>
             </Grid>
 
         </Grid>

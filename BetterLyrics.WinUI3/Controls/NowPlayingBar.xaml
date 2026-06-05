@@ -229,120 +229,122 @@
                         Spacing="3">
 
                         <!--  Volume  -->
-                        <Button
-                            x:Name="VolumeButton"
-                            Click="VolumeButton_Click"
-                            Style="{ThemeResource GhostButtonStyle}"
-                            Visibility="{x:Bind ShowVolumeButton, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                            <Grid>
+                        <Border Visibility="{x:Bind ViewModel.Volume, Mode=OneWay, Converter={StaticResource IntToVisibilityConverter}, ConverterParameter=-1}">
+                            <Button
+                                x:Name="VolumeButton"
+                                Click="VolumeButton_Click"
+                                Style="{ThemeResource GhostButtonStyle}"
+                                Visibility="{x:Bind ShowVolumeButton, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <Grid>
 
-                                <!--  Volumn: 0  -->
-                                <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE74F;">
-                                    <FontIcon.OpacityTransition>
-                                        <ScalarTransition />
-                                    </FontIcon.OpacityTransition>
-                                    <interactivity:Interaction.Behaviors>
-                                        <interactivity:DataTriggerBehavior
-                                            Binding="{x:Bind ViewModel.Volume, Mode=OneWay}"
-                                            ComparisonCondition="Equal"
-                                            Value="0">
-                                            <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
-                                        </interactivity:DataTriggerBehavior>
-                                        <interactivity:DataTriggerBehavior
-                                            Binding="{x:Bind ViewModel.Volume, Mode=OneWay}"
-                                            ComparisonCondition="NotEqual"
-                                            Value="0">
-                                            <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
-                                        </interactivity:DataTriggerBehavior>
-                                    </interactivity:Interaction.Behaviors>
-                                </FontIcon>
+                                    <!--  Volumn: 0  -->
+                                    <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE74F;">
+                                        <FontIcon.OpacityTransition>
+                                            <ScalarTransition />
+                                        </FontIcon.OpacityTransition>
+                                        <interactivity:Interaction.Behaviors>
+                                            <interactivity:DataTriggerBehavior
+                                                Binding="{x:Bind ViewModel.Volume, Mode=OneWay}"
+                                                ComparisonCondition="Equal"
+                                                Value="0">
+                                                <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
+                                            </interactivity:DataTriggerBehavior>
+                                            <interactivity:DataTriggerBehavior
+                                                Binding="{x:Bind ViewModel.Volume, Mode=OneWay}"
+                                                ComparisonCondition="NotEqual"
+                                                Value="0">
+                                                <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
+                                            </interactivity:DataTriggerBehavior>
+                                        </interactivity:Interaction.Behaviors>
+                                    </FontIcon>
 
-                                <!--  Volumn: 1-32  -->
-                                <FontIcon
-                                    x:Name="VolumeLevel1"
-                                    FontFamily="{StaticResource SegoeFluentIcons}"
-                                    Glyph="&#xE993;">
-                                    <FontIcon.OpacityTransition>
-                                        <ScalarTransition />
-                                    </FontIcon.OpacityTransition>
-                                    <interactivity:Interaction.Behaviors>
-                                        <interactivity:DataTriggerBehavior
-                                            Binding="{x:Bind ViewModel.Volume, Mode=OneWay}"
-                                            ComparisonCondition="GreaterThanOrEqual"
-                                            Value="1">
-                                            <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
-                                        </interactivity:DataTriggerBehavior>
-                                        <interactivity:DataTriggerBehavior
-                                            Binding="{x:Bind ViewModel.Volume, Mode=OneWay}"
-                                            ComparisonCondition="LessThan"
-                                            Value="1">
-                                            <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
-                                        </interactivity:DataTriggerBehavior>
-                                    </interactivity:Interaction.Behaviors>
-                                </FontIcon>
+                                    <!--  Volumn: 1-32  -->
+                                    <FontIcon
+                                        x:Name="VolumeLevel1"
+                                        FontFamily="{StaticResource SegoeFluentIcons}"
+                                        Glyph="&#xE993;">
+                                        <FontIcon.OpacityTransition>
+                                            <ScalarTransition />
+                                        </FontIcon.OpacityTransition>
+                                        <interactivity:Interaction.Behaviors>
+                                            <interactivity:DataTriggerBehavior
+                                                Binding="{x:Bind ViewModel.Volume, Mode=OneWay}"
+                                                ComparisonCondition="GreaterThanOrEqual"
+                                                Value="1">
+                                                <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
+                                            </interactivity:DataTriggerBehavior>
+                                            <interactivity:DataTriggerBehavior
+                                                Binding="{x:Bind ViewModel.Volume, Mode=OneWay}"
+                                                ComparisonCondition="LessThan"
+                                                Value="1">
+                                                <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
+                                            </interactivity:DataTriggerBehavior>
+                                        </interactivity:Interaction.Behaviors>
+                                    </FontIcon>
 
-                                <!--  Volumn: 33-65  -->
-                                <FontIcon
-                                    x:Name="VolumeLevel2"
-                                    FontFamily="{StaticResource SegoeFluentIcons}"
-                                    Glyph="&#xE994;">
-                                    <FontIcon.OpacityTransition>
-                                        <ScalarTransition />
-                                    </FontIcon.OpacityTransition>
-                                    <interactivity:Interaction.Behaviors>
-                                        <interactivity:DataTriggerBehavior
-                                            Binding="{x:Bind ViewModel.Volume, Mode=OneWay}"
-                                            ComparisonCondition="GreaterThanOrEqual"
-                                            Value="33">
-                                            <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
-                                        </interactivity:DataTriggerBehavior>
-                                        <interactivity:DataTriggerBehavior
-                                            Binding="{x:Bind ViewModel.Volume, Mode=OneWay}"
-                                            ComparisonCondition="LessThan"
-                                            Value="33">
-                                            <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
-                                        </interactivity:DataTriggerBehavior>
-                                    </interactivity:Interaction.Behaviors>
-                                </FontIcon>
+                                    <!--  Volumn: 33-65  -->
+                                    <FontIcon
+                                        x:Name="VolumeLevel2"
+                                        FontFamily="{StaticResource SegoeFluentIcons}"
+                                        Glyph="&#xE994;">
+                                        <FontIcon.OpacityTransition>
+                                            <ScalarTransition />
+                                        </FontIcon.OpacityTransition>
+                                        <interactivity:Interaction.Behaviors>
+                                            <interactivity:DataTriggerBehavior
+                                                Binding="{x:Bind ViewModel.Volume, Mode=OneWay}"
+                                                ComparisonCondition="GreaterThanOrEqual"
+                                                Value="33">
+                                                <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
+                                            </interactivity:DataTriggerBehavior>
+                                            <interactivity:DataTriggerBehavior
+                                                Binding="{x:Bind ViewModel.Volume, Mode=OneWay}"
+                                                ComparisonCondition="LessThan"
+                                                Value="33">
+                                                <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
+                                            </interactivity:DataTriggerBehavior>
+                                        </interactivity:Interaction.Behaviors>
+                                    </FontIcon>
 
-                                <!--  Volumn: 66-100  -->
-                                <FontIcon
-                                    x:Name="VolumeLevel3"
-                                    FontFamily="{StaticResource SegoeFluentIcons}"
-                                    Glyph="&#xE995;">
-                                    <FontIcon.OpacityTransition>
-                                        <ScalarTransition />
-                                    </FontIcon.OpacityTransition>
-                                    <interactivity:Interaction.Behaviors>
-                                        <interactivity:DataTriggerBehavior
-                                            Binding="{x:Bind ViewModel.Volume, Mode=OneWay}"
-                                            ComparisonCondition="GreaterThanOrEqual"
-                                            Value="66">
-                                            <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
-                                        </interactivity:DataTriggerBehavior>
-                                        <interactivity:DataTriggerBehavior
-                                            Binding="{x:Bind ViewModel.Volume, Mode=OneWay}"
-                                            ComparisonCondition="LessThan"
-                                            Value="66">
-                                            <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
-                                        </interactivity:DataTriggerBehavior>
-                                    </interactivity:Interaction.Behaviors>
-                                </FontIcon>
-                            </Grid>
+                                    <!--  Volumn: 66-100  -->
+                                    <FontIcon
+                                        x:Name="VolumeLevel3"
+                                        FontFamily="{StaticResource SegoeFluentIcons}"
+                                        Glyph="&#xE995;">
+                                        <FontIcon.OpacityTransition>
+                                            <ScalarTransition />
+                                        </FontIcon.OpacityTransition>
+                                        <interactivity:Interaction.Behaviors>
+                                            <interactivity:DataTriggerBehavior
+                                                Binding="{x:Bind ViewModel.Volume, Mode=OneWay}"
+                                                ComparisonCondition="GreaterThanOrEqual"
+                                                Value="66">
+                                                <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
+                                            </interactivity:DataTriggerBehavior>
+                                            <interactivity:DataTriggerBehavior
+                                                Binding="{x:Bind ViewModel.Volume, Mode=OneWay}"
+                                                ComparisonCondition="LessThan"
+                                                Value="66">
+                                                <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
+                                            </interactivity:DataTriggerBehavior>
+                                        </interactivity:Interaction.Behaviors>
+                                    </FontIcon>
+                                </Grid>
 
-                            <Button.ContextFlyout>
-                                <Flyout x:Name="VolumeFlyout" ShouldConstrainToRootBounds="False">
-                                    <local:ExtendedSlider
-                                        Frequency="1"
-                                        Maximum="100"
-                                        Minimum="0"
-                                        ResetButtonVisibility="Collapsed"
-                                        Unit="%"
-                                        ValueChangedByUser="ExtendedSlider_ValueChangedByUser"
-                                        Value="{x:Bind ViewModel.Volume, Mode=TwoWay}" />
-                                </Flyout>
-                            </Button.ContextFlyout>
-                        </Button>
+                                <Button.ContextFlyout>
+                                    <Flyout x:Name="VolumeFlyout" ShouldConstrainToRootBounds="False">
+                                        <local:ExtendedSlider
+                                            Frequency="1"
+                                            Maximum="100"
+                                            Minimum="0"
+                                            ResetButtonVisibility="Collapsed"
+                                            Unit="%"
+                                            ValueChangedByUser="ExtendedSlider_ValueChangedByUser"
+                                            Value="{x:Bind ViewModel.Volume, Mode=TwoWay}" />
+                                    </Flyout>
+                                </Button.ContextFlyout>
+                            </Button>
+                        </Border>
 
                         <!--  Stop media session  -->
                         <Button

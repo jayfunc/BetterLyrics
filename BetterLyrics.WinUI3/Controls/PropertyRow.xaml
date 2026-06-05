@@ -38,14 +38,14 @@
                     </Paragraph>
                 </RichTextBlock>
 
-                <HyperlinkButton
+                <local:ExternalLinkButton
                     Margin="0,-2,0,0"
                     Padding="0"
                     HorizontalContentAlignment="Left"
                     Click="OnLinkClicked"
                     Visibility="{x:Bind LinkVisibility, Mode=OneWay}">
                     <TextBlock Text="{x:Bind Value, Mode=OneWay}" TextWrapping="Wrap" />
-                </HyperlinkButton>
+                </local:ExternalLinkButton>
             </Grid>
 
             <Button
