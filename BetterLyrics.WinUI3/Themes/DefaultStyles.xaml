@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:uc="using:BetterLyrics.WinUI3.Controls">
 
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary Source="/Themes/DefaultAccentSplitButtonStyle.xaml" />
@@ -55,6 +58,9 @@
         x:Key="AccentSplitButtonStyle"
         BasedOn="{StaticResource DefaultAccentSplitButtonStyle}"
         TargetType="SplitButton" />
+
+    <!--  ExternalLinkButton Styles  -->
+    <Style BasedOn="{StaticResource DefaultHyperlinkButtonStyle}" TargetType="uc:ExternalLinkButton" />
 
     <!--  ListViewItem Styles  -->
     <Style BasedOn="{StaticResource DefaultListViewItemStyle}" TargetType="ListViewItem" />

@@ -205,7 +205,7 @@
                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                             Style="{StaticResource CaptionTextBlockStyle}" />
 
-                        <HyperlinkButton
+                        <uc:ExternalLinkButton
                             x:Uid="SettingsPageShareHub"
                             Grid.Column="1"
                             NavigateUri="{x:Bind constants:Link.LayoutsStore}" />

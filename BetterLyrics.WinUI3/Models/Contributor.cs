@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace BetterLyrics.WinUI3.Models
+{
+    public class Contributor
+    {
+        public string Header { get; set; }
+        public string AvatarSource { get; set; }
+        public string Badges { get; set; }
+        public string Description { get; set; }
+    }
+}

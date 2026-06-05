@@ -214,7 +214,7 @@
                             </Button>
 
                             <!--  Sharing hub  -->
-                            <HyperlinkButton
+                            <uc:ExternalLinkButton
                                 x:Uid="SettingsPageShareHub"
                                 Grid.Column="2"
                                 NavigateUri="{x:Bind constants:Link.ModesStore}" />

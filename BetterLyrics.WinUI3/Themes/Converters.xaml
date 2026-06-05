@@ -66,4 +66,6 @@
 
     <bwc:ComponentTypeToIconConverter x:Key="ComponentTypeToIconConverter" />
 
+    <bwc:NaNToZeroConverter x:Key="NaNToZeroConverter" />
+
 </ResourceDictionary>

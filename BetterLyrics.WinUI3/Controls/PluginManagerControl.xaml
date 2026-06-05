@@ -66,8 +66,8 @@
             VerticalAlignment="Bottom"
             Orientation="Horizontal"
             Spacing="6">
-            <HyperlinkButton x:Uid="PluginManagerControlVisitPluginDevGuide" NavigateUri="{x:Bind consts:Link.PluginDevGuide}" />
-            <HyperlinkButton x:Uid="PluginManagerControlVisitPluginStore" NavigateUri="{x:Bind consts:Link.PluginsStore}" />
+            <local:ExternalLinkButton x:Uid="PluginManagerControlVisitPluginDevGuide" NavigateUri="{x:Bind consts:Link.PluginDevGuide}" />
+            <local:ExternalLinkButton x:Uid="PluginManagerControlVisitPluginStore" NavigateUri="{x:Bind consts:Link.PluginsStore}" />
             <Button
                 x:Uid="PluginManagerControlInstall"
                 Command="{x:Bind ViewModel.InstallPluginCommand}"
