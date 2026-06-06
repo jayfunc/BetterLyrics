@@ -21,23 +21,48 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void UpdateContent()
         {
+            FrameworkElement? element = null;
             if (Content is string textContent)
             {
-                var panel = new StackPanel
+                element = new TextBlock
                 {
-                    Orientation = Orientation.Horizontal,
-                    Spacing = 6,
-                };
-                panel.Children.Add(new TextBlock { Text = textContent, VerticalAlignment = VerticalAlignment.Center });
-                panel.Children.Add(new FontIcon
-                {
-                    FontFamily = (FontFamily)Application.Current.Resources["SegoeFluentIcons"],
-                    Glyph = "\uE8A7",
-                    FontSize = 12,
+                    Text = textContent,
                     VerticalAlignment = VerticalAlignment.Center
-                });
-                this.Content = panel;
+                };
             }
+            else if (Content is FrameworkElement frameworkElement)
+            {
+                element = frameworkElement;
+                if (element.Tag?.ToString() == "ExternalLinkButtonPanel")
+                {
+                    return; // Already wrapped, no need to update
+                }
+            }
+
+            var panel = new Grid { ColumnSpacing = 6, Tag = "ExternalLinkButtonPanel" };
+            panel.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            panel.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+
+            panel.Children.Add(element);
+            Grid.SetColumn(element, 0);
+
+            var fontIcon = new FontIcon
+            {
+                FontFamily = (FontFamily)Application.Current.Resources["SegoeFluentIcons"],
+                Glyph = "\uE8A7",
+                FontSize = 12,
+                Margin = new Thickness(0, 2, 0, 0),
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            panel.Children.Add(fontIcon);
+            Grid.SetColumn(fontIcon, 1);
+
+            this.Content = panel;
+        }
+
+        protected override void OnContentChanged(object oldContent, object newContent)
+        {
+            UpdateContent();
         }
     }
 }

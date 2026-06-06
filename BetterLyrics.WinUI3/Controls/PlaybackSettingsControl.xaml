@@ -243,12 +243,7 @@
                             </controls:SettingsCard>
                             <controls:SettingsCard>
                                 <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <local:ExternalLinkButton
-                                        Padding="6"
-                                        Content="{ui:FontIcon FontSize=12,
-                                                              FontFamily={StaticResource SegoeFluentIcons},
-                                                              Glyph=&#xE897;}"
-                                        NavigateUri="https://gist.github.com/jayfunc/ad09a3df951b95c8cf6228695fecc067" />
+                                    <local:ExternalLinkButton x:Uid="Help" NavigateUri="https://gist.github.com/jayfunc/ad09a3df951b95c8cf6228695fecc067" />
                                     <Button x:Uid="SettingsPageImport" Command="{x:Bind ViewModel.ImportMemoryReaderConfigCommand}" />
                                 </StackPanel>
                             </controls:SettingsCard>
@@ -586,7 +581,10 @@
                                 </controls:SettingsCard>
                                 <controls:SettingsCard x:Uid="SettingsPageTranslationConfig" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=OneWay}">
                                     <controls:SettingsCard.Description>
-                                        <local:ExternalLinkButton Content="https://github.com/LibreTranslate/LibreTranslate" NavigateUri="https://github.com/LibreTranslate/LibreTranslate" />
+                                        <local:ExternalLinkButton
+                                            Padding="0"
+                                            Content="https://github.com/LibreTranslate/LibreTranslate"
+                                            NavigateUri="https://github.com/LibreTranslate/LibreTranslate" />
                                     </controls:SettingsCard.Description>
                                     <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsLibreTranslateEnabled, Mode=TwoWay}" />
                                 </controls:SettingsCard>
@@ -714,11 +712,9 @@
                                 Text="{x:Bind ViewModel.AppleMusicMediaUserToken, Mode=TwoWay}"
                                 TextWrapping="Wrap" />
                             <local:ExternalLinkButton
+                                x:Uid="Help"
                                 Grid.Column="1"
                                 VerticalAlignment="Bottom"
-                                Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                                      FontSize=12,
-                                                      Glyph=&#xE897;}"
                                 NavigateUri="{x:Bind constants:Link.AppleMusicCfg}" />
                             <Button
                                 Grid.Column="2"

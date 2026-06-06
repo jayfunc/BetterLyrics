@@ -306,6 +306,9 @@
   <data name="FullscreenMode" xml:space="preserve">
     <value>Fullscreen Mode</value>
   </data>
+  <data name="Help.Content" xml:space="preserve">
+    <value>Help</value>
+  </data>
   <data name="HostWindowMusicGalleryButtonToolTip.Content" xml:space="preserve">
     <value>Music Gallery</value>
   </data>
