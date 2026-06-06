@@ -24,8 +24,6 @@
 
                     <InfoBar
                         x:Uid="SettingsPageRemoveInfo"
-                        BorderThickness="0"
-                        CornerRadius="0"
                         IsClosable="False"
                         IsOpen="True"
                         Severity="Success">
@@ -117,6 +115,7 @@
                                         <StackPanel>
                                             <!--  Index info  -->
                                             <InfoBar
+                                                BorderThickness="0"
                                                 IsClosable="False"
                                                 IsOpen="True"
                                                 Message="{x:Bind StatusText, Mode=OneWay}"
@@ -149,7 +148,7 @@
                     </ListView>
 
                     <StackPanel
-                        Margin="0,6,0,0"
+                        Margin="0,6,2,0"
                         HorizontalAlignment="Right"
                         Orientation="Horizontal"
                         Spacing="6">

@@ -146,10 +146,10 @@
                             <controls:WrapPanel Orientation="Horizontal">
                                 <uc:ExternalLinkButton Command="{x:Bind ViewModel.OpenAppStorePageCommand}" Content="Microsoft Store" />
                                 <uc:ExternalLinkButton Content="GitHub" NavigateUri="{x:Bind const:Link.BetterLyricsGitHub}" />
-                                <uc:ExternalLinkButton Content="Dependencies" NavigateUri="{x:Bind const:Link.ThirdPartyLibraries}" />
-                                <uc:ExternalLinkButton Content="User Guide" NavigateUri="{x:Bind const:Link.UserGuide}" />
-                                <uc:ExternalLinkButton Content="Privacy Policy" NavigateUri="{x:Bind const:Link.PrivacyPolicy}" />
-                                <uc:ExternalLinkButton Content="Terms of Service" NavigateUri="{x:Bind const:Link.TermsOfService}" />
+                                <uc:ExternalLinkButton Content="Deps" NavigateUri="{x:Bind const:Link.ThirdPartyLibraries}" />
+                                <uc:ExternalLinkButton x:Uid="UserGuide" NavigateUri="{x:Bind const:Link.UserGuide}" />
+                                <uc:ExternalLinkButton x:Uid="PrivacyPolicy" NavigateUri="{x:Bind const:Link.PrivacyPolicy}" />
+                                <uc:ExternalLinkButton x:Uid="TermsOfService" NavigateUri="{x:Bind const:Link.TermsOfService}" />
                             </controls:WrapPanel>
 
                             <TextBlock x:Uid="SetingsPageFeedback" />
