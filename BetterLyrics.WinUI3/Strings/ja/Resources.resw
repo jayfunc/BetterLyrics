@@ -1614,6 +1614,9 @@
   <data name="SettingsPageFluidLayer.Header" xml:space="preserve">
     <value>流体レイヤー</value>
   </data>
+  <data name="SettingsPageFluidOverlayStatic.Header" xml:space="preserve">
+    <value>静的モード</value>
+  </data>
   <data name="SettingsPageFogLayer.Header" xml:space="preserve">
     <value>霧レイヤー</value>
   </data>

@@ -24,6 +24,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int FluidOverlayBreathingIntensity { get; set; } = 80;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsFluidOverlayLightWaveEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsColorDitheringEnabled { get; set; } = true;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsFluidOverlayStatic { get; set; } = false;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsSpectrumOverlayEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial SpectrumPlacement SpectrumPlacement { get; set; } = SpectrumPlacement.Bottom;

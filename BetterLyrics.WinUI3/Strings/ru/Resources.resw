@@ -1614,6 +1614,9 @@
   <data name="SettingsPageFluidLayer.Header" xml:space="preserve">
     <value>Слой жидкости</value>
   </data>
+  <data name="SettingsPageFluidOverlayStatic.Header" xml:space="preserve">
+    <value>Статический режим</value>
+  </data>
   <data name="SettingsPageFogLayer.Header" xml:space="preserve">
     <value>Слой тумана</value>
   </data>

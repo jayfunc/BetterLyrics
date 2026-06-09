@@ -4,6 +4,7 @@ using ComputeSharp.D2D1.WinUI;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
+using Microsoft.UI;
 using System;
 using System.Numerics;
 using Windows.UI;
@@ -22,6 +23,9 @@ namespace BetterLyrics.WinUI3.Renderer
         public bool EnableLightWave { get; set; } = true;
         public bool UseHSVBlending { get; set; } = false;
         public bool EnableDithering { get; set; } = true;
+        public bool IsStatic { get; set; } = false;
+
+        private CanvasRenderTarget? _cachedRenderTarget;
 
         private float _rnd1 = 0, _rnd2 = 0, _rnd3 = 0;
 
@@ -47,7 +51,10 @@ namespace BetterLyrics.WinUI3.Renderer
 
             base.UpdateBreathing(bassEnergy, breathingIntensity);
 
-            _timeAccumulator += (float)deltaTime.TotalSeconds;
+            if (!IsStatic)
+            {
+                _timeAccumulator += (float)deltaTime.TotalSeconds;
+            }
         }
 
         public void Draw(ICanvasAnimatedControl control, CanvasDrawingSession ds, bool isBreathingEffectEnabled)
@@ -57,15 +64,41 @@ namespace BetterLyrics.WinUI3.Renderer
             float width = control.ConvertDipsToPixels((float)control.Size.Width, CanvasDpiRounding.Round);
             float height = control.ConvertDipsToPixels((float)control.Size.Height, CanvasDpiRounding.Round);
 
-            _fluidEffect.ConstantBuffer = new FluidBackgroundEffect(
-                new float2(width, height),
-                _timeAccumulator,
-                _c1, _c2, _c3, _c4,
-                _rnd1, _rnd2, _rnd3,
-                UseHSVBlending,
-                EnableLightWave,
-                EnableDithering
-            );
+            ICanvasImage? sourceToDraw;
+
+            if (IsStatic)
+            {
+                bool needsUpdateCache = _cachedRenderTarget == null ||
+                                        _cachedRenderTarget.Size.Width != control.Size.Width ||
+                                        _cachedRenderTarget.Size.Height != control.Size.Height;
+
+                if (needsUpdateCache)
+                {
+                    UpdateShaderConstantBuffer(width, height);
+
+                    _cachedRenderTarget?.Dispose();
+                    _cachedRenderTarget = new CanvasRenderTarget(control, (float)control.Size.Width, (float)control.Size.Height, control.Dpi);
+
+                    using (var cacheDs = _cachedRenderTarget.CreateDrawingSession())
+                    {
+                        cacheDs.Clear(Colors.Transparent);
+                        cacheDs.DrawImage(_fluidEffect);
+                    }
+                }
+
+                sourceToDraw = _cachedRenderTarget;
+            }
+            else
+            {
+                if (_cachedRenderTarget != null)
+                {
+                    _cachedRenderTarget.Dispose();
+                    _cachedRenderTarget = null;
+                }
+
+                UpdateShaderConstantBuffer(width, height);
+                sourceToDraw = _fluidEffect;
+            }
 
             var center = new Vector2((float)control.Size.Width / 2, (float)control.Size.Height / 2);
 
@@ -73,13 +106,13 @@ namespace BetterLyrics.WinUI3.Renderer
 
             if (Opacity >= 1.0)
             {
-                ds.DrawImage(_fluidEffect);
+                ds.DrawImage(sourceToDraw);
             }
             else
             {
                 using var opacityEffect = new OpacityEffect
                 {
-                    Source = _fluidEffect,
+                    Source = sourceToDraw,
                     Opacity = (float)Opacity
                 };
                 ds.DrawImage(opacityEffect);
@@ -88,10 +121,26 @@ namespace BetterLyrics.WinUI3.Renderer
             ResetTransform(ds, isBreathingEffectEnabled);
         }
 
+        private void UpdateShaderConstantBuffer(float width, float height)
+        {
+            _fluidEffect!.ConstantBuffer = new FluidBackgroundEffect(
+                new float2(width, height),
+                _timeAccumulator,
+                _c1, _c2, _c3, _c4,
+                _rnd1, _rnd2, _rnd3,
+                UseHSVBlending,
+                EnableLightWave,
+                EnableDithering
+            );
+        }
+
         public void Dispose()
         {
             _fluidEffect?.Dispose();
             _fluidEffect = null;
+
+            _cachedRenderTarget?.Dispose();
+            _cachedRenderTarget = null;
         }
     }
 }

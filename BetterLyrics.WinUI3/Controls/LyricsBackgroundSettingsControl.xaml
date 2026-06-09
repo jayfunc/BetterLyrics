@@ -116,6 +116,10 @@
                                 <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsColorDitheringEnabled, Mode=TwoWay}" />
                             </controls:SettingsCard>
 
+                            <controls:SettingsCard x:Uid="SettingsPageFluidOverlayStatic">
+                                <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsFluidOverlayStatic, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
 

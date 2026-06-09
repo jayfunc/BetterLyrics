@@ -1614,6 +1614,9 @@
   <data name="SettingsPageFluidLayer.Header" xml:space="preserve">
     <value>Lapisan Cecair</value>
   </data>
+  <data name="SettingsPageFluidOverlayStatic.Header" xml:space="preserve">
+    <value>Mod Statik</value>
+  </data>
   <data name="SettingsPageFogLayer.Header" xml:space="preserve">
     <value>Lapisan Kabus</value>
   </data>

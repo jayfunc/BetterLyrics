@@ -1614,6 +1614,9 @@
   <data name="SettingsPageFluidLayer.Header" xml:space="preserve">
     <value>유체 레이어</value>
   </data>
+  <data name="SettingsPageFluidOverlayStatic.Header" xml:space="preserve">
+    <value>정적 모드</value>
+  </data>
   <data name="SettingsPageFogLayer.Header" xml:space="preserve">
     <value>안개 레이어</value>
   </data>
