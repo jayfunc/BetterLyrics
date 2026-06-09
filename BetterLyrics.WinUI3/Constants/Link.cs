@@ -11,8 +11,6 @@
 
         public const string BetterLyricsGitHub = $"{AuthorGitHub}/BetterLyrics";
 
-        public const string ThirdPartyLibraries = $"{BetterLyricsGitHub}/network/dependencies";
-
         public const string TermsOfService = $"{BetterLyricsGitHub}/blob/dev/docs/TERMS_OF_SERVICE.md";
         public const string PrivacyPolicy = $"{BetterLyricsGitHub}/blob/dev/docs/PRIVACY_POLICY.md";
         public const string OfficialWebsite = $"https://betterlyrics.github.io";
@@ -25,7 +23,8 @@
 
         public const string AppleMusicCfg = $"{OfficialWebsite}/lyrics-cfg/apple-music";
 
-        public const string QQGroup = "https://qun.qq.com/universal-share/share?ac=1&authKey=4Q%2BYTq3wZldYpF5SbS5c19ECFsiYoLZFAIcBNNzYpBUtiEjaZ8sZ%2F%2BnFN0qw3lad&busi_data=eyJncm91cENvZGUiOiIxMDU0NzAwMzg4IiwidG9rZW4iOiJiVnhqemVYN0N5QVc3b1ZkR24wWmZOTUtvUkJoWm1JRWlaWW5iZnlBcXJtZUtGc2FFTHNlUlFZMi9iRm03cWF5IiwidWluIjoiMTM5NTczOTY2MCJ9&data=39UmAihyH_o6CZaOs7nk2mO_lz2ruODoDou6pxxh7utcxP4WF5sbDBDOPvZ_Wqfzeey4441anegsLYQJxkrBAA&svctype=4&tempid=h5_group_info";
+        public const string QQGroup1 = "https://qm.qq.com/q/yArcw3n8pq";
+        public const string QQGroup2 = "https://qm.qq.com/q/27rzSjFXt6";
         public const string Discord = "https://discord.gg/5yAQPnyCKv";
         public const string Telegram = "https://t.me/+svhSLZ7awPsxNGY1";
 

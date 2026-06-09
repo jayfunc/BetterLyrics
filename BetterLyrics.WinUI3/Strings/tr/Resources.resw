@@ -1182,6 +1182,12 @@
   <data name="PlaybackSettingsControlMemoryReader.Header" xml:space="preserve">
     <value>Bellek Okuyucu Adaptörü</value>
   </data>
+  <data name="PlaybackSettingsControlSaveLyricsAsLrc.Text" xml:space="preserve">
+    <value>.lrc olarak kaydet</value>
+  </data>
+  <data name="PlaybackSettingsControlSaveLyricsAsTtml.Text" xml:space="preserve">
+    <value>.ttml olarak kaydet</value>
+  </data>
   <data name="PlaybackSettingsControlStopBetterLyricsPlayer.Content" xml:space="preserve">
     <value>Dur artık.</value>
   </data>

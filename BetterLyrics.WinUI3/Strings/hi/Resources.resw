@@ -1182,6 +1182,12 @@
   <data name="PlaybackSettingsControlMemoryReader.Header" xml:space="preserve">
     <value>मेमोरी रीडर एडाप्टर</value>
   </data>
+  <data name="PlaybackSettingsControlSaveLyricsAsLrc.Text" xml:space="preserve">
+    <value>.lrc के रूप में सहेजें</value>
+  </data>
+  <data name="PlaybackSettingsControlSaveLyricsAsTtml.Text" xml:space="preserve">
+    <value>के रूप में सहेजें .ttml</value>
+  </data>
   <data name="PlaybackSettingsControlStopBetterLyricsPlayer.Content" xml:space="preserve">
     <value>तुरंत रुकें</value>
   </data>

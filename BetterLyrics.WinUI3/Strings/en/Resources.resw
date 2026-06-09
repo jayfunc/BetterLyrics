@@ -1182,6 +1182,12 @@
   <data name="PlaybackSettingsControlMemoryReader.Header" xml:space="preserve">
     <value>Memory Reader Adapter</value>
   </data>
+  <data name="PlaybackSettingsControlSaveLyricsAsLrc.Text" xml:space="preserve">
+    <value>Save as .lrc</value>
+  </data>
+  <data name="PlaybackSettingsControlSaveLyricsAsTtml.Text" xml:space="preserve">
+    <value>Save as .ttml</value>
+  </data>
   <data name="PlaybackSettingsControlStopBetterLyricsPlayer.Content" xml:space="preserve">
     <value>Stop now</value>
   </data>

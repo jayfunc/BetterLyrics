@@ -55,9 +55,11 @@
             <ResourceDictionary.ThemeDictionaries>
                 <ResourceDictionary x:Key="Light">
                     <ImageSource x:Key="MusicWave">ms-appx:///Assets/MusicWaveBlack.gif</ImageSource>
+                    <ImageSource x:Key="DiscordLogo">ms-appx:///Assets/DiscordLogoBlack.png</ImageSource>
                 </ResourceDictionary>
                 <ResourceDictionary x:Key="Dark">
                     <ImageSource x:Key="MusicWave">ms-appx:///Assets/MusicWaveWhite.gif</ImageSource>
+                    <ImageSource x:Key="DiscordLogo">ms-appx:///Assets/DiscordLogoWhite.png</ImageSource>
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
 
