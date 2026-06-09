@@ -69,8 +69,8 @@ namespace BetterLyrics.WinUI3.Renderer
             if (IsStatic)
             {
                 bool needsUpdateCache = _cachedRenderTarget == null ||
-                                        _cachedRenderTarget.Size.Width != control.Size.Width ||
-                                        _cachedRenderTarget.Size.Height != control.Size.Height;
+                    _cachedRenderTarget.Size.Width != control.Size.Width ||
+                    _cachedRenderTarget.Size.Height != control.Size.Height;
 
                 if (needsUpdateCache)
                 {

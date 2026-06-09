@@ -461,6 +461,12 @@ namespace BetterLyrics.WinUI3.Controls
             _accentColor3Transition.Update(elapsedTime);
             _accentColor4Transition.Update(elapsedTime);
 
+            var isAccentColorsTransitioning =
+                _accentColor1Transition.IsTransitioning ||
+                _accentColor2Transition.IsTransitioning ||
+                _accentColor3Transition.IsTransitioning ||
+                _accentColor4Transition.IsTransitioning;
+
             _immersiveBgOpacityTransition.Update(elapsedTime);
             _immersiveBgColorTransition.Update(elapsedTime);
 
@@ -574,7 +580,7 @@ namespace BetterLyrics.WinUI3.Controls
             _fluidRenderer.EnableLightWave = lyricsBg.IsFluidOverlayLightWaveEnabled;
             _fluidRenderer.EnableDithering = lyricsBg.IsColorDitheringEnabled;
             _fluidRenderer.Opacity = lyricsBg.FluidOverlayOpacity / 100.0;
-            _fluidRenderer.IsStatic = lyricsBg.IsFluidOverlayStatic;
+            _fluidRenderer.IsStatic = isAccentColorsTransitioning ? false : lyricsBg.IsFluidOverlayStatic;
             _fluidRenderer.Update(
                 elapsedTime,
                 _accentColor1Transition.Value,
@@ -912,7 +918,7 @@ namespace BetterLyrics.WinUI3.Controls
 
             int animationPadding = (int)Constants.Time.AnimationDuration.TotalMilliseconds;
             int longSyllableThreshold = Math.Max(
-                _lyricsWindowStatus.LyricsEffectSettings.LyricsScaleEffectLongSyllableDuration, 
+                _lyricsWindowStatus.LyricsEffectSettings.LyricsScaleEffectLongSyllableDuration,
                 _lyricsWindowStatus.LyricsEffectSettings.LyricsGlowEffectLongSyllableDuration
             );
 
