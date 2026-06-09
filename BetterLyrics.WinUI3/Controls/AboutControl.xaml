@@ -146,7 +146,6 @@
                             <controls:WrapPanel Orientation="Horizontal">
                                 <uc:ExternalLinkButton Command="{x:Bind ViewModel.OpenAppStorePageCommand}" Content="Microsoft Store" />
                                 <uc:ExternalLinkButton Content="GitHub" NavigateUri="{x:Bind const:Link.BetterLyricsGitHub}" />
-                                <uc:ExternalLinkButton Content="Deps" NavigateUri="{x:Bind const:Link.ThirdPartyLibraries}" />
                                 <uc:ExternalLinkButton x:Uid="UserGuide" NavigateUri="{x:Bind const:Link.UserGuide}" />
                                 <uc:ExternalLinkButton x:Uid="PrivacyPolicy" NavigateUri="{x:Bind const:Link.PrivacyPolicy}" />
                                 <uc:ExternalLinkButton x:Uid="TermsOfService" NavigateUri="{x:Bind const:Link.TermsOfService}" />
@@ -154,32 +153,50 @@
 
                             <TextBlock x:Uid="SetingsPageFeedback" />
                             <controls:WrapPanel Orientation="Horizontal">
-                                <uc:ExternalLinkButton Content="QQ 反馈交流群" NavigateUri="{x:Bind const:Link.QQGroup}" />
-                                <uc:ExternalLinkButton Content="Discord" NavigateUri="{x:Bind const:Link.Discord}" />
-                                <uc:ExternalLinkButton Content="Telegram" NavigateUri="{x:Bind const:Link.Telegram}" />
+                                <HyperlinkButton x:Name="QQGroupButton" Click="QQGroupButton_Click">
+                                    <TextBlock Text="QQ 群" />
+                                    <HyperlinkButton.ContextFlyout>
+                                        <Flyout x:Name="QQGroupFlyout" FlyoutPresenterStyle="{StaticResource FlyoutGhostStyle}">
+                                            <StackPanel>
+                                                <uc:ExternalLinkButton Content="1 群（1054700388）" NavigateUri="{x:Bind const:Link.QQGroup1}" />
+                                                <uc:ExternalLinkButton Content="2 群（1076554669）" NavigateUri="{x:Bind const:Link.QQGroup2}" />
+                                            </StackPanel>
+                                        </Flyout>
+                                    </HyperlinkButton.ContextFlyout>
+                                </HyperlinkButton>
+                                <uc:ExternalLinkButton NavigateUri="{x:Bind const:Link.Discord}">
+                                    <TextBlock Text="Discord" />
+                                </uc:ExternalLinkButton>
+                                <uc:ExternalLinkButton NavigateUri="{x:Bind const:Link.Telegram}">
+                                    <TextBlock Text="Telegram" />
+                                </uc:ExternalLinkButton>
                             </controls:WrapPanel>
 
                             <TextBlock x:Uid="SetingsPageDonation" />
                             <controls:WrapPanel Orientation="Horizontal">
-                                <uc:ExternalLinkButton Content="Buy Me a Coffee" NavigateUri="{x:Bind const:Link.BuyMeACoffee}" />
-                                <uc:ExternalLinkButton Content="PayPal" NavigateUri="{x:Bind const:Link.PayPal}" />
-                                <HyperlinkButton
-                                    x:Name="AlipayWeChatPayButton"
-                                    Click="AlipayWeChatPayButton_Click"
-                                    Content="支付宝/微信支付">
+                                <uc:ExternalLinkButton NavigateUri="{x:Bind const:Link.BuyMeACoffee}">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <TextBlock Text="Buy me a coffee" />
+                                    </StackPanel>
+                                </uc:ExternalLinkButton>
+                                <uc:ExternalLinkButton NavigateUri="{x:Bind const:Link.PayPal}">
+                                    <TextBlock Text="PayPal" />
+                                </uc:ExternalLinkButton>
+                                <HyperlinkButton x:Name="AlipayWeChatPayButton" Click="AlipayWeChatPayButton_Click">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <TextBlock Text="支付宝" />
+                                        <Border Width="10" />
+                                        <TextBlock Text="微信支付" />
+                                    </StackPanel>
                                     <HyperlinkButton.ContextFlyout>
-                                        <Flyout x:Name="AlipayWeChatPayFlyout">
-                                            <Flyout.FlyoutPresenterStyle>
-                                                <Style TargetType="FlyoutPresenter">
-                                                    <Setter Property="CornerRadius" Value="12" />
-                                                    <Setter Property="Padding" Value="0" />
-                                                </Style>
-                                            </Flyout.FlyoutPresenterStyle>
+                                        <Flyout x:Name="AlipayWeChatPayFlyout" FlyoutPresenterStyle="{StaticResource FlyoutGhostStyle}">
                                             <Image Height="280" Source="/Assets/AlipayWeChatPay.png" />
                                         </Flyout>
                                     </HyperlinkButton.ContextFlyout>
                                 </HyperlinkButton>
-                                <uc:ExternalLinkButton Content="爱发电" NavigateUri="{x:Bind const:Link.Afdian}" />
+                                <uc:ExternalLinkButton NavigateUri="{x:Bind const:Link.Afdian}">
+                                    <TextBlock Text="爱发电" />
+                                </uc:ExternalLinkButton>
                             </controls:WrapPanel>
                             <Grid ColumnSpacing="6">
                                 <Grid.ColumnDefinitions>

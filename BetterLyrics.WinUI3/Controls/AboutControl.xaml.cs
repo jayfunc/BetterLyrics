@@ -22,5 +22,9 @@ namespace BetterLyrics.WinUI3.Controls
             AlipayWeChatPayFlyout.ShowAt(AlipayWeChatPayButton);
         }
 
+        private void QQGroupButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+        {
+            QQGroupFlyout.ShowAt(QQGroupButton);
+        }
     }
 }

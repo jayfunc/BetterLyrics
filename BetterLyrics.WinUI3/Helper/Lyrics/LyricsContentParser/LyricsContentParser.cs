@@ -6,6 +6,7 @@ using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.Models.Settings;
+using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Services.TranslationService;
 using BetterLyrics.WinUI3.Services.TransliterationService;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -68,9 +69,8 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
             LoadTransliteration(lyricsSearchResult);
             GenerateTransliterationLyricsData();
 
+            EnsureSyllables(lyricsSearchResult?.Duration);
             EnsureEndMs(lyricsSearchResult?.Duration);
-            EnsureSyllables();
-            //EnsureSufficientLineAni();
 
             return _lyricsDataArr;
         }
@@ -315,41 +315,36 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
             }
         }
 
+        /// <summary>
+        /// 基于已经处理好的音节，确保整句话的 EndMs
+        /// Invoke this after <see cref="EnsureSyllables"/>
+        /// </summary>
         private void EnsureEndMs(double? duration)
         {
             foreach (var lyricsData in _lyricsDataArr)
             {
+                if (lyricsData?.LyricsLines == null) continue;
                 var lines = lyricsData.LyricsLines;
+
                 for (int i = 0; i < lines.Count; i++)
                 {
                     var line = lines[i];
+                    if (line == null) continue;
 
-                    // 计算行结束时间
+                    bool isLastLine = i + 1 >= lines.Count;
+                    // 如果是最后一句，使用歌曲总长作为参考
+                    var nextLineStartMs = isLastLine ? (int)(duration ?? 0) * 1000 : lines[i + 1].StartMs;
+
+                    // 确保基础的 EndMs（基于最后的音节）
                     if (line.EndMs == null)
                     {
-                        if (i + 1 < lines.Count)
+                        if (line.PrimarySyllables.Count > 0)
                         {
-                            line.EndMs = lines[i + 1].StartMs;
+                            line.EndMs = line.PrimarySyllables.Last().EndMs;
                         }
                         else
                         {
-                            line.EndMs = (int)(duration ?? 0) * 1000;
-                        }
-                    }
-                    // 计算音节结束时间
-                    for (int j = 0; j < line.PrimarySyllables.Count; j++)
-                    {
-                        var syllable = line.PrimarySyllables[j];
-                        if (syllable.EndMs == null)
-                        {
-                            if (j < line.PrimarySyllables.Count - 1)
-                            {
-                                syllable.EndMs = line.PrimarySyllables[j + 1].StartMs;
-                            }
-                            else
-                            {
-                                syllable.EndMs = line.EndMs;
-                            }
+                            line.EndMs = line.StartMs >= nextLineStartMs ? line.StartMs + 1000 : nextLineStartMs;
                         }
                     }
                 }
@@ -357,61 +352,82 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
         }
 
         /// <summary>
-        /// Invoke this after <see cref="EnsureEndMs"/>
+        /// 优先确保音节的完整性（补全缺失的 EndMs，或者为纯文本歌词生成平均音节）
         /// </summary>
-        private void EnsureSyllables()
+        private void EnsureSyllables(double? duration)
         {
             foreach (var lyricsData in _lyricsDataArr)
             {
-                if (lyricsData == null) continue;
-
+                if (lyricsData?.LyricsLines == null) continue;
                 var lines = lyricsData.LyricsLines;
-                if (lines == null) continue;
 
-                foreach (var line in lines)
-                {
-                    if (line == null) continue;
-                    if (line.IsPrimaryHasRealSyllableInfo) continue;
-                    if (line.PrimarySyllables.Count > 0) continue;
-
-                    var content = line.PrimaryText;
-                    var length = content.Length;
-                    if (length == 0) continue;
-
-                    var avgSyllableDuration = line.DurationMs / length;
-                    if (avgSyllableDuration == 0) continue;
-
-                    for (int j = 0; j < length; j++)
-                    {
-                        line.PrimarySyllables.Add(new BaseLyrics
-                        {
-                            Text = content[j].ToString(),
-                            StartIndex = j,
-                            StartMs = line.StartMs + avgSyllableDuration * j,
-                            EndMs = line.StartMs + avgSyllableDuration * (j + 1),
-                        });
-                    }
-                }
-            }
-        }
-
-        private void EnsureSufficientLineAni()
-        {
-            foreach (var lyricsData in _lyricsDataArr)
-            {
-                var lines = lyricsData.LyricsLines;
                 for (int i = 0; i < lines.Count; i++)
                 {
                     var line = lines[i];
-                    var lineEndMs = line.EndMs;
-                    var lastSyllableEndMs = line.PrimarySyllables.LastOrDefault()?.EndMs;
-                    if (lineEndMs != null && lastSyllableEndMs != null)
+                    if (line == null) continue;
+
+                    // 预先获取下一句的 StartMs（如果是最后一句，用歌曲总长或者 0 代替）
+                    var nextLineStartMs = (i + 1 < lines.Count) ? lines[i + 1].StartMs : (int)(duration ?? 0) * 1000;
+
+                    // 1. 如果已经有音节，按照新逻辑修复音节的 EndMs
+                    if (line.PrimarySyllables.Count > 0)
                     {
-                        line.EndMs = (int)Math.Max((int)lastSyllableEndMs + 0, (int)lineEndMs);
+                        for (int j = 0; j < line.PrimarySyllables.Count; j++)
+                        {
+                            var syllable = line.PrimarySyllables[j];
+                            if (syllable.EndMs == null)
+                            {
+                                if (j < line.PrimarySyllables.Count - 1)
+                                {
+                                    // 不是最后一个音节：取后一个音节的 StartMs
+                                    syllable.EndMs = line.PrimarySyllables[j + 1].StartMs;
+                                }
+                                else
+                                {
+                                    // 最后一个音节
+                                    if (syllable.StartMs >= nextLineStartMs)
+                                    {
+                                        // 背景歌词特殊情况：起唱时间已超过下一句，直接默认持续1秒
+                                        syllable.EndMs = syllable.StartMs + 1000;
+                                    }
+                                    else
+                                    {
+                                        // 默认持续1秒，和下一句的 StartMs 比较，取较小的
+                                        syllable.EndMs = Math.Min(syllable.StartMs + 1000, nextLineStartMs);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    // 2. 如果没有音节（如 LRC 格式），则基于预估的整句时间自动生成平均分布的音节
+                    else if (!line.IsPrimaryHasRealSyllableInfo)
+                    {
+                        var content = line.PrimaryText;
+                        var length = content.Length;
+                        if (length == 0) continue;
+
+                        // 预估整句话的 EndMs（此时 EnsureEndMs 还没跑，需要临时计算用于平分时间）
+                        int tempLineEndMs = line.EndMs ?? (line.StartMs >= nextLineStartMs ? line.StartMs + 1000 : nextLineStartMs);
+                        int durationMs = tempLineEndMs - line.StartMs;
+
+                        if (durationMs <= 0) continue;
+
+                        var avgSyllableDuration = durationMs / length;
+                        if (avgSyllableDuration == 0) continue;
+
+                        for (int j = 0; j < length; j++)
+                        {
+                            line.PrimarySyllables.Add(new BaseLyrics
+                            {
+                                Text = content[j].ToString(),
+                                StartIndex = j,
+                                StartMs = line.StartMs + avgSyllableDuration * j,
+                                EndMs = line.StartMs + avgSyllableDuration * (j + 1),
+                            });
+                        }
                     }
                 }
             }
         }
-
     }
 }

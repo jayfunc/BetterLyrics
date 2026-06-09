@@ -66,7 +66,7 @@ namespace BetterLyrics.WinUI3.Controls
             ViewModel.CloseConfigPanelCommand.Execute(null);
         }
 
-        private async void SaveLyricsButton_Click(SplitButton sender, SplitButtonClickEventArgs args)
+        private async void SaveLyrics(LyricsFormat lyricsFormat)
         {
             var lyricsSearchResult = ViewModel.GSMTCService.CurrentLyricsSearchResult;
             if (lyricsSearchResult == null) return;
@@ -77,11 +77,12 @@ namespace BetterLyrics.WinUI3.Controls
                 lyricsSearchResult!.Artist,
                 lyricsSearchResult!.Album,
                 lyricsSearchResult!.Duration,
-                ViewModel.AppSettings.LyricsSaveConfig);
+                ViewModel.AppSettings.LyricsSaveConfig,
+                lyricsFormat);
 
             if (contentToWrite == null) return;
 
-            var ext = LyricsFormat.Lrc.ToFileExtension();
+            var ext = lyricsFormat.ToFileExtension();
             var safeTitle = FileHelper.SanitizeFileName($"{lyricsSearchResult.Artist} - {lyricsSearchResult.Title}");
             var fileName = $"{safeTitle}{ext}";
 
@@ -95,7 +96,10 @@ namespace BetterLyrics.WinUI3.Controls
 
                 GlobalToastManager.Show("ActionCompleted", storageFile.Path, InfoBarSeverity.Success);
             }
-            catch (Exception ex) { }
+            catch (Exception ex)
+            {
+                GlobalToastManager.Show("Error", ex.Message, InfoBarSeverity.Error);
+            }
         }
 
         private async void BrowseLyricsSaveLocationButton_Click(object sender, RoutedEventArgs e)
@@ -104,6 +108,16 @@ namespace BetterLyrics.WinUI3.Controls
             if (folder == null) return;
 
             ViewModel.AppSettings.LyricsSaveConfig.SaveLocation = folder.Path;
+        }
+
+        private void SaveLyricsAsLrcMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            SaveLyrics(LyricsFormat.Lrc);
+        }
+
+        private void SaveLyricsAsTtmlMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+            SaveLyrics(LyricsFormat.Ttml);
         }
     }
 }

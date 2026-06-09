@@ -786,6 +786,7 @@ namespace BetterLyrics.WinUI3.Controls
             {
                 DisposeRenderLyricsLines();
                 _renderLyricsLines = _gsmtcService.CurrentLyricsData?.LyricsLines.Select(x => new RenderLyricsLine(x)).ToList();
+                EnsureRenderLyricsLinesPreservedAnimation();
                 _isLyricsChanged = false;
                 _isLayoutChanged = true;
             }
@@ -813,6 +814,14 @@ namespace BetterLyrics.WinUI3.Controls
             _layoutTimer.Debounce(() =>
             {
                 _isLayoutChanged = true;
+            }, TimeSpan.FromMilliseconds(400));
+        }
+
+        private void RequestReloadLyrics()
+        {
+            _layoutTimer.Debounce(() =>
+            {
+                _isLyricsChanged = true;
             }, TimeSpan.FromMilliseconds(400));
         }
 
@@ -890,6 +899,55 @@ namespace BetterLyrics.WinUI3.Controls
             _isNowPlayingPaletteChanged = true;
         }
 
+        /// <summary>
+        /// 为包含长音节的行预留 UI 动画缓冲时间
+        /// </summary>
+        private void EnsureRenderLyricsLinesPreservedAnimation()
+        {
+            if (_lyricsWindowStatus == null) return;
+            if (_renderLyricsLines == null) return;
+
+            if (!_lyricsWindowStatus.LyricsEffectSettings.IsLyricsScaleEffectEnabled && !_lyricsWindowStatus.LyricsEffectSettings.IsLyricsGlowEffectEnabled) return;
+
+            int animationPadding = (int)Constants.Time.AnimationDuration.TotalMilliseconds;
+            int longSyllableThreshold = Math.Max(
+                _lyricsWindowStatus.LyricsEffectSettings.LyricsScaleEffectLongSyllableDuration, 
+                _lyricsWindowStatus.LyricsEffectSettings.LyricsGlowEffectLongSyllableDuration
+            );
+
+            var lines = _renderLyricsLines;
+            for (int i = 0; i < lines.Count; i++)
+            {
+                var line = lines[i];
+                if (line == null) continue;
+
+                bool isLastLine = i + 1 >= lines.Count;
+                // 如果是最后一句，使用歌曲总长作为参考
+                var nextLineStartMs = isLastLine ? (int)_gsmtcService.CurrentSongInfo.DurationMs : lines[i + 1].StartMs;
+
+                // 检查最后一个音节是否满足长音节条件
+                bool isLongSyllable = line.PrimaryRenderSyllables.LastOrDefault()?.DurationMs > longSyllableThreshold;
+
+                // 仅当最后一个音节是长音节时，加上淡出动画缓冲时间（Padding）
+                if (line.EndMs.HasValue && isLongSyllable)
+                {
+                    if (isLastLine || line.EndMs > nextLineStartMs)
+                    {
+                        // 最后一句或背景/平行歌词：直接加上缓冲时间
+                        line.EndMs += animationPadding;
+                    }
+                    else
+                    {
+                        // 正常歌词：尝试加上动画时间，但不能超过下一句的开始时间
+                        int targetEndMs = line.EndMs.Value + animationPadding;
+
+                        // 限制不超过下一句的开始时间，并且确保不会把原本正常的 EndMs 缩短
+                        line.EndMs = Math.Max(line.EndMs.Value, Math.Min(targetEndMs, nextLineStartMs));
+                    }
+                }
+            }
+        }
+
         public void Receive(PropertyChangedMessage<TimeSpan> message)
         {
             if (message.Sender is IGSMTCService)
@@ -922,7 +980,7 @@ namespace BetterLyrics.WinUI3.Controls
             {
                 if (message.PropertyName == nameof(IGSMTCService.CurrentLyricsData))
                 {
-                    _isLyricsChanged = true;
+                    RequestReloadLyrics();
                 }
             }
         }
@@ -1017,6 +1075,14 @@ namespace BetterLyrics.WinUI3.Controls
                 {
                     RequestRelayout();
                 }
+                else if (message.PropertyName == nameof(LyricsEffectSettings.LyricsScaleEffectLongSyllableDuration))
+                {
+                    RequestReloadLyrics();
+                }
+                else if (message.PropertyName == nameof(LyricsEffectSettings.LyricsGlowEffectLongSyllableDuration))
+                {
+                    RequestReloadLyrics();
+                }
             }
             else if (message.Sender == LyricsWindowStatus?.LyricsBackgroundSettings)
             {
@@ -1065,6 +1131,14 @@ namespace BetterLyrics.WinUI3.Controls
                 else if (message.PropertyName == nameof(LyricsEffectSettings.IsLyricsOutOfSightEffectEnabled))
                 {
                     RequestRelayout();
+                }
+                else if (message.PropertyName == nameof(LyricsEffectSettings.IsLyricsScaleEffectEnabled))
+                {
+                    RequestReloadLyrics();
+                }
+                else if (message.PropertyName == nameof(LyricsEffectSettings.IsLyricsGlowEffectEnabled))
+                {
+                    RequestReloadLyrics();
                 }
             }
             else if (message.Sender == LyricsWindowStatus?.LyricsStyleSettings)

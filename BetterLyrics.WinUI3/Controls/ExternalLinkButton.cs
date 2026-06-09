@@ -1,22 +1,61 @@
 ﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Animation;
 using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace BetterLyrics.WinUI3.Controls
 {
     public sealed partial class ExternalLinkButton : HyperlinkButton
     {
+        private FrameworkElement? _originalContent;
+        private Grid? _overlayGrid;
+        private Storyboard? _hoverStoryboard;
+
         public ExternalLinkButton()
         {
             this.Loaded += ExternalLinkButton_Loaded;
+            this.PointerEntered += ExternalLinkButton_PointerEntered;
+            this.PointerExited += ExternalLinkButton_PointerExited;
         }
 
         private void ExternalLinkButton_Loaded(object sender, RoutedEventArgs e)
         {
             UpdateContent();
+        }
+
+        private void ExternalLinkButton_PointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            AnimateHoverState(1.0, 0.3);
+        }
+
+        private void ExternalLinkButton_PointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            AnimateHoverState(0.0, 1.0);
+        }
+
+        private void AnimateHoverState(double overlayOpacity, double contentOpacity)
+        {
+            if (_overlayGrid == null || _originalContent == null) return;
+
+            _hoverStoryboard = new Storyboard();
+            var duration = new Duration(TimeSpan.FromMilliseconds(200));
+            var ease = new QuadraticEase { EasingMode = EasingMode.EaseOut };
+
+            var overlayAnim = new DoubleAnimation { To = overlayOpacity, Duration = duration, EasingFunction = ease };
+            Storyboard.SetTarget(overlayAnim, _overlayGrid);
+            Storyboard.SetTargetProperty(overlayAnim, "Opacity");
+
+            var opacityAnim = new DoubleAnimation { To = contentOpacity, Duration = duration, EasingFunction = ease };
+            Storyboard.SetTarget(opacityAnim, _originalContent);
+            Storyboard.SetTargetProperty(opacityAnim, "Opacity");
+
+            _hoverStoryboard.Children.Add(overlayAnim);
+            _hoverStoryboard.Children.Add(opacityAnim);
+
+            _hoverStoryboard.Begin();
         }
 
         private void UpdateContent()
@@ -33,31 +72,52 @@ namespace BetterLyrics.WinUI3.Controls
             else if (Content is FrameworkElement frameworkElement)
             {
                 element = frameworkElement;
-                if (element.Tag?.ToString() == "ExternalLinkButtonPanel")
+                if (element.Tag?.ToString() == "ExternalLinkButtonRoot")
                 {
-                    return; // Already wrapped, no need to update
+                    if (element is Grid rootGrid)
+                    {
+                        _originalContent = rootGrid.Children.FirstOrDefault(c => c is FrameworkElement fe && fe.Tag?.ToString() == "OriginalContent") as FrameworkElement;
+                        _overlayGrid = rootGrid.Children.FirstOrDefault(c => c is Grid g && g.Tag?.ToString() == "OverlayGrid") as Grid;
+                    }
+                    return;
                 }
             }
 
-            var panel = new Grid { ColumnSpacing = 6, Tag = "ExternalLinkButtonPanel" };
-            panel.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            panel.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
+            if (element == null) return;
 
-            panel.Children.Add(element);
-            Grid.SetColumn(element, 0);
+            bool isHovered = this.IsPointerOver;
 
-            var fontIcon = new FontIcon
+            var rootPanel = new Grid { Tag = "ExternalLinkButtonRoot" };
+
+            _originalContent = element;
+            _originalContent.Tag = "OriginalContent";
+            _originalContent.HorizontalAlignment = HorizontalAlignment.Center;
+            _originalContent.VerticalAlignment = VerticalAlignment.Center;
+            _originalContent.Opacity = isHovered ? 0.3 : 1.0;
+
+            rootPanel.Children.Add(_originalContent);
+
+            _overlayGrid = new Grid
+            {
+                Tag = "OverlayGrid",
+                Opacity = isHovered ? 1.0 : 0.0,
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                VerticalAlignment = VerticalAlignment.Stretch,
+            };
+
+            var icon = new FontIcon
             {
                 FontFamily = (FontFamily)Application.Current.Resources["SegoeFluentIcons"],
                 Glyph = "\uE8A7",
-                FontSize = 12,
-                Margin = new Thickness(0, 2, 0, 0),
+                FontSize = 14,
+                HorizontalAlignment = HorizontalAlignment.Center,
                 VerticalAlignment = VerticalAlignment.Center
             };
-            panel.Children.Add(fontIcon);
-            Grid.SetColumn(fontIcon, 1);
 
-            this.Content = panel;
+            _overlayGrid.Children.Add(icon);
+            rootPanel.Children.Add(_overlayGrid);
+
+            this.Content = rootPanel;
         }
 
         protected override void OnContentChanged(object oldContent, object newContent)
