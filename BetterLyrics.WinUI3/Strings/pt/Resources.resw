@@ -1614,6 +1614,9 @@
   <data name="SettingsPageFluidLayer.Header" xml:space="preserve">
     <value>Camada Fluida</value>
   </data>
+  <data name="SettingsPageFluidOverlayStatic.Header" xml:space="preserve">
+    <value>Modo estático</value>
+  </data>
   <data name="SettingsPageFogLayer.Header" xml:space="preserve">
     <value>Camada de Nevoeiro</value>
   </data>

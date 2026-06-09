@@ -1614,6 +1614,9 @@
   <data name="SettingsPageFluidLayer.Header" xml:space="preserve">
     <value>Lớp chất lỏng</value>
   </data>
+  <data name="SettingsPageFluidOverlayStatic.Header" xml:space="preserve">
+    <value>Chế độ tĩnh</value>
+  </data>
   <data name="SettingsPageFogLayer.Header" xml:space="preserve">
     <value>Lớp sương mù</value>
   </data>

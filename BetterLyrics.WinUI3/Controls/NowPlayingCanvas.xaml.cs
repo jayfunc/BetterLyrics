@@ -574,6 +574,7 @@ namespace BetterLyrics.WinUI3.Controls
             _fluidRenderer.EnableLightWave = lyricsBg.IsFluidOverlayLightWaveEnabled;
             _fluidRenderer.EnableDithering = lyricsBg.IsColorDitheringEnabled;
             _fluidRenderer.Opacity = lyricsBg.FluidOverlayOpacity / 100.0;
+            _fluidRenderer.IsStatic = lyricsBg.IsFluidOverlayStatic;
             _fluidRenderer.Update(
                 elapsedTime,
                 _accentColor1Transition.Value,

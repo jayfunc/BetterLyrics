@@ -1614,6 +1614,9 @@
   <data name="SettingsPageFluidLayer.Header" xml:space="preserve">
     <value>Couche fluide</value>
   </data>
+  <data name="SettingsPageFluidOverlayStatic.Header" xml:space="preserve">
+    <value>Mode statique</value>
+  </data>
   <data name="SettingsPageFogLayer.Header" xml:space="preserve">
     <value>Couche de brouillard</value>
   </data>
