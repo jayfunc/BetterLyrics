@@ -24,6 +24,8 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
 
         public bool IsPrimaryHasRealSyllableInfo { get; set; } = false;
 
+        public string AgentId { get; set; } = "";
+
         public LyricsLine()
         {
             for (int charStartIndex = 0; charStartIndex < PrimaryText.Length; charStartIndex++)

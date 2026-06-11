@@ -68,6 +68,8 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
 
                 double actualWidth = 0;
 
+                var alignment = style.UseInternalLyricsAlignment ? (line.HorizontalAlignmentType ?? style.LyricsAlignmentType) : style.LyricsAlignmentType;
+
                 line.RecreateTextLayout(
                     resourceCreator,
                     appSettings.TranslationSettings.IsChineseRomanizationEnabled || appSettings.TranslationSettings.IsJapaneseRomanizationEnabled,
@@ -76,7 +78,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                     fontWeight,
                     style.LyricsCJKFontFamily, style.LyricsWesternFontFamily,
                     lyricsWidth, lyricsHeight,
-                    style.LyricsAlignmentType, style.AutoWrap, style.LyricsLineContentOrientation
+                    alignment, style.AutoWrap, style.LyricsLineContentOrientation
                 );
 
                 line.RecreateTextGeometry();
@@ -256,6 +258,64 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
 
                 lanesEndMs[assignedLane] = end ?? 0;
                 line.LaneIndex = assignedLane;
+            }
+        }
+
+        public static void CalculateAlignments(IList<RenderLyricsLine>? lines)
+        {
+            if (lines == null || lines.Count == 0) return;
+
+            // 获取所有非空的、不重复的 AgentId，按照它们在歌词中首次出场的顺序排序
+            var uniqueAgents = lines
+                .Where(l => !string.IsNullOrEmpty(l.AgentId))
+                .Select(l => l.AgentId)
+                .Distinct()
+                .ToList();
+
+            // 建立一个映射字典：AgentId -> 对齐方式
+            Dictionary<string, TextAlignmentType> alignmentMap = new();
+
+            for (int i = 0; i < uniqueAgents.Count; i++)
+            {
+                string agent = uniqueAgents[i];
+
+                // 规范：v1000 通常代表 Group（合唱），强制居中
+                if (agent == "v1000" || agent.Contains("group", StringComparison.OrdinalIgnoreCase))
+                {
+                    alignmentMap[agent] = TextAlignmentType.Center;
+                    continue;
+                }
+
+                // 第一个出场的歌手 (通常是 v1) -> 左对齐
+                if (i == 0)
+                {
+                    alignmentMap[agent] = TextAlignmentType.Left;
+                }
+                // 第二个出场的歌手 (通常是 v2) -> 右对齐
+                else if (i == 1)
+                {
+                    alignmentMap[agent] = TextAlignmentType.Right;
+                }
+                // 第三个及以上的歌手 -> 统一左对齐 (避免画面过度混乱)
+                // 如果你想让他们交替，可以改成：i % 2 == 0 ? Left : Right
+                else
+                {
+                    alignmentMap[agent] = i % 2 == 0 ? TextAlignmentType.Left : TextAlignmentType.Right;
+                }
+            }
+
+            // 遍历所有行，应用对齐方式
+            foreach (var line in lines)
+            {
+                if (string.IsNullOrEmpty(line.AgentId))
+                {
+                    // 如果没有分配 Agent (比如单纯的纯音乐段落或脏数据)，使用默认值
+                    line.HorizontalAlignmentType = null;
+                }
+                else if (alignmentMap.TryGetValue(line.AgentId, out TextAlignmentType alignment))
+                {
+                    line.HorizontalAlignmentType = alignment;
+                }
             }
         }
 
