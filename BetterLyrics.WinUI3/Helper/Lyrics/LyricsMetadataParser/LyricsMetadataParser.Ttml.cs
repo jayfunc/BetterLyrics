@@ -128,7 +128,11 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsMetadataParser
             switch (key)
             {
                 case "musicName":
-                    metadata.Title = value;
+                    // 存在多个 musicName 标签时，优先使用第一个非空值作为标题
+                    if (string.IsNullOrWhiteSpace(metadata.Title))
+                    {
+                        metadata.Title = value;
+                    }
                     break;
                 case "artists":
                     // 此标签通常提供完整的艺人名称，优先级高于 ttm:agent 累加
