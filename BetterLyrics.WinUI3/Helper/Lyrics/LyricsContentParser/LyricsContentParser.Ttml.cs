@@ -5,9 +5,14 @@ using System.Xml.Linq;
 
 namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
 {
+    /// <summary>
+    /// This TTML content parser follows the format specification: https://github.com/amll-dev/amll-ttml-db/wiki/%E6%A0%BC%E5%BC%8F%E8%A7%84%E8%8C%83
+    /// </summary>
     public partial class LyricsContentParser
     {
         private readonly XNamespace _ttml = "http://www.w3.org/ns/ttml#metadata";
+        private readonly XNamespace _tts = "http://www.w3.org/ns/ttml#styling";
+        private readonly XNamespace _itunes = "http://itunes.apple.com/lyric-ttml-extensions";
 
         private void ParseTtml(string raw)
         {
@@ -18,6 +23,35 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
                 List<LyricsLine> romanLines = [];
 
                 var xdoc = XDocument.Parse(raw, LoadOptions.PreserveWhitespace);
+
+                // 预解析头部的 Apple Music 扩展辅助轨道数据
+                Dictionary<string, List<XElement>> headTransDict = [];
+                Dictionary<string, List<XElement>> headRomanDict = [];
+
+                var head = xdoc.Descendants().FirstOrDefault(e => e.Name.LocalName == "head");
+                if (head != null)
+                {
+                    var texts = head.Descendants().Where(e => e.Name.LocalName == "text");
+                    foreach (var text in texts)
+                    {
+                        var forKey = text.Attribute("for")?.Value;
+                        if (string.IsNullOrEmpty(forKey)) continue;
+
+                        var grandParent = text.Parent?.Parent?.Name.LocalName;
+                        if (grandParent == "translations")
+                        {
+                            if (!headTransDict.ContainsKey(forKey)) headTransDict[forKey] = [];
+                            headTransDict[forKey].Add(text);
+                        }
+                        else if (grandParent == "transliterations")
+                        {
+                            if (!headRomanDict.ContainsKey(forKey)) headRomanDict[forKey] = [];
+                            headRomanDict[forKey].Add(text);
+                        }
+                    }
+                }
+
+                // 解析正文
                 var body = xdoc.Descendants().FirstOrDefault(e => e.Name.LocalName == "body");
                 if (body == null) return;
 
@@ -25,23 +59,63 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
 
                 foreach (var p in ps)
                 {
+                    string pKey = p.Attribute(_itunes + "key")?.Value ?? "";
+
+                    // 解析主歌词行
                     ParseTtmlSegment(
                         container: p,
-                        originalDest: originalLines,
+                        primaryDest: originalLines,
                         transDest: translationLines,
                         romanDest: romanLines
                     );
 
-                    var bgSpans = p.Elements().Where(s => s.Attribute(_ttml + "role")?.Value == "x-bg");
+                    var currentOriginalLine = originalLines.LastOrDefault();
+                    int pStart = currentOriginalLine?.StartMs ?? 0;
+                    int pEnd = currentOriginalLine?.EndMs ?? 0;
 
+                    // Apple Music 扩展轨道注入
+                    if (!string.IsNullOrEmpty(pKey))
+                    {
+                        if (headTransDict.TryGetValue(pKey, out var transTexts))
+                        {
+                            foreach (var tText in transTexts)
+                            {
+                                ParseTtmlSegment(tText, translationLines, null, null, pStart, pEnd);
+
+                                // 处理可能嵌套在扩展 text 中的背景人声
+                                var textBgSpans = tText.Elements().Where(s => s.Attribute(_ttml + "role")?.Value == "x-bg");
+                                foreach (var bg in textBgSpans)
+                                {
+                                    ParseTtmlSegment(bg, translationLines, null, null, pStart, pEnd);
+                                }
+                            }
+                        }
+                        if (headRomanDict.TryGetValue(pKey, out var romanTexts))
+                        {
+                            foreach (var rText in romanTexts)
+                            {
+                                ParseTtmlSegment(rText, romanLines, null, null, pStart, pEnd);
+
+                                var textBgSpans = rText.Elements().Where(s => s.Attribute(_ttml + "role")?.Value == "x-bg");
+                                foreach (var bg in textBgSpans)
+                                {
+                                    ParseTtmlSegment(bg, romanLines, null, null, pStart, pEnd);
+                                }
+                            }
+                        }
+                    }
+
+                    // 行内嵌的背景人声
+                    var bgSpans = p.Elements().Where(s => s.Attribute(_ttml + "role")?.Value == "x-bg");
                     foreach (var bgSpan in bgSpans)
                     {
-                        // 把 span 当作一个容器，再调一次通用解析方法
                         ParseTtmlSegment(
                             container: bgSpan,
-                            originalDest: originalLines,
+                            primaryDest: originalLines,
                             transDest: translationLines,
-                            romanDest: romanLines
+                            romanDest: romanLines,
+                            fallbackStartMs: pStart,
+                            fallbackEndMs: pEnd
                         );
                     }
                 }
@@ -62,119 +136,154 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
         }
 
         private void ParseTtmlSegment(
-            XElement container,
-            List<LyricsLine> originalDest,
-            List<LyricsLine> transDest,
-            List<LyricsLine> romanDest)
+                    XElement container,
+                    List<LyricsLine>? primaryDest,
+                    List<LyricsLine>? transDest,
+                    List<LyricsLine>? romanDest,
+                    int fallbackStartMs = 0,
+                    int fallbackEndMs = 0)
         {
-            // 先获取所有无 role 属性的内容 span
-            var contentSpans = container.Elements()
-                .Where(s => s.Name.LocalName == "span")
-                .Where(s =>
-                {
-                    var role = s.Attribute(_ttml + "role")?.Value;
-                    return role == null;
-                })
-                .ToList();
-
-            // 解析容器的开始时间 (带降级处理)
-            int containerStartMs = 0;
+            int startMs = fallbackStartMs;
             var beginAttr = container.Attribute("begin");
-            if (beginAttr != null)
-            {
-                containerStartMs = ParseTtmlTime(beginAttr.Value);
-            }
-            else if (contentSpans.Count > 0)
-            {
-                // 容器缺少 begin 属性，使用首个子 span 的 begin
-                containerStartMs = ParseTtmlTime(contentSpans.First().Attribute("begin")?.Value);
-            }
+            if (beginAttr != null) startMs = ParseTtmlTime(beginAttr.Value);
 
-            // 解析容器的结束时间 (带降级处理)
-            int containerEndMs = 0;
+            int? endMs = fallbackEndMs;
             var endAttr = container.Attribute("end");
-            if (endAttr != null)
-            {
-                containerEndMs = ParseTtmlTime(endAttr.Value);
-            }
-            else if (contentSpans.Count > 0)
-            {
-                // 容器缺少 end 属性，使用末尾子 span 的 end
-                containerEndMs = ParseTtmlTime(contentSpans.Last().Attribute("end")?.Value);
-            }
+            if (endAttr != null) endMs = ParseTtmlTime(endAttr.Value);
 
-            // 拼接相邻的文本节点（修复带有标点符号被分离的文本）
-            for (int i = 0; i < contentSpans.Count; i++)
+            var syllables = new List<BaseLyrics>();
+            var sbText = new System.Text.StringBuilder();
+            int startIndex = 0;
+
+            // 用于追踪上一个被添加到列表的音节，以便将后续的空格或标点追加给它
+            BaseLyrics? lastSyllable = null;
+
+            // 遍历节点，提取纯文本与音节时轴
+            foreach (var node in container.Nodes())
             {
-                var span = contentSpans[i];
-                var nextNode = span.NodesAfterSelf().FirstOrDefault();
-                if (nextNode is XText textNode)
+                if (node is XText xText)
                 {
-                    span.Value += textNode.Value;
+                    string textVal = xText.Value;
+
+                    // 规范 3.3 兜底：只要包含换行符，说明这是 XML 排版格式化，丢弃多余的空白字符。
+                    // 这样可以避免把编辑器里的换行缩进当成歌词空格解析进去。
+                    if (textVal.Contains('\n'))
+                    {
+                        textVal = textVal.Trim(' ', '\t', '\r', '\n');
+                    }
+
+                    if (string.IsNullOrEmpty(textVal))
+                    {
+                        continue;
+                    }
+
+                    // 核心修复：如果纯文本节点（如行内空格、逗号）在 span 之后出现，追加到上一个音节的文本末尾
+                    if (lastSyllable != null)
+                    {
+                        lastSyllable.Text += textVal;
+                    }
+
+                    sbText.Append(textVal);
+                    startIndex += textVal.Length;
+                }
+                else if (node is XElement xElement && xElement.Name.LocalName == "span")
+                {
+                    string? role = xElement.Attribute(_ttml + "role")?.Value;
+                    // 剔除功能性子节点，它们会在外部独立解析
+                    if (role == "x-bg" || role == "x-translation" || role == "x-roman")
+                    {
+                        continue;
+                    }
+
+                    string? rubyAttr = xElement.Attribute(_tts + "ruby")?.Value;
+                    string textVal = "";
+                    int sStartMs = startMs;
+                    int? sEndMs = endMs;
+
+                    if (rubyAttr == "container")
+                    {
+                        var baseSpan = xElement.Elements().FirstOrDefault(e => e.Attribute(_tts + "ruby")?.Value == "base");
+                        var textSpans = xElement.Descendants().Where(e => e.Attribute(_tts + "ruby")?.Value == "text").ToList();
+
+                        textVal = baseSpan?.Value ?? "";
+                        int firstTime = ParseTtmlTime(textSpans.FirstOrDefault()?.Attribute("begin")?.Value ?? xElement.Attribute("begin")?.Value);
+                        int lastTime = ParseTtmlTime(textSpans.LastOrDefault()?.Attribute("end")?.Value ?? xElement.Attribute("end")?.Value);
+
+                        sStartMs = firstTime != 0 ? firstTime : startMs;
+                        sEndMs = lastTime != 0 ? lastTime : endMs;
+                    }
+                    else
+                    {
+                        // 包含在 span 内的文本（含自带尾随空格）将被原样提取
+                        textVal = xElement.Value;
+                        int bTime = ParseTtmlTime(xElement.Attribute("begin")?.Value);
+                        int eTime = ParseTtmlTime(xElement.Attribute("end")?.Value);
+
+                        sStartMs = bTime != 0 ? bTime : startMs;
+                        sEndMs = eTime != 0 ? eTime : endMs;
+                    }
+
+                    if (!string.IsNullOrEmpty(textVal))
+                    {
+                        var syl = new BaseLyrics
+                        {
+                            StartMs = sStartMs,
+                            EndMs = sEndMs,
+                            StartIndex = startIndex,
+                            Text = textVal
+                        };
+                        syllables.Add(syl);
+
+                        // 更新 lastSyllable 指针
+                        lastSyllable = syl;
+
+                        sbText.Append(textVal);
+                        startIndex += textVal.Length;
+                    }
                 }
             }
 
-            // 提取逐字音节时间轴
-            var syllables = new List<BaseLyrics>();
-            int startIndex = 0;
-            var sbText = new System.Text.StringBuilder();
+            string fullPrimaryText = sbText.ToString().Trim();
 
-            foreach (var span in contentSpans)
+            // 容器若缺起止时间，使用音节时间进行兜底补全
+            if (beginAttr == null && syllables.Count > 0) startMs = syllables.First().StartMs;
+            if (endAttr == null && syllables.Count > 0) endMs = syllables.Last().EndMs;
+
+            if (!string.IsNullOrWhiteSpace(fullPrimaryText) && primaryDest != null)
             {
-                int sStartMs = ParseTtmlTime(span.Attribute("begin")?.Value);
-                int sEndMs = ParseTtmlTime(span.Attribute("end")?.Value);
-                string text = span.Value;
-
-                syllables.Add(new BaseLyrics
+                primaryDest.Add(new LyricsLine
                 {
-                    StartMs = sStartMs,
-                    EndMs = sEndMs,
-                    StartIndex = startIndex,
-                    Text = text
+                    StartMs = startMs,
+                    EndMs = endMs,
+                    PrimaryText = fullPrimaryText,
+                    PrimarySyllables = syllables,
+                    IsPrimaryHasRealSyllableInfo = syllables.Count > 0,
                 });
-
-                sbText.Append(text);
-                startIndex += text.Length;
             }
 
-            // 合并整句歌词
-            string fullOriginalText = sbText.ToString();
-            if (contentSpans.Count == 0)
+            // 行内嵌的翻译及罗马音
+            if (transDest != null)
             {
-                fullOriginalText = container.Value;
+                var transSpan = container.Elements().FirstOrDefault(s => s.Attribute(_ttml + "role")?.Value == "x-translation");
+                AddAuxiliaryLine(transDest, transSpan, startMs, endMs);
             }
 
-            // 写入 OriginalDest
-            originalDest.Add(new LyricsLine
+            if (romanDest != null)
             {
-                StartMs = containerStartMs,
-                EndMs = containerEndMs,
-                PrimaryText = fullOriginalText,
-                PrimarySyllables = syllables,
-                IsPrimaryHasRealSyllableInfo = syllables.Count > 0,
-            });
-
-            // 提取并写入翻译与罗马音 (如果存在)
-            var transSpan = container.Elements()
-                .FirstOrDefault(s => s.Attribute(_ttml + "role")?.Value == "x-translation");
-            AddAuxiliaryLine(transDest, transSpan, containerStartMs, containerEndMs);
-
-            var romanSpan = container.Elements()
-                .FirstOrDefault(s => s.Attribute(_ttml + "role")?.Value == "x-roman");
-            AddAuxiliaryLine(romanDest, romanSpan, containerStartMs, containerEndMs);
+                var romanSpan = container.Elements().FirstOrDefault(s => s.Attribute(_ttml + "role")?.Value == "x-roman");
+                AddAuxiliaryLine(romanDest, romanSpan, startMs, endMs);
+            }
         }
 
-        private void AddAuxiliaryLine(List<LyricsLine> destList, XElement? span, int startMs, int endMs)
+        private void AddAuxiliaryLine(List<LyricsLine> destList, XElement? span, int startMs, int? endMs)
         {
-            if (span != null)
+            if (span != null && !string.IsNullOrWhiteSpace(span.Value))
             {
-                string text = span.Value;
-
                 destList.Add(new LyricsLine
                 {
                     StartMs = startMs,
                     EndMs = endMs,
-                    PrimaryText = text,
+                    PrimaryText = span.Value.Trim(),
                     IsPrimaryHasRealSyllableInfo = false,
                 });
             }
@@ -186,60 +295,35 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
                 return 0;
 
             t = t.Trim();
+            var parts = t.Split(':');
 
-            // 支持 "1.000s"
-            if (t.EndsWith("s"))
+            try
             {
-                if (
-                    double.TryParse(
-                        t.TrimEnd('s'),
-                        System.Globalization.NumberStyles.Float,
-                        System.Globalization.CultureInfo.InvariantCulture,
-                        out double seconds
-                    )
-                )
-                    return (int)(seconds * 1000);
-            }
-            else
-            {
-                var parts = t.Split(':');
                 if (parts.Length == 3)
                 {
                     // hh:mm:ss.xxx
                     int h = int.Parse(parts[0]);
                     int m = int.Parse(parts[1]);
-                    double s = double.Parse(
-                        parts[2],
-                        System.Globalization.CultureInfo.InvariantCulture
-                    );
+                    double s = double.Parse(parts[2], System.Globalization.CultureInfo.InvariantCulture);
                     return (int)((h * 3600 + m * 60 + s) * 1000);
                 }
                 else if (parts.Length == 2)
                 {
                     // mm:ss.xxx
                     int m = int.Parse(parts[0]);
-                    double s = double.Parse(
-                        parts[1],
-                        System.Globalization.CultureInfo.InvariantCulture
-                    );
+                    double s = double.Parse(parts[1], System.Globalization.CultureInfo.InvariantCulture);
                     return (int)((m * 60 + s) * 1000);
                 }
                 else if (parts.Length == 1)
                 {
                     // ss.xxx
-                    if (
-                        double.TryParse(
-                            parts[0],
-                            System.Globalization.NumberStyles.Float,
-                            System.Globalization.CultureInfo.InvariantCulture,
-                            out double s
-                        )
-                    )
-                        return (int)(s * 1000);
+                    double s = double.Parse(parts[0], System.Globalization.CultureInfo.InvariantCulture);
+                    return (int)(s * 1000);
                 }
             }
+            catch { }
+
             return 0;
         }
-
     }
 }

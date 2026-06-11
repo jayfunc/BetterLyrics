@@ -16,7 +16,7 @@ namespace BetterLyrics.WinUI3.Helper
         private readonly object _lock = new();
         private WasapiLoopbackCapture? _capture;
         private readonly MMDeviceEnumerator _deviceEnumerator;
-        private readonly LatestOnlyTaskRunner _deviceChangedTaskRunner;
+        private readonly Debouncer _deviceDebouncer = new();
 
         private int _sampleRate = 48000;
         private readonly int _fftLength = 2048;
@@ -77,8 +77,6 @@ namespace BetterLyrics.WinUI3.Helper
 
             _deviceEnumerator = new MMDeviceEnumerator();
             _deviceEnumerator.RegisterEndpointNotificationCallback(this);
-
-            _deviceChangedTaskRunner = new();
 
             _m = (int)Math.Log(_fftLength, 2);
             _fftLeftBuffer = new float[_fftLength];
@@ -198,16 +196,18 @@ namespace BetterLyrics.WinUI3.Helper
         {
             if (flow == DataFlow.Render && role == Role.Multimedia)
             {
-                _logger.LogInformation("System audio device is changing, ready to capture...");
+                _logger.LogInformation("System audio device is changing, waiting for stability...");
 
-                _ = _deviceChangedTaskRunner.RunAsync(async (token) =>
+                _ = _deviceDebouncer.RunAsync(async (token) =>
                 {
-                    await Task.Delay(1000, token);
+                    _logger.LogInformation("Audio device stable, restarting capture...");
 
                     StopCapture();
+
                     await Task.Delay(500, token);
+
                     StartCapture();
-                });
+                }, 1000);
             }
         }
 

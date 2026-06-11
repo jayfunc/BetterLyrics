@@ -10,17 +10,21 @@
     xmlns:models="using:BetterLyrics.WinUI3.Models"
     mc:Ignorable="d">
 
-    <Button x:Name="TriggerButton" Click="TriggerButton_Click">
+    <Button
+        x:Name="TriggerButton"
+        HorizontalAlignment="Stretch"
+        HorizontalContentAlignment="Stretch"
+        Click="TriggerButton_Click">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
+
             <ItemsControl
                 x:Name="SelectedFontsItemsControl"
                 VerticalAlignment="Center"
                 IsHitTestVisible="False">
-
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <controls:WrapPanel
@@ -42,6 +46,24 @@
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
+
+            <StackPanel
+                x:Name="LoadingPanel"
+                VerticalAlignment="Center"
+                Orientation="Horizontal"
+                Spacing="8">
+                <ProgressRing
+                    x:Name="LoadingRing"
+                    Width="16"
+                    Height="16"
+                    IsActive="False" />
+                <TextBlock
+                    x:Name="LoadingTextBlock"
+                    Margin="0,0,8,0"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Style="{StaticResource CaptionTextBlockStyle}" />
+            </StackPanel>
 
             <FontIcon
                 Grid.Column="1"

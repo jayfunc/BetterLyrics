@@ -4,12 +4,15 @@ using System.Xml;
 
 namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsMetadataParser
 {
+    /// <summary>
+    /// This TTML metadata parser follows the format specification: https://github.com/amll-dev/amll-ttml-db/wiki/%E6%A0%BC%E5%BC%8F%E8%A7%84%E8%8C%83
+    /// </summary>
     public partial class LyricsMetadataParser
     {
         private static LyricsMetadata ParseTtml(string content)
         {
             LyricsMetadata metadata = new();
-            if (content == null) return metadata;
+            if (string.IsNullOrWhiteSpace(content)) return metadata;
 
             var settings = new XmlReaderSettings
             {
@@ -26,7 +29,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsMetadataParser
                     {
                         reader.MoveToContent();
 
-                        while (reader.Read())
+                        while (!reader.EOF)
                         {
                             if (reader.NodeType == XmlNodeType.Element)
                             {
@@ -35,26 +38,48 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsMetadataParser
                                 switch (tagName)
                                 {
                                     case "ttm:title":
-                                        metadata.Title = reader.ReadElementContentAsString();
-                                        break;
-                                    case "ttm:desc":
-                                    case "ttm:description":
-                                        metadata.Comments.Add(reader.ReadElementContentAsString());
-                                        break;
-                                    case "ttm:copyright":
-                                        metadata.Comments.Add("Copyright: " + reader.ReadElementContentAsString());
-                                        break;
+                                        // 不要同时在 <ttm:title> 和 musicName 标签添加相同的值
+                                        string title = reader.ReadElementContentAsString();
+                                        if (string.IsNullOrWhiteSpace(metadata.Title))
+                                            metadata.Title = title;
+                                        continue;
+
                                     case "ttm:agent":
                                         ParseTtmlAgent(reader, metadata);
                                         break;
+
                                     case "amll:meta":
                                         ParseAmllMeta(reader, metadata);
                                         break;
+
+                                    case "songwriter":
+                                        // Apple Music 扩展的歌曲创作者信息
+                                        string songwriter = reader.ReadElementContentAsString();
+                                        if (!string.IsNullOrWhiteSpace(songwriter))
+                                        {
+                                            if (string.IsNullOrWhiteSpace(metadata.Author))
+                                                metadata.Author = songwriter;
+                                            else if (!metadata.Author.Contains(songwriter))
+                                                metadata.Author += "/" + songwriter;
+
+                                            if (string.IsNullOrWhiteSpace(metadata.Lyricist))
+                                                metadata.Lyricist = songwriter;
+                                            else if (!metadata.Lyricist.Contains(songwriter))
+                                                metadata.Lyricist += "/" + songwriter;
+                                        }
+                                        continue;
+
                                     case "body":
-                                        metadata.Length = reader.GetAttribute("dur") ?? "00:00";
+                                        // dur 是可选的。如果为空，保留原有 Length
+                                        string? dur = reader.GetAttribute("dur");
+                                        if (!string.IsNullOrWhiteSpace(dur))
+                                        {
+                                            metadata.Length = dur;
+                                        }
                                         return metadata;
                                 }
                             }
+                            reader.Read();
                         }
                     }
                     catch (XmlException)
@@ -70,22 +95,26 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsMetadataParser
         {
             if (reader.IsEmptyElement) return;
 
-            string? role = reader.GetAttribute("role");
-            if (string.IsNullOrWhiteSpace(role)) return;
-
-            string content = reader.ReadElementContentAsString();
-
-            if (role.Contains("artist") || role.Contains("performer"))
+            using (XmlReader innerReader = reader.ReadSubtree())
             {
-                metadata.Artist = content;
-            }
-            else if (role.Contains("composer") || role.Contains("author"))
-            {
-                metadata.Author = content;
-            }
-            else if (role.Contains("lyricist"))
-            {
-                metadata.Lyricist = content;
+                while (innerReader.Read())
+                {
+                    if (innerReader.NodeType == XmlNodeType.Element && innerReader.Name.ToLower() == "ttm:name")
+                    {
+                        string name = innerReader.ReadElementContentAsString();
+                        if (!string.IsNullOrWhiteSpace(name))
+                        {
+                            if (string.IsNullOrWhiteSpace(metadata.Artist))
+                            {
+                                metadata.Artist = name;
+                            }
+                            else if (!metadata.Artist.Contains(name))
+                            {
+                                metadata.Artist += "/" + name;
+                            }
+                        }
+                    }
+                }
             }
         }
 
@@ -94,26 +123,33 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsMetadataParser
             string? key = reader.GetAttribute("key");
             string? value = reader.GetAttribute("value");
 
-            if (string.IsNullOrWhiteSpace(key)) return;
-            if (string.IsNullOrWhiteSpace(value)) return;
+            if (string.IsNullOrWhiteSpace(key) || string.IsNullOrWhiteSpace(value)) return;
 
-            if (key == "musicName")
+            switch (key)
             {
-                metadata.Title = value;
-            }
-            else if (key == "artists")
-            {
-                if (metadata.Artist != "")
-                {
-                    metadata.Artist += "/";
-                }
-                metadata.Artist += value;
-            }
-            else if (key == "album")
-            {
-                metadata.Album = value;
+                case "musicName":
+                    metadata.Title = value;
+                    break;
+                case "artists":
+                    // 此标签通常提供完整的艺人名称，优先级高于 ttm:agent 累加
+                    metadata.Artist = value;
+                    break;
+                case "album":
+                    metadata.Album = value;
+                    break;
+                case "ttmlAuthorGithub":
+                case "ttmlAuthorGithubLogin":
+                    // 将 AMLL 规定的逐词歌词作者映射到 LRC 创建者字段
+                    if (string.IsNullOrWhiteSpace(metadata.LrcCreator))
+                    {
+                        metadata.LrcCreator = value;
+                    }
+                    else if (!metadata.LrcCreator.Contains(value))
+                    {
+                        metadata.LrcCreator += $" ({value})";
+                    }
+                    break;
             }
         }
-
     }
 }

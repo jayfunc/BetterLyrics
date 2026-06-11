@@ -101,7 +101,7 @@ namespace BetterLyrics.WinUI3
 
         private static void OnActivated(object? sender, AppActivationArguments args)
         {
-            DispatcherQueueHelper.Instance?.TryEnqueue(() =>
+            AppUIThread.Execute(() =>
             {
                 HandleActivation(args);
             });

@@ -167,7 +167,7 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
         private void PlaybackList_CurrentItemChanged(MediaPlaybackList sender, CurrentMediaPlaybackItemChangedEventArgs args)
         {
             var newItem = args.NewItem;
-            DispatcherQueueHelper.Instance?.TryEnqueue(() =>
+            AppUIThread.Execute(() =>
             {
                 if (newItem != null && newItem.Source.CustomProperties.TryGetValue("QueueItem", out var obj) && obj is PlayQueueItem queueItem)
                 {
@@ -246,7 +246,7 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
                         var storageFile = await StorageFile.GetFileFromPathAsync(track.LocalAlbumArtPath);
                         props.Thumbnail = RandomAccessStreamReference.CreateFromFile(storageFile);
 
-                        DispatcherQueueHelper.Instance?.TryEnqueue(() =>
+                        AppUIThread.Execute(() =>
                         {
                             item.ApplyDisplayProperties(props);
                         });
@@ -292,8 +292,7 @@ namespace BetterLyrics.WinUI3.Services.SMTCService
             }
             catch (Exception ex)
             {
-                DispatcherQueueHelper.Instance?.TryEnqueue(() =>
-                    GlobalToastManager.Show("Error", ex.Message, InfoBarSeverity.Error));
+                AppUIThread.Execute(() => GlobalToastManager.Show("Error", ex.Message, InfoBarSeverity.Error));
             }
             finally
             {

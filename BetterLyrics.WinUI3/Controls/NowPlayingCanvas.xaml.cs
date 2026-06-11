@@ -128,7 +128,8 @@ namespace BetterLyrics.WinUI3.Controls
 
         private List<RenderLyricsLine>? _renderLyricsLines = null;
 
-        private DispatcherQueueTimer _layoutTimer;
+        private readonly Debouncer _layoutDebouncer = new();
+        private readonly Debouncer _lyricsDebouncer = new();
         private bool _isLayoutChanged = false;
         private bool _isMouseScrollingChanged = false;
         private bool _isNowPlayingPaletteChanged = false;
@@ -266,7 +267,6 @@ namespace BetterLyrics.WinUI3.Controls
         {
             InitializeComponent();
             WeakReferenceMessenger.Default.RegisterAll(this);
-            _layoutTimer = DispatcherQueue.CreateTimer();
         }
 
         private static void OnDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -818,18 +818,18 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void RequestRelayout()
         {
-            _layoutTimer.Debounce(() =>
+            _ = _layoutDebouncer.RunAsync(() =>
             {
                 _isLayoutChanged = true;
-            }, TimeSpan.FromMilliseconds(400));
+            });
         }
 
         private void RequestReloadLyrics()
         {
-            _layoutTimer.Debounce(() =>
+            _ = _lyricsDebouncer.RunAsync(() =>
             {
                 _isLyricsChanged = true;
-            }, TimeSpan.FromMilliseconds(400));
+            });
         }
 
         private void UpdatePlaybackState(TimeSpan elapsedTime)

@@ -2,7 +2,6 @@
 using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.Models.Settings;
 using System;
-using System.Linq;
 using System.Text;
 
 namespace BetterLyrics.WinUI3.Helper.Lyrics
@@ -13,7 +12,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
         {
             if (lyricsData == null) return null;
 
-            StringBuilder stringBuilder = new StringBuilder();
+            StringBuilder stringBuilder = new();
 
             if (lyricsFormat == LyricsFormat.Lrc)
             {
@@ -90,44 +89,76 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                     stringBuilder.AppendLine();
                 }
             }
+            // 规范参考 https://github.com/amll-dev/amll-ttml-db/wiki/%E6%A0%BC%E5%BC%8F%E8%A7%84%E8%8C%83
             else if (lyricsFormat == LyricsFormat.Ttml)
             {
-                // XML声明和TTML根节点
+                // XML声明和TTML根节点，添加规范要求的命名空间
                 stringBuilder.AppendLine("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
-                stringBuilder.AppendLine("<tt xmlns=\"http://www.w3.org/ns/ttml\" xmlns:ttm=\"http://www.w3.org/ns/ttml#metadata\">");
+
+                string timing = lyricsSaveConfig.InSyllablesFormat ? "Word" : "Line";
+                stringBuilder.AppendLine($"<tt xmlns=\"http://www.w3.org/ns/ttml\"");
+                stringBuilder.AppendLine("    xmlns:ttm=\"http://www.w3.org/ns/ttml#metadata\"");
+                stringBuilder.AppendLine("    xmlns:tts=\"http://www.w3.org/ns/ttml#styling\"");
+                stringBuilder.AppendLine("    xmlns:itunes=\"http://itunes.apple.com/lyric-ttml-extensions\"");
+                stringBuilder.AppendLine("    xmlns:amll=\"http://www.example.com/ns/amll\"");
+                stringBuilder.AppendLine($"    xmlns:betterlyrics=\"{Constants.Link.BetterLyricsGitHub}\"");
+                stringBuilder.AppendLine($"    itunes:timing=\"{timing}\">");
 
                 // 构建元数据 (Head)
                 stringBuilder.AppendLine("  <head>");
                 stringBuilder.AppendLine("    <metadata>");
+
+                stringBuilder.AppendLine($"      <betterlyrics:meta key=\"generator\" value=\"{Constants.App.AppName}\" />");
+                stringBuilder.AppendLine($"      <betterlyrics:meta key=\"version\" value=\"{MetadataHelper.AppVersion}\" />");
+
+                // 规范 4.1：使用 ttm:title 定义歌曲名
                 if (!string.IsNullOrWhiteSpace(title))
                 {
                     stringBuilder.AppendLine($"      <ttm:title>{System.Net.WebUtility.HtmlEncode(title)}</ttm:title>");
                 }
-                if (!string.IsNullOrWhiteSpace(artist) || !string.IsNullOrWhiteSpace(album))
+
+                // 规范 4.1：使用 ttm:agent 定义演唱者
+                string safeArtist = System.Net.WebUtility.HtmlEncode(artist ?? "Unknown Artist");
+                stringBuilder.AppendLine("      <ttm:agent type=\"person\" xml:id=\"v1\">");
+                stringBuilder.AppendLine($"        <ttm:name type=\"full\">{safeArtist}</ttm:name>");
+                stringBuilder.AppendLine("      </ttm:agent>");
+
+                // 规范 4.2：使用 amll:meta 定义歌曲核心信息（为符合规范，不再重复写入 amll:meta 的 musicName）
+                if (!string.IsNullOrWhiteSpace(artist))
                 {
-                    var descElements = new[] { artist, album }.Where(s => !string.IsNullOrWhiteSpace(s));
-                    var desc = string.Join(" - ", descElements);
-                    stringBuilder.AppendLine($"      <ttm:desc>{System.Net.WebUtility.HtmlEncode(desc)}</ttm:desc>");
+                    stringBuilder.AppendLine($"      <amll:meta key=\"artists\" value=\"{safeArtist}\" />");
                 }
+                if (!string.IsNullOrWhiteSpace(album))
+                {
+                    stringBuilder.AppendLine($"      <amll:meta key=\"album\" value=\"{System.Net.WebUtility.HtmlEncode(album)}\" />");
+                }
+
                 stringBuilder.AppendLine("    </metadata>");
                 stringBuilder.AppendLine("  </head>");
 
                 // 构建歌词主体 (Body)
-                stringBuilder.AppendLine("  <body>");
+                string durAttribute = duration != null ? $" dur=\"{FormatToTtmlTimestamp(duration.Value * 1000)}\"" : "";
+                stringBuilder.AppendLine($"  <body{durAttribute}>");
                 stringBuilder.AppendLine("    <div>");
 
+                int lineIndex = 1;
                 foreach (var line in lyricsData.LyricsLines)
                 {
+                    // 规范 6.1 & 7.2：必须包含 begin, end, itunes:key, ttm:agent
                     var beginTime = FormatToTtmlTimestamp(line.StartMs);
-                    stringBuilder.Append($"      <p begin=\"{beginTime}\">");
+                    var endTime = FormatToTtmlTimestamp(line.EndMs > line.StartMs ? line.EndMs : line.StartMs + 2000); // 如果 EndMs 缺失，兜底加2秒防止报错
+
+                    stringBuilder.Append($"      <p begin=\"{beginTime}\" end=\"{endTime}\" itunes:key=\"L{lineIndex}\" ttm:agent=\"v1\">");
 
                     // 构建原文
-                    if (lyricsSaveConfig.InSyllablesFormat && line.PrimarySyllables != null)
+                    if (lyricsSaveConfig.InSyllablesFormat && line.PrimarySyllables != null && line.PrimarySyllables.Count > 0)
                     {
                         foreach (var syllable in line.PrimarySyllables)
                         {
-                            string sylBeginTime = FormatToTtmlTimestamp(syllable.StartMs);
-                            stringBuilder.Append($"<span begin=\"{sylBeginTime}\">{System.Net.WebUtility.HtmlEncode(syllable.Text)}</span>");
+                            // 逐字歌词 span 必须带 begin 和 end
+                            string sylBegin = FormatToTtmlTimestamp(syllable.StartMs);
+                            string sylEnd = FormatToTtmlTimestamp(syllable.EndMs > syllable.StartMs ? syllable.EndMs : syllable.StartMs + 500);
+                            stringBuilder.Append($"<span begin=\"{sylBegin}\" end=\"{sylEnd}\">{System.Net.WebUtility.HtmlEncode(syllable.Text)}</span>");
                         }
                     }
                     else
@@ -135,44 +166,19 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                         stringBuilder.Append(System.Net.WebUtility.HtmlEncode(line.PrimaryText));
                     }
 
-                    // 构建翻译
-                    if (lyricsSaveConfig.IncludeTranslation)
+                    // 规范 7.3：辅助歌词（内嵌翻译与罗马音）使用带有 ttm:role 的 span 标签，不再使用 <br/> 或 / 拼接
+                    if (lyricsSaveConfig.IncludeTranslation && !string.IsNullOrWhiteSpace(line.SecondaryText))
                     {
-                        var translation = line.SecondaryText;
-                        if (!string.IsNullOrWhiteSpace(translation))
-                        {
-                            if (lyricsSaveConfig.InOneLine)
-                            {
-                                stringBuilder.Append(" / ");
-                            }
-                            else
-                            {
-                                // TTML中换行推荐使用 <br/>
-                                stringBuilder.Append("<br/>");
-                            }
-                            stringBuilder.Append(System.Net.WebUtility.HtmlEncode(translation));
-                        }
+                        stringBuilder.Append($"<span ttm:role=\"x-translation\">{System.Net.WebUtility.HtmlEncode(line.SecondaryText)}</span>");
                     }
 
-                    // 构建音译
-                    if (lyricsSaveConfig.IncludeTransliteration)
+                    if (lyricsSaveConfig.IncludeTransliteration && !string.IsNullOrWhiteSpace(line.TertiaryText))
                     {
-                        var transliteration = line.TertiaryText;
-                        if (!string.IsNullOrWhiteSpace(transliteration))
-                        {
-                            if (lyricsSaveConfig.InOneLine)
-                            {
-                                stringBuilder.Append(" / ");
-                            }
-                            else
-                            {
-                                stringBuilder.Append("<br/>");
-                            }
-                            stringBuilder.Append(System.Net.WebUtility.HtmlEncode(transliteration));
-                        }
+                        stringBuilder.Append($"<span ttm:role=\"x-roman\">{System.Net.WebUtility.HtmlEncode(line.TertiaryText)}</span>");
                     }
 
                     stringBuilder.AppendLine("</p>");
+                    lineIndex++;
                 }
 
                 stringBuilder.AppendLine("    </div>");
@@ -186,28 +192,25 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
         public static string FormatToMetadataTimestamp(double seconds)
         {
             TimeSpan ts = TimeSpan.FromSeconds(seconds);
-
             return $"{(int)ts.TotalMinutes:D2}:{ts.Seconds:D2}";
         }
 
         public static string FormatToLineTimestamp(double milliseconds)
         {
             TimeSpan ts = TimeSpan.FromMilliseconds(milliseconds);
-
             return $"[{(int)ts.TotalMinutes:D2}:{ts.Seconds:D2}.{ts.Milliseconds:D3}]";
         }
 
-        public static string FormatToSyllableTimestamp(double milliseconds)
+        public static string FormatToSyllableTimestamp(double? milliseconds)
         {
-            TimeSpan ts = TimeSpan.FromMilliseconds(milliseconds);
-
+            TimeSpan ts = TimeSpan.FromMilliseconds(milliseconds ?? 0);
             return $"<{(int)ts.TotalMinutes:D2}:{ts.Seconds:D2}.{ts.Milliseconds:D3}>";
         }
 
-        public static string FormatToTtmlTimestamp(double milliseconds)
+        public static string FormatToTtmlTimestamp(double? milliseconds)
         {
-            TimeSpan ts = TimeSpan.FromMilliseconds(milliseconds);
-
+            TimeSpan ts = TimeSpan.FromMilliseconds(milliseconds ?? 0);
+            // 规范 3.1: 推荐使用 hh:mm:ss.xxx 或 mm:ss.xxx 格式
             return $"{(int)ts.TotalHours:D2}:{ts.Minutes:D2}:{ts.Seconds:D2}.{ts.Milliseconds:D3}";
         }
     }

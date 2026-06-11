@@ -70,7 +70,7 @@ namespace BetterLyrics.WinUI3
 
             // 初始化歌词切换窗口（包括系统托盘）
             m_window = WindowHook.OpenOrShowWindow<LyricsWindowSwitchWindow>();
-            DispatcherQueueHelper.Init(m_window);
+            AppUIThread.Initialize(m_window.DispatcherQueue);
 
             // 自动打开歌词窗口逻辑
             if (settingsService.AppSettings.GeneralSettings.AutoStartLyricsWindow)
@@ -134,9 +134,6 @@ namespace BetterLyrics.WinUI3
 
             // 确保播放源配置内歌词源与插件保持最新
             EnsureLyricsSearchProvidersInfo();
-
-            // 预加载系统字体列表
-            await FontHelper.GetSystemFontFamiliesAsync();
 
             // 启动周期更新检测
             var appUpdateService = Ioc.Default.GetRequiredService<IAppUpdateService>();

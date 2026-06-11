@@ -21,7 +21,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 {
     public partial class GSMTCService : IGSMTCService
     {
-        private readonly LatestOnlyTaskRunner _albumArtRefreshRunner = new();
+        private readonly Debouncer _albumArtDebouncer = new();
 
         private BitmapDecoder? _albumArtBitmapDecoder = null;
 
@@ -30,10 +30,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
         private void UpdateAlbumArt(bool ignoreCache = false)
         {
-            _ = _albumArtRefreshRunner.RunAsync(async (token) =>
-            {
-                await RefreshArtAlbumAsync(ignoreCache, token);
-            });
+            _ = _albumArtDebouncer.RunAsync(async (token) => await RefreshArtAlbumAsync(ignoreCache, token));
         }
 
         private async Task RefreshArtAlbumAsync(bool ignoreCache, CancellationToken token)

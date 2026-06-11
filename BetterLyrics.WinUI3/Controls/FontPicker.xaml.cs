@@ -19,6 +19,8 @@ namespace BetterLyrics.WinUI3.Controls
         {
             this.InitializeComponent();
             _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
+
+            LoadingTextBlock.Text = _localizationService.GetLocalizedString("Loading");
         }
 
         public string SelectedFontId
@@ -62,61 +64,89 @@ namespace BetterLyrics.WinUI3.Controls
             }
         }
 
-        private async Task UpdateDisplayAsync(string fontIdString)
+        private void SetLoadingState(bool isLoading)
         {
-            if (string.IsNullOrWhiteSpace(fontIdString))
+            if (isLoading)
             {
-                SelectedFontsItemsControl.ItemsSource = new List<ExtendedFontFamily>
-                {
-                    new ExtendedFontFamily
-                    {
-                        LocalizedFontFamily = "Segoe UI",
-                        FontFamily = "Segoe UI"
-                    }
-                };
-                return;
-            }
+                SelectedFontsItemsControl.Visibility = Visibility.Collapsed;
+                LoadingPanel.Visibility = Visibility.Visible;
+                LoadingRing.IsActive = true;
 
-            var fontIds = fontIdString
-                .Split([','], StringSplitOptions.RemoveEmptyEntries)
-                .Select(s => s.Trim())
-                .ToList();
-
-            var fonts = await FontHelper.GetSystemFontFamiliesAsync();
-            var displayItems = new List<ExtendedFontFamily>();
-
-            var idsToProcess = AllowMultipleSelection ? fontIds : fontIds.Take(1);
-
-            if (fontIds.Count != 0)
-            {
-                foreach (var fontId in idsToProcess)
-                {
-                    var matchedFont = fonts.FirstOrDefault(f => f.FontFamily == fontId);
-
-                    if (matchedFont != null)
-                    {
-                        displayItems.Add(matchedFont);
-                    }
-                    else
-                    {
-                        displayItems.Add(new ExtendedFontFamily
-                        {
-                            LocalizedFontFamily = fontId,
-                            FontFamily = fontId
-                        });
-                    }
-                }
+                TriggerButton.IsEnabled = false;
             }
             else
             {
-                displayItems.Add(new ExtendedFontFamily
-                {
-                    LocalizedFontFamily = fontIdString,
-                    FontFamily = "Unknown"
-                });
+                LoadingPanel.Visibility = Visibility.Collapsed;
+                LoadingRing.IsActive = false;
+                SelectedFontsItemsControl.Visibility = Visibility.Visible;
+                TriggerButton.IsEnabled = true;
             }
+        }
 
-            SelectedFontsItemsControl.ItemsSource = displayItems;
+        private async Task UpdateDisplayAsync(string fontIdString)
+        {
+            SetLoadingState(true);
+
+            try
+            {
+                if (string.IsNullOrWhiteSpace(fontIdString))
+                {
+                    SelectedFontsItemsControl.ItemsSource = new List<ExtendedFontFamily>
+                    {
+                        new ExtendedFontFamily
+                        {
+                            LocalizedFontFamily = "Segoe UI",
+                            FontFamily = "Segoe UI"
+                        }
+                    };
+                    return;
+                }
+
+                var fontIds = fontIdString
+                    .Split([','], StringSplitOptions.RemoveEmptyEntries)
+                    .Select(s => s.Trim())
+                    .ToList();
+
+                var fonts = await FontHelper.GetSystemFontFamiliesAsync();
+                var displayItems = new List<ExtendedFontFamily>();
+
+                var idsToProcess = AllowMultipleSelection ? fontIds : fontIds.Take(1);
+
+                if (fontIds.Count != 0)
+                {
+                    foreach (var fontId in idsToProcess)
+                    {
+                        var matchedFont = fonts.FirstOrDefault(f => f.FontFamily == fontId);
+
+                        if (matchedFont != null)
+                        {
+                            displayItems.Add(matchedFont);
+                        }
+                        else
+                        {
+                            displayItems.Add(new ExtendedFontFamily
+                            {
+                                LocalizedFontFamily = fontId,
+                                FontFamily = fontId
+                            });
+                        }
+                    }
+                }
+                else
+                {
+                    displayItems.Add(new ExtendedFontFamily
+                    {
+                        LocalizedFontFamily = fontIdString,
+                        FontFamily = "Unknown"
+                    });
+                }
+
+                SelectedFontsItemsControl.ItemsSource = displayItems;
+            }
+            finally
+            {
+                SetLoadingState(false);
+            }
         }
 
         private async void TriggerButton_Click(object sender, RoutedEventArgs e)
