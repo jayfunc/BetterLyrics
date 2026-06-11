@@ -10,7 +10,6 @@ using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Serialization;
 using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.ViewModels;
-using CommunityToolkit.WinUI;
 using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using System;
