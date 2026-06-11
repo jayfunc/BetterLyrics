@@ -46,8 +46,8 @@ namespace BetterLyrics.WinUI3.Views
         private readonly ISongSearchMapService _songSearchMapService = Ioc.Default.GetRequiredService<ISongSearchMapService>();
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
-        private DispatcherQueueTimer? _layoutChangedTimer = App.Current.Resources.DispatcherQueue.CreateTimer();
-        private DispatcherQueueTimer? _scrollChangedTimer = App.Current.Resources.DispatcherQueue.CreateTimer();
+        private readonly Debouncer _layoutChangedDebouncer = new();
+        private readonly Debouncer _scrollChangedDebouncer = new();
 
         public NowPlayingPageViewModel ViewModel => (NowPlayingPageViewModel)DataContext;
 
@@ -267,7 +267,7 @@ namespace BetterLyrics.WinUI3.Views
 
         private void OnLayoutChanged()
         {
-            _layoutChangedTimer?.Debounce(async () =>
+            _ = _layoutChangedDebouncer.RunAsync(async () =>
             {
                 HideContainers();
 
@@ -282,7 +282,7 @@ namespace BetterLyrics.WinUI3.Views
                 await RenderSongInfoAsync();
 
                 ShowContainers();
-            }, TimeSpan.FromMilliseconds(250));
+            });
         }
 
         private void RootGrid_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -340,11 +340,11 @@ namespace BetterLyrics.WinUI3.Views
             }
             LyricsCanvas.MouseScrollOffset = value;
 
-            _scrollChangedTimer?.Debounce(() =>
+            _ = _scrollChangedDebouncer.RunAsync(() =>
             {
                 LyricsCanvas.MouseScrollOffset = 0;
                 LyricsCanvas.IsMouseScrolling = false;
-            }, TimeSpan.FromSeconds(3));
+            }, 3000);
         }
 
         private void LyricsScrollViewer_PointerMoved(object sender, PointerRoutedEventArgs e)
@@ -408,12 +408,6 @@ namespace BetterLyrics.WinUI3.Views
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             WeakReferenceMessenger.Default.UnregisterAll(this);
-
-            _layoutChangedTimer?.Stop();
-            _layoutChangedTimer = null;
-
-            _scrollChangedTimer?.Stop();
-            _scrollChangedTimer = null;
 
             DataContext = null;
         }

@@ -47,7 +47,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private string _localizedTimesValue;
 
-        private readonly DispatcherQueueTimer? _timer;
+        private readonly Debouncer _debouncer = new();
 
         [ObservableProperty] public partial IGSMTCService GSMTCService { get; set; }
 
@@ -100,8 +100,6 @@ namespace BetterLyrics.WinUI3.ViewModels
             _logger = Ioc.Default.GetRequiredService<ILogger<StatsDashboardControlViewModel>>();
 
             _localizedTimesValue = _localizationService.GetLocalizedString("StatsDashboardControlTimes");
-
-            _timer = DispatcherQueueHelper.Instance?.CreateTimer();
 
             UpdateDateRange();
             UpdatePaints();
@@ -420,10 +418,10 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         public void LoadData()
         {
-            _timer?.Debounce(() =>
+            _ = _debouncer.RunAsync(() =>
             {
                 _ = LoadDataCoreAsync();
-            }, Constants.Time.DebounceTimeout);
+            });
         }
 
         [RelayCommand]

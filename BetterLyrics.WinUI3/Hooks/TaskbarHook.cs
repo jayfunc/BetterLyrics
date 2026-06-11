@@ -34,9 +34,8 @@ namespace BetterLyrics.WinUI3.Hooks
         private TaskbarPlacement _currentPlacement;
         private Rectangle _targetMonitorRect;
 
-        private readonly DispatcherQueue? _dispatcherQueue;
-        private readonly DispatcherQueueTimer? _debounceTimer;
-        private readonly DispatcherQueueTimer? _pollingTimer;
+        private readonly Debouncer _positionDebouncer = new();
+        private readonly AsyncPoller _poller = new(1000);
         private bool _isDisposed;
 
         public TaskbarHook(NowPlayingWindow window, TaskbarPlacement placement, Rectangle targetMonitorRect)
@@ -45,16 +44,6 @@ namespace BetterLyrics.WinUI3.Hooks
             _targetHwnd = WinRT.Interop.WindowNative.GetWindowHandle(_targetWindow);
 
             _automation = new();
-            _dispatcherQueue = DispatcherQueueHelper.Instance;
-
-            _debounceTimer = _dispatcherQueue?.CreateTimer();
-
-            _pollingTimer = _dispatcherQueue?.CreateTimer();
-            if (_pollingTimer != null)
-            {
-                _pollingTimer.Interval = TimeSpan.FromMilliseconds(1000);
-                _pollingTimer.Tick += (s, e) => RequestUpdate();
-            }
 
             _currentPlacement = placement;
             _targetMonitorRect = targetMonitorRect;
@@ -167,7 +156,7 @@ namespace BetterLyrics.WinUI3.Hooks
                     AttachToTaskbar(_taskbarHwnd);
                 }
 
-                _pollingTimer?.Start();
+                _poller.Start(async (token) => await Task.Run(() => RequestUpdate(), token));
 
                 RequestUpdate();
             }
@@ -185,7 +174,7 @@ namespace BetterLyrics.WinUI3.Hooks
 
             if (taskbar == null) return;
 
-            _debounceTimer?.Debounce(() =>
+            _ = _positionDebouncer.RunAsync(() =>
             {
                 _ = Task.Run(() =>
                 {
@@ -209,7 +198,7 @@ namespace BetterLyrics.WinUI3.Hooks
                         int relativeX = voidRect.Left - taskbarRect.Left;
                         int relativeY = voidRect.Top - taskbarRect.Top;
 
-                        _dispatcherQueue?.TryEnqueue(() =>
+                        AppUIThread.Execute(() =>
                         {
                             if (!_isDisposed)
                             {
@@ -221,7 +210,7 @@ namespace BetterLyrics.WinUI3.Hooks
                         });
                     }
                 });
-            }, TimeSpan.FromMilliseconds(100));
+            }, 100);
         }
 
         private Rectangle CalculateVoidRect(AutomationElement? taskbar, TaskbarPlacement placement)
@@ -563,7 +552,7 @@ namespace BetterLyrics.WinUI3.Hooks
             //_logger.LogInformation("Disposing TaskbarHook...");
             _isDisposed = true;
 
-            _pollingTimer?.Stop();
+            _poller.Stop();
 
             if (_targetHwnd != IntPtr.Zero)
             {

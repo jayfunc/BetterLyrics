@@ -11,12 +11,10 @@ namespace BetterLyrics.WinUI3.Controls
 {
     public sealed partial class ExtendedSlider : UserControl
     {
-        private bool _isSliderValueChangingByUser = false;
-
         public event EventHandler<ExtendedSliderValueChangedByUserEventArgs>? ValueChangedByUser;
 
         public static readonly DependencyProperty FrequencyProperty =
-    DependencyProperty.Register(nameof(Frequency), typeof(double), typeof(ExtendedSlider), new PropertyMetadata(1.0));
+            DependencyProperty.Register(nameof(Frequency), typeof(double), typeof(ExtendedSlider), new PropertyMetadata(1.0));
         public static readonly DependencyProperty MinimumProperty =
             DependencyProperty.Register(nameof(Minimum), typeof(double), typeof(ExtendedSlider), new PropertyMetadata(default));
         public static readonly DependencyProperty MaximumProperty =
@@ -61,16 +59,6 @@ namespace BetterLyrics.WinUI3.Controls
             {
                 Value += Frequency;
             }
-        }
-
-        private void SubtractTimer_Tick(object? sender, object e)
-        {
-            Subtract();
-        }
-
-        private void AddTimer_Tick(object? sender, object e)
-        {
-            Add();
         }
 
         public double Frequency

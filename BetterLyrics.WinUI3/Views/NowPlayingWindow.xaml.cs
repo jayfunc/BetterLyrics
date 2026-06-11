@@ -45,9 +45,9 @@ namespace BetterLyrics.WinUI3.Views
         IRecipient<PropertyChangedMessage<PaletteGeneratorType>>,
         IRecipient<PropertyChangedMessage<MediaSourceProviderInfo?>>
     {
-        private readonly SimpleTimer _alwaysOnTopPollingTimer;
-        private readonly SimpleTimer _underlayColorTimer;
-        private readonly DispatcherQueueTimer _visibilityTimer;
+        private readonly AsyncPoller _alwaysOnTopPoller = new();
+        private readonly AsyncPoller _underlayColorPoller = new();
+        private readonly Debouncer _visibilityDebouncer = new();
         private OverlayInputHelper? _overlayInputHelper;
         private TaskbarHook? _taskbarHook;
         private WindowMessageMonitor? _wmm;
@@ -65,27 +65,6 @@ namespace BetterLyrics.WinUI3.Views
             this.InitializeComponent();
             _wmm = new WindowMessageMonitor(this);
             _wmm.WindowMessageReceived += Wmm_WindowMessageReceived;
-
-            _alwaysOnTopPollingTimer = new(() =>
-            {
-                if (LyricsWindowStatus?.IsWallpaper != true)
-                {
-                    DispatcherQueue.TryEnqueue(() =>
-                    {
-                        this.SetIsAlwaysOnTop(true);
-                    });
-                }
-            });
-
-            _underlayColorTimer = new(() =>
-            {
-                DispatcherQueue.TryEnqueue(() =>
-                {
-                    UpdateBackdropAccentColor();
-                });
-            });
-
-            _visibilityTimer = DispatcherQueue.CreateTimer();
 
             LyricsWindowStatus = status;
             NowPlayingPage.LyricsWindowStatus = LyricsWindowStatus;
@@ -140,7 +119,7 @@ namespace BetterLyrics.WinUI3.Views
                     {
                         if (LyricsWindowStatus.IsWallpaper && LyricsWindowStatus.IsLocked)
                         {
-                            DispatcherQueueHelper.Instance?.TryEnqueue(() =>
+                            AppUIThread.Execute(() =>
                             {
                                 WorkerWHook.UnpinFromDesktop(this);
                                 WorkerWHook.PinToDesktop(this);
@@ -250,12 +229,21 @@ namespace BetterLyrics.WinUI3.Views
 
         private void OnIsAlwaysOnTopPollingChanged()
         {
-            _alwaysOnTopPollingTimer.Stop();
+            _alwaysOnTopPoller.Stop();
             LyricsWindowStatus.IsAlwaysOnTopPollingTimerRunning = false;
 
             if (LyricsWindowStatus.IsAlwaysOnTop && LyricsWindowStatus.IsAlwaysOnTopPolling)
             {
-                _alwaysOnTopPollingTimer.Start();
+                _alwaysOnTopPoller.Start(async (token) =>
+                {
+                    if (LyricsWindowStatus?.IsWallpaper != true)
+                    {
+                        AppUIThread.Execute(() =>
+                        {
+                            this.SetIsAlwaysOnTop(true);
+                        });
+                    }
+                });
                 LyricsWindowStatus.IsAlwaysOnTopPollingTimerRunning = true;
             }
         }
@@ -324,7 +312,7 @@ namespace BetterLyrics.WinUI3.Views
 
             if (status.HideWindowWhenPaused || status.HideWindowWhenNullSession)
             {
-                _visibilityTimer.Debounce(() =>
+                _ = _visibilityDebouncer.RunAsync(() =>
                 {
                     DispatcherQueue.TryEnqueue(() =>
                     {
@@ -355,18 +343,24 @@ namespace BetterLyrics.WinUI3.Views
                             }
                         }
                     });
-                }, TimeSpan.FromMilliseconds(LyricsWindowStatus.AutoShowOrHideWindowDelay));
+                }, LyricsWindowStatus.AutoShowOrHideWindowDelay);
             }
         }
 
         private void OnIsAdaptToEnvironmentChanged()
         {
-            _underlayColorTimer.Stop();
+            _underlayColorPoller.Stop();
             LyricsWindowStatus.IsUnderlayColorTimerRunning = false;
 
             if (LyricsWindowStatus.IsAdaptToEnvironment)
             {
-                _underlayColorTimer.Start();
+                _underlayColorPoller.Start(async (token) =>
+                {
+                    AppUIThread.Execute(() =>
+                    {
+                        UpdateBackdropAccentColor();
+                    });
+                });
                 LyricsWindowStatus.IsUnderlayColorTimerRunning = true;
             }
             else
@@ -461,12 +455,12 @@ namespace BetterLyrics.WinUI3.Views
             _wmm?.Dispose();
             _wmm = null;
 
-            _alwaysOnTopPollingTimer.Stop();
-            _alwaysOnTopPollingTimer.Dispose();
+            _alwaysOnTopPoller.Stop();
+            _alwaysOnTopPoller.Dispose();
             LyricsWindowStatus.IsAlwaysOnTopPollingTimerRunning = false;
 
-            _underlayColorTimer.Stop();
-            _underlayColorTimer.Dispose();
+            _underlayColorPoller.Stop();
+            _underlayColorPoller.Dispose();
             LyricsWindowStatus.IsUnderlayColorTimerRunning = false;
 
             _taskbarHook?.Dispose();

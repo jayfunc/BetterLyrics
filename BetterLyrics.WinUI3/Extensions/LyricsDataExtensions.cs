@@ -12,10 +12,10 @@ namespace BetterLyrics.WinUI3.Extensions
     {
         extension(LyricsData lyricsData)
         {
-            public static LyricsData GetLoadingPlaceholder()
+            public static LyricsData GetLoadingPlaceholder(int attempt = 1, int maxRetries = 1)
             {
                 var _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
-                var loadingText = _localizationService.GetLocalizedString("LyricsLoading");
+                var loadingText = $"{_localizationService.GetLocalizedString("LyricsLoading")} ({attempt}/{maxRetries})";
                 return new LyricsData()
                 {
                     LyricsLines = [

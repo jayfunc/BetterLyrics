@@ -41,7 +41,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty] public partial ISMTCService SMTCService { get; set; }
 
-        private readonly DispatcherQueueTimer? _refreshSongsTimer;
+        private readonly Debouncer _refreshSongsDebouncer = new();
 
         // All songs
         private List<ExtendedTrack> _allTracks = [];
@@ -92,8 +92,6 @@ namespace BetterLyrics.WinUI3.ViewModels
             _fileSystemService = fileSystemService;
             SMTCService = smtcService;
 
-            _refreshSongsTimer = DispatcherQueueHelper.Instance?.CreateTimer();
-
             _settingsService = settingsService;
             AppSettings = _settingsService.AppSettings;
 
@@ -119,7 +117,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         public void RefreshSongs(bool recoverPlaybackPosition = false, bool allowAutoPlay = false)
         {
-            _refreshSongsTimer?.Debounce(() =>
+            _ = _refreshSongsDebouncer.RunAsync(() =>
             {
                 _ = Task.Run(async () =>
                 {
@@ -152,7 +150,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                         .Where(x => x != null)
                         .ToList();
 
-                    DispatcherQueueHelper.Instance?.TryEnqueue(async () =>
+                    AppUIThread.Execute(async () =>
                     {
                         _allTracks = newTrackList;
 
@@ -170,7 +168,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                         await SMTCService.UpdatePlaybackListAsync(playQueue, recoverPlaybackPosition, allowAutoPlay);
                     });
                 });
-            }, Time.DebounceTimeout);
+            });
         }
 
         public void ApplyPlaylist()

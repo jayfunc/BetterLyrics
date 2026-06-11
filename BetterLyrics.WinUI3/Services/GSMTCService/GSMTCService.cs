@@ -70,7 +70,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         private double _lxMusicPositionSeconds = 0;
         private byte[]? _lxMusicAlbumArtBytes = null;
 
-        private readonly DispatcherQueueTimer? _onMediaPropsChangedTimer;
+        private readonly Debouncer _onMediaPropsChangedDebouncer = new();
         private readonly DispatcherTimer _scrobbleTimer;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsScrobbled { get; set; } = false;
@@ -131,8 +131,6 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             //    }
             //};
             //var test = JsonSerializer.Serialize(memoryReaderConfig, Serialization.SourceGenerationContext.Default.MemoryReaderConfig);
-
-            _onMediaPropsChangedTimer = _dispatcherQueue.CreateTimer();
 
             _settingsService.AppSettings.MediaSourceProvidersInfo.ItemPropertyChanged += MediaSourceProvidersInfo_ItemPropertyChanged;
 
@@ -307,10 +305,10 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
         private void MediaManager_OnAnyMediaPropertyChanged(MediaSession? mediaSession, GlobalSystemMediaTransportControlsSessionMediaProperties? mediaProperties)
         {
-            _onMediaPropsChangedTimer?.Debounce(() =>
+            _ = _onMediaPropsChangedDebouncer.RunAsync(() =>
             {
                 _ = OnAnyMediaPropertyChangedCoreAsync(mediaSession, mediaProperties);
-            }, TimeSpan.FromSeconds(1));
+            }, 1000);
         }
 
         private void MediaManager_OnAnySessionClosed(MediaSession mediaSession)

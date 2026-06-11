@@ -23,7 +23,7 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
 {
     public partial class SettingsService : BaseViewModel, ISettingsService
     {
-        private readonly DispatcherQueueTimer _writeAppSettingsTimer;
+        private readonly Debouncer _writeAppSettingsDebouncer = new();
         private readonly ILocalizationService _localizationService;
 
         public AppSettings AppSettings { get; set; }
@@ -31,7 +31,6 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
         public SettingsService(ILocalizationService localizationService)
         {
             _localizationService = localizationService;
-            _writeAppSettingsTimer = _dispatcherQueue.CreateTimer();
 
             AppSettings = ReadAppSettings();
 
@@ -314,13 +313,13 @@ namespace BetterLyrics.WinUI3.Services.SettingsService
 
         private void WriteAppSettings()
         {
-            _writeAppSettingsTimer.Debounce(() =>
+            _ = _writeAppSettingsDebouncer.RunAsync(() =>
             {
                 _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                 {
                     SaveAppSettings();
                 });
-            }, Constants.Time.DebounceTimeout);
+            });
         }
 
         private void SaveAppSettings()
