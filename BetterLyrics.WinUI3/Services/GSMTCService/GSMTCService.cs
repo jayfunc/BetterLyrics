@@ -21,7 +21,6 @@ using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
-using CommunityToolkit.WinUI;
 using EvtSource;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;

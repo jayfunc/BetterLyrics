@@ -5,7 +5,6 @@ using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.Models.Settings;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace BetterLyrics.WinUI3.Helper.Lyrics
 {

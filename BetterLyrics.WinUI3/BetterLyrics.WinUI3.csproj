@@ -66,6 +66,7 @@
 		<None Remove="Controls\MediaSettingsControl.xaml" />
 		<None Remove="Controls\NowPlayingBar.xaml" />
 		<None Remove="Controls\PaletteItemControl.xaml" />
+		<None Remove="Controls\ParallaxTiltControl.xaml" />
 		<None Remove="Controls\PatronControl.xaml" />
 		<None Remove="Controls\PlaybackSettingsControl.xaml" />
 		<None Remove="Controls\PlayQueue.xaml" />
@@ -537,6 +538,9 @@
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>
 	  <Page Update="Controls\FloatSidePanel.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Controls\ParallaxTiltControl.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>
 	  <None Update="Themes\Generic.xaml">
