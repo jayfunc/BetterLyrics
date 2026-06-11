@@ -21,13 +21,18 @@
 
                     <TextBlock x:Uid="SettingsPageLyricsStyle" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsAlignment" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8E3;}">
+                    <controls:SettingsExpander x:Uid="SettingsPageLyricsAlignment" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8E3;}">
                         <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsAlignmentType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageLeft" />
                             <ComboBoxItem x:Uid="SettingsPageCenter" />
                             <ComboBoxItem x:Uid="SettingsPageRight" />
                         </ComboBox>
-                    </controls:SettingsCard>
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="SettingsPageUseInternalLyricsAlignment">
+                                <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.LyricsStyleSettings.UseInternalLyricsAlignment, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
 
                     <controls:SettingsCard
                         x:Uid="SettingsPageLyricsContentOrientation"

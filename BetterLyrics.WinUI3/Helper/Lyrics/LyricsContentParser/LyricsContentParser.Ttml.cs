@@ -60,13 +60,15 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
                 foreach (var p in ps)
                 {
                     string pKey = p.Attribute(_itunes + "key")?.Value ?? "";
+                    string agentId = p.Attribute(_ttml + "agent")?.Value ?? "";
 
                     // 解析主歌词行
                     ParseTtmlSegment(
                         container: p,
                         primaryDest: originalLines,
                         transDest: translationLines,
-                        romanDest: romanLines
+                        romanDest: romanLines,
+                        agentId: agentId
                     );
 
                     var currentOriginalLine = originalLines.LastOrDefault();
@@ -80,13 +82,13 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
                         {
                             foreach (var tText in transTexts)
                             {
-                                ParseTtmlSegment(tText, translationLines, null, null, pStart, pEnd);
+                                ParseTtmlSegment(tText, translationLines, null, null, agentId, pStart, pEnd);
 
                                 // 处理可能嵌套在扩展 text 中的背景人声
                                 var textBgSpans = tText.Elements().Where(s => s.Attribute(_ttml + "role")?.Value == "x-bg");
                                 foreach (var bg in textBgSpans)
                                 {
-                                    ParseTtmlSegment(bg, translationLines, null, null, pStart, pEnd);
+                                    ParseTtmlSegment(bg, translationLines, null, null, agentId, pStart, pEnd);
                                 }
                             }
                         }
@@ -94,12 +96,12 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
                         {
                             foreach (var rText in romanTexts)
                             {
-                                ParseTtmlSegment(rText, romanLines, null, null, pStart, pEnd);
+                                ParseTtmlSegment(rText, romanLines, null, null, agentId, pStart, pEnd);
 
                                 var textBgSpans = rText.Elements().Where(s => s.Attribute(_ttml + "role")?.Value == "x-bg");
                                 foreach (var bg in textBgSpans)
                                 {
-                                    ParseTtmlSegment(bg, romanLines, null, null, pStart, pEnd);
+                                    ParseTtmlSegment(bg, romanLines, null, null, agentId, pStart, pEnd);
                                 }
                             }
                         }
@@ -115,7 +117,8 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
                             transDest: translationLines,
                             romanDest: romanLines,
                             fallbackStartMs: pStart,
-                            fallbackEndMs: pEnd
+                            fallbackEndMs: pEnd,
+                            agentId: agentId
                         );
                     }
                 }
@@ -136,12 +139,13 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
         }
 
         private void ParseTtmlSegment(
-                    XElement container,
-                    List<LyricsLine>? primaryDest,
-                    List<LyricsLine>? transDest,
-                    List<LyricsLine>? romanDest,
-                    int fallbackStartMs = 0,
-                    int fallbackEndMs = 0)
+            XElement container,
+            List<LyricsLine>? primaryDest,
+            List<LyricsLine>? transDest,
+            List<LyricsLine>? romanDest,
+            string agentId,
+            int fallbackStartMs = 0,
+            int fallbackEndMs = 0)
         {
             int startMs = fallbackStartMs;
             var beginAttr = container.Attribute("begin");
@@ -258,6 +262,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser
                     PrimaryText = fullPrimaryText,
                     PrimarySyllables = syllables,
                     IsPrimaryHasRealSyllableInfo = syllables.Count > 0,
+                    AgentId = agentId
                 });
             }
 

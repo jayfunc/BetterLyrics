@@ -2280,6 +2280,12 @@
   <data name="SettingsPageUnplayedStrokeFontColor.Header" xml:space="preserve">
     <value>Stroke (Unplayed)</value>
   </data>
+  <data name="SettingsPageUseInternalLyricsAlignment.Description" xml:space="preserve">
+    <value>Uses the alignment specified in the lyrics content (currently supports TTML only)</value>
+  </data>
+  <data name="SettingsPageUseInternalLyricsAlignment.Header" xml:space="preserve">
+    <value>Preserve Original Alignment</value>
+  </data>
   <data name="SettingsPageUserWhoPurchased" xml:space="preserve">
     <value>And users who purchased BetterLyrics</value>
   </data>

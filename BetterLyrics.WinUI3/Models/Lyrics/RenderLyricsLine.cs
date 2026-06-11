@@ -101,6 +101,10 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
 
         public bool IsPrimaryHasRealSyllableInfo { get; set; }
 
+        public string AgentId { get; set; }
+
+        public TextAlignmentType? HorizontalAlignmentType { get; set; }
+
         public RenderLyricsLine(LyricsLine lyricsLine) : base(lyricsLine)
         {
             AngleTransition = new(
@@ -186,6 +190,7 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
             SecondaryText = lyricsLine.SecondaryText;
             PrimaryRenderSyllables = lyricsLine.PrimarySyllables.Select(x => new RenderLyricsSyllable(x)).ToList();
             IsPrimaryHasRealSyllableInfo = lyricsLine.IsPrimaryHasRealSyllableInfo;
+            AgentId = lyricsLine.AgentId;
         }
 
         public void DisposeTextLayout()

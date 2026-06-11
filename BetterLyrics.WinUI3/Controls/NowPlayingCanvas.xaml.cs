@@ -803,6 +803,7 @@ namespace BetterLyrics.WinUI3.Controls
             if (_isLayoutChanged)
             {
                 LyricsLayoutManager.CalculateLanes(_renderLyricsLines);
+                LyricsLayoutManager.CalculateAlignments(_renderLyricsLines);
                 LyricsLayoutManager.MeasureAndArrange(
                     resourceCreator: Canvas,
                     lines: _renderLyricsLines,
@@ -1155,6 +1156,10 @@ namespace BetterLyrics.WinUI3.Controls
                     RequestRelayout();
                 }
                 else if (message.PropertyName == nameof(LyricsStyleSettings.AutoWrap))
+                {
+                    RequestRelayout();
+                }
+                else if (message.PropertyName == nameof(LyricsStyleSettings.UseInternalLyricsAlignment))
                 {
                     RequestRelayout();
                 }
