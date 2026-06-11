@@ -47,7 +47,7 @@ namespace BetterLyrics.WinUI3.Controls
         private void ConfigButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
             ViewModel.SelectedMediaSourceProvider = (MediaSourceProviderInfo)((Button)sender).DataContext;
-            ViewModel.OpenConfigPanel();
+            PlaybackConfigPanel.Show();
         }
 
         private void DeleteButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
@@ -56,14 +56,9 @@ namespace BetterLyrics.WinUI3.Controls
             ViewModel.AppSettings.MediaSourceProvidersInfo.Remove(data);
         }
 
-        private void PlaybackListGrid_SizeChanged(object sender, Microsoft.UI.Xaml.SizeChangedEventArgs e)
-        {
-            ViewModel.PlaybackListGridHeight = e.NewSize.Height;
-        }
-
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel.CloseConfigPanelCommand.Execute(null);
+            PlaybackConfigPanel.Hide();
         }
 
         private async void SaveLyrics(LyricsFormat lyricsFormat)
@@ -118,6 +113,11 @@ namespace BetterLyrics.WinUI3.Controls
         private void SaveLyricsAsTtmlMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             SaveLyrics(LyricsFormat.Ttml);
+        }
+
+        private void CloseConfigPanelButton_Click(object sender, RoutedEventArgs e)
+        {
+            PlaybackConfigPanel.Hide();
         }
     }
 }

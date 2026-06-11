@@ -50,6 +50,7 @@
 		<None Remove="Controls\DragVisualControl.xaml" />
 		<None Remove="Controls\DropGhostControl.xaml" />
 		<None Remove="Controls\ExtendedSlider.xaml" />
+		<None Remove="Controls\FloatSidePanel.xaml" />
 		<None Remove="Controls\FontPicker.xaml" />
 		<None Remove="Controls\FontPickerDialog.xaml" />
 		<None Remove="Controls\ImageSwitcher.xaml" />
@@ -533,6 +534,9 @@
 	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
 	  </Content>
 	  <Page Update="Themes\FluentExternalLinkButtonStyle.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </Page>
+	  <Page Update="Controls\FloatSidePanel.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </Page>
 	  <None Update="Themes\Generic.xaml">

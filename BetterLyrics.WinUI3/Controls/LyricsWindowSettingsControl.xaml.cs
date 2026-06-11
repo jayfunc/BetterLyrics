@@ -133,19 +133,19 @@ namespace BetterLyrics.WinUI3.Controls
         {
             ConfigNavView.SelectedItem = WindowSegmentedItem;
             LyricsWindowStatus = (LyricsWindowStatus)((Button)sender).DataContext;
-            ViewModel.OpenConfigPanel();
+            ConfigPanel.Show();
         }
 
         private void EmbeddedConfigButton_Click(object sender, RoutedEventArgs e)
         {
             ConfigNavView.SelectedItem = WindowSegmentedItem;
             LyricsWindowStatus = _settingsService.AppSettings.MusicGallerySettings.LyricsWindowStatus;
-            ViewModel.OpenConfigPanel();
+            ConfigPanel.Show();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            ViewModel.CloseConfigPanelCommand.Execute(null);
+            ConfigPanel.Hide();
         }
 
         private void ConfigNavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -299,5 +299,9 @@ namespace BetterLyrics.WinUI3.Controls
             }
         }
 
+        private void CloseConfigPanelButton_Click(object sender, RoutedEventArgs e)
+        {
+            ConfigPanel.Hide();
+        }
     }
 }

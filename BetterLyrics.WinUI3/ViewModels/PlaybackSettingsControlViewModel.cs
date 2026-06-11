@@ -14,7 +14,6 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.IO;
 using System.Linq;
-using System.Numerics;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -43,12 +42,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty] public partial int SelectedTargetLanguageIndex { get; set; }
 
         [ObservableProperty] public partial string AppleMusicMediaUserToken { get; set; }
-
-        [ObservableProperty] public partial double PlaybackListGridHeight { get; set; } = 0;
-
-        [ObservableProperty] public partial bool IsConfigPanelOpened { get; set; } = false;
-
-        [ObservableProperty] public partial Vector3 ConfigPanelTranslation { get; set; } = new();
 
         public PlaybackSettingsControlViewModel(
             ISettingsService settingsService,
@@ -192,34 +185,9 @@ namespace BetterLyrics.WinUI3.ViewModels
             GSMTCService.UpdateLyrics();
         }
 
-        [RelayCommand]
-        private void CloseConfigPanel()
-        {
-            IsConfigPanelOpened = false;
-            ConfigPanelTranslation = new(0, (float)PlaybackListGridHeight, 0);
-        }
-
-        public void OpenConfigPanel()
-        {
-            IsConfigPanelOpened = true;
-            ConfigPanelTranslation = new();
-        }
-
         partial void OnSelectedTargetLanguageIndexChanged(int value)
         {
             AppSettings.TranslationSettings.SelectedTargetLanguageCode = LanguageHelper.SupportedTranslationTargetLanguages[value].LanguageCode;
-        }
-
-        partial void OnPlaybackListGridHeightChanged(double value)
-        {
-            if (IsConfigPanelOpened)
-            {
-                OpenConfigPanel();
-            }
-            else
-            {
-                CloseConfigPanel();
-            }
         }
     }
 }
