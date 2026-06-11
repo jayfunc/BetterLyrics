@@ -66,15 +66,6 @@ namespace BetterLyrics.WinUI3.Controls
             set => SetValue(LyricsWindowStatusProperty, value);
         }
 
-        private static readonly DependencyProperty SwitchPresenterValueProperty =
-            DependencyProperty.Register(nameof(SwitchPresenterValue), typeof(int), typeof(LayoutSettingsControl), new PropertyMetadata(0));
-
-        private int SwitchPresenterValue
-        {
-            get => (int)GetValue(SwitchPresenterValueProperty);
-            set => SetValue(SwitchPresenterValueProperty, value);
-        }
-
         public LayoutSettingsControl()
         {
             InitializeComponent();
@@ -209,7 +200,7 @@ namespace BetterLyrics.WinUI3.Controls
             if (sender is FrameworkElement button && button.DataContext is LayoutProfile clickedProfile)
             {
                 EditingLayoutProfile = clickedProfile;
-                SwitchPresenterValue = 1;
+                ConfigPanel.Show();
             }
         }
 
@@ -220,7 +211,7 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            SwitchPresenterValue = 0;
+            ConfigPanel.Hide();
             EditingLayoutProfile = null;
         }
 

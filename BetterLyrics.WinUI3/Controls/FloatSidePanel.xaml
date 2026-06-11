@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.FloatSidePanel"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:BetterLyrics.WinUI3.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <Storyboard x:Name="EnterStoryboard">
+            <DoubleAnimation
+                Storyboard.TargetName="PanelTransform"
+                Storyboard.TargetProperty="X"
+                To="0"
+                Duration="0:0:0.3">
+                <DoubleAnimation.EasingFunction>
+                    <ExponentialEase EasingMode="EaseOut" Exponent="5" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation
+                Storyboard.TargetName="PanelTransform"
+                Storyboard.TargetProperty="Y"
+                To="0"
+                Duration="0:0:0.3">
+                <DoubleAnimation.EasingFunction>
+                    <ExponentialEase EasingMode="EaseOut" Exponent="5" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation
+                Storyboard.TargetName="MaskBorder"
+                Storyboard.TargetProperty="Opacity"
+                From="0"
+                To="1"
+                Duration="0:0:0.3" />
+        </Storyboard>
+
+        <Storyboard x:Name="ExitStoryboard" Completed="ExitStoryboard_Completed">
+            <DoubleAnimation
+                x:Name="ExitSlideAnimationX"
+                Storyboard.TargetName="PanelTransform"
+                Storyboard.TargetProperty="X"
+                Duration="0:0:0.2">
+                <DoubleAnimation.EasingFunction>
+                    <ExponentialEase EasingMode="EaseIn" Exponent="5" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation
+                x:Name="ExitSlideAnimationY"
+                Storyboard.TargetName="PanelTransform"
+                Storyboard.TargetProperty="Y"
+                Duration="0:0:0.2">
+                <DoubleAnimation.EasingFunction>
+                    <ExponentialEase EasingMode="EaseIn" Exponent="5" />
+                </DoubleAnimation.EasingFunction>
+            </DoubleAnimation>
+            <DoubleAnimation
+                Storyboard.TargetName="MaskBorder"
+                Storyboard.TargetProperty="Opacity"
+                From="1"
+                To="0"
+                Duration="0:0:0.2" />
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Grid x:Name="RootContainer" Visibility="Collapsed">
+
+        <Border
+            x:Name="MaskBorder"
+            Opacity="0"
+            Tapped="Mask_Tapped" />
+
+        <Grid
+            x:Name="PanelGrid"
+            Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}">
+
+            <Grid.RenderTransform>
+                <TranslateTransform x:Name="PanelTransform" />
+            </Grid.RenderTransform>
+
+            <ContentPresenter
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Stretch"
+                Content="{x:Bind PanelContent, Mode=OneWay}" />
+        </Grid>
+    </Grid>
+</UserControl>

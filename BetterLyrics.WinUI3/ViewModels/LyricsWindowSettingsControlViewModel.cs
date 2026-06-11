@@ -23,9 +23,6 @@ namespace BetterLyrics.WinUI3.ViewModels
         [ObservableProperty]
         public partial object SelectorBarSelectedItemTag { get; set; } = "AlbumArtStyle";
 
-        [ObservableProperty]
-        public partial bool IsConfigPanelOpened { get; set; } = false;
-
         public LyricsWindowSettingsControlViewModel(ISettingsService settingsService)
         {
             _settingsService = settingsService;
@@ -39,17 +36,6 @@ namespace BetterLyrics.WinUI3.ViewModels
             var status = new LyricsWindowStatus(mode);
             status.LayoutProfileId = AppSettings.LayoutProfiles.First(x => x.Mode == status.GetDefaultLayoutProfileMode()).Id;
             AppSettings.WindowBoundsRecords.Add(status);
-        }
-
-        public void OpenConfigPanel()
-        {
-            IsConfigPanelOpened = true;
-        }
-
-        [RelayCommand]
-        private void CloseConfigPanel()
-        {
-            IsConfigPanelOpened = false;
         }
 
         public void Receive(PropertyChangedMessage<bool> message)

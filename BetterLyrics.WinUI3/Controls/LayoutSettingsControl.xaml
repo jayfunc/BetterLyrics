@@ -94,157 +94,142 @@
     </UserControl.Resources>
 
     <Grid>
-        <controls:SwitchPresenter Value="{x:Bind SwitchPresenterValue, Mode=OneWay}">
-            <controls:SwitchPresenter.ContentTransitions>
-                <TransitionCollection>
-                    <PopupThemeTransition />
-                </TransitionCollection>
-            </controls:SwitchPresenter.ContentTransitions>
 
-            <controls:Case>
-                <controls:Case.Value>
-                    <x:Int32>0</x:Int32>
-                </controls:Case.Value>
-                <Grid RowSpacing="4">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
+        <Grid RowSpacing="4">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
 
-                    <Grid Grid.Row="0" />
+            <Grid Grid.Row="0" />
 
-                    <ScrollViewer Grid.Row="1">
-                        <StackPanel Padding="36,0">
-                            <Expander
-                                HorizontalAlignment="Stretch"
-                                HorizontalContentAlignment="Center"
-                                IsExpanded="True">
-                                <Expander.Header>
-                                    <TextBlock x:Uid="LayoutSettingsControlSystemProfiles" />
-                                </Expander.Header>
-                                <ListView
-                                    x:Name="SystemProfilesListView"
-                                    AllowDrop="False"
-                                    CanDragItems="False"
-                                    CanReorderItems="False"
-                                    ItemContainerStyle="{ThemeResource ListViewCardStyle}"
-                                    ItemTemplate="{StaticResource LayoutProfileDataTemplate}"
-                                    ItemsSource="{x:Bind SystemProfiles, Mode=OneWay}"
-                                    SelectedItem="{x:Bind SelectedLayoutProfile, Mode=OneWay}"
-                                    SelectionChanged="SystemProfilesListView_SelectionChanged"
-                                    SelectionMode="Single">
-                                    <ListView.ItemsPanel>
-                                        <ItemsPanelTemplate>
-                                            <ItemsWrapGrid Orientation="Horizontal" />
-                                        </ItemsPanelTemplate>
-                                    </ListView.ItemsPanel>
-                                </ListView>
-                            </Expander>
-                            <Expander
-                                HorizontalAlignment="Stretch"
-                                HorizontalContentAlignment="Center"
-                                IsExpanded="True">
-                                <Expander.Header>
-                                    <TextBlock x:Uid="LayoutSettingsControlCustomProfiles" />
-                                </Expander.Header>
-                                <Grid>
-                                    <ListView
-                                        x:Name="CustomProfilesListView"
-                                        AllowDrop="True"
-                                        CanDragItems="True"
-                                        CanReorderItems="True"
-                                        DragItemsCompleted="CustomProfilesListView_DragItemsCompleted"
-                                        ItemContainerStyle="{ThemeResource ListViewCardStyle}"
-                                        ItemTemplate="{StaticResource LayoutProfileDataTemplate}"
-                                        ItemsSource="{x:Bind CustomProfiles, Mode=OneWay}"
-                                        SelectedItem="{x:Bind SelectedLayoutProfile, Mode=OneWay}"
-                                        SelectionChanged="CustomProfilesListView_SelectionChanged"
-                                        SelectionMode="Single">
-                                        <ListView.ItemsPanel>
-                                            <ItemsPanelTemplate>
-                                                <ItemsWrapGrid Orientation="Horizontal" />
-                                            </ItemsPanelTemplate>
-                                        </ListView.ItemsPanel>
-                                    </ListView>
-                                    <Grid Visibility="{x:Bind CustomProfiles.Count, Mode=OneWay, Converter={StaticResource IntNegationToVisibilityConverter}}">
-                                        <StackPanel
-                                            Margin="0,24"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Center"
-                                            Spacing="12">
-                                            <Image MaxWidth="100" Source="/Assets/EmptyBox.png" />
-                                            <TextBlock
-                                                x:Uid="LayoutSettingsControlCustomProfilesEmpty"
-                                                HorizontalAlignment="Center"
-                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                                TextWrapping="Wrap" />
-                                        </StackPanel>
-                                    </Grid>
-                                </Grid>
-                            </Expander>
-                        </StackPanel>
-                    </ScrollViewer>
+            <ScrollViewer Grid.Row="1">
+                <StackPanel Padding="36,0">
+                    <Expander
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        IsExpanded="True">
+                        <Expander.Header>
+                            <TextBlock x:Uid="LayoutSettingsControlSystemProfiles" />
+                        </Expander.Header>
+                        <ListView
+                            x:Name="SystemProfilesListView"
+                            AllowDrop="False"
+                            CanDragItems="False"
+                            CanReorderItems="False"
+                            ItemContainerStyle="{ThemeResource ListViewCardStyle}"
+                            ItemTemplate="{StaticResource LayoutProfileDataTemplate}"
+                            ItemsSource="{x:Bind SystemProfiles, Mode=OneWay}"
+                            SelectedItem="{x:Bind SelectedLayoutProfile, Mode=OneWay}"
+                            SelectionChanged="SystemProfilesListView_SelectionChanged"
+                            SelectionMode="Single">
+                            <ListView.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <ItemsWrapGrid Orientation="Horizontal" />
+                                </ItemsPanelTemplate>
+                            </ListView.ItemsPanel>
+                        </ListView>
+                    </Expander>
+                    <Expander
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Center"
+                        IsExpanded="True">
+                        <Expander.Header>
+                            <TextBlock x:Uid="LayoutSettingsControlCustomProfiles" />
+                        </Expander.Header>
+                        <Grid>
+                            <ListView
+                                x:Name="CustomProfilesListView"
+                                AllowDrop="True"
+                                CanDragItems="True"
+                                CanReorderItems="True"
+                                DragItemsCompleted="CustomProfilesListView_DragItemsCompleted"
+                                ItemContainerStyle="{ThemeResource ListViewCardStyle}"
+                                ItemTemplate="{StaticResource LayoutProfileDataTemplate}"
+                                ItemsSource="{x:Bind CustomProfiles, Mode=OneWay}"
+                                SelectedItem="{x:Bind SelectedLayoutProfile, Mode=OneWay}"
+                                SelectionChanged="CustomProfilesListView_SelectionChanged"
+                                SelectionMode="Single">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <ItemsWrapGrid Orientation="Horizontal" />
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                            </ListView>
+                            <Grid Visibility="{x:Bind CustomProfiles.Count, Mode=OneWay, Converter={StaticResource IntNegationToVisibilityConverter}}">
+                                <StackPanel
+                                    Margin="0,24"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Spacing="12">
+                                    <Image MaxWidth="100" Source="/Assets/EmptyBox.png" />
+                                    <TextBlock
+                                        x:Uid="LayoutSettingsControlCustomProfilesEmpty"
+                                        HorizontalAlignment="Center"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        TextWrapping="Wrap" />
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </Expander>
+                </StackPanel>
+            </ScrollViewer>
 
-                    <Grid
-                        Grid.Row="2"
-                        Margin="36,20"
-                        ColumnSpacing="4">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
+            <Grid
+                Grid.Row="2"
+                Margin="36,20"
+                ColumnSpacing="4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
 
-                        <TextBlock
-                            x:Uid="SettingsPageLayoutConfigShareHint"
-                            Grid.Column="0"
-                            Margin="0,0,8,0"
-                            VerticalAlignment="Center"
-                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                            Style="{StaticResource CaptionTextBlockStyle}" />
+                <TextBlock
+                    x:Uid="SettingsPageLayoutConfigShareHint"
+                    Grid.Column="0"
+                    Margin="0,0,8,0"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Style="{StaticResource CaptionTextBlockStyle}" />
 
-                        <uc:ExternalLinkButton
-                            x:Uid="SettingsPageShareHub"
-                            Grid.Column="1"
-                            NavigateUri="{x:Bind constants:Link.LayoutsStore}" />
+                <uc:ExternalLinkButton
+                    x:Uid="SettingsPageShareHub"
+                    Grid.Column="1"
+                    NavigateUri="{x:Bind constants:Link.LayoutsStore}" />
 
-                        <Button x:Uid="SettingsPageCreateFromTemplates" Grid.Column="2">
-                            <Button.Flyout>
-                                <MenuFlyout x:Name="CreateFromTemplatesMenuFlyout" ShouldConstrainToRootBounds="False" />
-                            </Button.Flyout>
-                        </Button>
+                <Button x:Uid="SettingsPageCreateFromTemplates" Grid.Column="2">
+                    <Button.Flyout>
+                        <MenuFlyout x:Name="CreateFromTemplatesMenuFlyout" ShouldConstrainToRootBounds="False" />
+                    </Button.Flyout>
+                </Button>
 
-                        <Button
-                            x:Uid="SettingsPageImport"
-                            Grid.Column="3"
-                            Click="ImportButton_Click" />
-                    </Grid>
+                <Button
+                    x:Uid="SettingsPageImport"
+                    Grid.Column="3"
+                    Click="ImportButton_Click" />
+            </Grid>
 
-                </Grid>
-            </controls:Case>
+        </Grid>
 
-            <controls:Case>
-                <controls:Case.Value>
-                    <x:Int32>1</x:Int32>
-                </controls:Case.Value>
-                <Grid>
-                    <uc:LayoutEditorControl LayoutProfile="{x:Bind EditingLayoutProfile, Mode=OneWay}" LyricsWindowStatus="{x:Bind LyricsWindowStatus, Mode=OneWay}" />
-                    <Button
-                        Height="42"
-                        Margin="0,0,36,0"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Top"
-                        Click="BackButton_Click"
-                        Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                              FontSize=16,
-                                              Glyph=&#xE72B;}"
-                        Style="{ThemeResource AccentButtonStyle}" />
-                </Grid>
-            </controls:Case>
+        <uc:FloatSidePanel x:Name="ConfigPanel">
+            <Grid>
+                <uc:LayoutEditorControl LayoutProfile="{x:Bind EditingLayoutProfile, Mode=OneWay}" LyricsWindowStatus="{x:Bind LyricsWindowStatus, Mode=OneWay}" />
+                <Button
+                    Height="42"
+                    Margin="0,0,36,0"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Top"
+                    Click="BackButton_Click"
+                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                          FontSize=16,
+                                          Glyph=&#xE72B;}"
+                    Style="{ThemeResource AccentButtonStyle}" />
+            </Grid>
+        </uc:FloatSidePanel>
 
-        </controls:SwitchPresenter>
     </Grid>
 
 </UserControl>
