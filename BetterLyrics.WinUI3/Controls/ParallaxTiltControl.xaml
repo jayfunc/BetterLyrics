@@ -7,9 +7,6 @@
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Loaded="OnLoaded"
-    PointerEntered="OnPointerEntered"
-    PointerExited="OnPointerExited"
-    PointerMoved="OnPointerMoved"
     Unloaded="OnUnloaded"
     mc:Ignorable="d">
 
@@ -22,11 +19,7 @@
             <PlaneProjection x:Name="TiltProjection" />
         </Grid.Projection>
 
-        <ContentPresenter
-            x:Name="ContentPresenter"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Content="{x:Bind Child, Mode=OneWay}">
+        <ContentPresenter x:Name="ContentPresenter" Content="{x:Bind Child, Mode=OneWay}">
             <ContentPresenter.RenderTransform>
                 <CompositeTransform x:Name="ParallaxTransform" />
             </ContentPresenter.RenderTransform>

@@ -43,7 +43,7 @@ namespace BetterLyrics.WinUI3.Models
                 MarginTop = this.MarginTop,
                 MarginRight = this.MarginRight,
                 MarginBottom = this.MarginBottom,
-
+                
                 HorizontalAlignment = this.HorizontalAlignment,
                 VerticalAlignment = this.VerticalAlignment,
 

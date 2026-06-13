@@ -95,6 +95,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 TranslatedLyricsOpacity = this.TranslatedLyricsOpacity,
 
                 LyricsAlignmentType = this.LyricsAlignmentType,
+                UseInternalLyricsAlignment = this.UseInternalLyricsAlignment,
                 LyricsLineContentOrientation = this.LyricsLineContentOrientation,
                 AutoWrap = this.AutoWrap,
                 LyricsFontStrokeWidth = this.LyricsFontStrokeWidth,
@@ -110,6 +111,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 LyricsUnplayedStrokeFontColorType = this.LyricsUnplayedStrokeFontColorType,
                 LyricsFontWeight = this.LyricsFontWeight,
                 LyricsLineOverallSpacingFactor = this.LyricsLineOverallSpacingFactor,
+                LyricsLineInnerSpacingFactor = this.LyricsLineInnerSpacingFactor,
                 LyricsCJKFontFamily = this.LyricsCJKFontFamily,
                 LyricsWesternFontFamily = this.LyricsWesternFontFamily,
 

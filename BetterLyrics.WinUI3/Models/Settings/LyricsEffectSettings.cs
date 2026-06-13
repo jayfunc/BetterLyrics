@@ -1,6 +1,7 @@
 ﻿using BetterLyrics.WinUI3.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
+using System.Text.Json.Serialization;
 
 namespace BetterLyrics.WinUI3.Models.Settings
 {
@@ -41,12 +42,13 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsFanLyricsEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int FanLyricsAngle { get; set; } = 30;
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool Is3DLyricsEnabled { get; set; } = false;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int Lyrics3DXAngle { get; set; } = 30;
+        [ObservableProperty][NotifyPropertyChangedRecipients][NotifyPropertyChangedFor(nameof(Is3DLyricsAdjustable))] public partial bool Is3DLyricsEnabled { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients][NotifyPropertyChangedFor(nameof(Is3DLyricsAdjustable))] public partial bool IsAuto3DLyricsEnabled { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int Lyrics3DXAngle { get; set; } = 0;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int Lyrics3DYAngle { get; set; } = 0;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int Lyrics3DZAngle { get; set; } = 0;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool Lyrics3DAutoFitLayout { get; set; } = false;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int Lyrics3DDepth { get; set; } = 1000;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial int Lyrics3DDepth { get; set; } = 800;
+        [JsonIgnore] public bool Is3DLyricsAdjustable => Is3DLyricsEnabled && !IsAuto3DLyricsEnabled;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsBrethingEffectEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsBreathingIntensity { get; set; } = 80;
@@ -75,6 +77,8 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 LyricsGlowEffectAmount = this.LyricsGlowEffectAmount,
                 LyricsGlowEffectScope = this.LyricsGlowEffectScope,
 
+                IsLyricsShadowEffectEnabled = this.IsLyricsShadowEffectEnabled,
+
                 IsLyricsScaleEffectEnabled = this.IsLyricsScaleEffectEnabled,
                 LyricsScaleEffectLongSyllableDuration = this.LyricsScaleEffectLongSyllableDuration,
                 IsLyricsScaleEffectAmountAutoAdjust = this.IsLyricsScaleEffectAmountAutoAdjust,
@@ -97,10 +101,10 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 FanLyricsAngle = this.FanLyricsAngle,
 
                 Is3DLyricsEnabled = this.Is3DLyricsEnabled,
+                IsAuto3DLyricsEnabled = this.IsAuto3DLyricsEnabled,
                 Lyrics3DXAngle = this.Lyrics3DXAngle,
                 Lyrics3DYAngle = this.Lyrics3DYAngle,
                 Lyrics3DZAngle = this.Lyrics3DZAngle,
-                Lyrics3DAutoFitLayout = this.Lyrics3DAutoFitLayout,
                 Lyrics3DDepth = this.Lyrics3DDepth,
 
                 IsLyricsBrethingEffectEnabled = this.IsLyricsBrethingEffectEnabled,

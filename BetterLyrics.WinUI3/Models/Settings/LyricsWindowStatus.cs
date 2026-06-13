@@ -4,7 +4,6 @@ using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Services.LocalizationService;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using System;
 using System.Text.Json.Serialization;
@@ -93,7 +92,6 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [JsonIgnore][ObservableProperty] public partial bool IsUnderlayColorTimerRunning { get; set; } = false;
 
         [JsonIgnore][ObservableProperty][NotifyPropertyChangedRecipients] public partial WindowStatus WindowStatus { get; set; } = WindowStatus.Closed;
-        [JsonIgnore] public DispatcherQueueTimer? VisibilityTimer { get; set; }
         [JsonIgnore] public Thickness DemoWindowMargin => new(WindowBounds.Left - MonitorBounds.Left, WindowBounds.Top - MonitorBounds.Top, 0, 0);
         [JsonIgnore] public bool IsWindowThemeAdjustable => !IsAdaptToEnvironment && !IsAdaptToAlbumArt;
         [JsonIgnore] public bool IsAdaptToEnvironmentAdjustable => !IsAdaptToAlbumArt;
@@ -353,6 +351,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 WindowPalette = this.WindowPalette,
 
                 HideWindowWhenPaused = this.HideWindowWhenPaused,
+                HideWindowWhenNullSession = this.HideWindowWhenNullSession,
                 AutoShowOrHideWindowDelay = this.AutoShowOrHideWindowDelay,
                 TitleBarArea = this.TitleBarArea,
                 IsKeepScreenOpen = this.IsKeepScreenOpen,

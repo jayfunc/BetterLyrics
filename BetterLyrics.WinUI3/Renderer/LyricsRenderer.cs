@@ -1,4 +1,5 @@
-﻿using BetterLyrics.WinUI3.Extensions;
+﻿using BetterLyrics.WinUI3.Effects;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.Models.Settings;
 using Microsoft.Graphics.Canvas;
@@ -9,13 +10,13 @@ using Microsoft.UI;
 using System;
 using System.Collections.Generic;
 using System.Numerics;
+using Windows.Foundation;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Renderer
 {
-    public partial class LyricsRenderer : BreathingRendererBase, IDisposable
+    public partial class LyricsRenderer : EffectRendererBase, IDisposable
     {
-        private Matrix4x4 _threeDimMatrix = Matrix4x4.Identity;
         private EdgeFadeMaskRenderer _edgeFadeMaskRenderer = new();
 
         public int MouseHoverLineIndex { get; set; } = -1;
@@ -53,12 +54,8 @@ namespace BetterLyrics.WinUI3.Renderer
                 {
                     DrawLyricsWithEdgeFadeHandled(control, layerDs);
                 }
-
-                ds.DrawImage(new Transform3DEffect
-                {
-                    Source = layer,
-                    TransformMatrix = _threeDimMatrix
-                });
+                
+                base.DrawWithParallax(ds, layer);
             }
             else
             {
@@ -165,49 +162,42 @@ namespace BetterLyrics.WinUI3.Renderer
             }
         }
 
-        public void CalculateLyrics3DMatrix(bool isLayoutChanged)
+        private void UpdateLyricsParallaxMatrix()
         {
-            if (!isLayoutChanged) return;
-
             if (LyricsWindowStatus == null) return;
             var lyricsStyle = LyricsWindowStatus.LyricsStyleSettings;
             var lyricsEffect = LyricsWindowStatus.LyricsEffectSettings;
 
-            if (!lyricsEffect.Is3DLyricsEnabled) return;
+            if (!lyricsEffect.Is3DLyricsEnabled)
+            {
+                _threeDimMatrix = Matrix4x4.Identity;
+                return;
+            }
 
             var playingLineTopOffsetFactor = lyricsStyle.PlayingLineTopOffset / 100.0;
 
+            // 获取旋转中心点
             Vector3 center = new(
                 (float)(LyricsX + LyricsWidth / 2),
                 (float)(LyricsY + LyricsHeight * playingLineTopOffsetFactor),
                 0);
 
-            float rotationX = (float)(Math.PI * lyricsEffect.Lyrics3DXAngle / 180.0);
-            float rotationY = (float)(Math.PI * lyricsEffect.Lyrics3DYAngle / 180.0);
-            float rotationZ = (float)(Math.PI * lyricsEffect.Lyrics3DZAngle / 180.0);
-
-            Matrix4x4 rotation =
-                Matrix4x4.CreateRotationX(rotationX) *
-                Matrix4x4.CreateRotationY(rotationY) *
-                Matrix4x4.CreateRotationZ(rotationZ);
-            Matrix4x4 perspective = Matrix4x4.Identity;
-            perspective.M34 = 1.0f / lyricsEffect.Lyrics3DDepth;
-
-            // 组合变换：
-            // 1. 将中心移到原点
-            // 2. 旋转
-            // 3. 应用透视
-            // 4. 将中心移回原位
-            _threeDimMatrix =
-                Matrix4x4.CreateTranslation(-center) *
-                rotation *
-                perspective *
-                Matrix4x4.CreateTranslation(center);
+            base.UpdateParallaxMatrix(
+                center: center,
+                isAutoParallax: lyricsEffect.IsAuto3DLyricsEnabled,
+                manualAngleX: lyricsEffect.Lyrics3DXAngle,
+                manualAngleY: lyricsEffect.Lyrics3DYAngle,
+                manualAngleZ: lyricsEffect.Lyrics3DZAngle,
+                depth: lyricsEffect.IsAuto3DLyricsEnabled ? 800f : lyricsEffect.Lyrics3DDepth
+            );
         }
 
         public void Update(ICanvasAnimatedControl sender, float bassEnergy, int breathingIntensity)
         {
             base.UpdateBreathing(bassEnergy, breathingIntensity);
+
+            UpdateLyricsParallaxMatrix();
+
             switch (LyricsWindowStatus?.LyricsStyleSettings.LyricsLineContentOrientation)
             {
                 case Enums.LyricsLineContentOrientation.Horizontal:
@@ -225,19 +215,10 @@ namespace BetterLyrics.WinUI3.Renderer
 
                         new() { Position = 1.00f, Color = Colors.Transparent }
                     };
-                    _edgeFadeMaskRenderer.Update(
-                        sender,
-                        new Windows.Foundation.Rect(LyricsX - 16, LyricsY, LyricsWidth + 32, LyricsHeight),
-                        stops,
-                        false
-                    );
+                    _edgeFadeMaskRenderer.Update(sender, new Rect(LyricsX - 16, LyricsY, LyricsWidth + 32, LyricsHeight), stops, false);
                     break;
                 case Enums.LyricsLineContentOrientation.Vertical:
-                    _edgeFadeMaskRenderer.Update(
-                        sender,
-                        new Windows.Foundation.Rect(LyricsX - 16, LyricsY, LyricsWidth + 32, LyricsHeight),
-                        16, 0, 16, 0
-                    );
+                    _edgeFadeMaskRenderer.Update(sender, new Rect(LyricsX - 16, LyricsY, LyricsWidth + 32, LyricsHeight), 16, 0, 16, 0);
                     break;
                 default:
                     break;

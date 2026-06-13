@@ -2001,6 +2001,9 @@
   <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
     <value>Palet Oluşturucu Tipi</value>
   </data>
+  <data name="SettingsPageParallaxTilt.Header" xml:space="preserve">
+    <value>Paralaks Eğimi</value>
+  </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
     <value>Bu klasör zaten mevcut bir klasöre dahil edilmiştir, tekrar eklemeye gerek yoktur</value>
   </data>

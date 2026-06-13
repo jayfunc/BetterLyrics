@@ -78,6 +78,10 @@
                                     Value="{x:Bind LyricsBackgroundSettings.CoverOverlayBreathingIntensity, Mode=TwoWay}" />
                             </controls:SettingsCard>
 
+                            <controls:SettingsCard x:Uid="SettingsPageParallaxTilt">
+                                <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsCoverOverlayParallaxEnabled, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
 
@@ -120,6 +124,10 @@
                                 <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsFluidOverlayStatic, Mode=TwoWay}" />
                             </controls:SettingsCard>
 
+                            <controls:SettingsCard x:Uid="SettingsPageParallaxTilt">
+                                <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsFluidOverlayParallaxEnabled, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
 
@@ -157,6 +165,10 @@
                                     Value="{x:Bind LyricsBackgroundSettings.SnowFlakeOverlayBreathingIntensity, Mode=TwoWay}" />
                             </controls:SettingsCard>
 
+                            <controls:SettingsCard x:Uid="SettingsPageParallaxTilt">
+                                <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsSnowFlakeOverlayParallaxEnabled, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
 
@@ -176,6 +188,10 @@
                                     Minimum="0"
                                     Unit="%"
                                     Value="{x:Bind LyricsBackgroundSettings.FogOverlayBreathingIntensity, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+
+                            <controls:SettingsCard x:Uid="SettingsPageParallaxTilt">
+                                <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsFogOverlayParallaxEnabled, Mode=TwoWay}" />
                             </controls:SettingsCard>
 
                         </controls:SettingsExpander.Items>
@@ -242,6 +258,10 @@
                                     Minimum="0"
                                     Unit="%"
                                     Value="{x:Bind LyricsBackgroundSettings.RaindropOverlayBreathingIntensity, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+
+                            <controls:SettingsCard x:Uid="SettingsPageParallaxTilt">
+                                <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsRaindropOverlayParallaxEnabled, Mode=TwoWay}" />
                             </controls:SettingsCard>
 
                         </controls:SettingsExpander.Items>
@@ -318,6 +338,10 @@
 
                             <controls:SettingsCard x:Uid="SettingsPageSpectrumGlowEffect" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=OneWay}">
                                 <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsSpectrumGlowEffectEnabled, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+
+                            <controls:SettingsCard x:Uid="SettingsPageParallaxTilt">
+                                <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayParallaxEnabled, Mode=TwoWay}" />
                             </controls:SettingsCard>
 
                         </controls:SettingsExpander.Items>

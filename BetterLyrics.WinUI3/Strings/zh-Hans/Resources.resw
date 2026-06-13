@@ -2001,6 +2001,9 @@
   <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
     <value>取色风格</value>
   </data>
+  <data name="SettingsPageParallaxTilt.Header" xml:space="preserve">
+    <value>视差倾斜</value>
+  </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
     <value>该文件夹已包含在已有文件夹中，无需再次添加</value>
   </data>

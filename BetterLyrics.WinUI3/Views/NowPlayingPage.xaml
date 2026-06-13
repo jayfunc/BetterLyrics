@@ -22,28 +22,27 @@
     Unloaded="Page_Unloaded"
     mc:Ignorable="d">
 
-    <Grid x:Name="RootGrid" SizeChanged="RootGrid_SizeChanged">
+    <Grid
+        x:Name="RootGrid"
+        PointerEntered="RootGrid_PointerEntered"
+        PointerExited="RootGrid_PointerExited"
+        PointerMoved="RootGrid_PointerMoved"
+        PointerPressed="RootGrid_PointerPressed"
+        PointerReleased="RootGrid_PointerReleased"
+        PointerWheelChanged="RootGrid_PointerWheelChanged"
+        SizeChanged="RootGrid_SizeChanged">
 
-        <uc:NowPlayingCanvas x:Name="LyricsCanvas" LyricsWindowStatus="{x:Bind LyricsWindowStatus, Mode=OneWay}" />
+        <uc:NowPlayingCanvas
+            x:Name="NowPlayingCanvas"
+            Loaded="NowPlayingCanvas_Loaded"
+            LyricsWindowStatus="{x:Bind LyricsWindowStatus, Mode=OneWay}" />
 
         <Grid x:Name="DynamicLayoutGrid" Loaded="DynamicLayoutGrid_Loaded">
 
             <Grid
                 x:Name="LyricsContainer"
                 SizeChanged="LyricsContainer_SizeChanged"
-                Visibility="Collapsed">
-                <ScrollViewer
-                    x:Name="LyricsScrollViewer"
-                    PointerEntered="LyricsScrollViewer_PointerEntered"
-                    PointerExited="LyricsScrollViewer_PointerExited"
-                    PointerMoved="LyricsScrollViewer_PointerMoved"
-                    PointerPressed="LyricsScrollViewer_PointerPressed"
-                    PointerReleased="LyricsScrollViewer_PointerReleased"
-                    PointerWheelChanged="LyricsScrollViewer_PointerWheelChanged"
-                    VerticalScrollBarVisibility="Hidden">
-                    <Grid />
-                </ScrollViewer>
-            </Grid>
+                Visibility="Collapsed" />
 
             <Viewbox x:Name="LyricsCardContainer" Visibility="Collapsed">
                 <uc:LyricsCard
@@ -86,7 +85,10 @@
                         </StackPanel>
                     </Flyout>
                 </Grid.ContextFlyout>
-                <uc:ParallaxTiltControl>
+                <uc:ParallaxTiltControl
+                    x:Name="AlbumArtParallaxTiltControl"
+                    IsParallaxEnabled="{x:Bind LyricsWindowStatus.AlbumArtAreaEffectSettings.IsParallaxEnabled, Mode=OneWay}"
+                    Loaded="AlbumArtParallaxTiltControl_Loaded">
                     <controls:OpacityMaskView>
                         <controls:OpacityMaskView.OpacityMask>
                             <Rectangle>
@@ -111,103 +113,119 @@
                 <Grid.OpacityTransition>
                     <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
                 </Grid.OpacityTransition>
-                <controls:OpacityMaskView>
-                    <controls:OpacityMaskView.OpacityMask>
-                        <Rectangle>
-                            <Rectangle.Fill>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                    <GradientStop Offset="0" Color="Transparent" />
-                                    <GradientStop Offset="0.02" Color="#FFFFFFFF" />
-                                    <GradientStop Offset="0.98" Color="#FFFFFFFF" />
-                                    <GradientStop Offset="1" Color="Transparent" />
-                                </LinearGradientBrush>
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </controls:OpacityMaskView.OpacityMask>
-                    <dev:AutoScrollView
-                        x:Name="TitleAutoScrollHoverEffectView"
-                        IsPlaying="False"
-                        PointerCanceled="TitleAutoScrollHoverEffectView_PointerCanceled"
-                        PointerEntered="TitleAutoScrollHoverEffectView_PointerEntered"
-                        PointerExited="TitleAutoScrollHoverEffectView_PointerExited"
-                        ScrollingPixelsPreSecond="25">
-                        <TextBlock
-                            x:Name="TitleTextBlock"
-                            Padding="2,0"
-                            FontWeight="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
-                            TextTrimming="None" />
-                    </dev:AutoScrollView>
-                </controls:OpacityMaskView>
+                <uc:ParallaxTiltControl
+                    x:Name="SongTitleParallaxTiltControl"
+                    IsParallaxEnabled="False"
+                    Loaded="SongTitleParallaxTiltControl_Loaded">
+                    <controls:OpacityMaskView>
+                        <controls:OpacityMaskView.OpacityMask>
+                            <Rectangle>
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Offset="0" Color="Transparent" />
+                                        <GradientStop Offset="0.02" Color="#FFFFFFFF" />
+                                        <GradientStop Offset="0.98" Color="#FFFFFFFF" />
+                                        <GradientStop Offset="1" Color="Transparent" />
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </controls:OpacityMaskView.OpacityMask>
+                        <dev:AutoScrollView
+                            x:Name="TitleAutoScrollHoverEffectView"
+                            IsPlaying="False"
+                            PointerCanceled="TitleAutoScrollHoverEffectView_PointerCanceled"
+                            PointerEntered="TitleAutoScrollHoverEffectView_PointerEntered"
+                            PointerExited="TitleAutoScrollHoverEffectView_PointerExited"
+                            ScrollingPixelsPreSecond="25">
+                            <TextBlock
+                                x:Name="TitleTextBlock"
+                                Padding="2,0"
+                                FontWeight="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
+                                TextTrimming="None" />
+                        </dev:AutoScrollView>
+                    </controls:OpacityMaskView>
+                </uc:ParallaxTiltControl>
             </Grid>
 
             <Grid x:Name="SongArtistContainer" Visibility="Collapsed">
                 <Grid.OpacityTransition>
                     <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
                 </Grid.OpacityTransition>
-                <controls:OpacityMaskView>
-                    <controls:OpacityMaskView.OpacityMask>
-                        <Rectangle>
-                            <Rectangle.Fill>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                    <GradientStop Offset="0" Color="Transparent" />
-                                    <GradientStop Offset="0.02" Color="#FFFFFFFF" />
-                                    <GradientStop Offset="0.98" Color="#FFFFFFFF" />
-                                    <GradientStop Offset="1" Color="Transparent" />
-                                </LinearGradientBrush>
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </controls:OpacityMaskView.OpacityMask>
-                    <dev:AutoScrollView
-                        x:Name="ArtistsAutoScrollHoverEffectView"
-                        IsPlaying="False"
-                        PointerCanceled="ArtistsAutoScrollHoverEffectView_PointerCanceled"
-                        PointerEntered="ArtistsAutoScrollHoverEffectView_PointerEntered"
-                        PointerExited="ArtistsAutoScrollHoverEffectView_PointerExited"
-                        ScrollingPixelsPreSecond="25">
-                        <TextBlock
-                            x:Name="ArtistsTextBlock"
-                            Padding="2,0"
-                            FontWeight="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
-                            Opacity="0.6"
-                            TextTrimming="None" />
-                    </dev:AutoScrollView>
-                </controls:OpacityMaskView>
+                <uc:ParallaxTiltControl
+                    x:Name="SongAristParallaxTiltControl"
+                    IsParallaxEnabled="False"
+                    Loaded="SongArtistParallaxTiltControl_Loaded">
+                    <controls:OpacityMaskView>
+                        <controls:OpacityMaskView.OpacityMask>
+                            <Rectangle>
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Offset="0" Color="Transparent" />
+                                        <GradientStop Offset="0.02" Color="#FFFFFFFF" />
+                                        <GradientStop Offset="0.98" Color="#FFFFFFFF" />
+                                        <GradientStop Offset="1" Color="Transparent" />
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </controls:OpacityMaskView.OpacityMask>
+                        <dev:AutoScrollView
+                            x:Name="ArtistsAutoScrollHoverEffectView"
+                            IsPlaying="False"
+                            PointerCanceled="ArtistsAutoScrollHoverEffectView_PointerCanceled"
+                            PointerEntered="ArtistsAutoScrollHoverEffectView_PointerEntered"
+                            PointerExited="ArtistsAutoScrollHoverEffectView_PointerExited"
+                            ScrollingPixelsPreSecond="25">
+                            <TextBlock
+                                x:Name="ArtistsTextBlock"
+                                Padding="2,0"
+                                FontWeight="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
+                                Opacity="0.6"
+                                TextTrimming="None" />
+                        </dev:AutoScrollView>
+                    </controls:OpacityMaskView>
+                </uc:ParallaxTiltControl>
             </Grid>
 
             <Grid x:Name="SongAlbumContainer" Visibility="Collapsed">
                 <Grid.OpacityTransition>
                     <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
                 </Grid.OpacityTransition>
-                <controls:OpacityMaskView>
-                    <controls:OpacityMaskView.OpacityMask>
-                        <Rectangle>
-                            <Rectangle.Fill>
-                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                                    <GradientStop Offset="0" Color="Transparent" />
-                                    <GradientStop Offset="0.02" Color="#FFFFFFFF" />
-                                    <GradientStop Offset="0.98" Color="#FFFFFFFF" />
-                                    <GradientStop Offset="1" Color="Transparent" />
-                                </LinearGradientBrush>
-                            </Rectangle.Fill>
-                        </Rectangle>
-                    </controls:OpacityMaskView.OpacityMask>
-                    <dev:AutoScrollView
-                        x:Name="AlbumAutoScrollHoverEffectView"
-                        IsPlaying="False"
-                        PointerCanceled="AlbumAutoScrollHoverEffectView_PointerCanceled"
-                        PointerEntered="AlbumAutoScrollHoverEffectView_PointerEntered"
-                        PointerExited="AlbumAutoScrollHoverEffectView_PointerExited"
-                        ScrollingPixelsPreSecond="25">
-                        <TextBlock
-                            x:Name="AlbumTextBlock"
-                            Padding="2,0"
-                            FontWeight="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
-                            Opacity="0.3"
-                            TextTrimming="None" />
-                    </dev:AutoScrollView>
-                </controls:OpacityMaskView>
+                <uc:ParallaxTiltControl
+                    x:Name="SongAlbumParallaxTiltControl"
+                    IsParallaxEnabled="False"
+                    Loaded="SongAlbumParallaxTiltControl_Loaded">
+                    <controls:OpacityMaskView>
+                        <controls:OpacityMaskView.OpacityMask>
+                            <Rectangle>
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Offset="0" Color="Transparent" />
+                                        <GradientStop Offset="0.02" Color="#FFFFFFFF" />
+                                        <GradientStop Offset="0.98" Color="#FFFFFFFF" />
+                                        <GradientStop Offset="1" Color="Transparent" />
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </controls:OpacityMaskView.OpacityMask>
+                        <dev:AutoScrollView
+                            x:Name="AlbumAutoScrollHoverEffectView"
+                            IsPlaying="False"
+                            PointerCanceled="AlbumAutoScrollHoverEffectView_PointerCanceled"
+                            PointerEntered="AlbumAutoScrollHoverEffectView_PointerEntered"
+                            PointerExited="AlbumAutoScrollHoverEffectView_PointerExited"
+                            ScrollingPixelsPreSecond="25">
+                            <TextBlock
+                                x:Name="AlbumTextBlock"
+                                Padding="2,0"
+                                FontWeight="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
+                                Opacity="0.3"
+                                TextTrimming="None" />
+                        </dev:AutoScrollView>
+                    </controls:OpacityMaskView>
+                </uc:ParallaxTiltControl>
             </Grid>
 
         </Grid>
+
     </Grid>
 </Page>

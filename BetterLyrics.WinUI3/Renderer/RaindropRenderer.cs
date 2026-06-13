@@ -7,7 +7,7 @@ using System.Numerics;
 
 namespace BetterLyrics.WinUI3.Renderer
 {
-    public partial class RaindropRenderer : BreathingRendererBase, IDisposable
+    public partial class RaindropRenderer : EffectRendererBase, IDisposable
     {
         private PixelShaderEffect<RaindropEffect>? _raindropEffect;
         private float _timeAccumulator = 0f;
@@ -25,11 +25,21 @@ namespace BetterLyrics.WinUI3.Renderer
             _raindropEffect = new PixelShaderEffect<RaindropEffect>();
         }
 
-        public void Update(double deltaTime, float bassEnergy, int breathingIntensity)
+        public void Update(ICanvasAnimatedControl control, TimeSpan deltaTime, float bassEnergy, int breathingIntensity, bool is3DEnabled)
         {
             if (_raindropEffect == null || !IsEnabled) return;
             base.UpdateBreathing(bassEnergy, breathingIntensity);
-            _timeAccumulator += (float)deltaTime;
+            _timeAccumulator += (float)deltaTime.TotalSeconds;
+
+            if (is3DEnabled)
+            {
+                Vector3 center = new Vector3((float)control.Size.Width / 2, (float)control.Size.Height / 2, 0);
+                base.UpdateParallaxMatrix(center, isAutoParallax: true);
+            }
+            else
+            {
+                base.ResetParallaxMatrix();
+            }
         }
 
         public void Draw(ICanvasAnimatedControl control, CanvasDrawingSession ds, bool isBreathingEffectEnabled)
@@ -52,7 +62,9 @@ namespace BetterLyrics.WinUI3.Renderer
             );
 
             ApplyBreathingTransform(ds, center, isBreathingEffectEnabled);
-            ds.DrawImage(_raindropEffect);
+
+            base.DrawWithParallax(ds, _raindropEffect);
+
             ResetTransform(ds, isBreathingEffectEnabled);
         }
 

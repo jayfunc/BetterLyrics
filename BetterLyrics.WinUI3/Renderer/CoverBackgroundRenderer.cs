@@ -9,7 +9,7 @@ using Windows.Foundation;
 
 namespace BetterLyrics.WinUI3.Renderer
 {
-    public partial class CoverBackgroundRenderer : BreathingRendererBase, IDisposable
+    public partial class CoverBackgroundRenderer : EffectRendererBase, IDisposable
     {
         private CanvasBitmap? _currentBitmap;
         private CanvasBitmap? _previousBitmap;
@@ -91,7 +91,7 @@ namespace BetterLyrics.WinUI3.Renderer
             _needsCacheUpdate = true;
         }
 
-        public void Update(TimeSpan deltaTime, float bassEnergy, int breathingIntensity)
+        public void Update(ICanvasAnimatedControl control, TimeSpan deltaTime, float bassEnergy, int breathingIntensity, bool is3DEnabled)
         {
             if (!IsEnabled) return;
 
@@ -112,6 +112,16 @@ namespace BetterLyrics.WinUI3.Renderer
                 _previousBitmap = null;
                 _previousTargetCache?.Dispose();
                 _previousTargetCache = null;
+            }
+
+            if (is3DEnabled)
+            {
+                Vector3 center = new Vector3((float)control.Size.Width / 2, (float)control.Size.Height / 2, 0);
+                base.UpdateParallaxMatrix(center, isAutoParallax: true);
+            }
+            else
+            {
+                base.ResetParallaxMatrix();
             }
         }
 
@@ -143,16 +153,19 @@ namespace BetterLyrics.WinUI3.Renderer
 
             ApplyBreathingTransform(ds, screenCenter, isBreathingEffectEnabled);
 
-            if (isCrossfading)
+            if (!_threeDimMatrix.IsIdentity)
             {
-                DrawCachedLayer(ds, _previousTargetCache, screenCenter, angle, baseAlpha);
+                using var commandList = new CanvasCommandList(control);
+                using (var layerDs = commandList.CreateDrawingSession())
+                {
+                    Draw2DComposition(layerDs, screenCenter, angle, baseAlpha, fadeProgress, isCrossfading);
+                }
 
-                float newLayerAlpha = baseAlpha * (float)fadeProgress;
-                DrawCachedLayer(ds, _currentTargetCache, screenCenter, angle, newLayerAlpha);
+                base.DrawWithParallax(ds, commandList);
             }
-            else if (_currentTargetCache != null)
+            else
             {
-                DrawCachedLayer(ds, _currentTargetCache, screenCenter, angle, baseAlpha);
+                Draw2DComposition(ds, screenCenter, angle, baseAlpha, fadeProgress, isCrossfading);
             }
 
             ResetTransform(ds, isBreathingEffectEnabled);
@@ -236,6 +249,21 @@ namespace BetterLyrics.WinUI3.Renderer
             ds.DrawImage(cachedTexture, 0, 0, new Rect(0, 0, cachedTexture.Size.Width, cachedTexture.Size.Height), alpha);
 
             ds.Transform = previousTransform;
+        }
+
+        private void Draw2DComposition(CanvasDrawingSession ds, Vector2 screenCenter, float angle, float baseAlpha, double fadeProgress, bool isCrossfading)
+        {
+            if (isCrossfading)
+            {
+                DrawCachedLayer(ds, _previousTargetCache, screenCenter, angle, baseAlpha);
+
+                float newLayerAlpha = baseAlpha * (float)fadeProgress;
+                DrawCachedLayer(ds, _currentTargetCache, screenCenter, angle, newLayerAlpha);
+            }
+            else if (_currentTargetCache != null)
+            {
+                DrawCachedLayer(ds, _currentTargetCache, screenCenter, angle, baseAlpha);
+            }
         }
 
         public void Dispose()

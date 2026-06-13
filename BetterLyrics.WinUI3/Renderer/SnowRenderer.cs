@@ -1,13 +1,16 @@
-﻿using BetterLyrics.WinUI3.Shaders;
+﻿using BetterLyrics.WinUI3.Effects;
+using BetterLyrics.WinUI3.Shaders;
 using ComputeSharp.D2D1.WinUI;
 using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Numerics;
+using Windows.Foundation;
 
 namespace BetterLyrics.WinUI3.Renderer
 {
-    public partial class SnowRenderer : BreathingRendererBase, IDisposable
+    public partial class SnowRenderer : EffectRendererBase, IDisposable
     {
         private PixelShaderEffect<SnowEffect>? _snowEffect;
         private float _timeAccumulator = 0f;
@@ -22,11 +25,22 @@ namespace BetterLyrics.WinUI3.Renderer
             _snowEffect = new PixelShaderEffect<SnowEffect>();
         }
 
-        public void Update(double deltaTime, float bassEnergy, int breathingIntensity)
+        public void Update(ICanvasAnimatedControl control, TimeSpan deltaTime, float bassEnergy, int breathingIntensity, bool is3DEnabled)
         {
             if (_snowEffect == null || !IsEnabled) return;
+
             base.UpdateBreathing(bassEnergy, breathingIntensity);
-            _timeAccumulator += (float)deltaTime;
+            _timeAccumulator += (float)deltaTime.TotalSeconds;
+
+            if (is3DEnabled)
+            {
+                Vector3 center = new Vector3((float)control.Size.Width / 2, (float)control.Size.Height / 2, 0);
+                base.UpdateParallaxMatrix(center, isAutoParallax: true);
+            }
+            else
+            {
+                base.ResetParallaxMatrix();
+            }
         }
 
         public void Draw(ICanvasAnimatedControl control, CanvasDrawingSession ds, bool isBreathingEffectEnabled)
@@ -46,7 +60,9 @@ namespace BetterLyrics.WinUI3.Renderer
             );
 
             ApplyBreathingTransform(ds, center, isBreathingEffectEnabled);
-            ds.DrawImage(_snowEffect);
+
+            base.DrawWithParallax(ds, _snowEffect);
+
             ResetTransform(ds, isBreathingEffectEnabled);
         }
 

@@ -2001,6 +2001,9 @@
   <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
     <value>نمط التقاط الألوان</value>
   </data>
+  <data name="SettingsPageParallaxTilt.Header" xml:space="preserve">
+    <value>انحراف المنظر</value>
+  </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
     <value>المجلد مضمن بالفعل في المجلدات الموجودة، لا حاجة لإضافته مرة أخرى</value>
   </data>
