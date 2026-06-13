@@ -2001,6 +2001,9 @@
   <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
     <value>रंग पिकर शैली</value>
   </data>
+  <data name="SettingsPageParallaxTilt.Header" xml:space="preserve">
+    <value>पैरालैक्स झुकाव</value>
+  </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
     <value>यह फ़ोल्डर पहले से ही मौजूदा फ़ोल्डरों में शामिल है, इसे दोबारा जोड़ने की आवश्यकता नहीं है</value>
   </data>

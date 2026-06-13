@@ -1,5 +1,6 @@
 // 2025/6/23 by Zhe Fang
 
+using BetterLyrics.WinUI3.Effects;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
@@ -15,12 +16,14 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using CommunityToolkit.WinUI;
+using Lyricify.Lyrics.Providers.Web.AppleMusic;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -62,6 +65,8 @@ namespace BetterLyrics.WinUI3.Controls
         private readonly LyricsAnimator _animator = new();
 
         private readonly SpectrumAnalyzer _spectrumAnalyzer = new();
+
+        private ParallaxTiltEffect? _parallaxContext;
 
         private readonly ValueTransition<Color> _immersiveBgColorTransition = new(
             initialValue: Colors.Black,
@@ -129,6 +134,8 @@ namespace BetterLyrics.WinUI3.Controls
 
         private readonly Debouncer _layoutDebouncer = new();
         private readonly Debouncer _lyricsDebouncer = new();
+        private readonly Debouncer _scrollChangedDebouncer = new();
+
         private bool _isLayoutChanged = false;
         private bool _isMouseScrollingChanged = false;
         private bool _isNowPlayingPaletteChanged = false;
@@ -151,6 +158,15 @@ namespace BetterLyrics.WinUI3.Controls
 
         public static readonly DependencyProperty LyricsWindowStatusProperty =
             DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus), typeof(NowPlayingCanvas), new PropertyMetadata(null, OnDependencyPropertyChanged));
+
+        public ParallaxTiltEffect? ParallaxContext
+        {
+            get { return (ParallaxTiltEffect?)GetValue(ParallaxContextProperty); }
+            set { SetValue(ParallaxContextProperty, value); }
+        }
+
+        public static readonly DependencyProperty ParallaxContextProperty =
+            DependencyProperty.Register(nameof(ParallaxContext), typeof(ParallaxTiltEffect), typeof(NowPlayingCanvas), new PropertyMetadata(null, OnDependencyPropertyChanged));
 
         public Rect AlbumArtRect
         {
@@ -277,6 +293,17 @@ namespace BetterLyrics.WinUI3.Controls
                     canvas._lyricsWindowStatus = (LyricsWindowStatus)e.NewValue;
                     canvas.RequestRelayout();
                     canvas.UpdatePalette();
+                }
+                else if (e.Property == ParallaxContextProperty)
+                {
+                    canvas._parallaxContext = (ParallaxTiltEffect)e.NewValue;
+                    canvas._lyricsRenderer.ParallaxContext = canvas._parallaxContext;
+                    canvas._fluidRenderer.ParallaxContext = canvas._parallaxContext;
+                    canvas._coverRenderer.ParallaxContext = canvas._parallaxContext;
+                    canvas._snowRenderer.ParallaxContext = canvas._parallaxContext;
+                    canvas._fogRenderer.ParallaxContext = canvas._parallaxContext;
+                    canvas._raindropRenderer.ParallaxContext = canvas._parallaxContext;
+                    canvas._spectrumRenderer.ParallaxContext = canvas._parallaxContext;
                 }
                 else if (e.Property == AlbumArtRectProperty)
                 {
@@ -550,11 +577,6 @@ namespace BetterLyrics.WinUI3.Controls
             _isMouseScrollingChanged = false;
             _isNowPlayingPaletteChanged = false;
 
-            if (_renderLyricsOpacity == 1)
-            {
-                _lyricsRenderer.CalculateLyrics3DMatrix(_isLayoutChanged);
-            }
-
             _isLayoutChanged = false;
 
             if (_spectrumAnalyzer.IsCapturing)
@@ -575,33 +597,42 @@ namespace BetterLyrics.WinUI3.Controls
                 );
             }
 
+            _parallaxContext?.Update();
+
             _fluidRenderer.IsEnabled = lyricsBg.IsFluidOverlayEnabled;
             _fluidRenderer.EnableLightWave = lyricsBg.IsFluidOverlayLightWaveEnabled;
             _fluidRenderer.EnableDithering = lyricsBg.IsColorDitheringEnabled;
             _fluidRenderer.Opacity = lyricsBg.FluidOverlayOpacity / 100.0;
             _fluidRenderer.IsStatic = isAccentColorsTransitioning ? false : lyricsBg.IsFluidOverlayStatic;
             _fluidRenderer.Update(
-                elapsedTime,
+                sender, elapsedTime,
                 _accentColor1Transition.Value,
                 _accentColor2Transition.Value,
                 _accentColor3Transition.Value,
                 _accentColor4Transition.Value,
                 _spectrumAnalyzer.CurrentBassEnergy,
-                lyricsBg.FluidOverlayBreathingIntensity);
+                lyricsBg.FluidOverlayBreathingIntensity,
+                lyricsBg.IsFluidOverlayParallaxEnabled);
 
             _coverRenderer.IsEnabled = lyricsBg.IsCoverOverlayEnabled;
             _coverRenderer.Opacity = lyricsBg.CoverOverlayOpacity;
             _coverRenderer.BlurAmount = lyricsBg.CoverOverlayBlurAmount;
             _coverRenderer.Speed = lyricsBg.CoverOverlaySpeed;
-            _coverRenderer.Update(elapsedTime, _spectrumAnalyzer.CurrentBassEnergy, lyricsBg.CoverOverlayBreathingIntensity);
+            _coverRenderer.Update(
+                sender, elapsedTime,
+                _spectrumAnalyzer.CurrentBassEnergy, lyricsBg.CoverOverlayBreathingIntensity, lyricsBg.IsCoverOverlayParallaxEnabled);
 
             _snowRenderer.IsEnabled = lyricsBg.IsSnowFlakeOverlayEnabled;
             _snowRenderer.Amount = lyricsBg.SnowFlakeOverlayAmount / 100f;
             _snowRenderer.Speed = lyricsBg.SnowFlakeOverlaySpeed;
-            _snowRenderer.Update(elapsedTime.TotalSeconds, _spectrumAnalyzer.CurrentBassEnergy, lyricsBg.SnowFlakeOverlayBreathingIntensity);
+            _snowRenderer.Update(
+                sender, elapsedTime,
+                _spectrumAnalyzer.CurrentBassEnergy, lyricsBg.SnowFlakeOverlayBreathingIntensity, lyricsBg.IsSnowFlakeOverlayParallaxEnabled);
 
             _fogRenderer.IsEnabled = lyricsBg.IsFogOverlayEnabled;
-            _fogRenderer.Update(elapsedTime.TotalSeconds, _spectrumAnalyzer.CurrentBassEnergy, lyricsBg.FogOverlayBreathingIntensity);
+            _fogRenderer.Update(
+                sender, elapsedTime,
+                _spectrumAnalyzer.CurrentBassEnergy, lyricsBg.FogOverlayBreathingIntensity, lyricsBg.IsFogOverlayParallaxEnabled);
 
             _raindropRenderer.IsEnabled = lyricsBg.IsRaindropOverlayEnabled;
             _raindropRenderer.RainSpeed = lyricsBg.RaindropSpeed / 100f;
@@ -609,9 +640,13 @@ namespace BetterLyrics.WinUI3.Controls
             _raindropRenderer.RainDensity = lyricsBg.RaindropDensity / 100f;
             _raindropRenderer.LightAngle = MathF.PI * lyricsBg.RaindropLightAngle / 180f;
             _raindropRenderer.ShadowIntensity = lyricsBg.RaindropShadowIntensity / 100f;
-            _raindropRenderer.Update(elapsedTime.TotalSeconds, _spectrumAnalyzer.CurrentBassEnergy, lyricsBg.RaindropOverlayBreathingIntensity);
+            _raindropRenderer.Update(
+                sender, elapsedTime,
+                _spectrumAnalyzer.CurrentBassEnergy, lyricsBg.RaindropOverlayBreathingIntensity, lyricsBg.IsRaindropOverlayParallaxEnabled);
 
-            _spectrumRenderer.Update(_spectrumAnalyzer.CurrentBassEnergy, lyricsBg.SpectrumBreathingIntensity);
+            _spectrumRenderer.Update(
+                sender,
+                lyricsBg.SpectrumPlacement, _albumArtRect, _spectrumAnalyzer.CurrentBassEnergy, lyricsBg.SpectrumBreathingIntensity, lyricsBg.IsSpectrumOverlayParallaxEnabled);
 
             if (_renderLyricsOpacity == 1)
             {
@@ -655,6 +690,8 @@ namespace BetterLyrics.WinUI3.Controls
             TriggerRelayout();
         }
 
+        // ====
+
         private void UserControl_Unloaded(object sender, RoutedEventArgs e)
         {
             WeakReferenceMessenger.Default.UnregisterAll(this);
@@ -683,6 +720,93 @@ namespace BetterLyrics.WinUI3.Controls
 
             _compositionRenderer?.Dispose();
             _spoutHook?.Dispose();
+        }
+
+        // ====
+
+        public void HandlePointerEntered(PointerRoutedEventArgs e)
+        {
+
+        }
+
+        public void HandlePointerExited(PointerRoutedEventArgs e)
+        {
+            IsMouseInLyricsArea = false;
+            IsMousePressing = false;
+
+            _parallaxContext?.OnPointerExited();
+        }
+
+        public void HandlePointerMoved(PointerRoutedEventArgs e)
+        {
+            var pointerPoint = e.GetCurrentPoint(this);
+
+            bool isInsideLyricsArea = IsPointerInsideLyricsContainer(pointerPoint.Position);
+
+            IsMouseInLyricsArea = isInsideLyricsArea;
+
+            if (isInsideLyricsArea)
+            {
+                MousePosition = pointerPoint.Position;
+            }
+
+            _parallaxContext?.OnPointerMoved(pointerPoint.Position, this.ActualSize.ToSize());
+        }
+
+        public void HandlePointerPressed(PointerRoutedEventArgs e)
+        {
+            var pointerPoint = e.GetCurrentPoint(this);
+
+            if (IsPointerInsideLyricsContainer(pointerPoint.Position))
+            {
+                IsMousePressing = true;
+            }
+        }
+
+        public void HandlePointerReleased(PointerRoutedEventArgs e)
+        {
+            IsMousePressing = false;
+            var pointerPoint = e.GetCurrentPoint(this);
+
+            if (IsPointerInsideLyricsContainer(pointerPoint.Position))
+            {
+                _ = _gsmtcService.ChangeLyricsLineAsync(CurrentHoveringLineIndex);
+            }
+        }
+
+        public void HandlePointerWheelChanged(PointerRoutedEventArgs e)
+        {
+            var pointerPoint = e.GetCurrentPoint(this);
+
+            if (!IsPointerInsideLyricsContainer(pointerPoint.Position)) return;
+
+            IsMouseScrolling = true;
+
+            int mouseWheelDelta = pointerPoint.Properties.MouseWheelDelta;
+
+            var value = MouseScrollOffset + mouseWheelDelta;
+            if (value > 0)
+            {
+                value = Math.Min(-CurrentCanvasYScroll, value);
+            }
+            else
+            {
+                value = Math.Max(-CurrentCanvasYScroll - ActualLyricsHeight, value);
+            }
+            MouseScrollOffset = value;
+
+            _ = _scrollChangedDebouncer.RunAsync(() =>
+            {
+                MouseScrollOffset = 0;
+                IsMouseScrolling = false;
+            }, 3000);
+        }
+
+        private bool IsPointerInsideLyricsContainer(Point position)
+        {
+            return
+                _renderLyricsStartX <= position.X && position.X <= _renderLyricsStartX + _renderLyricsWidth &&
+                _renderLyricsStartY <= position.Y && position.Y <= _renderLyricsStartY + _renderLyricsHeight;
         }
 
         // ====

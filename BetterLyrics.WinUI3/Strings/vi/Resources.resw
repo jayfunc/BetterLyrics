@@ -2001,6 +2001,9 @@
   <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
     <value>Kiểu lấy màu</value>
   </data>
+  <data name="SettingsPageParallaxTilt.Header" xml:space="preserve">
+    <value>Hiệu ứng Parallax nghiêng</value>
+  </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
     <value>Thư mục này đã được bao gồm trong các thư mục hiện có, không cần thêm lại</value>
   </data>

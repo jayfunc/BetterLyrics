@@ -3,6 +3,7 @@ using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Geometry;
+using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
 using System;
 using System.Numerics;
@@ -11,7 +12,7 @@ using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Renderer
 {
-    public partial class SpectrumRenderer : BreathingRendererBase, IDisposable
+    public partial class SpectrumRenderer : EffectRendererBase, IDisposable
     {
         private CanvasGeometry? _spectrumGeometry;
 
@@ -30,33 +31,64 @@ namespace BetterLyrics.WinUI3.Renderer
             double canvasHeight,
             Color fillColor,
             Rect albumRect,
-            float cornerRadiusPercentage
-            )
+            float cornerRadiusPercentage)
         {
             _spectrumGeometry?.Dispose();
             _spectrumGeometry = null;
 
             if (!isEnabled || spectrumData == null || spectrumData.Length == 0) return;
 
+            // 生成路径几何
             _spectrumGeometry = CreateGeometry(resourceCreator, spectrumData, barCount, placement, style, canvasWidth, canvasHeight, albumRect, cornerRadiusPercentage);
 
             if (_spectrumGeometry != null)
             {
-                var center = placement == SpectrumPlacement.AroundAlbumArt
+                // 算出当前的 2D 中心点
+                Vector2 center = placement == SpectrumPlacement.AroundAlbumArt
                     ? new Vector2((float)(albumRect.X + albumRect.Width / 2), (float)(albumRect.Y + albumRect.Height / 2))
                     : new Vector2((float)canvasWidth / 2, placement == SpectrumPlacement.Bottom ? (float)canvasHeight : 0);
 
-                ApplyBreathingTransform(ds, center, isBreathingEffectEnabled);
+                if (!_threeDimMatrix.IsIdentity)
+                {
+                    using var commandList = new CanvasCommandList(resourceCreator);
+                    using (var layerDs = commandList.CreateDrawingSession())
+                    {
+                        Draw2DComposition(layerDs, center, isBreathingEffectEnabled, fillColor, isGlowEffectEnabled, opacity, placement, style, canvasHeight, albumRect);
+                    }
 
-                DrawGeometry(ds, _spectrumGeometry, fillColor, isGlowEffectEnabled, opacity, placement, style, canvasHeight, albumRect);
-
-                ResetTransform(ds, isBreathingEffectEnabled);
+                    base.DrawWithParallax(ds, commandList);
+                }
+                else
+                {
+                    Draw2DComposition(ds, center, isBreathingEffectEnabled, fillColor, isGlowEffectEnabled, opacity, placement, style, canvasHeight, albumRect);
+                }
             }
         }
 
-        public void Update(float bassEnergy, int breathingIntensity)
+        public void Update(
+            ICanvasAnimatedControl control,
+            SpectrumPlacement placement,
+            Rect albumRect,
+            float bassEnergy,
+            int breathingIntensity,
+            bool is3DEnabled)
         {
             base.UpdateBreathing(bassEnergy, breathingIntensity);
+
+            if (is3DEnabled)
+            {
+                Vector2 trueCenter2D = placement == SpectrumPlacement.AroundAlbumArt
+                    ? new Vector2((float)(albumRect.X + albumRect.Width / 2), (float)(albumRect.Y + albumRect.Height / 2))
+                    : new Vector2((float)control.Size.Width / 2, placement == SpectrumPlacement.Bottom ? (float)control.Size.Height : 0);
+
+                Vector3 center3D = new Vector3(trueCenter2D.X, trueCenter2D.Y, 0);
+
+                base.UpdateParallaxMatrix(center3D, isAutoParallax: true);
+            }
+            else
+            {
+                base.ResetParallaxMatrix();
+            }
         }
 
         private CanvasGeometry? CreateGeometry(
@@ -223,7 +255,7 @@ namespace BetterLyrics.WinUI3.Renderer
             return CanvasGeometry.CreatePath(pathBuilder);
         }
 
-        private (Vector2 Position, Vector2 Normal) GetPointAndNormalOnRoundRect(float distance, Rect rect, float r)
+        private static (Vector2 Position, Vector2 Normal) GetPointAndNormalOnRoundRect(float distance, Rect rect, float r)
         {
             float w = (float)rect.Width;
             float h = (float)rect.Height;
@@ -374,13 +406,33 @@ namespace BetterLyrics.WinUI3.Renderer
                     ds.Blend = CanvasBlend.SourceOver; // 还原混合模式
                 }
             }
-
             ds.FillGeometry(geometry, brush);
 
             // 绘制一条高亮的描边，增强轮廓感，让波峰更清晰
             //ds.DrawGeometry(geometry, Colors.White, 1.0f);
 
             brush.Dispose();
+        }
+
+        private void Draw2DComposition(
+            CanvasDrawingSession ds,
+            Vector2 center,
+            bool isBreathingEffectEnabled,
+            Color fillColor,
+            bool isGlowEffectEnabled,
+            float opacity,
+            SpectrumPlacement placement,
+            SpectrumStyle style,
+            double canvasHeight,
+            Rect albumRect)
+        {
+            if (_spectrumGeometry == null) return;
+
+            ApplyBreathingTransform(ds, center, isBreathingEffectEnabled);
+
+            DrawGeometry(ds, _spectrumGeometry, fillColor, isGlowEffectEnabled, opacity, placement, style, canvasHeight, albumRect);
+
+            ResetTransform(ds, isBreathingEffectEnabled);
         }
 
         public void Dispose()

@@ -2001,6 +2001,9 @@
   <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
     <value>색상 추출 스타일</value>
   </data>
+  <data name="SettingsPageParallaxTilt.Header" xml:space="preserve">
+    <value>시차 기울기</value>
+  </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
     <value>이 폴더는 이미 기존 폴더에 포함되어 있으므로 다시 추가할 필요가 없습니다</value>
   </data>

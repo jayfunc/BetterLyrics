@@ -13,6 +13,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial float FadeOutStartPointY { get; set; } = 0;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial float FadeOutEndPointX { get; set; } = 1;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial float FadeOutEndPointY { get; set; } = 0;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsParallaxEnabled { get; set; } = false;
 
         public object Clone()
         {
@@ -25,6 +26,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 FadeOutStartPointY = this.FadeOutStartPointY,
                 FadeOutEndPointX = this.FadeOutEndPointX,
                 FadeOutEndPointY = this.FadeOutEndPointY,
+                IsParallaxEnabled = this.IsParallaxEnabled,
             };
         }
     }

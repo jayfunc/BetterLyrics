@@ -17,6 +17,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int CoverOverlayBlurAmount { get; set; } = 100;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsCoverOverlayBrethingEffectEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int CoverOverlayBreathingIntensity { get; set; } = 80;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsCoverOverlayParallaxEnabled { get; set; } = false;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsFluidOverlayEnabled { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int FluidOverlayOpacity { get; set; } = 100;
@@ -25,6 +26,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsFluidOverlayLightWaveEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsColorDitheringEnabled { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsFluidOverlayStatic { get; set; } = false;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsFluidOverlayParallaxEnabled { get; set; } = false;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsSpectrumOverlayEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial SpectrumPlacement SpectrumPlacement { get; set; } = SpectrumPlacement.Bottom;
@@ -37,16 +39,19 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int SpectrumOpacity { get; set; } = 100; // 100%
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsFontColorType SpectrumColorType { get; set; } = LyricsFontColorType.AdaptiveGrayed;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial Color SpectrumCustomColor { get; set; } = Colors.White;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsSpectrumOverlayParallaxEnabled { get; set; } = false;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsSnowFlakeOverlayEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int SnowFlakeOverlayAmount { get; set; } = 10;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int SnowFlakeOverlaySpeed { get; set; } = 1;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsSnowFlakeOverlayBrethingEffectEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int SnowFlakeOverlayBreathingIntensity { get; set; } = 80;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsSnowFlakeOverlayParallaxEnabled { get; set; } = false;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsFogOverlayEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsFogOverlayBrethingEffectEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int FogOverlayBreathingIntensity { get; set; } = 80;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsFogOverlayParallaxEnabled { get; set; } = false;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsRaindropOverlayEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int RaindropSpeed { get; set; } = 100; // 100%
@@ -56,6 +61,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int RaindropShadowIntensity { get; set; } = 0; // 0%
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsRaindropOverlayBrethingEffectEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int RaindropOverlayBreathingIntensity { get; set; } = 80;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsRaindropOverlayParallaxEnabled { get; set; } = false;
 
         public LyricsBackgroundSettings() { }
 
@@ -72,6 +78,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 CoverOverlayBlurAmount = this.CoverOverlayBlurAmount,
                 CoverOverlayBreathingIntensity = this.CoverOverlayBreathingIntensity,
                 IsCoverOverlayBrethingEffectEnabled = this.IsCoverOverlayBrethingEffectEnabled,
+                IsCoverOverlayParallaxEnabled = this.IsCoverOverlayParallaxEnabled,
 
                 IsFluidOverlayEnabled = this.IsFluidOverlayEnabled,
                 FluidOverlayOpacity = this.FluidOverlayOpacity,
@@ -79,6 +86,8 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 IsFluidOverlayBrethingEffectEnabled = this.IsFluidOverlayBrethingEffectEnabled,
                 IsFluidOverlayLightWaveEnabled = this.IsFluidOverlayLightWaveEnabled,
                 IsColorDitheringEnabled = this.IsColorDitheringEnabled,
+                IsFluidOverlayStatic = this.IsFluidOverlayStatic,
+                IsFluidOverlayParallaxEnabled = this.IsFluidOverlayParallaxEnabled,
 
                 IsSpectrumOverlayEnabled = this.IsSpectrumOverlayEnabled,
                 SpectrumPlacement = this.SpectrumPlacement,
@@ -91,16 +100,19 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 SpectrumOpacity = this.SpectrumOpacity,
                 SpectrumColorType = this.SpectrumColorType,
                 SpectrumCustomColor = this.SpectrumCustomColor,
+                IsSpectrumOverlayParallaxEnabled = this.IsSpectrumOverlayParallaxEnabled,
 
                 IsSnowFlakeOverlayEnabled = this.IsSnowFlakeOverlayEnabled,
                 SnowFlakeOverlayAmount = this.SnowFlakeOverlayAmount,
                 SnowFlakeOverlaySpeed = this.SnowFlakeOverlaySpeed,
                 SnowFlakeOverlayBreathingIntensity = this.SnowFlakeOverlayBreathingIntensity,
                 IsSnowFlakeOverlayBrethingEffectEnabled = this.IsSnowFlakeOverlayBrethingEffectEnabled,
+                IsSnowFlakeOverlayParallaxEnabled = this.IsSnowFlakeOverlayParallaxEnabled,
 
                 IsFogOverlayEnabled = this.IsFogOverlayEnabled,
                 FogOverlayBreathingIntensity = this.FogOverlayBreathingIntensity,
                 IsFogOverlayBrethingEffectEnabled = this.IsFogOverlayBrethingEffectEnabled,
+                IsFogOverlayParallaxEnabled = this.IsFogOverlayParallaxEnabled,
 
                 IsRaindropOverlayEnabled = this.IsRaindropOverlayEnabled,
                 RaindropSpeed = this.RaindropSpeed,
@@ -110,6 +122,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 RaindropShadowIntensity = this.RaindropShadowIntensity,
                 RaindropOverlayBreathingIntensity = this.RaindropOverlayBreathingIntensity,
                 IsRaindropOverlayBrethingEffectEnabled = this.IsRaindropOverlayBrethingEffectEnabled,
+                IsRaindropOverlayParallaxEnabled = this.IsRaindropOverlayParallaxEnabled,
             };
         }
     }

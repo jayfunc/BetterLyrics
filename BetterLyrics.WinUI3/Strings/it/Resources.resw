@@ -2001,6 +2001,9 @@
   <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
     <value>Tipo generatore palette</value>
   </data>
+  <data name="SettingsPageParallaxTilt.Header" xml:space="preserve">
+    <value>Inclinazione parallasse</value>
+  </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
     <value>Questa cartella è già inclusa in una cartella esistente, non è necessario aggiungerla di nuovo.</value>
   </data>

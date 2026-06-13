@@ -157,10 +157,13 @@
                     </controls:SettingsExpander>
 
                     <!--  3D 歌词  -->
-                    <controls:SettingsExpander x:Uid="SettingsPage3DLyrics" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE914;}">
+                    <controls:SettingsExpander x:Uid="SettingsPageParallaxTilt" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xECA5;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=TwoWay}" />
                         <controls:SettingsExpander.Items>
-                            <controls:SettingsCard Header="X" IsEnabled="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=OneWay}">
+                            <controls:SettingsCard x:Uid="SettingsPageAutoAdjust">
+                                <ToggleSwitch IsEnabled="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=OneWay}" IsOn="{x:Bind LyricsEffectSettings.IsAuto3DLyricsEnabled, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                            <controls:SettingsCard Header="X" IsEnabled="{x:Bind LyricsEffectSettings.Is3DLyricsAdjustable, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="0"
                                     Maximum="90"
@@ -168,7 +171,7 @@
                                     Unit="°"
                                     Value="{x:Bind LyricsEffectSettings.Lyrics3DXAngle, Mode=TwoWay}" />
                             </controls:SettingsCard>
-                            <controls:SettingsCard Header="Y" IsEnabled="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=OneWay}">
+                            <controls:SettingsCard Header="Y" IsEnabled="{x:Bind LyricsEffectSettings.Is3DLyricsAdjustable, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="0"
                                     Maximum="90"
@@ -176,7 +179,7 @@
                                     Unit="°"
                                     Value="{x:Bind LyricsEffectSettings.Lyrics3DYAngle, Mode=TwoWay}" />
                             </controls:SettingsCard>
-                            <controls:SettingsCard Header="Z" IsEnabled="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=OneWay}">
+                            <controls:SettingsCard Header="Z" IsEnabled="{x:Bind LyricsEffectSettings.Is3DLyricsAdjustable, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="0"
                                     Maximum="90"
@@ -184,16 +187,12 @@
                                     Unit="°"
                                     Value="{x:Bind LyricsEffectSettings.Lyrics3DZAngle, Mode=TwoWay}" />
                             </controls:SettingsCard>
-                            <controls:SettingsCard x:Uid="SettingsPage3DLyricsAutoFitLayout">
-                                <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.Lyrics3DAutoFitLayout, Mode=TwoWay}" />
-                            </controls:SettingsCard>
-                            <controls:SettingsCard x:Uid="SettingsPage3DLyricsDepth" IsEnabled="{x:Bind LyricsEffectSettings.Is3DLyricsEnabled, Mode=OneWay}">
+                            <controls:SettingsCard x:Uid="SettingsPage3DLyricsDepth" IsEnabled="{x:Bind LyricsEffectSettings.Is3DLyricsAdjustable, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="1000"
                                     Frequency="10"
                                     Maximum="1000"
                                     Minimum="100"
-                                    Unit="°"
                                     Value="{x:Bind LyricsEffectSettings.Lyrics3DDepth, Mode=TwoWay}" />
                             </controls:SettingsCard>
                         </controls:SettingsExpander.Items>

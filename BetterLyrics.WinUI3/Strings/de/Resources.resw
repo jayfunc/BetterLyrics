@@ -2001,6 +2001,9 @@
   <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
     <value>Paletten-Generator-Typ</value>
   </data>
+  <data name="SettingsPageParallaxTilt.Header" xml:space="preserve">
+    <value>Parallax-Neigung</value>
+  </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
     <value>Dieser Ordner ist bereits in einem bestehenden Ordner enthalten, kein erneutes Hinzufügen erforderlich</value>
   </data>

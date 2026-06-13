@@ -7,11 +7,12 @@ using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
 using System;
 using System.Numerics;
+using Windows.Foundation;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Renderer
 {
-    public partial class FluidBackgroundRenderer : BreathingRendererBase, IDisposable
+    public partial class FluidBackgroundRenderer : EffectRendererBase, IDisposable
     {
         private PixelShaderEffect<FluidBackgroundEffect>? _fluidEffect;
         private float _timeAccumulator = 0f;
@@ -35,7 +36,7 @@ namespace BetterLyrics.WinUI3.Renderer
             _fluidEffect = new();
         }
 
-        public void Update(TimeSpan deltaTime, Color c1, Color c2, Color c3, Color c4, float bassEnergy, int breathingIntensity)
+        public void Update(ICanvasAnimatedControl control, TimeSpan deltaTime, Color c1, Color c2, Color c3, Color c4, float bassEnergy, int breathingIntensity, bool is3DEnabled)
         {
             if (_fluidEffect == null || !IsEnabled) return;
 
@@ -54,6 +55,16 @@ namespace BetterLyrics.WinUI3.Renderer
             if (!IsStatic)
             {
                 _timeAccumulator += (float)deltaTime.TotalSeconds;
+            }
+
+            if (is3DEnabled)
+            {
+                Vector3 center = new Vector3((float)control.Size.Width / 2, (float)control.Size.Height / 2, 0);
+                base.UpdateParallaxMatrix(center, isAutoParallax: true);
+            }
+            else
+            {
+                base.ResetParallaxMatrix();
             }
         }
 
@@ -106,7 +117,7 @@ namespace BetterLyrics.WinUI3.Renderer
 
             if (Opacity >= 1.0)
             {
-                ds.DrawImage(sourceToDraw);
+                base.DrawWithParallax(ds, sourceToDraw);
             }
             else
             {
@@ -115,7 +126,7 @@ namespace BetterLyrics.WinUI3.Renderer
                     Source = sourceToDraw,
                     Opacity = (float)Opacity
                 };
-                ds.DrawImage(opacityEffect);
+                base.DrawWithParallax(ds, opacityEffect);
             }
 
             ResetTransform(ds, isBreathingEffectEnabled);

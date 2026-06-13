@@ -1,6 +1,7 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.WinUI3.Controls;
+using BetterLyrics.WinUI3.Effects;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
@@ -45,7 +46,8 @@ namespace BetterLyrics.WinUI3.Views
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
         private readonly Debouncer _layoutChangedDebouncer = new();
-        private readonly Debouncer _scrollChangedDebouncer = new();
+
+        private readonly ParallaxTiltEffect _parallaxEffect = new();
 
         public NowPlayingPageViewModel ViewModel => (NowPlayingPageViewModel)DataContext;
 
@@ -219,34 +221,34 @@ namespace BetterLyrics.WinUI3.Views
 
         private void UpdateLyricsLayout()
         {
-            if (RootGrid == null || LyricsContainer == null || LyricsCanvas == null) return;
+            if (RootGrid == null || LyricsContainer == null || NowPlayingCanvas == null) return;
             if (LyricsWindowStatus == null) return;
 
             if (!LyricsContainer.IsLoaded || !RootGrid.IsLoaded) return;
 
             if (LyricsContainer.Visibility == Visibility.Collapsed)
             {
-                LyricsCanvas.LyricsOpacity = 0;
+                NowPlayingCanvas.LyricsOpacity = 0;
             }
             else
             {
-                LyricsCanvas.LyricsOpacity = 1;
+                NowPlayingCanvas.LyricsOpacity = 1;
 
                 var transform = LyricsContainer.TransformToVisual(RootGrid);
-                var localRect = new Windows.Foundation.Rect(0, 0, LyricsCanvas.ActualWidth, LyricsCanvas.ActualHeight);
+                var localRect = new Windows.Foundation.Rect(0, 0, NowPlayingCanvas.ActualWidth, NowPlayingCanvas.ActualHeight);
                 var relativeRect = transform.TransformBounds(localRect);
 
-                LyricsCanvas.LyricsStartX = relativeRect.X;
-                LyricsCanvas.LyricsStartY = relativeRect.Y;
-                LyricsCanvas.LyricsWidth = LyricsContainer.ActualWidth;
-                LyricsCanvas.LyricsHeight = LyricsContainer.ActualHeight;
+                NowPlayingCanvas.LyricsStartX = relativeRect.X;
+                NowPlayingCanvas.LyricsStartY = relativeRect.Y;
+                NowPlayingCanvas.LyricsWidth = LyricsContainer.ActualWidth;
+                NowPlayingCanvas.LyricsHeight = LyricsContainer.ActualHeight;
 
-                if (LyricsWindowStatus.LyricsEffectSettings.Lyrics3DAutoFitLayout)
-                {
-                    (LyricsCanvas.LyricsHeight, LyricsCanvas.LyricsWidth) = (LyricsCanvas.LyricsWidth, LyricsCanvas.LyricsHeight);
-                    LyricsCanvas.LyricsStartX += (LyricsCanvas.LyricsHeight - LyricsCanvas.LyricsWidth) / 2;
-                    LyricsCanvas.LyricsStartY += (LyricsCanvas.LyricsWidth - LyricsCanvas.LyricsHeight) / 2;
-                }
+                //if (LyricsWindowStatus.LyricsEffectSettings.Lyrics3DAutoFitLayout)
+                //{
+                //    (NowPlayingCanvas.LyricsHeight, NowPlayingCanvas.LyricsWidth) = (NowPlayingCanvas.LyricsWidth, NowPlayingCanvas.LyricsHeight);
+                //    NowPlayingCanvas.LyricsStartX += (NowPlayingCanvas.LyricsHeight - NowPlayingCanvas.LyricsWidth) / 2;
+                //    NowPlayingCanvas.LyricsStartY += (NowPlayingCanvas.LyricsWidth - NowPlayingCanvas.LyricsHeight) / 2;
+                //}
             }
         }
 
@@ -257,7 +259,7 @@ namespace BetterLyrics.WinUI3.Views
 
             var transform = AlbumArtContainer.TransformToVisual(RootGrid);
             var localRect = new Windows.Foundation.Rect(0, 0, AlbumArtContainer.ActualWidth, AlbumArtContainer.ActualHeight);
-            LyricsCanvas.AlbumArtRect = transform.TransformBounds(localRect);
+            NowPlayingCanvas.AlbumArtRect = transform.TransformBounds(localRect);
 
             ToggleAlbumArtFadeOut();
             UpdateAlbumArtFadeOutDirection();
@@ -320,56 +322,34 @@ namespace BetterLyrics.WinUI3.Views
         private void AlbumAutoScrollHoverEffectView_PointerEntered(object sender, PointerRoutedEventArgs e) => UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, true);
         private void AlbumAutoScrollHoverEffectView_PointerExited(object sender, PointerRoutedEventArgs e) => UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
 
-        private void LyricsScrollViewer_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
+        private void RootGrid_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
         {
-            LyricsCanvas.IsMouseScrolling = true;
-
-            var pointerPoint = e.GetCurrentPoint(LyricsScrollViewer);
-            int mouseWheelDelta = pointerPoint.Properties.MouseWheelDelta;
-
-            var value = LyricsCanvas.MouseScrollOffset + mouseWheelDelta;
-            if (value > 0)
-            {
-                value = Math.Min(-LyricsCanvas.CurrentCanvasYScroll, value);
-            }
-            else
-            {
-                value = Math.Max(-LyricsCanvas.CurrentCanvasYScroll - LyricsCanvas.ActualLyricsHeight, value);
-            }
-            LyricsCanvas.MouseScrollOffset = value;
-
-            _ = _scrollChangedDebouncer.RunAsync(() =>
-            {
-                LyricsCanvas.MouseScrollOffset = 0;
-                LyricsCanvas.IsMouseScrolling = false;
-            }, 3000);
+            NowPlayingCanvas.HandlePointerWheelChanged(e);
         }
 
-        private void LyricsScrollViewer_PointerMoved(object sender, PointerRoutedEventArgs e)
+        private void RootGrid_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
-            var pointerPoint = e.GetCurrentPoint(LyricsScrollViewer);
-            LyricsCanvas.MousePosition = pointerPoint.Position;
+            NowPlayingCanvas.HandlePointerMoved(e);
         }
 
-        private void LyricsScrollViewer_PointerReleased(object sender, PointerRoutedEventArgs e)
+        private void RootGrid_PointerReleased(object sender, PointerRoutedEventArgs e)
         {
-            LyricsCanvas.IsMousePressing = false;
-            _ = _gsmtcService.ChangeLyricsLineAsync(LyricsCanvas.CurrentHoveringLineIndex);
+            NowPlayingCanvas.HandlePointerReleased(e);
         }
 
-        private void LyricsScrollViewer_PointerExited(object sender, PointerRoutedEventArgs e)
+        private void RootGrid_PointerExited(object sender, PointerRoutedEventArgs e)
         {
-            LyricsCanvas.IsMouseInLyricsArea = false;
+            NowPlayingCanvas.HandlePointerExited(e);
         }
 
-        private void LyricsScrollViewer_PointerEntered(object sender, PointerRoutedEventArgs e)
+        private void RootGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
-            LyricsCanvas.IsMouseInLyricsArea = true;
+            NowPlayingCanvas.HandlePointerEntered(e);
         }
 
-        private void LyricsScrollViewer_PointerPressed(object sender, PointerRoutedEventArgs e)
+        private void RootGrid_PointerPressed(object sender, PointerRoutedEventArgs e)
         {
-            LyricsCanvas.IsMousePressing = true;
+            NowPlayingCanvas.HandlePointerPressed(e);
         }
 
         private async void SaveAlbumArtButton_Click(object sender, RoutedEventArgs e)
@@ -415,6 +395,31 @@ namespace BetterLyrics.WinUI3.Views
             OnLayoutChanged();
         }
 
+        private void AlbumArtParallaxTiltControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            AlbumArtParallaxTiltControl.ParallaxContext = _parallaxEffect;
+        }
+
+        private void SongTitleParallaxTiltControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            SongTitleParallaxTiltControl.ParallaxContext = _parallaxEffect;
+        }
+
+        private void SongArtistParallaxTiltControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            SongAristParallaxTiltControl.ParallaxContext = _parallaxEffect;
+        }
+
+        private void SongAlbumParallaxTiltControl_Loaded(object sender, RoutedEventArgs e)
+        {
+            SongAlbumParallaxTiltControl.ParallaxContext = _parallaxEffect;
+        }
+
+        private void NowPlayingCanvas_Loaded(object sender, RoutedEventArgs e)
+        {
+            NowPlayingCanvas.ParallaxContext = _parallaxEffect;
+        }
+
         private void UpdateAlbumArtFadeOutDirection()
         {
             var settings = LyricsWindowStatus?.AlbumArtAreaEffectSettings;
@@ -453,13 +458,6 @@ namespace BetterLyrics.WinUI3.Views
                 else if (message.PropertyName == nameof(AlbumArtAreaEffectSettings.FadeOut))
                 {
                     ToggleAlbumArtFadeOut();
-                }
-            }
-            else if (message.Sender == LyricsWindowStatus?.LyricsEffectSettings)
-            {
-                if (message.PropertyName == nameof(LyricsEffectSettings.Lyrics3DAutoFitLayout))
-                {
-                    OnLayoutChanged();
                 }
             }
         }

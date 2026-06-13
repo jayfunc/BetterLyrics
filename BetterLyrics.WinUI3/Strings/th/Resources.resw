@@ -2001,6 +2001,9 @@
   <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
     <value>สไตล์การดึงสี</value>
   </data>
+  <data name="SettingsPageParallaxTilt.Header" xml:space="preserve">
+    <value>พาลาแล็กซ์ ทิลต์</value>
+  </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
     <value>โฟลเดอร์นี้รวมอยู่ในโฟลเดอร์ที่มีอยู่แล้ว ไม่จำเป็นต้องเพิ่มอีก</value>
   </data>

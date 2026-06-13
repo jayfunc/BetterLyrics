@@ -2001,6 +2001,9 @@
   <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
     <value>Gaya Pengambilan Warna</value>
   </data>
+  <data name="SettingsPageParallaxTilt.Header" xml:space="preserve">
+    <value>Pergeseran Parallaks</value>
+  </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
     <value>Folder ini sudah termasuk dalam folder yang ada, tidak perlu menambahkannya lagi</value>
   </data>
