@@ -42,7 +42,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                             stringBuilder.Append(syllable.Text);
                         }
                         var lastSyllable = line.PrimarySyllables[^1];
-                        if(lastSyllable.EndMs > lastSyllable.StartMs) stringBuilder.Append(FormatToSyllableTimestamp(lastSyllable.EndMs));
+                        if(lastSyllable.EndMs > lastSyllable.StartMs && lastSyllable.Text.Trim().Length > 0) stringBuilder.Append(FormatToSyllableTimestamp(lastSyllable.EndMs));
                     }
                     else
                     {
