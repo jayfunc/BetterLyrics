@@ -41,6 +41,8 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                             stringBuilder.Append(FormatToSyllableTimestamp(syllable.StartMs));
                             stringBuilder.Append(syllable.Text);
                         }
+                        var lastSyllable = line.PrimarySyllables[^1];
+                        if(lastSyllable.EndMs > lastSyllable.StartMs) stringBuilder.Append(FormatToSyllableTimestamp(lastSyllable.EndMs));
                     }
                     else
                     {
