@@ -39,6 +39,11 @@
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsFadeOutEffectEnabled, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
+                    <!--  边缘羽化  -->
+                    <controls:SettingsCard x:Uid="WindowSettingsControlEdgeFeathering" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE799;}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsEdgeFeatheringEffectEnabled, Mode=TwoWay}" />
+                    </controls:SettingsCard>
+
                     <!--  远离视野  -->
                     <controls:SettingsCard x:Uid="SettingsPageLyricsOutOfSightEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xF19D;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsOutOfSightEffectEnabled, Mode=TwoWay}" />

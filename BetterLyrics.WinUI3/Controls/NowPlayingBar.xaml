@@ -374,9 +374,9 @@
                                         Command="{x:Bind ViewModel.NavigationService.OpenLyricsSearchWindowCommand}"
                                         Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                            Glyph=&#xE721;}" />
-                                    <!--  Lyrics window manager shortcut settings  -->
+                                    <!--  Config current lyrics window shortcut settings  -->
                                     <MenuFlyoutItem
-                                        x:Uid="LyricsPageLyricsSettings"
+                                        x:Uid="NowPlayingBarConfigCurrentLyricsWindow"
                                         Click="LyricsSettingsShortcutMenuFlyoutItem_Click"
                                         Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                            Glyph=&#xE61F;}">
@@ -385,13 +385,14 @@
                                                 x:Name="LyricsSettingsFlyout"
                                                 Closed="LyricsSettingsFlyout_Closed"
                                                 FlyoutPresenterStyle="{StaticResource FlyoutPageStyle}"
+                                                Opened="LyricsSettingsFlyout_Opened"
                                                 Placement="Right"
                                                 ShouldConstrainToRootBounds="False" />
                                         </MenuFlyoutItem.ContextFlyout>
                                     </MenuFlyoutItem>
-                                    <!--  Playback shortcut settings  -->
+                                    <!--  Config current playback source shortcut settings  -->
                                     <MenuFlyoutItem
-                                        x:Uid="LyricsPagePlaybackSource"
+                                        x:Uid="NowPlayingBarConfigCurrentPlaybackSource"
                                         Click="PlaybackSettingsShortcutMenuFlyoutItem_Click"
                                         Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                            Glyph=&#xEA69;}">
@@ -399,6 +400,7 @@
                                             <Flyout
                                                 x:Name="PlaybackSettingsFlyout"
                                                 Closed="PlaybackSettingsFlyout_Closed"
+                                                Opened="PlaybackSettingsFlyout_Opened"
                                                 FlyoutPresenterStyle="{StaticResource FlyoutPageStyle}"
                                                 Placement="Right"
                                                 ShouldConstrainToRootBounds="False" />

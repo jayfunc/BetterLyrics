@@ -57,7 +57,7 @@ namespace BetterLyrics.WinUI3.Models
                 Provider = this.Provider,
                 TranslationProvider = this.TranslationProvider,
                 TransliterationProvider = this.TransliterationProvider,
-                
+
                 Raw = this.Raw,
                 Translation = this.Translation,
                 Transliteration = this.Transliteration,

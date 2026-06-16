@@ -3,7 +3,6 @@ using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using System;
 using System.Numerics;
-using Windows.Foundation;
 
 namespace BetterLyrics.WinUI3.Renderer
 {

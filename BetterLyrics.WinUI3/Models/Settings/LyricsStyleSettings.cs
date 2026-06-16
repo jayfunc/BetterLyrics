@@ -21,7 +21,8 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TextAlignmentType LyricsAlignmentType { get; set; } = TextAlignmentType.Left;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool UseInternalLyricsAlignment { get; set; } = true;
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsLineContentOrientation LyricsLineContentOrientation { get; set; } = LyricsLineContentOrientation.Vertical;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsLayoutOrientation LyricsLayoutOrientation { get; set; } = LyricsLayoutOrientation.Horizontal;
+
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool AutoWrap { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsFontStrokeWidth { get; set; } = 0;
 
@@ -96,7 +97,8 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
                 LyricsAlignmentType = this.LyricsAlignmentType,
                 UseInternalLyricsAlignment = this.UseInternalLyricsAlignment,
-                LyricsLineContentOrientation = this.LyricsLineContentOrientation,
+                LyricsLayoutOrientation = this.LyricsLayoutOrientation,
+
                 AutoWrap = this.AutoWrap,
                 LyricsFontStrokeWidth = this.LyricsFontStrokeWidth,
                 LyricsCustomBgFontColor = this.LyricsCustomBgFontColor,

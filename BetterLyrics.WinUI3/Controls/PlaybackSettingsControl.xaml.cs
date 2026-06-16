@@ -20,6 +20,8 @@ namespace BetterLyrics.WinUI3.Controls
     {
         public PlaybackSettingsControlViewModel ViewModel => (PlaybackSettingsControlViewModel)DataContext;
 
+        public bool HideConfigPanelWhenLoaded { get; set; } = true;
+
         public PlaybackSettingsControl()
         {
             InitializeComponent();
@@ -46,8 +48,20 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void ConfigButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
         {
-            ViewModel.SelectedMediaSourceProvider = (MediaSourceProviderInfo)((Button)sender).DataContext;
+            ShowConfigPanel((MediaSourceProviderInfo)((Button)sender).DataContext);
+        }
+
+        private void ShowConfigPanel(MediaSourceProviderInfo? info)
+        {
+            if (info == null) return;
+
+            ViewModel.SelectedMediaSourceProvider = info;
             PlaybackConfigPanel.Show();
+        }
+
+        public void ShowCurrentConfigPanel()
+        {
+            ShowConfigPanel(ViewModel.GSMTCService.CurrentMediaSourceProviderInfo);
         }
 
         private void DeleteButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
@@ -58,7 +72,10 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            PlaybackConfigPanel.Hide();
+            if (HideConfigPanelWhenLoaded)
+            {
+                PlaybackConfigPanel.Hide();
+            }
         }
 
         private async void SaveLyrics(LyricsFormat lyricsFormat)

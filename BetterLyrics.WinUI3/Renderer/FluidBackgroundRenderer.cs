@@ -7,7 +7,6 @@ using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
 using System;
 using System.Numerics;
-using Windows.Foundation;
 using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Renderer

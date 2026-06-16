@@ -729,14 +729,8 @@
   <data name="LyricsPageLyricsSearch.Text" xml:space="preserve">
     <value>Búsqueda manual de letras</value>
   </data>
-  <data name="LyricsPageLyricsSettings.Text" xml:space="preserve">
-    <value>Configuración de atajos de gestión de ventana de letras</value>
-  </data>
   <data name="LyricsPageMatchPercentage.Header" xml:space="preserve">
     <value>Porcentaje de coincidencia</value>
-  </data>
-  <data name="LyricsPagePlaybackSource.Text" xml:space="preserve">
-    <value>Configuración de atajos de fuente de reproducción</value>
   </data>
   <data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve">
     <value>Restablecer a 0 al cambiar de canción</value>
@@ -1169,6 +1163,12 @@
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>Modo Estrecho</value>
+  </data>
+  <data name="NowPlayingBarConfigCurrentLyricsWindow.Text" xml:space="preserve">
+    <value>Configurar la ventana de letras actual</value>
+  </data>
+  <data name="NowPlayingBarConfigCurrentPlaybackSource.Text" xml:space="preserve">
+    <value>Configurar la fuente de reproducción actual</value>
   </data>
   <data name="PictureInPictureMode" xml:space="preserve">
     <value>Modo Imagen en Imagen</value>

@@ -35,7 +35,7 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
         public ValueTransition<double> SecondaryXOffsetTransition { get; set; }
         public ValueTransition<double> TertiaryXOffsetTransition { get; set; }
 
-        public ValueTransition<double> YOffsetTransition { get; set; }
+        public ValueTransition<double> OffsetTransition { get; set; }
 
         public ValueTransition<Color> PlayedFillColorTransition { get; set; }
         public ValueTransition<Color> UnplayedFillColorTransition { get; set; }
@@ -157,7 +157,7 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
                 EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
                 defaultTotalDuration: AnimationDuration
             );
-            YOffsetTransition = new(
+            OffsetTransition = new(
                 initialValue: 0,
                 EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
                 defaultTotalDuration: AnimationDuration
@@ -212,7 +212,7 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
             LyricsFontWeight fontWeight,
             string fontFamilyCJK, string fontFamilyWestern,
             double maxWidth, double maxHeight,
-            TextAlignmentType type, bool autoWrap, LyricsLineContentOrientation orientation)
+            TextAlignmentType type, bool autoWrap, LyricsLayoutOrientation orientation)
         {
             DisposeTextLayout();
 
@@ -222,12 +222,8 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
             bool phoneticVisible = createPhonetic && !string.IsNullOrWhiteSpace(TertiaryText);
             bool translatedVisible = createTranslated && !string.IsNullOrWhiteSpace(SecondaryText);
 
-            double requestedWidth = orientation switch
-            {
-                LyricsLineContentOrientation.Horizontal => maxWidth / (1 + (translatedVisible ? 1 : 0)),
-                _ => maxWidth
-            };
             var verticalAlignment = CanvasVerticalAlignment.Top;
+            var canvasTextDirection = orientation == LyricsLayoutOrientation.Vertical ? CanvasTextDirection.TopToBottomThenRightToLeft : CanvasTextDirection.LeftToRightThenTopToBottom;
 
             // 音译
             if (phoneticVisible)
@@ -238,10 +234,11 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
                     FontSize = phoneticTextFontSize,
                     FontWeight = fontWeight.ToFontWeight(),
                     WordWrapping = wordWrapping,
-                }, (float)requestedWidth, (float)maxHeight)
+                }, (float)maxWidth, (float)maxHeight)
                 {
                     HorizontalAlignment = horizontalAlignment,
                     Options = CanvasDrawTextOptions.NoPixelSnap,
+                    Direction = canvasTextDirection,
                 };
                 TertiaryTextLayout.SetFontFamily(TertiaryText, fontFamilyCJK, fontFamilyWestern);
             }
@@ -253,10 +250,11 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
                 FontSize = originalTextFontSize,
                 FontWeight = fontWeight.ToFontWeight(),
                 WordWrapping = wordWrapping,
-            }, (float)requestedWidth, (float)maxHeight)
+            }, (float)maxWidth, (float)maxHeight)
             {
                 HorizontalAlignment = horizontalAlignment,
                 Options = CanvasDrawTextOptions.NoPixelSnap,
+                Direction = canvasTextDirection,
             };
             PrimaryTextLayout.SetFontFamily(PrimaryText, fontFamilyCJK, fontFamilyWestern);
             PrimaryTextRegions = PrimaryTextLayout.GetCharacterRegions(0, PrimaryText.Length);
@@ -270,10 +268,11 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
                     FontSize = translatedTextFontSize,
                     FontWeight = fontWeight.ToFontWeight(),
                     WordWrapping = wordWrapping,
-                }, (float)requestedWidth, (float)maxHeight)
+                }, (float)maxWidth, (float)maxHeight)
                 {
                     HorizontalAlignment = horizontalAlignment,
                     Options = CanvasDrawTextOptions.NoPixelSnap,
+                    Direction = canvasTextDirection,
                 };
                 SecondaryTextLayout.SetFontFamily(SecondaryText, fontFamilyCJK, fontFamilyWestern);
             }
@@ -450,7 +449,7 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
             PrimaryXOffsetTransition.Update(elapsedTime);
             SecondaryXOffsetTransition.Update(elapsedTime);
             TertiaryXOffsetTransition.Update(elapsedTime);
-            YOffsetTransition.Update(elapsedTime);
+            OffsetTransition.Update(elapsedTime);
 
             PlayedFillColorTransition.Update(elapsedTime);
             UnplayedFillColorTransition.Update(elapsedTime);

@@ -45,7 +45,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedFor(nameof(DemoWindowMargin))] public partial Rect MonitorBounds { get; set; }
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial DockPlacement DockPlacement { get; set; } = DockPlacement.Top;
         [ObservableProperty] public partial LyricsStyleSettings LyricsStyleSettings { get; set; } = new();
-        [ObservableProperty] public partial LyricsEffectSettings LyricsEffectSettings { get; set; } = new(500, 500, 500, EasingType.Quad);
+        [ObservableProperty] public partial LyricsEffectSettings LyricsEffectSettings { get; set; } = new();
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsBackgroundSettings LyricsBackgroundSettings { get; set; } = new();
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial AlbumArtAreaStyleSettings AlbumArtLayoutSettings { get; set; } = new();
         [ObservableProperty] public partial AlbumArtAreaEffectSettings AlbumArtAreaEffectSettings { get; set; } = new();
@@ -179,6 +179,10 @@ namespace BetterLyrics.WinUI3.Models.Settings
             {
                 LyricsAlignmentType = TextAlignmentType.Center
             };
+            LyricsEffectSettings = new()
+            {
+                IsLyricsEdgeFeatheringEffectEnabled = false,
+            };
             LyricsBackgroundSettings = new LyricsBackgroundSettings
             {
                 IsFluidOverlayEnabled = false,
@@ -224,6 +228,10 @@ namespace BetterLyrics.WinUI3.Models.Settings
             {
                 LyricsAlignmentType = TextAlignmentType.Left,
                 AutoWrap = false
+            };
+            LyricsEffectSettings = new()
+            {
+                IsLyricsEdgeFeatheringEffectEnabled = false,
             };
             LyricsBackgroundSettings = new LyricsBackgroundSettings
             {

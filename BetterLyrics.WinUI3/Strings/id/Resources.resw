@@ -729,14 +729,8 @@
   <data name="LyricsPageLyricsSearch.Text" xml:space="preserve">
     <value>Pencarian Manual Lirik</value>
   </data>
-  <data name="LyricsPageLyricsSettings.Text" xml:space="preserve">
-    <value>Pengaturan Pintasan Manajemen Jendela Lirik</value>
-  </data>
   <data name="LyricsPageMatchPercentage.Header" xml:space="preserve">
     <value>Persentase Kecocokan</value>
-  </data>
-  <data name="LyricsPagePlaybackSource.Text" xml:space="preserve">
-    <value>Pengaturan Pintasan Sumber Pemutaran</value>
   </data>
   <data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve">
     <value>Atur ulang ke 0 saat mengganti lagu</value>
@@ -1169,6 +1163,12 @@
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>Mode Sempit</value>
+  </data>
+  <data name="NowPlayingBarConfigCurrentLyricsWindow.Text" xml:space="preserve">
+    <value>Konfigurasi Jendela Lirik Saat Ini</value>
+  </data>
+  <data name="NowPlayingBarConfigCurrentPlaybackSource.Text" xml:space="preserve">
+    <value>Konfigurasi Sumber Pemutaran Saat Ini</value>
   </data>
   <data name="PictureInPictureMode" xml:space="preserve">
     <value>Mode Gambar-dalam-Gambar (PiP)</value>
