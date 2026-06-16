@@ -14,13 +14,6 @@ namespace BetterLyrics.WinUI3.Extensions
                 LyricsLayoutOrientation.Vertical => Orientation.Vertical,
                 _ => throw new ArgumentOutOfRangeException(nameof(orientation)),
             };
-
-            public Orientation ToOrientationInverse() => orientation switch
-            {
-                LyricsLayoutOrientation.Horizontal => Orientation.Vertical,
-                LyricsLayoutOrientation.Vertical => Orientation.Horizontal,
-                _ => throw new ArgumentOutOfRangeException(nameof(orientation)),
-            };
         }
     }
 }

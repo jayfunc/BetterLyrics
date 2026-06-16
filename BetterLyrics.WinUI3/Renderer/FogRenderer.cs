@@ -54,7 +54,7 @@ namespace BetterLyrics.WinUI3.Renderer
             ApplyBreathingTransform(ds, center, isBreathingEffectEnabled);
 
             base.DrawWithParallax(ds, _fogEffect);
-            
+
             ResetTransform(ds, isBreathingEffectEnabled);
         }
 

@@ -20,11 +20,11 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
             int primaryPlayingLineIndex,
             double lyricsWidth,
             double lyricsHeight,
-            double targetYScrollOffset,
+            double targetScrollOffset,
             double playingLineTopOffsetFactor,
             LyricsStyleSettings lyricsStyle,
             LyricsEffectSettings lyricsEffect,
-            ValueTransition<double> canvasYScrollTransition,
+            ValueTransition<double> canvasScrollTransition,
             NowPlayingPalette albumArtThemeColors,
             TimeSpan elapsedTime,
             bool isMouseScrolling,
@@ -41,19 +41,26 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
             var primaryPlayingLine = lines[primaryPlayingLineIndex];
 
             var autoWrap = lyricsStyle.AutoWrap;
+            var isVertical = lyricsStyle.LyricsLayoutOrientation == LyricsLayoutOrientation.Vertical;
 
             var phoneticOpacity = lyricsStyle.PhoneticLyricsOpacity / 100.0;
             var originalOpacity = lyricsStyle.UnplayedOriginalLyricsOpacity / 100.0;
             var translatedOpacity = lyricsStyle.TranslatedLyricsOpacity / 100.0;
 
-            double topHeightFactor = lyricsHeight * playingLineTopOffsetFactor;
-            double bottomHeightFactor = lyricsHeight * (1 - playingLineTopOffsetFactor);
+            // 动态视口缓冲区域
+            double spaceBefore = isVertical
+                ? lyricsWidth * playingLineTopOffsetFactor
+                : lyricsHeight * playingLineTopOffsetFactor;
+
+            double spaceAfter = isVertical
+                ? lyricsWidth * (1 - playingLineTopOffsetFactor)
+                : lyricsHeight * (1 - playingLineTopOffsetFactor);
 
             double scrollTopDurationSec = lyricsEffect.LyricsScrollTopDuration / 1000.0;
             double scrollTopDelaySec = lyricsEffect.LyricsScrollTopDelay / 1000.0;
             double scrollBottomDurationSec = lyricsEffect.LyricsScrollBottomDuration / 1000.0;
             double scrollBottomDelaySec = lyricsEffect.LyricsScrollBottomDelay / 1000.0;
-            double canvasTransDuration = canvasYScrollTransition.DurationSeconds;
+            double canvasTransDuration = canvasScrollTransition.DurationSeconds;
 
             bool isBlurEnabled = lyricsEffect.IsLyricsBlurEffectEnabled;
             bool isOutOfSightEnabled = lyricsEffect.IsLyricsOutOfSightEffectEnabled;
@@ -102,99 +109,103 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                 if (isLayoutChanged || isPrimaryPlayingLineChanged || isMouseScrollingChanged || isSecondaryLinePlayingChanged || isArtThemeColorsChanged)
                 {
                     int lineCountDelta = i - primaryPlayingLineIndex;
-                    double distanceFromPlayingLine = Math.Abs(line.TopLeftPosition.Y - primaryPlayingLine.TopLeftPosition.Y);
+
+                    // 动态距离计算
+                    double distanceFromPlayingLine = isVertical
+                        ? Math.Abs(line.TopLeftPosition.X - primaryPlayingLine.TopLeftPosition.X)
+                        : Math.Abs(line.TopLeftPosition.Y - primaryPlayingLine.TopLeftPosition.Y);
 
                     double distanceFactor;
                     if (lineCountDelta < 0)
                     {
-                        distanceFactor = Math.Clamp(distanceFromPlayingLine / topHeightFactor, 0, 1);
+                        distanceFactor = Math.Clamp(distanceFromPlayingLine / spaceBefore, 0, 1);
                     }
                     else
                     {
-                        distanceFactor = Math.Clamp(distanceFromPlayingLine / bottomHeightFactor, 0, 1);
+                        distanceFactor = Math.Clamp(distanceFromPlayingLine / spaceAfter, 0, 1);
                     }
 
-                    double yScrollDuration;
-                    double yScrollDelay;
+                    double scrollDuration;
+                    double scrollDelay;
 
                     if (lineCountDelta < 0)
                     {
-                        yScrollDuration =
+                        scrollDuration =
                             canvasTransDuration +
                             distanceFactor * (scrollTopDurationSec - canvasTransDuration);
-                        yScrollDelay = distanceFactor * scrollTopDelaySec;
+                        scrollDelay = distanceFactor * scrollTopDelaySec;
                     }
                     else if (lineCountDelta == 0)
                     {
-                        yScrollDuration = canvasTransDuration;
-                        yScrollDelay = 0;
+                        scrollDuration = canvasTransDuration;
+                        scrollDelay = 0;
                     }
                     else
                     {
-                        yScrollDuration =
+                        scrollDuration =
                             canvasTransDuration +
                             distanceFactor * (scrollBottomDurationSec - canvasTransDuration);
-                        yScrollDelay = distanceFactor * scrollBottomDelaySec;
+                        scrollDelay = distanceFactor * scrollBottomDelaySec;
                     }
 
-                    line.BlurAmountTransition.SetDuration(yScrollDuration);
-                    line.BlurAmountTransition.SetDelay(yScrollDelay);
+                    line.BlurAmountTransition.SetDuration(scrollDuration);
+                    line.BlurAmountTransition.SetDelay(scrollDelay);
                     line.BlurAmountTransition.Start(
                         (isMouseScrolling || isSecondaryLinePlaying) ? 0 :
                         (isBlurEnabled ? (5 * distanceFactor) : 0));
 
-                    line.ScaleTransition.SetDuration(yScrollDuration);
-                    line.ScaleTransition.SetDelay(yScrollDelay);
+                    line.ScaleTransition.SetDuration(scrollDuration);
+                    line.ScaleTransition.SetDelay(scrollDelay);
                     line.ScaleTransition.Start(
                         isSecondaryLinePlaying ? _highlightedScale :
                         (isOutOfSightEnabled ?
                         (_highlightedScale - distanceFactor * (_highlightedScale - _defaultScale)) :
                         _highlightedScale));
 
-                    line.TertiaryOpacityTransition.SetDuration(yScrollDuration);
-                    line.TertiaryOpacityTransition.SetDelay(yScrollDelay);
+                    line.TertiaryOpacityTransition.SetDuration(scrollDuration);
+                    line.TertiaryOpacityTransition.SetDelay(scrollDelay);
                     line.TertiaryOpacityTransition.Start(
                         isSecondaryLinePlaying ? phoneticOpacity :
                         CalculateTargetOpacity(phoneticOpacity, phoneticOpacity, distanceFactor, isMouseScrolling, lyricsEffect));
 
                     // 原文不透明度（已播放）
-                    line.PlayedPrimaryOpacityTransition.SetDuration(yScrollDuration);
-                    line.PlayedPrimaryOpacityTransition.SetDelay(yScrollDelay);
+                    line.PlayedPrimaryOpacityTransition.SetDuration(scrollDuration);
+                    line.PlayedPrimaryOpacityTransition.SetDelay(scrollDelay);
                     line.PlayedPrimaryOpacityTransition.Start(
                         isSecondaryLinePlaying ? 1.0 :
                         CalculateTargetOpacity(originalOpacity, 1.0, distanceFactor, isMouseScrolling, lyricsEffect));
                     // 原文不透明度（未播放）
-                    line.UnplayedPrimaryOpacityTransition.SetDuration(yScrollDuration);
-                    line.UnplayedPrimaryOpacityTransition.SetDelay(yScrollDelay);
+                    line.UnplayedPrimaryOpacityTransition.SetDuration(scrollDuration);
+                    line.UnplayedPrimaryOpacityTransition.SetDelay(scrollDelay);
                     line.UnplayedPrimaryOpacityTransition.Start(
                         isSecondaryLinePlaying ? originalOpacity :
                         CalculateTargetOpacity(originalOpacity, originalOpacity, distanceFactor, isMouseScrolling, lyricsEffect));
 
-                    line.SecondaryOpacityTransition.SetDuration(yScrollDuration);
-                    line.SecondaryOpacityTransition.SetDelay(yScrollDelay);
+                    line.SecondaryOpacityTransition.SetDuration(scrollDuration);
+                    line.SecondaryOpacityTransition.SetDelay(scrollDelay);
                     line.SecondaryOpacityTransition.Start(
                         isSecondaryLinePlaying ? translatedOpacity :
                         CalculateTargetOpacity(translatedOpacity, translatedOpacity, distanceFactor, isMouseScrolling, lyricsEffect));
 
-                    line.PlayedFillColorTransition.SetDuration(yScrollDuration);
-                    line.PlayedFillColorTransition.SetDelay(yScrollDelay);
+                    line.PlayedFillColorTransition.SetDuration(scrollDuration);
+                    line.PlayedFillColorTransition.SetDelay(scrollDelay);
                     line.PlayedFillColorTransition.Start(isSecondaryLinePlaying ? albumArtThemeColors.PlayedCurrentLineFillColor : albumArtThemeColors.NonCurrentLineFillColor);
 
-                    line.UnplayedFillColorTransition.SetDuration(yScrollDuration);
-                    line.UnplayedFillColorTransition.SetDelay(yScrollDelay);
+                    line.UnplayedFillColorTransition.SetDuration(scrollDuration);
+                    line.UnplayedFillColorTransition.SetDelay(scrollDelay);
                     line.UnplayedFillColorTransition.Start(isSecondaryLinePlaying ? albumArtThemeColors.UnplayedCurrentLineFillColor : albumArtThemeColors.NonCurrentLineFillColor);
 
-                    line.PlayedStrokeColorTransition.SetDuration(yScrollDuration);
-                    line.PlayedStrokeColorTransition.SetDelay(yScrollDelay);
+                    line.PlayedStrokeColorTransition.SetDuration(scrollDuration);
+                    line.PlayedStrokeColorTransition.SetDelay(scrollDelay);
                     line.PlayedStrokeColorTransition.Start(isSecondaryLinePlaying ? albumArtThemeColors.PlayedTextStrokeColor : albumArtThemeColors.UnplayedTextStrokeColor);
 
-                    line.UnplayedStrokeColorTransition.SetDuration(yScrollDuration);
-                    line.UnplayedStrokeColorTransition.SetDelay(yScrollDelay);
+                    line.UnplayedStrokeColorTransition.SetDuration(scrollDuration);
+                    line.UnplayedStrokeColorTransition.SetDelay(scrollDelay);
                     line.UnplayedStrokeColorTransition.Start(isSecondaryLinePlaying ? albumArtThemeColors.UnplayedTextStrokeColor : albumArtThemeColors.UnplayedTextStrokeColor);
 
-                    line.AngleTransition.SetInterpolator(canvasYScrollTransition.Interpolator);
-                    line.AngleTransition.SetDuration(yScrollDuration);
-                    line.AngleTransition.SetDelay(yScrollDelay);
+                    line.AngleTransition.SetInterpolator(canvasScrollTransition.Interpolator);
+                    line.AngleTransition.SetDuration(scrollDuration);
+                    line.AngleTransition.SetDelay(scrollDelay);
                     line.AngleTransition.Start(
                         (isFanEnabled && !isMouseScrolling) ?
                         fanAngleRad * distanceFactor * (i > primaryPlayingLineIndex ? 1 : -1) :
@@ -202,16 +213,16 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
 
                     if (isLayoutChanged || isPrimaryPlayingLineChanged || isMouseScrollingChanged)
                     {
-                        line.YOffsetTransition.SetInterpolator(canvasYScrollTransition.Interpolator);
-                        line.YOffsetTransition.SetDuration(yScrollDuration);
-                        line.YOffsetTransition.SetDelay(yScrollDelay);
+                        line.OffsetTransition.SetInterpolator(canvasScrollTransition.Interpolator);
+                        line.OffsetTransition.SetDuration(scrollDuration);
+                        line.OffsetTransition.SetDelay(scrollDelay);
                         if (isLayoutChanged)
                         {
-                            line.YOffsetTransition.JumpTo(targetYScrollOffset);
+                            line.OffsetTransition.JumpTo(targetScrollOffset);
                         }
                         else
                         {
-                            line.YOffsetTransition.Start(targetYScrollOffset);
+                            line.OffsetTransition.Start(targetScrollOffset);
                         }
                     }
                 }
@@ -342,19 +353,26 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
 
                 if (!autoWrap)
                 {
+                    // 长文本跑马灯滚动计算，竖排用高度做极限比较，横排用宽度
+                    double layoutLimit = isVertical ? lyricsHeight : lyricsWidth;
+
+                    double pSize = isVertical ? (line.PrimaryTextLayout?.LayoutBounds.Height ?? 0) : (line.PrimaryTextLayout?.LayoutBounds.Width ?? 0);
+                    double sSize = isVertical ? (line.SecondaryTextLayout?.LayoutBounds.Height ?? 0) : (line.SecondaryTextLayout?.LayoutBounds.Width ?? 0);
+                    double tSize = isVertical ? (line.TertiaryTextLayout?.LayoutBounds.Height ?? 0) : (line.TertiaryTextLayout?.LayoutBounds.Width ?? 0);
+
                     if (isSecondaryLinePlaying)
                     {
-                        line.PrimaryXOffsetTransition.JumpTo(CalculateTargetXOffset(lyricsStyle.LyricsAlignmentType, line.PrimaryTextLayout?.LayoutBounds.Width ?? 0, lyricsWidth, playProgress));
-                        line.SecondaryXOffsetTransition.JumpTo(CalculateTargetXOffset(lyricsStyle.LyricsAlignmentType, line.SecondaryTextLayout?.LayoutBounds.Width ?? 0, lyricsWidth, playProgress));
-                        line.TertiaryXOffsetTransition.JumpTo(CalculateTargetXOffset(lyricsStyle.LyricsAlignmentType, line.TertiaryTextLayout?.LayoutBounds.Width ?? 0, lyricsWidth, playProgress));
+                        line.PrimaryXOffsetTransition.JumpTo(CalculateTargetNonWrapOffset(lyricsStyle.LyricsAlignmentType, pSize, layoutLimit, playProgress));
+                        line.SecondaryXOffsetTransition.JumpTo(CalculateTargetNonWrapOffset(lyricsStyle.LyricsAlignmentType, sSize, layoutLimit, playProgress));
+                        line.TertiaryXOffsetTransition.JumpTo(CalculateTargetNonWrapOffset(lyricsStyle.LyricsAlignmentType, tSize, layoutLimit, playProgress));
                     }
                     if (isSecondaryLinePlayingChanged)
                     {
                         if (!isSecondaryLinePlaying)
                         {
-                            line.PrimaryXOffsetTransition.Start(CalculateTargetXOffset(lyricsStyle.LyricsAlignmentType, line.PrimaryTextLayout?.LayoutBounds.Width ?? 0, lyricsWidth, 0));
-                            line.SecondaryXOffsetTransition.Start(CalculateTargetXOffset(lyricsStyle.LyricsAlignmentType, line.SecondaryTextLayout?.LayoutBounds.Width ?? 0, lyricsWidth, 0));
-                            line.TertiaryXOffsetTransition.Start(CalculateTargetXOffset(lyricsStyle.LyricsAlignmentType, line.TertiaryTextLayout?.LayoutBounds.Width ?? 0, lyricsWidth, 0));
+                            line.PrimaryXOffsetTransition.Start(CalculateTargetNonWrapOffset(lyricsStyle.LyricsAlignmentType, pSize, layoutLimit, 0));
+                            line.SecondaryXOffsetTransition.Start(CalculateTargetNonWrapOffset(lyricsStyle.LyricsAlignmentType, sSize, layoutLimit, 0));
+                            line.TertiaryXOffsetTransition.Start(CalculateTargetNonWrapOffset(lyricsStyle.LyricsAlignmentType, tSize, layoutLimit, 0));
                         }
                     }
                 }
@@ -391,27 +409,24 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
             return targetOpacity;
         }
 
-        private static double CalculateTargetXOffset(TextAlignmentType textAlignmentType, double actualWidth, double lyricsWidth, double progress)
+        private static double CalculateTargetNonWrapOffset(TextAlignmentType textAlignmentType, double actualSize, double limitSize, double progress)
         {
             var offset = textAlignmentType switch
             {
-                TextAlignmentType.Center => (lyricsWidth - actualWidth) / 2,
-                TextAlignmentType.Right => lyricsWidth - actualWidth,
+                TextAlignmentType.Center => (limitSize - actualSize) / 2,
+                TextAlignmentType.Right => limitSize - actualSize,
                 _ => 0,
             };
             offset = -Math.Min(0, offset);
-            var progressStartToScroll = lyricsWidth * 0.5 / actualWidth;
+            var progressStartToScroll = limitSize * 0.5 / actualSize;
             var progressEndToScroll = 1 - progressStartToScroll;
-            return -Math.Max((Math.Min(progress, progressEndToScroll) - progressStartToScroll), 0) * actualWidth + offset;
+            return -Math.Max((Math.Min(progress, progressEndToScroll) - progressStartToScroll), 0) * actualSize + offset;
         }
 
         private static (double InDuration, double OutDuration) CalculateSegmentDuration(double desiredDuration, double maxDuration)
         {
-            // 缓入动画时长尽量接近 desiredDuration
             var inDuration = Math.Min(desiredDuration, maxDuration);
-            // 缓出动画时长保证有合理的时长
             var outDuration = Math.Min(maxDuration - inDuration, Time.AnimationDuration.TotalSeconds);
-            //// 缓出动画时长过短时调整缓入动画时长以保证有合理的缓出动画
             if (outDuration == 0)
             {
                 outDuration = inDuration / 3 * 1;

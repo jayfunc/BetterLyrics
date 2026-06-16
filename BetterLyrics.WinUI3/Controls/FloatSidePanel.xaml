@@ -14,7 +14,7 @@
                 Storyboard.TargetName="PanelTransform"
                 Storyboard.TargetProperty="X"
                 To="0"
-                Duration="0:0:0.3">
+                Duration="0:0:0.35">
                 <DoubleAnimation.EasingFunction>
                     <ExponentialEase EasingMode="EaseOut" Exponent="5" />
                 </DoubleAnimation.EasingFunction>
@@ -23,7 +23,7 @@
                 Storyboard.TargetName="PanelTransform"
                 Storyboard.TargetProperty="Y"
                 To="0"
-                Duration="0:0:0.3">
+                Duration="0:0:0.35">
                 <DoubleAnimation.EasingFunction>
                     <ExponentialEase EasingMode="EaseOut" Exponent="5" />
                 </DoubleAnimation.EasingFunction>
@@ -33,7 +33,7 @@
                 Storyboard.TargetProperty="Opacity"
                 From="0"
                 To="1"
-                Duration="0:0:0.3" />
+                Duration="0:0:0.35" />
         </Storyboard>
 
         <Storyboard x:Name="ExitStoryboard" Completed="ExitStoryboard_Completed">

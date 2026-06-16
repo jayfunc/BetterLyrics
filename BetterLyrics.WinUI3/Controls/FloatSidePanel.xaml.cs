@@ -69,6 +69,8 @@ namespace BetterLyrics.WinUI3.Controls
 
         public void Show()
         {
+            ExitStoryboard.Stop();
+
             RootContainer.Visibility = Visibility.Visible;
             PanelGrid.UpdateLayout();
 

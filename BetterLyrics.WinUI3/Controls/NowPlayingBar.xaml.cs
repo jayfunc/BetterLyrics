@@ -181,11 +181,13 @@ public sealed partial class NowPlayingBar : UserControl
 
     private void PlaybackSettingsShortcutMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
     {
-        PlaybackSettingsFlyout.Content = new PlaybackSettingsControl
+        var content = new PlaybackSettingsControl
         {
             MaxHeight = 500,
             MaxWidth = 850,
+            HideConfigPanelWhenLoaded = false,
         };
+        PlaybackSettingsFlyout.Content = content;
         PlaybackSettingsFlyout.ShowAt(BottomRightCommandStackPanel);
     }
 
@@ -199,18 +201,32 @@ public sealed partial class NowPlayingBar : UserControl
         PlaybackSettingsFlyout.Content = null;
     }
 
+    private void PlaybackSettingsFlyout_Opened(object sender, object e)
+    {
+        var content = (PlaybackSettingsControl)PlaybackSettingsFlyout.Content;
+        content.ShowCurrentConfigPanel();
+    }
+
     private void LyricsSettingsFlyout_Closed(object sender, object e)
     {
         LyricsSettingsFlyout.Content = null;
     }
 
+    private async void LyricsSettingsFlyout_Opened(object sender, object e)
+    {
+        var content = (LyricsWindowSettingsControl)LyricsSettingsFlyout.Content;
+        content.ShowConfigPanel(LyricsWindowStatus);
+    }
+
     private void LyricsSettingsShortcutMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
     {
-        LyricsSettingsFlyout.Content = new LyricsWindowSettingsControl
+        var content = new LyricsWindowSettingsControl()
         {
             MaxHeight = 500,
             MaxWidth = 850,
+            HideConfigPanelWhenLoaded = false,
         };
+        LyricsSettingsFlyout.Content = content;
         LyricsSettingsFlyout.ShowAt(BottomRightCommandStackPanel);
     }
 

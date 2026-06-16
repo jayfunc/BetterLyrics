@@ -1,6 +1,5 @@
 ﻿using BetterLyrics.WinUI3.Extensions;
 using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.UI.Xaml;
 using Windows.Foundation;
 using Windows.UI;
 

@@ -11,6 +11,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsBlurEffectEnabled { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsFadeOutEffectEnabled { get; set; } = true;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsEdgeFeatheringEffectEnabled { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsOutOfSightEffectEnabled { get; set; } = true;
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsGlowEffectEnabled { get; set; } = true;
@@ -53,7 +54,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool IsLyricsBrethingEffectEnabled { get; set; } = false;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsBreathingIntensity { get; set; } = 80;
 
-        public LyricsEffectSettings(int lyricsScrollTopDuration, int lyricsScrollDuration, int lyricsScrollBottomDuration, EasingType lyricsScrollEasingType)
+        public LyricsEffectSettings(int lyricsScrollTopDuration = 500, int lyricsScrollDuration = 500, int lyricsScrollBottomDuration = 500, EasingType lyricsScrollEasingType = EasingType.Quad)
         {
             LyricsScrollTopDuration = lyricsScrollTopDuration;
             LyricsScrollDuration = lyricsScrollDuration;
@@ -69,6 +70,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
                 IsLyricsBlurEffectEnabled = this.IsLyricsBlurEffectEnabled,
                 IsLyricsFadeOutEffectEnabled = this.IsLyricsFadeOutEffectEnabled,
+                IsLyricsEdgeFeatheringEffectEnabled = this.IsLyricsEdgeFeatheringEffectEnabled,
                 IsLyricsOutOfSightEffectEnabled = this.IsLyricsOutOfSightEffectEnabled,
 
                 IsLyricsGlowEffectEnabled = this.IsLyricsGlowEffectEnabled,

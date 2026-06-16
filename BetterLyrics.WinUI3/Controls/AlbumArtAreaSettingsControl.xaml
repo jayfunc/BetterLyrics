@@ -45,7 +45,7 @@
                         </ComboBox>
                     </controls:SettingsCard>
 
-                    <controls:SettingsExpander x:Uid="AlbumArtAreaSettingsControlFadeOut" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE727;}">
+                    <controls:SettingsExpander x:Uid="AlbumArtAreaSettingsControlFadeOut" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE89F;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.AlbumArtAreaEffectSettings.FadeOut, Mode=TwoWay}" />
                         <controls:SettingsExpander.Items>
                             <controls:SettingsCard x:Uid="AlbumArtAreaSettingsControlStartPoint" IsEnabled="{x:Bind LyricsWindowStatus.AlbumArtAreaEffectSettings.FadeOut, Mode=OneWay}">

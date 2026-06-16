@@ -55,9 +55,6 @@
     <bwc:UriStringToDecodedAbsoluteUri x:Key="UriStringToDecodedAbsoluteUri" />
     <bwc:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
 
-    <bwc:LyricsLayoutOrientationToOrientationConverter x:Key="LyricsLayoutOrientationToOrientationConverter" />
-    <bwc:LyricsLayoutOrientationNegationToOrientationConverter x:Key="LyricsLayoutOrientationNegationToOrientationConverter" />
-
     <bwc:EnumToIntConverter x:Key="EnumToIntConverter" />
     <bwc:EnumToOpacityConverter x:Key="EnumToOpacityConverter" />
     <bwc:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />

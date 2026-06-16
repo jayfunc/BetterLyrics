@@ -102,7 +102,7 @@
                         </ComboBox>
                     </controls:SettingsCard>
                     <!--  边缘羽化  -->
-                    <controls:SettingsExpander x:Uid="WindowSettingsControlEdgeFeathering" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE950;}">
+                    <controls:SettingsExpander x:Uid="WindowSettingsControlEdgeFeathering" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE799;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsEdgeFeatheringEnabled, Mode=TwoWay}" />
                         <controls:SettingsExpander.Items>
                             <controls:SettingsCard x:Uid="WindowSettingsControlEdgeFeatheringLeft" IsEnabled="{x:Bind LyricsWindowStatus.IsEdgeFeatheringEnabled, Mode=OneWay}">

@@ -31,6 +31,8 @@ namespace BetterLyrics.WinUI3.Controls
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
         private readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
 
+        public bool HideConfigPanelWhenLoaded { get; set; } = true;
+
         public LyricsWindowStatus? LyricsWindowStatus
         {
             get { return (LyricsWindowStatus?)GetValue(LyricsWindowStatusProperty); }
@@ -131,8 +133,15 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void ConfigButton_Click(object sender, RoutedEventArgs e)
         {
+            ShowConfigPanel((LyricsWindowStatus)((Button)sender).DataContext);
+        }
+
+        public void ShowConfigPanel(LyricsWindowStatus? status)
+        {
+            if (status == null) return;
+
             ConfigNavView.SelectedItem = WindowSegmentedItem;
-            LyricsWindowStatus = (LyricsWindowStatus)((Button)sender).DataContext;
+            LyricsWindowStatus = status;
             ConfigPanel.Show();
         }
 
@@ -145,7 +154,10 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            ConfigPanel.Hide();
+            if (HideConfigPanelWhenLoaded)
+            {
+                ConfigPanel.Hide();
+            }
         }
 
         private void ConfigNavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
@@ -209,14 +221,7 @@ namespace BetterLyrics.WinUI3.Controls
             ViewModel.AppSettings.WindowBoundsRecords?.Refresh();
         }
 
-        private void ResetPositionMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
-        {
-            var status = (LyricsWindowStatus)((FrameworkElement)sender).DataContext;
-            var window = WindowHook.GetNowPlayingWindow(status);
-            window?.MoveAndResize(new(100, 100, 800, 500));
-        }
-
-        private Rect MapToMonitor(Rect monitorRectBefore, Rect monitorRectAfter, Rect windowRectBefore)
+        private static Rect MapToMonitor(Rect monitorRectBefore, Rect monitorRectAfter, Rect windowRectBefore)
         {
             var xRatio = monitorRectAfter.Width / monitorRectBefore.Width;
             var yRatio = monitorRectAfter.Height / monitorRectBefore.Height;

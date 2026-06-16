@@ -729,14 +729,8 @@
   <data name="LyricsPageLyricsSearch.Text" xml:space="preserve">
     <value>Tìm kiếm lời bài hát thủ công</value>
   </data>
-  <data name="LyricsPageLyricsSettings.Text" xml:space="preserve">
-    <value>Cài đặt phím tắt quản lý cửa sổ lời bài hát</value>
-  </data>
   <data name="LyricsPageMatchPercentage.Header" xml:space="preserve">
     <value>Tỷ lệ khớp</value>
-  </data>
-  <data name="LyricsPagePlaybackSource.Text" xml:space="preserve">
-    <value>Cài đặt phím tắt nguồn phát</value>
   </data>
   <data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve">
     <value>Đặt lại về 0 khi chuyển bài hát</value>
@@ -1169,6 +1163,12 @@
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>Chế độ hẹp</value>
+  </data>
+  <data name="NowPlayingBarConfigCurrentLyricsWindow.Text" xml:space="preserve">
+    <value>Cài đặt cửa sổ lời bài hát hiện tại</value>
+  </data>
+  <data name="NowPlayingBarConfigCurrentPlaybackSource.Text" xml:space="preserve">
+    <value>Cấu hình nguồn phát hiện tại</value>
   </data>
   <data name="PictureInPictureMode" xml:space="preserve">
     <value>Chế độ Hình trong hình (PiP)</value>
