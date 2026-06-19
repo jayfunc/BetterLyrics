@@ -4,6 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text.Json.Serialization;
 using Windows.UI;
 
@@ -103,7 +104,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 LyricsAlignmentType = this.LyricsAlignmentType,
                 UseInternalLyricsAlignment = this.UseInternalLyricsAlignment,
                 LyricsLayoutOrientation = this.LyricsLayoutOrientation,
-                LyricsLayerOrder = this.LyricsLayerOrder,
+                LyricsLayerOrder = new(this.LyricsLayerOrder.Select(p => (LyricsLayerConfig)p.Clone())),
 
                 AutoWrap = this.AutoWrap,
                 LyricsFontStrokeWidth = this.LyricsFontStrokeWidth,
