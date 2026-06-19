@@ -702,6 +702,15 @@
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve">
     <value>Thời gian</value>
   </data>
+  <data name="LyricsLayerPrimaryName" xml:space="preserve">
+    <value>Bản gốc</value>
+  </data>
+  <data name="LyricsLayerSecondaryName" xml:space="preserve">
+    <value>Bản dịch</value>
+  </data>
+  <data name="LyricsLayerTertiaryName" xml:space="preserve">
+    <value>Cách phát âm</value>
+  </data>
   <data name="LyricsLoading" xml:space="preserve">
     <value>Đang tải lời bài hát...</value>
   </data>
@@ -935,6 +944,9 @@
   </data>
   <data name="LyricsSharePageTitle" xml:space="preserve">
     <value>Thẻ lời bài hát</value>
+  </data>
+  <data name="LyricsStyleSettingsControlLyricsLayoutOrder.Text" xml:space="preserve">
+    <value>Trình tự bố cục lời bài hát</value>
   </data>
   <data name="LyricsWindowSettingsControlConfigMusicGalleryLyrics.Text" xml:space="preserve">
     <value>Cửa sổ lời bài hát được nhúng trong Config Music Gallery</value>
@@ -1394,6 +1406,9 @@
   </data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>Độ mờ</value>
+  </data>
+  <data name="SettingsPageBottom.Content" xml:space="preserve">
+    <value>Phần dưới cùng</value>
   </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>Gồm các tệp nhật ký và bộ nhớ đệm lời bài hát trực tuyến.</value>
@@ -2267,6 +2282,9 @@
   </data>
   <data name="SettingsPageTitleBarAreaWhole.Content" xml:space="preserve">
     <value>Toàn bộ cửa sổ</value>
+  </data>
+  <data name="SettingsPageTop.Content" xml:space="preserve">
+    <value>Hàng đầu</value>
   </data>
   <data name="SettingsPageTranslatedText.Header" xml:space="preserve">
     <value>Bản dịch</value>

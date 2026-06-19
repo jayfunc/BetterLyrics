@@ -702,6 +702,15 @@
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve">
     <value>ระยะเวลา</value>
   </data>
+  <data name="LyricsLayerPrimaryName" xml:space="preserve">
+    <value>ต้นฉบับ</value>
+  </data>
+  <data name="LyricsLayerSecondaryName" xml:space="preserve">
+    <value>การแปล</value>
+  </data>
+  <data name="LyricsLayerTertiaryName" xml:space="preserve">
+    <value>การออกเสียง</value>
+  </data>
   <data name="LyricsLoading" xml:space="preserve">
     <value>กำลังโหลดเนื้อเพลง...</value>
   </data>
@@ -935,6 +944,9 @@
   </data>
   <data name="LyricsSharePageTitle" xml:space="preserve">
     <value>บัตรเนื้อเพลง</value>
+  </data>
+  <data name="LyricsStyleSettingsControlLyricsLayoutOrder.Text" xml:space="preserve">
+    <value>ลำดับการจัดวางเนื้อเพลง</value>
   </data>
   <data name="LyricsWindowSettingsControlConfigMusicGalleryLyrics.Text" xml:space="preserve">
     <value>หน้าต่างแสดงเนื้อเพลงแบบฝังในแกลเลอรีเพลง Config</value>
@@ -1394,6 +1406,9 @@
   </data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>ปริมาณความเบลอ</value>
+  </data>
+  <data name="SettingsPageBottom.Content" xml:space="preserve">
+    <value>ด้านล่าง</value>
   </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>รวมถึงไฟล์บันทึก, แคชเนื้อเพลงออนไลน์</value>
@@ -2267,6 +2282,9 @@
   </data>
   <data name="SettingsPageTitleBarAreaWhole.Content" xml:space="preserve">
     <value>ทั้งหน้าต่าง</value>
+  </data>
+  <data name="SettingsPageTop.Content" xml:space="preserve">
+    <value>ด้านบน</value>
   </data>
   <data name="SettingsPageTranslatedText.Header" xml:space="preserve">
     <value>คำแปล</value>

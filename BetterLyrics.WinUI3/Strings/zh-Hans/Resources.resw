@@ -702,6 +702,15 @@
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve">
     <value>持续时间</value>
   </data>
+  <data name="LyricsLayerPrimaryName" xml:space="preserve">
+    <value>原文</value>
+  </data>
+  <data name="LyricsLayerSecondaryName" xml:space="preserve">
+    <value>译文</value>
+  </data>
+  <data name="LyricsLayerTertiaryName" xml:space="preserve">
+    <value>发音标示</value>
+  </data>
   <data name="LyricsLoading" xml:space="preserve">
     <value>加载歌词中...</value>
   </data>
@@ -935,6 +944,9 @@
   </data>
   <data name="LyricsSharePageTitle" xml:space="preserve">
     <value>歌词卡片</value>
+  </data>
+  <data name="LyricsStyleSettingsControlLyricsLayoutOrder.Text" xml:space="preserve">
+    <value>歌词排版顺序</value>
   </data>
   <data name="LyricsWindowSettingsControlConfigMusicGalleryLyrics.Text" xml:space="preserve">
     <value>配置音乐库内嵌歌词窗口</value>
@@ -1394,6 +1406,9 @@
   </data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>模糊量</value>
+  </data>
+  <data name="SettingsPageBottom.Content" xml:space="preserve">
+    <value>靠下</value>
   </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>包括日志文件，网络歌词缓存</value>
@@ -2267,6 +2282,9 @@
   </data>
   <data name="SettingsPageTitleBarAreaWhole.Content" xml:space="preserve">
     <value>整个窗口</value>
+  </data>
+  <data name="SettingsPageTop.Content" xml:space="preserve">
+    <value>靠上</value>
   </data>
   <data name="SettingsPageTranslatedText.Header" xml:space="preserve">
     <value>译文</value>

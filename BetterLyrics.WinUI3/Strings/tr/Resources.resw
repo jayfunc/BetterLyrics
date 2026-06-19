@@ -702,6 +702,15 @@
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve">
     <value>Süre</value>
   </data>
+  <data name="LyricsLayerPrimaryName" xml:space="preserve">
+    <value>Orijinal</value>
+  </data>
+  <data name="LyricsLayerSecondaryName" xml:space="preserve">
+    <value>Çeviri</value>
+  </data>
+  <data name="LyricsLayerTertiaryName" xml:space="preserve">
+    <value>Telaffuz</value>
+  </data>
   <data name="LyricsLoading" xml:space="preserve">
     <value>Şarkı sözleri yükleniyor...</value>
   </data>
@@ -935,6 +944,9 @@
   </data>
   <data name="LyricsSharePageTitle" xml:space="preserve">
     <value>Şarkı Sözü Kartı</value>
+  </data>
+  <data name="LyricsStyleSettingsControlLyricsLayoutOrder.Text" xml:space="preserve">
+    <value>Şarkı Sözleri Düzen Sırası</value>
   </data>
   <data name="LyricsWindowSettingsControlConfigMusicGalleryLyrics.Text" xml:space="preserve">
     <value>Config Müzik Galerisi gömülü şarkı sözleri penceresi</value>
@@ -1394,6 +1406,9 @@
   </data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>Bulanıklık Miktarı</value>
+  </data>
+  <data name="SettingsPageBottom.Content" xml:space="preserve">
+    <value>Alt kısım</value>
   </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>Günlük dosyalarını, çevrimiçi şarkı sözü önbelleğini içerir</value>
@@ -2267,6 +2282,9 @@
   </data>
   <data name="SettingsPageTitleBarAreaWhole.Content" xml:space="preserve">
     <value>Tüm Pencere</value>
+  </data>
+  <data name="SettingsPageTop.Content" xml:space="preserve">
+    <value>En üstte</value>
   </data>
   <data name="SettingsPageTranslatedText.Header" xml:space="preserve">
     <value>Çeviri</value>

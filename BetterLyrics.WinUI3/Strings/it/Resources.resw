@@ -694,13 +694,22 @@
     <value>Ad esempio: http://localhost:5000</value>
   </data>
   <data name="Loading" xml:space="preserve">
-    <value>Caricamento in corso...</value>
+    <value>Caricamento...</value>
   </data>
   <data name="LyricsCardOnlyLayout" xml:space="preserve">
     <value>Layout solo scheda testi</value>
   </data>
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve">
     <value>Durata</value>
+  </data>
+  <data name="LyricsLayerPrimaryName" xml:space="preserve">
+    <value>Originale</value>
+  </data>
+  <data name="LyricsLayerSecondaryName" xml:space="preserve">
+    <value>Traduzione</value>
+  </data>
+  <data name="LyricsLayerTertiaryName" xml:space="preserve">
+    <value>Pronuncia</value>
   </data>
   <data name="LyricsLoading" xml:space="preserve">
     <value>Caricamento testi...</value>
@@ -936,6 +945,9 @@
   <data name="LyricsSharePageTitle" xml:space="preserve">
     <value>Scheda testi</value>
   </data>
+  <data name="LyricsStyleSettingsControlLyricsLayoutOrder.Text" xml:space="preserve">
+    <value>Sequenza di impaginazione dei testi delle canzoni</value>
+  </data>
   <data name="LyricsWindowSettingsControlConfigMusicGalleryLyrics.Text" xml:space="preserve">
     <value>Configurazione finestra testi incorporata nella Galleria musicale</value>
   </data>
@@ -1165,7 +1177,7 @@
     <value>Modalità compatta</value>
   </data>
   <data name="NowPlayingBarConfigCurrentLyricsWindow.Text" xml:space="preserve">
-    <value>Configura la finestra dei testi attuale</value>
+    <value>Configura la finestra testi corrente</value>
   </data>
   <data name="NowPlayingBarConfigCurrentPlaybackSource.Text" xml:space="preserve">
     <value>Configura la sorgente di riproduzione corrente</value>
@@ -1186,7 +1198,7 @@
     <value>Adattatore lettore memoria</value>
   </data>
   <data name="PlaybackSettingsControlSaveLyricsAsLrc.Text" xml:space="preserve">
-    <value>Salva con estensione .lrc</value>
+    <value>Salva come .lrc</value>
   </data>
   <data name="PlaybackSettingsControlSaveLyricsAsTtml.Text" xml:space="preserve">
     <value>Salva come .ttml</value>
@@ -1394,6 +1406,9 @@
   </data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>Intensità sfocatura</value>
+  </data>
+  <data name="SettingsPageBottom.Content" xml:space="preserve">
+    <value>In fondo</value>
   </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>Include file di log e cache dei testi online.</value>
@@ -1648,7 +1663,7 @@
     <value>Aiutaci a tradurre questa applicazione</value>
   </data>
   <data name="SettingsPageHideWindow.Header" xml:space="preserve">
-    <value>Mostra/nascondi finestra automaticamente</value>
+    <value>Nascondi automaticamente la finestra quando la musica è in pausa</value>
   </data>
   <data name="SettingsPageHideWindowDelay.Header" xml:space="preserve">
     <value>Ritardo</value>
@@ -2268,6 +2283,9 @@
   <data name="SettingsPageTitleBarAreaWhole.Content" xml:space="preserve">
     <value>Finestra intera</value>
   </data>
+  <data name="SettingsPageTop.Content" xml:space="preserve">
+    <value>Inizio pagina</value>
+  </data>
   <data name="SettingsPageTranslatedText.Header" xml:space="preserve">
     <value>Traduzione</value>
   </data>
@@ -2284,7 +2302,7 @@
     <value>Contorno (non ancora riprodotto)</value>
   </data>
   <data name="SettingsPageUseInternalLyricsAlignment.Description" xml:space="preserve">
-    <value>Utilizza l'allineamento specificato nel file dei testi (attualmente supporta solo il formato TTML)</value>
+    <value>Usa l'allineamento specificato nel contenuto del testo (attualmente è supportato solo TTML)</value>
   </data>
   <data name="SettingsPageUseInternalLyricsAlignment.Header" xml:space="preserve">
     <value>Mantieni l'allineamento originale</value>
@@ -2341,7 +2359,7 @@
     <value>Fine</value>
   </data>
   <data name="StatsDashboardControlHeatmap.Text" xml:space="preserve">
-    <value>Mappa di calore</value>
+    <value>Heatmap</value>
   </data>
   <data name="StatsDashboardControlLeastActive.Text" xml:space="preserve">
     <value>Meno attivo</value>
@@ -2524,7 +2542,7 @@
     <value>Rimuovi bordi quando bloccata</value>
   </data>
   <data name="WindowSettingsControlShowAndHide.Text" xml:space="preserve">
-    <value>Nascondere e mostrare</value>
+    <value>Nascondi e mostra</value>
   </data>
   <data name="WindowSettingsControlSplitViewRatio.Header" xml:space="preserve">
     <value>Proporzione layout</value>

@@ -702,6 +702,15 @@
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve">
     <value>持続時間</value>
   </data>
+  <data name="LyricsLayerPrimaryName" xml:space="preserve">
+    <value>原文</value>
+  </data>
+  <data name="LyricsLayerSecondaryName" xml:space="preserve">
+    <value>訳文</value>
+  </data>
+  <data name="LyricsLayerTertiaryName" xml:space="preserve">
+    <value>ルビ</value>
+  </data>
   <data name="LyricsLoading" xml:space="preserve">
     <value>歌詞を読み込んでいます…</value>
   </data>
@@ -935,6 +944,9 @@
   </data>
   <data name="LyricsSharePageTitle" xml:space="preserve">
     <value>歌詞カード生成</value>
+  </data>
+  <data name="LyricsStyleSettingsControlLyricsLayoutOrder.Text" xml:space="preserve">
+    <value>歌詞のレイアウト順序</value>
   </data>
   <data name="LyricsWindowSettingsControlConfigMusicGalleryLyrics.Text" xml:space="preserve">
     <value>ミュージックギャラリー埋め込み歌詞ウィンドウの設定</value>
@@ -1394,6 +1406,9 @@
   </data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>ぼかし量</value>
+  </data>
+  <data name="SettingsPageBottom.Content" xml:space="preserve">
+    <value>下揃え</value>
   </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>ログファイル、オンライン歌詞キャッシュを含みます</value>
@@ -2267,6 +2282,9 @@
   </data>
   <data name="SettingsPageTitleBarAreaWhole.Content" xml:space="preserve">
     <value>ウィンドウ全体</value>
+  </data>
+  <data name="SettingsPageTop.Content" xml:space="preserve">
+    <value>上揃え</value>
   </data>
   <data name="SettingsPageTranslatedText.Header" xml:space="preserve">
     <value>訳文</value>

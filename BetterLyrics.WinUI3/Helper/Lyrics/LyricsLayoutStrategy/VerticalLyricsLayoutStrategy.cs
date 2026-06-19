@@ -2,6 +2,7 @@
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.Models.Settings;
+using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Collections.Generic;
@@ -14,14 +15,14 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsLayoutStrategy
     public class VerticalLyricsLayoutStrategy : LyricsLayoutStrategyBase
     {
         public override void MeasureAndArrange(
-                    ICanvasAnimatedControl resourceCreator,
-                    IList<RenderLyricsLine>? lines,
-                    LyricsWindowStatus status,
-                    AppSettings appSettings,
-                    double canvasWidth,
-                    double canvasHeight,
-                    double lyricsWidth,
-                    double lyricsHeight)
+            ICanvasAnimatedControl resourceCreator,
+            IList<RenderLyricsLine>? lines,
+            LyricsWindowStatus status,
+            AppSettings appSettings,
+            double canvasWidth,
+            double canvasHeight,
+            double lyricsWidth,
+            double lyricsHeight)
         {
             if (lines == null || resourceCreator == null) return;
 
@@ -75,33 +76,46 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsLayoutStrategy
 
                 double startX = currentX;
 
-                // 注音层 (最右侧)
-                if (line.TertiaryTextLayout != null)
+                // 动态图层收集
+                var validLayers = new List<(LyricsLayerConfig Type, CanvasTextLayout Layout, Rect Bounds)>();
+                foreach (var layer in style.LyricsLayerOrder)
                 {
-                    double w = line.TertiaryTextLayout.LayoutBounds.Width;
-                    line.TertiaryPosition = new Vector2((float)(currentX - w - line.TertiaryTextLayout.LayoutBounds.X), (float)(currentY - line.TertiaryTextLayout.LayoutBounds.Y));
-                    currentX -= w;
-                    currentX -= (w / line.TertiaryTextLayout.LineCount) * style.LyricsLineInnerSpacingFactor; // 间距
-                    actualHeight = Math.Max(actualHeight, line.TertiaryTextLayout.LayoutBounds.Height);
+                    CanvasTextLayout? layout = layer.LyricsLayerType switch
+                    {
+                        LyricsLayerType.Primary => line.PrimaryTextLayout,
+                        LyricsLayerType.Secondary => line.SecondaryTextLayout,
+                        LyricsLayerType.Tertiary => line.TertiaryTextLayout,
+                        _ => null
+                    };
+
+                    if (layout != null)
+                    {
+                        validLayers.Add((layer, layout, layout.LayoutBounds));
+                    }
                 }
 
-                // 原文层
-                if (line.PrimaryTextLayout != null)
+                // 按顺序从右往左排 (X递减)
+                for (int i = 0; i < validLayers.Count; i++)
                 {
-                    double w = line.PrimaryTextLayout.LayoutBounds.Width;
-                    line.PrimaryPosition = new Vector2((float)(currentX - w - line.PrimaryTextLayout.LayoutBounds.X), (float)(currentY - line.PrimaryTextLayout.LayoutBounds.Y));
-                    currentX -= w;
-                    actualHeight = Math.Max(actualHeight, line.PrimaryTextLayout.LayoutBounds.Height);
-                }
+                    var (layer, layout, bounds) = validLayers[i];
+                    var type = layer.LyricsLayerType;
 
-                // 翻译层
-                if (line.SecondaryTextLayout != null)
-                {
-                    double w = line.SecondaryTextLayout.LayoutBounds.Width;
-                    currentX -= (w / line.SecondaryTextLayout.LineCount) * style.LyricsLineInnerSpacingFactor; // 间距
-                    line.SecondaryPosition = new Vector2((float)(currentX - w - line.SecondaryTextLayout.LayoutBounds.X), (float)(currentY - line.SecondaryTextLayout.LayoutBounds.Y));
+                    double w = bounds.Width;
+                    var pos = new Vector2((float)(currentX - w - bounds.X), (float)(currentY - bounds.Y));
+
+                    // 赋值给对应的图层
+                    if (type == LyricsLayerType.Primary) line.PrimaryPosition = pos;
+                    else if (type == LyricsLayerType.Secondary) line.SecondaryPosition = pos;
+                    else if (type == LyricsLayerType.Tertiary) line.TertiaryPosition = pos;
+
                     currentX -= w;
-                    actualHeight = Math.Max(actualHeight, line.SecondaryTextLayout.LayoutBounds.Height);
+                    actualHeight = Math.Max(actualHeight, bounds.Height);
+
+                    // 如果不是最后一个图层，则减去层间距
+                    if (i < validLayers.Count - 1)
+                    {
+                        currentX -= (w / layout.LineCount) * style.LyricsLineInnerSpacingFactor;
+                    }
                 }
 
                 // 初始左右边界坐标

@@ -702,6 +702,15 @@
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve">
     <value>기간</value>
   </data>
+  <data name="LyricsLayerPrimaryName" xml:space="preserve">
+    <value>원문</value>
+  </data>
+  <data name="LyricsLayerSecondaryName" xml:space="preserve">
+    <value>번역</value>
+  </data>
+  <data name="LyricsLayerTertiaryName" xml:space="preserve">
+    <value>발음</value>
+  </data>
   <data name="LyricsLoading" xml:space="preserve">
     <value>가사 불러오는 중...</value>
   </data>
@@ -935,6 +944,9 @@
   </data>
   <data name="LyricsSharePageTitle" xml:space="preserve">
     <value>가사 카드</value>
+  </data>
+  <data name="LyricsStyleSettingsControlLyricsLayoutOrder.Text" xml:space="preserve">
+    <value>가사 레이아웃 순서</value>
   </data>
   <data name="LyricsWindowSettingsControlConfigMusicGalleryLyrics.Text" xml:space="preserve">
     <value>구성 음악 갤러리 내장 가사 창</value>
@@ -1394,6 +1406,9 @@
   </data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>흐림 효과 강도</value>
+  </data>
+  <data name="SettingsPageBottom.Content" xml:space="preserve">
+    <value>하단</value>
   </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>로그 파일, 온라인 가사 캐시 포함</value>
@@ -2267,6 +2282,9 @@
   </data>
   <data name="SettingsPageTitleBarAreaWhole.Content" xml:space="preserve">
     <value>전체 창</value>
+  </data>
+  <data name="SettingsPageTop.Content" xml:space="preserve">
+    <value>맨 위</value>
   </data>
   <data name="SettingsPageTranslatedText.Header" xml:space="preserve">
     <value>번역문</value>
