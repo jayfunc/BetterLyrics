@@ -8,6 +8,7 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:settingsmodels="using:BetterLyrics.WinUI3.Models.Settings"
     xmlns:ui="using:CommunityToolkit.WinUI"
     Loaded="UserControl_Loaded"
     mc:Ignorable="d">
@@ -22,11 +23,24 @@
                     <TextBlock x:Uid="SettingsPageLyricsStyle" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <controls:SettingsExpander x:Uid="SettingsPageLyricsAlignment" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8E3;}">
-                        <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsAlignmentType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                            <ComboBoxItem x:Uid="SettingsPageLeft" />
-                            <ComboBoxItem x:Uid="SettingsPageCenter" />
-                            <ComboBoxItem x:Uid="SettingsPageRight" />
-                        </ComboBox>
+                        <Grid>
+                            <ComboBox
+                                IsEnabled="{x:Bind LyricsWindowStatus.LyricsStyleSettings.UseInternalLyricsAlignment, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+                                SelectedIndex="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsAlignmentType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}"
+                                Visibility="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsLayoutOrientation, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=0, Mode=OneWay}">
+                                <ComboBoxItem x:Uid="SettingsPageLeft" />
+                                <ComboBoxItem x:Uid="SettingsPageCenter" />
+                                <ComboBoxItem x:Uid="SettingsPageRight" />
+                            </ComboBox>
+                            <ComboBox
+                                IsEnabled="{x:Bind LyricsWindowStatus.LyricsStyleSettings.UseInternalLyricsAlignment, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+                                SelectedIndex="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsAlignmentType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}"
+                                Visibility="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsLayoutOrientation, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=1, Mode=OneWay}">
+                                <ComboBoxItem x:Uid="SettingsPageTop" />
+                                <ComboBoxItem x:Uid="SettingsPageCenter" />
+                                <ComboBoxItem x:Uid="SettingsPageBottom" />
+                            </ComboBox>
+                        </Grid>
                         <controls:SettingsExpander.Items>
                             <controls:SettingsCard x:Uid="SettingsPageUseInternalLyricsAlignment">
                                 <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.LyricsStyleSettings.UseInternalLyricsAlignment, Mode=TwoWay}" />
@@ -34,12 +48,53 @@
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
 
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsContentOrientation" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE80A;}">
+                    <controls:SettingsExpander
+                        x:Name="LyricsContentLayout"
+                        x:Uid="SettingsPageLyricsContentOrientation"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                 Glyph=&#xE80A;}">
                         <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsLayoutOrientation, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageLayoutOrientationHorizontal" />
                             <ComboBoxItem x:Uid="SettingsPageLayoutOrientationVertical" />
                         </ComboBox>
-                    </controls:SettingsCard>
+                    </controls:SettingsExpander>
+
+                    <Grid
+                        Grid.Row="0"
+                        Margin="0,-21,0,0"
+                        Padding="59,16,16,16"
+                        RowSpacing="16"
+                        Style="{ThemeResource CardGridStyle}"
+                        Visibility="{Binding ElementName=LyricsContentLayout, Path=IsExpanded, Mode=OneWay}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock x:Uid="LyricsStyleSettingsControlLyricsLayoutOrder" />
+                        <ListView
+                            x:Name="LyricsLayerOrderListView"
+                            Grid.Row="1"
+                            AllowDrop="True"
+                            CanDragItems="True"
+                            CanReorderItems="True"
+                            DragItemsCompleted="LyricsLayerOrderListView_DragItemsCompleted"
+                            ItemContainerStyle="{ThemeResource ListViewStretchedItemContainerStyle}"
+                            ItemsSource="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsLayerOrder, Mode=OneWay}"
+                            SelectionMode="None">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="settingsmodels:LyricsLayerConfig">
+                                    <Grid>
+                                        <controls:SettingsCard Header="{x:Bind LyricsLayerName}">
+                                            <controls:SettingsCard.HeaderIcon>
+                                                <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#x283F;" />
+                                            </controls:SettingsCard.HeaderIcon>
+                                        </controls:SettingsCard>
+                                        <local:DragIndicator />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Grid>
 
                     <controls:SettingsCard x:Uid="SettingsPageAutoWrap" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xF465;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.LyricsStyleSettings.AutoWrap, Mode=TwoWay}" />

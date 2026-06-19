@@ -702,6 +702,15 @@
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve">
     <value>Duración</value>
   </data>
+  <data name="LyricsLayerPrimaryName" xml:space="preserve">
+    <value>Original</value>
+  </data>
+  <data name="LyricsLayerSecondaryName" xml:space="preserve">
+    <value>Traducción</value>
+  </data>
+  <data name="LyricsLayerTertiaryName" xml:space="preserve">
+    <value>Pronunciación</value>
+  </data>
   <data name="LyricsLoading" xml:space="preserve">
     <value>Cargando letra...</value>
   </data>
@@ -935,6 +944,9 @@
   </data>
   <data name="LyricsSharePageTitle" xml:space="preserve">
     <value>Tarjeta de letras</value>
+  </data>
+  <data name="LyricsStyleSettingsControlLyricsLayoutOrder.Text" xml:space="preserve">
+    <value>Secuencia de maquetación de las letras de las canciones</value>
   </data>
   <data name="LyricsWindowSettingsControlConfigMusicGalleryLyrics.Text" xml:space="preserve">
     <value>Configurar la ventana de letras incrustadas de la Galería de Música</value>
@@ -1394,6 +1406,9 @@
   </data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>Cantidad de desenfoque</value>
+  </data>
+  <data name="SettingsPageBottom.Content" xml:space="preserve">
+    <value>Parte inferior</value>
   </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>Incluye archivos de registro, caché de letras en línea</value>
@@ -2267,6 +2282,9 @@
   </data>
   <data name="SettingsPageTitleBarAreaWhole.Content" xml:space="preserve">
     <value>Ventana completa</value>
+  </data>
+  <data name="SettingsPageTop.Content" xml:space="preserve">
+    <value>Inicio</value>
   </data>
   <data name="SettingsPageTranslatedText.Header" xml:space="preserve">
     <value>Traducción</value>

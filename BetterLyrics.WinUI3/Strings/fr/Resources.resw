@@ -702,6 +702,15 @@
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve">
     <value>Durée de l'accord</value>
   </data>
+  <data name="LyricsLayerPrimaryName" xml:space="preserve">
+    <value>Original</value>
+  </data>
+  <data name="LyricsLayerSecondaryName" xml:space="preserve">
+    <value>Traduction</value>
+  </data>
+  <data name="LyricsLayerTertiaryName" xml:space="preserve">
+    <value>Prononciation</value>
+  </data>
   <data name="LyricsLoading" xml:space="preserve">
     <value>Chargement des paroles...</value>
   </data>
@@ -935,6 +944,9 @@
   </data>
   <data name="LyricsSharePageTitle" xml:space="preserve">
     <value>Carte des paroles</value>
+  </data>
+  <data name="LyricsStyleSettingsControlLyricsLayoutOrder.Text" xml:space="preserve">
+    <value>Séquence de mise en page des paroles</value>
   </data>
   <data name="LyricsWindowSettingsControlConfigMusicGalleryLyrics.Text" xml:space="preserve">
     <value>Configuration de la fenêtre de paroles intégrée à la galerie musicale</value>
@@ -1394,6 +1406,9 @@
   </data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>Quantité de flou</value>
+  </data>
+  <data name="SettingsPageBottom.Content" xml:space="preserve">
+    <value>En bas</value>
   </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>Inclut les fichiers journaux, le cache des paroles en ligne</value>
@@ -2267,6 +2282,9 @@
   </data>
   <data name="SettingsPageTitleBarAreaWhole.Content" xml:space="preserve">
     <value>Fenêtre entière</value>
+  </data>
+  <data name="SettingsPageTop.Content" xml:space="preserve">
+    <value>Haut de la page</value>
   </data>
   <data name="SettingsPageTranslatedText.Header" xml:space="preserve">
     <value>Traduction</value>

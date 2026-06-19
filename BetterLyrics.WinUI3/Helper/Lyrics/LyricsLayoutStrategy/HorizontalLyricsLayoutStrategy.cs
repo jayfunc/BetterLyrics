@@ -2,6 +2,7 @@
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.Models.Settings;
+using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
 using System.Collections.Generic;
@@ -86,33 +87,45 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsLayoutStrategy
 
                 double startY = currentY; // 记录本行的初始顶部位置
 
-                // 注音层 (在最上方)
-                if (line.TertiaryTextLayout != null)
+                // 找出当前行实际存在的图层，并按设置里的顺序排列
+                var validLayers = new List<(LyricsLayerConfig Type, CanvasTextLayout Layout, Rect Bounds)>();
+                foreach (var layer in style.LyricsLayerOrder)
                 {
-                    var bounds = line.TertiaryTextLayout.LayoutBounds;
-                    line.TertiaryPosition = new Vector2((float)(currentX - bounds.X), (float)(currentY - bounds.Y));
-                    currentY += bounds.Height;
-                    currentY += (bounds.Height / line.TertiaryTextLayout.LineCount) * style.LyricsLineInnerSpacingFactor; // 间距
-                    actualWidth = Math.Max(actualWidth, bounds.Width);
+                    CanvasTextLayout? layout = layer.LyricsLayerType switch
+                    {
+                        LyricsLayerType.Primary => line.PrimaryTextLayout,
+                        LyricsLayerType.Secondary => line.SecondaryTextLayout,
+                        LyricsLayerType.Tertiary => line.TertiaryTextLayout,
+                        _ => null
+                    };
+
+                    if (layout != null)
+                    {
+                        validLayers.Add((layer, layout, layout.LayoutBounds));
+                    }
                 }
 
-                // 原文层 (位于中间)
-                if (line.PrimaryTextLayout != null)
+                // 按顺序从上往下排
+                for (int i = 0; i < validLayers.Count; i++)
                 {
-                    var bounds = line.PrimaryTextLayout.LayoutBounds;
-                    line.PrimaryPosition = new Vector2((float)(currentX - bounds.X), (float)(currentY - bounds.Y));
-                    currentY += bounds.Height;
-                    actualWidth = Math.Max(actualWidth, bounds.Width);
-                }
+                    var (layer, layout, bounds) = validLayers[i];
+                    var type = layer.LyricsLayerType;
 
-                // 翻译层 (在最下方)
-                if (line.SecondaryTextLayout != null)
-                {
-                    var bounds = line.SecondaryTextLayout.LayoutBounds;
-                    currentY += (bounds.Height / line.SecondaryTextLayout.LineCount) * style.LyricsLineInnerSpacingFactor; // 间距
-                    line.SecondaryPosition = new Vector2((float)(currentX - bounds.X), (float)(currentY - bounds.Y));
+                    var pos = new Vector2((float)(currentX - bounds.X), (float)(currentY - bounds.Y));
+
+                    // 赋值给对应的图层
+                    if (type == LyricsLayerType.Primary) line.PrimaryPosition = pos;
+                    else if (type == LyricsLayerType.Secondary) line.SecondaryPosition = pos;
+                    else if (type == LyricsLayerType.Tertiary) line.TertiaryPosition = pos;
+
                     currentY += bounds.Height;
                     actualWidth = Math.Max(actualWidth, bounds.Width);
+
+                    // 如果不是最后一个图层，则加上层间距 (避免底部多出空隙)
+                    if (i < validLayers.Count - 1)
+                    {
+                        currentY += (bounds.Height / layout.LineCount) * style.LyricsLineInnerSpacingFactor;
+                    }
                 }
 
                 // 初始包围盒上下边界

@@ -1,7 +1,9 @@
-﻿using BetterLyrics.WinUI3.Enums;
+﻿using BetterLyrics.WinUI3.Collections;
+using BetterLyrics.WinUI3.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI;
 using System;
+using System.Collections.ObjectModel;
 using System.Text.Json.Serialization;
 using Windows.UI;
 
@@ -22,6 +24,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial TextAlignmentType LyricsAlignmentType { get; set; } = TextAlignmentType.Left;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool UseInternalLyricsAlignment { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial LyricsLayoutOrientation LyricsLayoutOrientation { get; set; } = LyricsLayoutOrientation.Horizontal;
+        [ObservableProperty][NotifyPropertyChangedRecipients] public partial FullyObservableCollection<LyricsLayerConfig> LyricsLayerOrder { get; set; } = new() { new LyricsLayerConfig(LyricsLayerType.Tertiary), new LyricsLayerConfig(LyricsLayerType.Primary), new LyricsLayerConfig(LyricsLayerType.Secondary) };
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial bool AutoWrap { get; set; } = true;
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int LyricsFontStrokeWidth { get; set; } = 0;
@@ -79,7 +82,9 @@ namespace BetterLyrics.WinUI3.Models.Settings
 
         [ObservableProperty][NotifyPropertyChangedRecipients] public partial int PlayingLineTopOffset { get; set; } = 50; // 50 %
 
-        public LyricsStyleSettings() { }
+        public LyricsStyleSettings()
+        {
+        }
 
         public object Clone()
         {
@@ -98,6 +103,7 @@ namespace BetterLyrics.WinUI3.Models.Settings
                 LyricsAlignmentType = this.LyricsAlignmentType,
                 UseInternalLyricsAlignment = this.UseInternalLyricsAlignment,
                 LyricsLayoutOrientation = this.LyricsLayoutOrientation,
+                LyricsLayerOrder = this.LyricsLayerOrder,
 
                 AutoWrap = this.AutoWrap,
                 LyricsFontStrokeWidth = this.LyricsFontStrokeWidth,

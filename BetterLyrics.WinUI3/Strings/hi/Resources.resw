@@ -702,6 +702,15 @@
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve">
     <value>समयांतराल</value>
   </data>
+  <data name="LyricsLayerPrimaryName" xml:space="preserve">
+    <value>मूल</value>
+  </data>
+  <data name="LyricsLayerSecondaryName" xml:space="preserve">
+    <value>अनुवाद</value>
+  </data>
+  <data name="LyricsLayerTertiaryName" xml:space="preserve">
+    <value>उच्चारण</value>
+  </data>
   <data name="LyricsLoading" xml:space="preserve">
     <value>बोल लोड हो रहे हैं...</value>
   </data>
@@ -935,6 +944,9 @@
   </data>
   <data name="LyricsSharePageTitle" xml:space="preserve">
     <value>गीत कार्ड</value>
+  </data>
+  <data name="LyricsStyleSettingsControlLyricsLayoutOrder.Text" xml:space="preserve">
+    <value>गीत-लेखन लेआउट अनुक्रम</value>
   </data>
   <data name="LyricsWindowSettingsControlConfigMusicGalleryLyrics.Text" xml:space="preserve">
     <value>कॉन्फ़िग म्यूजिक गैलरी एम्बेडेड लिरिक्स विंडो</value>
@@ -1394,6 +1406,9 @@
   </data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>धुंधलापन मात्रा</value>
+  </data>
+  <data name="SettingsPageBottom.Content" xml:space="preserve">
+    <value>तल</value>
   </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>लॉग फ़ाइलें, ऑनलाइन लिरिक्स कैश शामिल हैं</value>
@@ -2267,6 +2282,9 @@
   </data>
   <data name="SettingsPageTitleBarAreaWhole.Content" xml:space="preserve">
     <value>पूरी विंडो</value>
+  </data>
+  <data name="SettingsPageTop.Content" xml:space="preserve">
+    <value>शीर्ष</value>
   </data>
   <data name="SettingsPageTranslatedText.Header" xml:space="preserve">
     <value>अनुवाद</value>

@@ -702,6 +702,15 @@
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve">
     <value>Продолжительность</value>
   </data>
+  <data name="LyricsLayerPrimaryName" xml:space="preserve">
+    <value>Оригинал</value>
+  </data>
+  <data name="LyricsLayerSecondaryName" xml:space="preserve">
+    <value>Перевод</value>
+  </data>
+  <data name="LyricsLayerTertiaryName" xml:space="preserve">
+    <value>Произношение</value>
+  </data>
   <data name="LyricsLoading" xml:space="preserve">
     <value>Загрузка текста...</value>
   </data>
@@ -935,6 +944,9 @@
   </data>
   <data name="LyricsSharePageTitle" xml:space="preserve">
     <value>Карточка с лирикой</value>
+  </data>
+  <data name="LyricsStyleSettingsControlLyricsLayoutOrder.Text" xml:space="preserve">
+    <value>Последовательность размещения текстов песен</value>
   </data>
   <data name="LyricsWindowSettingsControlConfigMusicGalleryLyrics.Text" xml:space="preserve">
     <value>Настройка встроенного окна текстов песен в музыкальной галерее</value>
@@ -1394,6 +1406,9 @@
   </data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>Степень размытия</value>
+  </data>
+  <data name="SettingsPageBottom.Content" xml:space="preserve">
+    <value>Внизу</value>
   </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>Включая файлы журналов, кэш онлайновых текстов песен</value>
@@ -2267,6 +2282,9 @@
   </data>
   <data name="SettingsPageTitleBarAreaWhole.Content" xml:space="preserve">
     <value>Все окно</value>
+  </data>
+  <data name="SettingsPageTop.Content" xml:space="preserve">
+    <value>Наверх</value>
   </data>
   <data name="SettingsPageTranslatedText.Header" xml:space="preserve">
     <value>Перевод</value>

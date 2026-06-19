@@ -1,5 +1,6 @@
 // 2025/6/23 by Zhe Fang
 
+using BetterLyrics.WinUI3.Collections;
 using BetterLyrics.WinUI3.Effects;
 using BetterLyrics.WinUI3.Enums;
 using BetterLyrics.WinUI3.Extensions;
@@ -27,6 +28,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
@@ -293,7 +295,13 @@ namespace BetterLyrics.WinUI3.Controls
             {
                 if (e.Property == LyricsWindowStatusProperty)
                 {
-                    canvas._lyricsWindowStatus = (LyricsWindowStatus)e.NewValue;
+                    var oldValue = (LyricsWindowStatus?)e.OldValue;
+                    var newValue = (LyricsWindowStatus?)e.NewValue;
+
+                    oldValue?.LyricsStyleSettings.LyricsLayerOrder.CollectionChanged -= canvas.LyricsLayerOrder_CollectionChanged;
+                    newValue?.LyricsStyleSettings.LyricsLayerOrder.CollectionChanged += canvas.LyricsLayerOrder_CollectionChanged;
+
+                    canvas._lyricsWindowStatus = newValue;
                     canvas.RequestRelayout();
                     canvas.UpdatePalette();
                 }
@@ -364,6 +372,11 @@ namespace BetterLyrics.WinUI3.Controls
                     }
                 }
             }
+        }
+
+        private void LyricsLayerOrder_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            RequestRelayout();
         }
 
         // ====
