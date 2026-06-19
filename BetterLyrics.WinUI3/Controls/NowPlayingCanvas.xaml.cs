@@ -1097,7 +1097,7 @@ namespace BetterLyrics.WinUI3.Controls
                 var nextLineStartMs = isLastLine ? (int)_gsmtcService.CurrentSongInfo.DurationMs : lines[i + 1].StartMs;
 
                 // 检查最后一个音节是否满足长音节条件
-                bool isLongSyllable = line.PrimaryRenderSyllables.LastOrDefault()?.DurationMs > longSyllableThreshold;
+                bool isLongSyllable = line.PrimaryRenderSyllables.LastOrDefault()?.DurationMs >= longSyllableThreshold;
 
                 // 仅当最后一个音节是长音节时，加上淡出动画缓冲时间（Padding）
                 if (line.EndMs.HasValue && isLongSyllable)
