@@ -550,6 +550,7 @@ namespace BetterLyrics.WinUI3.Hooks
             _isDisposed = true;
 
             _poller.Stop();
+            _positionDebouncer.Dispose();
 
             if (_targetHwnd != IntPtr.Zero)
             {

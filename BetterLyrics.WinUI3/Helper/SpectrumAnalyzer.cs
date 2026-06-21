@@ -223,6 +223,8 @@ namespace BetterLyrics.WinUI3.Helper
                 _deviceEnumerator.UnregisterEndpointNotificationCallback(this);
                 _deviceEnumerator.Dispose();
 
+                _deviceDebouncer.Dispose();
+
                 StopCapture();
                 _disposed = true;
             }

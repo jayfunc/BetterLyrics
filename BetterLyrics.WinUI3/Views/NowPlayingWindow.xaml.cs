@@ -468,6 +468,9 @@ namespace BetterLyrics.WinUI3.Views
             _underlayColorPoller.Dispose();
             LyricsWindowStatus.IsUnderlayColorTimerRunning = false;
 
+            _visibilityDebouncer.Dispose();
+            _albumArtThemeColorsDebounder.Dispose();
+
             _taskbarHook?.Dispose();
             _taskbarHook = null;
         }
