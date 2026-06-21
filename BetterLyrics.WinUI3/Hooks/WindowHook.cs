@@ -35,7 +35,6 @@ namespace BetterLyrics.WinUI3.Hooks
             {
                 if (nowPlayingWindow.LyricsWindowStatus.IsWorkArea && GetWindowHandle(window) is IntPtr hwnd)
                 {
-                    _activeAppBars.Remove(window);
                     UnregisterAppBar(hwnd);
                 }
                 nowPlayingWindow.LyricsWindowStatus.WindowStatus = hiddenBy;
@@ -49,7 +48,6 @@ namespace BetterLyrics.WinUI3.Hooks
             {
                 if (nowPlayingWindow.LyricsWindowStatus.IsWorkArea && GetWindowHandle(window) is IntPtr hwnd)
                 {
-                    _activeAppBars.Remove(window);
                     UnregisterAppBar(hwnd);
                 }
                 if (nowPlayingWindow.LyricsWindowStatus.IsWallpaper)
@@ -60,6 +58,12 @@ namespace BetterLyrics.WinUI3.Hooks
                 nowPlayingWindow.LyricsWindowStatus.WindowStatus = WindowStatus.Closed;
             }
             _activeWindows.Remove(window);
+
+            if (window.Content is FrameworkElement rootElement)
+            {
+                rootElement.DataContext = null;
+                window.Content = null;
+            }
         }
 
         public static void CloseWindow(this Window window)
