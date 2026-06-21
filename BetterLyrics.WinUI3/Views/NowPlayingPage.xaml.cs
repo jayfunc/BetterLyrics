@@ -386,8 +386,9 @@ namespace BetterLyrics.WinUI3.Views
         private void Page_Unloaded(object sender, RoutedEventArgs e)
         {
             WeakReferenceMessenger.Default.UnregisterAll(this);
-
             DataContext = null;
+
+            _layoutChangedDebouncer.Dispose();
         }
 
         private void DynamicLayoutGrid_Loaded(object sender, RoutedEventArgs e)

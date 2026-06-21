@@ -738,6 +738,12 @@ namespace BetterLyrics.WinUI3.Controls
 
             _compositionRenderer?.Dispose();
             _spoutHook?.Dispose();
+
+            _lyricsWindowStatus?.LyricsStyleSettings.LyricsLayerOrder.CollectionChanged -= LyricsLayerOrder_CollectionChanged;
+
+            _layoutDebouncer.Dispose();
+            _lyricsDebouncer.Dispose();
+            _scrollChangedDebouncer.Dispose();
         }
 
         // ====
@@ -1046,11 +1052,11 @@ namespace BetterLyrics.WinUI3.Controls
         {
             if (_renderLyricsLines != null)
             {
-                foreach (var item in _renderLyricsLines)
+                foreach (var line in _renderLyricsLines)
                 {
-                    item.DisposeTextGeometry();
-                    item.DisposeTextLayout();
-                    item.DisposeCaches();
+                    line.DisposeTextGeometry();
+                    line.DisposeTextLayout();
+                    line.DisposeCaches();
                 }
                 _renderLyricsLines = null;
             }
