@@ -119,7 +119,7 @@
 	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="3v.EvtSource" Version="2.0.0" />
-		<PackageReference Include="CommunityToolkit.Labs.WinUI.Controls.OpacityMaskView" Version="0.1.260529-build.2632" />
+		<PackageReference Include="CommunityToolkit.Labs.WinUI.Controls.OpacityMaskView" Version="0.1.260617-build.2640" />
 		<PackageReference Include="CommunityToolkit.Labs.WinUI.MarqueeText" Version="0.1.250828-build.2223" />
 		<PackageReference Include="CommunityToolkit.Labs.WinUI.Shimmer" Version="0.1.250828-build.2223" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
@@ -143,24 +143,24 @@
 		<PackageReference Include="H.NotifyIcon.WinUI" Version="2.4.1" />
 		<PackageReference Include="Interop.UIAutomationClient" Version="10.19041.0" />
 		<PackageReference Include="LiteFM" Version="1.0.3" />
-		<PackageReference Include="LiveChartsCore.SkiaSharpView.WinUI" Version="2.0.4" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.8" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="10.0.8" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.8" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.8" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.8">
+		<PackageReference Include="LiveChartsCore.SkiaSharpView.WinUI" Version="2.0.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.9" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="10.0.9" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.9" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.9" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.9">
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.8" />
-		<PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.8" />
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.9" />
+		<PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.9" />
 		<PackageReference Include="Microsoft.Graphics.Win2D" Version="1.4.0" />
 		<PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="17.14.15">
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
 		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.1839" />
-		<PackageReference Include="Microsoft.WindowsAppSDK" Version="2.1.3" />
+		<PackageReference Include="Microsoft.WindowsAppSDK" Version="2.2.0" />
 		<PackageReference Include="MimeMapping" Version="4.0.0" />
 		<PackageReference Include="NAudio.Wasapi" Version="2.3.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
@@ -170,8 +170,8 @@
 		<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
 		<PackageReference Include="SMBLibrary" Version="1.5.7" />
 		<PackageReference Include="SpoutDx.Net.Interop.MultiPlatform" Version="0.1.0" />
-		<PackageReference Include="System.Drawing.Common" Version="10.0.8" />
-		<PackageReference Include="System.IO.Hashing" Version="10.0.8" />
+		<PackageReference Include="System.Drawing.Common" Version="10.0.9" />
+		<PackageReference Include="System.IO.Hashing" Version="10.0.9" />
 		<PackageReference Include="TagLibSharp" Version="2.3.0" />
 		<PackageReference Include="Ude.NetStandard" Version="1.2.0" />
 		<PackageReference Include="Vanara.PInvoke.DwmApi" Version="5.0.5" />
