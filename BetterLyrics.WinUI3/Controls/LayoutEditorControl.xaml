@@ -8,6 +8,7 @@
     xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:models1="using:BetterLyrics.Core.Models"
     IsTabStop="True"
     PreviewKeyDown="UserControl_PreviewKeyDown"
     PreviewKeyUp="UserControl_PreviewKeyUp"
@@ -427,7 +428,7 @@
                                     ItemContainerStyle="{StaticResource ListViewCardStyle}"
                                     ItemsSource="{x:Bind AvailableToolboxItems, Mode=OneWay}">
                                     <ListView.ItemTemplate>
-                                        <DataTemplate x:DataType="models:ToolboxItem">
+                                        <DataTemplate x:DataType="models1:ToolboxItem">
                                             <Grid
                                                 Margin="12,8"
                                                 CanDrag="True"

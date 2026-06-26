@@ -1,10 +1,12 @@
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Extensions;
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models.Domain;
+using BetterLyrics.Core.Models.Settings;
+using BetterLyrics.Core.Serialization;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Models.Settings;
-using BetterLyrics.WinUI3.Serialization;
-using BetterLyrics.WinUI3.Services.LocalizationService;
-using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -29,7 +31,9 @@ namespace BetterLyrics.WinUI3.Controls
         public LyricsWindowSettingsControlViewModel ViewModel => (LyricsWindowSettingsControlViewModel)DataContext;
 
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
-        private readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
+
+        private readonly ILocalizationService _localizationService =
+            Ioc.Default.GetRequiredService<ILocalizationService>();
 
         public bool HideConfigPanelWhenLoaded { get; set; } = true;
 
@@ -40,7 +44,8 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public static readonly DependencyProperty LyricsWindowStatusProperty =
-            DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus), typeof(LyricsWindowSettingsControl), new PropertyMetadata(null));
+            DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus),
+                typeof(LyricsWindowSettingsControl), new PropertyMetadata(null));
 
         public LyricsWindowSettingsControl()
         {
@@ -76,19 +81,22 @@ namespace BetterLyrics.WinUI3.Controls
                     StorageFile? file;
                     if (this.Parent is FlyoutPresenter)
                     {
-                        file = await PickerHelper.PickSaveFileAsync<NowPlayingWindow>(fileTypeChoices, suggestedFileName);
+                        file = await PickerHelper.PickSaveFileAsync<NowPlayingWindow>(fileTypeChoices,
+                            suggestedFileName);
                     }
                     else
                     {
                         file = await PickerHelper.PickSaveFileAsync<SettingsWindow>(fileTypeChoices, suggestedFileName);
                     }
+
                     if (file != null)
                     {
                         var clonedData = (LyricsWindowStatus)data.Clone();
                         clonedData.IsDefault = false;
-                        var json = System.Text.Json.JsonSerializer.Serialize(clonedData, SourceGenerationContext.Default.LyricsWindowStatus);
+                        var json = System.Text.Json.JsonSerializer.Serialize(clonedData,
+                            SourceGenerationContext.Default.LyricsWindowStatus);
                         File.WriteAllText(file.Path, json);
-                        GlobalToastManager.Show("ExportSettingsSuccess", null, InfoBarSeverity.Success);
+                        GlobalToastManager.Show("ExportSettingsSuccess", null, MessageSeverity.Success);
                     }
                 }
             }
@@ -119,14 +127,16 @@ namespace BetterLyrics.WinUI3.Controls
             {
                 file = await PickerHelper.PickSingleFileAsync<SettingsWindow>(fileTypeFilter);
             }
+
             if (file != null)
             {
                 var json = File.ReadAllText(file.Path);
-                var data = System.Text.Json.JsonSerializer.Deserialize(json, SourceGenerationContext.Default.LyricsWindowStatus);
+                var data = System.Text.Json.JsonSerializer.Deserialize(json,
+                    SourceGenerationContext.Default.LyricsWindowStatus);
                 if (data != null)
                 {
                     ViewModel.AppSettings.WindowBoundsRecords.Add(data);
-                    GlobalToastManager.Show("ImportSettingsSuccess", null, InfoBarSeverity.Success);
+                    GlobalToastManager.Show("ImportSettingsSuccess", null, MessageSeverity.Success);
                 }
             }
         }
@@ -221,7 +231,7 @@ namespace BetterLyrics.WinUI3.Controls
             ViewModel.AppSettings.WindowBoundsRecords?.Refresh();
         }
 
-        private static Rect MapToMonitor(Rect monitorRectBefore, Rect monitorRectAfter, Rect windowRectBefore)
+        private static Rect MapToMonitor(AppRect monitorRectBefore, Rect monitorRectAfter, AppRect windowRectBefore)
         {
             var xRatio = monitorRectAfter.Width / monitorRectBefore.Width;
             var yRatio = monitorRectAfter.Height / monitorRectBefore.Height;
@@ -237,7 +247,7 @@ namespace BetterLyrics.WinUI3.Controls
             var menuFlyout = (MenuFlyout)sender;
             var menuFlyoutSubItem = (MenuFlyoutSubItem)menuFlyout.Items.Last();
             var status = (LyricsWindowStatus)menuFlyoutSubItem.DataContext;
-            menuFlyoutSubItem.IsEnabled = status.WindowStatus == Enums.WindowStatus.Opened;
+            menuFlyoutSubItem.IsEnabled = status.WindowStatus == WindowStatus.Opened;
 
             var window = WindowHook.GetNowPlayingWindow(status);
             if (window == null) return;
@@ -257,14 +267,14 @@ namespace BetterLyrics.WinUI3.Controls
                     var windowRectAfter = MapToMonitor(monitorRectBefore, monitorRectAfter, windowRectBefore);
 
                     status.MonitorDeviceName = name;
-                    status.MonitorBounds = monitorRectAfter;
+                    status.MonitorBounds = monitorRectAfter.ToAppRect();
 
                     if (status.IsWallpaper)
                     {
                         window.LyricsWindowStatus.IsLocked = false;
                         await Task.Delay(500);
 
-                        window.MoveAndResize(windowRectAfter);
+                        window.MoveAndResize(windowRectAfter.ToAppRect());
                         await Task.Delay(500);
 
                         window.LyricsWindowStatus.IsLocked = true;
@@ -274,7 +284,7 @@ namespace BetterLyrics.WinUI3.Controls
                         window.LyricsWindowStatus.IsLocked = false;
                         await Task.Delay(500);
 
-                        window.MoveAndResize(windowRectAfter);
+                        window.MoveAndResize(windowRectAfter.ToAppRect());
                         await Task.Delay(500);
 
                         window.LyricsWindowStatus.IsLocked = true;
@@ -286,18 +296,18 @@ namespace BetterLyrics.WinUI3.Controls
                     else if (status.IsFullscreen)
                     {
                         window.SetWindowPresenter(AppWindowPresenterKind.Overlapped);
-                        window.MoveAndResize(windowRectAfter);
+                        window.MoveAndResize(windowRectAfter.ToAppRect());
                         window.SetWindowPresenter(AppWindowPresenterKind.FullScreen);
                     }
                     else if (status.IsMaximized)
                     {
                         window.Restore();
-                        window.MoveAndResize(windowRectAfter);
+                        window.MoveAndResize(windowRectAfter.ToAppRect());
                         window.Maximize();
                     }
                     else
                     {
-                        window.MoveAndResize(windowRectAfter);
+                        window.MoveAndResize(windowRectAfter.ToAppRect());
                     }
                 };
                 menuFlyoutSubItem.Items.Add(menuFlyoutItem);

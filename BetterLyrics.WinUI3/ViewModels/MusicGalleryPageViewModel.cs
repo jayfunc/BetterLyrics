@@ -1,14 +1,12 @@
-﻿using BetterLyrics.WinUI3.Collections;
-using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Extensions;
+﻿using BetterLyrics.Core.Collections;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Extensions;
+using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models;
+using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Models.Settings;
-using BetterLyrics.WinUI3.Services.FileSystemService;
-using BetterLyrics.WinUI3.Services.LocalizationService;
-using BetterLyrics.WinUI3.Services.SettingsService;
-using BetterLyrics.WinUI3.Services.SMTCService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -42,10 +40,13 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         // All songs
         private List<ExtendedTrack> _allTracks = [];
+
         // Songs in current playlist or songs in current file tree
         private List<ExtendedTrack> _middleTracks = [];
+
         // Filtered songs based on search query for current playlist
         private List<ExtendedTrack> _filteredTracks = [];
+
         // Sorted songs based on filtered songs
         private List<ExtendedTrack> _sortedTracks = [];
 
@@ -56,7 +57,8 @@ namespace BetterLyrics.WinUI3.ViewModels
         /// <summary>
         /// Grouped tracks after filtering and sorting for current playlist
         /// </summary>
-        [ObservableProperty] public partial ObservableCollection<GroupInfoList> GroupedTracks { get; set; } = [];
+        [ObservableProperty]
+        public partial ObservableCollection<GroupInfoList> GroupedTracks { get; set; } = [];
 
         [ObservableProperty] public partial List<ExtendedTrack> SelectedTracks { get; set; } = [];
         [ObservableProperty] public partial ExtendedTrack? SelectedFirstTrack { get; set; }
@@ -67,14 +69,16 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty] public partial int SelectedSongsTabInfoIndex { get; set; } = 0;
 
-        public SongsTabInfo? SelectedSongsTabInfo => AppSettings.StarredPlaylists.ElementAtOrDefault(SelectedSongsTabInfoIndex);
+        public SongsTabInfo? SelectedSongsTabInfo =>
+            AppSettings.StarredPlaylists.ElementAtOrDefault(SelectedSongsTabInfoIndex);
 
         [ObservableProperty] public partial bool IsDataSyncing { get; set; } = false;
         [ObservableProperty] public partial bool IsDataSyncError { get; set; } = false;
 
         [ObservableProperty] public partial string SongSearchQuery { get; set; } = string.Empty;
 
-        [ObservableProperty] public partial ListViewSelectionMode SongListViewSelectionMode { get; set; } = ListViewSelectionMode.Single;
+        [ObservableProperty]
+        public partial ListViewSelectionMode SongListViewSelectionMode { get; set; } = ListViewSelectionMode.Single;
 
         public ObservableCollection<FolderNode> FolderRoots { get; } = new();
 
@@ -100,10 +104,11 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private void LocalMediaFolders_ItemPropertyChanged(object? sender, ItemPropertyChangedEventArgs e)
         {
-            IsDataSyncError = AppSettings.LocalMediaFolders.Any(x => x.StatusSeverity == InfoBarSeverity.Error);
+            IsDataSyncError = AppSettings.LocalMediaFolders.Any(x => x.StatusSeverity == MessageSeverity.Error);
         }
 
-        private void LocalMediaFolders_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void LocalMediaFolders_CollectionChanged(object? sender,
+            System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             RefreshSongs(true);
         }
@@ -123,7 +128,8 @@ namespace BetterLyrics.WinUI3.ViewModels
                         .Select(f => f.Id)
                         .ToList();
                     var cachedFiles = await _fileSystemService.GetParsedFilesAsync(enabledFolderIds);
-                    cachedFiles = cachedFiles.Where(x => FileHelper.MusicExtensions.Contains(Path.GetExtension(x.FileName).ToLower())).ToList();
+                    cachedFiles = cachedFiles.Where(x =>
+                        FileHelper.MusicExtensions.Contains(Path.GetExtension(x.FileName).ToLower())).ToList();
 
                     var newTrackList = cachedFiles
                         .Select(x => new ExtendedTrack(x))
@@ -179,16 +185,24 @@ namespace BetterLyrics.WinUI3.ViewModels
                 switch (SelectedSongsTabInfo?.FilterProperty)
                 {
                     case CommonSongProperty.Title:
-                        _middleTracks = _allTracks.Where(t => t.Title.Equals(SelectedSongsTabInfo.FilterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                        _middleTracks = _allTracks.Where(t =>
+                                t.Title.Equals(SelectedSongsTabInfo.FilterValue, StringComparison.OrdinalIgnoreCase))
+                            .ToList();
                         break;
                     case CommonSongProperty.Album:
-                        _middleTracks = _allTracks.Where(t => t.Album.Equals(SelectedSongsTabInfo.FilterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                        _middleTracks = _allTracks.Where(t =>
+                                t.Album.Equals(SelectedSongsTabInfo.FilterValue, StringComparison.OrdinalIgnoreCase))
+                            .ToList();
                         break;
                     case CommonSongProperty.Artist:
-                        _middleTracks = _allTracks.Where(t => t.Artist.Equals(SelectedSongsTabInfo.FilterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                        _middleTracks = _allTracks.Where(t =>
+                                t.Artist.Equals(SelectedSongsTabInfo.FilterValue, StringComparison.OrdinalIgnoreCase))
+                            .ToList();
                         break;
                     case CommonSongProperty.Folder:
-                        _middleTracks = _allTracks.Where(t => t.ParentFolderPath.Equals(SelectedSongsTabInfo.FilterValue, StringComparison.OrdinalIgnoreCase)).ToList();
+                        _middleTracks = _allTracks.Where(t =>
+                            t.ParentFolderPath.Equals(SelectedSongsTabInfo.FilterValue,
+                                StringComparison.OrdinalIgnoreCase)).ToList();
                         break;
                     case CommonSongProperty.M3UFilePath:
                         if (SelectedSongsTabInfo.FilterValue is string path)
@@ -196,19 +210,22 @@ namespace BetterLyrics.WinUI3.ViewModels
                             if (File.Exists(path))
                             {
                                 var m3uFileContent = File.ReadAllText(path);
-                                _middleTracks = _allTracks.Where(t => m3uFileContent.Contains(t.Uri.ToDecodedAbsoluteUri())).ToList();
+                                _middleTracks = _allTracks
+                                    .Where(t => m3uFileContent.Contains(t.Uri.ToDecodedAbsoluteUri())).ToList();
                             }
                             else
                             {
                                 _middleTracks = [];
-                                GlobalToastManager.Show("PlaylistViewFailed", path, InfoBarSeverity.Success);
+                                GlobalToastManager.Show("PlaylistViewFailed", path, MessageSeverity.Success);
                             }
                         }
+
                         break;
                     default:
                         break;
                 }
             }
+
             ApplySongSearchQuery();
             IsLocalMediaNotFound = !_filteredTracks.Any();
             ApplySongOrderType();
@@ -221,12 +238,13 @@ namespace BetterLyrics.WinUI3.ViewModels
                 _filteredTracks = _middleTracks;
                 return;
             }
+
             _filteredTracks = _middleTracks.Where(t =>
-                    t.Title.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
-                    t.Artist.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
-                    t.Album.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
-                    t.FileName.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
-                    t.ParentFolderPath.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
+                t.Title.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
+                t.Artist.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
+                t.Album.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
+                t.FileName.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
+                t.ParentFolderPath.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
         }
 
         private void ApplySongOrderType()
@@ -258,6 +276,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     );
                     break;
             }
+
             _sortedTracks = GroupedTracks.SelectMany(x => x.Cast<ExtendedTrack>()).ToList();
         }
 
@@ -299,7 +318,8 @@ namespace BetterLyrics.WinUI3.ViewModels
         public void AddToPlaylists(SongsTabInfo playlist)
         {
             var starredPlaylists = AppSettings.StarredPlaylists;
-            var found = starredPlaylists.FirstOrDefault(x => x.FilterProperty == playlist.FilterProperty && x.FilterValue == playlist.FilterValue);
+            var found = starredPlaylists.FirstOrDefault(x =>
+                x.FilterProperty == playlist.FilterProperty && x.FilterValue == playlist.FilterValue);
             if (found == null)
             {
                 starredPlaylists.Add(playlist);
@@ -309,6 +329,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 SelectedSongsTabInfoIndex = starredPlaylists.IndexOf(found);
             }
+
             ApplyPlaylist();
         }
 
@@ -389,7 +410,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (file != null)
             {
                 AddFileToStarredPlaylists(file);
-                GlobalToastManager.Show("CreatePlaylistSuccessfully", file.Path, InfoBarSeverity.Success);
+                GlobalToastManager.Show("CreatePlaylistSuccessfully", file.Path, MessageSeverity.Success);
             }
         }
 
@@ -401,7 +422,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (file != null)
             {
                 AddFileToStarredPlaylists(file);
-                GlobalToastManager.Show("ImportPlaylistSuccessfully", file.Path, InfoBarSeverity.Success);
+                GlobalToastManager.Show("ImportPlaylistSuccessfully", file.Path, MessageSeverity.Success);
             }
         }
 
@@ -423,9 +444,9 @@ namespace BetterLyrics.WinUI3.ViewModels
         private void ToggleSongListViewSelectionMode()
         {
             SongListViewSelectionMode =
-                SongListViewSelectionMode == ListViewSelectionMode.Single ?
-                ListViewSelectionMode.Multiple :
-                ListViewSelectionMode.Single;
+                SongListViewSelectionMode == ListViewSelectionMode.Single
+                    ? ListViewSelectionMode.Multiple
+                    : ListViewSelectionMode.Single;
         }
 
         public void Receive(PropertyChangedMessage<DateTime?> message)
@@ -475,6 +496,5 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
             }
         }
-
     }
 }

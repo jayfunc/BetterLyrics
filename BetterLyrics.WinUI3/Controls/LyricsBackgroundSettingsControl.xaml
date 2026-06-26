@@ -5,7 +5,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:enums="using:BetterLyrics.WinUI3.Enums"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
@@ -282,7 +281,7 @@
                                         <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveGrayed" />
                                         <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
                                     </ComboBox>
-                                    <controls:ColorPickerButton SelectedColor="{x:Bind LyricsBackgroundSettings.SpectrumCustomColor, Mode=TwoWay}" Visibility="{x:Bind LyricsBackgroundSettings.SpectrumColorType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}" />
+                                    <controls:ColorPickerButton SelectedColor="{x:Bind LyricsBackgroundSettings.SpectrumCustomColor, Converter={StaticResource AppColorToColorConverter}, Mode=TwoWay}" Visibility="{x:Bind LyricsBackgroundSettings.SpectrumColorType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}" />
                                 </StackPanel>
                             </controls:SettingsCard>
 

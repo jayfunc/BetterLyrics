@@ -1,8 +1,9 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Models.Settings;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Models.Domain;
+using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Views;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
@@ -13,7 +14,6 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using Vanara.PInvoke;
 using Windows.ApplicationModel.Core;
-using Windows.Foundation;
 using WinRT.Interop;
 using WinUIEx;
 
@@ -333,7 +333,7 @@ namespace BetterLyrics.WinUI3.Hooks
             }
         }
 
-        public static void MoveAndResize(this Window window, Rect rect)
+        public static void MoveAndResize(this Window window, AppRect rect)
         {
             if (window == null) return;
             if (window.AppWindow == null) return;

@@ -1,4 +1,5 @@
-using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.Core.Constants;
+using BetterLyrics.Core.Enums;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
@@ -77,52 +78,52 @@ public sealed partial class ImageSwitcher : UserControl
 
     private void UpdateSourceCrossfade()
     {
-        // Îª±³¾°Í¼Æ¬ÉèÖÃ¾ÉÔ´
+        // Îªï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½Ã¾ï¿½Ô´
         LastAlbumArtImage.Source = AlbumArtImage.Source;
-        // Ê¹ÆäÁ¢¼´¿É¼û
+        // Ê¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¼ï¿½
         LastAlbumArtImage.TranslationTransition = null;
         LastAlbumArtImage.OpacityTransition = null;
         LastAlbumArtImage.Translation = new();
         LastAlbumArtImage.Opacity = 1;
-        LastAlbumArtImage.OpacityTransition = new ScalarTransition { Duration = Constants.Time.AnimationDuration };
+        LastAlbumArtImage.OpacityTransition = new ScalarTransition { Duration = Time.AnimationDuration };
 
-        // Ê¹Ç°¾°Í¼Æ¬Á¢¼´²»¿É¼û
+        // Ê¹Ç°ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¼ï¿½
         AlbumArtImage.TranslationTransition = null;
         AlbumArtImage.OpacityTransition = null;
         AlbumArtImage.Translation = new();
         AlbumArtImage.Opacity = 0;
-        AlbumArtImage.OpacityTransition = new ScalarTransition { Duration = Constants.Time.AnimationDuration };
-        // Ö®ºóÎªÆäÉèÖÃÐÂÔ´
+        AlbumArtImage.OpacityTransition = new ScalarTransition { Duration = Time.AnimationDuration };
+        // Ö®ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´
         AlbumArtImage.Source = Source;
 
-        // ½»²æµ­³öµ­Èë
+        // ï¿½ï¿½ï¿½æµ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         LastAlbumArtImage.Opacity = 0;
         AlbumArtImage.Opacity = 1;
     }
 
     private void UpdateSourceSlide()
     {
-        // Îª±³¾°Í¼Æ¬ÉèÖÃ¾ÉÔ´
+        // Îªï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½Ã¾ï¿½Ô´
         LastAlbumArtImage.Source = AlbumArtImage.Source;
-        // Ê¹Æä¹éÎ»
+        // Ê¹ï¿½ï¿½ï¿½Î»
         LastAlbumArtImage.TranslationTransition = null;
         LastAlbumArtImage.OpacityTransition = null;
         LastAlbumArtImage.Translation = new();
         LastAlbumArtImage.Opacity = 1;
-        LastAlbumArtImage.TranslationTransition = new Vector3Transition { Duration = Constants.Time.AnimationDuration };
-        LastAlbumArtImage.OpacityTransition = new ScalarTransition { Duration = Constants.Time.AnimationDuration };
+        LastAlbumArtImage.TranslationTransition = new Vector3Transition { Duration = Time.AnimationDuration };
+        LastAlbumArtImage.OpacityTransition = new ScalarTransition { Duration = Time.AnimationDuration };
 
-        // Ê¹Ç°¾°Í¼Æ¬Á¢¼´²»¿É¼û
+        // Ê¹Ç°ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¼ï¿½
         AlbumArtImage.TranslationTransition = null;
         AlbumArtImage.OpacityTransition = null;
         AlbumArtImage.Translation = new(-(float)ActualWidth, 0, 0);
         AlbumArtImage.Opacity = 0;
-        AlbumArtImage.TranslationTransition = new Vector3Transition { Duration = Constants.Time.AnimationDuration };
-        AlbumArtImage.OpacityTransition = new ScalarTransition { Duration = Constants.Time.AnimationDuration };
-        // Ö®ºóÎªÆäÉèÖÃÐÂÔ´
+        AlbumArtImage.TranslationTransition = new Vector3Transition { Duration = Time.AnimationDuration };
+        AlbumArtImage.OpacityTransition = new ScalarTransition { Duration = Time.AnimationDuration };
+        // Ö®ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô´
         AlbumArtImage.Source = Source;
 
-        // »¬¶¯
+        // ï¿½ï¿½ï¿½ï¿½
         LastAlbumArtImage.Opacity = 0;
         AlbumArtImage.Opacity = 1;
         LastAlbumArtImage.Translation = new(-(float)ActualWidth, 0, 0);

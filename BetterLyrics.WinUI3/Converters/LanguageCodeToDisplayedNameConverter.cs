@@ -1,4 +1,4 @@
-﻿using BetterLyrics.WinUI3.Helper;
+﻿using BetterLyrics.Core.Helpers;
 using Microsoft.UI.Xaml.Data;
 using System;
 using Windows.Globalization;

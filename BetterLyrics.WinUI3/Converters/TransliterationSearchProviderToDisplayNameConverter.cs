@@ -1,6 +1,5 @@
-﻿using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Services.LocalizationService;
-using BetterLyrics.WinUI3.Services.PluginService;
+﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Interfaces.Services;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml.Data;
 using System;

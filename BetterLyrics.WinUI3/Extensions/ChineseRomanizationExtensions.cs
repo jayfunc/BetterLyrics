@@ -1,5 +1,5 @@
-﻿using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Helper;
+﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Helpers;
 using System;
 
 namespace BetterLyrics.WinUI3.Extensions

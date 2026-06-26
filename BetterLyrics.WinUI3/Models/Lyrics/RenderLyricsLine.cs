@@ -1,17 +1,18 @@
-﻿using BetterLyrics.WinUI3.Enums;
+﻿using BetterLyrics.Core.Constants;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Models.Domain;
+using BetterLyrics.Core.Models.Lyrics;
 using BetterLyrics.WinUI3.Extensions;
-using BetterLyrics.WinUI3.Helper;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
-using Microsoft.UI;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
-using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Models.Lyrics
 {
@@ -37,10 +38,10 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
 
         public ValueTransition<double> OffsetTransition { get; set; }
 
-        public ValueTransition<Color> PlayedFillColorTransition { get; set; }
-        public ValueTransition<Color> UnplayedFillColorTransition { get; set; }
-        public ValueTransition<Color> PlayedStrokeColorTransition { get; set; }
-        public ValueTransition<Color> UnplayedStrokeColorTransition { get; set; }
+        public ValueTransition<AppColor> PlayedFillColorTransition { get; set; }
+        public ValueTransition<AppColor> UnplayedFillColorTransition { get; set; }
+        public ValueTransition<AppColor> PlayedStrokeColorTransition { get; set; }
+        public ValueTransition<AppColor> UnplayedStrokeColorTransition { get; set; }
 
         public CanvasTextLayout? PrimaryTextLayout { get; private set; }
         public CanvasTextLayout? SecondaryTextLayout { get; private set; }
@@ -165,22 +166,22 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
             PlayedFillColorTransition = new(
                 initialValue: Colors.Transparent,
                 defaultTotalDuration: 0.3f,
-                interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
+                interpolator: (from, to, progress) => ColorHelper.GetInterpolatedColor(progress, from, to)
             );
             UnplayedFillColorTransition = new(
                 initialValue: Colors.Transparent,
                 defaultTotalDuration: 0.3f,
-                interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
+                interpolator: (from, to, progress) => ColorHelper.GetInterpolatedColor(progress, from, to)
             );
             PlayedStrokeColorTransition = new(
                 initialValue: Colors.Transparent,
                 defaultTotalDuration: 0.3f,
-                interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
+                interpolator: (from, to, progress) => ColorHelper.GetInterpolatedColor(progress, from, to)
             );
             UnplayedStrokeColorTransition = new(
                 initialValue: Colors.Transparent,
                 defaultTotalDuration: 0.3f,
-                interpolator: (from, to, progress) => Helper.ColorHelper.GetInterpolatedColor(progress, from, to)
+                interpolator: (from, to, progress) => ColorHelper.GetInterpolatedColor(progress, from, to)
             );
 
             StartMs = lyricsLine.StartMs;
@@ -360,9 +361,9 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
             CachedFill = new CanvasCommandList(resourceCreator);
             using (var ds = CachedFill.CreateDrawingSession())
             {
-                if (TertiaryTextLayout != null) ds.DrawTextLayout(TertiaryTextLayout, TertiaryPosition, Colors.White);
-                if (PrimaryTextLayout != null) ds.DrawTextLayout(PrimaryTextLayout, PrimaryPosition, Colors.White);
-                if (SecondaryTextLayout != null) ds.DrawTextLayout(SecondaryTextLayout, SecondaryPosition, Colors.White);
+                if (TertiaryTextLayout != null) ds.DrawTextLayout(TertiaryTextLayout, TertiaryPosition, ColorExtensions.FromAppColor(Colors.White));
+                if (PrimaryTextLayout != null) ds.DrawTextLayout(PrimaryTextLayout, PrimaryPosition, ColorExtensions.FromAppColor(Colors.White));
+                if (SecondaryTextLayout != null) ds.DrawTextLayout(SecondaryTextLayout, SecondaryPosition, ColorExtensions.FromAppColor(Colors.White));
             }
 
             CachedStroke = new CanvasCommandList(resourceCreator);
@@ -377,13 +378,13 @@ namespace BetterLyrics.WinUI3.Models.Lyrics
                     EndCap = CanvasCapStyle.Round,
                 };
                 using var ds = CachedStroke.CreateDrawingSession();
-                if (TertiaryCanvasGeometry != null) ds.DrawGeometry(TertiaryCanvasGeometry, TertiaryPosition, Colors.White, (float)strokeWidth, roundStrokeStyle);
-                if (PrimaryCanvasGeometry != null) ds.DrawGeometry(PrimaryCanvasGeometry, PrimaryPosition, Colors.White, (float)strokeWidth, roundStrokeStyle);
-                if (SecondaryCanvasGeometry != null) ds.DrawGeometry(SecondaryCanvasGeometry, SecondaryPosition, Colors.White, (float)strokeWidth, roundStrokeStyle);
+                if (TertiaryCanvasGeometry != null) ds.DrawGeometry(TertiaryCanvasGeometry, TertiaryPosition, ColorExtensions.FromAppColor(Colors.White), (float)strokeWidth, roundStrokeStyle);
+                if (PrimaryCanvasGeometry != null) ds.DrawGeometry(PrimaryCanvasGeometry, PrimaryPosition, ColorExtensions.FromAppColor(Colors.White), (float)strokeWidth, roundStrokeStyle);
+                if (SecondaryCanvasGeometry != null) ds.DrawGeometry(SecondaryCanvasGeometry, SecondaryPosition, ColorExtensions.FromAppColor(Colors.White), (float)strokeWidth, roundStrokeStyle);
             }
 
-            UnplayedFillTint = new TintEffect { Source = CachedFill, Color = Colors.White };
-            UnplayedStrokeTint = new TintEffect { Source = CachedStroke, Color = Colors.White };
+            UnplayedFillTint = new TintEffect { Source = CachedFill, Color = ColorExtensions.FromAppColor(Colors.White) };
+            UnplayedStrokeTint = new TintEffect { Source = CachedStroke, Color = ColorExtensions.FromAppColor(Colors.White) };
             UnplayedComposite = new CompositeEffect { Sources = { UnplayedStrokeTint, UnplayedFillTint }, Mode = CanvasComposite.SourceOver };
 
             if (PrimaryTextRegions != null && (RenderLyricsRegions == null || RenderLyricsRegions.Length != PrimaryTextRegions.Length))

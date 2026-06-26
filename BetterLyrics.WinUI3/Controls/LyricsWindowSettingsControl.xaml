@@ -6,11 +6,12 @@
     xmlns:constants="using:BetterLyrics.WinUI3.Constants"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:enums="using:BetterLyrics.WinUI3.Enums"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:enums1="using:BetterLyrics.Core.Enums"
+    xmlns:constants1="using:BetterLyrics.Core.Constants"
     Loaded="UserControl_Loaded"
     mc:Ignorable="d">
 
@@ -215,7 +216,7 @@
                     <uc:ExternalLinkButton
                         x:Uid="SettingsPageShareHub"
                         Grid.Column="2"
-                        NavigateUri="{x:Bind constants:Link.ModesStore}" />
+                        NavigateUri="{x:Bind constants1:Link.ModesStore}" />
 
                     <!--  Create from templates  -->
                     <Button x:Uid="SettingsPageCreateFromTemplates" Grid.Column="3">
@@ -224,31 +225,31 @@
                                 <MenuFlyoutItem
                                     x:Uid="SettingsPageStandardMode"
                                     Command="{x:Bind ViewModel.CreateLyricsWindowStatusCommand}"
-                                    CommandParameter="{x:Bind enums:LyricsWindowMode.Standard}" />
+                                    CommandParameter="{x:Bind enums1:LyricsWindowMode.Standard}" />
                                 <MenuFlyoutItem
                                     x:Uid="SettingsPageDesktopMode"
                                     Command="{x:Bind ViewModel.CreateLyricsWindowStatusCommand}"
-                                    CommandParameter="{x:Bind enums:LyricsWindowMode.Desktop}" />
+                                    CommandParameter="{x:Bind enums1:LyricsWindowMode.Desktop}" />
                                 <MenuFlyoutItem
                                     x:Uid="SettingsPageDockedMode"
                                     Command="{x:Bind ViewModel.CreateLyricsWindowStatusCommand}"
-                                    CommandParameter="{x:Bind enums:LyricsWindowMode.Docked}" />
+                                    CommandParameter="{x:Bind enums1:LyricsWindowMode.Docked}" />
                                 <MenuFlyoutItem
                                     x:Uid="SettingsPageFullscreenMode"
                                     Command="{x:Bind ViewModel.CreateLyricsWindowStatusCommand}"
-                                    CommandParameter="{x:Bind enums:LyricsWindowMode.Fullscreen}" />
+                                    CommandParameter="{x:Bind enums1:LyricsWindowMode.Fullscreen}" />
                                 <MenuFlyoutItem
                                     x:Uid="SettingsPageNarrowMode"
                                     Command="{x:Bind ViewModel.CreateLyricsWindowStatusCommand}"
-                                    CommandParameter="{x:Bind enums:LyricsWindowMode.Narrow}" />
+                                    CommandParameter="{x:Bind enums1:LyricsWindowMode.Narrow}" />
                                 <MenuFlyoutItem
                                     x:Uid="SettingsPageTaskbarMode"
                                     Command="{x:Bind ViewModel.CreateLyricsWindowStatusCommand}"
-                                    CommandParameter="{x:Bind enums:LyricsWindowMode.Taskbar}" />
+                                    CommandParameter="{x:Bind enums1:LyricsWindowMode.Taskbar}" />
                                 <MenuFlyoutItem
                                     x:Uid="SettingsPageWallpaperMode"
                                     Command="{x:Bind ViewModel.CreateLyricsWindowStatusCommand}"
-                                    CommandParameter="{x:Bind enums:LyricsWindowMode.Wallpaper}" />
+                                    CommandParameter="{x:Bind enums1:LyricsWindowMode.Wallpaper}" />
                             </MenuFlyout>
                         </Button.Flyout>
                     </Button>

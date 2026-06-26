@@ -1,0 +1,7 @@
+namespace BetterLyrics.Core.Constants
+{
+    public class Discord
+    {
+        public const string AppID = "Your Discord app ID here";
+    }
+}

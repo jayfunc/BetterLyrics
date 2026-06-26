@@ -1,4 +1,5 @@
 ﻿using ATL;
+using BetterLyrics.Core.Helpers;
 using BetterLyrics.WinUI3.Helper;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media.Imaging;

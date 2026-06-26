@@ -1,3 +1,4 @@
+using BetterLyrics.Core.Enums;
 using BetterLyrics.WinUI3.Helper;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -80,7 +81,7 @@ namespace BetterLyrics.WinUI3.Controls
             }
             catch (Exception ex)
             {
-                GlobalToastManager.Show("Error", ex.Message, InfoBarSeverity.Error);
+                GlobalToastManager.Show("Error", ex.Message, MessageSeverity.Error);
                 return;
             }
 

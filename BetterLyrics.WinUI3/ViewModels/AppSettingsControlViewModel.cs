@@ -1,6 +1,6 @@
-﻿using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Models.Settings;
-using BetterLyrics.WinUI3.Services.SettingsService;
+﻿using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models.Settings;
+using BetterLyrics.WinUI3.Hooks;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System;
@@ -31,6 +31,5 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             WindowHook.RestartApp();
         }
-
     }
 }

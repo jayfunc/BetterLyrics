@@ -1,6 +1,5 @@
-﻿using BetterLyrics.WinUI3.Models.Settings;
-using BetterLyrics.WinUI3.Services.NavigationService;
-using BetterLyrics.WinUI3.Services.SettingsService;
+﻿using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BetterLyrics.WinUI3.ViewModels

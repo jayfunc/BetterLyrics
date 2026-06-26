@@ -1,16 +1,17 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Models.Lyrics;
-using BetterLyrics.WinUI3.Models.Settings;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Models;
+using BetterLyrics.Core.Models.Domain;
+using BetterLyrics.Core.Models.Entities;
+using BetterLyrics.Core.Models.Lyrics;
+using BetterLyrics.Core.Models.Settings;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Threading;
 using System.Threading.Tasks;
-using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Services.GSMTCService
 {
@@ -43,8 +44,11 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
         BitmapImage? AlbumArtBitmapImage { get; }
         byte[]? AlbumArtBytes { get; }
 
-        Task<NowPlayingPalette> CalculateAlbumArtThemeColorsAsync(LyricsWindowStatus lyricsWindowStatus, Color backdropAccentColor, CancellationToken token = default);
-        Task<List<Color>> GetAlbumArtAccentColorsAsync(PaletteGeneratorType paletteGeneratorType, bool isDark, CancellationToken token = default);
+        Task<NowPlayingPalette> CalculateAlbumArtThemeColorsAsync(LyricsWindowStatus lyricsWindowStatus,
+            AppColor backdropAccentColor, CancellationToken token = default);
+
+        Task<List<AppColor>> GetAlbumArtAccentColorsAsync(PaletteGeneratorType paletteGeneratorType, bool isDark,
+            CancellationToken token = default);
 
         LyricsCacheItem? CurrentLyricsSearchResult { get; }
     }

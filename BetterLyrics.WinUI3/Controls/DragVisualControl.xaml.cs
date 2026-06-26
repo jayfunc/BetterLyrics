@@ -1,4 +1,5 @@
-using BetterLyrics.WinUI3.Helper;
+using BetterLyrics.Core.Helpers;
+using BetterLyrics.WinUI3.Extensions;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 
@@ -16,8 +17,12 @@ namespace BetterLyrics.WinUI3.Controls
             RootBorder.Background = background;
             if (background is SolidColorBrush solidColorBrush)
             {
-                RootBorder.BorderBrush = new SolidColorBrush(ColorHelper.GetHarmoniousColor(solidColorBrush.Color));
+                RootBorder.BorderBrush =
+                    new SolidColorBrush(
+                        ColorExtensions.FromAppColor(
+                            ColorHelper.GetHarmoniousColor(solidColorBrush.Color.ToAppColor())));
             }
+
             this.Width = width;
             this.Height = height;
         }

@@ -1,8 +1,9 @@
+using BetterLyrics.Core.Extensions;
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models.Lyrics;
+using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Extensions;
-using BetterLyrics.WinUI3.Models.Lyrics;
-using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.GSMTCService;
-using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
@@ -29,7 +30,7 @@ public sealed partial class LyricsCard : Control
     // ===
 
     public static readonly DependencyProperty TitleProperty =
-            DependencyProperty.Register(nameof(Title), typeof(string), typeof(LyricsCard), new PropertyMetadata(null));
+        DependencyProperty.Register(nameof(Title), typeof(string), typeof(LyricsCard), new PropertyMetadata(null));
 
     public string Title
     {
@@ -40,7 +41,7 @@ public sealed partial class LyricsCard : Control
     // ===
 
     public static readonly DependencyProperty ArtistProperty =
-            DependencyProperty.Register(nameof(Artist), typeof(string), typeof(LyricsCard), new PropertyMetadata(null));
+        DependencyProperty.Register(nameof(Artist), typeof(string), typeof(LyricsCard), new PropertyMetadata(null));
 
     public string Artist
     {
@@ -51,7 +52,8 @@ public sealed partial class LyricsCard : Control
     // ===
 
     public static readonly DependencyProperty CoverAccentColorProperty =
-            DependencyProperty.Register(nameof(CoverAccentColor), typeof(Color), typeof(LyricsCard), new PropertyMetadata(null, OnDependencyPropertyChanged));
+        DependencyProperty.Register(nameof(CoverAccentColor), typeof(Color), typeof(LyricsCard),
+            new PropertyMetadata(null, OnDependencyPropertyChanged));
 
     public Color? CoverAccentColor
     {
@@ -62,7 +64,8 @@ public sealed partial class LyricsCard : Control
     // ===
 
     public static readonly DependencyProperty OverlayBrushProperty =
-            DependencyProperty.Register(nameof(OverlayBrush), typeof(Brush), typeof(LyricsCard), new PropertyMetadata(null));
+        DependencyProperty.Register(nameof(OverlayBrush), typeof(Brush), typeof(LyricsCard),
+            new PropertyMetadata(null));
 
     public Brush OverlayBrush
     {
@@ -73,7 +76,8 @@ public sealed partial class LyricsCard : Control
     // ===
 
     public static readonly DependencyProperty CoverImageProperty =
-            DependencyProperty.Register(nameof(CoverImage), typeof(ImageSource), typeof(LyricsCard), new PropertyMetadata(null));
+        DependencyProperty.Register(nameof(CoverImage), typeof(ImageSource), typeof(LyricsCard),
+            new PropertyMetadata(null));
 
     public ImageSource? CoverImage
     {
@@ -84,7 +88,8 @@ public sealed partial class LyricsCard : Control
     // ===
 
     public static readonly DependencyProperty LyricsLinesProperty =
-            DependencyProperty.Register(nameof(LyricsLines), typeof(IList<LyricsLine>), typeof(LyricsCard), new PropertyMetadata(null, OnDependencyPropertyChanged));
+        DependencyProperty.Register(nameof(LyricsLines), typeof(IList<LyricsLine>), typeof(LyricsCard),
+            new PropertyMetadata(null, OnDependencyPropertyChanged));
 
     public IList<LyricsLine> LyricsLines
     {
@@ -95,7 +100,8 @@ public sealed partial class LyricsCard : Control
     // ===
 
     public static readonly DependencyProperty IsScrollableProperty =
-            DependencyProperty.Register(nameof(IsScrollable), typeof(bool), typeof(LyricsCard), new PropertyMetadata(false, OnDependencyPropertyChanged));
+        DependencyProperty.Register(nameof(IsScrollable), typeof(bool), typeof(LyricsCard),
+            new PropertyMetadata(false, OnDependencyPropertyChanged));
 
     public bool IsScrollable
     {
@@ -112,17 +118,18 @@ public sealed partial class LyricsCard : Control
     }
 
     public static readonly DependencyProperty ConfigProperty =
-            DependencyProperty.Register(nameof(Config), typeof(LyricsCardConfig), typeof(LyricsCard), new PropertyMetadata(new LyricsCardConfig()));
+        DependencyProperty.Register(nameof(Config), typeof(LyricsCardConfig), typeof(LyricsCard),
+            new PropertyMetadata(new LyricsCardConfig()));
 
     // ===
 
     public static readonly DependencyProperty LyricsAreaSizeProperty =
-    DependencyProperty.Register(
-        nameof(LyricsAreaSize),
-        typeof(double),
-        typeof(LyricsCard),
-        new PropertyMetadata(double.NaN)
-    );
+        DependencyProperty.Register(
+            nameof(LyricsAreaSize),
+            typeof(double),
+            typeof(LyricsCard),
+            new PropertyMetadata(double.NaN)
+        );
 
     public double LyricsAreaSize
     {
@@ -133,11 +140,11 @@ public sealed partial class LyricsCard : Control
     // ===
 
     public static readonly DependencyProperty IsAutoScrollEnabledProperty =
-    DependencyProperty.Register(
-        nameof(IsAutoScrollEnabled),
-        typeof(bool),
-        typeof(LyricsCard),
-        new PropertyMetadata(false));
+        DependencyProperty.Register(
+            nameof(IsAutoScrollEnabled),
+            typeof(bool),
+            typeof(LyricsCard),
+            new PropertyMetadata(false));
 
     public bool IsAutoScrollEnabled
     {
@@ -203,16 +210,23 @@ public sealed partial class LyricsCard : Control
             {
                 if (card.LyricsLines != null)
                 {
-                    card.UpdateActiveLine(card.PlaybackPosition + TimeSpan.FromMilliseconds(card._gsmtcService.CurrentMediaSourceProviderInfo?.PositionOffset ?? 0));
+                    card.UpdateActiveLine(card.PlaybackPosition +
+                                          TimeSpan.FromMilliseconds(card._gsmtcService.CurrentMediaSourceProviderInfo
+                                              ?.PositionOffset ?? 0));
                 }
             }
             else if (e.Property == CoverAccentColorProperty)
             {
                 var color = (Color)e.NewValue;
-                LinearGradientBrush gradientBrush = new() { StartPoint = new Windows.Foundation.Point(0, 0), EndPoint = new Windows.Foundation.Point(0, 1) };
+                LinearGradientBrush gradientBrush = new()
+                { StartPoint = new Windows.Foundation.Point(0, 0), EndPoint = new Windows.Foundation.Point(0, 1) };
 
                 gradientBrush.GradientStops.Add(new GradientStop { Color = color.WithAlpha(180), Offset = 0.0 });
-                gradientBrush.GradientStops.Add(new GradientStop { Color = Color.FromArgb(220, (byte)(color.R / 2), (byte)(color.G / 2), (byte)(color.B / 2)), Offset = 0.6 });
+                gradientBrush.GradientStops.Add(new GradientStop
+                {
+                    Color = Color.FromArgb(220, (byte)(color.R / 2), (byte)(color.G / 2), (byte)(color.B / 2)),
+                    Offset = 0.6
+                });
                 gradientBrush.GradientStops.Add(new GradientStop { Color = Colors.Black, Offset = 1.0 });
 
                 card.OverlayBrush = gradientBrush;
@@ -220,7 +234,8 @@ public sealed partial class LyricsCard : Control
             else if (e.Property == StyleKeyProperty)
             {
                 var styleKey = (string)e.NewValue;
-                var found = card._settingsService.AppSettings.LyricsCardConfigs.FirstOrDefault(x => x.ResourceKey == styleKey);
+                var found = card._settingsService.AppSettings.LyricsCardConfigs.FirstOrDefault(x =>
+                    x.ResourceKey == styleKey);
 
                 if (found == null)
                 {
@@ -234,7 +249,6 @@ public sealed partial class LyricsCard : Control
                     card.Style = (Style)style;
                 }
             }
-
         }
     }
 

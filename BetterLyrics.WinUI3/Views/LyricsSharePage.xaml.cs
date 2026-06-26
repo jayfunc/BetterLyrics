@@ -1,5 +1,7 @@
+using BetterLyrics.Core.Constants;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Models.Lyrics;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -19,7 +21,6 @@ namespace BetterLyrics.WinUI3.Views
 {
     public sealed partial class LyricsSharePage : Page
     {
-
         public LyricsSharePageViewModel ViewModel { get; set; }
 
         public LyricsSharePage()
@@ -46,7 +47,8 @@ namespace BetterLyrics.WinUI3.Views
 
             try
             {
-                using (var memoryStream = await RenderToStreamAsync(PreviewCard, ImageQualitySlider.Value / 100.0 * 4.0))
+                using (var memoryStream =
+                       await RenderToStreamAsync(PreviewCard, ImageQualitySlider.Value / 100.0 * 4.0))
                 {
                     StorageFile? file = await PickerHelper.PickSaveFileAsync<LyricsShareWindow>(
                         new Dictionary<string, IList<string>> { { "PNG Image", new List<string> { ".png" } } },
@@ -57,16 +59,17 @@ namespace BetterLyrics.WinUI3.Views
                     {
                         using (var fileStream = await file.OpenAsync(FileAccessMode.ReadWrite))
                         {
-                            await RandomAccessStream.CopyAndCloseAsync(memoryStream.GetInputStreamAt(0), fileStream.GetOutputStreamAt(0));
+                            await RandomAccessStream.CopyAndCloseAsync(memoryStream.GetInputStreamAt(0),
+                                fileStream.GetOutputStreamAt(0));
                         }
 
-                        GlobalToastManager.Show("ActionCompleted", file.Path, InfoBarSeverity.Success);
+                        GlobalToastManager.Show("ActionCompleted", file.Path, MessageSeverity.Success);
                     }
                 }
             }
             catch (Exception ex)
             {
-                GlobalToastManager.Show("Error", ex.Message, InfoBarSeverity.Error);
+                GlobalToastManager.Show("Error", ex.Message, MessageSeverity.Error);
             }
             finally
             {
@@ -90,11 +93,11 @@ namespace BetterLyrics.WinUI3.Views
 
                 Clipboard.SetContent(dataPackage);
 
-                GlobalToastManager.Show("ActionCompleted", null, InfoBarSeverity.Success);
+                GlobalToastManager.Show("ActionCompleted", null, MessageSeverity.Success);
             }
             catch (Exception ex)
             {
-                GlobalToastManager.Show("Error", ex.Message, InfoBarSeverity.Error);
+                GlobalToastManager.Show("Error", ex.Message, MessageSeverity.Error);
             }
             finally
             {
@@ -108,7 +111,7 @@ namespace BetterLyrics.WinUI3.Views
             {
                 ProcessingOverlay.Visibility = Visibility.Visible;
                 ProcessingOverlay.Opacity = 1;
-                await Task.Delay(Constants.Time.AnimationDuration);
+                await Task.Delay(Time.AnimationDuration);
 
                 PreviewCardContainer.Stretch = Microsoft.UI.Xaml.Media.Stretch.UniformToFill;
                 LeftColDef.Width = RightColDef.Width = new GridLength(0, GridUnitType.Pixel);
@@ -120,7 +123,7 @@ namespace BetterLyrics.WinUI3.Views
                 PreviewCardContainer.Stretch = Microsoft.UI.Xaml.Media.Stretch.Uniform;
 
                 ProcessingOverlay.Opacity = 0;
-                await Task.Delay(Constants.Time.AnimationDuration);
+                await Task.Delay(Time.AnimationDuration);
                 ProcessingOverlay.Visibility = Visibility.Collapsed;
             }
         }

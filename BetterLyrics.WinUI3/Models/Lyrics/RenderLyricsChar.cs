@@ -1,6 +1,7 @@
-﻿using BetterLyrics.WinUI3.Constants;
-using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Helper;
+﻿using BetterLyrics.Core.Constants;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Models.Lyrics;
 using Microsoft.Graphics.Canvas.Effects;
 using System;
 using Windows.Foundation;

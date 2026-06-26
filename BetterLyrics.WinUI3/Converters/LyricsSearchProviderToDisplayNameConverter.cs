@@ -1,10 +1,8 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.Core.Enums;
-using BetterLyrics.WinUI3.Extensions;
-using BetterLyrics.WinUI3.Services.LocalizationService;
-using BetterLyrics.WinUI3.Services.PluginService;
-using BetterLyrics.WinUI3.Services.SettingsService;
+using BetterLyrics.Core.Extensions;
+using BetterLyrics.Core.Interfaces.Services;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml.Data;
 using System;

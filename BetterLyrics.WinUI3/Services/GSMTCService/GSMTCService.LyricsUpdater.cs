@@ -1,12 +1,12 @@
-﻿using BetterLyrics.WinUI3.Extensions;
-using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser;
-using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Models.Lyrics;
+﻿using BetterLyrics.Core.Extensions;
+using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Models.Entities;
+using BetterLyrics.Core.Models.Lyrics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using LyricsContentParser = BetterLyrics.Core.Helpers.Lyrics.ContentParser.LyricsContentParser;
 
 namespace BetterLyrics.WinUI3.Services.GSMTCService
 {

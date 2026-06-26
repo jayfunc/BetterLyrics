@@ -10,8 +10,9 @@
     xmlns:lvc="using:LiveChartsCore.SkiaSharpView.WinUI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BetterLyrics.WinUI3.Models"
-    xmlns:statsmodels="using:BetterLyrics.WinUI3.Models.Stats"
     xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:stats="using:BetterLyrics.Core.Models.Stats"
+    xmlns:models1="using:BetterLyrics.Core.Models"
     mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -254,7 +255,7 @@
                                         </ItemsControl.ItemsPanel>
 
                                         <ItemsControl.ItemTemplate>
-                                            <DataTemplate x:DataType="models:MonthLabel">
+                                            <DataTemplate x:DataType="models1:MonthLabel">
                                                 <Grid>
                                                     <Grid.RenderTransform>
                                                         <TranslateTransform X="{x:Bind Offset}" />
@@ -279,7 +280,7 @@
                                             </ItemsPanelTemplate>
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemTemplate>
-                                            <DataTemplate x:DataType="models:HeatmapNode">
+                                            <DataTemplate x:DataType="models1:HeatmapNode">
                                                 <Border
                                                     Width="14"
                                                     Height="14"
@@ -405,7 +406,7 @@
 
                             <ItemsControl ItemsSource="{x:Bind ViewModel.TopArtists, Mode=OneWay}">
                                 <ItemsControl.ItemTemplate>
-                                    <DataTemplate x:DataType="statsmodels:ArtistPlayCount">
+                                    <DataTemplate x:DataType="stats:ArtistPlayCount">
                                         <Grid Margin="0,4">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="*" />
@@ -450,7 +451,7 @@
                                 Style="{ThemeResource SubtitleTextBlockStyle}" />
                             <ItemsControl ItemsSource="{x:Bind ViewModel.TopSongs, Mode=OneWay}">
                                 <ItemsControl.ItemTemplate>
-                                    <DataTemplate x:DataType="statsmodels:SongPlayCount">
+                                    <DataTemplate x:DataType="stats:SongPlayCount">
                                         <Grid Margin="0,4">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />

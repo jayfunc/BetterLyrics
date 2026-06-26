@@ -1,9 +1,9 @@
-﻿using BetterLyrics.Core.Interfaces;
+﻿using BetterLyrics.Core.Constants;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Interfaces.Plugins;
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Models.Settings;
-using BetterLyrics.WinUI3.Services.LocalizationService;
-using BetterLyrics.WinUI3.Services.PluginService;
-using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
@@ -48,7 +48,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                     var settingsWindow = WindowHook.GetWindow<SettingsWindow>();
                     _pluginService.InstallPlugin(file.Path);
                     // 确保程序已保存设置
-                    await Task.Delay(Constants.Time.DebounceTimeout * 2);
+                    await Task.Delay(Time.DebounceTimeout * 2);
                     await new ContentDialog
                     {
                         Title = _localizationService.GetLocalizedString("PluginManagerControlInstallSuccessful"),
@@ -60,7 +60,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    Helper.GlobalToastManager.Show("Error", ex.Message, Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
+                    Helper.GlobalToastManager.Show("Error", ex.Message, MessageSeverity.Error);
                 }
             }
         }
@@ -73,7 +73,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 var settingsWindow = WindowHook.GetWindow<SettingsWindow>();
                 _pluginService.UninstallPlugin(plugin.Id);
                 // 确保程序已保存设置
-                await Task.Delay(Constants.Time.DebounceTimeout * 2);
+                await Task.Delay(Time.DebounceTimeout * 2);
                 await new ContentDialog
                 {
                     Title = _localizationService.GetLocalizedString("PluginManagerControlUninstallSuccessful"),
@@ -85,7 +85,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
             catch (Exception ex)
             {
-                Helper.GlobalToastManager.Show("Error", ex.Message, Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error);
+                Helper.GlobalToastManager.Show("Error", ex.Message, MessageSeverity.Error);
             }
         }
 

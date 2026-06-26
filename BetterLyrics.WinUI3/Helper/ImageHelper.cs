@@ -1,10 +1,10 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Helpers;
 using Impressionist.Abstractions;
 using System;
 using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;

@@ -1,4 +1,5 @@
-﻿using LiveChartsCore.SkiaSharpView.Painting;
+﻿using BetterLyrics.Core.Models.Domain;
+using LiveChartsCore.SkiaSharpView.Painting;
 using SkiaSharp;
 using System;
 using System.Numerics;
@@ -43,6 +44,10 @@ namespace BetterLyrics.WinUI3.Extensions
                 return new SolidColorPaint(skColor);
             }
 
+            public AppColor ToAppColor() => new AppColor(color.A, color.R, color.G, color.B);
         }
+
+        public static Color FromAppColor(AppColor appColor) =>
+            Color.FromArgb(appColor.A, appColor.R, appColor.G, appColor.B);
     }
 }

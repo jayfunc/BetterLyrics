@@ -1,4 +1,4 @@
-﻿using BetterLyrics.Core.Interfaces;
+﻿using BetterLyrics.Core.Interfaces.Plugins;
 using BetterLyrics.Core.Models.SettingsSchema;
 using System.Reflection;
 

@@ -1,28 +1,16 @@
 ﻿// https://learn.microsoft.com/en-us/windows/apps/windows-app-sdk/applifecycle/applifecycle-single-instance
 
-using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Interfaces.Providers;
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models.DbContext;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Models.DbContext;
+using BetterLyrics.WinUI3.Providers;
+using BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
-using BetterLyrics.WinUI3.Services.AppLifecycleService;
-using BetterLyrics.WinUI3.Services.AppUpdateService;
-using BetterLyrics.WinUI3.Services.DiscordService;
-using BetterLyrics.WinUI3.Services.FileSystemService;
-using BetterLyrics.WinUI3.Services.FileWatchService;
 using BetterLyrics.WinUI3.Services.GSMTCService;
-using BetterLyrics.WinUI3.Services.LastFMService;
-using BetterLyrics.WinUI3.Services.LocalizationService;
-using BetterLyrics.WinUI3.Services.LyricsCacheService;
-using BetterLyrics.WinUI3.Services.LyricsSearchService;
-using BetterLyrics.WinUI3.Services.NavigationService;
-using BetterLyrics.WinUI3.Services.PlayHistoryService;
-using BetterLyrics.WinUI3.Services.PluginService;
-using BetterLyrics.WinUI3.Services.SettingsService;
-using BetterLyrics.WinUI3.Services.SMTCService;
-using BetterLyrics.WinUI3.Services.SongSearchMapService;
-using BetterLyrics.WinUI3.Services.TranslationService;
-using BetterLyrics.WinUI3.Services.TransliterationService;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -35,6 +23,7 @@ using Microsoft.Windows.AppLifecycle;
 using Serilog;
 using System;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -65,8 +54,14 @@ namespace BetterLyrics.WinUI3
                     SynchronizationContext.SetSynchronizationContext(context);
 
                     Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+                    PathHelper.Initialize(ApplicationData.Current.LocalFolder.Path,
+                        ApplicationData.Current.LocalCacheFolder.Path,
+                        Path.Combine(Windows.ApplicationModel.Package.Current.InstalledPath, "Assets"));
                     PathHelper.EnsureDirectories();
+
                     ConfigureServices();
+
                     _logger = Ioc.Default.GetRequiredService<ILogger<Program>>();
 
                     _ = new App();
@@ -101,10 +96,7 @@ namespace BetterLyrics.WinUI3
 
         private static void OnActivated(object? sender, AppActivationArguments args)
         {
-            AppUIThread.Execute(() =>
-            {
-                HandleActivation(args);
-            });
+            AppUIThread.Execute(() => { HandleActivation(args); });
         }
 
         private static void HandleActivation(AppActivationArguments args, bool init = false)
@@ -154,7 +146,8 @@ namespace BetterLyrics.WinUI3
                 else if (protocolArgs.Uri.Host == "settings")
                 {
                     var targetSegment = protocolArgs.Uri.Segments.LastOrDefault()?.Trim('/');
-                    if (!string.IsNullOrEmpty(targetSegment) && Enum.TryParse<SettingsSection>(targetSegment, true, out var section))
+                    if (!string.IsNullOrEmpty(targetSegment) &&
+                        Enum.TryParse<SettingsSection>(targetSegment, true, out var section))
                     {
                         _ = WindowHook.OpenOrShowWindow<SettingsWindow>();
                         var settingsPageViewModel = Ioc.Default.GetRequiredService<SettingsPageViewModel>();
@@ -177,7 +170,8 @@ namespace BetterLyrics.WinUI3
                         var artist = decoder.FirstOrDefault(p => p.Name == "artist")?.Value ?? "";
                         var album = decoder.FirstOrDefault(p => p.Name == "album")?.Value ?? "";
 
-                        var lyricsSearchControlViewModel = Ioc.Default.GetRequiredService<LyricsSearchControlViewModel>();
+                        var lyricsSearchControlViewModel =
+                            Ioc.Default.GetRequiredService<LyricsSearchControlViewModel>();
                         lyricsSearchControlViewModel.MappedSongSearchQuery?.MappedTitle = title;
                         lyricsSearchControlViewModel.MappedSongSearchQuery?.MappedArtist = artist;
                         lyricsSearchControlViewModel.MappedSongSearchQuery?.MappedAlbum = album;
@@ -209,10 +203,14 @@ namespace BetterLyrics.WinUI3
             Ioc.Default.ConfigureServices(
                 new ServiceCollection()
                     // 数据库工厂
-                    .AddDbContextFactory<PlayHistoryDbContext>(options => options.UseSqlite($"Data Source={PathHelper.PlayHistoryPath}"))
-                    .AddDbContextFactory<FilesIndexDbContext>(options => options.UseSqlite($"Data Source={PathHelper.FilesIndexPath}"))
-                    .AddDbContextFactory<LyricsCacheDbContext>(options => options.UseSqlite($"Data Source={PathHelper.LyricsCachePath}"))
-                    .AddDbContextFactory<SongSearchMapDbContext>(options => options.UseSqlite($"Data Source={PathHelper.SongSearchMapPath}"))
+                    .AddDbContextFactory<PlayHistoryDbContext>(options =>
+                        options.UseSqlite($"Data Source={PathHelper.PlayHistoryPath}"))
+                    .AddDbContextFactory<FilesIndexDbContext>(options =>
+                        options.UseSqlite($"Data Source={PathHelper.FilesIndexPath}"))
+                    .AddDbContextFactory<LyricsCacheDbContext>(options =>
+                        options.UseSqlite($"Data Source={PathHelper.LyricsCachePath}"))
+                    .AddDbContextFactory<SongSearchMapDbContext>(options =>
+                        options.UseSqlite($"Data Source={PathHelper.SongSearchMapPath}"))
 
                     // 日志
                     .AddLogging(loggingBuilder =>
@@ -242,6 +240,11 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<INavigationService, NavigationService>()
                     .AddSingleton<IAppLifecycleService, AppLifecycleService>()
 
+                    // Providers
+                    .AddSingleton<IPlatformProvider, PlatformProvider>()
+                    .AddSingleton<IStringConverterProvider, StringConverterProvider>()
+                    .AddSingleton<ISystemUIProvider, SystemUIProvider>()
+
                     // ViewModels
                     .AddSingleton<AppSettingsControlViewModel>()
                     .AddSingleton<PlaybackSettingsControlViewModel>()
@@ -259,10 +262,8 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<PluginManagerControlViewModel>()
                     .AddSingleton<LyricsSharePageViewModel>()
                     .AddSingleton<MusicGalleryWindowViewModel>()
-
                     .AddTransient<NowPlayingPageViewModel>()
                     .AddTransient<NowPlayingBarViewModel>()
-
                     .BuildServiceProvider()
             );
         }
@@ -299,13 +300,12 @@ namespace BetterLyrics.WinUI3
             uint CWMO_DEFAULT = 0;
             uint INFINITE = 0xFFFFFFFF;
             _ = CoWaitForMultipleObjects(
-               CWMO_DEFAULT, INFINITE, 1,
-               [redirectEventHandle], out uint handleIndex);
+                CWMO_DEFAULT, INFINITE, 1,
+                [redirectEventHandle], out uint handleIndex);
 
             // Bring the window to the foreground
             Process process = Process.GetProcessById((int)keyInstance.ProcessId);
             SetForegroundWindow(process.MainWindowHandle);
         }
-
     }
 }

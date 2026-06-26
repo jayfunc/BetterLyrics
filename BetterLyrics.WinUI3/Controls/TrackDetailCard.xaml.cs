@@ -1,4 +1,4 @@
-using BetterLyrics.WinUI3.Models;
+using BetterLyrics.Core.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 

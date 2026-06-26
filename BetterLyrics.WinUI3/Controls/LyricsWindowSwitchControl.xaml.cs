@@ -1,3 +1,4 @@
+using BetterLyrics.Core.Enums;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
@@ -50,7 +51,7 @@ namespace BetterLyrics.WinUI3.Controls
             await HideAsync();
             WindowHook.OpenOrShowWindow<SettingsWindow>();
             var settingsPageViewModel = Ioc.Default.GetRequiredService<SettingsPageViewModel>();
-            settingsPageViewModel.NavigateToSection(Enums.SettingsSection.LyricsWindowMgr);
+            settingsPageViewModel.NavigateToSection(SettingsSection.LyricsWindowMgr);
         }
     }
 }

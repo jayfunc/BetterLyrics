@@ -1,4 +1,4 @@
-﻿using BetterLyrics.Core.Abstractions;
+﻿using BetterLyrics.Core.Abstractions.Plugins;
 
 namespace BetterLyrics.Plugins.Source.LRCLIB
 {

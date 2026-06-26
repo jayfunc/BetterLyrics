@@ -1,4 +1,4 @@
-﻿using BetterLyrics.WinUI3.Helper;
+﻿using BetterLyrics.Core.Helpers;
 using Microsoft.UI.Windowing;
 
 namespace BetterLyrics.WinUI3.Extensions

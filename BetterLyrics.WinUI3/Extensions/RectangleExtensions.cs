@@ -1,5 +1,5 @@
-﻿using System.Drawing;
-using Windows.Foundation;
+﻿using BetterLyrics.Core.Models.Domain;
+using System.Drawing;
 
 namespace BetterLyrics.WinUI3.Extensions
 {
@@ -7,7 +7,7 @@ namespace BetterLyrics.WinUI3.Extensions
     {
         extension(Rectangle rect)
         {
-            public Rect ToRect() => new(
+            public AppRect ToAppRect() => new(
                 rect.Left,
                 rect.Top,
                 rect.Right - rect.Left,

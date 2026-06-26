@@ -1,16 +1,15 @@
-﻿using BetterLyrics.WinUI3.Enums;
+﻿using BetterLyrics.Core.Constants;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models;
+using BetterLyrics.Core.Models.Entities;
+using BetterLyrics.Core.Models.Settings;
+using BetterLyrics.Core.Models.Stats;
 using BetterLyrics.WinUI3.Extensions;
-using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Models.Entities;
-using BetterLyrics.WinUI3.Models.Settings;
-using BetterLyrics.WinUI3.Models.Stats;
 using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
 using BetterLyrics.WinUI3.Services.GSMTCService;
-using BetterLyrics.WinUI3.Services.LocalizationService;
-using BetterLyrics.WinUI3.Services.PlayHistoryService;
-using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
@@ -331,7 +330,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             try
             {
-                await Task.Delay(Constants.Time.WaitingDuration);
+                await Task.Delay(Time.WaitingDuration);
 
                 var (start, end) = CalculateDateRange();
 
@@ -379,10 +378,10 @@ namespace BetterLyrics.WinUI3.ViewModels
 
             switch (_settingsService.AppSettings.GeneralSettings.AppTheme)
             {
-                case ElementTheme.Default:
+                case AppTheme.Default:
                     isDark = App.Current.RequestedTheme == ApplicationTheme.Dark;
                     break;
-                case ElementTheme.Dark:
+                case AppTheme.Dark:
                     isDark = true;
                     break;
                 default:

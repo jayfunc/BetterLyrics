@@ -76,9 +76,9 @@
 	</Target>
 
 	<ItemGroup>
-	  <PackageReference Include="Microsoft.ML.OnnxRuntime.DirectML" Version="1.23.0" />
+	  <PackageReference Include="Microsoft.ML.OnnxRuntime.DirectML" Version="1.24.4" />
 	  <PackageReference Include="Microsoft.ML.Tokenizers" Version="2.0.0" />
-	  <PackageReference Include="System.Numerics.Tensors" Version="10.0.2" />
+	  <PackageReference Include="System.Numerics.Tensors" Version="10.0.9" />
 	</ItemGroup>
 
 	<ItemGroup>

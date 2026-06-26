@@ -1,6 +1,7 @@
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Services.LocalizationService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
@@ -16,7 +17,8 @@ namespace BetterLyrics.WinUI3.Controls
 {
     public sealed partial class ShortcutTextBox : UserControl
     {
-        private readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
+        private readonly ILocalizationService _localizationService =
+            Ioc.Default.GetRequiredService<ILocalizationService>();
 
         public ShortcutTextBox()
         {
@@ -24,7 +26,8 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public static readonly DependencyProperty ShortcutProperty =
-            DependencyProperty.Register(nameof(Shortcut), typeof(List<string>), typeof(ShortcutTextBox), new PropertyMetadata(default));
+            DependencyProperty.Register(nameof(Shortcut), typeof(List<string>), typeof(ShortcutTextBox),
+                new PropertyMetadata(default));
 
         public List<string> Shortcut
         {
@@ -36,24 +39,32 @@ namespace BetterLyrics.WinUI3.Controls
         {
             List<string> shortcut = [];
 
-            bool ctrl = InputKeyboardSource.GetKeyStateForCurrentThread(Windows.System.VirtualKey.Control).HasFlag(CoreVirtualKeyStates.Down);
-            bool shift = InputKeyboardSource.GetKeyStateForCurrentThread(Windows.System.VirtualKey.Shift).HasFlag(CoreVirtualKeyStates.Down);
-            bool alt = InputKeyboardSource.GetKeyStateForCurrentThread(Windows.System.VirtualKey.Menu).HasFlag(CoreVirtualKeyStates.Down);
-            bool win = InputKeyboardSource.GetKeyStateForCurrentThread(Windows.System.VirtualKey.LeftWindows).HasFlag(CoreVirtualKeyStates.Down) ||
-                       InputKeyboardSource.GetKeyStateForCurrentThread(Windows.System.VirtualKey.RightWindows).HasFlag(CoreVirtualKeyStates.Down);
+            bool ctrl = InputKeyboardSource.GetKeyStateForCurrentThread(Windows.System.VirtualKey.Control)
+                .HasFlag(CoreVirtualKeyStates.Down);
+            bool shift = InputKeyboardSource.GetKeyStateForCurrentThread(Windows.System.VirtualKey.Shift)
+                .HasFlag(CoreVirtualKeyStates.Down);
+            bool alt = InputKeyboardSource.GetKeyStateForCurrentThread(Windows.System.VirtualKey.Menu)
+                .HasFlag(CoreVirtualKeyStates.Down);
+            bool win = InputKeyboardSource.GetKeyStateForCurrentThread(Windows.System.VirtualKey.LeftWindows)
+                           .HasFlag(CoreVirtualKeyStates.Down) ||
+                       InputKeyboardSource.GetKeyStateForCurrentThread(Windows.System.VirtualKey.RightWindows)
+                           .HasFlag(CoreVirtualKeyStates.Down);
 
             if (ctrl)
             {
                 shortcut.Add("Ctrl");
             }
+
             if (shift)
             {
                 shortcut.Add("Shift");
             }
+
             if (alt)
             {
                 shortcut.Add("Alt");
             }
+
             if (win)
             {
                 shortcut.Add("Win");
@@ -67,6 +78,7 @@ namespace BetterLyrics.WinUI3.Controls
             {
                 shortcut.Add(e.Key.ToString());
             }
+
             Shortcut = shortcut;
 
             UpdateTextBox();
@@ -93,11 +105,11 @@ namespace BetterLyrics.WinUI3.Controls
             bool registered = GlobalHotKeyHook.IsHotKeyRegistered(Shortcut);
             if (registered)
             {
-                GlobalToastManager.Show("SettingsPageShortcutRegSuccessInfo", null, InfoBarSeverity.Success);
+                GlobalToastManager.Show("SettingsPageShortcutRegSuccessInfo", null, MessageSeverity.Success);
             }
             else
             {
-                GlobalToastManager.Show("SettingsPageShortcutRegFailInfo", null, InfoBarSeverity.Error);
+                GlobalToastManager.Show("SettingsPageShortcutRegFailInfo", null, MessageSeverity.Error);
             }
         }
     }

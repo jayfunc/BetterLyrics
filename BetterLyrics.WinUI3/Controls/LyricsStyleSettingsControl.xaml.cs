@@ -1,10 +1,9 @@
-using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Models.Settings;
-using BetterLyrics.WinUI3.Services.LocalizationService;
+
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models.Settings;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using System.Collections.ObjectModel;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.

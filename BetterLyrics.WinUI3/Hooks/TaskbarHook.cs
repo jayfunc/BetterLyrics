@@ -1,4 +1,7 @@
-﻿using BetterLyrics.WinUI3.Enums;
+﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Models.Domain;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Models;
 using BetterLyrics.WinUI3.Views;
@@ -29,13 +32,13 @@ namespace BetterLyrics.WinUI3.Hooks
         private IntPtr _taskbarHwnd;
 
         private TaskbarPlacement _currentPlacement;
-        private Rectangle _targetMonitorRect;
+        private AppRect _targetMonitorRect;
 
         private readonly Debouncer _positionDebouncer = new();
         private readonly AsyncPoller _poller = new(1000);
         private bool _isDisposed;
 
-        public TaskbarHook(NowPlayingWindow window, TaskbarPlacement placement, Rectangle targetMonitorRect)
+        public TaskbarHook(NowPlayingWindow window, TaskbarPlacement placement, AppRect targetMonitorRect)
         {
             _targetWindow = window;
             _targetHwnd = WinRT.Interop.WindowNative.GetWindowHandle(_targetWindow);
@@ -82,7 +85,7 @@ namespace BetterLyrics.WinUI3.Hooks
                 var primaryTaskbar = desktop.FindFirstChild(x => x.ByClassName("Shell_TrayWnd"));
 
                 // 如果外部还没传入显示器范围，默认使用主任务栏
-                if (_targetMonitorRect == Rectangle.Empty)
+                if (_targetMonitorRect == AppRect.Empty)
                 {
                     target = primaryTaskbar;
                 }
@@ -125,7 +128,7 @@ namespace BetterLyrics.WinUI3.Hooks
         {
             try
             {
-                var rect = taskbarElement.BoundingRectangle;
+                var rect = taskbarElement.BoundingRectangle.ToAppRect();
                 // 只要任务栏和目标显示器有交集，就认为它属于该显示器
                 return rect.IntersectsWith(_targetMonitorRect);
             }

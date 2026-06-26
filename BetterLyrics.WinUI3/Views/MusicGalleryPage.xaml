@@ -6,7 +6,6 @@
     xmlns:atl="using:ATL"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:enums="using:BetterLyrics.WinUI3.Enums"
     xmlns:ext="using:BetterLyrics.WinUI3.Extensions"
     xmlns:helper="using:BetterLyrics.WinUI3.Helper"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
@@ -19,6 +18,9 @@
     xmlns:settingsmodels="using:BetterLyrics.WinUI3.Models.Settings"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:enums1="using:BetterLyrics.Core.Enums"
+    xmlns:settings="using:BetterLyrics.Core.Models.Settings"
+    xmlns:models1="using:BetterLyrics.Core.Models"
     Unloaded="Page_Unloaded"
     mc:Ignorable="d">
 
@@ -29,7 +31,7 @@
             IsSourceGrouped="True"
             Source="{x:Bind ViewModel.GroupedTracks, Mode=OneWay}" />
 
-        <DataTemplate x:Key="TitleSortTemplate" x:DataType="models:ExtendedTrack">
+        <DataTemplate x:Key="TitleSortTemplate" x:DataType="models1:ExtendedTrack">
             <Grid
                 Padding="12"
                 Background="Transparent"
@@ -61,7 +63,7 @@
                     TextWrapping="Wrap" />
             </Grid>
         </DataTemplate>
-        <DataTemplate x:Key="ArtistSortTemplate" x:DataType="models:ExtendedTrack">
+        <DataTemplate x:Key="ArtistSortTemplate" x:DataType="models1:ExtendedTrack">
             <Grid
                 Padding="12"
                 Background="Transparent"
@@ -93,7 +95,7 @@
                     TextWrapping="Wrap" />
             </Grid>
         </DataTemplate>
-        <DataTemplate x:Key="AlbumSortTemplate" x:DataType="models:ExtendedTrack">
+        <DataTemplate x:Key="AlbumSortTemplate" x:DataType="models1:ExtendedTrack">
             <Grid
                 Padding="12"
                 Background="Transparent"
@@ -137,7 +139,7 @@
                     TextWrapping="Wrap" />
             </Grid>
         </DataTemplate>
-        <DataTemplate x:Key="FolderSortTemplate" x:DataType="models:ExtendedTrack">
+        <DataTemplate x:Key="FolderSortTemplate" x:DataType="models1:ExtendedTrack">
             <Grid
                 Padding="12"
                 Background="Transparent"
@@ -216,7 +218,7 @@
                             ItemsSource="{x:Bind ViewModel.AppSettings.StarredPlaylists, Mode=OneWay}"
                             SelectedIndex="{x:Bind ViewModel.SelectedSongsTabInfoIndex, Mode=TwoWay}">
                             <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="settingsmodels:SongsTabInfo">
+                                <DataTemplate x:DataType="settings:SongsTabInfo">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*" />
@@ -343,7 +345,7 @@
                         SelectionMode="Single">
 
                         <TreeView.ItemTemplate>
-                            <DataTemplate x:DataType="models:FolderNode">
+                            <DataTemplate x:DataType="models1:FolderNode">
                                 <TreeViewItem
                                     Background="Transparent"
                                     IsExpanded="{x:Bind IsExpanded, Mode=TwoWay}"
@@ -533,7 +535,7 @@
                                         <Style BasedOn="{StaticResource InteractiveListViewHeaderStyle}" TargetType="ListViewHeaderItem" />
                                     </GroupStyle.HeaderContainerStyle>
                                     <GroupStyle.HeaderTemplate>
-                                        <DataTemplate x:DataType="models:GroupInfoList">
+                                        <DataTemplate x:DataType="models1:GroupInfoList">
                                             <TextBlock Text="{x:Bind}" />
                                         </DataTemplate>
                                     </GroupStyle.HeaderTemplate>
@@ -552,7 +554,7 @@
                             VerticalAlignment="Center"
                             ItemsSource="{x:Bind GroupedTracksCVS.View.CollectionGroups, Mode=OneWay}">
                             <GridView.ItemTemplate>
-                                <DataTemplate x:DataType="models:GroupInfoList">
+                                <DataTemplate x:DataType="models1:GroupInfoList">
                                     <TextBlock Style="{ThemeResource TitleTextBlockStyle}" Text="{Binding}" />
                                 </DataTemplate>
                             </GridView.ItemTemplate>
@@ -587,10 +589,10 @@
                                 <AddDeleteThemeTransition />
                             </TransitionCollection>
                         </controls:SwitchPresenter.ContentTransitions>
-                        <controls:Case Value="{x:Bind enums:TrackInfoDisplayTarget.SelectedItem}">
+                        <controls:Case Value="{x:Bind enums1:TrackInfoDisplayTarget.SelectedItem}">
                             <uc:TrackDetailCard ExtendedTrack="{x:Bind ViewModel.SelectedFirstTrack, Mode=OneWay}" />
                         </controls:Case>
-                        <controls:Case Value="{x:Bind enums:TrackInfoDisplayTarget.PlayingItem}">
+                        <controls:Case Value="{x:Bind enums1:TrackInfoDisplayTarget.PlayingItem}">
                             <uc:TrackDetailCard ExtendedTrack="{x:Bind ViewModel.SMTCService.PlayingTrack, Mode=OneWay}" />
                         </controls:Case>
                     </controls:SwitchPresenter>

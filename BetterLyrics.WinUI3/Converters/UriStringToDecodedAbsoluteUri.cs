@@ -1,4 +1,4 @@
-﻿using BetterLyrics.WinUI3.Extensions;
+﻿using BetterLyrics.Core.Extensions;
 using Microsoft.UI.Xaml.Data;
 using System;
 
@@ -12,6 +12,7 @@ namespace BetterLyrics.WinUI3.Converters
             {
                 return uriString.ToDecodedAbsoluteUri();
             }
+
             return "";
         }
 

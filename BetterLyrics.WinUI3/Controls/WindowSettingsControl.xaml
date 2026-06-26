@@ -220,19 +220,19 @@
                     <controls:SettingsExpander x:Uid="WindowSettingsControlRealTimePalette" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE80A;}">
                         <controls:SettingsExpander.Items>
                             <controls:SettingsCard x:Uid="WindowSettingsControlRealTimePaletteAccentColor1">
-                                <local:PaletteItemControl Color="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor1, Mode=OneWay}" />
+                                <local:PaletteItemControl Color="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor1, Converter={StaticResource AppColorToColorConverter}, Mode=OneWay}" />
                             </controls:SettingsCard>
                             <controls:SettingsCard x:Uid="WindowSettingsControlRealTimePaletteAccentColor2">
-                                <local:PaletteItemControl Color="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor2, Mode=OneWay}" />
+                                <local:PaletteItemControl Color="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor2, Converter={StaticResource AppColorToColorConverter}, Mode=OneWay}" />
                             </controls:SettingsCard>
                             <controls:SettingsCard x:Uid="WindowSettingsControlRealTimePaletteAccentColor3">
-                                <local:PaletteItemControl Color="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor3, Mode=OneWay}" />
+                                <local:PaletteItemControl Color="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor3, Converter={StaticResource AppColorToColorConverter}, Mode=OneWay}" />
                             </controls:SettingsCard>
                             <controls:SettingsCard x:Uid="WindowSettingsControlRealTimePaletteAccentColor4">
-                                <local:PaletteItemControl Color="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor4, Mode=OneWay}" />
+                                <local:PaletteItemControl Color="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor4, Converter={StaticResource AppColorToColorConverter}, Mode=OneWay}" />
                             </controls:SettingsCard>
                             <controls:SettingsCard x:Uid="WindowSettingsControlRealTimePaletteUnderlayColor">
-                                <local:PaletteItemControl Color="{x:Bind LyricsWindowStatus.WindowPalette.UnderlayColor, Mode=OneWay}" />
+                                <local:PaletteItemControl Color="{x:Bind LyricsWindowStatus.WindowPalette.UnderlayColor, Converter={StaticResource AppColorToColorConverter}, Mode=OneWay}" />
                             </controls:SettingsCard>
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>

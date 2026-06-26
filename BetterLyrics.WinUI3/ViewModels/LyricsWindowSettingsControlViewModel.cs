@@ -1,8 +1,8 @@
-﻿using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Extensions;
+﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Extensions;
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Models.Settings;
-using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -44,7 +44,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 if (message.PropertyName == nameof(GeneralSettings.MultiNowPlayingWindowMode))
                 {
-                    if (!message.NewValue && AppSettings.WindowBoundsRecords.Any(x => x.WindowStatus == Enums.WindowStatus.Opened))
+                    if (!message.NewValue && AppSettings.WindowBoundsRecords.Any(x => x.WindowStatus == WindowStatus.Opened))
                     {
                         var windows = WindowHook.GetWindows<NowPlayingWindow>();
                         var latest = windows.Last();

@@ -8,6 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
+    xmlns:lyrics="using:BetterLyrics.Core.Models.Lyrics"
     xmlns:lyricsmodels="using:BetterLyrics.WinUI3.Models.Lyrics"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BetterLyrics.WinUI3.Models"
@@ -52,7 +53,7 @@
                 SelectionChanged="LyricsListView_SelectionChanged"
                 SelectionMode="Multiple">
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="lyricsmodels:LyricsLine">
+                    <DataTemplate x:DataType="lyrics:LyricsLine">
                         <StackPanel Padding="0,8" Spacing="2">
                             <TextBlock Text="{x:Bind Text}" TextWrapping="Wrap" />
                             <TextBlock
@@ -117,7 +118,7 @@
                     x:Name="PreviewCard"
                     Title="{x:Bind ViewModel.CardData.Title, Mode=OneWay}"
                     Artist="{x:Bind ViewModel.CardData.Artist, Mode=OneWay}"
-                    CoverAccentColor="{x:Bind ViewModel.CardData.AccentCoverColor, Mode=OneWay}"
+                    CoverAccentColor="{x:Bind ViewModel.CardData.AccentCoverColor, Converter={StaticResource AppColorToColorConverter}, Mode=OneWay}"
                     CoverImage="{x:Bind ViewModel.CardData.CoverImage, Mode=OneWay}"
                     LyricsLines="{x:Bind ViewModel.CardData.Lyrics, Mode=OneWay}"
                     StyleKey="{x:Bind ViewModel.SelectedStyleItem.StyleKey, Mode=OneWay}" />

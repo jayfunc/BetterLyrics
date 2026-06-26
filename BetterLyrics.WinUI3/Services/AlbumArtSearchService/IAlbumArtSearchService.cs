@@ -1,4 +1,4 @@
-﻿using BetterLyrics.WinUI3.Models;
+﻿using BetterLyrics.Core.Models;
 using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage.Streams;

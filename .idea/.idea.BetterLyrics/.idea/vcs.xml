@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/External/Impressionist" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/External/Lyricify-Lyrics-Helper" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/External/WindowsMediaController" vcs="Git" />
+  </component>
+</project>

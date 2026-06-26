@@ -1,4 +1,4 @@
-﻿using BetterLyrics.WinUI3.Enums;
+﻿using BetterLyrics.Core.Enums;
 using Microsoft.UI.Text;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -79,11 +79,11 @@ namespace BetterLyrics.WinUI3.Helper
                     var textAlign = align == HorizontalAlignment.Left ? TextAlignment.Left : align == HorizontalAlignment.Right ? TextAlignment.Right : TextAlignment.Center;
 
                     lyricsStack.Children.Add(new TextBlock { Text = $"[{displayName}]", FontSize = 18, Foreground = tertiaryTextBrush, TextAlignment = textAlign });
-                    lyricsStack.Children.Add(new TextBlock { Text = $"{Constants.App.SloganEN}", FontSize = 18, Foreground = tertiaryTextBrush, TextAlignment = textAlign });
-                    lyricsStack.Children.Add(new TextBlock { Text = $"{Constants.App.SloganJP}", FontSize = 20, Foreground = secondaryTextBrush, TextAlignment = textAlign });
-                    lyricsStack.Children.Add(new TextBlock { Text = $"{Constants.App.SloganCN}", FontSize = 22, Foreground = primaryTextBrush, TextAlignment = textAlign });
-                    lyricsStack.Children.Add(new TextBlock { Text = $"{Constants.App.SloganJP}", FontSize = 20, Foreground = secondaryTextBrush, TextAlignment = textAlign });
-                    lyricsStack.Children.Add(new TextBlock { Text = $"{Constants.App.SloganEN}", FontSize = 18, Foreground = tertiaryTextBrush, TextAlignment = textAlign });
+                    lyricsStack.Children.Add(new TextBlock { Text = $"{Core.Constants.App.SloganEN}", FontSize = 18, Foreground = tertiaryTextBrush, TextAlignment = textAlign });
+                    lyricsStack.Children.Add(new TextBlock { Text = $"{Core.Constants.App.SloganJP}", FontSize = 20, Foreground = secondaryTextBrush, TextAlignment = textAlign });
+                    lyricsStack.Children.Add(new TextBlock { Text = $"{Core.Constants.App.SloganCN}", FontSize = 22, Foreground = primaryTextBrush, TextAlignment = textAlign });
+                    lyricsStack.Children.Add(new TextBlock { Text = $"{Core.Constants.App.SloganJP}", FontSize = 20, Foreground = secondaryTextBrush, TextAlignment = textAlign });
+                    lyricsStack.Children.Add(new TextBlock { Text = $"{Core.Constants.App.SloganEN}", FontSize = 18, Foreground = tertiaryTextBrush, TextAlignment = textAlign });
                     innerContent = lyricsStack;
                     break;
 
@@ -99,7 +99,7 @@ namespace BetterLyrics.WinUI3.Helper
                         HorizontalAlignment = contentAlign
                     };
                     var cardStack = new StackPanel { Spacing = 8 };
-                    cardStack.Children.Add(new TextBlock { Text = $"[{displayName}]「{Constants.App.SloganCN}」", FontSize = 16, FontWeight = FontWeights.Bold, Foreground = primaryTextBrush, HorizontalAlignment = HorizontalAlignment.Center });
+                    cardStack.Children.Add(new TextBlock { Text = $"[{displayName}]「{Core.Constants.App.SloganCN}」", FontSize = 16, FontWeight = FontWeights.Bold, Foreground = primaryTextBrush, HorizontalAlignment = HorizontalAlignment.Center });
                     cardStack.Children.Add(new TextBlock { Text = $"[{displayName}] BetterLyrics", FontSize = 10, Foreground = secondaryTextBrush, HorizontalAlignment = HorizontalAlignment.Center });
                     cardBorder.Child = cardStack;
                     innerContent = cardBorder;

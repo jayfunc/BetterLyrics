@@ -1,27 +1,26 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.Core.Constants;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Extensions;
+using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models.Domain;
+using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.GSMTCService;
-using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
-using CommunityToolkit.WinUI;
 using Microsoft.Extensions.Logging;
-using Microsoft.UI;
-using Microsoft.UI.Dispatching;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System.Runtime.InteropServices;
 using Vanara.PInvoke;
-using Windows.Foundation;
-using Windows.UI;
 using WinRT.Interop;
 using WinUIEx;
 using WinUIEx.Messaging;
@@ -38,7 +37,7 @@ namespace BetterLyrics.WinUI3.Views
         IRecipient<PropertyChangedMessage<ElementTheme>>,
         IRecipient<PropertyChangedMessage<BitmapImage?>>,
         IRecipient<PropertyChangedMessage<LyricsFontColorType>>,
-        IRecipient<PropertyChangedMessage<Color>>,
+        IRecipient<PropertyChangedMessage<AppColor>>,
         IRecipient<PropertyChangedMessage<TaskbarPlacement>>,
         IRecipient<PropertyChangedMessage<PaletteGeneratorType>>,
         IRecipient<PropertyChangedMessage<MediaSourceProviderInfo?>>
@@ -52,7 +51,7 @@ namespace BetterLyrics.WinUI3.Views
         private readonly ILogger<NowPlayingWindow> _logger = Ioc.Default.GetRequiredService<ILogger<NowPlayingWindow>>();
         private readonly Debouncer _albumArtThemeColorsDebounder = new();
 
-        private Color _backdropAccentColor = Colors.Transparent;
+        private AppColor _backdropAccentColor = Colors.Transparent;
 
         public LyricsWindowStatus LyricsWindowStatus { get; private set; }
 
@@ -186,7 +185,7 @@ namespace BetterLyrics.WinUI3.Views
         public void UpdateBackdropAccentColor()
         {
             var oldValue = _backdropAccentColor;
-            var newValue = Helper.ColorHelper.GetAccentColor(
+            var newValue = ColorHelper.GetAccentColor(
                 WindowNative.GetWindowHandle(this),
                 LyricsWindowStatus.EnvironmentSampleMode);
             // 防止不必要刷新导致界面不流畅
@@ -206,7 +205,7 @@ namespace BetterLyrics.WinUI3.Views
                 AppUIThread.Execute(() =>
                 {
                     NowPlayingPage.LyricsWindowStatus?.WindowPalette = result;
-                    RootGrid.RequestedTheme = result.ThemeType;
+                    RootGrid.RequestedTheme = result.ThemeType.ToElementTheme();
                 });
             });
         }
@@ -215,7 +214,7 @@ namespace BetterLyrics.WinUI3.Views
         {
             var mointor = MonitorHook.GetMonitorInfoExFromWindow(this);
             LyricsWindowStatus.MonitorDeviceName = mointor.szDevice;
-            LyricsWindowStatus.MonitorBounds = mointor.rcMonitor.ToRect();
+            LyricsWindowStatus.MonitorBounds = mointor.rcMonitor.ToAppRect();
         }
 
         // ====
@@ -308,7 +307,7 @@ namespace BetterLyrics.WinUI3.Views
             _taskbarHook?.Dispose();
             _taskbarHook = null;
 
-            _taskbarHook = new(this, LyricsWindowStatus.TaskbarPlacement, LyricsWindowStatus.MonitorBounds.ToRectangle());
+            _taskbarHook = new(this, LyricsWindowStatus.TaskbarPlacement, LyricsWindowStatus.MonitorBounds);
         }
 
         private void OnAutoShowOrHideWindowChanged()
@@ -553,7 +552,7 @@ namespace BetterLyrics.WinUI3.Views
                     }
                     else
                     {
-                        LyricsWindowStatus.WindowBounds = new Rect(rect.X, rect.Y, size.Width, size.Height);
+                        LyricsWindowStatus.WindowBounds = new AppRect(rect.X, rect.Y, size.Width, size.Height);
                         UpdateMonitorNameAndBounds();
                     }
                 }
@@ -856,7 +855,7 @@ namespace BetterLyrics.WinUI3.Views
                 }
                 else if (message.PropertyName == nameof(LyricsWindowStatus.Name))
                 {
-                    this.Title = $"{LyricsWindowStatus.Name} - {Constants.App.AppName}";
+                    this.Title = $"{LyricsWindowStatus.Name} - {Core.Constants.App.AppName}";
                 }
             }
         }
@@ -928,7 +927,7 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        public void Receive(PropertyChangedMessage<Color> message)
+        public void Receive(PropertyChangedMessage<AppColor> message)
         {
             if (message.Sender == LyricsWindowStatus.LyricsStyleSettings)
             {

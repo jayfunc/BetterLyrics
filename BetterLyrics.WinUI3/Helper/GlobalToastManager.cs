@@ -1,8 +1,9 @@
-﻿using BetterLyrics.WinUI3.Services.LocalizationService;
+﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Windowing;
-using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using Vanara.PInvoke;
@@ -12,7 +13,8 @@ namespace BetterLyrics.WinUI3.Helper
 {
     public static class GlobalToastManager
     {
-        private static readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
+        private static readonly ILocalizationService _localizationService =
+            Ioc.Default.GetRequiredService<ILocalizationService>();
 
         private static List<ToastOverlayWindow> _overlayWindows = [];
         private static bool _isInitialized = false;
@@ -36,7 +38,8 @@ namespace BetterLyrics.WinUI3.Helper
             _isInitialized = true;
         }
 
-        public static void Show(string localizedTitleKey, string? message = null, InfoBarSeverity severity = InfoBarSeverity.Informational, TimeSpan? duration = null)
+        public static void Show(string localizedTitleKey, string? message = null,
+            MessageSeverity severity = MessageSeverity.Informational, TimeSpan? duration = null)
         {
             if (!_isInitialized)
             {
@@ -55,7 +58,7 @@ namespace BetterLyrics.WinUI3.Helper
             }
             else
             {
-                if (severity == InfoBarSeverity.Error)
+                if (severity == MessageSeverity.Error)
                 {
                     actualDuration = TimeSpan.FromSeconds(3);
                 }
@@ -67,9 +70,10 @@ namespace BetterLyrics.WinUI3.Helper
 
             foreach (var window in _overlayWindows)
             {
-                window.DispatcherQueue.TryEnqueue(() =>
+                AppUIThread.Execute(() =>
                 {
-                    window.Stack.Show(_localizationService.GetLocalizedString(localizedTitleKey), message, severity, actualDuration, false);
+                    window.Stack.Show(_localizationService.GetLocalizedString(localizedTitleKey), message,
+                        InfoBarSeverityExtensions.FromMessageSeverity(severity), actualDuration, false);
                     window.StartOverlayInputHelper();
                 });
             }

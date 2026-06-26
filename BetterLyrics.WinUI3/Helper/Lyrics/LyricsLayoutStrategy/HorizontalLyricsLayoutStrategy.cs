@@ -1,7 +1,8 @@
-﻿using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Extensions;
+﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Extensions;
+using BetterLyrics.Core.Helpers.Lyrics;
+using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Models.Lyrics;
-using BetterLyrics.WinUI3.Models.Settings;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;

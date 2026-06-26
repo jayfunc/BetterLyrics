@@ -1,8 +1,9 @@
-﻿using BetterLyrics.WinUI3.Constants;
-using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Models;
+﻿using BetterLyrics.Core.Constants;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Models;
+using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Models.Lyrics;
-using BetterLyrics.WinUI3.Models.Settings;
 using System;
 using System.Collections.Generic;
 
@@ -81,9 +82,9 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
 
                 bool isWordAnimationEnabled = lyricsEffect.WordByWordEffectMode switch
                 {
-                    Enums.WordByWordEffectMode.Auto => line.IsPrimaryHasRealSyllableInfo,
-                    Enums.WordByWordEffectMode.Always => true,
-                    Enums.WordByWordEffectMode.Never => false,
+                    WordByWordEffectMode.Auto => line.IsPrimaryHasRealSyllableInfo,
+                    WordByWordEffectMode.Always => true,
+                    WordByWordEffectMode.Never => false,
                     _ => line.IsPrimaryHasRealSyllableInfo
                 };
 
@@ -232,7 +233,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                     if (isSecondaryLinePlayingChanged)
                     {
                         // 辉光动画（从行首开始到当前）
-                        if (isGlowEnabled && lyricsEffect.LyricsGlowEffectScope == Enums.LyricsEffectScope.LineStartToCurrentChar
+                        if (isGlowEnabled && lyricsEffect.LyricsGlowEffectScope == LyricsEffectScope.LineStartToCurrentChar
                              && isSecondaryLinePlaying)
                         {
                             foreach (var renderChar in line.PrimaryRenderChars)
@@ -240,9 +241,9 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                                 var stepInOutDuration = Math.Min(Time.AnimationDuration.TotalMilliseconds, maxAnimationDurationMs) / 2.0 / 1000.0;
                                 var stepLastingDuration = Math.Max(maxAnimationDurationMs / 1000.0 - stepInOutDuration * 2, 0);
                                 renderChar.GlowTransition.Start(
-                                    new Models.Keyframe<double>(targetCharGlow, stepInOutDuration),
-                                    new Models.Keyframe<double>(targetCharGlow, stepLastingDuration),
-                                    new Models.Keyframe<double>(0, stepInOutDuration)
+                                    new Keyframe<double>(targetCharGlow, stepInOutDuration),
+                                    new Keyframe<double>(targetCharGlow, stepLastingDuration),
+                                    new Keyframe<double>(0, stepInOutDuration)
                                 );
                             }
                         }
@@ -320,23 +321,23 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics
                                     {
                                         var (inDuration, outDuration) = CalculateSegmentDuration(desiredAnimationDurationMs / 1000.0, maxAnimationDurationMs / 1000.0);
                                         renderChar.ScaleTransition.Start(
-                                            new Models.Keyframe<double>(targetCharScale, inDuration),
-                                            new Models.Keyframe<double>(1.0, outDuration)
+                                            new Keyframe<double>(targetCharScale, inDuration),
+                                            new Keyframe<double>(1.0, outDuration)
                                         );
                                     }
                                 }
                             }
 
                             // 辉光（长音节）
-                            if (isGlowEnabled && isSyllablePlaying && lyricsEffect.LyricsGlowEffectScope == Enums.LyricsEffectScope.LongDurationSyllable
+                            if (isGlowEnabled && isSyllablePlaying && lyricsEffect.LyricsGlowEffectScope == LyricsEffectScope.LongDurationSyllable
                                 && syllable.DurationMs >= lyricsEffect.LyricsGlowEffectLongSyllableDuration)
                             {
                                 foreach (var renderChar in syllable.ChildrenRenderLyricsChars)
                                 {
                                     var (inDuration, outDuration) = CalculateSegmentDuration(desiredAnimationDurationMs / 1000.0, maxAnimationDurationMs / 1000.0);
                                     renderChar.GlowTransition.Start(
-                                        new Models.Keyframe<double>(targetCharGlow, inDuration),
-                                        new Models.Keyframe<double>(0, outDuration)
+                                        new Keyframe<double>(targetCharGlow, inDuration),
+                                        new Keyframe<double>(0, outDuration)
                                     );
                                 }
                             }
