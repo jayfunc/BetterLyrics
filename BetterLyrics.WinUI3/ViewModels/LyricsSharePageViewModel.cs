@@ -1,11 +1,11 @@
-﻿using BetterLyrics.WinUI3.Extensions;
+﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Extensions;
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models.Entities;
+using BetterLyrics.Core.Models.Lyrics;
+using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Models.Lyrics;
-using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.GSMTCService;
-using BetterLyrics.WinUI3.Services.LocalizationService;
-using BetterLyrics.WinUI3.Services.SettingsService;
-using BetterLyrics.WinUI3.Services.SongSearchMapService;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
@@ -147,7 +147,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             CardData.Title = mappedTitle;
             CardData.Artist = mappedArtist;
             CardData.CoverImage = GSMTCService.AlbumArtBitmapImage;
-            CardData.AccentCoverColor = (await GSMTCService.GetAlbumArtAccentColorsAsync(Enums.PaletteGeneratorType.Auto, true)).First();
+            CardData.AccentCoverColor = (await GSMTCService.GetAlbumArtAccentColorsAsync(PaletteGeneratorType.Auto, true)).First();
 
             CardData.Lyrics = [];
         }

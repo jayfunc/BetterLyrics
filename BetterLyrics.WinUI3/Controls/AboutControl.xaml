@@ -14,6 +14,9 @@
     xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:constants="using:BetterLyrics.Core.Constants"
+    xmlns:models1="using:BetterLyrics.Core.Models"
+    xmlns:helpers="using:BetterLyrics.Core.Helpers"
     mc:Ignorable="d">
 
     <Grid>
@@ -61,7 +64,7 @@
                                 FontFamily="{StaticResource SloganENFont}"
                                 FontSize="36"
                                 Style="{ThemeResource DisplayTextBlockStyle}"
-                                Text="{x:Bind const:App.AppName}" />
+                                Text="{x:Bind constants:App.AppName}" />
                         </StackPanel>
                         <!--  App slogan  -->
                         <StackPanel Background="Transparent" Spacing="4">
@@ -87,9 +90,9 @@
 
                     <controls:SettingsExpander
                         Description="© Zhe Fang 2025-2026. Licensed under GPL-3.0."
-                        Header="{x:Bind const:App.AppName}"
+                        Header="{x:Bind constants:App.AppName}"
                         HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/Logo.png}">
-                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind helper:MetadataHelper.AppVersion}" />
+                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind helpers:MetadataHelper.AppVersion}" />
                         <controls:SettingsExpander.Items>
                             <controls:SettingsCard Description="{x:Bind ViewModel.AppSettings.GeneralSettings.LastAppUpateCheckDateTime.ToString(), Mode=OneWay}">
                                 <controls:SettingsCard.Header>
@@ -145,10 +148,10 @@
 
                             <controls:WrapPanel Orientation="Horizontal">
                                 <uc:ExternalLinkButton Command="{x:Bind ViewModel.OpenAppStorePageCommand}" Content="Microsoft Store" />
-                                <uc:ExternalLinkButton Content="GitHub" NavigateUri="{x:Bind const:Link.BetterLyricsGitHub}" />
-                                <uc:ExternalLinkButton x:Uid="UserGuide" NavigateUri="{x:Bind const:Link.UserGuide}" />
-                                <uc:ExternalLinkButton x:Uid="PrivacyPolicy" NavigateUri="{x:Bind const:Link.PrivacyPolicy}" />
-                                <uc:ExternalLinkButton x:Uid="TermsOfService" NavigateUri="{x:Bind const:Link.TermsOfService}" />
+                                <uc:ExternalLinkButton Content="GitHub" NavigateUri="{x:Bind constants:Link.BetterLyricsGitHub}" />
+                                <uc:ExternalLinkButton x:Uid="UserGuide" NavigateUri="{x:Bind constants:Link.UserGuide}" />
+                                <uc:ExternalLinkButton x:Uid="PrivacyPolicy" NavigateUri="{x:Bind constants:Link.PrivacyPolicy}" />
+                                <uc:ExternalLinkButton x:Uid="TermsOfService" NavigateUri="{x:Bind constants:Link.TermsOfService}" />
                             </controls:WrapPanel>
 
                             <TextBlock x:Uid="SetingsPageFeedback" />
@@ -158,28 +161,28 @@
                                     <HyperlinkButton.ContextFlyout>
                                         <Flyout x:Name="QQGroupFlyout" FlyoutPresenterStyle="{StaticResource FlyoutGhostStyle}">
                                             <StackPanel>
-                                                <uc:ExternalLinkButton Content="1 群（1054700388）" NavigateUri="{x:Bind const:Link.QQGroup1}" />
-                                                <uc:ExternalLinkButton Content="2 群（1076554669）" NavigateUri="{x:Bind const:Link.QQGroup2}" />
+                                                <uc:ExternalLinkButton Content="1 群（1054700388）" NavigateUri="{x:Bind constants:Link.QQGroup1}" />
+                                                <uc:ExternalLinkButton Content="2 群（1076554669）" NavigateUri="{x:Bind constants:Link.QQGroup2}" />
                                             </StackPanel>
                                         </Flyout>
                                     </HyperlinkButton.ContextFlyout>
                                 </HyperlinkButton>
-                                <uc:ExternalLinkButton NavigateUri="{x:Bind const:Link.Discord}">
+                                <uc:ExternalLinkButton NavigateUri="{x:Bind constants:Link.Discord}">
                                     <TextBlock Text="Discord" />
                                 </uc:ExternalLinkButton>
-                                <uc:ExternalLinkButton NavigateUri="{x:Bind const:Link.Telegram}">
+                                <uc:ExternalLinkButton NavigateUri="{x:Bind constants:Link.Telegram}">
                                     <TextBlock Text="Telegram" />
                                 </uc:ExternalLinkButton>
                             </controls:WrapPanel>
 
                             <TextBlock x:Uid="SetingsPageDonation" />
                             <controls:WrapPanel Orientation="Horizontal">
-                                <uc:ExternalLinkButton NavigateUri="{x:Bind const:Link.BuyMeACoffee}">
+                                <uc:ExternalLinkButton NavigateUri="{x:Bind constants:Link.BuyMeACoffee}">
                                     <StackPanel Orientation="Horizontal" Spacing="6">
                                         <TextBlock Text="Buy me a coffee" />
                                     </StackPanel>
                                 </uc:ExternalLinkButton>
-                                <uc:ExternalLinkButton NavigateUri="{x:Bind const:Link.PayPal}">
+                                <uc:ExternalLinkButton NavigateUri="{x:Bind constants:Link.PayPal}">
                                     <TextBlock Text="PayPal" />
                                 </uc:ExternalLinkButton>
                                 <HyperlinkButton x:Name="AlipayWeChatPayButton" Click="AlipayWeChatPayButton_Click">
@@ -194,7 +197,7 @@
                                         </Flyout>
                                     </HyperlinkButton.ContextFlyout>
                                 </HyperlinkButton>
-                                <uc:ExternalLinkButton NavigateUri="{x:Bind const:Link.Afdian}">
+                                <uc:ExternalLinkButton NavigateUri="{x:Bind constants:Link.Afdian}">
                                     <TextBlock Text="爱发电" />
                                 </uc:ExternalLinkButton>
                             </controls:WrapPanel>
@@ -231,7 +234,7 @@
                             </ItemsControl.ItemsPanel>
 
                             <ItemsControl.ItemTemplate>
-                                <DataTemplate x:DataType="models:Contributor">
+                                <DataTemplate x:DataType="models1:Contributor">
                                     <local:ContributorCard
                                         AvatarSource="{x:Bind AvatarSource}"
                                         Badges="{x:Bind Badges}"
@@ -256,7 +259,7 @@
                             </ItemsControl.ItemsPanel>
 
                             <ItemsControl.ItemTemplate>
-                                <DataTemplate x:DataType="models:Donor">
+                                <DataTemplate x:DataType="models1:Donor">
                                     <uc:PatronControl Date="{x:Bind Date}" PatronName="{x:Bind PatronName}" />
                                 </DataTemplate>
                             </ItemsControl.ItemTemplate>

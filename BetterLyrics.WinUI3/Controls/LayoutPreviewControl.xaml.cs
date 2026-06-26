@@ -1,8 +1,8 @@
+using BetterLyrics.Core.Messages;
+using BetterLyrics.Core.Models;
+using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Messages;
-using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Models.Settings;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Xaml;
@@ -68,7 +68,8 @@ namespace BetterLyrics.WinUI3.Controls
         {
             double previewBaseWidth = 200; // 设定预览图的固定宽度
 
-            if (LyricsWindowStatus != null && LyricsWindowStatus.WindowBounds.Width > 0 && LyricsWindowStatus.WindowBounds.Height > 0)
+            if (LyricsWindowStatus != null && LyricsWindowStatus.WindowBounds.Width > 0 &&
+                LyricsWindowStatus.WindowBounds.Height > 0)
             {
                 double ratio = LyricsWindowStatus.WindowBounds.Height / LyricsWindowStatus.WindowBounds.Width;
                 PreviewGrid.Width = previewBaseWidth;
@@ -118,12 +119,14 @@ namespace BetterLyrics.WinUI3.Controls
 
             foreach (var rowDef in LayoutProfile.RowDefinitions)
             {
-                PreviewGrid.RowDefinitions.Add(new RowDefinition { Height = rowDef.ParseGridLength(scale) });
+                PreviewGrid.RowDefinitions.Add(new RowDefinition
+                { Height = GridLengthExtensions.ParseGridLength(rowDef, scale) });
             }
 
             foreach (var colDef in LayoutProfile.ColumnDefinitions)
             {
-                PreviewGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = colDef.ParseGridLength(scale) });
+                PreviewGrid.ColumnDefinitions.Add(new ColumnDefinition
+                { Width = GridLengthExtensions.ParseGridLength(colDef, scale) });
             }
 
             foreach (var placement in LayoutProfile.Placements.OrderBy(x => x.ComponentType))
@@ -148,13 +151,16 @@ namespace BetterLyrics.WinUI3.Controls
                     placement.MarginTop * scale,
                     placement.MarginRight * scale,
                     placement.MarginBottom * scale),
-                HorizontalAlignment = placement.HorizontalAlignment,
-                VerticalAlignment = placement.VerticalAlignment
+                HorizontalAlignment =
+                    HorizontalAlignmentExtensions.FromAppHorizontalAlignment(placement.HorizontalAlignment),
+                VerticalAlignment = VerticalAlignmentExtensions.FromAppVerticalAlignment(placement.VerticalAlignment)
             };
 
             ToolTipService.SetToolTip(container, placement.DisplayName);
 
-            container.Children.Add(MockupHelper.GenerateMockupContent(this, placement.ComponentType, placement.HorizontalAlignment, placement.DisplayName));
+            container.Children.Add(MockupHelper.GenerateMockupContent(this, placement.ComponentType,
+                HorizontalAlignmentExtensions.FromAppHorizontalAlignment(placement.HorizontalAlignment),
+                placement.DisplayName));
 
             return container;
         }

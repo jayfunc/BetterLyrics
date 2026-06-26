@@ -1,5 +1,5 @@
+using BetterLyrics.Core.Models;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;

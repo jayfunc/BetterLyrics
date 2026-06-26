@@ -1,12 +1,11 @@
-﻿using BetterLyrics.WinUI3.Controls;
-using BetterLyrics.WinUI3.Enums;
+﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models.Settings;
+using BetterLyrics.WinUI3.Controls;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Models.Settings;
-using BetterLyrics.WinUI3.Services.FileSystemService;
-using BetterLyrics.WinUI3.Services.LocalizationService;
-using BetterLyrics.WinUI3.Services.NavigationService;
-using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -48,10 +47,10 @@ namespace BetterLyrics.WinUI3.ViewModels
             _ = Task.Run(async () =>
             {
                 await _fileSystemService.DeleteCacheForMediaFolderAsync(folder);
-                _dispatcherQueue.TryEnqueue(() =>
+                AppUIThread.Execute(() =>
                 {
                     AppSettings.LocalMediaFolders.Remove(folder);
-                    PasswordVaultHelper.Delete(Constants.App.AppName, folder.VaultKey);
+                    PasswordVaultHelper.Delete(Core.Constants.App.AppName, folder.VaultKey);
                 });
             });
         }
@@ -210,7 +209,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                         if (isConnected)
                         {
                             AppSettings.LocalMediaFolders.Add(tempFolder);
-                            PasswordVaultHelper.Save(Constants.App.AppName, tempFolder.VaultKey, tempFolder.Password);
+                            PasswordVaultHelper.Save(Core.Constants.App.AppName, tempFolder.VaultKey, tempFolder.Password);
                             _ = Task.Run(async () => await _fileSystemService.ScanMediaFolderAsync(tempFolder));
                             e.Cancel = false; // 允许关闭
                         }

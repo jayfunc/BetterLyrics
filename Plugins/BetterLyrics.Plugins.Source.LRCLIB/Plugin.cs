@@ -1,6 +1,6 @@
-﻿using BetterLyrics.Core.Abstractions;
-using BetterLyrics.Core.Interfaces.Features;
-using BetterLyrics.Core.Models.Domain;
+﻿using BetterLyrics.Core.Abstractions.Plugins;
+using BetterLyrics.Core.Interfaces.Plugins;
+using BetterLyrics.Core.Models.Lyrics;
 using BetterLyrics.Core.Serialization;
 using System.Text.Json;
 

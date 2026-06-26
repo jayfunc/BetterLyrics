@@ -1,6 +1,7 @@
-﻿using BetterLyrics.WinUI3.Extensions;
+﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Models.Settings;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Models.Lyrics;
-using BetterLyrics.WinUI3.Models.Settings;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
@@ -63,7 +64,8 @@ namespace BetterLyrics.WinUI3.Renderer.LyricsRenderer
         {
             if (LyricsWindowStatus == null) return;
             if (_edgeFadeMaskRenderer.Brush != null &&
-                (!LyricsWindowStatus.LyricsStyleSettings.AutoWrap || LyricsWindowStatus.LyricsEffectSettings.IsLyricsEdgeFeatheringEffectEnabled))
+                (!LyricsWindowStatus.LyricsStyleSettings.AutoWrap ||
+                 LyricsWindowStatus.LyricsEffectSettings.IsLyricsEdgeFeatheringEffectEnabled))
             {
                 using (ds.CreateLayer(_edgeFadeMaskRenderer.Brush))
                 {
@@ -84,7 +86,7 @@ namespace BetterLyrics.WinUI3.Renderer.LyricsRenderer
             var styleSettings = LyricsWindowStatus.LyricsStyleSettings;
             var isBreathingEnabled = effectSettings.IsLyricsBrethingEffectEnabled;
 
-            bool isVertical = styleSettings.LyricsLayoutOrientation == Enums.LyricsLayoutOrientation.Vertical;
+            bool isVertical = styleSettings.LyricsLayoutOrientation == LyricsLayoutOrientation.Vertical;
 
             LyricsLineRendererBase lineRenderer = isVertical
                 ? new VerticalLyricsLineRenderer()
@@ -164,14 +166,17 @@ namespace BetterLyrics.WinUI3.Renderer.LyricsRenderer
                     if (isVertical)
                     {
                         // 竖排补偿 Y 轴位移，并绕 X 中心旋转
-                        currentYOffset += angleRatio * (LyricsHeight / 2) * (effectSettings.FanLyricsAngle < 0 ? 1 : -1);
-                        ds.Transform *= Matrix3x2.CreateRotation(angle, new Vector2(line.CenterPosition.X, (float)fanAnchorY));
+                        currentYOffset += angleRatio * (LyricsHeight / 2) *
+                                          (effectSettings.FanLyricsAngle < 0 ? 1 : -1);
+                        ds.Transform *= Matrix3x2.CreateRotation(angle,
+                            new Vector2(line.CenterPosition.X, (float)fanAnchorY));
                     }
                     else
                     {
                         // 横排补偿 X 轴位移，并绕 Y 中心旋转
                         currentXOffset += angleRatio * (LyricsWidth / 2) * (effectSettings.FanLyricsAngle < 0 ? 1 : -1);
-                        ds.Transform *= Matrix3x2.CreateRotation(angle, new Vector2((float)fanAnchorX, line.CenterPosition.Y));
+                        ds.Transform *= Matrix3x2.CreateRotation(angle,
+                            new Vector2((float)fanAnchorX, line.CenterPosition.Y));
                     }
                 }
 
@@ -180,10 +185,11 @@ namespace BetterLyrics.WinUI3.Renderer.LyricsRenderer
 
                 line.EnsureCaches(control, styleSettings.LyricsFontStrokeWidth);
                 if (line.CachedStroke == null || line.CachedFill == null) continue;
-                if (line.UnplayedFillTint == null || line.UnplayedStrokeTint == null || line.UnplayedComposite == null) continue;
+                if (line.UnplayedFillTint == null || line.UnplayedStrokeTint == null ||
+                    line.UnplayedComposite == null) continue;
 
-                line.UnplayedFillTint.Color = line.UnplayedFillColorTransition.Value;
-                line.UnplayedStrokeTint.Color = line.UnplayedStrokeColorTransition.Value;
+                line.UnplayedFillTint.Color = ColorExtensions.FromAppColor(line.UnplayedFillColorTransition.Value);
+                line.UnplayedStrokeTint.Color = ColorExtensions.FromAppColor(line.UnplayedStrokeColorTransition.Value);
 
                 // 真正的绘制调用
                 lineRenderer.Draw(control, ds);
@@ -249,10 +255,12 @@ namespace BetterLyrics.WinUI3.Renderer.LyricsRenderer
         {
             if (LyricsWindowStatus == null) return;
 
-            var isVertical = LyricsWindowStatus.LyricsStyleSettings.LyricsLayoutOrientation == Enums.LyricsLayoutOrientation.Vertical;
+            var isVertical = LyricsWindowStatus.LyricsStyleSettings.LyricsLayoutOrientation ==
+                             LyricsLayoutOrientation.Vertical;
 
             var autoWrapFadeWidth = LyricsWindowStatus.LyricsStyleSettings.AutoWrap ? 0 : 16;
-            var lyricsEdgeFadeWidth = LyricsWindowStatus.LyricsEffectSettings.IsLyricsEdgeFeatheringEffectEnabled ? 16 : 0;
+            var lyricsEdgeFadeWidth =
+                LyricsWindowStatus.LyricsEffectSettings.IsLyricsEdgeFeatheringEffectEnabled ? 16 : 0;
 
             if (isVertical)
             {
@@ -277,6 +285,5 @@ namespace BetterLyrics.WinUI3.Renderer.LyricsRenderer
         {
             _edgeFadeMaskRenderer.Dispose();
         }
-
     }
 }

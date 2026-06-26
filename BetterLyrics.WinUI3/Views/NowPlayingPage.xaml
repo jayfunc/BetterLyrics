@@ -6,6 +6,7 @@
     xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
     xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     xmlns:const="using:BetterLyrics.WinUI3.Constants"
+    xmlns:constants="using:BetterLyrics.Core.Constants"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:converters="using:CommunityToolkit.WinUI.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -47,7 +48,7 @@
             <Viewbox x:Name="LyricsCardContainer" Visibility="Collapsed">
                 <uc:LyricsCard
                     x:Name="LyricsCard"
-                    CoverAccentColor="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor1, Mode=OneWay}"
+                    CoverAccentColor="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor1, Converter={StaticResource AppColorToColorConverter}, Mode=OneWay}"
                     CoverImage="{x:Bind ViewModel.MediaSessionsService.AlbumArtBitmapImage, Mode=OneWay}"
                     IsAutoScrollEnabled="True"
                     IsScrollable="True"
@@ -61,7 +62,7 @@
                 SizeChanged="AlbumArtContainer_SizeChanged"
                 Visibility="Collapsed">
                 <Grid.OpacityTransition>
-                    <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
+                    <ScalarTransition Duration="{x:Bind constants:Time.AnimationDuration}" />
                 </Grid.OpacityTransition>
                 <Grid.ContextFlyout>
                     <Flyout FlyoutPresenterStyle="{StaticResource FlyoutGhostStyle}">
@@ -111,7 +112,7 @@
 
             <Grid x:Name="SongTitleContainer" Visibility="Collapsed">
                 <Grid.OpacityTransition>
-                    <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
+                    <ScalarTransition Duration="{x:Bind constants:Time.AnimationDuration}" />
                 </Grid.OpacityTransition>
                 <uc:ParallaxTiltControl
                     x:Name="SongTitleParallaxTiltControl"
@@ -149,7 +150,7 @@
 
             <Grid x:Name="SongArtistContainer" Visibility="Collapsed">
                 <Grid.OpacityTransition>
-                    <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
+                    <ScalarTransition Duration="{x:Bind constants:Time.AnimationDuration}" />
                 </Grid.OpacityTransition>
                 <uc:ParallaxTiltControl
                     x:Name="SongAristParallaxTiltControl"
@@ -188,7 +189,7 @@
 
             <Grid x:Name="SongAlbumContainer" Visibility="Collapsed">
                 <Grid.OpacityTransition>
-                    <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
+                    <ScalarTransition Duration="{x:Bind constants:Time.AnimationDuration}" />
                 </Grid.OpacityTransition>
                 <uc:ParallaxTiltControl
                     x:Name="SongAlbumParallaxTiltControl"

@@ -15,6 +15,10 @@
     xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:settingsmodels="using:BetterLyrics.WinUI3.Models.Settings"
     xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:settings="using:BetterLyrics.Core.Models.Settings"
+    xmlns:constants1="using:BetterLyrics.Core.Constants"
+    xmlns:models1="using:BetterLyrics.Core.Models"
+    xmlns:helpers="using:BetterLyrics.Core.Helpers"
     Loaded="UserControl_Loaded"
     mc:Ignorable="d">
 
@@ -80,7 +84,7 @@
                             ItemsSource="{x:Bind ViewModel.AppSettings.MediaSourceProvidersInfo, Mode=OneWay}"
                             SelectionMode="None">
                             <ListView.ItemTemplate>
-                                <DataTemplate x:DataType="settingsmodels:MediaSourceProviderInfo">
+                                <DataTemplate x:DataType="settings:MediaSourceProviderInfo">
                                     <Grid>
                                         <Grid
                                             Padding="12"
@@ -331,7 +335,7 @@
                                         <ScalarTransition />
                                     </ListView.OpacityTransition>
                                     <ListView.ItemTemplate>
-                                        <DataTemplate x:DataType="settingsmodels:AlbumArtSearchProviderInfo">
+                                        <DataTemplate x:DataType="settings:AlbumArtSearchProviderInfo">
                                             <Grid>
                                                 <controls:SettingsCard Header="{Binding Provider, Converter={StaticResource AlbumArtSearchProviderToDisplayNameConverter}, Mode=OneWay}">
                                                     <controls:SettingsCard.HeaderIcon>
@@ -385,7 +389,7 @@
                                         <ScalarTransition />
                                     </ListView.OpacityTransition>
                                     <ListView.ItemTemplate>
-                                        <DataTemplate x:DataType="settingsmodels:LyricsSearchProviderInfo">
+                                        <DataTemplate x:DataType="settings:LyricsSearchProviderInfo">
                                             <Grid>
                                                 <controls:SettingsExpander IsExpanded="{Binding IsMatchingThresholdOverwritten, Mode=OneWay}">
                                                     <controls:SettingsExpander.Header>
@@ -569,9 +573,9 @@
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=TwoWay}" />
                             <controls:SettingsExpander.Items>
                                 <controls:SettingsCard x:Uid="SettingsPageTargetLanguage" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=OneWay}">
-                                    <ComboBox ItemsSource="{x:Bind helper:LanguageHelper.SupportedTranslationTargetLanguages}" SelectedIndex="{x:Bind ViewModel.SelectedTargetLanguageIndex, Mode=TwoWay}">
+                                    <ComboBox ItemsSource="{x:Bind helpers:LanguageHelper.SupportedTranslationTargetLanguages}" SelectedIndex="{x:Bind ViewModel.SelectedTargetLanguageIndex, Mode=TwoWay}">
                                         <ComboBox.ItemTemplate>
-                                            <DataTemplate x:DataType="models:ExtendedLanguage">
+                                            <DataTemplate x:DataType="models1:ExtendedLanguage">
                                                 <StackPanel Orientation="Horizontal" Spacing="6">
                                                     <TextBlock Text="{x:Bind Name}" />
                                                 </StackPanel>
@@ -715,7 +719,7 @@
                                 x:Uid="Help"
                                 Grid.Column="1"
                                 VerticalAlignment="Bottom"
-                                NavigateUri="{x:Bind constants:Link.AppleMusicCfg}" />
+                                NavigateUri="{x:Bind constants1:Link.AppleMusicCfg}" />
                             <Button
                                 Grid.Column="2"
                                 VerticalAlignment="Bottom"

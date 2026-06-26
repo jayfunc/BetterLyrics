@@ -1,7 +1,6 @@
-﻿using BetterLyrics.WinUI3.Enums;
+﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Services.LocalizationService;
-using BetterLyrics.WinUI3.Services.SettingsService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI;
 using Microsoft.UI.Windowing;
@@ -30,7 +29,7 @@ namespace BetterLyrics.WinUI3.Extensions
                 {
                     window.Title = title;
                 }
-                window.Title += $" - {Constants.App.AppName}";
+                window.Title += $" - {Core.Constants.App.AppName}";
 
                 window.SystemBackdrop = SystemBackdropHelper.CreateSystemBackdrop(backdropType);
 
@@ -51,7 +50,7 @@ namespace BetterLyrics.WinUI3.Extensions
 
                 var appTheme = settingsService.AppSettings.GeneralSettings.AppTheme;
                 window.AppWindow.TitleBar.PreferredTheme = appTheme.ToTitleBarTheme();
-                ((FrameworkElement)window.Content).RequestedTheme = appTheme;
+                ((FrameworkElement)window.Content).RequestedTheme = appTheme.ToElementTheme();
             }
 
         }

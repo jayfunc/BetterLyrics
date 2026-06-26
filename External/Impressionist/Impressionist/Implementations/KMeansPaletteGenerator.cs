@@ -1,6 +1,7 @@
 ﻿using Impressionist.Abstractions;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
@@ -224,7 +225,7 @@ namespace Impressionist.Implementations
                         if (currentDistanceSquared < minDistanceSquared)
                         {
                             minDistanceSquared = currentDistanceSquared;
-                        }
+                        } 
                     }
                     var colorWeight = colors[targetColor[vectorId]];
                     accumulatedDistanceSquareds += minDistanceSquared * colorWeight;

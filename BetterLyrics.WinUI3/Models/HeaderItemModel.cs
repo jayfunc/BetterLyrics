@@ -1,5 +1,5 @@
-﻿using BetterLyrics.WinUI3.Controls;
-using BetterLyrics.WinUI3.Services.LocalizationService;
+﻿using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.WinUI3.Controls;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using System;

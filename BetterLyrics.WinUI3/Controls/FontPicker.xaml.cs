@@ -1,6 +1,6 @@
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Services.LocalizationService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;

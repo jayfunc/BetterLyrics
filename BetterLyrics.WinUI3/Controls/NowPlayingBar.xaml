@@ -400,8 +400,8 @@
                                             <Flyout
                                                 x:Name="PlaybackSettingsFlyout"
                                                 Closed="PlaybackSettingsFlyout_Closed"
-                                                Opened="PlaybackSettingsFlyout_Opened"
                                                 FlyoutPresenterStyle="{StaticResource FlyoutPageStyle}"
+                                                Opened="PlaybackSettingsFlyout_Opened"
                                                 Placement="Right"
                                                 ShouldConstrainToRootBounds="False" />
                                         </MenuFlyoutItem.ContextFlyout>

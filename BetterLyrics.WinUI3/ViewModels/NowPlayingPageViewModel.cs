@@ -1,6 +1,7 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using BetterLyrics.WinUI3.Models.Settings;
+using BetterLyrics.Core.Models.Settings;
+
 using BetterLyrics.WinUI3.Services.GSMTCService;
 using CommunityToolkit.Mvvm.ComponentModel;
 

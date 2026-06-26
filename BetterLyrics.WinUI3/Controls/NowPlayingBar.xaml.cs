@@ -1,7 +1,9 @@
-using BetterLyrics.WinUI3.Extensions;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Events;
+using BetterLyrics.Core.Extensions;
+using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.GSMTCService;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
@@ -269,7 +271,7 @@ public sealed partial class NowPlayingBar : UserControl
         ViewModel.TimelineSliderThumbOpacity = 0f;
     }
 
-    private void ExtendedSlider_ValueChangedByUser(object sender, Events.ExtendedSliderValueChangedByUserEventArgs e)
+    private void ExtendedSlider_ValueChangedByUser(object sender, ExtendedSliderValueChangedByUserEventArgs e)
     {
         AudioMixerHook.SetApplicationVolume(GSMTCService.CurrentMediaSourceProviderInfo?.Provider, ViewModel.Volume);
     }
@@ -357,17 +359,17 @@ public sealed partial class NowPlayingBar : UserControl
                 bool ok = await Launcher.LaunchUriAsync(new Uri(path));
                 if (!ok)
                 {
-                    GlobalToastManager.Show("Error", $"Fail to launch {path}", InfoBarSeverity.Warning);
+                    GlobalToastManager.Show("Error", $"Fail to launch {path}", MessageSeverity.Warning);
                 }
             }
             catch (Exception)
             {
-                GlobalToastManager.Show("Error", $"Could't launch {path}", InfoBarSeverity.Error);
+                GlobalToastManager.Show("Error", $"Could't launch {path}", MessageSeverity.Error);
             }
         }
         else
         {
-            GlobalToastManager.Show("Error", $"Could't get the path for {amuid}", InfoBarSeverity.Warning);
+            GlobalToastManager.Show("Error", $"Could't get the path for {amuid}", MessageSeverity.Warning);
         }
     }
 }

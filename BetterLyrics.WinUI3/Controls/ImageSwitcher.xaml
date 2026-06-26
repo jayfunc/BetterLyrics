@@ -7,11 +7,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:constants="using:BetterLyrics.Core.Constants"
     mc:Ignorable="d">
 
     <Grid>
         <Grid.OpacityTransition>
-            <ScalarTransition Duration="{x:Bind const:Time.AnimationDuration}" />
+            <ScalarTransition Duration="{x:Bind constants:Time.AnimationDuration}" />
         </Grid.OpacityTransition>
         <local:ShadowImage
             x:Name="LastAlbumArtImage"

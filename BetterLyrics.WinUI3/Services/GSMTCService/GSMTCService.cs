@@ -1,21 +1,17 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using BetterLyrics.WinUI3.Collections;
-using BetterLyrics.WinUI3.Constants;
-using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Extensions;
+using BetterLyrics.Core.Collections;
+using BetterLyrics.Core.Constants;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Extensions;
+using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models;
+using BetterLyrics.Core.Models.Memory;
+using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.AlbumArtSearchService;
-using BetterLyrics.WinUI3.Services.DiscordService;
-using BetterLyrics.WinUI3.Services.LastFMService;
-using BetterLyrics.WinUI3.Services.LyricsSearchService;
-using BetterLyrics.WinUI3.Services.PlayHistoryService;
-using BetterLyrics.WinUI3.Services.SettingsService;
-using BetterLyrics.WinUI3.Services.TranslationService;
-using BetterLyrics.WinUI3.Services.TransliterationService;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -23,9 +19,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using EvtSource;
 using Microsoft.Extensions.Logging;
-using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -226,7 +220,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
             }
             catch (Exception ex)
             {
-                GlobalToastManager.Show("Error", ex.Message, InfoBarSeverity.Error);
+                GlobalToastManager.Show("Error", ex.Message, MessageSeverity.Error);
                 return;
             }
 
@@ -254,7 +248,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
         private void OnAnyTimelineChangedCore(MediaSession? mediaSession, TimeSpan? currentPosition, TimeSpan? duration)
         {
-            _dispatcherQueue.TryEnqueue(() =>
+            AppUIThread.Execute(() =>
             {
                 if (mediaSession != _currentDesiredSession) return;
 
@@ -281,7 +275,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
         private void MediaManager_OnAnyPlaybackStateChanged(MediaSession? mediaSession, GlobalSystemMediaTransportControlsSessionPlaybackInfo? playbackInfo)
         {
-            _dispatcherQueue.TryEnqueue(() =>
+            AppUIThread.Execute(() =>
             {
                 if (mediaSession != _currentDesiredSession) return;
 
@@ -323,7 +317,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
             var id = mediaSession.Id;
 
-            _dispatcherQueue.TryEnqueue(() =>
+            AppUIThread.Execute(() =>
             {
                 RecordMediaSession(id);
                 OnDesiredSessionChanged();
@@ -404,7 +398,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                 _SMTCAlbumArtBuffer = null;
             }
 
-            _dispatcherQueue.TryEnqueue(() =>
+            AppUIThread.Execute(() =>
             {
                 CurrentSongInfo = new()
                 {
@@ -545,16 +539,16 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
             try
             {
-                _lxMusicSse = new EventSourceReader(new Uri($"{_settingsService.AppSettings.GeneralSettings.LXMusicServer}{Constants.LXMusic.QuerySuffix}")).Start();
+                _lxMusicSse = new EventSourceReader(new Uri($"{_settingsService.AppSettings.GeneralSettings.LXMusicServer}{LXMusic.QuerySuffix}")).Start();
                 _lxMusicSse.MessageReceived += LXMusicSse_MessageReceived;
                 _lxMusicSse.Disconnected += LXMusicSse_Disconnected;
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "StartLXMusicSSE");
-                _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+                AppUIThread.Execute(() =>
                 {
-                    GlobalToastManager.Show("FailToStartLXMusicServer", null, InfoBarSeverity.Error);
+                    GlobalToastManager.Show("FailToStartLXMusicServer", null, MessageSeverity.Error);
                 });
                 StopLXMusicSSE();
             }
@@ -573,7 +567,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
         private void LXMusicSse_Disconnected(object sender, DisconnectEventArgs e)
         {
-            _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, async () =>
+            AppUIThread.RunAsync(async () =>
             {
                 await Task.Delay(e.ReconnectDelay);
                 if (_lxMusicSse != null && !_lxMusicSse.IsDisposed) _lxMusicSse.Start();
@@ -582,11 +576,11 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
 
         private void LXMusicSse_MessageReceived(object sender, EventSourceMessageEventArgs e)
         {
-            _dispatcherQueue.TryEnqueue(async () =>
+            AppUIThread.RunAsync(async () =>
             {
                 if (PlayerIdHelper.IsLXMusic(CurrentSongInfo.PlayerId))
                 {
-                    var data = JsonSerializer.Deserialize(e.Message, Serialization.SourceGenerationContext.Default.JsonElement);
+                    var data = JsonSerializer.Deserialize(e.Message, Core.Serialization.SourceGenerationContext.Default.JsonElement);
                     if (data.ValueKind == JsonValueKind.Number)
                     {
                         if (e.Event == "progress")

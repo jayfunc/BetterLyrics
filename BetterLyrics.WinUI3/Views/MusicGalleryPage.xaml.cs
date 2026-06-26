@@ -1,9 +1,9 @@
-using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Extensions;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Extensions;
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models;
+using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Models.Settings;
-using BetterLyrics.WinUI3.Services.SMTCService;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -35,16 +35,19 @@ namespace BetterLyrics.WinUI3.Views
 
         private async void SongPathHyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
-            await LauncherHelper.SelectAndShowFileAsync(((ExtendedTrack)((HyperlinkButton)sender).DataContext).Uri.ToDecodedAbsoluteUri());
+            await LauncherHelper.SelectAndShowFileAsync(((ExtendedTrack)((HyperlinkButton)sender).DataContext).Uri
+                .ToDecodedAbsoluteUri());
         }
 
         private void AddSongToQueueNextMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             bool startPlaying = _smtcService.TrackPlayingQueue.Count == 0;
-            _smtcService.TrackPlayingQueue.InsertRange(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex + 1, SongListView.SelectedItems.Cast<ExtendedTrack>().Select(x => new PlayQueueItem(x)));
+            _smtcService.TrackPlayingQueue.InsertRange(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex + 1,
+                SongListView.SelectedItems.Cast<ExtendedTrack>().Select(x => new PlayQueueItem(x)));
             if (startPlaying)
             {
-                ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex = ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex + 1;
+                ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex =
+                    ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex + 1;
                 _smtcService.PlayTrackAt(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex);
             }
         }
@@ -56,9 +59,11 @@ namespace BetterLyrics.WinUI3.Views
             {
                 _smtcService.TrackPlayingQueue.Add(item);
             }
+
             if (startPlaying)
             {
-                ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex = ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex + 1;
+                ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex =
+                    ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex + 1;
                 _smtcService.PlayTrackAt(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex);
             }
         }
@@ -191,7 +196,8 @@ namespace BetterLyrics.WinUI3.Views
                     if (File.Exists(path))
                     {
                         var content = File.ReadAllText(path);
-                        foreach (var item in ViewModel.SelectedTracks.Select(x => x.Uri.ToDecodedAbsoluteUri()).ToList())
+                        foreach (var item in ViewModel.SelectedTracks.Select(x => x.Uri.ToDecodedAbsoluteUri())
+                                     .ToList())
                         {
                             if (!content.Contains(item))
                             {
@@ -199,12 +205,13 @@ namespace BetterLyrics.WinUI3.Views
                                 content += item;
                             }
                         }
+
                         File.WriteAllText(path, content);
-                        GlobalToastManager.Show("TracksAddToPlaylistSuccessfully", null, InfoBarSeverity.Success);
+                        GlobalToastManager.Show("TracksAddToPlaylistSuccessfully", null, MessageSeverity.Success);
                     }
                     else
                     {
-                        GlobalToastManager.Show("TracksAddToPlaylistFailed", null, InfoBarSeverity.Error);
+                        GlobalToastManager.Show("TracksAddToPlaylistFailed", null, MessageSeverity.Error);
                     }
                 }
             }

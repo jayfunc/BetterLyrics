@@ -1,5 +1,5 @@
-﻿using BetterLyrics.Core.Abstractions;
-using BetterLyrics.Core.Interfaces.Services;
+﻿using BetterLyrics.Core.Abstractions.Plugins;
+using BetterLyrics.Core.Interfaces.Plugins;
 using LLama;
 using LLama.Common;
 using System.Text;

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using BetterLyrics.Core.Models.Lyrics;
+using System.Collections.Generic;
 
 namespace BetterLyrics.WinUI3.Models.Lyrics
 {

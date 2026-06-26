@@ -1,8 +1,8 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Services.LocalizationService;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Linq;

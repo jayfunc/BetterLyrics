@@ -4,12 +4,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:enums="using:BetterLyrics.WinUI3.Enums"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BetterLyrics.WinUI3.Models"
-    xmlns:settingsmodels="using:BetterLyrics.WinUI3.Models.Settings"
+    xmlns:settings="using:BetterLyrics.Core.Models.Settings"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
@@ -48,7 +47,7 @@
                         ItemsSource="{x:Bind ViewModel.AppSettings.LocalMediaFolders, Mode=OneWay}"
                         SelectionMode="None">
                         <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="settingsmodels:MediaFolder">
+                            <DataTemplate x:DataType="settings:MediaFolder">
                                 <controls:SettingsExpander IsExpanded="True">
 
                                     <controls:SettingsExpander.HeaderIcon>
@@ -119,7 +118,7 @@
                                                 IsClosable="False"
                                                 IsOpen="True"
                                                 Message="{x:Bind StatusText, Mode=OneWay}"
-                                                Severity="{x:Bind StatusSeverity, Mode=OneWay}" />
+                                                Severity="{x:Bind StatusSeverity, Converter={StaticResource MessageSeverityToInfoBarSeverity}, Mode=OneWay}" />
                                             <ProgressBar
                                                 Background="Transparent"
                                                 Visibility="{x:Bind IsProcessing, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"

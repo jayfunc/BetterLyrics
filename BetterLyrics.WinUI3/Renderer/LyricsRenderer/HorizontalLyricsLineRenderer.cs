@@ -1,4 +1,5 @@
-﻿using BetterLyrics.WinUI3.Extensions;
+﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.WinUI3.Extensions;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using System;
@@ -22,8 +23,8 @@ namespace BetterLyrics.WinUI3.Renderer.LyricsRenderer
             double playedWidth = 0;
 
             // 1. 检查是否启用了逐字卡拉OK特效 (恢复你的原版逻辑)
-            if (LyricsWindowStatus!.LyricsEffectSettings.WordByWordEffectMode == Enums.WordByWordEffectMode.Never ||
-                (LyricsWindowStatus.LyricsEffectSettings.WordByWordEffectMode == Enums.WordByWordEffectMode.Auto && !Line.IsPrimaryHasRealSyllableInfo))
+            if (LyricsWindowStatus!.LyricsEffectSettings.WordByWordEffectMode == WordByWordEffectMode.Never ||
+                (LyricsWindowStatus.LyricsEffectSettings.WordByWordEffectMode == WordByWordEffectMode.Auto && !Line.IsPrimaryHasRealSyllableInfo))
             {
                 playedWidth = subLineRegion.LayoutBounds.Width;
             }

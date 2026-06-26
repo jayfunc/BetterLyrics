@@ -1,6 +1,6 @@
-﻿using BetterLyrics.Core.Models.SettingsSchema;
-using BetterLyrics.WinUI3.Models.Settings;
-using BetterLyrics.WinUI3.Services.PluginService;
+﻿using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models.Settings;
+using BetterLyrics.Core.Models.SettingsSchema;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.WinUI.Controls;
 using Microsoft.UI.Xaml;

@@ -1,11 +1,10 @@
-using BetterLyrics.WinUI3.Collections;
-using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.Core.Collections;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models;
+using BetterLyrics.Core.Models.Settings;
+using BetterLyrics.Core.Serialization;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Models.Settings;
-using BetterLyrics.WinUI3.Serialization;
-using BetterLyrics.WinUI3.Services.LocalizationService;
-using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -22,7 +21,9 @@ namespace BetterLyrics.WinUI3.Controls
     public sealed partial class LayoutSettingsControl : UserControl
     {
         private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
-        private readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
+
+        private readonly ILocalizationService _localizationService =
+            Ioc.Default.GetRequiredService<ILocalizationService>();
 
         public ObservableCollection<LayoutProfile> SystemProfiles { get; } = new();
         public ObservableCollection<LayoutProfile> CustomProfiles { get; } = new();
@@ -31,7 +32,8 @@ namespace BetterLyrics.WinUI3.Controls
         private bool _isUpdatingSelection = false;
 
         public static readonly DependencyProperty LayoutProfilesProperty =
-            DependencyProperty.Register(nameof(LayoutProfiles), typeof(FullyObservableCollection<LayoutProfile>), typeof(LayoutSettingsControl), new PropertyMetadata(default, OnDependencyPropertyChanged));
+            DependencyProperty.Register(nameof(LayoutProfiles), typeof(FullyObservableCollection<LayoutProfile>),
+                typeof(LayoutSettingsControl), new PropertyMetadata(default, OnDependencyPropertyChanged));
 
         public FullyObservableCollection<LayoutProfile> LayoutProfiles
         {
@@ -40,7 +42,8 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         private static readonly DependencyProperty SelectedLayoutProfileProperty =
-            DependencyProperty.Register(nameof(SelectedLayoutProfile), typeof(LayoutProfile), typeof(LayoutSettingsControl), new PropertyMetadata(default));
+            DependencyProperty.Register(nameof(SelectedLayoutProfile), typeof(LayoutProfile),
+                typeof(LayoutSettingsControl), new PropertyMetadata(default));
 
         private LayoutProfile SelectedLayoutProfile
         {
@@ -49,7 +52,8 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         private static readonly DependencyProperty EditingLayoutProfileProperty =
-            DependencyProperty.Register(nameof(EditingLayoutProfile), typeof(LayoutProfile), typeof(LayoutSettingsControl), new PropertyMetadata(default));
+            DependencyProperty.Register(nameof(EditingLayoutProfile), typeof(LayoutProfile),
+                typeof(LayoutSettingsControl), new PropertyMetadata(default));
 
         private LayoutProfile EditingLayoutProfile
         {
@@ -58,7 +62,8 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public static readonly DependencyProperty LyricsWindowStatusProperty =
-            DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus), typeof(LayoutSettingsControl), new PropertyMetadata(default, OnDependencyPropertyChanged));
+            DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus),
+                typeof(LayoutSettingsControl), new PropertyMetadata(default, OnDependencyPropertyChanged));
 
         public LyricsWindowStatus LyricsWindowStatus
         {
@@ -80,7 +85,8 @@ namespace BetterLyrics.WinUI3.Controls
                     var newStatus = e.NewValue as LyricsWindowStatus;
                     if (newStatus != null)
                     {
-                        control.SelectedLayoutProfile = control.LayoutProfiles?.FirstOrDefault(x => x.Id == newStatus.LayoutProfileId);
+                        control.SelectedLayoutProfile =
+                            control.LayoutProfiles?.FirstOrDefault(x => x.Id == newStatus.LayoutProfileId);
                     }
                 }
                 else if (e.Property == LayoutProfilesProperty)
@@ -96,7 +102,8 @@ namespace BetterLyrics.WinUI3.Controls
             }
         }
 
-        private void LayoutProfiles_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void LayoutProfiles_CollectionChanged(object? sender,
+            System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             if (_isSyncing) return;
             RefreshGroupedProfiles();
@@ -231,16 +238,19 @@ namespace BetterLyrics.WinUI3.Controls
             var menuFlyout = (MenuFlyout)sender;
             var menuFlyoutSubItem = (MenuFlyoutSubItem)menuFlyout.Items.Last();
             var layoutProfile = (LayoutProfile)menuFlyoutSubItem.DataContext;
-            var status = _settingsService.AppSettings.WindowBoundsRecords.Where(x => x.LayoutProfileId == layoutProfile.Id);
+            var status =
+                _settingsService.AppSettings.WindowBoundsRecords.Where(x => x.LayoutProfileId == layoutProfile.Id);
 
             menuFlyoutSubItem.Items.Clear();
             foreach (var item in status)
             {
                 menuFlyoutSubItem.Items.Add(new MenuFlyoutItem() { Text = $"{item.Name} ({item.MonitorDeviceName})" });
             }
+
             if (!status.Any())
             {
-                menuFlyoutSubItem.Items.Add(new MenuFlyoutItem() { Text = _localizationService.GetLocalizedString("LayoutSettingsControlNoLyricsWindow") });
+                menuFlyoutSubItem.Items.Add(new MenuFlyoutItem()
+                { Text = _localizationService.GetLocalizedString("LayoutSettingsControlNoLyricsWindow") });
             }
 
             var deleteMenuFlyoutItem = (MenuFlyoutItem)menuFlyout.Items[2];
@@ -259,15 +269,17 @@ namespace BetterLyrics.WinUI3.Controls
             {
                 file = await PickerHelper.PickSingleFileAsync<SettingsWindow>(fileTypeFilter);
             }
+
             if (file != null)
             {
                 var json = File.ReadAllText(file.Path);
-                var data = System.Text.Json.JsonSerializer.Deserialize(json, SourceGenerationContext.Default.LayoutProfile);
+                var data = System.Text.Json.JsonSerializer.Deserialize(json,
+                    SourceGenerationContext.Default.LayoutProfile);
                 if (data != null)
                 {
                     data.Id = System.Guid.NewGuid(); // Ensure the imported profile has a unique ID
                     _settingsService.AppSettings.LayoutProfiles.Add(data);
-                    GlobalToastManager.Show("ImportSettingsSuccess", null, InfoBarSeverity.Success);
+                    GlobalToastManager.Show("ImportSettingsSuccess", null, MessageSeverity.Success);
                 }
             }
         }
@@ -298,18 +310,21 @@ namespace BetterLyrics.WinUI3.Controls
                     StorageFile? file;
                     if (this.Parent is FlyoutPresenter)
                     {
-                        file = await PickerHelper.PickSaveFileAsync<NowPlayingWindow>(fileTypeChoices, suggestedFileName);
+                        file = await PickerHelper.PickSaveFileAsync<NowPlayingWindow>(fileTypeChoices,
+                            suggestedFileName);
                     }
                     else
                     {
                         file = await PickerHelper.PickSaveFileAsync<SettingsWindow>(fileTypeChoices, suggestedFileName);
                     }
+
                     if (file != null)
                     {
                         var clonedData = (LayoutProfile)data.Clone();
-                        var json = System.Text.Json.JsonSerializer.Serialize(clonedData, SourceGenerationContext.Default.LayoutProfile);
+                        var json = System.Text.Json.JsonSerializer.Serialize(clonedData,
+                            SourceGenerationContext.Default.LayoutProfile);
                         File.WriteAllText(file.Path, json);
-                        GlobalToastManager.Show("ExportSettingsSuccess", null, InfoBarSeverity.Success);
+                        GlobalToastManager.Show("ExportSettingsSuccess", null, MessageSeverity.Success);
                     }
                 }
             }
@@ -323,7 +338,8 @@ namespace BetterLyrics.WinUI3.Controls
                 {
                     if (mode != NowPlayingLayoutMode.Custom)
                     {
-                        var item = new MenuFlyoutItem() { Text = _localizationService.GetLocalizedString($"{mode}Layout"), Tag = mode };
+                        var item = new MenuFlyoutItem()
+                        { Text = _localizationService.GetLocalizedString($"{mode}Layout"), Tag = mode };
                         item.Click += CreateFromTemplateMenuFlyoutItem_Click;
                         CreateFromTemplatesMenuFlyout.Items.Add(item);
                     }

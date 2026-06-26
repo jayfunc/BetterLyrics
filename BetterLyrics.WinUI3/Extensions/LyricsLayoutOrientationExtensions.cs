@@ -1,4 +1,4 @@
-﻿using BetterLyrics.WinUI3.Enums;
+﻿using BetterLyrics.Core.Enums;
 using Microsoft.UI.Xaml.Controls;
 using System;
 

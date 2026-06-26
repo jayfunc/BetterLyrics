@@ -1,7 +1,7 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 
-using BetterLyrics.WinUI3.Services.LocalizationService;
+using BetterLyrics.Core.Interfaces.Services;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;

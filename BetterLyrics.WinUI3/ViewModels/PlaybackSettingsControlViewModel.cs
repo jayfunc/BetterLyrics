@@ -1,16 +1,14 @@
-﻿using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Models.Settings;
+﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Events;
+using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models.Settings;
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Services.GSMTCService;
-using BetterLyrics.WinUI3.Services.LastFMService;
-using BetterLyrics.WinUI3.Services.SettingsService;
-using BetterLyrics.WinUI3.Services.TranslationService;
-using BetterLyrics.WinUI3.Services.TransliterationService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using LiteFM.Abstractions;
-using Microsoft.UI.Dispatching;
-using Microsoft.UI.Xaml.Controls;
 using System;
 using System.IO;
 using System.Linq;
@@ -63,9 +61,11 @@ namespace BetterLyrics.WinUI3.ViewModels
             AppSettings = _settingsService.AppSettings;
             AppSettings.MediaSourceProvidersInfo.CollectionChanged += MediaSourceProvidersInfo_CollectionChanged;
 
-            AppleMusicMediaUserToken = PasswordVaultHelper.Get(Constants.App.AppName, Constants.AppleMusic.MediaUserTokenKey) ?? "";
+            AppleMusicMediaUserToken =
+                PasswordVaultHelper.Get(Core.Constants.App.AppName, Core.Constants.AppleMusic.MediaUserTokenKey) ?? "";
 
-            SelectedTargetLanguageIndex = LanguageHelper.SupportedTranslationTargetLanguages.ToList().FindIndex(x => x.LanguageCode == AppSettings.TranslationSettings.SelectedTargetLanguageCode);
+            SelectedTargetLanguageIndex = LanguageHelper.SupportedTranslationTargetLanguages.ToList().FindIndex(x =>
+                x.LanguageCode == AppSettings.TranslationSettings.SelectedTargetLanguageCode);
 
             IsLastFMAuthenticated = _lastFMService.IsAuthenticated;
             LastFMUser = _lastFMService.User;
@@ -73,17 +73,18 @@ namespace BetterLyrics.WinUI3.ViewModels
             SelectedMediaSourceProvider = AppSettings.MediaSourceProvidersInfo.FirstOrDefault();
         }
 
-        private void MediaSourceProvidersInfo_CollectionChanged(object? sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void MediaSourceProvidersInfo_CollectionChanged(object? sender,
+            System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             SelectedMediaSourceProvider = AppSettings.MediaSourceProvidersInfo.FirstOrDefault();
         }
 
-        private void LastFMService_IsAuthenticatedChanged(object? sender, Events.LastFMIsAuthenticatedChangedEventArgs e)
+        private void LastFMService_IsAuthenticatedChanged(object? sender, LastFMIsAuthenticatedChangedEventArgs e)
         {
             IsLastFMAuthenticated = e.IsAuthenticated;
         }
 
-        private void LastFMService_UserChanged(object? sender, Events.LastFMUserChangedEventArgs e)
+        private void LastFMService_UserChanged(object? sender, LastFMUserChangedEventArgs e)
         {
             LastFMUser = e.User;
         }
@@ -103,8 +104,9 @@ namespace BetterLyrics.WinUI3.ViewModels
             if (file != null)
             {
                 var json = File.ReadAllText(file.Path);
-                SelectedMediaSourceProvider?.MemoryReaderConfig = JsonSerializer.Deserialize(json, Serialization.SourceGenerationContext.Default.MemoryReaderConfig);
-                GlobalToastManager.Show("ImportSettingsSuccess", null, InfoBarSeverity.Success);
+                SelectedMediaSourceProvider?.MemoryReaderConfig = JsonSerializer.Deserialize(json,
+                    Core.Serialization.SourceGenerationContext.Default.MemoryReaderConfig);
+                GlobalToastManager.Show("ImportSettingsSuccess", null, MessageSeverity.Success);
             }
         }
 
@@ -117,23 +119,22 @@ namespace BetterLyrics.WinUI3.ViewModels
                 try
                 {
                     string result = await _translationService.TranslateTextAsync(
-                        "Hello, world!", AppSettings.TranslationSettings.SelectedTargetLanguageCode, new System.Threading.CancellationToken());
-                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+                        "Hello, world!", AppSettings.TranslationSettings.SelectedTargetLanguageCode,
+                        new System.Threading.CancellationToken());
+                    AppUIThread.Execute(() =>
                     {
-                        GlobalToastManager.Show("SettingsPageServerTestSuccessInfo", null, InfoBarSeverity.Success);
+                        GlobalToastManager.Show("SettingsPageServerTestSuccessInfo", null, MessageSeverity.Success);
                     });
                 }
                 catch (Exception)
                 {
-                    _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+                    AppUIThread.Execute(() =>
                     {
-                        GlobalToastManager.Show("SettingsPageServerTestFailedInfo", null, InfoBarSeverity.Error);
+                        GlobalToastManager.Show("SettingsPageServerTestFailedInfo", null, MessageSeverity.Error);
                     });
                 }
-                _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
-                {
-                    IsLibreTranslateServerTesting = false;
-                });
+
+                AppUIThread.Execute(() => { IsLibreTranslateServerTesting = false; });
             });
         }
 
@@ -161,17 +162,19 @@ namespace BetterLyrics.WinUI3.ViewModels
             IsLXMusicServerTesting = true;
             _ = Task.Run(async () =>
             {
-                bool testResult = await NetHelper.CheckConnectivityAsync($"{AppSettings.GeneralSettings.LXMusicServer}/status");
-                _dispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
+                bool testResult =
+                    await NetHelper.CheckConnectivityAsync($"{AppSettings.GeneralSettings.LXMusicServer}/status");
+                AppUIThread.Execute(() =>
                 {
                     if (testResult)
                     {
-                        GlobalToastManager.Show("SettingsPageServerTestSuccessInfo", null, InfoBarSeverity.Success);
+                        GlobalToastManager.Show("SettingsPageServerTestSuccessInfo", null, MessageSeverity.Success);
                     }
                     else
                     {
-                        GlobalToastManager.Show("SettingsPageServerTestFailedInfo", null, InfoBarSeverity.Error);
+                        GlobalToastManager.Show("SettingsPageServerTestFailedInfo", null, MessageSeverity.Error);
                     }
+
                     IsLXMusicServerTesting = false;
                 });
             });
@@ -180,14 +183,16 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private void SaveAppleMusicMediaUserToken()
         {
-            PasswordVaultHelper.Delete(Constants.App.AppName, Constants.AppleMusic.MediaUserTokenKey);
-            PasswordVaultHelper.Save(Constants.App.AppName, Constants.AppleMusic.MediaUserTokenKey, AppleMusicMediaUserToken);
+            PasswordVaultHelper.Delete(Core.Constants.App.AppName, Core.Constants.AppleMusic.MediaUserTokenKey);
+            PasswordVaultHelper.Save(Core.Constants.App.AppName, Core.Constants.AppleMusic.MediaUserTokenKey,
+                AppleMusicMediaUserToken);
             GSMTCService.UpdateLyrics();
         }
 
         partial void OnSelectedTargetLanguageIndexChanged(int value)
         {
-            AppSettings.TranslationSettings.SelectedTargetLanguageCode = LanguageHelper.SupportedTranslationTargetLanguages[value].LanguageCode;
+            AppSettings.TranslationSettings.SelectedTargetLanguageCode =
+                LanguageHelper.SupportedTranslationTargetLanguages[value].LanguageCode;
         }
     }
 }

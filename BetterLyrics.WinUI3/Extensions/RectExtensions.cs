@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using BetterLyrics.Core.Models.Domain;
+using System.Drawing;
 using System.Numerics;
 using Vanara.PInvoke;
 using Windows.Foundation;
@@ -112,6 +113,13 @@ namespace BetterLyrics.WinUI3.Extensions
             }
 
             public Rect ToCenterPart(double n) => rect.ToCenterPart(n, n);
+
+            public AppRect ToAppRect() => new(
+                rect.Left,
+                rect.Top,
+                rect.Width,
+                rect.Height
+            );
         }
 
         extension(RECT rect)
@@ -119,8 +127,15 @@ namespace BetterLyrics.WinUI3.Extensions
             public Rect ToRect() => new(
                 rect.Left,
                 rect.Top,
-                rect.Right - rect.Left,
-                rect.Bottom - rect.Top
+                rect.Width,
+                rect.Height
+            );
+
+            public AppRect ToAppRect() => new(
+                rect.Left,
+                rect.Top,
+                rect.Width,
+                rect.Height
             );
         }
     }

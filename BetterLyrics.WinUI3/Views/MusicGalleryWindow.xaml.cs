@@ -1,14 +1,13 @@
-using BetterLyrics.WinUI3.Controls;
-using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.Core.Constants;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.GSMTCService;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
-using Microsoft.UI;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media.Imaging;
@@ -48,14 +47,15 @@ namespace BetterLyrics.WinUI3.Views
 
         private void UpdateTheme()
         {
-            RootGrid.RequestedTheme = ViewModel.AppSettings.GeneralSettings.AppTheme;
+            var elementTheme = ViewModel.AppSettings.GeneralSettings.AppTheme.ToElementTheme();
+            RootGrid.RequestedTheme = elementTheme;
             if (NowPlayingPage.Opacity == 1)
             {
-                NowPlayingBar.RequestedTheme = ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.WindowPalette.ThemeType;
+                NowPlayingBar.RequestedTheme = ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.WindowPalette.ThemeType.ToElementTheme();
             }
             else
             {
-                NowPlayingBar.RequestedTheme = ViewModel.AppSettings.GeneralSettings.AppTheme;
+                NowPlayingBar.RequestedTheme = elementTheme;
             }
             AppWindow.TitleBar.PreferredTheme = NowPlayingBar.RequestedTheme.ToTitleBarTheme();
         }
@@ -66,7 +66,7 @@ namespace BetterLyrics.WinUI3.Views
                 ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus, Colors.Transparent);
 
             NowPlayingPage.LyricsWindowStatus?.WindowPalette = result;
-            NowPlayingPage.RequestedTheme = result.ThemeType;
+            NowPlayingPage.RequestedTheme = result.ThemeType.ToElementTheme();
 
             UpdateTheme();
         }
@@ -99,7 +99,7 @@ namespace BetterLyrics.WinUI3.Views
             NowPlayingBar.ShowTime = false;
             NowPlayingBar.IsAutoHideEnabled = false;
             NowPlayingPage.Opacity = 0;
-            await Task.Delay(Constants.Time.AnimationDuration);
+            await Task.Delay(Time.AnimationDuration);
             NowPlayingPage.Visibility = Visibility.Collapsed;
             UpdateTheme();
         }

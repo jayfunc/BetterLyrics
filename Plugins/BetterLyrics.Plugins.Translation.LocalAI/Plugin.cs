@@ -1,6 +1,5 @@
-﻿using BetterLyrics.Core.Abstractions;
-using BetterLyrics.Core.Interfaces.Features;
-using BetterLyrics.Core.Interfaces.Services;
+﻿using BetterLyrics.Core.Abstractions.Plugins;
+using BetterLyrics.Core.Interfaces.Plugins;
 using System.Text;
 using System.Text.RegularExpressions;
 

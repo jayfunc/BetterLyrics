@@ -1,23 +1,22 @@
-﻿using BetterLyrics.WinUI3.Extensions;
+﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Extensions;
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models;
+using BetterLyrics.Core.Models.Entities;
+using BetterLyrics.Core.Models.Lyrics;
+using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Helper.Lyrics.LyricsContentParser;
-using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Models.Lyrics;
-using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.Services.GSMTCService;
-using BetterLyrics.WinUI3.Services.LyricsSearchService;
-using BetterLyrics.WinUI3.Services.SettingsService;
-using BetterLyrics.WinUI3.Services.SongSearchMapService;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
-using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.ObjectModel;
 using System.Net;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
+using LyricsContentParser = BetterLyrics.Core.Helpers.Lyrics.ContentParser.LyricsContentParser;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
@@ -32,13 +31,16 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 
-        [ObservableProperty] public partial ObservableCollection<LyricsCacheItem> LyricsSearchResults { get; set; } = [];
+        [ObservableProperty]
+        public partial ObservableCollection<LyricsCacheItem> LyricsSearchResults { get; set; } = [];
 
         [ObservableProperty] public partial LyricsCacheItem? SelectedLyricsSearchResult { get; set; }
 
         [ObservableProperty] public partial ObservableCollection<LyricsData>? LyricsDataArr { get; set; }
 
-        [ObservableProperty][NotifyPropertyChangedRecipients] public partial MappedSongSearchQuery? MappedSongSearchQuery { get; set; }
+        [ObservableProperty]
+        [NotifyPropertyChangedRecipients]
+        public partial MappedSongSearchQuery? MappedSongSearchQuery { get; set; }
 
         [ObservableProperty] public partial bool IsSearching { get; set; } = false;
 
@@ -92,6 +94,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             {
                 return;
             }
+
             _ = GSMTCService.ChangePositionAsync(value.StartMs / 1000.0);
         }
 
@@ -130,7 +133,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
                     await foreach (var item in _lyricsSearchService.SearchAllAsync(songInfo, checkCache))
                     {
-                        _dispatcherQueue.TryEnqueue(() =>
+                        AppUIThread.Execute(() =>
                         {
                             var index = -1;
                             for (int i = 0; i < LyricsSearchResults.Count; i++)
@@ -152,7 +155,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
                 finally
                 {
-                    _dispatcherQueue.TryEnqueue(() =>
+                    AppUIThread.Execute(() =>
                     {
                         for (int i = LyricsSearchResults.Count - 1; i >= 0; i--)
                         {
@@ -214,20 +217,20 @@ namespace BetterLyrics.WinUI3.ViewModels
         private void CopySearchLink()
         {
             var uriString = $"betterlyrics://lyrics/search/" +
-                $"title={WebUtility.UrlEncode(MappedSongSearchQuery?.MappedTitle)}&" +
-                $"artist={WebUtility.UrlEncode(MappedSongSearchQuery?.MappedArtist)}&" +
-                $"album={WebUtility.UrlEncode(MappedSongSearchQuery?.MappedAlbum)}";
+                            $"title={WebUtility.UrlEncode(MappedSongSearchQuery?.MappedTitle)}&" +
+                            $"artist={WebUtility.UrlEncode(MappedSongSearchQuery?.MappedArtist)}&" +
+                            $"album={WebUtility.UrlEncode(MappedSongSearchQuery?.MappedAlbum)}";
             try
             {
                 DataPackage dataPackage = new();
                 dataPackage.SetText(uriString);
                 Clipboard.SetContent(dataPackage);
 
-                GlobalToastManager.Show("ActionCompleted", null, InfoBarSeverity.Success);
+                GlobalToastManager.Show("ActionCompleted", null, MessageSeverity.Success);
             }
             catch (Exception ex)
             {
-                GlobalToastManager.Show("Error", ex.Message, InfoBarSeverity.Error);
+                GlobalToastManager.Show("Error", ex.Message, MessageSeverity.Error);
                 return;
             }
         }

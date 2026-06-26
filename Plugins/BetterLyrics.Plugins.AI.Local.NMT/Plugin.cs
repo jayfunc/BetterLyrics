@@ -1,5 +1,5 @@
-﻿using BetterLyrics.Core.Abstractions;
-using BetterLyrics.Core.Interfaces.Services;
+﻿using BetterLyrics.Core.Abstractions.Plugins;
+using BetterLyrics.Core.Interfaces.Plugins;
 
 namespace BetterLyrics.Plugins.AI.Local.NMT
 {

@@ -1,7 +1,9 @@
-﻿using BetterLyrics.WinUI3.Enums;
+﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Extensions;
+using BetterLyrics.Core.Helpers.Lyrics;
+using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Models.Lyrics;
-using BetterLyrics.WinUI3.Models.Settings;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System;
@@ -57,11 +59,14 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsLayoutStrategy
 
                 double actualHeight = 0;
 
-                var alignment = style.UseInternalLyricsAlignment ? (line.HorizontalAlignmentType ?? style.LyricsAlignmentType) : style.LyricsAlignmentType;
+                var alignment = style.UseInternalLyricsAlignment
+                    ? (line.HorizontalAlignmentType ?? style.LyricsAlignmentType)
+                    : style.LyricsAlignmentType;
 
                 line.RecreateTextLayout(
                     resourceCreator,
-                    appSettings.TranslationSettings.IsChineseRomanizationEnabled || appSettings.TranslationSettings.IsJapaneseRomanizationEnabled,
+                    appSettings.TranslationSettings.IsChineseRomanizationEnabled ||
+                    appSettings.TranslationSettings.IsJapaneseRomanizationEnabled,
                     appSettings.TranslationSettings.IsTranslationEnabled,
                     phoneticFontSize, originalFontSize, translatedFontSize,
                     fontWeight,
@@ -125,15 +130,16 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsLayoutStrategy
                 // 行间距
                 if (line.PrimaryTextLayout != null)
                 {
-                    currentX -= (line.PrimaryTextLayout.LayoutBounds.Width / line.PrimaryTextLayout.LineCount) * style.LyricsLineOverallSpacingFactor;
+                    currentX -= (line.PrimaryTextLayout.LayoutBounds.Width / line.PrimaryTextLayout.LineCount) *
+                                style.LyricsLineOverallSpacingFactor;
                 }
 
                 // 计算全局 Y 轴偏移量
                 double offsetY = alignment switch
                 {
-                    Enums.TextAlignmentType.Left => 0, // 靠上
-                    Enums.TextAlignmentType.Center => (lyricsHeight - actualHeight) / 2, // 居中
-                    Enums.TextAlignmentType.Right => lyricsHeight - actualHeight, // 靠下
+                    TextAlignmentType.Left => 0, // 靠上
+                    TextAlignmentType.Center => (lyricsHeight - actualHeight) / 2, // 居中
+                    TextAlignmentType.Right => lyricsHeight - actualHeight, // 靠下
                     _ => 0
                 };
 
@@ -144,19 +150,36 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsLayoutStrategy
                 // 偏移量也应用到图层上，相对对齐
                 if (line.TertiaryTextLayout != null)
                 {
-                    double relativeY = alignment switch { TextAlignmentType.Center => (actualHeight - line.TertiaryTextLayout.LayoutBounds.Height) / 2, TextAlignmentType.Right => actualHeight - line.TertiaryTextLayout.LayoutBounds.Height, _ => 0 };
+                    double relativeY = alignment switch
+                    {
+                        TextAlignmentType.Center => (actualHeight - line.TertiaryTextLayout.LayoutBounds.Height) /
+                                                    2,
+                        TextAlignmentType.Right => actualHeight - line.TertiaryTextLayout.LayoutBounds.Height,
+                        _ => 0
+                    };
                     line.TertiaryPosition = line.TertiaryPosition.AddY((float)(offsetY + relativeY));
                 }
 
                 if (line.PrimaryTextLayout != null)
                 {
-                    double relativeY = alignment switch { TextAlignmentType.Center => (actualHeight - line.PrimaryTextLayout.LayoutBounds.Height) / 2, TextAlignmentType.Right => actualHeight - line.PrimaryTextLayout.LayoutBounds.Height, _ => 0 };
+                    double relativeY = alignment switch
+                    {
+                        TextAlignmentType.Center => (actualHeight - line.PrimaryTextLayout.LayoutBounds.Height) / 2,
+                        TextAlignmentType.Right => actualHeight - line.PrimaryTextLayout.LayoutBounds.Height,
+                        _ => 0
+                    };
                     line.PrimaryPosition = line.PrimaryPosition.AddY((float)(offsetY + relativeY));
                 }
 
                 if (line.SecondaryTextLayout != null)
                 {
-                    double relativeY = alignment switch { TextAlignmentType.Center => (actualHeight - line.SecondaryTextLayout.LayoutBounds.Height) / 2, TextAlignmentType.Right => actualHeight - line.SecondaryTextLayout.LayoutBounds.Height, _ => 0 };
+                    double relativeY = alignment switch
+                    {
+                        TextAlignmentType.Center => (actualHeight - line.SecondaryTextLayout.LayoutBounds.Height) /
+                                                    2,
+                        TextAlignmentType.Right => actualHeight - line.SecondaryTextLayout.LayoutBounds.Height,
+                        _ => 0
+                    };
                     line.SecondaryPosition = line.SecondaryPosition.AddY((float)(offsetY + relativeY));
                 }
 
@@ -256,7 +279,8 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsLayoutStrategy
             return Math.Abs(lines.Last().TopLeftPosition.X);
         }
 
-        private static int FindFirstVisibleLine(IList<RenderLyricsLine> lines, double offset, double lyricsX, double lyricsWidth)
+        private static int FindFirstVisibleLine(IList<RenderLyricsLine> lines, double offset, double lyricsX,
+            double lyricsWidth)
         {
             int left = 0, right = lines.Count - 1, result = -1;
             while (left <= right)
@@ -274,6 +298,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsLayoutStrategy
                     left = mid + 1;
                 }
             }
+
             return result;
         }
 
@@ -295,6 +320,7 @@ namespace BetterLyrics.WinUI3.Helper.Lyrics.LyricsLayoutStrategy
                     left = mid + 1;
                 }
             }
+
             return result;
         }
     }

@@ -6,7 +6,6 @@
     xmlns:const="using:BetterLyrics.WinUI3.Constants"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:enums="using:BetterLyrics.WinUI3.Enums"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -14,6 +13,8 @@
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:vm="using:BetterLyrics.WinUI3.ViewModels"
+    xmlns:enums1="using:BetterLyrics.Core.Enums"
+    xmlns:models1="using:BetterLyrics.Core.Models"
     mc:Ignorable="d">
 
     <Grid x:Name="RootGrid">
@@ -25,7 +26,7 @@
             MenuItemsSource="{x:Bind ViewModel.MenuItems}"
             SelectedItem="{x:Bind ViewModel.SelectedMenuItem, Mode=TwoWay}">
             <NavigationView.MenuItemTemplate>
-                <DataTemplate x:DataType="models:NavMenuItem">
+                <DataTemplate x:DataType="models1:NavMenuItem">
                     <NavigationViewItem Content="{x:Bind Label}">
                         <NavigationViewItem.Icon>
                             <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="{x:Bind Glyph}" />
@@ -42,32 +43,32 @@
                 </controls:SwitchPresenter.ContentTransitions>
 
                 <!--  App appearance and behavior  -->
-                <controls:Case Value="{x:Bind enums:SettingsSection.App}">
+                <controls:Case Value="{x:Bind enums1:SettingsSection.App}">
                     <uc:AppSettingsControl />
                 </controls:Case>
 
                 <!--  Lyrics window manager  -->
-                <controls:Case Value="{x:Bind enums:SettingsSection.LyricsWindowMgr}">
+                <controls:Case Value="{x:Bind enums1:SettingsSection.LyricsWindowMgr}">
                     <uc:LyricsWindowSettingsControl />
                 </controls:Case>
 
                 <!--  Playback sources  -->
-                <controls:Case Value="{x:Bind enums:SettingsSection.PlaybackLib}">
+                <controls:Case Value="{x:Bind enums1:SettingsSection.PlaybackLib}">
                     <uc:PlaybackSettingsControl />
                 </controls:Case>
 
                 <!--  Media lib  -->
-                <controls:Case Value="{x:Bind enums:SettingsSection.MediaLib}">
+                <controls:Case Value="{x:Bind enums1:SettingsSection.MediaLib}">
                     <uc:MediaSettingsControl />
                 </controls:Case>
 
                 <!--  Plugins  -->
-                <controls:Case Value="{x:Bind enums:SettingsSection.Plugins}">
+                <controls:Case Value="{x:Bind enums1:SettingsSection.Plugins}">
                     <uc:PluginManagerControl />
                 </controls:Case>
 
                 <!--  About  -->
-                <controls:Case Value="{x:Bind enums:SettingsSection.About}">
+                <controls:Case Value="{x:Bind enums1:SettingsSection.About}">
                     <uc:AboutControl />
                 </controls:Case>
 

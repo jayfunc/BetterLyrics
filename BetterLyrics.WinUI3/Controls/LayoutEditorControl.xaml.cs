@@ -1,10 +1,13 @@
-using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Messages;
+using BetterLyrics.Core.Models;
+using BetterLyrics.Core.Models.Domain;
+using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Messages;
 using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Models.Settings;
-using BetterLyrics.WinUI3.Services.LocalizationService;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
@@ -29,9 +32,11 @@ namespace BetterLyrics.WinUI3.Controls
     [INotifyPropertyChanged]
     public sealed partial class LayoutEditorControl : UserControl, IRecipient<PropertyChangedMessage<Rect>>
     {
-        private readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
+        private readonly ILocalizationService _localizationService =
+            Ioc.Default.GetRequiredService<ILocalizationService>();
 
-        [ObservableProperty] public partial ObservableCollection<ToolboxItem> AvailableToolboxItems { get; set; } = new();
+        [ObservableProperty]
+        public partial ObservableCollection<ToolboxItem> AvailableToolboxItems { get; set; } = new();
 
         [ObservableProperty]
         [NotifyPropertyChangedFor(nameof(HasSelection))]
@@ -55,14 +60,19 @@ namespace BetterLyrics.WinUI3.Controls
 
         public int MaxRowIndex => Math.Max(0, (LayoutProfile?.RowDefinitions?.Count ?? 1) - 1);
         public int MaxColIndex => Math.Max(0, (LayoutProfile?.ColumnDefinitions?.Count ?? 1) - 1);
-        public int MaxRowSpan => Math.Max(1, (LayoutProfile?.RowDefinitions?.Count ?? 1) - (SelectedPlacement?.Row ?? 0));
-        public int MaxColSpan => Math.Max(1, (LayoutProfile?.ColumnDefinitions?.Count ?? 1) - (SelectedPlacement?.Column ?? 0));
+
+        public int MaxRowSpan =>
+            Math.Max(1, (LayoutProfile?.RowDefinitions?.Count ?? 1) - (SelectedPlacement?.Row ?? 0));
+
+        public int MaxColSpan =>
+            Math.Max(1, (LayoutProfile?.ColumnDefinitions?.Count ?? 1) - (SelectedPlacement?.Column ?? 0));
 
         public bool HasSelection => SelectedPlacement != null;
 
 
         public static readonly DependencyProperty LayoutProfileProperty =
-            DependencyProperty.Register(nameof(LayoutProfile), typeof(LayoutProfile), typeof(LayoutEditorControl), new PropertyMetadata(null, OnLayoutProfileChanged));
+            DependencyProperty.Register(nameof(LayoutProfile), typeof(LayoutProfile), typeof(LayoutEditorControl),
+                new PropertyMetadata(null, OnLayoutProfileChanged));
 
         public LayoutProfile LayoutProfile
         {
@@ -71,7 +81,8 @@ namespace BetterLyrics.WinUI3.Controls
         }
 
         public static readonly DependencyProperty LyricsWindowStatusProperty =
-            DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus), typeof(LayoutEditorControl), new PropertyMetadata(null, OnWindowStatusChanged));
+            DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus),
+                typeof(LayoutEditorControl), new PropertyMetadata(null, OnWindowStatusChanged));
 
         public LyricsWindowStatus LyricsWindowStatus
         {
@@ -219,7 +230,9 @@ namespace BetterLyrics.WinUI3.Controls
         {
             _isUpdatingUI = true;
 
-            SelectedComponentLabel.Text = SelectedPlacement != null ? SelectedPlacement.DisplayName : _localizationService.GetLocalizedString("LayoutEditorControlNoSelection");
+            SelectedComponentLabel.Text = SelectedPlacement != null
+                ? SelectedPlacement.DisplayName
+                : _localizationService.GetLocalizedString("LayoutEditorControlNoSelection");
 
             if (SelectedPlacement != null)
             {
@@ -252,8 +265,10 @@ namespace BetterLyrics.WinUI3.Controls
 
             ScaledRowSpacing = LayoutProfile.RowSpacing * CurrentZoom;
             ScaledColSpacing = LayoutProfile.ColumnSpacing * CurrentZoom;
-            ScaledColPadding = new Thickness(LayoutProfile.PaddingLeft * CurrentZoom, 0, LayoutProfile.PaddingRight * CurrentZoom, 0);
-            ScaledRowPadding = new Thickness(0, LayoutProfile.PaddingTop * CurrentZoom, 0, LayoutProfile.PaddingBottom * CurrentZoom);
+            ScaledColPadding = new Thickness(LayoutProfile.PaddingLeft * CurrentZoom, 0,
+                LayoutProfile.PaddingRight * CurrentZoom, 0);
+            ScaledRowPadding = new Thickness(0, LayoutProfile.PaddingTop * CurrentZoom, 0,
+                LayoutProfile.PaddingBottom * CurrentZoom);
 
             for (int i = 0; i < ColumnHeaderItems.Count; i++)
             {
@@ -277,7 +292,8 @@ namespace BetterLyrics.WinUI3.Controls
             }
 
             var expectedTypes = Enum.GetValues<ComponentType>().Where(t => t != ComponentType.None).ToList();
-            var typesToShow = expectedTypes.Where(t => !LayoutProfile.Placements.Any(p => p.ComponentType == t)).ToList();
+            var typesToShow = expectedTypes.Where(t => !LayoutProfile.Placements.Any(p => p.ComponentType == t))
+                .ToList();
 
             for (int i = AvailableToolboxItems.Count - 1; i >= 0; i--)
             {
@@ -359,11 +375,13 @@ namespace BetterLyrics.WinUI3.Controls
                     if (LayoutProfile.Placements[i].Row >= lastRow)
                         LayoutProfile.Placements.RemoveAt(i);
                 }
+
                 LayoutProfile.RowDefinitions.RemoveAt(lastRow);
                 foreach (var p in LayoutProfile.Placements.Where(p => p.Row + p.RowSpan > lastRow))
                 {
                     p.RowSpan = Math.Max(1, lastRow - p.Row);
                 }
+
                 NotifyLimitsChanged();
                 CheckSelectionValidity();
                 UpdateToolbox();
@@ -383,11 +401,13 @@ namespace BetterLyrics.WinUI3.Controls
                     if (LayoutProfile.Placements[i].Column >= lastCol)
                         LayoutProfile.Placements.RemoveAt(i);
                 }
+
                 LayoutProfile.ColumnDefinitions.RemoveAt(lastCol);
                 foreach (var p in LayoutProfile.Placements.Where(p => p.Column + p.ColumnSpan > lastCol))
                 {
                     p.ColumnSpan = Math.Max(1, lastCol - p.Column);
                 }
+
                 NotifyLimitsChanged();
                 CheckSelectionValidity();
                 UpdateToolbox();
@@ -408,28 +428,40 @@ namespace BetterLyrics.WinUI3.Controls
             }
         }
 
-        [RelayCommand] private void InsertRowAction(int index) => InsertRowAt(index);
-        [RelayCommand] private void InsertRowAfterAction(int index) => InsertRowAt(index + 1);
-        [RelayCommand] private void DeleteRowAction(int index) => DeleteRowAt(index);
+        [RelayCommand]
+        private void InsertRowAction(int index) => InsertRowAt(index);
+
+        [RelayCommand]
+        private void InsertRowAfterAction(int index) => InsertRowAt(index + 1);
+
+        [RelayCommand]
+        private void DeleteRowAction(int index) => DeleteRowAt(index);
 
         [RelayCommand]
         private void ToggleRowStarAction(int index)
         {
             var current = LayoutProfile.RowDefinitions[index];
-            LayoutProfile.RowDefinitions[index] = current.Equals("Auto", StringComparison.OrdinalIgnoreCase) ? "1*" : "Auto";
+            LayoutProfile.RowDefinitions[index] =
+                current.Equals("Auto", StringComparison.OrdinalIgnoreCase) ? "1*" : "Auto";
             UpdateHeaders();
             RequestRender();
         }
 
-        [RelayCommand] private void InsertColAction(int index) => InsertColAt(index);
-        [RelayCommand] private void InsertColAfterAction(int index) => InsertColAt(index + 1);
-        [RelayCommand] private void DeleteColAction(int index) => DeleteColAt(index);
+        [RelayCommand]
+        private void InsertColAction(int index) => InsertColAt(index);
+
+        [RelayCommand]
+        private void InsertColAfterAction(int index) => InsertColAt(index + 1);
+
+        [RelayCommand]
+        private void DeleteColAction(int index) => DeleteColAt(index);
 
         [RelayCommand]
         private void ToggleColStarAction(int index)
         {
             var current = LayoutProfile.ColumnDefinitions[index];
-            LayoutProfile.ColumnDefinitions[index] = current.Equals("Auto", StringComparison.OrdinalIgnoreCase) ? "1*" : "Auto";
+            LayoutProfile.ColumnDefinitions[index] =
+                current.Equals("Auto", StringComparison.OrdinalIgnoreCase) ? "1*" : "Auto";
             UpdateHeaders();
             RequestRender();
         }
@@ -442,6 +474,7 @@ namespace BetterLyrics.WinUI3.Controls
                 if (p.Row >= index) p.Row++;
                 else if (p.Row + p.RowSpan > index) p.RowSpan++;
             }
+
             NotifyLimitsChanged();
             UpdateHeaders();
             RequestRender();
@@ -455,6 +488,7 @@ namespace BetterLyrics.WinUI3.Controls
                 if (p.Column >= index) p.Column++;
                 else if (p.Column + p.ColumnSpan > index) p.ColumnSpan++;
             }
+
             NotifyLimitsChanged();
             UpdateHeaders();
             RequestRender();
@@ -491,7 +525,8 @@ namespace BetterLyrics.WinUI3.Controls
             foreach (var p in LayoutProfile.Placements)
             {
                 if (p.Column > index) p.Column--;
-                else if (p.Column <= index && (p.Column + p.ColumnSpan) > index) p.ColumnSpan = Math.Max(1, p.ColumnSpan - 1);
+                else if (p.Column <= index && (p.Column + p.ColumnSpan) > index)
+                    p.ColumnSpan = Math.Max(1, p.ColumnSpan - 1);
             }
 
             CheckSelectionValidity();
@@ -527,16 +562,19 @@ namespace BetterLyrics.WinUI3.Controls
             PreviewGrid.RowSpacing = LayoutProfile.RowSpacing;
             PreviewGrid.ColumnSpacing = LayoutProfile.ColumnSpacing;
 
-            PreviewGrid.Padding = new Thickness(LayoutProfile.PaddingLeft, LayoutProfile.PaddingTop, LayoutProfile.PaddingRight, LayoutProfile.PaddingBottom);
+            PreviewGrid.Padding = new Thickness(LayoutProfile.PaddingLeft, LayoutProfile.PaddingTop,
+                LayoutProfile.PaddingRight, LayoutProfile.PaddingBottom);
 
             foreach (var rowDef in LayoutProfile.RowDefinitions)
             {
-                PreviewGrid.RowDefinitions.Add(new RowDefinition { Height = rowDef.ParseGridLength() });
+                PreviewGrid.RowDefinitions.Add(new RowDefinition
+                { Height = GridLengthExtensions.ParseGridLength(rowDef) });
             }
 
             foreach (var colDef in LayoutProfile.ColumnDefinitions)
             {
-                PreviewGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = colDef.ParseGridLength() });
+                PreviewGrid.ColumnDefinitions.Add(new ColumnDefinition
+                { Width = GridLengthExtensions.ParseGridLength(colDef) });
             }
 
             for (int r = 0; r < LayoutProfile.RowDefinitions.Count; r++)
@@ -561,8 +599,17 @@ namespace BetterLyrics.WinUI3.Controls
                         this.Focus(FocusState.Programmatic);
                     };
 
-                    if (r == 0) { int colIndex = c; cellSlot.SizeChanged += (s, e) => SyncColumnSize(colIndex, e.NewSize.Width); }
-                    if (c == 0) { int rowIndex = r; cellSlot.SizeChanged += (s, e) => SyncRowSize(rowIndex, e.NewSize.Height); }
+                    if (r == 0)
+                    {
+                        int colIndex = c;
+                        cellSlot.SizeChanged += (s, e) => SyncColumnSize(colIndex, e.NewSize.Width);
+                    }
+
+                    if (c == 0)
+                    {
+                        int rowIndex = r;
+                        cellSlot.SizeChanged += (s, e) => SyncRowSize(rowIndex, e.NewSize.Height);
+                    }
 
                     PreviewGrid.Children.Add(cellSlot);
                 }
@@ -642,8 +689,16 @@ namespace BetterLyrics.WinUI3.Controls
                     handle.PointerMoved += Handle_PointerMoved;
                     handle.PointerReleased += Handle_PointerReleased;
                     handle.PointerCanceled += Handle_PointerReleased;
-                    handle.PointerEntered += (s, e) => { _hoveredHandle = direction; UpdateCursor(); };
-                    handle.PointerExited += (s, e) => { if (_hoveredHandle == direction) _hoveredHandle = ""; UpdateCursor(); };
+                    handle.PointerEntered += (s, e) =>
+                    {
+                        _hoveredHandle = direction;
+                        UpdateCursor();
+                    };
+                    handle.PointerExited += (s, e) =>
+                    {
+                        if (_hoveredHandle == direction) _hoveredHandle = "";
+                        UpdateCursor();
+                    };
                 }
 
                 WireUpHandle(control.RightHandle, "Right");
@@ -674,6 +729,7 @@ namespace BetterLyrics.WinUI3.Controls
                     PropWidthBox.Value = 100;
                 }
             }
+
             RequestRender();
         }
 
@@ -695,10 +751,12 @@ namespace BetterLyrics.WinUI3.Controls
                     PropHeightBox.Value = 100;
                 }
             }
+
             RequestRender();
         }
 
-        private void Handle_PointerPressed(object sender, PointerRoutedEventArgs e, string direction, ComponentPlacement placement)
+        private void Handle_PointerPressed(object sender, PointerRoutedEventArgs e, string direction,
+            ComponentPlacement placement)
         {
             var handle = sender as UIElement;
             handle?.CapturePointer(e.Pointer);
@@ -725,9 +783,12 @@ namespace BetterLyrics.WinUI3.Controls
                     BorderBrush = new SolidColorBrush(color),
                     BorderThickness = new Thickness(3),
                     CornerRadius = new CornerRadius(4),
-                    Margin = new Thickness(placement.MarginLeft, placement.MarginTop, placement.MarginRight, placement.MarginBottom),
-                    HorizontalAlignment = placement.HorizontalAlignment,
-                    VerticalAlignment = placement.VerticalAlignment,
+                    Margin = new Thickness(placement.MarginLeft, placement.MarginTop, placement.MarginRight,
+                        placement.MarginBottom),
+                    HorizontalAlignment =
+                        HorizontalAlignmentExtensions.FromAppHorizontalAlignment(placement.HorizontalAlignment),
+                    VerticalAlignment =
+                        VerticalAlignmentExtensions.FromAppVerticalAlignment(placement.VerticalAlignment),
                     Child = new TextBlock
                     {
                         Text = placement.DisplayName,
@@ -763,8 +824,10 @@ namespace BetterLyrics.WinUI3.Controls
             int maxRowSpan = LayoutProfile.RowDefinitions.Count - _resizeTarget.Row;
             int maxColSpan = LayoutProfile.ColumnDefinitions.Count - _resizeTarget.Column;
 
-            if (_resizeDirection == "Right" || _resizeDirection == "Corner") newColSpan = Math.Clamp(hoverCol - _resizeTarget.Column + 1, 1, maxColSpan);
-            if (_resizeDirection == "Bottom" || _resizeDirection == "Corner") newRowSpan = Math.Clamp(hoverRow - _resizeTarget.Row + 1, 1, maxRowSpan);
+            if (_resizeDirection == "Right" || _resizeDirection == "Corner")
+                newColSpan = Math.Clamp(hoverCol - _resizeTarget.Column + 1, 1, maxColSpan);
+            if (_resizeDirection == "Bottom" || _resizeDirection == "Corner")
+                newRowSpan = Math.Clamp(hoverRow - _resizeTarget.Row + 1, 1, maxRowSpan);
 
             Grid.SetRowSpan(_dropPreviewGhost, newRowSpan);
             Grid.SetColumnSpan(_dropPreviewGhost, newColSpan);
@@ -805,13 +868,15 @@ namespace BetterLyrics.WinUI3.Controls
                 args.Data.SetText(item.ComponentType.ToString());
                 args.Data.RequestedOperation = DataPackageOperation.Copy;
 
-                _draggedRowSpan = 1; _draggedColSpan = 1;
+                _draggedRowSpan = 1;
+                _draggedColSpan = 1;
                 _draggedMargin = new Thickness(0);
                 _draggedHAlign = HorizontalAlignment.Stretch;
                 _draggedVAlign = VerticalAlignment.Stretch;
                 _draggedText = item.DisplayName;
 
-                _dragCellOffsetRow = 0; _dragCellOffsetCol = 0;
+                _dragCellOffsetRow = 0;
+                _dragCellOffsetCol = 0;
 
                 _draggedWidth = element.ActualWidth;
                 _draggedHeight = element.ActualHeight;
@@ -828,7 +893,8 @@ namespace BetterLyrics.WinUI3.Controls
                 _isStartingDrag = true;
                 try
                 {
-                    _draggedWidth = 0; _draggedHeight = 0;
+                    _draggedWidth = 0;
+                    _draggedHeight = 0;
                     if (element.Parent is FrameworkElement sizingWrapper)
                     {
                         _draggedWidth = sizingWrapper.ActualWidth;
@@ -847,9 +913,11 @@ namespace BetterLyrics.WinUI3.Controls
                     _draggedRowSpan = placement.RowSpan;
                     _draggedColSpan = placement.ColumnSpan;
                     _draggedText = placement.DisplayName;
-                    _draggedMargin = new Thickness(placement.MarginLeft, placement.MarginTop, placement.MarginRight, placement.MarginBottom);
-                    _draggedHAlign = placement.HorizontalAlignment;
-                    _draggedVAlign = placement.VerticalAlignment;
+                    _draggedMargin = new Thickness(placement.MarginLeft, placement.MarginTop, placement.MarginRight,
+                        placement.MarginBottom);
+                    _draggedHAlign =
+                        HorizontalAlignmentExtensions.FromAppHorizontalAlignment(placement.HorizontalAlignment);
+                    _draggedVAlign = VerticalAlignmentExtensions.FromAppVerticalAlignment(placement.VerticalAlignment);
 
                     var (mouseRow, mouseCol) = GetGridCellFromPoint(pointerPos);
                     _dragCellOffsetRow = mouseRow - placement.Row;
@@ -866,16 +934,25 @@ namespace BetterLyrics.WinUI3.Controls
 
                     UpdatePropertiesPanel();
                 }
-                finally { _isStartingDrag = false; }
+                finally
+                {
+                    _isStartingDrag = false;
+                }
             }
         }
 
         private void Common_DragOver(object sender, DragEventArgs e)
         {
-            if (!e.DataView.Contains(StandardDataFormats.Text)) { e.AcceptedOperation = DataPackageOperation.None; return; }
+            if (!e.DataView.Contains(StandardDataFormats.Text))
+            {
+                e.AcceptedOperation = DataPackageOperation.None;
+                return;
+            }
 
             e.DragUIOverride.IsContentVisible = false;
-            e.AcceptedOperation = (e.AllowedOperations & DataPackageOperation.Move) == DataPackageOperation.Move ? DataPackageOperation.Move : DataPackageOperation.Copy;
+            e.AcceptedOperation = (e.AllowedOperations & DataPackageOperation.Move) == DataPackageOperation.Move
+                ? DataPackageOperation.Move
+                : DataPackageOperation.Copy;
 
             var pointerPos = e.GetPosition(PreviewGrid);
             var (mouseRow, mouseCol) = GetGridCellFromPoint(pointerPos);
@@ -889,10 +966,13 @@ namespace BetterLyrics.WinUI3.Controls
                 Canvas.SetZIndex(_dropPreviewGhost, 9999);
                 PreviewGrid.Children.Add(_dropPreviewGhost);
             }
+
             Grid.SetRow(_dropPreviewGhost, targetRow);
             Grid.SetColumn(_dropPreviewGhost, targetCol);
-            Grid.SetRowSpan(_dropPreviewGhost, Math.Min(_draggedRowSpan, LayoutProfile.RowDefinitions.Count - targetRow));
-            Grid.SetColumnSpan(_dropPreviewGhost, Math.Min(_draggedColSpan, LayoutProfile.ColumnDefinitions.Count - targetCol));
+            Grid.SetRowSpan(_dropPreviewGhost,
+                Math.Min(_draggedRowSpan, LayoutProfile.RowDefinitions.Count - targetRow));
+            Grid.SetColumnSpan(_dropPreviewGhost,
+                Math.Min(_draggedColSpan, LayoutProfile.ColumnDefinitions.Count - targetCol));
 
             if (_floatingDragVisual == null)
             {
@@ -902,7 +982,8 @@ namespace BetterLyrics.WinUI3.Controls
                     VerticalAlignment = VerticalAlignment.Top,
                     IsHitTestVisible = false
                 };
-                Grid.SetRow(_floatingDragVisual, 0); Grid.SetColumn(_floatingDragVisual, 0);
+                Grid.SetRow(_floatingDragVisual, 0);
+                Grid.SetColumn(_floatingDragVisual, 0);
                 Grid.SetRowSpan(_floatingDragVisual, Math.Max(1, PreviewGrid.RowDefinitions.Count));
                 Grid.SetColumnSpan(_floatingDragVisual, Math.Max(1, PreviewGrid.ColumnDefinitions.Count));
                 Canvas.SetZIndex(_floatingDragVisual, 10000);
@@ -927,15 +1008,19 @@ namespace BetterLyrics.WinUI3.Controls
                     int targetRow = Math.Max(0, mouseRow - _dragCellOffsetRow);
                     int targetCol = Math.Max(0, mouseCol - _dragCellOffsetCol);
 
-                    var existingPlacement = LayoutProfile.Placements.FirstOrDefault(p => p.ComponentType == droppedType);
+                    var existingPlacement =
+                        LayoutProfile.Placements.FirstOrDefault(p => p.ComponentType == droppedType);
                     ComponentPlacement placementToInsert;
 
                     if (existingPlacement != null)
                     {
                         LayoutProfile.Placements.Remove(existingPlacement);
-                        existingPlacement.Row = targetRow; existingPlacement.Column = targetCol;
-                        existingPlacement.RowSpan = Math.Min(existingPlacement.RowSpan, LayoutProfile.RowDefinitions.Count - targetRow);
-                        existingPlacement.ColumnSpan = Math.Min(existingPlacement.ColumnSpan, LayoutProfile.ColumnDefinitions.Count - targetCol);
+                        existingPlacement.Row = targetRow;
+                        existingPlacement.Column = targetCol;
+                        existingPlacement.RowSpan = Math.Min(existingPlacement.RowSpan,
+                            LayoutProfile.RowDefinitions.Count - targetRow);
+                        existingPlacement.ColumnSpan = Math.Min(existingPlacement.ColumnSpan,
+                            LayoutProfile.ColumnDefinitions.Count - targetCol);
                         placementToInsert = existingPlacement;
                     }
                     else
@@ -947,8 +1032,8 @@ namespace BetterLyrics.WinUI3.Controls
                             Column = targetCol,
                             RowSpan = 1,
                             ColumnSpan = 1,
-                            HorizontalAlignment = HorizontalAlignment.Stretch,
-                            VerticalAlignment = VerticalAlignment.Stretch
+                            HorizontalAlignment = AppHorizontalAlignment.Stretch,
+                            VerticalAlignment = AppVerticalAlignment.Stretch
                         };
                     }
 
@@ -968,8 +1053,17 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void ClearDragVisuals()
         {
-            if (_dropPreviewGhost != null) { PreviewGrid.Children.Remove(_dropPreviewGhost); _dropPreviewGhost = null; }
-            if (_floatingDragVisual != null) { PreviewGrid.Children.Remove(_floatingDragVisual); _floatingDragVisual = null; }
+            if (_dropPreviewGhost != null)
+            {
+                PreviewGrid.Children.Remove(_dropPreviewGhost);
+                _dropPreviewGhost = null;
+            }
+
+            if (_floatingDragVisual != null)
+            {
+                PreviewGrid.Children.Remove(_floatingDragVisual);
+                _floatingDragVisual = null;
+            }
         }
 
         private (int row, int col) GetGridCellFromPoint(Point position)
@@ -979,21 +1073,39 @@ namespace BetterLyrics.WinUI3.Controls
             for (int c = 0; c < PreviewGrid.ColumnDefinitions.Count; c++)
             {
                 currentX += PreviewGrid.ColumnDefinitions[c].ActualWidth;
-                if (position.X < currentX) { col = c; break; }
-                currentX += PreviewGrid.ColumnSpacing; col = c;
+                if (position.X < currentX)
+                {
+                    col = c;
+                    break;
+                }
+
+                currentX += PreviewGrid.ColumnSpacing;
+                col = c;
             }
+
             for (int r = 0; r < PreviewGrid.RowDefinitions.Count; r++)
             {
                 currentY += PreviewGrid.RowDefinitions[r].ActualHeight;
-                if (position.Y < currentY) { row = r; break; }
-                currentY += PreviewGrid.RowSpacing; row = r;
+                if (position.Y < currentY)
+                {
+                    row = r;
+                    break;
+                }
+
+                currentY += PreviewGrid.RowSpacing;
+                row = r;
             }
+
             return (Math.Max(0, row), Math.Max(0, col));
         }
 
         private void Gutter_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if (sender is FrameworkElement fe) { Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase.ShowAttachedFlyout(fe); e.Handled = true; }
+            if (sender is FrameworkElement fe)
+            {
+                Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase.ShowAttachedFlyout(fe);
+                e.Handled = true;
+            }
         }
 
         private void PreviewScrollViewer_PointerPressed(object sender, PointerRoutedEventArgs e)
@@ -1016,7 +1128,8 @@ namespace BetterLyrics.WinUI3.Controls
             if (_isPanning)
             {
                 var currentPos = e.GetCurrentPoint(PreviewScrollViewer).Position;
-                PreviewScrollViewer.ChangeView(_startScrollX - (currentPos.X - _panStartPos.X), _startScrollY - (currentPos.Y - _panStartPos.Y), null, true);
+                PreviewScrollViewer.ChangeView(_startScrollX - (currentPos.X - _panStartPos.X),
+                    _startScrollY - (currentPos.Y - _panStartPos.Y), null, true);
                 e.Handled = true;
             }
         }
@@ -1036,13 +1149,16 @@ namespace BetterLyrics.WinUI3.Controls
         {
             var ctrlState = InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Control);
             var shiftState = InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Shift);
-            bool isCtrlDown = (ctrlState & Windows.UI.Core.CoreVirtualKeyStates.Down) == Windows.UI.Core.CoreVirtualKeyStates.Down;
-            bool isShiftDown = (shiftState & Windows.UI.Core.CoreVirtualKeyStates.Down) == Windows.UI.Core.CoreVirtualKeyStates.Down;
+            bool isCtrlDown = (ctrlState & Windows.UI.Core.CoreVirtualKeyStates.Down) ==
+                              Windows.UI.Core.CoreVirtualKeyStates.Down;
+            bool isShiftDown = (shiftState & Windows.UI.Core.CoreVirtualKeyStates.Down) ==
+                               Windows.UI.Core.CoreVirtualKeyStates.Down;
             var delta = e.GetCurrentPoint(PreviewScrollViewer).Properties.MouseWheelDelta;
 
             if (isCtrlDown)
             {
-                float newZoom = Math.Clamp(PreviewScrollViewer.ZoomFactor + (delta > 0 ? 0.1f : -0.1f), PreviewScrollViewer.MinZoomFactor, PreviewScrollViewer.MaxZoomFactor);
+                float newZoom = Math.Clamp(PreviewScrollViewer.ZoomFactor + (delta > 0 ? 0.1f : -0.1f),
+                    PreviewScrollViewer.MinZoomFactor, PreviewScrollViewer.MaxZoomFactor);
                 PreviewScrollViewer.ChangeView(null, null, newZoom);
                 e.Handled = true;
             }
@@ -1057,8 +1173,12 @@ namespace BetterLyrics.WinUI3.Controls
         {
             if (PreviewScrollViewer == null) return;
             CurrentZoom = PreviewScrollViewer.ZoomFactor;
-            if (ColHeadersItemsControl != null) ColHeadersItemsControl.RenderTransform = new TranslateTransform { X = -PreviewScrollViewer.HorizontalOffset, Y = 0 };
-            if (RowHeadersItemsControl != null) RowHeadersItemsControl.RenderTransform = new TranslateTransform { X = 0, Y = -PreviewScrollViewer.VerticalOffset };
+            if (ColHeadersItemsControl != null)
+                ColHeadersItemsControl.RenderTransform = new TranslateTransform
+                { X = -PreviewScrollViewer.HorizontalOffset, Y = 0 };
+            if (RowHeadersItemsControl != null)
+                RowHeadersItemsControl.RenderTransform = new TranslateTransform
+                { X = 0, Y = -PreviewScrollViewer.VerticalOffset };
 
             UpdateMinimap();
         }
@@ -1188,7 +1308,8 @@ namespace BetterLyrics.WinUI3.Controls
 
         private void UpdatePreviewAspectRatio()
         {
-            if (LyricsWindowStatus == null || LyricsWindowStatus.WindowBounds.Width <= 0 || LyricsWindowStatus.WindowBounds.Height <= 0) return;
+            if (LyricsWindowStatus == null || LyricsWindowStatus.WindowBounds.Width <= 0 ||
+                LyricsWindowStatus.WindowBounds.Height <= 0) return;
             PreviewGrid.Width = LyricsWindowStatus.WindowBounds.Width;
             PreviewGrid.Height = LyricsWindowStatus.WindowBounds.Height;
         }
@@ -1203,14 +1324,25 @@ namespace BetterLyrics.WinUI3.Controls
                 _isPanning = false;
                 PreviewScrollViewer.ReleasePointerCaptures();
             }
+
             UpdateCursor();
         }
 
-        private void HandToolToggle_Click(object sender, RoutedEventArgs e) => SetHandToolState(HandToolToggle.IsChecked ?? false);
-        private void ZoomIn_Click(object sender, RoutedEventArgs e) => PreviewScrollViewer.ChangeView(null, null, Math.Min(PreviewScrollViewer.ZoomFactor + 0.2f, PreviewScrollViewer.MaxZoomFactor));
-        private void ZoomOut_Click(object sender, RoutedEventArgs e) => PreviewScrollViewer.ChangeView(null, null, Math.Max(PreviewScrollViewer.ZoomFactor - 0.2f, PreviewScrollViewer.MinZoomFactor));
+        private void HandToolToggle_Click(object sender, RoutedEventArgs e) =>
+            SetHandToolState(HandToolToggle.IsChecked ?? false);
+
+        private void ZoomIn_Click(object sender, RoutedEventArgs e) => PreviewScrollViewer.ChangeView(null, null,
+            Math.Min(PreviewScrollViewer.ZoomFactor + 0.2f, PreviewScrollViewer.MaxZoomFactor));
+
+        private void ZoomOut_Click(object sender, RoutedEventArgs e) => PreviewScrollViewer.ChangeView(null, null,
+            Math.Max(PreviewScrollViewer.ZoomFactor - 0.2f, PreviewScrollViewer.MinZoomFactor));
+
         private void ZoomReset_Click(object sender, RoutedEventArgs e) => FitToScreen();
-        private void PreviewContainer_SizeChanged(object sender, SizeChangedEventArgs e) { UpdatePreviewAspectRatio(); }
+
+        private void PreviewContainer_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            UpdatePreviewAspectRatio();
+        }
 
         private void SizeEditorGrid_Loaded(object sender, RoutedEventArgs e)
         {
@@ -1324,10 +1456,12 @@ namespace BetterLyrics.WinUI3.Controls
             if (IsInputControlFocused()) return;
 
             var ctrlState = InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Control);
-            bool isCtrlDown = (ctrlState & Windows.UI.Core.CoreVirtualKeyStates.Down) == Windows.UI.Core.CoreVirtualKeyStates.Down;
+            bool isCtrlDown = (ctrlState & Windows.UI.Core.CoreVirtualKeyStates.Down) ==
+                              Windows.UI.Core.CoreVirtualKeyStates.Down;
 
             var shiftState = InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Shift);
-            bool isShiftDown = (shiftState & Windows.UI.Core.CoreVirtualKeyStates.Down) == Windows.UI.Core.CoreVirtualKeyStates.Down;
+            bool isShiftDown = (shiftState & Windows.UI.Core.CoreVirtualKeyStates.Down) ==
+                               Windows.UI.Core.CoreVirtualKeyStates.Down;
 
             if ((int)e.OriginalKey == 191 && isCtrlDown)
             {
@@ -1365,6 +1499,7 @@ namespace BetterLyrics.WinUI3.Controls
                         _wasHandToolActiveBeforeSpace = _isHandToolActive;
                         SetHandToolState(true);
                     }
+
                     e.Handled = true;
                     break;
                 case VirtualKey.Escape:
@@ -1378,6 +1513,7 @@ namespace BetterLyrics.WinUI3.Controls
                         RemoveSelectedCommand.Execute(null);
                         e.Handled = true;
                     }
+
                     break;
                 case VirtualKey.Left:
                 case VirtualKey.Right:
@@ -1392,6 +1528,7 @@ namespace BetterLyrics.WinUI3.Controls
                         HandleDirectionalKeys(e.Key, isShiftDown);
                         e.Handled = true;
                     }
+
                     break;
                 case VirtualKey.F1:
                     HelpButton.Flyout?.ShowAt(HelpButton);
@@ -1403,6 +1540,7 @@ namespace BetterLyrics.WinUI3.Controls
                         CycleSelection(isShiftDown);
                         e.Handled = true;
                     }
+
                     break;
                 case VirtualKey.F:
                     if (!IsInputControlFocused())
@@ -1410,6 +1548,7 @@ namespace BetterLyrics.WinUI3.Controls
                         FocusOnSelectedComponent();
                         e.Handled = true;
                     }
+
                     break;
             }
         }
@@ -1451,6 +1590,7 @@ namespace BetterLyrics.WinUI3.Controls
                 else if (isUp) p.Row = Math.Max(0, p.Row - 1);
                 else if (isDown) p.Row = Math.Min(maxRow - p.RowSpan + 1, p.Row + 1);
             }
+
             RequestRender();
         }
 

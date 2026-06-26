@@ -11,12 +11,14 @@
     xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:constants1="using:BetterLyrics.Core.Constants"
+    xmlns:models1="using:BetterLyrics.Core.Models"
     x:Name="RootLayoutSettings"
     Loaded="RootLayoutSettings_Loaded"
     mc:Ignorable="d">
 
     <UserControl.Resources>
-        <DataTemplate x:Key="LayoutProfileDataTemplate" x:DataType="models:LayoutProfile">
+        <DataTemplate x:Key="LayoutProfileDataTemplate" x:DataType="models1:LayoutProfile">
             <Grid>
                 <Grid
                     Padding="6"
@@ -198,7 +200,7 @@
                 <uc:ExternalLinkButton
                     x:Uid="SettingsPageShareHub"
                     Grid.Column="1"
-                    NavigateUri="{x:Bind constants:Link.LayoutsStore}" />
+                    NavigateUri="{x:Bind constants1:Link.LayoutsStore}" />
 
                 <Button x:Uid="SettingsPageCreateFromTemplates" Grid.Column="2">
                     <Button.Flyout>

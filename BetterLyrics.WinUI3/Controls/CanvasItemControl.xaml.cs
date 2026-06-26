@@ -1,6 +1,7 @@
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models;
+using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Services.LocalizationService;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
@@ -12,7 +13,8 @@ namespace BetterLyrics.WinUI3.Controls
 {
     public sealed partial class CanvasItemControl : UserControl
     {
-        private readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
+        private readonly ILocalizationService _localizationService =
+            Ioc.Default.GetRequiredService<ILocalizationService>();
 
         public ComponentPlacement Placement { get; }
 
@@ -38,20 +40,26 @@ namespace BetterLyrics.WinUI3.Controls
 
             MainBorder.Tag = placement;
 
-            MainBorder.HorizontalAlignment = placement.HorizontalAlignment;
-            MainBorder.VerticalAlignment = placement.VerticalAlignment;
-            MainBorder.Margin = new Thickness(placement.MarginLeft, placement.MarginTop, placement.MarginRight, placement.MarginBottom);
+            MainBorder.HorizontalAlignment =
+                HorizontalAlignmentExtensions.FromAppHorizontalAlignment(placement.HorizontalAlignment);
+            MainBorder.VerticalAlignment =
+                VerticalAlignmentExtensions.FromAppVerticalAlignment(placement.VerticalAlignment);
+            MainBorder.Margin = new Thickness(placement.MarginLeft, placement.MarginTop, placement.MarginRight,
+                placement.MarginBottom);
 
             MainBorder.Width = placement.Width;
             MainBorder.Height = placement.Height;
 
             var mockupGrid = new Grid
             {
-                HorizontalAlignment = placement.HorizontalAlignment,
+                HorizontalAlignment =
+                    HorizontalAlignmentExtensions.FromAppHorizontalAlignment(placement.HorizontalAlignment),
                 VerticalAlignment = VerticalAlignment.Stretch
             };
 
-            mockupGrid.Children.Add(MockupHelper.GenerateMockupContent(this, placement.ComponentType, placement.HorizontalAlignment, placement.DisplayName));
+            mockupGrid.Children.Add(MockupHelper.GenerateMockupContent(this, placement.ComponentType,
+                HorizontalAlignmentExtensions.FromAppHorizontalAlignment(placement.HorizontalAlignment),
+                placement.DisplayName));
             ContentHost.Children.Add(mockupGrid);
 
             _isSelected = isSelected;
@@ -65,6 +73,7 @@ namespace BetterLyrics.WinUI3.Controls
             {
                 accentColor = c;
             }
+
             var highlightBrush = new SolidColorBrush(accentColor);
             var defaultBorderBrush = BrushHelper.GetThemeBrush(this, "CardStrokeColorDefaultBrush");
 

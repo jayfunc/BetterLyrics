@@ -1,7 +1,7 @@
-using BetterLyrics.WinUI3.Enums;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Models.Settings;
-using BetterLyrics.WinUI3.Services.LocalizationService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -120,7 +120,7 @@ namespace BetterLyrics.WinUI3.Controls
                 SourceType = _fileSourceType,
 
                 UriScheme = scheme,
-                UriHost = HostBox.Text.Trim(), // È¥³ýÊ×Î²¿Õ¸ñ
+                UriHost = HostBox.Text.Trim(), // È¥ï¿½ï¿½ï¿½ï¿½Î²ï¿½Õ¸ï¿½
                 UriPort = (int)PortBox.Value,
 
                 UriPath = PathBox.Text.Trim(),

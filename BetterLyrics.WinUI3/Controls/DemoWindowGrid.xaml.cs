@@ -1,6 +1,6 @@
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Models.Settings;
-using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
@@ -40,12 +40,12 @@ public sealed partial class DemoWindowGrid : UserControl
     private void OpenButton_Click(object sender, RoutedEventArgs e)
     {
         var status = (LyricsWindowStatus)(((FrameworkElement)sender).DataContext);
-        // 多开模式
+        // 锟洁开模式
         if (_settingsService.AppSettings.GeneralSettings.MultiNowPlayingWindowMode)
         {
             WindowHook.OpenOrShowWindow<NowPlayingWindow>(status);
         }
-        // 单例模式
+        // 锟斤拷锟斤拷模式
         else
         {
             var openedWindows = WindowHook.GetWindows<NowPlayingWindow>();

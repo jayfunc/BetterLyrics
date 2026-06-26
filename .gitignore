@@ -414,3 +414,5 @@ FodyWeavers.xsd
 /Plugins/_Dist
 /BetterLyrics.WinUI3/Constants/LastFM.cs
 /BetterLyrics.WinUI3/Constants/Discord.cs
+/BetterLyrics.Core/Constants/Discord.cs
+/BetterLyrics.Core/Constants/LastFM.cs

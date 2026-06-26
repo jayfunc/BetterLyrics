@@ -9,6 +9,8 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:settingsmodels="using:BetterLyrics.WinUI3.Models.Settings"
     xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:settings="using:BetterLyrics.Core.Models.Settings"
+    xmlns:constants="using:BetterLyrics.Core.Constants"
     mc:Ignorable="d">
 
     <Grid Padding="36,0">
@@ -37,7 +39,7 @@
             ItemsSource="{x:Bind ViewModel.AppSettings.PluginsInfo, Mode=OneWay}"
             SelectionMode="None">
             <ListView.ItemTemplate>
-                <DataTemplate x:DataType="settingsmodels:PluginInfo">
+                <DataTemplate x:DataType="settings:PluginInfo">
                     <local:PluginItemControl PluginInfo="{x:Bind}" UninstallClicked="UninstallPluginButton_Click" />
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -66,8 +68,8 @@
             VerticalAlignment="Bottom"
             Orientation="Horizontal"
             Spacing="6">
-            <local:ExternalLinkButton x:Uid="PluginManagerControlVisitPluginDevGuide" NavigateUri="{x:Bind consts:Link.PluginDevGuide}" />
-            <local:ExternalLinkButton x:Uid="PluginManagerControlVisitPluginStore" NavigateUri="{x:Bind consts:Link.PluginsStore}" />
+            <local:ExternalLinkButton x:Uid="PluginManagerControlVisitPluginDevGuide" NavigateUri="{x:Bind constants:Link.PluginDevGuide}" />
+            <local:ExternalLinkButton x:Uid="PluginManagerControlVisitPluginStore" NavigateUri="{x:Bind constants:Link.PluginsStore}" />
             <Button
                 x:Uid="PluginManagerControlInstall"
                 Command="{x:Bind ViewModel.InstallPluginCommand}"

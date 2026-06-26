@@ -76,8 +76,8 @@
 	</Target>
 	
 	<ItemGroup>
-	  <PackageReference Include="LLamaSharp" Version="0.25.0" />
-	  <PackageReference Include="LLamaSharp.Backend.Vulkan.Windows" Version="0.25.0" />
+	  <PackageReference Include="LLamaSharp" Version="0.27.0" />
+	  <PackageReference Include="LLamaSharp.Backend.Vulkan.Windows" Version="0.27.0" />
 	</ItemGroup>
 
 	<ItemGroup>

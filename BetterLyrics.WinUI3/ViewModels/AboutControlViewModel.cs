@@ -1,17 +1,15 @@
-﻿using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Helper.BetterLyrics.WinUI3.Helper;
+﻿using BetterLyrics.Core.Constants;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models;
+using BetterLyrics.Core.Models.Settings;
+using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Models.Settings;
-using BetterLyrics.WinUI3.Services.AppUpdateService;
-using BetterLyrics.WinUI3.Services.LocalizationService;
-using BetterLyrics.WinUI3.Services.LyricsCacheService;
-using BetterLyrics.WinUI3.Services.SettingsService;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Data.Sqlite;
-using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -76,6 +74,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 
         private async Task LoadDonorsAsync()
         {
+
             var file = await StorageFile.GetFileFromApplicationUriAsync(new Uri("ms-appx:///Assets/Donors.csv"));
             var lines = await FileIO.ReadLinesAsync(file);
 
@@ -102,19 +101,19 @@ namespace BetterLyrics.WinUI3.ViewModels
         [RelayCommand]
         private static async Task LaunchProjectGitHubPageAsync()
         {
-            await Windows.System.Launcher.LaunchUriAsync(new Uri(Constants.Link.BetterLyricsGitHub));
+            await Windows.System.Launcher.LaunchUriAsync(new Uri(Link.BetterLyricsGitHub));
         }
 
         [RelayCommand]
         private static async Task OpenCacheFolderAsync()
         {
-            await Windows.System.Launcher.LaunchFolderPathAsync(PathHelper.CacheFolder);
+            await Windows.System.Launcher.LaunchFolderPathAsync(PathHelper.CacheFolderPath);
         }
 
         [RelayCommand]
         private static async Task OpenSettingsFolderAsync()
         {
-            await Windows.System.Launcher.LaunchFolderPathAsync(PathHelper.LocalFolder);
+            await Windows.System.Launcher.LaunchFolderPathAsync(PathHelper.LocalFolderPath);
         }
 
         [RelayCommand]
@@ -139,7 +138,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                         ZipFile.ExtractToDirectory(stream, tempExtractPath);
                     }
 
-                    DirectoryHelper.CopyDirectory(tempExtractPath, PathHelper.LocalFolder, true);
+                    DirectoryHelper.CopyDirectory(tempExtractPath, PathHelper.LocalFolderPath, true);
 
                     Directory.Delete(tempExtractPath, true);
 
@@ -147,7 +146,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 }
                 catch (Exception ex)
                 {
-                    GlobalToastManager.Show("ImportSettingsFailed", ex.Message, InfoBarSeverity.Error);
+                    GlobalToastManager.Show("ImportSettingsFailed", ex.Message, MessageSeverity.Error);
                 }
             }
         }
@@ -157,7 +156,7 @@ namespace BetterLyrics.WinUI3.ViewModels
         {
             try
             {
-                var suggestedFileName = $"{Constants.App.AppName}_{_settingsService.AppSettings.Version}_{DateTime.Now:yyyyMMdd_HHmmss}";
+                var suggestedFileName = $"{Core.Constants.App.AppName}_{_settingsService.AppSettings.Version}_{DateTime.Now:yyyyMMdd_HHmmss}";
                 IDictionary<string, IList<string>> fileTypeChoices = new Dictionary<string, IList<string>>()
                 {
                     { "Zip Archive", new List<string>() { ".zip" } }
@@ -169,7 +168,7 @@ namespace BetterLyrics.WinUI3.ViewModels
                 string tempDir = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
                 Directory.CreateDirectory(tempDir);
 
-                DirectoryHelper.CopyDirectory(PathHelper.LocalFolder, tempDir, true);
+                DirectoryHelper.CopyDirectory(PathHelper.LocalFolderPath, tempDir, true);
 
                 string tempZipPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString() + ".zip");
 
@@ -185,11 +184,11 @@ namespace BetterLyrics.WinUI3.ViewModels
                 Directory.Delete(tempDir, true);
                 File.Delete(tempZipPath);
 
-                GlobalToastManager.Show("ExportSettingsSuccess", null, InfoBarSeverity.Success);
+                GlobalToastManager.Show("ExportSettingsSuccess", null, MessageSeverity.Success);
             }
             catch (Exception ex)
             {
-                GlobalToastManager.Show("Error", ex.Message, InfoBarSeverity.Error);
+                GlobalToastManager.Show("Error", ex.Message, MessageSeverity.Error);
             }
         }
 
@@ -202,13 +201,13 @@ namespace BetterLyrics.WinUI3.ViewModels
             DirectoryHelper.DeleteAllFiles(PathHelper.LyricsCacheDirectory);
             DirectoryHelper.DeleteAllFiles(PathHelper.iTunesAlbumArtCacheDirectory);
 
-            GlobalToastManager.Show("ActionCompleted", null, InfoBarSeverity.Success);
+            GlobalToastManager.Show("ActionCompleted", null, MessageSeverity.Success);
         }
 
         [RelayCommand]
         private static async Task OpenAppStorePageAsync()
         {
-            await Launcher.LaunchUriAsync(new Uri(Constants.Link.StorePage));
+            await Launcher.LaunchUriAsync(new Uri(Link.StorePage));
         }
 
         [RelayCommand]

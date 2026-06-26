@@ -9,6 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:tb="using:H.NotifyIcon"
     xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:constants="using:BetterLyrics.Core.Constants"
     mc:Ignorable="d">
 
     <tb:TaskbarIcon
@@ -20,7 +21,7 @@
         LeftClickCommand="{x:Bind ViewModel.TrayIconClickedCommand}"
         Loaded="TrayIcon_Loaded"
         MiddleClickCommand="{x:Bind ViewModel.TrayIconMiddleClickedCommand}"
-        ToolTipText="{x:Bind consts:App.AppName}">
+        ToolTipText="{x:Bind constants:App.AppName}">
         <tb:TaskbarIcon.ContextFlyout>
             <MenuFlyout
                 AreOpenCloseAnimationsEnabled="True"

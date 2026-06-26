@@ -1,8 +1,9 @@
-using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Extensions;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Extensions;
+using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Helpers.Lyrics;
+using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Helper.Lyrics;
-using BetterLyrics.WinUI3.Models.Settings;
 using BetterLyrics.WinUI3.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -28,21 +29,24 @@ namespace BetterLyrics.WinUI3.Controls
             DataContext = Ioc.Default.GetRequiredService<PlaybackSettingsControlViewModel>();
         }
 
-        private void AlbumArtSearchProvidersListView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
+        private void AlbumArtSearchProvidersListView_DragItemsCompleted(ListViewBase sender,
+            DragItemsCompletedEventArgs args)
         {
-            // ÈÃ AlbumArtSearchProvidersInfo ´¥·¢ CollectionChanged ÊÂ¼þ
+            // ï¿½ï¿½ AlbumArtSearchProvidersInfo ï¿½ï¿½ï¿½ï¿½ CollectionChanged ï¿½Â¼ï¿½
             ViewModel.SelectedMediaSourceProvider?.AlbumArtSearchProvidersInfo?.Refresh();
         }
 
-        private void LyricsSearchProvidersListView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
+        private void LyricsSearchProvidersListView_DragItemsCompleted(ListViewBase sender,
+            DragItemsCompletedEventArgs args)
         {
-            // ÈÃ LyricsSearchProvidersInfo ´¥·¢ CollectionChanged ÊÂ¼þ
+            // ï¿½ï¿½ LyricsSearchProvidersInfo ï¿½ï¿½ï¿½ï¿½ CollectionChanged ï¿½Â¼ï¿½
             ViewModel.SelectedMediaSourceProvider?.LyricsSearchProvidersInfo?.Refresh();
         }
 
-        private void MediaSourceProvidersListView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
+        private void MediaSourceProvidersListView_DragItemsCompleted(ListViewBase sender,
+            DragItemsCompletedEventArgs args)
         {
-            // ÈÃ MediaSourceProvidersInfo ´¥·¢ CollectionChanged ÊÂ¼þ
+            // ï¿½ï¿½ MediaSourceProvidersInfo ï¿½ï¿½ï¿½ï¿½ CollectionChanged ï¿½Â¼ï¿½
             ViewModel.AppSettings.MediaSourceProvidersInfo?.Refresh();
         }
 
@@ -106,11 +110,11 @@ namespace BetterLyrics.WinUI3.Controls
                 var storageFile = await folder.CreateFileAsync(fileName, CreationCollisionOption.GenerateUniqueName);
                 await FileIO.WriteTextAsync(storageFile, contentToWrite);
 
-                GlobalToastManager.Show("ActionCompleted", storageFile.Path, InfoBarSeverity.Success);
+                GlobalToastManager.Show("ActionCompleted", storageFile.Path, MessageSeverity.Success);
             }
             catch (Exception ex)
             {
-                GlobalToastManager.Show("Error", ex.Message, InfoBarSeverity.Error);
+                GlobalToastManager.Show("Error", ex.Message, MessageSeverity.Error);
             }
         }
 

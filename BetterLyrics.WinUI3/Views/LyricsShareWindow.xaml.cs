@@ -1,5 +1,6 @@
+using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Extensions;
-using BetterLyrics.WinUI3.Models.Settings;
+
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Xaml;

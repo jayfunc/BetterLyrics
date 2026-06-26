@@ -1,10 +1,10 @@
-﻿using BetterLyrics.WinUI3.Enums;
-using BetterLyrics.WinUI3.Extensions;
-using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.Models;
-using BetterLyrics.WinUI3.Models.Entities;
-using BetterLyrics.WinUI3.Services.FileSystemService;
-using BetterLyrics.WinUI3.Services.SettingsService;
+﻿using BetterLyrics.Core.Constants;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Extensions;
+using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models;
+using BetterLyrics.Core.Models.Entities;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -213,7 +213,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
             if (string.IsNullOrWhiteSpace(keyword)) return null;
 
             // Build the iTunes API URL
-            string url = $"{Constants.iTunes.QueryPrefix}term=" + WebUtility.UrlEncode(keyword).Replace("%20", "+") + "&country=" + countryCode + "&entity=album&media=music&limit=1";
+            string url = $"{iTunes.QueryPrefix}term=" + WebUtility.UrlEncode(keyword).Replace("%20", "+") + "&country=" + countryCode + "&entity=album&media=music&limit=1";
 
             // Make a request to the API
             using HttpResponseMessage response = await _iTunesHttpClinet.GetAsync(url, token);
@@ -221,7 +221,7 @@ namespace BetterLyrics.WinUI3.Services.AlbumArtSearchService
             string responseBody = await response.Content.ReadAsStringAsync(token);
 
             // Parse the JSON response
-            var data = JsonSerializer.Deserialize(responseBody, Serialization.SourceGenerationContext.Default.JsonElement);
+            var data = JsonSerializer.Deserialize(responseBody, Core.Serialization.SourceGenerationContext.Default.JsonElement);
 
             if (data.TryGetProperty("results", out var results) && results.ValueKind == JsonValueKind.Array && results.GetArrayLength() > 0)
             {

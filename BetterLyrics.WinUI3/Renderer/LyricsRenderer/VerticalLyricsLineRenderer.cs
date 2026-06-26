@@ -1,4 +1,5 @@
-﻿using BetterLyrics.WinUI3.Extensions;
+﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.WinUI3.Extensions;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using System;
@@ -21,8 +22,8 @@ namespace BetterLyrics.WinUI3.Renderer.LyricsRenderer
             var subLineRegion = Line.PrimaryTextRegions[regionIndex];
             double playedHeight = 0;
 
-            if (LyricsWindowStatus!.LyricsEffectSettings.WordByWordEffectMode == Enums.WordByWordEffectMode.Never ||
-                (LyricsWindowStatus.LyricsEffectSettings.WordByWordEffectMode == Enums.WordByWordEffectMode.Auto && !Line.IsPrimaryHasRealSyllableInfo))
+            if (LyricsWindowStatus!.LyricsEffectSettings.WordByWordEffectMode == WordByWordEffectMode.Never ||
+                (LyricsWindowStatus.LyricsEffectSettings.WordByWordEffectMode == WordByWordEffectMode.Auto && !Line.IsPrimaryHasRealSyllableInfo))
             {
                 playedHeight = subLineRegion.LayoutBounds.Height;
             }
