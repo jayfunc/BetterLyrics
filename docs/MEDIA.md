@@ -1,3 +1,5 @@
+**English** | [**中文**](MEDIA.CN.md)
+
 Thanks to the following media, open-source weeklies, and community developers for their recommendations and reviews:
 
 #### Media Coverage & In-Depth Reviews
