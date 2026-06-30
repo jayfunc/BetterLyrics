@@ -5,6 +5,7 @@ using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Settings;
+using BetterLyrics.Core.ViewModels;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Views;

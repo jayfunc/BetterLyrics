@@ -16,6 +16,7 @@ using System.Collections.ObjectModel;
 using System.Net;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
+using BetterLyrics.Core.ViewModels;
 using LyricsContentParser = BetterLyrics.Core.Helpers.Lyrics.ContentParser.LyricsContentParser;
 
 namespace BetterLyrics.WinUI3.ViewModels

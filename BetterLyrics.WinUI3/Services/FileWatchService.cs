@@ -2,6 +2,7 @@
 using BetterLyrics.Core.Events;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Settings;
+using BetterLyrics.Core.ViewModels;
 using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;

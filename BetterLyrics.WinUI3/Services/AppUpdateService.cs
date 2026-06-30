@@ -1,8 +1,8 @@
 ﻿using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.ViewModels;
 using BetterLyrics.WinUI3.Helper;
-using BetterLyrics.WinUI3.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Windows.AppNotifications;
 using Microsoft.Windows.AppNotifications.Builder;

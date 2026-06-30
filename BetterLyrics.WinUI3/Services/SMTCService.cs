@@ -20,6 +20,7 @@ using Windows.Media.Core;
 using Windows.Media.Playback;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using BetterLyrics.Core.ViewModels;
 
 namespace BetterLyrics.WinUI3.Services
 {

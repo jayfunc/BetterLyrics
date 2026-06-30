@@ -4,11 +4,6 @@
     <Platform Name="x64" />
     <Platform Name="x86" />
   </Configurations>
-  <Folder Name="/External/">
-    <Project Path="External/Impressionist/Impressionist/Impressionist.csproj" />
-    <Project Path="External/Lyricify-Lyrics-Helper/Lyricify.Lyrics.Helper/Lyricify.Lyrics.Helper.csproj" />
-    <Project Path="External/WindowsMediaController/WindowsMediaController/WindowsMediaController.csproj" />
-  </Folder>
   <Folder Name="/Plugins/">
     <Project Path="Plugins/BetterLyrics.Plugins.AI.Local.LLM/BetterLyrics.Plugins.AI.Local.LLM.csproj" />
     <Project Path="Plugins/BetterLyrics.Plugins.AI.Local.NMT/BetterLyrics.Plugins.AI.Local.NMT.csproj" Id="1a486be1-707e-41a0-ae40-a5b81f49925b" />
@@ -17,6 +12,15 @@
     <Project Path="Plugins/BetterLyrics.Plugins.Transliteration.Romaji/BetterLyrics.Plugins.Transliteration.Romaji.csproj" />
   </Folder>
   <Folder Name="/Plugins/_Dist/" />
+  <Project Path="BetterLyrics.Avalonia/BetterLyrics.Avalonia.Android/BetterLyrics.Avalonia.Android.csproj" Id="ebf388a9-bdf1-4569-9422-b63bf5155775">
+    <Deploy />
+  </Project>
+  <Project Path="BetterLyrics.Avalonia/BetterLyrics.Avalonia.Browser/BetterLyrics.Avalonia.Browser.csproj" Id="180b01ea-d763-425d-9766-4d448f4c4321" />
+  <Project Path="BetterLyrics.Avalonia/BetterLyrics.Avalonia.Desktop/BetterLyrics.Avalonia.Desktop.csproj" Id="ee4657e1-63c2-445d-8fd3-f7ced54e72f2" />
+  <Project Path="BetterLyrics.Avalonia/BetterLyrics.Avalonia.iOS/BetterLyrics.Avalonia.iOS.csproj" Id="855a1ba8-99f3-4ae6-864f-e8c3f8cedb91">
+    <Deploy />
+  </Project>
+  <Project Path="BetterLyrics.Avalonia/BetterLyrics.Avalonia/BetterLyrics.Avalonia.csproj" Id="65fc6a68-8427-4d7a-86c1-41316be0184f" />
   <Project Path="BetterLyrics.Core/BetterLyrics.Core.csproj" />
   <Project Path="BetterLyrics.DevTools/BetterLyrics.DevTools.csproj" Id="8ee58bf7-807d-486c-8d7d-c00bb9ec2b81" />
   <Project Path="BetterLyrics.WinUI3 (Package)/BetterLyrics.WinUI3 (Package).wapproj" Type="c7167f0d-bc9f-4e6e-afe1-012c56b48db5" Id="6576cd19-ef92-4099-b37d-e2d8ebdb6bf5">

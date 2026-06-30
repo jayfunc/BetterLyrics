@@ -5,6 +5,7 @@ using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.DbContext;
 using BetterLyrics.Core.Models.Entities;
 using BetterLyrics.Core.Models.Settings;
+using BetterLyrics.Core.ViewModels;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using BetterLyrics.WinUI3.ViewModels;

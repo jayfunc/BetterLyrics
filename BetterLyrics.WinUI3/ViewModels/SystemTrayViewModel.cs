@@ -1,5 +1,6 @@
 ﻿using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.ViewModels;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.Input;

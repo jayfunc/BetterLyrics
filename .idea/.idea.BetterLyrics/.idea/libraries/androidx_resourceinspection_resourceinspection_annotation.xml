@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="androidx.resourceinspection.resourceinspection-annotation">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.nuget/packages/xamarin.androidx.resourceinspection.annotation/1.0.1.24/jar/androidx.resourceinspection.resourceinspection-annotation.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

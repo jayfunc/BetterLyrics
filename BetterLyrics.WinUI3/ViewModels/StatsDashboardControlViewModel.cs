@@ -6,6 +6,7 @@ using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Entities;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.Models.Stats;
+using BetterLyrics.Core.ViewModels;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Services.AlbumArtSearchService;

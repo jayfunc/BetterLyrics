@@ -1,0 +1,20 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:BetterLyrics.Avalonia"
+             xmlns:styling="using:FluentAvalonia.Styling"
+             x:Class="BetterLyrics.Avalonia.App"
+             RequestedThemeVariant="Default">
+    <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+
+    <Application.DataTemplates>
+        <local:ViewLocator/>
+    </Application.DataTemplates>
+
+    <Application.Resources>
+        <FontFamily x:Key="SegoeFluentIcons">avares://BetterLyrics.Avalonia/Assets/Fonts/SegoeFluentIcons.ttf#Segoe Fluent Icons</FontFamily>
+    </Application.Resources>
+
+    <Application.Styles>
+        <styling:FluentAvaloniaTheme  />
+    </Application.Styles>
+</Application>

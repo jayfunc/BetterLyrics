@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Windows.Globalization;
+using BetterLyrics.Core.ViewModels;
 
 namespace BetterLyrics.WinUI3.Services
 {

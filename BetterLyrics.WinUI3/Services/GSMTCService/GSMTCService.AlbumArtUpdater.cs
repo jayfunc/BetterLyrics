@@ -5,7 +5,6 @@ using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Domain;
 using BetterLyrics.Core.Models.Settings;
-using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helper;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml;

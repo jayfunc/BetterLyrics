@@ -28,6 +28,7 @@ using System.Threading.Tasks;
 using Vanara.Windows.Shell;
 using Windows.Media.Control;
 using Windows.Storage.Streams;
+using BetterLyrics.Core.ViewModels;
 using WindowsMediaController;
 using static WindowsMediaController.MediaManager;
 

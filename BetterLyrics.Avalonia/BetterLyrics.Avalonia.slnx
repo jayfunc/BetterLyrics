@@ -1,0 +1,11 @@
+﻿<Solution>
+  <Project Path="BetterLyrics.Avalonia.Android/BetterLyrics.Avalonia.Android.csproj">
+    <Deploy />
+  </Project>
+  <Project Path="BetterLyrics.Avalonia.Browser/BetterLyrics.Avalonia.Browser.csproj" />
+  <Project Path="BetterLyrics.Avalonia.Desktop/BetterLyrics.Avalonia.Desktop.csproj" />
+  <Project Path="BetterLyrics.Avalonia.iOS/BetterLyrics.Avalonia.iOS.csproj">
+    <Deploy />
+  </Project>
+  <Project Path="BetterLyrics.Avalonia/BetterLyrics.Avalonia.csproj" />
+</Solution>
