@@ -1,7 +1,7 @@
 **English** | [**中文**](README.CN.md)
 
 <div align="center">
-  <img src="BetterLyrics.WinUI3/Assets/Logo.png" alt="Logo" width="120">
+  <img src="docs/assets/promotion/Logo.png" alt="Logo" width="120">
   
   <h1>BetterLyrics</h1>
 
@@ -161,7 +161,7 @@ If you like BetterLyrics, please consider supporting it. Your support helps keep
 
 | Web Platforms | Alipay/WeChat Pay |
 | :---: | :---: |
-| [PayPal](https://paypal.me/zhefangpay)<br><br>[Buy Me a Coffee](https://buymeacoffee.com/founchoo)<br><br>[爱发电 (Afdian)](https://afdian.com/a/jayfunc) | <img src="/BetterLyrics.WinUI3/Assets/AlipayWeChatPay.png" height="250"> |
+| [PayPal](https://paypal.me/zhefangpay)<br><br>[Buy Me a Coffee](https://buymeacoffee.com/founchoo)<br><br>[爱发电 (Afdian)](https://afdian.com/a/jayfunc) | <img src="docs/assets/donation/alipay_wechatpay.png" height="250"> |
 
 **[View the full Hall of Fame (Sponsors)](docs/SPONSORS.md)**
 
@@ -179,33 +179,7 @@ If you like BetterLyrics, please consider supporting it. Your support helps keep
 
 ## 📰 Media Mentions & Community Features
 
-> Special thanks to the following media outlets, open-source weeklies, and community developers for featuring and reviewing BetterLyrics!
-
-**Featured Reviews & Media Coverage**
-
-- [HelloGitHub] [Featured in HelloGitHub Monthly / Recommended Open-Source Project](https://hellogithub.com/repository/jayfunc/BetterLyrics)
-- [SSPAI] [BetterLyrics - An Immersive and Fluid Lyrics Visualizer Crafted for Windows](https://sspai.com/post/101028)
-- [LINUX DO] [Showcase: An Awesome Native Windows Lyrics App Developed in C# — BetterLyrics](https://linux.do/t/topic/1785379)
-
-**Curated Weeklies & App Directories**
-
-- [ireflux Weekly] [Featured in Weekly Share (Issue #342)](https://github.com/ireflux/weekly/blob/d1912dd15d33c7cefc8aa4d8fe65c8baf3678d76/weekly_2025/weekly_342.md?plain=1#L17)
-- [jishnu-kv] [WinUI-3-Apps-List (Curated Showcase of Outstanding WinUI 3 Apps)](https://github.com/jishnu-kv/WinUI-3-Apps-List#-music-players)
-- [Bajins' Digital Garden] [Curated Windows Software · Audio & Video Recommendations](https://www.bajins.com/System/Windows%E8%BD%AF%E4%BB%B6.html#%E9%9F%B3%E8%A7%86%E9%A2%91)
-- [xy Open-Source Bookmarks] [Curated Open-Source Project Directory](https://cqxy.qzz.io/xy-site/site/Bookmark/github/#github)
-
-**Developer Showcases & Tech Blogs**
-
-- [Johnwikix/original-sound-hq-player] [Original Sound HQ Player README — Code Reference & Attributed Credits](https://github.com/Johnwikix/original-sound-hq-player#%E4%BB%A3%E7%A0%81%E5%8F%82%E8%80%83)
-- [Kifranei/Ella] [Ella Open-Source Project README — Special Thanks](https://github.com/Kifranei/Ella#-%E8%87%B4%E8%B0%A2)
-- [LYlostyu] [TDX_BUS_DEMO Log (Page 37)](https://tdx-bus-demo.vercel.app/37)
-- [Chenshi Yujingxuan's Blog] [[Pinned] How to Live a Better Life (A Curated Essentials Guide)](https://blog.cyx2009.top/archives/better_life)
-- [Fengfeng] [How to Stream Localized & Indie Artists on Apple Music](https://wesley666.github.io/article/20c98ff0)
-- [Jinvic's Blog] [Personal Software Recommendations](https://github.com/Jinvic/personal-blog/blob/f67f6aabdc6a53648de71a574887a597d5626fce/content/posts/collection/%E4%B8%AA%E4%BA%BA%E5%90%91%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90.md?plain=1#L104)
-
-**Community Spotlights & Video Demos**
-
-- [Bilibili] [C-Pop Collection: "How on Earth Do You Translate Love"](https://www.bilibili.com/video/BV19eQ1B7EbY)
+Discover what the community and media are saying about BetterLyrics! Check out our full [Media & Community Features List](docs/MEDIA.md).
 
 ## 📄 License & Credits
 
