@@ -1,5 +1,5 @@
-﻿using BetterLyrics.Core.Interfaces.Plugins;
-using BetterLyrics.Core.Interfaces.Services;
+﻿using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Sdk.Interfaces.Plugins;
 
 namespace BetterLyrics.Core.Implementations.Services.PluginService
 {

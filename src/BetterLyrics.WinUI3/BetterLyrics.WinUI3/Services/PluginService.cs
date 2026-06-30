@@ -1,9 +1,10 @@
 ﻿using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Implementations.Services.PluginService;
-using BetterLyrics.Core.Interfaces.Plugins;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.ViewModels;
+using BetterLyrics.Sdk.Enums;
+using BetterLyrics.Sdk.Interfaces.Plugins;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.Extensions.Logging;
@@ -272,7 +273,7 @@ namespace BetterLyrics.WinUI3.Services
 
         public void SetSettingItem(string pluginId, string key, object value)
         {
-            _configurator.GetValueOrDefault(pluginId)?.Set(key, value, Core.Enums.ConfigChangedBy.Host);
+            _configurator.GetValueOrDefault(pluginId)?.Set(key, value, ConfigChangedBy.Host);
         }
 
         public object GetSettingItem(string pluginId, string key, object defaultValue)

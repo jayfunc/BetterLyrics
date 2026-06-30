@@ -4,7 +4,7 @@ using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Helpers;
-using BetterLyrics.Core.Interfaces.Plugins;
+using BetterLyrics.Sdk.Interfaces.Plugins;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Entities;

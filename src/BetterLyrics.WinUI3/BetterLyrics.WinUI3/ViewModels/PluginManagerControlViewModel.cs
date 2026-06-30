@@ -1,9 +1,9 @@
 ﻿using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
-using BetterLyrics.Core.Interfaces.Plugins;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.ViewModels;
+using BetterLyrics.Sdk.Interfaces.Plugins;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.Input;
