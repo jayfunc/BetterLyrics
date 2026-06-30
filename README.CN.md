@@ -1,7 +1,7 @@
  [**English**](README.md) | **中文**
 
 <div align="center">
-  <img src="BetterLyrics.WinUI3/Assets/Logo.png" alt="Logo" width="120">
+  <img src="docs/assets/promotion/Logo.png" alt="Logo" width="120">
   
   <h1>BetterLyrics</h1>
 
@@ -161,7 +161,7 @@
 
 | 网页平台 | 支付宝/微信支付 |
 | :---: | :---: |
-| [PayPal](https://paypal.me/zhefangpay)<br><br>[Buy Me a Coffee](https://buymeacoffee.com/founchoo)<br><br>[爱发电 (Afdian)](https://afdian.com/a/jayfunc) | <img src="/BetterLyrics.WinUI3/Assets/AlipayWeChatPay.png" height="240"> |
+| [PayPal](https://paypal.me/zhefangpay)<br><br>[Buy Me a Coffee](https://buymeacoffee.com/founchoo)<br><br>[爱发电 (Afdian)](https://afdian.com/a/jayfunc) | <img src="docs/assets/donation/alipay_wechatpay.png" height="240"> |
 
 [赞助者名单 (Hall of Fame)](docs/SPONSORS.md)
 
@@ -181,33 +181,7 @@
 
 ## 📰 社区提及与媒体推荐
 
-> 感谢以下媒体、开源周刊及社区开发者的推荐与评测！
-
-**媒体报道 & 深度评测**
-
-- [HelloGitHub] [入选 HelloGitHub 月刊 / HelloGitHub 开源项目推荐](https://hellogithub.com/repository/jayfunc/BetterLyrics)
-- [少数派 SSPAI] [BetterLyrics - 一款专为 Windows 打造的沉浸式流畅歌词显示软件](https://sspai.com/post/101028)
-- [LINUX DO 社区] [推荐一款大佬 C# 开发的 Windows 原生歌词应用 —— BetterLyrics](https://linux.do/t/topic/1785379)
-
-**优质周刊 & 应用收录**
-
-- [ireflux 技术周刊] [入选《每周分享》第 342 期](https://github.com/ireflux/weekly/blob/d1912dd15d33c7cefc8aa4d8fe65c8baf3678d76/weekly_2025/weekly_342.md?plain=1#L17)
-- [jishnu-kv] [WinUI-3-Apps-List（优秀 WinUI 3 应用收录）](https://github.com/jishnu-kv/WinUI-3-Apps-List#-music-players)
-- [Bajins 个人数字花园] [Windows 软件精选 · 音视频推荐](https://www.bajins.com/System/Windows%E8%BD%AF%E4%BB%B6.html#%E9%9F%B3%E8%A7%86%E9%A2%91)
-- [xy 开源书签] [GitHub 独立开源项目精选收录](https://cqxy.qzz.io/xy-site/site/Bookmark/github/#github)
-
-**开发者致谢 & 独立博客**
-
-- [Johnwikix/original-sound-hq-player] [Original Sound HQ Player README — 代码参考致谢](https://github.com/Johnwikix/original-sound-hq-player#%E4%BB%A3%E7%A0%81%E5%8F%82%E8%80%83)
-- [Kifranei/Ella] [Ella 开源项目 README — 特别致谢](https://github.com/Kifranei/Ella#-%E8%87%B4%E8%B0%A2)
-- [LYlostyu] [TDX_BUS_DEMO 教学第 37 页](https://tdx-bus-demo.vercel.app/37)
-- [沉石鱼惊旋的博客] [『置顶』如何获得更优质的生活（大杂烩指南）](https://blog.cyx2009.top/archives/better_life)
-- [锋风Fengfeng] [怎么在 Apple Music 听南京市民和升哥的歌](https://wesley666.github.io/article/20c98ff0)
-- [Jinvic 的个人博客] [个人向软件推荐](https://github.com/Jinvic/personal-blog/blob/f67f6aabdc6a53648de71a574887a597d5626fce/content/posts/collection/%E4%B8%AA%E4%BA%BA%E5%90%91%E8%BD%AF%E4%BB%B6%E6%8E%A8%E8%8D%90.md?plain=1#L104)
-
-**趣味联动 & 视频演示**
-
-- [哔哩哔哩] [【华语合集】“爱情到底要怎么翻译”](https://www.bilibili.com/video/BV19eQ1B7EbY)
+了解媒体与社区对 BetterLyrics 的评价，请参见 [社区提及与媒体推荐列表](docs/MEDIA.CN.md)。
 
 ## 📄 许可与致谢
 
