@@ -1,4 +1,4 @@
-﻿using BetterLyrics.Core.Interfaces.Plugins;
+﻿using BetterLyrics.Sdk.Interfaces.Plugins;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Text.Json.Serialization;
 

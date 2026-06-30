@@ -1,4 +1,4 @@
-﻿using BetterLyrics.Core.Interfaces.Plugins;
+﻿using BetterLyrics.Sdk.Interfaces.Plugins;
 using System.Text.Json;
 
 namespace BetterLyrics.Core.Implementations.Services.PluginService

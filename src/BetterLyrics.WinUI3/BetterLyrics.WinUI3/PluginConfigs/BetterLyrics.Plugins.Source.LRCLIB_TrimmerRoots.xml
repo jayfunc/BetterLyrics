@@ -1,9 +1,0 @@
-
-<linker>
-  <assembly fullname="System.Net.Http" preserve="all" />
-  <assembly fullname="System.Runtime" preserve="all" />
-  <assembly fullname="System.Text.Json" preserve="all" />
-  <assembly fullname="BetterLyrics.WinUI3">
-    <type fullname="BetterLyrics.WinUI3.PluginConfigs.BetterLyrics_Plugins_Source_LRCLIB_Config" preserve="all" />
-  </assembly>
-</linker>

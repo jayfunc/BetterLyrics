@@ -1,8 +1,0 @@
-
-<linker>
-  <assembly fullname="System.Runtime" preserve="all" />
-  <assembly fullname="System.Text.RegularExpressions" preserve="all" />
-  <assembly fullname="BetterLyrics.WinUI3">
-    <type fullname="BetterLyrics.WinUI3.PluginConfigs.BetterLyrics_Plugins_Translation_LocalAI_Config" preserve="all" />
-  </assembly>
-</linker>

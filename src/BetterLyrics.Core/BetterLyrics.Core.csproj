@@ -4,8 +4,6 @@
 		<TargetFrameworks>net10.0;net10.0-windows10.0.26100.0</TargetFrameworks>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<Nullable>enable</Nullable>
-		<Private>false</Private>
-		<ExcludeAssets>runtime</ExcludeAssets>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -27,6 +25,14 @@
 	  <PackageReference Include="WanaKana-net" Version="1.0.0" />
 	  <PackageReference Include="WebDav.Client" Version="2.9.0" />
 	  <PackageReference Include="z440.atl.core" Version="7.15.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Abstractions\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\BetterLyrics.Sdk\BetterLyrics.Sdk.csproj" />
 	</ItemGroup>
 
 </Project>

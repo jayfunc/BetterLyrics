@@ -1,5 +1,5 @@
-﻿using BetterLyrics.Core.Enums;
-using BetterLyrics.Core.Interfaces.Plugins;
+﻿using BetterLyrics.Sdk.Enums;
+using BetterLyrics.Sdk.Interfaces.Plugins;
 
 namespace BetterLyrics.Core.Implementations.Services.PluginService
 {

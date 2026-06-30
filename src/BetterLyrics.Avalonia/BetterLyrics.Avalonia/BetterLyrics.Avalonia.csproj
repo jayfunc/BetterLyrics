@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\BetterLyrics.Core\BetterLyrics.Core.csproj" />
+    <ProjectReference Include="..\..\BetterLyrics.Sdk\BetterLyrics.Sdk.csproj" />
   </ItemGroup>
 
   <ItemGroup>

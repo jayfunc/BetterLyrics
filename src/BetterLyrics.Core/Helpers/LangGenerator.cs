@@ -1,4 +1,4 @@
-﻿using BetterLyrics.Core.Abstractions.Plugins;
+﻿using BetterLyrics.Sdk.Abstractions.Plugins;
 using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 using System.Text.Encodings.Web;
