@@ -11,6 +11,7 @@ using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Threading.Tasks;
 using Windows.Storage;
+using BetterLyrics.Core.ViewModels;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {

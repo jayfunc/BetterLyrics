@@ -3,6 +3,7 @@
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
+using BetterLyrics.Core.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
 using System.Linq;

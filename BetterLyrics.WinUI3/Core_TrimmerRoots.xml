@@ -5,7 +5,7 @@
 
 	<assembly fullname="FlaUI.UIA3" preserve="all" />
 	<assembly fullname="Interop.UIAutomationClient" preserve="all" />
-	<assembly fullname="Lyricify.Lyrics.Helper" preserve="all" />
+	<assembly fullname="Lyricify.Lyrics.Helper.Jayfunc" preserve="all" />
 
 	<assembly fullname="Microsoft.EntityFrameworkCore" preserve="all" />
 	<assembly fullname="Microsoft.EntityFrameworkCore.Abstractions" preserve="all" />

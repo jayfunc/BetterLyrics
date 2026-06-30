@@ -137,13 +137,16 @@
 		<PackageReference Include="ComputeSharp.D2D1.WinUI" Version="3.2.0" />
 		<PackageReference Include="csharp-pinyin" Version="1.0.1" />
 		<PackageReference Include="DevWinUI.Controls" Version="9.9.4" />
+		<PackageReference Include="Dubya.WindowsMediaController.Jayfunc" Version="2.5.6" />
 		<PackageReference Include="F23.StringSimilarity" Version="7.0.1" />
 		<PackageReference Include="FlaUI.UIA3" Version="5.0.0" />
 		<PackageReference Include="FluentFTP" Version="54.2.0" />
 		<PackageReference Include="H.NotifyIcon.WinUI" Version="2.4.1" />
+		<PackageReference Include="Impressionist.Jayfunc" Version="1.0.0" />
 		<PackageReference Include="Interop.UIAutomationClient" Version="10.19041.0" />
 		<PackageReference Include="LiteFM" Version="1.0.3" />
 		<PackageReference Include="LiveChartsCore.SkiaSharpView.WinUI" Version="2.0.5" />
+		<PackageReference Include="Lyricify.Lyrics.Helper.Jayfunc" Version="0.1.4" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.9" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="10.0.9" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.9" />
@@ -159,7 +162,7 @@
 		  <PrivateAssets>all</PrivateAssets>
 		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
-		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.1839" />
+		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.2270" />
 		<PackageReference Include="Microsoft.WindowsAppSDK" Version="2.2.0" />
 		<PackageReference Include="MimeMapping" Version="4.0.0" />
 		<PackageReference Include="NAudio.Wasapi" Version="2.3.0" />
@@ -488,18 +491,7 @@
 		<Folder Include="PluginConfigs\" />
 	</ItemGroup>
 	<ItemGroup>
-	  <Reference Include="BetterLyrics.Core">
-	    <HintPath>..\BetterLyrics.Core\bin\Release\Publish\BetterLyrics.Core.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Impressionist">
-	    <HintPath>..\External\Impressionist\Impressionist\bin\Release\netstandard2.0\Impressionist.dll</HintPath>
-	  </Reference>
-	  <Reference Include="Lyricify.Lyrics.Helper">
-	    <HintPath>..\External\Lyricify-Lyrics-Helper\Lyricify.Lyrics.Helper\bin\Release\netstandard2.1\Lyricify.Lyrics.Helper.dll</HintPath>
-	  </Reference>
-	  <Reference Include="WindowsMediaController">
-	    <HintPath>..\External\WindowsMediaController\WindowsMediaController\bin\Release\net10.0-windows10.0.26100.0\WindowsMediaController.dll</HintPath>
-	  </Reference>
+	  <ProjectReference Include="..\BetterLyrics.Core\BetterLyrics.Core.csproj" />
 	</ItemGroup>
 	<ItemGroup>
 		<Content Update="Assets\Logo.png">

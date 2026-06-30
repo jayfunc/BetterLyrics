@@ -1,7 +1,7 @@
 ﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.Core.Models.Settings;
-
+using BetterLyrics.Core.ViewModels;
 using BetterLyrics.WinUI3.Services.GSMTCService;
 using CommunityToolkit.Mvvm.ComponentModel;
 

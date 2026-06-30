@@ -264,6 +264,7 @@ namespace BetterLyrics.WinUI3
                     .AddSingleton<MusicGalleryWindowViewModel>()
                     .AddTransient<NowPlayingPageViewModel>()
                     .AddTransient<NowPlayingBarViewModel>()
+
                     .BuildServiceProvider()
             );
         }

@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using BetterLyrics.Core.ViewModels;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {

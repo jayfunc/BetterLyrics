@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="androidx.window.window-core-jvm">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.nuget/packages/xamarin.androidx.window.windowcore.jvm/1.5.1.2/jar/androidx.window.window-core-jvm.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

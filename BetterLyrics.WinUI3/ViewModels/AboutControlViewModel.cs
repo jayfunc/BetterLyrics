@@ -19,6 +19,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.System;
+using BetterLyrics.Core.ViewModels;
 
 namespace BetterLyrics.WinUI3.ViewModels
 {
