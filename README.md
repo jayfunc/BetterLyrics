@@ -1,7 +1,7 @@
 **English** | [**中文**](README.CN.md)
 
 <div align="center">
-  <img src="docs/assets/promotion/Logo.png" alt="Logo" width="120">
+  <img src="docs/assets/promotion/logo.png" alt="Logo" width="120">
   
   <h1>BetterLyrics</h1>
 
