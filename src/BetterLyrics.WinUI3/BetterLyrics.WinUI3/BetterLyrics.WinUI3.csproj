@@ -16,6 +16,7 @@
 	<PropertyGroup>
 		<DefineConstants>$(DefineConstants);DISABLE_XAML_GENERATED_MAIN</DefineConstants>
 	</PropertyGroup>
+
 	<ItemGroup>
 		<Compile Remove="TemplateSelector\**" />
 		<Compile Remove="ViewModels\Lyrics\**" />
