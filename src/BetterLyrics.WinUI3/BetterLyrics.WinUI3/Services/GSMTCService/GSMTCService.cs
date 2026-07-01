@@ -405,7 +405,7 @@ namespace BetterLyrics.WinUI3.Services.GSMTCService
                     Title = fixedTitle ?? "N/A",
                     Artist = fixedArtist ?? "N/A",
                     Album = fixedAlbum ?? "N/A",
-                    DurationMs = mediaSession?.ControlSession.GetTimelineProperties().EndTime.TotalMilliseconds ?? 0,
+                    DurationMs = mediaSession?.ControlSession?.GetTimelineProperties()?.EndTime.TotalMilliseconds ?? 0,
                     PlayerId = sessionId,
                     SongId = songId,
                     LinkedFileName = linkedFileName,
