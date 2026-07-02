@@ -1,7 +1,7 @@
+using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Hooks;
-
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Windowing;
@@ -10,7 +10,7 @@ using Microsoft.UI.Xaml;
 namespace BetterLyrics.WinUI3.Views
 {
     public sealed partial class SettingsWindow : Window,
-        IRecipient<PropertyChangedMessage<ElementTheme>>
+        IRecipient<PropertyChangedMessage<AppTheme>>
     {
         public SettingsWindow()
         {
@@ -39,7 +39,7 @@ namespace BetterLyrics.WinUI3.Views
             WindowHook.OpenOrShowWindow<LyricsWindowSwitchWindow>();
         }
 
-        public void Receive(PropertyChangedMessage<ElementTheme> message)
+        public void Receive(PropertyChangedMessage<AppTheme> message)
         {
             if (message.Sender is GeneralSettings)
             {

@@ -180,6 +180,10 @@
                                         <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
                                     </ComboBox>
                                     <controls:ColorPickerButton SelectedColor="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsCustomPlayedStrokeFontColor, Converter={StaticResource AppColorToColorConverter}, Mode=TwoWay}" Visibility="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsPlayedStrokeFontColorType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}" />
+                                    <controls:ColorPickerButton
+                                        IsEnabled="False"
+                                        SelectedColor="{x:Bind LyricsWindowStatus.WindowPalette.PlayedTextStrokeColor, Converter={StaticResource AppColorToColorConverter}, Mode=OneWay}"
+                                        Visibility="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsPlayedStrokeFontColorType, Mode=OneWay, Converter={StaticResource EnumNegationToVisibilityConverter}, ConverterParameter=2}" />
                                 </StackPanel>
                             </controls:SettingsCard>
 
@@ -192,6 +196,10 @@
                                         <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
                                     </ComboBox>
                                     <controls:ColorPickerButton SelectedColor="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsCustomUnplayedStrokeFontColor, Converter={StaticResource AppColorToColorConverter}, Mode=TwoWay}" Visibility="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsUnplayedStrokeFontColorType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}" />
+                                    <controls:ColorPickerButton
+                                        IsEnabled="False"
+                                        SelectedColor="{x:Bind LyricsWindowStatus.WindowPalette.UnplayedTextStrokeColor, Converter={StaticResource AppColorToColorConverter}, Mode=OneWay}"
+                                        Visibility="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsUnplayedStrokeFontColorType, Mode=OneWay, Converter={StaticResource EnumNegationToVisibilityConverter}, ConverterParameter=2}" />
                                 </StackPanel>
                             </controls:SettingsCard>
 
@@ -204,6 +212,10 @@
                                         <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
                                     </ComboBox>
                                     <controls:ColorPickerButton SelectedColor="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsCustomBgFontColor, Converter={StaticResource AppColorToColorConverter}, Mode=TwoWay}" Visibility="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsBgFontColorType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}" />
+                                    <controls:ColorPickerButton
+                                        IsEnabled="False"
+                                        SelectedColor="{x:Bind LyricsWindowStatus.WindowPalette.NonCurrentLineFillColor, Converter={StaticResource AppColorToColorConverter}, Mode=OneWay}"
+                                        Visibility="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsBgFontColorType, Mode=OneWay, Converter={StaticResource EnumNegationToVisibilityConverter}, ConverterParameter=2}" />
                                 </StackPanel>
                             </controls:SettingsCard>
 
@@ -216,6 +228,10 @@
                                         <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
                                     </ComboBox>
                                     <controls:ColorPickerButton SelectedColor="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsCustomPlayedFgFontColor, Converter={StaticResource AppColorToColorConverter}, Mode=TwoWay}" Visibility="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsPlayedFgFontColorType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}" />
+                                    <controls:ColorPickerButton
+                                        IsEnabled="False"
+                                        SelectedColor="{x:Bind LyricsWindowStatus.WindowPalette.PlayedCurrentLineFillColor, Converter={StaticResource AppColorToColorConverter}, Mode=OneWay}"
+                                        Visibility="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsPlayedFgFontColorType, Mode=OneWay, Converter={StaticResource EnumNegationToVisibilityConverter}, ConverterParameter=2}" />
                                 </StackPanel>
                             </controls:SettingsCard>
 
@@ -228,6 +244,10 @@
                                         <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
                                     </ComboBox>
                                     <controls:ColorPickerButton SelectedColor="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsCustomUnplayedFgFontColor, Converter={StaticResource AppColorToColorConverter}, Mode=TwoWay}" Visibility="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsUnplayedFgFontColorType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}" />
+                                    <controls:ColorPickerButton
+                                        IsEnabled="False"
+                                        SelectedColor="{x:Bind LyricsWindowStatus.WindowPalette.UnplayedCurrentLineFillColor, Converter={StaticResource AppColorToColorConverter}, Mode=OneWay}"
+                                        Visibility="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsUnplayedFgFontColorType, Mode=OneWay, Converter={StaticResource EnumNegationToVisibilityConverter}, ConverterParameter=2}" />
                                 </StackPanel>
                             </controls:SettingsCard>
 
