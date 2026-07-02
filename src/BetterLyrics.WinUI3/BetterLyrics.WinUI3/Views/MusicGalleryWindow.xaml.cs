@@ -23,7 +23,7 @@ namespace BetterLyrics.WinUI3.Views
     /// </summary>
     public sealed partial class MusicGalleryWindow : Window,
          IRecipient<PropertyChangedMessage<BitmapImage?>>,
-         IRecipient<PropertyChangedMessage<ElementTheme>>,
+         IRecipient<PropertyChangedMessage<AppTheme>>,
          IRecipient<PropertyChangedMessage<PaletteGeneratorType>>
     {
         public MusicGalleryWindowViewModel ViewModel { get; private set; }
@@ -149,7 +149,7 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        public void Receive(PropertyChangedMessage<ElementTheme> message)
+        public void Receive(PropertyChangedMessage<AppTheme> message)
         {
             if (message.Sender == ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus)
             {

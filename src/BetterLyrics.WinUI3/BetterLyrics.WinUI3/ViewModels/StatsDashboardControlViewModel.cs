@@ -35,7 +35,7 @@ namespace BetterLyrics.WinUI3.ViewModels
 {
     public partial class StatsDashboardControlViewModel : BaseViewModel,
         IRecipient<PropertyChangedMessage<bool>>,
-        IRecipient<PropertyChangedMessage<ElementTheme>>
+        IRecipient<PropertyChangedMessage<AppTheme>>
     {
         private readonly IPlayHistoryService _playHistoryService;
         private readonly ILocalizationService _localizationService;
@@ -443,7 +443,7 @@ namespace BetterLyrics.WinUI3.ViewModels
             }
         }
 
-        public void Receive(PropertyChangedMessage<ElementTheme> message)
+        public void Receive(PropertyChangedMessage<AppTheme> message)
         {
             if (message.Sender is GeneralSettings)
             {

@@ -18,12 +18,17 @@ namespace BetterLyrics.Core.Extensions
                 return new AppColor((byte)(opacity * 255), color.R, color.G, color.B);
             }
 
+            /// <summary>
+            /// 
+            /// </summary>
+            /// <param name="brightness">0-1</param>
+            /// <returns></returns>
             public AppColor WithBrightness(double brightness)
             {
                 // 确保亮度因子在合理范围内
                 brightness = Math.Max(0, Math.Min(1, brightness));
 
-                var (h, s, l) = ColorHelper.ToHsl(color);
+                var (h, s, _) = ColorHelper.ToHsl(color);
 
                 return ColorHelper.FromHsl(h, s, brightness);
             }

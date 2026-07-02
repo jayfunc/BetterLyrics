@@ -34,7 +34,7 @@ namespace BetterLyrics.WinUI3.Views
         IRecipient<PropertyChangedMessage<string>>,
         IRecipient<PropertyChangedMessage<DockPlacement>>,
         IRecipient<PropertyChangedMessage<TitleBarArea>>,
-        IRecipient<PropertyChangedMessage<ElementTheme>>,
+        IRecipient<PropertyChangedMessage<AppTheme>>,
         IRecipient<PropertyChangedMessage<BitmapImage?>>,
         IRecipient<PropertyChangedMessage<LyricsFontColorType>>,
         IRecipient<PropertyChangedMessage<AppColor>>,
@@ -882,7 +882,7 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        public void Receive(PropertyChangedMessage<ElementTheme> message)
+        public void Receive(PropertyChangedMessage<AppTheme> message)
         {
             if (message.Sender == LyricsWindowStatus)
             {

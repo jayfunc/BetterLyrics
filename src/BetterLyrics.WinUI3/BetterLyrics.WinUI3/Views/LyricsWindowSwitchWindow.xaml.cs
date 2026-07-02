@@ -26,7 +26,7 @@ namespace BetterLyrics.WinUI3.Views
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class LyricsWindowSwitchWindow : Window,
-        IRecipient<PropertyChangedMessage<ElementTheme>>,
+        IRecipient<PropertyChangedMessage<AppTheme>>,
         IRecipient<PropertyChangedMessage<WindowStatus>>,
         IRecipient<PropertyChangedMessage<List<string>>>,
         IRecipient<PropertyChangedMessage<bool>>
@@ -162,7 +162,7 @@ namespace BetterLyrics.WinUI3.Views
             }
         }
 
-        public void Receive(PropertyChangedMessage<ElementTheme> message)
+        public void Receive(PropertyChangedMessage<AppTheme> message)
         {
             if (message.Sender is GeneralSettings)
             {

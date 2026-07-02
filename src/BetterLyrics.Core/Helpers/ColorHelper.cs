@@ -85,6 +85,11 @@ namespace BetterLyrics.Core.Helpers
         public static AppColor GetAccentColor(IntPtr myHwnd, WindowPixelSampleMode mode) =>
             _systemUiProvider.GetAccentColor(myHwnd, mode);
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns>H: 0-360, S: 0-1, L: 0-1</returns>
         public static (double, double, double) ToHsl(AppColor color)
         {
             double r = color.R / 255.0;
@@ -113,14 +118,22 @@ namespace BetterLyrics.Core.Helpers
                 h /= 6.0;
             }
 
-            return (h * 360, s * 100, l * 100); // H: 0-360, S: 0-100, L: 0-100
+            return (h * 360, s, l); // h * 360: 0-360, s: 0-1, l: 0-1
         }
 
-        public static AppColor FromHsl(double h, double s, double l, byte a = 255)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="h">0-360</param>
+        /// <param name="s">0-1</param>
+        /// <param name="l">0-1</param>
+        /// <param name="a">0-1</param>
+        /// <returns></returns>
+        public static AppColor FromHsl(double h, double s, double l, double a = 1)
         {
             double hNorm = h / 360.0;
-            double sNorm = s / 100.0;
-            double lNorm = l / 100.0;
+            double sNorm = s;
+            double lNorm = l;
 
             double r, g, b;
 
@@ -138,7 +151,7 @@ namespace BetterLyrics.Core.Helpers
                 b = HueToRgb(p, q, hNorm - 1.0 / 3.0);
             }
 
-            return new AppColor(a, (byte)Math.Round(r * 255), (byte)Math.Round(g * 255), (byte)Math.Round(b * 255));
+            return new AppColor((byte)Math.Round(a * 255), (byte)Math.Round(r * 255), (byte)Math.Round(g * 255), (byte)Math.Round(b * 255));
         }
 
         private static double HueToRgb(double p, double q, double t)
