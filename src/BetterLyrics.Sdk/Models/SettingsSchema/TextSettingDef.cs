@@ -1,7 +1,6 @@
-﻿namespace BetterLyrics.Sdk.Models.SettingsSchema
+﻿namespace BetterLyrics.Sdk.Models.SettingsSchema;
+
+public class TextSettingDef : SettingDef
 {
-    public class TextSettingDef : SettingDef
-    {
-        public bool IsPassword { get; set; }
-    }
+    public bool IsPassword { get; set; }
 }

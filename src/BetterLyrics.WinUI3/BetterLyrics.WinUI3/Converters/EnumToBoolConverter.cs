@@ -1,45 +1,33 @@
-﻿using Microsoft.UI.Xaml.Data;
-using System;
+﻿using System;
+using Microsoft.UI.Xaml.Data;
 
-namespace BetterLyrics.WinUI3.Converters
+namespace BetterLyrics.WinUI3.Converters;
+
+public partial class EnumToBoolConverter : IValueConverter
 {
-    public partial class EnumToBoolConverter : IValueConverter
+    public object Convert(object value, Type targetType, object parameter, string language)
     {
-        public object Convert(object value, Type targetType, object parameter, string language)
-        {
-            if (value == null || parameter == null)
-            {
-                return false;
-            }
+        if (value == null || parameter == null) return false;
 
-            if (IsMatch(value, parameter))
-            {
-                return true;
-            }
+        if (IsMatch(value, parameter)) return true;
 
-            return false;
-        }
+        return false;
+    }
 
-        public object ConvertBack(object value, Type targetType, object parameter, string language)
-        {
-            throw new NotImplementedException();
-        }
+    public object ConvertBack(object value, Type targetType, object parameter, string language)
+    {
+        throw new NotImplementedException();
+    }
 
-        private bool IsMatch(object value, object parameter)
-        {
-            string? valueString;
+    private bool IsMatch(object value, object parameter)
+    {
+        string? valueString;
 
-            if (value.GetType().IsEnum)
-            {
-                valueString = ((int)value).ToString();
-            }
-            else
-            {
-                valueString = value.ToString();
-            }
+        if (value.GetType().IsEnum)
+            valueString = ((int)value).ToString();
+        else
+            valueString = value.ToString();
 
-            return valueString == parameter.ToString();
-        }
-
+        return valueString == parameter.ToString();
     }
 }

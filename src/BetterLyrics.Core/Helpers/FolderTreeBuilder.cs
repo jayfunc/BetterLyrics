@@ -1,92 +1,90 @@
-﻿using BetterLyrics.Core.Models;
+﻿using System.Collections.ObjectModel;
+using System.Net;
+using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Settings;
-using System.Collections.ObjectModel;
 
-namespace BetterLyrics.Core.Helpers
+namespace BetterLyrics.Core.Helpers;
+
+public static class FolderTreeBuilder
 {
-    public static class FolderTreeBuilder
+    public static ObservableCollection<FolderNode> Build(List<ExtendedTrack> tracks,
+        List<MediaFolder> folderConfigs)
     {
-        public static ObservableCollection<FolderNode> Build(List<ExtendedTrack> tracks,
-            List<MediaFolder> folderConfigs)
+        var rootNodes = new ObservableCollection<FolderNode>();
+
+        // 按 MediaFolderId 分组
+        var folderGroups = tracks.GroupBy(t => t.MediaFolderId);
+
+        foreach (var group in folderGroups)
         {
-            var rootNodes = new ObservableCollection<FolderNode>();
+            var config = folderConfigs.FirstOrDefault(f => f.Id == group.Key);
+            if (config == null) continue;
 
-            // 按 MediaFolderId 分组
-            var folderGroups = tracks.GroupBy(t => t.MediaFolderId);
+            var baseUri = config.GetStandardUri().AbsoluteUri.TrimEnd('/');
 
-            foreach (var group in folderGroups)
+            var rootNode = new FolderNode
             {
-                var config = folderConfigs.FirstOrDefault(f => f.Id == group.Key);
-                if (config == null) continue;
+                SourceType = config.SourceType,
+                FolderName = config.Name ?? config.ConnectionSummary, // 显示用户自定义的名字
+                MediaFolderId = group.Key,
+                FolderPath = baseUri,
+                IsExpanded = true
+            };
 
-                string baseUri = config.GetStandardUri().AbsoluteUri.TrimEnd('/');
-
-                var rootNode = new FolderNode
+            foreach (var track in group)
+                try
                 {
-                    SourceType = config.SourceType,
-                    FolderName = config.Name ?? config.ConnectionSummary, // 显示用户自定义的名字
-                    MediaFolderId = group.Key,
-                    FolderPath = baseUri,
-                    IsExpanded = true
-                };
+                    if (!track.Uri.StartsWith(baseUri)) continue; // 防御性编程
 
-                foreach (var track in group)
-                {
-                    try
+                    var relativePart = track.Uri.Substring(baseUri.Length);
+
+                    var segments = relativePart
+                        .Split('/', StringSplitOptions.RemoveEmptyEntries)
+                        .Select(s => WebUtility.UrlDecode(s))
+                        .ToArray();
+
+                    if (segments.Length > 1) // 长度大于1说明在子文件夹里
                     {
-                        if (!track.Uri.StartsWith(baseUri)) continue; // 防御性编程
-
-                        string relativePart = track.Uri.Substring(baseUri.Length);
-
-                        var segments = relativePart
-                            .Split('/', StringSplitOptions.RemoveEmptyEntries)
-                            .Select(s => System.Net.WebUtility.UrlDecode(s))
-                            .ToArray();
-
-                        if (segments.Length > 1) // 长度大于1说明在子文件夹里
-                        {
-                            var folderSegments = segments.Take(segments.Length - 1).ToArray();
-                            CreateFolderStructure(rootNode, folderSegments, baseUri);
-                        }
-                    }
-                    catch
-                    {
+                        var folderSegments = segments.Take(segments.Length - 1).ToArray();
+                        CreateFolderStructure(rootNode, folderSegments, baseUri);
                     }
                 }
+                catch
+                {
+                }
 
-                rootNodes.Add(rootNode);
-            }
-
-            return rootNodes;
+            rootNodes.Add(rootNode);
         }
 
-        private static void CreateFolderStructure(FolderNode parent, string[] segments, string rootBaseUri)
+        return rootNodes;
+    }
+
+    private static void CreateFolderStructure(FolderNode parent, string[] segments, string rootBaseUri)
+    {
+        var current = parent;
+        var currentFullPath = parent.FolderPath;
+
+        foreach (var segmentName in segments)
         {
-            var current = parent;
-            string currentFullPath = parent.FolderPath;
+            var existingChild = current.SubFolders.FirstOrDefault(f => f.FolderName == segmentName);
 
-            foreach (var segmentName in segments)
+            currentFullPath += "/" + WebUtility.UrlEncode(segmentName);
+
+            if (existingChild == null)
             {
-                var existingChild = current.SubFolders.FirstOrDefault(f => f.FolderName == segmentName);
-
-                currentFullPath += "/" + System.Net.WebUtility.UrlEncode(segmentName);
-
-                if (existingChild == null)
+                var newFolder = new FolderNode
                 {
-                    var newFolder = new FolderNode
-                    {
-                        FolderName = segmentName,
-                        FolderPath = currentFullPath, // 存完整的 URI
-                        MediaFolderId = parent.MediaFolderId
-                    };
-                    current.SubFolders.Add(newFolder);
-                    current = newFolder;
-                }
-                else
-                {
-                    current = existingChild;
-                    currentFullPath = existingChild.FolderPath;
-                }
+                    FolderName = segmentName,
+                    FolderPath = currentFullPath, // 存完整的 URI
+                    MediaFolderId = parent.MediaFolderId
+                };
+                current.SubFolders.Add(newFolder);
+                current = newFolder;
+            }
+            else
+            {
+                current = existingChild;
+                currentFullPath = existingChild.FolderPath;
             }
         }
     }

@@ -1,14 +1,13 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-namespace BetterLyrics.Core.Enums
+namespace BetterLyrics.Core.Enums;
+
+public enum LyricsFormat
 {
-    public enum LyricsFormat
-    {
-        Lrc,
-        Eslrc,
-        Ttml,
-        Qrc,
-        Krc,
-        NotSpecified,
-    }
+    Lrc,
+    Eslrc,
+    Ttml,
+    Qrc,
+    Krc,
+    NotSpecified
 }

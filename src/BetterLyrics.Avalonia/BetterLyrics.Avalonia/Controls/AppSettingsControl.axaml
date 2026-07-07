@@ -1,0 +1,284 @@
+<UserControl
+    x:Class="BetterLyrics.Avalonia.Controls.AppSettingsControl"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:constants="using:BetterLyrics.Core.Constants"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="using:BetterLyrics.Core.Helpers"
+    xmlns:local="using:BetterLyrics.Avalonia.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:BetterLyrics.Core.Models"
+    xmlns:strings="using:BetterLyrics.Avalonia.Strings"
+    xmlns:ui="using:FluentAvalonia.UI.Controls"
+    xmlns:vm="using:BetterLyrics.Core.ViewModels"
+    x:DataType="vm:AppSettingsControlViewModel"
+    mc:Ignorable="d">
+
+    <Grid>
+        <ScrollViewer Classes="SettingsScrollViewerStyle">
+            <Border Classes="SettingsBorderStyle">
+                <StackPanel Spacing="{DynamicResource SettingsCardSpacing}">
+
+                    <TextBlock Text="{x:Static strings:Resources.SettingsPageAppAppearance_Text}"
+                               Classes="SettingsSectionHeaderTextBlockStyle" />
+
+                    <ui:FASettingsExpander Header="{x:Static strings:Resources.AppSettingsControlTheme_Header}">
+                        <ui:FASettingsExpander.IconSource>
+                            <ui:FAFontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xE790;" />
+                        </ui:FASettingsExpander.IconSource>
+                        <ui:FASettingsExpander.Footer>
+                            <ui:FAComboBox x:Name="ThemeComboBox"
+                                      SelectedIndex="{Binding AppSettings.GeneralSettings.AppTheme, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                <ui:FAComboBoxItem Content="{x:Static strings:Resources.SettingsPageFollowSystem_Content}" />
+                                <ui:FAComboBoxItem Content="{x:Static strings:Resources.SettingsPageLight_Content}" />
+                                <ui:FAComboBoxItem Content="{x:Static strings:Resources.SettingsPageDark_Content}" />
+                            </ui:FAComboBox>
+                        </ui:FASettingsExpander.Footer>
+                    </ui:FASettingsExpander>
+
+                    <ui:FASettingsExpander Header="{x:Static strings:Resources.SettingsPageLanguage_Header}" IsExpanded="True">
+                        <ui:FASettingsExpander.IconSource>
+                            <ui:FAFontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xF2B7;" />
+                        </ui:FASettingsExpander.IconSource>
+                        <ui:FASettingsExpander.Footer>
+                            <ui:FAComboBox ItemsSource="{Binding Source={x:Static helpers:LanguageHelper.SupportedDisplayLanguages}}"
+                                      SelectedIndex="{Binding AppSettings.GeneralSettings.LanguageCode, Mode=TwoWay, Converter={StaticResource DisplayLanguageCodeToIndexConverter}}">
+                                <ui:FAComboBox.ItemTemplate>
+                                    <DataTemplate x:DataType="models:ExtendedLanguage">
+                                        <StackPanel Orientation="Horizontal" Spacing="6">
+                                            <TextBlock Text="{Binding Name}" />
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ui:FAComboBox.ItemTemplate>
+                            </ui:FAComboBox>
+                        </ui:FASettingsExpander.Footer>
+                        
+                        <ui:FASettingsExpander.Items>
+                            <ui:FASettingsExpanderItem>
+                                <ui:FASettingsExpanderItem.Footer>
+                                    <Button Content="{x:Static strings:Resources.SettingsPageRestart_Content}" Command="{Binding RestartAppCommand}" />
+                                </ui:FASettingsExpanderItem.Footer>
+                            </ui:FASettingsExpanderItem>
+
+                            <ui:FASettingsExpanderItem>
+                                <ui:FASettingsExpanderItem.Content>
+                                    <ui:FAInfoBar IsClosable="False" IsOpen="True">
+                                        <local:ExternalLinkButton Content="{x:Static strings:Resources.SettingsPageHelpUsTranslate_Content}"
+                                                                  NavigateUri="{x:Static constants:Link.Crowdin}" />
+                                    </ui:FAInfoBar>
+                                </ui:FASettingsExpanderItem.Content>
+                            </ui:FASettingsExpanderItem>
+                        </ui:FASettingsExpander.Items>
+                    </ui:FASettingsExpander>
+
+                    <ui:FASettingsExpander Header="{x:Static strings:Resources.AppSettingsControlEnhanceControlAnimations_Header}" IsExpanded="True">
+                        <ui:FASettingsExpander.IconSource>
+                            <ui:FAFontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xF4A5;" />
+                        </ui:FASettingsExpander.IconSource>
+                        <ui:FASettingsExpander.Footer>
+                            <ToggleSwitch IsChecked="{Binding AppSettings.GeneralSettings.EnhanceControlInteractiveAnimations, Mode=TwoWay}" />
+                        </ui:FASettingsExpander.Footer>
+                        <ui:FASettingsExpander.Items>
+                            <ui:FASettingsExpanderItem>
+                                <ui:FASettingsExpanderItem.Footer>
+                                    <Button Content="{x:Static strings:Resources.SettingsPageRestart_Content}" Command="{Binding RestartAppCommand}" />
+                                </ui:FASettingsExpanderItem.Footer>
+                            </ui:FASettingsExpanderItem>
+                        </ui:FASettingsExpander.Items>
+                    </ui:FASettingsExpander>
+
+                    <TextBlock Text="{x:Static strings:Resources.SettingsPageStartup_Text}" Classes="SettingsSectionHeaderTextBlockStyle" />
+
+                    <ui:FASettingsExpander Header="{x:Static strings:Resources.SettingsPageAutoStart_Header}"
+                                       Command="{Binding OpenTaskMgrStartupAppsCommand}"
+                                       IsClickEnabled="True">
+                        <ui:FASettingsExpander.IconSource>
+                            <ui:FAFontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xF71C;" />
+                        </ui:FASettingsExpander.IconSource>
+                    </ui:FASettingsExpander>
+
+                    <ui:FASettingsExpander Header="{x:Static strings:Resources.SettingsPageAutoOpenSplashWindow_Header}">
+                        <ui:FASettingsExpander.IconSource>
+                            <ui:FAFontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xE786;" />
+                        </ui:FASettingsExpander.IconSource>
+                        <ui:FASettingsExpander.Footer>
+                            <ToggleSwitch IsChecked="{Binding AppSettings.GeneralSettings.ShowSplashScreen, Mode=TwoWay}" />
+                        </ui:FASettingsExpander.Footer>
+                    </ui:FASettingsExpander>
+
+                    <ui:FASettingsExpander Header="{x:Static strings:Resources.SettingsPageAutoOpenMusicGalleryWindow_Header}">
+                        <ui:FASettingsExpander.IconSource>
+                            <ui:FAFontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xE8F1;" />
+                        </ui:FASettingsExpander.IconSource>
+                        <ui:FASettingsExpander.Footer>
+                            <ToggleSwitch IsChecked="{Binding AppSettings.MusicGallerySettings.AutoOpen, Mode=TwoWay}" />
+                        </ui:FASettingsExpander.Footer>
+                    </ui:FASettingsExpander>
+
+                    <ui:FASettingsExpander Header="{x:Static strings:Resources.SettingsPageAutoOpenLyricsWindow_Header}">
+                        <ui:FASettingsExpander.IconSource>
+                            <ui:FAFontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xE90B;" />
+                        </ui:FASettingsExpander.IconSource>
+                        <ui:FASettingsExpander.Footer>
+                            <ToggleSwitch IsChecked="{Binding AppSettings.GeneralSettings.AutoStartLyricsWindow, Mode=TwoWay}" />
+                        </ui:FASettingsExpander.Footer>
+                    </ui:FASettingsExpander>
+
+                    <TextBlock Text="{x:Static strings:Resources.SettingsPageMusicGallery_Text}"
+                               Classes="SettingsSectionHeaderTextBlockStyle" />
+
+                    <ui:FASettingsExpander Header="{x:Static strings:Resources.SettingsPageAutoPlayWhenOpenMusicGalleryWindow_Header}">
+                        <ui:FASettingsExpander.IconSource>
+                            <ui:FAFontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xE768;" />
+                        </ui:FASettingsExpander.IconSource>
+                        <ui:FASettingsExpander.Footer>
+                            <ToggleSwitch IsChecked="{Binding AppSettings.MusicGallerySettings.AutoPlay, Mode=TwoWay}" />
+                        </ui:FASettingsExpander.Footer>
+                    </ui:FASettingsExpander>
+
+                    <ui:FASettingsExpander Header="{x:Static strings:Resources.SettingsPageStopTrackOnGalleryWindowClosed_Header}">
+                        <ui:FASettingsExpander.IconSource>
+                            <ui:FAFontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xE71A;" />
+                        </ui:FASettingsExpander.IconSource>
+                        <ui:FASettingsExpander.Footer>
+                            <ToggleSwitch IsChecked="{Binding AppSettings.MusicGallerySettings.StopOnWindowClosed, Mode=TwoWay}" />
+                        </ui:FASettingsExpander.Footer>
+                    </ui:FASettingsExpander>
+
+                    <ui:FASettingsExpander Header="{x:Static strings:Resources.SettingsPageExitOnGalleryWindowClosed_Header}">
+                        <ui:FASettingsExpander.IconSource>
+                            <ui:FAFontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xE711;" />
+                        </ui:FASettingsExpander.IconSource>
+                        <ui:FASettingsExpander.Footer>
+                            <ToggleSwitch IsChecked="{Binding AppSettings.MusicGallerySettings.ExitOnWindowClosed, Mode=TwoWay}" />
+                        </ui:FASettingsExpander.Footer>
+                    </ui:FASettingsExpander>
+
+                    <TextBlock Text="{x:Static strings:Resources.SettingsPageLyricsWindow_Text}"
+                               Classes="SettingsSectionHeaderTextBlockStyle" />
+
+                    <ui:FASettingsExpander Header="{x:Static strings:Resources.SettingsPageExitOnLyricsWindowClosed_Header}">
+                        <ui:FASettingsExpander.IconSource>
+                            <ui:FAFontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xE711;" />
+                        </ui:FASettingsExpander.IconSource>
+                        <ui:FASettingsExpander.Footer>
+                            <ToggleSwitch IsChecked="{Binding AppSettings.GeneralSettings.ExitOnLyricsWindowClosed, Mode=TwoWay}" />
+                        </ui:FASettingsExpander.Footer>
+                    </ui:FASettingsExpander>
+
+                    <TextBlock Text="{x:Static strings:Resources.SettingsPageShortcut_Text}"
+                               Classes="SettingsSectionHeaderTextBlockStyle" />
+
+                    <ui:FASettingsExpander Header="{x:Static strings:Resources.SettingsPageShowHideHotKey_Header}">
+                        <ui:FASettingsExpander.IconSource>
+                            <ui:FAFontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xEDA7;" />
+                        </ui:FASettingsExpander.IconSource>
+                        <ui:FASettingsExpander.Footer>
+                            <local:ShortcutTextBox Shortcut="{Binding AppSettings.GeneralSettings.ShowOrHideLyricsWindowShortcut, Mode=TwoWay}" />
+                        </ui:FASettingsExpander.Footer>
+                    </ui:FASettingsExpander>
+
+                    <ui:FASettingsExpander Header="{x:Static strings:Resources.SettingsPageLyricsWindowSwitchHotKey_Header}">
+                        <ui:FASettingsExpander.IconSource>
+                            <ui:FAFontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xEDA7;" />
+                        </ui:FASettingsExpander.IconSource>
+                        <ui:FASettingsExpander.Footer>
+                            <local:ShortcutTextBox Shortcut="{Binding AppSettings.GeneralSettings.LyricsWindowSwitchShortcut, Mode=TwoWay}" />
+                        </ui:FASettingsExpander.Footer>
+                    </ui:FASettingsExpander>
+
+                    <ui:FASettingsExpander Header="{x:Static strings:Resources.SettingsPagePlayOrPauseSongHotKey_Header}">
+                        <ui:FASettingsExpander.IconSource>
+                            <ui:FAFontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xEDA7;" />
+                        </ui:FASettingsExpander.IconSource>
+                        <ui:FASettingsExpander.Footer>
+                            <local:ShortcutTextBox Shortcut="{Binding AppSettings.GeneralSettings.PlayOrPauseShortcut, Mode=TwoWay}" />
+                        </ui:FASettingsExpander.Footer>
+                    </ui:FASettingsExpander>
+
+                    <ui:FASettingsExpander Header="{x:Static strings:Resources.SettingsPageNextSongHotKey_Header}">
+                        <ui:FASettingsExpander.IconSource>
+                            <ui:FAFontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xEDA7;" />
+                        </ui:FASettingsExpander.IconSource>
+                        <ui:FASettingsExpander.Footer>
+                            <local:ShortcutTextBox Shortcut="{Binding AppSettings.GeneralSettings.NextSongShortcut, Mode=TwoWay}" />
+                        </ui:FASettingsExpander.Footer>
+                    </ui:FASettingsExpander>
+
+                    <ui:FASettingsExpander Header="{x:Static strings:Resources.SettingsPagePreviousSongHotKey_Header}">
+                        <ui:FASettingsExpander.IconSource>
+                            <ui:FAFontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xEDA7;" />
+                        </ui:FASettingsExpander.IconSource>
+                        <ui:FASettingsExpander.Footer>
+                            <local:ShortcutTextBox Shortcut="{Binding AppSettings.GeneralSettings.PreviousSongShortcut, Mode=TwoWay}" />
+                        </ui:FASettingsExpander.Footer>
+                    </ui:FASettingsExpander>
+
+                    <TextBlock Text="{x:Static strings:Resources.AppSettingsControlSystemTray_Text}"
+                               Classes="SettingsSectionHeaderTextBlockStyle" />
+
+                    <ui:FASettingsExpander Header="{x:Static strings:Resources.AppSettingsControlSystemTrayColorfulIcon_Header}">
+                        <ui:FASettingsExpander.IconSource>
+                            <ui:FAFontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xE790;" />
+                        </ui:FASettingsExpander.IconSource>
+                        <ui:FASettingsExpander.Footer>
+                            <ToggleSwitch IsChecked="{Binding AppSettings.SystemTraySettings.ColorfulSystemTrayIcon, Mode=TwoWay}" />
+                        </ui:FASettingsExpander.Footer>
+                    </ui:FASettingsExpander>
+
+                    <ui:FASettingsExpander Header="{x:Static strings:Resources.AppSettingsControlSystemTrayClickCallback_Header}">
+                        <ui:FASettingsExpander.IconSource>
+                            <ui:FAFontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xE8B0;" />
+                        </ui:FASettingsExpander.IconSource>
+                        <ui:FASettingsExpander.Footer>
+                            <ui:FAComboBox SelectedIndex="{Binding AppSettings.SystemTraySettings.SystemTrayClickCallback, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                <ui:FAComboBoxItem Content="{x:Static strings:Resources.AppSettingsControlSystemTrayCallbackNone_Content}" />
+                                <ui:FAComboBoxItem Content="{x:Static strings:Resources.AppSettingsControlSystemTrayCallbackLyricsWindowSwitchWindow_Content}" />
+                                <ui:FAComboBoxItem Content="{x:Static strings:Resources.AppSettingsControlSystemTrayCallbackLyricsSearchWindow_Content}" />
+                                <ui:FAComboBoxItem Content="{x:Static strings:Resources.AppSettingsControlSystemTrayCallbackMusicGalleryWindow_Content}" />
+                                <ui:FAComboBoxItem Content="{x:Static strings:Resources.AppSettingsControlSystemTrayCallbackStatsWindow_Content}" />
+                                <ui:FAComboBoxItem Content="{x:Static strings:Resources.AppSettingsControlSystemTrayCallbackLyricsCardWindow_Content}" />
+                                <ui:FAComboBoxItem Content="{x:Static strings:Resources.AppSettingsControlSystemTrayCallbackSettingsWindow_Content}" />
+                            </ui:FAComboBox>
+                        </ui:FASettingsExpander.Footer>
+                    </ui:FASettingsExpander>
+
+                    <ui:FASettingsExpander Header="{x:Static strings:Resources.AppSettingsControlSystemTrayDoubleClickCallback_Header}">
+                        <ui:FASettingsExpander.IconSource>
+                            <ui:FAFontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xE7C4;" />
+                        </ui:FASettingsExpander.IconSource>
+                        <ui:FASettingsExpander.Footer>
+                            <ui:FAComboBox SelectedIndex="{Binding AppSettings.SystemTraySettings.SystemTrayDoubleClickCallback, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                <ui:FAComboBoxItem Content="{x:Static strings:Resources.AppSettingsControlSystemTrayCallbackNone_Content}" />
+                                <ui:FAComboBoxItem Content="{x:Static strings:Resources.AppSettingsControlSystemTrayCallbackLyricsWindowSwitchWindow_Content}" />
+                                <ui:FAComboBoxItem Content="{x:Static strings:Resources.AppSettingsControlSystemTrayCallbackLyricsSearchWindow_Content}" />
+                                <ui:FAComboBoxItem Content="{x:Static strings:Resources.AppSettingsControlSystemTrayCallbackMusicGalleryWindow_Content}" />
+                                <ui:FAComboBoxItem Content="{x:Static strings:Resources.AppSettingsControlSystemTrayCallbackStatsWindow_Content}" />
+                                <ui:FAComboBoxItem Content="{x:Static strings:Resources.AppSettingsControlSystemTrayCallbackLyricsCardWindow_Content}" />
+                                <ui:FAComboBoxItem Content="{x:Static strings:Resources.AppSettingsControlSystemTrayCallbackSettingsWindow_Content}" />
+                            </ui:FAComboBox>
+                        </ui:FASettingsExpander.Footer>
+                    </ui:FASettingsExpander>
+
+                    <ui:FASettingsExpander Header="{x:Static strings:Resources.AppSettingsControlSystemTrayMiddleClickCallback_Header}">
+                        <ui:FASettingsExpander.IconSource>
+                            <ui:FAFontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xE962;" />
+                        </ui:FASettingsExpander.IconSource>
+                        <ui:FASettingsExpander.Footer>
+                            <ui:FAComboBox SelectedIndex="{Binding AppSettings.SystemTraySettings.SystemTrayMiddleClickCallback, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                <ui:FAComboBoxItem Content="{x:Static strings:Resources.AppSettingsControlSystemTrayCallbackNone_Content}" />
+                                <ui:FAComboBoxItem Content="{x:Static strings:Resources.AppSettingsControlSystemTrayCallbackLyricsWindowSwitchWindow_Content}" />
+                                <ui:FAComboBoxItem Content="{x:Static strings:Resources.AppSettingsControlSystemTrayCallbackLyricsSearchWindow_Content}" />
+                                <ui:FAComboBoxItem Content="{x:Static strings:Resources.AppSettingsControlSystemTrayCallbackMusicGalleryWindow_Content}" />
+                                <ui:FAComboBoxItem Content="{x:Static strings:Resources.AppSettingsControlSystemTrayCallbackStatsWindow_Content}" />
+                                <ui:FAComboBoxItem Content="{x:Static strings:Resources.AppSettingsControlSystemTrayCallbackLyricsCardWindow_Content}" />
+                                <ui:FAComboBoxItem Content="{x:Static strings:Resources.AppSettingsControlSystemTrayCallbackSettingsWindow_Content}" />
+                            </ui:FAComboBox>
+                        </ui:FASettingsExpander.Footer>
+                    </ui:FASettingsExpander>
+
+                </StackPanel>
+            </Border>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

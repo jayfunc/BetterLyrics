@@ -1,8 +1,7 @@
-﻿namespace BetterLyrics.Core.Models
+﻿namespace BetterLyrics.Core.Models;
+
+public class MonthLabel
 {
-    public class MonthLabel
-    {
-        public string Name { get; set; }
-        public double Offset { get; set; }
-    }
+    public string Name { get; set; }
+    public double Offset { get; set; }
 }

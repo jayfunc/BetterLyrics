@@ -1,0 +1,335 @@
+<UserControl
+    x:Class="BetterLyrics.Avalonia.Controls.PlaybackSettingsControl"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:constants="using:BetterLyrics.Core.Constants"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="using:BetterLyrics.Avalonia.Helpers"
+    xmlns:local="using:BetterLyrics.Avalonia.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:BetterLyrics.Core.Models"
+    xmlns:settings="using:BetterLyrics.Core.Models.Settings"
+    xmlns:strings="using:BetterLyrics.Avalonia.Strings"
+    xmlns:ui="using:FluentAvalonia.UI.Controls"
+    xmlns:vm="using:BetterLyrics.Core.ViewModels"
+    x:DataType="vm:PlaybackSettingsControlViewModel"
+    Loaded="UserControl_Loaded"
+    mc:Ignorable="d">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Grid Grid.Column="0">
+            <Grid.Styles>
+                <Style Selector="Grid">
+                    <Setter Property="Transitions">
+                        <Transitions>
+                            <DoubleTransition Property="Opacity" Duration="0:0:0.2" />
+                        </Transitions>
+                    </Setter>
+                </Style>
+            </Grid.Styles>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <StackPanel Grid.Row="0">
+                <ui:FAInfoBar
+                    IsClosable="False"
+                    IsOpen="{Binding AppSettings.MusicGallerySettings.LyricsWindowStatus.WindowStatus, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=0}"
+                    Message="{x:Static strings:Resources.SettingsPageMusicGalleryOpened_Message}"
+                    Severity="Informational" />
+
+                <ui:FAInfoBar
+                    IsClosable="False"
+                    IsOpen="{Binding GsmtcService.CurrentMediaSourceProviderInfo.IsBetterLyrics}"
+                    Message="{x:Static strings:Resources.PlaybackSettingsControlBetterLyricsRunningInBackground_Message}"
+                    Severity="Informational">
+                    <ui:FAInfoBar.ActionButton>
+                        <Button Content="{x:Static strings:Resources.PlaybackSettingsControlStopBetterLyricsPlayer_Content}"
+                                Command="{Binding StopTrackCommand}"
+                                Classes="HyperlinkButton" />
+                    </ui:FAInfoBar.ActionButton>
+                </ui:FAInfoBar>
+            </StackPanel>
+
+            <Grid Grid.Row="1" IsVisible="{Binding AppSettings.MediaSourceProvidersInfo.Count, Converter={StaticResource IntToBoolConverter}}">
+                <ScrollViewer>
+                    <StackPanel Margin="36,0,36,36" Spacing="{DynamicResource SettingsCardSpacing}">
+                        <TextBlock Text="{x:Static strings:Resources.SettingsPageConfigPlaybackSource_Text}"
+                                   Classes="SettingsSectionHeaderTextBlockStyle" />
+
+                        <ListBox
+                            x:Name="MediaSourceProvidersListView"
+                            HorizontalAlignment="Stretch"
+                            Theme="{StaticResource ListViewCardStyle}"
+                            ItemsSource="{Binding AppSettings.MediaSourceProvidersInfo}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate x:DataType="settings:MediaSourceProviderInfo">
+                                    <Grid>
+                                        <Border Padding="12">
+                                            <Grid ColumnSpacing="12"
+                                                  Opacity="{Binding IsEnabled, Converter={StaticResource BoolToPartialOpacityConverter}}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <ToolTip.Tip>
+                                                    <TextBlock Text="{Binding Provider}" />
+                                                </ToolTip.Tip>
+
+                                                <Grid Grid.Column="0">
+                                                    <TextBlock FontFamily="Segoe UI Symbol" FontSize="16" Text="&#x283F;" />
+                                                </Grid>
+
+                                                <Grid Grid.Column="1">
+                                                    <Image Height="24" helpers:AppExtensions.Aumid="{Binding Provider}" />
+                                                </Grid>
+
+                                                <StackPanel Grid.Column="2">
+                                                    <StackPanel Orientation="Horizontal" Spacing="3">
+                                                        <TextBlock VerticalAlignment="Center"
+                                                                   helpers:AppExtensions.Aumid="{Binding Provider}"
+                                                                   TextWrapping="Wrap" />
+                                                        <Image Height="16"
+                                                               helpers:GifHelper.IsPlaying="{Binding #MediaSourceProvidersListView.((vm:PlaybackSettingsControlViewModel)DataContext).GsmtcService.CurrentIsPlaying}"
+                                                               Source="{DynamicResource MusicWave}"
+                                                               IsVisible="{Binding IsFocused}" />
+                                                    </StackPanel>
+                                                    <TextBlock VerticalAlignment="Center"
+                                                               Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                               MaxLines="1"
+                                                               Classes="CaptionTextBlockStyle"
+                                                               Text="{Binding Provider}"
+                                                               TextTrimming="CharacterEllipsis" />
+                                                </StackPanel>
+
+                                                <StackPanel Grid.Column="3" HorizontalAlignment="Right" Orientation="Horizontal" Spacing="6">
+                                                    <Button Padding="6" Click="ConfigButton_Click">
+                                                        <ui:FAFontIcon FontFamily="Segoe Fluent Icons" FontSize="16" Glyph="&#xE90F;" />
+                                                    </Button>
+                                                    <Button Padding="6" Click="DeleteButton_Click">
+                                                        <ui:FAFontIcon FontFamily="Segoe Fluent Icons" FontSize="16" Glyph="&#xE74D;" />
+                                                    </Button>
+                                                </StackPanel>
+                                            </Grid>
+                                        </Border>
+                                        <local:DragIndicator Width="32" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+
+            <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="12"
+                        IsVisible="{Binding !AppSettings.MediaSourceProvidersInfo.Count}">
+                <Image MaxWidth="200" Source="/Assets/Leaf.png" />
+                <TextBlock Text="{x:Static strings:Resources.SettingsPagePlaybackNotFound_Text}"
+                           HorizontalAlignment="Center"
+                           Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+            </StackPanel>
+        </Grid>
+
+        <local:FloatSidePanel x:Name="PlaybackConfigPanel" Grid.Column="0">
+            <ScrollViewer Classes="SettingsScrollViewerStyle">
+                <Grid Classes="SettingsGridStyle">
+                    <StackPanel Spacing="{DynamicResource SettingsCardSpacing}">
+                        <Grid ColumnSpacing="6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <Image Grid.Column="0" Height="16" Margin="0,26,0,0"
+                                   helpers:AppExtensions.Aumid="{Binding SelectedMediaSourceProvider.Provider}" />
+
+                            <TextBlock Grid.Column="1"
+                                       helpers:AppExtensions.Aumid="{Binding SelectedMediaSourceProvider.Provider}"
+                                       Classes="SettingsSectionHeaderTextBlockStyle" />
+
+                            <Image Grid.Column="2" Height="16" Margin="0,26,0,0"
+                                   helpers:GifHelper.IsPlaying="{Binding GsmtcService.CurrentIsPlaying}"
+                                   Source="{DynamicResource MusicWave}"
+                                   IsVisible="{Binding SelectedMediaSourceProvider.IsFocused}" />
+
+                            <Button Grid.Column="4" Margin="0,24,0,0" Click="CloseConfigPanelButton_Click" Classes="AccentButtonStyle">
+                                <ui:FAFontIcon FontSize="16" FontFamily="Segoe Fluent Icons" Glyph="&#xE70D;" />
+                            </Button>
+                        </Grid>
+
+                        <ui:FASettingsExpander Header="{x:Static strings:Resources.SettingsPageMediaSourceProvidersConfig_Header}">
+                            <ui:FASettingsExpander.Footer>
+                                <ToggleSwitch IsChecked="{Binding SelectedMediaSourceProvider.IsEnabled, Mode=TwoWay}" />
+                            </ui:FASettingsExpander.Footer>
+
+                            <ui:FASettingsExpander.Items>
+                                <ui:FASettingsExpanderItem Content="{x:Static strings:Resources.PlaybackSettingsControlMemoryReader_Header}">
+                                    <ui:FASettingsExpanderItem.Footer>
+                                        <ToggleSwitch IsChecked="{Binding SelectedMediaSourceProvider.IsMemoryReaderEnabled, Mode=TwoWay}" />
+                                    </ui:FASettingsExpanderItem.Footer>
+                                </ui:FASettingsExpanderItem>
+
+                                <ui:FASettingsExpanderItem>
+                                    <ui:FASettingsExpanderItem.Footer>
+                                        <StackPanel Orientation="Horizontal" Spacing="6">
+                                            <local:ExternalLinkButton Content="{x:Static strings:Resources.Help_Content}"
+                                                                      NavigateUri="https://gist.github.com/jayfunc/ad09a3df951b95c8cf6228695fecc067" />
+                                            <Button Content="{x:Static strings:Resources.SettingsPageImport_Content}"
+                                                    Command="{Binding ImportMemoryReaderConfigCommand}" />
+                                        </StackPanel>
+                                    </ui:FASettingsExpanderItem.Footer>
+                                </ui:FASettingsExpanderItem>
+                            </ui:FASettingsExpander.Items>
+                        </ui:FASettingsExpander>
+
+                        <ui:FASettingsExpanderItem Content="{x:Static strings:Resources.SettingsPageLastFMTrack_Header}"
+                                                   IsEnabled="{Binding IsLastFmAuthenticated}">
+                            <ui:FASettingsExpanderItem.Footer>
+                                <ToggleSwitch IsChecked="{Binding SelectedMediaSourceProvider.IsLastFMTrackEnabled, Mode=TwoWay}" />
+                            </ui:FASettingsExpanderItem.Footer>
+                        </ui:FASettingsExpanderItem>
+
+                        <ui:FASettingsExpanderItem Content="{x:Static strings:Resources.SettingsPageDiscordPresence_Header}">
+                            <ui:FASettingsExpanderItem.Footer>
+                                <ToggleSwitch IsChecked="{Binding SelectedMediaSourceProvider.IsDiscordPresenceEnabled, Mode=TwoWay}" />
+                            </ui:FASettingsExpanderItem.Footer>
+                        </ui:FASettingsExpanderItem>
+
+                        <ui:FASettingsExpanderItem Content="{x:Static strings:Resources.SettingsPageLXMusicServer_Header}"
+                                                   IsVisible="{Binding SelectedMediaSourceProvider.IsLXMusic}">
+                            <ui:FASettingsExpanderItem.Footer>
+                                <Grid ColumnSpacing="6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Grid.Column="0"
+                                             IsEnabled="{Binding !IsLxMusicServerTesting}"
+                                             Text="{Binding AppSettings.GeneralSettings.LXMusicServer, Mode=TwoWay}"
+                                             TextWrapping="Wrap" />
+                                    <Button Grid.Column="1"
+                                            Content="{x:Static strings:Resources.SettingsPageServerTestButton_Content}"
+                                            Command="{Binding LxMusicServerTestCommand}"
+                                            IsEnabled="{Binding !IsLxMusicServerTesting}" />
+                                </Grid>
+                            </ui:FASettingsExpanderItem.Footer>
+                        </ui:FASettingsExpanderItem>
+
+                        <Expander Padding="0" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch"
+                                  Background="Transparent" BorderBrush="Transparent">
+                            <Expander.Header>
+                                <TextBlock Text="{x:Static strings:Resources.SettingsPageAlbumArtSearchProvidersConfig_Text}" />
+                            </Expander.Header>
+                            <StackPanel>
+                                <ui:FASettingsExpanderItem Content="{x:Static strings:Resources.AlbumArtSearchProvidersTargetSize_Header}">
+                                    <ui:FASettingsExpanderItem.Footer>
+                                        <local:ExtendedSlider Frequency="128" Maximum="2048" Minimum="64" Unit="px"
+                                                              Value="{Binding SelectedMediaSourceProvider.TargetAlbumArtSize, Mode=TwoWay}" />
+                                    </ui:FASettingsExpanderItem.Footer>
+                                </ui:FASettingsExpanderItem>
+
+                                <ListBox ItemsSource="{Binding SelectedMediaSourceProvider.AlbumArtSearchProvidersInfo}" Theme="{StaticResource ListViewStretchedItemContainerStyle}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate x:DataType="settings:AlbumArtSearchProviderInfo">
+                                            <Grid>
+                                                <ui:FASettingsExpander Header="{Binding Provider, Converter={StaticResource AlbumArtSearchProviderToDisplayNameConverter}}">
+                                                    <ui:FASettingsExpander.IconSource>
+                                                        <ui:FAFontIconSource FontFamily="Segoe UI Symbol" Glyph="&#x283F;" />
+                                                    </ui:FASettingsExpander.IconSource>
+                                                    <ui:FASettingsExpander.Footer>
+                                                        <ToggleSwitch IsChecked="{Binding IsEnabled, Mode=TwoWay}" />
+                                                    </ui:FASettingsExpander.Footer>
+                                                </ui:FASettingsExpander>
+                                                <local:DragIndicator />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                            </StackPanel>
+                        </Expander>
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+        </local:FloatSidePanel>
+
+        <Grid Grid.Column="1">
+            <ScrollViewer Classes="SettingsScrollViewerStyle">
+                <Grid Classes="SettingsGridStyle">
+                    <StackPanel Spacing="{DynamicResource SettingsCardSpacing}">
+
+                        <TextBlock Text="{x:Static strings:Resources.SettingsPageRealtimeStatus_Text}" Classes="SettingsSectionHeaderTextBlockStyle" />
+
+                        <Expander Header="{x:Static strings:Resources.SettingsPagePlaybackStatus_Header}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                            <StackPanel Spacing="6">
+                                <local:PropertyRow Header="{x:Static strings:Resources.SettingsPagePlaybackSource_Header}"
+                                                   helpers:AppExtensions.Aumid="{Binding GsmtcService.CurrentMediaSourceProviderInfo.Provider, TargetNullValue='N/A'}" />
+                                <local:PropertyRow Header="{x:Static strings:Resources.SettingsPagePlaybackSourceID_Header}"
+                                                   Value="{Binding GsmtcService.CurrentMediaSourceProviderInfo.Provider, TargetNullValue='N/A'}" />
+                            </StackPanel>
+                        </Expander>
+
+                        <Expander Header="{x:Static strings:Resources.SettingsPageSongStatus_Header}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left">
+                            <StackPanel Spacing="6">
+                                <local:PropertyRow Header="{x:Static strings:Resources.SettingsPageSongTitle_Header}" Value="{Binding GsmtcService.CurrentSongInfo.Title, TargetNullValue='N/A'}" />
+                                <local:PropertyRow Header="{x:Static strings:Resources.SettingsPageArtist_Header}" Value="{Binding GsmtcService.CurrentSongInfo.Artist, TargetNullValue='N/A'}" />
+                                <local:PropertyRow Header="{x:Static strings:Resources.SettingsPageAlbum_Header}" Value="{Binding GsmtcService.CurrentSongInfo.Album, TargetNullValue='N/A'}" />
+                                <local:PropertyRow Header="{x:Static strings:Resources.LyricsSearchControlDurauion_Header}" Value="{Binding GsmtcService.CurrentSongInfo.DurationMs, TargetNullValue='N/A', Converter={StaticResource MillisecondsToFormattedTimeConverter}}" />
+                            </StackPanel>
+                        </Expander>
+
+                        <Expander Header="{x:Static strings:Resources.SettingsPageSearchResultStatus_Header}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                            <StackPanel Spacing="6">
+                                <local:PropertyRow Header="{x:Static strings:Resources.SettingsPageSongTitle_Header}" Value="{Binding GsmtcService.CurrentLyricsSearchResult.Title, TargetNullValue='N/A'}" />
+                                <local:PropertyRow Header="{x:Static strings:Resources.SettingsPageArtist_Header}" Value="{Binding GsmtcService.CurrentLyricsSearchResult.Artist, TargetNullValue='N/A'}" />
+                                <local:PropertyRow Header="{x:Static strings:Resources.SettingsPageAlbum_Header}" Value="{Binding GsmtcService.CurrentLyricsSearchResult.Album, TargetNullValue='N/A'}" />
+                                <local:PropertyRow Header="{x:Static strings:Resources.LyricsSearchControlDurauion_Header}" Value="{Binding GsmtcService.CurrentLyricsSearchResult.Duration, TargetNullValue='N/A', Converter={StaticResource SecondsToFormattedTimeConverter}}" />
+
+                                <Grid Margin="-16,0,-16,-16" ColumnSpacing="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Button Grid.Column="0">
+                                        <ui:FAFontIcon FontFamily="Segoe Fluent Icons" FontSize="16" Glyph="&#xE713;" />
+                                        <Button.Flyout>
+                                            <Flyout Placement="Bottom">
+                                                <StackPanel MaxWidth="500">
+                                                    <ui:FASettingsExpanderItem Content="{x:Static strings:Resources.LyricsSaveConfigInSyllablesFormat_Header}">
+                                                        <ui:FASettingsExpanderItem.Footer>
+                                                            <ToggleSwitch IsChecked="{Binding AppSettings.LyricsSaveConfig.InSyllablesFormat, Mode=TwoWay}" />
+                                                        </ui:FASettingsExpanderItem.Footer>
+                                                    </ui:FASettingsExpanderItem>
+                                                </StackPanel>
+                                            </Flyout>
+                                        </Button.Flyout>
+                                    </Button>
+                                    <DropDownButton Grid.Column="1" HorizontalAlignment="Stretch">
+                                        <ui:FAFontIcon FontFamily="Segoe Fluent Icons" FontSize="16" Glyph="&#xE74E;" />
+                                        <DropDownButton.Flyout>
+                                            <ui:FAMenuFlyout>
+                                                <ui:FAMenuFlyoutItem Text="{x:Static strings:Resources.PlaybackSettingsControlSaveLyricsAsLrc_Text}" Click="SaveLyricsAsLrcMenuFlyoutItem_Click" />
+                                                <ui:FAMenuFlyoutItem Text="{x:Static strings:Resources.PlaybackSettingsControlSaveLyricsAsTtml_Text}" Click="SaveLyricsAsTtmlMenuFlyoutItem_Click" />
+                                            </ui:FAMenuFlyout>
+                                        </DropDownButton.Flyout>
+                                    </DropDownButton>
+                                </Grid>
+                            </StackPanel>
+                        </Expander>
+
+                    </StackPanel>
+                </Grid>
+            </ScrollViewer>
+        </Grid>
+    </Grid>
+</UserControl>

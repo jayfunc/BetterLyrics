@@ -1,33 +1,26 @@
-﻿using ATL;
-using BetterLyrics.Core.Helpers;
-using BetterLyrics.WinUI3.Helper;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Media.Imaging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using ATL;
+using BetterLyrics.Core.Helpers;
+using BetterLyrics.WinUI3.Extensions;
+using Microsoft.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Media.Imaging;
 
-namespace BetterLyrics.WinUI3.Converters
+namespace BetterLyrics.WinUI3.Converters;
+
+public partial class PictureInfosToImageSourceConverter : IValueConverter
 {
-    public partial class PictureInfosToImageSourceConverter : IValueConverter
+    public object Convert(object value, Type targetType, object parameter, string language)
     {
-        public object Convert(object value, Type targetType, object parameter, string language)
-        {
-            BitmapImage bitmapImage = new();
-            if (value is IList<PictureInfo> list && list.FirstOrDefault()?.PictureData is byte[] pictureData)
-            {
-                bitmapImage.SetSource(ImageHelper.ToIRandomAccessStream(pictureData));
-            }
-            else
-            {
-                bitmapImage.UriSource = new Uri(PathHelper.AlbumArtPlaceholderPath);
-            }
-            return bitmapImage;
-        }
+        if (value is IList<PictureInfo> list && list.FirstOrDefault()?.PictureData is byte[] pictureData)
+            return BitmapImageExtensions.FromByteArray(pictureData);
 
-        public object ConvertBack(object value, Type targetType, object parameter, string language)
-        {
-            throw new NotImplementedException();
-        }
+        return new BitmapImage(new Uri(PathHelper.AlbumArtPlaceholderPath));
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, string language)
+    {
+        throw new NotImplementedException();
     }
 }

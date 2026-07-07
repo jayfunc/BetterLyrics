@@ -9,25 +9,25 @@ public class Case : AvaloniaObject
     public static readonly StyledProperty<object?> ValueProperty =
         AvaloniaProperty.Register<Case, object?>(nameof(Value));
 
+    // 是否为默认项（当所有 Case 都不匹配时显示）
+    public static readonly StyledProperty<bool> IsDefaultProperty =
+        AvaloniaProperty.Register<Case, bool>(nameof(IsDefault));
+
+    // Case 内部包裹的内容
+    public static readonly StyledProperty<object?> ContentProperty =
+        AvaloniaProperty.Register<Case, object?>(nameof(Content));
+
     public object? Value
     {
         get => GetValue(ValueProperty);
         set => SetValue(ValueProperty, value);
     }
 
-    // 是否为默认项（当所有 Case 都不匹配时显示）
-    public static readonly StyledProperty<bool> IsDefaultProperty =
-        AvaloniaProperty.Register<Case, bool>(nameof(IsDefault));
-
     public bool IsDefault
     {
         get => GetValue(IsDefaultProperty);
         set => SetValue(IsDefaultProperty, value);
     }
-
-    // Case 内部包裹的内容
-    public static readonly StyledProperty<object?> ContentProperty =
-        AvaloniaProperty.Register<Case, object?>(nameof(Content));
 
     [Content] // 标记为 Content，这样在 XAML 里就可以直接往 Case 里塞控件了
     public object? Content

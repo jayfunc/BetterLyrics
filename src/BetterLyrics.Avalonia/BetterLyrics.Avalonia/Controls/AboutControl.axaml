@@ -1,224 +1,248 @@
-<UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:controls="using:FluentAvalonia.UI.Controls"
-             xmlns:vm="using:BetterLyrics.Avalonia.ViewModels"
-             xmlns:constants="using:BetterLyrics.Core.Constants"
-             xmlns:helpers="using:BetterLyrics.Core.Helpers"
-             xmlns:models1="using:BetterLyrics.Core.Models"
-             xmlns:local="using:BetterLyrics.Avalonia.Controls"
-             xmlns:lang="using:BetterLyrics.Avalonia.Strings"
-             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="600"
-             x:Class="BetterLyrics.Avalonia.Controls.AboutControl"
-             x:DataType="vm:AboutControlViewModel"> 
-
-    <Design.DataContext>
-        <vm:AboutControlViewModel />
-    </Design.DataContext>
+<UserControl
+    x:Class="BetterLyrics.Avalonia.Controls.AboutControl"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:constants="using:BetterLyrics.Core.Constants"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:helpers="using:BetterLyrics.Core.Helpers"
+    xmlns:local="using:BetterLyrics.Avalonia.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:BetterLyrics.Core.Models"
+    xmlns:strings="using:BetterLyrics.Avalonia.Strings"
+    xmlns:system="using:System"
+    xmlns:ui="using:FluentAvalonia.UI.Controls"
+    xmlns:vm="using:BetterLyrics.Core.ViewModels"
+    x:DataType="vm:AboutControlViewModel"
+    mc:Ignorable="d">
 
     <Grid>
-        <Grid Height="200" VerticalAlignment="Top" ClipToBounds="True">
-            <Image Source="avares://BetterLyrics.Avalonia/Assets/Banner.png" Stretch="UniformToFill" />
-            <!--<ExperimentalAcrylicBorder>
-                <ExperimentalAcrylicBorder.Material>
-                    <ExperimentalAcrylicMaterial
-                        BackgroundSource="Digger"
-                        TintColor="{DynamicResource SolidBackgroundFillColorBaseAlt}"
-                        TintOpacity="0.7"
-                        MaterialOpacity="0.3" />
-                </ExperimentalAcrylicBorder.Material>
-            </ExperimentalAcrylicBorder>-->
-        </Grid>
+        <Panel>
+            <Panel.OpacityMask>
+                <LinearGradientBrush StartPoint="0%,0%" EndPoint="0%,100%">
+                    <GradientStop Offset="0" Color="White" />
+                    <GradientStop Offset="1" Color="Transparent" />
+                </LinearGradientBrush>
+            </Panel.OpacityMask>
+            <Grid>
+                <Image Source="avares://BetterLyrics.Avalonia/Assets/Banner.png" Stretch="UniformToFill" />
+                <Border Background="{DynamicResource SolidBackgroundFillColorBaseAlt}" Opacity="0.7">
+                </Border>
+            </Grid>
+        </Panel>
 
         <ScrollViewer>
-            <StackPanel Margin="36,48,36,36" Spacing="12">
+            <Border Classes="SettingsBorderStyle">
+                <StackPanel Margin="36,0" Spacing="{DynamicResource SettingsCardSpacing}">
 
-                <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" Spacing="16" Margin="0,0,0,24">
-                    <Image Width="32" Height="32" Source="avares://BetterLyrics.Avalonia/Assets/Logo.png" />
-                    <TextBlock FontSize="36"
-                               Theme="{DynamicResource DisplayTextBlockStyle}"
-                               Text="{x:Static constants:App.AppName}" />
-                </StackPanel>
+                    <StackPanel Margin="0,48" Spacing="12">
+                        <StackPanel
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal"
+                            Spacing="16">
+                            <Image
+                                Width="32"
+                                Height="32"
+                                Source="avares://BetterLyrics.Avalonia/Assets/Logo.png" />
+                            <TextBlock
+                                FontFamily="{DynamicResource SloganENFont}"
+                                FontSize="36"
+                                Classes="DisplayTextBlockStyle"
+                                Text="{x:Static constants:App.AppName}" />
+                        </StackPanel>
+                        <StackPanel Background="Transparent" Spacing="4">
+                            <TextBlock
+                                x:Name="SloganCN"
+                                HorizontalAlignment="Center"
+                                FontFamily="{DynamicResource SloganCNFont}"
+                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                Classes="SubtitleTextBlockStyle"
+                                Text="曲拨心弦，词落云笺" />
 
-                <StackPanel Background="Transparent" Spacing="4" Margin="0,0,0,24">
-                    <TextBlock x:Name="SloganCN"
-                               HorizontalAlignment="Center"
-                               Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                               Theme="{DynamicResource SubtitleTextBlockStyle}"
-                               Text="曲拨心弦，词落云笺" />
-                    <TextBlock x:Name="SloganEN"
-                               HorizontalAlignment="Center"
-                               FontWeight="Bold"
-                               Foreground="{DynamicResource TextFillColorTertiaryBrush}"
-                               Theme="{DynamicResource CaptionTextBlockStyle}"
-                               Text="Strums the Heartstrings, Graces the Wordscapes" />
-                </StackPanel>
-
-                <controls:FASettingsExpander Description="© Zhe Fang 2025-2026. Licensed under GPL-3.0."
-                                             Header="{x:Static constants:App.AppName}">
-                    <controls:FASettingsExpander.IconSource>
-                        <controls:FABitmapIconSource UriSource="avares://BetterLyrics.Avalonia/Assets/Logo.png" />
-                    </controls:FASettingsExpander.IconSource>
-
-                    <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="{x:Static helpers:MetadataHelper.AppVersion}" />
-
-                    <controls:FASettingsExpanderItem Content="{x:Static lang:Resources.AboutControlLastCheckTime_Text}">
-                        <controls:FASettingsExpanderItem.Footer>
-                            <Button Content="{x:Static lang:Resources.AboutControlCheckUpdate_Content}"
-                                Command="{Binding CheckAppUpdateCommand}" />
-                        </controls:FASettingsExpanderItem.Footer>
-                    </controls:FASettingsExpanderItem>
-                </controls:FASettingsExpander>
-
-                <Grid>
-                    <controls:FAInfoBar Title="{x:Static lang:Resources.AboutControlUpToDate_Title}"
-                                        IsClosable="False"
-                                        IsOpen="True"
-                                        Severity="Success"
-                                        IsVisible="{Binding AppUpdateService.AppUpdateStatus, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=0}" />
-                    <controls:FAInfoBar Title="{x:Static lang:Resources.AboutControlUpdateAvailable_Title}"
-                                        IsClosable="False"
-                                        IsOpen="True"
-                                        Severity="Warning"
-                                        IsVisible="{Binding AppUpdateService.AppUpdateStatus, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=1}">
-                        <controls:FAInfoBar.ActionButton>
-                            <Button Content="{x:Static lang:Resources.AboutControlOpenAppStorePage_Content}"
-                                    Command="{Binding OpenAppStorePageCommand}" />
-                        </controls:FAInfoBar.ActionButton>
-                    </controls:FAInfoBar>
-                    <controls:FAInfoBar Title="{x:Static lang:Resources.AboutControlCheckUpdateError_Title}"
-                                        IsClosable="False"
-                                        IsOpen="True"
-                                        Severity="Error"
-                                        IsVisible="{Binding AppUpdateService.AppUpdateStatus, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=2}" />
-
-                    <ProgressBar Margin="0,2,0,0"
-                                 VerticalAlignment="Top"
-                                 IsIndeterminate="True"
-                                 IsVisible="{Binding !CheckAppUpdateCommand.IsRunning}" />
-                </Grid>
-
-                <Border Padding="58,6" Background="{DynamicResource CardBackgroundFillColorDefaultBrush}" CornerRadius="4">
-                    <StackPanel Spacing="6">
-                        <WrapPanel Orientation="Horizontal">
-                            <Button Classes="accent" Command="{Binding OpenAppStorePageCommand}" Content="Microsoft Store" />
-                            <Button Content="GitHub" Command="{Binding OpenUriCommand}" CommandParameter="{x:Static constants:Link.BetterLyricsGitHub}" />
-                            <Button Content="{x:Static lang:Resources.UserGuide_Content}" Command="{Binding OpenUriCommand}" CommandParameter="{x:Static constants:Link.UserGuide}" />
-                            <Button Content="{x:Static lang:Resources.PrivacyPolicy_Content}" Command="{Binding OpenUriCommand}" CommandParameter="{x:Static constants:Link.PrivacyPolicy}" />
-                            <Button Content="{x:Static lang:Resources.TermsOfService_Content}" Command="{Binding OpenUriCommand}" CommandParameter="{x:Static constants:Link.TermsOfService}" />
-                        </WrapPanel>
-
-                        <TextBlock Text="{x:Static lang:Resources.SetingsPageFeedback_Text}" />
-                        <WrapPanel Orientation="Horizontal">
-                            <Button Content="QQ 群" Click="QQGroupButton_Click">
-                                <!--<Button.Flyout>
-                                    <Flyout x:Name="QQGroupFlyout">
-                                        <StackPanel Spacing="4">
-                                            <Button Content="1 群（1054700388）" Command="{Binding OpenUriCommand}" CommandParameter="{x:Static constants:Link.QQGroup1}" />
-                                            <Button Content="2 群（1076554669）" Command="{Binding OpenUriCommand}" CommandParameter="{x:Static constants:Link.QQGroup2}" />
-                                        </StackPanel>
-                                    </Flyout>
-                                </Button.Flyout>-->
-                            </Button>
-                            <Button Content="Discord" Command="{Binding OpenUriCommand}" CommandParameter="{x:Static constants:Link.Discord}" />
-                            <Button Content="Telegram" Command="{Binding OpenUriCommand}" CommandParameter="{x:Static constants:Link.Telegram}" />
-                        </WrapPanel>
-
-                        <TextBlock Text="{x:Static lang:Resources.SetingsPageDonation_Text}" />
-                        <WrapPanel Orientation="Horizontal">
-                            <Button Content="Buy me a coffee" Command="{Binding OpenUriCommand}" CommandParameter="{x:Static constants:Link.BuyMeACoffee}" />
-                            <Button Content="PayPal" Command="{Binding OpenUriCommand}" CommandParameter="{x:Static constants:Link.PayPal}" />
-                            <Button Content="支付宝 / 微信支付" Click="AlipayWeChatPayButton_Click">
-<!--                                <Button.Flyout>
-                                    <Flyout Placement="Bottom" x:Name="AlipayWeChatPayFlyout">
-                                        <Image Height="280" Source="avares://BetterLyrics.Avalonia/Assets/AlipayWeChatPay.png" />
-                                    </Flyout>
-                                </Button.Flyout>-->
-                            </Button>
-                            <Button Content="爱发电" Command="{Binding OpenUriCommand}" CommandParameter="{x:Static constants:Link.Afdian}" />
-                        </WrapPanel>
-
-                        <Grid ColumnSpacing="6">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="*" />
-                            <TextBlock Grid.Column="1"
-                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                                       Theme="{DynamicResource CaptionTextBlockStyle}"
-                                       TextWrapping="Wrap"
-                                       Text="{x:Static lang:Resources.SetingsPageThanks_Text}"/>
-                        </Grid>
+                            <TextBlock
+                                x:Name="SloganEN"
+                                HorizontalAlignment="Center"
+                                FontFamily="{DynamicResource SloganENFont}"
+                                FontWeight="Bold"
+                                Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                                Classes="CaptionTextBlockStyle"
+                                Text="Strums the Heartstrings, Graces the Wordscapes" />
+                        </StackPanel>
                     </StackPanel>
-                </Border>
 
-                <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Header="{x:Static lang:Resources.SetingsPageContributors_Text}">
-                    <ItemsControl ItemsSource="{Binding Contributors}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate x:DataType="models1:Contributor">
-                                <!--                                <local:ContributorCard
-                                AvatarSource="{Binding AvatarSource}"
-                                Badges="{Binding Badges}"
-                                Description="{Binding Description}"
-                                Header="{Binding Header}" />-->
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </Expander>
+                    <ui:FASettingsExpander
+                        Description="© Zhe Fang 2025-2026. Licensed under GPL-3.0."
+                        Header="{x:Static constants:App.AppName}">
+                        <ui:FASettingsExpander.IconSource>
+                            <ui:FABitmapIconSource UriSource="avares://BetterLyrics.Avalonia/Assets/Logo.png" />
+                        </ui:FASettingsExpander.IconSource>
 
-                <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" Header="{x:Static lang:Resources.SettingsPagePatrons_Text}">
-                    <ItemsControl ItemsSource="{Binding Donors}">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel Orientation="Horizontal" />
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate x:DataType="models1:Donor">
-                                <!--<local:PatronControl Date="{Binding Date}" PatronName="{Binding PatronName}" />-->
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </Expander>
+                        <ui:FASettingsExpander.Footer>
+                            <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                       Text="{x:Static helpers:MetadataHelper.AppVersion}" />
+                        </ui:FASettingsExpander.Footer>
 
-                <controls:FASettingsExpander Header="{x:Static lang:Resources.SettingsPageCache_Header}" IsExpanded="True">
-                    <controls:FASettingsExpander.Footer>
-                        <Button Content="{x:Static lang:Resources.SettingsPageOpenFolderButton_Content}" Command="{Binding OpenCacheFolderCommand}" />
-                    </controls:FASettingsExpander.Footer>
-                    <controls:FASettingsExpander.Items>
-                        <controls:FASettingsExpanderItem>
-                            <Button Content="{x:Static lang:Resources.SettingsPageClearCache_Content}" Command="{Binding ClearCacheFilesCommand}" />
-                        </controls:FASettingsExpanderItem>
-                    </controls:FASettingsExpander.Items>
-                </controls:FASettingsExpander>
+                        <ui:FASettingsExpander.Items>
+                            <ui:FASettingsExpanderItem
+                                Content="{x:Static strings:Resources.AboutControlLastCheckTime_Text}"
+                                Description="{Binding AppSettings.GeneralSettings.LastAppUpateCheckDateTime}">
+                                <ui:FASettingsExpanderItem.Footer>
+                                    <Button
+                                        x:Name="CheckUpdateButton"
+                                        Content="{x:Static strings:Resources.AboutControlCheckUpdate_Content}"
+                                        Command="{Binding CheckAppUpdateCommand}" />
+                                </ui:FASettingsExpanderItem.Footer>
+                            </ui:FASettingsExpanderItem>
+                        </ui:FASettingsExpander.Items>
+                    </ui:FASettingsExpander>
 
-                <controls:FASettingsExpander Header="{x:Static lang:Resources.SettingsPageSettings_Header}">
-                    <Button Content="{x:Static lang:Resources.SettingsPageOpenFolderButton_Content}" Command="{Binding OpenSettingsFolderCommand}" />
-                </controls:FASettingsExpander>
+                    <Border Margin="0,-4,0,0" Classes="CardBorderStyle">
+                        <Border.Styles>
+                            <Style Selector="WrapPanel">
+                                <Setter Property="Margin" Value="-12,0,0,0" />
+                            </Style>
+                        </Border.Styles>
+                        <StackPanel Margin="58,6" Spacing="6">
 
-                <controls:FASettingsExpander Header="{x:Static lang:Resources.SettingsPageSettingsManager_Header}" IsExpanded="True">
-                    <StackPanel Orientation="Horizontal" Spacing="6">
-                        <Button Content="{x:Static lang:Resources.SettingsPageImportSettingsButton_Content}" Command="{Binding ImportSettingsCommand}" />
-                        <Button Content="{x:Static lang:Resources.SettingsPageExportSettingsButton_Content}" Command="{Binding ExportSettingsCommand}" />
-                    </StackPanel>
-                    <controls:FAInfoBar Content="{x:Static lang:Resources.SettingsPageImportSettingsInfo_Content}"
-                                        IsClosable="False"
-                                        IsOpen="True" />
-                </controls:FASettingsExpander>
+                            <WrapPanel Orientation="Horizontal">
+                                <local:ExternalLinkButton Command="{Binding OpenAppStorePageCommand}"
+                                                          Content="Microsoft Store" />
+                                <local:ExternalLinkButton Content="GitHub"
+                                                          NavigateUri="{x:Static constants:Link.BetterLyricsGitHub}" />
+                                <local:ExternalLinkButton Content="{x:Static strings:Resources.UserGuide_Content}"
+                                                          NavigateUri="{x:Static constants:Link.UserGuide}" />
+                                <local:ExternalLinkButton Content="{x:Static strings:Resources.PrivacyPolicy_Content}"
+                                                          NavigateUri="{x:Static constants:Link.PrivacyPolicy}" />
+                                <local:ExternalLinkButton Content="{x:Static strings:Resources.TermsOfService_Content}"
+                                                          NavigateUri="{x:Static constants:Link.TermsOfService}" />
+                            </WrapPanel>
 
-                <TextBlock Margin="12"
-                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"
-                           Theme="{DynamicResource CaptionTextBlockStyle}"
-                           Text="{x:Static lang:Resources.SettingsPageDisclaimer_Text}"/>
+                            <TextBlock Text="{x:Static strings:Resources.SetingsPageFeedback_Text}" />
+                            <WrapPanel Orientation="Horizontal">
+                                <Button x:Name="QQGroupButton" Click="QQGroupButton_Click" Background="Transparent" BorderThickness="0">
+                                    <TextBlock Text="QQ 群" />
+                                    <Button.Flyout>
+                                        <Flyout>
+                                            <StackPanel>
+                                                <local:ExternalLinkButton Content="1 群（1054700388）"
+                                                                          NavigateUri="{x:Static constants:Link.QQGroup1}" />
+                                                <local:ExternalLinkButton Content="2 群（1076554669）"
+                                                                          NavigateUri="{x:Static constants:Link.QQGroup2}" />
+                                            </StackPanel>
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </Button>
+                                <local:ExternalLinkButton NavigateUri="{x:Static constants:Link.Discord}">
+                                    <TextBlock Text="Discord" />
+                                </local:ExternalLinkButton>
+                                <local:ExternalLinkButton NavigateUri="{x:Static constants:Link.Telegram}">
+                                    <TextBlock Text="Telegram" />
+                                </local:ExternalLinkButton>
+                            </WrapPanel>
 
-            </StackPanel>
+                            <TextBlock Text="{x:Static strings:Resources.SetingsPageDonation_Text}" />
+                            <WrapPanel Orientation="Horizontal">
+                                <local:ExternalLinkButton NavigateUri="{x:Static constants:Link.BuyMeACoffee}">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <TextBlock Text="Buy me a coffee" />
+                                    </StackPanel>
+                                </local:ExternalLinkButton>
+                                <local:ExternalLinkButton NavigateUri="{x:Static constants:Link.PayPal}">
+                                    <TextBlock Text="PayPal" />
+                                </local:ExternalLinkButton>
+                                <Button x:Name="AlipayWeChatPayButton" Click="AlipayWeChatPayButton_Click" Background="Transparent" BorderThickness="0">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <TextBlock Text="支付宝" />
+                                        <Border Width="10" />
+                                        <TextBlock Text="微信支付" />
+                                    </StackPanel>
+                                    <Button.Flyout>
+                                        <Flyout>
+                                            <Image Height="280" Source="avares://BetterLyrics.Avalonia/Assets/AlipayWeChatPay.png" />
+                                        </Flyout>
+                                    </Button.Flyout>
+                                </Button>
+                                <local:ExternalLinkButton NavigateUri="{x:Static constants:Link.Afdian}">
+                                    <TextBlock Text="爱发电" />
+                                </local:ExternalLinkButton>
+                            </WrapPanel>
+                            <Grid ColumnDefinitions="Auto,*">
+                                <TextBlock
+                                    Grid.Column="0" Margin="0,0,6,0"
+                                    Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                    Text="*" />
+                                <TextBlock
+                                    Text="{x:Static strings:Resources.SetingsPageThanks_Text}"
+                                    Grid.Column="1"
+                                    Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                    Classes="CaptionTextBlockStyle"
+                                    TextWrapping="Wrap" />
+                            </Grid>
+
+                        </StackPanel>
+                    </Border>
+
+                    <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                        <Expander.Header>
+                            <TextBlock Text="{x:Static strings:Resources.SetingsPageContributors_Text}" />
+                        </Expander.Header>
+
+                        <ItemsControl ItemsSource="{Binding Contributors}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="models:Contributor">
+                                    <local:ContributorCard
+                                        AvatarSource="{Binding AvatarSource}"
+                                        Badges="{Binding Badges}"
+                                        Description="{Binding Description}"
+                                        Header="{Binding Header}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Expander>
+
+                    <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
+                        <Expander.Header>
+                            <TextBlock Text="{x:Static strings:Resources.SettingsPagePatrons_Text}" />
+                        </Expander.Header>
+
+                        <ItemsControl ItemsSource="{Binding Donors}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <WrapPanel />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="models:Donor">
+                                    <local:PatronControl Date="{Binding Date}" PatronName="{Binding PatronName}" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                    </Expander>
+
+                    <ui:FASettingsExpander Header="{x:Static strings:Resources.SettingsPageCache_Header}" IsExpanded="True">
+                        <ui:FASettingsExpander.Footer>
+                            <Button Content="{x:Static strings:Resources.SettingsPageOpenFolderButton_Content}"
+                                    Command="{Binding OpenCacheFolderCommand}" />
+                        </ui:FASettingsExpander.Footer>
+                        <ui:FASettingsExpander.Items>
+                            <ui:FASettingsExpanderItem>
+                                <ui:FASettingsExpanderItem.Footer>
+                                    <Button Content="{x:Static strings:Resources.SettingsPageClearCache_Content}"
+                                            Command="{Binding ClearCacheFilesCommand}" />
+                                </ui:FASettingsExpanderItem.Footer>
+                            </ui:FASettingsExpanderItem>
+                        </ui:FASettingsExpander.Items>
+                    </ui:FASettingsExpander>
+
+                </StackPanel>
+            </Border>
         </ScrollViewer>
+
     </Grid>
 </UserControl>

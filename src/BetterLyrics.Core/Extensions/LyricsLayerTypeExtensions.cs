@@ -2,15 +2,18 @@
 using BetterLyrics.Core.Interfaces.Services;
 using CommunityToolkit.Mvvm.DependencyInjection;
 
-namespace BetterLyrics.Core.Extensions
-{
-    public static class LyricsLayerTypeExtensions
-    {
-        private static readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
+namespace BetterLyrics.Core.Extensions;
 
-        extension(LyricsLayerType type)
+public static class LyricsLayerTypeExtensions
+{
+    private static readonly ILocalizationService _localizationService =
+        Ioc.Default.GetRequiredService<ILocalizationService>();
+
+    extension(LyricsLayerType type)
+    {
+        public string ToDisplayName()
         {
-            public string ToDisplayName() => type switch
+            return type switch
             {
                 LyricsLayerType.Primary => _localizationService.GetLocalizedString("LyricsLayerPrimaryName"),
                 LyricsLayerType.Secondary => _localizationService.GetLocalizedString("LyricsLayerSecondaryName"),

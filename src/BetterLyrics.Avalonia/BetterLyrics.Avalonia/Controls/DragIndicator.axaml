@@ -1,0 +1,36 @@
+<UserControl
+    x:Class="BetterLyrics.Avalonia.Controls.DragIndicator"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Width="46"
+    HorizontalAlignment="Left"
+    HorizontalContentAlignment="Left"
+    x:Name="RootControl"
+    mc:Ignorable="d">
+
+    <Border
+        CornerRadius="4"
+        Width="{Binding #RootControl.Width}">
+        <Grid
+            Background="{DynamicResource ControlStrokeColorDefaultBrush}"
+            ToolTip.Tip="SettingsPageHoldDragSort">
+
+            <Grid.Styles>
+                <Style Selector="Grid">
+                    <Setter Property="Opacity" Value="0" />
+                    <Setter Property="Transitions">
+                        <Transitions>
+                            <DoubleTransition Property="Opacity" Duration="0:0:0.2" />
+                        </Transitions>
+                    </Setter>
+                </Style>
+                <Style Selector="Grid:pointerover">
+                    <Setter Property="Opacity" Value="1" />
+                </Style>
+            </Grid.Styles>
+
+        </Grid>
+    </Border>
+</UserControl>

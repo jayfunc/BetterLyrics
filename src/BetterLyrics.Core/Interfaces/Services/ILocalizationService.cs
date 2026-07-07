@@ -1,7 +1,6 @@
-﻿namespace BetterLyrics.Core.Interfaces.Services
+﻿namespace BetterLyrics.Core.Interfaces.Services;
+
+public interface ILocalizationService
 {
-    public interface ILocalizationService
-    {
-        string GetLocalizedString(string id);
-    }
+    string GetLocalizedString(string id);
 }

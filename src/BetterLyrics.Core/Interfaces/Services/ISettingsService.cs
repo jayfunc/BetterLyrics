@@ -2,15 +2,12 @@
 
 using BetterLyrics.Core.Models.Settings;
 
-namespace BetterLyrics.Core.Interfaces.Services
+namespace BetterLyrics.Core.Interfaces.Services;
+
+public interface ISettingsService
 {
-    public interface ISettingsService
-    {
-        AppSettings AppSettings { get; set; }
+    AppSettings AppSettings { get; set; }
 
-        void UpdateGlobalStyles(bool useCustom);
-
-        bool ImportSettings(string importPath);
-        void ExportSettings(string exportPath);
-    }
+    bool ImportSettings(string importPath);
+    void ExportSettings(string exportPath);
 }

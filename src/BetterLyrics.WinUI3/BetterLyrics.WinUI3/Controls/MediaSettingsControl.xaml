@@ -5,9 +5,7 @@
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:settings="using:BetterLyrics.Core.Models.Settings"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">

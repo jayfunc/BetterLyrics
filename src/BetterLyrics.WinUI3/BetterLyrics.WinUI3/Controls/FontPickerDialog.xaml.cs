@@ -1,109 +1,94 @@
-using BetterLyrics.Core.Models;
-using BetterLyrics.WinUI3.Helper;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using BetterLyrics.Core.Models;
+using BetterLyrics.WinUI3.Helpers;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
-namespace BetterLyrics.WinUI3.Controls
+namespace BetterLyrics.WinUI3.Controls;
+
+public sealed partial class FontPickerDialog : ContentDialog
 {
-    public sealed partial class FontPickerDialog : ContentDialog
+    private readonly ObservableCollection<ExtendedFontFamily> _filteredFonts = new();
+    private readonly ObservableCollection<ExtendedFontFamily> _selectedFonts = new();
+    private List<ExtendedFontFamily> _allFontsReference;
+
+    public FontPickerDialog(List<string> currentFontIds, bool allowMultipleSelection = true)
     {
-        private ObservableCollection<ExtendedFontFamily> _filteredFonts = new();
-        private ObservableCollection<ExtendedFontFamily> _selectedFonts = new();
-        private List<ExtendedFontFamily> _allFontsReference;
+        InitializeComponent();
+        AllowMultipleSelection = allowMultipleSelection;
+        SelectedFontsListView.ItemsSource = _selectedFonts;
+        _ = InitializeFontsAsync(currentFontIds);
+    }
 
-        public List<string> SelectedFontIds { get; private set; } = new();
+    public List<string> SelectedFontIds { get; private set; } = new();
 
-        public bool AllowMultipleSelection { get; private set; }
+    public bool AllowMultipleSelection { get; }
 
-        public FontPickerDialog(List<string> currentFontIds, bool allowMultipleSelection = true)
+    private async Task InitializeFontsAsync(List<string> currentFontIds)
+    {
+        _allFontsReference = await FontHelper.GetSystemFontFamiliesAsync();
+        foreach (var font in _allFontsReference) _filteredFonts.Add(font);
+        FontListView.ItemsSource = _filteredFonts;
+
+        if (currentFontIds != null && currentFontIds.Count != 0)
         {
-            this.InitializeComponent();
-            AllowMultipleSelection = allowMultipleSelection;
-            SelectedFontsListView.ItemsSource = _selectedFonts;
-            _ = InitializeFontsAsync(currentFontIds);
-        }
+            var idsToProcess = AllowMultipleSelection ? currentFontIds : currentFontIds.Take(1);
 
-        private async Task InitializeFontsAsync(List<string> currentFontIds)
-        {
-            _allFontsReference = await FontHelper.GetSystemFontFamiliesAsync();
-            foreach (var font in _allFontsReference)
+            foreach (var id in idsToProcess)
             {
-                _filteredFonts.Add(font);
-            }
-            FontListView.ItemsSource = _filteredFonts;
-
-            if (currentFontIds != null && currentFontIds.Count != 0)
-            {
-                var idsToProcess = AllowMultipleSelection ? currentFontIds : currentFontIds.Take(1);
-
-                foreach (var id in idsToProcess)
-                {
-                    var match = _allFontsReference.FirstOrDefault(f => f.FontFamily == id);
-                    if (match != null)
-                    {
-                        _selectedFonts.Add(match);
-                    }
-                    else
-                    {
-                        _selectedFonts.Add(new ExtendedFontFamily { IsExistedInSystem = false, FontFamily = id, LocalizedFontFamily = id });
-                    }
-                }
+                var match = _allFontsReference.FirstOrDefault(f => f.FontFamily == id);
+                if (match != null)
+                    _selectedFonts.Add(match);
+                else
+                    _selectedFonts.Add(new ExtendedFontFamily
+                        { IsExistedInSystem = false, FontFamily = id, LocalizedFontFamily = id });
             }
         }
+    }
 
-        private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+    private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (_allFontsReference == null) return;
+        var query = SearchBox.Text.Trim().ToLower();
+
+        _filteredFonts.Clear();
+        var result = string.IsNullOrEmpty(query)
+            ? _allFontsReference
+            : _allFontsReference.Where(f =>
+                f.LocalizedFontFamily.Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
+                f.FontFamily.Contains(query, StringComparison.CurrentCultureIgnoreCase));
+
+        foreach (var item in result) _filteredFonts.Add(item);
+    }
+
+    private void FontListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        if (FontListView.SelectedItem is ExtendedFontFamily selected)
         {
-            if (_allFontsReference == null) return;
-            string query = SearchBox.Text.Trim().ToLower();
+            if (!AllowMultipleSelection) _selectedFonts.Clear();
 
-            _filteredFonts.Clear();
-            var result = string.IsNullOrEmpty(query)
-                ? _allFontsReference
-                : _allFontsReference.Where(f =>
-                    f.LocalizedFontFamily.Contains(query, StringComparison.CurrentCultureIgnoreCase) ||
-                    f.FontFamily.Contains(query, StringComparison.CurrentCultureIgnoreCase));
+            if (!_selectedFonts.Contains(selected)) _selectedFonts.Add(selected);
 
-            foreach (var item in result) _filteredFonts.Add(item);
+            FontListView.SelectedItem = null;
         }
+    }
 
-        private void FontListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (FontListView.SelectedItem is ExtendedFontFamily selected)
-            {
-                if (!AllowMultipleSelection)
-                {
-                    _selectedFonts.Clear();
-                }
+    private void RemoveFont_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button btn && btn.DataContext is ExtendedFontFamily fontToRemove)
+            _selectedFonts.Remove(fontToRemove);
+    }
 
-                if (!_selectedFonts.Contains(selected))
-                {
-                    _selectedFonts.Add(selected);
-                }
+    private void FontListView_Loaded(object sender, RoutedEventArgs e)
+    {
+    }
 
-                FontListView.SelectedItem = null;
-            }
-        }
-
-        private void RemoveFont_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button btn && btn.DataContext is ExtendedFontFamily fontToRemove)
-            {
-                _selectedFonts.Remove(fontToRemove);
-            }
-        }
-
-        private void FontListView_Loaded(object sender, RoutedEventArgs e)
-        {
-        }
-
-        private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
-        {
-            SelectedFontIds = _selectedFonts.Select(f => f.FontFamily).ToList();
-        }
+    private void ContentDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+    {
+        SelectedFontIds = _selectedFonts.Select(f => f.FontFamily).ToList();
     }
 }

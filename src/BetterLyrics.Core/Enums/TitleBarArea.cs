@@ -1,9 +1,8 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum TitleBarArea
 {
-    public enum TitleBarArea
-    {
-        None,
-        Top,
-        Whole,
-    }
+    None,
+    Top,
+    Whole
 }

@@ -1,10 +1,9 @@
-namespace BetterLyrics.Core.Models.Domain
+namespace BetterLyrics.Core.Models.Domain;
+
+public enum AppVerticalAlignment
 {
-    public enum AppVerticalAlignment
-    {
-        Top,
-        Center,
-        Bottom,
-        Stretch
-    }
+    Top,
+    Center,
+    Bottom,
+    Stretch
 }

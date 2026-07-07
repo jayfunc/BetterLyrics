@@ -1,0 +1,375 @@
+<UserControl
+    x:Class="BetterLyrics.Avalonia.Controls.NowPlayingBar"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:helpers="using:BetterLyrics.Avalonia.Helpers"
+    xmlns:local="using:BetterLyrics.Avalonia.Controls"
+    xmlns:ui="using:FluentAvalonia.UI.Controls"
+    x:DataType="local:NowPlayingBar"
+    x:Name="RootControl"
+    mc:Ignorable="d">
+
+    <Grid x:Name="RootGrid">
+
+        <Grid
+            x:Name="BottomCommandGrid"
+            Background="Transparent"
+            Opacity="1"
+            PointerEntered="BottomCommandGrid_PointerEntered"
+            PointerExited="BottomCommandGrid_PointerExited">
+            <Grid.Transitions>
+                <Transitions>
+                    <DoubleTransition Property="Opacity" Duration="0:0:0.3" />
+                </Transitions>
+            </Grid.Transitions>
+
+            <Grid x:Name="BottomCommandContent">
+
+                <Grid HorizontalAlignment="Left">
+                    <Border Padding="{Binding #RootControl.Padding}">
+                        <StackPanel x:Name="BottomLeftCommandStackPanel">
+
+                            <StackPanel
+                                x:Name="SongInfoStackPanel"
+                                VerticalAlignment="Center"
+                                IsVisible="{Binding #RootControl.ShowSongInfo}"
+                                Opacity="{Binding ShowSongInfo, Converter={StaticResource BoolToOpacityConverter}}"
+                                Orientation="Horizontal"
+                                Spacing="12">
+                                <StackPanel.Transitions>
+                                    <Transitions>
+                                        <DoubleTransition Property="Opacity" Duration="0:0:0.3" />
+                                    </Transitions>
+                                </StackPanel.Transitions>
+                                <Grid Width="36" Height="36" VerticalAlignment="Center">
+                                    <Border CornerRadius="4" ClipToBounds="True">
+                                        <local:ImageSwitcher Source="{Binding #RootControl.GSMTCService.AlbumArtBytes, Converter={StaticResource ByteArrayToImageConverter}}" />
+                                    </Border>
+                                    <Grid
+                                        x:Name="LyricsOpenHintGrid"
+                                        Background="{DynamicResource AcrylicBackgroundFillColorDefaultBrush}"
+                                        Opacity="0"
+                                        Tapped="SongInfoStackPanel_Tapped">
+                                        <Grid.Transitions>
+                                            <Transitions>
+                                                <DoubleTransition Property="Opacity" Duration="0:0:0.3" />
+                                            </Transitions>
+                                        </Grid.Transitions>
+                                        <ui:FAFontIcon
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            FontFamily="{StaticResource SegoeFluentIcons}"
+                                            FontSize="16"
+                                            Glyph="&#xE70E;" />
+                                    </Grid>
+                                </Grid>
+                                <StackPanel VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding #RootControl.GSMTCService.CurrentSongInfo.Title}" />
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                        Text="{Binding #RootControl.GSMTCService.CurrentSongInfo.Artist}" />
+                                </StackPanel>
+                            </StackPanel>
+
+                            <StackPanel
+                                x:Name="TimeStackPanel"
+                                Height="36"
+                                VerticalAlignment="Center"
+                                IsVisible="{Binding ShowTime}"
+                                Opacity="{Binding ShowTime, Converter={StaticResource BoolToOpacityConverter}}"
+                                Orientation="Horizontal"
+                                Spacing="6"
+                                Tapped="TimeStackPanel_Tapped">
+                                <StackPanel.Transitions>
+                                    <Transitions>
+                                        <DoubleTransition Property="Opacity" Duration="0:0:0.3" />
+                                    </Transitions>
+                                </StackPanel.Transitions>
+
+                                <TextBlock Margin="0,8,0,0">
+                                    <Run Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="{Binding #TimelineSlider.Value, Converter={StaticResource SecondsToFormattedTimeConverter}}" />
+                                    <Run Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="/" />
+                                    <Run Text="{Binding #TimelineSlider.Maximum, Converter={StaticResource SecondsToFormattedTimeConverter}}" />
+                                </TextBlock>
+
+                                <ui:FAFontIcon
+                                    VerticalAlignment="Center"
+                                    FontFamily="{StaticResource SegoeFluentIcons}"
+                                    FontSize="12"
+                                    Glyph="&#xE70D;"
+                                    IsVisible="{Binding ShowPlayingQueueButton}" />
+                            </StackPanel>
+
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <Grid HorizontalAlignment="Center">
+                    <Border Padding="{Binding Padding}">
+                        <StackPanel
+                            x:Name="BottomCenterCommandStackPanel"
+                            Orientation="Horizontal"
+                            Spacing="12">
+
+                            <Button
+                                Click="PlaybackOrderButton_Click"
+                                Theme="{DynamicResource GhostButtonStyle}"
+                                IsVisible="{Binding ShowPlaybackOrderButton}">
+                                <ToolTip.Tip>
+                                    <Grid>
+                                        <TextBlock IsVisible="{Binding #RootControl.ViewModel.AppSettings.MusicGallerySettings.PlaybackOrder, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=0}" Text="Queue Loop" />
+                                        <TextBlock IsVisible="{Binding #RootControl.ViewModel.AppSettings.MusicGallerySettings.PlaybackOrder, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=1}" Text="Single Loop" />
+                                        <TextBlock IsVisible="{Binding #RootControl.ViewModel.AppSettings.MusicGallerySettings.PlaybackOrder, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=2}" Text="Queue Random" />
+                                    </Grid>
+                                </ToolTip.Tip>
+                                <Grid>
+                                    <ui:FAFontIcon FontFamily="{StaticResource SegoeFluentIcons}" FontSize="16" Glyph="&#xE8EE;" Opacity="{Binding #RootControl.ViewModel.AppSettings.MusicGallerySettings.PlaybackOrder, Converter={StaticResource EnumToOpacityConverter}, ConverterParameter=0}" />
+                                    <ui:FAFontIcon FontFamily="{StaticResource SegoeFluentIcons}" FontSize="16" Glyph="&#xE8ED;" Opacity="{Binding #RootControl.ViewModel.AppSettings.MusicGallerySettings.PlaybackOrder, Converter={StaticResource EnumToOpacityConverter}, ConverterParameter=1}" />
+                                    <ui:FAFontIcon FontFamily="{StaticResource SegoeFluentIcons}" FontSize="16" Glyph="&#xE8B1;" Opacity="{Binding #RootControl.ViewModel.AppSettings.MusicGallerySettings.PlaybackOrder, Converter={StaticResource EnumToOpacityConverter}, ConverterParameter=2}" />
+                                </Grid>
+                            </Button>
+
+                            <Button
+                                Command="{Binding #RootControl.ViewModel.PreviousSongCommand}"
+                                Theme="{DynamicResource GhostButtonStyle}">
+                                <ui:FAFontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE622;" />
+                            </Button>
+
+                            <Button
+                                Command="{Binding #RootControl.ViewModel.PauseSongCommand}"
+                                Theme="{DynamicResource GhostButtonStyle}">
+                                <Interaction.Behaviors>
+                                    <DataTriggerBehavior Binding="{Binding #RootControl.GSMTCService.CurrentIsPlaying}" ComparisonCondition="Equal" Value="True">
+                                        <ChangePropertyAction PropertyName="IsVisible" Value="True" />
+                                    </DataTriggerBehavior>
+                                    <DataTriggerBehavior Binding="{Binding #RootControl.GSMTCService.CurrentIsPlaying}" ComparisonCondition="Equal" Value="False">
+                                        <ChangePropertyAction PropertyName="IsVisible" Value="False" />
+                                    </DataTriggerBehavior>
+                                </Interaction.Behaviors>
+                                <ui:FAFontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xF8AE;" />
+                            </Button>
+
+                            <Button
+                                Command="{Binding #RootControl.ViewModel.PlaySongCommand}"
+                                Theme="{DynamicResource GhostButtonStyle}">
+                                <Interaction.Behaviors>
+                                    <DataTriggerBehavior Binding="{Binding #RootControl.GSMTCService.CurrentIsPlaying}" ComparisonCondition="Equal" Value="True">
+                                        <ChangePropertyAction PropertyName="IsVisible" Value="False" />
+                                    </DataTriggerBehavior>
+                                    <DataTriggerBehavior Binding="{Binding GSMTCService.CurrentIsPlaying}" ComparisonCondition="Equal" Value="False">
+                                        <ChangePropertyAction PropertyName="IsVisible" Value="True" />
+                                    </DataTriggerBehavior>
+                                </Interaction.Behaviors>
+                                <ui:FAFontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xF5B0;" />
+                            </Button>
+
+                            <Button
+                                Command="{Binding #RootControl.ViewModel.NextSongCommand}"
+                                Theme="{DynamicResource GhostButtonStyle}">
+                                <ui:FAFontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE623;" />
+                            </Button>
+
+                            <Button
+                                Click="PlayingQueueButton_Click"
+                                Theme="{DynamicResource GhostButtonStyle}"
+                                IsVisible="{Binding ShowPlayingQueueButton}">
+                                <ToolTip.Tip>
+                                    <TextBlock Text="Playing Queue" />
+                                </ToolTip.Tip>
+                                <ui:FAFontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE8FD;" />
+                            </Button>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <Grid HorizontalAlignment="Right">
+                    <Border Padding="{Binding Padding}">
+                        <StackPanel
+                            x:Name="BottomRightCommandStackPanel"
+                            Orientation="Horizontal"
+                            Spacing="3">
+
+                            <Border IsVisible="{Binding #RootControl.ViewModel.Volume, Converter={StaticResource IntToBoolConverter}, ConverterParameter=-1}">
+                                <Button
+                                    x:Name="VolumeButton"
+                                    Click="VolumeButton_Click"
+                                    Theme="{DynamicResource GhostButtonStyle}"
+                                    IsVisible="{Binding ShowVolumeButton}">
+                                    <Grid>
+                                        <ui:FAFontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE74F;">
+                                            <Interaction.Behaviors>
+                                                <DataTriggerBehavior Binding="{Binding #RootControl.ViewModel.Volume}" ComparisonCondition="Equal" Value="0">
+                                                    <ChangePropertyAction PropertyName="Opacity" Value="1" />
+                                                </DataTriggerBehavior>
+                                                <DataTriggerBehavior Binding="{Binding #RootControl.ViewModel.Volume}" ComparisonCondition="NotEqual" Value="0">
+                                                    <ChangePropertyAction PropertyName="Opacity" Value="0" />
+                                                </DataTriggerBehavior>
+                                            </Interaction.Behaviors>
+                                        </ui:FAFontIcon>
+
+                                        <ui:FAFontIcon x:Name="VolumeLevel1" FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE993;">
+                                            <Interaction.Behaviors>
+                                                <DataTriggerBehavior Binding="{Binding #RootControl.ViewModel.Volume}" ComparisonCondition="GreaterThanOrEqual" Value="1">
+                                                    <ChangePropertyAction PropertyName="Opacity" Value="1" />
+                                                </DataTriggerBehavior>
+                                                <DataTriggerBehavior Binding="{Binding #RootControl.ViewModel.Volume}" ComparisonCondition="LessThan" Value="1">
+                                                    <ChangePropertyAction PropertyName="Opacity" Value="0" />
+                                                </DataTriggerBehavior>
+                                            </Interaction.Behaviors>
+                                        </ui:FAFontIcon>
+
+                                        <ui:FAFontIcon x:Name="VolumeLevel2" FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE994;">
+                                            <Interaction.Behaviors>
+                                                <DataTriggerBehavior Binding="{Binding #RootControl.ViewModel.Volume}" ComparisonCondition="GreaterThanOrEqual" Value="33">
+                                                    <ChangePropertyAction PropertyName="Opacity" Value="1" />
+                                                </DataTriggerBehavior>
+                                                <DataTriggerBehavior Binding="{Binding #RootControl.ViewModel.Volume}" ComparisonCondition="LessThan" Value="33">
+                                                    <ChangePropertyAction PropertyName="Opacity" Value="0" />
+                                                </DataTriggerBehavior>
+                                            </Interaction.Behaviors>
+                                        </ui:FAFontIcon>
+
+                                        <ui:FAFontIcon x:Name="VolumeLevel3" FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE995;">
+                                            <Interaction.Behaviors>
+                                                <DataTriggerBehavior Binding="{Binding #RootControl.ViewModel.Volume}" ComparisonCondition="GreaterThanOrEqual" Value="66">
+                                                    <ChangePropertyAction PropertyName="Opacity" Value="1" />
+                                                </DataTriggerBehavior>
+                                                <DataTriggerBehavior Binding="{Binding #RootControl.ViewModel.Volume}" ComparisonCondition="LessThan" Value="66">
+                                                    <ChangePropertyAction PropertyName="Opacity" Value="0" />
+                                                </DataTriggerBehavior>
+                                            </Interaction.Behaviors>
+                                        </ui:FAFontIcon>
+                                    </Grid>
+
+                                    <Button.Flyout>
+<!--                                        <Flyout x:Name="VolumeFlyout" Placement="Top">
+                                            <local:ExtendedSlider
+                                                Frequency="1"
+                                                Maximum="100"
+                                                Minimum="0"
+                                                ValueChangedByUser="ExtendedSlider_ValueChangedByUser"
+                                                Value="{Binding #RootControl.ViewModel.Volume, Mode=TwoWay}" />
+                                        </Flyout>-->
+                                    </Button.Flyout>
+                                </Button>
+                            </Border>
+
+                            <Button
+                                Command="{Binding #RootControl.ViewModel.StopTrackCommand}"
+                                Theme="{DynamicResource GhostButtonStyle}"
+                                IsVisible="{Binding ShowStopButton}">
+                                <ToolTip.Tip>
+                                    <TextBlock Text="Stop Track" />
+                                </ToolTip.Tip>
+                                <ui:FAFontIcon FontFamily="{StaticResource SegoeFluentIcons}" FontSize="16" FontWeight="Bold" Glyph="&#xE7E8;" />
+                            </Button>
+
+                            <Button
+                                Theme="{DynamicResource GhostButtonStyle}"
+                                IsVisible="{Binding ShowMoreButton}">
+                                <ui:FAFontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE712;" />
+                                <Button.Flyout>
+                                    <MenuFlyout>
+                                        <MenuItem Header="Lyrics Search" Command="{Binding #RootControl.ViewModel.NavigationService.OpenLyricsSearchWindowCommand}">
+                                            <MenuItem.Icon>
+                                                <ui:FAFontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE721;" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                        <MenuItem Header="Settings" Command="{Binding #RootControl.ViewModel.NavigationService.OpenSettingsWindowCommand}">
+                                            <MenuItem.Icon>
+                                                <ui:FAFontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="&#xE713;" />
+                                            </MenuItem.Icon>
+                                        </MenuItem>
+                                    </MenuFlyout>
+                                </Button.Flyout>
+                            </Button>
+
+                        </StackPanel>
+                    </Border>
+                </Grid>
+
+                <Slider
+                    x:Name="TimelineSlider"
+                    Margin="0,-14,0,0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Top"
+                    Maximum="{Binding #RootControl.GSMTCService.CurrentSongInfo.DurationMs, Converter={StaticResource MillisecondsToSecondsConverter}}"
+                    Minimum="0"
+                    Theme="{DynamicResource GhostSliderStyle}"
+                    Value="{Binding #RootControl.GSMTCService.CurrentPosition.TotalSeconds}" />
+
+                <Border Padding="8,4">
+                    <Grid
+                        x:Name="TimelineSliderLyricsLineInfo"
+                        Margin="0,-32,0,0"
+                        HorizontalAlignment="Left"
+                        VerticalAlignment="Top"
+                        Background="{DynamicResource LayerOnMicaBaseAltFillColorDefaultBrush}"
+                        Opacity="{Binding #RootControl.ViewModel.TimelineSliderThumbOpacity}">
+
+                        <Grid.RenderTransform>
+                            <!--<TranslateTransform x:Name="LyricsLineInfoTransform" />-->
+                        </Grid.RenderTransform>
+                        <Grid.Transitions>
+                            <Transitions>
+                                <DoubleTransition Property="Opacity" Duration="0:0:0.3" />
+                            </Transitions>
+                        </Grid.Transitions>
+
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <TextBlock
+                                Margin="0,0,0,2"
+                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                Text="{Binding #RootControl.ViewModel.TimelineSliderThumbLyricsLine.StartMs, Converter={StaticResource MillisecondsToFormattedTimeConverter}}" />
+                            <TextBlock Margin="0,0,0,2" Text="{Binding #RootControl.ViewModel.TimelineSliderThumbLyricsLine.PrimaryText}" />
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <Grid
+                    Height="32"
+                    Margin="0,-12,0,0"
+                    VerticalAlignment="Top"
+                    Background="Transparent"
+                    PointerEntered="TimelineSliderOverlay_PointerEntered"
+                    PointerExited="TimelineSliderOverlay_PointerExited"
+                    PointerMoved="TimelineSliderOverlay_PointerMoved"
+                    PointerPressed="TimelineSliderOverlay_PointerPressed" />
+            </Grid>
+        </Grid>
+
+        <Grid
+            x:Name="BottomCommandFlyoutTrigger"
+            Height="12"
+            VerticalAlignment="Bottom"
+            Background="Transparent"
+            Opacity="0"
+            PointerEntered="BottomCommandFlyoutTrigger_PointerEntered"
+            PointerExited="BottomCommandFlyoutTrigger_PointerExited"
+            Tapped="BottomCommandFlyoutTrigger_Tapped">
+            <Grid.Transitions>
+                <Transitions>
+                    <DoubleTransition Property="Opacity" Duration="0:0:0.3" />
+                </Transitions>
+            </Grid.Transitions>
+
+            <Border
+                x:Name="BottomCommandFlyoutTriggerHint"
+                MaxWidth="400"
+                Background="{DynamicResource ControlAAFillColorDefaultBrush}"
+                CornerRadius="4,4,0,0">
+                <Border.RenderTransform>
+                    <!--<TranslateTransform x:Name="HintTransform" />-->
+                </Border.RenderTransform>
+                <Border.Transitions>
+                    <Transitions>
+                        <DoubleTransition Property="Opacity" Duration="0:0:0.3" />
+                    </Transitions>
+                </Border.Transitions>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

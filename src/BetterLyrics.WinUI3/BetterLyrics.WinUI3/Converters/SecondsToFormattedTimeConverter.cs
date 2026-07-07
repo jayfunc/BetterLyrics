@@ -1,38 +1,25 @@
-﻿using Microsoft.UI.Xaml.Data;
-using System;
+﻿using System;
+using Microsoft.UI.Xaml.Data;
 
-namespace BetterLyrics.WinUI3.Converters
+namespace BetterLyrics.WinUI3.Converters;
+
+public partial class SecondsToFormattedTimeConverter : IValueConverter
 {
-    public partial class SecondsToFormattedTimeConverter : IValueConverter
+    public object Convert(object value, Type targetType, object parameter, string language)
     {
-        public object Convert(object value, Type targetType, object parameter, string language)
-        {
-            TimeSpan timeSpan = TimeSpan.Zero;
-            if (value is double seconds)
-            {
-                timeSpan = TimeSpan.FromSeconds(seconds);
-            }
-            else if (value is int secondsInt)
-            {
-                timeSpan = TimeSpan.FromSeconds(secondsInt);
-            }
-            if (timeSpan.Days > 0)
-            {
-                return timeSpan.ToString(@"dd\.hh\:mm\:ss");
-            }
-            else if (timeSpan.Hours > 0)
-            {
-                return timeSpan.ToString(@"hh\:mm\:ss");
-            }
-            else
-            {
-                return timeSpan.ToString(@"mm\:ss");
-            }
-        }
+        var timeSpan = TimeSpan.Zero;
+        if (value is double seconds)
+            timeSpan = TimeSpan.FromSeconds(seconds);
+        else if (value is int secondsInt) timeSpan = TimeSpan.FromSeconds(secondsInt);
+        if (timeSpan.Days > 0) return timeSpan.ToString(@"dd\.hh\:mm\:ss");
 
-        public object ConvertBack(object value, Type targetType, object parameter, string language)
-        {
-            throw new NotImplementedException();
-        }
+        if (timeSpan.Hours > 0) return timeSpan.ToString(@"hh\:mm\:ss");
+
+        return timeSpan.ToString(@"mm\:ss");
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, string language)
+    {
+        throw new NotImplementedException();
     }
 }

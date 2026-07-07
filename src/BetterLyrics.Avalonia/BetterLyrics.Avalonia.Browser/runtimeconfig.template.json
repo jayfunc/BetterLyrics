@@ -1,10 +1,10 @@
 {
-    "wasmHostProperties": {
-        "perHostConfig": [
-            {
-                "name": "browser",
-                "host": "browser"
-            }
-        ]
-    }
+  "wasmHostProperties": {
+    "perHostConfig": [
+      {
+        "name": "browser",
+        "host": "browser"
+      }
+    ]
+  }
 }

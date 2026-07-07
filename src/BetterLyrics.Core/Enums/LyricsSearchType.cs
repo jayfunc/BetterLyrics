@@ -1,8 +1,7 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum LyricsSearchType
 {
-    public enum LyricsSearchType
-    {
-        Sequential,
-        BestMatch
-    }
+    Sequential,
+    BestMatch
 }

@@ -1,2559 +1,2564 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
-    Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
-    associated with the data types.
-    
-    Example:
-    
-    ... ado.net/XML headers & schema ...
-    <resheader name="resmimetype">text/microsoft-resx</resheader>
-    <resheader name="version">2.0</resheader>
-    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
-    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
-    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
-    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
-        <value>[base64 mime encoded serialized .NET Framework object]</value>
-    </data>
-    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
-        <comment>This is a comment</comment>
-    </data>
-                
-    There are any number of "resheader" rows that contain simple 
-    name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
-    mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
-    extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
-    read any of the formats listed below.
-    
-    mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
-            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
-            : and then encoded with base64 encoding.
-    
-    mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
-            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
-            : and then encoded with base64 encoding.
-
-    mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
-            : using a System.ComponentModel.TypeConverter
-            : and then encoded with base64 encoding.
-    -->
-  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
-    <xsd:element name="root" msdata:IsDataSet="true">
-      <xsd:complexType>
-        <xsd:choice maxOccurs="unbounded">
-          <xsd:element name="metadata">
+    <!-- 
+      Microsoft ResX Schema 
+      
+      Version 2.0
+      
+      The primary goals of this format is to allow a simple XML format 
+      that is mostly human readable. The generation and parsing of the 
+      various data types are done through the TypeConverter classes 
+      associated with the data types.
+      
+      Example:
+      
+      ... ado.net/XML headers & schema ...
+      <resheader name="resmimetype">text/microsoft-resx</resheader>
+      <resheader name="version">2.0</resheader>
+      <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+      <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+      <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+      <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+      <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+          <value>[base64 mime encoded serialized .NET Framework object]</value>
+      </data>
+      <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+          <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+          <comment>This is a comment</comment>
+      </data>
+                  
+      There are any number of "resheader" rows that contain simple 
+      name/value pairs.
+      
+      Each data row contains a name, and value. The row also contains a 
+      type or mimetype. Type corresponds to a .NET class that support 
+      text/value conversion through the TypeConverter architecture. 
+      Classes that don't support this are serialized and stored with the 
+      mimetype set.
+      
+      The mimetype is used for serialized objects, and tells the 
+      ResXResourceReader how to depersist the object. This is currently not 
+      extensible. For a given mimetype the value must be set accordingly:
+      
+      Note - application/x-microsoft.net.object.binary.base64 is the format 
+      that the ResXResourceWriter will generate, however the reader can 
+      read any of the formats listed below.
+      
+      mimetype: application/x-microsoft.net.object.binary.base64
+      value   : The object must be serialized with 
+              : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+              : and then encoded with base64 encoding.
+      
+      mimetype: application/x-microsoft.net.object.soap.base64
+      value   : The object must be serialized with 
+              : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+              : and then encoded with base64 encoding.
+  
+      mimetype: application/x-microsoft.net.object.bytearray.base64
+      value   : The object must be serialized into a byte array 
+              : using a System.ComponentModel.TypeConverter
+              : and then encoded with base64 encoding.
+      -->
+    <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata"
+                xmlns="" id="root">
+        <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
+        <xsd:element name="root" msdata:IsDataSet="true">
             <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
-              </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string"/>
-              <xsd:attribute name="type" type="xsd:string"/>
-              <xsd:attribute name="mimetype" type="xsd:string"/>
-              <xsd:attribute ref="xml:space"/>
+                <xsd:choice maxOccurs="unbounded">
+                    <xsd:element name="metadata">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" use="required" type="xsd:string"/>
+                            <xsd:attribute name="type" type="xsd:string"/>
+                            <xsd:attribute name="mimetype" type="xsd:string"/>
+                            <xsd:attribute ref="xml:space"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="assembly">
+                        <xsd:complexType>
+                            <xsd:attribute name="alias" type="xsd:string"/>
+                            <xsd:attribute name="name" type="xsd:string"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="data">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+                            <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+                            <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+                            <xsd:attribute ref="xml:space"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                    <xsd:element name="resheader">
+                        <xsd:complexType>
+                            <xsd:sequence>
+                                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                            </xsd:sequence>
+                            <xsd:attribute name="name" type="xsd:string" use="required"/>
+                        </xsd:complexType>
+                    </xsd:element>
+                </xsd:choice>
             </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="assembly">
-            <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string"/>
-              <xsd:attribute name="name" type="xsd:string"/>
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="data">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
-              <xsd:attribute ref="xml:space"/>
-            </xsd:complexType>
-          </xsd:element>
-          <xsd:element name="resheader">
-            <xsd:complexType>
-              <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
-              </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required"/>
-            </xsd:complexType>
-          </xsd:element>
-        </xsd:choice>
-      </xsd:complexType>
-    </xsd:element>
-  </xsd:schema>
-  <resheader name="resmimetype">
-    <value>text/microsoft-resx</value>
-  </resheader>
-  <resheader name="version">
-    <value>2.0</value>
-  </resheader>
-  <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </resheader>
-  <data name="AboutControlCheckUpdate.Content" xml:space="preserve">
+        </xsd:element>
+    </xsd:schema>
+    <resheader name="resmimetype">
+        <value>text/microsoft-resx</value>
+    </resheader>
+    <resheader name="version">
+        <value>2.0</value>
+    </resheader>
+    <resheader name="reader">
+        <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <resheader name="writer">
+        <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral,
+            PublicKeyToken=b77a5c561934e089
+        </value>
+    </resheader>
+    <data name="AboutControlCheckUpdate.Content" xml:space="preserve">
     <value>नये उपलब्ध अपडेट की जांच करें</value>
   </data>
-  <data name="AboutControlCheckUpdateError.Title" xml:space="preserve">
+    <data name="AboutControlCheckUpdateError.Title" xml:space="preserve">
     <value>अपडेट चेक करते समय एक एरर आया</value>
   </data>
-  <data name="AboutControlLastCheckTime.Text" xml:space="preserve">
+    <data name="AboutControlLastCheckTime.Text" xml:space="preserve">
     <value>अंतिम बार जाँचा गया समय</value>
   </data>
-  <data name="AboutControlOpenAppStorePage.Content" xml:space="preserve">
+    <data name="AboutControlOpenAppStorePage.Content" xml:space="preserve">
     <value>Microsoft Store में अपडेट करें</value>
   </data>
-  <data name="AboutControlUpdateAvailable.Title" xml:space="preserve">
+    <data name="AboutControlUpdateAvailable.Title" xml:space="preserve">
     <value>BetterLyrics का नया वर्शन उपलब्ध है</value>
   </data>
-  <data name="AboutControlUpToDate.Title" xml:space="preserve">
+    <data name="AboutControlUpToDate.Title" xml:space="preserve">
     <value>BetterLyrics अप टू डेट है</value>
   </data>
-  <data name="ActionCompleted" xml:space="preserve">
+    <data name="ActionCompleted" xml:space="preserve">
     <value>कार्रवाई पूरी हुई</value>
   </data>
-  <data name="Add" xml:space="preserve">
+    <data name="Add" xml:space="preserve">
     <value>जोड़ें</value>
   </data>
-  <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Description" xml:space="preserve">
+    <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Description" xml:space="preserve">
     <value>जब गाना बहुत लंबा हो जाए, तो माउस घुमाने पर भी, गाने की जानकारी अपने आप स्क्रॉल हो जाएगी</value>
   </data>
-  <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Header" xml:space="preserve">
+    <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Header" xml:space="preserve">
     <value>ऑटो-स्क्रॉल गीत जानकारी</value>
   </data>
-  <data name="AlbumArtAreaSettingsControlEndPoint.Header" xml:space="preserve">
+    <data name="AlbumArtAreaSettingsControlEndPoint.Header" xml:space="preserve">
     <value>अंतिम बिंदु</value>
   </data>
-  <data name="AlbumArtAreaSettingsControlFadeOut.Header" xml:space="preserve">
+    <data name="AlbumArtAreaSettingsControlFadeOut.Header" xml:space="preserve">
     <value>धीरे-धीरे फीका पड़ना</value>
   </data>
-  <data name="AlbumArtAreaSettingsControlFadeOutDirection.Header" xml:space="preserve">
+    <data name="AlbumArtAreaSettingsControlFadeOutDirection.Header" xml:space="preserve">
     <value>दिशा</value>
   </data>
-  <data name="AlbumArtAreaSettingsControlStartPoint.Header" xml:space="preserve">
+    <data name="AlbumArtAreaSettingsControlStartPoint.Header" xml:space="preserve">
     <value>आरंभ बिंदु</value>
   </data>
-  <data name="AlbumArtOnlyLayout" xml:space="preserve">
+    <data name="AlbumArtOnlyLayout" xml:space="preserve">
     <value>केवल एल्बम आर्ट लेआउट</value>
   </data>
-  <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
+    <data name="AlbumArtSearchLocalProvider" xml:space="preserve">
     <value>स्थानीय संगीत फ़ाइलें</value>
   </data>
-  <data name="AlbumArtSearchProvidersTargetSize.Description" xml:space="preserve">
+    <data name="AlbumArtSearchProvidersTargetSize.Description" xml:space="preserve">
     <value>सिर्फ़ ऑनलाइन सोर्स पर लागू होता है। यह एक टारगेट रिज़ॉल्यूशन है और हो सकता है कि यह हासिल न हो पाए</value>
   </data>
-  <data name="AlbumArtSearchProvidersTargetSize.Header" xml:space="preserve">
+    <data name="AlbumArtSearchProvidersTargetSize.Header" xml:space="preserve">
     <value>लक्ष्य आकार</value>
   </data>
-  <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
+    <data name="AlbumArtSearchSMTCProvider" xml:space="preserve">
     <value>म्यूजिक प्लेयर</value>
   </data>
-  <data name="AppSettingsControlEnhanceControlAnimations.Header" xml:space="preserve">
+    <data name="AppSettingsControlEnhanceControlAnimations.Header" xml:space="preserve">
     <value>इंटरैक्टिव एनिमेशन को बेहतर बनाएँ</value>
   </data>
-  <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
+    <data name="AppSettingsControlGeneral.Text" xml:space="preserve">
     <value>विंडो</value>
   </data>
-  <data name="AppSettingsControlSystemTray.Text" xml:space="preserve">
+    <data name="AppSettingsControlSystemTray.Text" xml:space="preserve">
     <value>सिस्टम ट्रे</value>
   </data>
-  <data name="AppSettingsControlSystemTrayCallbackLyricsCardWindow.Content" xml:space="preserve">
+    <data name="AppSettingsControlSystemTrayCallbackLyricsCardWindow.Content" xml:space="preserve">
     <value>गीत कार्ड</value>
   </data>
-  <data name="AppSettingsControlSystemTrayCallbackLyricsSearchWindow.Content" xml:space="preserve">
+    <data name="AppSettingsControlSystemTrayCallbackLyricsSearchWindow.Content" xml:space="preserve">
     <value>गीत खोज विंडो</value>
   </data>
-  <data name="AppSettingsControlSystemTrayCallbackLyricsWindowSwitchWindow.Content" xml:space="preserve">
+    <data name="AppSettingsControlSystemTrayCallbackLyricsWindowSwitchWindow.Content" xml:space="preserve">
     <value>लिरिक्स विंडो स्विचर</value>
   </data>
-  <data name="AppSettingsControlSystemTrayCallbackMusicGalleryWindow.Content" xml:space="preserve">
+    <data name="AppSettingsControlSystemTrayCallbackMusicGalleryWindow.Content" xml:space="preserve">
     <value>संगीत गैलरी</value>
   </data>
-  <data name="AppSettingsControlSystemTrayCallbackNone.Content" xml:space="preserve">
+    <data name="AppSettingsControlSystemTrayCallbackNone.Content" xml:space="preserve">
     <value>कोई नहीं</value>
   </data>
-  <data name="AppSettingsControlSystemTrayCallbackSettingsWindow.Content" xml:space="preserve">
+    <data name="AppSettingsControlSystemTrayCallbackSettingsWindow.Content" xml:space="preserve">
     <value>सेटिंग्स</value>
   </data>
-  <data name="AppSettingsControlSystemTrayCallbackStatsWindow.Content" xml:space="preserve">
+    <data name="AppSettingsControlSystemTrayCallbackStatsWindow.Content" xml:space="preserve">
     <value>आंकड़े</value>
   </data>
-  <data name="AppSettingsControlSystemTrayClickCallback.Header" xml:space="preserve">
+    <data name="AppSettingsControlSystemTrayClickCallback.Header" xml:space="preserve">
     <value>क्लिक कॉलबैक</value>
   </data>
-  <data name="AppSettingsControlSystemTrayColorfulIcon.Header" xml:space="preserve">
+    <data name="AppSettingsControlSystemTrayColorfulIcon.Header" xml:space="preserve">
     <value>रंगीन आइकन</value>
   </data>
-  <data name="AppSettingsControlSystemTrayDoubleClickCallback.Header" xml:space="preserve">
+    <data name="AppSettingsControlSystemTrayDoubleClickCallback.Header" xml:space="preserve">
     <value>डबल क्लिक कॉलबैक</value>
   </data>
-  <data name="AppSettingsControlSystemTrayMiddleClickCallback.Header" xml:space="preserve">
+    <data name="AppSettingsControlSystemTrayMiddleClickCallback.Header" xml:space="preserve">
     <value>मिडिल क्लिक कॉलबैक</value>
   </data>
-  <data name="AppSettingsControlTheme.Header" xml:space="preserve">
+    <data name="AppSettingsControlTheme.Header" xml:space="preserve">
     <value>एप थीम</value>
   </data>
-  <data name="AppUpdateServiceNewVersionAvailable" xml:space="preserve">
+    <data name="AppUpdateServiceNewVersionAvailable" xml:space="preserve">
     <value>BetterLyrics का नया वर्शन उपलब्ध है</value>
   </data>
-  <data name="AppUpdateServiceUpdateAvailable" xml:space="preserve">
+    <data name="AppUpdateServiceUpdateAvailable" xml:space="preserve">
     <value>उपलब्ध अद्यतन</value>
   </data>
-  <data name="AppUpdateServiceUpdateMS" xml:space="preserve">
+    <data name="AppUpdateServiceUpdateMS" xml:space="preserve">
     <value>Microsoft Store में अपडेट करें</value>
   </data>
-  <data name="ArtistsSplitHint.Text" xml:space="preserve">
+    <data name="ArtistsSplitHint.Text" xml:space="preserve">
     <value>कई कलाकारों को इनपुट करते समय, कृपया उन्हें अलग करने के लिए निम्नलिखित विभाजकों में से किसी एक का उपयोग करें (कृपया मिश्रण न करें)</value>
   </data>
-  <data name="Cancel" xml:space="preserve">
+    <data name="Cancel" xml:space="preserve">
     <value>रद्द करें</value>
   </data>
-  <data name="Column" xml:space="preserve">
+    <data name="Column" xml:space="preserve">
     <value>स्तंभ</value>
   </data>
-  <data name="Confirm" xml:space="preserve">
+    <data name="Confirm" xml:space="preserve">
     <value>पुष्टि करें</value>
   </data>
-  <data name="Copy.Content" xml:space="preserve">
+    <data name="Copy.Content" xml:space="preserve">
     <value>कॉपी</value>
   </data>
-  <data name="CreatePlaylistSuccessfully" xml:space="preserve">
+    <data name="CreatePlaylistSuccessfully" xml:space="preserve">
     <value>प्लेलिस्ट सफलतापूर्वक बनाई गई</value>
   </data>
-  <data name="CutletServerTextBox.PlaceholderText" xml:space="preserve">
+    <data name="CutletServerTextBox.PlaceholderText" xml:space="preserve">
     <value>उदाहरण http://localhost:23333</value>
   </data>
-  <data name="DemoWindowControlDefault.Text" xml:space="preserve">
+    <data name="DemoWindowControlDefault.Text" xml:space="preserve">
     <value>डिफ़ॉल्ट</value>
   </data>
-  <data name="DesktopMode" xml:space="preserve">
+    <data name="DesktopMode" xml:space="preserve">
     <value>डेस्कटॉप मोड (पारदर्शी)</value>
   </data>
-  <data name="DockedMode" xml:space="preserve">
+    <data name="DockedMode" xml:space="preserve">
     <value>डॉक्ड मोड</value>
   </data>
-  <data name="Error" xml:space="preserve">
+    <data name="Error" xml:space="preserve">
     <value>त्रुटि</value>
   </data>
-  <data name="ExportSettingsSuccess" xml:space="preserve">
+    <data name="ExportSettingsSuccess" xml:space="preserve">
     <value>निर्यात सफल रहा</value>
   </data>
-  <data name="FailToStartLXMusicServer" xml:space="preserve">
+    <data name="FailToStartLXMusicServer" xml:space="preserve">
     <value>LX Music सर्वर से कनेक्ट नहीं हो सकता, कृपया सेटिंग्स - प्लेबैक स्रोत - LX Music - LX Music सर्वर पर जाएं और जांचें कि लिंक सही तरीके से दर्ज किया गया है या नहीं</value>
   </data>
-  <data name="FileSystemServiceCleaningCache" xml:space="preserve">
+    <data name="FileSystemServiceCleaningCache" xml:space="preserve">
     <value>कैश साफ़ हो रहा है...</value>
   </data>
-  <data name="FileSystemServiceConnectFailed" xml:space="preserve">
+    <data name="FileSystemServiceConnectFailed" xml:space="preserve">
     <value>कनेक्शन विफल रहा</value>
   </data>
-  <data name="FileSystemServiceConnecting" xml:space="preserve">
+    <data name="FileSystemServiceConnecting" xml:space="preserve">
     <value>कनेक्टिंग ...</value>
   </data>
-  <data name="FileSystemServiceFetchingFileList" xml:space="preserve">
+    <data name="FileSystemServiceFetchingFileList" xml:space="preserve">
     <value>फ़ाइल लिस्ट लाई जा रही है...</value>
   </data>
-  <data name="FileSystemServiceParsing" xml:space="preserve">
+    <data name="FileSystemServiceParsing" xml:space="preserve">
     <value>पार्सिंग...</value>
   </data>
-  <data name="FileSystemServicePrepareToClean" xml:space="preserve">
+    <data name="FileSystemServicePrepareToClean" xml:space="preserve">
     <value>कैश साफ़ करने की तैयारी...</value>
   </data>
-  <data name="FileSystemServiceReady" xml:space="preserve">
+    <data name="FileSystemServiceReady" xml:space="preserve">
     <value>तैयार</value>
   </data>
-  <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
+    <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
     <value>रूट डायरेक्टरी पाथ का पता चल गया है। एक फुल डिस्क इंडेक्स में बड़ी संख्या में नॉन-मीडिया फ़ाइलें हो सकती हैं और स्कैन में बहुत ज़्यादा समय लग सकता है। एक खास सबडायरेक्टरी बताने की सलाह दी जाती है।</value>
   </data>
-  <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
+    <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
     <value>स्कैन करने की तैयारी...</value>
   </data>
-  <data name="FontPickerDialogFontNotFound.Text" xml:space="preserve">
+    <data name="FontPickerDialogFontNotFound.Text" xml:space="preserve">
     <value>सिस्टम में फ़ॉन्ट नहीं मिला, यह मान्य नहीं है</value>
   </data>
-  <data name="FontPickerSearchBox.PlaceholderText" xml:space="preserve">
+    <data name="FontPickerSearchBox.PlaceholderText" xml:space="preserve">
     <value>फ़ॉन्ट्स खोजे</value>
   </data>
-  <data name="FontPickerSelectedFontText.Text" xml:space="preserve">
+    <data name="FontPickerSelectedFontText.Text" xml:space="preserve">
     <value>चयनित फ़ॉन्ट</value>
   </data>
-  <data name="FullscreenMode" xml:space="preserve">
+    <data name="FullscreenMode" xml:space="preserve">
     <value>फुलस्क्रीन मोड</value>
   </data>
-  <data name="Help.Content" xml:space="preserve">
+    <data name="Help.Content" xml:space="preserve">
     <value>मदद</value>
   </data>
-  <data name="HostWindowMusicGalleryButtonToolTip.Content" xml:space="preserve">
+    <data name="HostWindowMusicGalleryButtonToolTip.Content" xml:space="preserve">
     <value>संगीत गैलरी</value>
   </data>
-  <data name="HostWindowSettingsButtonToolTip.Content" xml:space="preserve">
+    <data name="HostWindowSettingsButtonToolTip.Content" xml:space="preserve">
     <value>सेटिंग्स</value>
   </data>
-  <data name="ImportPlaylistSuccessfully" xml:space="preserve">
+    <data name="ImportPlaylistSuccessfully" xml:space="preserve">
     <value>प्लेलिस्ट सफलतापूर्वक आयात की गई</value>
   </data>
-  <data name="ImportSettingsFailed" xml:space="preserve">
+    <data name="ImportSettingsFailed" xml:space="preserve">
     <value>सेटिंग्स फ़ाइल आयात करने में विफल, एप्लिकेशन सेटिंग्स अपरिवर्तित रहीं</value>
   </data>
-  <data name="ImportSettingsSuccess" xml:space="preserve">
+    <data name="ImportSettingsSuccess" xml:space="preserve">
     <value>आयात सफल रहा</value>
   </data>
-  <data name="Jyutping" xml:space="preserve">
+    <data name="Jyutping" xml:space="preserve">
     <value>ज्यूतपिंग (केंटोनीज़)</value>
   </data>
-  <data name="LastFMAuthFailed" xml:space="preserve">
+    <data name="LastFMAuthFailed" xml:space="preserve">
     <value>प्राधिकरण विफल, कृपया पुनः प्रयास करें</value>
   </data>
-  <data name="LastFMRequestAuthConfirm" xml:space="preserve">
+    <data name="LastFMRequestAuthConfirm" xml:space="preserve">
     <value>मैंने प्राधिकरण पूरा कर लिया है</value>
   </data>
-  <data name="LastFMRequestAuthDesc" xml:space="preserve">
+    <data name="LastFMRequestAuthDesc" xml:space="preserve">
     <value>कृपया ब्राउज़र में प्राधिकरण पूरा करें</value>
   </data>
-  <data name="LastFMRequestAuthTitle" xml:space="preserve">
+    <data name="LastFMRequestAuthTitle" xml:space="preserve">
     <value>BetterLyrics को अपने Last.fm खाते तक पहुँच प्रदान करें</value>
   </data>
-  <data name="LastFMRequestUnAuthConfirm" xml:space="preserve">
+    <data name="LastFMRequestUnAuthConfirm" xml:space="preserve">
     <value>मैंने अपना प्राधिकरण रद्द कर दिया है</value>
   </data>
-  <data name="LastFMRequestUnAuthDesc" xml:space="preserve">
+    <data name="LastFMRequestUnAuthDesc" xml:space="preserve">
     <value>कृपया ब्राउज़र में रद्दीकरण पूरा करें</value>
   </data>
-  <data name="LastFMRequestUnAuthTitle" xml:space="preserve">
+    <data name="LastFMRequestUnAuthTitle" xml:space="preserve">
     <value>अपने Last.fm खाते तक BetterLyrics की पहुँच रद्द करें</value>
   </data>
-  <data name="LayoutEditorControlAddColButton.Content" xml:space="preserve">
+    <data name="LayoutEditorControlAddColButton.Content" xml:space="preserve">
     <value>कॉलम जोड़ें</value>
   </data>
-  <data name="LayoutEditorControlAddRowButton.Content" xml:space="preserve">
+    <data name="LayoutEditorControlAddRowButton.Content" xml:space="preserve">
     <value>पंक्ति जोड़ें</value>
   </data>
-  <data name="LayoutEditorControlAdjustColumnWidth.Text" xml:space="preserve">
+    <data name="LayoutEditorControlAdjustColumnWidth.Text" xml:space="preserve">
     <value>कॉलम की चौड़ाई समायोजित करें</value>
   </data>
-  <data name="LayoutEditorControlAdjustRowHeight.Text" xml:space="preserve">
+    <data name="LayoutEditorControlAdjustRowHeight.Text" xml:space="preserve">
     <value>कतार की ऊँचाई समायोजित करें</value>
   </data>
-  <data name="LayoutEditorControlAlignmentHeader.Text" xml:space="preserve">
+    <data name="LayoutEditorControlAlignmentHeader.Text" xml:space="preserve">
     <value>संरेखण</value>
   </data>
-  <data name="LayoutEditorControlAllPlacedMessage.Text" xml:space="preserve">
+    <data name="LayoutEditorControlAllPlacedMessage.Text" xml:space="preserve">
     <value>सभी घटक रख दिए गए हैं।</value>
   </data>
-  <data name="LayoutEditorControlApplySizeButton.Content" xml:space="preserve">
+    <data name="LayoutEditorControlApplySizeButton.Content" xml:space="preserve">
     <value>लागू करें</value>
   </data>
-  <data name="LayoutEditorControlAutoDescription.Text" xml:space="preserve">
+    <data name="LayoutEditorControlAutoDescription.Text" xml:space="preserve">
     <value>आंतरिक घटकों की सामग्री के आधार पर स्वचालित रूप से आकार निर्धारित करता है।</value>
   </data>
-  <data name="LayoutEditorControlCanvasNavigationHeader.Text" xml:space="preserve">
+    <data name="LayoutEditorControlCanvasNavigationHeader.Text" xml:space="preserve">
     <value>कैनवास नेविगेशन</value>
   </data>
-  <data name="LayoutEditorControlCanvasPaddingTextBlock.Text" xml:space="preserve">
+    <data name="LayoutEditorControlCanvasPaddingTextBlock.Text" xml:space="preserve">
     <value>पैडिंग</value>
   </data>
-  <data name="LayoutEditorControlCanvasSectionHeader.Text" xml:space="preserve">
+    <data name="LayoutEditorControlCanvasSectionHeader.Text" xml:space="preserve">
     <value>कैनवास</value>
   </data>
-  <data name="LayoutEditorControlChangeComponentSpanHeader.Text" xml:space="preserve">
+    <data name="LayoutEditorControlChangeComponentSpanHeader.Text" xml:space="preserve">
     <value>घटक का आकार बदलें</value>
   </data>
-  <data name="LayoutEditorControlChangeComponentSpanInfoTag.Text" xml:space="preserve">
+    <data name="LayoutEditorControlChangeComponentSpanInfoTag.Text" xml:space="preserve">
     <value>तीर कुंजियाँ / WASD</value>
   </data>
-  <data name="LayoutEditorControlColBox.Header" xml:space="preserve">
+    <data name="LayoutEditorControlColBox.Header" xml:space="preserve">
     <value>स्तंभ</value>
   </data>
-  <data name="LayoutEditorControlColSpanBox.Header" xml:space="preserve">
+    <data name="LayoutEditorControlColSpanBox.Header" xml:space="preserve">
     <value>स्तंभ फैलाव</value>
   </data>
-  <data name="LayoutEditorControlColumnHeader.Text" xml:space="preserve">
+    <data name="LayoutEditorControlColumnHeader.Text" xml:space="preserve">
     <value>स्तंभ</value>
   </data>
-  <data name="LayoutEditorControlComponentAlbumArt" xml:space="preserve">
+    <data name="LayoutEditorControlComponentAlbumArt" xml:space="preserve">
     <value>एल्बम कला</value>
   </data>
-  <data name="LayoutEditorControlComponentLyrics" xml:space="preserve">
+    <data name="LayoutEditorControlComponentLyrics" xml:space="preserve">
     <value>गीत के बोल</value>
   </data>
-  <data name="LayoutEditorControlComponentLyricsCard" xml:space="preserve">
+    <data name="LayoutEditorControlComponentLyricsCard" xml:space="preserve">
     <value>गीतकार्ड</value>
   </data>
-  <data name="LayoutEditorControlComponentNone" xml:space="preserve">
+    <data name="LayoutEditorControlComponentNone" xml:space="preserve">
     <value>कोई नहीं</value>
   </data>
-  <data name="LayoutEditorControlComponentOperationHeader.Text" xml:space="preserve">
+    <data name="LayoutEditorControlComponentOperationHeader.Text" xml:space="preserve">
     <value>घटक संचालन (चयन आवश्यक)</value>
   </data>
-  <data name="LayoutEditorControlComponentSongAlbum" xml:space="preserve">
+    <data name="LayoutEditorControlComponentSongAlbum" xml:space="preserve">
     <value>गीत एल्बम</value>
   </data>
-  <data name="LayoutEditorControlComponentSongArtist" xml:space="preserve">
+    <data name="LayoutEditorControlComponentSongArtist" xml:space="preserve">
     <value>गायक कलाकार</value>
   </data>
-  <data name="LayoutEditorControlComponentSongInfo" xml:space="preserve">
+    <data name="LayoutEditorControlComponentSongInfo" xml:space="preserve">
     <value>गीत की जानकारी</value>
   </data>
-  <data name="LayoutEditorControlComponentSongTitle" xml:space="preserve">
+    <data name="LayoutEditorControlComponentSongTitle" xml:space="preserve">
     <value>गीत का शीर्षक</value>
   </data>
-  <data name="LayoutEditorControlCopyHere" xml:space="preserve">
+    <data name="LayoutEditorControlCopyHere" xml:space="preserve">
     <value>यहाँ रखें</value>
   </data>
-  <data name="LayoutEditorControlDeleteBottomRow" xml:space="preserve">
+    <data name="LayoutEditorControlDeleteBottomRow" xml:space="preserve">
     <value>नीचे दी गई पंक्ति को हटाएँ</value>
   </data>
-  <data name="LayoutEditorControlDeleteCol.Text" xml:space="preserve">
+    <data name="LayoutEditorControlDeleteCol.Text" xml:space="preserve">
     <value>इस स्तंभ को हटाएँ</value>
   </data>
-  <data name="LayoutEditorControlDeleteComponentHeader.Text" xml:space="preserve">
+    <data name="LayoutEditorControlDeleteComponentHeader.Text" xml:space="preserve">
     <value>घटक हटाएँ</value>
   </data>
-  <data name="LayoutEditorControlDeleteLeftColumn" xml:space="preserve">
+    <data name="LayoutEditorControlDeleteLeftColumn" xml:space="preserve">
     <value>बाईं ओर का स्तंभ हटाएँ</value>
   </data>
-  <data name="LayoutEditorControlDeleteRightColumn" xml:space="preserve">
+    <data name="LayoutEditorControlDeleteRightColumn" xml:space="preserve">
     <value>दाईं ओर का स्तंभ हटाएँ</value>
   </data>
-  <data name="LayoutEditorControlDeleteRow.Text" xml:space="preserve">
+    <data name="LayoutEditorControlDeleteRow.Text" xml:space="preserve">
     <value>इस पंक्ति को हटाएँ</value>
   </data>
-  <data name="LayoutEditorControlDeleteTopRow" xml:space="preserve">
+    <data name="LayoutEditorControlDeleteTopRow" xml:space="preserve">
     <value>ऊपर की पंक्ति हटाएँ</value>
   </data>
-  <data name="LayoutEditorControlFocusComponentHeader.Text" xml:space="preserve">
+    <data name="LayoutEditorControlFocusComponentHeader.Text" xml:space="preserve">
     <value>चयनित घटक पर ध्यान केंद्रित करें</value>
   </data>
-  <data name="LayoutEditorControlGlobalColSpacingBox.Header" xml:space="preserve">
+    <data name="LayoutEditorControlGlobalColSpacingBox.Header" xml:space="preserve">
     <value>स्तंभ अंतर</value>
   </data>
-  <data name="LayoutEditorControlGlobalPadBottomBox.Header" xml:space="preserve">
+    <data name="LayoutEditorControlGlobalPadBottomBox.Header" xml:space="preserve">
     <value>तला</value>
   </data>
-  <data name="LayoutEditorControlGlobalPadLeftBox.Header" xml:space="preserve">
+    <data name="LayoutEditorControlGlobalPadLeftBox.Header" xml:space="preserve">
     <value>बायाँ</value>
   </data>
-  <data name="LayoutEditorControlGlobalPadRightBox.Header" xml:space="preserve">
+    <data name="LayoutEditorControlGlobalPadRightBox.Header" xml:space="preserve">
     <value>सही</value>
   </data>
-  <data name="LayoutEditorControlGlobalPadTopBox.Header" xml:space="preserve">
+    <data name="LayoutEditorControlGlobalPadTopBox.Header" xml:space="preserve">
     <value>शीर्ष</value>
   </data>
-  <data name="LayoutEditorControlGlobalRowSpacingBox.Header" xml:space="preserve">
+    <data name="LayoutEditorControlGlobalRowSpacingBox.Header" xml:space="preserve">
     <value>कतारों के बीच की दूरी</value>
   </data>
-  <data name="LayoutEditorControlHandToolToggle.Content" xml:space="preserve">
+    <data name="LayoutEditorControlHandToolToggle.Content" xml:space="preserve">
     <value>तवा</value>
   </data>
-  <data name="LayoutEditorControlHelpButton.Content" xml:space="preserve">
+    <data name="LayoutEditorControlHelpButton.Content" xml:space="preserve">
     <value>शॉर्टकट्स गाइड</value>
   </data>
-  <data name="LayoutEditorControlHorizontalAlignmentBox.Header" xml:space="preserve">
+    <data name="LayoutEditorControlHorizontalAlignmentBox.Header" xml:space="preserve">
     <value>क्षैतिज संरेखण</value>
   </data>
-  <data name="LayoutEditorControlHorizontalAlignmentCenter.Content" xml:space="preserve">
+    <data name="LayoutEditorControlHorizontalAlignmentCenter.Content" xml:space="preserve">
     <value>केंद्र</value>
   </data>
-  <data name="LayoutEditorControlHorizontalAlignmentLeft.Content" xml:space="preserve">
+    <data name="LayoutEditorControlHorizontalAlignmentLeft.Content" xml:space="preserve">
     <value>बायाँ</value>
   </data>
-  <data name="LayoutEditorControlHorizontalAlignmentRight.Content" xml:space="preserve">
+    <data name="LayoutEditorControlHorizontalAlignmentRight.Content" xml:space="preserve">
     <value>सही</value>
   </data>
-  <data name="LayoutEditorControlHorizontalAlignmentStretch.Content" xml:space="preserve">
+    <data name="LayoutEditorControlHorizontalAlignmentStretch.Content" xml:space="preserve">
     <value>खींचो</value>
   </data>
-  <data name="LayoutEditorControlHorizontalScrollHeader.Text" xml:space="preserve">
+    <data name="LayoutEditorControlHorizontalScrollHeader.Text" xml:space="preserve">
     <value>क्षैतिज स्क्रॉल</value>
   </data>
-  <data name="LayoutEditorControlHorizontalScrollInfoTag.Text" xml:space="preserve">
+    <data name="LayoutEditorControlHorizontalScrollInfoTag.Text" xml:space="preserve">
     <value>माउस व्हील</value>
   </data>
-  <data name="LayoutEditorControlInsertColAfter.Text" xml:space="preserve">
+    <data name="LayoutEditorControlInsertColAfter.Text" xml:space="preserve">
     <value>दाईं ओर कॉलम डालें</value>
   </data>
-  <data name="LayoutEditorControlInsertColBefore.Text" xml:space="preserve">
+    <data name="LayoutEditorControlInsertColBefore.Text" xml:space="preserve">
     <value>बाईं ओर स्तंभ डालें</value>
   </data>
-  <data name="LayoutEditorControlInsertColumn" xml:space="preserve">
+    <data name="LayoutEditorControlInsertColumn" xml:space="preserve">
     <value>यहाँ स्तंभ डालें</value>
   </data>
-  <data name="LayoutEditorControlInsertRow" xml:space="preserve">
+    <data name="LayoutEditorControlInsertRow" xml:space="preserve">
     <value>यहाँ पंक्ति डालें</value>
   </data>
-  <data name="LayoutEditorControlInsertRowAfter.Text" xml:space="preserve">
+    <data name="LayoutEditorControlInsertRowAfter.Text" xml:space="preserve">
     <value>नीचे पंक्ति डालें</value>
   </data>
-  <data name="LayoutEditorControlInsertRowBefore.Text" xml:space="preserve">
+    <data name="LayoutEditorControlInsertRowBefore.Text" xml:space="preserve">
     <value>ऊपर की पंक्ति डालें</value>
   </data>
-  <data name="LayoutEditorControlKeyboardShortcutsHeader.Text" xml:space="preserve">
+    <data name="LayoutEditorControlKeyboardShortcutsHeader.Text" xml:space="preserve">
     <value>कीबोर्ड शॉर्टकट</value>
   </data>
-  <data name="LayoutEditorControlLearnMoreLink.Content" xml:space="preserve">
+    <data name="LayoutEditorControlLearnMoreLink.Content" xml:space="preserve">
     <value>लेआउट एडिटर के बारे में और जानें</value>
   </data>
-  <data name="LayoutEditorControlMarginBottomBox.Header" xml:space="preserve">
+    <data name="LayoutEditorControlMarginBottomBox.Header" xml:space="preserve">
     <value>तला</value>
   </data>
-  <data name="LayoutEditorControlMarginHeader.Text" xml:space="preserve">
+    <data name="LayoutEditorControlMarginHeader.Text" xml:space="preserve">
     <value>अंतर</value>
   </data>
-  <data name="LayoutEditorControlMarginLeftBox.Header" xml:space="preserve">
+    <data name="LayoutEditorControlMarginLeftBox.Header" xml:space="preserve">
     <value>बायाँ</value>
   </data>
-  <data name="LayoutEditorControlMarginRightBox.Header" xml:space="preserve">
+    <data name="LayoutEditorControlMarginRightBox.Header" xml:space="preserve">
     <value>सही</value>
   </data>
-  <data name="LayoutEditorControlMarginTopBox.Header" xml:space="preserve">
+    <data name="LayoutEditorControlMarginTopBox.Header" xml:space="preserve">
     <value>शीर्ष</value>
   </data>
-  <data name="LayoutEditorControlMoveComponentHeader.Text" xml:space="preserve">
+    <data name="LayoutEditorControlMoveComponentHeader.Text" xml:space="preserve">
     <value>घटक स्थानांतरित करें</value>
   </data>
-  <data name="LayoutEditorControlMoveComponentInfoTag.Text" xml:space="preserve">
+    <data name="LayoutEditorControlMoveComponentInfoTag.Text" xml:space="preserve">
     <value>तीर कुंजियाँ / WASD</value>
   </data>
-  <data name="LayoutEditorControlMoveHere" xml:space="preserve">
+    <data name="LayoutEditorControlMoveHere" xml:space="preserve">
     <value>यहाँ आओ</value>
   </data>
-  <data name="LayoutEditorControlNoSelection" xml:space="preserve">
+    <data name="LayoutEditorControlNoSelection" xml:space="preserve">
     <value>जारी रखने के लिए पूर्वावलोकन या बाईं सूची में एक घटक चुनें।</value>
   </data>
-  <data name="LayoutEditorControlPendingComponentsDescriptionTextBlock.Text" xml:space="preserve">
+    <data name="LayoutEditorControlPendingComponentsDescriptionTextBlock.Text" xml:space="preserve">
     <value>घटकों को दाहिने ग्रिड में रखने के लिए उन्हें खींचें। एक बार रखे जाने के बाद, घटकों को ग्रिड के भीतर स्वतंत्र रूप से स्थानांतरित किया जा सकता है।</value>
   </data>
-  <data name="LayoutEditorControlPendingComponentsTextBlock.Text" xml:space="preserve">
+    <data name="LayoutEditorControlPendingComponentsTextBlock.Text" xml:space="preserve">
     <value>लंबित घटक</value>
   </data>
-  <data name="LayoutEditorControlPlacedComponentsDescriptionTextBlock.Text" xml:space="preserve">
+    <data name="LayoutEditorControlPlacedComponentsDescriptionTextBlock.Text" xml:space="preserve">
     <value>यदि यह घटक दाईं ओर छिपा या क्लिक करने योग्य नहीं है, तो इसे यहाँ चुनें।</value>
   </data>
-  <data name="LayoutEditorControlPlacedComponentsTextBlock.Text" xml:space="preserve">
+    <data name="LayoutEditorControlPlacedComponentsTextBlock.Text" xml:space="preserve">
     <value>स्थापित घटक</value>
   </data>
-  <data name="LayoutEditorControlPxDescription.Text" xml:space="preserve">
+    <data name="LayoutEditorControlPxDescription.Text" xml:space="preserve">
     <value>निर्दिष्ट निरपेक्ष पिक्सेल चौड़ाई/ऊंचाई पर स्थिर</value>
   </data>
-  <data name="LayoutEditorControlRemoveButton.Content" xml:space="preserve">
+    <data name="LayoutEditorControlRemoveButton.Content" xml:space="preserve">
     <value>घटक हटाएँ</value>
   </data>
-  <data name="LayoutEditorControlRemoveColButton.Content" xml:space="preserve">
+    <data name="LayoutEditorControlRemoveColButton.Content" xml:space="preserve">
     <value>स्तंभ हटाएँ</value>
   </data>
-  <data name="LayoutEditorControlRemoveRowButton.Content" xml:space="preserve">
+    <data name="LayoutEditorControlRemoveRowButton.Content" xml:space="preserve">
     <value>पंक्ति हटाएँ</value>
   </data>
-  <data name="LayoutEditorControlRowBox.Header" xml:space="preserve">
+    <data name="LayoutEditorControlRowBox.Header" xml:space="preserve">
     <value>पंक्ति</value>
   </data>
-  <data name="LayoutEditorControlRowHeader.Text" xml:space="preserve">
+    <data name="LayoutEditorControlRowHeader.Text" xml:space="preserve">
     <value>पंक्ति</value>
   </data>
-  <data name="LayoutEditorControlRowSpanBox.Header" xml:space="preserve">
+    <data name="LayoutEditorControlRowSpanBox.Header" xml:space="preserve">
     <value>पंक्ति विस्तार</value>
   </data>
-  <data name="LayoutEditorControlSelectedComponentLabel.Text" xml:space="preserve">
+    <data name="LayoutEditorControlSelectedComponentLabel.Text" xml:space="preserve">
     <value>जारी रखने के लिए पूर्वावलोकन या बाईं सूची में एक घटक चुनें।</value>
   </data>
-  <data name="LayoutEditorControlSelectedComponentPropertiesHeader.Text" xml:space="preserve">
+    <data name="LayoutEditorControlSelectedComponentPropertiesHeader.Text" xml:space="preserve">
     <value>गुणधर्म</value>
   </data>
-  <data name="LayoutEditorControlSelectNextComponentHeader.Text" xml:space="preserve">
+    <data name="LayoutEditorControlSelectNextComponentHeader.Text" xml:space="preserve">
     <value>अगले घटक का चयन करें</value>
   </data>
-  <data name="LayoutEditorControlSelectPrevComponentHeader.Text" xml:space="preserve">
+    <data name="LayoutEditorControlSelectPrevComponentHeader.Text" xml:space="preserve">
     <value>पिछले घटक का चयन करें</value>
   </data>
-  <data name="LayoutEditorControlSetBottomRowToAuto" xml:space="preserve">
+    <data name="LayoutEditorControlSetBottomRowToAuto" xml:space="preserve">
     <value>नीचे की पंक्ति को ऑटो पर सेट करें</value>
   </data>
-  <data name="LayoutEditorControlSetBottomRowToStar" xml:space="preserve">
+    <data name="LayoutEditorControlSetBottomRowToStar" xml:space="preserve">
     <value>नीचे की पंक्ति को भरें</value>
   </data>
-  <data name="LayoutEditorControlSetLeftColumnToAuto" xml:space="preserve">
+    <data name="LayoutEditorControlSetLeftColumnToAuto" xml:space="preserve">
     <value>बाएँ कॉलम को ऑटो पर सेट करें</value>
   </data>
-  <data name="LayoutEditorControlSetLeftColumnToStar" xml:space="preserve">
+    <data name="LayoutEditorControlSetLeftColumnToStar" xml:space="preserve">
     <value>बाएँ कॉलम को भरने के लिए सेट करें</value>
   </data>
-  <data name="LayoutEditorControlSetRightColumnToAuto" xml:space="preserve">
+    <data name="LayoutEditorControlSetRightColumnToAuto" xml:space="preserve">
     <value>दाएँ कॉलम को ऑटो पर सेट करें</value>
   </data>
-  <data name="LayoutEditorControlSetRightColumnToStar" xml:space="preserve">
+    <data name="LayoutEditorControlSetRightColumnToStar" xml:space="preserve">
     <value>दाएँ कॉलम को भरने के लिए सेट करें</value>
   </data>
-  <data name="LayoutEditorControlSetTopRowToAuto" xml:space="preserve">
+    <data name="LayoutEditorControlSetTopRowToAuto" xml:space="preserve">
     <value>शीर्ष पंक्ति को ऑटो पर सेट करें</value>
   </data>
-  <data name="LayoutEditorControlSetTopRowToStar" xml:space="preserve">
+    <data name="LayoutEditorControlSetTopRowToStar" xml:space="preserve">
     <value>शीर्ष पंक्ति को भरें</value>
   </data>
-  <data name="LayoutEditorControlSizeHeader.Text" xml:space="preserve">
+    <data name="LayoutEditorControlSizeHeader.Text" xml:space="preserve">
     <value>आकार</value>
   </data>
-  <data name="LayoutEditorControlStarDescription.Text" xml:space="preserve">
+    <data name="LayoutEditorControlStarDescription.Text" xml:space="preserve">
     <value>प्रविष्ट मान के आधार पर शेष स्थान को आनुपातिक रूप से वितरित करता है।</value>
   </data>
-  <data name="LayoutEditorControlTemporaryActivateHandHeader.Text" xml:space="preserve">
+    <data name="LayoutEditorControlTemporaryActivateHandHeader.Text" xml:space="preserve">
     <value>अस्थायी रूप से हैंड टूल सक्रिय करें</value>
   </data>
-  <data name="LayoutEditorControlTemporaryActivateHandInfoTag.Text" xml:space="preserve">
+    <data name="LayoutEditorControlTemporaryActivateHandInfoTag.Text" xml:space="preserve">
     <value>स्पेस बार को लंबे समय तक दबाएँ</value>
   </data>
-  <data name="LayoutEditorControlVerticalAlignmentBottom.Content" xml:space="preserve">
+    <data name="LayoutEditorControlVerticalAlignmentBottom.Content" xml:space="preserve">
     <value>तला</value>
   </data>
-  <data name="LayoutEditorControlVerticalAlignmentBox.Header" xml:space="preserve">
+    <data name="LayoutEditorControlVerticalAlignmentBox.Header" xml:space="preserve">
     <value>लंबवत संरेखण</value>
   </data>
-  <data name="LayoutEditorControlVerticalAlignmentCenter.Content" xml:space="preserve">
+    <data name="LayoutEditorControlVerticalAlignmentCenter.Content" xml:space="preserve">
     <value>केंद्र</value>
   </data>
-  <data name="LayoutEditorControlVerticalAlignmentStretch.Content" xml:space="preserve">
+    <data name="LayoutEditorControlVerticalAlignmentStretch.Content" xml:space="preserve">
     <value>खींचो</value>
   </data>
-  <data name="LayoutEditorControlVerticalAlignmentTop.Content" xml:space="preserve">
+    <data name="LayoutEditorControlVerticalAlignmentTop.Content" xml:space="preserve">
     <value>शीर्ष</value>
   </data>
-  <data name="LayoutEditorControlZoomCanvasHeader.Text" xml:space="preserve">
+    <data name="LayoutEditorControlZoomCanvasHeader.Text" xml:space="preserve">
     <value>ज़ूम इन/आउट</value>
   </data>
-  <data name="LayoutEditorControlZoomCanvasInfoTag.Text" xml:space="preserve">
+    <data name="LayoutEditorControlZoomCanvasInfoTag.Text" xml:space="preserve">
     <value>माउस व्हील</value>
   </data>
-  <data name="LayoutEditorControlZoomInButton.Content" xml:space="preserve">
+    <data name="LayoutEditorControlZoomInButton.Content" xml:space="preserve">
     <value>ज़ूम इन</value>
   </data>
-  <data name="LayoutEditorControlZoomOutButton.Content" xml:space="preserve">
+    <data name="LayoutEditorControlZoomOutButton.Content" xml:space="preserve">
     <value>आउट करें</value>
   </data>
-  <data name="LayoutEditorControlZoomResetButton.Content" xml:space="preserve">
+    <data name="LayoutEditorControlZoomResetButton.Content" xml:space="preserve">
     <value>फिट करने के लिए ज़ूम करें</value>
   </data>
-  <data name="LayoutSettingsControlCustomProfiles.Text" xml:space="preserve">
+    <data name="LayoutSettingsControlCustomProfiles.Text" xml:space="preserve">
     <value>अनुकूलित</value>
   </data>
-  <data name="LayoutSettingsControlCustomProfilesEmpty.Text" xml:space="preserve">
+    <data name="LayoutSettingsControlCustomProfilesEmpty.Text" xml:space="preserve">
     <value>कोई कस्टम लेआउट नहीं मिला। एक टेम्पलेट से बनाएँ या मौजूदा लेआउट आयात करें।</value>
   </data>
-  <data name="LayoutSettingsControlLayoutNameTextBox.PlaceholderText" xml:space="preserve">
+    <data name="LayoutSettingsControlLayoutNameTextBox.PlaceholderText" xml:space="preserve">
     <value>इस लेआउट को पहचानने में मदद के लिए एक नाम दर्ज करें।</value>
   </data>
-  <data name="LayoutSettingsControlNoLyricsWindow" xml:space="preserve">
+    <data name="LayoutSettingsControlNoLyricsWindow" xml:space="preserve">
     <value>कोई गीत विंडो इस लेआउट का उपयोग नहीं कर रही है।</value>
   </data>
-  <data name="LayoutSettingsControlSystemProfiles.Text" xml:space="preserve">
+    <data name="LayoutSettingsControlSystemProfiles.Text" xml:space="preserve">
     <value>डिफ़ॉल्ट</value>
   </data>
-  <data name="LayoutSettingsControlViewAppliedLyricsWindow.Text" xml:space="preserve">
+    <data name="LayoutSettingsControlViewAppliedLyricsWindow.Text" xml:space="preserve">
     <value>इस लेआउट का उपयोग करके गीतों की विंडो देखें</value>
   </data>
-  <data name="LeftAlbumArtRightLyricsCompactLayout" xml:space="preserve">
+    <data name="LeftAlbumArtRightLyricsCompactLayout" xml:space="preserve">
     <value>बाएँ एल्बम कला दाएँ गीतों की व्यवस्था (कॉम्पैक्ट)</value>
   </data>
-  <data name="LeftAlbumArtRightLyricsLayout" xml:space="preserve">
+    <data name="LeftAlbumArtRightLyricsLayout" xml:space="preserve">
     <value>बाएँ एल्बम कला दाएँ गीतों की व्यवस्था लेआउट</value>
   </data>
-  <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve">
+    <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve">
     <value>बाएँ गीत, दाएँ एल्बम कला लेआउट (कॉम्पैक्ट)</value>
   </data>
-  <data name="LeftLyricsRightAlbumArtLayout" xml:space="preserve">
+    <data name="LeftLyricsRightAlbumArtLayout" xml:space="preserve">
     <value>बाएँ गीत, दाएँ एल्बम कला लेआउट</value>
   </data>
-  <data name="LibreTranslateFailed" xml:space="preserve">
+    <data name="LibreTranslateFailed" xml:space="preserve">
     <value>LibreTranslate से अनुवाद का अनुरोध विफल रहा, कृपया सेटिंग्स या स्थानीय LibreTranslate कॉन्फ़िगरेशन की जाँच करें</value>
   </data>
-  <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve">
+    <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve">
     <value>उदाहरण http://localhost:5000</value>
   </data>
-  <data name="Loading" xml:space="preserve">
+    <data name="Loading" xml:space="preserve">
     <value>लोड हो रहा है...</value>
   </data>
-  <data name="LyricsCardOnlyLayout" xml:space="preserve">
+    <data name="LyricsCardOnlyLayout" xml:space="preserve">
     <value>केवल लिरिक्स कार्ड लेआउट</value>
   </data>
-  <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve">
+    <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve">
     <value>समयांतराल</value>
   </data>
-  <data name="LyricsLayerPrimaryName" xml:space="preserve">
+    <data name="LyricsLayerPrimaryName" xml:space="preserve">
     <value>मूल</value>
   </data>
-  <data name="LyricsLayerSecondaryName" xml:space="preserve">
+    <data name="LyricsLayerSecondaryName" xml:space="preserve">
     <value>अनुवाद</value>
   </data>
-  <data name="LyricsLayerTertiaryName" xml:space="preserve">
+    <data name="LyricsLayerTertiaryName" xml:space="preserve">
     <value>उच्चारण</value>
   </data>
-  <data name="LyricsLoading" xml:space="preserve">
+    <data name="LyricsLoading" xml:space="preserve">
     <value>बोल लोड हो रहे हैं...</value>
   </data>
-  <data name="LyricsNotFound" xml:space="preserve">
+    <data name="LyricsNotFound" xml:space="preserve">
     <value>बोल नहीं मिले</value>
   </data>
-  <data name="LyricsOnlyLayout" xml:space="preserve">
+    <data name="LyricsOnlyLayout" xml:space="preserve">
     <value>केवल गीत</value>
   </data>
-  <data name="LyricsPageCachePath.Header" xml:space="preserve">
+    <data name="LyricsPageCachePath.Header" xml:space="preserve">
     <value>कैश पथ</value>
   </data>
-  <data name="LyricsPageCachePath.Value" xml:space="preserve">
+    <data name="LyricsPageCachePath.Value" xml:space="preserve">
     <value>कैश पथ</value>
   </data>
-  <data name="LyricsPageLanguageCode.Header" xml:space="preserve">
+    <data name="LyricsPageLanguageCode.Header" xml:space="preserve">
     <value>बोल की भाषा</value>
   </data>
-  <data name="LyricsPageLyricsCard.Text" xml:space="preserve">
+    <data name="LyricsPageLyricsCard.Text" xml:space="preserve">
     <value>गीत कार्ड</value>
   </data>
-  <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
+    <data name="LyricsPageLyricsProviderPrefix.Header" xml:space="preserve">
     <value>बोल प्रदाता</value>
   </data>
-  <data name="LyricsPageLyricsSearch.Text" xml:space="preserve">
+    <data name="LyricsPageLyricsSearch.Text" xml:space="preserve">
     <value>बोल मैनुअल खोज</value>
   </data>
-  <data name="LyricsPageMatchPercentage.Header" xml:space="preserve">
+    <data name="LyricsPageMatchPercentage.Header" xml:space="preserve">
     <value>मिलान प्रतिशत</value>
   </data>
-  <data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve">
+    <data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve">
     <value>गीत बदलते समय 0 पर रीसेट करें</value>
   </data>
-  <data name="LyricsPageSettings.Text" xml:space="preserve">
+    <data name="LyricsPageSettings.Text" xml:space="preserve">
     <value>सेटिंग्स</value>
   </data>
-  <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve">
+    <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve">
     <value>बोल के भीतर अनुवाद पढ़ने को प्राथमिकता दी जाएगी, यदि कोई मेल नहीं मिलता है तो LibreTranslate सर्वर से मशीनी अनुवाद का अनुरोध किया जाएगा</value>
   </data>
-  <data name="LyricsPageTranslationEnabled.Header" xml:space="preserve">
+    <data name="LyricsPageTranslationEnabled.Header" xml:space="preserve">
     <value>अनुवाद सक्षम करें</value>
   </data>
-  <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
+    <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve">
     <value>अनुवाद प्रदाता</value>
   </data>
-  <data name="LyricsPageTransliterationProviderPrefix.Header" xml:space="preserve">
+    <data name="LyricsPageTransliterationProviderPrefix.Header" xml:space="preserve">
     <value>लिप्यंतरण प्रदाता</value>
   </data>
-  <data name="LyricsParseError" xml:space="preserve">
+    <data name="LyricsParseError" xml:space="preserve">
     <value>बोल पार्सिंग विफल</value>
   </data>
-  <data name="LyricsSaveConfigFolder.Header" xml:space="preserve">
+    <data name="LyricsSaveConfigFolder.Header" xml:space="preserve">
     <value>सहेजने का स्थान</value>
   </data>
-  <data name="LyricsSaveConfigIncludeTranslation.Header" xml:space="preserve">
+    <data name="LyricsSaveConfigIncludeTranslation.Header" xml:space="preserve">
     <value>अनुवाद शामिल करें</value>
   </data>
-  <data name="LyricsSaveConfigIncludeTransliteration.Header" xml:space="preserve">
+    <data name="LyricsSaveConfigIncludeTransliteration.Header" xml:space="preserve">
     <value>लिप्यंतरण शामिल करें</value>
   </data>
-  <data name="LyricsSaveConfigInOneLine.Description" xml:space="preserve">
+    <data name="LyricsSaveConfigInOneLine.Description" xml:space="preserve">
     <value>स्लैश से अलग किया गया</value>
   </data>
-  <data name="LyricsSaveConfigInOneLine.Header" xml:space="preserve">
+    <data name="LyricsSaveConfigInOneLine.Header" xml:space="preserve">
     <value>मूल, अनुवाद और लिप्यंतरण को मिलाएं</value>
   </data>
-  <data name="LyricsSaveConfigInSyllablesFormat.Header" xml:space="preserve">
+    <data name="LyricsSaveConfigInSyllablesFormat.Header" xml:space="preserve">
     <value>वर्ड-सिंक्ड लिरिक्स के तौर पर सेव करें</value>
   </data>
-  <data name="LyricsSearchControlAlbum.Header" xml:space="preserve">
+    <data name="LyricsSearchControlAlbum.Header" xml:space="preserve">
     <value>एल्बम</value>
   </data>
-  <data name="LyricsSearchControlArtist.Header" xml:space="preserve">
+    <data name="LyricsSearchControlArtist.Header" xml:space="preserve">
     <value>कलाकार</value>
   </data>
-  <data name="LyricsSearchControlAutoGenerated.Text" xml:space="preserve">
+    <data name="LyricsSearchControlAutoGenerated.Text" xml:space="preserve">
     <value>ऑटो प्रोसेस</value>
   </data>
-  <data name="LyricsSearchControlConvertToKanji.Text" xml:space="preserve">
+    <data name="LyricsSearchControlConvertToKanji.Text" xml:space="preserve">
     <value>चुने हुए रोमाजी को कांजी में बदलें</value>
   </data>
-  <data name="LyricsSearchControlCopySearchLink.Content" xml:space="preserve">
+    <data name="LyricsSearchControlCopySearchLink.Content" xml:space="preserve">
     <value>खोज लिंक कॉपी करें</value>
   </data>
-  <data name="LyricsSearchControlDurauion.Header" xml:space="preserve">
+    <data name="LyricsSearchControlDurauion.Header" xml:space="preserve">
     <value>अवधि</value>
   </data>
-  <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
+    <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
     <value>* परिवर्तन सहेजने के बाद तुरंत प्रभावी होंगे, फिर गीत के बोल मैपिंग जानकारी और लक्ष्य बोल के माध्यम से पुनर्प्राप्त किए जाएंगे; शुद्ध संगीत के रूप में चिह्नित करने पर सीधे शुद्ध संगीत प्लेसहोल्डर बोल बहाल हो जाएंगे। रीसेट करने के बाद मूल डेटा पुनर्प्राप्ति बहाल हो जाएगी।</value>
   </data>
-  <data name="LyricsSearchControlIgnoreCache.Header" xml:space="preserve">
+    <data name="LyricsSearchControlIgnoreCache.Header" xml:space="preserve">
     <value>खोजते समय कैश को अनदेखा करें</value>
   </data>
-  <data name="LyricsSearchControlMappedAs.Text" xml:space="preserve">
+    <data name="LyricsSearchControlMappedAs.Text" xml:space="preserve">
     <value>के रूप में मैप किया गया</value>
   </data>
-  <data name="LyricsSearchControlMarkAsPureMusic.Header" xml:space="preserve">
+    <data name="LyricsSearchControlMarkAsPureMusic.Header" xml:space="preserve">
     <value>वाद्य के रूप में चिह्नित करें</value>
   </data>
-  <data name="LyricsSearchControlNotFound.Text" xml:space="preserve">
+    <data name="LyricsSearchControlNotFound.Text" xml:space="preserve">
     <value>नहीं मिला</value>
   </data>
-  <data name="LyricsSearchControlReset.Content" xml:space="preserve">
+    <data name="LyricsSearchControlReset.Content" xml:space="preserve">
     <value>रीसेट</value>
   </data>
-  <data name="LyricsSearchControlSaveChanges.Content" xml:space="preserve">
+    <data name="LyricsSearchControlSaveChanges.Content" xml:space="preserve">
     <value>परिवर्तन सहेजें</value>
   </data>
-  <data name="LyricsSearchControlSearch.Content" xml:space="preserve">
+    <data name="LyricsSearchControlSearch.Content" xml:space="preserve">
     <value>खोजें</value>
   </data>
-  <data name="LyricsSearchControlSongInfoMapping.Text" xml:space="preserve">
+    <data name="LyricsSearchControlSongInfoMapping.Text" xml:space="preserve">
     <value>गीत सूचना मैपिंग</value>
   </data>
-  <data name="LyricsSearchControlTitle.Header" xml:space="preserve">
+    <data name="LyricsSearchControlTitle.Header" xml:space="preserve">
     <value>शीर्षक</value>
   </data>
-  <data name="LyricsSearchControlWordByWord.Text" xml:space="preserve">
+    <data name="LyricsSearchControlWordByWord.Text" xml:space="preserve">
     <value>शब्द-दर-शब्द</value>
   </data>
-  <data name="LyricsSearchPageTitle" xml:space="preserve">
+    <data name="LyricsSearchPageTitle" xml:space="preserve">
     <value>बोल खोज - BetterLyrics</value>
   </data>
-  <data name="LyricsSearchProviderEslrcFile" xml:space="preserve">
+    <data name="LyricsSearchProviderEslrcFile" xml:space="preserve">
     <value>स्थानीय .ESLRC फ़ाइल</value>
   </data>
-  <data name="LyricsSearchProviderLocalLrcFile" xml:space="preserve">
+    <data name="LyricsSearchProviderLocalLrcFile" xml:space="preserve">
     <value>स्थानीय .LRC फ़ाइल</value>
   </data>
-  <data name="LyricsSearchProviderLocalMusicFile" xml:space="preserve">
+    <data name="LyricsSearchProviderLocalMusicFile" xml:space="preserve">
     <value>स्थानीय संगीत फ़ाइल</value>
   </data>
-  <data name="LyricsSearchProviderTtmlFile" xml:space="preserve">
+    <data name="LyricsSearchProviderTtmlFile" xml:space="preserve">
     <value>स्थानीय .TTML फ़ाइल</value>
   </data>
-  <data name="LyricsSharePageCopyImage.Content" xml:space="preserve">
+    <data name="LyricsSharePageCopyImage.Content" xml:space="preserve">
     <value>चित्र कॉपी करें</value>
   </data>
-  <data name="LyricsSharePageFontFamily.Text" xml:space="preserve">
+    <data name="LyricsSharePageFontFamily.Text" xml:space="preserve">
     <value>फुहारा परिवार</value>
   </data>
-  <data name="LyricsSharePageGroupAtmosphere" xml:space="preserve">
+    <data name="LyricsSharePageGroupAtmosphere" xml:space="preserve">
     <value>वातावरण</value>
   </data>
-  <data name="LyricsSharePageGroupChineseElegance" xml:space="preserve">
+    <data name="LyricsSharePageGroupChineseElegance" xml:space="preserve">
     <value>चीनी लालित्य</value>
   </data>
-  <data name="LyricsSharePageGroupClassic" xml:space="preserve">
+    <data name="LyricsSharePageGroupClassic" xml:space="preserve">
     <value>क्लासिक डिज़ाइन</value>
   </data>
-  <data name="LyricsSharePageGroupModernVision" xml:space="preserve">
+    <data name="LyricsSharePageGroupModernVision" xml:space="preserve">
     <value>आधुनिक दृष्टि</value>
   </data>
-  <data name="LyricsSharePageGroupPhysical" xml:space="preserve">
+    <data name="LyricsSharePageGroupPhysical" xml:space="preserve">
     <value>शारीरिक</value>
   </data>
-  <data name="LyricsSharePageGroupRetro" xml:space="preserve">
+    <data name="LyricsSharePageGroupRetro" xml:space="preserve">
     <value>डिजिटल रेट्रो</value>
   </data>
-  <data name="LyricsSharePageGroupTracesOfTime" xml:space="preserve">
+    <data name="LyricsSharePageGroupTracesOfTime" xml:space="preserve">
     <value>समय के निशान</value>
   </data>
-  <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
+    <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
     <value>छवि गुणवत्ता</value>
   </data>
-  <data name="LyricsSharePagePinLyricsCardHint.Text" xml:space="preserve">
+    <data name="LyricsSharePagePinLyricsCardHint.Text" xml:space="preserve">
     <value>लिरिक कार्ड को पिन करने के लिए उसे लिरिक विंडो में ड्रैग करें। अनपिन करने के लिए, पिन किए गए कार्ड पर राइट-क्लिक करें और मेनू से 'डिलीट' चुनें।</value>
   </data>
-  <data name="LyricsSharePageSaveImage.Content" xml:space="preserve">
+    <data name="LyricsSharePageSaveImage.Content" xml:space="preserve">
     <value>छवि सहेजें</value>
   </data>
-  <data name="LyricsSharePageSelectLyricsTitle.Text" xml:space="preserve">
+    <data name="LyricsSharePageSelectLyricsTitle.Text" xml:space="preserve">
     <value>बोल चुनें</value>
   </data>
-  <data name="LyricsSharePageStyleAncientBook" xml:space="preserve">
+    <data name="LyricsSharePageStyleAncientBook" xml:space="preserve">
     <value>प्राचीन पुस्तक</value>
   </data>
-  <data name="LyricsSharePageStyleBambooSlips" xml:space="preserve">
+    <data name="LyricsSharePageStyleBambooSlips" xml:space="preserve">
     <value>बांस की चप्पलें</value>
   </data>
-  <data name="LyricsSharePageStyleCD" xml:space="preserve">
+    <data name="LyricsSharePageStyleCD" xml:space="preserve">
     <value>सीडी केस</value>
   </data>
-  <data name="LyricsSharePageStyleCinematic" xml:space="preserve">
+    <data name="LyricsSharePageStyleCinematic" xml:space="preserve">
     <value>सिनेमाई</value>
   </data>
-  <data name="LyricsSharePageStyleCyberpunk" xml:space="preserve">
+    <data name="LyricsSharePageStyleCyberpunk" xml:space="preserve">
     <value>साइबरपंक</value>
   </data>
-  <data name="LyricsSharePageStyleDunhuang" xml:space="preserve">
+    <data name="LyricsSharePageStyleDunhuang" xml:space="preserve">
     <value>दुनहुआंग</value>
   </data>
-  <data name="LyricsSharePageStyleInkWash" xml:space="preserve">
+    <data name="LyricsSharePageStyleInkWash" xml:space="preserve">
     <value>स्याही धुलाई</value>
   </data>
-  <data name="LyricsSharePageStyleJournal" xml:space="preserve">
+    <data name="LyricsSharePageStyleJournal" xml:space="preserve">
     <value>पत्रिका</value>
   </data>
-  <data name="LyricsSharePageStyleMagazine" xml:space="preserve">
+    <data name="LyricsSharePageStyleMagazine" xml:space="preserve">
     <value>मैगज़ीन</value>
   </data>
-  <data name="LyricsSharePageStyleMinimal" xml:space="preserve">
+    <data name="LyricsSharePageStyleMinimal" xml:space="preserve">
     <value>न्यूनतम</value>
   </data>
-  <data name="LyricsSharePageStylePolaroid" xml:space="preserve">
+    <data name="LyricsSharePageStylePolaroid" xml:space="preserve">
     <value>पोलरोइड</value>
   </data>
-  <data name="LyricsSharePageStyleReceipt" xml:space="preserve">
+    <data name="LyricsSharePageStyleReceipt" xml:space="preserve">
     <value>रसीद</value>
   </data>
-  <data name="LyricsSharePageStyleRetroMSN" xml:space="preserve">
+    <data name="LyricsSharePageStyleRetroMSN" xml:space="preserve">
     <value>रेट्रो एमएसएन</value>
   </data>
-  <data name="LyricsSharePageStyleRetroQQ" xml:space="preserve">
+    <data name="LyricsSharePageStyleRetroQQ" xml:space="preserve">
     <value>रेट्रो QQ</value>
   </data>
-  <data name="LyricsSharePageStyleStickyNote" xml:space="preserve">
+    <data name="LyricsSharePageStyleStickyNote" xml:space="preserve">
     <value>चिपचिपा नोट</value>
   </data>
-  <data name="LyricsSharePageStyleSwiss" xml:space="preserve">
+    <data name="LyricsSharePageStyleSwiss" xml:space="preserve">
     <value>स्विस</value>
   </data>
-  <data name="LyricsSharePageStyleTicket" xml:space="preserve">
+    <data name="LyricsSharePageStyleTicket" xml:space="preserve">
     <value>टिकट</value>
   </data>
-  <data name="LyricsSharePageStyleTitle.Text" xml:space="preserve">
+    <data name="LyricsSharePageStyleTitle.Text" xml:space="preserve">
     <value>शैली</value>
   </data>
-  <data name="LyricsSharePageStyleVinyl" xml:space="preserve">
+    <data name="LyricsSharePageStyleVinyl" xml:space="preserve">
     <value>विनाइल</value>
   </data>
-  <data name="LyricsSharePageTitle" xml:space="preserve">
+    <data name="LyricsSharePageTitle" xml:space="preserve">
     <value>गीत कार्ड</value>
   </data>
-  <data name="LyricsStyleSettingsControlLyricsLayoutOrder.Text" xml:space="preserve">
+    <data name="LyricsStyleSettingsControlLyricsLayoutOrder.Text" xml:space="preserve">
     <value>गीत-लेखन लेआउट अनुक्रम</value>
   </data>
-  <data name="LyricsWindowSettingsControlConfigMusicGalleryLyrics.Text" xml:space="preserve">
+    <data name="LyricsWindowSettingsControlConfigMusicGalleryLyrics.Text" xml:space="preserve">
     <value>कॉन्फ़िग म्यूजिक गैलरी एम्बेडेड लिरिक्स विंडो</value>
   </data>
-  <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
+    <data name="LyricsWindowSettingsControlLyricsWindowConfig.Text" xml:space="preserve">
     <value>कॉन्फ़िगरेशन</value>
   </data>
-  <data name="LyricsWindowSettingsControlSetDefault.Text" xml:space="preserve">
+    <data name="LyricsWindowSettingsControlSetDefault.Text" xml:space="preserve">
     <value>डिफ़ॉल्ट के रूप में सेट करें</value>
   </data>
-  <data name="LyricsWindowSettingsControlShare.Text" xml:space="preserve">
+    <data name="LyricsWindowSettingsControlShare.Text" xml:space="preserve">
     <value>निर्यात</value>
   </data>
-  <data name="LyricsWindowSwitchButtonToolTip.Content" xml:space="preserve">
+    <data name="LyricsWindowSwitchButtonToolTip.Content" xml:space="preserve">
     <value>बोल विंडो स्विचर</value>
   </data>
-  <data name="LyricsWindowSwitchWindowHelp.Text" xml:space="preserve">
+    <data name="LyricsWindowSwitchWindowHelp.Text" xml:space="preserve">
     <value>अधिक मोड जोड़ने के लिए "सेटिंग्स" पर जाएं</value>
   </data>
-  <data name="LyricsWindowSwitchWindowTitle" xml:space="preserve">
+    <data name="LyricsWindowSwitchWindowTitle" xml:space="preserve">
     <value>बोल विंडो स्विचर</value>
   </data>
-  <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
+    <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
     <value>केवल एल्बम आर्ट क्षेत्र दिखाएं</value>
   </data>
-  <data name="MainPageLyriscOnly.Content" xml:space="preserve">
+    <data name="MainPageLyriscOnly.Content" xml:space="preserve">
     <value>केवल बोल दिखाएं</value>
   </data>
-  <data name="MainPageNoLocalFilesMatched.Text" xml:space="preserve">
+    <data name="MainPageNoLocalFilesMatched.Text" xml:space="preserve">
     <value>कोई स्थानीय फ़ाइल मेल नहीं खाती</value>
   </data>
-  <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
+    <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
     <value>फिलहाल कोई संगीत नहीं बज रहा है</value>
   </data>
-  <data name="MainPagePositionOffsetSlider.Header" xml:space="preserve">
+    <data name="MainPagePositionOffsetSlider.Header" xml:space="preserve">
     <value>बोल समयरेखा ऑफसेट</value>
   </data>
-  <data name="MainPageSplitView.Content" xml:space="preserve">
+    <data name="MainPageSplitView.Content" xml:space="preserve">
     <value>विभाजित दृश्य</value>
   </data>
-  <data name="MediaSettingsControlAdvOpt.Text" xml:space="preserve">
+    <data name="MediaSettingsControlAdvOpt.Text" xml:space="preserve">
     <value>उन्नत विकल्प</value>
   </data>
-  <data name="MediaSettingsControlLastSyncTime.Header" xml:space="preserve">
+    <data name="MediaSettingsControlLastSyncTime.Header" xml:space="preserve">
     <value>अंतिम सिंक समय</value>
   </data>
-  <data name="MediaSettingsControlLocalFolder" xml:space="preserve">
+    <data name="MediaSettingsControlLocalFolder" xml:space="preserve">
     <value>स्थानीय फोल्डर</value>
   </data>
-  <data name="MediaSettingsControlNameSetting.Header" xml:space="preserve">
+    <data name="MediaSettingsControlNameSetting.Header" xml:space="preserve">
     <value>नाम</value>
   </data>
-  <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
+    <data name="MediaSettingsControlSyncNow.Content" xml:space="preserve">
     <value>अभी सिंक्रनाइज़ करें</value>
   </data>
-  <data name="MediaSettingsForceSyncButton.Content" xml:space="preserve">
+    <data name="MediaSettingsForceSyncButton.Content" xml:space="preserve">
     <value>जबरन सिंक करें</value>
   </data>
-  <data name="MediaSettingsForceSyncHint.Text" xml:space="preserve">
+    <data name="MediaSettingsForceSyncHint.Text" xml:space="preserve">
     <value>यह ऑप्शन रिमोट डेटाबेस से मेटाडेटा का री-रिज़ॉल्यूशन करेगा। यह ऑप्शन तब मददगार होता है जब लोकल डेटाबेस में कोई समस्या हो, या जब किसी वजह से पूरा रिफ्रेश करना ज़रूरी हो।</value>
   </data>
-  <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
+    <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
     <value>प्लेलिस्ट में जोड़ें</value>
   </data>
-  <data name="MusicGalleryPageAddToEnd.Text" xml:space="preserve">
+    <data name="MusicGalleryPageAddToEnd.Text" xml:space="preserve">
     <value>सूची का अंत</value>
   </data>
-  <data name="MusicGalleryPageAddToNext.Text" xml:space="preserve">
+    <data name="MusicGalleryPageAddToNext.Text" xml:space="preserve">
     <value>अगला आइटम</value>
   </data>
-  <data name="MusicGalleryPageAddToPlayingQueue.Text" xml:space="preserve">
+    <data name="MusicGalleryPageAddToPlayingQueue.Text" xml:space="preserve">
     <value>प्लेइंग क्यू में जोड़ें</value>
   </data>
-  <data name="MusicGalleryPageAllSongs" xml:space="preserve">
+    <data name="MusicGalleryPageAllSongs" xml:space="preserve">
     <value>सभी गाने</value>
   </data>
-  <data name="MusicGalleryPageDataSync.Message" xml:space="preserve">
+    <data name="MusicGalleryPageDataSync.Message" xml:space="preserve">
     <value>मीडिया लाइब्रेरी सिंक चल रहा है...</value>
   </data>
-  <data name="MusicGalleryPageDataSyncError.Message" xml:space="preserve">
+    <data name="MusicGalleryPageDataSyncError.Message" xml:space="preserve">
     <value>मीडिया लाइब्रेरी सिंक में कोई समस्या है</value>
   </data>
-  <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
+    <data name="MusicGalleryPageEmptyPlayingQueue.Text" xml:space="preserve">
     <value>प्लेइंग कतार साफ़ करें</value>
   </data>
-  <data name="MusicGalleryPageFileAlbum.Header" xml:space="preserve">
+    <data name="MusicGalleryPageFileAlbum.Header" xml:space="preserve">
     <value>एल्बम</value>
   </data>
-  <data name="MusicGalleryPageFileArtist.Header" xml:space="preserve">
+    <data name="MusicGalleryPageFileArtist.Header" xml:space="preserve">
     <value>कलाकार</value>
   </data>
-  <data name="MusicGalleryPageFileInfoBitDepth.Header" xml:space="preserve">
+    <data name="MusicGalleryPageFileInfoBitDepth.Header" xml:space="preserve">
     <value>बिट गहराई</value>
   </data>
-  <data name="MusicGalleryPageFileInfoBitrate.Header" xml:space="preserve">
+    <data name="MusicGalleryPageFileInfoBitrate.Header" xml:space="preserve">
     <value>बिटरेट</value>
   </data>
-  <data name="MusicGalleryPageFileInfoDuration.Header" xml:space="preserve">
+    <data name="MusicGalleryPageFileInfoDuration.Header" xml:space="preserve">
     <value>अवधि</value>
   </data>
-  <data name="MusicGalleryPageFileInfoEncoder.Header" xml:space="preserve">
+    <data name="MusicGalleryPageFileInfoEncoder.Header" xml:space="preserve">
     <value>एनकोडर</value>
   </data>
-  <data name="MusicGalleryPageFileInfoFormat.Header" xml:space="preserve">
+    <data name="MusicGalleryPageFileInfoFormat.Header" xml:space="preserve">
     <value>प्रारूप</value>
   </data>
-  <data name="MusicGalleryPageFileInfoLyrics.Header" xml:space="preserve">
+    <data name="MusicGalleryPageFileInfoLyrics.Header" xml:space="preserve">
     <value>बोल</value>
   </data>
-  <data name="MusicGalleryPageFileInfoPath.Header" xml:space="preserve">
+    <data name="MusicGalleryPageFileInfoPath.Header" xml:space="preserve">
     <value>पथ</value>
   </data>
-  <data name="MusicGalleryPageFileInfoSampleRate.Header" xml:space="preserve">
+    <data name="MusicGalleryPageFileInfoSampleRate.Header" xml:space="preserve">
     <value>सैंपल दर</value>
   </data>
-  <data name="MusicGalleryPageFileInfoTitle.Header" xml:space="preserve">
+    <data name="MusicGalleryPageFileInfoTitle.Header" xml:space="preserve">
     <value>शीर्षक</value>
   </data>
-  <data name="MusicGalleryPageFileInfoYear.Header" xml:space="preserve">
+    <data name="MusicGalleryPageFileInfoYear.Header" xml:space="preserve">
     <value>वर्ष</value>
   </data>
-  <data name="MusicGalleryPageFileNotFound.Text" xml:space="preserve">
+    <data name="MusicGalleryPageFileNotFound.Text" xml:space="preserve">
     <value>मीडिया लाइब्रेरी में कोई गाना नहीं मिला</value>
   </data>
-  <data name="MusicGalleryPageFolder.Text" xml:space="preserve">
+    <data name="MusicGalleryPageFolder.Text" xml:space="preserve">
     <value>फ़ोल्डर्स</value>
   </data>
-  <data name="MusicGalleryPageImportFromFile.Text" xml:space="preserve">
+    <data name="MusicGalleryPageImportFromFile.Text" xml:space="preserve">
     <value>फ़ाइल से आयात करें</value>
   </data>
-  <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
+    <data name="MusicGalleryPageNewPlaylist.Text" xml:space="preserve">
     <value>प्लेलिस्ट बनायें</value>
   </data>
-  <data name="MusicGalleryPageOpenInFileExplorer.Text" xml:space="preserve">
+    <data name="MusicGalleryPageOpenInFileExplorer.Text" xml:space="preserve">
     <value>फ़ाइल एक्सप्लोरर में खोलें</value>
   </data>
-  <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
+    <data name="MusicGalleryPagePlayingQueue.Text" xml:space="preserve">
     <value>प्लेइंग कतार</value>
   </data>
-  <data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
+    <data name="MusicGalleryPagePlayingQueueEmpty.Text" xml:space="preserve">
     <value>प्लेइंग कतार खाली है</value>
   </data>
-  <data name="MusicGalleryPagePlayingTrackDetail.Content" xml:space="preserve">
+    <data name="MusicGalleryPagePlayingTrackDetail.Content" xml:space="preserve">
     <value>अभी चल रहे ट्रैक की जानकारी</value>
   </data>
-  <data name="MusicGalleryPagePlaylist.Text" xml:space="preserve">
+    <data name="MusicGalleryPagePlaylist.Text" xml:space="preserve">
     <value>प्लेलिस्ट</value>
   </data>
-  <data name="MusicGalleryPageQueueLoop.Text" xml:space="preserve">
+    <data name="MusicGalleryPageQueueLoop.Text" xml:space="preserve">
     <value>सूची लूप</value>
   </data>
-  <data name="MusicGalleryPageQueueRandom.Text" xml:space="preserve">
+    <data name="MusicGalleryPageQueueRandom.Text" xml:space="preserve">
     <value>रैंडम</value>
   </data>
-  <data name="MusicGalleryPageRemoveFromCustomList.Text" xml:space="preserve">
+    <data name="MusicGalleryPageRemoveFromCustomList.Text" xml:space="preserve">
     <value>प्लेलिस्ट से हटाएं</value>
   </data>
-  <data name="MusicGalleryPageRemoveFromPlayingQueue.Text" xml:space="preserve">
+    <data name="MusicGalleryPageRemoveFromPlayingQueue.Text" xml:space="preserve">
     <value>प्लेइंग कतार से हटाएं</value>
   </data>
-  <data name="MusicGalleryPageRepeatAll.Content" xml:space="preserve">
+    <data name="MusicGalleryPageRepeatAll.Content" xml:space="preserve">
     <value>सभी को दोहराएं</value>
   </data>
-  <data name="MusicGalleryPageScrollToPlayingItem.Text" xml:space="preserve">
+    <data name="MusicGalleryPageScrollToPlayingItem.Text" xml:space="preserve">
     <value>प्लेइंग आइटम पर स्क्रॉल करें</value>
   </data>
-  <data name="MusicGalleryPageSelectedTrackDetail.Content" xml:space="preserve">
+    <data name="MusicGalleryPageSelectedTrackDetail.Content" xml:space="preserve">
     <value>अभी चुने गए ट्रैक की जानकारी</value>
   </data>
-  <data name="MusicGalleryPageShufflePlay.Content" xml:space="preserve">
+    <data name="MusicGalleryPageShufflePlay.Content" xml:space="preserve">
     <value>शफल करें</value>
   </data>
-  <data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve">
+    <data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve">
     <value>एकल लूप</value>
   </data>
-  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
+    <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
     <value>गीत का नाम, कलाकार, एल्बम, फ़ाइल का नाम या फ़ाइल का पथ खोजें</value>
   </data>
-  <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve">
+    <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve">
     <value>एल्बम</value>
   </data>
-  <data name="MusicGalleryPageSortByArtist.Content" xml:space="preserve">
+    <data name="MusicGalleryPageSortByArtist.Content" xml:space="preserve">
     <value>कलाकार</value>
   </data>
-  <data name="MusicGalleryPageSortByFolder.Content" xml:space="preserve">
+    <data name="MusicGalleryPageSortByFolder.Content" xml:space="preserve">
     <value>फ़ोल्डर</value>
   </data>
-  <data name="MusicGalleryPageSortByTitle.Content" xml:space="preserve">
+    <data name="MusicGalleryPageSortByTitle.Content" xml:space="preserve">
     <value>शीर्षक</value>
   </data>
-  <data name="MusicGalleryPageSortType.Text" xml:space="preserve">
+    <data name="MusicGalleryPageSortType.Text" xml:space="preserve">
     <value>क्रमबद्ध प्रकार</value>
   </data>
-  <data name="MusicGalleryPageStopTrack.Text" xml:space="preserve">
+    <data name="MusicGalleryPageStopTrack.Text" xml:space="preserve">
     <value>रोकें</value>
   </data>
-  <data name="MusicGalleryPageTitle" xml:space="preserve">
+    <data name="MusicGalleryPageTitle" xml:space="preserve">
     <value>संगीत लाइब्रेरी - BetterLyrics</value>
   </data>
-  <data name="MusicSettingsControlAutoSyncInterval.Description" xml:space="preserve">
+    <data name="MusicSettingsControlAutoSyncInterval.Description" xml:space="preserve">
     <value>तय समय पर फ़ाइल में हुए बदलावों को अपने आप चेक करता है। लोकल और रिमोट दोनों सोर्स पर लागू होता है</value>
   </data>
-  <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
+    <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
     <value>ऑटो-सिंक आवृत्ति</value>
   </data>
-  <data name="MusicSettingsControlAutoSyncIntervalDisabled.Content" xml:space="preserve">
+    <data name="MusicSettingsControlAutoSyncIntervalDisabled.Content" xml:space="preserve">
     <value>कभी नहीं</value>
   </data>
-  <data name="MusicSettingsControlAutoSyncIntervalEveryDay.Content" xml:space="preserve">
+    <data name="MusicSettingsControlAutoSyncIntervalEveryDay.Content" xml:space="preserve">
     <value>प्रतिदिन</value>
   </data>
-  <data name="MusicSettingsControlAutoSyncIntervalEveryFifteenMin.Content" xml:space="preserve">
+    <data name="MusicSettingsControlAutoSyncIntervalEveryFifteenMin.Content" xml:space="preserve">
     <value>हर 15 मिनट</value>
   </data>
-  <data name="MusicSettingsControlAutoSyncIntervalEveryHour.Content" xml:space="preserve">
+    <data name="MusicSettingsControlAutoSyncIntervalEveryHour.Content" xml:space="preserve">
     <value>हर घंटे</value>
   </data>
-  <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
+    <data name="MusicSettingsControlAutoSyncIntervalEverySixHrs.Content" xml:space="preserve">
     <value>हर ६ घंटे</value>
   </data>
-  <data name="MusicSettingsControlRealTimeScan.Description" xml:space="preserve">
+    <data name="MusicSettingsControlRealTimeScan.Description" xml:space="preserve">
     <value>फ़ाइल में बदलाव का पता चलने पर ऑटोमैटिकली सिंक हो जाता है। यह ऑप्शन सिर्फ़ लोकल सोर्स के लिए उपलब्ध है</value>
   </data>
-  <data name="MusicSettingsControlRealTimeScan.Header" xml:space="preserve">
+    <data name="MusicSettingsControlRealTimeScan.Header" xml:space="preserve">
     <value>वास्तविक समय में निगरानी</value>
   </data>
-  <data name="NarrowMode" xml:space="preserve">
+    <data name="NarrowMode" xml:space="preserve">
     <value>संकीर्ण मोड</value>
   </data>
-  <data name="NowPlayingBarConfigCurrentLyricsWindow.Text" xml:space="preserve">
+    <data name="NowPlayingBarConfigCurrentLyricsWindow.Text" xml:space="preserve">
     <value>वर्तमान गीतों की विंडो कॉन्फ़िगर करें</value>
   </data>
-  <data name="NowPlayingBarConfigCurrentPlaybackSource.Text" xml:space="preserve">
+    <data name="NowPlayingBarConfigCurrentPlaybackSource.Text" xml:space="preserve">
     <value>वर्तमान प्लेबैक स्रोत कॉन्फ़िगर करें</value>
   </data>
-  <data name="PictureInPictureMode" xml:space="preserve">
+    <data name="PictureInPictureMode" xml:space="preserve">
     <value>पिक्चर-इन-पिक्चर मोड</value>
   </data>
-  <data name="Pinyin" xml:space="preserve">
+    <data name="Pinyin" xml:space="preserve">
     <value>पिनयिन (मंडारिन)</value>
   </data>
-  <data name="PlaybackSettingsControlBetterLyricsRunningInBackground.Message" xml:space="preserve">
+    <data name="PlaybackSettingsControlBetterLyricsRunningInBackground.Message" xml:space="preserve">
     <value>BetterLyrics का बिल्ट-इन प्लेयर अभी भी बैकग्राउंड में चल रहा है, और सॉफ्टवेयर दूसरे प्लेबैक सोर्स को इग्नोर कर देगा। दूसरे प्लेबैक सोर्स सुनने के लिए, म्यूज़िक गैलरी में जाएं और नीचे दाएं कोने में स्टॉप बटन पर क्लिक करें</value>
   </data>
-  <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
+    <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
     <value>टारगेट प्रोसेस मेमोरी से सीधे प्लेबैक प्रोग्रेस पढ़ने के लिए एक्सटर्नल कॉन्फ़िगरेशन लोड करता है। कृपया सावधानी से इस्तेमाल करें; डेवलपर थर्ड-पार्टी कॉन्फ़िगरेशन की सुरक्षा के लिए ज़िम्मेदार नहीं है।</value>
   </data>
-  <data name="PlaybackSettingsControlMemoryReader.Header" xml:space="preserve">
+    <data name="PlaybackSettingsControlMemoryReader.Header" xml:space="preserve">
     <value>मेमोरी रीडर एडाप्टर</value>
   </data>
-  <data name="PlaybackSettingsControlSaveLyricsAsLrc.Text" xml:space="preserve">
+    <data name="PlaybackSettingsControlSaveLyricsAsLrc.Text" xml:space="preserve">
     <value>.lrc के रूप में सहेजें</value>
   </data>
-  <data name="PlaybackSettingsControlSaveLyricsAsTtml.Text" xml:space="preserve">
+    <data name="PlaybackSettingsControlSaveLyricsAsTtml.Text" xml:space="preserve">
     <value>के रूप में सहेजें .ttml</value>
   </data>
-  <data name="PlaybackSettingsControlStopBetterLyricsPlayer.Content" xml:space="preserve">
+    <data name="PlaybackSettingsControlStopBetterLyricsPlayer.Content" xml:space="preserve">
     <value>तुरंत रुकें</value>
   </data>
-  <data name="PlaylistViewFailed" xml:space="preserve">
+    <data name="PlaylistViewFailed" xml:space="preserve">
     <value>ट्रैक देखने में असमर्थ क्योंकि पथ मौजूद नहीं है</value>
   </data>
-  <data name="PluginItemControlEnablePlugin.Header" xml:space="preserve">
+    <data name="PluginItemControlEnablePlugin.Header" xml:space="preserve">
     <value>प्लगइन सक्षम करें</value>
   </data>
-  <data name="PluginManagerControlInfoBar.Message" xml:space="preserve">
+    <data name="PluginManagerControlInfoBar.Message" xml:space="preserve">
     <value>किसी भी प्लगइन को इंस्टॉल, अनइंस्टॉल या अपडेट करने के बाद रीस्टार्ट अपने आप हो जाएगा</value>
   </data>
-  <data name="PluginManagerControlInstall.Content" xml:space="preserve">
+    <data name="PluginManagerControlInstall.Content" xml:space="preserve">
     <value>Plugins स्थापित</value>
   </data>
-  <data name="PluginManagerControlInstallSuccessful" xml:space="preserve">
+    <data name="PluginManagerControlInstallSuccessful" xml:space="preserve">
     <value>स्थापना सफल</value>
   </data>
-  <data name="PluginManagerControlNoPluginsInstalled.Text" xml:space="preserve">
+    <data name="PluginManagerControlNoPluginsInstalled.Text" xml:space="preserve">
     <value>कोई प्लगइन्स इंस्टॉल नहीं है</value>
   </data>
-  <data name="PluginManagerControlRestartNow" xml:space="preserve">
+    <data name="PluginManagerControlRestartNow" xml:space="preserve">
     <value>अब पुनःचालू करें</value>
   </data>
-  <data name="PluginManagerControlRestartRequired" xml:space="preserve">
+    <data name="PluginManagerControlRestartRequired" xml:space="preserve">
     <value>बदलाव लागू करने के लिए एप्लिकेशन अब रीस्टार्ट होगा</value>
   </data>
-  <data name="PluginManagerControlTitle.Text" xml:space="preserve">
+    <data name="PluginManagerControlTitle.Text" xml:space="preserve">
     <value>प्लगइन प्रबंधक</value>
   </data>
-  <data name="PluginManagerControlUninstall.Content" xml:space="preserve">
+    <data name="PluginManagerControlUninstall.Content" xml:space="preserve">
     <value>प्लगइन प्रबंधक</value>
   </data>
-  <data name="PluginManagerControlUninstallSuccessful" xml:space="preserve">
+    <data name="PluginManagerControlUninstallSuccessful" xml:space="preserve">
     <value>अनइंस्टॉलेशन सफल रहा</value>
   </data>
-  <data name="PluginManagerControlVisitPluginDevGuide.Content" xml:space="preserve">
+    <data name="PluginManagerControlVisitPluginDevGuide.Content" xml:space="preserve">
     <value>प्लगइन डेव डॉक पर जाएं</value>
   </data>
-  <data name="PluginManagerControlVisitPluginStore.Content" xml:space="preserve">
+    <data name="PluginManagerControlVisitPluginStore.Content" xml:space="preserve">
     <value>प्लगइन्स स्टोर पर जाएँ</value>
   </data>
-  <data name="PrivacyPolicy.Content" xml:space="preserve">
+    <data name="PrivacyPolicy.Content" xml:space="preserve">
     <value>गोपनीयता नीति</value>
   </data>
-  <data name="RemoteServerConfigControlBrowse.Content" xml:space="preserve">
+    <data name="RemoteServerConfigControlBrowse.Content" xml:space="preserve">
     <value>ब्राउज करें</value>
   </data>
-  <data name="RemoteServerConfigControlName.Header" xml:space="preserve">
+    <data name="RemoteServerConfigControlName.Header" xml:space="preserve">
     <value>नाम</value>
   </data>
-  <data name="RemoteServerConfigControlName.PlaceholderText" xml:space="preserve">
+    <data name="RemoteServerConfigControlName.PlaceholderText" xml:space="preserve">
     <value>इसे खाली छोड़ने से अपने आप एक डिफ़ॉल्ट नाम बन जाएगा।</value>
   </data>
-  <data name="RemoteServerConfigControlPassword.Header" xml:space="preserve">
+    <data name="RemoteServerConfigControlPassword.Header" xml:space="preserve">
     <value>पासवर्ड</value>
   </data>
-  <data name="RemoteServerConfigControlPath.Header" xml:space="preserve">
+    <data name="RemoteServerConfigControlPath.Header" xml:space="preserve">
     <value>पथ</value>
   </data>
-  <data name="RemoteServerConfigControlPathNotExisted" xml:space="preserve">
+    <data name="RemoteServerConfigControlPathNotExisted" xml:space="preserve">
     <value>बताया गया फ़ोल्डर पाथ नहीं मिला</value>
   </data>
-  <data name="RemoteServerConfigControlPathRequired" xml:space="preserve">
+    <data name="RemoteServerConfigControlPathRequired" xml:space="preserve">
     <value>पथ आवश्यक है</value>
   </data>
-  <data name="RemoteServerConfigControlPort.Header" xml:space="preserve">
+    <data name="RemoteServerConfigControlPort.Header" xml:space="preserve">
     <value>पोर्ट</value>
   </data>
-  <data name="RemoteServerConfigControlServerAddress.Header" xml:space="preserve">
+    <data name="RemoteServerConfigControlServerAddress.Header" xml:space="preserve">
     <value>सर्वर पता</value>
   </data>
-  <data name="RemoteServerConfigControlServerAddressRequired" xml:space="preserve">
+    <data name="RemoteServerConfigControlServerAddressRequired" xml:space="preserve">
     <value>सर्वर पता आवश्यक है</value>
   </data>
-  <data name="RemoteServerConfigControlUsername.Header" xml:space="preserve">
+    <data name="RemoteServerConfigControlUsername.Header" xml:space="preserve">
     <value>उपयोगकर्ता नाम</value>
   </data>
-  <data name="Romaji" xml:space="preserve">
+    <data name="Romaji" xml:space="preserve">
     <value>रोमाजी</value>
   </data>
-  <data name="Row" xml:space="preserve">
+    <data name="Row" xml:space="preserve">
     <value>पंक्ति</value>
   </data>
-  <data name="SetingsPageContributors.Text" xml:space="preserve">
+    <data name="SetingsPageContributors.Text" xml:space="preserve">
     <value>योगदानकर्ता</value>
   </data>
-  <data name="SetingsPageDonation.Text" xml:space="preserve">
+    <data name="SetingsPageDonation.Text" xml:space="preserve">
     <value>दान करें</value>
   </data>
-  <data name="SetingsPageFeedback.Text" xml:space="preserve">
+    <data name="SetingsPageFeedback.Text" xml:space="preserve">
     <value>फीडबैक</value>
   </data>
-  <data name="SetingsPageSpecialThanks.Text" xml:space="preserve">
+    <data name="SetingsPageSpecialThanks.Text" xml:space="preserve">
     <value>विशेष आभार</value>
   </data>
-  <data name="SetingsPageThanks.Text" xml:space="preserve">
+    <data name="SetingsPageThanks.Text" xml:space="preserve">
     <value>यदि आप इस प्रोजेक्ट को पसंद करते हैं, तो कृपया दान करके इसका समर्थन करने पर विचार करें। आपका समर्थन प्रोजेक्ट को जीवित रखने और आगे के विकास को प्रोत्साहित करने में मदद करेगा।</value>
   </data>
-  <data name="SettingsPage3DLyrics.Header" xml:space="preserve">
+    <data name="SettingsPage3DLyrics.Header" xml:space="preserve">
     <value>[प्रयोगात्मक] गहराई प्रभाव</value>
   </data>
-  <data name="SettingsPage3DLyricsAutoFitLayout.Description" xml:space="preserve">
+    <data name="SettingsPage3DLyricsAutoFitLayout.Description" xml:space="preserve">
     <value>यह उन स्थितियों के लिए सही है जहां Z-एक्सिस को एडजस्ट करने के बाद लिरिक्स पूरी स्क्रीन पर नहीं आ पाते हैं</value>
   </data>
-  <data name="SettingsPage3DLyricsAutoFitLayout.Header" xml:space="preserve">
+    <data name="SettingsPage3DLyricsAutoFitLayout.Header" xml:space="preserve">
     <value>लेआउट में फिट होने के लिए अपने आप एडजस्ट हो जाता है</value>
   </data>
-  <data name="SettingsPage3DLyricsDepth.Header" xml:space="preserve">
+    <data name="SettingsPage3DLyricsDepth.Header" xml:space="preserve">
     <value>गहराई</value>
   </data>
-  <data name="SettingsPageAbout" xml:space="preserve">
+    <data name="SettingsPageAbout" xml:space="preserve">
     <value>जानकारी</value>
   </data>
-  <data name="SettingsPageAdaptAlbumArtAccentColor.Header" xml:space="preserve">
+    <data name="SettingsPageAdaptAlbumArtAccentColor.Header" xml:space="preserve">
     <value>एल्बम आर्ट के मुख्य रंग के अनुसार अनुकूलित करें</value>
   </data>
-  <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
+    <data name="SettingsPageAdaptEnvColor.Header" xml:space="preserve">
     <value>पर्यावरण के रंग के अनुकूल बनें</value>
   </data>
-  <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
+    <data name="SettingsPageAddFolderButton.Content" xml:space="preserve">
     <value>जोड़ें</value>
   </data>
-  <data name="SettingsPageAlbum.Header" xml:space="preserve">
+    <data name="SettingsPageAlbum.Header" xml:space="preserve">
     <value>एल्बम</value>
   </data>
-  <data name="SettingsPageAlbumArt.Text" xml:space="preserve">
+    <data name="SettingsPageAlbumArt.Text" xml:space="preserve">
     <value>एल्बम कला</value>
   </data>
-  <data name="SettingsPageAlbumArtHeight.Header" xml:space="preserve">
+    <data name="SettingsPageAlbumArtHeight.Header" xml:space="preserve">
     <value>एल्बम कला ऊंचाई</value>
   </data>
-  <data name="SettingsPageAlbumArtLayer.Header" xml:space="preserve">
+    <data name="SettingsPageAlbumArtLayer.Header" xml:space="preserve">
     <value>एल्बम कला परत</value>
   </data>
-  <data name="SettingsPageAlbumArtSearchProvidersConfig.Text" xml:space="preserve">
+    <data name="SettingsPageAlbumArtSearchProvidersConfig.Text" xml:space="preserve">
     <value>एल्बम कला स्रोत कॉन्फ़िगर करें</value>
   </data>
-  <data name="SettingsPageAlbumEffect.Text" xml:space="preserve">
+    <data name="SettingsPageAlbumEffect.Text" xml:space="preserve">
     <value>एल्बम कला प्रभाव</value>
   </data>
-  <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
+    <data name="SettingsPageAlbumRadius.Header" xml:space="preserve">
     <value>कोने की त्रिज्या</value>
   </data>
-  <data name="SettingsPageAlbumShadowAmount.Header" xml:space="preserve">
+    <data name="SettingsPageAlbumShadowAmount.Header" xml:space="preserve">
     <value>छाया प्रसार मात्रा</value>
   </data>
-  <data name="SettingsPageAlbumStyle.Text" xml:space="preserve">
+    <data name="SettingsPageAlbumStyle.Text" xml:space="preserve">
     <value>एल्बम कला क्षेत्र शैली</value>
   </data>
-  <data name="SettingsPageAlignment.Header" xml:space="preserve">
+    <data name="SettingsPageAlignment.Header" xml:space="preserve">
     <value>संरेखण</value>
   </data>
-  <data name="SettingsPageAlwaysHideUnlockButton.Header" xml:space="preserve">
+    <data name="SettingsPageAlwaysHideUnlockButton.Header" xml:space="preserve">
     <value>हमेशा अनलॉक बटन छिपाएं</value>
   </data>
-  <data name="SettingsPageAmllTtmlDbBaseUrl.Header" xml:space="preserve">
+    <data name="SettingsPageAmllTtmlDbBaseUrl.Header" xml:space="preserve">
     <value>बेस URL</value>
   </data>
-  <data name="SettingsPageAmount.Header" xml:space="preserve">
+    <data name="SettingsPageAmount.Header" xml:space="preserve">
     <value>मात्रा</value>
   </data>
-  <data name="SettingsPageAOT.Header" xml:space="preserve">
+    <data name="SettingsPageAOT.Header" xml:space="preserve">
     <value>बोल विंडो को सबसे ऊपर रखें</value>
   </data>
-  <data name="SettingsPageApp" xml:space="preserve">
+    <data name="SettingsPageApp" xml:space="preserve">
     <value>ऐप का स्वरूप और व्यवहार</value>
   </data>
-  <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
+    <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>ऐप का रूप</value>
   </data>
-  <data name="SettingsPageArtist.Header" xml:space="preserve">
+    <data name="SettingsPageArtist.Header" xml:space="preserve">
     <value>कलाकार</value>
   </data>
-  <data name="SettingsPageAuto.Content" xml:space="preserve">
+    <data name="SettingsPageAuto.Content" xml:space="preserve">
     <value>ऑटो</value>
   </data>
-  <data name="SettingsPageAutoAdjust.Header" xml:space="preserve">
+    <data name="SettingsPageAutoAdjust.Header" xml:space="preserve">
     <value>स्वतः समायोजन</value>
   </data>
-  <data name="SettingsPageAutoOpenLyricsWindow.Header" xml:space="preserve">
+    <data name="SettingsPageAutoOpenLyricsWindow.Header" xml:space="preserve">
     <value>स्टार्टअप पर डिफ़ॉल्ट बोल विंडो स्वचालित रूप से खोलें</value>
   </data>
-  <data name="SettingsPageAutoOpenMusicGalleryWindow.Header" xml:space="preserve">
+    <data name="SettingsPageAutoOpenMusicGalleryWindow.Header" xml:space="preserve">
     <value>स्टार्टअप पर संगीत गैलरी विंडो खोलें</value>
   </data>
-  <data name="SettingsPageAutoOpenSplashWindow.Header" xml:space="preserve">
+    <data name="SettingsPageAutoOpenSplashWindow.Header" xml:space="preserve">
     <value>स्प्लैश स्क्रीन दिखाएँ</value>
   </data>
-  <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve">
+    <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve">
     <value>संगीत गैलरी विंडो खोलते समय स्वचालित रूप से प्लेबैक जारी रखें</value>
   </data>
-  <data name="SettingsPageAutoStart.Header" xml:space="preserve">
+    <data name="SettingsPageAutoStart.Header" xml:space="preserve">
     <value>ऑटो स्टार्ट</value>
   </data>
-  <data name="SettingsPageAutoWrap.Header" xml:space="preserve">
+    <data name="SettingsPageAutoWrap.Header" xml:space="preserve">
     <value>ऑटो रैप</value>
   </data>
-  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
+    <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
     <value>बोल पृष्ठभूमि</value>
   </data>
-  <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
+    <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>धुंधलापन मात्रा</value>
   </data>
-  <data name="SettingsPageBottom.Content" xml:space="preserve">
+    <data name="SettingsPageBottom.Content" xml:space="preserve">
     <value>तल</value>
   </data>
-  <data name="SettingsPageCache.Description" xml:space="preserve">
+    <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>लॉग फ़ाइलें, ऑनलाइन लिरिक्स कैश शामिल हैं</value>
   </data>
-  <data name="SettingsPageCache.Header" xml:space="preserve">
+    <data name="SettingsPageCache.Header" xml:space="preserve">
     <value>कैश</value>
   </data>
-  <data name="SettingsPageCenter.Content" xml:space="preserve">
+    <data name="SettingsPageCenter.Content" xml:space="preserve">
     <value>मध्य</value>
   </data>
-  <data name="SettingsPageCheckShortcut.Content" xml:space="preserve">
+    <data name="SettingsPageCheckShortcut.Content" xml:space="preserve">
     <value>शॉर्टकट जांचें</value>
   </data>
-  <data name="SettingsPageChinese.Header" xml:space="preserve">
+    <data name="SettingsPageChinese.Header" xml:space="preserve">
     <value>चीनी ध्वन्यात्मकता</value>
   </data>
-  <data name="SettingsPageChineseLyrics.Text" xml:space="preserve">
+    <data name="SettingsPageChineseLyrics.Text" xml:space="preserve">
     <value>चीनी बोल</value>
   </data>
-  <data name="SettingsPageChinesePreference.Description" xml:space="preserve">
+    <data name="SettingsPageChinesePreference.Description" xml:space="preserve">
     <value>"Unspecified" चुनने से ओरिजिनल लिरिक्स सुरक्षित रहेंगे; "Simplified Chinese" या "Traditional Chinese" चुनने से ओरिजिनल लिरिक्स पर मशीन कन्वर्ज़न होगा</value>
   </data>
-  <data name="SettingsPageChinesePreference.Header" xml:space="preserve">
+    <data name="SettingsPageChinesePreference.Header" xml:space="preserve">
     <value>चीनी वरीयता</value>
   </data>
-  <data name="SettingsPageChinesePreferenceSToT.Content" xml:space="preserve">
+    <data name="SettingsPageChinesePreferenceSToT.Content" xml:space="preserve">
     <value>पारंपरिक चीनी</value>
   </data>
-  <data name="SettingsPageChinesePreferenceTToS.Content" xml:space="preserve">
+    <data name="SettingsPageChinesePreferenceTToS.Content" xml:space="preserve">
     <value>सरलीकृत चीनी</value>
   </data>
-  <data name="SettingsPageChinesePreferenceUnspecified.Content" xml:space="preserve">
+    <data name="SettingsPageChinesePreferenceUnspecified.Content" xml:space="preserve">
     <value>निर्दिष्ट नहीं किए गए</value>
   </data>
-  <data name="SettingsPageCJK.Header" xml:space="preserve">
+    <data name="SettingsPageCJK.Header" xml:space="preserve">
     <value>CJK यूनिफ़ाइड आइडियोग्राफ़</value>
   </data>
-  <data name="SettingsPageClear.Content" xml:space="preserve">
+    <data name="SettingsPageClear.Content" xml:space="preserve">
     <value>साफ़ करें</value>
   </data>
-  <data name="SettingsPageClearCache.Content" xml:space="preserve">
+    <data name="SettingsPageClearCache.Content" xml:space="preserve">
     <value>कैश फ़ाइलें साफ़ करें</value>
   </data>
-  <data name="SettingsPageCloseStatus.Text" xml:space="preserve">
+    <data name="SettingsPageCloseStatus.Text" xml:space="preserve">
     <value>बंद करें</value>
   </data>
-  <data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
+    <data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
     <value>ड्रॉपडाउन संक्षिप्त करें</value>
   </data>
-  <data name="SettingsPageColor.Header" xml:space="preserve">
+    <data name="SettingsPageColor.Header" xml:space="preserve">
     <value>रंग</value>
   </data>
-  <data name="SettingsPageConfigName.Description" xml:space="preserve">
+    <data name="SettingsPageConfigName.Description" xml:space="preserve">
     <value>रिकॉर्ड की गई विंडो स्थिति का नामकरण करने से आपको उन्हें बेहतर ढंग से अलग करने में मदद मिल सकती है</value>
   </data>
-  <data name="SettingsPageConfigName.Header" xml:space="preserve">
+    <data name="SettingsPageConfigName.Header" xml:space="preserve">
     <value>कॉन्फ़िगरेशन नाम</value>
   </data>
-  <data name="SettingsPageConfigPlaybackSource.Text" xml:space="preserve">
+    <data name="SettingsPageConfigPlaybackSource.Text" xml:space="preserve">
     <value>प्लेबैक स्रोत कॉन्फ़िगर करें</value>
   </data>
-  <data name="SettingsPageCreateFromCurrent.Text" xml:space="preserve">
+    <data name="SettingsPageCreateFromCurrent.Text" xml:space="preserve">
     <value>डुप्लिकेट</value>
   </data>
-  <data name="SettingsPageCreateFromCurrentAndTransformTo.Text" xml:space="preserve">
+    <data name="SettingsPageCreateFromCurrentAndTransformTo.Text" xml:space="preserve">
     <value>कॉपी करें और बदलें</value>
   </data>
-  <data name="SettingsPageCreateFromTemplates.Content" xml:space="preserve">
+    <data name="SettingsPageCreateFromTemplates.Content" xml:space="preserve">
     <value>टेम्पलेट्स से बनाएं</value>
   </data>
-  <data name="SettingsPageCrossfade.Content" xml:space="preserve">
+    <data name="SettingsPageCrossfade.Content" xml:space="preserve">
     <value>क्रॉसफ़ेड</value>
   </data>
-  <data name="SettingsPageCutletDockerServer.Header" xml:space="preserve">
+    <data name="SettingsPageCutletDockerServer.Header" xml:space="preserve">
     <value>cutlet-docker लिप्यंतरण सेवा</value>
   </data>
-  <data name="SettingsPageDark.Content" xml:space="preserve">
+    <data name="SettingsPageDark.Content" xml:space="preserve">
     <value>डार्क</value>
   </data>
-  <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
+    <data name="SettingsPageDebugOverlay.Header" xml:space="preserve">
     <value>डीबग ओवरले</value>
   </data>
-  <data name="SettingsPageDelete.Text" xml:space="preserve">
+    <data name="SettingsPageDelete.Text" xml:space="preserve">
     <value>हटाएं</value>
   </data>
-  <data name="SettingsPageDensity.Header" xml:space="preserve">
+    <data name="SettingsPageDensity.Header" xml:space="preserve">
     <value>घनत्व</value>
   </data>
-  <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
+    <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>डेस्कटॉप मोड (पारदर्शी)</value>
   </data>
-  <data name="SettingsPageDirectionBottom.Content" xml:space="preserve">
+    <data name="SettingsPageDirectionBottom.Content" xml:space="preserve">
     <value>नीचे की ओर</value>
   </data>
-  <data name="SettingsPageDirectionLeft.Content" xml:space="preserve">
+    <data name="SettingsPageDirectionLeft.Content" xml:space="preserve">
     <value>बाईं ओर</value>
   </data>
-  <data name="SettingsPageDirectionRight.Content" xml:space="preserve">
+    <data name="SettingsPageDirectionRight.Content" xml:space="preserve">
     <value>दाईं ओर</value>
   </data>
-  <data name="SettingsPageDirectionTop.Content" xml:space="preserve">
+    <data name="SettingsPageDirectionTop.Content" xml:space="preserve">
     <value>ऊपर की ओर</value>
   </data>
-  <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
+    <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
     <value>यह प्रोजेक्ट "जैसा है" के आधार पर प्रदान किया गया है, बिना किसी प्रकार की वारंटी के। सभी बोल, फ़ॉन्ट, आइकन और अन्य तृतीय-पक्ष संसाधन उनके संबंधित कॉपीराइट स्वामियों की संपत्ति हैं। इस प्रोजेक्ट के लेखक ऐसे संसाधनों पर स्वामित्व का दावा नहीं करते हैं। यह एक गैर-व्यावसायिक परियोजना है और इसका उपयोग किसी भी अधिकार का उल्लंघन करने के लिए नहीं किया जा सकता है। उपयोगकर्ता यह सुनिश्चित करने के लिए जिम्मेदार हैं कि उनका उपयोग लागू कानूनों और लाइसेंसों का अनुपालन करता है।</value>
   </data>
-  <data name="SettingsPageDiscordPresence.Header" xml:space="preserve">
+    <data name="SettingsPageDiscordPresence.Header" xml:space="preserve">
     <value>Discord Presence के माध्यम से सुनने की स्थिति दिखाएं</value>
   </data>
-  <data name="SettingsPageDisplayTypeSwitcher.Header" xml:space="preserve">
+    <data name="SettingsPageDisplayTypeSwitcher.Header" xml:space="preserve">
     <value>लेआउट मोड</value>
   </data>
-  <data name="SettingsPageDockedMode.Text" xml:space="preserve">
+    <data name="SettingsPageDockedMode.Text" xml:space="preserve">
     <value>डॉक्ड मोड</value>
   </data>
-  <data name="SettingsPageDockMonitor.Header" xml:space="preserve">
+    <data name="SettingsPageDockMonitor.Header" xml:space="preserve">
     <value>लक्ष्य मॉनिटर</value>
   </data>
-  <data name="SettingsPageDockPlacement.Header" xml:space="preserve">
+    <data name="SettingsPageDockPlacement.Header" xml:space="preserve">
     <value>ऐपबार स्थिति</value>
   </data>
-  <data name="SettingsPageDockPlacementBottom.Content" xml:space="preserve">
+    <data name="SettingsPageDockPlacementBottom.Content" xml:space="preserve">
     <value>निचला</value>
   </data>
-  <data name="SettingsPageDockPlacementTop.Content" xml:space="preserve">
+    <data name="SettingsPageDockPlacementTop.Content" xml:space="preserve">
     <value>ऊपरी</value>
   </data>
-  <data name="SettingsPageDragArea.Header" xml:space="preserve">
+    <data name="SettingsPageDragArea.Header" xml:space="preserve">
     <value>खींचने योग्य क्षेत्र</value>
   </data>
-  <data name="SettingsPageEasingMode.Header" xml:space="preserve">
+    <data name="SettingsPageEasingMode.Header" xml:space="preserve">
     <value>आसान मोड</value>
   </data>
-  <data name="SettingsPageEasingModeIn.Content" xml:space="preserve">
+    <data name="SettingsPageEasingModeIn.Content" xml:space="preserve">
     <value>धीमी प्रविष्टि</value>
   </data>
-  <data name="SettingsPageEasingModeInOut.Content" xml:space="preserve">
+    <data name="SettingsPageEasingModeInOut.Content" xml:space="preserve">
     <value>धीरे अंदर, धीरे बाहर</value>
   </data>
-  <data name="SettingsPageEasingModeOut.Content" xml:space="preserve">
+    <data name="SettingsPageEasingModeOut.Content" xml:space="preserve">
     <value>बाहर</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseBack.Content" xml:space="preserve">
+    <data name="SettingsPageEasingTypeEaseBack.Content" xml:space="preserve">
     <value>पीछे</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseBounce.Content" xml:space="preserve">
+    <data name="SettingsPageEasingTypeEaseBounce.Content" xml:space="preserve">
     <value>उछाल</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseCirc.Content" xml:space="preserve">
+    <data name="SettingsPageEasingTypeEaseCirc.Content" xml:space="preserve">
     <value>परिपत्र</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseCubic.Content" xml:space="preserve">
+    <data name="SettingsPageEasingTypeEaseCubic.Content" xml:space="preserve">
     <value>घन</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseElastic.Content" xml:space="preserve">
+    <data name="SettingsPageEasingTypeEaseElastic.Content" xml:space="preserve">
     <value>लचीला</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseExpo.Content" xml:space="preserve">
+    <data name="SettingsPageEasingTypeEaseExpo.Content" xml:space="preserve">
     <value>घातीय</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseQuad.Content" xml:space="preserve">
+    <data name="SettingsPageEasingTypeEaseQuad.Content" xml:space="preserve">
     <value>द्विघात</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseQuart.Content" xml:space="preserve">
+    <data name="SettingsPageEasingTypeEaseQuart.Content" xml:space="preserve">
     <value>क्वार्टिक</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseQuint.Content" xml:space="preserve">
+    <data name="SettingsPageEasingTypeEaseQuint.Content" xml:space="preserve">
     <value>क्विंटिक</value>
   </data>
-  <data name="SettingsPageEasingTypeEaseSine.Content" xml:space="preserve">
+    <data name="SettingsPageEasingTypeEaseSine.Content" xml:space="preserve">
     <value>साइन</value>
   </data>
-  <data name="SettingsPageEasingTypeLinear.Content" xml:space="preserve">
+    <data name="SettingsPageEasingTypeLinear.Content" xml:space="preserve">
     <value>रैखिक (Linear)</value>
   </data>
-  <data name="SettingsPageEasingTypeSmoothStep.Content" xml:space="preserve">
+    <data name="SettingsPageEasingTypeSmoothStep.Content" xml:space="preserve">
     <value>SmoothStep</value>
   </data>
-  <data name="SettingsPageEffectLineStartToCurrentChar.Content" xml:space="preserve">
+    <data name="SettingsPageEffectLineStartToCurrentChar.Content" xml:space="preserve">
     <value>वर्तमान वर्ण के लिए पंक्ति प्रारंभ</value>
   </data>
-  <data name="SettingsPageEffectScopeLongDurationSyllable.Content" xml:space="preserve">
+    <data name="SettingsPageEffectScopeLongDurationSyllable.Content" xml:space="preserve">
     <value>लंबी अवधि के शब्दांश</value>
   </data>
-  <data name="SettingsPageEnvColorSample.Header" xml:space="preserve">
+    <data name="SettingsPageEnvColorSample.Header" xml:space="preserve">
     <value>पर्यावरण रंग नमूनाकरण मोड</value>
   </data>
-  <data name="SettingsPageEnvColorSampleAbove.Content" xml:space="preserve">
+    <data name="SettingsPageEnvColorSampleAbove.Content" xml:space="preserve">
     <value>विंडो के ऊपर</value>
   </data>
-  <data name="SettingsPageEnvColorSampleBelow.Content" xml:space="preserve">
+    <data name="SettingsPageEnvColorSampleBelow.Content" xml:space="preserve">
     <value>विंडो के नीचे</value>
   </data>
-  <data name="SettingsPageEnvColorSampleEdge.Content" xml:space="preserve">
+    <data name="SettingsPageEnvColorSampleEdge.Content" xml:space="preserve">
     <value>विंडो का किनारा</value>
   </data>
-  <data name="SettingsPageEnvColorSampleInner.Content" xml:space="preserve">
+    <data name="SettingsPageEnvColorSampleInner.Content" xml:space="preserve">
     <value>विंडो के अंदर</value>
   </data>
-  <data name="SettingsPageEnvColorSampleWallpaper.Content" xml:space="preserve">
+    <data name="SettingsPageEnvColorSampleWallpaper.Content" xml:space="preserve">
     <value>वॉलपेपर</value>
   </data>
-  <data name="SettingsPageExitOnGalleryWindowClosed.Header" xml:space="preserve">
+    <data name="SettingsPageExitOnGalleryWindowClosed.Header" xml:space="preserve">
     <value>संगीत गैलरी विंडो बंद होने पर बाहर निकलें</value>
   </data>
-  <data name="SettingsPageExitOnLyricsWindowClosed.Header" xml:space="preserve">
+    <data name="SettingsPageExitOnLyricsWindowClosed.Header" xml:space="preserve">
     <value>बोल विंडो बंद होने पर बाहर निकलें</value>
   </data>
-  <data name="SettingsPageExportPlayHistoryButton.Content" xml:space="preserve">
+    <data name="SettingsPageExportPlayHistoryButton.Content" xml:space="preserve">
     <value>प्ले इतिहास निर्यात करें</value>
   </data>
-  <data name="SettingsPageExportSettingsButton.Content" xml:space="preserve">
+    <data name="SettingsPageExportSettingsButton.Content" xml:space="preserve">
     <value>सेटिंग्स निर्यात करें</value>
   </data>
-  <data name="SettingsPageFan.Header" xml:space="preserve">
+    <data name="SettingsPageFan.Header" xml:space="preserve">
     <value>पंखे जैसे बोल</value>
   </data>
-  <data name="SettingsPageFixedTimeStep.Header" xml:space="preserve">
+    <data name="SettingsPageFixedTimeStep.Header" xml:space="preserve">
     <value>निश्चित समय चरण रेंडरिंग</value>
   </data>
-  <data name="SettingsPageFluidLayer.Header" xml:space="preserve">
+    <data name="SettingsPageFluidLayer.Header" xml:space="preserve">
     <value>द्रव परत</value>
   </data>
-  <data name="SettingsPageFluidOverlayStatic.Header" xml:space="preserve">
+    <data name="SettingsPageFluidOverlayStatic.Header" xml:space="preserve">
     <value>स्थिर मोड</value>
   </data>
-  <data name="SettingsPageFogLayer.Header" xml:space="preserve">
+    <data name="SettingsPageFogLayer.Header" xml:space="preserve">
     <value>कोहरा परत</value>
   </data>
-  <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
+    <data name="SettingsPageFollowSystem.Content" xml:space="preserve">
     <value>सिस्टम का अनुसरण करें</value>
   </data>
-  <data name="SettingsPageFontColor.Header" xml:space="preserve">
+    <data name="SettingsPageFontColor.Header" xml:space="preserve">
     <value>फ़ॉन्ट रंग</value>
   </data>
-  <data name="SettingsPageForceAlwaysOnTop.Description" xml:space="preserve">
+    <data name="SettingsPageForceAlwaysOnTop.Description" xml:space="preserve">
     <value>पोलिंग के माध्यम से बोल विंडो को सबसे ऊपर रखें</value>
   </data>
-  <data name="SettingsPageForceAlwaysOnTop.Header" xml:space="preserve">
+    <data name="SettingsPageForceAlwaysOnTop.Header" xml:space="preserve">
     <value>हमेशा शीर्ष पर रखने के लिए बाध्य करें</value>
   </data>
-  <data name="SettingsPageFPS.Header" xml:space="preserve">
+    <data name="SettingsPageFPS.Header" xml:space="preserve">
     <value>रेंडरिंग फ्रेम दर</value>
   </data>
-  <data name="SettingsPageFullscreenMode.Text" xml:space="preserve">
+    <data name="SettingsPageFullscreenMode.Text" xml:space="preserve">
     <value>फुलस्क्रीन मोड</value>
   </data>
-  <data name="SettingsPageHeight.Header" xml:space="preserve">
+    <data name="SettingsPageHeight.Header" xml:space="preserve">
     <value>ऊंचाई</value>
   </data>
-  <data name="SettingsPageHelpUsTranslate.Content" xml:space="preserve">
+    <data name="SettingsPageHelpUsTranslate.Content" xml:space="preserve">
     <value>इस एप्लिकेशन का अनुवाद करने में हमारी सहायता करें</value>
   </data>
-  <data name="SettingsPageHideWindow.Header" xml:space="preserve">
+    <data name="SettingsPageHideWindow.Header" xml:space="preserve">
     <value>विंडो को स्वचालित रूप से छिपाएं/दिखाएं</value>
   </data>
-  <data name="SettingsPageHideWindowDelay.Header" xml:space="preserve">
+    <data name="SettingsPageHideWindowDelay.Header" xml:space="preserve">
     <value>विलंब</value>
   </data>
-  <data name="SettingsPageHideWindowWhenNullSession.Header" xml:space="preserve">
+    <data name="SettingsPageHideWindowWhenNullSession.Header" xml:space="preserve">
     <value>जब कोई मीडिया सत्र न हो तो विंडो स्वचालित रूप से छिपाएँ</value>
   </data>
-  <data name="SettingsPageHoldDragSort.Content" xml:space="preserve">
+    <data name="SettingsPageHoldDragSort.Content" xml:space="preserve">
     <value>यहाँ पकड़ें और क्रमबद्ध करने के लिए खींचें</value>
   </data>
-  <data name="SettingsPageImageSwitchType.Header" xml:space="preserve">
+    <data name="SettingsPageImageSwitchType.Header" xml:space="preserve">
     <value>एल्बम कला स्विच एनीमेशन</value>
   </data>
-  <data name="SettingsPageImport.Content" xml:space="preserve">
+    <data name="SettingsPageImport.Content" xml:space="preserve">
     <value>आयात</value>
   </data>
-  <data name="SettingsPageImportSettingsButton.Content" xml:space="preserve">
+    <data name="SettingsPageImportSettingsButton.Content" xml:space="preserve">
     <value>सेटिंग्स आयात करें</value>
   </data>
-  <data name="SettingsPageImportSettingsInfo.Content" xml:space="preserve">
+    <data name="SettingsPageImportSettingsInfo.Content" xml:space="preserve">
     <value>सफल आयात के बाद, प्रोग्राम स्वचालित रूप से पुनरारंभ हो जाएगा</value>
   </data>
-  <data name="SettingsPageJapanese.Header" xml:space="preserve">
+    <data name="SettingsPageJapanese.Header" xml:space="preserve">
     <value>जापानी ध्वन्यात्मकता</value>
   </data>
-  <data name="SettingsPageJyutping.Content" xml:space="preserve">
+    <data name="SettingsPageJyutping.Content" xml:space="preserve">
     <value>ज्यूतपिंग (केंटोनीज़)</value>
   </data>
-  <data name="SettingsPageKeepNowPlayingBarInteractive.Header" xml:space="preserve">
+    <data name="SettingsPageKeepNowPlayingBarInteractive.Header" xml:space="preserve">
     <value>लॉक होने पर मीडिया कंट्रोल बार को इंटरैक्टिव रखें</value>
   </data>
-  <data name="SettingsPageKeepNowPlayingBarLyricsPreview.Header" xml:space="preserve">
+    <data name="SettingsPageKeepNowPlayingBarLyricsPreview.Header" xml:space="preserve">
     <value>प्रोग्रेस बार लिरिक्स प्रीव्यू</value>
   </data>
-  <data name="SettingsPageKeepScreenOpen.Header" xml:space="preserve">
+    <data name="SettingsPageKeepScreenOpen.Header" xml:space="preserve">
     <value>स्क्रीन को जगाए रखें</value>
   </data>
-  <data name="SettingsPageLanguage.Header" xml:space="preserve">
+    <data name="SettingsPageLanguage.Header" xml:space="preserve">
     <value>भाषा</value>
   </data>
-  <data name="SettingsPageLastFMAuth.Content" xml:space="preserve">
+    <data name="SettingsPageLastFMAuth.Content" xml:space="preserve">
     <value>प्राधिकरण</value>
   </data>
-  <data name="SettingsPageLastFMPlaycount.Header" xml:space="preserve">
+    <data name="SettingsPageLastFMPlaycount.Header" xml:space="preserve">
     <value>कुल प्लेबैक</value>
   </data>
-  <data name="SettingsPageLastFMRefresh.Content" xml:space="preserve">
+    <data name="SettingsPageLastFMRefresh.Content" xml:space="preserve">
     <value>रीफ्रेश</value>
   </data>
-  <data name="SettingsPageLastFMRegistered.Header" xml:space="preserve">
+    <data name="SettingsPageLastFMRegistered.Header" xml:space="preserve">
     <value>पंजीकरण तिथि</value>
   </data>
-  <data name="SettingsPageLastFMTrack.Header" xml:space="preserve">
+    <data name="SettingsPageLastFMTrack.Header" xml:space="preserve">
     <value>Last.fm के माध्यम से सुनने का इतिहास ट्रैक करें</value>
   </data>
-  <data name="SettingsPageLastFMUnAuth.Content" xml:space="preserve">
+    <data name="SettingsPageLastFMUnAuth.Content" xml:space="preserve">
     <value>प्राधिकरण रद्द करें</value>
   </data>
-  <data name="SettingsPageLastFMUsername.Header" xml:space="preserve">
+    <data name="SettingsPageLastFMUsername.Header" xml:space="preserve">
     <value>उपयोगकर्ता नाम</value>
   </data>
-  <data name="SettingsPageLayout.Text" xml:space="preserve">
+    <data name="SettingsPageLayout.Text" xml:space="preserve">
     <value>लेआउट</value>
   </data>
-  <data name="SettingsPageLayoutConfigShareHint.Text" xml:space="preserve">
+    <data name="SettingsPageLayoutConfigShareHint.Text" xml:space="preserve">
     <value>नोट: लेआउट कॉन्फ़िगरेशन वैश्विक रूप से साझा किए जाते हैं। एक ही लेआउट को विभिन्न मोड में गीत विंडो पर लागू किया जा सकता है। कोई भी संशोधन या हटाने की क्रिया वर्तमान में इस लेआउट का उपयोग कर रही सभी विंडो पर प्रभाव डालेगी।</value>
   </data>
-  <data name="SettingsPageLayoutOrientation.Header" xml:space="preserve">
+    <data name="SettingsPageLayoutOrientation.Header" xml:space="preserve">
     <value>लेआउट ओरिएंटेशन</value>
   </data>
-  <data name="SettingsPageLayoutOrientationHorizontal.Content" xml:space="preserve">
+    <data name="SettingsPageLayoutOrientationHorizontal.Content" xml:space="preserve">
     <value>क्षैतिज</value>
   </data>
-  <data name="SettingsPageLayoutOrientationVertical.Content" xml:space="preserve">
+    <data name="SettingsPageLayoutOrientationVertical.Content" xml:space="preserve">
     <value>लंबवत</value>
   </data>
-  <data name="SettingsPageLeft.Content" xml:space="preserve">
+    <data name="SettingsPageLeft.Content" xml:space="preserve">
     <value>बायां</value>
   </data>
-  <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
+    <data name="SettingsPageLibreTranslateServer.Header" xml:space="preserve">
     <value>सर्वर पता</value>
   </data>
-  <data name="SettingsPageLight.Content" xml:space="preserve">
+    <data name="SettingsPageLight.Content" xml:space="preserve">
     <value>लाइट</value>
   </data>
-  <data name="SettingsPageLightAngle.Header" xml:space="preserve">
+    <data name="SettingsPageLightAngle.Header" xml:space="preserve">
     <value>प्रकाश कोण</value>
   </data>
-  <data name="SettingsPageLightWaveEffect.Header" xml:space="preserve">
+    <data name="SettingsPageLightWaveEffect.Header" xml:space="preserve">
     <value>प्रकाश तरंग</value>
   </data>
-  <data name="SettingsPageListenNewSession.Header" xml:space="preserve">
+    <data name="SettingsPageListenNewSession.Header" xml:space="preserve">
     <value>नए प्लेबैक स्रोतों को सुनना सक्षम करें</value>
   </data>
-  <data name="SettingsPageLocalFolder.Text" xml:space="preserve">
+    <data name="SettingsPageLocalFolder.Text" xml:space="preserve">
     <value>स्थानीय फ़ोल्डर</value>
   </data>
-  <data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve">
+    <data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve">
     <value>दीर्घ शब्दांश थ्रेसहोल्ड</value>
   </data>
-  <data name="SettingsPageLXMusicServer.Header" xml:space="preserve">
+    <data name="SettingsPageLXMusicServer.Header" xml:space="preserve">
     <value>LX Music सर्वर</value>
   </data>
-  <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve">
+    <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve">
     <value>उदाहरण http://127.0.0.1:23330</value>
   </data>
-  <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
     <value>संरेखण</value>
   </data>
-  <data name="SettingsPageLyricsBackground.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsBackground.Header" xml:space="preserve">
     <value>बोल पृष्ठभूमि</value>
   </data>
-  <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
     <value>गैर-वर्तमान पंक्ति</value>
   </data>
-  <data name="SettingsPageLyricsBlack.Content" xml:space="preserve">
+    <data name="SettingsPageLyricsBlack.Content" xml:space="preserve">
     <value>ब्लैक</value>
   </data>
-  <data name="SettingsPageLyricsBlurEffect.Description" xml:space="preserve">
+    <data name="SettingsPageLyricsBlurEffect.Description" xml:space="preserve">
     <value>गैर-वर्तमान पंक्तियों के लिए धुंधलापन सक्षम करें</value>
   </data>
-  <data name="SettingsPageLyricsBlurEffect.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsBlurEffect.Header" xml:space="preserve">
     <value>धुंधला प्रभाव</value>
   </data>
-  <data name="SettingsPageLyricsBold.Content" xml:space="preserve">
+    <data name="SettingsPageLyricsBold.Content" xml:space="preserve">
     <value>बोल्ड</value>
   </data>
-  <data name="SettingsPageLyricsCardStyle.Text" xml:space="preserve">
+    <data name="SettingsPageLyricsCardStyle.Text" xml:space="preserve">
     <value>गीतकार्ड शैली</value>
   </data>
-  <data name="SettingsPageLyricsCenterTopOffset.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsCenterTopOffset.Header" xml:space="preserve">
     <value>वर्तमान पंक्ति स्थिति</value>
   </data>
-  <data name="SettingsPageLyricsContentOrientation.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsContentOrientation.Header" xml:space="preserve">
     <value>गीत सामग्री लेआउट</value>
   </data>
-  <data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
+    <data name="SettingsPageLyricsEffect.Text" xml:space="preserve">
     <value>बोल प्रभाव</value>
   </data>
-  <data name="SettingsPageLyricsExtraBlack.Content" xml:space="preserve">
+    <data name="SettingsPageLyricsExtraBlack.Content" xml:space="preserve">
     <value>एक्स्ट्रा ब्लैक</value>
   </data>
-  <data name="SettingsPageLyricsExtraBold.Content" xml:space="preserve">
+    <data name="SettingsPageLyricsExtraBold.Content" xml:space="preserve">
     <value>एक्स्ट्रा बोल्ड</value>
   </data>
-  <data name="SettingsPageLyricsExtraLight.Content" xml:space="preserve">
+    <data name="SettingsPageLyricsExtraLight.Content" xml:space="preserve">
     <value>एक्स्ट्रा लाइट</value>
   </data>
-  <data name="SettingsPageLyricsFadeOutEffect.Description" xml:space="preserve">
+    <data name="SettingsPageLyricsFadeOutEffect.Description" xml:space="preserve">
     <value>गैर-वर्तमान पंक्तियों के लिए फ़ेड-आउट प्रभाव सक्षम करें</value>
   </data>
-  <data name="SettingsPageLyricsFadeOutEffect.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsFadeOutEffect.Header" xml:space="preserve">
     <value>फ़ेड-आउट प्रभाव</value>
   </data>
-  <data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
     <value>वर्तमान पंक्ति</value>
   </data>
-  <data name="SettingsPageLyricsFilter.Description" xml:space="preserve">
+    <data name="SettingsPageLyricsFilter.Description" xml:space="preserve">
     <value>लिरिक्स और कंपोज़िशन क्रेडिट जैसी नॉन-टेक्स्टुअल जानकारी हटा दें</value>
   </data>
-  <data name="SettingsPageLyricsFilter.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsFilter.Header" xml:space="preserve">
     <value>गीत फ़िल्टर</value>
   </data>
-  <data name="SettingsPageLyricsFloatAnimation.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsFloatAnimation.Header" xml:space="preserve">
     <value>फ़्लोट एनीमेशन</value>
   </data>
-  <data name="SettingsPageLyricsFontColorAdaptiveColored.Content" xml:space="preserve">
+    <data name="SettingsPageLyricsFontColorAdaptiveColored.Content" xml:space="preserve">
     <value>बोल पृष्ठभूमि के अनुकूल (रंगीन)</value>
   </data>
-  <data name="SettingsPageLyricsFontColorAdaptiveGrayed.Content" xml:space="preserve">
+    <data name="SettingsPageLyricsFontColorAdaptiveGrayed.Content" xml:space="preserve">
     <value>बोल पृष्ठभूमि के अनुकूल (धूसर)</value>
   </data>
-  <data name="SettingsPageLyricsFontColorCustom.Content" xml:space="preserve">
+    <data name="SettingsPageLyricsFontColorCustom.Content" xml:space="preserve">
     <value>कस्टम</value>
   </data>
-  <data name="SettingsPageLyricsFontFamily.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsFontFamily.Header" xml:space="preserve">
     <value>फ़ॉन्ट परिवार</value>
   </data>
-  <data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsFontSize.Header" xml:space="preserve">
     <value>फ़ॉन्ट आकार</value>
   </data>
-  <data name="SettingsPageLyricsFontStrokeWidth.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsFontStrokeWidth.Header" xml:space="preserve">
     <value>बोल स्ट्रोक की चौड़ाई</value>
   </data>
-  <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>फ़ॉन्ट भार</value>
   </data>
-  <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>चमक प्रभाव</value>
   </data>
-  <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
+    <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
     <value>लाइट</value>
   </data>
-  <data name="SettingsPageLyricsLineInnerSpacingFactor.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsLineInnerSpacingFactor.Header" xml:space="preserve">
     <value>अंतर-पंक्ति रिक्ति</value>
   </data>
-  <data name="SettingsPageLyricsLineOverallSpacingFactor.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsLineOverallSpacingFactor.Header" xml:space="preserve">
     <value>कुल पंक्ति अंतर</value>
   </data>
-  <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsLineSpacingFactor.Header" xml:space="preserve">
     <value>लाइन स्पेसिंग</value>
   </data>
-  <data name="SettingsPageLyricsMedium.Content" xml:space="preserve">
+    <data name="SettingsPageLyricsMedium.Content" xml:space="preserve">
     <value>मध्यम</value>
   </data>
-  <data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
+    <data name="SettingsPageLyricsNormal.Content" xml:space="preserve">
     <value>सामान्य</value>
   </data>
-  <data name="SettingsPageLyricsOpacity.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsOpacity.Header" xml:space="preserve">
     <value>फ़ॉन्ट अस्पष्टता</value>
   </data>
-  <data name="SettingsPageLyricsOutOfSightEffect.Description" xml:space="preserve">
+    <data name="SettingsPageLyricsOutOfSightEffect.Description" xml:space="preserve">
     <value>गैर-वर्तमान पंक्तियों को धीरे-धीरे दृष्टि से दूर करें</value>
   </data>
-  <data name="SettingsPageLyricsOutOfSightEffect.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsOutOfSightEffect.Header" xml:space="preserve">
     <value>दृष्टि से बाहर</value>
   </data>
-  <data name="SettingsPageLyricsPlayedFgFontColor.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsPlayedFgFontColor.Header" xml:space="preserve">
     <value>वर्तमान लाइन (खेली गई)</value>
   </data>
-  <data name="SettingsPageLyricsProcessing.Text" xml:space="preserve">
+    <data name="SettingsPageLyricsProcessing.Text" xml:space="preserve">
     <value>गीत प्रसंस्करण</value>
   </data>
-  <data name="SettingsPageLyricsScaleEffect.Description" xml:space="preserve">
+    <data name="SettingsPageLyricsScaleEffect.Description" xml:space="preserve">
     <value>लंबी अवधि के शब्दांशों के लिए स्केलिंग सक्षम करें</value>
   </data>
-  <data name="SettingsPageLyricsScaleEffect.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsScaleEffect.Header" xml:space="preserve">
     <value>स्केल प्रभाव</value>
   </data>
-  <data name="SettingsPageLyricsSearchBestMatch.Content" xml:space="preserve">
+    <data name="SettingsPageLyricsSearchBestMatch.Content" xml:space="preserve">
     <value>सर्वोत्तम मिलान</value>
   </data>
-  <data name="SettingsPageLyricsSearchProvidersConfig.Text" xml:space="preserve">
+    <data name="SettingsPageLyricsSearchProvidersConfig.Text" xml:space="preserve">
     <value>बोल स्रोतों को कॉन्फ़िगर करें</value>
   </data>
-  <data name="SettingsPageLyricsSearchSequential.Content" xml:space="preserve">
+    <data name="SettingsPageLyricsSearchSequential.Content" xml:space="preserve">
     <value>क्रम में</value>
   </data>
-  <data name="SettingsPageLyricsSearchType.Description" xml:space="preserve">
+    <data name="SettingsPageLyricsSearchType.Description" xml:space="preserve">
     <value>क्रम में: नीचे दी गई सूची की प्राथमिकता के अनुसार क्रम में खोजें, और पहले मिले बोल लौटाएं; सर्वोत्तम मिलान: सभी सक्षम बोल स्रोतों में खोजें और स्वचालित रूप से उच्चतम मिलान परिणाम चुनें</value>
   </data>
-  <data name="SettingsPageLyricsSearchType.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsSearchType.Header" xml:space="preserve">
     <value>बोल खोज रणनीति</value>
   </data>
-  <data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve">
+    <data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve">
     <value>सेमी बोल्ड</value>
   </data>
-  <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve">
+    <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve">
     <value>सेमी लाइट</value>
   </data>
-  <data name="SettingsPageLyricsStyle.Text" xml:space="preserve">
+    <data name="SettingsPageLyricsStyle.Text" xml:space="preserve">
     <value>बोल शैली</value>
   </data>
-  <data name="SettingsPageLyricsThin.Content" xml:space="preserve">
+    <data name="SettingsPageLyricsThin.Content" xml:space="preserve">
     <value>थिन</value>
   </data>
-  <data name="SettingsPageLyricsTimeline.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsTimeline.Header" xml:space="preserve">
     <value>बोल समयरेखा सिंक</value>
   </data>
-  <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve">
+    <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve">
     <value>जब बोल की प्रगति में घबराहट हो, तो इस मान को बढ़ाने का प्रयास करें; इस मान को बदलने से बोल सिंक में विचलन हो सकता है</value>
   </data>
-  <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
     <value>बोल समयरेखा सिंक थ्रेसहोल्ड</value>
   </data>
-  <data name="SettingsPageLyricsUnplayedFgFontColor.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsUnplayedFgFontColor.Header" xml:space="preserve">
     <value>वर्तमान लाइन (अनप्लेड)</value>
   </data>
-  <data name="SettingsPageLyricsWindow.Text" xml:space="preserve">
+    <data name="SettingsPageLyricsWindow.Text" xml:space="preserve">
     <value>बोल विंडो</value>
   </data>
-  <data name="SettingsPageLyricsWindowMgr" xml:space="preserve">
+    <data name="SettingsPageLyricsWindowMgr" xml:space="preserve">
     <value>गीत विंडो प्रबंधक</value>
   </data>
-  <data name="SettingsPageLyricsWindowSwitchHotKey.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsWindowSwitchHotKey.Header" xml:space="preserve">
     <value>बोल विंडो स्थिति स्विच शॉर्टकट</value>
   </data>
-  <data name="SettingsPageLyricsWordByWordEffectMode.Header" xml:space="preserve">
+    <data name="SettingsPageLyricsWordByWordEffectMode.Header" xml:space="preserve">
     <value>शब्द-दर-शब्द एनिमेशन रणनीति</value>
   </data>
-  <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve">
+    <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve">
     <value>हमेशा</value>
   </data>
-  <data name="SettingsPageLyricsWordByWordEffectModeAuto.Content" xml:space="preserve">
+    <data name="SettingsPageLyricsWordByWordEffectModeAuto.Content" xml:space="preserve">
     <value>स्वतः</value>
   </data>
-  <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve">
+    <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve">
     <value>कभी नहीं</value>
   </data>
-  <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve">
+    <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve">
     <value>इस मान को समायोजित करने से अनुक्रमिक खोज और सर्वोत्तम मिलान खोज परिणाम प्रभावित होंगे, लेकिन मैनुअल बोल खोज इंटरफ़ेस में खोज परिणाम प्रभावित नहीं होंगे</value>
   </data>
-  <data name="SettingsPageMatchingThreshold.Header" xml:space="preserve">
+    <data name="SettingsPageMatchingThreshold.Header" xml:space="preserve">
     <value>न्यूनतम मिलान सीमा</value>
   </data>
-  <data name="SettingsPageMediaLib" xml:space="preserve">
+    <data name="SettingsPageMediaLib" xml:space="preserve">
     <value>मीडिया लाइब्रेरी</value>
   </data>
-  <data name="SettingsPageMedianCut.Content" xml:space="preserve">
+    <data name="SettingsPageMedianCut.Content" xml:space="preserve">
     <value>रूढ़िवादी</value>
   </data>
-  <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
+    <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
     <value>इस प्लेबैक स्रोत की निगरानी करें</value>
   </data>
-  <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
+    <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
     <value>परीक्षण संगीत चलाएं</value>
   </data>
-  <data name="SettingsPageMultiNowPlayingWindows.Text" xml:space="preserve">
+    <data name="SettingsPageMultiNowPlayingWindows.Text" xml:space="preserve">
     <value>मल्टी-विंडो मोड</value>
   </data>
-  <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
+    <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
     <value>संगीत गैलरी</value>
   </data>
-  <data name="SettingsPageMusicGalleryLyrics.Header" xml:space="preserve">
+    <data name="SettingsPageMusicGalleryLyrics.Header" xml:space="preserve">
     <value>संगीत गैलरी एम्बेडेड बोल विंडो</value>
   </data>
-  <data name="SettingsPageMusicGalleryOpened.Message" xml:space="preserve">
+    <data name="SettingsPageMusicGalleryOpened.Message" xml:space="preserve">
     <value>संगीत गैलरी विंडो खुली है, अन्य प्लेबैक स्रोतों की निगरानी को अनदेखा किया गया है</value>
   </data>
-  <data name="SettingsPageMusicLib.Description" xml:space="preserve">
+    <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>संगीत या बोल वाले फ़ोल्डर जोड़ें</value>
   </data>
-  <data name="SettingsPageMusicLib.Header" xml:space="preserve">
+    <data name="SettingsPageMusicLib.Header" xml:space="preserve">
     <value>स्थानीय मीडिया लाइब्रेरी</value>
   </data>
-  <data name="SettingsPageNarrowMode.Text" xml:space="preserve">
+    <data name="SettingsPageNarrowMode.Text" xml:space="preserve">
     <value>संकीर्ण मोड</value>
   </data>
-  <data name="SettingsPageNextSongHotKey.Header" xml:space="preserve">
+    <data name="SettingsPageNextSongHotKey.Header" xml:space="preserve">
     <value>अगला ट्रैक शॉर्टकट</value>
   </data>
-  <data name="SettingsPageOctTree.Content" xml:space="preserve">
+    <data name="SettingsPageOctTree.Content" xml:space="preserve">
     <value>आक्रामक</value>
   </data>
-  <data name="SettingsPageOneFontFamilyOnly.Message" xml:space="preserve">
+    <data name="SettingsPageOneFontFamilyOnly.Message" xml:space="preserve">
     <value>कृपया सिर्फ़ एक फ़ॉन्ट चुनें. एक से ज़्यादा फ़ॉन्ट चुनने से यह सेटिंग फ़ेल हो जाएगी और सिस्टम डिफ़ॉल्ट फ़ॉन्ट पर वापस आ जाएगी</value>
   </data>
-  <data name="SettingsPageOpacity.Header" xml:space="preserve">
+    <data name="SettingsPageOpacity.Header" xml:space="preserve">
     <value>अपारदर्शिता</value>
   </data>
-  <data name="SettingsPageOpenFolderButton.Content" xml:space="preserve">
+    <data name="SettingsPageOpenFolderButton.Content" xml:space="preserve">
     <value>फ़ाइल एक्सप्लोरर में खोलें</value>
   </data>
-  <data name="SettingsPageOriginalText.Header" xml:space="preserve">
+    <data name="SettingsPageOriginalText.Header" xml:space="preserve">
     <value>मूल पाठ</value>
   </data>
-  <data name="SettingsPageOverwriteMatchingThreshold.Header" xml:space="preserve">
+    <data name="SettingsPageOverwriteMatchingThreshold.Header" xml:space="preserve">
     <value>न्यूनतम मिलान सीमा अलग से सेट करें</value>
   </data>
-  <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
+    <data name="SettingsPagePaletteGeneratorType.Header" xml:space="preserve">
     <value>रंग पिकर शैली</value>
   </data>
-  <data name="SettingsPageParallaxTilt.Header" xml:space="preserve">
+    <data name="SettingsPageParallaxTilt.Header" xml:space="preserve">
     <value>पैरालैक्स झुकाव</value>
   </data>
-  <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
+    <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
     <value>यह फ़ोल्डर पहले से ही मौजूदा फ़ोल्डरों में शामिल है, इसे दोबारा जोड़ने की आवश्यकता नहीं है</value>
   </data>
-  <data name="SettingsPagePathExistedInfo" xml:space="preserve">
+    <data name="SettingsPagePathExistedInfo" xml:space="preserve">
     <value>यह फ़ोल्डर पहले ही जोड़ा जा चुका है, कृपया दोबारा न जोड़ें</value>
   </data>
-  <data name="SettingsPagePathIncludingOthersInfo" xml:space="preserve">
+    <data name="SettingsPagePathIncludingOthersInfo" xml:space="preserve">
     <value>इस फ़ोल्डर में पहले से जोड़े गए फ़ोल्डर शामिल हैं, कृपया इस फ़ोल्डर को जोड़ने के लिए उन फ़ोल्डरों को हटा दें</value>
   </data>
-  <data name="SettingsPagePatrons.Text" xml:space="preserve">
+    <data name="SettingsPagePatrons.Text" xml:space="preserve">
     <value>प्रायोजक</value>
   </data>
-  <data name="SettingsPagePhonetic.Text" xml:space="preserve">
+    <data name="SettingsPagePhonetic.Text" xml:space="preserve">
     <value>बोल ध्वन्यात्मकता</value>
   </data>
-  <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
+    <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
     <value>उच्चारण</value>
   </data>
-  <data name="SettingsPagePinToTaskbar.Header" xml:space="preserve">
+    <data name="SettingsPagePinToTaskbar.Header" xml:space="preserve">
     <value>टास्कबार पर पिन करें</value>
   </data>
-  <data name="SettingsPagePinyin.Content" xml:space="preserve">
+    <data name="SettingsPagePinyin.Content" xml:space="preserve">
     <value>पिनयिन (मंडारिन)</value>
   </data>
-  <data name="SettingsPagePlaybackLib" xml:space="preserve">
+    <data name="SettingsPagePlaybackLib" xml:space="preserve">
     <value>प्लेबैक स्रोत और गीत प्रसंस्करण</value>
   </data>
-  <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
+    <data name="SettingsPagePlaybackNotFound.Text" xml:space="preserve">
     <value>कोई प्लेबैक स्रोत कैप्चर नहीं किया गया</value>
   </data>
-  <data name="SettingsPagePlaybackSource.Header" xml:space="preserve">
+    <data name="SettingsPagePlaybackSource.Header" xml:space="preserve">
     <value>प्लेबैक स्रोत</value>
   </data>
-  <data name="SettingsPagePlaybackSourceID.Header" xml:space="preserve">
+    <data name="SettingsPagePlaybackSourceID.Header" xml:space="preserve">
     <value>प्लेबैक स्रोत आईडी</value>
   </data>
-  <data name="SettingsPagePlaybackStatus.Header" xml:space="preserve">
+    <data name="SettingsPagePlaybackStatus.Header" xml:space="preserve">
     <value>वर्तमान प्लेबैक स्रोत</value>
   </data>
-  <data name="SettingsPagePlayedOriginalText.Header" xml:space="preserve">
+    <data name="SettingsPagePlayedOriginalText.Header" xml:space="preserve">
     <value>मूल (बजाया गया)</value>
   </data>
-  <data name="SettingsPagePlayedStrokeFontColor.Header" xml:space="preserve">
+    <data name="SettingsPagePlayedStrokeFontColor.Header" xml:space="preserve">
     <value>स्ट्रोक (खेला गया)</value>
   </data>
-  <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
+    <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
     <value>"soundcloud.com" पर "Cut to the Feeling" चलाएं</value>
   </data>
-  <data name="SettingsPagePlayOrPauseSongHotKey.Header" xml:space="preserve">
+    <data name="SettingsPagePlayOrPauseSongHotKey.Header" xml:space="preserve">
     <value>प्ले और पॉज़ शॉर्टकट</value>
   </data>
-  <data name="SettingsPagePlugins" xml:space="preserve">
+    <data name="SettingsPagePlugins" xml:space="preserve">
     <value>प्लगइन्स</value>
   </data>
-  <data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
+    <data name="SettingsPagePreviousSongHotKey.Header" xml:space="preserve">
     <value>पिछला ट्रैक शॉर्टकट</value>
   </data>
-  <data name="SettingsPagePureLayer.Header" xml:space="preserve">
+    <data name="SettingsPagePureLayer.Header" xml:space="preserve">
     <value>ठोस रंग परत</value>
   </data>
-  <data name="SettingsPageRaindropLayer.Header" xml:space="preserve">
+    <data name="SettingsPageRaindropLayer.Header" xml:space="preserve">
     <value>वर्षा की बूंद परत</value>
   </data>
-  <data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
+    <data name="SettingsPageRealtimeStatus.Text" xml:space="preserve">
     <value>वास्तविक समय स्थिति</value>
   </data>
-  <data name="SettingsPageRecordedWindowStatus.Text" xml:space="preserve">
+    <data name="SettingsPageRecordedWindowStatus.Text" xml:space="preserve">
     <value>रिकॉर्ड की गई विंडो स्थिति</value>
   </data>
-  <data name="SettingsPageRefreshDropdown.Content" xml:space="preserve">
+    <data name="SettingsPageRefreshDropdown.Content" xml:space="preserve">
     <value>ड्रॉपडाउन रीफ्रेश करें</value>
   </data>
-  <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
+    <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
     <value>पथ में मूल फ़ाइलें और फ़ोल्डर हटाए नहीं जाएंगे</value>
   </data>
-  <data name="SettingsPageRemoveInfo.Title" xml:space="preserve">
+    <data name="SettingsPageRemoveInfo.Title" xml:space="preserve">
     <value>आप निम्नलिखित को सुरक्षित रूप से हटा सकते हैं</value>
   </data>
-  <data name="SettingsPageRemovePath.Content" xml:space="preserve">
+    <data name="SettingsPageRemovePath.Content" xml:space="preserve">
     <value>ऐप से हटाएं</value>
   </data>
-  <data name="SettingsPageRestart.Content" xml:space="preserve">
+    <data name="SettingsPageRestart.Content" xml:space="preserve">
     <value>परिवर्तनों को लागू करने के लिए ऐप को पुनरारंभ करें</value>
   </data>
-  <data name="SettingsPageRight.Content" xml:space="preserve">
+    <data name="SettingsPageRight.Content" xml:space="preserve">
     <value>दायां</value>
   </data>
-  <data name="SettingsPageScope.Header" xml:space="preserve">
+    <data name="SettingsPageScope.Header" xml:space="preserve">
     <value>स्कोप</value>
   </data>
-  <data name="SettingsPageScrollBottomDelay.Header" xml:space="preserve">
+    <data name="SettingsPageScrollBottomDelay.Header" xml:space="preserve">
     <value>अंतिम पंक्ति विलंब</value>
   </data>
-  <data name="SettingsPageScrollBottomDuration.Header" xml:space="preserve">
+    <data name="SettingsPageScrollBottomDuration.Header" xml:space="preserve">
     <value>अंतिम पंक्ति अवधि</value>
   </data>
-  <data name="SettingsPageScrollDuration.Header" xml:space="preserve">
+    <data name="SettingsPageScrollDuration.Header" xml:space="preserve">
     <value>वर्तमान पंक्ति अवधि</value>
   </data>
-  <data name="SettingsPageScrollEasing.Header" xml:space="preserve">
+    <data name="SettingsPageScrollEasing.Header" xml:space="preserve">
     <value>बोल एनीमेशन प्रकार</value>
   </data>
-  <data name="SettingsPageScrollTopDelay.Header" xml:space="preserve">
+    <data name="SettingsPageScrollTopDelay.Header" xml:space="preserve">
     <value>प्रथम पंक्ति विलंब</value>
   </data>
-  <data name="SettingsPageScrollTopDuration.Header" xml:space="preserve">
+    <data name="SettingsPageScrollTopDuration.Header" xml:space="preserve">
     <value>प्रथम पंक्ति अवधि</value>
   </data>
-  <data name="SettingsPageSearchResultStatus.Header" xml:space="preserve">
+    <data name="SettingsPageSearchResultStatus.Header" xml:space="preserve">
     <value>वर्तमान बोल खोज परिणाम</value>
   </data>
-  <data name="SettingsPageServerTestButton.Content" xml:space="preserve">
+    <data name="SettingsPageServerTestButton.Content" xml:space="preserve">
     <value>सर्वर परीक्षण</value>
   </data>
-  <data name="SettingsPageServerTestFailedInfo" xml:space="preserve">
+    <data name="SettingsPageServerTestFailedInfo" xml:space="preserve">
     <value>सर्वर परीक्षण विफल</value>
   </data>
-  <data name="SettingsPageServerTestSuccessInfo" xml:space="preserve">
+    <data name="SettingsPageServerTestSuccessInfo" xml:space="preserve">
     <value>सर्वर परीक्षण सफल</value>
   </data>
-  <data name="SettingsPageSettings.Header" xml:space="preserve">
+    <data name="SettingsPageSettings.Header" xml:space="preserve">
     <value>सेटिंग्स</value>
   </data>
-  <data name="SettingsPageSettingsManager.Header" xml:space="preserve">
+    <data name="SettingsPageSettingsManager.Header" xml:space="preserve">
     <value>सेटिंग्स प्रबंधक</value>
   </data>
-  <data name="SettingsPageSettingsPlayHistory.Header" xml:space="preserve">
+    <data name="SettingsPageSettingsPlayHistory.Header" xml:space="preserve">
     <value>प्ले इतिहास</value>
   </data>
-  <data name="SettingsPageShadowIntensity.Header" xml:space="preserve">
+    <data name="SettingsPageShadowIntensity.Header" xml:space="preserve">
     <value>छाया की तीव्रता</value>
   </data>
-  <data name="SettingsPageShareHub.Content" xml:space="preserve">
+    <data name="SettingsPageShareHub.Content" xml:space="preserve">
     <value>ऑनलाइन संसाधन शेयरिंग हब ब्राउज़ करें</value>
   </data>
-  <data name="SettingsPageShortcut.Text" xml:space="preserve">
+    <data name="SettingsPageShortcut.Text" xml:space="preserve">
     <value>शॉर्टकट</value>
   </data>
-  <data name="SettingsPageShortcutRegFailInfo" xml:space="preserve">
+    <data name="SettingsPageShortcutRegFailInfo" xml:space="preserve">
     <value>हॉटकी सफलतापूर्वक पंजीकृत नहीं हुई</value>
   </data>
-  <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve">
+    <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve">
     <value>हॉटकी सफलतापूर्वक पंजीकृत हो गई</value>
   </data>
-  <data name="SettingsPageShowAlbum.Header" xml:space="preserve">
+    <data name="SettingsPageShowAlbum.Header" xml:space="preserve">
     <value>एल्बम दिखाएं</value>
   </data>
-  <data name="SettingsPageShowArtists.Header" xml:space="preserve">
+    <data name="SettingsPageShowArtists.Header" xml:space="preserve">
     <value>कलाकार दिखाएं</value>
   </data>
-  <data name="SettingsPageShowHideHotKey.Header" xml:space="preserve">
+    <data name="SettingsPageShowHideHotKey.Header" xml:space="preserve">
     <value>बोल विंडो दिखाएं और छिपाएं शॉर्टकट</value>
   </data>
-  <data name="SettingsPageShowInSwitchers.Description" xml:space="preserve">
+    <data name="SettingsPageShowInSwitchers.Description" xml:space="preserve">
     <value>उदाहरण के लिए: Alt + Tab, टास्कबार</value>
   </data>
-  <data name="SettingsPageShowInSwitchers.Header" xml:space="preserve">
+    <data name="SettingsPageShowInSwitchers.Header" xml:space="preserve">
     <value>सिस्टम वातावरण में दिखाएं</value>
   </data>
-  <data name="SettingsPageShowTitle.Header" xml:space="preserve">
+    <data name="SettingsPageShowTitle.Header" xml:space="preserve">
     <value>शीर्षक दिखाएं</value>
   </data>
-  <data name="SettingsPageSize.Header" xml:space="preserve">
+    <data name="SettingsPageSize.Header" xml:space="preserve">
     <value>आकार</value>
   </data>
-  <data name="SettingsPageSlide.Content" xml:space="preserve">
+    <data name="SettingsPageSlide.Content" xml:space="preserve">
     <value>स्लाइड</value>
   </data>
-  <data name="SettingsPageSnowFlakeLayer.Header" xml:space="preserve">
+    <data name="SettingsPageSnowFlakeLayer.Header" xml:space="preserve">
     <value>स्नोफ्लेक परत</value>
   </data>
-  <data name="SettingsPageSongInfo.Text" xml:space="preserve">
+    <data name="SettingsPageSongInfo.Text" xml:space="preserve">
     <value>गीत की जानकारी</value>
   </data>
-  <data name="SettingsPageSongInfoEffect.Text" xml:space="preserve">
+    <data name="SettingsPageSongInfoEffect.Text" xml:space="preserve">
     <value>गाने की जानकारी का असर</value>
   </data>
-  <data name="SettingsPageSongStatus.Header" xml:space="preserve">
+    <data name="SettingsPageSongStatus.Header" xml:space="preserve">
     <value>वर्तमान गीत</value>
   </data>
-  <data name="SettingsPageSongTitle.Header" xml:space="preserve">
+    <data name="SettingsPageSongTitle.Header" xml:space="preserve">
     <value>शीर्षक</value>
   </data>
-  <data name="SettingsPageSpectrumBreathingIntensity.Header" xml:space="preserve">
+    <data name="SettingsPageSpectrumBreathingIntensity.Header" xml:space="preserve">
     <value>श्वास की तीव्रता</value>
   </data>
-  <data name="SettingsPageSpectrumBrethingEffect.Header" xml:space="preserve">
+    <data name="SettingsPageSpectrumBrethingEffect.Header" xml:space="preserve">
     <value>श्वास प्रभाव</value>
   </data>
-  <data name="SettingsPageSpectrumGlowEffect.Header" xml:space="preserve">
+    <data name="SettingsPageSpectrumGlowEffect.Header" xml:space="preserve">
     <value>चमक प्रभाव</value>
   </data>
-  <data name="SettingsPageSpectrumLayer.Header" xml:space="preserve">
+    <data name="SettingsPageSpectrumLayer.Header" xml:space="preserve">
     <value>[प्रयोगात्मक] स्पेक्ट्रम परत</value>
   </data>
-  <data name="SettingsPageSpectrumLayerPlacement.Header" xml:space="preserve">
+    <data name="SettingsPageSpectrumLayerPlacement.Header" xml:space="preserve">
     <value>स्पेक्ट्रम स्थान</value>
   </data>
-  <data name="SettingsPageSpectrumLayerStyle.Header" xml:space="preserve">
+    <data name="SettingsPageSpectrumLayerStyle.Header" xml:space="preserve">
     <value>स्पेक्ट्रम शैली</value>
   </data>
-  <data name="SettingsPageSpectrumPlacementAroundAlbumArt.Content" xml:space="preserve">
+    <data name="SettingsPageSpectrumPlacementAroundAlbumArt.Content" xml:space="preserve">
     <value>एल्बम कला के आसपास</value>
   </data>
-  <data name="SettingsPageSpectrumPlacementBottom.Content" xml:space="preserve">
+    <data name="SettingsPageSpectrumPlacementBottom.Content" xml:space="preserve">
     <value>निचला</value>
   </data>
-  <data name="SettingsPageSpectrumPlacementTop.Content" xml:space="preserve">
+    <data name="SettingsPageSpectrumPlacementTop.Content" xml:space="preserve">
     <value>ऊपरी</value>
   </data>
-  <data name="SettingsPageSpectrumSensitivity.Header" xml:space="preserve">
+    <data name="SettingsPageSpectrumSensitivity.Header" xml:space="preserve">
     <value>संवेदनशीलता</value>
   </data>
-  <data name="SettingsPageSpectrumStyleBar.Content" xml:space="preserve">
+    <data name="SettingsPageSpectrumStyleBar.Content" xml:space="preserve">
     <value>बार</value>
   </data>
-  <data name="SettingsPageSpectrumStyleCurve.Content" xml:space="preserve">
+    <data name="SettingsPageSpectrumStyleCurve.Content" xml:space="preserve">
     <value>वक्र</value>
   </data>
-  <data name="SettingsPageSpeed.Header" xml:space="preserve">
+    <data name="SettingsPageSpeed.Header" xml:space="preserve">
     <value>गति की चाल</value>
   </data>
-  <data name="SettingsPageStandardMode.Text" xml:space="preserve">
+    <data name="SettingsPageStandardMode.Text" xml:space="preserve">
     <value>मानक मोड</value>
   </data>
-  <data name="SettingsPageStartup.Text" xml:space="preserve">
+    <data name="SettingsPageStartup.Text" xml:space="preserve">
     <value>स्टार्टअप</value>
   </data>
-  <data name="SettingsPageStats" xml:space="preserve">
+    <data name="SettingsPageStats" xml:space="preserve">
     <value>आंकड़े</value>
   </data>
-  <data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
+    <data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
     <value>संगीत गैलरी विंडो बंद होने पर प्लेबैक रोकें</value>
   </data>
-  <data name="SettingsPageStrokeFontColor.Header" xml:space="preserve">
+    <data name="SettingsPageStrokeFontColor.Header" xml:space="preserve">
     <value>स्ट्रोक रंग</value>
   </data>
-  <data name="SettingsPageSystemLanguage" xml:space="preserve">
+    <data name="SettingsPageSystemLanguage" xml:space="preserve">
     <value>डिफ़ॉल्ट</value>
   </data>
-  <data name="SettingsPageTargetLanguage.Header" xml:space="preserve">
+    <data name="SettingsPageTargetLanguage.Header" xml:space="preserve">
     <value>लक्ष्य भाषा</value>
   </data>
-  <data name="SettingsPageTaskbarMode.Text" xml:space="preserve">
+    <data name="SettingsPageTaskbarMode.Text" xml:space="preserve">
     <value>टास्कबार मोड</value>
   </data>
-  <data name="SettingsPageTaskbarPlacement.Header" xml:space="preserve">
+    <data name="SettingsPageTaskbarPlacement.Header" xml:space="preserve">
     <value>टास्कबार फिक्सिंग स्थिति</value>
   </data>
-  <data name="SettingsPageThanksList.Header" xml:space="preserve">
+    <data name="SettingsPageThanksList.Header" xml:space="preserve">
     <value>आभार सूची</value>
   </data>
-  <data name="SettingsPageTitle" xml:space="preserve">
+    <data name="SettingsPageTitle" xml:space="preserve">
     <value>सेटिंग्स</value>
   </data>
-  <data name="SettingsPageTitleBarAreaNone.Content" xml:space="preserve">
+    <data name="SettingsPageTitleBarAreaNone.Content" xml:space="preserve">
     <value>कोई नहीं</value>
   </data>
-  <data name="SettingsPageTitleBarAreaTop.Content" xml:space="preserve">
+    <data name="SettingsPageTitleBarAreaTop.Content" xml:space="preserve">
     <value>शीर्ष</value>
   </data>
-  <data name="SettingsPageTitleBarAreaWhole.Content" xml:space="preserve">
+    <data name="SettingsPageTitleBarAreaWhole.Content" xml:space="preserve">
     <value>पूरी विंडो</value>
   </data>
-  <data name="SettingsPageTop.Content" xml:space="preserve">
+    <data name="SettingsPageTop.Content" xml:space="preserve">
     <value>शीर्ष</value>
   </data>
-  <data name="SettingsPageTranslatedText.Header" xml:space="preserve">
+    <data name="SettingsPageTranslatedText.Header" xml:space="preserve">
     <value>अनुवाद</value>
   </data>
-  <data name="SettingsPageTranslation.Text" xml:space="preserve">
+    <data name="SettingsPageTranslation.Text" xml:space="preserve">
     <value>बोल अनुवाद</value>
   </data>
-  <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
+    <data name="SettingsPageTranslationConfig.Header" xml:space="preserve">
     <value>LibreTranslate अनुवाद सेवा</value>
   </data>
-  <data name="SettingsPageUnplayedOriginalText.Header" xml:space="preserve">
+    <data name="SettingsPageUnplayedOriginalText.Header" xml:space="preserve">
     <value>मूल (अनप्लेड)</value>
   </data>
-  <data name="SettingsPageUnplayedStrokeFontColor.Header" xml:space="preserve">
+    <data name="SettingsPageUnplayedStrokeFontColor.Header" xml:space="preserve">
     <value>स्ट्रोक (अनप्लेड)</value>
   </data>
-  <data name="SettingsPageUseInternalLyricsAlignment.Description" xml:space="preserve">
+    <data name="SettingsPageUseInternalLyricsAlignment.Description" xml:space="preserve">
     <value>लिरिक्स फ़ाइल में निर्दिष्ट संरेखण का उपयोग करता है (वर्तमान में केवल TTML का समर्थन करता है)</value>
   </data>
-  <data name="SettingsPageUseInternalLyricsAlignment.Header" xml:space="preserve">
+    <data name="SettingsPageUseInternalLyricsAlignment.Header" xml:space="preserve">
     <value>मूल संरेखण बनाए रखें</value>
   </data>
-  <data name="SettingsPageUserWhoPurchased" xml:space="preserve">
+    <data name="SettingsPageUserWhoPurchased" xml:space="preserve">
     <value>और BetterLyrics खरीदार</value>
   </data>
-  <data name="SettingsPageVersion.Text" xml:space="preserve">
+    <data name="SettingsPageVersion.Text" xml:space="preserve">
     <value>संस्करण</value>
   </data>
-  <data name="SettingsPageWallpaperMode.Text" xml:space="preserve">
+    <data name="SettingsPageWallpaperMode.Text" xml:space="preserve">
     <value>वॉलपेपर मोड</value>
   </data>
-  <data name="SettingsPageWesternChar.Header" xml:space="preserve">
+    <data name="SettingsPageWesternChar.Header" xml:space="preserve">
     <value>लैटिन अक्षर</value>
   </data>
-  <data name="SettingsPageWidth.Header" xml:space="preserve">
+    <data name="SettingsPageWidth.Header" xml:space="preserve">
     <value>चौड़ाई</value>
   </data>
-  <data name="SettingsPageWorkArea.Description" xml:space="preserve">
+    <data name="SettingsPageWorkArea.Description" xml:space="preserve">
     <value>एप्लिकेशन डेस्कटॉप टूलबार, स्क्रीन के ऊपर/नीचे किनारे पर डॉक किया गया</value>
   </data>
-  <data name="SettingsPageWorkArea.Header" xml:space="preserve">
+    <data name="SettingsPageWorkArea.Header" xml:space="preserve">
     <value>ऐपबार</value>
   </data>
-  <data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve">
+    <data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve">
     <value>ऐपबार की ऊँचाई</value>
   </data>
-  <data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
+    <data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
     <value>आप जो अभी इस सॉफ़्टवेयर का उपयोग कर रहे हैं</value>
   </data>
-  <data name="SetTo1Star" xml:space="preserve">
+    <data name="SetTo1Star" xml:space="preserve">
     <value>1* पर सेट करें</value>
   </data>
-  <data name="SetToAuto" xml:space="preserve">
+    <data name="SetToAuto" xml:space="preserve">
     <value>ऑटो पर सेट करें</value>
   </data>
-  <data name="SLyricsWindowSettingsControlShareMoveToMonitor.Text" xml:space="preserve">
+    <data name="SLyricsWindowSettingsControlShareMoveToMonitor.Text" xml:space="preserve">
     <value>मॉनिटर पर ले जाएँ</value>
   </data>
-  <data name="StandardMode" xml:space="preserve">
+    <data name="StandardMode" xml:space="preserve">
     <value>मानक मोड</value>
   </data>
-  <data name="StatsDashboardControlActivityByHour.Text" xml:space="preserve">
+    <data name="StatsDashboardControlActivityByHour.Text" xml:space="preserve">
     <value>घंटे के हिसाब से गतिविधि</value>
   </data>
-  <data name="StatsDashboardControlAllTime.Content" xml:space="preserve">
+    <data name="StatsDashboardControlAllTime.Content" xml:space="preserve">
     <value>अब तक के सारे</value>
   </data>
-  <data name="StatsDashboardControlCustom.Content" xml:space="preserve">
+    <data name="StatsDashboardControlCustom.Content" xml:space="preserve">
     <value>कस्टम</value>
   </data>
-  <data name="StatsDashboardControlEnd.Header" xml:space="preserve">
+    <data name="StatsDashboardControlEnd.Header" xml:space="preserve">
     <value>समाप्त</value>
   </data>
-  <data name="StatsDashboardControlHeatmap.Text" xml:space="preserve">
+    <data name="StatsDashboardControlHeatmap.Text" xml:space="preserve">
     <value>तापमान मानचित्र</value>
   </data>
-  <data name="StatsDashboardControlLeastActive.Text" xml:space="preserve">
+    <data name="StatsDashboardControlLeastActive.Text" xml:space="preserve">
     <value>सबसे कम सक्रिय</value>
   </data>
-  <data name="StatsDashboardControlMostActive.Text" xml:space="preserve">
+    <data name="StatsDashboardControlMostActive.Text" xml:space="preserve">
     <value>सर्वाधिक सक्रिय</value>
   </data>
-  <data name="StatsDashboardControlRecording.Title" xml:space="preserve">
+    <data name="StatsDashboardControlRecording.Title" xml:space="preserve">
     <value>रिकॉर्डिंग...</value>
   </data>
-  <data name="StatsDashboardControlSources.Text" xml:space="preserve">
+    <data name="StatsDashboardControlSources.Text" xml:space="preserve">
     <value>स्रोत</value>
   </data>
-  <data name="StatsDashboardControlStart.Header" xml:space="preserve">
+    <data name="StatsDashboardControlStart.Header" xml:space="preserve">
     <value>शुरू करें</value>
   </data>
-  <data name="StatsDashboardControlThisMonth.Content" xml:space="preserve">
+    <data name="StatsDashboardControlThisMonth.Content" xml:space="preserve">
     <value>इस महीने</value>
   </data>
-  <data name="StatsDashboardControlThisQuarter.Content" xml:space="preserve">
+    <data name="StatsDashboardControlThisQuarter.Content" xml:space="preserve">
     <value>इस तिमाही</value>
   </data>
-  <data name="StatsDashboardControlThisWeek.Content" xml:space="preserve">
+    <data name="StatsDashboardControlThisWeek.Content" xml:space="preserve">
     <value>इस सप्ताह</value>
   </data>
-  <data name="StatsDashboardControlThisYear.Content" xml:space="preserve">
+    <data name="StatsDashboardControlThisYear.Content" xml:space="preserve">
     <value>इस वर्ष</value>
   </data>
-  <data name="StatsDashboardControlTimeRange.Header" xml:space="preserve">
+    <data name="StatsDashboardControlTimeRange.Header" xml:space="preserve">
     <value>समय सीमा</value>
   </data>
-  <data name="StatsDashboardControlTimes" xml:space="preserve">
+    <data name="StatsDashboardControlTimes" xml:space="preserve">
     <value>दूसरे दर्जे का</value>
   </data>
-  <data name="StatsDashboardControlToday.Content" xml:space="preserve">
+    <data name="StatsDashboardControlToday.Content" xml:space="preserve">
     <value>आज</value>
   </data>
-  <data name="StatsDashboardControlTopArtists.Text" xml:space="preserve">
+    <data name="StatsDashboardControlTopArtists.Text" xml:space="preserve">
     <value>शीर्ष कलाकार</value>
   </data>
-  <data name="StatsDashboardControlTopSongs.Text" xml:space="preserve">
+    <data name="StatsDashboardControlTopSongs.Text" xml:space="preserve">
     <value>शीर्ष रास्ता</value>
   </data>
-  <data name="StatsDashboardControlTopSource.Text" xml:space="preserve">
+    <data name="StatsDashboardControlTopSource.Text" xml:space="preserve">
     <value>शीर्ष स्रोत</value>
   </data>
-  <data name="StatsDashboardControlTotalDuration.Text" xml:space="preserve">
+    <data name="StatsDashboardControlTotalDuration.Text" xml:space="preserve">
     <value>कुल अवधि</value>
   </data>
-  <data name="StatsDashboardControlTrackCountAxis.AxisName" xml:space="preserve">
+    <data name="StatsDashboardControlTrackCountAxis.AxisName" xml:space="preserve">
     <value>दूसरे दर्जे का</value>
   </data>
-  <data name="StatsDashboardControlTrackCountText.Text" xml:space="preserve">
+    <data name="StatsDashboardControlTrackCountText.Text" xml:space="preserve">
     <value>दूसरे दर्जे का</value>
   </data>
-  <data name="StatsDashboardControlTracksPlayed.Text" xml:space="preserve">
+    <data name="StatsDashboardControlTracksPlayed.Text" xml:space="preserve">
     <value>बजाए गए ट्रैक</value>
   </data>
-  <data name="SystemTrayExit.Text" xml:space="preserve">
+    <data name="SystemTrayExit.Text" xml:space="preserve">
     <value>कार्यक्रम से बाहर निकलें</value>
   </data>
-  <data name="SystemTrayLyrics.Text" xml:space="preserve">
+    <data name="SystemTrayLyrics.Text" xml:space="preserve">
     <value>बोल विंडो खोलें</value>
   </data>
-  <data name="SystemTrayMusicGallery.Text" xml:space="preserve">
+    <data name="SystemTrayMusicGallery.Text" xml:space="preserve">
     <value>संगीत गैलरी खोलें</value>
   </data>
-  <data name="SystemTrayResetWindowPosition.Text" xml:space="preserve">
+    <data name="SystemTrayResetWindowPosition.Text" xml:space="preserve">
     <value>विंडो स्थिति रीसेट करें</value>
   </data>
-  <data name="SystemTrayRestart.Text" xml:space="preserve">
+    <data name="SystemTrayRestart.Text" xml:space="preserve">
     <value>पुनरारंभ करें</value>
   </data>
-  <data name="SystemTraySearch.Text" xml:space="preserve">
+    <data name="SystemTraySearch.Text" xml:space="preserve">
     <value>बोल खोज विंडो</value>
   </data>
-  <data name="SystemTraySettings.Text" xml:space="preserve">
+    <data name="SystemTraySettings.Text" xml:space="preserve">
     <value>सेटिंग्स खोलें</value>
   </data>
-  <data name="SystemTrayStats.Text" xml:space="preserve">
+    <data name="SystemTrayStats.Text" xml:space="preserve">
     <value>आंकड़े</value>
   </data>
-  <data name="SystemTraySwitch.Text" xml:space="preserve">
+    <data name="SystemTraySwitch.Text" xml:space="preserve">
     <value>बोल विंडो स्विचर</value>
   </data>
-  <data name="TaskbarMode" xml:space="preserve">
+    <data name="TaskbarMode" xml:space="preserve">
     <value>टास्कबार मोड</value>
   </data>
-  <data name="TermsOfService.Content" xml:space="preserve">
+    <data name="TermsOfService.Content" xml:space="preserve">
     <value>सेवा की शर्तें</value>
   </data>
-  <data name="ToastOverlayTitle" xml:space="preserve">
+    <data name="ToastOverlayTitle" xml:space="preserve">
     <value>टोस्ट ओवरले</value>
   </data>
-  <data name="TopAlbumArtBottomLyricsCompactLayout" xml:space="preserve">
+    <data name="TopAlbumArtBottomLyricsCompactLayout" xml:space="preserve">
     <value>ऊपर एल्बम आर्ट नीचे गीत के बोल लेआउट (कॉम्पैक्ट)</value>
   </data>
-  <data name="TopAlbumArtBottomLyricsLayout" xml:space="preserve">
+    <data name="TopAlbumArtBottomLyricsLayout" xml:space="preserve">
     <value>शीर्ष एल्बम कला निचले बोल लेआउट</value>
   </data>
-  <data name="TracksAddToPlaylistFailed" xml:space="preserve">
+    <data name="TracksAddToPlaylistFailed" xml:space="preserve">
     <value>ट्रैक जोड़ने में असमर्थ क्योंकि पथ मौजूद नहीं है</value>
   </data>
-  <data name="TracksAddToPlaylistSuccessfully" xml:space="preserve">
+    <data name="TracksAddToPlaylistSuccessfully" xml:space="preserve">
     <value>चयनित ट्रैक इस प्लेलिस्ट में जोड़े गए</value>
   </data>
-  <data name="TryRunMultipleInstance" xml:space="preserve">
+    <data name="TryRunMultipleInstance" xml:space="preserve">
     <value>BetterLyrics पहले से चल रहा है</value>
   </data>
-  <data name="UserGuide.Content" xml:space="preserve">
+    <data name="UserGuide.Content" xml:space="preserve">
     <value>उपयोगकर्ता गाइड</value>
   </data>
-  <data name="WallpaperMode" xml:space="preserve">
+    <data name="WallpaperMode" xml:space="preserve">
     <value>वॉलपेपर मोड</value>
   </data>
-  <data name="WindowSettingsControlAlwaysHideNowPlayingBar.Header" xml:space="preserve">
+    <data name="WindowSettingsControlAlwaysHideNowPlayingBar.Header" xml:space="preserve">
     <value>मीडिया कंट्रोल बार को हमेशा नीचे वाली सफ़ेद बार में छिपाएँ</value>
   </data>
-  <data name="WindowSettingsControlColor.Text" xml:space="preserve">
+    <data name="WindowSettingsControlColor.Text" xml:space="preserve">
     <value>रंग</value>
   </data>
-  <data name="WindowSettingsControlDebug.Text" xml:space="preserve">
+    <data name="WindowSettingsControlDebug.Text" xml:space="preserve">
     <value>डिबग</value>
   </data>
-  <data name="WindowSettingsControlEdgeFeathering.Header" xml:space="preserve">
+    <data name="WindowSettingsControlEdgeFeathering.Header" xml:space="preserve">
     <value>किनारे पर पंख लगाना</value>
   </data>
-  <data name="WindowSettingsControlEdgeFeatheringBottom.Header" xml:space="preserve">
+    <data name="WindowSettingsControlEdgeFeatheringBottom.Header" xml:space="preserve">
     <value>तल</value>
   </data>
-  <data name="WindowSettingsControlEdgeFeatheringLeft.Header" xml:space="preserve">
+    <data name="WindowSettingsControlEdgeFeatheringLeft.Header" xml:space="preserve">
     <value>बाएं</value>
   </data>
-  <data name="WindowSettingsControlEdgeFeatheringRight.Header" xml:space="preserve">
+    <data name="WindowSettingsControlEdgeFeatheringRight.Header" xml:space="preserve">
     <value>दाएँ</value>
   </data>
-  <data name="WindowSettingsControlEdgeFeatheringTop.Header" xml:space="preserve">
+    <data name="WindowSettingsControlEdgeFeatheringTop.Header" xml:space="preserve">
     <value>ऊपर</value>
   </data>
-  <data name="WindowSettingsControlLockAndUnlock.Text" xml:space="preserve">
+    <data name="WindowSettingsControlLockAndUnlock.Text" xml:space="preserve">
     <value>लॉक और अनलॉक</value>
   </data>
-  <data name="WindowSettingsControlNowPlayingBar.Text" xml:space="preserve">
+    <data name="WindowSettingsControlNowPlayingBar.Text" xml:space="preserve">
     <value>मीडिया नियंत्रण पैनल</value>
   </data>
-  <data name="WindowSettingsControlPadding.Header" xml:space="preserve">
+    <data name="WindowSettingsControlPadding.Header" xml:space="preserve">
     <value>विंडो पैडिंग</value>
   </data>
-  <data name="WindowSettingsControlPaddingBottom.Header" xml:space="preserve">
+    <data name="WindowSettingsControlPaddingBottom.Header" xml:space="preserve">
     <value>निचला पैडिंग</value>
   </data>
-  <data name="WindowSettingsControlPaddingLeft.Header" xml:space="preserve">
+    <data name="WindowSettingsControlPaddingLeft.Header" xml:space="preserve">
     <value>बायाँ पैडिंग</value>
   </data>
-  <data name="WindowSettingsControlPaddingRight.Header" xml:space="preserve">
+    <data name="WindowSettingsControlPaddingRight.Header" xml:space="preserve">
     <value>दायाँ पैडिंग</value>
   </data>
-  <data name="WindowSettingsControlPaddingTop.Header" xml:space="preserve">
+    <data name="WindowSettingsControlPaddingTop.Header" xml:space="preserve">
     <value>शीर्ष पैडिंग</value>
   </data>
-  <data name="WindowSettingsControlRealTimePalette.Header" xml:space="preserve">
+    <data name="WindowSettingsControlRealTimePalette.Header" xml:space="preserve">
     <value>लाइव पैलेट पूर्वावलोकन</value>
   </data>
-  <data name="WindowSettingsControlRealTimePaletteAccentColor1.Header" xml:space="preserve">
+    <data name="WindowSettingsControlRealTimePaletteAccentColor1.Header" xml:space="preserve">
     <value>एक्सेंट रंग 1</value>
   </data>
-  <data name="WindowSettingsControlRealTimePaletteAccentColor2.Header" xml:space="preserve">
+    <data name="WindowSettingsControlRealTimePaletteAccentColor2.Header" xml:space="preserve">
     <value>एक्सेंट रंग 2</value>
   </data>
-  <data name="WindowSettingsControlRealTimePaletteAccentColor3.Header" xml:space="preserve">
+    <data name="WindowSettingsControlRealTimePaletteAccentColor3.Header" xml:space="preserve">
     <value>एक्सेंट रंग 3</value>
   </data>
-  <data name="WindowSettingsControlRealTimePaletteAccentColor4.Header" xml:space="preserve">
+    <data name="WindowSettingsControlRealTimePaletteAccentColor4.Header" xml:space="preserve">
     <value>एक्सेंट रंग 4</value>
   </data>
-  <data name="WindowSettingsControlRealTimePaletteUnderlayColor.Header" xml:space="preserve">
+    <data name="WindowSettingsControlRealTimePaletteUnderlayColor.Header" xml:space="preserve">
     <value>अंडरले रंग</value>
   </data>
-  <data name="WindowSettingsControlRemoveBorder.Header" xml:space="preserve">
+    <data name="WindowSettingsControlRemoveBorder.Header" xml:space="preserve">
     <value>लॉक होने पर बॉर्डर हटाएँ</value>
   </data>
-  <data name="WindowSettingsControlShowAndHide.Text" xml:space="preserve">
+    <data name="WindowSettingsControlShowAndHide.Text" xml:space="preserve">
     <value>छिपाएँ और दिखाएँ</value>
   </data>
-  <data name="WindowSettingsControlSplitViewRatio.Header" xml:space="preserve">
+    <data name="WindowSettingsControlSplitViewRatio.Header" xml:space="preserve">
     <value>लेआउट आवंटन</value>
   </data>
-  <data name="WindowSettingsControlSplitViewSwitch.Header" xml:space="preserve">
+    <data name="WindowSettingsControlSplitViewSwitch.Header" xml:space="preserve">
     <value>स्वैप लेआउट</value>
   </data>
-  <data name="WindowSettingsControlSpoutOutput.Header" xml:space="preserve">
+    <data name="WindowSettingsControlSpoutOutput.Header" xml:space="preserve">
     <value>Spout आउटपुट</value>
   </data>
-  <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
+    <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
     <value>विंडो थीम</value>
   </data>
 </root>

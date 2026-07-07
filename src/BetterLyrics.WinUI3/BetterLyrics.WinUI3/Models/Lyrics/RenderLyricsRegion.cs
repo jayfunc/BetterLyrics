@@ -1,39 +1,38 @@
-﻿using Microsoft.Graphics.Canvas;
+﻿using System;
+using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
-using System;
 
-namespace BetterLyrics.WinUI3.Models.Lyrics
+namespace BetterLyrics.WinUI3.Models.Lyrics;
+
+public partial class RenderLyricsRegion : IDisposable
 {
-    public partial class RenderLyricsRegion : IDisposable
+    public RenderLyricsRegion(ICanvasImage cachedFill, ICanvasImage? cachedStroke)
     {
-        public CanvasGradientStop[] FillStops { get; } = new CanvasGradientStop[4];
-        public CanvasGradientStop[] StrokeStops { get; } = new CanvasGradientStop[4];
+        FinalFillEffect = new AlphaMaskEffect { AlphaMask = cachedFill };
 
-        public AlphaMaskEffect FinalFillEffect { get; }
-        public AlphaMaskEffect? FinalStrokeEffect { get; }
-        public CompositeEffect? CombinedEffect { get; }
-
-        public RenderLyricsRegion(ICanvasImage cachedFill, ICanvasImage? cachedStroke)
+        if (cachedStroke != null)
         {
-            FinalFillEffect = new AlphaMaskEffect { AlphaMask = cachedFill };
-
-            if (cachedStroke != null)
+            FinalStrokeEffect = new AlphaMaskEffect { AlphaMask = cachedStroke };
+            CombinedEffect = new CompositeEffect
             {
-                FinalStrokeEffect = new AlphaMaskEffect { AlphaMask = cachedStroke };
-                CombinedEffect = new CompositeEffect
-                {
-                    Sources = { FinalStrokeEffect, FinalFillEffect },
-                    Mode = CanvasComposite.SourceOver
-                };
-            }
+                Sources = { FinalStrokeEffect, FinalFillEffect },
+                Mode = CanvasComposite.SourceOver
+            };
         }
+    }
 
-        public void Dispose()
-        {
-            FinalFillEffect?.Dispose();
-            FinalStrokeEffect?.Dispose();
-            CombinedEffect?.Dispose();
-        }
+    public CanvasGradientStop[] FillStops { get; } = new CanvasGradientStop[4];
+    public CanvasGradientStop[] StrokeStops { get; } = new CanvasGradientStop[4];
+
+    public AlphaMaskEffect FinalFillEffect { get; }
+    public AlphaMaskEffect? FinalStrokeEffect { get; }
+    public CompositeEffect? CombinedEffect { get; }
+
+    public void Dispose()
+    {
+        FinalFillEffect?.Dispose();
+        FinalStrokeEffect?.Dispose();
+        CombinedEffect?.Dispose();
     }
 }

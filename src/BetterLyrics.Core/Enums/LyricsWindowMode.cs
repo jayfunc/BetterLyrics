@@ -1,13 +1,12 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum LyricsWindowMode
 {
-    public enum LyricsWindowMode
-    {
-        Standard,
-        Narrow,
-        Fullscreen,
-        Desktop,
-        Docked,
-        Taskbar,
-        Wallpaper,
-    }
+    Standard,
+    Narrow,
+    Fullscreen,
+    Desktop,
+    Docked,
+    Taskbar,
+    Wallpaper
 }

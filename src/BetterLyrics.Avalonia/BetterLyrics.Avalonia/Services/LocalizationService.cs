@@ -1,12 +1,12 @@
-﻿using BetterLyrics.Core.Interfaces.Services;
+﻿using BetterLyrics.Avalonia.Strings;
+using BetterLyrics.Core.Interfaces.Services;
 
-namespace BetterLyrics.Avalonia.Services
+namespace BetterLyrics.Avalonia.Services;
+
+public class LocalizationService : ILocalizationService
 {
-    public class LocalizationService : ILocalizationService
+    public string GetLocalizedString(string id)
     {
-        public string GetLocalizedString(string id)
-        {
-            return Strings.Resources.ResourceManager.GetString(id) ?? id;
-        }
+        return Resources.ResourceManager.GetString(id) ?? id;
     }
 }

@@ -1,9 +1,7 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace BetterLyrics.Core.Models.Settings
+namespace BetterLyrics.Core.Models.Settings;
+
+public class LastFMSettings : ObservableRecipient
 {
-    public partial class LastFMSettings : ObservableRecipient
-    {
-        public LastFMSettings() { }
-    }
 }

@@ -1,7 +1,6 @@
-﻿namespace BetterLyrics.Sdk.Interfaces.Plugins
+﻿namespace BetterLyrics.Sdk.Interfaces.Plugins;
+
+public interface ILyricsTransliterator
 {
-    public interface ILyricsTransliterator
-    {
-        Task<string?> GetTransliterationAsync(string text, string targetLangCode, CancellationToken token);
-    }
+    Task<string?> GetTransliterationAsync(string text, string targetLangCode, CancellationToken token);
 }

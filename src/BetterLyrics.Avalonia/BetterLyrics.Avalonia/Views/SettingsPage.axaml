@@ -1,47 +1,67 @@
 <UserControl xmlns="https://github.com/avaloniaui"
-             xmlns:controls="using:FluentAvalonia.UI.Controls"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:ic="using:FluentIcons.Avalonia.Fluent"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:uc="using:BetterLyrics.Avalonia.Controls"
              xmlns:models="using:BetterLyrics.Core.Models"
-             xmlns:vm="using:BetterLyrics.Avalonia.ViewModels"
-             xmlns:enums1="using:BetterLyrics.Core.Enums"
+             xmlns:vm="using:BetterLyrics.Core.ViewModels"
+             xmlns:enums="using:BetterLyrics.Core.Enums"
              mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
              x:Class="BetterLyrics.Avalonia.Views.SettingsPage"
              x:DataType="vm:SettingsPageViewModel">
-    <Design.DataContext>
-        <!-- This only sets the DataContext for the previewer in an IDE,
-        to set the actual DataContext for runtime, set the DataContext property in code (look at App.axaml.cs) -->
-        <vm:SettingsPageViewModel />
-    </Design.DataContext>
 
-    <controls:FANavigationView IsBackButtonVisible="False"
+    <ui:FANavigationView IsBackButtonVisible="False"
                                IsSettingsVisible="False"
                                MenuItemsSource="{Binding MenuItems}"
                                SelectedItem="{Binding SelectedMenuItem, Mode=TwoWay}">
-        <controls:FANavigationView.MenuItemTemplate>
+        <ui:FANavigationView.MenuItemTemplate>
             <DataTemplate x:DataType="models:NavMenuItem">
-                <controls:FANavigationViewItem Content="{Binding Label}">
-                    <controls:FANavigationViewItem.IconSource>
-                        <controls:FAFontIconSource FontFamily="{StaticResource SegoeFluentIcons}" Glyph="{Binding Glyph}" />
-                    </controls:FANavigationViewItem.IconSource>
-                </controls:FANavigationViewItem>
+                <ui:FANavigationViewItem Content="{Binding Label}">
+                    <ui:FANavigationViewItem.IconSource>
+                        <ui:FAFontIconSource FontFamily="{StaticResource SegoeFluentIcons}"
+                                                   Glyph="{Binding Glyph}" />
+                    </ui:FANavigationViewItem.IconSource>
+                </ui:FANavigationViewItem>
             </DataTemplate>
-        </controls:FANavigationView.MenuItemTemplate>
+        </ui:FANavigationView.MenuItemTemplate>
 
         <uc:SwitchPresenter Value="{Binding SelectedMenuItem.Section, Mode=OneWay}">
             <uc:SwitchPresenter.PageTransition>
                 <PageSlide Duration="0:0:0.25" Orientation="Horizontal" />
             </uc:SwitchPresenter.PageTransition>
 
+            <!--  App appearance and behavior  -->
+            <uc:Case Value="{x:Static enums:SettingsSection.App}">
+                <uc:AppSettingsControl />
+            </uc:Case>
+
+            <!--  Lyrics window manager  -->
+            <uc:Case Value="{x:Static enums:SettingsSection.LyricsWindowMgr}">
+                <uc:LyricsWindowSettingsControl />
+            </uc:Case>
+
+            <!--  Playback sources  -->
+            <uc:Case Value="{x:Static enums:SettingsSection.PlaybackLib}">
+                <uc:PlaybackSettingsControl />
+            </uc:Case>
+
+            <!--  Media lib  -->
+            <uc:Case Value="{x:Static enums:SettingsSection.MediaLib}">
+                <uc:MediaSettingsControl />
+            </uc:Case>
+
+            <!--  Plugins  -->
+            <uc:Case Value="{x:Static enums:SettingsSection.Plugins}">
+                <uc:PluginManagerControl />
+            </uc:Case>
+
             <!--  About  -->
-            <uc:Case Value="{x:Static enums1:SettingsSection.About}">
+            <uc:Case Value="{x:Static enums:SettingsSection.About}">
                 <uc:AboutControl />
             </uc:Case>
 
         </uc:SwitchPresenter>
 
-    </controls:FANavigationView>
+    </ui:FANavigationView>
 </UserControl>

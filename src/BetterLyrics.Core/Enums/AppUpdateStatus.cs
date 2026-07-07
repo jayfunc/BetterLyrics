@@ -1,9 +1,8 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum AppUpdateStatus
 {
-    public enum AppUpdateStatus
-    {
-        UpToDate,
-        NewAvailable,
-        ErrorOccured,
-    }
+    UpToDate,
+    NewAvailable,
+    ErrorOccured
 }

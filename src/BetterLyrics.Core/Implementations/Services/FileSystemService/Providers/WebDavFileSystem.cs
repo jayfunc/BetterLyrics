@@ -1,126 +1,129 @@
-﻿using BetterLyrics.Core.Helpers;
+﻿using System.Net;
+using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Entities;
 using BetterLyrics.Core.Models.Settings;
 using WebDav;
 
-namespace BetterLyrics.Core.Implementations.Services.FileSystemService.Providers
+namespace BetterLyrics.Core.Implementations.Services.FileSystemService.Providers;
+
+public class WebDavFileSystem : IUnifiedFileSystem
 {
-    public partial class WebDavFileSystem : IUnifiedFileSystem
+    private readonly Uri _baseAddress;
+    private readonly WebDavClient _client;
+    private readonly MediaFolder _config;
+
+    public WebDavFileSystem(MediaFolder config)
     {
-        private readonly WebDavClient _client;
-        private readonly MediaFolder _config;
-        private readonly Uri _baseAddress;
+        _config = config ?? throw new ArgumentNullException(nameof(config));
 
-        public WebDavFileSystem(MediaFolder config)
+        // 构建 BaseAddress (只包含 http://host:port/)
+        // MediaFolder.GetStandardUri() 返回的是带路径的完整 URI (http://host:port/path)
+        // 提取出根用于初始化 WebDavClient
+        var fullUri = _config.GetStandardUri();
+
+        // 提取 "http://host:port"
+        _baseAddress = new Uri($"{fullUri.Scheme}://{fullUri.Authority}");
+
+        _client = new WebDavClient(new WebDavClientParams
         {
-            _config = config ?? throw new ArgumentNullException(nameof(config));
+            BaseAddress = _baseAddress,
+            Credentials = new NetworkCredential(_config.UserName, _config.Password)
+        });
+    }
 
-            // 构建 BaseAddress (只包含 http://host:port/)
-            // MediaFolder.GetStandardUri() 返回的是带路径的完整 URI (http://host:port/path)
-            // 提取出根用于初始化 WebDavClient
-            var fullUri = _config.GetStandardUri();
+    public async Task<bool> ConnectAsync()
+    {
+        var result = await _client.Propfind(_config.GetStandardUri().AbsoluteUri);
+        return result.IsSuccessful;
+    }
 
-            // 提取 "http://host:port"
-            _baseAddress = new Uri($"{fullUri.Scheme}://{fullUri.Authority}");
+    public async Task<List<FilesIndexItem>> GetFilesAsync(FilesIndexItem? parentFolder = null)
+    {
+        var list = new List<FilesIndexItem>();
 
-            _client = new WebDavClient(new WebDavClientParams
-            {
-                BaseAddress = _baseAddress,
-                Credentials = new System.Net.NetworkCredential(_config.UserName, _config.Password)
-            });
-        }
+        Uri targetUri;
+        if (parentFolder == null)
+            targetUri = _config.GetStandardUri();
+        else
+            targetUri = new Uri(parentFolder.Uri);
 
-        public async Task<bool> ConnectAsync()
+        var result = await _client.Propfind(targetUri.AbsoluteUri);
+
+        if (result.IsSuccessful)
         {
-            var result = await _client.Propfind(_config.GetStandardUri().AbsoluteUri);
-            return result.IsSuccessful;
-        }
+            var parentUriString = targetUri.AbsoluteUri;
+            if (!parentUriString.EndsWith("/")) parentUriString += "/";
 
-        public async Task<List<FilesIndexItem>> GetFilesAsync(FilesIndexItem? parentFolder = null)
-        {
-            var list = new List<FilesIndexItem>();
+            var targetPathClean = targetUri.AbsolutePath.TrimEnd('/');
 
-            Uri targetUri;
-            if (parentFolder == null)
+            foreach (var res in result.Resources)
             {
-                targetUri = _config.GetStandardUri();
-            }
-            else
-            {
-                targetUri = new Uri(parentFolder.Uri);
-            }
+                var itemUri = new Uri(_baseAddress, res.Uri);
 
-            var result = await _client.Propfind(targetUri.AbsoluteUri);
+                // 过滤掉文件夹自身
+                if (itemUri.AbsolutePath.TrimEnd('/') == targetPathClean) continue;
 
-            if (result.IsSuccessful)
-            {
-                string parentUriString = targetUri.AbsoluteUri;
-                if (!parentUriString.EndsWith("/")) parentUriString += "/";
-
-                string targetPathClean = targetUri.AbsolutePath.TrimEnd('/');
-
-                foreach (var res in result.Resources)
+                var name = res.DisplayName;
+                if (string.IsNullOrEmpty(name))
                 {
-                    var itemUri = new Uri(_baseAddress, res.Uri);
-
-                    // 过滤掉文件夹自身
-                    if (itemUri.AbsolutePath.TrimEnd('/') == targetPathClean) continue;
-
-                    string? name = res.DisplayName;
-                    if (string.IsNullOrEmpty(name))
-                    {
-                        name = itemUri.AbsolutePath.TrimEnd('/').Split('/').Last();
-                        name = System.Net.WebUtility.UrlDecode(name);
-                    }
-
-                    if (string.IsNullOrEmpty(name)) continue;
-
-                    if (name.StartsWith(".")) continue;
-
-                    bool isDir = res.IsCollection;
-                    if (!isDir)
-                    {
-                        string extension = System.IO.Path.GetExtension(name).ToLower();
-                        // 如果后缀为空或不在白名单，跳过
-                        if (string.IsNullOrEmpty(extension) || !FileHelper.AllSupportedExtensions.Contains(extension)) continue;
-                    }
-
-                    list.Add(new FilesIndexItem
-                    {
-                        MediaFolderId = _config.Id,
-
-                        ParentUri = parentFolder?.Uri ?? _config.GetStandardUri().AbsoluteUri,
-
-                        Uri = itemUri.AbsoluteUri,
-
-                        FileName = name,
-                        IsDirectory = res.IsCollection,
-
-                        FileSize = res.ContentLength ?? 0,
-                        LastModified = res.LastModifiedDate ?? DateTime.MinValue,
-                    });
+                    name = itemUri.AbsolutePath.TrimEnd('/').Split('/').Last();
+                    name = WebUtility.UrlDecode(name);
                 }
+
+                if (string.IsNullOrEmpty(name)) continue;
+
+                if (name.StartsWith(".")) continue;
+
+                var isDir = res.IsCollection;
+                if (!isDir)
+                {
+                    var extension = Path.GetExtension(name).ToLower();
+                    // 如果后缀为空或不在白名单，跳过
+                    if (string.IsNullOrEmpty(extension) ||
+                        !FileHelper.AllSupportedExtensions.Contains(extension)) continue;
+                }
+
+                list.Add(new FilesIndexItem
+                {
+                    MediaFolderId = _config.Id,
+
+                    ParentUri = parentFolder?.Uri ?? _config.GetStandardUri().AbsoluteUri,
+
+                    Uri = itemUri.AbsoluteUri,
+
+                    FileName = name,
+                    IsDirectory = res.IsCollection,
+
+                    FileSize = res.ContentLength ?? 0,
+                    LastModified = res.LastModifiedDate ?? DateTime.MinValue
+                });
             }
-
-            return list;
         }
 
-        public async Task<Stream?> OpenReadAsync(FilesIndexItem entity)
-        {
-            if (entity == null) return null;
+        return list;
+    }
 
-            // WebDAV 获取流，直接使用完整 URI
-            var res = await _client.GetRawFile(entity.Uri);
+    public async Task<Stream?> OpenReadAsync(FilesIndexItem entity)
+    {
+        if (entity == null) return null;
 
-            if (!res.IsSuccessful)
-                throw new IOException($"WebDAV Error {res.StatusCode}: {res.Description}");
+        // WebDAV 获取流，直接使用完整 URI
+        var res = await _client.GetRawFile(entity.Uri);
 
-            return res.Stream;
-        }
+        if (!res.IsSuccessful)
+            throw new IOException($"WebDAV Error {res.StatusCode}: {res.Description}");
 
-        public async Task DisconnectAsync() => await Task.CompletedTask;
+        return res.Stream;
+    }
 
-        public void Dispose() => _client?.Dispose();
+    public async Task DisconnectAsync()
+    {
+        await Task.CompletedTask;
+    }
+
+    public void Dispose()
+    {
+        _client?.Dispose();
     }
 }

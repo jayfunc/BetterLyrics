@@ -1,8 +1,7 @@
-﻿namespace BetterLyrics.Sdk.Models.SettingsSchema
+﻿namespace BetterLyrics.Sdk.Models.SettingsSchema;
+
+public class ActionSettingDef : SettingDef
 {
-    public class ActionSettingDef : SettingDef
-    {
-        public string ButtonText { get; set; }
-        public Action<string> Action { get; set; }
-    }
+    public string ButtonText { get; set; }
+    public Action<string> Action { get; set; }
 }

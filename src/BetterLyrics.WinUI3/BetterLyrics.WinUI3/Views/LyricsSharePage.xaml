@@ -1,20 +1,16 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
+
 <Page
     x:Class="BetterLyrics.WinUI3.Views.LyricsSharePage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:canvas="using:Microsoft.Graphics.Canvas.UI.Xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:lyrics="using:BetterLyrics.Core.Models.Lyrics"
-    xmlns:lyricsmodels="using:BetterLyrics.WinUI3.Models.Lyrics"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
-    xmlns:viewmodels="using:BetterLyrics.WinUI3.ViewModels"
+    xmlns:models="using:BetterLyrics.Core.Models"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -88,7 +84,8 @@
                     </DropDownButton.Content>
                     <DropDownButton.Flyout>
                         <Flyout FlyoutPresenterStyle="{StaticResource FlyoutGhostStyle}">
-                            <uc:FontPicker MaxWidth="400" SelectedFontId="{x:Bind ViewModel.CardConfig.FontFamily, Mode=TwoWay}" />
+                            <uc:FontPicker MaxWidth="400"
+                                           SelectedFontId="{x:Bind ViewModel.CardConfig.FontFamily, Mode=TwoWay}" />
                         </Flyout>
                     </DropDownButton.Flyout>
                 </DropDownButton>
@@ -119,7 +116,7 @@
                     Title="{x:Bind ViewModel.CardData.Title, Mode=OneWay}"
                     Artist="{x:Bind ViewModel.CardData.Artist, Mode=OneWay}"
                     CoverAccentColor="{x:Bind ViewModel.CardData.AccentCoverColor, Converter={StaticResource AppColorToColorConverter}, Mode=OneWay}"
-                    CoverImage="{x:Bind ViewModel.CardData.CoverImage, Mode=OneWay}"
+                    CoverImage="{x:Bind ViewModel.CardData.CoverImageBytes, Converter={StaticResource ByteArrayToImageConverter}, Mode=OneWay}"
                     LyricsLines="{x:Bind ViewModel.CardData.Lyrics, Mode=OneWay}"
                     StyleKey="{x:Bind ViewModel.SelectedStyleItem.StyleKey, Mode=OneWay}" />
             </Viewbox>
@@ -151,7 +148,8 @@
             <Grid Grid.Row="1">
                 <SemanticZoom>
                     <SemanticZoom.ZoomedInView>
-                        <GridView ItemsSource="{Binding Source={StaticResource StyleGroupsCVS}}" SelectedItem="{x:Bind ViewModel.SelectedStyleItem, Mode=TwoWay}">
+                        <GridView ItemsSource="{Binding Source={StaticResource StyleGroupsCVS}}"
+                                  SelectedItem="{x:Bind ViewModel.SelectedStyleItem, Mode=TwoWay}">
 
                             <GridView.ItemContainerStyle>
                                 <Style BasedOn="{StaticResource DefaultGridViewItemStyle}" TargetType="GridViewItem">
@@ -171,8 +169,10 @@
 
                                     <GroupStyle.HeaderContainerStyle>
                                         <Style TargetType="GridViewHeaderItem">
-                                            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
-                                            <Setter Property="FontSize" Value="{ThemeResource GridViewHeaderItemThemeFontSize}" />
+                                            <Setter Property="FontFamily"
+                                                    Value="{ThemeResource ContentControlThemeFontFamily}" />
+                                            <Setter Property="FontSize"
+                                                    Value="{ThemeResource GridViewHeaderItemThemeFontSize}" />
                                             <Setter Property="Background" Value="Transparent" />
                                             <Setter Property="Margin" Value="0,0,0,4" />
                                             <Setter Property="Padding" Value="6,12" />
@@ -180,7 +180,8 @@
                                             <Setter Property="VerticalContentAlignment" Value="Top" />
                                             <Setter Property="MinHeight" Value="0" />
                                             <Setter Property="CornerRadius" Value="4" />
-                                            <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
+                                            <Setter Property="UseSystemFocusVisuals"
+                                                    Value="{StaticResource UseSystemFocusVisuals}" />
                                             <Setter Property="Template">
                                                 <Setter.Value>
                                                     <ControlTemplate TargetType="GridViewHeaderItem">
@@ -206,19 +207,22 @@
 
                                                                     <VisualState x:Name="PointerOver">
                                                                         <VisualState.Setters>
-                                                                            <Setter Target="RootGrid.Background" Value="{ThemeResource ListViewItemBackgroundPointerOver}" />
+                                                                            <Setter Target="RootGrid.Background"
+                                                                                    Value="{ThemeResource ListViewItemBackgroundPointerOver}" />
                                                                         </VisualState.Setters>
                                                                     </VisualState>
 
                                                                     <VisualState x:Name="Pressed">
                                                                         <VisualState.Setters>
-                                                                            <Setter Target="RootGrid.Background" Value="{ThemeResource ListViewItemBackgroundPressed}" />
+                                                                            <Setter Target="RootGrid.Background"
+                                                                                    Value="{ThemeResource ListViewItemBackgroundPressed}" />
                                                                         </VisualState.Setters>
                                                                     </VisualState>
 
                                                                     <VisualState x:Name="Disabled">
                                                                         <VisualState.Setters>
-                                                                            <Setter Target="ContentPresenter.Opacity" Value="{ThemeResource ListViewItemDisabledThemeOpacity}" />
+                                                                            <Setter Target="ContentPresenter.Opacity"
+                                                                                    Value="{ThemeResource ListViewItemDisabledThemeOpacity}" />
                                                                         </VisualState.Setters>
                                                                     </VisualState>
                                                                 </VisualStateGroup>
@@ -232,7 +236,8 @@
 
                                     <GroupStyle.HeaderTemplate>
                                         <DataTemplate x:DataType="models:LyricsCardStyleGroup">
-                                            <TextBlock Style="{ThemeResource BodyStrongTextBlockStyle}" Text="{x:Bind GroupTitle}" />
+                                            <TextBlock Style="{ThemeResource BodyStrongTextBlockStyle}"
+                                                       Text="{x:Bind GroupTitle}" />
                                         </DataTemplate>
                                     </GroupStyle.HeaderTemplate>
 
@@ -255,7 +260,8 @@
                                             <RowDefinition Height="*" />
                                             <RowDefinition Height="Auto" />
                                         </Grid.RowDefinitions>
-                                        <Grid Grid.Row="0" Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}">
+                                        <Grid Grid.Row="0"
+                                              Background="{ThemeResource CardBackgroundFillColorSecondaryBrush}">
                                             <Viewbox
                                                 Width="110"
                                                 Height="150"
@@ -303,8 +309,10 @@
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top"
                     SelectedIndex="{x:Bind ViewModel.SelectedStyleDisplayTypeIndex, Mode=TwoWay}">
-                    <controls:SegmentedItem Content="{ui:FontIcon FontSize=16, FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8C0;}" />
-                    <controls:SegmentedItem Content="{ui:FontIcon FontSize=16, FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8BF;}" />
+                    <controls:SegmentedItem
+                        Content="{ui:FontIcon FontSize=16, FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8C0;}" />
+                    <controls:SegmentedItem
+                        Content="{ui:FontIcon FontSize=16, FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8BF;}" />
                 </controls:Segmented>
             </Grid>
 

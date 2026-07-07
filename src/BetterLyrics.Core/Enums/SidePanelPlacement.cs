@@ -1,10 +1,9 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum SidePanelPlacement
 {
-    public enum SidePanelPlacement
-    {
-        Left,
-        Right,
-        Top,
-        Bottom
-    }
+    Left,
+    Right,
+    Top,
+    Bottom
 }

@@ -1,9 +1,8 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum PaletteGeneratorType
 {
-    public enum PaletteGeneratorType
-    {
-        Auto,
-        OctTree,
-        KMeans
-    }
+    Auto,
+    OctTree,
+    KMeans
 }

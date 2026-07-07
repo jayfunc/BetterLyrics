@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿namespace BetterLyrics.Sdk.Enums;
 
-namespace BetterLyrics.Sdk.Enums
+public enum ConfigChangedBy
 {
-    public enum ConfigChangedBy
-    {
-        Plugin,
-        Host,
-    }
+    Plugin,
+    Host
 }

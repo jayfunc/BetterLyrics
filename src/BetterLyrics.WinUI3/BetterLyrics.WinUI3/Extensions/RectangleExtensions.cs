@@ -1,13 +1,15 @@
-﻿using BetterLyrics.Core.Models.Domain;
-using System.Drawing;
+﻿using System.Drawing;
+using BetterLyrics.Core.Models.Domain;
 
-namespace BetterLyrics.WinUI3.Extensions
+namespace BetterLyrics.WinUI3.Extensions;
+
+public static class RectangleExtensions
 {
-    public static class RectangleExtensions
+    extension(Rectangle rect)
     {
-        extension(Rectangle rect)
+        public AppRect ToAppRect()
         {
-            public AppRect ToAppRect() => new(
+            return new AppRect(
                 rect.Left,
                 rect.Top,
                 rect.Right - rect.Left,

@@ -1,18 +1,17 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-namespace BetterLyrics.Core.Enums
+namespace BetterLyrics.Core.Enums;
+
+public enum LyricsSearchProvider
 {
-    public enum LyricsSearchProvider
-    {
-        QQ,
-        Kugou,
-        Netease,
-        LrcLib,
-        AmllTtmlDb,
-        LocalMusicFile,
-        LocalLrcFile,
-        LocalEslrcFile,
-        LocalTtmlFile,
-        AppleMusic,
-    }
+    QQ,
+    Kugou,
+    Netease,
+    LrcLib,
+    AmllTtmlDb,
+    LocalMusicFile,
+    LocalLrcFile,
+    LocalEslrcFile,
+    LocalTtmlFile,
+    AppleMusic
 }

@@ -1,0 +1,98 @@
+<UserControl
+    x:Class="BetterLyrics.Avalonia.Controls.ExtendedSlider"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:FluentAvalonia.UI.Controls"
+    x:Name="RootControl"
+    mc:Ignorable="d">
+
+    <Grid RowDefinitions="Auto,Auto">
+        <Grid.Styles>
+            <Style Selector="Grid">
+                <Setter Property="RowSpacing" Value="4" />
+            </Style>
+        </Grid.Styles>
+
+        <Slider
+            Grid.Row="0"
+            IsEnabled="{Binding IsSliderEnabled, ElementName=RootControl}"
+            Maximum="{Binding Maximum, ElementName=RootControl}"
+            Minimum="{Binding Minimum, ElementName=RootControl}"
+            PointerMoved="Slider_PointerMoved"
+            IsSnapToTickEnabled="True"
+            SmallChange="{Binding Frequency, ElementName=RootControl}"
+            LargeChange="{Binding Frequency, ElementName=RootControl}"
+            TickFrequency="{Binding Frequency, ElementName=RootControl}"
+            TickPlacement="None"
+            Value="{Binding Value, ElementName=RootControl, Mode=TwoWay}" />
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="6" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Button
+                Grid.Column="0"
+                VerticalAlignment="Center"
+                Click="ResetButton_Click"
+                Classes="GhostButtonStyle"
+                IsVisible="{Binding ShowResetButton, ElementName=RootControl}">
+                <ui:FAFontIcon FontFamily="Segoe Fluent Icons" FontSize="12" Glyph="&#xE777;" />
+            </Button>
+
+            <Border
+                Grid.Column="2"
+                Padding="2"
+                Background="{DynamicResource ControlFillColorDefaultBrush}"
+                BorderBrush="{DynamicResource ControlStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="4">
+
+                <StackPanel Orientation="Horizontal" Spacing="0">
+
+                    <Button
+                        x:Name="SubtractButton"
+                        Width="30"
+                        Height="28"
+                        Padding="0"
+                        VerticalAlignment="Center"
+                        Click="SubtractButton_Click"
+                        Classes="GhostButtonStyle">
+                        <ui:FAFontIcon FontFamily="Segoe Fluent Icons" FontSize="12" Glyph="&#xE738;" />
+                    </Button>
+
+                    <Border MinWidth="40" Padding="8,0">
+                        <StackPanel
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal"
+                            Spacing="2">
+                            <TextBlock VerticalAlignment="Center" Text="{Binding RoundedValue, ElementName=RootControl}" />
+
+                            <TextBlock
+                                VerticalAlignment="Center"
+                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                Text="{Binding Unit, ElementName=RootControl}" />
+                        </StackPanel>
+                    </Border>
+
+                    <Button
+                        x:Name="AddButton"
+                        Width="30"
+                        Height="28"
+                        Padding="0"
+                        VerticalAlignment="Center"
+                        Click="AddButton_Click"
+                        Classes="GhostButtonStyle">
+                        <ui:FAFontIcon FontFamily="Segoe Fluent Icons" FontSize="12" Glyph="&#xE710;" />
+                    </Button>
+
+                </StackPanel>
+            </Border>
+        </Grid>
+    </Grid>
+</UserControl>

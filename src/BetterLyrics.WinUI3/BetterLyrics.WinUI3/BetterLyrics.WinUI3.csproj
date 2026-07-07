@@ -1,732 +1,561 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-	<PropertyGroup>
-		<OutputType>WinExe</OutputType>
-		<TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
-		<TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
-		<RootNamespace>BetterLyrics.WinUI3</RootNamespace>
-		<Platforms>x86;x64;ARM64</Platforms>
-		<RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
-		<UseWinUI>true</UseWinUI>
-		<Nullable>enable</Nullable>
-		<LangVersion>preview</LangVersion>
-		<EnableDynamicLoading>true</EnableDynamicLoading>
-		<BuiltInComInteropSupport>true</BuiltInComInteropSupport>
-		<AppxDefaultResourceQualifiers>Language=en;ar;de;es;fr;hi;id;it;ja;ko;ms;pt;ru;th;vi;zh-Hans;zh-Hant|Contrast=standard|Scale=200|HomeRegion=001|TargetSize=256|LayoutDirection=LTR|DXFeatureLevel=DX9|Configuration=|AlternateForm=</AppxDefaultResourceQualifiers>
-	</PropertyGroup>
-	<PropertyGroup>
-		<DefineConstants>$(DefineConstants);DISABLE_XAML_GENERATED_MAIN</DefineConstants>
-	</PropertyGroup>
-
-	<ItemGroup>
-		<Compile Remove="TemplateSelector\**" />
-		<Compile Remove="ViewModels\Lyrics\**" />
-		<Content Remove="TemplateSelector\**" />
-		<Content Remove="ViewModels\Lyrics\**" />
-		<EmbeddedResource Remove="TemplateSelector\**" />
-		<EmbeddedResource Remove="ViewModels\Lyrics\**" />
-		<None Remove="TemplateSelector\**" />
-		<None Remove="ViewModels\Lyrics\**" />
-		<Page Remove="TemplateSelector\**" />
-		<Page Remove="ViewModels\Lyrics\**" />
-		<PRIResource Remove="TemplateSelector\**" />
-		<PRIResource Remove="ViewModels\Lyrics\**" />
-	</ItemGroup>
-	<ItemGroup>
-		<None Remove="Assets\Banner.png" />
-		<None Remove="Assets\Contributors.csv" />
-		<None Remove="Assets\Donors.csv" />
-		<None Remove="Assets\Fonts\SegoeFluentIcons.ttf" />
-		<None Remove="Assets\Fonts\SloganCNFont.ttf" />
-		<None Remove="Assets\Fonts\SloganENFont.ttf" />
-		<None Remove="Assets\Logo.ico" />
-		<None Remove="Assets\Logo.png" />
-		<None Remove="Assets\Segoe Fluent Icons.ttf" />
-		<None Remove="Assets\Wiki82.profile.xml" />
-		<None Remove="Controls\AboutControl.xaml" />
-		<None Remove="Controls\AlbumArtAreaSettingsControl.xaml" />
-		<None Remove="Controls\AppSettingsControl.xaml" />
-		<None Remove="Controls\CanvasItemControl.xaml" />
-		<None Remove="Controls\ContributorCard.xaml" />
-		<None Remove="Controls\DemoWindowGrid.xaml" />
-		<None Remove="Controls\DragIndicator.xaml" />
-		<None Remove="Controls\DragVisualControl.xaml" />
-		<None Remove="Controls\DropGhostControl.xaml" />
-		<None Remove="Controls\ExtendedSlider.xaml" />
-		<None Remove="Controls\FloatSidePanel.xaml" />
-		<None Remove="Controls\FontPicker.xaml" />
-		<None Remove="Controls\FontPickerDialog.xaml" />
-		<None Remove="Controls\ImageSwitcher.xaml" />
-		<None Remove="Controls\InAppNotificationStack.xaml" />
-		<None Remove="Controls\InfoTag.xaml" />
-		<None Remove="Controls\LayoutEditorControl.xaml" />
-		<None Remove="Controls\LayoutPreviewControl.xaml" />
-		<None Remove="Controls\LayoutSettingsControl.xaml" />
-		<None Remove="Controls\LyricsSearchControl.xaml" />
-		<None Remove="Controls\LyricsStyleSettingsControl.xaml" />
-		<None Remove="Controls\LyricsWindowSettingsControl.xaml" />
-		<None Remove="Controls\LyricsWindowSwitchControl.xaml" />
-		<None Remove="Controls\MediaSettingsControl.xaml" />
-		<None Remove="Controls\NowPlayingBar.xaml" />
-		<None Remove="Controls\PaletteItemControl.xaml" />
-		<None Remove="Controls\ParallaxTiltControl.xaml" />
-		<None Remove="Controls\PatronControl.xaml" />
-		<None Remove="Controls\PlaybackSettingsControl.xaml" />
-		<None Remove="Controls\PlayQueue.xaml" />
-		<None Remove="Controls\PluginItemControl.xaml" />
-		<None Remove="Controls\PluginManagerControl.xaml" />
-		<None Remove="Controls\PropertyRow.xaml" />
-		<None Remove="Controls\RemoteServerConfigControl.xaml" />
-		<None Remove="Controls\ShortcutTextBox.xaml" />
-		<None Remove="Controls\StatsDashboardControl.xaml" />
-		<None Remove="Controls\SystemTray.xaml" />
-		<None Remove="Controls\TrackDetailCard.xaml" />
-		<None Remove="Controls\WindowSettingsControl.xaml" />
-		<None Remove="Themes\DefaultAccentSplitButtonStyle.xaml" />
-		<None Remove="Themes\DefaultListViewItemStyle.xaml" />
-		<None Remove="Themes\DefaultStyles.xaml" />
-		<None Remove="Themes\FluentAccentButtonStyle.xaml" />
-		<None Remove="Themes\FluentAccentSplitButtonStyle.xaml" />
-		<None Remove="Themes\FluentButtonStyle.xaml" />
-		<None Remove="Themes\FluentComboBoxItemStyle.xaml" />
-		<None Remove="Themes\FluentExternalLinkButtonStyle.xaml" />
-		<None Remove="Themes\FluentHyperlinkButtonStyle.xaml" />
-		<None Remove="Themes\FluentListViewItemStyle.xaml" />
-		<None Remove="Themes\FluentMenuFlyoutItemStyle.xaml" />
-		<None Remove="Themes\FluentSliderStyle.xaml" />
-		<None Remove="Themes\FluentStyles.xaml" />
-		<None Remove="Themes\FluentToggleButtonStyle.xaml" />
-		<None Remove="Themes\FluentToolTipStyle.xaml" />
-		<None Remove="Themes\GhostSliderStyle.xaml" />
-		<None Remove="Themes\InteractiveListViewHeaderStyle.xaml" />
-		<None Remove="Themes\LyricsCardInkWashStyle.xaml" />
-		<None Remove="Themes\LyricsCardMinimalStyle.xaml" />
-		<None Remove="Themes\LyricsCardQQStyle.xaml" />
-		<None Remove="Views\LyricsSearchWindow.xaml" />
-		<None Remove="Views\LyricsSharePage.xaml" />
-		<None Remove="Views\LyricsShareWindow.xaml" />
-		<None Remove="Views\LyricsWindowSwitchWindow.xaml" />
-		<None Remove="Views\MusicGalleryPage.xaml" />
-		<None Remove="Views\MusicGalleryWindow.xaml" />
-		<None Remove="Views\SettingsWindow.xaml" />
-		<None Remove="Views\StatsDashboardWindow.xaml" />
-		<None Remove="Views\ToastOverlayWindow.xaml" />
-	</ItemGroup>
-	<ItemGroup>
-		<Content Include="Logo.ico">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
-	<ItemGroup>
-		<Manifest Include="$(ApplicationManifest)" />
-	</ItemGroup>
-	<ItemGroup>
-		<PackageReference Include="3v.EvtSource" Version="2.0.0" />
-		<PackageReference Include="CommunityToolkit.Labs.WinUI.Controls.OpacityMaskView" Version="0.1.260617-build.2640" />
-		<PackageReference Include="CommunityToolkit.Labs.WinUI.MarqueeText" Version="0.1.250828-build.2223" />
-		<PackageReference Include="CommunityToolkit.Labs.WinUI.Shimmer" Version="0.1.250828-build.2223" />
-		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-		<PackageReference Include="CommunityToolkit.WinUI.Behaviors" Version="8.2.251219" />
-		<PackageReference Include="CommunityToolkit.WinUI.Controls.ColorPicker" Version="8.2.251219" />
-		<PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.2.251219" />
-		<PackageReference Include="CommunityToolkit.WinUI.Controls.Segmented" Version="8.2.251219" />
-		<PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.2.251219" />
-		<PackageReference Include="CommunityToolkit.WinUI.Controls.Sizers" Version="8.2.251219" />
-		<PackageReference Include="CommunityToolkit.WinUI.Converters" Version="8.2.251219" />
-		<PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.2.251219" />
-		<PackageReference Include="CommunityToolkit.WinUI.Helpers" Version="8.2.251219" />
-		<PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.2.251219" />
-		<PackageReference Include="CommunityToolkit.WinUI.Triggers" Version="8.2.251219" />
-		<PackageReference Include="ComputeSharp.D2D1.WinUI" Version="3.2.0" />
-		<PackageReference Include="csharp-pinyin" Version="1.0.1" />
-		<PackageReference Include="DevWinUI.Controls" Version="9.9.4" />
-		<PackageReference Include="Dubya.WindowsMediaController.Jayfunc" Version="2.5.6" />
-		<PackageReference Include="F23.StringSimilarity" Version="7.0.1" />
-		<PackageReference Include="FlaUI.UIA3" Version="5.0.0" />
-		<PackageReference Include="FluentFTP" Version="54.2.0" />
-		<PackageReference Include="H.NotifyIcon.WinUI" Version="2.4.1" />
-		<PackageReference Include="Impressionist.Jayfunc" Version="1.0.0" />
-		<PackageReference Include="Interop.UIAutomationClient" Version="10.19041.0" />
-		<PackageReference Include="LiteFM" Version="1.0.3" />
-		<PackageReference Include="LiveChartsCore.SkiaSharpView.WinUI" Version="2.0.5" />
-		<PackageReference Include="Lyricify.Lyrics.Helper.Jayfunc" Version="0.1.4" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.9" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="10.0.9" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.9" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.9" />
-		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.9">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.9" />
-		<PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.9" />
-		<PackageReference Include="Microsoft.Graphics.Win2D" Version="1.4.0" />
-		<PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="18.7.23">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.2270" />
-		<PackageReference Include="Microsoft.WindowsAppSDK" Version="2.2.0" />
-		<PackageReference Include="MimeMapping" Version="4.0.0" />
-		<PackageReference Include="NAudio.Wasapi" Version="2.3.0" />
-		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-		<PackageReference Include="NTextCat" Version="0.3.65" />
-		<PackageReference Include="QRCoder" Version="1.8.0" />
-		<PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0" />
-		<PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
-		<PackageReference Include="SMBLibrary" Version="1.5.7" />
-		<PackageReference Include="SpoutDx.Net.Interop.MultiPlatform" Version="0.1.0" />
-		<PackageReference Include="System.Drawing.Common" Version="10.0.9" />
-		<PackageReference Include="System.IO.Hashing" Version="10.0.9" />
-		<PackageReference Include="TagLibSharp" Version="2.3.0" />
-		<PackageReference Include="Ude.NetStandard" Version="1.2.0" />
-		<PackageReference Include="Vanara.PInvoke.DwmApi" Version="5.0.5" />
-		<PackageReference Include="Vanara.PInvoke.Gdi32" Version="5.0.5" />
-		<PackageReference Include="Vanara.PInvoke.Shell32" Version="5.0.5" />
-		<PackageReference Include="Vanara.PInvoke.User32" Version="5.0.5" />
-		<PackageReference Include="Vanara.Windows.Shell" Version="5.0.5" />
-		<PackageReference Include="VCollab.DiscordRichPresence" Version="1.7.0" />
-		<PackageReference Include="Vortice.Direct3D11" Version="3.8.3" />
-		<PackageReference Include="WanaKana-net" Version="1.0.0" />
-		<PackageReference Include="WebDav.Client" Version="2.9.0" />
-		<PackageReference Include="WinUIEx" Version="2.9.1" />
-		<PackageReference Include="z440.atl.core" Version="7.15.3" />
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Rendering\InAppLyricsRenderer.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Rendering\DesktopLyricsRenderer.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Remove="Themes\Generic.xaml" />
-	</ItemGroup>
-	<ItemGroup>
-		<Content Update="Assets\AlbumArtPlaceholder.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="Assets\Alipay.jpg">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="Assets\AlipayWeChatPay.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="Assets\Empty.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="Assets\EmptyBox.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="Assets\EmptyState.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="Assets\Folder.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="Assets\Fonts\SloganCNFont.ttf">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="Assets\Fonts\SloganENFont.ttf">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="Assets\LastFM.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="Assets\Leaf.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="Assets\Logo.ico">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="Assets\LogoPlugin.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="Assets\LogoWhite.ico">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="Assets\MusicWaveBlack.gif">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="Assets\MusicWaveWhite.gif">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="Assets\Page.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="Assets\Question.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="Assets\Fonts\SegoeFluentIcons.ttf">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="Assets\WeChatPay.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="Assets\Wiki82.profile.xml">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\PluginManagerControl.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\PatronControl.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-		<Page Update="Styles\Converters.xaml">
-			<SubType>Designer</SubType>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Styles\GhostSliderStyle.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\PlayQueue.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\StatsDashboardControl.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\LyricsStyleSettingsControl.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-		<Page Update="Styles\LyricsCardCinematicStyle.xaml">
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Update="Styles\LyricsCardPodStyle.xaml">
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Update="Styles\LyricsCardBambooSlipsStyle.xaml">
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Update="Styles\LyricsCardDunhuangStyle.xaml">
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Update="Styles\LyricsCardJournalStyle.xaml">
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Update="Styles\LyricsCardStickyNoteStyle.xaml">
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Update="Styles\LyricsCardAncientBookStyle.xaml">
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Update="Styles\LyricsCardWindowsPhoneStyle.xaml">
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Update="Styles\LyricsCardCyberpunkStyle.xaml">
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Update="Styles\LyricsCardCDStyle.xaml">
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Update="Styles\LyricsCardReceiptStyle.xaml">
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Update="Styles\LyricsCardRetroMSNStyle.xaml">
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Update="Styles\LyricsCardRetroQQStyle.xaml">
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Update="Styles\LyricsCardSwissStyle.xaml">
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Update="Styles\LyricsCardMagazineStyle.xaml">
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Update="Styles\LyricsCardTicketStyle.xaml">
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Update="Styles\LyricsCardPolaroidStyle.xaml">
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Update="Themes\LyricsCardLINEStyle.xaml">
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Update="Themes\LyricsCardTelegramStyle.xaml">
-			<SubType>Designer</SubType>
-		</Page>
-		<Page Update="Themes\LyricsCardWhatsAppStyle.xaml">
-			<SubType>Designer</SubType>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Views\LyricsWindowSwitchWindow.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\LyricsWindowSwitchControl.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\DemoWindowGrid.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\LyricsWindowSettingsControl.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Views\LyricsSearchWindow.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\LyricsSearchControl.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\ShortcutTextBox.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\ExtendedSlider.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\LyricsEffectSettingsControl.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\MediaSettingsControl.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\PlaybackSettingsControl.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\LyricsBackgroundSettingsControl.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\AppSettingsControl.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Views\MusicGalleryWindow.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Views\MusicGalleryPage.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Views\SettingsWindow.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\SystemTray.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\RemoteServerConfigControl.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\NowPlayingBar.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\WindowSettingsControl.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\ImageSwitcher.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\ShadowImage.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\PropertyRow.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\AboutControl.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Styles\InteractiveListViewHeaderStyle.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<ProjectReference Include="..\..\BetterLyrics.Core\BetterLyrics.Core.csproj" />
-		<ProjectReference Include="..\..\BetterLyrics.Sdk\BetterLyrics.Sdk.csproj" />
-	</ItemGroup>
-	<ItemGroup>
-		<Content Update="Assets\Logo.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
-	<ItemGroup>
-		<Content Update="Assets\Banner.png">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\LayoutEditorControl.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-		<Page Update="Controls\CanvasItemControl.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-		<Page Update="Controls\DropGhostControl.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-		<Page Update="Controls\DragVisualControl.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-		<Page Update="Controls\LayoutPreviewControl.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-		<Page Update="Controls\LayoutSettingsControl.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-		<Page Update="Controls\AlbumArtAreaSettingsControl.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-		<Content Update="Assets\LogoBlack.ico">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="Assets\Donors.csv">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Content Update="Assets\Contributors.csv">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</Content>
-		<Page Update="Themes\FluentExternalLinkButtonStyle.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-		<Page Update="Controls\FloatSidePanel.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-		<Page Update="Controls\ParallaxTiltControl.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-		<None Update="Themes\Generic.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</None>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Views\StatsDashboardWindow.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Themes\LyricsCardQQStyle.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\TrackDetailCard.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Themes\FluentAccentSplitButtonStyle.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Themes\DefaultAccentSplitButtonStyle.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\PaletteItemControl.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Themes\DefaultListViewItemStyle.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Themes\FluentListViewItemStyle.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Themes\FluentNavigationViewItemPresenterStyles.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Themes\DefaultStyles.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Styles\FluentStyles.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Styles\FluentSliderStyle.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Styles\FluentMenuFlyoutItemStyle.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Styles\FluentComboBoxItemStyle.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Styles\FluentHyperlinkButtonStyle.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Styles\FluentAccentButtonStyle.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Styles\FluentToggleButtonStyle.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Styles\FluentToolTipStyle.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Styles\FluentButtonStyle.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\ContributorCard.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Styles\LyricsCardInkWashStyle.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Styles\LyricsCardMinimalStyle.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Styles\LyricsCardVinylStyle.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Views\LyricsShareWindow.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Views\LyricsSharePage.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\DragIndicator.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Views\ToastOverlayWindow.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\InAppNotificationStack.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\FontPickerDialog.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\FontPicker.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\InfoTag.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<ItemGroup>
-		<Page Update="Controls\PluginItemControl.xaml">
-			<Generator>MSBuild:Compile</Generator>
-		</Page>
-	</ItemGroup>
-	<!-- Publish Properties -->
-	<PropertyGroup>
-		<PublishReadyToRun Condition="'$(Configuration)' == 'Debug'">False</PublishReadyToRun>
-		<PublishReadyToRun Condition="'$(Configuration)' != 'Debug'">True</PublishReadyToRun>
-		<PublishTrimmed Condition="'$(Configuration)' == 'Debug'">False</PublishTrimmed>
-		<!--<PublishTrimmed Condition="'$(Configuration)' != 'Debug'">True</PublishTrimmed>-->
-		<PublishTrimmed Condition="'$(Configuration)' != 'Debug'">False</PublishTrimmed>
-		<SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
-	</PropertyGroup>
-	<PropertyGroup>
-		<DefineConstants>$(DefineConstants)</DefineConstants>
-		<ApplicationManifest>app.manifest</ApplicationManifest>
-		<ApplicationIcon>Logo.ico</ApplicationIcon>
-		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-		<ShouldCreateLogs>True</ShouldCreateLogs>
-		<AdvancedSettingsExpanded>True</AdvancedSettingsExpanded>
-		<UpdateAssemblyVersion>False</UpdateAssemblyVersion>
-		<UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
-		<UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
-		<UpdatePackageVersion>True</UpdatePackageVersion>
-		<AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
-		<InheritWinAppVersionFrom>AssemblyVersion</InheritWinAppVersionFrom>
-		<PackageVersionSettings>AssemblyVersion.None.None</PackageVersionSettings>
-	</PropertyGroup>
+    <PropertyGroup>
+        <OutputType>WinExe</OutputType>
+        <TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
+        <TargetPlatformMinVersion>10.0.19041.0</TargetPlatformMinVersion>
+        <RootNamespace>BetterLyrics.WinUI3</RootNamespace>
+        <Platforms>x86;x64;ARM64</Platforms>
+        <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+        <UseWinUI>true</UseWinUI>
+        <Nullable>enable</Nullable>
+        <LangVersion>preview</LangVersion>
+        <EnableDynamicLoading>true</EnableDynamicLoading>
+        <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+        <AppxDefaultResourceQualifiers>Language=en;ar;de;es;fr;hi;id;it;ja;ko;ms;pt;ru;th;vi;zh-Hans;zh-Hant|Contrast=standard|Scale=200|HomeRegion=001|TargetSize=256|LayoutDirection=LTR|DXFeatureLevel=DX9|Configuration=|AlternateForm=</AppxDefaultResourceQualifiers>
+    </PropertyGroup>
+    <PropertyGroup>
+        <DefineConstants>$(DefineConstants);DISABLE_XAML_GENERATED_MAIN</DefineConstants>
+    </PropertyGroup>
+    <ItemGroup>
+      <None Remove="Views\SystemTrayWindow.xaml" />
+    </ItemGroup>
+	
+    <ItemGroup>
+        <Content Include="Logo.ico">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
+    <ItemGroup>
+        <Manifest Include="$(ApplicationManifest)" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="3v.EvtSource" Version="2.0.0" />
+        <PackageReference Include="CommunityToolkit.Labs.WinUI.Controls.OpacityMaskView" Version="0.1.260617-build.2640" />
+        <PackageReference Include="CommunityToolkit.Labs.WinUI.MarqueeText" Version="0.1.250828-build.2223" />
+        <PackageReference Include="CommunityToolkit.Labs.WinUI.Shimmer" Version="0.1.250828-build.2223" />
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+        <PackageReference Include="CommunityToolkit.WinUI.Behaviors" Version="8.2.251219" />
+        <PackageReference Include="CommunityToolkit.WinUI.Controls.ColorPicker" Version="8.2.251219" />
+        <PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.2.251219" />
+        <PackageReference Include="CommunityToolkit.WinUI.Controls.Segmented" Version="8.2.251219" />
+        <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.2.251219" />
+        <PackageReference Include="CommunityToolkit.WinUI.Controls.Sizers" Version="8.2.251219" />
+        <PackageReference Include="CommunityToolkit.WinUI.Converters" Version="8.2.251219" />
+        <PackageReference Include="CommunityToolkit.WinUI.Extensions" Version="8.2.251219" />
+        <PackageReference Include="CommunityToolkit.WinUI.Helpers" Version="8.2.251219" />
+        <PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.2.251219" />
+        <PackageReference Include="CommunityToolkit.WinUI.Triggers" Version="8.2.251219" />
+        <PackageReference Include="ComputeSharp.D2D1.WinUI" Version="3.2.0" />
+        <PackageReference Include="csharp-pinyin" Version="1.0.1" />
+        <PackageReference Include="DevWinUI.Controls" Version="9.9.4" />
+        <PackageReference Include="Dubya.WindowsMediaController.Jayfunc" Version="2.5.6" />
+        <PackageReference Include="F23.StringSimilarity" Version="7.0.1" />
+        <PackageReference Include="FlaUI.UIA3" Version="5.0.0" />
+        <PackageReference Include="FluentFTP" Version="54.2.0" />
+        <PackageReference Include="H.NotifyIcon.WinUI" Version="2.4.1" />
+        <PackageReference Include="Impressionist.Jayfunc" Version="1.0.0" />
+        <PackageReference Include="Interop.UIAutomationClient" Version="10.19041.0" />
+        <PackageReference Include="LiteFM" Version="1.0.3" />
+        <PackageReference Include="LiveChartsCore.SkiaSharpView.WinUI" Version="2.0.5" />
+        <PackageReference Include="Lyricify.Lyrics.Helper.Jayfunc" Version="0.1.4" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="10.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.9">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.9" />
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.9" />
+        <PackageReference Include="Microsoft.Graphics.Win2D" Version="1.4.0" />
+        <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="18.7.23">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.2270" />
+        <PackageReference Include="Microsoft.WindowsAppSDK" Version="2.2.0" />
+        <PackageReference Include="MimeMapping" Version="4.0.0" />
+        <PackageReference Include="NAudio.Wasapi" Version="2.3.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+        <PackageReference Include="NTextCat" Version="0.3.65" />
+        <PackageReference Include="QRCoder" Version="1.8.0" />
+        <PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0" />
+        <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
+        <PackageReference Include="SMBLibrary" Version="1.5.7" />
+        <PackageReference Include="SpoutDx.Net.Interop.MultiPlatform" Version="0.1.0" />
+        <PackageReference Include="System.Drawing.Common" Version="10.0.9" />
+        <PackageReference Include="System.IO.Hashing" Version="10.0.9" />
+        <PackageReference Include="TagLibSharp" Version="2.3.0" />
+        <PackageReference Include="Ude.NetStandard" Version="1.2.0" />
+        <PackageReference Include="Vanara.PInvoke.DwmApi" Version="5.0.5" />
+        <PackageReference Include="Vanara.PInvoke.Gdi32" Version="5.0.5" />
+        <PackageReference Include="Vanara.PInvoke.Shell32" Version="5.0.5" />
+        <PackageReference Include="Vanara.PInvoke.User32" Version="5.0.5" />
+        <PackageReference Include="Vanara.Windows.Shell" Version="5.0.5" />
+        <PackageReference Include="VCollab.DiscordRichPresence" Version="1.7.0" />
+        <PackageReference Include="Vortice.Direct3D11" Version="3.8.3" />
+        <PackageReference Include="WanaKana-net" Version="1.0.0" />
+        <PackageReference Include="WebDav.Client" Version="2.9.0" />
+        <PackageReference Include="WinUIEx" Version="2.9.1" />
+        <PackageReference Include="z440.atl.core" Version="7.15.3" />
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Rendering\InAppLyricsRenderer.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Rendering\DesktopLyricsRenderer.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\PluginManagerControl.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\PatronControl.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Update="Styles\Converters.xaml">
+            <SubType>Designer</SubType>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Styles\GhostSliderStyle.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\PlayQueue.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\StatsDashboardControl.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\LyricsStyleSettingsControl.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Update="Styles\LyricsCardCinematicStyle.xaml">
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Styles\LyricsCardPodStyle.xaml">
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Styles\LyricsCardBambooSlipsStyle.xaml">
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Styles\LyricsCardDunhuangStyle.xaml">
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Styles\LyricsCardJournalStyle.xaml">
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Styles\LyricsCardStickyNoteStyle.xaml">
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Styles\LyricsCardAncientBookStyle.xaml">
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Styles\LyricsCardWindowsPhoneStyle.xaml">
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Styles\LyricsCardCyberpunkStyle.xaml">
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Styles\LyricsCardCDStyle.xaml">
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Styles\LyricsCardReceiptStyle.xaml">
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Styles\LyricsCardRetroMSNStyle.xaml">
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Styles\LyricsCardRetroQQStyle.xaml">
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Styles\LyricsCardSwissStyle.xaml">
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Styles\LyricsCardMagazineStyle.xaml">
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Styles\LyricsCardTicketStyle.xaml">
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Styles\LyricsCardPolaroidStyle.xaml">
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Themes\LyricsCardLINEStyle.xaml">
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Themes\LyricsCardTelegramStyle.xaml">
+            <SubType>Designer</SubType>
+        </Page>
+        <Page Update="Themes\LyricsCardWhatsAppStyle.xaml">
+            <SubType>Designer</SubType>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Views\LyricsWindowSwitchWindow.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\LyricsWindowSwitchControl.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\DemoWindowGrid.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\LyricsWindowSettingsControl.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Views\LyricsSearchWindow.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\LyricsSearchControl.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\ShortcutTextBox.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\ExtendedSlider.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\LyricsEffectSettingsControl.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\MediaSettingsControl.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\PlaybackSettingsControl.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\LyricsBackgroundSettingsControl.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\AppSettingsControl.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Views\MusicGalleryWindow.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Views\MusicGalleryPage.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Views\SettingsWindow.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\SystemTray.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\RemoteServerConfigControl.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\NowPlayingBar.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\WindowSettingsControl.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\ImageSwitcher.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\ShadowImage.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\PropertyRow.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\AboutControl.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Styles\InteractiveListViewHeaderStyle.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\..\BetterLyrics.Core\BetterLyrics.Core.csproj" />
+        <ProjectReference Include="..\..\BetterLyrics.Sdk\BetterLyrics.Sdk.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\LayoutEditorControl.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Update="Controls\CanvasItemControl.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Update="Controls\DropGhostControl.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Update="Controls\DragVisualControl.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Update="Controls\LayoutPreviewControl.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Update="Controls\LayoutSettingsControl.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Update="Controls\AlbumArtAreaSettingsControl.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Update="Themes\FluentExternalLinkButtonStyle.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Update="Controls\FloatSidePanel.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Update="Controls\ParallaxTiltControl.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <None Update="Themes\Generic.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </None>
+        <Page Update="Views\SystemTrayWindow.xaml">
+          <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Views\StatsDashboardWindow.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Themes\LyricsCardQQStyle.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\TrackDetailCard.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Themes\FluentAccentSplitButtonStyle.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Themes\DefaultAccentSplitButtonStyle.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\PaletteItemControl.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Themes\DefaultListViewItemStyle.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Themes\FluentListViewItemStyle.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Themes\FluentNavigationViewItemPresenterStyles.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Themes\DefaultStyles.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Styles\FluentStyles.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Styles\FluentSliderStyle.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Styles\FluentMenuFlyoutItemStyle.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Styles\FluentComboBoxItemStyle.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Styles\FluentHyperlinkButtonStyle.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Styles\FluentAccentButtonStyle.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Styles\FluentToggleButtonStyle.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Styles\FluentToolTipStyle.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Styles\FluentButtonStyle.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\ContributorCard.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Styles\LyricsCardInkWashStyle.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Styles\LyricsCardMinimalStyle.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Styles\LyricsCardVinylStyle.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Views\LyricsShareWindow.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Views\LyricsSharePage.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\DragIndicator.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Views\ToastOverlayWindow.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\InAppNotificationStack.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\FontPickerDialog.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\FontPicker.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\InfoTag.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Page Update="Controls\PluginItemControl.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Events\" />
+        <Folder Include="ViewModels\" />
+    </ItemGroup>
+    <!-- Publish Properties -->
+    <PropertyGroup>
+        <PublishReadyToRun Condition="'$(Configuration)' == 'Debug'">False</PublishReadyToRun>
+        <PublishReadyToRun Condition="'$(Configuration)' != 'Debug'">True</PublishReadyToRun>
+        <PublishTrimmed Condition="'$(Configuration)' == 'Debug'">False</PublishTrimmed>
+        <!--<PublishTrimmed Condition="'$(Configuration)' != 'Debug'">True</PublishTrimmed>-->
+        <PublishTrimmed Condition="'$(Configuration)' != 'Debug'">False</PublishTrimmed>
+        <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
+    </PropertyGroup>
+    <PropertyGroup>
+        <DefineConstants>$(DefineConstants)</DefineConstants>
+        <ApplicationManifest>app.manifest</ApplicationManifest>
+        <ApplicationIcon>Logo.ico</ApplicationIcon>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        <ShouldCreateLogs>True</ShouldCreateLogs>
+        <AdvancedSettingsExpanded>True</AdvancedSettingsExpanded>
+        <UpdateAssemblyVersion>False</UpdateAssemblyVersion>
+        <UpdateAssemblyFileVersion>False</UpdateAssemblyFileVersion>
+        <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
+        <UpdatePackageVersion>True</UpdatePackageVersion>
+        <AssemblyInfoVersionType>SettingsVersion</AssemblyInfoVersionType>
+        <InheritWinAppVersionFrom>AssemblyVersion</InheritWinAppVersionFrom>
+        <PackageVersionSettings>AssemblyVersion.None.None</PackageVersionSettings>
+    </PropertyGroup>
 </Project>

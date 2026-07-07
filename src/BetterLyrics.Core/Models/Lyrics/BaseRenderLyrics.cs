@@ -1,18 +1,24 @@
-﻿namespace BetterLyrics.Core.Models.Lyrics
+﻿namespace BetterLyrics.Core.Models.Lyrics;
+
+public class BaseRenderLyrics : BaseLyrics
 {
-    public class BaseRenderLyrics : BaseLyrics
+    public BaseRenderLyrics(BaseLyrics baseLyrics)
     {
-        public bool IsPlayingLastFrame { get; set; } = false;
+        Text = baseLyrics.Text;
+        StartMs = baseLyrics.StartMs;
+        EndMs = baseLyrics.EndMs;
+        StartIndex = baseLyrics.StartIndex;
+    }
 
-        public BaseRenderLyrics(BaseLyrics baseLyrics)
-        {
-            this.Text = baseLyrics.Text;
-            this.StartMs = baseLyrics.StartMs;
-            this.EndMs = baseLyrics.EndMs;
-            this.StartIndex = baseLyrics.StartIndex;
-        }
+    public bool IsPlayingLastFrame { get; set; } = false;
 
-        public bool GetIsPlaying(double currentMs) => this.StartMs <= currentMs && currentMs < this.EndMs;
-        public double GetPlayProgress(double currentMs) => Math.Clamp((currentMs - this.StartMs) / this.DurationMs, 0, 1);
+    public bool GetIsPlaying(double currentMs)
+    {
+        return StartMs <= currentMs && currentMs < EndMs;
+    }
+
+    public double GetPlayProgress(double currentMs)
+    {
+        return Math.Clamp((currentMs - StartMs) / DurationMs, 0, 1);
     }
 }

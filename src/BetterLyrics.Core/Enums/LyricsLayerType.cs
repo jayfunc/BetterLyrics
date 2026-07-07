@@ -1,9 +1,8 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum LyricsLayerType
 {
-    public enum LyricsLayerType
-    {
-        Primary,
-        Secondary,
-        Tertiary
-    }
+    Primary,
+    Secondary,
+    Tertiary
 }

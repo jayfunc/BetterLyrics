@@ -1,10 +1,9 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum TaskbarPlacement
 {
-    public enum TaskbarPlacement
-    {
-        Auto,
-        Left,
-        Right,
-        Center
-    }
+    Auto,
+    Left,
+    Right,
+    Center
 }

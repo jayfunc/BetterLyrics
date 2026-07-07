@@ -1,0 +1,294 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
+using Avalonia;
+using Avalonia.Media.TextFormatting;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Extensions;
+using BetterLyrics.Core.Helpers.Lyrics;
+using BetterLyrics.Core.Models.Settings;
+using BetterLyrics.Avalonia.Models.Lyrics;
+
+namespace BetterLyrics.Avalonia.Helpers.Lyrics.LyricsLayoutStrategy;
+
+public class VerticalLyricsLayoutStrategy : LyricsLayoutStrategyBase
+{
+    public override void MeasureAndArrange(
+        IList<RenderLyricsLine>? lines,
+        LyricsWindowStatus status,
+        AppSettings appSettings,
+        double canvasWidth,
+        double canvasHeight,
+        double lyricsWidth,
+        double lyricsHeight)
+    {
+        if (lines == null) return;
+
+        int originalFontSize, phoneticFontSize, translatedFontSize;
+        var style = status.LyricsStyleSettings;
+
+        if (style.IsDynamicLyricsFontSize)
+        {
+            var lyricsLayoutMetrics = LyricsLayoutHelper.CalculateLayout(canvasWidth, canvasHeight);
+
+            phoneticFontSize = (int)lyricsLayoutMetrics.TransliterationSize;
+            originalFontSize = (int)lyricsLayoutMetrics.MainLyricsSize;
+            translatedFontSize = (int)lyricsLayoutMetrics.TranslationSize;
+        }
+        else
+        {
+            phoneticFontSize = style.PhoneticLyricsFontSize;
+            originalFontSize = style.OriginalLyricsFontSize;
+            translatedFontSize = style.TranslatedLyricsFontSize;
+        }
+
+        var fontWeight = style.LyricsFontWeight;
+
+        double currentX = 0;
+        double currentY = 0;
+
+        foreach (var line in lines)
+        {
+            if (line == null) continue;
+
+            double actualHeight = 0;
+
+            var alignment = style.UseInternalLyricsAlignment
+                ? line.HorizontalAlignmentType ?? style.LyricsAlignmentType
+                : style.LyricsAlignmentType;
+
+            line.RecreateTextLayout(
+                appSettings.TranslationSettings.IsChineseRomanizationEnabled ||
+                appSettings.TranslationSettings.IsJapaneseRomanizationEnabled,
+                appSettings.TranslationSettings.IsTranslationEnabled,
+                phoneticFontSize, originalFontSize, translatedFontSize,
+                fontWeight,
+                style.LyricsCJKFontFamily, style.LyricsWesternFontFamily,
+                lyricsWidth, lyricsHeight,
+                alignment, style.AutoWrap,
+                style.LyricsLayoutOrientation
+            );
+
+            line.RecreateTextGeometry();
+            line.DisposeCaches();
+
+            var startX = currentX;
+
+            var validLayers = new List<(LyricsLayerConfig Type, TextLayout Layout, Rect Bounds)>();
+            foreach (var layer in style.LyricsLayerOrder)
+            {
+                var layout = layer.LyricsLayerType switch
+                {
+                    LyricsLayerType.Primary => line.PrimaryTextLayout,
+                    LyricsLayerType.Secondary => line.SecondaryTextLayout,
+                    LyricsLayerType.Tertiary => line.TertiaryTextLayout,
+                    _ => null
+                };
+
+                if (layout != null) validLayers.Add((layer, layout, new Rect(0, 0, layout.Width, layout.Height)));
+            }
+
+            for (var i = 0; i < validLayers.Count; i++)
+            {
+                var (layer, layout, bounds) = validLayers[i];
+                var type = layer.LyricsLayerType;
+
+                var w = bounds.Width;
+                var pos = new Vector2((float)(currentX - w - bounds.X), (float)(currentY - bounds.Y));
+
+                if (type == LyricsLayerType.Primary) line.PrimaryPosition = pos;
+                else if (type == LyricsLayerType.Secondary) line.SecondaryPosition = pos;
+                else if (type == LyricsLayerType.Tertiary) line.TertiaryPosition = pos;
+
+                currentX -= w;
+                actualHeight = Math.Max(actualHeight, bounds.Height);
+
+                if (i < validLayers.Count - 1)
+                    currentX -= w / layout.TextLines.Count * style.LyricsLineInnerSpacingFactor;
+            }
+
+            line.TopLeftPosition = new Vector2((float)currentX, (float)currentY);
+            line.BottomRightPosition = new Vector2((float)startX, (float)(currentY + actualHeight));
+
+            if (line.PrimaryTextLayout != null)
+                currentX -= line.PrimaryTextLayout.Width / line.PrimaryTextLayout.TextLines.Count *
+                            style.LyricsLineOverallSpacingFactor;
+
+            var offsetY = alignment switch
+            {
+                TextAlignmentType.Left => 0,
+                TextAlignmentType.Center => (lyricsHeight - actualHeight) / 2,
+                TextAlignmentType.Right => lyricsHeight - actualHeight,
+                _ => 0
+            };
+
+            line.TopLeftPosition = line.TopLeftPosition.AddY((float)offsetY);
+            line.BottomRightPosition = line.BottomRightPosition.AddY((float)offsetY);
+
+            if (line.TertiaryTextLayout != null)
+            {
+                var relativeY = alignment switch
+                {
+                    TextAlignmentType.Center => (actualHeight - line.TertiaryTextLayout.Height) / 2,
+                    TextAlignmentType.Right => actualHeight - line.TertiaryTextLayout.Height,
+                    _ => 0
+                };
+                line.TertiaryPosition = line.TertiaryPosition.AddY((float)(offsetY + relativeY));
+            }
+
+            if (line.PrimaryTextLayout != null)
+            {
+                var relativeY = alignment switch
+                {
+                    TextAlignmentType.Center => (actualHeight - line.PrimaryTextLayout.Height) / 2,
+                    TextAlignmentType.Right => actualHeight - line.PrimaryTextLayout.Height,
+                    _ => 0
+                };
+                line.PrimaryPosition = line.PrimaryPosition.AddY((float)(offsetY + relativeY));
+            }
+
+            if (line.SecondaryTextLayout != null)
+            {
+                var relativeY = alignment switch
+                {
+                    TextAlignmentType.Center => (actualHeight - line.SecondaryTextLayout.Height) / 2,
+                    TextAlignmentType.Right => actualHeight - line.SecondaryTextLayout.Height,
+                    _ => 0
+                };
+                line.SecondaryPosition = line.SecondaryPosition.AddY((float)(offsetY + relativeY));
+            }
+
+            double centerX = (line.TopLeftPosition.X + line.BottomRightPosition.X) / 2;
+
+            line.CenterPosition = alignment switch
+            {
+                TextAlignmentType.Left => new Vector2((float)centerX, 0),
+                TextAlignmentType.Center => new Vector2((float)centerX, (float)(lyricsHeight / 2)),
+                TextAlignmentType.Right => new Vector2((float)centerX, (float)lyricsHeight),
+                _ => line.CenterPosition
+            };
+
+            line.RecreateRenderChars(style.LyricsFontStrokeWidth);
+        }
+    }
+
+    public override double? CalculateTargetScrollOffset(IList<RenderLyricsLine>? lines, int playingLineIndex)
+    {
+        if (lines == null || lines.Count == 0) return null;
+        var currentLine = lines.ElementAtOrDefault(playingLineIndex);
+        if (currentLine?.PrimaryTextLayout == null) return null;
+
+        return -currentLine.CenterPosition.X;
+    }
+
+    public override (int Start, int End) CalculateVisibleRange(
+        IList<RenderLyricsLine>? lines,
+        double currentScrollOffset,
+        double lyricsX,
+        double lyricsWidth,
+        double playingLineOffsetFactor)
+    {
+        if (lines == null || lines.Count == 0) return (-1, -1);
+
+        var offset = currentScrollOffset + lyricsX + lyricsWidth * (1 - playingLineOffsetFactor);
+
+        var start = FindFirstVisibleLine(lines, offset, lyricsX, lyricsWidth);
+        var end = FindLastVisibleLine(lines, offset, lyricsX);
+
+        if (start != -1 && end == -1) end = lines.Count - 1;
+
+        return (start, end);
+    }
+
+    public override int FindMouseHoverLineIndex(
+        IList<RenderLyricsLine>? lines, bool isMouseInLyricsArea, Point mousePosition,
+        double currentScrollOffset, double lyricsX, double lyricsWidth, double playingLineOffsetFactor)
+    {
+        if (!isMouseInLyricsArea) return -1;
+        if (lines == null || lines.Count == 0) return -1;
+
+        var xOffset = currentScrollOffset + lyricsWidth * (1 - playingLineOffsetFactor);
+
+        int left = 0, right = lines.Count - 1, result = -1;
+        while (left <= right)
+        {
+            var mid = (left + right) / 2;
+            var line = lines[mid];
+            if (line.PrimaryTextLayout == null) break;
+            var lineLeftX = xOffset + line.TopLeftPosition.X;
+            if (lineLeftX <= mousePosition.X)
+            {
+                result = mid;
+                right = mid - 1;
+            }
+            else
+            {
+                left = mid + 1;
+            }
+        }
+
+        if (result != -1)
+        {
+            var line = lines[result];
+            double lineTopY = line.TopLeftPosition.Y;
+            double lineBottomY = line.BottomRightPosition.Y;
+            var lineRightX = xOffset + line.BottomRightPosition.X;
+            if (mousePosition.X > lineRightX || mousePosition.Y < lineTopY || mousePosition.Y > lineBottomY)
+                result = -1;
+        }
+
+        return result;
+    }
+
+    public override double CalculateActualSize(IList<RenderLyricsLine>? lines)
+    {
+        if (lines == null || lines.Count == 0) return 0;
+        return Math.Abs(lines.Last().TopLeftPosition.X);
+    }
+
+    private static int FindFirstVisibleLine(IList<RenderLyricsLine> lines, double offset, double lyricsX,
+        double lyricsWidth)
+    {
+        int left = 0, right = lines.Count - 1, result = -1;
+        while (left <= right)
+        {
+            var mid = (left + right) / 2;
+            var line = lines[mid];
+            var value = offset + line.TopLeftPosition.X;
+            if (value <= lyricsX + lyricsWidth)
+            {
+                result = mid;
+                right = mid - 1;
+            }
+            else
+            {
+                left = mid + 1;
+            }
+        }
+
+        return result;
+    }
+
+    private static int FindLastVisibleLine(IList<RenderLyricsLine> lines, double offset, double lyricsX)
+    {
+        int left = 0, right = lines.Count - 1, result = -1;
+        while (left <= right)
+        {
+            var mid = (left + right) / 2;
+            var line = lines[mid];
+            var value = offset + line.TopLeftPosition.X;
+            if (value <= lyricsX)
+            {
+                result = mid;
+                right = mid - 1;
+            }
+            else
+            {
+                left = mid + 1;
+            }
+        }
+
+        return result;
+    }
+}

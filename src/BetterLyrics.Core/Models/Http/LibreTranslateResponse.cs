@@ -1,10 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace BetterLyrics.Core.Models.Http
+namespace BetterLyrics.Core.Models.Http;
+
+public class LibreTranslateResponse
 {
-    public class LibreTranslateResponse
-    {
-        [JsonPropertyName("translatedText")]
-        public string TranslatedText { get; set; }
-    }
+    [JsonPropertyName("translatedText")] public string TranslatedText { get; set; }
 }

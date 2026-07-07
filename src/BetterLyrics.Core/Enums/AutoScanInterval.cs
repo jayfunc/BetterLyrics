@@ -1,11 +1,10 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum AutoScanInterval
 {
-    public enum AutoScanInterval
-    {
-        Disabled,
-        Every15Minutes,
-        EveryHour,
-        Every6Hours,
-        Daily
-    }
+    Disabled,
+    Every15Minutes,
+    EveryHour,
+    Every6Hours,
+    Daily
 }

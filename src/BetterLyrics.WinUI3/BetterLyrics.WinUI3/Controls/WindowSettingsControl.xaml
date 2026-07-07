@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
+
 <UserControl
     x:Class="BetterLyrics.WinUI3.Controls.WindowSettingsControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -15,11 +16,15 @@
             <Grid Style="{StaticResource SettingsGridStyle}">
                 <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
-                    <TextBlock x:Uid="AppSettingsControlGeneral" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                    <TextBlock x:Uid="AppSettingsControlGeneral"
+                               Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <!--  配置名称  -->
-                    <controls:SettingsCard x:Uid="SettingsPageConfigName" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8AC;}">
-                        <TextBox Text="{x:Bind LyricsWindowStatus.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" />
+                    <controls:SettingsCard x:Uid="SettingsPageConfigName"
+                                           HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8AC;}">
+                        <TextBox
+                            Text="{x:Bind LyricsWindowStatus.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            TextWrapping="Wrap" />
                     </controls:SettingsCard>
                     <!--  工作区  -->
                     <controls:SettingsExpander
@@ -29,7 +34,8 @@
                         IsExpanded="{x:Bind LyricsWindowStatus.IsWorkArea, Mode=OneWay}"
                         Visibility="{x:Bind LyricsWindowStatus.IsWorkArea, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}">
                         <controls:SettingsExpander.Items>
-                            <controls:SettingsCard x:Uid="SettingsPageWorkAreaHeight" IsEnabled="{x:Bind LyricsWindowStatus.IsWorkArea, Mode=OneWay}">
+                            <controls:SettingsCard x:Uid="SettingsPageWorkAreaHeight"
+                                                   IsEnabled="{x:Bind LyricsWindowStatus.IsWorkArea, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="64"
                                     Maximum="{x:Bind LyricsWindowStatus.MonitorBounds.Height, Mode=OneWay}"
@@ -38,16 +44,20 @@
                                     Value="{x:Bind LyricsWindowStatus.DockHeight, Mode=TwoWay}" />
                             </controls:SettingsCard>
 
-                            <controls:SettingsCard x:Uid="SettingsPageDockPlacement" IsEnabled="{x:Bind LyricsWindowStatus.IsWorkArea, Mode=OneWay}">
-                                <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.DockPlacement, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                            <controls:SettingsCard x:Uid="SettingsPageDockPlacement"
+                                                   IsEnabled="{x:Bind LyricsWindowStatus.IsWorkArea, Mode=OneWay}">
+                                <ComboBox
+                                    SelectedIndex="{x:Bind LyricsWindowStatus.DockPlacement, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                     <ComboBoxItem x:Uid="SettingsPageDockPlacementTop" />
                                     <ComboBoxItem x:Uid="SettingsPageDockPlacementBottom" />
                                 </ComboBox>
                             </controls:SettingsCard>
 
-                            <controls:SettingsCard x:Uid="SettingsPageDockMonitor" IsEnabled="{x:Bind LyricsWindowStatus.IsWorkArea, Mode=OneWay}">
+                            <controls:SettingsCard x:Uid="SettingsPageDockMonitor"
+                                                   IsEnabled="{x:Bind LyricsWindowStatus.IsWorkArea, Mode=OneWay}">
                                 <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <ComboBox ItemsSource="{x:Bind MonitorDeviceNames, Mode=OneWay}" SelectedItem="{x:Bind LyricsWindowStatus.MonitorDeviceName, Mode=TwoWay}" />
+                                    <ComboBox ItemsSource="{x:Bind MonitorDeviceNames, Mode=OneWay}"
+                                              SelectedItem="{x:Bind LyricsWindowStatus.MonitorDeviceName, Mode=TwoWay}" />
                                     <Button
                                         Click="RefreshMonitorButton_Click"
                                         Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
@@ -65,7 +75,8 @@
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xE8E3;}"
                         Visibility="{x:Bind LyricsWindowStatus.IsPinToTaskbar, Mode=TwoWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.TaskbarPlacement, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                        <ComboBox
+                            SelectedIndex="{x:Bind LyricsWindowStatus.TaskbarPlacement, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageAuto" />
                             <ComboBoxItem x:Uid="SettingsPageLeft" />
                             <ComboBoxItem x:Uid="SettingsPageRight" />
@@ -80,32 +91,39 @@
                         IsExpanded="True">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAlwaysOnTop, Mode=TwoWay}" />
                         <controls:SettingsExpander.Items>
-                            <controls:SettingsCard x:Uid="SettingsPageForceAlwaysOnTop" IsEnabled="{x:Bind LyricsWindowStatus.IsAlwaysOnTop, Mode=OneWay}">
+                            <controls:SettingsCard x:Uid="SettingsPageForceAlwaysOnTop"
+                                                   IsEnabled="{x:Bind LyricsWindowStatus.IsAlwaysOnTop, Mode=OneWay}">
                                 <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAlwaysOnTopPolling, Mode=TwoWay}" />
                             </controls:SettingsCard>
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
                     <!--  保持屏幕常亮  -->
-                    <controls:SettingsCard x:Uid="SettingsPageKeepScreenOpen" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEA80;}">
+                    <controls:SettingsCard x:Uid="SettingsPageKeepScreenOpen"
+                                           HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEA80;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsKeepScreenOpen, Mode=TwoWay}" />
                     </controls:SettingsCard>
                     <!--  在系统环境中显示  -->
-                    <controls:SettingsCard x:Uid="SettingsPageShowInSwitchers" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE7C4;}">
+                    <controls:SettingsCard x:Uid="SettingsPageShowInSwitchers"
+                                           HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE7C4;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsShownInSwitchers, Mode=TwoWay}" />
                     </controls:SettingsCard>
                     <!--  可拖动区域  -->
-                    <controls:SettingsCard x:Uid="SettingsPageDragArea" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEB41;}">
-                        <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.TitleBarArea, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                    <controls:SettingsCard x:Uid="SettingsPageDragArea"
+                                           HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEB41;}">
+                        <ComboBox
+                            SelectedIndex="{x:Bind LyricsWindowStatus.TitleBarArea, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageTitleBarAreaNone" />
                             <ComboBoxItem x:Uid="SettingsPageTitleBarAreaTop" />
                             <ComboBoxItem x:Uid="SettingsPageTitleBarAreaWhole" />
                         </ComboBox>
                     </controls:SettingsCard>
                     <!--  边缘羽化  -->
-                    <controls:SettingsExpander x:Uid="WindowSettingsControlEdgeFeathering" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE799;}">
+                    <controls:SettingsExpander x:Uid="WindowSettingsControlEdgeFeathering"
+                                               HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE799;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsEdgeFeatheringEnabled, Mode=TwoWay}" />
                         <controls:SettingsExpander.Items>
-                            <controls:SettingsCard x:Uid="WindowSettingsControlEdgeFeatheringLeft" IsEnabled="{x:Bind LyricsWindowStatus.IsEdgeFeatheringEnabled, Mode=OneWay}">
+                            <controls:SettingsCard x:Uid="WindowSettingsControlEdgeFeatheringLeft"
+                                                   IsEnabled="{x:Bind LyricsWindowStatus.IsEdgeFeatheringEnabled, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="0"
                                     Maximum="100"
@@ -113,7 +131,8 @@
                                     Unit="%"
                                     Value="{x:Bind LyricsWindowStatus.EdgeFeatheringLeft, Mode=TwoWay}" />
                             </controls:SettingsCard>
-                            <controls:SettingsCard x:Uid="WindowSettingsControlEdgeFeatheringTop" IsEnabled="{x:Bind LyricsWindowStatus.IsEdgeFeatheringEnabled, Mode=OneWay}">
+                            <controls:SettingsCard x:Uid="WindowSettingsControlEdgeFeatheringTop"
+                                                   IsEnabled="{x:Bind LyricsWindowStatus.IsEdgeFeatheringEnabled, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="0"
                                     Maximum="100"
@@ -121,7 +140,8 @@
                                     Unit="%"
                                     Value="{x:Bind LyricsWindowStatus.EdgeFeatheringTop, Mode=TwoWay}" />
                             </controls:SettingsCard>
-                            <controls:SettingsCard x:Uid="WindowSettingsControlEdgeFeatheringRight" IsEnabled="{x:Bind LyricsWindowStatus.IsEdgeFeatheringEnabled, Mode=OneWay}">
+                            <controls:SettingsCard x:Uid="WindowSettingsControlEdgeFeatheringRight"
+                                                   IsEnabled="{x:Bind LyricsWindowStatus.IsEdgeFeatheringEnabled, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="0"
                                     Maximum="100"
@@ -129,7 +149,8 @@
                                     Unit="%"
                                     Value="{x:Bind LyricsWindowStatus.EdgeFeatheringRight, Mode=TwoWay}" />
                             </controls:SettingsCard>
-                            <controls:SettingsCard x:Uid="WindowSettingsControlEdgeFeatheringBottom" IsEnabled="{x:Bind LyricsWindowStatus.IsEdgeFeatheringEnabled, Mode=OneWay}">
+                            <controls:SettingsCard x:Uid="WindowSettingsControlEdgeFeatheringBottom"
+                                                   IsEnabled="{x:Bind LyricsWindowStatus.IsEdgeFeatheringEnabled, Mode=OneWay}">
                                 <local:ExtendedSlider
                                     Default="0"
                                     Maximum="100"
@@ -140,21 +161,26 @@
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
 
-                    <controls:SettingsCard x:Uid="WindowSettingsControlSpoutOutput" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8AD;}">
+                    <controls:SettingsCard x:Uid="WindowSettingsControlSpoutOutput"
+                                           HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8AD;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsSpoutOutputEnabled, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
-                    <TextBlock x:Uid="WindowSettingsControlShowAndHide" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                    <TextBlock x:Uid="WindowSettingsControlShowAndHide"
+                               Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <!--  隐藏窗口（暂停时）  -->
-                    <controls:SettingsCard x:Uid="SettingsPageHideWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xED1A;}">
+                    <controls:SettingsCard x:Uid="SettingsPageHideWindow"
+                                           HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xED1A;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.HideWindowWhenPaused, Mode=TwoWay}" />
                     </controls:SettingsCard>
                     <!--  隐藏窗口（媒体会话为空时）  -->
-                    <controls:SettingsCard x:Uid="SettingsPageHideWindowWhenNullSession" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xED1A;}">
+                    <controls:SettingsCard x:Uid="SettingsPageHideWindowWhenNullSession"
+                                           HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xED1A;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.HideWindowWhenNullSession, Mode=TwoWay}" />
                     </controls:SettingsCard>
-                    <controls:SettingsCard x:Uid="SettingsPageHideWindowDelay" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xECC5;}">
+                    <controls:SettingsCard x:Uid="SettingsPageHideWindowDelay"
+                                           HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xECC5;}">
                         <local:ExtendedSlider
                             Default="250"
                             Frequency="50"
@@ -164,7 +190,8 @@
                             Value="{x:Bind LyricsWindowStatus.AutoShowOrHideWindowDelay, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
-                    <TextBlock x:Uid="WindowSettingsControlColor" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                    <TextBlock x:Uid="WindowSettingsControlColor"
+                               Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <!--  窗口主题色  -->
                     <controls:SettingsCard
@@ -172,7 +199,8 @@
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xE790;}"
                         IsEnabled="{x:Bind LyricsWindowStatus.IsWindowThemeAdjustable, Mode=OneWay}">
-                        <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.WindowTheme, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                        <ComboBox
+                            SelectedIndex="{x:Bind LyricsWindowStatus.WindowTheme, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageFollowSystem" />
                             <ComboBoxItem x:Uid="SettingsPageLight" />
                             <ComboBoxItem x:Uid="SettingsPageDark" />
@@ -190,7 +218,8 @@
                                 x:Uid="SettingsPageEnvColorSample"
                                 Header="Environment color sample mode"
                                 IsEnabled="{x:Bind LyricsWindowStatus.IsAdaptToEnvironment, Mode=OneWay}">
-                                <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.EnvironmentSampleMode, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                <ComboBox
+                                    SelectedIndex="{x:Bind LyricsWindowStatus.EnvironmentSampleMode, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                     <ComboBoxItem x:Uid="SettingsPageEnvColorSampleBelow" />
                                     <ComboBoxItem x:Uid="SettingsPageEnvColorSampleAbove" />
                                     <ComboBoxItem x:Uid="SettingsPageEnvColorSampleInner" />
@@ -209,35 +238,44 @@
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAdaptToAlbumArt, Mode=TwoWay}" />
                     </controls:SettingsCard>
                     <!--  取色风格  -->
-                    <controls:SettingsCard x:Uid="SettingsPagePaletteGeneratorType" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE771;}">
-                        <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.PaletteGeneratorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                    <controls:SettingsCard x:Uid="SettingsPagePaletteGeneratorType"
+                                           HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE771;}">
+                        <ComboBox
+                            SelectedIndex="{x:Bind LyricsWindowStatus.PaletteGeneratorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageAuto" />
                             <ComboBoxItem Content="OctTree" />
                             <ComboBoxItem Content="KMeans" />
                         </ComboBox>
                     </controls:SettingsCard>
                     <!--  取色结果  -->
-                    <controls:SettingsExpander x:Uid="WindowSettingsControlRealTimePalette" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE80A;}">
+                    <controls:SettingsExpander x:Uid="WindowSettingsControlRealTimePalette"
+                                               HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE80A;}">
                         <controls:SettingsExpander.Items>
                             <controls:SettingsCard x:Uid="WindowSettingsControlRealTimePaletteAccentColor1">
-                                <local:PaletteItemControl Color="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor1, Converter={StaticResource AppColorToColorConverter}, Mode=OneWay}" />
+                                <local:PaletteItemControl
+                                    Color="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor1, Converter={StaticResource AppColorToColorConverter}, Mode=OneWay}" />
                             </controls:SettingsCard>
                             <controls:SettingsCard x:Uid="WindowSettingsControlRealTimePaletteAccentColor2">
-                                <local:PaletteItemControl Color="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor2, Converter={StaticResource AppColorToColorConverter}, Mode=OneWay}" />
+                                <local:PaletteItemControl
+                                    Color="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor2, Converter={StaticResource AppColorToColorConverter}, Mode=OneWay}" />
                             </controls:SettingsCard>
                             <controls:SettingsCard x:Uid="WindowSettingsControlRealTimePaletteAccentColor3">
-                                <local:PaletteItemControl Color="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor3, Converter={StaticResource AppColorToColorConverter}, Mode=OneWay}" />
+                                <local:PaletteItemControl
+                                    Color="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor3, Converter={StaticResource AppColorToColorConverter}, Mode=OneWay}" />
                             </controls:SettingsCard>
                             <controls:SettingsCard x:Uid="WindowSettingsControlRealTimePaletteAccentColor4">
-                                <local:PaletteItemControl Color="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor4, Converter={StaticResource AppColorToColorConverter}, Mode=OneWay}" />
+                                <local:PaletteItemControl
+                                    Color="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor4, Converter={StaticResource AppColorToColorConverter}, Mode=OneWay}" />
                             </controls:SettingsCard>
                             <controls:SettingsCard x:Uid="WindowSettingsControlRealTimePaletteUnderlayColor">
-                                <local:PaletteItemControl Color="{x:Bind LyricsWindowStatus.WindowPalette.UnderlayColor, Converter={StaticResource AppColorToColorConverter}, Mode=OneWay}" />
+                                <local:PaletteItemControl
+                                    Color="{x:Bind LyricsWindowStatus.WindowPalette.UnderlayColor, Converter={StaticResource AppColorToColorConverter}, Mode=OneWay}" />
                             </controls:SettingsCard>
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
 
-                    <TextBlock x:Uid="WindowSettingsControlLockAndUnlock" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                    <TextBlock x:Uid="WindowSettingsControlLockAndUnlock"
+                               Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <!--  隐藏解锁键  -->
                     <controls:SettingsCard
@@ -256,7 +294,8 @@
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsBorderlessWhenLocked, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
-                    <TextBlock x:Uid="WindowSettingsControlNowPlayingBar" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                    <TextBlock x:Uid="WindowSettingsControlNowPlayingBar"
+                               Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <!--  保持控制栏可交互  -->
                     <controls:SettingsCard
@@ -264,21 +303,26 @@
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xE76F;}"
                         IsEnabled="{x:Bind LyricsWindowStatus.IsWallpaper, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
-                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.KeepNowPlayingBarInteractiveWhenLocked, Mode=TwoWay}" />
+                        <ToggleSwitch
+                            IsOn="{x:Bind LyricsWindowStatus.KeepNowPlayingBarInteractiveWhenLocked, Mode=TwoWay}" />
                     </controls:SettingsCard>
                     <!--  进度条歌词预览  -->
-                    <controls:SettingsCard x:Uid="SettingsPageKeepNowPlayingBarLyricsPreview" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8C5;}">
+                    <controls:SettingsCard x:Uid="SettingsPageKeepNowPlayingBarLyricsPreview"
+                                           HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8C5;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsTimelineLyricsPreviewEnabled, Mode=TwoWay}" />
                     </controls:SettingsCard>
                     <!--  总是收起至小白条  -->
-                    <controls:SettingsCard x:Uid="WindowSettingsControlAlwaysHideNowPlayingBar" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE70A;}">
+                    <controls:SettingsCard x:Uid="WindowSettingsControlAlwaysHideNowPlayingBar"
+                                           HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE70A;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAlwaysHidePlayingBar, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
-                    <TextBlock x:Uid="WindowSettingsControlDebug" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                    <TextBlock x:Uid="WindowSettingsControlDebug"
+                               Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <controls:SettingsCard x:Uid="SettingsPageFPS">
-                        <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.FPS, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                        <ComboBox
+                            SelectedIndex="{x:Bind LyricsWindowStatus.FPS, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem Content="60 Hz" />
                             <ComboBoxItem Content="75 Hz" />
                             <ComboBoxItem Content="120 Hz" />
@@ -301,15 +345,24 @@
                         HorizontalContentAlignment="Stretch"
                         Header="Status">
                         <StackPanel>
-                            <local:PropertyRow Header="IsOverlayInputHelperRunning" Value="{x:Bind LyricsWindowStatus.IsOverlayInputHelperRunning, Mode=OneWay}" />
-                            <local:PropertyRow Header="IsAlwaysOnTopPollingTimerRunning" Value="{x:Bind LyricsWindowStatus.IsAlwaysOnTopPollingTimerRunning, Mode=OneWay}" />
-                            <local:PropertyRow Header="IsUnderlayColorTimerRunning" Value="{x:Bind LyricsWindowStatus.IsUnderlayColorTimerRunning, Mode=OneWay}" />
-                            <local:PropertyRow Header="WindowStatus" Value="{x:Bind LyricsWindowStatus.WindowStatus, Mode=OneWay}" />
-                            <local:PropertyRow Header="WindowTheme" Value="{Binding ActualTheme, Converter={StaticResource EnumToIntConverter}, Mode=OneWay, RelativeSource={RelativeSource Mode=Self}}" />
-                            <local:PropertyRow Header="WindowBounds" Value="{x:Bind LyricsWindowStatus.WindowBounds, Mode=OneWay}" />
-                            <local:PropertyRow Header="MonitorBounds" Value="{x:Bind LyricsWindowStatus.MonitorBounds, Mode=OneWay}" />
-                            <local:PropertyRow Header="IsFullscreen" Value="{x:Bind LyricsWindowStatus.IsFullscreen, Mode=OneWay}" />
-                            <local:PropertyRow Header="IsMaximized" Value="{x:Bind LyricsWindowStatus.IsMaximized, Mode=OneWay}" />
+                            <local:PropertyRow Header="IsOverlayInputHelperRunning"
+                                               Value="{x:Bind LyricsWindowStatus.IsOverlayInputHelperRunning, Mode=OneWay}" />
+                            <local:PropertyRow Header="IsAlwaysOnTopPollingTimerRunning"
+                                               Value="{x:Bind LyricsWindowStatus.IsAlwaysOnTopPollingTimerRunning, Mode=OneWay}" />
+                            <local:PropertyRow Header="IsUnderlayColorTimerRunning"
+                                               Value="{x:Bind LyricsWindowStatus.IsUnderlayColorTimerRunning, Mode=OneWay}" />
+                            <local:PropertyRow Header="WindowStatus"
+                                               Value="{x:Bind LyricsWindowStatus.WindowStatus, Mode=OneWay}" />
+                            <local:PropertyRow Header="WindowTheme"
+                                               Value="{Binding ActualTheme, Converter={StaticResource EnumToIntConverter}, Mode=OneWay, RelativeSource={RelativeSource Mode=Self}}" />
+                            <local:PropertyRow Header="WindowBounds"
+                                               Value="{x:Bind LyricsWindowStatus.WindowBounds, Mode=OneWay}" />
+                            <local:PropertyRow Header="MonitorBounds"
+                                               Value="{x:Bind LyricsWindowStatus.MonitorBounds, Mode=OneWay}" />
+                            <local:PropertyRow Header="IsFullscreen"
+                                               Value="{x:Bind LyricsWindowStatus.IsFullscreen, Mode=OneWay}" />
+                            <local:PropertyRow Header="IsMaximized"
+                                               Value="{x:Bind LyricsWindowStatus.IsMaximized, Mode=OneWay}" />
                         </StackPanel>
                     </Expander>
 

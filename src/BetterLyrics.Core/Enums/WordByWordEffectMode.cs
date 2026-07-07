@@ -1,9 +1,8 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum WordByWordEffectMode
 {
-    public enum WordByWordEffectMode
-    {
-        Auto,
-        Never,
-        Always,
-    }
+    Auto,
+    Never,
+    Always
 }

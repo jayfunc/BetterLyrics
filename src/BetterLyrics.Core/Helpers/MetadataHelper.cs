@@ -3,12 +3,11 @@
 using BetterLyrics.Core.Interfaces.Providers;
 using CommunityToolkit.Mvvm.DependencyInjection;
 
-namespace BetterLyrics.Core.Helpers
-{
-    public static class MetadataHelper
-    {
-        private static IPlatformProvider _platformProvider = Ioc.Default.GetRequiredService<IPlatformProvider>();
+namespace BetterLyrics.Core.Helpers;
 
-        public static string AppVersion => _platformProvider.AppVersion;
-    }
+public static class MetadataHelper
+{
+    private static readonly IPlatformProvider _platformProvider = Ioc.Default.GetRequiredService<IPlatformProvider>();
+
+    public static string AppVersion => _platformProvider.AppVersion;
 }

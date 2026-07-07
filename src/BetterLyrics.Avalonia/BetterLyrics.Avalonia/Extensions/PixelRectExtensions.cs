@@ -1,13 +1,15 @@
 ﻿using Avalonia;
 using BetterLyrics.Core.Models.Domain;
 
-namespace BetterLyrics.Avalonia.Extensions
+namespace BetterLyrics.Avalonia.Extensions;
+
+public static class PixelRectExtensions
 {
-    public static class PixelRectExtensions
+    extension(PixelRect pixelRect)
     {
-        extension(PixelRect pixelRect)
+        public AppRect ToAppRect()
         {
-            public AppRect ToAppRect() => new AppRect(pixelRect.X, pixelRect.Y, pixelRect.Width, pixelRect.Height);
+            return new AppRect(pixelRect.X, pixelRect.Y, pixelRect.Width, pixelRect.Height);
         }
     }
 }

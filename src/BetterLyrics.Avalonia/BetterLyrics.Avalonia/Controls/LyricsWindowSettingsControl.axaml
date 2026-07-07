@@ -1,0 +1,310 @@
+<UserControl
+    x:Class="BetterLyrics.Avalonia.Controls.LyricsWindowSettingsControl"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:constants="using:BetterLyrics.Core.Constants"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:enums="using:BetterLyrics.Core.Enums"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:settings="using:BetterLyrics.Core.Models.Settings"
+    xmlns:uc="using:BetterLyrics.Avalonia.Controls"
+    xmlns:ui="using:FluentAvalonia.UI.Controls"
+    xmlns:vm="using:BetterLyrics.Core.ViewModels"
+    xmlns:strings="using:BetterLyrics.Avalonia.Strings"
+    Loaded="UserControl_Loaded"
+    x:Name="RootControl"
+    x:DataType="vm:LyricsWindowSettingsControlViewModel"
+    mc:Ignorable="d">
+
+    <Grid>
+
+        <Grid>
+            <Grid Margin="0,0,0,20" RowDefinitions="Auto,*,Auto">
+                <Grid.Styles>
+                    <Style Selector="Grid">
+                        <Setter Property="RowSpacing" Value="4" />
+                    </Style>
+                </Grid.Styles>
+
+                <Grid Grid.Row="0" Margin="36,0" ColumnDefinitions="Auto,*,Auto">
+                    <TextBlock
+                        Text="{x:Static strings:Resources.SettingsPageRecordedWindowStatus_Text}"
+                        Grid.Column="0"
+                        Classes="SettingsSectionHeaderTextBlockStyle" />
+                    <Grid
+                        Grid.Column="2"
+                        Margin="0,30,0,0"
+                        ColumnDefinitions="Auto,Auto">
+                        <Grid.Styles>
+                            <Style Selector="Grid">
+                                <Setter Property="ColumnSpacing" Value="8" />
+                            </Style>
+                        </Grid.Styles>
+                        <TextBlock
+                            Text="{x:Static strings:Resources.SettingsPageMultiNowPlayingWindows_Text}"
+                            Grid.Column="0"
+                            Margin="0,0,0,2"
+                            VerticalAlignment="Center"
+                            TextWrapping="Wrap" />
+                        <CheckBox
+                            Grid.Column="1"
+                            MinWidth="0"
+                            IsChecked="{Binding AppSettings.GeneralSettings.MultiNowPlayingWindowMode, Mode=TwoWay}" />
+                    </Grid>
+                </Grid>
+
+                <ScrollViewer Grid.Row="1">
+                    <ListBox
+                        x:Name="WindowStatusListView"
+                        Margin="36,0"
+                        HorizontalAlignment="Center"
+                        CornerRadius="4"
+                        Classes="ListViewCardStyle"
+                        ItemsSource="{Binding AppSettings.WindowBoundsRecords, Mode=OneWay}"
+                        SelectionMode="Single"
+                        Background="Transparent">
+                        <ListBox.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Orientation="Horizontal" />
+                            </ItemsPanelTemplate>
+                        </ListBox.ItemsPanel>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="settings:LyricsWindowStatus">
+                                <Grid>
+                                    <Border Padding="6">
+                                        <Grid
+                                            ColumnDefinitions="Auto,Auto,*"
+                                            RowDefinitions="Auto,Auto,Auto">
+                                            <Grid.Styles>
+                                                <Style Selector="Grid">
+                                                    <Setter Property="ColumnSpacing" Value="12" />
+                                                    <Setter Property="RowSpacing" Value="6" />
+                                                </Style>
+                                            </Grid.Styles>
+
+                                            <ui:FAFontIcon
+                                                Grid.RowSpan="3"
+                                                FontFamily="Segoe UI Symbol"
+                                                FontSize="16"
+                                                Glyph="&#x283F;" />
+
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                Grid.ColumnSpan="2"
+                                                Text="{Binding Name, Mode=OneWay}"
+                                                TextAlignment="Center" />
+
+                                            <uc:DemoWindowGrid
+                                                Grid.Row="1"
+                                                Grid.Column="1"
+                                                Grid.ColumnSpan="2"
+                                                LyricsWindowStatus="{Binding}" />
+
+                                            <TextBlock
+                                                Grid.Row="2"
+                                                Grid.Column="1"
+                                                VerticalAlignment="Center"
+                                                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                TextWrapping="Wrap"
+                                                FontSize="12">
+                                                <Run Text="{Binding MonitorDeviceName, Mode=OneWay}" />
+                                                <Run Text="[" />
+                                                <Run Text="{Binding MonitorBounds.Width, Mode=OneWay}" />
+                                                <Run Text="×" />
+                                                <Run Text="{Binding MonitorBounds.Height, Mode=OneWay}" />
+                                                <Run Text="]" />
+                                            </TextBlock>
+
+                                            <StackPanel
+                                                Grid.Row="2"
+                                                Grid.Column="2"
+                                                HorizontalAlignment="Right"
+                                                Orientation="Horizontal"
+                                                Spacing="6">
+                                                <Button
+                                                    Padding="6"
+                                                    Click="ConfigButton_Click"
+                                                    ToolTip.Tip="{x:Static strings:Resources.LyricsWindowSettingsControlLyricsWindowConfig_Text}">
+                                                    <ui:FAFontIcon FontFamily="Segoe Fluent Icons" FontSize="16" Glyph="&#xE90F;" />
+                                                </Button>
+                                                <Button Padding="6">
+                                                    <ui:FAFontIcon FontFamily="Segoe Fluent Icons" FontSize="16" Glyph="&#xE712;" />
+                                                    <Button.Flyout>
+                                                        <ui:FAMenuFlyout Opened="MenuFlyout_Opened">
+                                                            <ui:FAMenuFlyoutItem Text="{x:Static strings:Resources.SettingsPageCreateFromCurrent_Text}" Click="CopyMenuFlyoutItem_Click" />
+                                                            <ui:FAMenuFlyoutSubItem Text="{x:Static strings:Resources.SettingsPageCreateFromCurrentAndTransformTo_Text}">
+                                                                <ui:FAMenuFlyoutItem Text="{x:Static strings:Resources.SettingsPageStandardMode_Text}" Click="CopyAndTransformMenuFlyoutItem_Click" Tag="StandardMode" />
+                                                                <ui:FAMenuFlyoutItem Text="{x:Static strings:Resources.SettingsPageDesktopMode_Text}" Click="CopyAndTransformMenuFlyoutItem_Click" Tag="DesktopMode" />
+                                                                <ui:FAMenuFlyoutItem Text="{x:Static strings:Resources.SettingsPageDockedMode_Text}" Click="CopyAndTransformMenuFlyoutItem_Click" Tag="DockedMode" />
+                                                                <ui:FAMenuFlyoutItem Text="{x:Static strings:Resources.SettingsPageFullscreenMode_Text}" Click="CopyAndTransformMenuFlyoutItem_Click" Tag="FullscreenMode" />
+                                                                <ui:FAMenuFlyoutItem Text="{x:Static strings:Resources.SettingsPageNarrowMode_Text}" Click="CopyAndTransformMenuFlyoutItem_Click" Tag="NarrowMode" />
+                                                                <ui:FAMenuFlyoutItem Text="{x:Static strings:Resources.SettingsPageTaskbarMode_Text}" Click="CopyAndTransformMenuFlyoutItem_Click" Tag="TaskbarMode" />
+                                                                <ui:FAMenuFlyoutItem Text="{x:Static strings:Resources.SettingsPageWallpaperMode_Text}" Click="CopyAndTransformMenuFlyoutItem_Click" Tag="WallpaperMode" />
+                                                            </ui:FAMenuFlyoutSubItem>
+                                                            <ui:FAMenuFlyoutItem Text="{x:Static strings:Resources.LyricsWindowSettingsControlShare_Text}" Click="ShareMenuFlyoutItem_Click" />
+                                                            <ui:FAMenuFlyoutItem Text="{x:Static strings:Resources.SettingsPageDelete_Text}"
+                                                                      Click="DeleteMenuFlyoutItem_Click"
+                                                                      IsEnabled="{Binding !IsDefault, Mode=OneWay}" />
+                                                            <ui:FAMenuFlyoutItem x:Name="MoveToMonitorMenuItem" Text="{x:Static strings:Resources.SLyricsWindowSettingsControlShareMoveToMonitor_Text}" />
+                                                        </ui:FAMenuFlyout>
+                                                    </Button.Flyout>
+                                                </Button>
+                                            </StackPanel>
+
+                                        </Grid>
+                                    </Border>
+                                    <uc:DragIndicator Width="32" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </ScrollViewer>
+
+                <Grid
+                    Grid.Row="2"
+                    Margin="36,12,36,0"
+                    ColumnDefinitions="Auto,*,Auto,Auto,Auto">
+                    <Grid.Styles>
+                        <Style Selector="Grid">
+                            <Setter Property="ColumnSpacing" Value="4" />
+                        </Style>
+                    </Grid.Styles>
+
+                    <Button Grid.Column="0" Click="EmbeddedConfigButton_Click">
+                        <TextBlock Text="{x:Static strings:Resources.LyricsWindowSettingsControlConfigMusicGalleryLyrics_Text}" TextWrapping="Wrap" />
+                    </Button>
+
+                    <uc:ExternalLinkButton
+                        Content="{x:Static strings:Resources.SettingsPageShareHub_Content}"
+                        Grid.Column="2"
+                        NavigateUri="{x:Static constants:Link.ModesStore}" />
+
+                    <Button Content="{x:Static strings:Resources.SettingsPageCreateFromTemplates_Content}" Grid.Column="3">
+                        <Button.Flyout>
+                            <ui:FAMenuFlyout>
+                                <ui:FAMenuFlyoutItem Text="{x:Static strings:Resources.SettingsPageStandardMode_Text}"
+                                          Command="{Binding CreateLyricsWindowStatusCommand}"
+                                          CommandParameter="{x:Static enums:LyricsWindowMode.Standard}" />
+                                <ui:FAMenuFlyoutItem Text="{x:Static strings:Resources.SettingsPageDesktopMode_Text}"
+                                          Command="{Binding CreateLyricsWindowStatusCommand}"
+                                          CommandParameter="{x:Static enums:LyricsWindowMode.Desktop}" />
+                                <ui:FAMenuFlyoutItem Text="{x:Static strings:Resources.SettingsPageDockedMode_Text}"
+                                          Command="{Binding CreateLyricsWindowStatusCommand}"
+                                          CommandParameter="{x:Static enums:LyricsWindowMode.Docked}" />
+                                <ui:FAMenuFlyoutItem Text="{x:Static strings:Resources.SettingsPageFullscreenMode_Text}"
+                                          Command="{Binding CreateLyricsWindowStatusCommand}"
+                                          CommandParameter="{x:Static enums:LyricsWindowMode.Fullscreen}" />
+                                <ui:FAMenuFlyoutItem Text="{x:Static strings:Resources.SettingsPageNarrowMode_Text}"
+                                          Command="{Binding CreateLyricsWindowStatusCommand}"
+                                          CommandParameter="{x:Static enums:LyricsWindowMode.Narrow}" />
+                                <ui:FAMenuFlyoutItem Text="{x:Static strings:Resources.SettingsPageTaskbarMode_Text}"
+                                          Command="{Binding CreateLyricsWindowStatusCommand}"
+                                          CommandParameter="{x:Static enums:LyricsWindowMode.Taskbar}" />
+                                <ui:FAMenuFlyoutItem Text="{x:Static strings:Resources.SettingsPageWallpaperMode_Text}"
+                                          Command="{Binding CreateLyricsWindowStatusCommand}"
+                                          CommandParameter="{x:Static enums:LyricsWindowMode.Wallpaper}" />
+                            </ui:FAMenuFlyout>
+                        </Button.Flyout>
+                    </Button>
+
+                    <Button
+                        Content="{x:Static strings:Resources.SettingsPageImport_Content}"
+                        Grid.Column="4"
+                        Click="ImportButton_Click" />
+
+                </Grid>
+
+            </Grid>
+        </Grid>
+
+        <uc:FloatSidePanel x:Name="ConfigPanel">
+            <Grid RowDefinitions="Auto,*">
+
+                <Border Padding="36,0">
+                    <Grid
+                        Grid.Row="0"
+                        Classes="SettingsGridStyle"
+                        RowDefinitions="Auto,*">
+                        <Grid.Styles>
+                            <Style Selector="Grid">
+                                <Setter Property="RowSpacing" Value="{DynamicResource SettingsCardSpacing}" />
+                            </Style>
+                        </Grid.Styles>
+
+                        <Grid Grid.Row="0" ColumnDefinitions="Auto,*,Auto">
+                            <TextBlock
+                                Grid.Column="0"
+                                Classes="SettingsSectionHeaderTextBlockStyle"
+                                Text="{Binding #RootControl.LyricsWindowStatus.Name, Mode=OneWay}" />
+                            <Button
+                                Grid.Column="2"
+                                Margin="0,24,0,0"
+                                Click="CloseConfigPanelButton_Click"
+                                Classes="accent">
+                                <ui:FAFontIcon FontSize="16" FontFamily="Segoe Fluent Icons" Glyph="&#xE70D;" />
+                            </Button>
+                        </Grid>
+
+                        <ui:FANavigationView
+                            x:Name="ConfigNavView"
+                            Grid.Row="1"
+                            IsBackButtonVisible="False"
+                            IsBackEnabled="False"
+                            IsSettingsVisible="False"
+                            PaneDisplayMode="Top"
+                            SelectionChanged="ConfigNavView_SelectionChanged">
+                            <ui:FANavigationView.MenuItems>
+                                <ui:FANavigationViewItem x:Name="WindowSegmentedItem" Tag="Window" Content="{x:Static strings:Resources.AppSettingsControlGeneral_Text}" />
+                                <ui:FANavigationViewItem Tag="Layout" Content="{x:Static strings:Resources.SettingsPageLayout_Text}" />
+                                <ui:FANavigationViewItem Tag="AlbumArt" Content="{x:Static strings:Resources.SettingsPageAlbumArt_Text}" />
+                                <ui:FANavigationViewItem Tag="LyricsStyle" Content="{x:Static strings:Resources.SettingsPageLyricsStyle_Text}" />
+                                <ui:FANavigationViewItem Tag="LyricsEffect" Content="{x:Static strings:Resources.SettingsPageLyricsEffect_Text}" />
+                                <ui:FANavigationViewItem Tag="LyricsBackground" Content="{x:Static strings:Resources.SettingsPageBackgroundOverlay_Text}" />
+                            </ui:FANavigationView.MenuItems>
+                        </ui:FANavigationView>
+                    </Grid>
+                </Border>
+
+                <uc:SwitchPresenter Grid.Row="1" Value="{Binding SelectorBarSelectedItemTag, Mode=OneWay}">
+                    <uc:Case Value="Window">
+                        <DataTemplate>
+                            <!--<uc:WindowSettingsControl LyricsWindowStatus="{Binding #RootControl.LyricsWindowStatus}" />-->
+                        </DataTemplate>
+                    </uc:Case>
+
+                    <uc:Case Value="Layout">
+                        <DataTemplate>
+                            <!--<uc:LayoutSettingsControl LayoutProfiles="{Binding AppSettings.LayoutProfiles}" LyricsWindowStatus="{Binding #RootControl.LyricsWindowStatus}" />-->
+                        </DataTemplate>
+                    </uc:Case>
+
+                    <uc:Case Value="AlbumArt">
+                        <DataTemplate>
+                            <!--<uc:AlbumArtAreaSettingsControl LyricsWindowStatus="{Binding #RootControl.LyricsWindowStatus}" />-->
+                        </DataTemplate>
+                    </uc:Case>
+
+                    <uc:Case Value="LyricsStyle">
+                        <DataTemplate>
+                            <!--<uc:LyricsStyleSettingsControl LyricsWindowStatus="{Binding #RootControl.LyricsWindowStatus}" />-->
+                        </DataTemplate>
+                    </uc:Case>
+
+                    <uc:Case Value="LyricsEffect">
+                        <DataTemplate>
+                            <!--<uc:LyricsEffectSettingsControl LyricsEffectSettings="{Binding #RootControl.LyricsWindowStatus.LyricsEffectSettings}" />-->
+                        </DataTemplate>
+                    </uc:Case>
+
+                    <uc:Case Value="LyricsBackground">
+                        <DataTemplate>
+                            <!--<uc:LyricsBackgroundSettingsControl LyricsBackgroundSettings="{Binding #RootControl.LyricsWindowStatus.LyricsBackgroundSettings}" />-->
+                        </DataTemplate>
+                    </uc:Case>
+                </uc:SwitchPresenter>
+
+            </Grid>
+        </uc:FloatSidePanel>
+
+    </Grid>
+</UserControl>

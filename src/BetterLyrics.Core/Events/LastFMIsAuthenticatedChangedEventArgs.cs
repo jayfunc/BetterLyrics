@@ -1,11 +1,11 @@
-﻿namespace BetterLyrics.Core.Events
+﻿namespace BetterLyrics.Core.Events;
+
+public class LastFMIsAuthenticatedChangedEventArgs : EventArgs
 {
-    public class LastFMIsAuthenticatedChangedEventArgs : EventArgs
+    public LastFMIsAuthenticatedChangedEventArgs(bool isAuthenticated)
     {
-        public bool IsAuthenticated { get; set; }
-        public LastFMIsAuthenticatedChangedEventArgs(bool isAuthenticated)
-        {
-            IsAuthenticated = isAuthenticated;
-        }
+        IsAuthenticated = isAuthenticated;
     }
+
+    public bool IsAuthenticated { get; set; }
 }

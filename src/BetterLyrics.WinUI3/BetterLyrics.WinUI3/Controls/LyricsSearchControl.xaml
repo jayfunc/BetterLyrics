@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
+
 <UserControl
     x:Class="BetterLyrics.WinUI3.Controls.LyricsSearchControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -7,9 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
-    xmlns:lyricsmodels="using:BetterLyrics.WinUI3.Models.Lyrics"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:entities="using:BetterLyrics.Core.Models.Entities"
     xmlns:lyrics="using:BetterLyrics.Core.Models.Lyrics"
@@ -32,7 +31,8 @@
                     <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock x:Uid="LyricsSearchControlSongInfoMapping" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                            <TextBlock x:Uid="LyricsSearchControlSongInfoMapping"
+                                       Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
                             <Button
                                 Margin="6,26,0,0"
                                 Command="{x:Bind ViewModel.CopySearchLinkCommand}"
@@ -49,7 +49,8 @@
                         <Grid Padding="16" Style="{StaticResource CardGridStyle}">
                             <StackPanel Spacing="6">
 
-                                <local:PropertyRow x:Uid="LyricsSearchControlTitle" Value="{x:Bind ViewModel.MappedSongSearchQuery.OriginalTitle, Mode=OneWay}" />
+                                <local:PropertyRow x:Uid="LyricsSearchControlTitle"
+                                                   Value="{x:Bind ViewModel.MappedSongSearchQuery.OriginalTitle, Mode=OneWay}" />
 
                                 <Grid ColumnSpacing="6">
                                     <Grid.ColumnDefinitions>
@@ -97,7 +98,8 @@
                         <Grid Padding="16" Style="{StaticResource CardGridStyle}">
                             <StackPanel Spacing="6">
 
-                                <local:PropertyRow x:Uid="LyricsSearchControlArtist" Value="{x:Bind ViewModel.MappedSongSearchQuery.OriginalArtist, Mode=OneWay}" />
+                                <local:PropertyRow x:Uid="LyricsSearchControlArtist"
+                                                   Value="{x:Bind ViewModel.MappedSongSearchQuery.OriginalArtist, Mode=OneWay}" />
 
                                 <Grid ColumnSpacing="6">
                                     <Grid.ColumnDefinitions>
@@ -145,7 +147,8 @@
                         <Grid Padding="16" Style="{StaticResource CardGridStyle}">
                             <StackPanel Spacing="6">
 
-                                <local:PropertyRow x:Uid="LyricsSearchControlAlbum" Value="{x:Bind ViewModel.MappedSongSearchQuery.OriginalAlbum, Mode=OneWay}" />
+                                <local:PropertyRow x:Uid="LyricsSearchControlAlbum"
+                                                   Value="{x:Bind ViewModel.MappedSongSearchQuery.OriginalAlbum, Mode=OneWay}" />
 
                                 <Grid ColumnSpacing="6">
                                     <Grid.ColumnDefinitions>
@@ -192,7 +195,8 @@
                         </Grid>
 
                         <Grid Padding="16" Style="{StaticResource CardGridStyle}">
-                            <local:PropertyRow x:Uid="LyricsSearchControlDurauion" Value="{x:Bind ViewModel.GSMTCService.CurrentSongInfo.Duration, Converter={StaticResource SecondsToFormattedTimeConverter}, TargetNullValue=N/A, Mode=OneWay}" />
+                            <local:PropertyRow x:Uid="LyricsSearchControlDurauion"
+                                               Value="{x:Bind ViewModel.GsmtcService.CurrentSongInfo.Duration, Converter={StaticResource SecondsToFormattedTimeConverter}, TargetNullValue=N/A, Mode=OneWay}" />
                         </Grid>
 
                         <Button
@@ -203,11 +207,13 @@
                             Style="{ThemeResource AccentButtonStyle}" />
 
                         <controls:SettingsCard x:Uid="LyricsSearchControlMarkAsPureMusic">
-                            <CheckBox MinWidth="20" IsChecked="{x:Bind ViewModel.MappedSongSearchQuery.IsMarkedAsPureMusic, Mode=TwoWay}" />
+                            <CheckBox MinWidth="20"
+                                      IsChecked="{x:Bind ViewModel.MappedSongSearchQuery.IsMarkedAsPureMusic, Mode=TwoWay}" />
                         </controls:SettingsCard>
 
                         <controls:SettingsCard x:Uid="LyricsSearchControlIgnoreCache">
-                            <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.IgnoreCacheWhenSearching, Mode=TwoWay}" />
+                            <ToggleSwitch
+                                IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.IgnoreCacheWhenSearching, Mode=TwoWay}" />
                         </controls:SettingsCard>
 
                     </StackPanel>
@@ -251,11 +257,16 @@
                                             Visibility="{x:Bind IsPlugin, Converter={StaticResource BoolToVisibilityConverter}}" />
                                     </Grid>
                                     <!--  Lyrics search result  -->
-                                    <StackPanel Grid.Row="1" Opacity="{x:Bind IsFound, Converter={StaticResource BoolToOpacityConverter}, Mode=OneWay}">
-                                        <local:PropertyRow x:Uid="SettingsPageSongTitle" Value="{x:Bind Title, TargetNullValue=N/A, Mode=OneWay}" />
-                                        <local:PropertyRow x:Uid="SettingsPageArtist" Value="{x:Bind Artist, TargetNullValue=N/A, Mode=OneWay}" />
-                                        <local:PropertyRow x:Uid="SettingsPageAlbum" Value="{x:Bind Album, TargetNullValue=N/A, Mode=OneWay}" />
-                                        <local:PropertyRow x:Uid="LyricsSearchControlDurauion" Value="{x:Bind Duration, Converter={StaticResource SecondsToFormattedTimeConverter}, TargetNullValue=N/A, Mode=OneWay}" />
+                                    <StackPanel Grid.Row="1"
+                                                Opacity="{x:Bind IsFound, Converter={StaticResource BoolToOpacityConverter}, Mode=OneWay}">
+                                        <local:PropertyRow x:Uid="SettingsPageSongTitle"
+                                                           Value="{x:Bind Title, TargetNullValue=N/A, Mode=OneWay}" />
+                                        <local:PropertyRow x:Uid="SettingsPageArtist"
+                                                           Value="{x:Bind Artist, TargetNullValue=N/A, Mode=OneWay}" />
+                                        <local:PropertyRow x:Uid="SettingsPageAlbum"
+                                                           Value="{x:Bind Album, TargetNullValue=N/A, Mode=OneWay}" />
+                                        <local:PropertyRow x:Uid="LyricsSearchControlDurauion"
+                                                           Value="{x:Bind Duration, Converter={StaticResource SecondsToFormattedTimeConverter}, TargetNullValue=N/A, Mode=OneWay}" />
                                         <local:PropertyRow
                                             x:Uid="LyricsPageMatchPercentage"
                                             Unit="%"
@@ -270,11 +281,13 @@
                                         Spacing="6"
                                         Visibility="{x:Bind IsFound, Converter={StaticResource BoolNegationToVisibilityConverter}, Mode=OneWay}">
                                         <Image MaxWidth="48" Source="/Assets/Empty.png" />
-                                        <TextBlock x:Uid="LyricsSearchControlNotFound" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                        <TextBlock x:Uid="LyricsSearchControlNotFound"
+                                                   Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                                     </StackPanel>
                                     <!--  Searching  -->
                                     <Grid Grid.Row="1" Visibility="{x:Bind IsSearching, Mode=OneWay}">
-                                        <ProgressRing VerticalAlignment="Center" IsActive="{x:Bind IsSearching, Mode=OneWay}" />
+                                        <ProgressRing VerticalAlignment="Center"
+                                                      IsActive="{x:Bind IsSearching, Mode=OneWay}" />
                                     </Grid>
                                 </Grid>
                             </ListViewItem>
@@ -341,9 +354,12 @@
                     <Pivot.HeaderTemplate>
                         <DataTemplate x:DataType="lyrics:LyricsData">
                             <StackPanel Orientation="Horizontal" Spacing="6">
-                                <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind LanguageCode, Mode=OneWay, Converter={StaticResource LanguageCodeToDisplayedNameConverter}}" />
-                                <local:InfoTag x:Uid="LyricsSearchControlAutoGenerated" Visibility="{x:Bind AutoGenerated, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
-                                <local:InfoTag x:Uid="LyricsSearchControlWordByWord" Visibility="{x:Bind IsWordByWord, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
+                                <TextBlock Style="{StaticResource BodyTextBlockStyle}"
+                                           Text="{x:Bind LanguageCode, Mode=OneWay, Converter={StaticResource LanguageCodeToDisplayedNameConverter}}" />
+                                <local:InfoTag x:Uid="LyricsSearchControlAutoGenerated"
+                                               Visibility="{x:Bind AutoGenerated, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
+                                <local:InfoTag x:Uid="LyricsSearchControlWordByWord"
+                                               Visibility="{x:Bind IsWordByWord, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
                             </StackPanel>
                         </DataTemplate>
                     </Pivot.HeaderTemplate>
@@ -361,7 +377,8 @@
                                                 <ColumnDefinition Width="*" />
                                             </Grid.ColumnDefinitions>
                                             <Grid Grid.Column="0">
-                                                <TextBlock Foreground="{ThemeResource SystemFillColorNeutralBrush}" Text="{x:Bind StartMs, Mode=OneWay, Converter={StaticResource MillisecondsToFormattedTimeConverter}}" />
+                                                <TextBlock Foreground="{ThemeResource SystemFillColorNeutralBrush}"
+                                                           Text="{x:Bind StartMs, Mode=OneWay, Converter={StaticResource MillisecondsToFormattedTimeConverter}}" />
                                                 <Button
                                                     HorizontalAlignment="Center"
                                                     VerticalAlignment="Center"
@@ -376,15 +393,18 @@
                                                     </Button.OpacityTransition>
                                                     <interactivity:Interaction.Behaviors>
                                                         <interactivity:EventTriggerBehavior EventName="PointerEntered">
-                                                            <interactivity:ChangePropertyAction PropertyName="Opacity" Value="1" />
+                                                            <interactivity:ChangePropertyAction PropertyName="Opacity"
+                                                                    Value="1" />
                                                         </interactivity:EventTriggerBehavior>
                                                         <interactivity:EventTriggerBehavior EventName="PointerExited">
-                                                            <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
+                                                            <interactivity:ChangePropertyAction PropertyName="Opacity"
+                                                                    Value="0" />
                                                         </interactivity:EventTriggerBehavior>
                                                     </interactivity:Interaction.Behaviors>
                                                 </Button>
                                             </Grid>
-                                            <local:PropertyRow Grid.Column="1" Value="{x:Bind PrimaryText, Mode=OneWay}" />
+                                            <local:PropertyRow Grid.Column="1"
+                                                               Value="{x:Bind PrimaryText, Mode=OneWay}" />
                                         </Grid>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>

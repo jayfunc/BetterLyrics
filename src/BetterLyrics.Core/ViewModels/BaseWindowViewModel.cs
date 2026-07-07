@@ -1,6 +1,5 @@
-﻿namespace BetterLyrics.Core.ViewModels
+﻿namespace BetterLyrics.Core.ViewModels;
+
+public class BaseWindowViewModel : BaseViewModel
 {
-    public partial class BaseWindowViewModel : BaseViewModel
-    {
-    }
 }

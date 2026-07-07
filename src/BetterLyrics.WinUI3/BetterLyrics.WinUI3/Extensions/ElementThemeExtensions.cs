@@ -1,13 +1,15 @@
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 
-namespace BetterLyrics.WinUI3.Extensions
+namespace BetterLyrics.WinUI3.Extensions;
+
+public static class ElementThemeExtensions
 {
-    public static class ElementThemeExtensions
+    extension(ElementTheme elementTheme)
     {
-        extension(ElementTheme elementTheme)
+        public TitleBarTheme ToTitleBarTheme()
         {
-            public TitleBarTheme ToTitleBarTheme() => elementTheme switch
+            return elementTheme switch
             {
                 ElementTheme.Light => TitleBarTheme.Light,
                 ElementTheme.Dark => TitleBarTheme.Dark,

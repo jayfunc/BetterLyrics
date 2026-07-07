@@ -1,8 +1,7 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum LyricsEffectScope
 {
-    public enum LyricsEffectScope
-    {
-        LongDurationSyllable,
-        LineStartToCurrentChar,
-    }
+    LongDurationSyllable,
+    LineStartToCurrentChar
 }

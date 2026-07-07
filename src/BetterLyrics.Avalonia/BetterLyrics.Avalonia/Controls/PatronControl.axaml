@@ -1,0 +1,31 @@
+<UserControl
+    x:Class="BetterLyrics.Avalonia.Controls.PatronControl"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:BetterLyrics.Avalonia.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    x:Name="RootControl">
+
+    <Border Classes="CardBorderStyle">
+        <StackPanel
+            Margin="12,8"
+            Orientation="Horizontal"
+            Spacing="6">
+
+            <TextBlock
+                VerticalAlignment="Center"
+                Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+                Classes="BodyTextBlockStyle"
+                Text="{Binding #RootControl.PatronName}"
+                TextTrimming="CharacterEllipsis" />
+
+            <TextBlock
+                VerticalAlignment="Center"
+                FontSize="12"
+                Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                Text="{Binding #RootControl.Date}" />
+        </StackPanel>
+    </Border>
+</UserControl>

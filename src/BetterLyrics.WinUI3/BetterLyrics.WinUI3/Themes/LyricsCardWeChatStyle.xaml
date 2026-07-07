@@ -1,8 +1,6 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:lyricsmodels="using:BetterLyrics.WinUI3.Models.Lyrics"
-    xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls">
 
     <Style x:Key="LyricsCardWeChatStyle" TargetType="uc:LyricsCard">
@@ -192,7 +190,7 @@
                                                         RadiusX="4"
                                                         RadiusY="4">
                                                         <Rectangle.Fill>
-                                                            <ImageBrush ImageSource="{Binding Tag.CoverImage, ElementName=WeChatCardRoot}" Stretch="UniformToFill" />
+                                                            <ImageBrush ImageSource="{Binding Tag.CoverImageBytes, ElementName=WeChatCardRoot, Converter={StaticResource ByteArrayToImageConverter}}" Stretch="UniformToFill" />
                                                         </Rectangle.Fill>
                                                     </Rectangle>
 

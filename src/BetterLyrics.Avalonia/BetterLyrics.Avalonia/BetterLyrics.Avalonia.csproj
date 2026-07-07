@@ -1,138 +1,125 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net10.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <LangVersion>latest</LangVersion>
-    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
-  </PropertyGroup>
-  
-  <ItemGroup>
-    <AvaloniaResource Include="Assets\**" />
-  </ItemGroup>
+	<PropertyGroup>
+		<TargetFramework>net10.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<LangVersion>latest</LangVersion>
+		<AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Avalonia" />
-    <PackageReference Include="Avalonia.Skia" />
-    <PackageReference Include="Avalonia.Themes.Fluent" />
-    <PackageReference Include="Avalonia.Fonts.Inter" />
-    <PackageReference Include="AvaloniaUI.DiagnosticsSupport">
-      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
-      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="CommunityToolkit.Mvvm" />
-    <PackageReference Include="FluentAvaloniaUI" />
-    <PackageReference Include="FluentIcons.Avalonia.Fluent" />
-  </ItemGroup>
+	<ItemGroup>
+		<AvaloniaResource Include="Assets\**" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\BetterLyrics.Core\BetterLyrics.Core.csproj" />
-    <ProjectReference Include="..\..\BetterLyrics.Sdk\BetterLyrics.Sdk.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Avalonia" />
+		<PackageReference Include="Avalonia.Skia" />
+		<PackageReference Include="Avalonia.Themes.Fluent" />
+		<PackageReference Include="Avalonia.Fonts.Inter" />
+		<PackageReference Include="AvaloniaUI.DiagnosticsSupport">
+			<IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+			<PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="CommunityToolkit.Mvvm" />
+		<PackageReference Include="FluentAvaloniaUI" />
+		<PackageReference Include="FluentIcons.Avalonia.Fluent" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Relational" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" />
+		<PackageReference Include="Serilog.Extensions.Logging" />
+		<PackageReference Include="Serilog.Sinks.File" />
+		<PackageReference Include="System.Reactive" />
+		<PackageReference Include="Xaml.Behaviors" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <AvaloniaResource Update="Assets\AlipayWeChatPay.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </AvaloniaResource>
-    <AvaloniaResource Update="Assets\Banner.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </AvaloniaResource>
-    <AvaloniaResource Update="Assets\Fonts\SegoeFluentIcons.ttf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </AvaloniaResource>
-    <AvaloniaResource Update="Assets\Fonts\SloganCNFont.ttf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </AvaloniaResource>
-    <AvaloniaResource Update="Assets\Fonts\SloganENFont.ttf">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </AvaloniaResource>
-    <AvaloniaResource Update="Assets\Logo.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </AvaloniaResource>
-    <AvaloniaResource Update="Assets\Wiki82.profile.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </AvaloniaResource>
-  </ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\..\BetterLyrics.Core\BetterLyrics.Core.csproj" />
+		<ProjectReference Include="..\..\BetterLyrics.Sdk\BetterLyrics.Sdk.csproj" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Strings\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Update="Strings\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Strings\Resources.ar.resx">
-      <SubType>Designer</SubType>
-      <Generator></Generator>
-      <CustomToolNamespace></CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Strings\Resources.de.resx">
-      <SubType>Designer</SubType>
-      <CustomToolNamespace></CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Strings\Resources.es.resx">
-      <SubType>Designer</SubType>
-      <CustomToolNamespace></CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Strings\Resources.fr.resx">
-      <SubType>Designer</SubType>
-      <CustomToolNamespace></CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Strings\Resources.hi.resx">
-      <SubType>Designer</SubType>
-      <CustomToolNamespace></CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Strings\Resources.id.resx">
-      <SubType>Designer</SubType>
-      <CustomToolNamespace></CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Strings\Resources.it.resx">
-      <CustomToolNamespace></CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Strings\Resources.ja.resx">
-      <SubType>Designer</SubType>
-      <CustomToolNamespace></CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Strings\Resources.ko.resx">
-      <SubType>Designer</SubType>
-      <CustomToolNamespace></CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Strings\Resources.ms.resx">
-      <SubType>Designer</SubType>
-      <CustomToolNamespace></CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Strings\Resources.pt.resx">
-      <SubType>Designer</SubType>
-      <CustomToolNamespace></CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Strings\Resources.resx">
-      <SubType>Designer</SubType>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <CustomToolNamespace></CustomToolNamespace>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Strings\Resources.ru.resx">
-      <SubType>Designer</SubType>
-      <CustomToolNamespace></CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Strings\Resources.th.resx">
-      <SubType>Designer</SubType>
-      <CustomToolNamespace></CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Strings\Resources.tr.resx">
-      <CustomToolNamespace></CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Strings\Resources.vi.resx">
-      <CustomToolNamespace></CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Strings\Resources.zh-Hans.resx">
-      <SubType>Designer</SubType>
-      <CustomToolNamespace></CustomToolNamespace>
-    </EmbeddedResource>
-    <EmbeddedResource Update="Strings\Resources.zh-Hant.resx">
-      <SubType>Designer</SubType>
-      <CustomToolNamespace></CustomToolNamespace>
-    </EmbeddedResource>
-  </ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Strings\Resources.ar.resx">
+			<SubType>Designer</SubType>
+			<Generator></Generator>
+			<CustomToolNamespace></CustomToolNamespace>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Strings\Resources.de.resx">
+			<SubType>Designer</SubType>
+			<CustomToolNamespace></CustomToolNamespace>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Strings\Resources.es.resx">
+			<SubType>Designer</SubType>
+			<CustomToolNamespace></CustomToolNamespace>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Strings\Resources.fr.resx">
+			<SubType>Designer</SubType>
+			<CustomToolNamespace></CustomToolNamespace>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Strings\Resources.hi.resx">
+			<SubType>Designer</SubType>
+			<CustomToolNamespace></CustomToolNamespace>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Strings\Resources.id.resx">
+			<SubType>Designer</SubType>
+			<CustomToolNamespace></CustomToolNamespace>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Strings\Resources.it.resx">
+			<CustomToolNamespace></CustomToolNamespace>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Strings\Resources.ja.resx">
+			<SubType>Designer</SubType>
+			<CustomToolNamespace></CustomToolNamespace>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Strings\Resources.ko.resx">
+			<SubType>Designer</SubType>
+			<CustomToolNamespace></CustomToolNamespace>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Strings\Resources.ms.resx">
+			<SubType>Designer</SubType>
+			<CustomToolNamespace></CustomToolNamespace>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Strings\Resources.pt.resx">
+			<SubType>Designer</SubType>
+			<CustomToolNamespace></CustomToolNamespace>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Strings\Resources.resx">
+			<SubType>Designer</SubType>
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<CustomToolNamespace></CustomToolNamespace>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Strings\Resources.ru.resx">
+			<SubType>Designer</SubType>
+			<CustomToolNamespace></CustomToolNamespace>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Strings\Resources.th.resx">
+			<SubType>Designer</SubType>
+			<CustomToolNamespace></CustomToolNamespace>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Strings\Resources.tr.resx">
+			<CustomToolNamespace></CustomToolNamespace>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Strings\Resources.vi.resx">
+			<CustomToolNamespace></CustomToolNamespace>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Strings\Resources.zh-Hans.resx">
+			<SubType>Designer</SubType>
+			<CustomToolNamespace></CustomToolNamespace>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Strings\Resources.zh-Hant.resx">
+			<SubType>Designer</SubType>
+			<CustomToolNamespace></CustomToolNamespace>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="ViewModels\" />
+	</ItemGroup>
 </Project>

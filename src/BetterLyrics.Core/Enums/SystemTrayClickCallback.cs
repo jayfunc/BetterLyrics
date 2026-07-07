@@ -1,13 +1,12 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum SystemTrayClickCallback
 {
-    public enum SystemTrayClickCallback
-    {
-        None,
-        LyricsWindowSwitchWindow,
-        LyricsSearchWindow,
-        MusicGalleryWindow,
-        StatsWindow,
-        LyricsCardWindow,
-        SettingsWindow
-    }
+    None,
+    LyricsWindowSwitchWindow,
+    LyricsSearchWindow,
+    MusicGalleryWindow,
+    StatsWindow,
+    LyricsCardWindow,
+    SettingsWindow
 }

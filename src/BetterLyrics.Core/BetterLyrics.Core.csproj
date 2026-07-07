@@ -7,33 +7,43 @@
 		<RuntimeIdentifiers>win-x64;win-x86;win-arm64</RuntimeIdentifiers>
 	</PropertyGroup>
 
-	<ItemGroup>
-	  <PackageReference Include="CHTCHSConv" Version="1.0.0" />
-	  <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
-	  <PackageReference Include="csharp-pinyin" Version="1.0.1" />
-	  <PackageReference Include="F23.StringSimilarity" Version="7.0.1" />
-	  <PackageReference Include="FluentFTP" Version="54.2.0" />
-	  <PackageReference Include="LiteFM" Version="1.0.3" />
-	  <PackageReference Include="Lyricify.Lyrics.Helper.Jayfunc" Version="0.1.4" />
-	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.9" />
-	  <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.9" />
-	  <PackageReference Include="MimeMapping" Version="4.0.0" />
-	  <PackageReference Include="NAudio" Version="2.3.0" />
-	  <PackageReference Include="NTextCat" Version="0.3.65" />
-	  <PackageReference Include="SMBLibrary" Version="1.5.7" />
-	  <PackageReference Include="System.IO.Hashing" Version="10.0.9" />
-	  <PackageReference Include="TagLibSharp" Version="2.3.0" />
-	  <PackageReference Include="WanaKana-net" Version="1.0.0" />
-	  <PackageReference Include="WebDav.Client" Version="2.9.0" />
-	  <PackageReference Include="z440.atl.core" Version="7.15.3" />
-	</ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="3v.EvtSource" Version="2.0.0" />
+        <PackageReference Include="CHTCHSConv" Version="1.0.0" />
+        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+        <PackageReference Include="csharp-pinyin" Version="1.0.1" />
+        <PackageReference Include="DiscordRichPresence" Version="1.6.1.70" />
+        <PackageReference Include="F23.StringSimilarity" Version="7.0.1" />
+        <PackageReference Include="FluentFTP" Version="54.2.0" />
+        <PackageReference Include="Impressionist.Jayfunc" Version="1.0.0" />
+        <PackageReference Include="LiteFM" Version="1.0.3" />
+        <PackageReference Include="LiveChartsCore" Version="2.0.5" />
+        <PackageReference Include="LiveChartsCore.SkiaSharpView" Version="2.0.5" />
+        <PackageReference Include="Lyricify.Lyrics.Helper.Jayfunc" Version="0.1.4" />
+        <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.9" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.9" />
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.9" />
+        <PackageReference Include="MimeMapping" Version="4.0.0" />
+        <PackageReference Include="NAudio" Version="2.3.0" />
+        <PackageReference Include="NTextCat" Version="0.3.65" />
+        <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
+        <PackageReference Include="SkiaSharp" Version="4.148.0" />
+        <PackageReference Include="SMBLibrary" Version="1.5.7" />
+        <PackageReference Include="System.IO.Hashing" Version="10.0.9" />
+        <PackageReference Include="TagLibSharp" Version="2.3.0" />
+        <PackageReference Include="TextCopy" Version="6.2.1" />
+        <PackageReference Include="WanaKana-net" Version="1.0.0" />
+        <PackageReference Include="WebDav.Client" Version="2.9.0" />
+        <PackageReference Include="z440.atl.core" Version="7.15.3" />
+    </ItemGroup>
 
-	<ItemGroup>
-	  <Folder Include="Abstractions\" />
-	</ItemGroup>
+    <ItemGroup>
+        <Folder Include="Abstractions\" />
+    </ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\BetterLyrics.Sdk\BetterLyrics.Sdk.csproj" />
-	</ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\BetterLyrics.Sdk\BetterLyrics.Sdk.csproj" />
+    </ItemGroup>
 
 </Project>

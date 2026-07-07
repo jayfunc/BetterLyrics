@@ -1,9 +1,8 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum SpectrumPlacement
 {
-    public enum SpectrumPlacement
-    {
-        Top,
-        Bottom,
-        AroundAlbumArt
-    }
+    Top,
+    Bottom,
+    AroundAlbumArt
 }

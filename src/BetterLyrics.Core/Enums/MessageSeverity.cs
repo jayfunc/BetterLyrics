@@ -1,10 +1,9 @@
-namespace BetterLyrics.Core.Enums
+namespace BetterLyrics.Core.Enums;
+
+public enum MessageSeverity
 {
-    public enum MessageSeverity
-    {
-        Informational,
-        Success,
-        Warning,
-        Error
-    }
+    Informational,
+    Success,
+    Warning,
+    Error
 }

@@ -1,8 +1,7 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum SpectrumStyle
 {
-    public enum SpectrumStyle
-    {
-        Curve,
-        Bar
-    }
+    Curve,
+    Bar
 }

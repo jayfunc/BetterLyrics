@@ -1,15 +1,14 @@
 using Avalonia.Controls;
-using BetterLyrics.Avalonia.ViewModels;
+using BetterLyrics.Core.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 
-namespace BetterLyrics.Avalonia.Views
+namespace BetterLyrics.Avalonia.Views;
+
+public partial class SettingsPage : UserControl
 {
-    public partial class SettingsPage : UserControl
+    public SettingsPage()
     {
-        public SettingsPage()
-        {
-            InitializeComponent();
-            DataContext = Ioc.Default.GetRequiredService<SettingsPageViewModel>();
-        }
+        InitializeComponent();
+        DataContext = Ioc.Default.GetRequiredService<SettingsPageViewModel>();
     }
 }

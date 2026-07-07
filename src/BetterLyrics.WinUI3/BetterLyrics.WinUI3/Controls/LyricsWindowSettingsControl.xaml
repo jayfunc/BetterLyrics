@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8" ?>
+
 <UserControl
     x:Class="BetterLyrics.WinUI3.Controls.LyricsWindowSettingsControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:constants="using:BetterLyrics.WinUI3.Constants"
+    xmlns:constants1="using:BetterLyrics.Core.Constants"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:enums1="using:BetterLyrics.Core.Enums"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
-    xmlns:enums1="using:BetterLyrics.Core.Enums"
-    xmlns:constants1="using:BetterLyrics.Core.Constants"
     Loaded="UserControl_Loaded"
     mc:Ignorable="d">
 

@@ -1,13 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
+
 <Application
     x:Class="BetterLyrics.WinUI3.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:globalization="using:Windows.Globalization"
-    xmlns:local="using:BetterLyrics.WinUI3"
-    xmlns:media="using:CommunityToolkit.WinUI.Media"
-    xmlns:painting="using:LiveChartsCore.SkiaSharpView.Painting"
-    xmlns:skiasharp="using:SkiaSharp">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

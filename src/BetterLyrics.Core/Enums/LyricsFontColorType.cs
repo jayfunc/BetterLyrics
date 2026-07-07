@@ -1,11 +1,10 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-namespace BetterLyrics.Core.Enums
+namespace BetterLyrics.Core.Enums;
+
+public enum LyricsFontColorType
 {
-    public enum LyricsFontColorType
-    {
-        AdaptiveColored,
-        AdaptiveGrayed,
-        Custom,
-    }
+    AdaptiveColored,
+    AdaptiveGrayed,
+    Custom
 }

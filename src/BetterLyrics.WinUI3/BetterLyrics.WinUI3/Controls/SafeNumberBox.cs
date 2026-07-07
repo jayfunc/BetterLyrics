@@ -1,114 +1,105 @@
-﻿using Microsoft.UI.Xaml;
+﻿using System;
+using Windows.Globalization.NumberFormatting;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using System;
 
-namespace BetterLyrics.WinUI3.Controls
+namespace BetterLyrics.WinUI3.Controls;
+
+public partial class SafeNumberBox : NumberBox
 {
-    public partial class SafeNumberBox : NumberBox
+    public static readonly DependencyProperty DefaultValueProperty =
+        DependencyProperty.Register(nameof(DefaultValue), typeof(double), typeof(SafeNumberBox),
+            new PropertyMetadata(0.0));
+
+    public static readonly DependencyProperty IsIntegerOnlyProperty =
+        DependencyProperty.Register(nameof(IsIntegerOnly), typeof(bool), typeof(SafeNumberBox),
+            new PropertyMetadata(false));
+
+    public static readonly DependencyProperty IntValueProperty =
+        DependencyProperty.Register(nameof(IntValue), typeof(int), typeof(SafeNumberBox),
+            new PropertyMetadata(0, OnIntValueInternalChanged));
+
+    private bool _isSyncing;
+
+    public SafeNumberBox()
     {
-        private bool _isSyncing = false;
+        ValueChanged += OnValueChanged;
+        Loaded += OnSafeNumberBoxLoaded;
+    }
 
-        public SafeNumberBox()
-        {
-            this.ValueChanged += OnValueChanged;
-            this.Loaded += OnSafeNumberBoxLoaded;
-        }
+    public double DefaultValue
+    {
+        get => (double)GetValue(DefaultValueProperty);
+        set => SetValue(DefaultValueProperty, value);
+    }
 
-        private void OnSafeNumberBoxLoaded(object sender, RoutedEventArgs e)
+    public bool IsIntegerOnly
+    {
+        get => (bool)GetValue(IsIntegerOnlyProperty);
+        set => SetValue(IsIntegerOnlyProperty, value);
+    }
+
+    public int IntValue
+    {
+        get => (int)GetValue(IntValueProperty);
+        set => SetValue(IntValueProperty, value);
+    }
+
+    private void OnSafeNumberBoxLoaded(object sender, RoutedEventArgs e)
+    {
+        if (IsIntegerOnly)
         {
-            if (IsIntegerOnly)
+            var formatter = new DecimalFormatter
             {
-                var formatter = new Windows.Globalization.NumberFormatting.DecimalFormatter
+                FractionDigits = 0,
+                NumberRounder = new IncrementNumberRounder
                 {
-                    FractionDigits = 0,
-                    NumberRounder = new Windows.Globalization.NumberFormatting.IncrementNumberRounder
-                    {
-                        Increment = 1,
-                        RoundingAlgorithm = Windows.Globalization.NumberFormatting.RoundingAlgorithm.RoundHalfUp
-                    }
-                };
+                    Increment = 1,
+                    RoundingAlgorithm = RoundingAlgorithm.RoundHalfUp
+                }
+            };
 
-                this.NumberFormatter = formatter;
-            }
+            NumberFormatter = formatter;
         }
+    }
 
-        public double DefaultValue
+    private static void OnIntValueInternalChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is SafeNumberBox target)
         {
-            get { return (double)GetValue(DefaultValueProperty); }
-            set { SetValue(DefaultValueProperty, value); }
+            if (target._isSyncing) return;
+
+            target._isSyncing = true;
+            target.Value = (int)e.NewValue;
+            target._isSyncing = false;
         }
+    }
 
-        public static readonly DependencyProperty DefaultValueProperty =
-            DependencyProperty.Register(nameof(DefaultValue), typeof(double), typeof(SafeNumberBox), new PropertyMetadata(0.0));
+    private void OnValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+    {
+        if (_isSyncing) return;
+        _isSyncing = true;
 
-        public bool IsIntegerOnly
+        try
         {
-            get { return (bool)GetValue(IsIntegerOnlyProperty); }
-            set { SetValue(IsIntegerOnlyProperty, value); }
-        }
+            var finalValue = sender.Value;
 
-        public static readonly DependencyProperty IsIntegerOnlyProperty =
-            DependencyProperty.Register(nameof(IsIntegerOnly), typeof(bool), typeof(SafeNumberBox), new PropertyMetadata(false));
+            if (double.IsNaN(finalValue)) finalValue = DefaultValue;
 
-        public int IntValue
-        {
-            get { return (int)GetValue(IntValueProperty); }
-            set { SetValue(IntValueProperty, value); }
-        }
+            if (IsIntegerOnly) finalValue = Math.Round(finalValue);
 
-        public static readonly DependencyProperty IntValueProperty =
-            DependencyProperty.Register(nameof(IntValue), typeof(int), typeof(SafeNumberBox), new PropertyMetadata(0, OnIntValueInternalChanged));
-
-        private static void OnIntValueInternalChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
-            if (d is SafeNumberBox target)
+            if (sender.Value != finalValue || double.IsNaN(sender.Value))
             {
-                if (target._isSyncing) return;
-
-                target._isSyncing = true;
-                target.Value = (int)e.NewValue;
-                target._isSyncing = false;
+                sender.Value = finalValue;
+                if (double.IsNaN(args.NewValue)) sender.Text = finalValue.ToString();
             }
+
+            var newIntValue = Convert.ToInt32(finalValue);
+            if (IntValue != newIntValue) IntValue = newIntValue;
         }
-
-        private void OnValueChanged(NumberBox sender, NumberBoxValueChangedEventArgs args)
+        finally
         {
-            if (_isSyncing) return;
-            _isSyncing = true;
-
-            try
-            {
-                double finalValue = sender.Value;
-
-                if (double.IsNaN(finalValue))
-                {
-                    finalValue = DefaultValue;
-                }
-
-                if (IsIntegerOnly)
-                {
-                    finalValue = Math.Round(finalValue);
-                }
-
-                if (sender.Value != finalValue || double.IsNaN(sender.Value))
-                {
-                    sender.Value = finalValue;
-                    if (double.IsNaN(args.NewValue))
-                    {
-                        sender.Text = finalValue.ToString();
-                    }
-                }
-
-                int newIntValue = Convert.ToInt32(finalValue);
-                if (this.IntValue != newIntValue)
-                {
-                    this.IntValue = newIntValue;
-                }
-            }
-            finally
-            {
-                _isSyncing = false;
-            }
+            _isSyncing = false;
         }
     }
 }

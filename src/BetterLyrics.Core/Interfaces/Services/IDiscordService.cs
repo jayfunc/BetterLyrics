@@ -1,11 +1,10 @@
 ﻿using BetterLyrics.Core.Models;
 
-namespace BetterLyrics.Core.Interfaces.Services
+namespace BetterLyrics.Core.Interfaces.Services;
+
+public interface IDiscordService
 {
-    public interface IDiscordService
-    {
-        void Enable();
-        void Disable();
-        void UpdateRichPresence(SongInfo songInfo);
-    }
+    void Enable();
+    void Disable();
+    void UpdateRichPresence(SongInfo songInfo);
 }

@@ -1,17 +1,20 @@
-﻿using Avalonia;
+﻿using System.Threading.Tasks;
+using Avalonia;
 using Avalonia.Browser;
-using BetterLyrics.Avalonia;
-using System.Threading.Tasks;
 
-internal sealed partial class Program
+namespace BetterLyrics.Avalonia.Browser;
+
+internal sealed class Program
 {
     private static Task Main(string[] args) => BuildAvaloniaApp()
-            .WithInterFont()
+        .WithInterFont()
 #if DEBUG
-            .WithDeveloperTools()
+        .WithDeveloperTools()
 #endif
-            .StartBrowserAppAsync("out");
+        .StartBrowserAppAsync("out");
 
     public static AppBuilder BuildAvaloniaApp()
-        => AppBuilder.Configure<App>();
+    {
+        return AppBuilder.Configure<App>();
+    }
 }

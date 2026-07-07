@@ -1,9 +1,8 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum ChineseConversion
 {
-    public enum ChineseConversion
-    {
-        Unspecified,
-        S2T,
-        T2S
-    }
+    Unspecified,
+    S2T,
+    T2S
 }

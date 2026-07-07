@@ -4,17 +4,17 @@ using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Entities;
 
-namespace BetterLyrics.Core.Interfaces.Services
+namespace BetterLyrics.Core.Interfaces.Services;
+
+public interface ILyricsSearchService
 {
-    public interface ILyricsSearchService
-    {
-        Task<LyricsCacheItem?> SearchSmartlyAsync(SongInfo songInfo, LyricsSearchType? lyricsSearchType, CancellationToken token);
+    Task<LyricsCacheItem?> SearchSmartlyAsync(SongInfo songInfo, LyricsSearchType? lyricsSearchType,
+        CancellationToken token);
 
-        IAsyncEnumerable<LyricsCacheItem> SearchAllAsync(
-            SongInfo songInfo,
-            bool checkCache,
-            CancellationToken cancellationToken = default);
+    IAsyncEnumerable<LyricsCacheItem> SearchAllAsync(
+        SongInfo songInfo,
+        bool checkCache,
+        CancellationToken cancellationToken = default);
 
-        List<LyricsSearchProvider> GetActiveProviders();
-    }
+    List<LyricsSearchProvider> GetActiveProviders();
 }

@@ -1,11 +1,10 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-namespace BetterLyrics.Core.Enums
+namespace BetterLyrics.Core.Enums;
+
+public enum TextAlignmentType
 {
-    public enum TextAlignmentType
-    {
-        Left,
-        Center,
-        Right,
-    }
+    Left,
+    Center,
+    Right
 }

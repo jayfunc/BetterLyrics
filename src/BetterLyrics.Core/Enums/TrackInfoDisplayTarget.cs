@@ -1,8 +1,7 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum TrackInfoDisplayTarget
 {
-    public enum TrackInfoDisplayTarget
-    {
-        SelectedItem,
-        PlayingItem
-    }
+    SelectedItem,
+    PlayingItem
 }

@@ -1,7 +1,6 @@
-﻿namespace BetterLyrics.Core.Constants
+﻿namespace BetterLyrics.Core.Constants;
+
+public static class AppleMusic
 {
-    public static class AppleMusic
-    {
-        public const string MediaUserTokenKey = "AppleMusicMediaUserToken";
-    }
+    public const string MediaUserTokenKey = "AppleMusicMediaUserToken";
 }

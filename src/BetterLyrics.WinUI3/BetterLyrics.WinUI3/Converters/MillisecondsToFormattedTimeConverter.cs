@@ -1,45 +1,41 @@
-﻿using Microsoft.UI.Xaml.Data;
-using System;
+﻿using System;
+using Microsoft.UI.Xaml.Data;
 
-namespace BetterLyrics.WinUI3.Converters
+namespace BetterLyrics.WinUI3.Converters;
+
+public partial class MillisecondsToFormattedTimeConverter : IValueConverter
 {
-    public partial class MillisecondsToFormattedTimeConverter : IValueConverter
+    public object Convert(object value, Type targetType, object parameter, string language)
     {
-        public object Convert(object value, Type targetType, object parameter, string language)
+        double? milliseconds = null;
+
+        if (value is int iVal) milliseconds = iVal;
+        else if (value is double dVal) milliseconds = dVal;
+        else if (value is long lVal) milliseconds = lVal;
+
+        if (milliseconds.HasValue)
         {
-            double? milliseconds = null;
+            var ts = TimeSpan.FromMilliseconds(milliseconds.Value);
 
-            if (value is int iVal) milliseconds = iVal;
-            else if (value is double dVal) milliseconds = dVal;
-            else if (value is long lVal) milliseconds = lVal;
+            var format = parameter?.ToString();
 
-            if (milliseconds.HasValue)
+            if (string.IsNullOrEmpty(format)) format = @"mm\:ss\.fff";
+
+            try
             {
-                var ts = TimeSpan.FromMilliseconds(milliseconds.Value);
-
-                string? format = parameter?.ToString();
-
-                if (string.IsNullOrEmpty(format))
-                {
-                    format = @"mm\:ss\.fff";
-                }
-
-                try
-                {
-                    return ts.ToString(format);
-                }
-                catch (FormatException)
-                {
-                    return ts.ToString();
-                }
+                return ts.ToString(format);
             }
-
-            return value?.ToString() ?? "";
+            catch (FormatException)
+            {
+                return ts.ToString();
+            }
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, string language)
-        {
-            throw new NotImplementedException();
-        }
+        return value?.ToString() ?? "";
+    }
+
+    public object ConvertBack(object value, Type targetType, object parameter, string language)
+    {
+        throw new NotImplementedException();
     }
 }

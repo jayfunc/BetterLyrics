@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
+
 <UserControl
     x:Class="BetterLyrics.WinUI3.Controls.NowPlayingBar"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:helper="using:BetterLyrics.WinUI3.Helper"
+    xmlns:helpers="using:BetterLyrics.WinUI3.Helpers"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -43,7 +44,7 @@
                                 Height="36"
                                 VerticalAlignment="Center">
                                 <Grid CornerRadius="4">
-                                    <local:ImageSwitcher Source="{x:Bind GSMTCService.AlbumArtBitmapImage, Mode=OneWay}" />
+                                    <local:ImageSwitcher Source="{x:Bind GSMTCService.AlbumArtBytes, Converter={StaticResource ByteArrayToImageConverter}, Mode=OneWay}" />
                                 </Grid>
                                 <Grid
                                     x:Name="LyricsOpenHintGrid"
@@ -110,7 +111,6 @@
                         Spacing="12">
                         <!--  Playback order  -->
                         <Button
-                            Grid.Column="2"
                             Click="PlaybackOrderButton_Click"
                             Style="{ThemeResource GhostButtonStyle}"
                             Visibility="{x:Bind ShowPlaybackOrderButton, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
@@ -529,7 +529,7 @@
                                 Height="48"
                                 Margin="16"
                                 CornerRadius="4">
-                                <Image Source="{x:Bind GSMTCService.AlbumArtBitmapImage, Mode=OneWay}" />
+                                <Image Source="{x:Bind GSMTCService.AlbumArtBytes, Converter={StaticResource ByteArrayToImageConverter}, Mode=OneWay}" />
                             </Grid>
                             <Grid
                                 Grid.Column="1"
@@ -579,10 +579,10 @@
                                         Grid.Column="0"
                                         Width="16"
                                         Height="16"
-                                        helper:AppExtensions.Aumid="{x:Bind GSMTCService.CurrentMediaSourceProviderInfo.Provider, Mode=OneWay}" />
+                                        helpers:AppExtensions.Aumid="{x:Bind GSMTCService.CurrentMediaSourceProviderInfo.Provider, Mode=OneWay}" />
                                     <TextBlock
                                         Grid.Column="1"
-                                        helper:AppExtensions.Aumid="{x:Bind GSMTCService.CurrentMediaSourceProviderInfo.Provider, Mode=OneWay}"
+                                        helpers:AppExtensions.Aumid="{x:Bind GSMTCService.CurrentMediaSourceProviderInfo.Provider, Mode=OneWay}"
                                         Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                                 </Grid>
                             </Grid>

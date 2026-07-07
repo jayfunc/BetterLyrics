@@ -1,0 +1,26 @@
+<UserControl
+    x:Class="BetterLyrics.Avalonia.Controls.ShadowImage"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:BetterLyrics.Avalonia.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:DataType="local:ShadowImage"
+    x:Name="RootControl"
+    mc:Ignorable="d">
+
+    <Grid Margin="32">
+        <Border
+            x:Name="ShadowRect"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            ClipToBounds="True">
+            
+            <Image 
+                x:Name="ContentImage"
+                Source="{Binding #RootControl.Source}" 
+                Stretch="{Binding #RootControl.Stretch}" />
+                
+        </Border>
+    </Grid>
+</UserControl>

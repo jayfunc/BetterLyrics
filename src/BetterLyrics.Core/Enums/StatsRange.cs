@@ -1,13 +1,12 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum StatsRange
 {
-    public enum StatsRange
-    {
-        Today,
-        ThisWeek,
-        ThisMonth,
-        ThisQuarter,
-        ThisYear,
-        AllTime,
-        Custom
-    }
+    Today,
+    ThisWeek,
+    ThisMonth,
+    ThisQuarter,
+    ThisYear,
+    AllTime,
+    Custom
 }

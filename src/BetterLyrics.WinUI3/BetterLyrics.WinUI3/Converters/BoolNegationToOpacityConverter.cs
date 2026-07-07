@@ -1,23 +1,18 @@
-﻿using Microsoft.UI.Xaml.Data;
-using System;
+﻿using System;
+using Microsoft.UI.Xaml.Data;
 
-namespace BetterLyrics.WinUI3.Converters
+namespace BetterLyrics.WinUI3.Converters;
+
+public partial class BoolNegationToOpacityConverter : IValueConverter
 {
-    public partial class BoolNegationToOpacityConverter : IValueConverter
+    public object Convert(object value, Type targetType, object parameter, string language)
     {
-        public object Convert(object value, Type targetType, object parameter, string language)
-        {
-            if (value is bool boolValue)
-            {
-                return boolValue ? 0.0 : 1.0;
-            }
-            return 0.0;
-        }
+        if (value is bool boolValue) return boolValue ? 0.0 : 1.0;
+        return 0.0;
+    }
 
-        public object ConvertBack(object value, Type targetType, object parameter, string language)
-        {
-            throw new NotImplementedException();
-        }
-
+    public object ConvertBack(object value, Type targetType, object parameter, string language)
+    {
+        throw new NotImplementedException();
     }
 }

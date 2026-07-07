@@ -1,24 +1,20 @@
-﻿using BetterLyrics.Core.Extensions;
+﻿using System;
+using BetterLyrics.Core.Extensions;
 using Microsoft.UI.Xaml.Data;
-using System;
 
-namespace BetterLyrics.WinUI3.Converters
+namespace BetterLyrics.WinUI3.Converters;
+
+public partial class UriStringToDecodedAbsoluteUri : IValueConverter
 {
-    public partial class UriStringToDecodedAbsoluteUri : IValueConverter
+    public object Convert(object value, Type targetType, object parameter, string language)
     {
-        public object Convert(object value, Type targetType, object parameter, string language)
-        {
-            if (value is string uriString)
-            {
-                return uriString.ToDecodedAbsoluteUri();
-            }
+        if (value is string uriString) return uriString.ToDecodedAbsoluteUri();
 
-            return "";
-        }
+        return "";
+    }
 
-        public object ConvertBack(object value, Type targetType, object parameter, string language)
-        {
-            throw new NotImplementedException();
-        }
+    public object ConvertBack(object value, Type targetType, object parameter, string language)
+    {
+        throw new NotImplementedException();
     }
 }

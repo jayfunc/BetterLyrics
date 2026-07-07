@@ -1,10 +1,9 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum FileSourceType
 {
-    public enum FileSourceType
-    {
-        Local,
-        SMB,
-        FTP,
-        WebDAV
-    }
+    Local,
+    SMB,
+    FTP,
+    WebDAV
 }

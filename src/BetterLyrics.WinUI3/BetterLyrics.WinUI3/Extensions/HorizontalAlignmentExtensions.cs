@@ -1,12 +1,14 @@
+using System;
 using BetterLyrics.Core.Models.Domain;
 using Microsoft.UI.Xaml;
-using System;
 
-namespace BetterLyrics.WinUI3.Extensions
+namespace BetterLyrics.WinUI3.Extensions;
+
+public static class HorizontalAlignmentExtensions
 {
-    public static class HorizontalAlignmentExtensions
+    public static HorizontalAlignment FromAppHorizontalAlignment(AppHorizontalAlignment value)
     {
-        public static HorizontalAlignment FromAppHorizontalAlignment(AppHorizontalAlignment value) => value switch
+        return value switch
         {
             AppHorizontalAlignment.Left => HorizontalAlignment.Left,
             AppHorizontalAlignment.Center => HorizontalAlignment.Center,

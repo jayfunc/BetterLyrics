@@ -1,7 +1,6 @@
-﻿namespace BetterLyrics.Sdk.Interfaces.Plugins
+﻿namespace BetterLyrics.Sdk.Interfaces.Plugins;
+
+public interface IAIService
 {
-    public interface IAIService
-    {
-        Task<string> ChatAsync(string systemPrompt, string userPrompt);
-    }
+    Task<string> ChatAsync(string systemPrompt, string userPrompt);
 }

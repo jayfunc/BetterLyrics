@@ -1,0 +1,40 @@
+<Window
+    x:Class="BetterLyrics.Avalonia.Views.SettingsWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:BetterLyrics.Avalonia.Views"
+    xmlns:strings="using:BetterLyrics.Avalonia.Strings"
+    xmlns:ui="using:FluentAvalonia.UI.Controls"
+    mc:Ignorable="d">
+
+    <Grid x:Name="RootGrid">
+
+        <local:SettingsPage />
+
+        <Grid
+            Margin="0,0,190,0"
+            VerticalAlignment="Top"
+            Background="Transparent"
+            PointerPressed="CustomTitleBar_PointerPressed">
+
+            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
+                <Button Click="LyricsWindowSwitchButton_Click" Classes="TitleBarButtonStyle">
+                    <ui:FAFontIcon FontFamily="Segoe Fluent Icons" FontSize="12" Glyph="&#xE8AB;" />
+                    <ToolTip.Tip>
+                        <TextBlock Text="{x:Static strings:Resources.LyricsWindowSwitchButtonToolTip_Content}" />
+                    </ToolTip.Tip>
+                </Button>
+
+                <Button Click="MusicGalleryButton_Click" Classes="TitleBarButtonStyle">
+                    <ui:FAFontIcon FontFamily="Segoe Fluent Icons" FontSize="12" Glyph="&#xE8F1;" />
+                    <ToolTip.Tip>
+                        <TextBlock Text="{x:Static strings:Resources.HostWindowMusicGalleryButtonToolTip_Content}" />
+                    </ToolTip.Tip>
+                </Button>
+            </StackPanel>
+
+        </Grid>
+    </Grid>
+</Window>

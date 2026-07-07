@@ -1,8 +1,7 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum DockPlacement
 {
-    public enum DockPlacement
-    {
-        Top,
-        Bottom
-    }
+    Top,
+    Bottom
 }

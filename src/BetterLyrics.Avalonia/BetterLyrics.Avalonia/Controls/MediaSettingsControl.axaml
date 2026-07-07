@@ -1,0 +1,183 @@
+<UserControl
+    x:Class="BetterLyrics.Avalonia.Controls.MediaSettingsControl"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:settings="using:BetterLyrics.Core.Models.Settings"
+    xmlns:strings="using:BetterLyrics.Avalonia.Strings"
+    xmlns:ui="using:FluentAvalonia.UI.Controls"
+    xmlns:vm="using:BetterLyrics.Core.ViewModels"
+    x:DataType="vm:MediaSettingsControlViewModel"
+    mc:Ignorable="d">
+
+    <Grid>
+        <ScrollViewer Classes="SettingsScrollViewerStyle">
+            <Border Classes="SettingsBorderStyle">
+                <StackPanel Spacing="{DynamicResource SettingsCardSpacing}">
+
+                    <!-- 顶部占位标题 (如果原代码没文字，可按需补充或保留空Text) -->
+                    <TextBlock Classes="SettingsSectionHeaderTextBlockStyle" 
+                               Text="{x:Static strings:Resources.SettingsPageMusicLib_Header}" />
+
+                    <!-- 媒体库头部指示 -->
+                    <ui:FASettingsExpander Header="{x:Static strings:Resources.SettingsPageMusicLib_Header}">
+                        <ui:FASettingsExpander.IconSource>
+                            <ui:FAFontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xE8B7;" />
+                        </ui:FASettingsExpander.IconSource>
+                    </ui:FASettingsExpander>
+
+                    <!-- 删除路径的提示，使用 Converter 替代 Behavior 控制可见性 -->
+                    <ui:FAInfoBar 
+                        IsClosable="False" 
+                        IsOpen="True" 
+                        Severity="Success"
+                        Message="{x:Static strings:Resources.SettingsPageRemoveInfo_Message}"
+                        IsVisible="{Binding AppSettings.LocalMediaFolders.Count, Converter={StaticResource IntToBoolConverter}}" />
+
+                    <!-- 使用 ItemsControl 渲染媒体文件夹列表 -->
+                    <ItemsControl ItemsSource="{Binding AppSettings.LocalMediaFolders}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="settings:MediaFolder">
+                                <ui:FASettingsExpander Header="{Binding Name}" 
+                                                       Description="{Binding ConnectionSummary}" 
+                                                       IsExpanded="True">
+                                    <ui:FASettingsExpander.IconSource>
+                                        <!-- 注意: IconSource 绑定转换器 -->
+                                        <ui:FAFontIconSource FontFamily="Segoe Fluent Icons" 
+                                                             Glyph="{Binding SourceType, Converter={StaticResource FileSourceTypeToIconConverter}}" />
+                                    </ui:FASettingsExpander.IconSource>
+                                    
+                                    <ui:FASettingsExpander.Footer>
+                                        <ToggleSwitch IsChecked="{Binding IsEnabled, Mode=TwoWay}" />
+                                    </ui:FASettingsExpander.Footer>
+
+                                    <!-- Expander 内部子项 -->
+                                    <ui:FASettingsExpander.Items>
+                                        
+                                        <ui:FASettingsExpanderItem Content="{x:Static strings:Resources.MediaSettingsControlNameSetting_Header}">
+                                            <ui:FASettingsExpanderItem.Footer>
+                                                <TextBox VerticalAlignment="Center" Text="{Binding Name, Mode=TwoWay}" />
+                                            </ui:FASettingsExpanderItem.Footer>
+                                        </ui:FASettingsExpanderItem>
+
+                                        <ui:FASettingsExpanderItem Content="{x:Static strings:Resources.MediaSettingsControlLastSyncTime_Header}"
+                                                                   Description="{Binding LastSyncTime, TargetNullValue='N/A'}">
+                                            <ui:FASettingsExpanderItem.Footer>
+                                                <StackPanel>
+                                                    <!-- 如果 FluentAvalonia 未使用 FA 前缀，则改回 ui:SplitButton -->
+                                                    <SplitButton Content="{x:Static strings:Resources.MediaSettingsControlSyncNow_Content}"
+                                                                      Click="SyncNowButton_Click"
+                                                                      IsEnabled="{Binding IsEnabled}">
+                                                        <SplitButton.Flyout>
+                                                            <Flyout Placement="Bottom">
+                                                                <StackPanel MaxWidth="250" Spacing="10">
+                                                                    <TextBlock Text="{x:Static strings:Resources.MediaSettingsControlAdvOpt_Text}" />
+                                                                    <Button Content="{x:Static strings:Resources.MediaSettingsForceSyncButton_Content}"
+                                                                            HorizontalAlignment="Stretch"
+                                                                            Click="ForceSyncButton_Click" />
+                                                                    <TextBlock Text="{x:Static strings:Resources.MediaSettingsForceSyncHint_Text}"
+                                                                               Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                                               Classes="CaptionTextBlockStyle"
+                                                                               TextWrapping="Wrap" />
+                                                                </StackPanel>
+                                                            </Flyout>
+                                                        </SplitButton.Flyout>
+                                                    </SplitButton>
+                                                </StackPanel>
+                                            </ui:FASettingsExpanderItem.Footer>
+                                        </ui:FASettingsExpanderItem>
+
+                                        <ui:FASettingsExpanderItem Content="{x:Static strings:Resources.MusicSettingsControlAutoSyncInterval_Header}">
+                                            <ui:FASettingsExpanderItem.Footer>
+                                                <ui:FAComboBox IsEnabled="{Binding IsEnabled}"
+                                                          SelectedIndex="{Binding ScanInterval, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                                    <ui:FAComboBoxItem Content="{x:Static strings:Resources.MusicSettingsControlAutoSyncIntervalDisabled_Content}" />
+                                                    <ui:FAComboBoxItem Content="{x:Static strings:Resources.MusicSettingsControlAutoSyncIntervalEveryFifteenMin_Content}" />
+                                                    <ui:FAComboBoxItem Content="{x:Static strings:Resources.MusicSettingsControlAutoSyncIntervalEveryHour_Content}" />
+                                                    <ui:FAComboBoxItem Content="{x:Static strings:Resources.MusicSettingsControlAutoSyncIntervalEverySixHrs_Content}" />
+                                                    <ui:FAComboBoxItem Content="{x:Static strings:Resources.MusicSettingsControlAutoSyncIntervalEveryDay_Content}" />
+                                                </ui:FAComboBox>
+                                            </ui:FASettingsExpanderItem.Footer>
+                                        </ui:FASettingsExpanderItem>
+
+                                        <ui:FASettingsExpanderItem Content="{x:Static strings:Resources.MusicSettingsControlRealTimeScan_Header}"
+                                                                   IsEnabled="{Binding IsLocal}">
+                                            <ui:FASettingsExpanderItem.Footer>
+                                                <ToggleSwitch IsChecked="{Binding IsRealTimeScanEnabled, Mode=TwoWay}" />
+                                            </ui:FASettingsExpanderItem.Footer>
+                                        </ui:FASettingsExpanderItem>
+
+                                        <ui:FASettingsExpanderItem>
+                                            <ui:FASettingsExpanderItem.Footer>
+                                                <Button Content="{x:Static strings:Resources.SettingsPageRemovePath_Content}"
+                                                        Click="SettingsPageRemovePathButton_Click" />
+                                            </ui:FASettingsExpanderItem.Footer>
+                                        </ui:FASettingsExpanderItem>
+
+                                        <!-- 原本的 Index info (InfoBar + ProgressBar) 现在作为最后一个自定义 Item 显示 -->
+                                        <ui:FASettingsExpanderItem>
+                                            <ui:FASettingsExpanderItem.Content>
+                                                <StackPanel Spacing="4">
+                                                    <ui:FAInfoBar BorderThickness="0"
+                                                                  IsClosable="False"
+                                                                  IsOpen="True"
+                                                                  Message="{Binding StatusText}"
+                                                                  Severity="{Binding StatusSeverity, Converter={StaticResource MessageSeverityToInfoBarSeverity}}" />
+                                                    <ProgressBar Background="Transparent"
+                                                                 IsVisible="{Binding IsProcessing}"
+                                                                 Value="{Binding IndexingProgress}"
+                                                                 IsIndeterminate="{Binding IndexingProgress, Converter={StaticResource ZeroToBoolConverter}}" />
+                                                </StackPanel>
+                                            </ui:FASettingsExpanderItem.Content>
+                                        </ui:FASettingsExpanderItem>
+
+                                    </ui:FASettingsExpander.Items>
+                                </ui:FASettingsExpander>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <!-- 底部操作按钮 -->
+                    <StackPanel Margin="0,6,2,0" HorizontalAlignment="Right" Orientation="Horizontal" Spacing="6">
+                        <Button Command="{Binding NavigationService.OpenMusicGalleryWindowCommand}">
+                            <TextBlock Text="{x:Static strings:Resources.SystemTrayMusicGallery_Text}" />
+                        </Button>
+                        
+                        <!-- Avalonia DropDownButton -->
+                        <DropDownButton Content="{x:Static strings:Resources.SettingsPageAddFolderButton_Content}">
+                            <DropDownButton.Flyout>
+                                <ui:FAMenuFlyout>
+                                    <ui:FAMenuFlyoutItem Text="{x:Static strings:Resources.SettingsPageLocalFolder_Text}"
+                                                    Command="{Binding AddMediaSourceCommand}"
+                                                    CommandParameter="Local">
+                                        <ui:FAMenuFlyoutItem.IconSource>
+                                            <ui:FAFontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xE8B7;" />
+                                        </ui:FAMenuFlyoutItem.IconSource>
+                                    </ui:FAMenuFlyoutItem>
+                                    <ui:FAMenuFlyoutSeparator />
+                                    <ui:FAMenuFlyoutItem Text="SMB" Command="{Binding AddMediaSourceCommand}" CommandParameter="SMB">
+                                        <ui:FAMenuFlyoutItem.IconSource>
+                                            <ui:FAFontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xE839;" />
+                                        </ui:FAMenuFlyoutItem.IconSource>
+                                    </ui:FAMenuFlyoutItem>
+                                    <ui:FAMenuFlyoutItem Text="FTP" Command="{Binding AddMediaSourceCommand}" CommandParameter="FTP">
+                                        <ui:FAMenuFlyoutItem.IconSource>
+                                            <ui:FAFontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xE838;" />
+                                        </ui:FAMenuFlyoutItem.IconSource>
+                                    </ui:FAMenuFlyoutItem>
+                                    <ui:FAMenuFlyoutItem Text="WebDAV" Command="{Binding AddMediaSourceCommand}" CommandParameter="WebDAV">
+                                        <ui:FAMenuFlyoutItem.IconSource>
+                                            <ui:FAFontIconSource FontFamily="Segoe Fluent Icons" Glyph="&#xE774;" />
+                                        </ui:FAMenuFlyoutItem.IconSource>
+                                    </ui:FAMenuFlyoutItem>
+                                </ui:FAMenuFlyout>
+                            </DropDownButton.Flyout>
+                        </DropDownButton>
+                    </StackPanel>
+
+                </StackPanel>
+            </Border>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

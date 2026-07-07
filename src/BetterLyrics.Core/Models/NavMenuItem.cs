@@ -1,11 +1,10 @@
 ﻿using BetterLyrics.Core.Enums;
 
-namespace BetterLyrics.Core.Models
+namespace BetterLyrics.Core.Models;
+
+public class NavMenuItem
 {
-    public class NavMenuItem
-    {
-        public string Label { get; set; }
-        public string Glyph { get; set; }
-        public SettingsSection Section { get; set; }
-    }
+    public string Label { get; set; }
+    public string Glyph { get; set; }
+    public SettingsSection Section { get; set; }
 }

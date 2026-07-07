@@ -1,8 +1,6 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:lyricsmodels="using:BetterLyrics.WinUI3.Models.Lyrics"
-    xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls">
 
     <Style x:Key="LyricsCardBambooSlipsStyle" TargetType="uc:LyricsCard">
@@ -84,7 +82,6 @@
                                 VerticalScrollMode="Disabled">
                                 <ItemsControl
                                     x:Name="PART_LyricsItemsControl"
-                                    Grid.Column="0"
                                     Margin="20,40,0,40"
                                     FlowDirection="RightToLeft"
                                     FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"

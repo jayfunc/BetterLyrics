@@ -1,40 +1,34 @@
-﻿namespace BetterLyrics.Core.Helpers
+﻿using File = TagLib.File;
+
+namespace BetterLyrics.Core.Helpers;
+
+public class StreamFileAbstraction : File.IFileAbstraction
 {
-    public class StreamFileAbstraction : TagLib.File.IFileAbstraction
+    private readonly bool _closeStreamOnDispose;
+
+    public StreamFileAbstraction(string path, Stream? stream, bool closeStreamOnDispose = false)
     {
-        private readonly string _name;
-        private readonly Stream _stream;
-        private readonly bool _closeStreamOnDispose;
+        Name = Path.GetFileName(path);
+        ReadStream = stream ?? throw new ArgumentNullException(nameof(stream));
+        _closeStreamOnDispose = closeStreamOnDispose;
+    }
 
-        public StreamFileAbstraction(string path, Stream? stream, bool closeStreamOnDispose = false)
+    public string Name { get; }
+
+    public Stream ReadStream { get; }
+
+    public Stream WriteStream
+    {
+        get
         {
-            _name = Path.GetFileName(path);
-            _stream = stream ?? throw new ArgumentNullException(nameof(stream));
-            _closeStreamOnDispose = closeStreamOnDispose;
+            if (ReadStream.CanWrite) return ReadStream;
+            throw new InvalidOperationException(
+                "The underlying stream is read-only. Tag saving is not supported for this source.");
         }
+    }
 
-        public string Name => _name;
-
-        public Stream ReadStream => _stream;
-
-        public Stream WriteStream
-        {
-            get
-            {
-                if (_stream.CanWrite)
-                {
-                    return _stream;
-                }
-                throw new InvalidOperationException("The underlying stream is read-only. Tag saving is not supported for this source.");
-            }
-        }
-
-        public void CloseStream(Stream stream)
-        {
-            if (_closeStreamOnDispose)
-            {
-                stream?.Dispose();
-            }
-        }
+    public void CloseStream(Stream stream)
+    {
+        if (_closeStreamOnDispose) stream?.Dispose();
     }
 }

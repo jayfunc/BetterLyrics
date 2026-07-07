@@ -1,0 +1,155 @@
+<UserControl
+    x:Class="BetterLyrics.Avalonia.Controls.DemoWindowGrid"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="RootControl"
+    mc:Ignorable="d">
+
+    <Border Background="{DynamicResource AcrylicBackgroundFillColorBaseBrush}" CornerRadius="4">
+        <Grid>
+            <Border Margin="16">
+                <Viewbox Width="200" Height="100" Stretch="Uniform">
+                    <Border
+                        Width="{Binding #RootControl.LyricsWindowStatus.MonitorBounds.Width}"
+                        Height="{Binding #RootControl.LyricsWindowStatus.MonitorBounds.Height}"
+                        Background="{DynamicResource AcrylicBackgroundFillColorDefaultBrush}"
+                        CornerRadius="32">
+                        <Border
+                            Width="{Binding #RootControl.LyricsWindowStatus.WindowBounds.Width}"
+                            Height="{Binding #RootControl.LyricsWindowStatus.WindowBounds.Height}"
+                            Margin="{Binding #RootControl.LyricsWindowStatus.DemoWindowMargin, Converter={StaticResource AppThicknessToThicknessConverter}}"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Top"
+                            Background="{DynamicResource AccentAcrylicBackgroundFillColorDefaultBrush}"
+                            CornerRadius="32" />
+                    </Border>
+                </Viewbox>
+            </Border>
+
+            <Border Padding="6,3">
+                <Border CornerRadius="4">
+                    <Grid
+                        Margin="4"
+                        HorizontalAlignment="Left" VerticalAlignment="Top"
+                        Background="{DynamicResource AcrylicBackgroundFillColorBaseBrush}"
+                        Opacity="0.7"
+                        IsVisible="{Binding #RootControl.LyricsWindowStatus.IsDefault}">
+
+                        <TextBlock FontSize="12" TextWrapping="Wrap" Text="DemoWindowControlDefault" />
+                    </Grid>
+                </Border>
+            </Border>
+
+            <Border Padding="6,3">
+                <Border CornerRadius="4">
+                    <Grid
+                        Margin="4"
+                        HorizontalAlignment="Right" VerticalAlignment="Top"
+                        Background="{DynamicResource AcrylicBackgroundFillColorBaseBrush}"
+                        Opacity="0.7"
+                        IsVisible="{Binding #RootControl.LyricsWindowStatus.IsAlwaysOnTop}">
+
+                        <TextBlock FontFamily="{StaticResource SegoeFluentIcons}" FontSize="12" Text="&#xE718;" />
+                        <TextBlock FontFamily="{StaticResource SegoeFluentIcons}" FontSize="12" Text="&#xE841;"
+                                   IsVisible="{Binding #RootControl.LyricsWindowStatus.IsAlwaysOnTopPolling}" />
+                    </Grid>
+                </Border>
+            </Border>
+
+            <Border Padding="6,3">
+                <Border CornerRadius="4">
+                    <Grid
+                        Margin="4"
+                        HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                        Background="{DynamicResource AcrylicBackgroundFillColorBaseBrush}"
+                        Opacity="0.7"
+                        IsVisible="{Binding #RootControl.LyricsWindowStatus.IsLocked}">
+                        <TextBlock FontFamily="{StaticResource SegoeFluentIcons}" FontSize="12" Text="&#xE72E;" />
+                    </Grid>
+                </Border>
+            </Border>
+
+            <Border Padding="6">
+                <Grid Background="{DynamicResource AcrylicInAppFillColorDefaultBrush}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.Styles>
+                        <Style Selector="Grid">
+                            <Setter Property="Opacity" Value="0" />
+                            <Setter Property="Transitions">
+                                <Transitions>
+                                    <DoubleTransition Property="Opacity" Duration="0:0:0.2" />
+                                </Transitions>
+                            </Setter>
+                        </Style>
+                        <Style Selector="Grid:pointerover">
+                            <Setter Property="Opacity" Value="1" />
+                        </Style>
+                    </Grid.Styles>
+
+                    <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="0,0,3,0" Click="OpenButton_Click">
+                            <TextBlock FontFamily="{StaticResource SegoeFluentIcons}" FontSize="16" Text="&#xE78B;"/>
+                            <ToolTip.Tip>
+                                <TextBlock Text="SystemTrayLyrics" />
+                            </ToolTip.Tip>
+                        </Button>
+
+                        <Button Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="3,0,0,0" Click="CloseButton_Click"
+                                IsEnabled="{Binding #RootControl.LyricsWindowStatus.WindowStatus, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=0}">
+                            <TextBlock FontFamily="{StaticResource SegoeFluentIcons}" FontSize="16" Text="&#xE711;"/>
+                            <ToolTip.Tip>
+                                <TextBlock Text="SettingsPageCloseStatus" />
+                            </ToolTip.Tip>
+                        </Button>
+                    </Grid>
+
+                    <Grid Grid.Row="1" Margin="0,6,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <ToggleButton Grid.Column="0" HorizontalAlignment="Stretch" Margin="0,0,3,0"
+                                      IsChecked="{Binding #RootControl.LyricsWindowStatus.IsDefault, Mode=TwoWay}">
+                            <TextBlock FontSize="16" FontFamily="{StaticResource SegoeFluentIcons}" Text="&#xE80F;" HorizontalAlignment="Center"/>
+                            <ToolTip.Tip>
+                                <TextBlock Text="LyricsWindowSettingsControlSetDefault" />
+                            </ToolTip.Tip>
+                        </ToggleButton>
+
+                        <ToggleButton Grid.Column="1" HorizontalAlignment="Stretch" Margin="3,0,3,0"
+                                      IsChecked="{Binding #RootControl.LyricsWindowStatus.IsLocked, Mode=TwoWay}">
+                            <TextBlock FontSize="16" FontFamily="{StaticResource SegoeFluentIcons}" Text="&#xE72E;" HorizontalAlignment="Center"/>
+                        </ToggleButton>
+
+                        <ToggleButton Grid.Column="2" HorizontalAlignment="Stretch" Margin="3,0,0,0"
+                                      IsChecked="{Binding #RootControl.LyricsWindowStatus.IsAlwaysOnTop, Mode=TwoWay}">
+                            <Grid>
+                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}" FontSize="16" Text="&#xE840;" />
+                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}" FontSize="16" Text="&#xE841;" />
+                            </Grid>
+                        </ToggleButton>
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <Border
+                BorderBrush="{DynamicResource AccentAAFillColorDefaultBrush}"
+                BorderThickness="2"
+                CornerRadius="4"
+                IsVisible="{Binding #RootControl.LyricsWindowStatus.WindowStatus, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=0}" />
+        </Grid>
+    </Border>
+</UserControl>

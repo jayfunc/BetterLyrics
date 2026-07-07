@@ -1,11 +1,10 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum ShortcutId
 {
-    public enum ShortcutId
-    {
-        LyricsWindowShowOrHide,
-        LyricsWindowSwitch,
-        PlayOrPauseSong,
-        NextSong,
-        PreviousSong,
-    }
+    LyricsWindowShowOrHide,
+    LyricsWindowSwitch,
+    PlayOrPauseSong,
+    NextSong,
+    PreviousSong
 }

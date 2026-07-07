@@ -1,37 +1,22 @@
 ﻿using BetterLyrics.Core.Helpers;
+using BetterLyrics.WinUI3.Extensions;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media.Imaging;
 using System;
-using System.IO;
 
-namespace BetterLyrics.WinUI3.Converters
+namespace BetterLyrics.WinUI3.Converters;
+
+public partial class ByteArrayToImageConverter : IValueConverter
 {
-    public partial class ByteArrayToImageConverter : IValueConverter
+    public object Convert(object value, Type targetType, object parameter, string language)
     {
-        public object Convert(object value, Type targetType, object parameter, string language)
-        {
-            if (value is byte[] byteArray && byteArray.Length > 0)
-            {
-                try
-                {
-                    using (var ms = new MemoryStream(byteArray))
-                    {
-                        var stream = ms.AsRandomAccessStream();
+        if (value is byte[] byteArray) return BitmapImageExtensions.FromByteArray(byteArray);
 
-                        var bitmapImage = new BitmapImage();
-                        bitmapImage.SetSource(stream);
-                        return bitmapImage;
-                    }
-                }
-                catch { }
-            }
+        return new BitmapImage(new Uri(PathHelper.AlbumArtPlaceholderPath));
+    }
 
-            return new BitmapImage(new Uri(PathHelper.AlbumArtPlaceholderPath));
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, string language)
-        {
-            throw new NotImplementedException();
-        }
+    public object ConvertBack(object value, Type targetType, object parameter, string language)
+    {
+        throw new NotImplementedException();
     }
 }

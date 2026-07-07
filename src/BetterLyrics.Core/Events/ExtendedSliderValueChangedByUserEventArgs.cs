@@ -1,12 +1,11 @@
-﻿namespace BetterLyrics.Core.Events
-{
-    public class ExtendedSliderValueChangedByUserEventArgs : EventArgs
-    {
-        public double Value { get; set; }
+﻿namespace BetterLyrics.Core.Events;
 
-        public ExtendedSliderValueChangedByUserEventArgs(double value)
-        {
-            Value = value;
-        }
+public class ExtendedSliderValueChangedByUserEventArgs : EventArgs
+{
+    public ExtendedSliderValueChangedByUserEventArgs(double value)
+    {
+        Value = value;
     }
+
+    public double Value { get; set; }
 }

@@ -1,0 +1,67 @@
+<UserControl
+    x:Class="BetterLyrics.Avalonia.Controls.PluginManagerControl"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:settings="using:BetterLyrics.Core.Models.Settings"
+    xmlns:constants="using:BetterLyrics.Core.Constants"
+    xmlns:ui="using:FluentAvalonia.UI.Controls"
+    xmlns:local="using:BetterLyrics.Avalonia.Controls"
+    xmlns:vm="using:BetterLyrics.Core.ViewModels"
+    xmlns:strings="using:BetterLyrics.Avalonia.Strings"
+    x:DataType="vm:PluginManagerControlViewModel"
+    mc:Ignorable="d">
+
+    <Grid Margin="36,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" 
+                   Text="{x:Static strings:Resources.PluginManagerControlTitle_Text}" 
+                   Classes="SettingsSectionHeaderTextBlockStyle" />
+
+        <ui:FAInfoBar
+            Grid.Row="1"
+            Message="{x:Static strings:Resources.PluginManagerControlInfoBar_Message}"
+            IsClosable="False"
+            IsOpen="True"
+            Severity="Warning" />
+
+        <ItemsControl Grid.Row="2"
+                      ItemsSource="{Binding AppSettings.PluginsInfo}">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="settings:PluginInfo">
+                    <local:PluginItemControl PluginInfo="{Binding}" UninstallClicked="UninstallPluginButton_Click" />
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <StackPanel Grid.Row="2"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    IsVisible="{Binding IsListEmpty}">
+            <ui:FAFontIcon FontFamily="Segoe Fluent Icons" FontSize="48" Glyph="&#xE74C;" Opacity="0.3" />
+            <TextBlock Text="{x:Static strings:Resources.PluginManagerControlNoPluginsInstalled_Text}" 
+                       Margin="0,12,0,0" Opacity="0.5" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="2"
+                    Margin="0,0,0,20"
+                    HorizontalAlignment="Right"
+                    VerticalAlignment="Bottom"
+                    Orientation="Horizontal"
+                    Spacing="6">
+            <local:ExternalLinkButton Content="{x:Static strings:Resources.PluginManagerControlVisitPluginDevGuide_Content}"
+                                      NavigateUri="{x:Static constants:Link.PluginDevGuide}" />
+            <local:ExternalLinkButton Content="{x:Static strings:Resources.PluginManagerControlVisitPluginStore_Content}"
+                                      NavigateUri="{x:Static constants:Link.PluginsStore}" />
+            <Button Content="{x:Static strings:Resources.PluginManagerControlInstall_Content}"
+                    Command="{Binding InstallPluginCommand}"
+                    Classes="AccentButtonStyle" />
+        </StackPanel>
+    </Grid>
+</UserControl>

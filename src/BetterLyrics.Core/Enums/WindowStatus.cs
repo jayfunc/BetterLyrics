@@ -1,10 +1,9 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum WindowStatus
 {
-    public enum WindowStatus
-    {
-        Opened,
-        HiddenByUser,
-        HiddenBySystem,
-        Closed
-    }
+    Opened,
+    HiddenByUser,
+    HiddenBySystem,
+    Closed
 }

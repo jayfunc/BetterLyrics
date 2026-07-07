@@ -1,12 +1,11 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum SettingsSection
 {
-    public enum SettingsSection
-    {
-        App,
-        LyricsWindowMgr,
-        MediaLib,
-        PlaybackLib,
-        Plugins,
-        About
-    }
+    App,
+    LyricsWindowMgr,
+    MediaLib,
+    PlaybackLib,
+    Plugins,
+    About
 }

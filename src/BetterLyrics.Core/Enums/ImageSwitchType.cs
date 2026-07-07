@@ -1,8 +1,7 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum ImageSwitchType
 {
-    public enum ImageSwitchType
-    {
-        Crossfade,
-        Slide
-    }
+    Crossfade,
+    Slide
 }

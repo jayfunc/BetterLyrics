@@ -1,20 +1,19 @@
 ﻿using BetterLyrics.Sdk.Models.SettingsSchema;
 
-namespace BetterLyrics.Sdk.Interfaces.Plugins
+namespace BetterLyrics.Sdk.Interfaces.Plugins;
+
+public interface IPlugin : IAsyncDisposable
 {
-    public interface IPlugin : IAsyncDisposable
-    {
-        string Title { get; }
-        string Description { get; }
-        string Author { get; }
+    string Title { get; }
+    string Description { get; }
+    string Author { get; }
 
-        string Id { get; }
-        string Version { get; }
-        DateTime LastUpdated { get; }
+    string Id { get; }
+    string Version { get; }
+    DateTime LastUpdated { get; }
 
-        string RepositoryUrl { get; }
+    string RepositoryUrl { get; }
 
-        Task InitializeAsync(IPluginContext context);
-        Dictionary<string, SettingDef> GetSettingDefDict();
-    }
+    Task InitializeAsync(IPluginContext context);
+    Dictionary<string, SettingDef> GetSettingDefDict();
 }

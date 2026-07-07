@@ -1,8 +1,6 @@
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:lyricsmodels="using:BetterLyrics.WinUI3.Models.Lyrics"
-    xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls">
 
     <Style x:Key="LyricsCardTelegramStyle" TargetType="uc:LyricsCard">
@@ -86,7 +84,7 @@
                         </Grid>
 
                         <ScrollViewer Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Hidden">
-                            <StackPanel Grid.Row="1" Padding="0,16,0,24">
+                            <StackPanel Padding="0,16,0,24">
 
                                 <Border
                                     Margin="0,0,0,20"

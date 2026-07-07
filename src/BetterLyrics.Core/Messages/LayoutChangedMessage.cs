@@ -1,6 +1,5 @@
-﻿namespace BetterLyrics.Core.Messages
+﻿namespace BetterLyrics.Core.Messages;
+
+public class LayoutChangedMessage
 {
-    public class LayoutChangedMessage
-    {
-    }
 }

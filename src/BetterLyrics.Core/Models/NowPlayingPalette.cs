@@ -1,27 +1,26 @@
 ﻿using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Models.Domain;
 
-namespace BetterLyrics.Core.Models
+namespace BetterLyrics.Core.Models;
+
+public struct NowPlayingPalette
 {
-    public struct NowPlayingPalette
-    {
-        public AppColor SpectrumColor;
+    public AppColor SpectrumColor { get; set; }
 
-        public AppColor NonCurrentLineFillColor;
+    public AppColor NonCurrentLineFillColor { get; set; }
 
-        public AppColor PlayedCurrentLineFillColor;
-        public AppColor UnplayedCurrentLineFillColor;
+    public AppColor PlayedCurrentLineFillColor { get; set; }
+    public AppColor UnplayedCurrentLineFillColor { get; set; }
 
-        public AppColor PlayedTextStrokeColor;
-        public AppColor UnplayedTextStrokeColor;
+    public AppColor PlayedTextStrokeColor { get; set; }
+    public AppColor UnplayedTextStrokeColor { get; set; }
 
-        public AppColor UnderlayColor;
+    public AppColor UnderlayColor { get; set; }
 
-        public AppColor AccentColor1;
-        public AppColor AccentColor2;
-        public AppColor AccentColor3;
-        public AppColor AccentColor4;
+    public AppColor AccentColor1 { get; set; }
+    public AppColor AccentColor2 { get; set; }
+    public AppColor AccentColor3 { get; set; }
+    public AppColor AccentColor4 { get; set; }
 
-        public AppTheme ThemeType;
-    }
+    public AppTheme ThemeType { get; set; }
 }

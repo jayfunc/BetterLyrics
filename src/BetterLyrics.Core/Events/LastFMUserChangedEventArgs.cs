@@ -1,13 +1,13 @@
 ﻿using LiteFM.Abstractions;
 
-namespace BetterLyrics.Core.Events
+namespace BetterLyrics.Core.Events;
+
+public class LastFMUserChangedEventArgs : EventArgs
 {
-    public class LastFMUserChangedEventArgs : EventArgs
+    public LastFMUserChangedEventArgs(LastFMUser? user)
     {
-        public LastFMUser? User { get; set; }
-        public LastFMUserChangedEventArgs(LastFMUser? user)
-        {
-            User = user;
-        }
+        User = user;
     }
+
+    public LastFMUser? User { get; set; }
 }

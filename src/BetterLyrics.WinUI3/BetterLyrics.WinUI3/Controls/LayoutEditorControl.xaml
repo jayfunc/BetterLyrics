@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BetterLyrics.WinUI3.Models"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
-    xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:models1="using:BetterLyrics.Core.Models"
     IsTabStop="True"
     PreviewKeyDown="UserControl_PreviewKeyDown"
@@ -628,10 +627,14 @@
                                                 Grid.Column="0"
                                                 HorizontalAlignment="Stretch"
                                                 SelectedIndex="{x:Bind SelectedPlacement.HorizontalAlignment, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                                <ComboBoxItem x:Uid="LayoutEditorControlHorizontalAlignmentLeft" Tag="Left" />
-                                                <ComboBoxItem x:Uid="LayoutEditorControlHorizontalAlignmentCenter" Tag="Center" />
-                                                <ComboBoxItem x:Uid="LayoutEditorControlHorizontalAlignmentRight" Tag="Right" />
-                                                <ComboBoxItem x:Uid="LayoutEditorControlHorizontalAlignmentStretch" Tag="Stretch" />
+                                                <ComboBoxItem x:Uid="LayoutEditorControlHorizontalAlignmentLeft"
+                                                              Tag="Left" />
+                                                <ComboBoxItem x:Uid="LayoutEditorControlHorizontalAlignmentCenter"
+                                                              Tag="Center" />
+                                                <ComboBoxItem x:Uid="LayoutEditorControlHorizontalAlignmentRight"
+                                                              Tag="Right" />
+                                                <ComboBoxItem x:Uid="LayoutEditorControlHorizontalAlignmentStretch"
+                                                              Tag="Stretch" />
                                             </ComboBox>
                                             <ComboBox
                                                 x:Uid="LayoutEditorControlVerticalAlignmentBox"
@@ -639,9 +642,12 @@
                                                 HorizontalAlignment="Stretch"
                                                 SelectedIndex="{x:Bind SelectedPlacement.VerticalAlignment, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                                 <ComboBoxItem x:Uid="LayoutEditorControlVerticalAlignmentTop" Tag="Top" />
-                                                <ComboBoxItem x:Uid="LayoutEditorControlVerticalAlignmentCenter" Tag="Center" />
-                                                <ComboBoxItem x:Uid="LayoutEditorControlVerticalAlignmentBottom" Tag="Bottom" />
-                                                <ComboBoxItem x:Uid="LayoutEditorControlVerticalAlignmentStretch" Tag="Stretch" />
+                                                <ComboBoxItem x:Uid="LayoutEditorControlVerticalAlignmentCenter"
+                                                              Tag="Center" />
+                                                <ComboBoxItem x:Uid="LayoutEditorControlVerticalAlignmentBottom"
+                                                              Tag="Bottom" />
+                                                <ComboBoxItem x:Uid="LayoutEditorControlVerticalAlignmentStretch"
+                                                              Tag="Stretch" />
                                             </ComboBox>
                                         </Grid>
 

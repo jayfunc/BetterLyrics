@@ -1,78 +1,77 @@
-﻿using BetterLyrics.Core.Models;
-using BetterLyrics.Core.Models.Entities;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
+using BetterLyrics.Core.Models;
+using BetterLyrics.Core.Models.Entities;
 
-namespace BetterLyrics.Core.Extensions
+namespace BetterLyrics.Core.Extensions;
+
+public static class SongInfoExtensions
 {
-    public static class SongInfoExtensions
+    public static SongInfo Placeholder => new()
     {
-        public static SongInfo Placeholder => new()
+        Title = "N/A",
+        Album = "N/A",
+        Artist = "N/A"
+    };
+
+    extension(SongInfo songInfo)
+    {
+        public SongInfo WithTitle(string value)
         {
-            Title = "N/A",
-            Album = "N/A",
-            Artist = "N/A",
-        };
+            songInfo.Title = value;
+            return songInfo;
+        }
 
-        extension(SongInfo songInfo)
+        public SongInfo WithArtist(string value)
         {
-            public SongInfo WithTitle(string value)
+            songInfo.Artist = value;
+            return songInfo;
+        }
+
+        public SongInfo WithAlbum(string value)
+        {
+            songInfo.Album = value;
+            return songInfo;
+        }
+
+        public SongInfo WithSongId(string value)
+        {
+            songInfo.SongId = value;
+            return songInfo;
+        }
+
+        public PlayHistoryItem? ToPlayHistoryItem(double actualPlayedMs)
+        {
+            if (songInfo == null) return null;
+
+            return new PlayHistoryItem
             {
-                songInfo.Title = value;
-                return songInfo;
-            }
+                Title = songInfo.Title,
+                Artist = songInfo.Artist,
+                Album = songInfo.Album,
+                PlayerId = songInfo.PlayerId ?? "N/A",
+                TotalDurationMs = songInfo.DurationMs,
+                DurationPlayedMs = actualPlayedMs,
+                StartedAt = DateTime.FromBinary(songInfo.StartedAt)
+            };
+        }
 
-            public SongInfo WithArtist(string value)
-            {
-                songInfo.Artist = value;
-                return songInfo;
-            }
+        public string GetCacheKey()
+        {
+            var title = songInfo.Title?.Trim() ?? "";
+            var album = songInfo.Album?.Trim() ?? "";
 
-            public SongInfo WithAlbum(string value)
-            {
-                songInfo.Album = value;
-                return songInfo;
-            }
+            var artists = songInfo.Artist?.Trim() ?? "";
 
-            public SongInfo WithSongId(string value)
-            {
-                songInfo.SongId = value;
-                return songInfo;
-            }
+            var seconds = (long)Math.Round(songInfo.Duration);
+            var durationPart = seconds.ToString(CultureInfo.InvariantCulture);
 
-            public PlayHistoryItem? ToPlayHistoryItem(double actualPlayedMs)
-            {
-                if (songInfo == null) return null;
+            var rawKey = $"{title}|{artists}|{album}|{durationPart}";
 
-                return new PlayHistoryItem
-                {
-                    Title = songInfo.Title,
-                    Artist = songInfo.Artist,
-                    Album = songInfo.Album,
-                    PlayerId = songInfo.PlayerId ?? "N/A",
-                    TotalDurationMs = songInfo.DurationMs,
-                    DurationPlayedMs = actualPlayedMs,
-                    StartedAt = DateTime.FromBinary(songInfo.StartedAt)
-                };
-            }
-
-            public string GetCacheKey()
-            {
-                string title = songInfo.Title?.Trim() ?? "";
-                string album = songInfo.Album?.Trim() ?? "";
-
-                string artists = songInfo.Artist?.Trim() ?? "";
-
-                long seconds = (long)Math.Round(songInfo.Duration);
-                string durationPart = seconds.ToString(CultureInfo.InvariantCulture);
-
-                string rawKey = $"{title}|{artists}|{album}|{durationPart}";
-
-                using var sha256 = SHA256.Create();
-                byte[] bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(rawKey));
-                return Convert.ToHexString(bytes);
-            }
+            using var sha256 = SHA256.Create();
+            var bytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(rawKey));
+            return Convert.ToHexString(bytes);
         }
     }
 }

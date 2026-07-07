@@ -1,126 +1,125 @@
-﻿using BetterLyrics.Avalonia.Helpers;
+﻿using System;
+using System.Threading;
+using System.Threading.Tasks;
 using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace BetterLyrics.Avalonia.Services
+namespace BetterLyrics.Avalonia.Services;
+
+public partial class AppUpdateService : BaseViewModel, IAppUpdateService, IDisposable
 {
-    public partial class AppUpdateService : BaseViewModel, IAppUpdateService, IDisposable
+    private readonly IAppUIThreadProvider _appUIThreadProvider;
+    private readonly ILocalizationService _localizationService;
+
+    private readonly ISettingsService _settingsService;
+
+    // TODO
+    //private readonly StoreContext _storeContext;
+    private CancellationTokenSource? _cts;
+
+    public AppUpdateService(ILocalizationService localizationService, ISettingsService settingsService,
+        IAppUIThreadProvider appUIThreadProvider)
     {
-        private readonly ILocalizationService _localizationService;
-        private readonly ISettingsService _settingsService;
+        _localizationService = localizationService;
+        _settingsService = settingsService;
+        _appUIThreadProvider = appUIThreadProvider;
         // TODO
-        //private readonly StoreContext _storeContext;
-        private CancellationTokenSource? _cts;
+        //_storeContext = StoreContext.GetDefault();
+    }
 
-        [ObservableProperty]
-        public partial AppUpdateStatus AppUpdateStatus { get; set; } = AppUpdateStatus.ErrorOccured;
+    [ObservableProperty] public partial AppUpdateStatus AppUpdateStatus { get; set; } = AppUpdateStatus.ErrorOccured;
 
-        [ObservableProperty]
-        public partial string LatestVersion { get; set; } = "-";
+    [ObservableProperty] public partial string LatestVersion { get; set; } = "-";
 
-        public AppUpdateService(ILocalizationService localizationService, ISettingsService settingsService)
+    public void StartDailyCheck()
+    {
+        StopDailyCheck();
+        _cts = new CancellationTokenSource();
+
+        _ = Task.Run(() => CheckUpdatePeriodicallyAsync(_cts.Token));
+    }
+
+    public async Task UpdateAvailabilityAsync()
+    {
+        await Task.Delay(Time.WaitingDuration);
+
+        var appUpdateStatus = AppUpdateStatus.ErrorOccured;
+        var latestVersion = "-";
+
+//#if DEBUG
+//#else
+//            try
+//            {
+//                var packages = await _storeContext.GetAppAndOptionalStorePackageUpdatesAsync();
+//                if (packages != null && packages.Count > 0)
+//                {
+//                    appUpdateStatus = AppUpdateStatus.NewAvailable;
+//                    var version = packages[0].Package.Id.Version;
+//                    latestVersion = $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
+//                }
+//                else
+//                {
+//                    appUpdateStatus = AppUpdateStatus.UpToDate;
+//                }
+//            }
+//            catch (Exception)
+//            {
+//            }
+//#endif
+
+        if (appUpdateStatus == AppUpdateStatus.NewAvailable)
         {
-            _localizationService = localizationService;
-            _settingsService = settingsService;
-            // TODO
-            //_storeContext = StoreContext.GetDefault();
+            //var notification = new AppNotificationBuilder()
+            //    .AddText(_localizationService.GetLocalizedString("AppUpdateServiceUpdateAvailable"))
+            //    .AddText($"{_localizationService.GetLocalizedString("AppUpdateServiceNewVersionAvailable")}")
+            //    .AddButton(new AppNotificationButton(_localizationService.GetLocalizedString("AppUpdateServiceUpdateMS"))
+            //        .SetInvokeUri(new Uri(Link.StorePage))
+            //    )
+            //    .BuildNotification();
+            //AppNotificationManager.Default.Show(notification);
         }
 
-        public void StartDailyCheck()
-        {
-            StopDailyCheck();
-            _cts = new CancellationTokenSource();
+        _settingsService.AppSettings.GeneralSettings.LastAppUpateCheckDateTime = DateTime.Now;
 
-            _ = Task.Run(() => CheckUpdatePeriodicallyAsync(_cts.Token));
+        _appUIThreadProvider.Execute(() =>
+        {
+            AppUpdateStatus = appUpdateStatus;
+            LatestVersion = latestVersion;
+        });
+    }
+
+    public void Dispose()
+    {
+        StopDailyCheck();
+        GC.SuppressFinalize(this);
+    }
+
+    private void StopDailyCheck()
+    {
+        if (_cts != null && !_cts.IsCancellationRequested)
+        {
+            _cts.Cancel();
+            _cts.Dispose();
+            _cts = null;
         }
+    }
 
-        private void StopDailyCheck()
+    private async Task CheckUpdatePeriodicallyAsync(CancellationToken token)
+    {
+        await UpdateAvailabilityAsync();
+
+        using var timer = new PeriodicTimer(TimeSpan.FromDays(1));
+
+        try
         {
-            if (_cts != null && !_cts.IsCancellationRequested)
-            {
-                _cts.Cancel();
-                _cts.Dispose();
-                _cts = null;
-            }
+            while (await timer.WaitForNextTickAsync(token)) await UpdateAvailabilityAsync();
         }
-
-        private async Task CheckUpdatePeriodicallyAsync(CancellationToken token)
+        catch (OperationCanceledException)
         {
-            await UpdateAvailabilityAsync();
-
-            using var timer = new PeriodicTimer(TimeSpan.FromDays(1));
-
-            try
-            {
-                while (await timer.WaitForNextTickAsync(token))
-                {
-                    await UpdateAvailabilityAsync();
-                }
-            }
-            catch (OperationCanceledException)
-            {
-            }
-        }
-
-        public async Task UpdateAvailabilityAsync()
-        {
-            await Task.Delay(Time.WaitingDuration);
-
-            AppUpdateStatus appUpdateStatus = AppUpdateStatus.ErrorOccured;
-            string latestVersion = "-";
-
-#if DEBUG
-#else
-            try
-            {
-                var packages = await _storeContext.GetAppAndOptionalStorePackageUpdatesAsync();
-                if (packages != null && packages.Count > 0)
-                {
-                    appUpdateStatus = AppUpdateStatus.NewAvailable;
-                    var version = packages[0].Package.Id.Version;
-                    latestVersion = $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
-                }
-                else
-                {
-                    appUpdateStatus = AppUpdateStatus.UpToDate;
-                }
-            }
-            catch (Exception)
-            {
-            }
-#endif
-
-            if (appUpdateStatus == AppUpdateStatus.NewAvailable)
-            {
-                //var notification = new AppNotificationBuilder()
-                //    .AddText(_localizationService.GetLocalizedString("AppUpdateServiceUpdateAvailable"))
-                //    .AddText($"{_localizationService.GetLocalizedString("AppUpdateServiceNewVersionAvailable")}")
-                //    .AddButton(new AppNotificationButton(_localizationService.GetLocalizedString("AppUpdateServiceUpdateMS"))
-                //        .SetInvokeUri(new Uri(Link.StorePage))
-                //    )
-                //    .BuildNotification();
-                //AppNotificationManager.Default.Show(notification);
-            }
-
-            _settingsService.AppSettings.GeneralSettings.LastAppUpateCheckDateTime = DateTime.Now;
-
-            AppUIThread.Execute(() =>
-            {
-                AppUpdateStatus = appUpdateStatus;
-                LatestVersion = latestVersion;
-            });
-        }
-
-        public void Dispose()
-        {
-            StopDailyCheck();
-            GC.SuppressFinalize(this);
         }
     }
 }

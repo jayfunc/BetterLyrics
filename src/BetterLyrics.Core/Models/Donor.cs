@@ -1,8 +1,7 @@
-﻿namespace BetterLyrics.Core.Models
+﻿namespace BetterLyrics.Core.Models;
+
+public class Donor
 {
-    public class Donor
-    {
-        public string Date { get; set; }
-        public string PatronName { get; set; }
-    }
+    public string Date { get; set; }
+    public string PatronName { get; set; }
 }

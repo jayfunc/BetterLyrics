@@ -1,21 +1,12 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
+
 <Page
     x:Class="BetterLyrics.WinUI3.Views.MusicGalleryPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:atl="using:ATL"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:ext="using:BetterLyrics.WinUI3.Extensions"
-    xmlns:helper="using:BetterLyrics.WinUI3.Helper"
-    xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
-    xmlns:labs="using:CommunityToolkit.Labs.WinUI"
-    xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:media="using:CommunityToolkit.WinUI.Media"
-    xmlns:models="using:BetterLyrics.WinUI3.Models"
-    xmlns:muxm="using:Microsoft.UI.Xaml.Media"
-    xmlns:settingsmodels="using:BetterLyrics.WinUI3.Models.Settings"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:enums1="using:BetterLyrics.Core.Enums"
@@ -256,7 +247,8 @@
                                             <Button.Flyout>
                                                 <MenuFlyout>
                                                     <!--  从播放列表移除  -->
-                                                    <MenuFlyoutItem x:Uid="MusicGalleryPageRemoveFromCustomList" Click="RemoveFromPlaylistMenuFlyoutItem_Click" />
+                                                    <MenuFlyoutItem x:Uid="MusicGalleryPageRemoveFromCustomList"
+                                                                    Click="RemoveFromPlaylistMenuFlyoutItem_Click" />
                                                     <MenuFlyoutItem
                                                         x:Uid="MusicGalleryPageOpenInFileExplorer"
                                                         Click="OpenPlaylistInFileExplorerMenuFlyoutItem_Click"
@@ -458,7 +450,8 @@
                                 <Run Text="{x:Bind ViewModel.SelectedTracks.Count, Mode=OneWay}" />
                                 <Run Text="/" />
                                 <Run Text="{x:Bind GroupedTracksCVS.View.Count, Mode=OneWay}" />
-                                <Run Text="{x:Bind ViewModel.SelectedTracksTotalDuration, Mode=OneWay, Converter={StaticResource SecondsToFormattedTimeConverter}}" />
+                                <Run
+                                    Text="{x:Bind ViewModel.SelectedTracksTotalDuration, Mode=OneWay, Converter={StaticResource SecondsToFormattedTimeConverter}}" />
                             </Paragraph>
                         </RichTextBlock>
                     </Grid>
@@ -511,12 +504,15 @@
                             ItemsSource="{x:Bind GroupedTracksCVS.View, Mode=OneWay}"
                             RightTapped="SongListView_RightTapped"
                             SelectionChanged="SongListView_SelectionChanged"
-                            SelectionMode="{x:Bind ViewModel.SongListViewSelectionMode, Mode=TwoWay}">
+                            SelectionMode="{x:Bind ViewModel.SongListViewSelectionMode, Mode=TwoWay, Converter={StaticResource AppListViewSelectionModeToListViewSelectionModeConverter}}">
                             <ListView.ContextFlyout>
                                 <MenuBarItemFlyout Opened="AddToMenuBarItemFlyout_Opened">
-                                    <MenuFlyoutSubItem x:Uid="MusicGalleryPageAddToPlayingQueue" IsEnabled="{x:Bind ViewModel.SelectedTracks.Count, Mode=OneWay, Converter={StaticResource IntToBoolConverter}}">
-                                        <MenuFlyoutItem x:Uid="MusicGalleryPageAddToNext" Click="AddSongToQueueNextMenuFlyoutItem_Click" />
-                                        <MenuFlyoutItem x:Uid="MusicGalleryPageAddToEnd" Click="AddSongToQueueEndMenuFlyoutItem_Click" />
+                                    <MenuFlyoutSubItem x:Uid="MusicGalleryPageAddToPlayingQueue"
+                                                       IsEnabled="{x:Bind ViewModel.SelectedTracks.Count, Mode=OneWay, Converter={StaticResource IntToBoolConverter}}">
+                                        <MenuFlyoutItem x:Uid="MusicGalleryPageAddToNext"
+                                                        Click="AddSongToQueueNextMenuFlyoutItem_Click" />
+                                        <MenuFlyoutItem x:Uid="MusicGalleryPageAddToEnd"
+                                                        Click="AddSongToQueueEndMenuFlyoutItem_Click" />
                                     </MenuFlyoutSubItem>
                                     <MenuFlyoutSubItem
                                         x:Name="AddToCustomListMenuFlyoutSubItem"
@@ -532,7 +528,8 @@
                             <ListView.GroupStyle>
                                 <GroupStyle>
                                     <GroupStyle.HeaderContainerStyle>
-                                        <Style BasedOn="{StaticResource InteractiveListViewHeaderStyle}" TargetType="ListViewHeaderItem" />
+                                        <Style BasedOn="{StaticResource InteractiveListViewHeaderStyle}"
+                                               TargetType="ListViewHeaderItem" />
                                     </GroupStyle.HeaderContainerStyle>
                                     <GroupStyle.HeaderTemplate>
                                         <DataTemplate x:DataType="models1:GroupInfoList">
@@ -542,7 +539,8 @@
                                 </GroupStyle>
                             </ListView.GroupStyle>
                             <ListView.ItemContainerStyle>
-                                <Style BasedOn="{StaticResource ListViewStretchedItemContainerStyle}" TargetType="ListViewItem" />
+                                <Style BasedOn="{StaticResource ListViewStretchedItemContainerStyle}"
+                                       TargetType="ListViewItem" />
                             </ListView.ItemContainerStyle>
                         </ListView>
                     </SemanticZoom.ZoomedInView>
@@ -562,7 +560,8 @@
                     </SemanticZoom.ZoomedOutView>
                 </SemanticZoom>
 
-                <Grid Grid.Row="3" Visibility="{x:Bind ViewModel.IsLocalMediaNotFound, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                <Grid Grid.Row="3"
+                      Visibility="{x:Bind ViewModel.IsLocalMediaNotFound, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                     <StackPanel
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
@@ -583,7 +582,8 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
-                    <controls:SwitchPresenter Value="{x:Bind ViewModel.AppSettings.MusicGallerySettings.TrackInfoDisplayTarget, Mode=OneWay}">
+                    <controls:SwitchPresenter
+                        Value="{x:Bind ViewModel.AppSettings.MusicGallerySettings.TrackInfoDisplayTarget, Mode=OneWay}">
                         <controls:SwitchPresenter.ContentTransitions>
                             <TransitionCollection>
                                 <AddDeleteThemeTransition />
@@ -593,7 +593,8 @@
                             <uc:TrackDetailCard ExtendedTrack="{x:Bind ViewModel.SelectedFirstTrack, Mode=OneWay}" />
                         </controls:Case>
                         <controls:Case Value="{x:Bind enums1:TrackInfoDisplayTarget.PlayingItem}">
-                            <uc:TrackDetailCard ExtendedTrack="{x:Bind ViewModel.SMTCService.PlayingTrack, Mode=OneWay}" />
+                            <uc:TrackDetailCard
+                                ExtendedTrack="{x:Bind ViewModel.SMTCService.PlayingTrack, Mode=OneWay}" />
                         </controls:Case>
                     </controls:SwitchPresenter>
                     <controls:Segmented
@@ -601,12 +602,14 @@
                         HorizontalAlignment="Right"
                         VerticalAlignment="Bottom"
                         SelectedIndex="{x:Bind ViewModel.AppSettings.MusicGallerySettings.TrackInfoDisplayTarget, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                        <controls:SegmentedItem Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE962;}">
+                        <controls:SegmentedItem
+                            Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE962;}">
                             <ToolTipService.ToolTip>
                                 <ToolTip x:Uid="MusicGalleryPageSelectedTrackDetail" />
                             </ToolTipService.ToolTip>
                         </controls:SegmentedItem>
-                        <controls:SegmentedItem Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEC4F;}">
+                        <controls:SegmentedItem
+                            Icon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEC4F;}">
                             <ToolTipService.ToolTip>
                                 <ToolTip x:Uid="MusicGalleryPagePlayingTrackDetail" />
                             </ToolTipService.ToolTip>

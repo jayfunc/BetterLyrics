@@ -1,8 +1,7 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum ChineseRomanization
 {
-    public enum ChineseRomanization
-    {
-        Pinyin,
-        Jyutping,
-    }
+    Pinyin,
+    Jyutping
 }

@@ -1,10 +1,9 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum Direction
 {
-    public enum Direction
-    {
-        Left,
-        Up,
-        Right,
-        Down
-    }
+    Left,
+    Up,
+    Right,
+    Down
 }

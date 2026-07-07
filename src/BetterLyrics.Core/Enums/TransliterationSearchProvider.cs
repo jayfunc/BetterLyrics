@@ -1,17 +1,16 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum TransliterationSearchProvider
 {
-    public enum TransliterationSearchProvider
-    {
-        QQ,
-        Kugou,
-        Netease,
-        LrcLib,
-        AmllTtmlDb,
-        AppleMusic,
-        LocalMusicFile,
-        LocalLrcFile,
-        LocalEslrcFile,
-        LocalTtmlFile,
-        BetterLyrics,
-    }
+    QQ,
+    Kugou,
+    Netease,
+    LrcLib,
+    AmllTtmlDb,
+    AppleMusic,
+    LocalMusicFile,
+    LocalLrcFile,
+    LocalEslrcFile,
+    LocalTtmlFile,
+    BetterLyrics
 }

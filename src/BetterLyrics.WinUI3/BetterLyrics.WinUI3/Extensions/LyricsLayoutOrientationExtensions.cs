@@ -1,18 +1,20 @@
-﻿using BetterLyrics.Core.Enums;
+﻿using System;
+using BetterLyrics.Core.Enums;
 using Microsoft.UI.Xaml.Controls;
-using System;
 
-namespace BetterLyrics.WinUI3.Extensions
+namespace BetterLyrics.WinUI3.Extensions;
+
+public static class LyricsLayoutOrientationExtensions
 {
-    public static class LyricsLayoutOrientationExtensions
+    extension(LyricsLayoutOrientation orientation)
     {
-        extension(LyricsLayoutOrientation orientation)
+        public Orientation ToOrientation()
         {
-            public Orientation ToOrientation() => orientation switch
+            return orientation switch
             {
                 LyricsLayoutOrientation.Horizontal => Orientation.Horizontal,
                 LyricsLayoutOrientation.Vertical => Orientation.Vertical,
-                _ => throw new ArgumentOutOfRangeException(nameof(orientation)),
+                _ => throw new ArgumentOutOfRangeException(nameof(orientation))
             };
         }
     }

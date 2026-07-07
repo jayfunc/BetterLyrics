@@ -1,68 +1,66 @@
-﻿using Microsoft.Graphics.Canvas;
+﻿using System;
+using Microsoft.Graphics.Canvas;
 using SpoutDx.Net.Interop;
-using System;
 using Vanara.PInvoke;
 using Vortice.Direct3D11;
 using WinRT;
 
-namespace BetterLyrics.WinUI3.Hooks
+namespace BetterLyrics.WinUI3.Hooks;
+
+/// <summary>
+///     Co-author:
+///     1) <see href="https://github.com/cnbluefire" />
+///     2) <see href="https://github.com/Raspberry-Monster" />
+/// </summary>
+public partial class SpoutTextureHook : IDisposable
 {
-    /// <summary>
-    /// Co-author:
-    /// 1) <see href="https://github.com/cnbluefire"/>
-    /// 2) <see href="https://github.com/Raspberry-Monster"/>
-    /// </summary>
-    public partial class SpoutTextureHook : IDisposable
+    private static readonly Guid DxgiInterfaceAccessGuid = new("A9B3D012-3DF2-4EE3-B8D1-8695F457D3C1");
+    private bool _isDisposed;
+    private SpoutSender? _sender;
+
+    public string SenderName { get; private set; } = "BetterLyrics (Disabled)";
+
+    public void Dispose()
     {
-        private SpoutSender? _sender;
-        private bool _isDisposed;
+        if (_isDisposed) return;
 
-        private static readonly Guid DxgiInterfaceAccessGuid = new("A9B3D012-3DF2-4EE3-B8D1-8695F457D3C1");
+        _sender?.Dispose();
+        _sender = null;
 
-        public string SenderName { get; private set; } = "BetterLyrics (Disabled)";
+        _isDisposed = true;
+    }
 
-        public void Initialize(CanvasDevice device, string senderName)
+    public void Initialize(CanvasDevice device, string senderName)
+    {
+        if (device == null) return;
+
+        var deviceObject = device.As<IWinRTObject>();
+        HRESULT result = deviceObject.NativeObject.TryAs(DxgiInterfaceAccessGuid, out var pointer);
+
+        if (result == HRESULT.S_OK)
         {
-            if (device == null) return;
+            using var access = new IDirect3DDxgiInterfaceAccess(pointer);
+            using var d3dDevice = access.GetInterface<ID3D11Device>();
 
-            var deviceObject = device.As<IWinRTObject>();
-            HRESULT result = deviceObject.NativeObject.TryAs(DxgiInterfaceAccessGuid, out var pointer);
-
-            if (result == HRESULT.S_OK)
+            _sender = new SpoutSender(d3dDevice.NativePointer)
             {
-                using var access = new IDirect3DDxgiInterfaceAccess(pointer);
-                using var d3dDevice = access.GetInterface<ID3D11Device>();
-
-                _sender = new SpoutSender(d3dDevice.NativePointer)
-                {
-                    Name = senderName
-                };
-                SenderName = senderName;
-            }
+                Name = senderName
+            };
+            SenderName = senderName;
         }
+    }
 
-        public void SendTexture(CanvasRenderTarget renderTarget)
+    public void SendTexture(CanvasRenderTarget renderTarget)
+    {
+        if (_sender == null || renderTarget == null) return;
+
+        HRESULT success = renderTarget.As<IWinRTObject>().NativeObject.TryAs(DxgiInterfaceAccessGuid, out var pointer);
+
+        if (success == HRESULT.S_OK)
         {
-            if (_sender == null || renderTarget == null) return;
-
-            HRESULT success = renderTarget.As<IWinRTObject>().NativeObject.TryAs(DxgiInterfaceAccessGuid, out var pointer);
-
-            if (success == HRESULT.S_OK)
-            {
-                using var access = new IDirect3DDxgiInterfaceAccess(pointer);
-                using var texture = access.GetInterface<ID3D11Texture2D>();
-                _sender.SendTexture(texture.NativePointer);
-            }
-        }
-
-        public void Dispose()
-        {
-            if (_isDisposed) return;
-
-            _sender?.Dispose();
-            _sender = null;
-
-            _isDisposed = true;
+            using var access = new IDirect3DDxgiInterfaceAccess(pointer);
+            using var texture = access.GetInterface<ID3D11Texture2D>();
+            _sender.SendTexture(texture.NativePointer);
         }
     }
 }

@@ -1,11 +1,11 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum AlbumArtSearchProvider
 {
-    public enum AlbumArtSearchProvider
-    {
-        Local,
-        SMTC,
-        iTunes,
-        Kugou,
-        //Netease,
-    }
+    Local,
+    SMTC,
+    iTunes,
+
+    Kugou
+    //Netease,
 }

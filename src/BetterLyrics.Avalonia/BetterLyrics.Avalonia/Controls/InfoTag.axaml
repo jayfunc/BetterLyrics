@@ -1,0 +1,49 @@
+<UserControl
+    x:Class="BetterLyrics.Avalonia.Controls.InfoTag"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:ui="using:FluentAvalonia.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:BetterLyrics.Avalonia.Controls"
+    x:Name="RootControl"
+    x:DataType="local:InfoTag"
+    mc:Ignorable="d">
+
+    <UserControl.Styles>
+        <Style Selector="Border#BadgeBorder">
+            <Setter Property="Padding" Value="6,2" />
+            <Setter Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource CardStrokeColorDefaultBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="4" />
+        </Style>
+
+        <Style Selector="Border#BadgeBorder.hasLink:pointerover">
+            <Setter Property="Background" Value="{DynamicResource CardBackgroundFillColorSecondaryBrush}" />
+            <Setter Property="Cursor" Value="Hand" />
+        </Style>
+    </UserControl.Styles>
+
+    <Border x:Name="BadgeBorder" 
+            Classes.hasLink="{Binding #RootControl.HasLink}"
+            PointerPressed="OnTapped">
+        
+        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+            <ui:FAFontIcon
+                Margin="0,0,4,0"
+                FontFamily="Segoe Fluent Icons"
+                FontSize="10"
+                Foreground="{DynamicResource TextFillColorTertiaryBrush}"
+                Glyph="{Binding #RootControl.Glyph}"
+                IsVisible="{Binding #RootControl.HasIcon}" />
+
+            <TextBlock
+                FontWeight="SemiBold"
+                Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                Theme="{DynamicResource CaptionTextBlockStyle}"
+                Text="{Binding #RootControl.Text}"
+                IsVisible="{Binding #RootControl.HasText}" />
+        </StackPanel>
+    </Border>
+</UserControl>

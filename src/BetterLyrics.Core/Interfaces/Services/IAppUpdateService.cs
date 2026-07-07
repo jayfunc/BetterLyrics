@@ -1,14 +1,13 @@
 ﻿using BetterLyrics.Core.Enums;
 
-namespace BetterLyrics.Core.Interfaces.Services
+namespace BetterLyrics.Core.Interfaces.Services;
+
+public interface IAppUpdateService
 {
-    public interface IAppUpdateService
-    {
-        AppUpdateStatus AppUpdateStatus { get; }
-        string LatestVersion { get; }
+    AppUpdateStatus AppUpdateStatus { get; }
+    string LatestVersion { get; }
 
-        public void StartDailyCheck();
+    public void StartDailyCheck();
 
-        Task UpdateAvailabilityAsync();
-    }
+    Task UpdateAvailabilityAsync();
 }

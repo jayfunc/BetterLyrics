@@ -1,4 +1,5 @@
 <Application xmlns="https://github.com/avaloniaui"
+             xmlns:converters="using:BetterLyrics.Avalonia.Converters"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="using:BetterLyrics.Avalonia"
              xmlns:styling="using:FluentAvalonia.Styling"
@@ -7,14 +8,55 @@
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
 
     <Application.DataTemplates>
-        <local:ViewLocator/>
+        <local:ViewLocator />
     </Application.DataTemplates>
 
     <Application.Resources>
         <FontFamily x:Key="SegoeFluentIcons">avares://BetterLyrics.Avalonia/Assets/Fonts/SegoeFluentIcons.ttf#Segoe Fluent Icons</FontFamily>
+        <FontFamily x:Key="SloganCNFont">avares:///BetterLyrics.Avalonia/Assets/Fonts/SloganCNFont.ttf#LXGW WenKai Lite</FontFamily>
+        <FontFamily x:Key="SloganENFont">avares:///BetterLyrics.Avalonia/Assets/Fonts/SloganENFont.ttf#Lora</FontFamily>
+
+        <converters:EnumToIntConverter x:Key="EnumToIntConverter" />
+        <converters:EnumToBoolConverter x:Key="EnumToBoolConverter" />
+        <converters:DisplayLanguageCodeToIndexConverter x:Key="DisplayLanguageCodeToIndexConverter" />
+        <converters:IntToBoolConverter x:Key="IntToBoolConverter" />
+        <converters:MillisecondsToFormattedTimeConverter x:Key="MillisecondsToFormattedTimeConverter" />
+        <converters:SecondsToFormattedTimeConverter x:Key="SecondsToFormattedTimeConverter" />
+        <converters:AppThicknessToThicknessConverter x:Key="AppThicknessToThicknessConverter" />
     </Application.Resources>
 
     <Application.Styles>
-        <styling:FluentAvaloniaTheme  />
+        <styling:FluentAvaloniaTheme />
+        <Style Selector="Border.CardBorderStyle">
+            <Setter Property="Background" Value="{DynamicResource CardBackgroundFillColorDefaultBrush}" />
+            <Setter Property="BorderBrush" Value="{DynamicResource CardStrokeColorDefaultBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="{DynamicResource ControlCornerRadius}" />
+        </Style>
+        <Style Selector="Border.SettingsBorderStyle">
+            <Setter Property="Padding" Value="0,0,0,36" />
+        </Style>
+        <Style Selector="ScrollViewer.SettingsScrollViewerStyle">
+            <Setter Property="Padding" Value="36,0" />
+        </Style>
+        <Style Selector="TextBlock.SettingsSectionHeaderTextBlockStyle">
+            <Style.Setters>
+                <Setter Property="Margin" Value="1,30,0,6" />
+            </Style.Setters>
+        </Style>
+        <Style Selector="Button.TitleBarButtonStyle">
+            <Setter Property="VerticalAlignment" Value="Top" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="16,9,16,9" />
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
+        <Style Selector="Button.GhostButtonStyle">
+            <Setter Property="VerticalAlignment" Value="Stretch" />
+            <Setter Property="Padding" Value="8" />
+            <Setter Property="CornerRadius" Value="4" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Background" Value="Transparent" />
+        </Style>
     </Application.Styles>
 </Application>

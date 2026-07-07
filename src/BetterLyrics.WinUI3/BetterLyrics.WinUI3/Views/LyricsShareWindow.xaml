@@ -1,4 +1,5 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8"?>
+
 <Window
     x:Class="BetterLyrics.WinUI3.Views.LyricsShareWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"

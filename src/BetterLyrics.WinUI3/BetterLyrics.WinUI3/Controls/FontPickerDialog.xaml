@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
+
 <ContentDialog
     x:Class="BetterLyrics.WinUI3.Controls.FontPickerDialog"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -7,22 +8,16 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models="using:BetterLyrics.WinUI3.Models"
-    xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:models1="using:BetterLyrics.Core.Models"
+    xmlns:ui="using:CommunityToolkit.WinUI"
     DefaultButton="Primary"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     Style="{StaticResource DefaultContentDialogStyle}"
     mc:Ignorable="d">
 
-    <ContentDialog.Resources>
-        <x:Double x:Key="ContentDialogMaxWidth">800</x:Double>
-    </ContentDialog.Resources>
+    <ContentDialog.Resources />
 
-    <Grid
-        Width="700"
-        Height="400"
-        ColumnSpacing="12">
+    <Grid MinWidth="500" ColumnSpacing="12">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
             <ColumnDefinition Width="*" />
@@ -111,24 +106,33 @@
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
                             <Grid Grid.Row="0">
-                                <Grid Margin="0,6">
+                                <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="42" />
                                         <ColumnDefinition Width="*" />
                                     </Grid.ColumnDefinitions>
                                     <FontIcon
                                         Grid.Column="0"
-                                        Margin="16,0"
                                         FontFamily="Segoe UI Symbol"
                                         FontSize="16"
                                         Glyph="&#x283F;" />
-                                    <StackPanel Grid.Column="1">
-                                        <TextBlock FontFamily="{x:Bind FontFamily}" Text="{x:Bind LocalizedFontFamily}" />
+                                    <Grid Grid.Column="1" Margin="0,6,6,6">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
                                         <TextBlock
+                                            Grid.Row="0"
+                                            FontFamily="{x:Bind FontFamily}"
+                                            Text="{x:Bind LocalizedFontFamily}"
+                                            TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Grid.Row="1"
                                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                             Style="{StaticResource CaptionTextBlockStyle}"
-                                            Text="{x:Bind LocalizedFontFamily}" />
-                                    </StackPanel>
+                                            Text="{x:Bind LocalizedFontFamily}"
+                                            TextWrapping="Wrap" />
+                                    </Grid>
                                 </Grid>
                                 <local:DragIndicator Width="42" />
                                 <Grid
@@ -146,18 +150,14 @@
                                             <interactivity:ChangePropertyAction PropertyName="Opacity" Value="0" />
                                         </interactivity:EventTriggerBehavior>
                                     </interactivity:Interaction.Behaviors>
-                                    <StackPanel
-                                        Margin="0,0,10,0"
-                                        HorizontalAlignment="Right"
-                                        Orientation="Horizontal"
-                                        Spacing="6">
+                                    <Grid Margin="0,0,10,0" HorizontalAlignment="Right">
                                         <Button
                                             Padding="6"
                                             Click="RemoveFont_Click"
                                             Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                                   FontSize=16,
                                                                   Glyph=&#xE738;}" />
-                                    </StackPanel>
+                                    </Grid>
                                 </Grid>
                             </Grid>
                             <Grid

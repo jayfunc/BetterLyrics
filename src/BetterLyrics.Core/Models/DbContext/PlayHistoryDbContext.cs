@@ -1,12 +1,13 @@
 ﻿using BetterLyrics.Core.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace BetterLyrics.Core.Models.DbContext
-{
-    public partial class PlayHistoryDbContext : Microsoft.EntityFrameworkCore.DbContext
-    {
-        public PlayHistoryDbContext(DbContextOptions<PlayHistoryDbContext> options) : base(options) { }
+namespace BetterLyrics.Core.Models.DbContext;
 
-        public DbSet<PlayHistoryItem> PlayHistory { get; set; }
+public class PlayHistoryDbContext : Microsoft.EntityFrameworkCore.DbContext
+{
+    public PlayHistoryDbContext(DbContextOptions<PlayHistoryDbContext> options) : base(options)
+    {
     }
+
+    public DbSet<PlayHistoryItem> PlayHistory { get; set; }
 }

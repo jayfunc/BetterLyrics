@@ -1,41 +1,27 @@
-﻿using Avalonia;
+﻿using System;
+using System.Linq;
+using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using BetterLyrics.Avalonia.Extensions;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Models.Domain;
-using System;
-using System.Linq;
 
-namespace BetterLyrics.Avalonia.Providers
+namespace BetterLyrics.Avalonia.Providers;
+
+public class SystemUIProvider : ISystemUIProvider
 {
-    public class SystemUIProvider : ISystemUIProvider
+    public AppColor GetAccentColor(nint myHwnd, WindowPixelSampleMode mode)
     {
-        public AppColor GetAccentColor(nint myHwnd, WindowPixelSampleMode mode)
-        {
-            throw new NotImplementedException();
-        }
+        throw new NotImplementedException();
+    }
 
-        public (string, AppRect) GetPrimaryMonitorInfo()
-        {
-            var lifetime = Application.Current?.ApplicationLifetime as IClassicDesktopStyleApplicationLifetime;
-            var mainWindow = lifetime?.MainWindow;
+    public AppTheme GetAppTheme()
+    {
+        throw new NotImplementedException();
+    }
 
-            if (mainWindow?.Screens != null)
-            {
-                var primaryScreen = mainWindow.Screens.All.FirstOrDefault(s => s.IsPrimary);
-                if (primaryScreen != null)
-                {
-                    return (primaryScreen.DisplayName ?? string.Empty, primaryScreen.Bounds.ToAppRect());
-                }
-            }
-
-            return (string.Empty, AppRect.Empty);
-        }
-
-        public void ShowToast(string localizedTitleKey, string? message = null, MessageSeverity severity = MessageSeverity.Informational, TimeSpan? duration = null)
-        {
-            throw new NotImplementedException();
-        }
+    public void SetAppLanguage(string languageCode)
+    {
     }
 }

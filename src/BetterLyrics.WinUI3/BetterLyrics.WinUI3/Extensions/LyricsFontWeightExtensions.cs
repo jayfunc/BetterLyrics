@@ -1,7 +1,7 @@
-using BetterLyrics.Core.Enums;
-using Microsoft.UI.Text;
 using System;
 using Windows.UI.Text;
+using BetterLyrics.Core.Enums;
+using Microsoft.UI.Text;
 
 namespace BetterLyrics.WinUI3.Extensions;
 
@@ -22,7 +22,7 @@ public static class LyricsFontWeightExtensions
             LyricsFontWeight.ExtraBold => FontWeights.ExtraBold,
             LyricsFontWeight.Black => FontWeights.Black,
             LyricsFontWeight.ExtraBlack => FontWeights.ExtraBlack,
-            _ => throw new ArgumentOutOfRangeException(nameof(weight), weight, null),
+            _ => throw new ArgumentOutOfRangeException(nameof(weight), weight, null)
         };
     }
 }

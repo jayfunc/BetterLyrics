@@ -1,19 +1,18 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-namespace BetterLyrics.Core.Enums
+namespace BetterLyrics.Core.Enums;
+
+public enum LyricsFontWeight
 {
-    public enum LyricsFontWeight
-    {
-        Thin,
-        ExtraLight,
-        Light,
-        SemiLight,
-        Normal,
-        Medium,
-        SemiBold,
-        Bold,
-        ExtraBold,
-        Black,
-        ExtraBlack,
-    }
+    Thin,
+    ExtraLight,
+    Light,
+    SemiLight,
+    Normal,
+    Medium,
+    SemiBold,
+    Bold,
+    ExtraBold,
+    Black,
+    ExtraBlack
 }

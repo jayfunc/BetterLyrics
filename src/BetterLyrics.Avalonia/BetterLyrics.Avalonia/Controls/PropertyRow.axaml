@@ -1,0 +1,94 @@
+<UserControl
+    x:Class="BetterLyrics.Avalonia.Controls.PropertyRow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:BetterLyrics.Avalonia.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:FluentAvalonia.UI.Controls"
+    xmlns:strings="using:BetterLyrics.Avalonia.Strings"
+    x:Name="RootControl"
+    x:DataType="local:PropertyRow"
+    mc:Ignorable="d">
+
+    <Grid HorizontalAlignment="Left" ColumnSpacing="6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <TextBlock
+            Grid.Column="0"
+            VerticalAlignment="Top"
+            Text="{Binding Header, ElementName=RootControl}" />
+
+        <Grid x:Name="ContentArea" Grid.Column="1" VerticalAlignment="Top">
+
+            <Grid.Styles>
+                <Style Selector="Grid#ContentArea Button#CopyButton">
+                    <Setter Property="Opacity" Value="0" />
+                    <Setter Property="IsHitTestVisible" Value="False" />
+                    <Setter Property="Transitions">
+                        <Transitions>
+                            <DoubleTransition Property="Opacity" Duration="0:0:0.2" />
+                        </Transitions>
+                    </Setter>
+                </Style>
+                <Style Selector="Grid#ContentArea:pointerover Button#CopyButton">
+                    <Setter Property="Opacity" Value="1" />
+                    <Setter Property="IsHitTestVisible" Value="True" />
+                </Style>
+            </Grid.Styles>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <Grid Grid.Column="0">
+                <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                           IsVisible="{Binding #RootControl.Link, Converter={x:Static StringConverters.IsNullOrEmpty}}"
+                           TextWrapping="Wrap">
+                    <Run Text="{Binding #RootControl.Value}" />
+                    <Run Text="{Binding #RootControl.Unit}" />
+                </TextBlock>
+
+                <local:ExternalLinkButton
+                    Margin="0,-2,0,0"
+                    Padding="0"
+                    HorizontalContentAlignment="Left"
+                    Click="OnLinkClicked"
+                    IsVisible="{Binding #RootControl.Link, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                    <TextBlock Text="{Binding #RootControl.Value}" TextWrapping="Wrap" />
+                </local:ExternalLinkButton>
+            </Grid>
+
+            <Button
+                x:Name="CopyButton"
+                Grid.Column="1"
+                Margin="8,-2,0,0"
+                Padding="4"
+                VerticalAlignment="Top"
+                Click="OnCopyClicked"
+                Theme="{DynamicResource TransparentButtonTheme}">
+                <ToolTip.Tip>
+                    <TextBlock Text="{x:Static strings:Resources.Copy_Content}" />
+                </ToolTip.Tip>
+                <Grid>
+                    <ui:FAFontIcon
+                        x:Name="CopyIcon"
+                        FontFamily="Segoe Fluent Icons"
+                        FontSize="16"
+                        Glyph="&#xE8C8;"
+                        IsVisible="True" />
+                    <ui:FAFontIcon
+                        x:Name="CheckIcon"
+                        FontFamily="Segoe Fluent Icons"
+                        FontSize="16"
+                        Glyph="&#xE73E;"
+                        IsVisible="False" />
+                </Grid>
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>

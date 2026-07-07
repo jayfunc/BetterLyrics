@@ -1,0 +1,46 @@
+<UserControl
+    x:Class="BetterLyrics.Avalonia.Controls.PluginItemControl"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:BetterLyrics.Avalonia.Controls"
+    xmlns:ui="using:FluentAvalonia.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="RootControl"
+    x:DataType="local:PluginItemControl"
+    mc:Ignorable="d">
+
+    <ui:FASettingsExpander x:Name="RootExpander" IsExpanded="False" Description="{Binding #RootControl.PluginInfo.Plugin.Description}" >
+        <ui:FASettingsExpander.Header>
+            <StackPanel Spacing="2">
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                    <TextBlock Text="{Binding #RootControl.PluginInfo.Plugin.Id}" />
+                    <local:InfoTag Glyph="&#xE77B;" Text="{Binding #RootControl.PluginInfo.Plugin.Author}" />
+                </StackPanel>
+            </StackPanel>
+        </ui:FASettingsExpander.Header>
+
+        <ui:FASettingsExpander.Footer>
+            <StackPanel Orientation="Vertical" Spacing="4">
+                <StackPanel Orientation="Horizontal" Spacing="4">
+                    <local:InfoTag Glyph="&#xE8EC;" Text="{Binding #RootControl.PluginInfo.Plugin.Version}" />
+                    <local:InfoTag Glyph="&#xE943;" Link="{Binding #RootControl.PluginInfo.Plugin.RepositoryUrl}" />
+                </StackPanel>
+                <local:InfoTag Glyph="&#xE787;" Text="{Binding #RootControl.PluginInfo.Plugin.LastUpdated}" HorizontalAlignment="Right" />
+            </StackPanel>
+        </ui:FASettingsExpander.Footer>
+
+        <ui:FASettingsExpanderItem>
+            <ui:FASettingsExpanderItem.Footer>
+                <ToggleSwitch IsChecked="{Binding PluginInfo.IsEnabled, ElementName=RootControl, Mode=TwoWay}" 
+                              IsCheckedChanged="ToggleSwitch_Toggled" />
+            </ui:FASettingsExpanderItem.Footer>
+        </ui:FASettingsExpanderItem>
+
+        <ui:FASettingsExpanderItem>
+            <ui:FASettingsExpanderItem.Footer>
+                <Button Content="Uninstall" Click="UninstallClick" />
+            </ui:FASettingsExpanderItem.Footer>
+        </ui:FASettingsExpanderItem>
+    </ui:FASettingsExpander>
+</UserControl>

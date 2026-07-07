@@ -1,20 +1,19 @@
-﻿using Microsoft.UI.Xaml;
+﻿using System;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
-using System;
 
-namespace BetterLyrics.WinUI3.Converters
+namespace BetterLyrics.WinUI3.Converters;
+
+public partial class IntToVisibilityConverter : IValueConverter
 {
-    public partial class IntToVisibilityConverter : IValueConverter
+    public object Convert(object value, Type targetType, object parameter, string language)
     {
-        public object Convert(object value, Type targetType, object parameter, string language)
-        {
-            int threshold = int.Parse(parameter?.ToString() ?? "0");
-            return value is int intVal && intVal != threshold ? Visibility.Visible : Visibility.Collapsed;
-        }
+        var threshold = int.Parse(parameter?.ToString() ?? "0");
+        return value is int intVal && intVal != threshold ? Visibility.Visible : Visibility.Collapsed;
+    }
 
-        public object ConvertBack(object value, Type targetType, object parameter, string language)
-        {
-            throw new NotImplementedException();
-        }
+    public object ConvertBack(object value, Type targetType, object parameter, string language)
+    {
+        throw new NotImplementedException();
     }
 }

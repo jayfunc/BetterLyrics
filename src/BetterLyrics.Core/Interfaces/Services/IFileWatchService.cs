@@ -1,6 +1,5 @@
-﻿namespace BetterLyrics.Core.Interfaces.Services
+﻿namespace BetterLyrics.Core.Interfaces.Services;
+
+public interface IFileWatchService
 {
-    public interface IFileWatchService
-    {
-    }
 }

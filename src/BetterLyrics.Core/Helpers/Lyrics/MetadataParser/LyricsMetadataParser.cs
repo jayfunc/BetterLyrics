@@ -1,21 +1,16 @@
 ﻿using BetterLyrics.Core.Models.Lyrics;
 
-namespace BetterLyrics.Core.Helpers.Lyrics.MetadataParser
+namespace BetterLyrics.Core.Helpers.Lyrics.MetadataParser;
+
+public partial class LyricsMetadataParser
 {
-    public partial class LyricsMetadataParser
+    public static LyricsMetadata Parse(string content, string ext)
     {
-        public static LyricsMetadata Parse(string content, string ext)
-        {
-            LyricsMetadata metadata = new();
-            if (ext == ".ttml")
-            {
-                metadata = LyricsMetadataParser.ParseTtml(content);
-            }
-            else
-            {
-                metadata = LyricsMetadataParser.ParseLrc(content);
-            }
-            return metadata;
-        }
+        LyricsMetadata metadata = new();
+        if (ext == ".ttml")
+            metadata = ParseTtml(content);
+        else
+            metadata = ParseLrc(content);
+        return metadata;
     }
 }

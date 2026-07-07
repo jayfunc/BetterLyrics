@@ -1,54 +1,52 @@
 using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Extensions;
-using BetterLyrics.WinUI3.Hooks;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 
-namespace BetterLyrics.WinUI3.Views
+namespace BetterLyrics.WinUI3.Views;
+
+public sealed partial class SettingsWindow : Window,
+    IRecipient<PropertyChangedMessage<AppTheme>>
 {
-    public sealed partial class SettingsWindow : Window,
-        IRecipient<PropertyChangedMessage<AppTheme>>
+    private readonly IWindowManagerProvider _windowManagerProvider =
+        Ioc.Default.GetRequiredService<IWindowManagerProvider>();
+
+    public SettingsWindow()
     {
-        public SettingsWindow()
-        {
-            InitializeComponent();
+        InitializeComponent();
 
-            WeakReferenceMessenger.Default.RegisterAll(this);
+        WeakReferenceMessenger.Default.RegisterAll(this);
 
-            this.Init("SettingsPageTitle");
-            this.SyncTheme();
+        this.Init("SettingsPageTitle");
+        this.SyncTheme();
 
-            AppWindow.Closing += AppWindow_Closing;
-        }
+        AppWindow.Closing += AppWindow_Closing;
+    }
 
-        private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
-        {
-            this.CloseWindow();
-        }
+    public void Receive(PropertyChangedMessage<AppTheme> message)
+    {
+        if (message.Sender is GeneralSettings)
+            if (message.PropertyName == nameof(GeneralSettings.AppTheme))
+                this.SyncTheme();
+    }
 
-        private void MusicGalleryButton_Click(object sender, RoutedEventArgs e)
-        {
-            WindowHook.OpenOrShowWindow<MusicGalleryWindow>();
-        }
+    private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
+    {
+        _windowManagerProvider.CloseWindow(this);
+    }
 
-        private void LyricsWindowSwitchButton_Click(object sender, RoutedEventArgs e)
-        {
-            WindowHook.OpenOrShowWindow<LyricsWindowSwitchWindow>();
-        }
+    private void MusicGalleryButton_Click(object sender, RoutedEventArgs e)
+    {
+        _windowManagerProvider.OpenOrShowWindow<MusicGalleryWindow>();
+    }
 
-        public void Receive(PropertyChangedMessage<AppTheme> message)
-        {
-            if (message.Sender is GeneralSettings)
-            {
-                if (message.PropertyName == nameof(GeneralSettings.AppTheme))
-                {
-                    this.SyncTheme();
-                }
-            }
-        }
-
+    private void LyricsWindowSwitchButton_Click(object sender, RoutedEventArgs e)
+    {
+        _windowManagerProvider.OpenOrShowWindow<LyricsWindowSwitchWindow>();
     }
 }

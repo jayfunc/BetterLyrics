@@ -1,7 +1,6 @@
-namespace BetterLyrics.Core.Interfaces.Providers
+namespace BetterLyrics.Core.Interfaces.Providers;
+
+public interface IStringConverterProvider
 {
-    public interface IStringConverterProvider
-    {
-        string RomajiToKanji(string romaji);
-    }
+    string RomajiToKanji(string romaji);
 }

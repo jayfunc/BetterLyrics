@@ -1,13 +1,12 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum ComponentType
 {
-    public enum ComponentType
-    {
-        None,
-        Lyrics,
-        LyricsCard,
-        AlbumArt,
-        SongTitle,
-        SongArtist,
-        SongAlbum,
-    }
+    None,
+    Lyrics,
+    LyricsCard,
+    AlbumArt,
+    SongTitle,
+    SongArtist,
+    SongAlbum
 }

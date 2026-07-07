@@ -1,11 +1,10 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum WindowPixelSampleMode
 {
-    public enum WindowPixelSampleMode
-    {
-        BelowWindow,
-        AboveWindow,
-        WindowArea,
-        WindowEdge,
-        Wallpaper,
-    }
+    BelowWindow,
+    AboveWindow,
+    WindowArea,
+    WindowEdge,
+    Wallpaper
 }

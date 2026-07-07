@@ -1,0 +1,153 @@
+<Window
+    x:Class="BetterLyrics.Avalonia.Views.NowPlayingWindow"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:BetterLyrics.Avalonia.Views"
+    xmlns:uc="using:BetterLyrics.Avalonia.Controls"
+    xmlns:strings="using:BetterLyrics.Avalonia.Strings"
+    xmlns:ui="using:FluentAvalonia.UI.Controls"
+    x:Name="RootWindow"
+    Closed="Window_Closed"
+    mc:Ignorable="d">
+
+    <Grid x:Name="RootGrid" Loaded="RootGrid_Loaded" SizeChanged="RootGrid_SizeChanged">
+
+        <local:NowPlayingPage x:Name="NowPlayingPage" />
+
+        <Grid x:Name="TopCommandGrid" VerticalAlignment="Top" Background="Transparent">
+            <Grid.Styles>
+                <Style Selector="Grid#TopCommandGrid">
+                    <Setter Property="Opacity" Value="0" />
+                    <Setter Property="Transitions">
+                        <Transitions>
+                            <DoubleTransition Property="Opacity" Duration="0:0:0.2" />
+                        </Transitions>
+                    </Setter>
+                </Style>
+                <Style Selector="Grid#TopCommandGrid:pointerover">
+                    <Setter Property="Opacity" Value="1" />
+                </Style>
+            </Grid.Styles>
+
+            <Grid x:Name="TopLeftCommandGrid" HorizontalAlignment="Left">
+                <Border Padding="3" >
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal" Spacing="3">
+
+                        <Button Click="MusicGalleryButton_Click" Classes="TitleBarButtonStyle">
+                            <ui:FAFontIcon FontFamily="Segoe Fluent Icons" FontSize="12" Glyph="&#xE8F1;" />
+                            <ToolTip.Tip>
+                                <TextBlock Text="{x:Static strings:Resources.HostWindowMusicGalleryButtonToolTip_Content}" />
+                            </ToolTip.Tip>
+                        </Button>
+
+                        <Button x:Name="SettingsWindowButton" Click="SettingsWindowButton_Click" Classes="TitleBarButtonStyle">
+                            <ui:FAFontIcon FontFamily="Segoe Fluent Icons" FontSize="12" Glyph="&#xE713;" />
+                            <ToolTip.Tip>
+                                <TextBlock Text="{x:Static strings:Resources.HostWindowSettingsButtonToolTip_Content}" />
+                            </ToolTip.Tip>
+                        </Button>
+
+                        <Button Click="LyricsWindowSwitchButton_Click" Classes="TitleBarButtonStyle">
+                            <ui:FAFontIcon FontFamily="Segoe Fluent Icons" FontSize="12" Glyph="&#xE8AB;" />
+                            <ToolTip.Tip>
+                                <TextBlock Text="{x:Static strings:Resources.LyricsWindowSwitchButtonToolTip_Content}" />
+                            </ToolTip.Tip>
+                        </Button>
+
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Grid x:Name="TopRightCommandGrid" HorizontalAlignment="Right">
+                <Border Padding="3">
+                    <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Spacing="3">
+
+                        <Button x:Name="LockButton" Click="LockButton_Click" Classes="TitleBarButtonStyle">
+                            <ui:FAFontIcon FontFamily="Segoe Fluent Icons" FontSize="12" Glyph="&#xE72E;" />
+                        </Button>
+
+                        <Button x:Name="AOTButton" Click="AOTButton_Click" Classes="TitleBarButtonStyle">
+                            <Grid>
+                                <ui:FAFontIcon FontFamily="Segoe Fluent Icons" FontSize="12" Glyph="&#xE840;" />
+                                <ui:FAFontIcon x:Name="PinFillFontIcon" FontFamily="Segoe Fluent Icons" FontSize="12" Glyph="&#xE841;"
+                                               IsVisible="False" />
+                            </Grid>
+                        </Button>
+
+                        <Button x:Name="FullscreenButton" Click="FullscreenButton_Click" Classes="TitleBarButtonStyle">
+                            <Grid>
+                                <ui:FAFontIcon x:Name="EnterFullscreenFontIcon" FontFamily="Segoe Fluent Icons" FontSize="12" Glyph="&#xE740;" />
+                                <ui:FAFontIcon x:Name="ExitFullscreenFontIcon" FontFamily="Segoe Fluent Icons" FontSize="12" Glyph="&#xE73F;" IsVisible="False" />
+                            </Grid>
+                        </Button>
+
+                        <Button x:Name="MinimizeButton" Click="MinimizeButton_Click" Classes="TitleBarButtonStyle">
+                            <ui:FAFontIcon FontFamily="Segoe Fluent Icons" FontSize="12" Glyph="&#xE738;" />
+                        </Button>
+
+                        <Button x:Name="MaximizeButton" Click="MaximizeButton_Click" Classes="TitleBarButtonStyle">
+                            <Grid>
+                                <ui:FAFontIcon x:Name="EnterMaximizeFontIcon" FontFamily="Segoe Fluent Icons" FontSize="12" Glyph="&#xE71A;" />
+                                <ui:FAFontIcon x:Name="ExitMaximizeFontIcon" FontFamily="Segoe Fluent Icons" FontSize="12" Glyph="&#xE744;" IsVisible="False" />
+                            </Grid>
+                        </Button>
+
+                        <Button x:Name="CloseButton" Click="CloseButton_Click" Classes="TitleBarButtonStyle">
+                            <ui:FAFontIcon FontFamily="Segoe Fluent Icons" FontSize="12" Glyph="&#xE711;" />
+                        </Button>
+
+                    </StackPanel>
+                </Border>
+            </Grid>
+
+            <Grid x:Name="TopCenterCommandGrid" HorizontalAlignment="Stretch">
+                <Border Padding="3" >
+                    <Button HorizontalAlignment="Stretch" Classes="TitleBarButtonStyle">
+                        <ui:FAFontIcon FontFamily="Segoe Fluent Icons" FontSize="12" Glyph="&#xE712;" />
+                        <Button.Flyout>
+                            <Flyout FlyoutPresenterClasses="FlyoutGhostStyle" Placement="Bottom">
+                                <Grid x:Name="TopCommandFlyoutContainer" Width="450" Height="38" />
+                            </Flyout>
+                        </Button.Flyout>
+                    </Button>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <Grid VerticalAlignment="Bottom">
+            <uc:NowPlayingBar
+                x:Name="NowPlayingBar"
+                Padding="16"
+                IsAutoHideEnabled="True"
+                ShowTime="True" />
+        </Grid>
+
+        <Grid x:Name="LockToggleButtonContainer" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+            <Grid.Styles>
+                <Style Selector="Button#UnlockButton">
+                    <Setter Property="Opacity" Value="0" />
+                    <Setter Property="Transitions">
+                        <Transitions>
+                            <DoubleTransition Property="Opacity" Duration="0:0:0.2" />
+                        </Transitions>
+                    </Setter>
+                </Style>
+                <Style Selector="Button#UnlockButton:pointerover">
+                    <Setter Property="Opacity" Value="1" />
+                </Style>
+            </Grid.Styles>
+            <Border Padding="3" >
+                <Button x:Name="UnlockButton"
+                        Click="UnlockButton_Click"
+                        Classes="AccentButtonStyle"
+                        IsHitTestVisible="True">
+                    <ui:FAFontIcon FontFamily="Segoe Fluent Icons" FontSize="12" Glyph="&#xE785;" />
+                </Button>
+            </Border>
+        </Grid>
+
+    </Grid>
+</Window>

@@ -2,13 +2,12 @@
 
 using CommunityToolkit.Mvvm.ComponentModel;
 
-namespace BetterLyrics.Core.ViewModels
+namespace BetterLyrics.Core.ViewModels;
+
+public class BaseViewModel : ObservableRecipient
 {
-    public partial class BaseViewModel : ObservableRecipient
+    public BaseViewModel()
     {
-        public BaseViewModel()
-        {
-            IsActive = true;
-        }
+        IsActive = true;
     }
 }

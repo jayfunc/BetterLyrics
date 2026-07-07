@@ -1,0 +1,38 @@
+<UserControl
+    x:Class="BetterLyrics.Avalonia.Controls.ShortcutTextBox"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:FluentAvalonia.UI.Controls"
+    xmlns:strings="using:BetterLyrics.Avalonia.Strings"
+    mc:Ignorable="d">
+
+    <Grid>
+        <StackPanel Orientation="Horizontal">
+            <TextBox
+                x:Name="TextBox"
+                IsReadOnly="True"
+                KeyDown="TextBox_KeyDown"
+                Loaded="TextBox_Loaded" />
+            
+            <Button
+                Margin="3,0,0,0"
+                HorizontalAlignment="Right"
+                Click="ClearButton_Click"
+                Theme="{DynamicResource TransparentButtonTheme}"
+                ToolTip.Tip="{x:Static strings:Resources.SettingsPageClear_Content}">
+                <ui:FAFontIcon FontFamily="Segoe Fluent Icons" FontSize="12" Glyph="&#xE894;" />
+            </Button>
+            
+            <Button
+                Margin="3,0,0,0"
+                HorizontalAlignment="Right"
+                Click="CheckButton_Click"
+                Theme="{DynamicResource TransparentButtonTheme}"
+                ToolTip.Tip="{x:Static strings:Resources.SettingsPageCheckShortcut_Content}">
+                <ui:FAFontIcon FontFamily="Segoe Fluent Icons" FontSize="12" Glyph="&#xE721;" />
+            </Button>
+        </StackPanel>
+    </Grid>
+</UserControl>

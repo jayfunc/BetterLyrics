@@ -1,9 +1,8 @@
-﻿namespace BetterLyrics.Core.Enums
+﻿namespace BetterLyrics.Core.Enums;
+
+public enum PlaybackOrder
 {
-    public enum PlaybackOrder
-    {
-        RepeatAll,
-        RepeatOne,
-        Shuffle,
-    }
+    RepeatAll,
+    RepeatOne,
+    Shuffle
 }

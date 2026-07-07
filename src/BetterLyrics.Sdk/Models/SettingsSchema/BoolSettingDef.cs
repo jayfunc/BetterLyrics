@@ -1,4 +1,5 @@
-﻿namespace BetterLyrics.Sdk.Models.SettingsSchema
+﻿namespace BetterLyrics.Sdk.Models.SettingsSchema;
+
+public class BoolSettingDef : SettingDef
 {
-    public class BoolSettingDef : SettingDef { }
 }

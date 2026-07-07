@@ -1,46 +1,50 @@
-﻿using Microsoft.UI.Xaml;
+﻿using System;
+using Microsoft.UI.Xaml;
 using Microsoft.Win32;
-using System;
 
-namespace BetterLyrics.WinUI3.Hooks
+namespace BetterLyrics.WinUI3.Hooks;
+
+public static class SystemThemeHook
 {
-    public static class SystemThemeHook
+    private static readonly DispatcherTimer? _timer;
+    private static ApplicationTheme _lastTheme;
+
+    static SystemThemeHook()
     {
-        private static DispatcherTimer? _timer;
-        private static ApplicationTheme _lastTheme;
-        public static event Action<ApplicationTheme>? ThemeChanged;
+        _lastTheme = GetCurrentMode();
 
-        static SystemThemeHook()
+        _timer = new DispatcherTimer();
+        _timer.Interval = TimeSpan.FromSeconds(1);
+        _timer.Tick += (s, e) =>
         {
-            _lastTheme = GetCurrentMode();
-
-            _timer = new DispatcherTimer();
-            _timer.Interval = TimeSpan.FromSeconds(1);
-            _timer.Tick += (s, e) =>
+            var current = GetCurrentMode();
+            if (current != _lastTheme)
             {
-                var current = GetCurrentMode();
-                if (current != _lastTheme)
-                {
-                    _lastTheme = current;
-                    ThemeChanged?.Invoke(current);
-                }
-            };
-            _timer.Start();
-        }
-
-        public static ApplicationTheme GetCurrentMode()
-        {
-            try
-            {
-                using var key = Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize");
-                if (key != null)
-                {
-                    int value = (int)key.GetValue("SystemUsesLightTheme", 1);
-                    return value == 1 ? ApplicationTheme.Light : ApplicationTheme.Dark;
-                }
+                _lastTheme = current;
+                ThemeChanged?.Invoke(current);
             }
-            catch { }
-            return ApplicationTheme.Dark;
+        };
+        _timer.Start();
+    }
+
+    public static event Action<ApplicationTheme>? ThemeChanged;
+
+    public static ApplicationTheme GetCurrentMode()
+    {
+        try
+        {
+            using var key =
+                Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize");
+            if (key != null)
+            {
+                var value = (int)key.GetValue("SystemUsesLightTheme", 1);
+                return value == 1 ? ApplicationTheme.Light : ApplicationTheme.Dark;
+            }
         }
+        catch
+        {
+        }
+
+        return ApplicationTheme.Dark;
     }
 }
