@@ -1,10 +1,11 @@
-﻿using System;
+using System;
 using Avalonia;
 using Avalonia.Media;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Avalonia.Extensions; // Adjusted namespace
-using BetterLyrics.Avalonia.Models.Lyrics; // Adjusted namespace
+using BetterLyrics.Avalonia.Models.Lyrics;
+using System.Collections.Generic; // Adjusted namespace
 
 namespace BetterLyrics.Avalonia.Renderer.LyricsRenderer;
 
@@ -33,7 +34,7 @@ public partial class LyricsRenderer : EffectRendererBase, IDisposable
 
     public LyricsWindowStatus? LyricsWindowStatus { get; set; }
 
-    public System.Collections.Generic.IList<RenderLyricsLine>? RenderLyricsLines { get; set; }
+    public IList<RenderLyricsLine>? RenderLyricsLines { get; set; }
 
     public void Dispose()
     {
@@ -71,14 +72,17 @@ public partial class LyricsRenderer : EffectRendererBase, IDisposable
     {
         if (LyricsWindowStatus == null) return;
         
-        var bounds = new Rect(LyricsX, LyricsY, LyricsWidth, LyricsHeight);
-
         if (_edgeFadeMaskRenderer.Brush != null &&
             (!LyricsWindowStatus.LyricsStyleSettings.AutoWrap ||
              LyricsWindowStatus.LyricsEffectSettings.IsLyricsEdgeFeatheringEffectEnabled))
         {
+            var isVertical = LyricsWindowStatus.LyricsStyleSettings.LyricsLayoutOrientation == LyricsLayoutOrientation.Vertical;
+            var maskBounds = isVertical
+                ? new Rect(LyricsX, LyricsY - 16, LyricsWidth, LyricsHeight + 32)
+                : new Rect(LyricsX - 16, LyricsY, LyricsWidth + 32, LyricsHeight);
+
             // Replaces ds.CreateLayer(_edgeFadeMaskRenderer.Brush)
-            using (context.PushOpacityMask(_edgeFadeMaskRenderer.Brush, bounds))
+            using (context.PushOpacityMask(_edgeFadeMaskRenderer.Brush, maskBounds))
             {
                 DrawLyrics(context);
             }
@@ -164,7 +168,9 @@ public partial class LyricsRenderer : EffectRendererBase, IDisposable
                 // Multiply the scale transition with the bass energy scale inherited from EffectRendererBase
                 scale *= _currentScale; 
             }
-            transform *= Matrix.CreateScale(scale, scale);
+            transform *= Matrix.CreateTranslation(-line.CenterPosition.X, -line.CenterPosition.Y) * 
+                         Matrix.CreateScale(scale, scale) * 
+                         Matrix.CreateTranslation(line.CenterPosition.X, line.CenterPosition.Y);
 
             // 2. Rotation Matrix (Fan Lyrics)
             if (effectSettings.IsFanLyricsEnabled)
@@ -175,12 +181,12 @@ public partial class LyricsRenderer : EffectRendererBase, IDisposable
                 if (isVertical)
                 {
                     currentYOffset += angleRatio * (LyricsHeight / 2) * (effectSettings.FanLyricsAngle < 0 ? 1 : -1);
-                    transform *= Matrix.CreateRotation(angle, line.CenterPosition.ToPoint());
+                    transform *= Matrix.CreateRotation(angle, new Point(line.CenterPosition.X, fanAnchorY));
                 }
                 else
                 {
                     currentXOffset += angleRatio * (LyricsWidth / 2) * (effectSettings.FanLyricsAngle < 0 ? 1 : -1);
-                    transform *= Matrix.CreateRotation(angle, line.CenterPosition.ToPoint());
+                    transform *= Matrix.CreateRotation(angle, new Point(fanAnchorX, line.CenterPosition.Y));
                 }
             }
 

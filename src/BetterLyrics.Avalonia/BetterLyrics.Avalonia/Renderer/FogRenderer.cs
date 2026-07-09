@@ -16,19 +16,6 @@ public partial class FogRenderer : EffectRendererBase, IDisposable // Assuming E
 
     public bool IsEnabled { get; set; } = false;
 
-    // TODO: Paste your translated SkSL fog shader code here.
-    private const string SkSlShaderCode = @"
-        uniform vec2 u_resolution;
-        uniform float u_time;
-
-        vec4 main(vec2 fragCoord) {
-            // Your fog logic here, e.g., fbm (fractal brownian motion)
-            // Normalized pixel coordinates (from 0 to 1)
-            vec2 uv = fragCoord / u_resolution.xy;
-            return vec4(1.0, 1.0, 1.0, 0.5); // Placeholder return
-        }
-    ";
-
     public void Dispose()
     {
         _fogEffect?.Dispose();
@@ -39,7 +26,7 @@ public partial class FogRenderer : EffectRendererBase, IDisposable // Assuming E
     {
         Dispose();
 
-        var result = SKRuntimeEffect.CreateShader(SkSlShaderCode, out var error);
+        var result = SKRuntimeEffect.CreateShader(Shaders.FogEffect.SkSlShaderCode, out var error);
         if (result == null)
         {
             throw new InvalidOperationException($"Fog shader compilation failed: {error}");

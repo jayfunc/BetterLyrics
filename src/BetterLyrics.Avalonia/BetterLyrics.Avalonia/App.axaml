@@ -12,17 +12,29 @@
     </Application.DataTemplates>
 
     <Application.Resources>
-        <FontFamily x:Key="SegoeFluentIcons">avares://BetterLyrics.Avalonia/Assets/Fonts/SegoeFluentIcons.ttf#Segoe Fluent Icons</FontFamily>
-        <FontFamily x:Key="SloganCNFont">avares:///BetterLyrics.Avalonia/Assets/Fonts/SloganCNFont.ttf#LXGW WenKai Lite</FontFamily>
-        <FontFamily x:Key="SloganENFont">avares:///BetterLyrics.Avalonia/Assets/Fonts/SloganENFont.ttf#Lora</FontFamily>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Controls/AutoScrollView.axaml"/>
+            </ResourceDictionary.MergedDictionaries>
 
-        <converters:EnumToIntConverter x:Key="EnumToIntConverter" />
-        <converters:EnumToBoolConverter x:Key="EnumToBoolConverter" />
-        <converters:DisplayLanguageCodeToIndexConverter x:Key="DisplayLanguageCodeToIndexConverter" />
-        <converters:IntToBoolConverter x:Key="IntToBoolConverter" />
-        <converters:MillisecondsToFormattedTimeConverter x:Key="MillisecondsToFormattedTimeConverter" />
-        <converters:SecondsToFormattedTimeConverter x:Key="SecondsToFormattedTimeConverter" />
-        <converters:AppThicknessToThicknessConverter x:Key="AppThicknessToThicknessConverter" />
+            <FontFamily x:Key="SegoeFluentIcons">avares://BetterLyrics.Avalonia/Assets/Fonts/SegoeFluentIcons.ttf#Segoe Fluent Icons</FontFamily>
+            <FontFamily x:Key="SloganCNFont">avares:///BetterLyrics.Avalonia/Assets/Fonts/SloganCNFont.ttf#LXGW WenKai Lite</FontFamily>
+            <FontFamily x:Key="SloganENFont">avares:///BetterLyrics.Avalonia/Assets/Fonts/SloganENFont.ttf#Lora</FontFamily>
+
+            <converters:EnumToIntConverter x:Key="EnumToIntConverter" />
+            <converters:EnumToBoolConverter x:Key="EnumToBoolConverter" />
+            <converters:DisplayLanguageCodeToIndexConverter x:Key="DisplayLanguageCodeToIndexConverter" />
+            <converters:IntToBoolConverter x:Key="IntToBoolConverter" />
+            <converters:MillisecondsToFormattedTimeConverter x:Key="MillisecondsToFormattedTimeConverter" />
+            <converters:SecondsToFormattedTimeConverter x:Key="SecondsToFormattedTimeConverter" />
+            <converters:AppThicknessToThicknessConverter x:Key="AppThicknessToThicknessConverter" />
+            <converters:AppColorToColorConverter x:Key="AppColorToColorConverter" />
+            <converters:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter" />
+            <converters:BoolToOpacityConverter x:Key="BoolToOpacityConverter" />
+            <converters:EnumToOpacityConverter x:Key="EnumToOpacityConverter" />
+            <converters:MillisecondsToSecondsConverter x:Key="MillisecondsToSecondsConverter" />
+            <converters:LyricsFontWeightToFontWeightConverter x:Key="LyricsFontWeightToFontWeightConverter" />
+        </ResourceDictionary>
     </Application.Resources>
 
     <Application.Styles>

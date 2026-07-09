@@ -11,7 +11,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
@@ -26,6 +25,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using BetterLyrics.Core.Effects;
 using BetterLyrics.Core.ViewModels;
+using BetterLyrics.Avalonia.Controls;
 
 namespace BetterLyrics.Avalonia.Views;
 
@@ -50,15 +50,16 @@ public partial class NowPlayingPage : UserControl,
     private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
     private readonly ISongSearchMapService _songSearchMapService = Ioc.Default.GetRequiredService<ISongSearchMapService>();
     private readonly IWindowManagerProvider _windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
+    private readonly IAppUIThreadProvider _appUiThreadProvider = Ioc.Default.GetRequiredService<IAppUIThreadProvider>();
 
     public NowPlayingPage()
     {
         InitializeComponent();
-        DataContext = Ioc.Default.GetRequiredService<NowPlayingPageViewModel>();
+        DataContext = this;
         WeakReferenceMessenger.Default.RegisterAll(this);
     }
 
-    public NowPlayingPageViewModel ViewModel => (NowPlayingPageViewModel)DataContext!;
+    public NowPlayingPageViewModel ViewModel => Ioc.Default.GetRequiredService<NowPlayingPageViewModel>();
 
     public LyricsWindowStatus? LyricsWindowStatus
     {
@@ -86,10 +87,9 @@ public partial class NowPlayingPage : UserControl,
             {
                 if (message.PropertyName == nameof(AlbumArtAreaEffectSettings.SongInfoAutoScroll))
                 {
-                    // TODO
                     //UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, false);
-                    //UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
-                    //UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
+                    UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
+                    UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
                 }
                 else if (message.PropertyName == nameof(AlbumArtAreaEffectSettings.FadeOut))
                 {
@@ -141,10 +141,9 @@ public partial class NowPlayingPage : UserControl,
             Dispatcher.UIThread.InvokeAsync(() =>
             {
                 _ = RefreshSongInfoAsync();
-                // TODO
                 //UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, false);
-                //UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
-                //UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
+                UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
+                UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
             });
         }
     }
@@ -191,11 +190,9 @@ public partial class NowPlayingPage : UserControl,
         var artistFontSize = SongArtistContainer.Bounds.Height * 0.75;
         var albumFontSize = SongAlbumContainer.Bounds.Height * 0.75;
 
-        // TODO
-
-        //RenderTextBlock(TitleTextBlock, mappedTitle, titleFontSize);
-        //RenderTextBlock(ArtistsTextBlock, mappedArtist, artistFontSize);
-        //RenderTextBlock(AlbumTextBlock, mappedAlbum, albumFontSize);
+        RenderTextBlock(TitleTextBlock, mappedTitle, titleFontSize);
+        RenderTextBlock(ArtistsTextBlock, mappedArtist, artistFontSize);
+        RenderTextBlock(AlbumTextBlock, mappedAlbum, albumFontSize);
     }
 
     private async Task RefreshSongInfoAsync()
@@ -203,7 +200,7 @@ public partial class NowPlayingPage : UserControl,
         SongTitleContainer.Opacity = 0;
         SongArtistContainer.Opacity = 0;
         SongAlbumContainer.Opacity = 0;
-        await Task.Delay(Time.AnimationDuration);
+        await Task.Delay(Core.Constants.Time.AnimationDuration);
         await RenderSongInfoAsync();
         SongTitleContainer.Opacity = 1;
         SongArtistContainer.Opacity = 1;
@@ -217,17 +214,14 @@ public partial class NowPlayingPage : UserControl,
 
         DynamicLayoutGrid.Margin = new Thickness(profile.PaddingLeft, profile.PaddingTop, profile.PaddingRight, profile.PaddingBottom);
 
-        // Grid definitions (simplified translation, assume extensions exist or map natively)
         DynamicLayoutGrid.RowDefinitions.Clear();
         DynamicLayoutGrid.ColumnDefinitions.Clear();
 
-        // TODO
+        foreach (var row in profile.RowDefinitions)
+            DynamicLayoutGrid.RowDefinitions.Add(new RowDefinition { Height = GridLengthExtensions.ParseGridLength(row) });
 
-        //foreach (var row in profile.RowDefinitions)
-        //    DynamicLayoutGrid.RowDefinitions.Add(new RowDefinition { Height = GridLengthExtensions.ParseGridLength(row) });
-
-        //foreach (var col in profile.ColumnDefinitions)
-        //    DynamicLayoutGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLengthExtensions.ParseGridLength(col) });
+        foreach (var col in profile.ColumnDefinitions)
+            DynamicLayoutGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLengthExtensions.ParseGridLength(col) });
 
         foreach (var placement in profile.Placements)
         {
@@ -254,10 +248,8 @@ public partial class NowPlayingPage : UserControl,
                 targetElement.Width = placement.Width;
                 targetElement.Height = placement.Height;
 
-                // TODO
-
-                //targetElement.HorizontalAlignment = HorizontalAlignmentExtensions.FromAppHorizontalAlignment(placement.HorizontalAlignment);
-                //targetElement.VerticalAlignment = VerticalAlignmentExtensions.FromAppVerticalAlignment(placement.VerticalAlignment);
+                targetElement.HorizontalAlignment = HorizontalAlignmentExtensions.FromAppHorizontalAlignment(placement.HorizontalAlignment);
+                targetElement.VerticalAlignment = VerticalAlignmentExtensions.FromAppVerticalAlignment(placement.VerticalAlignment);
             }
         }
     }
@@ -280,7 +272,7 @@ public partial class NowPlayingPage : UserControl,
                 _ => null
             };
 
-            if (targetElement != null) targetElement.IsVisible = true;
+            targetElement?.IsVisible = true;
         }
     }
 
@@ -341,7 +333,6 @@ public partial class NowPlayingPage : UserControl,
             HideContainers();
             ApplyLayoutProfile();
 
-            // Avalonia layouts are asynchronous, giving it a brief delay to measure
             await Task.Delay(100);
 
             UpdateLyricsLayout();
@@ -358,35 +349,31 @@ public partial class NowPlayingPage : UserControl,
     private void UpdateAutoScrollViewIsPlaying(object element, bool isPointerEntered)
     {
         // Cast to your custom element
-        
-        // TODO
 
-        //if (element is not dev.AutoScrollView autoScrollView) return;
+        if (element is not AutoScrollView autoScrollView) return;
 
-        //if (LyricsWindowStatus?.AlbumArtAreaEffectSettings.SongInfoAutoScroll == true)
-        //    autoScrollView.IsPlaying = true;
-        //else
-        //    autoScrollView.IsPlaying = isPointerEntered;
+        if (LyricsWindowStatus?.AlbumArtAreaEffectSettings.SongInfoAutoScroll == true)
+            autoScrollView.IsPlaying = true;
+        else
+            autoScrollView.IsPlaying = isPointerEntered;
     }
 
-    // TODO
+    private void TitleAutoScrollHoverEffectView_PointerEntered(object? sender, PointerEventArgs e) => UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, true);
+    private void TitleAutoScrollHoverEffectView_PointerExited(object? sender, PointerEventArgs e) => UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, false);
 
-    //private void TitleAutoScrollHoverEffectView_PointerEntered(object? sender, PointerEventArgs e) => UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, true);
-    //private void TitleAutoScrollHoverEffectView_PointerExited(object? sender, PointerEventArgs e) => UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, false);
+    private void ArtistsAutoScrollHoverEffectView_PointerEntered(object? sender, PointerEventArgs e) => UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, true);
+    private void ArtistsAutoScrollHoverEffectView_PointerExited(object? sender, PointerEventArgs e) => UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
 
-    //private void ArtistsAutoScrollHoverEffectView_PointerEntered(object? sender, PointerEventArgs e) => UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, true);
-    //private void ArtistsAutoScrollHoverEffectView_PointerExited(object? sender, PointerEventArgs e) => UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
+    private void AlbumAutoScrollHoverEffectView_PointerEntered(object? sender, PointerEventArgs e) => UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, true);
+    private void AlbumAutoScrollHoverEffectView_PointerExited(object? sender, PointerEventArgs e) => UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
 
-    //private void AlbumAutoScrollHoverEffectView_PointerEntered(object? sender, PointerEventArgs e) => UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, true);
-    //private void AlbumAutoScrollHoverEffectView_PointerExited(object? sender, PointerEventArgs e) => UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
+    private void RootGrid_PointerWheelChanged(object? sender, PointerWheelEventArgs e) => NowPlayingCanvas.HandlePointerWheelChanged(sender, e);
+    private void RootGrid_PointerMoved(object? sender, PointerEventArgs e) => NowPlayingCanvas.HandlePointerMoved(sender, e);
+    private void RootGrid_PointerReleased(object? sender, PointerReleasedEventArgs e) => NowPlayingCanvas.HandlePointerReleased(sender, e);
+    private void RootGrid_PointerExited(object? sender, PointerEventArgs e) => NowPlayingCanvas.HandlePointerExited(sender, e);
 
-    private void RootGrid_PointerWheelChanged(object? sender, PointerWheelEventArgs e) => NowPlayingCanvas.HandlePointerWheelChanged(e);
-    private void RootGrid_PointerMoved(object? sender, PointerEventArgs e) => NowPlayingCanvas.HandlePointerMoved(e);
-    private void RootGrid_PointerReleased(object? sender, PointerReleasedEventArgs e) => NowPlayingCanvas.HandlePointerReleased(e);
-    private void RootGrid_PointerExited(object? sender, PointerEventArgs e) => NowPlayingCanvas.HandlePointerExited(e);
-
-    private void RootGrid_PointerEntered(object? sender, PointerEventArgs e) { } // TODO => NowPlayingCanvas.HandlePointerEntered(e);
-    private void RootGrid_PointerPressed(object? sender, PointerPressedEventArgs e) => NowPlayingCanvas.HandlePointerPressed(e);
+    private void RootGrid_PointerEntered(object? sender, PointerEventArgs e) => NowPlayingCanvas.HandlePointerEntered(sender, e);
+    private void RootGrid_PointerPressed(object? sender, PointerPressedEventArgs e) => NowPlayingCanvas.HandlePointerPressed(sender, e);
 
     private async void SaveAlbumArtButton_Click(object? sender, RoutedEventArgs e)
     {
@@ -432,23 +419,22 @@ public partial class NowPlayingPage : UserControl,
     private void UpdateAlbumArtFadeOutDirection()
     {
         var settings = LyricsWindowStatus?.AlbumArtAreaEffectSettings;
-        // TODO
 
-        //if (settings == null || AlbumArtGradientBrush == null) return;
+        var brush = (LinearGradientBrush?)AlbumArtBorder.OpacityMask;
 
-        //// Avalonia RelativePoints need to track percentages usually, or absolute points. Using percentages (0-100%).
-        //AlbumArtGradientBrush.StartPoint = new RelativePoint(settings.FadeOutStartPointX, settings.FadeOutStartPointY, RelativeUnit.Relative);
-        //AlbumArtGradientBrush.EndPoint = new RelativePoint(settings.FadeOutEndPointX, settings.FadeOutEndPointY, RelativeUnit.Relative);
+        if (settings == null || brush == null) return;
+
+        brush.StartPoint = new RelativePoint(settings.FadeOutStartPointX, settings.FadeOutStartPointY, RelativeUnit.Relative);
+        brush.EndPoint = new RelativePoint(settings.FadeOutEndPointX, settings.FadeOutEndPointY, RelativeUnit.Relative);
     }
 
     private void ToggleAlbumArtFadeOut()
     {
-        // TODO
+        var endStop = ((LinearGradientBrush?)AlbumArtBorder.OpacityMask)?.GradientStops.LastOrDefault();
+        if (endStop == null) return;
 
-        //if (AlbumArtGradientBrushEnd == null) return;
-
-        //AlbumArtGradientBrushEnd.Color = LyricsWindowStatus?.AlbumArtAreaEffectSettings.FadeOut == true
-        //    ? Colors.Transparent
-        //    : Colors.White;
+        endStop.Color = LyricsWindowStatus?.AlbumArtAreaEffectSettings.FadeOut == true
+            ? Colors.Transparent
+            : Colors.White;
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using Avalonia;
 using Avalonia.Media;
@@ -145,8 +145,7 @@ public partial class EdgeFadeMaskRenderer : IDisposable
         {
             AlignmentX = AlignmentX.Left,
             AlignmentY = AlignmentY.Top,
-            Stretch = Stretch.None,
-            Transform = new TranslateTransform(startX, startY)
+            Stretch = Stretch.None
         };
 
         // 更新缓存
@@ -218,8 +217,7 @@ public partial class EdgeFadeMaskRenderer : IDisposable
         {
             AlignmentX = AlignmentX.Left,
             AlignmentY = AlignmentY.Top,
-            Stretch = Stretch.None,
-            Transform = new TranslateTransform(startX, startY)
+            Stretch = Stretch.None
         };
 
         // 更新缓存

@@ -20,6 +20,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Events;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BetterLyrics.Avalonia;
 
@@ -29,22 +31,26 @@ public class App : Application
     {
         PathHelper.EnsureDirectories();
         ConfigureServices();
-        
+
         AvaloniaXamlLoader.Load(this);
     }
 
-    public override void OnFrameworkInitializationCompleted()
+    public override async void OnFrameworkInitializationCompleted()
     {
+        await InitDatabasesAsync();
+
+        var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+
         if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
-            desktop.MainWindow = new SettingsWindow();
+            desktop.MainWindow = new NowPlayingWindow(settingsService.AppSettings.WindowBoundsRecords.FirstOrDefault() ?? new());
         else if (ApplicationLifetime is IActivityApplicationLifetime singleViewFactoryApplicationLifetime)
-            singleViewFactoryApplicationLifetime.MainViewFactory = () => new SettingsPage();
+            singleViewFactoryApplicationLifetime.MainViewFactory = () => new NowPlayingPage();
         else if (ApplicationLifetime is ISingleViewApplicationLifetime singleViewPlatform)
-            singleViewPlatform.MainView = new SettingsPage();
+            singleViewPlatform.MainView = new NowPlayingPage();
 
         base.OnFrameworkInitializationCompleted();
     }
-    
+
     private static void ConfigureServices()
     {
         Log.Logger = new LoggerConfiguration()
@@ -108,6 +114,7 @@ public class App : Application
                 .AddSingleton<IFilePickerProvider, FilePickerProvider>()
                 .AddSingleton<IProgramProvider, ProgramProvider>()
                 .AddSingleton<IMonitorProvider, MonitorProvider>()
+                .AddSingleton<ISpoutTextureProvider, SpoutTextureProvider>()
 
                 // ViewModels
                 .AddSingleton<AppSettingsControlViewModel>()
@@ -132,4 +139,32 @@ public class App : Application
         );
     }
 
+    private static async Task InitDatabasesAsync()
+    {
+        // Init databases
+        var playHistoryFactory = Ioc.Default.GetRequiredService<IDbContextFactory<PlayHistoryDbContext>>();
+        var songSearchMapFactory = Ioc.Default.GetRequiredService<IDbContextFactory<SongSearchMapDbContext>>();
+        var filesIndexFactory = Ioc.Default.GetRequiredService<IDbContextFactory<FilesIndexDbContext>>();
+        var lyricsCacheFactory = Ioc.Default.GetRequiredService<IDbContextFactory<LyricsCacheDbContext>>();
+
+        using (var playHistoryDb = await playHistoryFactory.CreateDbContextAsync())
+        {
+            await playHistoryDb.Database.EnsureCreatedAsync();
+        }
+
+        using (var songSearchMapDb = await songSearchMapFactory.CreateDbContextAsync())
+        {
+            await songSearchMapDb.Database.EnsureCreatedAsync();
+        }
+
+        using (var filesIndexDb = await filesIndexFactory.CreateDbContextAsync())
+        {
+            await filesIndexDb.Database.EnsureCreatedAsync();
+        }
+
+        using (var lyricsCacheDb = await lyricsCacheFactory.CreateDbContextAsync())
+        {
+            await lyricsCacheDb.Database.EnsureCreatedAsync();
+        }
+    }
 }

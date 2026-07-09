@@ -9,4 +9,9 @@ public static class ColorExtensions
     {
         return new Color(appColor.A, appColor.R, appColor.G, appColor.B);
     }
+
+    public static AppColor ToAppColor(this Color color)
+    {
+        return new AppColor(color.A, color.R, color.G, color.B);
+    }
 }

@@ -86,7 +86,7 @@ public class WindowManagerProvider : IWindowManagerProvider
 
     public void SetIsBorderless(object obj, bool enable)
     {
-        throw new NotImplementedException();
+        // TODO
     }
 
     public void SetIsChildWindow(object obj, bool enable)
@@ -96,7 +96,7 @@ public class WindowManagerProvider : IWindowManagerProvider
 
     public void MoveAndResize(object obj, AppRect rect)
     {
-        throw new NotImplementedException();
+        // TODO
     }
 
     public object? GetNowPlayingWindow(LyricsWindowStatus status)

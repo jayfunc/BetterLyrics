@@ -4,7 +4,6 @@ using Avalonia;
 using Avalonia.Media;
 using Avalonia.Rendering.SceneGraph;
 using Avalonia.Skia;
-using BetterLyrics.Avalonia.Extensions;
 using SkiaSharp;
 
 namespace BetterLyrics.Avalonia.Renderer;
@@ -25,22 +24,8 @@ public partial class FluidBackgroundRenderer : EffectRendererBase, IDisposable
     public double Opacity { get; set; } = 1.0;
     public bool EnableLightWave { get; set; } = true;
     public bool UseHSVBlending { get; set; } = false;
-    public bool EnableDithering { get; set; } = true;
+    public bool EnableDithering { get; set; } = false;
     public bool IsStatic { get; set; } = false;
-
-    // TODO: Paste your translated SkSL shader code here.
-    private const string SkSlShaderCode = @"
-        uniform vec2 u_resolution;
-        uniform float u_time;
-        uniform vec3 u_c1, u_c2, u_c3, u_c4;
-        uniform vec3 u_rnd;
-        uniform vec3 u_flags; // x: HSV, y: LightWave, z: Dithering
-
-        vec4 main(vec2 fragCoord) {
-            // Your fluid logic here...
-            return vec4(u_c1, 1.0); 
-        }
-    ";
 
     public void Dispose()
     {
@@ -56,7 +41,7 @@ public partial class FluidBackgroundRenderer : EffectRendererBase, IDisposable
         Dispose();
 
         // Compile the SkSL shader
-        var result = SKRuntimeEffect.CreateShader(SkSlShaderCode, out var error);
+        var result = SKRuntimeEffect.CreateShader(Shaders.FluidBackgroundEffect.SkSlShaderCode, out var error);
         if (result == null)
         {
             throw new InvalidOperationException($"Shader compilation failed: {error}");

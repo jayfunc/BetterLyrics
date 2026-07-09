@@ -1,0 +1,30 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="using:BetterLyrics.Avalonia.Controls">
+
+    <ControlTheme x:Key="{x:Type local:AutoScrollView}" TargetType="local:AutoScrollView">
+        <Setter Property="ClipToBounds" Value="True" />
+        <Setter Property="Template">
+            <ControlTemplate>
+                <Canvas Name="PART_Canvas" Background="{TemplateBinding Background}">
+                    
+                    <Panel Name="PART_MovingPanel">
+                        
+                        <ContentPresenter Name="PART_Content"
+                                          Content="{TemplateBinding Content}"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          HorizontalAlignment="Left"
+                                          VerticalAlignment="Top" />
+                        
+                        <Rectangle Name="PART_Duplicate"
+                                   HorizontalAlignment="Left"
+                                   VerticalAlignment="Top"
+                                   IsVisible="False"/>
+                        
+                    </Panel>
+                </Canvas>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>

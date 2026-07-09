@@ -146,19 +146,19 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
 
     public async Task PlayAsync()
     {
-        await _currentDesiredSession?.TryPlayAsync();
+        await (_currentDesiredSession?.TryPlayAsync() ?? Task.CompletedTask);
     }
 
     public async Task PauseAsync()
     {
-        await _currentDesiredSession?.TryPauseAsync();
+        await (_currentDesiredSession?.TryPauseAsync() ?? Task.CompletedTask);
     }
 
     public async Task StopAsync()
     {
         try
         {
-            await _currentDesiredSession?.TryStopAsync();
+            await (_currentDesiredSession?.TryStopAsync() ?? Task.CompletedTask);
         }
         catch (Exception)
         {
@@ -167,17 +167,17 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
 
     public async Task PreviousAsync()
     {
-        await _currentDesiredSession?.TrySkipPreviousAsync();
+        await (_currentDesiredSession?.TrySkipPreviousAsync() ?? Task.CompletedTask);
     }
 
     public async Task NextAsync()
     {
-        await _currentDesiredSession?.TrySkipNextAsync();
+        await (_currentDesiredSession?.TrySkipNextAsync() ?? Task.CompletedTask);
     }
 
     public async Task ChangePositionAsync(double seconds)
     {
-        await _currentDesiredSession?.TryChangePlaybackPositionAsync(TimeSpan.FromSeconds(seconds));
+        await (_currentDesiredSession?.TryChangePlaybackPositionAsync(TimeSpan.FromSeconds(seconds)) ?? Task.CompletedTask);
     }
 
     public async Task ChangeLyricsLineAsync(int index)
@@ -516,8 +516,9 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
 
         HandleLXMusicIfDetected(sessionId);
 
+        // TODO
         // 总是先停止 _memoryReader
-        _memoryReader.Stop();
+        //_memoryReader.Stop();
 
         // 注册
         if (currentMediaSourceProviderInfo?.IsMemoryReaderEnabled == true)

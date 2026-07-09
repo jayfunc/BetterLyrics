@@ -36,6 +36,8 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using BetterLyrics.Core.Effects;
+using BetterLyrics.WinUI3.Providers;
+using BetterLyrics.Core.Interfaces.Providers;
 
 namespace BetterLyrics.WinUI3.Controls;
 
@@ -207,7 +209,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
     private TimeSpan _songPosition; // ��ǰ����ʱ��
 
     private TimeSpan _songPositionWithOffset;
-    private SpoutTextureHook _spoutHook = new();
+    private readonly ISpoutTextureProvider _spoutHook = Ioc.Default.GetRequiredService<ISpoutTextureProvider>();
     private (int Start, int End) _visibleRange;
 
     public NowPlayingCanvas()
@@ -622,7 +624,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
             ds.DrawImage(finalTexture);
 
-            _spoutHook?.SendTexture(finalTexture);
+            _spoutHook.SendTexture(finalTexture);
         }
         else
         {
@@ -641,7 +643,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
                 ColorExtensions.FromAppColor(Colors.Cyan));
 
             var debugText =
-                $"Spout Sender : {_spoutHook?.SenderName ?? "Disabled"}\n" +
+                $"Spout Sender : {_spoutHook.SenderName ?? "Disabled"}\n" +
                 $"FPS          : {1.0 / args.Timing.ElapsedTime.TotalSeconds:00.0} (Avg: {args.Timing.UpdateCount / args.Timing.TotalTime.TotalSeconds:00.0})\n" +
                 $"----------------------------------------\n" +
                 $"Render Pos   : [{(int)_renderLyricsStartX}, {(int)_renderLyricsStartY}]\n" +
@@ -948,7 +950,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
         _edgeFadeMaskRenderer.Dispose();
 
         _compositionRenderer?.Dispose();
-        _spoutHook?.Dispose();
+        _spoutHook.Close();
 
         _lyricsWindowStatus?.LyricsStyleSettings.LyricsLayerOrder.CollectionChanged -=
             LyricsLayerOrder_CollectionChanged;
@@ -1120,8 +1122,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
     private void InitSpoutHook(CanvasAnimatedControl sender)
     {
-        _spoutHook?.Dispose();
-        _spoutHook = new SpoutTextureHook();
+        _spoutHook.Close();
         _spoutHook.Initialize(sender.Device, $"BetterLyrics ({_lyricsWindowStatus?.GetHashCode()})");
     }
 

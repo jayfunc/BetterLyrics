@@ -15,14 +15,14 @@
         x:Name="RootGrid"
         Background="Transparent"
         RenderTransformOrigin="50%,50%">
-        
+
         <Grid.RenderTransform>
-            <!--<Rotate3DTransform x:Name="TiltProjection" />-->
+            <Rotate3DTransform />
         </Grid.RenderTransform>
 
-        <ContentPresenter x:Name="ContentPresenter" Content="{Binding #RootControl.Child}">
+        <ContentPresenter x:Name="ContentPresenter" Content="{Binding #RootControl.Content}">
             <ContentPresenter.RenderTransform>
-                <!--<TranslateTransform x:Name="ParallaxTransform" />-->
+                <TranslateTransform />
             </ContentPresenter.RenderTransform>
         </ContentPresenter>
 

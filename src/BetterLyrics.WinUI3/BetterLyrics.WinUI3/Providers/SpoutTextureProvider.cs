@@ -1,18 +1,19 @@
 ﻿using System;
+using BetterLyrics.Core.Interfaces.Providers;
 using Microsoft.Graphics.Canvas;
 using SpoutDx.Net.Interop;
 using Vanara.PInvoke;
 using Vortice.Direct3D11;
 using WinRT;
 
-namespace BetterLyrics.WinUI3.Hooks;
+namespace BetterLyrics.WinUI3.Providers;
 
 /// <summary>
 ///     Co-author:
 ///     1) <see href="https://github.com/cnbluefire" />
 ///     2) <see href="https://github.com/Raspberry-Monster" />
 /// </summary>
-public partial class SpoutTextureHook : IDisposable
+public partial class SpoutTextureProvider : ISpoutTextureProvider
 {
     private static readonly Guid DxgiInterfaceAccessGuid = new("A9B3D012-3DF2-4EE3-B8D1-8695F457D3C1");
     private bool _isDisposed;
@@ -20,7 +21,7 @@ public partial class SpoutTextureHook : IDisposable
 
     public string SenderName { get; private set; } = "BetterLyrics (Disabled)";
 
-    public void Dispose()
+    public void Close()
     {
         if (_isDisposed) return;
 
@@ -30,11 +31,15 @@ public partial class SpoutTextureHook : IDisposable
         _isDisposed = true;
     }
 
-    public void Initialize(CanvasDevice device, string senderName)
+    public void Initialize(object device, string senderName)
     {
         if (device == null) return;
 
-        var deviceObject = device.As<IWinRTObject>();
+        var canvasDevice = (CanvasDevice?)device;
+
+        if (canvasDevice == null) return;
+
+        var deviceObject = canvasDevice.As<IWinRTObject>();
         HRESULT result = deviceObject.NativeObject.TryAs(DxgiInterfaceAccessGuid, out var pointer);
 
         if (result == HRESULT.S_OK)
@@ -50,11 +55,15 @@ public partial class SpoutTextureHook : IDisposable
         }
     }
 
-    public void SendTexture(CanvasRenderTarget renderTarget)
+    public void SendTexture(object renderTarget)
     {
         if (_sender == null || renderTarget == null) return;
 
-        HRESULT success = renderTarget.As<IWinRTObject>().NativeObject.TryAs(DxgiInterfaceAccessGuid, out var pointer);
+        var canvasRenderTarget = (CanvasRenderTarget?)renderTarget;
+
+        if (canvasRenderTarget == null) return;
+
+        HRESULT success = canvasRenderTarget.As<IWinRTObject>().NativeObject.TryAs(DxgiInterfaceAccessGuid, out var pointer);
 
         if (success == HRESULT.S_OK)
         {

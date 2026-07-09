@@ -21,23 +21,6 @@ public partial class RaindropRenderer : EffectRendererBase, IDisposable
     public float LightAngle { get; set; } = 0;
     public float ShadowIntensity { get; set; } = 0;
 
-    // TODO: Paste your translated SkSL raindrop shader code here.
-    private const string SkSlShaderCode = @"
-        uniform vec2 u_resolution;
-        uniform float u_time;
-        uniform float u_rainSpeed;
-        uniform float u_rainSize;
-        uniform float u_rainDensity;
-        uniform float u_lightAngle;
-        uniform float u_shadowIntensity;
-
-        vec4 main(vec2 fragCoord) {
-            // Your raindrop math/logic here
-            vec2 uv = fragCoord / u_resolution.xy;
-            return vec4(0.0, 0.0, 0.0, 0.0); // Placeholder
-        }
-    ";
-
     public void Dispose()
     {
         _raindropEffect?.Dispose();
@@ -48,7 +31,7 @@ public partial class RaindropRenderer : EffectRendererBase, IDisposable
     {
         Dispose();
 
-        var result = SKRuntimeEffect.CreateShader(SkSlShaderCode, out var error);
+        var result = SKRuntimeEffect.CreateShader(Shaders.RaindropEffect.SkSlShaderCode, out var error);
         if (result == null)
         {
             throw new InvalidOperationException($"Raindrop shader compilation failed: {error}");
@@ -93,9 +76,9 @@ public partial class RaindropRenderer : EffectRendererBase, IDisposable
         {
             { "u_time", _timeAccumulator },
             { "u_resolution", new[] { width, height } },
-            { "u_rainSpeed", RainSpeed },
-            { "u_rainSize", RainSize },
-            { "u_rainDensity", RainDensity },
+            { "u_speed", RainSpeed },
+            { "u_size", RainSize },
+            { "u_density", RainDensity },
             { "u_lightAngle", LightAngle },
             { "u_shadowIntensity", ShadowIntensity }
         };

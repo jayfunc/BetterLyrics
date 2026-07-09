@@ -48,5 +48,10 @@ namespace BetterLyrics.Avalonia.Extensions
         {
             return rect.Extend(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding);
         }
+
+        public static Size ToSize(this Rect rect)
+        {
+            return new Size(rect.Width, rect.Height);
+        }
     }
 }

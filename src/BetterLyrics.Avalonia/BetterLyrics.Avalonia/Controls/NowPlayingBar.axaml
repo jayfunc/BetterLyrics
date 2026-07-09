@@ -90,9 +90,9 @@
                                 </StackPanel.Transitions>
 
                                 <TextBlock Margin="0,8,0,0">
-                                    <Run Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="{Binding #TimelineSlider.Value, Converter={StaticResource SecondsToFormattedTimeConverter}}" />
+                                    <Run Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="{Binding #TimelineSlider.Value, Converter={StaticResource SecondsToFormattedTimeConverter}, Mode=OneWay}" />
                                     <Run Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="/" />
-                                    <Run Text="{Binding #TimelineSlider.Maximum, Converter={StaticResource SecondsToFormattedTimeConverter}}" />
+                                    <Run Text="{Binding #TimelineSlider.Maximum, Converter={StaticResource SecondsToFormattedTimeConverter}, Mode=OneWay}" />
                                 </TextBlock>
 
                                 <ui:FAFontIcon

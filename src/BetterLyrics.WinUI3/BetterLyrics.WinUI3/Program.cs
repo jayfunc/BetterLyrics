@@ -58,7 +58,7 @@ public class Program
 
                 Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
-                // WinUI3 specific
+                // TODO WinUI3 specific
                 //PathHelper.Initialize(ApplicationData.Current.LocalFolder.Path,
                 //    ApplicationData.Current.LocalCacheFolder.Path);
                 PathHelper.EnsureDirectories();
@@ -260,6 +260,7 @@ public class Program
                 .AddSingleton<IFilePickerProvider, FilePickerProvider>()
                 .AddSingleton<IProgramProvider, ProgramProvider>()
                 .AddSingleton<IMonitorProvider, MonitorProvider>()
+                .AddSingleton<ISpoutTextureProvider, SpoutTextureProvider>()
 
                 // ViewModels
                 .AddSingleton<AppSettingsControlViewModel>()

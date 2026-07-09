@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Avalonia;
 using Avalonia.Media;
 using BetterLyrics.Core.Enums;
@@ -82,8 +82,11 @@ public abstract class LyricsLineRendererBase
         if (LyricsWindowStatus == null || Line?.PrimaryTextLayout == null ||
             Line.PrimaryTextRegions == null) return;
 
+        // TODO
+        //var bounds =
+        //    new Rect(0, 0, Line.PrimaryTextLayout.Width, Line.PrimaryTextLayout.Height).Extend(StrokeWidth / 2f);
         var bounds =
-            new Rect(0, 0, Line.PrimaryTextLayout.Width, Line.PrimaryTextLayout.Height).Extend(StrokeWidth / 2f);
+            new Rect(0, 0, Line.PrimaryTextLayout.Width, Line.PrimaryTextLayout.Height);
         var srcRect = new Rect(bounds.X + Line.PrimaryPosition.X, bounds.Y + Line.PrimaryPosition.Y, bounds.Width,
             bounds.Height);
         var destRect = srcRect;
@@ -236,12 +239,12 @@ public abstract class LyricsLineRendererBase
         {
             var endCharIndex = startCharIndex + charCount;
             for (var i = startCharIndex; i < endCharIndex; i++)
-                DrawSingleCharacter(context, i, region, startPoint, endPoint);
+                DrawSingleCharacter(context, i, region, startPoint, endPoint, subLineRect);
         }
     }
 
     private void DrawSingleCharacter(DrawingContext context, int charIndex, RenderLyricsRegion region, Point startPt,
-        Point endPt)
+        Point endPt, Rect subLineRect)
     {
         if (LyricsWindowStatus == null || Line?.PrimaryTextLayout == null ||
             charIndex >= Line.PrimaryRenderChars.Count) return;
@@ -274,7 +277,7 @@ public abstract class LyricsLineRendererBase
                 // Glow fallback (if required by specs, could render the region twice with a slight scale/opacity push)
 
                 // Base character render
-                region.Render(context, sourceCharRect, startPt, endPt);
+                region.Render(context, subLineRect, startPt, endPt);
             }
         }
     }

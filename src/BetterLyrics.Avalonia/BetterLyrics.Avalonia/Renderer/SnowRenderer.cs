@@ -18,20 +18,6 @@ public partial class SnowRenderer : EffectRendererBase, IDisposable
     public float Amount { get; set; } = 0.5f;
     public float Speed { get; set; } = 1.0f;
 
-    // TODO: Paste your translated SkSL snow shader code here.
-    private const string SkSlShaderCode = @"
-        uniform vec2 u_resolution;
-        uniform float u_time;
-        uniform float u_amount;
-        uniform float u_speed;
-
-        vec4 main(vec2 fragCoord) {
-            // Your snow rendering math here
-            vec2 uv = fragCoord / u_resolution.xy;
-            return vec4(1.0, 1.0, 1.0, 0.0); // Placeholder return
-        }
-    ";
-
     public void Dispose()
     {
         _snowEffect?.Dispose();
@@ -42,7 +28,7 @@ public partial class SnowRenderer : EffectRendererBase, IDisposable
     {
         Dispose();
 
-        var result = SKRuntimeEffect.CreateShader(SkSlShaderCode, out var error);
+        var result = SKRuntimeEffect.CreateShader(Shaders.SnowEffect.SkSlShaderCode, out var error);
         if (result == null)
         {
             throw new InvalidOperationException($"Snow shader compilation failed: {error}");
@@ -87,7 +73,7 @@ public partial class SnowRenderer : EffectRendererBase, IDisposable
         {
             { "u_time", _timeAccumulator },
             { "u_resolution", new[] { width, height } },
-            { "u_amount", Amount },
+            { "u_density", Amount },
             { "u_speed", Speed }
         };
 
