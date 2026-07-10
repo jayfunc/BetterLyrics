@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<UserControl x:Name="Root"
+             x:Class="BetterLyrics.Avalonia.Controls.TrackDetailCard"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="using:BetterLyrics.Avalonia.Controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:strings="using:BetterLyrics.Avalonia.Strings"
+             mc:Ignorable="d">
+
+    <Grid>
+        <ScrollViewer>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0">
+                    <Grid.OpacityMask>
+                        <LinearGradientBrush StartPoint="0%,0%" EndPoint="0%,100%">
+                            <GradientStop Offset="0" Color="White" />
+                            <GradientStop Offset="1" Color="Transparent" />
+                        </LinearGradientBrush>
+                    </Grid.OpacityMask>
+                    <Border CornerRadius="4" ClipToBounds="True">
+                        <local:ImageSwitcher
+                            Source="{Binding #Root.ExtendedTrack.LocalAlbumArtPath, Mode=OneWay}"
+                            Stretch="Uniform" />
+                    </Border>
+                </Grid>
+                <Border Grid.Row="1" Padding="12">
+                    <StackPanel
+                        Spacing="6">
+                        <local:PropertyRow Header="{x:Static strings:Resources.MusicGalleryPageFileInfoTitle_Header}"
+                                           Value="{Binding #Root.ExtendedTrack.Title}" />
+                        <local:PropertyRow Header="{x:Static strings:Resources.MusicGalleryPageFileArtist_Header}"
+                                           Value="{Binding #Root.ExtendedTrack.Artist}" />
+                        <local:PropertyRow Header="{x:Static strings:Resources.MusicGalleryPageFileAlbum_Header}"
+                                           Value="{Binding #Root.ExtendedTrack.Album}" />
+                        <local:PropertyRow Header="{x:Static strings:Resources.MusicGalleryPageFileInfoYear_Header}"
+                                           Value="{Binding #Root.ExtendedTrack.Year}" />
+                        <local:PropertyRow Header="{x:Static strings:Resources.MusicGalleryPageFileInfoDuration_Header}"
+                                           Value="{Binding #Root.ExtendedTrack.Duration, Mode=OneWay}" />
+                        <local:PropertyRow Header="{x:Static strings:Resources.MusicGalleryPageFileInfoBitrate_Header}"
+                                           Value="{Binding #Root.ExtendedTrack.Bitrate}" />
+                        <local:PropertyRow Header="{x:Static strings:Resources.MusicGalleryPageFileInfoSampleRate_Header}"
+                                           Value="{Binding #Root.ExtendedTrack.SampleRate}" />
+                        <local:PropertyRow Header="{x:Static strings:Resources.MusicGalleryPageFileInfoBitDepth_Header}"
+                                           Value="{Binding #Root.ExtendedTrack.BitDepth}" />
+                        <local:PropertyRow Header="{x:Static strings:Resources.MusicGalleryPageFileInfoFormat_Header}"
+                                           Value="{Binding #Root.ExtendedTrack.AudioFormatName}" />
+                        <local:PropertyRow Header="{x:Static strings:Resources.MusicGalleryPageFileInfoEncoder_Header}"
+                                           Value="{Binding #Root.ExtendedTrack.Encoder}" />
+                        <local:PropertyRow Header="{x:Static strings:Resources.MusicGalleryPageFileInfoPath_Header}"
+                                           Link="{Binding #Root.ExtendedTrack.Uri, Mode=OneWay}"
+                                           Value="{Binding #Root.ExtendedTrack.Uri, Mode=OneWay}" />
+                        <local:PropertyRow Header="{x:Static strings:Resources.MusicGalleryPageFileInfoLyrics_Header}"
+                                           Value="{Binding #Root.ExtendedTrack.RawLyrics}" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

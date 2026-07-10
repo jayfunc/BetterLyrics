@@ -1,11 +1,11 @@
 using System;
 using System.Runtime.InteropServices;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Input;
-using Avalonia.Interactivity;
-using Avalonia.Media;
-using Avalonia.Threading;
+using global::Avalonia;
+using global::Avalonia.Controls;
+using global::Avalonia.Input;
+using global::Avalonia.Interactivity;
+using global::Avalonia.Media;
+using global::Avalonia.Threading;
 using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
@@ -782,5 +782,15 @@ public sealed partial class NowPlayingWindow : Window,
     {
         InitStatus();
         OnTitleBarAreaChanged();
+    }
+
+    private void CustomTitleBar_PointerPressed(object? sender, PointerPressedEventArgs e)
+    {
+        // 防止拖拽事件干扰到标题栏里的其他按钮点击
+        if (e.GetCurrentPoint(this).Properties.IsLeftButtonPressed)
+        {
+            // 核心代码：通知 Avalonia 开始接管窗口拖拽
+            this.BeginMoveDrag(e);
+        }
     }
 }

@@ -1,0 +1,21 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:controls="using:BetterLyrics.Avalonia.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="BetterLyrics.Avalonia.Controls.SemanticZoom"
+             x:Name="Root">
+
+    <Grid>
+        <!-- Zoomed Out View -->
+        <ContentPresenter x:Name="ZoomedOutPresenter"
+                          Content="{Binding ZoomedOutView, ElementName=Root}"
+                          IsVisible="{Binding !IsZoomedInViewActive, ElementName=Root}" />
+
+        <!-- Zoomed In View -->
+        <ContentPresenter x:Name="ZoomedInPresenter"
+                          Content="{Binding ZoomedInView, ElementName=Root}"
+                          IsVisible="{Binding IsZoomedInViewActive, ElementName=Root}" />
+    </Grid>
+</UserControl>

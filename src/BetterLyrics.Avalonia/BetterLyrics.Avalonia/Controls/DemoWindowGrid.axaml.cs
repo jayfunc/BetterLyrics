@@ -1,7 +1,7 @@
 using System.Linq;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Interactivity;
+using global::Avalonia;
+using global::Avalonia.Controls;
+using global::Avalonia.Interactivity;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;

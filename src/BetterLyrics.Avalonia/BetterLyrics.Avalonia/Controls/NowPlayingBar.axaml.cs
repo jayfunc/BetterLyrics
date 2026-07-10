@@ -1,7 +1,8 @@
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Input;
-using Avalonia.Interactivity;
+using global::Avalonia;
+using global::Avalonia.Controls;
+using global::Avalonia.Input;
+using global::Avalonia.Interactivity;
+using global::Avalonia.Media;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Events;
 using BetterLyrics.Core.Extensions;
@@ -44,6 +45,9 @@ public partial class NowPlayingBar : UserControl
     public static readonly StyledProperty<bool> IsAutoHideEnabledProperty =
         AvaloniaProperty.Register<NowPlayingBar, bool>(nameof(IsAutoHideEnabled), false);
 
+    public static new readonly StyledProperty<Thickness> PaddingProperty =
+        AvaloniaProperty.Register<NowPlayingBar, Thickness>(nameof(Padding), new Thickness(0));
+
     public static readonly StyledProperty<LyricsWindowStatus?> LyricsWindowStatusProperty =
         AvaloniaProperty.Register<NowPlayingBar, LyricsWindowStatus?>(nameof(LyricsWindowStatus));
 
@@ -51,7 +55,13 @@ public partial class NowPlayingBar : UserControl
     private readonly IWindowManagerProvider _windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
     private readonly IProgramProvider _programProvider = Ioc.Default.GetRequiredService<IProgramProvider>();
 
+    private TranslateTransform? LyricsLineInfoTransform => (TranslateTransform?)TimelineSliderLyricsLineInfo.RenderTransform;
+    private TranslateTransform? HintTransform => (TranslateTransform?)BottomCommandFlyoutTriggerHint.RenderTransform;
+
+    private Flyout? VolumeFlyout => (Flyout?)VolumeButton.Flyout;
+
     private bool _isPointerInBottomCommandGrid;
+    private bool _isDraggingTimeline;
 
     public NowPlayingBar()
     {
@@ -125,6 +135,12 @@ public partial class NowPlayingBar : UserControl
         set => SetValue(LyricsWindowStatusProperty, value);
     }
 
+    public new Thickness? Padding
+    {
+        get => GetValue(PaddingProperty);
+        set => SetValue(PaddingProperty, value);
+    }
+
     public event EventHandler? SongInfoTapped;
     public event EventHandler? TimeTapped;
     public event EventHandler? PlayQueueButtonClick;
@@ -159,33 +175,32 @@ public partial class NowPlayingBar : UserControl
     {
         // Adjust for Avalonia's visual tree operations. 
         // Note: You must ensure 'BottomCommandFlyoutContainer' exists in your Avalonia visual layout if you retain this specific swapping logic.
-        
-        // TODO
-        
-        //if (IsCompactMode)
-        //{
-        //    if (HintTransform != null) HintTransform.Y = 0;
-        //}
-        //else
-        //{
-        //    if (HintTransform != null) HintTransform.Y = 12;
-        //}
+
+        if (IsCompactMode)
+        {
+            if (HintTransform != null) HintTransform.Y = 0;
+        }
+        else
+        {
+            if (HintTransform != null) HintTransform.Y = 12;
+        }
     }
 
     private void VolumeButton_Click(object? sender, RoutedEventArgs e)
     {
-        // TODO
-
-        //VolumeFlyout.ShowAt(BottomRightCommandStackPanel);
+        VolumeFlyout?.ShowAt(BottomRightCommandStackPanel);
     }
 
     private void TimelineSliderOverlay_PointerPressed(object? sender, PointerPressedEventArgs e)
     {
         if (sender is Control grid)
         {
+            _isDraggingTimeline = true;
+            e.Pointer.Capture(grid);
+
             var pos = e.GetPosition(grid);
-            var ratio = pos.X / grid.Bounds.Width;
-            _ = GSMTCService.ChangePositionAsync(TimelineSlider.Maximum * ratio);
+            var ratio = Math.Clamp(pos.X / grid.Bounds.Width, 0, 1);
+            TimelineSlider.Value = TimelineSlider.Maximum * ratio;
         }
     }
 
@@ -194,8 +209,13 @@ public partial class NowPlayingBar : UserControl
         if (sender is Control grid)
         {
             var pos = e.GetPosition(grid);
-            var ratio = pos.X / grid.Bounds.Width;
+            var ratio = Math.Clamp(pos.X / grid.Bounds.Width, 0, 1);
             ViewModel.TimelineSliderThumbSeconds = TimelineSlider.Maximum * ratio;
+
+            if (_isDraggingTimeline)
+            {
+                TimelineSlider.Value = TimelineSlider.Maximum * ratio;
+            }
 
             double targetX;
             if (pos.X + TimelineSliderLyricsLineInfo.Bounds.Width > grid.Bounds.Width)
@@ -203,12 +223,23 @@ public partial class NowPlayingBar : UserControl
             else
                 targetX = pos.X;
 
-            // TODO
+            if (LyricsLineInfoTransform != null)
+            {
+                LyricsLineInfoTransform.X = targetX;
+            }
+        }
+    }
 
-            //if (LyricsLineInfoTransform != null)
-            //{
-            //    LyricsLineInfoTransform.X = targetX;
-            //}
+    private void TimelineSliderOverlay_PointerReleased(object? sender, PointerReleasedEventArgs e)
+    {
+        if (_isDraggingTimeline && sender is Control grid)
+        {
+            _isDraggingTimeline = false;
+            e.Pointer.Capture(null);
+
+            var pos = e.GetPosition(grid);
+            var ratio = Math.Clamp(pos.X / grid.Bounds.Width, 0, 1);
+            _ = GSMTCService.ChangePositionAsync(TimelineSlider.Maximum * ratio);
         }
     }
 

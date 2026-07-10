@@ -1,6 +1,6 @@
-using Avalonia.Controls;
-using Avalonia.Input;
-using Avalonia.Interactivity;
+using global::Avalonia.Controls;
+using global::Avalonia.Input;
+using global::Avalonia.Interactivity;
 using BetterLyrics.Avalonia.Extensions;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;

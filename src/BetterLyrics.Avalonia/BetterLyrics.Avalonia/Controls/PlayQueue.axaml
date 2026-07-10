@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<UserControl x:Name="Root"
+             x:Class="BetterLyrics.Avalonia.Controls.PlayQueue"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="using:BetterLyrics.Core.Models"
+             xmlns:strings="using:BetterLyrics.Avalonia.Strings"
+             Loaded="UserControl_Loaded"
+             Unloaded="UserControl_Unloaded"
+             mc:Ignorable="d">
+
+    <Border Classes="CardGridStyle">
+        <Grid>
+            <Grid.Transitions>
+                <!-- <Vector3Transition /> -->
+            </Grid.Transitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Margin="12,12,12,0">
+                <TextBlock
+                    Text="{x:Static strings:Resources.MusicGalleryPagePlayingQueue_Text}"
+                    VerticalAlignment="Center"
+                    Theme="{StaticResource BodyStrongTextBlockStyle}" />
+            </Grid>
+
+            <Grid Grid.Row="1" Margin="12,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <StackPanel
+                    Grid.Column="0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal">
+                    <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                               Text="{Binding #Root.ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex, Mode=OneWay, Converter={StaticResource IndexToDisplayConverter}}" />
+                    <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}" Text="/" />
+                    <TextBlock Text="{Binding #Root.ViewModel.SMTCService.TrackPlayingQueue.Count, Mode=OneWay}" />
+                </StackPanel>
+
+                <!--  Scroll to playing item  -->
+                <Button
+                    Grid.Column="1"
+                    HorizontalAlignment="Right"
+                    Click="ScrollToPlayingItemButton_Click"
+                    Classes="GhostButtonStyle"
+                    ToolTip.Tip="{x:Static strings:Resources.MusicGalleryPageScrollToPlayingItem_Text}">
+                    <ui:FAFontIcon FontFamily="{StaticResource SegoeFluentIcons}" FontSize="16" Glyph="&#xE7B7;" />
+                </Button>
+                <!--  Empty play queue  -->
+                <Button
+                    Grid.Column="2"
+                    HorizontalAlignment="Right"
+                    Click="EmptyPlayingQueueButton_Click"
+                    Classes="GhostButtonStyle"
+                    ToolTip.Tip="{x:Static strings:Resources.MusicGalleryPageEmptyPlayingQueue_Text}">
+                    <ui:FAFontIcon FontFamily="{StaticResource SegoeFluentIcons}" FontSize="16" Glyph="&#xE738;" />
+                </Button>
+
+            </Grid>
+
+            <Border Height="1" Background="{DynamicResource DividerStrokeColorDefaultBrush}" Grid.Row="2" />
+
+            <Grid Grid.Row="3"
+                  IsVisible="{Binding !#Root.ViewModel.SMTCService.TrackPlayingQueue.Count, Mode=OneWay}">
+                <StackPanel
+                    Margin="0,24"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Spacing="12">
+                    <Image MaxWidth="100" Source="/Assets/EmptyBox.png" />
+                    <TextBlock
+                        Text="{x:Static strings:Resources.MusicGalleryPagePlayingQueueEmpty_Text}"
+                        HorizontalAlignment="Center"
+                        Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                </StackPanel>
+            </Grid>
+
+            <ListBox
+                x:Name="PlayingQueueListBox"
+                Grid.Row="3"
+                ItemsSource="{Binding #Root.ViewModel.SMTCService.TrackPlayingQueue, Mode=OneWay}"
+                SelectedIndex="{Binding #Root.ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex, Mode=TwoWay}">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="models:PlayQueueItem">
+                        <Border Padding="0,6">
+                            <Grid>
+                                <Grid Tapped="PlayingQueueListVireItemGrid_Tapped">
+                                    <StackPanel Margin="0,0,36,0">
+                                        <TextBlock Text="{Binding Track.Title}" TextWrapping="Wrap" />
+                                        <TextBlock
+                                            Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                            Text="{Binding Track.Artist}"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </Grid>
+                                <Grid HorizontalAlignment="Right">
+                                    <Button
+                                        VerticalAlignment="Center"
+                                        Click="RemoveFromPlayingQueueButton_Click"
+                                        Classes="GhostButtonStyle"
+                                        ToolTip.Tip="{x:Static strings:Resources.MusicGalleryPageRemoveFromPlayingQueue_Text}">
+                                        <ui:FAFontIcon FontFamily="{StaticResource SegoeFluentIcons}" FontSize="16" Glyph="&#xE738;" />
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+
+        </Grid>
+    </Border>
+
+</UserControl>

@@ -1,6 +1,6 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
-		<TargetFramework>net10.0</TargetFramework>
+		<TargetFrameworks>net10.0;net10.0-windows10.0.26100.0</TargetFrameworks>
 		<Nullable>enable</Nullable>
 		<LangVersion>latest</LangVersion>
 		<AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
@@ -20,6 +20,7 @@
 			<PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
 		</PackageReference>
 		<PackageReference Include="CommunityToolkit.Mvvm" />
+		<PackageReference Include="Dubya.WindowsMediaController.Jayfunc" Condition="$(TargetFramework.Contains('-windows'))" />
 		<PackageReference Include="FluentAvaloniaUI" />
 		<PackageReference Include="FluentIcons.Avalonia.Fluent" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore" />

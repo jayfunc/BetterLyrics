@@ -1,10 +1,10 @@
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.Documents;
-using Avalonia.Input;
-using Avalonia.Interactivity;
-using Avalonia.Media;
-using Avalonia.Threading;
+using global::Avalonia;
+using global::Avalonia.Controls;
+using global::Avalonia.Controls.Documents;
+using global::Avalonia.Input;
+using global::Avalonia.Interactivity;
+using global::Avalonia.Media;
+using global::Avalonia.Threading;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;

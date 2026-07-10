@@ -1,0 +1,58 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="using:BetterLyrics.Avalonia.Views"
+        xmlns:uc="using:BetterLyrics.Avalonia.Controls"
+        xmlns:strings="using:BetterLyrics.Avalonia.Strings"
+        xmlns:viewModels="using:BetterLyrics.Core.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="BetterLyrics.Avalonia.Views.MusicGalleryWindow"
+        Title="{x:Static strings:Resources.MusicGalleryPageTitle}"
+        x:DataType="viewModels:MusicGalleryWindowViewModel">
+
+    <Grid x:Name="RootGrid"
+          Loaded="RootGrid_Loaded"
+          Unloaded="RootGrid_Unloaded">
+
+        <!-- TODO: MusicGalleryPage is not yet ported to Avalonia -->
+        <TextBlock Text="MusicGalleryPage (Not Ported Yet)" HorizontalAlignment="Center" VerticalAlignment="Center" />
+        
+        <ThemeVariantScope x:Name="NowPlayingPageScope">
+            <local:NowPlayingPage
+                x:Name="NowPlayingPage"
+                Opacity="0"
+                IsVisible="False">
+                <local:NowPlayingPage.Transitions>
+                    <Transitions>
+                        <DoubleTransition Property="Opacity" Duration="0:0:0.35" />
+                    </Transitions>
+                </local:NowPlayingPage.Transitions>
+            </local:NowPlayingPage>
+        </ThemeVariantScope>
+
+        <ThemeVariantScope x:Name="NowPlayingBarScope" VerticalAlignment="Bottom">
+            <uc:NowPlayingBar
+                x:Name="NowPlayingBar"
+                Padding="16"
+                PlayQueueButtonClick="NowPlayingBar_PlayingQueueClick"
+                ShowPlaybackOrderButton="True"
+                ShowPlayingQueueButton="True"
+                ShowSongInfo="True"
+                ShowStopButton="True"
+                SongInfoTapped="NowPlayingBar_SongInfoTapped"
+                TimeTapped="NowPlayingBar_TimeTapped">
+                
+                 
+                <FlyoutBase.AttachedFlyout>
+                    <Flyout Placement="Top">
+                        <uc:PlayQueue x:Name="PlayQueue" Width="300" MaxHeight="600" />
+                    </Flyout>
+                </FlyoutBase.AttachedFlyout>
+                
+            </uc:NowPlayingBar>
+        </ThemeVariantScope>
+
+    </Grid>
+
+</Window>

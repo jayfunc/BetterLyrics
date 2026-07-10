@@ -1,8 +1,8 @@
 using System;
-using Avalonia;
-using Avalonia.Animation;
-using Avalonia.Controls;
-using Avalonia.Media;
+using global::Avalonia;
+using global::Avalonia.Animation;
+using global::Avalonia.Controls;
+using global::Avalonia.Media;
 using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
 

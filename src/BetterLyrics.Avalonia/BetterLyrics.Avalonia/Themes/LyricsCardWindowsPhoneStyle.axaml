@@ -1,0 +1,256 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:BetterLyrics.Avalonia.Controls"
+    xmlns:lyrics="using:BetterLyrics.Core.Models.Lyrics"
+    xmlns:ui="using:FluentAvalonia.UI.Controls">
+
+    <ControlTheme x:Key="LyricsCardWindowsPhoneStyle" TargetType="controls:LyricsCard">
+        
+                <Setter Property="Template">
+                <ControlTemplate TargetType="controls:LyricsCard">
+                    <Grid
+                        Width="450"
+                        Height="{TemplateBinding LyricsAreaSize}"
+                        MinHeight="800"
+                        Background="Black">
+                        <Image
+                            Opacity="0.6"
+                            Source="{Binding CoverImage, RelativeSource={RelativeSource TemplatedParent}}"
+                            Stretch="UniformToFill" />
+
+                        <Rectangle Height="400" VerticalAlignment="Bottom">
+                            <Rectangle.Fill>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Offset="0" Color="Transparent" />
+                                    <GradientStop Offset="1" Color="#CC000000" />
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+
+                        <Grid
+                            Height="32"
+                            
+                            VerticalAlignment="Top"
+                            Background="#33000000">
+                            <StackPanel
+                                HorizontalAlignment="Left"
+                                Orientation="Horizontal"
+                                Spacing="8">
+                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                    FontSize="14"
+                                    Foreground="White"
+                                    Text="&#xE870;" />
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                    FontSize="12"
+                                    FontWeight="Bold"
+                                    Foreground="White"
+                                    Text="5G" />
+                            </StackPanel>
+
+                            <StackPanel
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal"
+                                Spacing="12">
+                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                    FontSize="14"
+                                    Foreground="White"
+                                    Text="&#xE701;" />
+                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                    FontSize="14"
+                                    Foreground="White"
+                                    Text="&#xE83F;" />
+                            </StackPanel>
+                        </Grid>
+
+                        <Grid
+                            Height="100"
+                            Margin="0,32,0,0"
+                            VerticalAlignment="Top"
+                            Background="#1F1F1F">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Image
+                                Grid.Column="0"
+                                Width="100"
+                                Height="100"
+                                Source="{Binding CoverImage, RelativeSource={RelativeSource TemplatedParent}}"
+                                Stretch="UniformToFill" />
+
+                            <Grid Grid.Column="1" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" VerticalAlignment="Center">
+                                    <TextBlock
+                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                        FontSize="15"
+                                        Foreground="White"
+                                        Text="{Binding Artist, RelativeSource={RelativeSource TemplatedParent}}"
+                                        TextTrimming="CharacterEllipsis" />
+                                    <TextBlock
+                                        Margin="0,2,0,0"
+                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                        FontSize="13"
+                                        Foreground="#999"
+                                        Text="{Binding Title, RelativeSource={RelativeSource TemplatedParent}}"
+                                        TextTrimming="CharacterEllipsis" />
+                                </StackPanel>
+
+                                <StackPanel
+                                    Grid.Row="1"
+                                    Margin="0,0,0,4"
+                                    HorizontalAlignment="Left"
+                                    Orientation="Horizontal"
+                                    Spacing="25">
+                                    <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                        FontSize="18"
+                                        Foreground="#CCC"
+                                        Text="&#xE892;" />
+                                    <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                        FontSize="22"
+                                        Foreground="White"
+                                        Text="&#xE768;" />
+                                    <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                        FontSize="18"
+                                        Foreground="#CCC"
+                                        Text="&#xE893;" />
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+
+                        <Grid Margin="30,160,30,240" VerticalAlignment="Center">
+                            <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                                <ItemsControl
+                                    x:Name="PART_LyricsItemsControl"
+                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                    ItemsSource="{Binding LyricsLines, RelativeSource={RelativeSource TemplatedParent}}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="lyrics:LyricsLine">
+                                            <StackPanel Margin="0,0,0,24">
+
+                                                <TextBlock
+                                                    FontSize="26"
+                                                    Foreground="White"
+                                                    LineHeight="34"
+                                                    Opacity="1.0"
+                                                    Text="{Binding Text}"
+                                                    TextAlignment="Center"
+                                                    TextWrapping="Wrap">
+                                                    
+                                                </TextBlock>
+
+                                                <TextBlock
+                                                    Margin="0,4,0,0"
+                                                    FontSize="18"
+                                                    Foreground="#A6A6A6"
+                                                    LineHeight="24"
+                                                    Text="{Binding SecondaryText}"
+                                                    TextAlignment="Center"
+                                                    TextWrapping="Wrap"
+                                                    IsVisible="{Binding SecondaryText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                                                    
+                                                </TextBlock>
+
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </Grid>
+
+                        <StackPanel Margin="24,0,0,40" VerticalAlignment="Bottom">
+                            <TextBlock
+                                Margin="-4,0,0,-12"
+                                FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                FontSize="90"
+                                Foreground="White"
+                                Text="{Binding TimeShort, RelativeSource={RelativeSource TemplatedParent}}" />
+
+                            <TextBlock
+                                Margin="2,0,0,4"
+                                FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                FontSize="22"
+                                Foreground="White"
+                                Text="{Binding DateLong, RelativeSource={RelativeSource TemplatedParent}}" />
+
+                            <TextBlock
+                                Margin="2,0,0,24"
+                                FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                FontSize="16"
+                                Foreground="#CCC"
+                                Text="BetterLyrics" />
+
+                            <StackPanel
+                                Opacity="0.9"
+                                Orientation="Horizontal"
+                                Spacing="12">
+                                <Grid>
+                                    <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                        FontSize="20"
+                                        Foreground="White"
+                                        Text="&#xE717;" />
+                                    <TextBlock
+                                        Margin="30,-2,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
+                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                        FontSize="10"
+                                        FontWeight="Bold"
+                                        Foreground="White"
+                                        Text="1" />
+                                </Grid>
+                                <Grid>
+                                    <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                        FontSize="20"
+                                        Foreground="White"
+                                        Text="&#xE715;" />
+                                    <TextBlock
+                                        Margin="30,-2,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
+                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                        FontSize="10"
+                                        FontWeight="Bold"
+                                        Foreground="White"
+                                        Text="5" />
+                                </Grid>
+                                <Grid>
+                                    <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                        FontSize="20"
+                                        Foreground="White"
+                                        Text="&#xE8BD;" />
+                                    <TextBlock
+                                        Margin="30,-2,0,0"
+                                        HorizontalAlignment="Left"
+                                        VerticalAlignment="Top"
+                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                        FontSize="10"
+                                        FontWeight="Bold"
+                                        Foreground="White"
+                                        Text="2" />
+                                </Grid>
+                            </StackPanel>
+                        </StackPanel>
+
+                        <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                            Margin="0,0,0,10"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Bottom"
+                            FontSize="12"
+                            Foreground="White"
+                            Text="&#xE70E;"
+                            Opacity="0.5" />
+                    </Grid>
+                </ControlTemplate>
+            </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>

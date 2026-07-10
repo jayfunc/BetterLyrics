@@ -3,14 +3,16 @@
     xmlns="https://github.com/avaloniaui"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:BetterLyrics.Avalonia.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
+    x:DataType="local:FloatSidePanel"
     x:Name="RootControl">
 
     <Grid x:Name="RootContainer" IsVisible="False">
-        <Border x:Name="MaskBorder" 
-                Background="#66000000" 
-                Opacity="0" 
+        <Border x:Name="MaskBorder"
+                Background="#66000000"
+                Opacity="0"
                 PointerPressed="Mask_Tapped">
             <Border.Transitions>
                 <Transitions>
@@ -20,18 +22,21 @@
         </Border>
 
         <Border x:Name="PanelBorder"
-              Background="{DynamicResource AcrylicInAppFillColorDefaultBrush}"
-              BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}">
-            <Border.RenderTransform>
-                <TranslateTransform />
-            </Border.RenderTransform>
-            <Border.Transitions>
-                <Transitions>
-                    <TransformOperationsTransition Property="RenderTransform" Duration="0:0:0.35" Easing="ExponentialEaseOut" />
-                </Transitions>
-            </Border.Transitions>
+                Background="{DynamicResource AcrylicInAppFillColorDefaultBrush}"
+                BorderBrush="{DynamicResource CardStrokeColorDefaultBrush}">
 
-            <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding #RootControl.PanelContent}" />
+            <Border.RenderTransform>
+                <TranslateTransform>
+                    <TranslateTransform.Transitions>
+                        <Transitions>
+                            <DoubleTransition Property="X" Duration="0:0:0.35" Easing="ExponentialEaseOut" />
+                            <DoubleTransition Property="Y" Duration="0:0:0.35" Easing="ExponentialEaseOut" />
+                        </Transitions>
+                    </TranslateTransform.Transitions>
+                </TranslateTransform>
+            </Border.RenderTransform>
+
+            <ContentPresenter HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="{Binding Content}" />
         </Border>
     </Grid>
 </UserControl>

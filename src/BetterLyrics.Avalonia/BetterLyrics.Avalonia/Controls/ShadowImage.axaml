@@ -9,18 +9,18 @@
     x:Name="RootControl"
     mc:Ignorable="d">
 
-    <Grid Margin="32">
-        <Border
-            x:Name="ShadowRect"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            ClipToBounds="True">
-            
-            <Image 
-                x:Name="ContentImage"
-                Source="{Binding #RootControl.Source}" 
-                Stretch="{Binding #RootControl.Stretch}" />
-                
+    <Grid Margin="-32">
+        <Border Padding="32">
+            <Border
+                x:Name="ShadowRect"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                ClipToBounds="True">
+                <Image
+                    x:Name="ContentImage"
+                    Source="{Binding #RootControl.Source}"
+                    Stretch="{Binding #RootControl.Stretch}" />
+            </Border>
         </Border>
     </Grid>
 </UserControl>

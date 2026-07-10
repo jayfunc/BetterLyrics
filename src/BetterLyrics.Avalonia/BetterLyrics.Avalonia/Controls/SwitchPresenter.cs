@@ -1,8 +1,8 @@
 ﻿using System;
-using Avalonia;
-using Avalonia.Collections;
-using Avalonia.Controls;
-using Avalonia.Metadata;
+using global::Avalonia;
+using global::Avalonia.Collections;
+using global::Avalonia.Controls;
+using global::Avalonia.Metadata;
 
 namespace BetterLyrics.Avalonia.Controls;
 

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Input;
-using Avalonia.Layout;
-using Avalonia.Media;
-using Avalonia.Animation;
-using Avalonia.Interactivity;
+using global::Avalonia;
+using global::Avalonia.Controls;
+using global::Avalonia.Input;
+using global::Avalonia.Layout;
+using global::Avalonia.Media;
+using global::Avalonia.Animation;
+using global::Avalonia.Interactivity;
 
 namespace BetterLyrics.Avalonia.Controls;
 

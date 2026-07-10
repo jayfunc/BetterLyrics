@@ -1,0 +1,213 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:BetterLyrics.Avalonia.Controls"
+    xmlns:lyrics="using:BetterLyrics.Core.Models.Lyrics"
+    xmlns:ui="using:FluentAvalonia.UI.Controls">
+
+    <ControlTheme x:Key="LyricsCardCinematicStyle" TargetType="controls:LyricsCard">
+        
+                <Setter Property="Template">
+                <ControlTemplate TargetType="controls:LyricsCard">
+                    <Grid
+                        Width="450"
+                        Height="{TemplateBinding LyricsAreaSize}"
+                        MinHeight="600"
+                        Background="Black">
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="60" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Grid Grid.Row="1">
+                            <Image
+                                Opacity="0.9"
+                                Source="{Binding CoverImage, RelativeSource={RelativeSource TemplatedParent}}"
+                                Stretch="UniformToFill" />
+
+                            <Rectangle Height="300" VerticalAlignment="Bottom">
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                        <GradientStop Offset="0" Color="Transparent" />
+                                        <GradientStop Offset="0.4" Color="#40000000" />
+                                        <GradientStop Offset="1" Color="#FF000000" />
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+
+                            <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                                <ItemsControl
+                                    x:Name="PART_LyricsItemsControl"
+                                    Margin="20,0,20,20"
+                                    VerticalAlignment="Bottom"
+                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                    ItemsSource="{Binding LyricsLines, RelativeSource={RelativeSource TemplatedParent}}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="lyrics:LyricsLine">
+                                            <StackPanel Margin="0,0,0,24">
+
+                                                <Grid HorizontalAlignment="Center">
+                                                    <TextBlock
+                                                        FontSize="22"
+                                                        FontWeight="Bold"
+                                                        Foreground="Black"
+                                                        Opacity="0.8"
+                                                        Text="{Binding Text}"
+                                                        TextAlignment="Center"
+                                                        TextWrapping="Wrap">
+                                                        <TextBlock.RenderTransform>
+                                                            <TranslateTransform X="2" Y="2" />
+                                                        </TextBlock.RenderTransform>
+                                                    </TextBlock>
+                                                    <TextBlock
+                                                        FontSize="22"
+                                                        FontWeight="Bold"
+                                                        Foreground="Black"
+                                                        Opacity="0.8"
+                                                        Text="{Binding Text}"
+                                                        TextAlignment="Center"
+                                                        TextWrapping="Wrap">
+                                                        <TextBlock.RenderTransform>
+                                                            <TranslateTransform X="-1" Y="-1" />
+                                                        </TextBlock.RenderTransform>
+                                                    </TextBlock>
+                                                    <TextBlock
+                                                        FontSize="22"
+                                                        FontWeight="Bold"
+                                                        Foreground="Black"
+                                                        Opacity="0.8"
+                                                        Text="{Binding Text}"
+                                                        TextAlignment="Center"
+                                                        TextWrapping="Wrap">
+                                                        <TextBlock.RenderTransform>
+                                                            <TranslateTransform X="1" Y="-1" />
+                                                        </TextBlock.RenderTransform>
+                                                    </TextBlock>
+                                                    <TextBlock
+                                                        FontSize="22"
+                                                        FontWeight="Bold"
+                                                        Foreground="Black"
+                                                        Opacity="0.8"
+                                                        Text="{Binding Text}"
+                                                        TextAlignment="Center"
+                                                        TextWrapping="Wrap">
+                                                        <TextBlock.RenderTransform>
+                                                            <TranslateTransform X="-1" Y="1" />
+                                                        </TextBlock.RenderTransform>
+                                                    </TextBlock>
+
+                                                    <TextBlock
+                                                        FontSize="22"
+                                                        FontWeight="Bold"
+                                                        Foreground="#FFCB4C"
+                                                        Text="{Binding Text}"
+                                                        TextAlignment="Center"
+                                                        TextWrapping="Wrap" />
+                                                </Grid>
+
+                                                <Grid
+                                                    Margin="0,6,0,0"
+                                                    HorizontalAlignment="Center"
+                                                    IsVisible="{Binding SecondaryText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+
+                                                    <TextBlock
+                                                        FontSize="15"
+                                                        FontWeight="SemiBold"
+                                                        Foreground="Black"
+                                                        Opacity="0.8"
+                                                        Text="{Binding SecondaryText}"
+                                                        TextAlignment="Center"
+                                                        TextWrapping="Wrap">
+                                                        <TextBlock.RenderTransform>
+                                                            <TranslateTransform X="1" Y="1" />
+                                                        </TextBlock.RenderTransform>
+                                                    </TextBlock>
+                                                    <TextBlock
+                                                        FontSize="15"
+                                                        FontWeight="SemiBold"
+                                                        Foreground="Black"
+                                                        Opacity="0.8"
+                                                        Text="{Binding SecondaryText}"
+                                                        TextAlignment="Center"
+                                                        TextWrapping="Wrap">
+                                                        <TextBlock.RenderTransform>
+                                                            <TranslateTransform X="-1" Y="-1" />
+                                                        </TextBlock.RenderTransform>
+                                                    </TextBlock>
+
+                                                    <TextBlock
+                                                        FontSize="15"
+                                                        FontWeight="SemiBold"
+                                                        Foreground="#E0E0E0"
+                                                        Text="{Binding SecondaryText}"
+                                                        TextAlignment="Center"
+                                                        TextWrapping="Wrap" />
+                                                </Grid>
+
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </ScrollViewer>
+                        </Grid>
+
+                        <TextBlock
+                            Grid.Row="0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                            FontSize="10"
+                            Foreground="#444"
+                            Text="NOW PLAYING" />
+
+                        <StackPanel
+                            Grid.Row="2"
+                            Margin="0,10,0,40"
+                            Background="Black">
+
+                            <TextBlock
+                                Margin="20,0"
+                                HorizontalAlignment="Center"
+                                FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                FontSize="26"
+                                FontWeight="Black"
+                                Foreground="White"
+                                Text="{Binding Title, RelativeSource={RelativeSource TemplatedParent}}"
+                                TextAlignment="Center"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="Wrap" />
+
+                            <TextBlock
+                                Margin="40,12,40,0"
+                                HorizontalAlignment="Center"
+                                FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                FontSize="9"
+                                FontStretch="Condensed"
+                                LineHeight="14"
+                                TextAlignment="Center"
+                                TextWrapping="Wrap">
+                                <Run Foreground="#555" Text="STARRING" />
+                                <Run
+                                    FontWeight="Bold"
+                                    Foreground="#CCC"
+                                    Text="{Binding Artist, RelativeSource={RelativeSource TemplatedParent}}" />
+                                <Run Foreground="#555" Text="  MUSIC BY" />
+                                <Run Foreground="#CCC" Text="{Binding Artist, RelativeSource={RelativeSource TemplatedParent}}" />
+                                <Run Foreground="#555" Text="  PRODUCED BY" />
+                                <Run Foreground="#CCC" Text="BETTERLYRICS" />
+                                <LineBreak />
+                                <Run Foreground="#555" Text="DOLBY DIGITAL" />
+                                <Run Foreground="#333" Text="  |  " />
+                                <Run Foreground="#555" Text="RESTRICTED" />
+                                <Run Foreground="#333" Text="  |  " />
+                                <Run Foreground="#555" Text="RATED R" />
+                            </TextBlock>
+                        </StackPanel>
+                    </Grid>
+                </ControlTemplate>
+            </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>

@@ -1,0 +1,70 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="using:FluentAvalonia.UI.Controls"
+        xmlns:controls="using:BetterLyrics.Avalonia.Controls"
+        xmlns:viewModels="using:BetterLyrics.Core.ViewModels"
+        xmlns:models="using:BetterLyrics.Core.Models.Settings"
+        xmlns:strings="using:BetterLyrics.Avalonia.Strings"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="BetterLyrics.Avalonia.Views.LyricsWindowSwitchWindow"
+        Title="LyricsWindowSwitchWindow"
+        Background="Transparent"
+        TransparencyLevelHint="Transparent"
+        WindowDecorations="None"
+        WindowStartupLocation="CenterScreen"
+        Topmost="True"
+        x:DataType="viewModels:LyricsWindowSwitchControlViewModel">
+
+    <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Border Background="{DynamicResource CardBackgroundFillColorDefaultBrush}"
+                CornerRadius="12"
+                BoxShadow="0 4 32 0 #40000000">
+            <Border Padding="24"
+                    Background="{DynamicResource AcrylicBackgroundFillColorDefaultBrush}"
+                    CornerRadius="12">
+                <Grid RowDefinitions="Auto, *, Auto">
+
+                    <Grid Grid.Row="0">
+                        <TextBlock Text="{x:Static strings:Resources.SystemTraySwitch_Text}" VerticalAlignment="Center" />
+                        <Button HorizontalAlignment="Right"
+                                Click="Button_Click"
+                                Theme="{StaticResource TransparentButton}"
+                                HotKey="Escape">
+                            <TextBlock FontFamily="{StaticResource SegoeFluentIcons}" Text="&#xE73C;" />
+                        </Button>
+                    </Grid>
+
+                    <ItemsControl Grid.Row="1"
+                                  Margin="36,12"
+                                  Background="Transparent"
+                                  ItemsSource="{Binding AppSettings.WindowBoundsRecords}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="models:LyricsWindowStatus">
+                                <Grid Margin="6" Tapped="Grid_Tapped" RowDefinitions="Auto, Auto" Background="Transparent">
+                                    <TextBlock Text="{Binding Name}" TextAlignment="Center" Margin="0,0,0,6" />
+                                    <controls:DemoWindowGrid Grid.Row="1" LyricsWindowStatus="{Binding}" />
+                                </Grid>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <Grid Grid.Row="2">
+                        <controls:ExternalLinkButton Click="SettingsHypelinkButton_Click">
+                            <controls:ExternalLinkButton.Content>
+                                <TextBlock Text="{x:Static strings:Resources.LyricsWindowSwitchWindowHelp_Text}" />
+                            </controls:ExternalLinkButton.Content>
+                        </controls:ExternalLinkButton>
+                    </Grid>
+
+                </Grid>
+            </Border>
+        </Border>
+    </Grid>
+</Window>

@@ -223,8 +223,7 @@ public class WindowManagerProvider : IWindowManagerProvider
 
             var castedWindow = (Window)window;
 
-            if (typeof(T) != typeof(LyricsWindowSwitchWindow) && typeof(T) != typeof(SystemTrayWindow) &&
-                typeof(T) != typeof(NowPlayingWindow))
+            if (typeof(T) != typeof(LyricsWindowSwitchWindow) && typeof(T) != typeof(SystemTrayWindow))
                 castedWindow.Activate();
         }
         else
@@ -248,6 +247,9 @@ public class WindowManagerProvider : IWindowManagerProvider
             : OpenOrShowWindow<NowPlayingWindow>(),
         WindowType.MusicGalleryWindow => OpenOrShowWindow<MusicGalleryWindow>(),
         WindowType.LyricsShareWindow => OpenOrShowWindow<LyricsShareWindow>(),
+        WindowType.LyricsWindowSwitchWindow => OpenOrShowWindow<LyricsWindowSwitchWindow>(),
+        WindowType.LyricsSearchWindow => OpenOrShowWindow<LyricsSearchWindow>(),
+        WindowType.StatsDashboardWindow => OpenOrShowWindow<StatsDashboardWindow>(),
         _ => null
     };
 

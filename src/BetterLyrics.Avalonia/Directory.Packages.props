@@ -16,6 +16,7 @@
     <PackageVersion Include="Avalonia.Browser" Version="12.0.5" />
     <PackageVersion Include="Avalonia.Android" Version="12.0.5" />
     <PackageVersion Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+    <PackageVersion Include="Dubya.WindowsMediaController.Jayfunc" Version="2.5.6" />
     <PackageVersion Include="FluentAvaloniaUI" Version="3.0.0" />
     <PackageVersion Include="FluentIcons.Avalonia.Fluent" Version="2.1.331" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore" Version="10.0.9" />

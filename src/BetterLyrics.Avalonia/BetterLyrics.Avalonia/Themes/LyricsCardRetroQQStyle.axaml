@@ -1,0 +1,634 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:BetterLyrics.Avalonia.Controls"
+    xmlns:lyrics="using:BetterLyrics.Core.Models.Lyrics"
+    xmlns:ui="using:FluentAvalonia.UI.Controls">
+
+    <ControlTheme x:Key="LyricsCardRetroQQStyle" TargetType="controls:LyricsCard">
+        
+                <Setter Property="Template">
+                <ControlTemplate TargetType="controls:LyricsCard">
+                    <Grid
+                        x:Name="QQCardRoot"
+                        Width="450"
+                        Height="{TemplateBinding LyricsAreaSize}"
+                        MinHeight="600"
+                        Background="#0055e4"
+                        >
+                        <Border
+                            Background="#dfdfdf"
+                            BorderBrush="#0055e4"
+                            BorderThickness="2,0,2,2">
+                            <Border
+                                Background="#dfdfdf"
+                                BorderBrush="#338bfa"
+                                BorderThickness="0,2,0,0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="36" />
+                                        <RowDefinition Height="*" />
+                                    </Grid.RowDefinitions>
+
+                                    <Border
+                                        Grid.Row="0"
+                                        BorderBrush="#0d45d9"
+                                        BorderThickness="0,0,0,2">
+                                        <Grid Background="#0269fc">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Image
+                                                Width="16"
+                                                Height="16"
+                                                Margin="4,0"
+                                                VerticalAlignment="Bottom"
+                                                Source="{Binding CoverImage, RelativeSource={RelativeSource TemplatedParent}}" />
+
+                                            <Grid
+                                                Grid.Column="1"
+                                                Margin="2,0,100,0"
+                                                VerticalAlignment="Bottom">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock
+                                                    Grid.Column="0"
+                                                    MaxWidth="200"
+                                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                    FontSize="12"
+                                                    FontWeight="Bold"
+                                                    Foreground="White"
+                                                    Text="{Binding Artist, RelativeSource={RelativeSource TemplatedParent}}" />
+                                                <TextBlock
+                                                    Grid.Column="1"
+                                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                    FontSize="12"
+                                                    FontWeight="Bold"
+                                                    Foreground="White"
+                                                    Text="-发送消息" />
+                                            </Grid>
+
+                                            <StackPanel
+                                                Grid.Column="2"
+                                                Margin="0,4,2,0"
+                                                Orientation="Horizontal">
+                                                <Border
+                                                    Width="16"
+                                                    Height="16"
+                                                    Margin="0,0,2,0"
+                                                    Background="#20FFFFFF"
+                                                    BorderBrush="White"
+                                                    BorderThickness="1"
+                                                    CornerRadius="2">
+                                                    <TextBlock
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontFamily="Marlett"
+                                                        FontSize="10"
+                                                        Foreground="White"
+                                                        Text="&#x0030;" />
+                                                </Border>
+                                                <Border
+                                                    Width="16"
+                                                    Height="16"
+                                                    Margin="0,0,2,0"
+                                                    Background="#225feb"
+                                                    BorderBrush="#5799fc"
+                                                    BorderThickness="1"
+                                                    CornerRadius="2">
+                                                    <TextBlock
+                                                        Margin="1.5,1,0,0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontFamily="Marlett"
+                                                        FontSize="10"
+                                                        Foreground="#8a9de7"
+                                                        Text="&#x0031;" />
+                                                </Border>
+                                                <Border
+                                                    Width="16"
+                                                    Height="16"
+                                                    Background="#D54739"
+                                                    BorderBrush="White"
+                                                    BorderThickness="1"
+                                                    CornerRadius="2">
+                                                    <TextBlock
+                                                        Margin="1,0,0,0"
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontFamily="Marlett"
+                                                        FontSize="10"
+                                                        Foreground="White"
+                                                        Text="&#x0072;" />
+                                                </Border>
+                                            </StackPanel>
+                                        </Grid>
+                                    </Border>
+
+                                    <Grid Grid.Row="1" >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <Border
+                                            Width="32"
+                                            Height="32"
+                                            Background="White"
+                                            BorderBrush="#6c6d6d"
+                                            BorderThickness="1.5,1.5,0,0">
+                                            <Image Source="{Binding CoverImage, RelativeSource={RelativeSource TemplatedParent}}" Stretch="UniformToFill" />
+                                        </Border>
+                                        <StackPanel
+                                            Grid.Column="1"
+                                            Margin="8,0,0,0"
+                                            VerticalAlignment="Center"
+                                            Spacing="3">
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock
+                                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                    FontSize="12"
+                                                    Foreground="Black"
+                                                    Text="QQ#: " />
+                                                <TextBlock
+                                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                    FontSize="12"
+                                                    Foreground="Black"
+                                                    Text="3344520" />
+                                            </StackPanel>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock
+                                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                    FontSize="12"
+                                                    Foreground="Black"
+                                                    Text="昵称: " />
+                                                <TextBlock
+                                                    Grid.Column="1"
+                                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                    FontSize="12"
+                                                    Foreground="Black"
+                                                    Text="{Binding Title, RelativeSource={RelativeSource TemplatedParent}}"
+                                                    TextTrimming="CharacterEllipsis" />
+                                            </Grid>
+                                        </StackPanel>
+                                    </Grid>
+
+                                    <Grid Grid.Row="2" Margin="3">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="140" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid Grid.Column="0" Margin="0,0,3,0">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="26" />
+                                                <RowDefinition Height="80" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+
+                                            <Border
+                                                Grid.Row="0"
+                                                Background="White"
+                                                BorderBrush="#ababab"
+                                                BorderThickness="1"
+                                                CornerRadius="4,4,0,0">
+                                                <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                                                    <ItemsControl
+                                                        x:Name="PART_LyricsItemsControl"
+                                                        Margin="12,8"
+                                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                        ItemsSource="{Binding LyricsLines, RelativeSource={RelativeSource TemplatedParent}}">
+                                                        <ItemsControl.ItemTemplate>
+                                                            <DataTemplate x:DataType="lyrics:LyricsLine">
+                                                                <StackPanel Margin="0,0,0,12">
+
+                                                                    <StackPanel Margin="0,0,0,4">
+                                                                        <Grid Margin="0,0,0,2">
+                                                                            <Grid.ColumnDefinitions>
+                                                                                <ColumnDefinition Width="Auto" />
+                                                                                <ColumnDefinition Width="Auto" />
+                                                                            </Grid.ColumnDefinitions>
+                                                                            <TextBlock
+                                                                                MaxWidth="220"
+                                                                                FontSize="12"
+                                                                                Foreground="#0000FF"
+                                                                                Text="{Binding $parent[controls:LyricsCard].Artist}"
+                                                                                TextTrimming="CharacterEllipsis" />
+                                                                            <TextBlock
+                                                                                Grid.Column="1"
+                                                                                FontSize="12"
+                                                                                Foreground="#0000FF"
+                                                                                Text=" 13:14:20" />
+                                                                        </Grid>
+
+                                                                        <TextBlock
+                                                                            Margin="8,0,0,0"
+                                                                            FontSize="13"
+                                                                            Foreground="Black"
+                                                                            LineHeight="18"
+                                                                            Text="{Binding Text}"
+                                                                            TextWrapping="Wrap" />
+                                                                    </StackPanel>
+
+                                                                    <StackPanel Margin="0,8,0,0" IsVisible="{Binding SecondaryText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+
+                                                                        <StackPanel Margin="0,0,0,2" Orientation="Horizontal">
+                                                                            <TextBlock
+                                                                                FontSize="12"
+                                                                                Foreground="#008000"
+                                                                                Text="我" />
+                                                                            <TextBlock
+                                                                                FontSize="12"
+                                                                                Foreground="#008000"
+                                                                                Text=" 20:13:14" />
+                                                                        </StackPanel>
+
+                                                                        <TextBlock
+                                                                            Margin="8,0,0,0"
+                                                                            FontSize="13"
+                                                                            Foreground="Black"
+                                                                            LineHeight="18"
+                                                                            Text="{Binding SecondaryText}"
+                                                                            TextWrapping="Wrap" />
+                                                                    </StackPanel>
+
+                                                                </StackPanel>
+                                                            </DataTemplate>
+                                                        </ItemsControl.ItemTemplate>
+                                                    </ItemsControl>
+                                                </ScrollViewer>
+                                            </Border>
+
+                                            <Border
+                                                Grid.Row="1"
+                                                Background="#6281d0"
+                                                BorderBrush="#ababab"
+                                                BorderThickness="1,0">
+                                                <Grid>
+                                                    <StackPanel
+                                                        Margin="8,0"
+                                                        VerticalAlignment="Center"
+                                                        Orientation="Horizontal"
+                                                        Spacing="12">
+                                                        <StackPanel Orientation="Horizontal" Spacing="2">
+                                                            <Grid>
+                                                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                                                    FontSize="16"
+                                                                    Foreground="Black"
+                                                                    Text="&#xE8D2;" />
+                                                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                                                    FontSize="16"
+                                                                    Foreground="#eba90f"
+                                                                    Text="&#xE8D2;" />
+                                                            </Grid>
+                                                            <TextBlock
+                                                                VerticalAlignment="Bottom"
+                                                                FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                FontSize="12"
+                                                                Foreground="White"
+                                                                Text="字体" />
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" Spacing="2">
+                                                            <Grid>
+                                                                <Ellipse
+                                                                    Width="16"
+                                                                    Height="16"
+                                                                    Fill="#fbe22c" />
+                                                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                                                    FontSize="16"
+                                                                    Foreground="#6c6f65"
+                                                                    Text="&#xE76E;" />
+                                                            </Grid>
+                                                            <TextBlock
+                                                                VerticalAlignment="Bottom"
+                                                                FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                FontSize="12"
+                                                                Foreground="White"
+                                                                Text="表情" />
+                                                        </StackPanel>
+                                                        <StackPanel Orientation="Horizontal" Spacing="2">
+                                                            <Grid RenderTransformOrigin="0.5,0.5">
+                                                                <Grid.RenderTransform>
+                                                                    <RotateTransform Angle="-30" />
+                                                                </Grid.RenderTransform>
+                                                                <Rectangle
+                                                                    Width="6"
+                                                                    Height="16"
+                                                                    Fill="#cd9f12" />
+                                                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                                                    FontSize="16"
+                                                                    Foreground="#6c6f65"
+                                                                    Text="&#xE8EA;" />
+                                                            </Grid>
+                                                            <TextBlock
+                                                                VerticalAlignment="Bottom"
+                                                                FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                FontSize="12"
+                                                                Foreground="White"
+                                                                Text="手机短信" />
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                    <Border
+                                                        Width="16"
+                                                        Height="16"
+                                                        Margin="8,0"
+                                                        HorizontalAlignment="Right"
+                                                        BorderBrush="#5c7cc3"
+                                                        BorderThickness="2"
+                                                        CornerRadius="16">
+                                                        <Grid>
+                                                            <Ellipse
+                                                                Width="16"
+                                                                Height="16"
+                                                                Fill="#767dd3" />
+                                                            <TextBlock
+                                                                Margin="0,0,4,1"
+                                                                HorizontalAlignment="Center"
+                                                                VerticalAlignment="Center"
+                                                                FontFamily="{StaticResource SegoeFluentIcons}"
+                                                                FontSize="10"
+                                                                FontWeight="Black"
+                                                                Text="&#xE76B;" />
+                                                            <TextBlock
+                                                                Margin="3,0,0,1"
+                                                                HorizontalAlignment="Center"
+                                                                VerticalAlignment="Center"
+                                                                FontFamily="{StaticResource SegoeFluentIcons}"
+                                                                FontSize="10"
+                                                                FontWeight="Black"
+                                                                Text="&#xE76B;" />
+                                                        </Grid>
+                                                    </Border>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border
+                                                Grid.Row="2"
+                                                Background="White"
+                                                BorderBrush="#ababab"
+                                                BorderThickness="1"
+                                                CornerRadius="0,0,4,4">
+                                                <TextBlock
+                                                    Margin="4"
+                                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                    FontSize="12"
+                                                    Foreground="#CCC"
+                                                    Text="BetterLyrics..." />
+                                            </Border>
+
+                                            <Grid Grid.Row="3" Margin="0,3,0,0">
+                                                <StackPanel
+                                                    Margin="0,3,0,0"
+                                                    HorizontalAlignment="Left"
+                                                    VerticalAlignment="Center"
+                                                    Orientation="Horizontal"
+                                                    Spacing="6">
+                                                    <Border
+                                                        BorderBrush="#ced3d9"
+                                                        BorderThickness="1,1,1,0"
+                                                        CornerRadius="2">
+                                                        <Border
+                                                            Padding="6,2"
+                                                            Background="#ebeef6"
+                                                            BorderBrush="#666"
+                                                            BorderThickness="0,0,0,1"
+                                                            CornerRadius="2">
+                                                            <TextBlock
+                                                                FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                FontSize="12"
+                                                                Foreground="Black"
+                                                                Text="聊天记录" />
+                                                        </Border>
+                                                    </Border>
+                                                    <Border
+                                                        BorderBrush="#ced3d9"
+                                                        BorderThickness="1,1,1,0"
+                                                        CornerRadius="2">
+                                                        <Border
+                                                            Padding="6,2"
+                                                            Background="#ebeef6"
+                                                            BorderBrush="#666"
+                                                            BorderThickness="0,0,0,1"
+                                                            CornerRadius="2">
+                                                            <TextBlock
+                                                                FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                FontSize="12"
+                                                                Foreground="Black"
+                                                                Text="消息模式" />
+                                                        </Border>
+                                                    </Border>
+                                                </StackPanel>
+
+                                                <StackPanel
+                                                    Margin="0,3,1,0"
+                                                    HorizontalAlignment="Right"
+                                                    VerticalAlignment="Center"
+                                                    Orientation="Horizontal"
+                                                    Spacing="6">
+                                                    <Border
+                                                        BorderBrush="#ced3d9"
+                                                        BorderThickness="1,1,1,0"
+                                                        CornerRadius="2">
+                                                        <Border
+                                                            Padding="6,2"
+                                                            Background="#ebeef6"
+                                                            BorderBrush="#666"
+                                                            BorderThickness="0,0,0,1"
+                                                            CornerRadius="2">
+                                                            <TextBlock
+                                                                FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                FontSize="12"
+                                                                Foreground="Black"
+                                                                Text="取消发送" />
+                                                        </Border>
+                                                    </Border>
+                                                    <Border
+                                                        BorderBrush="#ced3d9"
+                                                        BorderThickness="1,1,1,0"
+                                                        CornerRadius="2">
+                                                        <Border
+                                                            Padding="14,2"
+                                                            Background="#c0d2f1"
+                                                            BorderBrush="#666"
+                                                            BorderThickness="0,0,0,1"
+                                                            CornerRadius="2">
+                                                            <TextBlock
+                                                                FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                                FontSize="12"
+                                                                Foreground="Black"
+                                                                Text="送讯息" />
+                                                        </Border>
+                                                    </Border>
+                                                </StackPanel>
+                                            </Grid>
+
+                                        </Grid>
+
+                                        <Grid Grid.Column="1">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="*" />
+                                            </Grid.RowDefinitions>
+
+                                            <Border
+                                                Grid.Row="0"
+                                                Height="20"
+                                                Padding="4,0"
+                                                Background="#6281d0"
+                                                CornerRadius="4,4,0,0">
+                                                <Grid>
+                                                    <TextBlock
+                                                        Margin="0,1,0,0"
+                                                        VerticalAlignment="Center"
+                                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                        FontSize="11"
+                                                        Foreground="White"
+                                                        Text="QQ秀" />
+                                                    <Border
+                                                        Width="16"
+                                                        Height="16"
+                                                        HorizontalAlignment="Right"
+                                                        BorderBrush="#5c7cc3"
+                                                        BorderThickness="2"
+                                                        CornerRadius="16">
+                                                        <Grid>
+                                                            <Ellipse
+                                                                Width="16"
+                                                                Height="16"
+                                                                Fill="#767dd3" />
+                                                            <TextBlock
+                                                                Margin="0,0,0,1"
+                                                                HorizontalAlignment="Center"
+                                                                VerticalAlignment="Center"
+                                                                FontFamily="{StaticResource SegoeFluentIcons}"
+                                                                FontSize="10"
+                                                                FontWeight="Black"
+                                                                Text="&#xE70E;" />
+                                                        </Grid>
+                                                    </Border>
+                                                </Grid>
+                                            </Border>
+
+                                            <Border
+                                                Grid.Row="1"
+                                                Background="White"
+                                                BorderBrush="#6281d0"
+                                                BorderThickness="1">
+                                                <Image Source="{Binding CoverImage, RelativeSource={RelativeSource TemplatedParent}}" Stretch="Uniform" />
+                                            </Border>
+
+                                            <StackPanel
+                                                Grid.Row="2"
+                                                Background="#6281d0">
+                                                <Grid >
+                                                    <TextBlock
+                                                        VerticalAlignment="Center"
+                                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                        FontSize="11"
+                                                        Foreground="White"
+                                                        Text="您可以..." />
+                                                    <Border
+                                                        Width="16"
+                                                        Height="16"
+                                                        HorizontalAlignment="Right"
+                                                        VerticalAlignment="Center"
+                                                        BorderBrush="#5c7cc3"
+                                                        BorderThickness="2"
+                                                        CornerRadius="16">
+                                                        <Grid>
+                                                            <Ellipse
+                                                                Width="16"
+                                                                Height="16"
+                                                                Fill="#767dd3" />
+                                                            <TextBlock
+                                                                Margin="0,0,0,1"
+                                                                HorizontalAlignment="Center"
+                                                                VerticalAlignment="Center"
+                                                                FontFamily="{StaticResource SegoeFluentIcons}"
+                                                                FontSize="10"
+                                                                FontWeight="Black"
+                                                                Text="&#xE70E;" />
+                                                        </Grid>
+                                                    </Border>
+                                                </Grid>
+                                                <Grid Height="1">
+                                                    <Grid.Background>
+                                                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                            <GradientStop Offset="0" Color="White" />
+                                                            <GradientStop Offset="1" Color="Transparent" />
+                                                        </LinearGradientBrush>
+                                                    </Grid.Background>
+                                                </Grid>
+                                                <StackPanel Margin="4" Orientation="Horizontal">
+                                                    <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                                        Margin="0,0,4,0"
+                                                        FontSize="10"
+                                                        Foreground="#c3c8c8"
+                                                        Text="&#xE722;" />
+                                                    <TextBlock
+                                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                        FontSize="11"
+                                                        Foreground="White"
+                                                        Text="VQQ 视频聊天" />
+                                                </StackPanel>
+                                                <StackPanel Margin="4,0" Orientation="Horizontal">
+                                                    <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                                        Margin="0,0,4,0"
+                                                        FontSize="10"
+                                                        Foreground="#c3c8c8"
+                                                        Text="&#xEC71;" />
+                                                    <TextBlock
+                                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                        FontSize="11"
+                                                        Foreground="White"
+                                                        Text="语音聊天" />
+                                                </StackPanel>
+                                                <TextBlock
+                                                    Margin="18,4,0,4"
+                                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                    FontSize="11"
+                                                    FontWeight="Bold"
+                                                    Foreground="#FFFF00"
+                                                    Text="申请QQ号码" />
+                                                <StackPanel Margin="4,0" Orientation="Horizontal">
+                                                    <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                                        Margin="0,0,4,0"
+                                                        FontSize="10"
+                                                        Foreground="#f1e358"
+                                                        Text="&#xE8D5;" />
+                                                    <TextBlock
+                                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                        FontSize="11"
+                                                        Foreground="White"
+                                                        Text="发送文件" />
+                                                </StackPanel>
+                                                <TextBlock
+                                                    Margin="18,4,0,0"
+                                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                    FontSize="11"
+                                                    Foreground="White"
+                                                    Text="其他..." />
+                                            </StackPanel>
+                                        </Grid>
+                                    </Grid>
+
+                                </Grid>
+                            </Border>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>

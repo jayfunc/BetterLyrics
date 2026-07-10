@@ -1,8 +1,10 @@
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Input;
-using Avalonia.Layout;
-using Avalonia.Media;
+using global::Avalonia;
+using global::Avalonia.Controls;
+using global::Avalonia.Input;
+using global::Avalonia.Layout;
+using global::Avalonia.Media;
+using global::Avalonia.Media.Transformation;
+using global::Avalonia.Metadata;
 using BetterLyrics.Core.Enums;
 using System;
 using System.Reactive.Linq;
@@ -11,17 +13,8 @@ namespace BetterLyrics.Avalonia.Controls;
 
 public partial class FloatSidePanel : UserControl
 {
-    public static readonly StyledProperty<object?> PanelContentProperty =
-        AvaloniaProperty.Register<FloatSidePanel, object?>(nameof(PanelContent));
-
     public static readonly StyledProperty<SidePanelPlacement> PlacementProperty =
         AvaloniaProperty.Register<FloatSidePanel, SidePanelPlacement>(nameof(Placement), SidePanelPlacement.Bottom);
-
-    public object? PanelContent
-    {
-        get => GetValue(PanelContentProperty);
-        set => SetValue(PanelContentProperty, value);
-    }
 
     public SidePanelPlacement Placement
     {
@@ -32,6 +25,7 @@ public partial class FloatSidePanel : UserControl
     public FloatSidePanel()
     {
         InitializeComponent();
+        DataContext = this;
         this.GetPropertyChangedObservable(PlacementProperty).Subscribe(new System.Reactive.AnonymousObserver<AvaloniaPropertyChangedEventArgs>(_ =>
         {
             UpdatePlacement();
@@ -67,6 +61,7 @@ public partial class FloatSidePanel : UserControl
     public async void Show()
     {
         RootContainer.IsVisible = true;
+        
         // 强制布局更新以获取 ActualWidth/Height
         await System.Threading.Tasks.Task.Delay(10);
 
@@ -74,20 +69,38 @@ public partial class FloatSidePanel : UserControl
         var height = PanelBorder.Bounds.Height;
 
         var panelTranslateTransform = (TranslateTransform?)PanelBorder.RenderTransform;
+        if (panelTranslateTransform == null) return;
+
+        // 临时移除过渡效果，瞬间定位到初始隐藏位置
+        var transitions = panelTranslateTransform.Transitions;
+        panelTranslateTransform.Transitions = null;
 
         // 设置动画起始位置（隐藏状态）
         switch (Placement)
         {
-            case SidePanelPlacement.Right: panelTranslateTransform?.X = width; break;
-            case SidePanelPlacement.Left: panelTranslateTransform?.X = -width; break;
-            case SidePanelPlacement.Bottom: panelTranslateTransform?.Y = height; break;
-            case SidePanelPlacement.Top: panelTranslateTransform?.Y = -height; break;
+            case SidePanelPlacement.Right: panelTranslateTransform.X = width; break;
+            case SidePanelPlacement.Left: panelTranslateTransform.X = -width; break;
+            case SidePanelPlacement.Bottom: panelTranslateTransform.Y = height; break;
+            case SidePanelPlacement.Top: panelTranslateTransform.Y = -height; break;
         }
+
+        // 等待布局生效
+        await System.Threading.Tasks.Task.Delay(10);
+        panelTranslateTransform.Transitions = transitions;
 
         // 执行进入动画
         MaskBorder.Opacity = 1;
-        panelTranslateTransform?.X = 0;
-        panelTranslateTransform?.Y = 0;
+        switch (Placement)
+        {
+            case SidePanelPlacement.Right:
+            case SidePanelPlacement.Left:
+                panelTranslateTransform.X = 0;
+                break;
+            case SidePanelPlacement.Bottom:
+            case SidePanelPlacement.Top:
+                panelTranslateTransform.Y = 0;
+                break;
+        }
     }
 
     public async void Hide()
@@ -96,14 +109,15 @@ public partial class FloatSidePanel : UserControl
         var height = PanelBorder.Bounds.Height;
 
         var panelTranslateTransform = (TranslateTransform?)PanelBorder.RenderTransform;
+        if (panelTranslateTransform == null) return;
 
         // 设置动画结束位置（隐藏状态）
         switch (Placement)
         {
-            case SidePanelPlacement.Right: panelTranslateTransform?.X = width; break;
-            case SidePanelPlacement.Left: panelTranslateTransform?.X = -width; break;
-            case SidePanelPlacement.Bottom: panelTranslateTransform?.Y = height; break;
-            case SidePanelPlacement.Top: panelTranslateTransform?.Y = -height; break;
+            case SidePanelPlacement.Right: panelTranslateTransform.X = width; break;
+            case SidePanelPlacement.Left: panelTranslateTransform.X = -width; break;
+            case SidePanelPlacement.Bottom: panelTranslateTransform.Y = height; break;
+            case SidePanelPlacement.Top: panelTranslateTransform.Y = -height; break;
         }
 
         MaskBorder.Opacity = 0;

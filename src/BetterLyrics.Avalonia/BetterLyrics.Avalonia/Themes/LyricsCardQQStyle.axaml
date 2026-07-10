@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:BetterLyrics.Avalonia.Controls"
+    xmlns:lyrics="using:BetterLyrics.Core.Models.Lyrics"
+    xmlns:ui="using:FluentAvalonia.UI.Controls">
+
+    <ControlTheme x:Key="LyricsCardQQStyle" TargetType="controls:LyricsCard">
+        
+                <Setter Property="Template">
+                <ControlTemplate TargetType="controls:LyricsCard">
+                    <Grid
+                        x:Name="QQCardRoot"
+                        Width="480"
+                        Height="{TemplateBinding LyricsAreaSize}"
+                        MinHeight="600"
+                        Background="#F2F2F2"
+                        >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Grid
+                            Grid.Row="0"
+                            Height="40"
+                            Background="Transparent">
+                            <TextBlock
+                                MaxWidth="250"
+                                Margin="16,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                FontSize="14"
+                                FontWeight="SemiBold"
+                                Foreground="#333333"
+                                Text="{Binding Artist, RelativeSource={RelativeSource TemplatedParent}}"
+                                TextTrimming="CharacterEllipsis" />
+
+                            <StackPanel
+                                Margin="0,0,16,0"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal"
+                                Spacing="16">
+                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                    FontSize="13"
+                                    Foreground="#333333"
+                                    Text="&#xE717;" />
+                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                    FontSize="13"
+                                    Foreground="#333333"
+                                    Text="&#xE714;" />
+                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                    FontSize="13"
+                                    Foreground="#333333"
+                                    Text="&#xE72D;" />
+                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                    FontSize="13"
+                                    Foreground="#333333"
+                                    Text="&#xE975;" />
+                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                    FontSize="13"
+                                    Foreground="#333333"
+                                    Text="&#xE8F2;" />
+                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                    FontSize="13"
+                                    Foreground="#333333"
+                                    Text="&#xE712;" />
+                            </StackPanel>
+                        </Grid>
+
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
+                            <StackPanel Margin="20,16,20,20">
+                                <TextBlock
+                                    Margin="0,0,0,20"
+                                    HorizontalAlignment="Center"
+                                    FontSize="12"
+                                    Foreground="#B3B3B3"
+                                    Text="刚刚" />
+
+                                <Grid Margin="0,0,0,16" ColumnSpacing="6">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Ellipse
+                                        Grid.Column="0"
+                                        Width="36"
+                                        Height="36"
+                                        VerticalAlignment="Top">
+                                        <Ellipse.Fill>
+                                            <ImageBrush Source="{Binding CoverImage, RelativeSource={RelativeSource TemplatedParent}}" Stretch="UniformToFill" />
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+
+                                    <Border
+                                        Grid.Column="1"
+                                        MaxWidth="320"
+                                        HorizontalAlignment="Left"
+                                        Background="#FFFFFF"
+                                        BorderBrush="#EBEBEB"
+                                        BorderThickness="1"
+                                        CornerRadius="12">
+                                        <StackPanel Margin="12,12,12,8">
+                                            <Grid ColumnSpacing="10">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <Border
+                                                    Grid.Column="0"
+                                                    Width="48"
+                                                    Height="48"
+                                                    CornerRadius="4">
+                                                    <Border.Background>
+                                                        <ImageBrush Source="{Binding CoverImage, RelativeSource={RelativeSource TemplatedParent}}" Stretch="UniformToFill" />
+                                                    </Border.Background>
+                                                </Border>
+
+                                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                                    <TextBlock
+                                                        FontSize="14"
+                                                        Foreground="#000000"
+                                                        MaxLines="1"
+                                                        Text="{Binding Title, RelativeSource={RelativeSource TemplatedParent}}"
+                                                        TextTrimming="CharacterEllipsis" />
+                                                    <TextBlock
+                                                        Margin="0,4,0,0"
+                                                        FontSize="12"
+                                                        Foreground="#808080"
+                                                        MaxLines="1"
+                                                        Text="{Binding Artist, RelativeSource={RelativeSource TemplatedParent}}"
+                                                        TextTrimming="CharacterEllipsis" />
+                                                </StackPanel>
+                                            </Grid>
+
+                                            <Border
+                                                Height="1"
+                                                Margin="-12,12,-12,8"
+                                                Background="#F0F0F0" />
+
+                                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                                    FontSize="10"
+                                                    Foreground="#A0A0A0"
+                                                    Text="&#xE8D6;" />
+                                                <TextBlock
+                                                    FontSize="10"
+                                                    Foreground="#A0A0A0"
+                                                    Text="BetterLyrics" />
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Border>
+                                </Grid>
+
+                                <ItemsControl
+                                    x:Name="PART_LyricsItemsControl"
+                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                    ItemsSource="{Binding LyricsLines, RelativeSource={RelativeSource TemplatedParent}}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="lyrics:LyricsLine">
+                                            <StackPanel>
+                                                <Grid Margin="0,0,0,16" ColumnSpacing="6">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Ellipse
+                                                        Grid.Column="0"
+                                                        Width="36"
+                                                        Height="36"
+                                                        VerticalAlignment="Top">
+                                                        <Ellipse.Fill>
+                                                            <ImageBrush Source="{Binding $parent[controls:LyricsCard].CoverImage}" Stretch="UniformToFill" />
+                                                        </Ellipse.Fill>
+                                                    </Ellipse>
+
+                                                    <Border
+                                                        Grid.Column="1"
+                                                        MaxWidth="320"
+                                                        Padding="14,10"
+                                                        HorizontalAlignment="Left"
+                                                        Background="#FFFFFF"
+                                                        BorderBrush="#EBEBEB"
+                                                        BorderThickness="1"
+                                                        CornerRadius="12">
+                                                        <TextBlock
+                                                            FontSize="15"
+                                                            Foreground="#000000"
+                                                            LineHeight="22"
+                                                            Text="{Binding Text}"
+                                                            TextWrapping="Wrap" />
+                                                    </Border>
+                                                </Grid>
+
+                                                <Grid Margin="0,0,0,16" IsVisible="{Binding SecondaryText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+                                                    <Border
+                                                        MaxWidth="320"
+                                                        Padding="14,10"
+                                                        HorizontalAlignment="Right"
+                                                        Background="#0099FF"
+                                                        CornerRadius="12">
+                                                        <TextBlock
+                                                            FontSize="15"
+                                                            Foreground="#FFFFFF"
+                                                            LineHeight="22"
+                                                            Text="{Binding SecondaryText}"
+                                                            TextWrapping="Wrap" />
+                                                    </Border>
+                                                </Grid>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </StackPanel>
+                        </ScrollViewer>
+
+                        <Grid
+                            Grid.Row="2"
+                            Height="140"
+                            Background="#F5F5F5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <StackPanel
+                                Grid.Row="0"
+                                Margin="16,10"
+                                Orientation="Horizontal"
+                                Spacing="16">
+                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                    FontSize="13"
+                                    Foreground="#333333"
+                                    Text="&#xED54;" />
+                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                    FontSize="13"
+                                    Foreground="#333333"
+                                    Text="&#xE8C6;" />
+                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                    FontSize="13"
+                                    Foreground="#333333"
+                                    Text="&#xE8B7;" />
+                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                    FontSize="13"
+                                    Foreground="#333333"
+                                    Text="&#xE8B9;" />
+                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                    FontSize="13"
+                                    Foreground="#333333"
+                                    Text="&#xE8EA;" />
+                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                    FontSize="13"
+                                    Foreground="#333333"
+                                    Text="&#xF592;" />
+                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                    FontSize="13"
+                                    Foreground="#333333"
+                                    Text="&#xE720;" />
+                            </StackPanel>
+
+                            <StackPanel
+                                Grid.Row="0"
+                                Margin="16,10"
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal"
+                                Spacing="16">
+                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                    FontSize="13"
+                                    Foreground="#333333"
+                                    Text="&#xE81C;" />
+                            </StackPanel>
+
+                            <StackPanel
+                                Grid.Row="2"
+                                Margin="0,0,16,12"
+                                HorizontalAlignment="Right"
+                                Orientation="Horizontal"
+                                Spacing="6">
+                                <Border
+                                    BorderBrush="LightGray"
+                                    BorderThickness="1"
+                                    CornerRadius="8">
+                                    <TextBlock
+                                        Margin="16,6"
+                                        VerticalAlignment="Center"
+                                        FontSize="13"
+                                        Foreground="#333333"
+                                        Text="关闭" />
+                                </Border>
+                                <Border
+                                    Background="#0099FF"
+                                    BorderThickness="1"
+                                    CornerRadius="8">
+                                    <StackPanel
+                                        Margin="16,6,12,6"
+                                        Orientation="Horizontal"
+                                        Spacing="10">
+                                        <TextBlock
+                                            VerticalAlignment="Center"
+                                            FontSize="13"
+                                            Foreground="#3eb2ff"
+                                            Text="发送" />
+                                        <Grid
+                                            Width="1"
+                                            VerticalAlignment="Stretch"
+                                            Background="#12a0ff" />
+                                        <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                            FontSize="10"
+                                            Foreground="#c5e8ff"
+                                            Text="&#xE70D;" />
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>

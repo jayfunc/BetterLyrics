@@ -98,7 +98,7 @@
                                                                    helpers:AppExtensions.Aumid="{Binding Provider}"
                                                                    TextWrapping="Wrap" />
                                                         <Image Height="16"
-                                                               helpers:GifHelper.IsPlaying="{Binding #MediaSourceProvidersListView.((vm:PlaybackSettingsControlViewModel)DataContext).GsmtcService.CurrentIsPlaying}"
+                                                               helpers:GifHelper.IsPlaying="{Binding $parent[local:PlaybackSettingsControl].ViewModel.GsmtcService.CurrentIsPlaying}"
                                                                Source="{DynamicResource MusicWave}"
                                                                IsVisible="{Binding IsFocused}" />
                                                     </StackPanel>
@@ -130,7 +130,7 @@
             </Grid>
 
             <StackPanel Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Spacing="12"
-                        IsVisible="{Binding !AppSettings.MediaSourceProvidersInfo.Count}">
+                        IsVisible="{Binding !AppSettings.MediaSourceProvidersInfo.Count, Converter={StaticResource IntToBoolConverter}}">
                 <Image MaxWidth="200" Source="/Assets/Leaf.png" />
                 <TextBlock Text="{x:Static strings:Resources.SettingsPagePlaybackNotFound_Text}"
                            HorizontalAlignment="Center"

@@ -1,0 +1,169 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ui="using:FluentAvalonia.UI.Controls"
+        xmlns:controls="using:BetterLyrics.Avalonia.Controls"
+        xmlns:lyrics="using:BetterLyrics.Core.Models.Lyrics"
+        xmlns:models="using:BetterLyrics.Core.Models"
+        xmlns:viewModels="using:BetterLyrics.Core.ViewModels"
+        mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="700"
+        x:Class="BetterLyrics.Avalonia.Views.LyricsShareWindow"
+        Title="LyricsShareWindow"
+        x:DataType="viewModels:LyricsSharePageViewModel">
+
+    <Grid x:Name="MainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <!-- Left Column: Lyrics Selection -->
+        <Grid Grid.Column="0" Margin="24" RowDefinitions="Auto, *">
+            <StackPanel Orientation="Horizontal" Spacing="12" Margin="0,0,0,12">
+                <TextBlock Text="Select Lyrics" Theme="{StaticResource SubtitleTextBlockStyle}" />
+                <CheckBox x:Name="LyricsHostCheckBox" IsThreeState="True" Click="LyricsHostCheckBox_Click" />
+            </StackPanel>
+            <ListBox x:Name="LyricsListView" Grid.Row="1"
+                     ItemsSource="{Binding GSMTCService.CurrentLyricsData.LyricsLines}"
+                     SelectionMode="Multiple,Toggle"
+                     SelectionChanged="LyricsListView_SelectionChanged">
+                <ListBox.ItemTemplate>
+                    <DataTemplate x:DataType="lyrics:LyricsLine">
+                        <StackPanel Margin="0,8" Spacing="2">
+                            <TextBlock Text="{Binding Text}" TextWrapping="Wrap" />
+                            <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                       Text="{Binding SecondaryText}"
+                                       TextWrapping="Wrap"
+                                       IsVisible="{Binding SecondaryText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </Grid>
+
+        <!-- Center Column: Preview and Settings -->
+        <Grid Grid.Column="1" Margin="24" RowDefinitions="Auto, *, Auto">
+            <WrapPanel Grid.Row="0" Margin="0,0,0,16">
+                <!-- Font Family -->
+                <Button Margin="0,0,6,6">
+                    <Button.Content>
+                        <TextBlock Text="Font Family" />
+                    </Button.Content>
+                    <Button.Flyout>
+                        <Flyout>
+                            <controls:FontPicker Width="300"
+                                                 SelectedFontId="{Binding CardConfig.FontFamily, Mode=TwoWay}" />
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+
+                <!-- Image Quality -->
+                <Button Margin="0,0,6,6">
+                    <Button.Content>
+                        <TextBlock Text="Image Quality" />
+                    </Button.Content>
+                    <Button.Flyout>
+                        <Flyout>
+                            <controls:ExtendedSlider x:Name="ImageQualitySlider"
+                                                     Minimum="10" Maximum="100"
+                                                     Value="100" />
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+            </WrapPanel>
+
+            <Viewbox x:Name="PreviewCardContainer" Grid.Row="1">
+                <controls:LyricsCard x:Name="PreviewCard"
+                                     Title="{Binding CardData.Title}"
+                                     Artist="{Binding CardData.Artist}"
+                                     CoverAccentColor="{Binding CardData.AccentCoverColor, Converter={StaticResource AppColorToColorConverter}}"
+                                     CoverImage="{Binding CardData.CoverImageBytes, Converter={StaticResource ByteArrayToImageConverter}}"
+                                     LyricsLines="{Binding CardData.Lyrics}"
+                                     StyleKey="{Binding SelectedStyleItem.StyleKey}" />
+            </Viewbox>
+            <TextBlock Grid.Row="2"
+                       Margin="0,6,0,0"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"
+                       Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                       Theme="{StaticResource CaptionTextBlockStyle}"
+                       Text="{Binding SelectedStyleItem.DisplayText}" />
+        </Grid>
+
+        <!-- Right Column: Styles -->
+        <Grid Grid.Column="2" Margin="24" RowDefinitions="Auto, *, Auto">
+            <TextBlock Text="Styles" Grid.Row="0" Theme="{StaticResource SubtitleTextBlockStyle}" Margin="0,0,0,12" />
+
+            <Grid Grid.Row="1">
+                <controls:SemanticZoom x:Name="StylesSemanticZoom" IsZoomedInViewActive="True">
+                    <!-- Zoomed In View: Styles Grid -->
+                    <controls:SemanticZoom.ZoomedInView>
+                        <ListBox ItemsSource="{Binding StyleGroups}"
+                                 SelectedItem="{Binding SelectedStyleItem, Mode=TwoWay}">
+                            <!-- This could be enhanced to support proper grouping using Avalonia's hierarchical structures if needed -->
+                            <ListBox.ItemTemplate>
+                                <DataTemplate x:DataType="models:LyricsCardStyleGroup">
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding GroupTitle}" Theme="{StaticResource BodyStrongTextBlockStyle}" Margin="0,12,0,4"/>
+                                        <ItemsControl ItemsSource="{Binding}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <WrapPanel />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate x:DataType="models:LyricsCardStyleItem">
+                                                    <Grid Margin="4" Width="110">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="150" />
+                                                            <RowDefinition Height="Auto" />
+                                                        </Grid.RowDefinitions>
+                                                        <Border Background="{DynamicResource CardBackgroundFillColorSecondaryBrush}">
+                                                            <Viewbox Stretch="Uniform">
+                                                                <controls:LyricsCard Title="{Binding CardData.Title}"
+                                                                                     Artist="{Binding CardData.Artist}"
+                                                                                     LyricsLines="{Binding CardData.Lyrics}"
+                                                                                     StyleKey="{Binding StyleKey}" />
+                                                            </Viewbox>
+                                                        </Border>
+                                                        <TextBlock Grid.Row="1" Text="{Binding DisplayText}" TextWrapping="Wrap" TextAlignment="Center" Margin="0,4,0,0" />
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </controls:SemanticZoom.ZoomedInView>
+                    <!-- Zoomed Out View: Group List -->
+                    <controls:SemanticZoom.ZoomedOutView>
+                        <ListBox ItemsSource="{Binding StyleGroups}">
+                            <ListBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Margin="0,12" Theme="{StaticResource SubtitleTextBlockStyle}" Text="{Binding GroupTitle}" />
+                                </DataTemplate>
+                            </ListBox.ItemTemplate>
+                        </ListBox>
+                    </controls:SemanticZoom.ZoomedOutView>
+                </controls:SemanticZoom>
+
+                <Button Content="Zoom Toggle" Click="ZoomToggle_Click" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,6,0,0"/>
+            </Grid>
+
+            <Grid Grid.Row="2" Margin="0,12,0,0">
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <Button Content="Save" Click="SaveImage_Click" Theme="{StaticResource AccentButtonStyle}" />
+                    <Button Content="Copy" Click="CopyImage_Click" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+        <!-- Processing Overlay -->
+        <Grid x:Name="ProcessingOverlay" Grid.ColumnSpan="3" Background="{DynamicResource ApplicationPageBackgroundThemeBrush}" IsVisible="False" Opacity="0.8">
+            <ProgressBar Width="100" Height="4" IsIndeterminate="True" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        </Grid>
+    </Grid>
+</Window>

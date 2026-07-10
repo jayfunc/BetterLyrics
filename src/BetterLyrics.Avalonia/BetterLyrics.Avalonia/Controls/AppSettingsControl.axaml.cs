@@ -1,4 +1,4 @@
-using Avalonia.Controls;
+using global::Avalonia.Controls;
 using BetterLyrics.Core.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 

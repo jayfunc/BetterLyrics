@@ -1,0 +1,186 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:BetterLyrics.Avalonia.Controls"
+    xmlns:lyrics="using:BetterLyrics.Core.Models.Lyrics"
+    xmlns:ui="using:FluentAvalonia.UI.Controls">
+
+    <ControlTheme x:Key="LyricsCardJournalStyle" TargetType="controls:LyricsCard">
+        
+                <Setter Property="Template">
+                <ControlTemplate TargetType="controls:LyricsCard">
+                    <Grid
+                        Width="450"
+                        Height="{TemplateBinding LyricsAreaSize}"
+                        MinHeight="600"
+                        Background="WhiteSmoke">
+                        <Grid
+                            Margin="40"
+                            Background="#F4EBD9">
+
+                            <StackPanel
+                                Margin="16,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Spacing="30">
+                                <Border
+                                    Width="16"
+                                    Height="16"
+                                    BorderBrush="#E0D5C1"
+                                    BorderThickness="1"
+                                    CornerRadius="16">
+                                    <Ellipse Fill="WhiteSmoke" />
+                                </Border>
+                                <Border
+                                    Width="16"
+                                    Height="16"
+                                    BorderBrush="#E0D5C1"
+                                    BorderThickness="1"
+                                    CornerRadius="16">
+                                    <Ellipse Fill="WhiteSmoke" />
+                                </Border>
+                                <Border
+                                    Width="16"
+                                    Height="16"
+                                    BorderBrush="#E0D5C1"
+                                    BorderThickness="1"
+                                    CornerRadius="16">
+                                    <Ellipse Fill="WhiteSmoke" />
+                                </Border>
+                                <Border
+                                    Width="16"
+                                    Height="16"
+                                    BorderBrush="#E0D5C1"
+                                    BorderThickness="1"
+                                    CornerRadius="16">
+                                    <Ellipse Fill="WhiteSmoke" />
+                                </Border>
+                                <Border
+                                    Width="16"
+                                    Height="16"
+                                    BorderBrush="#E0D5C1"
+                                    BorderThickness="1"
+                                    CornerRadius="16">
+                                    <Ellipse Fill="WhiteSmoke" />
+                                </Border>
+                                <Border
+                                    Width="16"
+                                    Height="16"
+                                    BorderBrush="#E0D5C1"
+                                    BorderThickness="1"
+                                    CornerRadius="16">
+                                    <Ellipse Fill="WhiteSmoke" />
+                                </Border>
+                                <Border
+                                    Width="16"
+                                    Height="16"
+                                    BorderBrush="#E0D5C1"
+                                    BorderThickness="1"
+                                    CornerRadius="16">
+                                    <Ellipse Fill="WhiteSmoke" />
+                                </Border>
+                                <Border
+                                    Width="16"
+                                    Height="16"
+                                    BorderBrush="#E0D5C1"
+                                    BorderThickness="1"
+                                    CornerRadius="16">
+                                    <Ellipse Fill="WhiteSmoke" />
+                                </Border>
+                                <Border
+                                    Width="16"
+                                    Height="16"
+                                    BorderBrush="#E0D5C1"
+                                    BorderThickness="1"
+                                    CornerRadius="16">
+                                    <Ellipse Fill="WhiteSmoke" />
+                                </Border>
+                            </StackPanel>
+
+                            <Rectangle
+                                Width="1.5"
+                                Margin="45,0,0,0"
+                                HorizontalAlignment="Left"
+                                Fill="#D9A8A8"
+                                Opacity="0.6" />
+
+                            <Grid Margin="65,36,36,36">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Margin="0,0,0,24">
+                                    <TextBlock
+                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                        FontSize="24"
+                                        FontWeight="SemiBold"
+                                        Foreground="#3C4858"
+                                        Text="{Binding Title, RelativeSource={RelativeSource TemplatedParent}}"
+                                        TextWrapping="Wrap" />
+                                    <TextBlock
+                                        Margin="0,8,0,0"
+                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                        FontSize="15"
+                                        Foreground="#6C7A89"
+                                        Text="{Binding Artist, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </StackPanel>
+
+                                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
+                                    <ItemsControl
+                                        x:Name="PART_LyricsItemsControl"
+                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                        ItemsSource="{Binding LyricsLines, RelativeSource={RelativeSource TemplatedParent}}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="lyrics:LyricsLine">
+                                                <Grid Margin="0,0,0,16">
+                                                    <StackPanel>
+                                                        <TextBlock
+                                                            FontSize="16"
+                                                            Foreground="#3C4858"
+                                                            LineHeight="26"
+                                                            Text="{Binding Text}"
+                                                            TextWrapping="Wrap" />
+
+                                                        <TextBlock
+                                                            Margin="0,4,0,0"
+                                                            FontSize="14"
+                                                            Foreground="#8B96A5"
+                                                            LineHeight="22"
+                                                            Text="{Binding SecondaryText}"
+                                                            TextWrapping="Wrap"
+                                                            IsVisible="{Binding SecondaryText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                                                    </StackPanel>
+
+                                                    <Rectangle
+                                                        Height="1"
+                                                        Margin="0,0,0,-4"
+                                                        VerticalAlignment="Bottom"
+                                                        Fill="#E5DCC5" />
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+
+                                <StackPanel
+                                    Grid.Row="2"
+                                    HorizontalAlignment="Right"
+                                    Opacity="0.5"
+                                    Orientation="Horizontal">
+                                    <TextBlock
+                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                        FontSize="10"
+                                        FontStyle="Italic"
+                                        Foreground="#3C4858"
+                                        Text="BetterLyrics" />
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>

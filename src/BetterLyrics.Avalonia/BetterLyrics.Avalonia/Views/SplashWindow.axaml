@@ -1,0 +1,14 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Width="400" Height="300"
+        WindowStartupLocation="CenterScreen"
+        WindowDecorations="None"
+        Topmost="True"
+        Background="Transparent"
+        x:Class="BetterLyrics.Avalonia.Views.SplashWindow"
+        Title="SplashWindow">
+    <Image Source="avares://BetterLyrics.Avalonia/Assets/Splash.png"/>
+</Window>

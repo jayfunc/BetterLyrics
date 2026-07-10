@@ -1,0 +1,185 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:BetterLyrics.Avalonia.Controls"
+    xmlns:lyrics="using:BetterLyrics.Core.Models.Lyrics"
+    xmlns:ui="using:FluentAvalonia.UI.Controls">
+
+    <ControlTheme x:Key="LyricsCardAncientBookStyle" TargetType="controls:LyricsCard">
+        
+                <Setter Property="Template">
+                <ControlTemplate TargetType="controls:LyricsCard">
+                    <Grid
+                        Width="{TemplateBinding LyricsAreaSize}"
+                        Height="600"
+                        MinWidth="450"
+                        Background="#EFE8D8">
+                        <Border
+                            Margin="20"
+                            BorderBrush="#3A2E28"
+                            BorderThickness="2">
+                            <Border
+                                Margin="3"
+                                BorderBrush="#3A2E28"
+                                BorderThickness="1">
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="45" />
+                                        <ColumnDefinition Width="1" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid Grid.Column="0" Background="#EBE3D1">
+                                        <StackPanel
+                                            Margin="0,20,0,0"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Top"
+                                            Spacing="9">
+
+                                            <TextBlock
+                                                Width="12"
+                                                FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                FontSize="12"
+                                                Foreground="#3A2E28"
+                                                LineHeight="18"
+                                                Text="曲拨心弦"
+                                                TextAlignment="Center"
+                                                TextWrapping="Wrap" />
+
+                                            <TextBlock
+                                                Width="12"
+                                                FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                FontSize="12"
+                                                Foreground="#3A2E28"
+                                                LineHeight="18"
+                                                Text="词落云笺"
+                                                TextAlignment="Center"
+                                                TextWrapping="Wrap" />
+
+                                        </StackPanel>
+
+                                        <TextBlock
+                                            Margin="0,0,0,20"
+                                            VerticalAlignment="Bottom"
+                                            FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                            FontSize="12"
+                                            Foreground="#3A2E28"
+                                            Text="卷&#x0a;一"
+                                            TextAlignment="Center" />
+                                    </Grid>
+
+                                    <Rectangle Grid.Column="1" Fill="#3A2E28" />
+
+                                    <Grid Grid.Column="2" >
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="1" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <ScrollViewer
+                                            Grid.Column="0"
+                                            HorizontalScrollBarVisibility="Hidden"
+                                            VerticalScrollBarVisibility="Disabled">
+                                            <ItemsControl
+                                                x:Name="PART_LyricsItemsControl"
+                                                FlowDirection="RightToLeft"
+                                                FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                ItemsSource="{Binding LyricsLines, RelativeSource={RelativeSource TemplatedParent}}">
+
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <StackPanel FlowDirection="RightToLeft" Orientation="Horizontal" />
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate x:DataType="lyrics:LyricsLine">
+                                                        <Border
+                                                            Padding="16,20"
+                                                            BorderBrush="#bab1a4"
+                                                            BorderThickness="0,0,1,0">
+                                                            <StackPanel FlowDirection="RightToLeft" Orientation="Horizontal">
+                                                                <TextBlock
+                                                                    Width="24"
+                                                                    FontSize="18"
+                                                                    Foreground="#241B15"
+                                                                    LineHeight="26"
+                                                                    Text="{Binding Text}"
+                                                                    TextAlignment="Center"
+                                                                    TextWrapping="Wrap" />
+
+                                                                <TextBlock
+                                                                    Width="18"
+                                                                    Margin="12,0,0,0"
+                                                                    FontSize="14"
+                                                                    Foreground="#6B5D54"
+                                                                    LineHeight="22"
+                                                                    Text="{Binding SecondaryText}"
+                                                                    TextAlignment="Center"
+                                                                    TextWrapping="Wrap"
+                                                                    IsVisible="{Binding SecondaryText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                                                            </StackPanel>
+                                                        </Border>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </ScrollViewer>
+
+                                        <Rectangle
+                                            Grid.Column="1"
+                                            Width="1"
+                                            Fill="#bab1a4" />
+
+                                        <Grid Grid.Column="2" >
+                                            <StackPanel FlowDirection="RightToLeft" Orientation="Horizontal">
+                                                <TextBlock
+                                                    Width="32"
+                                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                    FontSize="26"
+                                                    FontWeight="Bold"
+                                                    Foreground="#241B15"
+                                                    LineHeight="30"
+                                                    Text="{Binding Title, RelativeSource={RelativeSource TemplatedParent}}"
+                                                    TextAlignment="Center"
+                                                    TextWrapping="Wrap" />
+
+                                                <StackPanel
+                                                    Margin="16,0,0,0"
+                                                    VerticalAlignment="Bottom"
+                                                    Orientation="Vertical">
+                                                    <Border
+                                                        Margin="0,0,0,8"
+                                                        Padding="2,4"
+                                                        Background="#8C2218"
+                                                        CornerRadius="2">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Center"
+                                                            FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                            FontSize="10"
+                                                            Foreground="#EFE8D8"
+                                                            Text="撰" />
+                                                    </Border>
+                                                    <TextBlock
+                                                        Width="20"
+                                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                                        FontSize="15"
+                                                        Foreground="#5A4E46"
+                                                        Text="{Binding Artist, RelativeSource={RelativeSource TemplatedParent}}"
+                                                        TextAlignment="Center"
+                                                        TextWrapping="Wrap" />
+                                                </StackPanel>
+                                            </StackPanel>
+                                        </Grid>
+
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </Border>
+                    </Grid>
+                </ControlTemplate>
+            </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>

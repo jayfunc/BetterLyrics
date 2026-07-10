@@ -1,0 +1,356 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:BetterLyrics.Avalonia.Controls"
+    xmlns:lyrics="using:BetterLyrics.Core.Models.Lyrics"
+    xmlns:ui="using:FluentAvalonia.UI.Controls">
+
+    <ControlTheme x:Key="LyricsCardLINEStyle" TargetType="controls:LyricsCard">
+        
+                <Setter Property="Template">
+                <ControlTemplate TargetType="controls:LyricsCard">
+                    <Grid
+                        x:Name="LINECardRoot"
+                        Width="460"
+                        Height="{TemplateBinding LyricsAreaSize}"
+                        MinHeight="800"
+                        Background="#8cabd9"
+                        >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Grid
+                            Grid.Row="0"
+                            Height="56"
+                            Background="#FFFFFF">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel
+                                Grid.Column="0"
+                                Margin="16,0,12,0"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal"
+                                Spacing="6">
+                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                    Foreground="#111111"
+                                    Text="&#xE76B;" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock
+                                    MaxWidth="250"
+                                    HorizontalAlignment="Left"
+                                    FontSize="16"
+                                    Foreground="#111111"
+                                    Text="{Binding Artist, RelativeSource={RelativeSource TemplatedParent}}"
+                                    TextTrimming="CharacterEllipsis" />
+                                <TextBlock
+                                    FontSize="12"
+                                    Foreground="#939393"
+                                    Text="自動で返信しています" />
+                            </StackPanel>
+
+                            <StackPanel
+                                Grid.Column="2"
+                                Margin="0,0,16,0"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal"
+                                Spacing="20">
+                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                    FontSize="16"
+                                    Foreground="#111111"
+                                    Text="&#xE721;" />
+                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                    FontSize="16"
+                                    Foreground="#111111"
+                                    Text="&#xE700;" />
+                            </StackPanel>
+                        </Grid>
+
+                        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
+                            <StackPanel Margin="0,16,0,24">
+
+                                <Border
+                                    Margin="0,0,0,20"
+                                    Padding="12,8"
+                                    HorizontalAlignment="Center"
+                                    Background="#33000000"
+                                    CornerRadius="12">
+                                    <TextBlock
+                                        FontSize="12"
+                                        Foreground="#FFFFFF"
+                                        Text="今日" />
+                                </Border>
+
+                                <Grid
+                                    Margin="12,0,16,16"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Top">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Ellipse
+                                        Grid.Column="0"
+                                        Width="40"
+                                        Height="40"
+                                        VerticalAlignment="Top">
+                                        <Ellipse.Fill>
+                                            <ImageBrush Source="{Binding CoverImage, RelativeSource={RelativeSource TemplatedParent}}" Stretch="UniformToFill" />
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+
+                                    <StackPanel Grid.Column="1" HorizontalAlignment="Left">
+
+                                        <StackPanel Orientation="Horizontal">
+                                            <Path
+                                                VerticalAlignment="Top"
+                                                Data="M 8 0 L 0 4 L 8 8 Z"
+                                                Fill="#FFFFFF"
+                                                RenderTransformOrigin="0.5,0.5">
+                                                <Path.RenderTransform>
+                                                    <TransformGroup>
+                                                        <RotateTransform Angle="45" />
+                                                        <TranslateTransform X="7" Y="-2" />
+                                                    </TransformGroup>
+                                                </Path.RenderTransform>
+                                            </Path>
+
+                                            <Border
+                                                MaxWidth="280"
+                                                Padding="14,10"
+                                                Background="#FFFFFF"
+                                                CornerRadius="16">
+                                                <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                                                    <Border
+                                                        Width="30"
+                                                        Height="30"
+                                                        Margin="0,0,10,0"
+                                                        BorderBrush="#F0F0F0"
+                                                        BorderThickness="1"
+                                                        CornerRadius="4">
+                                                        <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                                            FontSize="14"
+                                                            Foreground="#888888"
+                                                            Text="&#xE8D6;" />
+                                                    </Border>
+                                                    <TextBlock
+                                                        MaxWidth="200"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="15"
+                                                        Foreground="#111111"
+                                                        Text="{TemplateBinding Title}"
+                                                        TextWrapping="Wrap" />
+                                                </StackPanel>
+                                            </Border>
+
+                                            <TextBlock
+                                                Margin="6,0,0,6"
+                                                VerticalAlignment="Bottom"
+                                                FontSize="10"
+                                                Foreground="#445975"
+                                                Text="10:05" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </Grid>
+
+                                <ItemsControl
+                                    x:Name="PART_LyricsItemsControl"
+                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                    ItemsSource="{Binding LyricsLines, RelativeSource={RelativeSource TemplatedParent}}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate x:DataType="lyrics:LyricsLine">
+                                            <StackPanel Margin="0,0,0,16">
+
+                                                <Grid
+                                                    Margin="12,0,16,4"
+                                                    HorizontalAlignment="Left"
+                                                    VerticalAlignment="Top">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Ellipse
+                                                        Grid.Column="0"
+                                                        Width="40"
+                                                        Height="40"
+                                                        VerticalAlignment="Top">
+                                                        <Ellipse.Fill>
+                                                            <ImageBrush Source="{Binding $parent[controls:LyricsCard].CoverImage}" Stretch="UniformToFill" />
+                                                        </Ellipse.Fill>
+                                                    </Ellipse>
+
+                                                    <StackPanel Grid.Column="1" HorizontalAlignment="Left">
+
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Path
+                                                                VerticalAlignment="Top"
+                                                                Data="M 8 0 L 0 4 L 8 8 Z"
+                                                                Fill="#FFFFFF"
+                                                                RenderTransformOrigin="0.5,0.5">
+                                                                <Path.RenderTransform>
+                                                                    <TransformGroup>
+                                                                        <RotateTransform Angle="45" />
+                                                                        <TranslateTransform X="7" Y="-2" />
+                                                                    </TransformGroup>
+                                                                </Path.RenderTransform>
+                                                            </Path>
+
+                                                            <Border
+                                                                MaxWidth="280"
+                                                                Padding="14,10"
+                                                                Background="#FFFFFF"
+                                                                CornerRadius="16">
+                                                                <TextBlock
+                                                                    FontSize="15"
+                                                                    Foreground="#111111"
+                                                                    LineHeight="22"
+                                                                    Text="{Binding Text}"
+                                                                    TextWrapping="Wrap" />
+                                                            </Border>
+
+                                                            <TextBlock
+                                                                Margin="6,0,0,6"
+                                                                VerticalAlignment="Bottom"
+                                                                FontSize="10"
+                                                                Foreground="#445975"
+                                                                Text="10:06" />
+                                                        </StackPanel>
+                                                    </StackPanel>
+                                                </Grid>
+
+                                                <StackPanel
+                                                    Margin="16,16,4,0"
+                                                    HorizontalAlignment="Right"
+                                                    VerticalAlignment="Top"
+                                                    Orientation="Horizontal"
+                                                    IsVisible="{Binding SecondaryText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}">
+
+                                                    <StackPanel Margin="0,0,6,0" VerticalAlignment="Bottom">
+                                                        <TextBlock
+                                                            HorizontalAlignment="Right"
+                                                            FontSize="10"
+                                                            Foreground="#445975"
+                                                            Text="既読" />
+                                                        <TextBlock
+                                                            Margin="0,2,0,6"
+                                                            HorizontalAlignment="Right"
+                                                            FontSize="10"
+                                                            Foreground="#445975"
+                                                            Text="10:07" />
+                                                    </StackPanel>
+
+                                                    <Border
+                                                        MaxWidth="320"
+                                                        Padding="14,10"
+                                                        Background="#9de694"
+                                                        CornerRadius="16">
+                                                        <TextBlock
+                                                            FontSize="15"
+                                                            Foreground="#111111"
+                                                            LineHeight="22"
+                                                            Text="{Binding SecondaryText}"
+                                                            TextWrapping="Wrap" />
+                                                    </Border>
+
+                                                    <Path
+                                                        VerticalAlignment="Top"
+                                                        Data="M 0 0 L 8 4 L 0 8 Z"
+                                                        Fill="#9de694"
+                                                        RenderTransformOrigin="0.5,0.5">
+                                                        <Path.RenderTransform>
+                                                            <TransformGroup>
+                                                                <RotateTransform Angle="-45" />
+                                                                <TranslateTransform X="-7" Y="-2" />
+                                                            </TransformGroup>
+                                                        </Path.RenderTransform>
+                                                    </Path>
+
+                                                </StackPanel>
+
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+
+                            </StackPanel>
+                        </ScrollViewer>
+
+                        <Grid
+                            Grid.Row="2"
+                            Height="60"
+                            Background="#FFFFFF">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel
+                                Grid.Column="0"
+                                Margin="16,0,12,0"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal"
+                                Spacing="16">
+                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                    FontSize="20"
+                                    Foreground="#111111"
+                                    Text="&#xE710;" />
+                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                    FontSize="20"
+                                    Foreground="#111111"
+                                    Text="&#xE722;" />
+                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                    FontSize="20"
+                                    Foreground="#111111"
+                                    Text="&#xE8B9;" />
+                            </StackPanel>
+
+                            <Border
+                                Grid.Column="1"
+                                Height="36"
+                                Padding="12,0"
+                                Background="#F5F5F5"
+                                CornerRadius="18">
+                                <TextBlock
+                                    VerticalAlignment="Center"
+                                    FontSize="14"
+                                    Foreground="#999999"
+                                    Text="BetterLyrics" />
+                            </Border>
+
+                            <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                Grid.Column="1"
+                                Margin="0,0,16,0"
+                                HorizontalAlignment="Right"
+                                FontSize="20"
+                                Foreground="#707070"
+                                Text="&#xE11D;" />
+
+                            <StackPanel
+                                Grid.Column="2"
+                                Margin="12,0,16,0"
+                                VerticalAlignment="Center"
+                                Orientation="Horizontal"
+                                Spacing="16">
+                                <TextBlock FontFamily="{StaticResource SegoeFluentIcons}"
+                                    FontSize="20"
+                                    Foreground="#111111"
+                                    Text="&#xE720;" />
+                            </StackPanel>
+                        </Grid>
+
+                    </Grid>
+                </ControlTemplate>
+            </Setter>
+    </ControlTheme>
+</ResourceDictionary>

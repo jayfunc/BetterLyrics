@@ -1,10 +1,10 @@
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Input;
-using Avalonia.Interactivity;
-using Avalonia.Media;
-using Avalonia.Media.Imaging;
-using Avalonia.Threading;
+using global::Avalonia;
+using global::Avalonia.Controls;
+using global::Avalonia.Input;
+using global::Avalonia.Interactivity;
+using global::Avalonia.Media;
+using global::Avalonia.Media.Imaging;
+using global::Avalonia.Threading;
 using BetterLyrics.Avalonia.Extensions;
 using BetterLyrics.Avalonia.Helpers.Lyrics.LyricsLayoutStrategy;
 using BetterLyrics.Avalonia.Models.Lyrics;

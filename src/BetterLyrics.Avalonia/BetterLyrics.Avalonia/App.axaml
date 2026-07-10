@@ -6,6 +6,13 @@
              x:Class="BetterLyrics.Avalonia.App"
              RequestedThemeVariant="Default">
     <!-- "Default" ThemeVariant follows system theme variant. "Dark" or "Light" are other available options. -->
+    <TrayIcon.Icons>
+        <TrayIcons>
+            <TrayIcon Icon="/Assets/Logo.ico"
+                      ToolTipText="BetterLyrics">
+            </TrayIcon>
+        </TrayIcons>
+    </TrayIcon.Icons>
 
     <Application.DataTemplates>
         <local:ViewLocator />
@@ -15,25 +22,41 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceInclude Source="avares://BetterLyrics.Avalonia/Controls/AutoScrollView.axaml"/>
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/DefaultStyles.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/GhostSliderStyle.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/Converters.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Styles/SegmentedStyle.axaml" />
+
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/LyricsCardAncientBookStyle.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/LyricsCardBambooSlipsStyle.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/LyricsCardCDStyle.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/LyricsCardCinematicStyle.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/LyricsCardCyberpunkStyle.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/LyricsCardDunhuangStyle.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/LyricsCardInkWashStyle.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/LyricsCardJournalStyle.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/LyricsCardLINEStyle.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/LyricsCardMagazineStyle.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/LyricsCardMinimalStyle.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/LyricsCardPodStyle.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/LyricsCardPolaroidStyle.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/LyricsCardQQStyle.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/LyricsCardReceiptStyle.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/LyricsCardRetroMSNStyle.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/LyricsCardRetroQQStyle.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/LyricsCardStickyNoteStyle.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/LyricsCardSwissStyle.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/LyricsCardTelegramStyle.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/LyricsCardTicketStyle.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/LyricsCardVinylStyle.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/LyricsCardWeChatStyle.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/LyricsCardWhatsAppStyle.axaml" />
+                <ResourceInclude Source="avares://BetterLyrics.Avalonia/Themes/LyricsCardWindowsPhoneStyle.axaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <FontFamily x:Key="SegoeFluentIcons">avares://BetterLyrics.Avalonia/Assets/Fonts/SegoeFluentIcons.ttf#Segoe Fluent Icons</FontFamily>
             <FontFamily x:Key="SloganCNFont">avares:///BetterLyrics.Avalonia/Assets/Fonts/SloganCNFont.ttf#LXGW WenKai Lite</FontFamily>
             <FontFamily x:Key="SloganENFont">avares:///BetterLyrics.Avalonia/Assets/Fonts/SloganENFont.ttf#Lora</FontFamily>
-
-            <converters:EnumToIntConverter x:Key="EnumToIntConverter" />
-            <converters:EnumToBoolConverter x:Key="EnumToBoolConverter" />
-            <converters:DisplayLanguageCodeToIndexConverter x:Key="DisplayLanguageCodeToIndexConverter" />
-            <converters:IntToBoolConverter x:Key="IntToBoolConverter" />
-            <converters:MillisecondsToFormattedTimeConverter x:Key="MillisecondsToFormattedTimeConverter" />
-            <converters:SecondsToFormattedTimeConverter x:Key="SecondsToFormattedTimeConverter" />
-            <converters:AppThicknessToThicknessConverter x:Key="AppThicknessToThicknessConverter" />
-            <converters:AppColorToColorConverter x:Key="AppColorToColorConverter" />
-            <converters:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter" />
-            <converters:BoolToOpacityConverter x:Key="BoolToOpacityConverter" />
-            <converters:EnumToOpacityConverter x:Key="EnumToOpacityConverter" />
-            <converters:MillisecondsToSecondsConverter x:Key="MillisecondsToSecondsConverter" />
-            <converters:LyricsFontWeightToFontWeightConverter x:Key="LyricsFontWeightToFontWeightConverter" />
         </ResourceDictionary>
     </Application.Resources>
 
@@ -65,7 +88,7 @@
         </Style>
         <Style Selector="Button.GhostButtonStyle">
             <Setter Property="VerticalAlignment" Value="Stretch" />
-            <Setter Property="Padding" Value="8" />
+            <Setter Property="Padding" Value="12,8" />
             <Setter Property="CornerRadius" Value="4" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="Background" Value="Transparent" />

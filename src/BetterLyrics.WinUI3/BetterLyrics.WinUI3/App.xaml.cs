@@ -5,7 +5,6 @@ using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.DbContext;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Sdk.Interfaces.Plugins;
-using BetterLyrics.WinUI3.Providers;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.EntityFrameworkCore;

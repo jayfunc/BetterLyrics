@@ -1,0 +1,84 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="using:BetterLyrics.Core.Models"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="50"
+             x:Class="BetterLyrics.Avalonia.Controls.FontPicker"
+             x:Name="RootControl">
+
+    <Button x:Name="TriggerButton"
+            HorizontalAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            Click="TriggerButton_Click">
+        <Grid ColumnDefinitions="*, Auto">
+            <ItemsControl x:Name="SelectedFontsItemsControl"
+                          VerticalAlignment="Center"
+                          IsHitTestVisible="False">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="models:ExtendedFontFamily">
+                        <StackPanel Margin="0,0,4,0">
+                            <TextBlock FontFamily="{Binding FontFamily}" Text="{Binding LocalizedFontFamily}" />
+                            <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                       Theme="{StaticResource CaptionTextBlockStyle}"
+                                       Text="{Binding FontFamily}" />
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <StackPanel x:Name="LoadingPanel"
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal"
+                        Spacing="8"
+                        IsVisible="False">
+                <ProgressBar x:Name="LoadingRing"
+                             Width="16" Height="16"
+                             IsIndeterminate="True" />
+                <TextBlock x:Name="LoadingTextBlock"
+                           VerticalAlignment="Center"
+                           Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                           Theme="{StaticResource CaptionTextBlockStyle}" />
+            </StackPanel>
+            <TextBlock Grid.Column="1"
+                       Margin="0,0,4,0"
+                       FontFamily="{StaticResource SymbolThemeFontFamily}"
+                       FontSize="10"
+                       Text="&#xE70D;"
+                       Opacity="0.6" />
+        </Grid>
+
+        <Button.Flyout>
+            <Flyout Placement="BottomEdgeAlignedLeft">
+                <Grid RowDefinitions="Auto, *" Width="300" Height="400">
+                    <TextBox x:Name="SearchBox"
+                             PlaceholderText="Search Fonts"
+                             TextChanged="SearchBox_TextChanged"
+                             Margin="0,0,0,8"/>
+                    <ListBox x:Name="FontListBox"
+                             Grid.Row="1"
+                             SelectionMode="Multiple,Toggle"
+                             SelectionChanged="FontListBox_SelectionChanged">
+                        <ListBox.ItemTemplate>
+                            <DataTemplate x:DataType="models:ExtendedFontFamily">
+                                <StackPanel Margin="0,4">
+                                    <TextBlock FontFamily="{Binding FontFamily}"
+                                               Text="{Binding LocalizedFontFamily}"
+                                               FontSize="16"/>
+                                    <TextBlock Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                               Text="{Binding FontFamily}" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </Grid>
+            </Flyout>
+        </Button.Flyout>
+    </Button>
+
+</UserControl>

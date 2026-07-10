@@ -1,6 +1,6 @@
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Interactivity;
+using global::Avalonia;
+using global::Avalonia.Controls;
+using global::Avalonia.Interactivity;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Sdk.Models.SettingsSchema;

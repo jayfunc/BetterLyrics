@@ -1,121 +1,514 @@
-using System;
-using System.Collections.Generic;
+using Avalonia;
+using Avalonia.Controls;
+using BetterLyrics.Avalonia.Views;
 using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Models.Domain;
 using BetterLyrics.Core.Models.Settings;
+using DiscordRPC.Message;
+using FluentAvalonia.UI.Windowing;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Runtime.InteropServices;
 
 namespace BetterLyrics.Avalonia.Providers;
 
 public class WindowManagerProvider : IWindowManagerProvider
 {
+    private static readonly List<object> _activeWindows = [];
+    private static readonly List<object> _activeAppBars = [];
+
     public void HideWindow(object obj, WindowStatus hiddenBy = WindowStatus.HiddenByUser)
     {
-        throw new NotImplementedException();
+        if (obj is not Window)
+            throw new ArgumentException(
+                $"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.",
+                nameof(obj));
+
+        if (hiddenBy is WindowStatus.Closed or WindowStatus.Opened)
+            throw new ArgumentOutOfRangeException(nameof(hiddenBy));
+
+        if (obj is NowPlayingWindow nowPlayingWindow)
+        {
+            if (nowPlayingWindow.LyricsWindowStatus.IsWorkArea && GetWindowHandle(obj) is IntPtr hwnd)
+                UnregisterAppBar(hwnd);
+
+            nowPlayingWindow.LyricsWindowStatus.WindowStatus = hiddenBy;
+        }
+
+        var window = (Window)obj;
+
+        window.Hide();
     }
 
     public void PrepareWindowClosing(object obj)
     {
-        throw new NotImplementedException();
+        if (obj is NowPlayingWindow nowPlayingWindow)
+        {
+            if (nowPlayingWindow.LyricsWindowStatus.IsWorkArea && GetWindowHandle(obj) is IntPtr hwnd)
+                UnregisterAppBar(hwnd);
+
+            if (nowPlayingWindow.LyricsWindowStatus.IsWallpaper)
+                // 先取消固定至桌面以防后续关闭该窗口时报错
+                // TODO
+                // WorkerWHook.UnpinFromDesktop(nowPlayingWindow);
+
+            nowPlayingWindow.LyricsWindowStatus.WindowStatus = WindowStatus.Closed;
+        }
+
+        _activeWindows.Remove(obj);
+
+        var window = (Window)obj;
+        // TODO
+        //if (window.Content is FrameworkElement rootElement)
+        //{
+        //    rootElement.DataContext = null;
+        //    window.Content = null;
+        //}
     }
 
     public void CloseWindow(object obj)
     {
-        throw new NotImplementedException();
+        PrepareWindowClosing(obj);
+
+        var window = (Window)obj;
+        window.Close();
     }
 
     public void MinimizeWindow(object obj)
     {
-        throw new NotImplementedException();
+        if (obj is not Window)
+            throw new ArgumentException(
+                $"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.",
+                nameof(obj));
+
+        var window = (Window)obj;
+        window.WindowState = WindowState.Minimized;
     }
 
-    public IntPtr? GetWindowHandle(object? obj)
+    public object? GetWindow(WindowType windowType, object? windowParameter) => windowType switch
     {
-        throw new NotImplementedException();
-    }
-
-    public IntPtr? GetWindowHandle<T>()
-    {
-        throw new NotImplementedException();
-    }
-
-    public List<object> GetWindows(WindowType windowType)
-    {
-        throw new NotImplementedException();
-    }
-
-    public object? GetWindow(WindowType windowType, object? windowParameter = null)
-    {
-        throw new NotImplementedException();
-    }
-
-    public object? OpenOrShowWindow(WindowType windowType, object? windowParameter = null)
-    {
-        throw new NotImplementedException();
-    }
+        WindowType.LyricsShareWindow => GetWindow<LyricsShareWindow>(),
+        WindowType.MusicGalleryWindow => GetWindow<MusicGalleryWindow>(),
+        WindowType.LyricsSearchWindow => GetWindow<LyricsSearchWindow>(),
+        WindowType.LyricsWindowSwitchWindow => GetWindow<LyricsWindowSwitchWindow>(),
+        WindowType.StatsDashboardWindow => GetWindow<StatsDashboardWindow>(),
+        WindowType.SettingsWindow => GetWindow<SettingsWindow>(),
+        WindowType.NowPlayingWindow => windowParameter is LyricsWindowStatus lyricsWindowStatus
+            ? GetNowPlayingWindow(lyricsWindowStatus)
+            : GetWindow<NowPlayingWindow>(),
+        _ => null
+    };
 
     public T? GetWindow<T>()
     {
-        throw new NotImplementedException();
+        foreach (var window in _activeWindows)
+            if (window is T castedWindow)
+                return castedWindow;
+
+        return default;
     }
 
-    public T OpenOrShowWindow<T>(LyricsWindowStatus? status = null)
+    public object? GetNowPlayingWindow(LyricsWindowStatus status)
     {
-        throw new NotImplementedException();
+        return GetWindows<NowPlayingWindow>().FirstOrDefault(x => x.LyricsWindowStatus == status);
     }
 
     public List<T> GetWindows<T>()
     {
-        throw new NotImplementedException();
+        var windows = new List<T>();
+        foreach (var window in _activeWindows)
+            if (window is T castedWindow)
+                windows.Add(castedWindow);
+
+        return windows;
     }
+
+    public List<object> GetWindows(WindowType windowType) => windowType switch
+    {
+        WindowType.SettingsWindow => GetWindows<SettingsWindow>().Select(x => (object)x).ToList(),
+        WindowType.NowPlayingWindow => GetWindows<NowPlayingWindow>().Select(x => (object)x).ToList(),
+        WindowType.MusicGalleryWindow => GetWindows<MusicGalleryWindow>().Select(x => (object)x).ToList(),
+        WindowType.LyricsShareWindow => GetWindows<LyricsShareWindow>().Select(x => (object)x).ToList(),
+        WindowType.LyricsSearchWindow => GetWindows<LyricsSearchWindow>().Select(x => (object)x).ToList(),
+        WindowType.LyricsWindowSwitchWindow => GetWindows<LyricsWindowSwitchWindow>().Select(x => (object)x).ToList(),
+        WindowType.StatsDashboardWindow => GetWindows<StatsDashboardWindow>().Select(x => (object)x).ToList(),
+        _ => []
+    };
+
+    public IntPtr? GetWindowHandle(object? obj)
+    {
+        // TODO
+        //if (obj is FrameworkElement frameworkElement)
+        //    return frameworkElement.XamlRoot.ContentIslandEnvironment.AppWindowId.GetWindowHandle();
+
+        //if (obj is Window window) return WindowNative.GetWindowHandle(window);
+
+        return null;
+    }
+
+    public IntPtr? GetWindowHandle<T>()
+    {
+        return GetWindowHandle(GetWindow<T>());
+    }
+
+    public T OpenOrShowWindow<T>(LyricsWindowStatus? status = null)
+    {
+        var window = _activeWindows.Find(w =>
+            (typeof(T) != typeof(NowPlayingWindow) && w is T) ||
+            (typeof(T) == typeof(NowPlayingWindow) && w is T && ((NowPlayingWindow)w).LyricsWindowStatus == status)
+        );
+
+        if (window == null)
+        {
+            if (typeof(T) == typeof(NowPlayingWindow))
+            {
+                if (status == null) throw new NullReferenceException(nameof(status));
+
+                window = new NowPlayingWindow(status);
+            }
+            else if (typeof(T) == typeof(SettingsWindow))
+            {
+                window = new SettingsWindow();
+            }
+            else if (typeof(T) == typeof(MusicGalleryWindow))
+            {
+                window = new MusicGalleryWindow();
+            }
+            else if (typeof(T) == typeof(LyricsSearchWindow))
+            {
+                window = new LyricsSearchWindow();
+            }
+            else if (typeof(T) == typeof(LyricsWindowSwitchWindow))
+            {
+                window = new LyricsWindowSwitchWindow();
+            }
+            else if (typeof(T) == typeof(LyricsShareWindow))
+            {
+                window = new LyricsShareWindow();
+            }
+            else if (typeof(T) == typeof(StatsDashboardWindow))
+            {
+                window = new StatsDashboardWindow();
+            }
+            else if (typeof(T) == typeof(SystemTrayWindow))
+            {
+                window = new SystemTrayWindow();
+            }
+            else
+            {
+                throw new ArgumentException("Unsupported window type", nameof(T));
+            }
+
+            TrackWindow(window);
+
+            var castedWindow = (Window)window;
+
+            if (typeof(T) != typeof(LyricsWindowSwitchWindow) && typeof(T) != typeof(SystemTrayWindow))
+                castedWindow.Show();
+        }
+        else
+        {
+            if (typeof(T) == typeof(NowPlayingWindow))
+                ((NowPlayingWindow)window).LyricsWindowStatus.WindowStatus = WindowStatus.Opened;
+
+            var castedWindow = (Window)window;
+            castedWindow.Show();
+            //castedWindow.SetForegroundWindow();
+        }
+
+        return (T)window;
+    }
+
+    public object? OpenOrShowWindow(WindowType windowType, object? windowParameter = null) => windowType switch
+    {
+        WindowType.SettingsWindow => OpenOrShowWindow<SettingsWindow>(),
+        WindowType.NowPlayingWindow => windowParameter is LyricsWindowStatus lyricsWindowStatus
+            ? OpenOrShowWindow<NowPlayingWindow>(lyricsWindowStatus)
+            : OpenOrShowWindow<NowPlayingWindow>(),
+        WindowType.MusicGalleryWindow => OpenOrShowWindow<MusicGalleryWindow>(),
+        WindowType.LyricsShareWindow => OpenOrShowWindow<LyricsShareWindow>(),
+        WindowType.LyricsWindowSwitchWindow => OpenOrShowWindow<LyricsWindowSwitchWindow>(),
+        WindowType.LyricsSearchWindow => OpenOrShowWindow<LyricsSearchWindow>(),
+        WindowType.StatsDashboardWindow => OpenOrShowWindow<StatsDashboardWindow>(),
+        _ => null
+    };
 
     public void RestartApp(string args = "")
     {
-        throw new NotImplementedException();
+        // TODO
+        //// The restart will be executed immediately.
+        //var failureReason =
+        //    AppInstance.Restart(args);
+
+        //// If the restart fails, handle it here.
+        //switch (failureReason)
+        //{
+        //    case AppRestartFailureReason.RestartPending:
+        //        break;
+        //    case AppRestartFailureReason.NotInForeground:
+        //        break;
+        //    case AppRestartFailureReason.InvalidUser:
+        //        break;
+        //}
     }
 
     public void ExitApp()
     {
-        throw new NotImplementedException();
+        EnsureAllWorkAreasReleased();
+        Environment.Exit(0);
+    }
+
+    public void SetIsAppBar(object obj, bool enable)
+    {
+        if (obj == null) return;
+
+        // TODO
+
+        //var hwnd = WindowNative.GetWindowHandle(obj);
+
+        //if (enable)
+        //    RegisterAppBar(hwnd, ((NowPlayingWindow)obj).LyricsWindowStatus);
+        //else
+        //    UnregisterAppBar(hwnd);
     }
 
     public void SetIsClickThrough(object obj, bool enable)
     {
-        throw new NotImplementedException();
+        if (obj is not Window)
+            throw new ArgumentException(
+                $"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.",
+                nameof(obj));
+
+        var window = (Window)obj;
+
+        // TODO
+
+        //var hwnd = window.GetWindowHandle();
+        //var style = User32.GetWindowLong(hwnd, User32.WindowLongFlags.GWL_EXSTYLE);
+
+        //if (enable)
+        //    style |= (int)(ExtendedWindowStyle.Layered | ExtendedWindowStyle.Transparent);
+        //else
+        //    style &= ~(int)(ExtendedWindowStyle.Layered | ExtendedWindowStyle.Transparent);
+
+        //User32.SetWindowLong(hwnd, User32.WindowLongFlags.GWL_EXSTYLE, style);
     }
 
     public void SetIsBorderless(object obj, bool enable)
     {
         // TODO
+        //var hwnd = WindowNative.GetWindowHandle(obj);
+        //var style = User32.GetWindowLong(hwnd, User32.WindowLongFlags.GWL_STYLE);
+
+        //if (enable)
+        //    style &= ~(int)(User32.WindowStyles.WS_CAPTION | User32.WindowStyles.WS_THICKFRAME);
+        //else
+        //    style |= (int)(User32.WindowStyles.WS_CAPTION | User32.WindowStyles.WS_THICKFRAME);
+
+        //User32.SetWindowLong(hwnd, User32.WindowLongFlags.GWL_STYLE, style);
     }
 
     public void SetIsChildWindow(object obj, bool enable)
     {
-        throw new NotImplementedException();
-    }
-
-    public void MoveAndResize(object obj, AppRect rect)
-    {
         // TODO
-    }
+        //var hwnd = WindowNative.GetWindowHandle(obj);
+        //var style = User32.GetWindowLong(hwnd, User32.WindowLongFlags.GWL_STYLE);
 
-    public object? GetNowPlayingWindow(LyricsWindowStatus status)
-    {
-        throw new NotImplementedException();
-    }
+        //if (enable)
+        //{
+        //    style &= ~unchecked((int)User32.WindowStyles.WS_POPUP);
+        //    style |= (int)User32.WindowStyles.WS_CHILD;
+        //}
+        //else
+        //{
+        //    style |= unchecked((int)User32.WindowStyles.WS_POPUP);
+        //    style &= ~(int)User32.WindowStyles.WS_CHILD;
+        //}
 
-    public void SetIsAppBar(object obj, bool enable)
-    {
-        throw new NotImplementedException();
+        //User32.SetWindowLong(hwnd, User32.WindowLongFlags.GWL_STYLE, style);
     }
 
     public void SetIsAlwaysOnTop(object obj, bool enable)
     {
-        throw new NotImplementedException();
+        if (obj is not Window)
+            throw new ArgumentException(
+                $"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.",
+                nameof(obj));
+
+        var window = (Window)obj;
+
+        // TODO
+
+        //if (window.AppWindow is AppWindow appWindow &&
+        //    appWindow.Presenter.Kind == AppWindowPresenterKind.Overlapped)
+        //    window.SetIsAlwaysOnTop(enable);
     }
 
+    public void MoveAndResize(object obj, AppRect rect)
+    {
+        if (obj is not Window)
+            throw new ArgumentException(
+                $"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.",
+                nameof(obj));
+
+        if (obj == null) return;
+
+        var window = (Window)obj;
+
+        // TODO
+
+        //if (window.AppWindow == null) return;
+
+        //window.AppWindow.Move(new PointInt32((int)rect.X, (int)rect.Y));
+        //window.AppWindow.Resize(new SizeInt32((int)rect.Width, (int)rect.Height));
+    }
+
+    /// <summary>
+    ///     更新应用栏
+    /// </summary>
+    /// <param name="obj"></param>
     public void UpdateAppBar(object obj)
     {
-        throw new NotImplementedException();
+        if (obj is not Window)
+            throw new ArgumentException(
+                $"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.",
+                nameof(obj));
+
+        // TODO
+
+        //var hwnd = WindowNative.GetWindowHandle(obj);
+
+        //if (!_activeAppBars.Contains(hwnd))
+        //    return;
+
+        //var status = ((NowPlayingWindow)obj).LyricsWindowStatus;
+
+        //var uEdge = status.DockPlacement == DockPlacement.Top ? Shell32.ABE.ABE_TOP : Shell32.ABE.ABE_BOTTOM;
+
+        //var top = status.DockPlacement == DockPlacement.Top
+        //    ? status.MonitorBounds.Top
+        //    : status.MonitorBounds.Bottom - status.DockHeight;
+
+        //var bottom = top + status.DockHeight;
+
+        //Shell32.APPBARDATA abd = new()
+        //{
+        //    cbSize = (uint)Marshal.SizeOf<Shell32.APPBARDATA>(),
+        //    hWnd = hwnd,
+        //    uCallbackMessage = Message.WM_APPBAR_CALLBACK,
+        //    uEdge = uEdge,
+        //    rc = new RECT
+        //    {
+        //        Left = (int)status.MonitorBounds.Left,
+        //        Top = (int)top,
+        //        Right = (int)status.MonitorBounds.Right,
+        //        Bottom = (int)bottom
+        //    }
+        //};
+
+        //Shell32.SHAppBarMessage(Shell32.ABM.ABM_QUERYPOS, ref abd);
+        //Shell32.SHAppBarMessage(Shell32.ABM.ABM_SETPOS, ref abd);
     }
+
+    // private
+
+    /// <summary>
+    ///     注册应用栏
+    /// </summary>
+    /// <param name="hwnd"></param>
+    /// <param name="status"></param>
+    private static void RegisterAppBar(IntPtr hwnd, LyricsWindowStatus status)
+    {
+        if (_activeAppBars.Contains(hwnd)) return;
+
+        // TODO
+
+        //var uEdge = status.DockPlacement == DockPlacement.Top ? Shell32.ABE.ABE_TOP : Shell32.ABE.ABE_BOTTOM;
+
+        //var top = status.DockPlacement == DockPlacement.Top
+        //    ? status.MonitorBounds.Top
+        //    : status.MonitorBounds.Bottom - status.DockHeight;
+        //var bottom = top + status.DockHeight;
+
+        //Shell32.APPBARDATA abd = new()
+        //{
+        //    cbSize = (uint)Marshal.SizeOf<Shell32.APPBARDATA>(),
+        //    hWnd = hwnd,
+        //    uCallbackMessage = Message.WM_APPBAR_CALLBACK,
+        //    uEdge = uEdge,
+        //    rc = new RECT
+        //    {
+        //        Left = (int)status.MonitorBounds.Left,
+        //        Top = (int)top,
+        //        Right = (int)status.MonitorBounds.Right,
+        //        Bottom = (int)bottom
+        //    }
+        //};
+
+        //var result = Shell32.SHAppBarMessage(Shell32.ABM.ABM_NEW, ref abd);
+        //if (result != IntPtr.Zero) Debug.WriteLine("AppBar has been registered successfully.");
+
+        //Shell32.SHAppBarMessage(Shell32.ABM.ABM_QUERYPOS, ref abd);
+        //Shell32.SHAppBarMessage(Shell32.ABM.ABM_SETPOS, ref abd);
+
+        //_activeAppBars.Add(hwnd);
+    }
+
+    /// <summary>
+    ///     取消注册应用栏
+    /// </summary>
+    /// <param name="hwnd"></param>
+    private static void UnregisterAppBar(IntPtr hwnd)
+    {
+        if (!_activeAppBars.Contains(hwnd))
+            return;
+
+        // TODO
+
+        //Shell32.APPBARDATA abd = new()
+        //{
+        //    cbSize = (uint)Marshal.SizeOf<Shell32.APPBARDATA>(),
+        //    hWnd = hwnd,
+        //    uCallbackMessage = Message.WM_APPBAR_CALLBACK
+        //};
+
+        //Shell32.SHAppBarMessage(Shell32.ABM.ABM_REMOVE, ref abd);
+
+        //_activeAppBars.Remove(hwnd);
+    }
+
+    private void EnsureAllWorkAreasReleased()
+    {
+        foreach (var item in _activeAppBars)
+            if (GetWindowHandle(item) is IntPtr hwnd)
+                UnregisterAppBar(hwnd);
+    }
+
+    private static void TrackWindow(object window)
+    {
+        if (!_activeWindows.Contains(window))
+        {
+            _activeWindows.Add(window);
+            var castedWindow = (Window)window;
+            // TODO
+            //castedWindow.Closed += WindowHelper_Closed;
+        }
+    }
+
+    // TODO
+
+    //private static void WindowHelper_Closed(object sender, WindowEventArgs args)
+    //{
+    //    var window = (Window)sender;
+    //    window.Closed -= WindowHelper_Closed;
+
+    //    _activeWindows.Remove(sender);
+
+    //    MemoryLeakDetector.Track(window);
+    //    MemoryLeakDetector.ScheduleCheck(4000);
+    //}
 }

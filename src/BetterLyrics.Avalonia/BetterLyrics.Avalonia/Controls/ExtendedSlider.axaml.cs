@@ -1,8 +1,8 @@
 using System;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Input;
-using Avalonia.Interactivity;
+using global::Avalonia;
+using global::Avalonia.Controls;
+using global::Avalonia.Input;
+using global::Avalonia.Interactivity;
 using BetterLyrics.Core.Events;
 
 namespace BetterLyrics.Avalonia.Controls;

@@ -1,7 +1,7 @@
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
-using Avalonia.Interactivity;
+using global::Avalonia;
+using global::Avalonia.Controls;
+using global::Avalonia.Controls.Primitives;
+using global::Avalonia.Interactivity;
 using BetterLyrics.Avalonia.Extensions;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;

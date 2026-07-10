@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Avalonia;
 using Avalonia.Media;
 using BetterLyrics.Avalonia.Extensions; // Or wherever your generic extensions are
@@ -45,7 +45,12 @@ public partial class RenderLyricsRegion : IDisposable
             };
             strokeBrush.GradientStops.AddRange(StrokeStops);
 
-            var strokeMaskBrush = new DrawingBrush(CachedStrokeMask) { Stretch = Stretch.None };
+            var strokeMaskBrush = new DrawingBrush(CachedStrokeMask) 
+            { 
+                Stretch = Stretch.None,
+                SourceRect = new RelativeRect(bounds, RelativeUnit.Absolute),
+                DestinationRect = new RelativeRect(bounds, RelativeUnit.Absolute)
+            };
 
             // Equivalent to AlphaMaskEffect for the stroke
             using (context.PushOpacityMask(strokeMaskBrush, bounds))
@@ -63,7 +68,12 @@ public partial class RenderLyricsRegion : IDisposable
         };
         fillBrush.GradientStops.AddRange(FillStops);
 
-        var fillMaskBrush = new DrawingBrush(CachedFillMask) { Stretch = Stretch.None };
+        var fillMaskBrush = new DrawingBrush(CachedFillMask) 
+        { 
+            Stretch = Stretch.None,
+            SourceRect = new RelativeRect(bounds, RelativeUnit.Absolute),
+            DestinationRect = new RelativeRect(bounds, RelativeUnit.Absolute)
+        };
 
         // Equivalent to AlphaMaskEffect for the fill
         using (context.PushOpacityMask(fillMaskBrush, bounds))

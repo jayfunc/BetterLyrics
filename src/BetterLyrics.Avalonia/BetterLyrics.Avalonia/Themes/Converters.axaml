@@ -1,0 +1,20 @@
+<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="using:BetterLyrics.Avalonia.Converters">
+    <converters:EnumToIntConverter x:Key="EnumToIntConverter" />
+    <converters:EnumToBoolConverter x:Key="EnumToBoolConverter" />
+    <converters:DisplayLanguageCodeToIndexConverter x:Key="DisplayLanguageCodeToIndexConverter" />
+    <converters:IntToBoolConverter x:Key="IntToBoolConverter" />
+    <converters:MillisecondsToFormattedTimeConverter x:Key="MillisecondsToFormattedTimeConverter" />
+    <converters:SecondsToFormattedTimeConverter x:Key="SecondsToFormattedTimeConverter" />
+    <converters:AppThicknessToThicknessConverter x:Key="AppThicknessToThicknessConverter" />
+    <converters:AppColorToColorConverter x:Key="AppColorToColorConverter" />
+    <converters:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter" />
+    <converters:BoolToOpacityConverter x:Key="BoolToOpacityConverter" />
+    <converters:EnumToOpacityConverter x:Key="EnumToOpacityConverter" />
+    <converters:MillisecondsToSecondsConverter x:Key="MillisecondsToSecondsConverter" />
+    <converters:LyricsFontWeightToFontWeightConverter x:Key="LyricsFontWeightToFontWeightConverter" />
+    <converters:BoolToPartialOpacityConverter x:Key="BoolToPartialOpacityConverter" />
+    <converters:AlbumArtSearchProviderToDisplayNameConverter x:Key="AlbumArtSearchProviderToDisplayNameConverter" />
+    <converters:IndexToDisplayConverter x:Key="IndexToDisplayConverter" />
+</ResourceDictionary>

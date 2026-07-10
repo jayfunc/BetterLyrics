@@ -1,10 +1,10 @@
-﻿using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Controls.Metadata;
-using Avalonia.Controls.Primitives;
-using Avalonia.Media;
-using Avalonia.Metadata;
-using Avalonia.Styling;
+﻿using global::Avalonia;
+using global::Avalonia.Controls;
+using global::Avalonia.Controls.Metadata;
+using global::Avalonia.Controls.Primitives;
+using global::Avalonia.Media;
+using global::Avalonia.Metadata;
+using global::Avalonia.Styling;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Lyrics;

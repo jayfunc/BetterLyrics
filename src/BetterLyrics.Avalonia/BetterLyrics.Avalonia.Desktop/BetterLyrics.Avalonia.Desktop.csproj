@@ -3,7 +3,7 @@
         <OutputType>WinExe</OutputType>
         <!--If you are willing to use platform-specific APIs, use conditional compilation.
         See https://docs.avaloniaui.net/docs/guides/platforms/platform-specific-code/dotnet for more details.-->
-        <TargetFramework>net10.0</TargetFramework>
+        <TargetFrameworks>net10.0;net10.0-windows10.0.26100.0</TargetFrameworks>
         <Nullable>enable</Nullable>
     </PropertyGroup>
 

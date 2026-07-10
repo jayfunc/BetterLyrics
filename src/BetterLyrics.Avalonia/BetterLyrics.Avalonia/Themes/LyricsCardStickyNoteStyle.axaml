@@ -1,0 +1,108 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:BetterLyrics.Avalonia.Controls"
+    xmlns:lyrics="using:BetterLyrics.Core.Models.Lyrics"
+    xmlns:ui="using:FluentAvalonia.UI.Controls">
+
+    <ControlTheme x:Key="LyricsCardStickyNoteStyle" TargetType="controls:LyricsCard">
+        
+                <Setter Property="Template">
+                <ControlTemplate TargetType="controls:LyricsCard">
+                    <Grid
+                        Width="450"
+                        Height="{TemplateBinding LyricsAreaSize}"
+                        MinHeight="500">
+
+                        <Grid
+                            Margin="40"
+                            Background="#FFF4A3">
+
+                            <Grid Margin="32,40,32,32">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <StackPanel Grid.Row="0" Margin="0,0,0,24">
+                                    <TextBlock
+                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                        FontSize="26"
+                                        FontWeight="SemiBold"
+                                        Foreground="#2C3440"
+                                        Text="{Binding Title, RelativeSource={RelativeSource TemplatedParent}}"
+                                        TextWrapping="Wrap" />
+                                    <TextBlock
+                                        Margin="0,8,0,0"
+                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                        FontSize="15"
+                                        Foreground="#5C6673"
+                                        Text="{Binding Artist, RelativeSource={RelativeSource TemplatedParent}}" />
+                                </StackPanel>
+
+                                <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Hidden">
+                                    <ItemsControl
+                                        x:Name="PART_LyricsItemsControl"
+                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                        ItemsSource="{Binding LyricsLines, RelativeSource={RelativeSource TemplatedParent}}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="lyrics:LyricsLine">
+                                                <Grid Margin="0,0,0,16">
+                                                    <StackPanel>
+                                                        <TextBlock
+                                                            FontSize="18"
+                                                            Foreground="#2C3440"
+                                                            LineHeight="28"
+                                                            Text="{Binding Text}"
+                                                            TextWrapping="Wrap" />
+
+                                                        <TextBlock
+                                                            Margin="0,4,0,0"
+                                                            FontSize="14"
+                                                            Foreground="#7A8491"
+                                                            LineHeight="22"
+                                                            Text="{Binding SecondaryText}"
+                                                            TextWrapping="Wrap"
+                                                            IsVisible="{Binding SecondaryText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                                                    </StackPanel>
+                                                </Grid>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+
+                                <StackPanel
+                                    Grid.Row="2"
+                                    HorizontalAlignment="Right"
+                                    Opacity="0.5"
+                                    Orientation="Horizontal">
+                                    <TextBlock
+                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                        FontSize="10"
+                                        FontStyle="Italic"
+                                        Foreground="#2C3440"
+                                        Text="BetterLyrics" />
+                                </StackPanel>
+                            </Grid>
+                        </Grid>
+
+                        <Rectangle
+                            Width="100"
+                            Height="25"
+                            Margin="0,25,0,0"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Top"
+                            Fill="#D9D9D9"
+                            Opacity="0.6">
+                            <Rectangle.RenderTransform>
+                                <RotateTransform Angle="-2" CenterX="50" CenterY="12.5" />
+                            </Rectangle.RenderTransform>
+                        </Rectangle>
+
+                    </Grid>
+                </ControlTemplate>
+            </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>

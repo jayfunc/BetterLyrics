@@ -1,6 +1,6 @@
-using Avalonia.Controls;
-using Avalonia.Controls.Primitives;
-using Avalonia.Interactivity;
+using global::Avalonia.Controls;
+using global::Avalonia.Controls.Primitives;
+using global::Avalonia.Interactivity;
 using BetterLyrics.Core.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 

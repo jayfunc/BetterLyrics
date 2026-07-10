@@ -1,5 +1,5 @@
-using Avalonia;
-using Avalonia.Controls;
+using global::Avalonia;
+using global::Avalonia.Controls;
 
 namespace BetterLyrics.Avalonia.Controls;
 

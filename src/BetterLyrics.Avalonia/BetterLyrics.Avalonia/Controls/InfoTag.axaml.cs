@@ -1,7 +1,7 @@
 using System;
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Input;
+using global::Avalonia;
+using global::Avalonia.Controls;
+using global::Avalonia.Input;
 
 namespace BetterLyrics.Avalonia.Controls;
 

@@ -9,6 +9,7 @@
     xmlns:strings="using:BetterLyrics.Avalonia.Strings"
     xmlns:ui="using:FluentAvalonia.UI.Controls"
     x:Name="RootWindow"
+    WindowDecorations="None"
     Closed="Window_Closed"
     mc:Ignorable="d">
 
@@ -16,7 +17,7 @@
 
         <local:NowPlayingPage x:Name="NowPlayingPage" />
 
-        <Grid x:Name="TopCommandGrid" VerticalAlignment="Top" Background="Transparent">
+        <Grid x:Name="TopCommandGrid" VerticalAlignment="Top" Background="Transparent" PointerPressed="CustomTitleBar_PointerPressed">
             <Grid.Styles>
                 <Style Selector="Grid#TopCommandGrid">
                     <Setter Property="Opacity" Value="0" />

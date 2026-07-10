@@ -2,18 +2,14 @@
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
 public partial class NavigationService : ObservableObject, INavigationService
 {
-    private readonly IWindowManagerProvider _windowManagerProvider;
-
-    public NavigationService(IWindowManagerProvider windowManagerProvider)
-    {
-        _windowManagerProvider = windowManagerProvider;
-    }
+    private readonly IWindowManagerProvider _windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
 
     [RelayCommand]
     private void OpenSettingsWindow()

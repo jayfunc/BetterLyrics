@@ -1,0 +1,145 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:BetterLyrics.Avalonia.Controls"
+    xmlns:lyrics="using:BetterLyrics.Core.Models.Lyrics"
+    xmlns:ui="using:FluentAvalonia.UI.Controls">
+
+    <ControlTheme x:Key="LyricsCardSwissStyle" TargetType="controls:LyricsCard">
+        
+                <Setter Property="Template">
+                <ControlTemplate TargetType="controls:LyricsCard">
+                    <Grid
+                        Width="450"
+                        Height="{TemplateBinding LyricsAreaSize}"
+                        MinHeight="600"
+                        Background="#F0F0F0">
+                        <Grid
+                            Margin="20">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <Grid
+                                Grid.Row="0"
+                                
+                                Background="White">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock
+                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                        FontSize="48"
+                                        FontWeight="Black"
+                                        Foreground="Black"
+                                        LineHeight="40"
+                                        Text="{Binding Title, RelativeSource={RelativeSource TemplatedParent}}"
+                                        TextWrapping="Wrap" />
+                                    <TextBlock
+                                        Margin="0,10,0,0"
+                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                        FontSize="20"
+                                        FontWeight="Bold"
+                                        Foreground="Black"
+                                        Text="{Binding Artist, RelativeSource={RelativeSource TemplatedParent}}"
+                                        TextTrimming="CharacterEllipsis" />
+                                </StackPanel>
+                                <TextBlock
+                                    Grid.Column="1"
+                                    Margin="10,-20,-10,0"
+                                    VerticalAlignment="Top"
+                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                    FontSize="80"
+                                    FontWeight="Bold"
+                                    Foreground="#EEE"
+                                    Text="01" />
+                            </Grid>
+
+                            <Rectangle
+                                Grid.Row="1"
+                                Height="4"
+                                Fill="Black" />
+
+                            <Grid Grid.Row="2" Background="{TemplateBinding OverlayBrush}">
+                                <Rectangle Fill="White" Opacity="0.8" />
+
+                                <ScrollViewer VerticalScrollBarVisibility="Hidden">
+                                    <ItemsControl
+                                        x:Name="PART_LyricsItemsControl"
+                                        Margin="20,30"
+                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                        ItemsSource="{Binding LyricsLines, RelativeSource={RelativeSource TemplatedParent}}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="lyrics:LyricsLine">
+                                                <StackPanel Margin="0,0,0,24">
+
+                                                    <TextBlock
+                                                        FontSize="24"
+                                                        FontWeight="Black"
+                                                        Foreground="Black"
+                                                        LineHeight="28"
+                                                        Text="{Binding Text}"
+                                                        TextAlignment="Left"
+                                                        TextWrapping="Wrap" />
+
+                                                    <TextBlock
+                                                        Margin="0,4,0,0"
+                                                        FontSize="16"
+                                                        FontWeight="Normal"
+                                                        Foreground="#444444"
+                                                        LineHeight="22"
+                                                        Text="{Binding SecondaryText}"
+                                                        TextAlignment="Left"
+                                                        TextWrapping="Wrap"
+                                                        IsVisible="{Binding SecondaryText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </Grid>
+
+                            <Grid
+                                Grid.Row="3"
+                                
+                                Background="Black">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel Orientation="Horizontal" Spacing="10">
+                                    <Border
+                                        Width="40"
+                                        Height="40"
+                                        Background="White"
+                                        CornerRadius="20">
+                                        <Image Source="{Binding CoverImage, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    </Border>
+                                    <TextBlock
+                                        VerticalAlignment="Center"
+                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                        FontWeight="Bold"
+                                        Foreground="White"
+                                        Text="NOW PLAYING" />
+                                </StackPanel>
+                                <TextBlock
+                                    Grid.Column="1"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                    Foreground="White"
+                                    Opacity="0.5"
+                                    Text="BetterLyrics" />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>

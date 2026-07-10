@@ -305,13 +305,25 @@ public abstract class LyricsLineRendererBase
 
                 if (strokeMask != null)
                 {
-                    using (context.PushOpacityMask(new DrawingBrush(strokeMask) { Stretch = Stretch.None }, srcRect))
+                    var strokeMaskBrush = new DrawingBrush(strokeMask)
+                    {
+                        Stretch = Stretch.None,
+                        SourceRect = new RelativeRect(srcRect, RelativeUnit.Absolute),
+                        DestinationRect = new RelativeRect(destRect, RelativeUnit.Absolute)
+                    };
+                    using (context.PushOpacityMask(strokeMaskBrush, srcRect))
                     {
                         context.DrawRectangle(fallbackBrush, null, srcRect);
                     }
                 }
 
-                using (context.PushOpacityMask(new DrawingBrush(fillMask) { Stretch = Stretch.None }, srcRect))
+                var fillMaskBrush = new DrawingBrush(fillMask)
+                {
+                    Stretch = Stretch.None,
+                    SourceRect = new RelativeRect(srcRect, RelativeUnit.Absolute),
+                    DestinationRect = new RelativeRect(destRect, RelativeUnit.Absolute)
+                };
+                using (context.PushOpacityMask(fillMaskBrush, srcRect))
                 {
                     context.DrawRectangle(fallbackBrush, null, srcRect);
                 }

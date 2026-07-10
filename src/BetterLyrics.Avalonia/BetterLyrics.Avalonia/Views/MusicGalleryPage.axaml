@@ -1,0 +1,20 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="using:FluentAvalonia.UI.Controls"
+             xmlns:controls="using:BetterLyrics.Avalonia.Controls"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="BetterLyrics.Avalonia.Views.MusicGalleryPage"
+             x:CompileBindings="False">
+
+    <Grid>
+        <TextBlock Text="MusicGalleryPage Stub - UI building in progress" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="24" />
+        
+        <!-- Hidden elements to satisfy code-behind requirements -->
+        <ListBox x:Name="SongListBox" IsVisible="False" />
+        <CheckBox x:Name="SelectAllCheckBox" IsVisible="False" />
+        <TreeView x:Name="FolderTreeView" IsVisible="False" />
+        <MenuItem x:Name="AddToCustomListMenuItem" IsVisible="False" />
+    </Grid>
+</UserControl>

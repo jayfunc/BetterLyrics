@@ -1,12 +1,12 @@
-using Avalonia;
-using Avalonia.Animation;
-using Avalonia.Controls;
-using Avalonia.Controls.Presenters;
-using Avalonia.Controls.Primitives;
-using Avalonia.Controls.Shapes;
-using Avalonia.Media;
-using Avalonia.Styling;
-using Avalonia.Threading;
+using global::Avalonia;
+using global::Avalonia.Animation;
+using global::Avalonia.Controls;
+using global::Avalonia.Controls.Presenters;
+using global::Avalonia.Controls.Primitives;
+using global::Avalonia.Controls.Shapes;
+using global::Avalonia.Media;
+using global::Avalonia.Styling;
+using global::Avalonia.Threading;
 using System;
 using System.Threading;
 

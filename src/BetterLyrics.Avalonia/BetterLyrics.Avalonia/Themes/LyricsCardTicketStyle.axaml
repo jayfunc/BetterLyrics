@@ -1,0 +1,194 @@
+<ResourceDictionary
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="using:BetterLyrics.Avalonia.Controls"
+    xmlns:lyrics="using:BetterLyrics.Core.Models.Lyrics"
+    xmlns:ui="using:FluentAvalonia.UI.Controls">
+
+    <ControlTheme x:Key="LyricsCardTicketStyle" TargetType="controls:LyricsCard">
+        
+                <Setter Property="Template">
+                <ControlTemplate TargetType="controls:LyricsCard">
+                    <Grid
+                        Width="450"
+                        Height="{TemplateBinding LyricsAreaSize}"
+                        MinHeight="600"
+                        Background="WhiteSmoke">
+                        <Grid
+                            Margin="20"
+                            Background="#FFF8F0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <Border
+                                Grid.Row="0"
+                                BorderBrush="#e6dfd8"
+                                BorderThickness="1,1,1,0"
+                                CornerRadius="12,12,0,0">
+                                <Grid Margin="24,24,24,0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="80" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Border CornerRadius="4">
+                                        <Image
+                                            Width="80"
+                                            Height="80"
+                                            Source="{Binding CoverImage, RelativeSource={RelativeSource TemplatedParent}}" />
+                                    </Border>
+                                    <StackPanel
+                                        Grid.Column="1"
+                                        Margin="16,0,0,0"
+                                        VerticalAlignment="Center">
+                                        <TextBlock
+                                            FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                            FontSize="10"
+                                            FontWeight="Bold"
+                                            Foreground="#FF5555"
+                                            Text="ADMIT ONE" />
+
+                                        <TextBlock
+                                            FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                            FontSize="20"
+                                            FontWeight="Black"
+                                            Foreground="#333"
+                                            MaxLines="2"
+                                            Text="{Binding Title, RelativeSource={RelativeSource TemplatedParent}}"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="Wrap" />
+
+                                        <TextBlock
+                                            Margin="0,4,0,0"
+                                            FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                            FontSize="14"
+                                            Foreground="#777"
+                                            MaxLines="1"
+                                            Text="{Binding Artist, RelativeSource={RelativeSource TemplatedParent}}"
+                                            TextTrimming="CharacterEllipsis"
+                                            TextWrapping="NoWrap" />
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+
+                            <Border
+                                Grid.Row="1"
+                                BorderBrush="#e6dfd8"
+                                BorderThickness="1,0">
+                                <ScrollViewer Margin="0,20,0,0" VerticalScrollBarVisibility="Hidden">
+                                    <ItemsControl
+                                        x:Name="PART_LyricsItemsControl"
+                                        Margin="24,10,24,30"
+                                        FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                        ItemsSource="{Binding LyricsLines, RelativeSource={RelativeSource TemplatedParent}}">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate x:DataType="lyrics:LyricsLine">
+                                                <StackPanel Margin="0,0,0,16">
+
+                                                    <TextBlock
+                                                        FontSize="18"
+                                                        Foreground="#444"
+                                                        LineHeight="28"
+                                                        Text="{Binding Text}"
+                                                        TextWrapping="Wrap" />
+
+                                                    <TextBlock
+                                                        Margin="0,2,0,0"
+                                                        FontSize="14"
+                                                        Foreground="#888"
+                                                        LineHeight="20"
+                                                        Text="{Binding SecondaryText}"
+                                                        TextWrapping="Wrap"
+                                                        IsVisible="{Binding SecondaryText, Converter={x:Static StringConverters.IsNotNullOrEmpty}}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </ScrollViewer>
+                            </Border>
+
+                            <Grid Grid.Row="2" Height="20">
+                                <Line
+                                    Margin="10,0"
+                                    VerticalAlignment="Center"
+                                    Stroke="#CCC"
+                                    StrokeDashArray="8"
+                                    StrokeThickness="1"
+                                    StartPoint="0,3" EndPoint="410,3" />
+                                <Border
+                                    Width="20"
+                                    Height="20"
+                                    Margin="-10,0,0,0"
+                                    HorizontalAlignment="Left"
+                                    BorderBrush="#e6dfd8"
+                                    BorderThickness="1"
+                                    CornerRadius="10">
+                                    <Ellipse Fill="WhiteSmoke" />
+                                </Border>
+                                <Border
+                                    Width="20"
+                                    Height="20"
+                                    Margin="0,0,-10,0"
+                                    HorizontalAlignment="Right"
+                                    BorderBrush="#e6dfd8"
+                                    BorderThickness="1"
+                                    CornerRadius="10">
+                                    <Ellipse Fill="WhiteSmoke" />
+                                </Border>
+                            </Grid>
+
+                            <Border
+                                Grid.Row="3"
+                                BorderBrush="#e6dfd8"
+                                BorderThickness="1,0,1,1"
+                                CornerRadius="0,0,12,12">
+                                <Grid >
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel VerticalAlignment="Center">
+                                        <TextBlock
+                                            FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                            FontSize="10"
+                                            Foreground="#999"
+                                            Text="DATE" />
+                                        <TextBlock
+                                            FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                            FontSize="14"
+                                            Foreground="#333"
+                                            Text="{Binding DateShort, RelativeSource={RelativeSource TemplatedParent}}" />
+                                        <TextBlock
+                                            Margin="0,8,0,0"
+                                            FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                            FontSize="10"
+                                            Foreground="#999"
+                                            Text="LOCATION" />
+                                        <TextBlock
+                                            FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource TemplatedParent}}"
+                                            FontSize="14"
+                                            Foreground="#333"
+                                            Text="BetterLyrics" />
+                                    </StackPanel>
+                                    <StackPanel
+                                        Grid.Column="1"
+                                        VerticalAlignment="Bottom"
+                                        Opacity="0.8">
+                                        <TextBlock
+                                            HorizontalAlignment="Right"
+                                            FontSize="16"
+                                            Foreground="#333"
+                                            Text="||| |||| | ||||" />
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+
+                        </Grid>
+                    </Grid>
+                </ControlTemplate>
+            </Setter>
+    </ControlTheme>
+</ResourceDictionary>

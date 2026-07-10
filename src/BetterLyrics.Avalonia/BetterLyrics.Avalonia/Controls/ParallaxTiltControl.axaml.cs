@@ -1,9 +1,9 @@
-using Avalonia;
-using Avalonia.Controls;
-using Avalonia.Interactivity;
-using Avalonia.Media;
-using Avalonia.Metadata;
-using Avalonia.Threading;
+using global::Avalonia;
+using global::Avalonia.Controls;
+using global::Avalonia.Interactivity;
+using global::Avalonia.Media;
+using global::Avalonia.Metadata;
+using global::Avalonia.Threading;
 using BetterLyrics.Core.Effects;
 using System;
 

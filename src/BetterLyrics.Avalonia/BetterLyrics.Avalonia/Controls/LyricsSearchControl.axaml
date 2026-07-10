@@ -1,0 +1,336 @@
+<UserControl
+    x:Class="BetterLyrics.Avalonia.Controls.LyricsSearchControl"
+    xmlns="https://github.com/avaloniaui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local="using:BetterLyrics.Avalonia.Controls"
+    xmlns:strings="using:BetterLyrics.Avalonia.Strings"
+    xmlns:ui="using:FluentAvalonia.UI.Controls"
+    xmlns:entities="using:BetterLyrics.Core.Models.Entities"
+    xmlns:lyrics="using:BetterLyrics.Core.Models.Lyrics"
+    xmlns:vm="using:BetterLyrics.Core.ViewModels"
+    x:DataType="vm:LyricsSearchControlViewModel"
+    mc:Ignorable="d">
+
+    <Grid Margin="16" RowDefinitions="*,Auto">
+        <Grid Grid.Row="0" ColumnDefinitions="*,*,*">
+            <!--  映射  -->
+            <Grid Grid.Column="0">
+                <ScrollViewer Padding="8,0">
+                    <StackPanel Spacing="6">
+
+                        <StackPanel Orientation="Horizontal" Spacing="6">
+                            <TextBlock Text="{x:Static strings:Resources.LyricsSearchControlSongInfoMapping_Text}"
+                                       Classes="SettingsSectionHeaderTextBlockStyle" />
+                            <Button
+                                Margin="0,18,0,0"
+                                Command="{Binding CopySearchLinkCommand}"
+                                Classes="GhostButtonStyle">
+                                <ToolTip.Tip>
+                                    <TextBlock Text="{x:Static strings:Resources.LyricsSearchControlCopySearchLink_Content}" />
+                                </ToolTip.Tip>
+                                <ui:FAFontIcon FontFamily="{StaticResource SegoeFluentIcons}"
+                                               FontSize="16"
+                                               Glyph="&#xE71B;" />
+                            </Button>
+                        </StackPanel>
+
+                        <Border Padding="16">
+                            <Grid Classes="CardGridStyle">
+                                <StackPanel Spacing="6">
+                                    <local:PropertyRow Header="{x:Static strings:Resources.LyricsSearchControlTitle_Header}"
+                                                       Value="{Binding MappedSongSearchQuery.OriginalTitle, Mode=OneWay}" />
+
+                                    <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+                                        <TextBlock Text="{x:Static strings:Resources.LyricsSearchControlMappedAs_Text}"
+                                                   Grid.Column="0" VerticalAlignment="Center" Margin="0,0,6,0" />
+                                        <TextBox x:Name="MappedTitleTextBox"
+                                                 Grid.Column="1" Margin="0,0,6,0"
+                                                 Text="{Binding MappedSongSearchQuery.MappedTitle, Mode=TwoWay}"
+                                                 TextWrapping="Wrap" />
+                                        <Button Grid.Column="2" Margin="0,0,6,0"
+                                                VerticalAlignment="Center"
+                                                Click="ConvertMappedTitleToKanjiButton_Click"
+                                                Classes="GhostButtonStyle">
+                                            <ToolTip.Tip>
+                                                <TextBlock Text="{x:Static strings:Resources.LyricsSearchControlConvertToKanji_Text}" />
+                                            </ToolTip.Tip>
+                                            <ui:FAFontIcon FontFamily="{StaticResource SegoeFluentIcons}"
+                                                           FontSize="12" Glyph="&#xE8AB;" />
+                                        </Button>
+                                        <Button Grid.Column="3"
+                                                VerticalAlignment="Center"
+                                                Command="{Binding ResetMappedTitleCommand}"
+                                                Classes="GhostButtonStyle">
+                                            <ui:FAFontIcon FontFamily="{StaticResource SegoeFluentIcons}"
+                                                           FontSize="12" Glyph="&#xE777;" />
+                                        </Button>
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <Border Padding="16">
+                            <Grid Classes="CardGridStyle">
+                                <StackPanel Spacing="6">
+                                    <local:PropertyRow Header="{x:Static strings:Resources.LyricsSearchControlArtist_Header}"
+                                                       Value="{Binding MappedSongSearchQuery.OriginalArtist, Mode=OneWay}" />
+
+                                    <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+                                        <TextBlock Text="{x:Static strings:Resources.LyricsSearchControlMappedAs_Text}"
+                                                   Grid.Column="0" VerticalAlignment="Center" Margin="0,0,6,0" />
+                                        <TextBox x:Name="MappedArtistTextBox"
+                                                 Grid.Column="1" Margin="0,0,6,0"
+                                                 Text="{Binding MappedSongSearchQuery.MappedArtist, Mode=TwoWay}"
+                                                 TextWrapping="Wrap" />
+                                        <Button Grid.Column="2" Margin="0,0,6,0"
+                                                VerticalAlignment="Center"
+                                                Click="ConvertMappedArtistToKanjiButton_Click"
+                                                Classes="GhostButtonStyle">
+                                            <ToolTip.Tip>
+                                                <TextBlock Text="{x:Static strings:Resources.LyricsSearchControlConvertToKanji_Text}" />
+                                            </ToolTip.Tip>
+                                            <ui:FAFontIcon FontFamily="{StaticResource SegoeFluentIcons}"
+                                                           FontSize="12" Glyph="&#xE8AB;" />
+                                        </Button>
+                                        <Button Grid.Column="3"
+                                                VerticalAlignment="Center"
+                                                Command="{Binding ResetMappedArtistCommand}"
+                                                Classes="GhostButtonStyle">
+                                            <ui:FAFontIcon FontFamily="{StaticResource SegoeFluentIcons}"
+                                                           FontSize="12" Glyph="&#xE777;" />
+                                        </Button>
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <Border Padding="16">
+                            <Grid Classes="CardGridStyle">
+                                <StackPanel Spacing="6">
+                                    <local:PropertyRow Header="{x:Static strings:Resources.LyricsSearchControlAlbum_Header}"
+                                                       Value="{Binding MappedSongSearchQuery.OriginalAlbum, Mode=OneWay}" />
+
+                                    <Grid ColumnDefinitions="Auto,*,Auto,Auto">
+                                        <TextBlock Text="{x:Static strings:Resources.LyricsSearchControlMappedAs_Text}"
+                                                   Grid.Column="0" VerticalAlignment="Center" Margin="0,0,6,0" />
+                                        <TextBox x:Name="MappedAlbumTextBox"
+                                                 Grid.Column="1" Margin="0,0,6,0"
+                                                 Text="{Binding MappedSongSearchQuery.MappedAlbum, Mode=TwoWay}"
+                                                 TextWrapping="Wrap" />
+                                        <Button Grid.Column="2" Margin="0,0,6,0"
+                                                VerticalAlignment="Center"
+                                                Click="ConvertMappedAlbumToKanjiButton_Click"
+                                                Classes="GhostButtonStyle">
+                                            <ToolTip.Tip>
+                                                <TextBlock Text="{x:Static strings:Resources.LyricsSearchControlConvertToKanji_Text}" />
+                                            </ToolTip.Tip>
+                                            <ui:FAFontIcon FontFamily="{StaticResource SegoeFluentIcons}"
+                                                           FontSize="12" Glyph="&#xE8AB;" />
+                                        </Button>
+                                        <Button Grid.Column="3"
+                                                VerticalAlignment="Center"
+                                                Command="{Binding ResetMappedAlbumCommand}"
+                                                Classes="GhostButtonStyle">
+                                            <ui:FAFontIcon FontFamily="{StaticResource SegoeFluentIcons}"
+                                                           FontSize="12" Glyph="&#xE777;" />
+                                        </Button>
+                                    </Grid>
+                                </StackPanel>
+                            </Grid>
+                        </Border>
+
+                        <Border Padding="16">
+                            <Grid Classes="CardGridStyle">
+                                <local:PropertyRow Header="{x:Static strings:Resources.LyricsSearchControlDurauion_Header}"
+                                                   Value="{Binding GsmtcService.CurrentSongInfo.Duration, Converter={StaticResource SecondsToFormattedTimeConverter}, TargetNullValue=N/A, Mode=OneWay}" />
+                            </Grid>
+                        </Border>
+
+                        <Button Content="{x:Static strings:Resources.LyricsSearchControlSearch_Content}"
+                                HorizontalAlignment="Stretch"
+                                Command="{Binding SearchCommand}"
+                                IsEnabled="{Binding !IsSearching}"
+                                Classes="AccentButtonStyle" />
+
+                        <ui:FASettingsExpander Header="{x:Static strings:Resources.LyricsSearchControlMarkAsPureMusic_Header}">
+                            <ui:FASettingsExpander.Footer>
+                                <CheckBox MinWidth="20"
+                                          IsChecked="{Binding MappedSongSearchQuery.IsMarkedAsPureMusic, Mode=TwoWay}" />
+                            </ui:FASettingsExpander.Footer>
+                        </ui:FASettingsExpander>
+
+                        <ui:FASettingsExpander Header="{x:Static strings:Resources.LyricsSearchControlIgnoreCache_Header}">
+                            <ui:FASettingsExpander.Footer>
+                                <ToggleSwitch IsChecked="{Binding AppSettings.GeneralSettings.IgnoreCacheWhenSearching, Mode=TwoWay}" />
+                            </ui:FASettingsExpander.Footer>
+                        </ui:FASettingsExpander>
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+
+            <!--  词源一览  -->
+            <Grid Grid.Column="1" Margin="6,0">
+                <ListBox Theme="{StaticResource ListViewCardStyle}"
+                         ItemsSource="{Binding LyricsSearchResults}"
+                         SelectedItem="{Binding SelectedLyricsSearchResult, Mode=TwoWay}"
+                         IsVisible="{Binding LyricsSearchResults.Count}">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate x:DataType="entities:LyricsCacheItem">
+                            <Border Padding="12,6">
+                                <Grid RowDefinitions="Auto,*">
+                                    <!--  Lyrics source provider  -->
+                                    <Grid Grid.Row="0" Margin="-8,0,0,0" ColumnDefinitions="*,Auto">
+                                        <local:PropertyRow Grid.Column="0"
+                                                           IsEnabled="{Binding IsFound}"
+                                                           Value="{Binding Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}" />
+                                        <!-- Tooltip missing due to complex binding, can add later -->
+                                        <ui:FAFontIcon Grid.Column="1"
+                                                       Margin="0,2,0,0"
+                                                       FontFamily="{StaticResource SegoeFluentIcons}"
+                                                       FontSize="12"
+                                                       Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                                                       Glyph="&#xE74C;"
+                                                       IsVisible="{Binding IsPlugin}" />
+                                    </Grid>
+
+                                    <!--  Lyrics search result  -->
+                                    <StackPanel Grid.Row="1"
+                                                IsVisible="{Binding IsFound}">
+                                        <local:PropertyRow Header="{x:Static strings:Resources.SettingsPageSongTitle_Header}"
+                                                           Value="{Binding Title, TargetNullValue=N/A}" />
+                                        <local:PropertyRow Header="{x:Static strings:Resources.SettingsPageArtist_Header}"
+                                                           Value="{Binding Artist, TargetNullValue=N/A}" />
+                                        <local:PropertyRow Header="{x:Static strings:Resources.SettingsPageAlbum_Header}"
+                                                           Value="{Binding Album, TargetNullValue=N/A}" />
+                                        <local:PropertyRow Header="{x:Static strings:Resources.LyricsSearchControlDurauion_Header}"
+                                                           Value="{Binding Duration, Converter={StaticResource SecondsToFormattedTimeConverter}, TargetNullValue=N/A}" />
+                                        <local:PropertyRow Header="{x:Static strings:Resources.LyricsPageMatchPercentage_Header}"
+                                                           Value="{Binding MatchPercentage, StringFormat={}{0}%}" />
+                                    </StackPanel>
+
+                                    <!--  NOT FOUND  -->
+                                    <StackPanel Grid.Row="1"
+                                                HorizontalAlignment="Center"
+                                                VerticalAlignment="Center"
+                                                Spacing="6"
+                                                IsVisible="{Binding !IsFound}">
+                                        <Image MaxWidth="48" Source="avares://BetterLyrics.Avalonia/Assets/Empty.png" />
+                                        <TextBlock Text="{x:Static strings:Resources.LyricsSearchControlNotFound_Text}"
+                                                   Foreground="{DynamicResource TextFillColorSecondaryBrush}" />
+                                    </StackPanel>
+
+                                    <!--  Searching  -->
+                                    <Grid Grid.Row="1" IsVisible="{Binding IsSearching}">
+                                        <ProgressBar VerticalAlignment="Center" IsIndeterminate="True" />
+                                    </Grid>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <Border Padding="0,36">
+                    <StackPanel
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Spacing="12"
+                        IsVisible="{Binding !LyricsSearchResults.Count}">
+                        <Image MaxWidth="100" Source="avares://BetterLyrics.Avalonia/Assets/Empty.png" />
+                    </StackPanel>
+                </Border>
+
+                <ProgressBar VerticalAlignment="Top"
+                             IsIndeterminate="True"
+                             IsVisible="{Binding IsSearching}" />
+            </Grid>
+
+            <!--  歌词内容  -->
+            <Grid Grid.Column="2">
+                <TabControl ItemsSource="{Binding LyricsDataArr}"
+                            IsVisible="{Binding LyricsDataArr, Converter={x:Static ObjectConverters.IsNotNull}}">
+                    <TabControl.ItemTemplate>
+                        <DataTemplate x:DataType="lyrics:LyricsData">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <TextBlock Classes="BodyTextBlockStyle"
+                                           Text="{Binding LanguageCode, Converter={StaticResource LanguageCodeToDisplayedNameConverter}}" />
+                                <local:InfoTag Content="{x:Static strings:Resources.LyricsSearchControlAutoGenerated_Text}"
+                                               IsVisible="{Binding AutoGenerated}" />
+                                <local:InfoTag Content="{x:Static strings:Resources.LyricsSearchControlWordByWord_Text}"
+                                               IsVisible="{Binding IsWordByWord}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </TabControl.ItemTemplate>
+                    <TabControl.ContentTemplate>
+                        <DataTemplate x:DataType="lyrics:LyricsData">
+                            <ListBox Theme="{StaticResource ListViewStretchedItemContainerStyle}"
+                                     ItemsSource="{Binding LyricsLines}"
+                                     SelectionMode="Toggle">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate x:DataType="lyrics:LyricsLine">
+                                        <Grid Margin="0,6" ColumnDefinitions="Auto,*">
+                                            <Grid Grid.Column="0" Margin="0,0,6,0">
+                                                <TextBlock Foreground="{DynamicResource SystemFillColorNeutralBrush}"
+                                                           Text="{Binding StartMs, Converter={StaticResource MillisecondsToFormattedTimeConverter}}" />
+                                                <Button HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        Click="PlayLyricsLineButton_Click"
+                                                        Opacity="0"
+                                                        Classes="AccentButtonStyle">
+                                                    <Button.Styles>
+                                                        <Style Selector="Button">
+                                                            <Setter Property="Transitions">
+                                                                <Transitions>
+                                                                    <DoubleTransition Property="Opacity" Duration="0:0:0.2" />
+                                                                </Transitions>
+                                                            </Setter>
+                                                        </Style>
+                                                        <Style Selector="Button:pointerover">
+                                                            <Setter Property="Opacity" Value="1" />
+                                                        </Style>
+                                                    </Button.Styles>
+                                                    <ui:FAFontIcon FontFamily="{StaticResource SegoeFluentIcons}"
+                                                                   FontSize="16" Glyph="&#xE768;" />
+                                                </Button>
+                                            </Grid>
+                                            <local:PropertyRow Grid.Column="1" Value="{Binding PrimaryText}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </DataTemplate>
+                    </TabControl.ContentTemplate>
+                </TabControl>
+
+                <Border Padding="0,36">
+                    <StackPanel
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Spacing="12"
+                        IsVisible="{Binding LyricsDataArr, Converter={x:Static ObjectConverters.IsNull}}">
+                        <Image MaxWidth="100" Source="avares://BetterLyrics.Avalonia/Assets/Page.png" />
+                    </StackPanel>
+                </Border>
+            </Grid>
+        </Grid>
+
+        <!--  操作栏  -->
+        <Grid Grid.Row="1" Margin="0,6,0,0" ColumnDefinitions="Auto,*,Auto,Auto">
+            <TextBlock Grid.Column="1" Margin="6,0"
+                       VerticalAlignment="Center"
+                       FontSize="12"
+                       Foreground="{DynamicResource TextFillColorSecondaryBrush}"
+                       TextWrapping="Wrap"
+                       Text="{x:Static strings:Resources.LyricsSearchControlHelp_Text}" />
+            <Button Grid.Column="2" Margin="0,0,6,0"
+                    Content="{x:Static strings:Resources.LyricsSearchControlReset_Content}"
+                    Command="{Binding ResetCommand}" />
+            <Button Grid.Column="3"
+                    Content="{x:Static strings:Resources.LyricsSearchControlSaveChanges_Content}"
+                    Command="{Binding SaveCommand}"
+                    Classes="AccentButtonStyle" />
+        </Grid>
+    </Grid>
+</UserControl>
