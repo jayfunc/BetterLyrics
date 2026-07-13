@@ -1,0 +1,20 @@
+<Solution>
+    <Configurations>
+        <Platform Name="ARM64" />
+        <Platform Name="x64" />
+        <Platform Name="x86" />
+    </Configurations>
+    <Folder Name="/BetterLyrics.WinUI3/">
+        <Project Path="BetterLyrics.WinUI3/BetterLyrics.WinUI3 (Package)/BetterLyrics.WinUI3 (Package).wapproj" Type="c7167f0d-bc9f-4e6e-afe1-012c56b48db5" Id="6576cd19-ef92-4099-b37d-e2d8ebdb6bf5">
+            <Deploy />
+        </Project>
+        <Project Path="BetterLyrics.WinUI3/BetterLyrics.WinUI3/BetterLyrics.WinUI3.csproj">
+            <Platform Solution="*|ARM64" Project="ARM64" />
+            <Platform Solution="*|x64" Project="x64" />
+            <Platform Solution="*|x86" Project="x86" />
+            <Deploy />
+        </Project>
+    </Folder>
+    <Project Path="BetterLyrics.Core/BetterLyrics.Core.csproj" />
+    <Project Path="BetterLyrics.Sdk/BetterLyrics.Sdk.csproj" Id="3ef420c2-f617-4ad4-9f40-483e9b7fe27c" />
+</Solution>

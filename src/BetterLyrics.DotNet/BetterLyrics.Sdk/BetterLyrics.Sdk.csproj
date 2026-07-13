@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFrameworks>net10.0;net10.0-windows10.0.26100.0</TargetFrameworks>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <Authors>jayfunc</Authors>
+        <Authors>jayfunc</Authors>
+        <Version>1.0.0</Version>
+        <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+        <PackageProjectUrl>https://github.com/jayfunc/BetterLyrics/tree/dev/src/BetterLyrics.Sdk</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/jayfunc/BetterLyrics/tree/dev/src/BetterLyrics.Sdk</RepositoryUrl>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="README.md">
+            <Pack>True</Pack>
+            <PackagePath>\</PackagePath>
+        </None>
+    </ItemGroup>
+
+</Project>

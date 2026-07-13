@@ -1,0 +1,29 @@
+CREATE TABLE LyricsCacheEntity (
+    cacheKey TEXT NOT NULL,
+    provider TEXT NOT NULL,
+    title TEXT,
+    artist TEXT,
+    album TEXT,
+    duration REAL NOT NULL,
+    transliterationProvider TEXT,
+    translationProvider TEXT,
+    raw TEXT,
+    translation TEXT,
+    matchPercentage REAL NOT NULL,
+    reference TEXT,
+    PRIMARY KEY (cacheKey, provider)
+);
+
+getLyrics:
+SELECT * FROM LyricsCacheEntity
+WHERE cacheKey = ? AND provider = ?;
+
+insertLyrics:
+INSERT OR REPLACE INTO LyricsCacheEntity(
+    cacheKey, provider, title, artist, album, duration,
+    transliterationProvider, translationProvider, raw, translation,
+    matchPercentage, reference
+) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+clearCache:
+DELETE FROM LyricsCacheEntity;
