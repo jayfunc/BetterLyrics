@@ -423,8 +423,14 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
 
                 if (dbMap.TryGetValue(remote.Uri, out var existing))
                 {
+                    bool timeChanged = existing.LastModified != remote.LastModified;
+                    if (existing.LastModified.HasValue && remote.LastModified.HasValue)
+                    {
+                        timeChanged = Math.Abs((existing.LastModified.Value - remote.LastModified.Value).TotalSeconds) > 1;
+                    }
+
                     var isChanged = existing.FileSize != remote.FileSize ||
-                                    existing.LastModified != remote.LastModified ||
+                                    timeChanged ||
                                     forceSync;
 
                     if (isChanged)
