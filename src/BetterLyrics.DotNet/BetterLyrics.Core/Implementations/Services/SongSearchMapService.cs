@@ -1,26 +1,34 @@
-﻿using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
-using BetterLyrics.Core.Models.DbContext;
 using BetterLyrics.Core.Models.Entities;
-using Microsoft.EntityFrameworkCore;
+using LiteDB;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
 public class SongSearchMapService : ISongSearchMapService
 {
-    private readonly IDbContextFactory<SongSearchMapDbContext> _contextFactory;
+    private readonly IDatabaseService _databaseService;
 
-    public SongSearchMapService(IDbContextFactory<SongSearchMapDbContext> contextFactory)
+    public SongSearchMapService(IDatabaseService databaseService)
     {
-        _contextFactory = contextFactory;
+        _databaseService = databaseService;
+        
+        var col = _databaseService.SongSearchMapDb.GetCollection<MappedSongSearchQuery>("songSearchMap");
+        col.EnsureIndex(x => x.OriginalTitle);
+        col.EnsureIndex(x => x.OriginalArtist);
+        col.EnsureIndex(x => x.OriginalAlbum);
+    }
+    
+    private ILiteCollection<MappedSongSearchQuery> GetCollection()
+    {
+        return _databaseService.SongSearchMapDb.GetCollection<MappedSongSearchQuery>("songSearchMap");
     }
 
-    public async Task SaveMappingAsync(MappedSongSearchQuery mapping)
+    public Task SaveMappingAsync(MappedSongSearchQuery mapping)
     {
-        using var context = await _contextFactory.CreateDbContextAsync();
+        var col = GetCollection();
 
-        var existing = await context.SongSearchMap
-            .FirstOrDefaultAsync(x =>
+        var existing = col.FindOne(x =>
                 x.OriginalTitle == mapping.OriginalTitle &&
                 x.OriginalArtist == mapping.OriginalArtist &&
                 x.OriginalAlbum == mapping.OriginalAlbum);
@@ -34,27 +42,27 @@ public class SongSearchMapService : ISongSearchMapService
             existing.IsMarkedAsPureMusic = mapping.IsMarkedAsPureMusic;
             existing.LyricsSearchProvider = mapping.LyricsSearchProvider;
 
-            context.SongSearchMap.Update(existing);
+            col.Update(existing);
         }
         else
         {
             var newItem = (MappedSongSearchQuery)mapping.Clone();
-            await context.SongSearchMap.AddAsync(newItem);
+            col.Insert(newItem);
         }
 
-        await context.SaveChangesAsync();
+        return Task.CompletedTask;
     }
 
-    public async Task<MappedSongSearchQuery?> TryGetMappingAsync(SongInfo songInfo, CancellationToken token = default)
+    public Task<MappedSongSearchQuery?> TryGetMappingAsync(SongInfo songInfo, CancellationToken token = default)
     {
-        using var context = await _contextFactory.CreateDbContextAsync(token);
+        var col = GetCollection();
 
-        return await context.SongSearchMap
-            .AsNoTracking()
-            .FirstOrDefaultAsync(x =>
+        var mapped = col.FindOne(x =>
                 x.OriginalTitle == songInfo.Title &&
                 x.OriginalArtist == songInfo.Artist &&
-                x.OriginalAlbum == songInfo.Album, token);
+                x.OriginalAlbum == songInfo.Album);
+                
+        return Task.FromResult(mapped);
     }
 
     public async Task<(string Title, string Artist, string Album)> GetMappingAsync(SongInfo songInfo,
@@ -76,20 +84,20 @@ public class SongSearchMapService : ISongSearchMapService
         return (mappedTitle, mappedArtist, mappedAlbum);
     }
 
-    public async Task DeleteMappingAsync(MappedSongSearchQuery mapping)
+    public Task DeleteMappingAsync(MappedSongSearchQuery mapping)
     {
-        using var context = await _contextFactory.CreateDbContextAsync();
+        var col = GetCollection();
 
-        var target = await context.SongSearchMap
-            .FirstOrDefaultAsync(x =>
+        var target = col.FindOne(x =>
                 x.OriginalTitle == mapping.OriginalTitle &&
                 x.OriginalArtist == mapping.OriginalArtist &&
                 x.OriginalAlbum == mapping.OriginalAlbum);
 
         if (target != null)
         {
-            context.SongSearchMap.Remove(target);
-            await context.SaveChangesAsync();
+            col.Delete(target.Id);
         }
+        
+        return Task.CompletedTask;
     }
 }

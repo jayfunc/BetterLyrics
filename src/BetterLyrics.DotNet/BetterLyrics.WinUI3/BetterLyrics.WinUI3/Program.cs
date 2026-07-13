@@ -9,12 +9,10 @@ using BetterLyrics.Core.Implementations.Services.LyricsSearchService;
 using BetterLyrics.Core.Implementations.Services.PluginService;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
-using BetterLyrics.Core.Models.DbContext;
 using BetterLyrics.WinUI3.Providers;
 using BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Dispatching;
@@ -204,15 +202,9 @@ public class Program
 
         Ioc.Default.ConfigureServices(
             new ServiceCollection()
-                // 数据库工厂
-                .AddDbContextFactory<PlayHistoryDbContext>(options =>
-                    options.UseSqlite($"Data Source={PathHelper.PlayHistoryPath}"))
-                .AddDbContextFactory<FilesIndexDbContext>(options =>
-                    options.UseSqlite($"Data Source={PathHelper.FilesIndexPath}"))
-                .AddDbContextFactory<LyricsCacheDbContext>(options =>
-                    options.UseSqlite($"Data Source={PathHelper.LyricsCachePath}"))
-                .AddDbContextFactory<SongSearchMapDbContext>(options =>
-                    options.UseSqlite($"Data Source={PathHelper.SongSearchMapPath}"))
+                // 数据库服务和迁移
+                .AddSingleton<IDatabaseService, DatabaseService>()
+                .AddSingleton<IDatabaseMigrationService, DatabaseMigrationService>()
 
                 // 日志
                 .AddLogging(loggingBuilder =>

@@ -1,61 +1,70 @@
-﻿using BetterLyrics.Core.Interfaces.Services;
-using BetterLyrics.Core.Models.DbContext;
+using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Entities;
 using BetterLyrics.Core.Models.Stats;
-using Microsoft.EntityFrameworkCore;
+using LiteDB;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
 public class PlayHistoryService : IPlayHistoryService
 {
-    private readonly IDbContextFactory<PlayHistoryDbContext> _contextFactory;
+    private readonly IDatabaseService _databaseService;
 
-    public PlayHistoryService(IDbContextFactory<PlayHistoryDbContext> contextFactory)
+    public PlayHistoryService(IDatabaseService databaseService)
     {
-        _contextFactory = contextFactory;
+        _databaseService = databaseService;
+        
+        var col = _databaseService.PlayHistoryDb.GetCollection<PlayHistoryItem>("playHistory");
+        col.EnsureIndex(x => x.Title);
+        col.EnsureIndex(x => x.Artist);
+        col.EnsureIndex(x => x.StartedAt);
+        col.EnsureIndex(x => x.PlayerId);
     }
 
-    public async Task AddLogAsync(PlayHistoryItem item)
+    private ILiteCollection<PlayHistoryItem> GetCollection()
     {
-        using var context = await _contextFactory.CreateDbContextAsync();
+        return _databaseService.PlayHistoryDb.GetCollection<PlayHistoryItem>("playHistory");
+    }
 
-        // 确保 UTC
+    public Task AddLogAsync(PlayHistoryItem item)
+    {
         if (item.StartedAt.Kind != DateTimeKind.Utc) item.StartedAt = item.StartedAt.ToUniversalTime();
 
-        context.PlayHistory.Add(item);
-        await context.SaveChangesAsync();
+        var col = GetCollection();
+        col.Insert(item);
+        
+        return Task.CompletedTask;
     }
 
-    public async Task<List<PlayHistoryItem>> GetRecentLogsAsync(int limit = 50)
+    public Task<List<PlayHistoryItem>> GetRecentLogsAsync(int limit = 50)
     {
-        using var context = await _contextFactory.CreateDbContextAsync();
-
-        return await context.PlayHistory
-            .AsNoTracking() // 读操作，不需要追踪状态，提升性能
+        var col = GetCollection();
+        var result = col.Query()
             .OrderByDescending(x => x.StartedAt)
-            .Take(limit)
-            .ToListAsync();
+            .Limit(limit)
+            .ToList();
+            
+        return Task.FromResult(result);
     }
 
-    public async Task<List<PlayHistoryItem>> GetLogsByDateRangeAsync(DateTime start, DateTime end)
+    public Task<List<PlayHistoryItem>> GetLogsByDateRangeAsync(DateTime start, DateTime end)
     {
-        using var context = await _contextFactory.CreateDbContextAsync();
-
-        return await context.PlayHistory
-            .AsNoTracking()
+        var col = GetCollection();
+        var result = col.Query()
             .Where(x => x.StartedAt >= start && x.StartedAt <= end)
-            .ToListAsync();
+            .ToList();
+            
+        return Task.FromResult(result);
     }
 
-    public async Task<List<SongPlayCount>> GetTopSongsAsync(DateTime start, DateTime end, int limit = 10)
+    public Task<List<SongPlayCount>> GetTopSongsAsync(DateTime start, DateTime end, int limit = 10)
     {
-        using var context = await _contextFactory.CreateDbContextAsync();
-
-        // EF Core 会自动将这个 LINQ 翻译成高效的 GROUP BY SQL
-        return await context.PlayHistory
-            .AsNoTracking()
+        var col = GetCollection();
+        var logs = col.Query()
             .Where(x => x.StartedAt >= start && x.StartedAt <= end)
-            .GroupBy(x => new { x.Title, x.Artist }) // 组合分组
+            .ToList();
+
+        var result = logs
+            .GroupBy(x => new { x.Title, x.Artist })
             .Select(g => new SongPlayCount
             {
                 Title = g.Key.Title,
@@ -64,47 +73,52 @@ public class PlayHistoryService : IPlayHistoryService
             })
             .OrderByDescending(x => x.PlayCount)
             .Take(limit)
-            .ToListAsync();
+            .ToList();
+
+        return Task.FromResult(result);
     }
 
-    public async Task<List<ArtistPlayCount>> GetTopArtistsAsync(DateTime start, DateTime end, int limit = 10)
+    public Task<List<ArtistPlayCount>> GetTopArtistsAsync(DateTime start, DateTime end, int limit = 10)
     {
-        using var context = await _contextFactory.CreateDbContextAsync();
-
-        return await context.PlayHistory
-            .AsNoTracking()
+        var col = GetCollection();
+        var logs = col.Query()
             .Where(x => x.StartedAt >= start && x.StartedAt <= end)
+            .ToList();
+
+        var result = logs
             .GroupBy(x => x.Artist)
             .Select(g => new ArtistPlayCount
             {
                 Artist = g.Key,
                 PlayCount = g.Count(),
-                // 注意：SQLite 存储 double 精度，这里求和后转秒
                 TotalDurationSeconds = g.Sum(x => x.DurationPlayedMs) / 1000.0
             })
             .OrderByDescending(x => x.PlayCount)
             .Take(limit)
-            .ToListAsync();
+            .ToList();
+
+        return Task.FromResult(result);
     }
 
-    public async Task<TimeSpan> GetTotalListeningDurationAsync(DateTime start, DateTime end)
+    public Task<TimeSpan> GetTotalListeningDurationAsync(DateTime start, DateTime end)
     {
-        using var context = await _contextFactory.CreateDbContextAsync();
-
-        var totalMs = await context.PlayHistory
+        var col = GetCollection();
+        var totalMs = col.Query()
             .Where(x => x.StartedAt >= start && x.StartedAt <= end)
-            .SumAsync(x => Math.Min(x.DurationPlayedMs, x.TotalDurationMs)); // 防止超过歌曲本身时长
+            .ToList()
+            .Sum(x => Math.Min(x.DurationPlayedMs, x.TotalDurationMs));
 
-        return TimeSpan.FromMilliseconds(totalMs);
+        return Task.FromResult(TimeSpan.FromMilliseconds(totalMs));
     }
 
-    public async Task<List<PlayerStats>> GetPlayerDistributionAsync(DateTime start, DateTime end)
+    public Task<List<PlayerStats>> GetPlayerDistributionAsync(DateTime start, DateTime end)
     {
-        using var context = await _contextFactory.CreateDbContextAsync();
-
-        return await context.PlayHistory
-            .AsNoTracking()
+        var col = GetCollection();
+        var logs = col.Query()
             .Where(x => x.StartedAt >= start && x.StartedAt <= end)
+            .ToList();
+
+        var result = logs
             .GroupBy(x => x.PlayerId)
             .Select(g => new PlayerStats
             {
@@ -112,35 +126,27 @@ public class PlayHistoryService : IPlayHistoryService
                 Count = g.Count()
             })
             .OrderByDescending(x => x.Count)
-            .ToListAsync();
+            .ToList();
+
+        return Task.FromResult(result);
     }
 
-    public async Task DeleteLogAsync(int id)
+    public Task DeleteLogAsync(int id)
     {
-        using var context = await _contextFactory.CreateDbContextAsync();
-
-        // EF Core 删除需要先查询，或者使用 ExecuteDeleteAsync (EF Core 7+)
-        // 写法 1 (传统):
-        // var item = await context.PlayHistory.FindAsync(id);
-        // if (item != null) { context.PlayHistory.Remove(item); await context.SaveChangesAsync(); }
-
-        // 写法 2 (EF Core 7.0+ 高效写法，直接生成 DELETE SQL):
-        await context.PlayHistory
-            .Where(x => x.Id == id)
-            .ExecuteDeleteAsync();
+        var col = GetCollection();
+        col.Delete(id);
+        return Task.CompletedTask;
     }
 
-    public async Task ClearHistoryAsync()
+    public Task ClearHistoryAsync()
     {
-        using var context = await _contextFactory.CreateDbContextAsync();
-
-        // 高效清空表
-        await context.PlayHistory.ExecuteDeleteAsync();
+        var col = GetCollection();
+        col.DeleteAll();
+        return Task.CompletedTask;
     }
 
-    public async Task GenerateTestDataAsync(int count = 100)
+    public Task GenerateTestDataAsync(int count = 100)
     {
-        // 这里的逻辑稍微重构了一下，使用批量插入提升性能
         var random = new Random();
         var presetSongs = new List<(string Title, string Artist, string Album)>
         {
@@ -155,57 +161,13 @@ public class PlayHistoryService : IPlayHistoryService
             ("Shape of You", "Ed Sheeran", "Divide"),
             ("Bad Guy", "Billie Eilish", "When We All Fall Asleep, Where Do We Go?"),
             ("Flowers", "Miley Cyrus", "Endless Summer Vacation"),
-            ("Stay", "The Kid LAROI & Justin Bieber", "F*ck Love 3: Over You"),
-            ("七里香", "周杰伦", "七里香"),
-            ("晴天", "周杰伦", "叶惠美"),
-            ("一路向北", "周杰伦", "11月的肖邦"),
-            ("告白气球", "周杰伦", "周杰伦的床边故事"),
-            ("十年", "陈奕迅", "黑·白·灰"),
-            ("富士山下", "陈奕迅", "What's Going On...?"),
-            ("孤勇者", "陈奕迅", "孤勇者"),
-            ("修炼爱情", "林俊杰", "因你而在"),
-            ("江南", "林俊杰", "第二天堂"),
-            ("光年之外", "G.E.M. 邓紫棋", "摩天动物园"),
-            ("泡沫", "G.E.M. 邓紫棋", "Xposed"),
-            ("因为爱情", "王菲 & 陈奕迅", "Stranger Under My Skin"),
-            ("红豆", "王菲", "唱游"),
-            ("Bohemian Rhapsody", "Queen", "A Night at the Opera"),
-            ("Don't Stop Me Now", "Queen", "Jazz"),
-            ("Numb", "Linkin Park", "Meteora"),
-            ("In the End", "Linkin Park", "Hybrid Theory"),
-            ("Yellow", "Coldplay", "Parachutes"),
-            ("Viva La Vida", "Coldplay", "Viva La Vida"),
-            ("Smells Like Teen Spirit", "Nirvana", "Nevermind"),
-            ("Hotel California", "Eagles", "Hotel California"),
-            ("Lemon", "米津玄師", "Lemon"),
-            ("Kick Back", "米津玄師", "KICK BACK"),
-            ("アイドル", "YOASOBI", "アイドル"),
-            ("夜に駆ける", "YOASOBI", "THE BOOK"),
-            ("First Love", "宇多田ヒカル", "First Love"),
-            ("Dynamite", "BTS", "BE"),
-            ("Butter", "BTS", "Butter"),
-            ("How You Like That", "BLACKPINK", "The Album"),
-            ("Ditto", "NewJeans", "OMG"),
-            ("Get Lucky", "Daft Punk", "Random Access Memories"),
-            ("The Nights", "Avicii", "The Days / Nights"),
-            ("Summer", "Calvin Harris", "Motion")
+            ("Stay", "The Kid LAROI & Justin Bieber", "F*ck Love 3: Over You")
         };
 
-        var playerIds = new[]
-        {
-            //PlayerId.Spotify, PlayerId.Spotify, PlayerId.Spotify,
-            //PlayerId.MusicBee, PlayerId.MusicBee,
-            //PlayerId.QQMusic,
-            //PlayerId.NetEaseCloudMusic,
-            //PlayerId.AppleMusic,
-            ""
-        };
-
+        var playerIds = new[] { "" };
         var batchList = new List<PlayHistoryItem>();
-
-        // 我们尝试生成 count 条有效数据
-        // 为了防止死循环，加个硬上限
         var attempts = 0;
+        
         while (batchList.Count < count && attempts < count * 5)
         {
             attempts++;
@@ -217,7 +179,7 @@ public class PlayHistoryService : IPlayHistoryService
             var minutesBack = random.Next(0, 60);
             var secondsBack = random.Next(0, 60);
 
-            var startedAt = DateTime.UtcNow // 直接用 UTC
+            var startedAt = DateTime.UtcNow
                 .AddDays(-daysBack)
                 .AddHours(-hoursBack)
                 .AddMinutes(-minutesBack)
@@ -233,7 +195,6 @@ public class PlayHistoryService : IPlayHistoryService
 
             var playedDurationMs = totalDurationMs * playedRatio;
 
-            // 只有听了一半以上的才算作记录
             if (playedDurationMs >= totalDurationMs / 2)
                 batchList.Add(new PlayHistoryItem
                 {
@@ -249,9 +210,10 @@ public class PlayHistoryService : IPlayHistoryService
 
         if (batchList.Count > 0)
         {
-            using var context = await _contextFactory.CreateDbContextAsync();
-            await context.PlayHistory.AddRangeAsync(batchList);
-            await context.SaveChangesAsync();
+            var col = GetCollection();
+            col.InsertBulk(batchList);
         }
+        
+        return Task.CompletedTask;
     }
 }

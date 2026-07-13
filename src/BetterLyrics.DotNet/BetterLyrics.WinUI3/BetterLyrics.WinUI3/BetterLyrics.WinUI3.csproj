@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
         <TargetFramework>net10.0-windows10.0.26100.0</TargetFramework>
@@ -62,14 +62,7 @@
         <PackageReference Include="LiteFM" Version="1.0.3" />
         <PackageReference Include="LiveChartsCore.SkiaSharpView.WinUI" Version="2.0.5" />
         <PackageReference Include="Lyricify.Lyrics.Helper.Jayfunc" Version="0.1.4" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.9" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="10.0.9" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="10.0.9" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.9" />
-        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.9">
-            <PrivateAssets>all</PrivateAssets>
-            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-        </PackageReference>
+
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.9" />
         <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.9" />
         <PackageReference Include="Microsoft.Graphics.Win2D" Version="1.4.0" />

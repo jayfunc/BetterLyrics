@@ -1,54 +1,53 @@
-﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
-using BetterLyrics.Core.Models.DbContext;
 using BetterLyrics.Core.Models.Entities;
-using Microsoft.EntityFrameworkCore;
+using LiteDB;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
 public class LyricsCacheService : ILyricsCacheService
 {
-    private readonly IDbContextFactory<LyricsCacheDbContext> _contextFactory;
+    private readonly IDatabaseService _databaseService;
 
-    public LyricsCacheService(IDbContextFactory<LyricsCacheDbContext> contextFactory)
+    public LyricsCacheService(IDatabaseService databaseService)
     {
-        _contextFactory = contextFactory;
+        _databaseService = databaseService;
+        
+        var col = _databaseService.LyricsCacheDb.GetCollection<LyricsCacheItem>("lyricsCache");
+        col.EnsureIndex(x => x.CacheKey);
+        col.EnsureIndex(x => x.Provider);
     }
 
-    /// <summary>
-    ///     Read cache from DB
-    ///     <exception cref="OperationCanceledException"></exception>
-    /// </summary>
-    public async Task<LyricsCacheItem?> GetLyricsAsync(SongInfo songInfo, LyricsSearchProvider provider,
+    private ILiteCollection<LyricsCacheItem> GetCollection()
+    {
+        return _databaseService.LyricsCacheDb.GetCollection<LyricsCacheItem>("lyricsCache");
+    }
+
+    public Task<LyricsCacheItem?> GetLyricsAsync(SongInfo songInfo, LyricsSearchProvider provider,
         CancellationToken token)
     {
-        using var context = await _contextFactory.CreateDbContextAsync(token);
-
+        var col = GetCollection();
         var key = songInfo.GetCacheKey();
 
-        var existingItem = await context.LyricsCache
-            .FirstOrDefaultAsync(x => x.CacheKey == key && x.Provider == provider, token);
+        var existingItem = col.FindOne(x => x.CacheKey == key && x.Provider == provider);
 
-        return existingItem;
+        return Task.FromResult(existingItem);
     }
 
-    public async Task SaveLyricsAsync(SongInfo songInfo, LyricsCacheItem result, CancellationToken token)
+    public Task SaveLyricsAsync(SongInfo songInfo, LyricsCacheItem result, CancellationToken token)
     {
-        using var context = await _contextFactory.CreateDbContextAsync(token);
-
+        var col = GetCollection();
         var key = songInfo.GetCacheKey();
 
-        var existingItem = await context.LyricsCache
-            .FirstOrDefaultAsync(x => x.CacheKey == key && x.Provider == result.Provider, token);
+        var existingItem = col.FindOne(x => x.CacheKey == key && x.Provider == result.Provider);
 
         if (existingItem == null)
         {
             var newItem = (LyricsCacheItem)result.Clone();
             newItem.CacheKey = key;
-
-            await context.LyricsCache.AddAsync(newItem, token);
+            col.Insert(newItem);
         }
         else
         {
@@ -65,16 +64,18 @@ public class LyricsCacheService : ILyricsCacheService
 
             existingItem.MatchPercentage = result.MatchPercentage;
             existingItem.Reference = result.Reference;
+
+            col.Update(existingItem);
         }
 
-        await context.SaveChangesAsync(token);
+        return Task.CompletedTask;
     }
 
-    public async Task ClearCacheAsync()
+    public Task ClearCacheAsync()
     {
-        using var context = await _contextFactory.CreateDbContextAsync();
-
-        await context.LyricsCache.ExecuteDeleteAsync();
-        await context.Database.ExecuteSqlRawAsync("VACUUM;");
+        var col = GetCollection();
+        col.DeleteAll();
+        _databaseService.LyricsCacheDb.Rebuild();
+        return Task.CompletedTask;
     }
 }

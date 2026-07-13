@@ -1,4 +1,4 @@
-﻿using BetterLyrics.Core.Constants;
+using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
 
 namespace BetterLyrics.Core.Helpers;
@@ -64,10 +64,16 @@ public static class PathHelper
     public static string NeteaseAlbumArtCacheDirectory => Path.Combine(AlbumArtCacheDirectory, "netease");
 
     public static string PlayQueuePath => Path.Combine(LocalFolderPath, "play-queue.m3u");
+
     public static string PlayHistoryPath => Path.Combine(LocalFolderPath, "play-history.db");
     public static string FilesIndexPath => Path.Combine(LocalFolderPath, "files-index.db");
     public static string SongSearchMapPath => Path.Combine(LocalFolderPath, "song-search-map.db");
     public static string LyricsCachePath => Path.Combine(LyricsCacheDirectory, "lyrics-cache.db");
+
+    public static string PlayHistoryLiteDbPath => Path.Combine(LocalFolderPath, "play-history.litedb");
+    public static string FilesIndexLiteDbPath => Path.Combine(LocalFolderPath, "files-index.litedb");
+    public static string SongSearchMapLiteDbPath => Path.Combine(LocalFolderPath, "song-search-map.litedb");
+    public static string LyricsCacheLiteDbPath => Path.Combine(LyricsCacheDirectory, "lyrics-cache.litedb");
 
     public static string PluginsDirectory => Path.Combine(LocalFolderPath, "plugins");
     public static string PendingPluginsDirectory => Path.Combine(LocalFolderPath, "plugins-pending");

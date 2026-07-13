@@ -1,4 +1,4 @@
-﻿using System.Collections.Concurrent;
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using BetterLyrics.Core.Enums;
@@ -7,13 +7,12 @@ using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
-using BetterLyrics.Core.Models.DbContext;
 using BetterLyrics.Core.Models.Entities;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.ViewModels;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
-using Microsoft.EntityFrameworkCore;
+using LiteDB;
 using Microsoft.Extensions.Logging;
 using LyricsMetadataParser = BetterLyrics.Core.Helpers.Lyrics.MetadataParser.LyricsMetadataParser;
 
@@ -25,13 +24,11 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
 {
     private static readonly SemaphoreSlim _folderScanLock = new(1, 1);
 
-    // 当前正在执行的扫描任务字典
     private readonly ConcurrentDictionary<string, CancellationTokenSource> _activeScanTokens = new();
     private readonly IAppUIThreadProvider _appUIThreadProvider;
 
-    private readonly IDbContextFactory<FilesIndexDbContext> _contextFactory;
+    private readonly IDatabaseService _databaseService;
 
-    // 定时器字典
     private readonly ConcurrentDictionary<string, CancellationTokenSource> _folderTimerTokens = new();
     private readonly ILocalizationService _localizationService;
     private readonly ILogger<FileSystemService> _logger;
@@ -41,57 +38,59 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
         ISettingsService settingsService,
         ILocalizationService localizationService,
         ILogger<FileSystemService> logger,
-        IDbContextFactory<FilesIndexDbContext> contextFactory, IAppUIThreadProvider appUiThreadProvider)
+        IDatabaseService databaseService, IAppUIThreadProvider appUiThreadProvider)
     {
         _logger = logger;
         _localizationService = localizationService;
         _settingsService = settingsService;
-        _contextFactory = contextFactory;
+        _databaseService = databaseService;
         _appUIThreadProvider = appUiThreadProvider;
+        
+        var col = _databaseService.FilesIndexDb.GetCollection<FilesIndexItem>("filesIndex");
+        col.EnsureIndex(x => x.MediaFolderId);
+        col.EnsureIndex(x => x.ParentUri);
+        col.EnsureIndex(x => x.Uri, true);
+    }
+    
+    private ILiteCollection<FilesIndexItem> GetCollection()
+    {
+        return _databaseService.FilesIndexDb.GetCollection<FilesIndexItem>("filesIndex");
     }
 
     public async Task<List<FilesIndexItem>> GetFilesAsync(IUnifiedFileSystem provider, FilesIndexItem? parentFolder,
         string configId, bool forceSync = false)
     {
-        var queryParentUri = parentFolder == null ? "" : parentFolder.Uri;
-
-        using var context = await _contextFactory.CreateDbContextAsync();
-
-        var cachedEntities = await context.FilesIndex
-            .AsNoTracking() // 读操作不追踪，提升性能
-            .Where(x => x.MediaFolderId == configId && x.ParentUri == queryParentUri)
-            .ToListAsync();
-
-        // SyncAsync 内部自己管理 Context
-        cachedEntities = await SyncAsync(provider, parentFolder, configId, forceSync);
+        var cachedEntities = await SyncAsync(provider, parentFolder, configId, forceSync);
 
         return cachedEntities;
     }
 
-    public async Task UpdateMetadataAsync(FilesIndexItem entity)
+    public Task UpdateMetadataAsync(FilesIndexItem entity)
     {
-        using var context = await _contextFactory.CreateDbContextAsync();
-
-        // 使用 EF Core 7.0+ 的 ExecuteUpdateAsync 高效更新
-        // 这会直接生成 UPDATE SQL，不经过内存加载，性能极高
-        await context.FilesIndex
-            .Where(x => x.Id == entity.Id) // 优先用 Id
-            .ExecuteUpdateAsync(setters => setters
-                .SetProperty(p => p.Title, entity.Title)
-                .SetProperty(p => p.Artist, entity.Artist)
-                .SetProperty(p => p.Album, entity.Album)
-                .SetProperty(p => p.Year, entity.Year)
-                .SetProperty(p => p.Bitrate, entity.Bitrate)
-                .SetProperty(p => p.SampleRate, entity.SampleRate)
-                .SetProperty(p => p.BitDepth, entity.BitDepth)
-                .SetProperty(p => p.Duration, entity.Duration)
-                .SetProperty(p => p.AudioFormatName, entity.AudioFormatName)
-                .SetProperty(p => p.AudioFormatShortName, entity.AudioFormatShortName)
-                .SetProperty(p => p.Encoder, entity.Encoder)
-                .SetProperty(p => p.EmbeddedLyrics, entity.EmbeddedLyrics)
-                .SetProperty(p => p.LocalAlbumArtPath, entity.LocalAlbumArtPath)
-                .SetProperty(p => p.IsMetadataParsed, true)
-            );
+        var col = GetCollection();
+        // To be safe, we fetch the item by Id or Uri, and update the whole object
+        var dbItem = col.FindById(entity.Id);
+        if (dbItem != null)
+        {
+            dbItem.Title = entity.Title;
+            dbItem.Artists = entity.Artists;
+            dbItem.Album = entity.Album;
+            dbItem.Year = entity.Year;
+            dbItem.Bitrate = entity.Bitrate;
+            dbItem.SampleRate = entity.SampleRate;
+            dbItem.BitDepth = entity.BitDepth;
+            dbItem.Duration = entity.Duration;
+            dbItem.AudioFormatName = entity.AudioFormatName;
+            dbItem.AudioFormatShortName = entity.AudioFormatShortName;
+            dbItem.Encoder = entity.Encoder;
+            dbItem.EmbeddedLyrics = entity.EmbeddedLyrics;
+            dbItem.LocalAlbumArtPath = entity.LocalAlbumArtPath;
+            dbItem.IsMetadataParsed = true;
+            
+            col.Update(dbItem);
+        }
+        
+        return Task.CompletedTask;
     }
 
     public async Task<Stream?> OpenFileAsync(IUnifiedFileSystem provider, FilesIndexItem entity)
@@ -130,13 +129,9 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
                         _localizationService.GetLocalizedString("FileSystemServiceCleaningCache");
                 });
 
-                using var context = await _contextFactory.CreateDbContextAsync();
-
-                await context.FilesIndex
-                    .Where(x => x.MediaFolderId == folder.Id)
-                    .ExecuteDeleteAsync();
-
-                await context.Database.ExecuteSqlRawAsync("VACUUM");
+                var col = GetCollection();
+                col.DeleteMany(x => x.MediaFolderId == folder.Id);
+                _databaseService.FilesIndexDb.Rebuild();
             }
             finally
             {
@@ -266,7 +261,7 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
                             var artPath = await SaveAlbumArtToDiskAsync(track);
 
                             item.Title = track.Title;
-                            item.Artist = track.Artist;
+                            item.Artists = track.Artist;
                             item.Album = track.Album;
                             item.Year = track.Year;
                             item.Bitrate = track.Bitrate;
@@ -293,7 +288,7 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
 
                                 var metadata = LyricsMetadataParser.Parse(content, ext);
                                 item.Title = metadata.Title;
-                                item.Artist = metadata.Artist;
+                                item.Artists = metadata.Artist;
                                 item.Album = metadata.Album;
                                 item.Duration = (int)metadata.TotalSeconds;
                             }
@@ -303,9 +298,6 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
                     }
 
                     if (item.IsMetadataParsed)
-                        // 更新操作：直接调用 UpdateMetadataAsync
-                        // 此时不需要 _dbLock，因为 UpdateMetadataAsync 内部会 CreateDbContextAsync
-                        // 而 _folderScanLock 已经保证了当前文件夹扫描的独占性
                         await UpdateMetadataAsync(item);
                 }
                 catch (Exception ex)
@@ -346,31 +338,24 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
         }
     }
 
-    public async Task<List<FilesIndexItem>> GetParsedFilesAsync()
+    public Task<List<FilesIndexItem>> GetParsedFilesAsync()
     {
-        using var context = await _contextFactory.CreateDbContextAsync();
-
-        // SQL: SELECT * FROM FileCache WHERE IsMetadataParsed = 1 AND MediaFolderId IN (...)
-        return await context.FilesIndex
-            .AsNoTracking()
-            .Where(x => x.IsMetadataParsed)
-            .ToListAsync();
+        var col = GetCollection();
+        var list = col.Find(x => x.IsMetadataParsed).ToList();
+        return Task.FromResult(list);
     }
 
-    public async Task<List<FilesIndexItem>> GetParsedFilesAsync(IEnumerable<string> enabledConfigIds,
+    public Task<List<FilesIndexItem>> GetParsedFilesAsync(IEnumerable<string> enabledConfigIds,
         CancellationToken token = default)
     {
-        if (enabledConfigIds == null || !enabledConfigIds.Any()) return new List<FilesIndexItem>();
+        if (enabledConfigIds == null || !enabledConfigIds.Any()) return Task.FromResult(new List<FilesIndexItem>());
 
         var idList = enabledConfigIds.ToList();
-
-        using var context = await _contextFactory.CreateDbContextAsync(token);
-
-        // SQL: SELECT * FROM FileCache WHERE IsMetadataParsed = 1 AND MediaFolderId IN (...)
-        return await context.FilesIndex
-            .AsNoTracking()
-            .Where(x => x.IsMetadataParsed && idList.Contains(x.MediaFolderId))
-            .ToListAsync(token);
+        var col = GetCollection();
+        
+        var list = col.Find(x => x.IsMetadataParsed && idList.Contains(x.MediaFolderId)).ToList();
+        
+        return Task.FromResult(list);
     }
 
     public void StartAllFolderTimers()
@@ -394,9 +379,6 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
                 UpdateFolderTimer(mediaFolder);
     }
 
-    /// <summary>
-    ///     从远端/本地同步文件至数据库
-    /// </summary>
     private async Task<List<FilesIndexItem>> SyncAsync(IUnifiedFileSystem provider, FilesIndexItem? parentFolder,
         string configId, bool forceSync = false)
     {
@@ -423,19 +405,11 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
 
         try
         {
-            using var context = await _contextFactory.CreateDbContextAsync();
-
-            // 开启事务 (EF Core 也能管理事务)
-            using var transaction = await context.Database.BeginTransactionAsync();
-
-            // 1. 获取数据库中现有的该目录下的文件
-            var dbItems = await context.FilesIndex
-                .Where(x => x.MediaFolderId == configId && x.ParentUri == targetParentUri)
-                .ToListAsync();
-
+            var col = GetCollection();
+            
+            var dbItems = col.Find(x => x.MediaFolderId == configId && x.ParentUri == targetParentUri).ToList();
             var dbMap = dbItems.ToDictionary(x => x.Uri, x => x);
 
-            // 2. 远端数据去重（防止 Provider 返回重复 Uri）
             var remoteDistinct = remoteItems
                 .GroupBy(x => x.Uri)
                 .Select(g => g.First())
@@ -443,14 +417,12 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
 
             var remoteUris = new HashSet<string>();
 
-            // 3. 处理 新增 和 更新
             foreach (var remote in remoteDistinct)
             {
                 remoteUris.Add(remote.Uri);
 
                 if (dbMap.TryGetValue(remote.Uri, out var existing))
                 {
-                    // 检查是否变更
                     var isChanged = existing.FileSize != remote.FileSize ||
                                     existing.LastModified != remote.LastModified ||
                                     forceSync;
@@ -459,34 +431,26 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
                     {
                         existing.FileSize = remote.FileSize;
                         existing.LastModified = remote.LastModified;
-                        existing.IsMetadataParsed = false; // 标记重新解析
-
-                        // EF Core 自动追踪 existing 的变化，无需手动 Update
+                        existing.IsMetadataParsed = false;
+                        
+                        col.Update(existing);
                     }
                 }
                 else
                 {
-                    // 新增
-                    // 注意：如果 Id 是自增的，不要手动赋值 Id，除非是 Guid
-                    context.FilesIndex.Add(remote);
+                    col.Insert(remote);
                 }
             }
 
-            // 4. 处理 删除 (数据库有，远端没有)
             foreach (var dbItem in dbItems)
+            {
                 if (!remoteUris.Contains(dbItem.Uri))
-                    context.FilesIndex.Remove(dbItem);
+                {
+                    col.Delete(dbItem.Id);
+                }
+            }
 
-            await context.SaveChangesAsync();
-            await transaction.CommitAsync();
-
-            // 5. 返回最新数据
-            // 这里的 dbItems 已经被 Update 更新了内存状态，但 Remove 的还在列表里，Add 的不在列表里
-            // 所以最稳妥的是重新查一次，或者手动维护列表。为了准确性，重新查询 (AsNoTracking)
-            var finalItems = await context.FilesIndex
-                .AsNoTracking()
-                .Where(x => x.MediaFolderId == configId && x.ParentUri == targetParentUri)
-                .ToListAsync();
+            var finalItems = col.Find(x => x.MediaFolderId == configId && x.ParentUri == targetParentUri).ToList();
 
             FolderUpdated?.Invoke(this, targetParentUri);
 
@@ -544,7 +508,6 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
 
     private async Task<string?> SaveAlbumArtToDiskAsync(ExtendedTrack track)
     {
-        // 代码未变，纯 IO 操作
         var picData = track.AlbumArtByteArray;
         if (picData == null || picData.Length == 0) return null;
 

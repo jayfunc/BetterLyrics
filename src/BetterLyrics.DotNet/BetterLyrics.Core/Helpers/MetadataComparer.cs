@@ -22,7 +22,7 @@ public static partial class MetadataComparer
 
     public static int CalculateScore(SongInfo songInfo, FilesIndexItem local)
     {
-        return CalculateScore(songInfo, local.Title, local.Artist, local.Album, local.Duration, local.FileName);
+        return CalculateScore(songInfo, local.Title, local.Artists, local.Album, local.Duration, local.FileName);
     }
 
     public static int CalculateScore(

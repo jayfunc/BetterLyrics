@@ -430,7 +430,7 @@ public class LyricsSearchService : ILyricsSearchService
             lyricsSearchResult.Title = string.IsNullOrEmpty(bestFileEntity.Title)
                 ? bestFileEntity.FileName
                 : bestFileEntity.Title;
-            lyricsSearchResult.Artist = bestFileEntity.Artist;
+            lyricsSearchResult.Artist = bestFileEntity.Artists;
             lyricsSearchResult.Album = bestFileEntity.Album;
             lyricsSearchResult.Duration = bestFileEntity.Duration;
 
@@ -478,7 +478,7 @@ public class LyricsSearchService : ILyricsSearchService
         if (bestFile != null && maxScore > 0)
         {
             lyricsSearchResult.Title = bestFile.Title;
-            lyricsSearchResult.Artist = bestFile.Artist;
+            lyricsSearchResult.Artist = bestFile.Artists;
             lyricsSearchResult.Album = bestFile.Album;
             lyricsSearchResult.Duration = bestFile.Duration;
 

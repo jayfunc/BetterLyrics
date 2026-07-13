@@ -39,7 +39,7 @@ public class ExtendedTrack
         Uri = entity.Uri;
 
         Title = entity.Title;
-        Artist = entity.Artist;
+        Artist = entity.Artists;
         Album = entity.Album;
         Year = entity.Year;
         Bitrate = entity.Bitrate;

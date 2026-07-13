@@ -1,18 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 using BetterLyrics.Core.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.EntityFrameworkCore;
+using LiteDB;
 
 namespace BetterLyrics.Core.Models.Entities;
 
-[Table("SongSearchMap")]
-[Index(nameof(OriginalTitle), nameof(OriginalArtist), nameof(OriginalAlbum))]
 public partial class MappedSongSearchQuery : ObservableRecipient, ICloneable
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public string Id { get; set; }
+    public ObjectId Id { get; set; }
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]

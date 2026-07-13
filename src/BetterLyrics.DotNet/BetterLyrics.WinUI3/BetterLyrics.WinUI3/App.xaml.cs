@@ -1,13 +1,11 @@
-﻿using ATL;
+using ATL;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
-using BetterLyrics.Core.Models.DbContext;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Sdk.Interfaces.Plugins;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
 using System;
@@ -93,15 +91,15 @@ public partial class App : Application
 
     private async Task InitAppServicesAsync()
     {
-        await InitDatabasesAsync();
-
-        var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
-
         // 应用增强动效设置项
+        var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
         UpdateGlobalStyles(settingsService.AppSettings.GeneralSettings
             .EnhanceControlInteractiveAnimations);
 
         // 迁移逻辑
+        var migrationService = Ioc.Default.GetRequiredService<IDatabaseMigrationService>();
+        await migrationService.MigrateAllAsync();
+
         var songSearchMapService = Ioc.Default.GetRequiredService<ISongSearchMapService>();
         var obsoleteSongSearchMap = settingsService.AppSettings.MappedSongSearchQueries;
         if (obsoleteSongSearchMap.Count > 0)
@@ -133,35 +131,6 @@ public partial class App : Application
         // 启动周期更新检测
         var appUpdateService = Ioc.Default.GetRequiredService<IAppUpdateService>();
         appUpdateService.StartDailyCheck();
-    }
-
-    private static async Task InitDatabasesAsync()
-    {
-        // Init databases
-        var playHistoryFactory = Ioc.Default.GetRequiredService<IDbContextFactory<PlayHistoryDbContext>>();
-        var songSearchMapFactory = Ioc.Default.GetRequiredService<IDbContextFactory<SongSearchMapDbContext>>();
-        var filesIndexFactory = Ioc.Default.GetRequiredService<IDbContextFactory<FilesIndexDbContext>>();
-        var lyricsCacheFactory = Ioc.Default.GetRequiredService<IDbContextFactory<LyricsCacheDbContext>>();
-
-        using (var playHistoryDb = await playHistoryFactory.CreateDbContextAsync())
-        {
-            await playHistoryDb.Database.EnsureCreatedAsync();
-        }
-
-        using (var songSearchMapDb = await songSearchMapFactory.CreateDbContextAsync())
-        {
-            await songSearchMapDb.Database.EnsureCreatedAsync();
-        }
-
-        using (var filesIndexDb = await filesIndexFactory.CreateDbContextAsync())
-        {
-            await filesIndexDb.Database.EnsureCreatedAsync();
-        }
-
-        using (var lyricsCacheDb = await lyricsCacheFactory.CreateDbContextAsync())
-        {
-            await lyricsCacheDb.Database.EnsureCreatedAsync();
-        }
     }
 
     private void EnsureLyricsSearchProvidersInfo()
@@ -214,7 +183,7 @@ public partial class App : Application
         {
             if (fluentDict == null)
                 mergedDicts.Add(new ResourceDictionary
-                    { Source = new Uri("ms-appx:///Themes/FluentStyles.xaml") });
+                { Source = new Uri("ms-appx:///Themes/FluentStyles.xaml") });
 
             if (defaultDict != null) mergedDicts.Remove(defaultDict);
         }
@@ -222,7 +191,7 @@ public partial class App : Application
         {
             if (defaultDict == null)
                 mergedDicts.Add(new ResourceDictionary
-                    { Source = new Uri("ms-appx:///Themes/DefaultStyles.xaml") });
+                { Source = new Uri("ms-appx:///Themes/DefaultStyles.xaml") });
 
             if (fluentDict != null) mergedDicts.Remove(fluentDict);
         }
