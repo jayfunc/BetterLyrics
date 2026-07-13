@@ -17,6 +17,10 @@
         <DefineConstants>$(DefineConstants);DISABLE_XAML_GENERATED_MAIN</DefineConstants>
     </PropertyGroup>
     <ItemGroup>
+      <Content Remove="assets\Wiki82.profile.xml.template" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Remove="Assets\Wiki82.profile.xml" />
       <None Remove="Views\SystemTrayWindow.xaml" />
     </ItemGroup>
 	

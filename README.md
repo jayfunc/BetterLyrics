@@ -59,8 +59,8 @@
 
 <div align="center">
 
-| Microsoft Store (Recommended) | Manual Install |
-| :---: | :---: |
+|                                                                                        Microsoft Store (Recommended)                                                                                         |                                                                             Manual Install                                                                              |
+| :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | <a href="https://apps.microsoft.com/detail/9P1WCD1P597R?referrer=appbadge&mode=direct"><img src="https://get.microsoft.com/images/en-us%20dark.svg" width="160"/></a><br>Unlimited free trial (Same as paid) | [**📦 Latest Release (.zip)**](https://github.com/jayfunc/BetterLyrics/releases/latest)<br>See [Installation Guide](https://betterlyrics.github.io/get-started/install) |
 
 [📖 Docs](https://betterlyrics.github.io) | [🧩 Plugin Store](https://betterlyrics.github.io/plugins-store) | [🔒 Privacy Policy](docs/PRIVACY_POLICY.md) | [⚖️ Terms of Service](docs/TERMS_OF_SERVICE.md)
@@ -151,7 +151,15 @@
 **Develop Plugins:** Want to extend functionality? [🧩 Read the Developer Guide](https://betterlyrics.github.io/plugin-dev/intro/).
 
 **Build from source:**
-> Before building, ensure you have replaced `DiscordTemplate.cs` and `LastFM.cs` in the `Constants` folder.
+
+Before building, please perform the following replacements:
+
+- `src/BetterLyrics.DotNet`
+  - `BetterLyrics.Core/Constants`
+    - `DiscordTemplate` -> `Discord.cs`
+    - `LastFMTemplate` -> `LastFM.cs`
+  - `BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets`
+    - `Wiki82.profile.xml.template` -> `Wiki82.profile.xml` (download the zip and extra the file from https://github.com/ivanakcheurov/ntextcat/blob/master/src/LanguageModels/Wiki.profiles.7z)
 
 ## 🤑 Donations
 
@@ -159,8 +167,8 @@ If you like BetterLyrics, please consider supporting it. Your support helps keep
 
 <div align="center">
 
-| Web Platforms | Alipay/WeChat Pay |
-| :---: | :---: |
+|                                                                       Web Platforms                                                                       |                         Alipay/WeChat Pay                          |
+| :-------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------: |
 | [PayPal](https://paypal.me/zhefangpay)<br><br>[Buy Me a Coffee](https://buymeacoffee.com/founchoo)<br><br>[爱发电 (Afdian)](https://afdian.com/a/jayfunc) | <img src="docs/assets/donation/alipay_wechatpay.png" height="250"> |
 
 **[View the full Hall of Fame (Sponsors)](docs/SPONSORS.md)**
@@ -191,38 +199,39 @@ This project is licensed under the **GNU General Public License v3.0**.
 
 #### Contributors
 
-* [jayfunc](https://github.com/jayfunc) `💻` `🌐` `🧪` `📝`
-* [Raspberry-Monster](https://github.com/Raspberry-Monster) `💻`
-* [zxbmmmmmmmmm](https://github.com/zxbmmmmmmmmm) `💻`
-* [ZHider](https://github.com/ZHider) `💻`
-* [YUZU384](https://github.com/YUZU384) `💻`
-* [kusutori](https://github.com/kusutori) `💻`
-* [PiYuanZhouLv](https://github.com/PiYuanZhouLv) `💻`
-* [SuHeAndZl](https://crowdin.com/profile/SuHeAndZl) `🌐` `🧪` `📝`
-* [borcolasky](https://crowdin.com/profile/borcolasky) `🌐`
+- [jayfunc](https://github.com/jayfunc) `💻` `🌐` `🧪` `📝`
+- [Raspberry-Monster](https://github.com/Raspberry-Monster) `💻`
+- [zxbmmmmmmmmm](https://github.com/zxbmmmmmmmmm) `💻`
+- [ZHider](https://github.com/ZHider) `💻`
+- [YUZU384](https://github.com/YUZU384) `💻`
+- [kusutori](https://github.com/kusutori) `💻`
+- [PiYuanZhouLv](https://github.com/PiYuanZhouLv) `💻`
+- [SuHeAndZl](https://crowdin.com/profile/SuHeAndZl) `🌐` `🧪` `📝`
+- [borcolasky](https://crowdin.com/profile/borcolasky) `🌐`
 
 > `💻` Code ╹ `🌐` i18n ╹ `🧪` QA ╹ `📝` Docs
 
 #### Sponsors
 
-* Special thanks to everyone who has supported the project through donations. For full details, please refer to the [Sponsors List (Hall of Fame)](docs/SPONSORS.md).
+- Special thanks to everyone who has supported the project through donations. For full details, please refer to the [Sponsors List (Hall of Fame)](docs/SPONSORS.md).
 
 ### Dependencies & References
 
-| Projects/Packages | Description |
-| :--- | :--- |
-| [Isolation](https://github.com/Storyteller-Studios/Isolation) | Dynamic fluid background implementation |
-| [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate) | Provide the ability for offline lyrics translation |
-| [lrclib](https://github.com/tranxuanthang/lrclib) | LRCLIB lyrics API provider |
-| [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper) | Provide lyrics fetch, decryption, and parsing for QQ, Netease, and Kugou sources |
-| [Manzana-Apple-Music-Lyrics](https://github.com/dropcreations/Manzana-Apple-Music-Lyrics) | Apple Music lyrics fetch using Python |
-| [SpectrumVisualization](https://github.com/Johnwikix/SpectrumVisualization) | Audio visualization reference |
+| Projects/Packages                                                                         | Description                                                                      |
+| :---------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------- |
+| [Isolation](https://github.com/Storyteller-Studios/Isolation)                             | Dynamic fluid background implementation                                          |
+| [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate)                        | Provide the ability for offline lyrics translation                               |
+| [lrclib](https://github.com/tranxuanthang/lrclib)                                         | LRCLIB lyrics API provider                                                       |
+| [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper)                 | Provide lyrics fetch, decryption, and parsing for QQ, Netease, and Kugou sources |
+| [Manzana-Apple-Music-Lyrics](https://github.com/dropcreations/Manzana-Apple-Music-Lyrics) | Apple Music lyrics fetch using Python                                            |
+| [SpectrumVisualization](https://github.com/Johnwikix/SpectrumVisualization)               | Audio visualization reference                                                    |
 
 See [dependencies](https://github.com/jayfunc/BetterLyrics/network/dependencies) for the full list.
 
 ### Inspired by
 
 Some design ideas are referenced from the following projects (design inspiration only):
+
 - [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease) `FOSS`
 - [Lyricify-App](https://github.com/WXRIW/Lyricify-App) `Prop`
 - [Salt Player for Windows](https://moriafly.com/program/spw.html) `💰` `Prop`

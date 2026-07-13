@@ -1,4 +1,4 @@
- [**English**](README.md) | **中文**
+[**English**](README.md) | **中文**
 
 <div align="center">
   <img src="docs/assets/promotion/logo.png" alt="Logo" width="120">
@@ -59,8 +59,8 @@
 
 <div align="center">
 
-| Microsoft Store (推荐) | 手动安装 |
-| :---: | :---: |
+|                                                                                           Microsoft Store (推荐)                                                                                            |                                                                           手动安装                                                                            |
+| :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | :-----------------------------------------------------------------------------------------------------------------------------------------------------------: |
 | <a href="https://apps.microsoft.com/detail/9P1WCD1P597R?referrer=appbadge&mode=direct"><img src="https://get.microsoft.com/images/en-us%20dark.svg" width="160"/></a><br>无限期免费试用（功能与付费版一致） | [**📦 最新版本 (.zip)**](https://github.com/jayfunc/BetterLyrics/releases/latest)<br>[查看安装指南](https://betterlyrics.github.io/zh-cn/get-started/install) |
 
 [📖 使用文档](https://betterlyrics.github.io/zh-cn) | [🧩 插件商店](https://betterlyrics.github.io/zh-cn/plugins-store) | [🔒 隐私政策](docs/PRIVACY_POLICY.CN.md) | [⚖️ 服务条款](docs/TERMS_OF_SERVICE.CN.md)
@@ -151,7 +151,15 @@
 **开发插件：** 想要扩展功能？[🧩 阅读插件开发指南](https://betterlyrics.github.io/zh-cn/plugin-dev/intro/)。
 
 **从源码构建：**
-> 构建前，请确保已替换 `Constants` 文件夹下的 `DiscordTemplate.cs` 和 `LastFM.cs`。
+
+构建前，请执行以下替换：
+
+- `src/BetterLyrics.DotNet`
+  - `BetterLyrics.Core/Constants`
+    - `DiscordTemplate` -> `Discord.cs`
+    - `LastFMTemplate` -> `LastFM.cs`
+  - `BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets`
+    - `Wiki82.profile.xml.template` -> `Wiki82.profile.xml`（下载解压 https://github.com/ivanakcheurov/ntextcat/blob/master/src/LanguageModels/Wiki.profiles.7z 以获取该文件）
 
 ## 🤑 赞助与捐赠
 
@@ -159,8 +167,8 @@
 
 <div align="center">
 
-| 网页平台 | 支付宝/微信支付 |
-| :---: | :---: |
+|                                                                         网页平台                                                                          |                          支付宝/微信支付                           |
+| :-------------------------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------: |
 | [PayPal](https://paypal.me/zhefangpay)<br><br>[Buy Me a Coffee](https://buymeacoffee.com/founchoo)<br><br>[爱发电 (Afdian)](https://afdian.com/a/jayfunc) | <img src="docs/assets/donation/alipay_wechatpay.png" height="240"> |
 
 [赞助者名单 (Hall of Fame)](docs/SPONSORS.md)
@@ -211,20 +219,21 @@
 
 ### 依赖与引用
 
-| 项目/包 (Projects/Packages) | 描述 (Description) |
-| :--- | :--- |
-| [Isolation](https://github.com/Storyteller-Studios/Isolation) | 动态流体背景的实现 |
-| [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate) | 提供离线歌词翻译功能 |
-| [lrclib](https://github.com/tranxuanthang/lrclib) | LRCLIB 歌词 API 数据源 |
-| [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper) | 提供 QQ、网易云音乐和酷狗音乐源的歌词抓取、解密及解析功能 |
-| [Manzana-Apple-Music-Lyrics](https://github.com/dropcreations/Manzana-Apple-Music-Lyrics) | 使用 Python 获取 Apple Music 歌词 |
-| [SpectrumVisualization](https://github.com/Johnwikix/SpectrumVisualization) | 音频频谱可视化参考 |
+| 项目/包 (Projects/Packages)                                                               | 描述 (Description)                                        |
+| :---------------------------------------------------------------------------------------- | :-------------------------------------------------------- |
+| [Isolation](https://github.com/Storyteller-Studios/Isolation)                             | 动态流体背景的实现                                        |
+| [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate)                        | 提供离线歌词翻译功能                                      |
+| [lrclib](https://github.com/tranxuanthang/lrclib)                                         | LRCLIB 歌词 API 数据源                                    |
+| [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper)                 | 提供 QQ、网易云音乐和酷狗音乐源的歌词抓取、解密及解析功能 |
+| [Manzana-Apple-Music-Lyrics](https://github.com/dropcreations/Manzana-Apple-Music-Lyrics) | 使用 Python 获取 Apple Music 歌词                         |
+| [SpectrumVisualization](https://github.com/Johnwikix/SpectrumVisualization)               | 音频频谱可视化参考                                        |
 
 查看 [完整依赖列表](https://github.com/jayfunc/BetterLyrics/network/dependencies)。
 
 ### 灵感来源
 
 部分设计理念参考了以下插件/软件（仅作为设计思路参考，不涉及代码引用）：
+
 - [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease) `FOSS`
 - [Lyricify-App](https://github.com/WXRIW/Lyricify-App) `Prop`
 - [Salt Player for Windows](https://moriafly.com/program/spw) `💰` `Prop`
