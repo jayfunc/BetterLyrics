@@ -11,7 +11,8 @@
         <PackageProjectUrl>https://github.com/jayfunc/BetterLyrics/tree/dev/src/BetterLyrics.Sdk</PackageProjectUrl>
         <RepositoryUrl>https://github.com/jayfunc/BetterLyrics/tree/dev/src/BetterLyrics.Sdk</RepositoryUrl>
         <PackageReadmeFile>README.md</PackageReadmeFile>
-    </PropertyGroup>
+		<RuntimeIdentifiers Condition="$(TargetFrameworks.Contains('windows10.0'))">win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+	</PropertyGroup>
 
     <ItemGroup>
         <None Include="README.md">

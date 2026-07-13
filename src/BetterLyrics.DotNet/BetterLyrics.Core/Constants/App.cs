@@ -14,7 +14,9 @@ public static class App
 
     public const string SloganEN = "Strums the Heartstrings, Graces the Wordscapes.";
 
-    // using Windows.ApplicationModel;
-    // public static string AppName = Package.Current.Id.FamilyName == "37412.BetterLyrics_rd1g0rsrrtxw8" ? "BetterLyrics" : "BetterLyrics (Dev)";
+#if WINDOWS
+     public static string AppName = Windows.ApplicationModel.Package.Current.Id.FamilyName == "37412.BetterLyrics_rd1g0rsrrtxw8" ? "BetterLyrics" : "BetterLyrics (Dev)";
+#else
     public static string AppName = "BetterLyrics";
+#endif
 }
