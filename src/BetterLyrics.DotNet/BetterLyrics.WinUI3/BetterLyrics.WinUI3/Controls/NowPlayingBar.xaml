@@ -433,7 +433,6 @@
 
                 <Slider
                     x:Name="TimelineSlider"
-                    Margin="0,-14,0,0"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Top"
                     Maximum="{x:Bind GSMTCService.CurrentSongInfo.DurationMs, Mode=OneWay, Converter={StaticResource MillisecondsToSecondsConverter}}"
@@ -444,20 +443,23 @@
 
                 <Grid
                     x:Name="TimelineSliderLyricsLineInfo"
-                    Margin="0,-32,0,0"
-                    Padding="8,4"
+                    Margin="0,4,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
                     Background="{ThemeResource LayerOnMicaBaseAltFillColorDefaultBrush}"
                     CornerRadius="6"
-                    Opacity="{x:Bind ViewModel.TimelineSliderThumbOpacity, Mode=OneWay}">
+                    Opacity="{x:Bind ViewModel.TimelineSliderThumbOpacity, Mode=OneWay}"
+                    Visibility="{x:Bind LyricsWindowStatus.IsTimelineLyricsPreviewEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                     <Grid.OpacityTransition>
                         <ScalarTransition />
                     </Grid.OpacityTransition>
                     <Grid.TranslationTransition>
                         <Vector3Transition />
                     </Grid.TranslationTransition>
-                    <StackPanel Orientation="Horizontal" Spacing="6">
+                    <StackPanel
+                        Margin="8,4"
+                        Orientation="Horizontal"
+                        Spacing="6">
                         <TextBlock
                             Margin="0,0,0,2"
                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
@@ -467,8 +469,7 @@
                     </StackPanel>
                 </Grid>
                 <Grid
-                    Height="32"
-                    Margin="0,-12,0,0"
+                    Height="16"
                     VerticalAlignment="Top"
                     Background="Transparent"
                     PointerEntered="TimelineSliderOverlay_PointerEntered"

@@ -32,6 +32,7 @@ using Windows.Foundation;
 using Windows.Storage;
 using BetterLyrics.Core.ViewModels;
 using WinRT;
+using BetterLyrics.Core.ViewModels.MusicGalleryPageViewModel;
 
 namespace BetterLyrics.WinUI3;
 

@@ -267,7 +267,7 @@ public sealed partial class NowPlayingBar : UserControl
 
     private void TimelineSliderOverlay_PointerEntered(object sender, PointerRoutedEventArgs e)
     {
-        if (LyricsWindowStatus?.IsTimelineLyricsPreviewEnabled == true) ViewModel.TimelineSliderThumbOpacity = 1f;
+        ViewModel.TimelineSliderThumbOpacity = 1f;
     }
 
     private void TimelineSliderOverlay_PointerExited(object sender, PointerRoutedEventArgs e)

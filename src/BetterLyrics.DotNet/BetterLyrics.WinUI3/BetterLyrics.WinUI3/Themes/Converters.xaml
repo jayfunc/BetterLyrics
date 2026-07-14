@@ -45,6 +45,7 @@
     <bwc:BoolNegationToOpacityConverter x:Key="BoolNegationToOpacityConverter" />
     <bwc:BoolNegationToVisibilityConverter x:Key="BoolNegationToVisibilityConverter" />
     <cwc:BoolNegationConverter x:Key="BoolNegationConverter" />
+    <bwc:BoolToSortDirectionIconConverter x:Key="BoolToSortDirectionIconConverter" />
 
     <bwc:RectToMarginConverter x:Key="RectToMarginConverter" />
     <bwc:LanguageCodeToDisplayedNameConverter x:Key="LanguageCodeToDisplayedNameConverter" />

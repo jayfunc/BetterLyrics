@@ -21,6 +21,7 @@
     </ItemGroup>
     <ItemGroup>
       <None Remove="Assets\Wiki82.profile.xml" />
+      <None Remove="Themes\InteractiveGridViewHeaderStyle.xaml" />
       <None Remove="Views\SystemTrayWindow.xaml" />
     </ItemGroup>
 	
@@ -363,6 +364,9 @@
         <None Update="Themes\Generic.xaml">
             <Generator>MSBuild:Compile</Generator>
         </None>
+        <Page Update="Themes\InteractiveGridViewHeaderStyle.xaml">
+          <Generator>MSBuild:Compile</Generator>
+        </Page>
         <Page Update="Views\SystemTrayWindow.xaml">
           <Generator>MSBuild:Compile</Generator>
         </Page>

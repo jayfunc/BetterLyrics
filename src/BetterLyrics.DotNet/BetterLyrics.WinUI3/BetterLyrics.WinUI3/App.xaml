@@ -17,6 +17,7 @@
 
                 <ResourceDictionary Source="/Themes/Converters.xaml" />
                 <ResourceDictionary Source="/Themes/GhostSliderStyle.xaml" />
+                <ResourceDictionary Source="/Themes/InteractiveGridViewHeaderStyle.xaml" />
                 <ResourceDictionary Source="/Themes/InteractiveListViewHeaderStyle.xaml" />
 
                 <ResourceDictionary Source="/Themes/LyricsCardAncientBookStyle.xaml" />

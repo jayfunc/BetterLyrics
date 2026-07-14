@@ -7,7 +7,7 @@ using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Settings;
-using BetterLyrics.Core.ViewModels;
+using BetterLyrics.Core.ViewModels.MusicGalleryPageViewModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -72,57 +72,74 @@ public sealed partial class MusicGalleryPage : Page
         }
     }
 
-    private void SongListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private void OnGenericSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        ViewModel.SelectedTracks = SongListView.SelectedItems.Cast<ExtendedTrack>().ToList();
-        ViewModel.SelectedFirstTrack = ViewModel.SelectedTracks.FirstOrDefault();
-        ViewModel.SelectedTracksTotalDuration = ViewModel.SelectedTracks.Select(x => x.Duration).Sum();
-        if (SelectAllCheckBox != null)
-            if (SongListView.SelectionMode == ListViewSelectionMode.Multiple)
+        if (sender is ListViewBase listViewBase)
+        {
+            if (listViewBase.SelectedItems != null)
             {
-                if (SongListView.SelectedItems.Count == SongListView.Items.Count)
-                    SelectAllCheckBox.IsChecked = true;
-                else if (SongListView.SelectedItems.Count == 0) SelectAllCheckBox.IsChecked = false;
+                var isAlbumOrArtist = listViewBase.Name == "AlbumGridView" || listViewBase.Name == "ArtistGridView";
+                if (isAlbumOrArtist)
+                {
+                    if (listViewBase.Name == "AlbumGridView")
+                    {
+                        var selectedAlbums = listViewBase.SelectedItems.Cast<AlbumModel>().ToList();
+                        ViewModel.SelectedTracks = ViewModel.FilteredTracks.Where(t => selectedAlbums.Any(a => t.Album.Equals(a.Title, StringComparison.OrdinalIgnoreCase))).ToList();
+                    }
+                    else
+                    {
+                        var selectedArtists = listViewBase.SelectedItems.Cast<ArtistModel>().ToList();
+                        ViewModel.SelectedTracks = ViewModel.FilteredTracks.Where(t => selectedArtists.Any(a => t.Artist.Equals(a.Name, StringComparison.OrdinalIgnoreCase))).ToList();
+                    }
+                }
+                else
+                {
+                    ViewModel.SelectedTracks = listViewBase.SelectedItems.Cast<ExtendedTrack>().ToList();
+                }
+
+                ViewModel.SelectedFirstTrack = ViewModel.SelectedTracks.FirstOrDefault();
+                ViewModel.SelectedTracksTotalDuration = ViewModel.SelectedTracks.Select(x => x.Duration).Sum();
+
+                if (SelectAllCheckBox != null && listViewBase.SelectionMode == ListViewSelectionMode.Multiple)
+                {
+                    if (listViewBase.SelectedItems.Count == listViewBase.Items.Count)
+                        SelectAllCheckBox.IsChecked = true;
+                    else if (listViewBase.SelectedItems.Count == 0) 
+                        SelectAllCheckBox.IsChecked = false;
+                }
             }
+        }
+    }
+
+    private void NavigateToPlaylist(string name, string icon, CommonSongProperty filterProperty, string filterValue, System.Windows.Input.ICommand? command, object? commandParam)
+    {
+        var playlist = new SongsTabInfo
+        {
+            Name = name,
+            Icon = icon,
+            FilterProperty = filterProperty,
+            FilterValue = filterValue
+        };
+        ViewModel.AddToPlaylists(playlist);
+        command?.Execute(commandParam);
     }
 
     private void ArtistHyperlibkButton_Click(object sender, RoutedEventArgs e)
     {
         var artist = ((ExtendedTrack)((FrameworkElement)sender).DataContext).Artist;
-        var playlist = new SongsTabInfo
-        {
-            Name = artist,
-            Icon = "\uEFA9",
-            FilterProperty = CommonSongProperty.Artist,
-            FilterValue = artist
-        };
-        ViewModel.AddToPlaylists(playlist);
+        NavigateToPlaylist(artist, "\uEFA9", CommonSongProperty.Artist, artist, ViewModel.SelectArtistCommand, new ArtistModel { Name = artist });
     }
 
     private void AlbumHyperlibkButton_Click(object sender, RoutedEventArgs e)
     {
         var album = ((ExtendedTrack)((FrameworkElement)sender).DataContext).Album;
-        var playlist = new SongsTabInfo
-        {
-            Name = album,
-            Icon = "\uE93C",
-            FilterProperty = CommonSongProperty.Album,
-            FilterValue = album
-        };
-        ViewModel.AddToPlaylists(playlist);
+        NavigateToPlaylist(album, "\uE93C", CommonSongProperty.Album, album, ViewModel.SelectAlbumCommand, new AlbumModel { Title = album });
     }
 
     private void PathHyperlibkButton_Click(object sender, RoutedEventArgs e)
     {
         var track = (ExtendedTrack)((FrameworkElement)sender).DataContext;
-        var playlist = new SongsTabInfo
-        {
-            Name = track.ParentFolderName,
-            Icon = "\uE8B7",
-            FilterProperty = CommonSongProperty.Folder,
-            FilterValue = track.ParentFolderPath
-        };
-        ViewModel.AddToPlaylists(playlist);
+        NavigateToPlaylist(track.ParentFolderName, "\uE8B7", CommonSongProperty.Folder, track.ParentFolderPath, null, null);
     }
 
     private void PlaylistGrid_Tapped(object sender, TappedRoutedEventArgs e)
@@ -130,6 +147,14 @@ public sealed partial class MusicGalleryPage : Page
         FolderTreeView.SelectedItem = null;
         var playlist = (SongsTabInfo)((FrameworkElement)sender).DataContext;
         ViewModel.AddToPlaylists(playlist);
+        if (playlist.FilterProperty == CommonSongProperty.Album)
+        {
+            ViewModel.SelectAlbumCommand.Execute(new AlbumModel { Title = playlist.FilterValue });
+        }
+        else if (playlist.FilterProperty == CommonSongProperty.Artist)
+        {
+            ViewModel.SelectArtistCommand.Execute(new ArtistModel { Name = playlist.FilterValue });
+        }
     }
 
     private void Page_Unloaded(object sender, RoutedEventArgs e)
@@ -154,12 +179,23 @@ public sealed partial class MusicGalleryPage : Page
 
     private void SelectAllCheckBox_Checked(object sender, RoutedEventArgs e)
     {
-        if (ViewModel.SongListViewSelectionMode == AppListViewSelectionMode.Multiple) SongListView.SelectAll();
+        if (ViewModel.SongListViewSelectionMode == AppListViewSelectionMode.Multiple)
+        {
+            SongListView.SelectAll();
+            AlbumDetailSongListView?.SelectAll();
+            ArtistDetailSongListView?.SelectAll();
+            AlbumGridView?.SelectAll();
+            ArtistGridView?.SelectAll();
+        }
     }
 
     private void SelectAllCheckBox_Unchecked(object sender, RoutedEventArgs e)
     {
         SongListView.SelectedItems.Clear();
+        AlbumDetailSongListView?.SelectedItems.Clear();
+        ArtistDetailSongListView?.SelectedItems.Clear();
+        AlbumGridView?.SelectedItems.Clear();
+        ArtistGridView?.SelectedItems.Clear();
     }
 
     private void SongListViewItem_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
@@ -203,50 +239,73 @@ public sealed partial class MusicGalleryPage : Page
 
     private void AddToMenuBarItemFlyout_Opened(object sender, object e)
     {
-        AddToCustomListMenuFlyoutSubItem.Items.Clear();
-        foreach (var item in ViewModel.AppSettings.StarredPlaylists)
-            if (item.FilterProperty == CommonSongProperty.M3UFilePath)
+        if (sender is MenuBarItemFlyout menuBarItemFlyout)
+        {
+            var targetSubItem = menuBarItemFlyout.Items.OfType<MenuFlyoutSubItem>().LastOrDefault();
+            if (targetSubItem != null)
             {
-                var menuFlyoutItem = new MenuFlyoutItem
-                {
-                    Text = item.Name,
-                    DataContext = item
-                };
-                menuFlyoutItem.Click += ToBeAddedPlaylistsMenuFlyoutItem_Click;
-                AddToCustomListMenuFlyoutSubItem.Items.Add(menuFlyoutItem);
+                targetSubItem.Items.Clear();
+                foreach (var item in ViewModel.AppSettings.StarredPlaylists)
+                    if (item.FilterProperty == CommonSongProperty.M3UFilePath)
+                    {
+                        var menuFlyoutItem = new MenuFlyoutItem { Text = item.Name, DataContext = item };
+                        menuFlyoutItem.Click += ToBeAddedPlaylistsMenuFlyoutItem_Click;
+                        targetSubItem.Items.Add(menuFlyoutItem);
+                    }
             }
-    }
-
-    private void SortComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-        if (SongListView == null) return;
-
-        if (sender is ComboBox comboBox)
-            SongListView.ItemTemplate = comboBox.SelectedIndex switch
-            {
-                // 标题
-                0 => (DataTemplate)Resources["TitleSortTemplate"],
-                // 专辑
-                1 => (DataTemplate)Resources["AlbumSortTemplate"],
-                // 艺术家
-                2 => (DataTemplate)Resources["ArtistSortTemplate"],
-                // 文件夹
-                3 => (DataTemplate)Resources["FolderSortTemplate"],
-                _ => (DataTemplate)Resources["TitleSortTemplate"]
-            };
+        }
     }
 
     private void SongListView_RightTapped(object sender, RightTappedRoutedEventArgs e)
     {
+        var listView = (ListView)sender;
         var managedElement = (FrameworkElement)e.OriginalSource;
         var clickedItem = managedElement.DataContext;
 
         if (clickedItem == null) return;
 
-        if (SongListView.SelectionMode == ListViewSelectionMode.Single)
-            SongListView.SelectedItem = clickedItem;
-        else if (SongListView.SelectionMode == ListViewSelectionMode.Multiple)
-            if (!SongListView.SelectedItems.Contains(clickedItem))
-                SongListView.SelectedItems.Add(clickedItem);
+        if (listView.SelectionMode == ListViewSelectionMode.Single)
+            listView.SelectedItem = clickedItem;
+        else if (listView.SelectionMode == ListViewSelectionMode.Multiple)
+            if (!listView.SelectedItems.Contains(clickedItem))
+                listView.SelectedItems.Add(clickedItem);
     }
+
+    private void AlbumGridView_ItemClick(object sender, ItemClickEventArgs e)
+    {
+        if (e.ClickedItem is AlbumModel model)
+        {
+            var album = model.Title;
+            var playlist = new SongsTabInfo
+            {
+                Name = album,
+                Icon = "\uE93C",
+                FilterProperty = CommonSongProperty.Album,
+                FilterValue = album
+            };
+            ViewModel.AddToPlaylists(playlist);
+
+            ViewModel.SelectAlbumCommand.Execute(model);
+        }
+    }
+
+    private void ArtistGridView_ItemClick(object sender, ItemClickEventArgs e)
+    {
+        if (e.ClickedItem is ArtistModel model)
+        {
+            var artist = model.Name;
+            var playlist = new SongsTabInfo
+            {
+                Name = artist,
+                Icon = "\uEFA9",
+                FilterProperty = CommonSongProperty.Artist,
+                FilterValue = artist
+            };
+            ViewModel.AddToPlaylists(playlist);
+
+            ViewModel.SelectArtistCommand.Execute(model);
+        }
+    }
+
+
 }
