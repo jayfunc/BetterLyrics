@@ -109,6 +109,11 @@ public partial class MusicGalleryPageViewModel : BaseViewModel,
 
     [ObservableProperty] public partial ObservableCollection<AlbumModel> Albums { get; set; } = [];
     [ObservableProperty] public partial ObservableCollection<GroupInfoList> GroupedAlbums { get; set; } = [];
+    
+    [ObservableProperty] public partial bool IsAlbumGlobeViewEnabled { get; set; } = false;
+    [ObservableProperty] public partial ObservableCollection<ScatteredAlbumModel> ScatteredAlbums { get; set; } = [];
+    [ObservableProperty] public partial double GlobeCanvasWidth { get; set; } = 3000;
+    [ObservableProperty] public partial double GlobeCanvasHeight { get; set; } = 3000;
 
     [ObservableProperty] public partial ObservableCollection<ArtistModel> Artists { get; set; } = [];
     [ObservableProperty] public partial ObservableCollection<GroupInfoList> GroupedArtists { get; set; } = [];

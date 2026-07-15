@@ -447,63 +447,140 @@
                         </Grid>
                     </controls:Case>
                     <controls:Case Value="{x:Bind enums:MusicLibraryViewType.Albums}">
-                        <SemanticZoom>
-                            <SemanticZoom.ZoomedInView>
-                                <GridView
-                                    x:Name="AlbumGridView"
-                                    IsItemClickEnabled="{x:Bind ViewModel.SongListViewSelectionMode, Mode=OneWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=1}"
-                                    ItemClick="AlbumGridView_ItemClick"
-                                    ItemsSource="{x:Bind GroupedAlbumsCVS.View, Mode=OneWay}"
-                                    SelectionChanged="OnGenericSelectionChanged"
-                                    SelectionMode="{x:Bind ViewModel.SongListViewSelectionMode, Mode=OneWay, Converter={StaticResource AppListViewSelectionModeToListViewSelectionModeConverter}}">
-                                    <GridView.GroupStyle>
-                                        <GroupStyle>
-                                            <GroupStyle.HeaderContainerStyle>
-                                                <Style BasedOn="{StaticResource InteractiveGridViewHeaderStyle}" TargetType="GridViewHeaderItem" />
-                                            </GroupStyle.HeaderContainerStyle>
-                                            <GroupStyle.HeaderTemplate>
-                                                <DataTemplate x:DataType="models:GroupInfoList">
-                                                    <TextBlock Text="{x:Bind}" />
-                                                </DataTemplate>
-                                            </GroupStyle.HeaderTemplate>
-                                        </GroupStyle>
-                                    </GridView.GroupStyle>
-                                    <GridView.ItemTemplate>
-                                        <DataTemplate x:DataType="models:AlbumModel">
-                                            <StackPanel
-                                                Width="150"
-                                                Margin="8"
-                                                Spacing="8">
-                                                <Grid
+                        <Grid>
+
+                            <SemanticZoom Visibility="{x:Bind ViewModel.IsAlbumGlobeViewEnabled, Mode=OneWay, Converter={StaticResource BoolNegationToVisibilityConverter}}">
+                                <SemanticZoom.ZoomedInView>
+                                    <GridView
+                                        x:Name="AlbumGridView"
+                                        IsItemClickEnabled="{x:Bind ViewModel.SongListViewSelectionMode, Mode=OneWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=1}"
+                                        ItemClick="AlbumGridView_ItemClick"
+                                        ItemsSource="{x:Bind GroupedAlbumsCVS.View, Mode=OneWay}"
+                                        SelectionChanged="OnGenericSelectionChanged"
+                                        SelectionMode="{x:Bind ViewModel.SongListViewSelectionMode, Mode=OneWay, Converter={StaticResource AppListViewSelectionModeToListViewSelectionModeConverter}}">
+                                        <GridView.GroupStyle>
+                                            <GroupStyle>
+                                                <GroupStyle.HeaderContainerStyle>
+                                                    <Style BasedOn="{StaticResource InteractiveGridViewHeaderStyle}" TargetType="GridViewHeaderItem" />
+                                                </GroupStyle.HeaderContainerStyle>
+                                                <GroupStyle.HeaderTemplate>
+                                                    <DataTemplate x:DataType="models:GroupInfoList">
+                                                        <TextBlock Text="{x:Bind}" />
+                                                    </DataTemplate>
+                                                </GroupStyle.HeaderTemplate>
+                                            </GroupStyle>
+                                        </GridView.GroupStyle>
+                                        <GridView.ItemTemplate>
+                                            <DataTemplate x:DataType="models:AlbumModel">
+                                                <StackPanel
                                                     Width="150"
-                                                    Height="150"
-                                                    CornerRadius="8">
-                                                    <Image Source="{x:Bind LocalAlbumArtPath, Converter={StaticResource PathToImageConverter}}" Stretch="UniformToFill" />
-                                                </Grid>
-                                                <TextBlock
-                                                    FontWeight="SemiBold"
-                                                    Text="{x:Bind Title}"
-                                                    TextTrimming="CharacterEllipsis"
-                                                    ToolTipService.ToolTip="{x:Bind Title}" />
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </GridView.ItemTemplate>
-                                </GridView>
-                            </SemanticZoom.ZoomedInView>
-                            <SemanticZoom.ZoomedOutView>
-                                <GridView
-                                    MaxWidth="500"
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    ItemsSource="{x:Bind GroupedAlbumsCVS.View.CollectionGroups, Mode=OneWay}">
-                                    <GridView.ItemTemplate>
-                                        <DataTemplate x:DataType="models:GroupInfoList">
-                                            <TextBlock Style="{ThemeResource TitleTextBlockStyle}" Text="{Binding}" />
-                                        </DataTemplate>
-                                    </GridView.ItemTemplate>
-                                </GridView>
-                            </SemanticZoom.ZoomedOutView>
-                        </SemanticZoom>
+                                                    Margin="8"
+                                                    Spacing="8">
+                                                    <Grid
+                                                        Width="150"
+                                                        Height="150"
+                                                        CornerRadius="8">
+                                                        <Image Source="{x:Bind LocalAlbumArtPath, Converter={StaticResource PathToImageConverter}}" Stretch="UniformToFill" />
+                                                    </Grid>
+                                                    <TextBlock
+                                                        FontWeight="SemiBold"
+                                                        Text="{x:Bind Title}"
+                                                        TextTrimming="CharacterEllipsis"
+                                                        ToolTipService.ToolTip="{x:Bind Title}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </GridView.ItemTemplate>
+                                    </GridView>
+                                </SemanticZoom.ZoomedInView>
+                                <SemanticZoom.ZoomedOutView>
+                                    <GridView
+                                        MaxWidth="500"
+                                        HorizontalAlignment="Center"
+                                        VerticalAlignment="Center"
+                                        ItemsSource="{x:Bind GroupedAlbumsCVS.View.CollectionGroups, Mode=OneWay}">
+                                        <GridView.ItemTemplate>
+                                            <DataTemplate x:DataType="models:GroupInfoList">
+                                                <TextBlock Style="{ThemeResource TitleTextBlockStyle}" Text="{Binding}" />
+                                            </DataTemplate>
+                                        </GridView.ItemTemplate>
+                                    </GridView>
+                                </SemanticZoom.ZoomedOutView>
+                            </SemanticZoom>
+
+                            <controls:OpacityMaskView>
+                                <controls:OpacityMaskView.OpacityMask>
+                                    <Rectangle>
+                                        <Rectangle.Fill>
+                                            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                <GradientStop Offset="0" Color="Transparent" />
+                                                <GradientStop Offset="0.02" Color="#FFFFFFFF" />
+                                                <GradientStop Offset="0.98" Color="#FFFFFFFF" />
+                                                <GradientStop Offset="1" Color="Transparent" />
+                                            </LinearGradientBrush>
+                                        </Rectangle.Fill>
+                                    </Rectangle>
+                                </controls:OpacityMaskView.OpacityMask>
+                                <ScrollViewer
+                                    HorizontalScrollBarVisibility="Hidden"
+                                    HorizontalScrollMode="Enabled"
+                                    MaxZoomFactor="3.0"
+                                    MinZoomFactor="0.1"
+                                    VerticalScrollBarVisibility="Hidden"
+                                    VerticalScrollMode="Enabled"
+                                    Visibility="{x:Bind ViewModel.IsAlbumGlobeViewEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
+                                    ZoomMode="Enabled">
+                                    <Grid>
+                                        <ItemsControl
+                                            Width="{x:Bind ViewModel.GlobeCanvasWidth, Mode=OneWay}"
+                                            Height="{x:Bind ViewModel.GlobeCanvasHeight, Mode=OneWay}"
+                                            HorizontalAlignment="Center"
+                                            VerticalAlignment="Center"
+                                            ItemsSource="{x:Bind ViewModel.ScatteredAlbums, Mode=OneWay}">
+                                            <ItemsControl.ItemsPanel>
+                                                <ItemsPanelTemplate>
+                                                    <Canvas Background="Transparent" />
+                                                </ItemsPanelTemplate>
+                                            </ItemsControl.ItemsPanel>
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate x:DataType="models:ScatteredAlbumModel">
+                                                    <Grid
+                                                        Width="150"
+                                                        Height="150"
+                                                        Background="Transparent"
+                                                        CornerRadius="8"
+                                                        PointerEntered="ScatteredAlbum_PointerEntered"
+                                                        PointerExited="ScatteredAlbum_PointerExited"
+                                                        PointerPressed="ScatteredAlbum_PointerPressed"
+                                                        ToolTipService.ToolTip="{x:Bind Album.Title}">
+                                                        <Grid.RenderTransform>
+                                                            <TransformGroup>
+                                                                <RotateTransform Angle="{x:Bind Rotation}" CenterX="75" CenterY="75" />
+                                                                <ScaleTransform CenterX="75" CenterY="75" ScaleX="1" ScaleY="1" />
+                                                                <TranslateTransform X="{x:Bind X}" Y="{x:Bind Y}" />
+                                                            </TransformGroup>
+                                                        </Grid.RenderTransform>
+                                                        <Image Source="{x:Bind Album.LocalAlbumArtPath, Converter={StaticResource PathToImageConverter}}" Stretch="UniformToFill" />
+                                                    </Grid>
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </Grid>
+                                </ScrollViewer>
+                            </controls:OpacityMaskView>
+
+                            <StackPanel
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Top"
+                                Orientation="Horizontal">
+                                <ToggleButton
+                                    Background="Transparent"
+                                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                          FontSize=16,
+                                                          Glyph=&#xE81E;}"
+                                    IsChecked="{x:Bind ViewModel.IsAlbumGlobeViewEnabled, Mode=TwoWay}" />
+                            </StackPanel>
+
+                        </Grid>
                     </controls:Case>
                     <controls:Case Value="{x:Bind enums:MusicLibraryViewType.Artists}">
                         <SemanticZoom>
