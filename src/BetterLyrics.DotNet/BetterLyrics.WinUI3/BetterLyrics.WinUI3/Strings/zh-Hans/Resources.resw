@@ -2631,4 +2631,10 @@
   <data name="MusicGalleryPageShowDateModifiedColumn.Text" xml:space="preserve">
     <value>修改时间</value>
   </data>
+  <data name="SettingsPageLeftRight.Content" xml:space="preserve">
+    <value>靠左靠右</value>
+  </data>
+  <data name="SettingsPageTopBottom.Content" xml:space="preserve">
+    <value>靠上靠下</value>
+  </data>
 </root>

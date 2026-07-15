@@ -362,19 +362,27 @@ public class LyricsAnimator
                 var sSize = line.SecondaryTextLayoutBounds != null ? (isVertical ? line.SecondaryTextLayoutBounds.Height : line.SecondaryTextLayoutBounds.Width) : 0;
                 var tSize = line.TertiaryTextLayoutBounds != null ? (isVertical ? line.TertiaryTextLayoutBounds.Height : line.TertiaryTextLayoutBounds.Width) : 0;
 
+                var alignmentForNonWrap = lyricsStyle.UseInternalLyricsAlignment
+                    ? line.HorizontalAlignmentType ?? lyricsStyle.LyricsAlignmentType
+                    : lyricsStyle.LyricsAlignmentType;
+                if (alignmentForNonWrap == TextAlignmentType.LeftRight)
+                {
+                    alignmentForNonWrap = i % 2 == 0 ? TextAlignmentType.Left : TextAlignmentType.Right;
+                }
+
                 if (isSecondaryLinePlaying)
                 {
                     if (pSize > 0)
                         line.PrimaryXOffsetTransition.JumpTo(
-                            CalculateTargetNonWrapOffset(lyricsStyle.LyricsAlignmentType, pSize, layoutLimit,
+                            CalculateTargetNonWrapOffset(alignmentForNonWrap, pSize, layoutLimit,
                                 playProgress));
                     if (sSize > 0)
                         line.SecondaryXOffsetTransition.JumpTo(
-                            CalculateTargetNonWrapOffset(lyricsStyle.LyricsAlignmentType, sSize, layoutLimit,
+                            CalculateTargetNonWrapOffset(alignmentForNonWrap, sSize, layoutLimit,
                                 playProgress));
                     if (tSize > 0)
                         line.TertiaryXOffsetTransition.JumpTo(
-                            CalculateTargetNonWrapOffset(lyricsStyle.LyricsAlignmentType, tSize, layoutLimit,
+                            CalculateTargetNonWrapOffset(alignmentForNonWrap, tSize, layoutLimit,
                                 playProgress));
                 }
 
@@ -382,13 +390,13 @@ public class LyricsAnimator
                 {
                     if (pSize > 0)
                         line.PrimaryXOffsetTransition.Start(
-                            CalculateTargetNonWrapOffset(lyricsStyle.LyricsAlignmentType, pSize, layoutLimit, 0));
+                            CalculateTargetNonWrapOffset(alignmentForNonWrap, pSize, layoutLimit, 0));
                     if (sSize > 0)
                         line.SecondaryXOffsetTransition.Start(
-                            CalculateTargetNonWrapOffset(lyricsStyle.LyricsAlignmentType, sSize, layoutLimit, 0));
+                            CalculateTargetNonWrapOffset(alignmentForNonWrap, sSize, layoutLimit, 0));
                     if (tSize > 0)
                         line.TertiaryXOffsetTransition.Start(
-                            CalculateTargetNonWrapOffset(lyricsStyle.LyricsAlignmentType, tSize, layoutLimit, 0));
+                            CalculateTargetNonWrapOffset(alignmentForNonWrap, tSize, layoutLimit, 0));
                 }
             }
 

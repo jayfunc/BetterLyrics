@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Numerics;
@@ -72,6 +72,11 @@ public class HorizontalLyricsLayoutStrategy : LyricsLayoutStrategyBase
             var alignment = style.UseInternalLyricsAlignment
                 ? line.HorizontalAlignmentType ?? style.LyricsAlignmentType
                 : style.LyricsAlignmentType;
+                
+            if (alignment == TextAlignmentType.LeftRight)
+            {
+                alignment = lines.IndexOf(line) % 2 == 0 ? TextAlignmentType.Left : TextAlignmentType.Right;
+            }
 
             line.RecreateTextLayout(
                 resourceCreator,

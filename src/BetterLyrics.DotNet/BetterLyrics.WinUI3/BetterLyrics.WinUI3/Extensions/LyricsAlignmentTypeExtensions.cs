@@ -7,17 +7,6 @@ namespace BetterLyrics.WinUI3.Extensions;
 
 public static class LyricsAlignmentTypeExtensions
 {
-    public static HorizontalAlignment ToHorizontalAlignment(this TextAlignmentType alignmentType)
-    {
-        return alignmentType switch
-        {
-            TextAlignmentType.Left => HorizontalAlignment.Left,
-            TextAlignmentType.Center => HorizontalAlignment.Center,
-            TextAlignmentType.Right => HorizontalAlignment.Right,
-            _ => throw new ArgumentOutOfRangeException(nameof(alignmentType), alignmentType, null)
-        };
-    }
-
     public static CanvasHorizontalAlignment ToCanvasHorizontalAlignment(this TextAlignmentType alignmentType)
     {
         return alignmentType switch
@@ -25,6 +14,7 @@ public static class LyricsAlignmentTypeExtensions
             TextAlignmentType.Left => CanvasHorizontalAlignment.Left,
             TextAlignmentType.Center => CanvasHorizontalAlignment.Center,
             TextAlignmentType.Right => CanvasHorizontalAlignment.Right,
+            TextAlignmentType.LeftRight => CanvasHorizontalAlignment.Left,
             _ => throw new ArgumentOutOfRangeException(nameof(alignmentType), alignmentType, null)
         };
     }

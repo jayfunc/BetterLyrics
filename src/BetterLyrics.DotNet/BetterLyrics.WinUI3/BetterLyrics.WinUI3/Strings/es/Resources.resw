@@ -2631,4 +2631,10 @@
   <data name="MusicGalleryPageShowDateModifiedColumn.Text" xml:space="preserve">
     <value>Fecha de modificación</value>
   </data>
+  <data name="SettingsPageLeftRight.Content" xml:space="preserve">
+    <value>Left-Right</value>
+  </data>
+  <data name="SettingsPageTopBottom.Content" xml:space="preserve">
+    <value>Top-Bottom</value>
+  </data>
 </root>

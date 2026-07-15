@@ -56,7 +56,6 @@
     <bwc:MillisecondsToSecondsConverter x:Key="MillisecondsToSecondsConverter" />
     <bwc:PictureInfosToImageSourceConverter x:Key="PictureInfosToImageSourceConverter" />
     <bwc:LyricsFontWeightToFontWeightConverter x:Key="LyricsFontWeightToFontWeightConverter" />
-    <bwc:TextAlignmentTypeToHorizontalAlignmentConverter x:Key="TextAlignmentTypeToHorizontalAlignmentConverter" />
     <bwc:FileSourceTypeToIconConverter x:Key="FileSourceTypeToIconConverter" />
     <bwc:PathToImageConverter x:Key="PathToImageConverter" />
     <bwc:DoubleToDecimalConverter x:Key="DoubleToDecimalConverter" />
