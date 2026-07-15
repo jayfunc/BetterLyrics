@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 
@@ -25,7 +25,7 @@ public partial class EnumToVisibilityConverter : IValueConverter
         string? valueString;
 
         if (value.GetType().IsEnum)
-            valueString = ((int)value).ToString();
+            valueString = System.Convert.ToInt32(value).ToString();
         else
             valueString = value.ToString();
 

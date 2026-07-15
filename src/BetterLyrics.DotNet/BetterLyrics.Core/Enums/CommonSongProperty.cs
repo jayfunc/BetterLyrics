@@ -1,4 +1,4 @@
-﻿namespace BetterLyrics.Core.Enums;
+namespace BetterLyrics.Core.Enums;
 
 public enum CommonSongProperty
 {
@@ -6,5 +6,15 @@ public enum CommonSongProperty
     Album,
     Artist,
     Folder,
-    M3UFilePath
+    M3UFilePath,
+    Genre,
+    Year,
+    TrackNumber,
+    Bitrate,
+    SampleRate,
+    AudioFormat,
+    FileSize,
+    DateCreated,
+    DateModified,
+    Duration
 }

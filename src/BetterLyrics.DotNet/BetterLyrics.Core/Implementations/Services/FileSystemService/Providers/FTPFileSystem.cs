@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.Net;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Services;
@@ -108,6 +108,7 @@ public class FTPFileSystem : IUnifiedFileSystem
                     FileSize = item.Size,
                     // 防止某些服务器返回 MinValue
                     LastModified = item.Modified == DateTime.MinValue ? DateTime.Now : item.Modified,
+                    DateCreated = item.Created == DateTime.MinValue ? (item.Modified == DateTime.MinValue ? DateTime.Now : item.Modified) : item.Created,
 
                     IsMetadataParsed = false
                 });

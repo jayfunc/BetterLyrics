@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Microsoft.UI.Xaml.Data;
 
 namespace BetterLyrics.WinUI3.Converters;
@@ -24,7 +24,7 @@ public partial class EnumToBoolConverter : IValueConverter
         string? valueString;
 
         if (value.GetType().IsEnum)
-            valueString = ((int)value).ToString();
+            valueString = System.Convert.ToInt32(value).ToString();
         else
             valueString = value.ToString();
 

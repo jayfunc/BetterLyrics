@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8" ?>
-
 <Page
     x:Class="BetterLyrics.WinUI3.Views.MusicGalleryPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -8,6 +7,7 @@
     xmlns:converters="using:BetterLyrics.WinUI3.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enums="using:BetterLyrics.Core.Enums"
+    xmlns:helpers="using:BetterLyrics.WinUI3.Helpers"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BetterLyrics.Core.Models"
     xmlns:settings="using:BetterLyrics.Core.Models.Settings"
@@ -15,10 +15,10 @@
     xmlns:ui="using:CommunityToolkit.WinUI"
     Unloaded="Page_Unloaded"
     mc:Ignorable="d">
-
     <Page.Resources>
         <converters:EnumToBoolConverter x:Key="EnumToBoolConverter" />
-
+        <converters:FileSizeToStringConverter x:Key="FileSizeToStringConverter" />
+        <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
         <CollectionViewSource
             x:Name="GroupedTracksCVS"
             IsSourceGrouped="True"
@@ -31,10 +31,10 @@
             x:Name="GroupedArtistsCVS"
             IsSourceGrouped="True"
             Source="{x:Bind ViewModel.GroupedArtists, Mode=OneWay}" />
-
         <DataTemplate x:Key="TitleSortTemplate" x:DataType="models:ExtendedTrack">
             <Grid
                 Padding="12"
+                helpers:GridColumnVisibilityHelper.SyncWithMusicGallerySettings="True"
                 Background="Transparent"
                 ColumnSpacing="12"
                 DoubleTapped="SongListViewItem_DoubleTapped">
@@ -43,38 +43,113 @@
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="32" />
                 </Grid.ColumnDefinitions>
-
-                <TextBlock
+                <HyperlinkButton
                     Grid.Column="0"
-                    VerticalAlignment="Center"
-                    Text="{x:Bind Title}"
-                    TextWrapping="Wrap" />
-                <HyperlinkButton Grid.Column="1" Click="ArtistHyperlibkButton_Click">
+                    Padding="0"
+                    Command="{Binding ElementName=PlayQueue, Path=PlayCommand}"
+                    CommandParameter="{x:Bind}">
+                    <TextBlock Text="{x:Bind Title}" TextWrapping="Wrap" />
+                </HyperlinkButton>
+                <HyperlinkButton
+                    Grid.Column="1"
+                    Padding="0"
+                    Click="ArtistHyperlibkButton_Click">
                     <TextBlock Text="{x:Bind Artist}" TextWrapping="Wrap" />
                 </HyperlinkButton>
-                <HyperlinkButton Grid.Column="2" Click="AlbumHyperlibkButton_Click">
+                <HyperlinkButton
+                    Grid.Column="2"
+                    Padding="0"
+                    Click="AlbumHyperlibkButton_Click">
                     <TextBlock Text="{x:Bind Album}" TextWrapping="Wrap" />
                 </HyperlinkButton>
                 <TextBlock
                     Grid.Column="3"
                     VerticalAlignment="Center"
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind Genre}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Grid.Column="4"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind Year}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Grid.Column="5"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind TrackNumber}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Grid.Column="6"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind Bitrate}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Grid.Column="7"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind SampleRate}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Grid.Column="8"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind AudioFormatShortName}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Grid.Column="9"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind FileSize, Converter={StaticResource FileSizeToStringConverter}}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Grid.Column="10"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind ParentFolderName}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Grid.Column="11"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Text="{x:Bind Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Grid.Column="12"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind DateCreated, Converter={StaticResource DateTimeToStringConverter}}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Grid.Column="13"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind DateModified, Converter={StaticResource DateTimeToStringConverter}}"
                     TextWrapping="Wrap" />
             </Grid>
         </DataTemplate>
     </Page.Resources>
-
     <Grid>
-
         <Grid Padding="0,0,0,66" ColumnSpacing="6">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="3*" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-
             <ScrollViewer x:Name="LeftSidePanel" Grid.Column="0">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -84,13 +159,11 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
-
                     <TextBlock
                         x:Uid="MusicGalleryPagePlaylist"
                         Grid.Row="0"
                         Margin="12"
                         Style="{StaticResource BodyStrongTextBlockStyle}" />
-
                     <Grid Grid.Row="1">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
@@ -203,9 +276,7 @@
                             </StackPanel>
                         </Grid>
                     </Grid>
-
                     <NavigationViewItemSeparator Grid.Row="2" />
-
                     <StackPanel
                         Grid.Row="3"
                         Margin="12"
@@ -219,7 +290,6 @@
                                                   Glyph=&#xE713;}"
                             Style="{ThemeResource GhostButtonStyle}" />
                     </StackPanel>
-
                     <TreeView
                         x:Name="FolderTreeView"
                         Grid.Row="4"
@@ -229,7 +299,6 @@
                         ItemInvoked="FolderTreeView_ItemInvoked"
                         ItemsSource="{x:Bind ViewModel.FolderRoots, Mode=OneWay}"
                         SelectionMode="Single">
-
                         <TreeView.ItemTemplate>
                             <DataTemplate x:DataType="models:FolderNode">
                                 <TreeViewItem
@@ -255,10 +324,8 @@
                             </DataTemplate>
                         </TreeView.ItemTemplate>
                     </TreeView>
-
                 </Grid>
             </ScrollViewer>
-
             <Grid x:Name="SongViewer" Grid.Column="1">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" MinHeight="34" />
@@ -268,20 +335,17 @@
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-
                 <StackPanel Grid.Row="0">
                     <InfoBar
                         x:Uid="MusicGalleryPageDataSync"
                         IsClosable="False"
                         IsOpen="{x:Bind ViewModel.IsDataSyncing, Mode=OneWay}" />
-
                     <InfoBar
                         x:Uid="MusicGalleryPageDataSyncError"
                         IsClosable="False"
                         IsOpen="{x:Bind ViewModel.IsDataSyncError, Mode=OneWay}"
                         Severity="Error" />
                 </StackPanel>
-
                 <!--  顶部命令栏  -->
                 <Grid Grid.Row="1">
                     <Grid.ColumnDefinitions>
@@ -310,9 +374,7 @@
                         QueryIcon="Find"
                         Text="{x:Bind ViewModel.SongSearchQuery, Mode=TwoWay}" />
                 </Grid>
-
                 <NavigationViewItemSeparator Grid.Row="2" />
-
                 <controls:SwitchPresenter Grid.Row="3" Value="{x:Bind ViewModel.CurrentView, Mode=OneWay}">
                     <controls:SwitchPresenter.ContentTransitions>
                         <TransitionCollection>
@@ -325,101 +387,8 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-
                             <!--  Fake Header  -->
-                            <Grid Grid.Row="0" ColumnSpacing="12">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="2*" />
-                                    <ColumnDefinition Width="2*" />
-                                    <ColumnDefinition Width="2*" />
-                                    <ColumnDefinition Width="1*" />
-                                </Grid.ColumnDefinitions>
-                                <Grid Grid.Column="0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <HyperlinkButton
-                                        x:Uid="MusicGalleryPageSortByTitle"
-                                        Grid.Column="0"
-                                        Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
-                                        CommandParameter="{x:Bind enums:CommonSongProperty.Title}"
-                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                    <FontIcon
-                                        Grid.Column="1"
-                                        VerticalAlignment="Center"
-                                        FontFamily="{StaticResource SegoeFluentIcons}"
-                                        FontSize="12"
-                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                        Glyph="{x:Bind ViewModel.IsSortDescending, Mode=OneWay, Converter={StaticResource BoolToSortDirectionIconConverter}}"
-                                        Visibility="{x:Bind ViewModel.SongOrderType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=0}" />
-                                </Grid>
-                                <Grid Grid.Column="1">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <HyperlinkButton
-                                        x:Uid="MusicGalleryPageSortByArtist"
-                                        Grid.Column="0"
-                                        Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
-                                        CommandParameter="{x:Bind enums:CommonSongProperty.Artist}"
-                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                    <FontIcon
-                                        Grid.Column="1"
-                                        VerticalAlignment="Center"
-                                        FontFamily="{StaticResource SegoeFluentIcons}"
-                                        FontSize="12"
-                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                        Glyph="{x:Bind ViewModel.IsSortDescending, Mode=OneWay, Converter={StaticResource BoolToSortDirectionIconConverter}}"
-                                        Visibility="{x:Bind ViewModel.SongOrderType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}" />
-                                </Grid>
-                                <Grid Grid.Column="2">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="Auto" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <HyperlinkButton
-                                        x:Uid="MusicGalleryPageSortByAlbum"
-                                        Grid.Column="0"
-                                        Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
-                                        CommandParameter="{x:Bind enums:CommonSongProperty.Album}"
-                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                    <FontIcon
-                                        Grid.Column="1"
-                                        VerticalAlignment="Center"
-                                        FontFamily="{StaticResource SegoeFluentIcons}"
-                                        FontSize="12"
-                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                        Glyph="{x:Bind ViewModel.IsSortDescending, Mode=OneWay, Converter={StaticResource BoolToSortDirectionIconConverter}}"
-                                        Visibility="{x:Bind ViewModel.SongOrderType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=1}" />
-                                </Grid>
-                                <StackPanel
-                                    Grid.Column="3"
-                                    Orientation="Horizontal"
-                                    Spacing="12">
-                                    <TextBlock
-                                        Margin="12,0,0,0"
-                                        VerticalAlignment="Center"
-                                        FontFamily="{StaticResource SegoeFluentIcons}"
-                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                        Text="&#xE916;"
-                                        ToolTipService.ToolTip="Duration" />
-                                    <HyperlinkButton
-                                        x:Uid="MusicGalleryPageSortByFolder"
-                                        Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
-                                        CommandParameter="{x:Bind enums:CommonSongProperty.Folder}"
-                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                    <FontIcon
-                                        VerticalAlignment="Center"
-                                        FontFamily="{StaticResource SegoeFluentIcons}"
-                                        FontSize="12"
-                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                        Glyph="{x:Bind ViewModel.IsSortDescending, Mode=OneWay, Converter={StaticResource BoolToSortDirectionIconConverter}}"
-                                        Visibility="{x:Bind ViewModel.SongOrderType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=3}" />
-                                </StackPanel>
-                            </Grid>
-
+                            <uc:SongListFakeHeaderControl Margin="12,0" ViewModel="{x:Bind ViewModel, Mode=OneWay}" />
                             <SemanticZoom Grid.Row="1">
                                 <SemanticZoom.ZoomedInView>
                                     <ListView
@@ -463,7 +432,6 @@
                                         </ListView.ItemContainerStyle>
                                     </ListView>
                                 </SemanticZoom.ZoomedInView>
-
                                 <SemanticZoom.ZoomedOutView>
                                     <GridView
                                         MaxWidth="500"
@@ -478,7 +446,6 @@
                                     </GridView>
                                 </SemanticZoom.ZoomedOutView>
                             </SemanticZoom>
-
                             <Grid Visibility="{x:Bind ViewModel.IsLocalMediaNotFound, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <StackPanel
                                     HorizontalAlignment="Center"
@@ -493,13 +460,12 @@
                             </Grid>
                         </Grid>
                     </controls:Case>
-
                     <controls:Case Value="{x:Bind enums:MusicLibraryViewType.Albums}">
                         <SemanticZoom>
                             <SemanticZoom.ZoomedInView>
                                 <GridView
                                     x:Name="AlbumGridView"
-                                    IsItemClickEnabled="{x:Bind ViewModel.SongListViewSelectionMode, Mode=OneWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Single}"
+                                    IsItemClickEnabled="{x:Bind ViewModel.SongListViewSelectionMode, Mode=OneWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=1}"
                                     ItemClick="AlbumGridView_ItemClick"
                                     ItemsSource="{x:Bind GroupedAlbumsCVS.View, Mode=OneWay}"
                                     SelectionChanged="OnGenericSelectionChanged"
@@ -553,13 +519,12 @@
                             </SemanticZoom.ZoomedOutView>
                         </SemanticZoom>
                     </controls:Case>
-
                     <controls:Case Value="{x:Bind enums:MusicLibraryViewType.Artists}">
                         <SemanticZoom>
                             <SemanticZoom.ZoomedInView>
                                 <GridView
                                     x:Name="ArtistGridView"
-                                    IsItemClickEnabled="{x:Bind ViewModel.SongListViewSelectionMode, Mode=OneWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Single}"
+                                    IsItemClickEnabled="{x:Bind ViewModel.SongListViewSelectionMode, Mode=OneWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=1}"
                                     ItemClick="ArtistGridView_ItemClick"
                                     ItemsSource="{x:Bind GroupedArtistsCVS.View, Mode=OneWay}"
                                     SelectionChanged="OnGenericSelectionChanged"
@@ -620,14 +585,12 @@
                             </SemanticZoom.ZoomedOutView>
                         </SemanticZoom>
                     </controls:Case>
-
                     <controls:Case Value="{x:Bind enums:MusicLibraryViewType.AlbumDetail}">
                         <Grid RowSpacing="6">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-
                             <Grid Grid.Row="0" ColumnSpacing="24">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -650,111 +613,16 @@
                                         TextWrapping="Wrap" />
                                 </StackPanel>
                             </Grid>
-
                             <Grid Grid.Row="1">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-
                                 <!--  Fake Header  -->
-                                <Grid
+                                <uc:SongListFakeHeaderControl
                                     Grid.Row="0"
-                                    Margin="0,0,0,4"
-                                    Padding="12,0,12,8"
-                                    ColumnSpacing="12">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="1*" />
-                                    </Grid.ColumnDefinitions>
-                                    <Grid Grid.Column="0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <HyperlinkButton
-                                            x:Uid="MusicGalleryPageSortByTitle"
-                                            Grid.Column="0"
-                                            Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
-                                            CommandParameter="{x:Bind enums:CommonSongProperty.Title}"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                        <FontIcon
-                                            Grid.Column="1"
-                                            VerticalAlignment="Center"
-                                            FontFamily="{StaticResource SegoeFluentIcons}"
-                                            FontSize="12"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Glyph="{x:Bind ViewModel.IsSortDescending, Mode=OneWay, Converter={StaticResource BoolToSortDirectionIconConverter}}"
-                                            Visibility="{x:Bind ViewModel.SongOrderType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=0}" />
-                                    </Grid>
-                                    <Grid Grid.Column="1">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <HyperlinkButton
-                                            x:Uid="MusicGalleryPageSortByArtist"
-                                            Grid.Column="0"
-                                            Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
-                                            CommandParameter="{x:Bind enums:CommonSongProperty.Artist}"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                        <FontIcon
-                                            Grid.Column="1"
-                                            VerticalAlignment="Center"
-                                            FontFamily="{StaticResource SegoeFluentIcons}"
-                                            FontSize="12"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Glyph="{x:Bind ViewModel.IsSortDescending, Mode=OneWay, Converter={StaticResource BoolToSortDirectionIconConverter}}"
-                                            Visibility="{x:Bind ViewModel.SongOrderType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}" />
-                                    </Grid>
-                                    <Grid Grid.Column="2">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="Auto" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <HyperlinkButton
-                                            x:Uid="MusicGalleryPageSortByAlbum"
-                                            Grid.Column="0"
-                                            Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
-                                            CommandParameter="{x:Bind enums:CommonSongProperty.Album}"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                        <FontIcon
-                                            Grid.Column="1"
-                                            VerticalAlignment="Center"
-                                            FontFamily="{StaticResource SegoeFluentIcons}"
-                                            FontSize="12"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Glyph="{x:Bind ViewModel.IsSortDescending, Mode=OneWay, Converter={StaticResource BoolToSortDirectionIconConverter}}"
-                                            Visibility="{x:Bind ViewModel.SongOrderType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=1}" />
-                                    </Grid>
-                                    <StackPanel
-                                        Grid.Column="3"
-                                        Orientation="Horizontal"
-                                        Spacing="12">
-                                        <TextBlock
-                                            Margin="12,0,0,0"
-                                            VerticalAlignment="Center"
-                                            FontFamily="{StaticResource SegoeFluentIcons}"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Text="&#xE916;"
-                                            ToolTipService.ToolTip="Duration" />
-                                        <HyperlinkButton
-                                            x:Uid="MusicGalleryPageSortByFolder"
-                                            Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
-                                            CommandParameter="{x:Bind enums:CommonSongProperty.Folder}"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                        <FontIcon
-                                            VerticalAlignment="Center"
-                                            FontFamily="{StaticResource SegoeFluentIcons}"
-                                            FontSize="12"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Glyph="{x:Bind ViewModel.IsSortDescending, Mode=OneWay, Converter={StaticResource BoolToSortDirectionIconConverter}}"
-                                            Visibility="{x:Bind ViewModel.SongOrderType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=3}" />
-                                    </StackPanel>
-                                </Grid>
-
+                                    Margin="12,0"
+                                    ViewModel="{x:Bind ViewModel, Mode=OneWay}" />
                                 <ListView
                                     x:Name="AlbumDetailSongListView"
                                     Grid.Row="1"
@@ -782,14 +650,12 @@
                             </Grid>
                         </Grid>
                     </controls:Case>
-
                     <controls:Case Value="{x:Bind enums:MusicLibraryViewType.ArtistDetail}">
                         <Grid RowSpacing="6">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-
                             <Grid Grid.Row="0" ColumnSpacing="24">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="Auto" />
@@ -817,62 +683,16 @@
                                         TextWrapping="Wrap" />
                                 </StackPanel>
                             </Grid>
-
                             <Grid Grid.Row="1">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
                                     <RowDefinition Height="*" />
                                 </Grid.RowDefinitions>
-
                                 <!--  Fake Header  -->
-                                <Grid
+                                <uc:SongListFakeHeaderControl
                                     Grid.Row="0"
-                                    Margin="0,0,0,4"
-                                    Padding="12,0,12,8"
-                                    ColumnSpacing="12">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="1*" />
-                                    </Grid.ColumnDefinitions>
-                                    <HyperlinkButton
-                                        x:Uid="MusicGalleryPageSortByTitle"
-                                        Grid.Column="0"
-                                        Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
-                                        CommandParameter="{x:Bind enums:CommonSongProperty.Title}"
-                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                    <HyperlinkButton
-                                        x:Uid="MusicGalleryPageSortByArtist"
-                                        Grid.Column="1"
-                                        Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
-                                        CommandParameter="{x:Bind enums:CommonSongProperty.Artist}"
-                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                    <HyperlinkButton
-                                        x:Uid="MusicGalleryPageSortByAlbum"
-                                        Grid.Column="2"
-                                        Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
-                                        CommandParameter="{x:Bind enums:CommonSongProperty.Album}"
-                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                    <StackPanel
-                                        Grid.Column="3"
-                                        Orientation="Horizontal"
-                                        Spacing="12">
-                                        <TextBlock
-                                            Margin="12,0,0,0"
-                                            VerticalAlignment="Center"
-                                            FontFamily="{StaticResource SegoeFluentIcons}"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Text="&#xE916;"
-                                            ToolTipService.ToolTip="Duration" />
-                                        <HyperlinkButton
-                                            x:Uid="MusicGalleryPageSortByFolder"
-                                            Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
-                                            CommandParameter="{x:Bind enums:CommonSongProperty.Folder}"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                    </StackPanel>
-                                </Grid>
-
+                                    Margin="12,0"
+                                    ViewModel="{x:Bind ViewModel, Mode=OneWay}" />
                                 <ListView
                                     x:Name="ArtistDetailSongListView"
                                     Grid.Row="1"
@@ -901,9 +721,7 @@
                         </Grid>
                     </controls:Case>
                 </controls:SwitchPresenter>
-
                 <NavigationViewItemSeparator Grid.Row="4" />
-
                 <!--  底部命令栏  -->
                 <Grid
                     Grid.Row="5"
@@ -968,9 +786,7 @@
                             Command="{x:Bind ViewModel.RepeatAllCommand}" />
                     </Grid>
                 </Grid>
-
             </Grid>
-
             <Grid Grid.Column="2">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -1009,8 +825,6 @@
                 </Grid>
                 <uc:PlayQueue x:Name="PlayQueue" Grid.Row="1" />
             </Grid>
-
         </Grid>
-
     </Grid>
 </Page>

@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.SongListFakeHeaderControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:converters="using:BetterLyrics.WinUI3.Converters"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:enums="using:BetterLyrics.Core.Enums"
+    xmlns:helpers="using:BetterLyrics.WinUI3.Helpers"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <converters:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
+        <converters:BoolToSortDirectionIconConverter x:Key="BoolToSortDirectionIconConverter" />
+    </UserControl.Resources>
+
+    <Grid helpers:GridColumnVisibilityHelper.SyncWithMusicGallerySettings="True" ColumnSpacing="12">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0" HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <HyperlinkButton
+                x:Uid="MusicGalleryPageSortByTitle"
+                Grid.Column="0"
+                Margin="0,0,4,0"
+                Padding="0"
+                HorizontalAlignment="Left"
+                Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
+                CommandParameter="{x:Bind enums:CommonSongProperty.Title}"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                <HyperlinkButton.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Text="{Binding}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
+                    </DataTemplate>
+                </HyperlinkButton.ContentTemplate>
+            </HyperlinkButton>
+            <FontIcon
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                FontFamily="{StaticResource SegoeFluentIcons}"
+                FontSize="12"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                Glyph="{x:Bind ViewModel.IsSortDescending, Mode=OneWay, Converter={StaticResource BoolToSortDirectionIconConverter}}"
+                Visibility="{x:Bind ViewModel.SongOrderType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=0}" />
+        </Grid>
+        <Grid Grid.Column="1" HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <HyperlinkButton
+                x:Uid="MusicGalleryPageSortByArtist"
+                Grid.Column="0"
+                Margin="0,0,4,0"
+                Padding="0"
+                HorizontalAlignment="Left"
+                Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
+                CommandParameter="{x:Bind enums:CommonSongProperty.Artist}"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                <HyperlinkButton.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Text="{Binding}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
+                    </DataTemplate>
+                </HyperlinkButton.ContentTemplate>
+            </HyperlinkButton>
+            <FontIcon
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                FontFamily="{StaticResource SegoeFluentIcons}"
+                FontSize="12"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                Glyph="{x:Bind ViewModel.IsSortDescending, Mode=OneWay, Converter={StaticResource BoolToSortDirectionIconConverter}}"
+                Visibility="{x:Bind ViewModel.SongOrderType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=2}" />
+        </Grid>
+        <Grid Grid.Column="2" HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <HyperlinkButton
+                x:Uid="MusicGalleryPageSortByAlbum"
+                Grid.Column="0"
+                Margin="0,0,4,0"
+                Padding="0"
+                HorizontalAlignment="Left"
+                Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
+                CommandParameter="{x:Bind enums:CommonSongProperty.Album}"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                <HyperlinkButton.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Text="{Binding}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
+                    </DataTemplate>
+                </HyperlinkButton.ContentTemplate>
+            </HyperlinkButton>
+            <FontIcon
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                FontFamily="{StaticResource SegoeFluentIcons}"
+                FontSize="12"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                Glyph="{x:Bind ViewModel.IsSortDescending, Mode=OneWay, Converter={StaticResource BoolToSortDirectionIconConverter}}"
+                Visibility="{x:Bind ViewModel.SongOrderType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=1}" />
+        </Grid>
+        <Grid Grid.Column="3" HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <HyperlinkButton
+                Grid.Column="0"
+                Margin="0,0,4,0"
+                Padding="0"
+                HorizontalAlignment="Left"
+                Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
+                CommandParameter="{x:Bind enums:CommonSongProperty.Genre}"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                <TextBlock
+                    Text="流派"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="NoWrap" />
+            </HyperlinkButton>
+            <FontIcon
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                FontFamily="{StaticResource SegoeFluentIcons}"
+                FontSize="12"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                Glyph="{x:Bind ViewModel.IsSortDescending, Mode=OneWay, Converter={StaticResource BoolToSortDirectionIconConverter}}"
+                Visibility="{x:Bind ViewModel.SongOrderType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=5}" />
+        </Grid>
+        <Grid Grid.Column="4" HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <HyperlinkButton
+                Grid.Column="0"
+                Margin="0,0,4,0"
+                Padding="0"
+                HorizontalAlignment="Left"
+                Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
+                CommandParameter="{x:Bind enums:CommonSongProperty.Year}"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                <TextBlock
+                    Text="年份"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="NoWrap" />
+            </HyperlinkButton>
+            <FontIcon
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                FontFamily="{StaticResource SegoeFluentIcons}"
+                FontSize="12"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                Glyph="{x:Bind ViewModel.IsSortDescending, Mode=OneWay, Converter={StaticResource BoolToSortDirectionIconConverter}}"
+                Visibility="{x:Bind ViewModel.SongOrderType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=6}" />
+        </Grid>
+        <Grid Grid.Column="5" HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <HyperlinkButton
+                Grid.Column="0"
+                Margin="0,0,4,0"
+                Padding="0"
+                HorizontalAlignment="Left"
+                Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
+                CommandParameter="{x:Bind enums:CommonSongProperty.TrackNumber}"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                <TextBlock
+                    Text="音轨"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="NoWrap" />
+            </HyperlinkButton>
+            <FontIcon
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                FontFamily="{StaticResource SegoeFluentIcons}"
+                FontSize="12"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                Glyph="{x:Bind ViewModel.IsSortDescending, Mode=OneWay, Converter={StaticResource BoolToSortDirectionIconConverter}}"
+                Visibility="{x:Bind ViewModel.SongOrderType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=7}" />
+        </Grid>
+        <Grid Grid.Column="6" HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <HyperlinkButton
+                Grid.Column="0"
+                Margin="0,0,4,0"
+                Padding="0"
+                HorizontalAlignment="Left"
+                Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
+                CommandParameter="{x:Bind enums:CommonSongProperty.Bitrate}"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                <TextBlock
+                    Text="比特率"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="NoWrap" />
+            </HyperlinkButton>
+            <FontIcon
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                FontFamily="{StaticResource SegoeFluentIcons}"
+                FontSize="12"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                Glyph="{x:Bind ViewModel.IsSortDescending, Mode=OneWay, Converter={StaticResource BoolToSortDirectionIconConverter}}"
+                Visibility="{x:Bind ViewModel.SongOrderType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=8}" />
+        </Grid>
+        <Grid Grid.Column="7" HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <HyperlinkButton
+                Grid.Column="0"
+                Margin="0,0,4,0"
+                Padding="0"
+                HorizontalAlignment="Left"
+                Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
+                CommandParameter="{x:Bind enums:CommonSongProperty.SampleRate}"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                <TextBlock
+                    Text="采样率"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="NoWrap" />
+            </HyperlinkButton>
+            <FontIcon
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                FontFamily="{StaticResource SegoeFluentIcons}"
+                FontSize="12"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                Glyph="{x:Bind ViewModel.IsSortDescending, Mode=OneWay, Converter={StaticResource BoolToSortDirectionIconConverter}}"
+                Visibility="{x:Bind ViewModel.SongOrderType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=9}" />
+        </Grid>
+        <Grid Grid.Column="8" HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <HyperlinkButton
+                Grid.Column="0"
+                Margin="0,0,4,0"
+                Padding="0"
+                HorizontalAlignment="Left"
+                Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
+                CommandParameter="{x:Bind enums:CommonSongProperty.AudioFormat}"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                <TextBlock
+                    Text="格式"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="NoWrap" />
+            </HyperlinkButton>
+            <FontIcon
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                FontFamily="{StaticResource SegoeFluentIcons}"
+                FontSize="12"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                Glyph="{x:Bind ViewModel.IsSortDescending, Mode=OneWay, Converter={StaticResource BoolToSortDirectionIconConverter}}"
+                Visibility="{x:Bind ViewModel.SongOrderType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=10}" />
+        </Grid>
+        <Grid Grid.Column="9" HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <HyperlinkButton
+                Grid.Column="0"
+                Margin="0,0,4,0"
+                Padding="0"
+                HorizontalAlignment="Left"
+                Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
+                CommandParameter="{x:Bind enums:CommonSongProperty.FileSize}"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                <TextBlock
+                    Text="大小"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="NoWrap" />
+            </HyperlinkButton>
+            <FontIcon
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                FontFamily="{StaticResource SegoeFluentIcons}"
+                FontSize="12"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                Glyph="{x:Bind ViewModel.IsSortDescending, Mode=OneWay, Converter={StaticResource BoolToSortDirectionIconConverter}}"
+                Visibility="{x:Bind ViewModel.SongOrderType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=11}" />
+        </Grid>
+        <Grid Grid.Column="10" HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <HyperlinkButton
+                x:Uid="MusicGalleryPageSortByFolder"
+                Grid.Column="0"
+                Margin="0,0,4,0"
+                Padding="0"
+                HorizontalAlignment="Left"
+                Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
+                CommandParameter="{x:Bind enums:CommonSongProperty.Folder}"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                <HyperlinkButton.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Text="{Binding}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
+                    </DataTemplate>
+                </HyperlinkButton.ContentTemplate>
+            </HyperlinkButton>
+            <FontIcon
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                FontFamily="{StaticResource SegoeFluentIcons}"
+                FontSize="12"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                Glyph="{x:Bind ViewModel.IsSortDescending, Mode=OneWay, Converter={StaticResource BoolToSortDirectionIconConverter}}"
+                Visibility="{x:Bind ViewModel.SongOrderType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=3}" />
+        </Grid>
+        <Grid Grid.Column="11" HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <HyperlinkButton
+                Grid.Column="0"
+                Margin="0,0,4,0"
+                Padding="0"
+                HorizontalAlignment="Left"
+                Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
+                CommandParameter="{x:Bind enums:CommonSongProperty.Duration}"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                <TextBlock
+                    Text="时长"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="NoWrap" />
+            </HyperlinkButton>
+            <FontIcon
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                FontFamily="{StaticResource SegoeFluentIcons}"
+                FontSize="12"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                Glyph="{x:Bind ViewModel.IsSortDescending, Mode=OneWay, Converter={StaticResource BoolToSortDirectionIconConverter}}"
+                Visibility="{x:Bind ViewModel.SongOrderType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=14}" />
+        </Grid>
+        <Grid Grid.Column="12" HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <HyperlinkButton
+                Grid.Column="0"
+                Margin="0,0,4,0"
+                Padding="0"
+                HorizontalAlignment="Left"
+                Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
+                CommandParameter="{x:Bind enums:CommonSongProperty.DateCreated}"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                <TextBlock
+                    Text="创建时间"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="NoWrap" />
+            </HyperlinkButton>
+            <FontIcon
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                FontFamily="{StaticResource SegoeFluentIcons}"
+                FontSize="12"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                Glyph="{x:Bind ViewModel.IsSortDescending, Mode=OneWay, Converter={StaticResource BoolToSortDirectionIconConverter}}"
+                Visibility="{x:Bind ViewModel.SongOrderType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=12}" />
+        </Grid>
+        <Grid Grid.Column="13" HorizontalAlignment="Left">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <HyperlinkButton
+                Grid.Column="0"
+                Margin="0,0,4,0"
+                Padding="0"
+                HorizontalAlignment="Left"
+                Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
+                CommandParameter="{x:Bind enums:CommonSongProperty.DateModified}"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}">
+                <TextBlock
+                    Text="修改时间"
+                    TextTrimming="CharacterEllipsis"
+                    TextWrapping="NoWrap" />
+            </HyperlinkButton>
+            <FontIcon
+                Grid.Column="1"
+                VerticalAlignment="Center"
+                FontFamily="{StaticResource SegoeFluentIcons}"
+                FontSize="12"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                Glyph="{x:Bind ViewModel.IsSortDescending, Mode=OneWay, Converter={StaticResource BoolToSortDirectionIconConverter}}"
+                Visibility="{x:Bind ViewModel.SongOrderType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=13}" />
+        </Grid>
+        <Button Grid.Column="14" Style="{ThemeResource GhostButtonStyle}">
+            <Button.Content>
+                <FontIcon
+                    FontFamily="{StaticResource SegoeFluentIcons}"
+                    FontSize="14"
+                    Glyph="&#xE712;" />
+            </Button.Content>
+            <Button.Flyout>
+                <MenuFlyout>
+                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowAlbumColumn, Mode=TwoWay}" Text="专辑" />
+                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowGenreColumn, Mode=TwoWay}" Text="流派" />
+                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowYearColumn, Mode=TwoWay}" Text="年份" />
+                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowTrackNumberColumn, Mode=TwoWay}" Text="音轨" />
+                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowBitrateColumn, Mode=TwoWay}" Text="比特率" />
+                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowSampleRateColumn, Mode=TwoWay}" Text="采样率" />
+                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowFormatColumn, Mode=TwoWay}" Text="格式" />
+                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowFileSizeColumn, Mode=TwoWay}" Text="大小" />
+                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowFolderColumn, Mode=TwoWay}" Text="文件夹" />
+                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowDurationColumn, Mode=TwoWay}" Text="时长" />
+                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowDateCreatedColumn, Mode=TwoWay}" Text="创建时间" />
+                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowDateModifiedColumn, Mode=TwoWay}" Text="修改时间" />
+                </MenuFlyout>
+            </Button.Flyout>
+        </Button>
+    </Grid>
+
+</UserControl>

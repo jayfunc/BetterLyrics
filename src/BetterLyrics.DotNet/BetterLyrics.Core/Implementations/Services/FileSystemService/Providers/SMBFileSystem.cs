@@ -1,4 +1,4 @@
-﻿using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Entities;
 using BetterLyrics.Core.Models.Settings;
@@ -120,7 +120,8 @@ public class SMBFileSystem : IUnifiedFileSystem
                         FileName = item.FileName,
                         IsDirectory = (item.FileAttributes & FileAttributes.Directory) == FileAttributes.Directory,
                         FileSize = item.AllocationSize,
-                        LastModified = item.ChangeTime
+                        LastModified = item.ChangeTime,
+                        DateCreated = item.CreationTime
                     });
                 }
 

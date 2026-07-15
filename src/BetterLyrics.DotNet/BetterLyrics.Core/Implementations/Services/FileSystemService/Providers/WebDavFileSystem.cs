@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Entities;
@@ -96,7 +96,8 @@ public class WebDavFileSystem : IUnifiedFileSystem
                     IsDirectory = res.IsCollection,
 
                     FileSize = res.ContentLength ?? 0,
-                    LastModified = res.LastModifiedDate ?? DateTime.MinValue
+                    LastModified = res.LastModifiedDate ?? DateTime.MinValue,
+                    DateCreated = res.CreationDate ?? (res.LastModifiedDate ?? DateTime.MinValue)
                 });
             }
         }

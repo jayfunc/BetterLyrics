@@ -21,6 +21,7 @@ public class FilesIndexItem
     public bool IsDirectory { get; set; }
 
     public long FileSize { get; set; }
+    public DateTime? DateCreated { get; set; }
 
     public DateTime? LastModified { get; set; }
 
@@ -29,6 +30,9 @@ public class FilesIndexItem
     public string Artists { get; set; } = "";
     public string Album { get; set; } = "";
     public int? Year { get; set; }
+    public string Genre { get; set; } = "";
+    public int? TrackNumber { get; set; }
+    public int? DiscNumber { get; set; }
     public int Bitrate { get; set; }
     public double SampleRate { get; set; }
     public int BitDepth { get; set; }

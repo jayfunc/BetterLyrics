@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Entities;
@@ -83,6 +83,7 @@ public class LocalFileSystem : IUnifiedFileSystem
                     IsDirectory = isDir,
 
                     FileSize = size,
+                    DateCreated = item.CreationTime,
                     LastModified = item.LastWriteTime
                 });
             }

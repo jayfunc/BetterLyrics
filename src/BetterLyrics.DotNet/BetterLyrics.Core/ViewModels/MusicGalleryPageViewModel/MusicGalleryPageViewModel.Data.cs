@@ -282,15 +282,35 @@ public partial class MusicGalleryPageViewModel
         CommonSongProperty.Artist => track.Artist,
         CommonSongProperty.Album => track.Album,
         CommonSongProperty.Folder => track.ParentFolderName,
+        CommonSongProperty.Genre => track.Genre ?? string.Empty,
+        CommonSongProperty.Year => track.Year.ToString(),
+        CommonSongProperty.TrackNumber => track.TrackNumber.ToString(),
+        CommonSongProperty.Bitrate => track.Bitrate.ToString(),
+        CommonSongProperty.SampleRate => track.SampleRate.ToString(),
+        CommonSongProperty.AudioFormat => track.AudioFormatShortName ?? string.Empty,
+        CommonSongProperty.FileSize => track.FileSize.ToString(),
+        CommonSongProperty.DateCreated => track.DateCreated?.ToString() ?? string.Empty,
+        CommonSongProperty.DateModified => track.DateModified?.ToString() ?? string.Empty,
+        CommonSongProperty.Duration => track.Duration.ToString(),
         _ => track.Title
     };
 
-    private string GetTrackDisplayValue(ExtendedTrack track, CommonSongProperty property) => property switch
+    private object GetTrackDisplayValue(ExtendedTrack track, CommonSongProperty property) => property switch
     {
         CommonSongProperty.Title => track.Title,
         CommonSongProperty.Artist => track.Artist,
         CommonSongProperty.Album => track.Album,
         CommonSongProperty.Folder => track.Album,
+        CommonSongProperty.Genre => track.Genre ?? string.Empty,
+        CommonSongProperty.Year => track.Year,
+        CommonSongProperty.TrackNumber => track.TrackNumber,
+        CommonSongProperty.Bitrate => track.Bitrate,
+        CommonSongProperty.SampleRate => track.SampleRate,
+        CommonSongProperty.AudioFormat => track.AudioFormatShortName ?? string.Empty,
+        CommonSongProperty.FileSize => track.FileSize,
+        CommonSongProperty.DateCreated => track.DateCreated ?? DateTime.MinValue,
+        CommonSongProperty.DateModified => track.DateModified ?? DateTime.MinValue,
+        CommonSongProperty.Duration => track.Duration,
         _ => track.Title
     };
 }

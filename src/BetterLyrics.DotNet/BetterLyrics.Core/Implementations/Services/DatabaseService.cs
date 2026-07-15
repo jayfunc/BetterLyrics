@@ -16,6 +16,7 @@ public class DatabaseService : IDatabaseService, IDisposable
     public LiteDatabase LyricsCacheDb => _lyricsCacheDb ??= new LiteDatabase(PathHelper.LyricsCacheLiteDbPath);
     public LiteDatabase SongSearchMapDb => _songSearchMapDb ??= new LiteDatabase(PathHelper.SongSearchMapLiteDbPath);
 
+
     public void Dispose()
     {
         _playHistoryDb?.Dispose();

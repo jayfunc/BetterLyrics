@@ -264,6 +264,9 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
                             item.Artists = track.Artist;
                             item.Album = track.Album;
                             item.Year = track.Year;
+                            item.Genre = track.Genre;
+                            item.TrackNumber = track.TrackNumber;
+                            item.DiscNumber = track.DiscNumber;
                             item.Bitrate = track.Bitrate;
                             item.SampleRate = track.SampleRate;
                             item.BitDepth = track.BitDepth;
@@ -430,13 +433,15 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
                     }
 
                     var isChanged = existing.FileSize != remote.FileSize ||
-                                    timeChanged ||
-                                    forceSync;
+                        existing.DateCreated != remote.DateCreated ||
+                        timeChanged ||
+                        forceSync;
 
                     if (isChanged)
                     {
                         existing.FileSize = remote.FileSize;
                         existing.LastModified = remote.LastModified;
+                        existing.DateCreated = remote.DateCreated;
                         existing.IsMetadataParsed = false;
                         
                         col.Update(existing);

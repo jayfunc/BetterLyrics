@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using BetterLyrics.Core.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 
@@ -45,4 +45,52 @@ public partial class MusicGallerySettings : ObservableRecipient
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
     public partial bool StopOnWindowClosed { get; set; } = false;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial bool ShowAlbumColumn { get; set; } = true;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial bool ShowGenreColumn { get; set; } = false;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial bool ShowYearColumn { get; set; } = false;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial bool ShowTrackNumberColumn { get; set; } = false;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial bool ShowBitrateColumn { get; set; } = false;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial bool ShowSampleRateColumn { get; set; } = false;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial bool ShowFormatColumn { get; set; } = false;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial bool ShowFileSizeColumn { get; set; } = false;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial bool ShowDateCreatedColumn { get; set; } = false;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial bool ShowDateModifiedColumn { get; set; } = false;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial bool ShowDurationColumn { get; set; } = true;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial bool ShowFolderColumn { get; set; } = true;
 }

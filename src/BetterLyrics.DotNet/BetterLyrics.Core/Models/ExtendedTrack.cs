@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using ATL;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Models.Entities;
@@ -42,6 +42,12 @@ public class ExtendedTrack
         Artist = entity.Artists;
         Album = entity.Album;
         Year = entity.Year;
+        Genre = entity.Genre;
+        TrackNumber = entity.TrackNumber;
+        DiscNumber = entity.DiscNumber;
+        FileSize = entity.FileSize;
+        DateCreated = entity.DateCreated;
+        DateModified = entity.LastModified;
         Bitrate = entity.Bitrate;
         SampleRate = entity.SampleRate;
         BitDepth = entity.BitDepth;
@@ -150,6 +156,12 @@ public class ExtendedTrack
     public string Artist { get; set; } = "";
     public string Album { get; set; } = "";
     public int? Year { get; set; }
+    public string Genre { get; set; } = "";
+    public int? TrackNumber { get; set; }
+    public int? DiscNumber { get; set; }
+    public long FileSize { get; set; }
+    public DateTime? DateCreated { get; set; }
+    public DateTime? DateModified { get; set; }
     public int Bitrate { get; set; }
     public double SampleRate { get; set; }
     public int BitDepth { get; set; }
@@ -166,6 +178,9 @@ public class ExtendedTrack
         Artist = track.Artist;
         Album = track.Album;
         Year = track.Year;
+        Genre = track.Genre;
+        TrackNumber = track.TrackNumber;
+        DiscNumber = track.DiscNumber;
         Bitrate = track.Bitrate;
         SampleRate = track.SampleRate;
         BitDepth = track.BitDepth;

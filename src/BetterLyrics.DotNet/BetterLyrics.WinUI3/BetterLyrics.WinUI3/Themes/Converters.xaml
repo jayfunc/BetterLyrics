@@ -71,6 +71,10 @@
 
     <bwc:ComponentTypeToIconConverter x:Key="ComponentTypeToIconConverter" />
 
+    <bwc:BoolToGridLengthConverter x:Key="BoolToGridLength1StarConverter" TrueValue="1*" />
+    <bwc:BoolToGridLengthConverter x:Key="BoolToGridLength2StarConverter" TrueValue="2*" />
+    <bwc:BoolToGridLengthConverter x:Key="BoolToGridLengthAutoConverter" TrueValue="Auto" />
+
     <bwc:NaNToZeroConverter x:Key="NaNToZeroConverter" />
 
 </ResourceDictionary>
