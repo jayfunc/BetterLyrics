@@ -1,4 +1,6 @@
 using System.Net;
+using System.Net.Http;
+using System.IO;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Entities;
@@ -12,6 +14,7 @@ public class WebDavFileSystem : IUnifiedFileSystem
     private readonly Uri _baseAddress;
     private readonly WebDavClient _client;
     private readonly MediaFolder _config;
+    private readonly HttpClient _httpClient;
 
     public WebDavFileSystem(MediaFolder config)
     {
@@ -30,6 +33,12 @@ public class WebDavFileSystem : IUnifiedFileSystem
             BaseAddress = _baseAddress,
             Credentials = new NetworkCredential(_config.UserName, _config.Password)
         });
+
+        var handler = new HttpClientHandler
+        {
+            Credentials = new NetworkCredential(_config.UserName, _config.Password)
+        };
+        _httpClient = new HttpClient(handler);
     }
 
     public async Task<bool> ConnectAsync()
@@ -109,13 +118,8 @@ public class WebDavFileSystem : IUnifiedFileSystem
     {
         if (entity == null) return null;
 
-        // WebDAV 获取流，直接使用完整 URI
-        var res = await _client.GetRawFile(entity.Uri);
-
-        if (!res.IsSuccessful)
-            throw new IOException($"WebDAV Error {res.StatusCode}: {res.Description}");
-
-        return res.Stream;
+        // WebDavReadOnlyStream 内部已经实现了智能缓存池机制，直接返回即可
+        return new WebDavReadOnlyStream(_httpClient, entity.Uri, entity.FileSize);
     }
 
     public async Task DisconnectAsync()
@@ -126,5 +130,6 @@ public class WebDavFileSystem : IUnifiedFileSystem
     public void Dispose()
     {
         _client?.Dispose();
+        _httpClient?.Dispose();
     }
 }

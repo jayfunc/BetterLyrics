@@ -55,34 +55,32 @@
                     <ColumnDefinition Width="1*" />
                     <ColumnDefinition Width="32" />
                 </Grid.ColumnDefinitions>
-                <HyperlinkButton
+                <TextBlock
                     Grid.Column="0"
                     Padding="0"
-                    Command="{Binding ElementName=PlayQueue, Path=PlayCommand}"
-                    CommandParameter="{x:Bind}">
-                    <TextBlock Text="{x:Bind Title}" TextWrapping="Wrap" />
-                </HyperlinkButton>
+                    Text="{x:Bind Title}"
+                    TextWrapping="Wrap" />
                 <HyperlinkButton
                     Grid.Column="1"
                     Padding="0"
+                    VerticalAlignment="Top"
                     Click="ArtistHyperlibkButton_Click">
                     <TextBlock Text="{x:Bind Artist}" TextWrapping="Wrap" />
                 </HyperlinkButton>
                 <HyperlinkButton
                     Grid.Column="2"
                     Padding="0"
+                    VerticalAlignment="Top"
                     Click="AlbumHyperlibkButton_Click">
                     <TextBlock Text="{x:Bind Album}" TextWrapping="Wrap" />
                 </HyperlinkButton>
                 <TextBlock
                     Grid.Column="3"
-                    VerticalAlignment="Center"
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Text="{x:Bind Genre}"
                     TextWrapping="Wrap" />
                 <TextBlock
                     Grid.Column="4"
-                    VerticalAlignment="Center"
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Text="{x:Bind Year}"
                     TextWrapping="Wrap" />
@@ -94,49 +92,43 @@
                     TextWrapping="Wrap" />
                 <TextBlock
                     Grid.Column="6"
-                    VerticalAlignment="Center"
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Text="{x:Bind Bitrate}"
                     TextWrapping="Wrap" />
                 <TextBlock
                     Grid.Column="7"
-                    VerticalAlignment="Center"
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Text="{x:Bind SampleRate}"
                     TextWrapping="Wrap" />
                 <TextBlock
                     Grid.Column="8"
-                    VerticalAlignment="Center"
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Text="{x:Bind AudioFormatShortName}"
                     TextWrapping="Wrap" />
                 <TextBlock
                     Grid.Column="9"
-                    VerticalAlignment="Center"
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Text="{x:Bind FileSize, Converter={StaticResource FileSizeToStringConverter}}"
                     TextWrapping="Wrap" />
-                <TextBlock
+                <HyperlinkButton
                     Grid.Column="10"
-                    VerticalAlignment="Center"
-                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                    Text="{x:Bind ParentFolderName}"
-                    TextWrapping="Wrap" />
+                    Padding="0"
+                    VerticalAlignment="Top"
+                    Click="PathHyperlibkButton_Click">
+                    <TextBlock Text="{x:Bind ParentFolderName}" TextWrapping="Wrap" />
+                </HyperlinkButton>
                 <TextBlock
                     Grid.Column="11"
-                    VerticalAlignment="Center"
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Text="{x:Bind Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
                     TextWrapping="Wrap" />
                 <TextBlock
                     Grid.Column="12"
-                    VerticalAlignment="Center"
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Text="{x:Bind DateCreated, Converter={StaticResource DateTimeToStringConverter}}"
                     TextWrapping="Wrap" />
                 <TextBlock
                     Grid.Column="13"
-                    VerticalAlignment="Center"
                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                     Text="{x:Bind DateModified, Converter={StaticResource DateTimeToStringConverter}}"
                     TextWrapping="Wrap" />
@@ -375,7 +367,10 @@
                         Text="{x:Bind ViewModel.SongSearchQuery, Mode=TwoWay}" />
                 </Grid>
                 <NavigationViewItemSeparator Grid.Row="2" />
-                <controls:SwitchPresenter Grid.Row="3" Value="{x:Bind ViewModel.CurrentView, Mode=OneWay}">
+                <controls:SwitchPresenter
+                    Grid.Row="3"
+                    Visibility="{x:Bind ViewModel.IsLocalMediaNotFound, Mode=OneWay, Converter={StaticResource BoolNegationToVisibilityConverter}}"
+                    Value="{x:Bind ViewModel.CurrentView, Mode=OneWay}">
                     <controls:SwitchPresenter.ContentTransitions>
                         <TransitionCollection>
                             <AddDeleteThemeTransition />
@@ -388,7 +383,10 @@
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
                             <!--  Fake Header  -->
-                            <uc:SongListFakeHeaderControl Margin="12,0" ViewModel="{x:Bind ViewModel, Mode=OneWay}" />
+                            <uc:SongListFakeHeaderControl
+                                Grid.Row="0"
+                                Margin="12,0"
+                                ViewModel="{x:Bind ViewModel, Mode=OneWay}" />
                             <SemanticZoom Grid.Row="1">
                                 <SemanticZoom.ZoomedInView>
                                     <ListView
@@ -446,18 +444,6 @@
                                     </GridView>
                                 </SemanticZoom.ZoomedOutView>
                             </SemanticZoom>
-                            <Grid Visibility="{x:Bind ViewModel.IsLocalMediaNotFound, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                                <StackPanel
-                                    HorizontalAlignment="Center"
-                                    VerticalAlignment="Center"
-                                    Spacing="12">
-                                    <Image MaxWidth="200" Source="/Assets/EmptyState.png" />
-                                    <TextBlock
-                                        x:Uid="MusicGalleryPageFileNotFound"
-                                        HorizontalAlignment="Center"
-                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
-                                </StackPanel>
-                            </Grid>
                         </Grid>
                     </controls:Case>
                     <controls:Case Value="{x:Bind enums:MusicLibraryViewType.Albums}">
@@ -721,6 +707,18 @@
                         </Grid>
                     </controls:Case>
                 </controls:SwitchPresenter>
+                <Grid Grid.Row="3" Visibility="{x:Bind ViewModel.IsLocalMediaNotFound, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <StackPanel
+                        HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Spacing="12">
+                        <Image MaxWidth="200" Source="/Assets/EmptyState.png" />
+                        <TextBlock
+                            x:Uid="MusicGalleryPageFileNotFound"
+                            HorizontalAlignment="Center"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                    </StackPanel>
+                </Grid>
                 <NavigationViewItemSeparator Grid.Row="4" />
                 <!--  底部命令栏  -->
                 <Grid

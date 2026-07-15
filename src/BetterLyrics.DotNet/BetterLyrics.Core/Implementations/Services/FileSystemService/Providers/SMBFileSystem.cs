@@ -149,6 +149,7 @@ public class SMBFileSystem : IUnifiedFileSystem
         if (ret != NTStatus.STATUS_SUCCESS)
             throw new IOException($"SMB Open Error: {ret}");
 
+        // SMBReadOnlyStream 内部已经实现了 2MB 的智能滑动缓存池，直接返回即可
         return new SMBReadOnlyStream(_fileStore, handle);
     }
 

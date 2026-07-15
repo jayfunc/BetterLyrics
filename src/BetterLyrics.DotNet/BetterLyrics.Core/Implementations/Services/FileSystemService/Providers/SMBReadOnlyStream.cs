@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using SMBLibrary;
 using SMBLibrary.Client;
 
@@ -6,8 +6,6 @@ namespace BetterLyrics.Core.Implementations.Services.FileSystemService.Providers
 
 public class SMBReadOnlyStream : Stream
 {
-    // SMB 协议建议的最大读取块大小 (64KB 是最安全的通用值)
-    private const int MaxReadChunkSize = 65536;
     private readonly object _handle;
     private readonly long _length;
     private readonly ISMBFileStore _store;
@@ -18,6 +16,7 @@ public class SMBReadOnlyStream : Stream
         _store = store;
         _handle = handle;
         _position = 0;
+        _buffer = new byte[BufferSize];
 
         var status = _store.GetFileInformation(out var result, handle, FileInformationClass.FileStandardInformation);
         if (status == NTStatus.STATUS_SUCCESS && result is FileStandardInformation info)
@@ -42,50 +41,105 @@ public class SMBReadOnlyStream : Stream
         set => _position = value;
     }
 
+    private byte[] _buffer;
+    private long _bufferStart = -1;
+    private int _bufferLength = 0;
+    // 256KB 缓存区
+    private const int BufferSize = 256 * 1024; 
+
     public override int Read(byte[] buffer, int offset, int count)
     {
         if (_position >= _length) return 0;
 
-        var totalBytesRead = 0;
-        var remainingRequest = count;
-
-        // 循环读取，直到读完请求的数量，或者文件结束
-        while (remainingRequest > 0)
+        // 如果要读的数据完全在缓存里，直接命中缓存返回
+        if (_bufferStart != -1 && _position >= _bufferStart && _position + count <= _bufferStart + _bufferLength)
         {
-            // 计算剩余文件长度
-            var remainingFile = _length - _position;
-            if (remainingFile <= 0) break; // 已到末尾
-
-            // 计算本次 SMB 请求的大小 (取三者最小值：请求剩余量、文件剩余量、SMB最大块限制)
-            var bytesToReadThisChunk = (int)Math.Min(Math.Min(remainingRequest, remainingFile), MaxReadChunkSize);
-
-            // 发送 SMB 请求
-            var status = _store.ReadFile(out var data, _handle, _position, bytesToReadThisChunk);
-
-            // 处理结果
-            if (status == NTStatus.STATUS_END_OF_FILE) break;
-
-            if (status != NTStatus.STATUS_SUCCESS)
-                // 遇到错误抛出详细信息
-                throw new IOException(
-                    $"SMB Read failed. Status: {status}, Position: {_position}, ChunkReq: {bytesToReadThisChunk}");
-
-            if (data == null || data.Length == 0) break;
-
-            // 复制数据到输出 buffer
-            Array.Copy(data, 0, buffer, offset + totalBytesRead, data.Length);
-
-            // 更新指针和计数器
-            _position += data.Length;
-            totalBytesRead += data.Length;
-            remainingRequest -= data.Length;
-
-            // 如果实际读到的比请求的少，通常意味着提前到了 EOF，或者网络包较小
-            // 这里选择继续循环尝试，直到读不够或者明确 EOF
-            if (data.Length < bytesToReadThisChunk) break;
+            int bufferOffset = (int)(_position - _bufferStart);
+            Array.Copy(_buffer, bufferOffset, buffer, offset, count);
+            _position += count;
+            return count;
         }
 
-        return totalBytesRead;
+        // 缓存没命中，去网络请求
+        long remainingFile = _length - _position;
+        int bytesToRequest = (int)Math.Min(Math.Max(count, BufferSize), remainingFile);
+        
+        // 由于 SMB 可能会限制单次请求大小，但这没关系，SMBLibrary 会返回它能给的最大实际数据
+        var status = _store.ReadFile(out var data, _handle, _position, bytesToRequest);
+
+        if (status == NTStatus.STATUS_END_OF_FILE || data == null || data.Length == 0) return 0;
+        if (status != NTStatus.STATUS_SUCCESS)
+            throw new IOException($"SMB Read failed. Status: {status}, Position: {_position}, ChunkReq: {bytesToRequest}");
+
+        // 更新缓存
+        _bufferStart = _position;
+        _bufferLength = data.Length;
+
+        if (data.Length > _buffer.Length)
+        {
+            _buffer = new byte[data.Length];
+        }
+        Array.Copy(data, 0, _buffer, 0, data.Length);
+
+        // 返回给调用者实际需要的大小
+        int bytesToReturn = Math.Min(count, data.Length);
+        Array.Copy(data, 0, buffer, offset, bytesToReturn);
+        _position += bytesToReturn;
+
+        return bytesToReturn;
+    }
+
+    public override Task<int> ReadAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
+    {
+        return ReadAsync(new Memory<byte>(buffer, offset, count), cancellationToken).AsTask();
+    }
+
+    public override async ValueTask<int> ReadAsync(Memory<byte> buffer, CancellationToken cancellationToken = default)
+    {
+        if (_position >= _length) return 0;
+        int count = buffer.Length;
+
+        // 如果要读的数据完全在缓存里，直接命中缓存返回
+        if (_bufferStart != -1 && _position >= _bufferStart && _position + count <= _bufferStart + _bufferLength)
+        {
+            int bufferOffset = (int)(_position - _bufferStart);
+            new Span<byte>(_buffer, bufferOffset, count).CopyTo(buffer.Span);
+            _position += count;
+            return count;
+        }
+
+        // 缓存没命中，去网络请求
+        long remainingFile = _length - _position;
+        int bytesToRequest = (int)Math.Min(Math.Max(count, BufferSize), remainingFile);
+        
+        // 由于 SMB 可能会限制单次请求大小，但这没关系，SMBLibrary 会返回它能给的最大实际数据
+        // 使用包装方法以避免在 Task.Run 里遇到 out 参数的编译错误
+        var (status, data) = await Task.Run(() => 
+        {
+            var st = _store.ReadFile(out var d, _handle, _position, bytesToRequest);
+            return (st, d);
+        }, cancellationToken).ConfigureAwait(false);
+
+        if (status == NTStatus.STATUS_END_OF_FILE || data == null || data.Length == 0) return 0;
+        if (status != NTStatus.STATUS_SUCCESS)
+            throw new IOException($"SMB Read failed. Status: {status}, Position: {_position}, ChunkReq: {bytesToRequest}");
+
+        // 更新缓存
+        _bufferStart = _position;
+        _bufferLength = data.Length;
+
+        if (data.Length > _buffer.Length)
+        {
+            _buffer = new byte[data.Length];
+        }
+        Array.Copy(data, 0, _buffer, 0, data.Length);
+
+        // 返回给调用者实际需要的大小
+        int bytesToReturn = Math.Min(count, data.Length);
+        new Span<byte>(data, 0, bytesToReturn).CopyTo(buffer.Span);
+        _position += bytesToReturn;
+
+        return bytesToReturn;
     }
 
     public override long Seek(long offset, SeekOrigin origin)

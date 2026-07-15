@@ -45,13 +45,13 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
         _settingsService = settingsService;
         _databaseService = databaseService;
         _appUIThreadProvider = appUiThreadProvider;
-        
+
         var col = _databaseService.FilesIndexDb.GetCollection<FilesIndexItem>("filesIndex");
         col.EnsureIndex(x => x.MediaFolderId);
         col.EnsureIndex(x => x.ParentUri);
         col.EnsureIndex(x => x.Uri, true);
     }
-    
+
     private ILiteCollection<FilesIndexItem> GetCollection()
     {
         return _databaseService.FilesIndexDb.GetCollection<FilesIndexItem>("filesIndex");
@@ -86,10 +86,10 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
             dbItem.EmbeddedLyrics = entity.EmbeddedLyrics;
             dbItem.LocalAlbumArtPath = entity.LocalAlbumArtPath;
             dbItem.IsMetadataParsed = true;
-            
+
             col.Update(dbItem);
         }
-        
+
         return Task.CompletedTask;
     }
 
@@ -250,8 +250,19 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
                         }
                         else
                         {
+                            // 针对不支持 Seek 的流，仅读取前 3MB 以避免下载整个庞大的音频文件
                             using var memStream = new MemoryStream();
-                            await originalStream.CopyToAsync(memStream, scanCts.Token);
+                            var buffer = new byte[81920];
+                            long maxBytesToRead = 3 * 1024 * 1024; // 3MB
+                            long totalRead = 0;
+                            int bytesRead;
+
+                            while (totalRead < maxBytesToRead && (bytesRead = await originalStream.ReadAsync(buffer, 0, (int)Math.Min(buffer.Length, maxBytesToRead - totalRead), scanCts.Token)) > 0)
+                            {
+                                await memStream.WriteAsync(buffer.AsMemory(0, bytesRead), scanCts.Token);
+                                totalRead += bytesRead;
+                            }
+
                             memStream.Position = 0;
                             track = new ExtendedTrack(item, memStream);
                         }
@@ -355,9 +366,9 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
 
         var idList = enabledConfigIds.ToList();
         var col = GetCollection();
-        
+
         var list = col.Find(x => x.IsMetadataParsed && idList.Contains(x.MediaFolderId)).ToList();
-        
+
         return Task.FromResult(list);
     }
 
@@ -409,7 +420,7 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
         try
         {
             var col = GetCollection();
-            
+
             var dbItems = col.Find(x => x.MediaFolderId == configId && x.ParentUri == targetParentUri).ToList();
             var dbMap = dbItems.ToDictionary(x => x.Uri, x => x);
 
@@ -426,15 +437,21 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
 
                 if (dbMap.TryGetValue(remote.Uri, out var existing))
                 {
-                    bool timeChanged = existing.LastModified != remote.LastModified;
+                    bool lastModifiedTimeChanged = existing.LastModified != remote.LastModified;
                     if (existing.LastModified.HasValue && remote.LastModified.HasValue)
                     {
-                        timeChanged = Math.Abs((existing.LastModified.Value - remote.LastModified.Value).TotalSeconds) > 1;
+                        lastModifiedTimeChanged = Math.Abs((existing.LastModified.Value - remote.LastModified.Value).TotalSeconds) > 1;
+                    }
+
+                    bool createTimeChanged = existing.DateCreated != remote.DateCreated;
+                    if (existing.DateCreated.HasValue && remote.DateCreated.HasValue)
+                    {
+                        createTimeChanged = Math.Abs((existing.DateCreated.Value - remote.DateCreated.Value).TotalSeconds) > 1;
                     }
 
                     var isChanged = existing.FileSize != remote.FileSize ||
-                        existing.DateCreated != remote.DateCreated ||
-                        timeChanged ||
+                        createTimeChanged ||
+                        lastModifiedTimeChanged ||
                         forceSync;
 
                     if (isChanged)
@@ -443,7 +460,7 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
                         existing.LastModified = remote.LastModified;
                         existing.DateCreated = remote.DateCreated;
                         existing.IsMetadataParsed = false;
-                        
+
                         col.Update(existing);
                     }
                 }
