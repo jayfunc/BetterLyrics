@@ -2556,4 +2556,79 @@
   <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
     <value>視窗主題</value>
   </data>
+  <data name="MusicGalleryPageSongsTab.Content" xml:space="preserve">
+    <value>歌曲</value>
+  </data>
+  <data name="MusicGalleryPageAlbumsTab.Content" xml:space="preserve">
+    <value>專輯</value>
+  </data>
+  <data name="MusicGalleryPageArtistsTab.Content" xml:space="preserve">
+    <value>演出者</value>
+  </data>
+  <data name="MusicGalleryPageSortByGenre.Content" xml:space="preserve">
+    <value>類型</value>
+  </data>
+  <data name="MusicGalleryPageSortByYear.Content" xml:space="preserve">
+    <value>年份</value>
+  </data>
+  <data name="MusicGalleryPageSortByTrackNumber.Content" xml:space="preserve">
+    <value>音軌</value>
+  </data>
+  <data name="MusicGalleryPageSortByBitrate.Content" xml:space="preserve">
+    <value>位元速率</value>
+  </data>
+  <data name="MusicGalleryPageSortBySampleRate.Content" xml:space="preserve">
+    <value>取樣率</value>
+  </data>
+  <data name="MusicGalleryPageSortByFormat.Content" xml:space="preserve">
+    <value>格式</value>
+  </data>
+  <data name="MusicGalleryPageSortByFileSize.Content" xml:space="preserve">
+    <value>大小</value>
+  </data>
+  <data name="MusicGalleryPageSortByDuration.Content" xml:space="preserve">
+    <value>時間長度</value>
+  </data>
+  <data name="MusicGalleryPageSortByDateCreated.Content" xml:space="preserve">
+    <value>建立時間</value>
+  </data>
+  <data name="MusicGalleryPageSortByDateModified.Content" xml:space="preserve">
+    <value>修改時間</value>
+  </data>
+  <data name="MusicGalleryPageShowAlbumColumn.Text" xml:space="preserve">
+    <value>專輯</value>
+  </data>
+  <data name="MusicGalleryPageShowGenreColumn.Text" xml:space="preserve">
+    <value>類型</value>
+  </data>
+  <data name="MusicGalleryPageShowYearColumn.Text" xml:space="preserve">
+    <value>年份</value>
+  </data>
+  <data name="MusicGalleryPageShowTrackNumberColumn.Text" xml:space="preserve">
+    <value>音軌</value>
+  </data>
+  <data name="MusicGalleryPageShowBitrateColumn.Text" xml:space="preserve">
+    <value>位元速率</value>
+  </data>
+  <data name="MusicGalleryPageShowSampleRateColumn.Text" xml:space="preserve">
+    <value>取樣率</value>
+  </data>
+  <data name="MusicGalleryPageShowFormatColumn.Text" xml:space="preserve">
+    <value>格式</value>
+  </data>
+  <data name="MusicGalleryPageShowFileSizeColumn.Text" xml:space="preserve">
+    <value>大小</value>
+  </data>
+  <data name="MusicGalleryPageShowFolderColumn.Text" xml:space="preserve">
+    <value>資料夾</value>
+  </data>
+  <data name="MusicGalleryPageShowDurationColumn.Text" xml:space="preserve">
+    <value>時間長度</value>
+  </data>
+  <data name="MusicGalleryPageShowDateCreatedColumn.Text" xml:space="preserve">
+    <value>建立時間</value>
+  </data>
+  <data name="MusicGalleryPageShowDateModifiedColumn.Text" xml:space="preserve">
+    <value>修改時間</value>
+  </data>
 </root>

@@ -2556,4 +2556,79 @@
   <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
     <value>विंडो थीम</value>
   </data>
+  <data name="MusicGalleryPageSongsTab.Content" xml:space="preserve">
+    <value>गीत</value>
+  </data>
+  <data name="MusicGalleryPageAlbumsTab.Content" xml:space="preserve">
+    <value>एल्बम</value>
+  </data>
+  <data name="MusicGalleryPageArtistsTab.Content" xml:space="preserve">
+    <value>कलाकार</value>
+  </data>
+  <data name="MusicGalleryPageSortByGenre.Content" xml:space="preserve">
+    <value>शैली</value>
+  </data>
+  <data name="MusicGalleryPageSortByYear.Content" xml:space="preserve">
+    <value>वर्ष</value>
+  </data>
+  <data name="MusicGalleryPageSortByTrackNumber.Content" xml:space="preserve">
+    <value>ट्रैक</value>
+  </data>
+  <data name="MusicGalleryPageSortByBitrate.Content" xml:space="preserve">
+    <value>बिटरेट</value>
+  </data>
+  <data name="MusicGalleryPageSortBySampleRate.Content" xml:space="preserve">
+    <value>सैंपल रेट</value>
+  </data>
+  <data name="MusicGalleryPageSortByFormat.Content" xml:space="preserve">
+    <value>प्रारूप</value>
+  </data>
+  <data name="MusicGalleryPageSortByFileSize.Content" xml:space="preserve">
+    <value>आकार</value>
+  </data>
+  <data name="MusicGalleryPageSortByDuration.Content" xml:space="preserve">
+    <value>अवधि</value>
+  </data>
+  <data name="MusicGalleryPageSortByDateCreated.Content" xml:space="preserve">
+    <value>बनने की तिथि</value>
+  </data>
+  <data name="MusicGalleryPageSortByDateModified.Content" xml:space="preserve">
+    <value>संशोधित तिथि</value>
+  </data>
+  <data name="MusicGalleryPageShowAlbumColumn.Text" xml:space="preserve">
+    <value>एल्बम</value>
+  </data>
+  <data name="MusicGalleryPageShowGenreColumn.Text" xml:space="preserve">
+    <value>शैली</value>
+  </data>
+  <data name="MusicGalleryPageShowYearColumn.Text" xml:space="preserve">
+    <value>वर्ष</value>
+  </data>
+  <data name="MusicGalleryPageShowTrackNumberColumn.Text" xml:space="preserve">
+    <value>ट्रैक</value>
+  </data>
+  <data name="MusicGalleryPageShowBitrateColumn.Text" xml:space="preserve">
+    <value>बिटरेट</value>
+  </data>
+  <data name="MusicGalleryPageShowSampleRateColumn.Text" xml:space="preserve">
+    <value>सैंपल रेट</value>
+  </data>
+  <data name="MusicGalleryPageShowFormatColumn.Text" xml:space="preserve">
+    <value>प्रारूप</value>
+  </data>
+  <data name="MusicGalleryPageShowFileSizeColumn.Text" xml:space="preserve">
+    <value>आकार</value>
+  </data>
+  <data name="MusicGalleryPageShowFolderColumn.Text" xml:space="preserve">
+    <value>फ़ोल्डर</value>
+  </data>
+  <data name="MusicGalleryPageShowDurationColumn.Text" xml:space="preserve">
+    <value>अवधि</value>
+  </data>
+  <data name="MusicGalleryPageShowDateCreatedColumn.Text" xml:space="preserve">
+    <value>बनने की तिथि</value>
+  </data>
+  <data name="MusicGalleryPageShowDateModifiedColumn.Text" xml:space="preserve">
+    <value>संशोधित तिथि</value>
+  </data>
 </root>

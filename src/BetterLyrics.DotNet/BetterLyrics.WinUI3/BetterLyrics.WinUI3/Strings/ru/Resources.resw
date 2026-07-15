@@ -2556,4 +2556,79 @@
   <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
     <value>Оконная тема</value>
   </data>
+  <data name="MusicGalleryPageSongsTab.Content" xml:space="preserve">
+    <value>Песни</value>
+  </data>
+  <data name="MusicGalleryPageAlbumsTab.Content" xml:space="preserve">
+    <value>Альбомы</value>
+  </data>
+  <data name="MusicGalleryPageArtistsTab.Content" xml:space="preserve">
+    <value>Исполнители</value>
+  </data>
+  <data name="MusicGalleryPageSortByGenre.Content" xml:space="preserve">
+    <value>Жанр</value>
+  </data>
+  <data name="MusicGalleryPageSortByYear.Content" xml:space="preserve">
+    <value>Год</value>
+  </data>
+  <data name="MusicGalleryPageSortByTrackNumber.Content" xml:space="preserve">
+    <value>Дорожка</value>
+  </data>
+  <data name="MusicGalleryPageSortByBitrate.Content" xml:space="preserve">
+    <value>Битрейт</value>
+  </data>
+  <data name="MusicGalleryPageSortBySampleRate.Content" xml:space="preserve">
+    <value>Частота дискретизации</value>
+  </data>
+  <data name="MusicGalleryPageSortByFormat.Content" xml:space="preserve">
+    <value>Формат</value>
+  </data>
+  <data name="MusicGalleryPageSortByFileSize.Content" xml:space="preserve">
+    <value>Размер</value>
+  </data>
+  <data name="MusicGalleryPageSortByDuration.Content" xml:space="preserve">
+    <value>Длительность</value>
+  </data>
+  <data name="MusicGalleryPageSortByDateCreated.Content" xml:space="preserve">
+    <value>Дата создания</value>
+  </data>
+  <data name="MusicGalleryPageSortByDateModified.Content" xml:space="preserve">
+    <value>Дата изменения</value>
+  </data>
+  <data name="MusicGalleryPageShowAlbumColumn.Text" xml:space="preserve">
+    <value>Альбом</value>
+  </data>
+  <data name="MusicGalleryPageShowGenreColumn.Text" xml:space="preserve">
+    <value>Жанр</value>
+  </data>
+  <data name="MusicGalleryPageShowYearColumn.Text" xml:space="preserve">
+    <value>Год</value>
+  </data>
+  <data name="MusicGalleryPageShowTrackNumberColumn.Text" xml:space="preserve">
+    <value>Дорожка</value>
+  </data>
+  <data name="MusicGalleryPageShowBitrateColumn.Text" xml:space="preserve">
+    <value>Битрейт</value>
+  </data>
+  <data name="MusicGalleryPageShowSampleRateColumn.Text" xml:space="preserve">
+    <value>Частота дискретизации</value>
+  </data>
+  <data name="MusicGalleryPageShowFormatColumn.Text" xml:space="preserve">
+    <value>Формат</value>
+  </data>
+  <data name="MusicGalleryPageShowFileSizeColumn.Text" xml:space="preserve">
+    <value>Размер</value>
+  </data>
+  <data name="MusicGalleryPageShowFolderColumn.Text" xml:space="preserve">
+    <value>Папка</value>
+  </data>
+  <data name="MusicGalleryPageShowDurationColumn.Text" xml:space="preserve">
+    <value>Длительность</value>
+  </data>
+  <data name="MusicGalleryPageShowDateCreatedColumn.Text" xml:space="preserve">
+    <value>Дата создания</value>
+  </data>
+  <data name="MusicGalleryPageShowDateModifiedColumn.Text" xml:space="preserve">
+    <value>Дата изменения</value>
+  </data>
 </root>

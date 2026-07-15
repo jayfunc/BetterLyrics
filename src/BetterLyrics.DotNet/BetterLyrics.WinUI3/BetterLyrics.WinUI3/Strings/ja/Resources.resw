@@ -2556,4 +2556,79 @@
   <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
     <value>ウィンドウのテーマ</value>
   </data>
+  <data name="MusicGalleryPageSongsTab.Content" xml:space="preserve">
+    <value>曲</value>
+  </data>
+  <data name="MusicGalleryPageAlbumsTab.Content" xml:space="preserve">
+    <value>アルバム</value>
+  </data>
+  <data name="MusicGalleryPageArtistsTab.Content" xml:space="preserve">
+    <value>アーティスト</value>
+  </data>
+  <data name="MusicGalleryPageSortByGenre.Content" xml:space="preserve">
+    <value>ジャンル</value>
+  </data>
+  <data name="MusicGalleryPageSortByYear.Content" xml:space="preserve">
+    <value>年</value>
+  </data>
+  <data name="MusicGalleryPageSortByTrackNumber.Content" xml:space="preserve">
+    <value>トラック</value>
+  </data>
+  <data name="MusicGalleryPageSortByBitrate.Content" xml:space="preserve">
+    <value>ビットレート</value>
+  </data>
+  <data name="MusicGalleryPageSortBySampleRate.Content" xml:space="preserve">
+    <value>サンプルレート</value>
+  </data>
+  <data name="MusicGalleryPageSortByFormat.Content" xml:space="preserve">
+    <value>フォーマット</value>
+  </data>
+  <data name="MusicGalleryPageSortByFileSize.Content" xml:space="preserve">
+    <value>サイズ</value>
+  </data>
+  <data name="MusicGalleryPageSortByDuration.Content" xml:space="preserve">
+    <value>再生時間</value>
+  </data>
+  <data name="MusicGalleryPageSortByDateCreated.Content" xml:space="preserve">
+    <value>作成日時</value>
+  </data>
+  <data name="MusicGalleryPageSortByDateModified.Content" xml:space="preserve">
+    <value>更新日時</value>
+  </data>
+  <data name="MusicGalleryPageShowAlbumColumn.Text" xml:space="preserve">
+    <value>アルバム</value>
+  </data>
+  <data name="MusicGalleryPageShowGenreColumn.Text" xml:space="preserve">
+    <value>ジャンル</value>
+  </data>
+  <data name="MusicGalleryPageShowYearColumn.Text" xml:space="preserve">
+    <value>年</value>
+  </data>
+  <data name="MusicGalleryPageShowTrackNumberColumn.Text" xml:space="preserve">
+    <value>トラック</value>
+  </data>
+  <data name="MusicGalleryPageShowBitrateColumn.Text" xml:space="preserve">
+    <value>ビットレート</value>
+  </data>
+  <data name="MusicGalleryPageShowSampleRateColumn.Text" xml:space="preserve">
+    <value>サンプルレート</value>
+  </data>
+  <data name="MusicGalleryPageShowFormatColumn.Text" xml:space="preserve">
+    <value>フォーマット</value>
+  </data>
+  <data name="MusicGalleryPageShowFileSizeColumn.Text" xml:space="preserve">
+    <value>サイズ</value>
+  </data>
+  <data name="MusicGalleryPageShowFolderColumn.Text" xml:space="preserve">
+    <value>フォルダー</value>
+  </data>
+  <data name="MusicGalleryPageShowDurationColumn.Text" xml:space="preserve">
+    <value>再生時間</value>
+  </data>
+  <data name="MusicGalleryPageShowDateCreatedColumn.Text" xml:space="preserve">
+    <value>作成日時</value>
+  </data>
+  <data name="MusicGalleryPageShowDateModifiedColumn.Text" xml:space="preserve">
+    <value>更新日時</value>
+  </data>
 </root>

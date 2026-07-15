@@ -2556,4 +2556,79 @@
   <data name="WindowSettingsControlTheme.Header" xml:space="preserve">
     <value>Pencere Teması</value>
   </data>
+  <data name="MusicGalleryPageSongsTab.Content" xml:space="preserve">
+    <value>Şarkılar</value>
+  </data>
+  <data name="MusicGalleryPageAlbumsTab.Content" xml:space="preserve">
+    <value>Albümler</value>
+  </data>
+  <data name="MusicGalleryPageArtistsTab.Content" xml:space="preserve">
+    <value>Sanatçılar</value>
+  </data>
+  <data name="MusicGalleryPageSortByGenre.Content" xml:space="preserve">
+    <value>Tür</value>
+  </data>
+  <data name="MusicGalleryPageSortByYear.Content" xml:space="preserve">
+    <value>Yıl</value>
+  </data>
+  <data name="MusicGalleryPageSortByTrackNumber.Content" xml:space="preserve">
+    <value>Parça</value>
+  </data>
+  <data name="MusicGalleryPageSortByBitrate.Content" xml:space="preserve">
+    <value>Bit hızı</value>
+  </data>
+  <data name="MusicGalleryPageSortBySampleRate.Content" xml:space="preserve">
+    <value>Örnekleme hızı</value>
+  </data>
+  <data name="MusicGalleryPageSortByFormat.Content" xml:space="preserve">
+    <value>Biçim</value>
+  </data>
+  <data name="MusicGalleryPageSortByFileSize.Content" xml:space="preserve">
+    <value>Boyut</value>
+  </data>
+  <data name="MusicGalleryPageSortByDuration.Content" xml:space="preserve">
+    <value>Süre</value>
+  </data>
+  <data name="MusicGalleryPageSortByDateCreated.Content" xml:space="preserve">
+    <value>Oluşturulma Tarihi</value>
+  </data>
+  <data name="MusicGalleryPageSortByDateModified.Content" xml:space="preserve">
+    <value>Değiştirilme Tarihi</value>
+  </data>
+  <data name="MusicGalleryPageShowAlbumColumn.Text" xml:space="preserve">
+    <value>Albüm</value>
+  </data>
+  <data name="MusicGalleryPageShowGenreColumn.Text" xml:space="preserve">
+    <value>Tür</value>
+  </data>
+  <data name="MusicGalleryPageShowYearColumn.Text" xml:space="preserve">
+    <value>Yıl</value>
+  </data>
+  <data name="MusicGalleryPageShowTrackNumberColumn.Text" xml:space="preserve">
+    <value>Parça</value>
+  </data>
+  <data name="MusicGalleryPageShowBitrateColumn.Text" xml:space="preserve">
+    <value>Bit hızı</value>
+  </data>
+  <data name="MusicGalleryPageShowSampleRateColumn.Text" xml:space="preserve">
+    <value>Örnekleme hızı</value>
+  </data>
+  <data name="MusicGalleryPageShowFormatColumn.Text" xml:space="preserve">
+    <value>Biçim</value>
+  </data>
+  <data name="MusicGalleryPageShowFileSizeColumn.Text" xml:space="preserve">
+    <value>Boyut</value>
+  </data>
+  <data name="MusicGalleryPageShowFolderColumn.Text" xml:space="preserve">
+    <value>Klasör</value>
+  </data>
+  <data name="MusicGalleryPageShowDurationColumn.Text" xml:space="preserve">
+    <value>Süre</value>
+  </data>
+  <data name="MusicGalleryPageShowDateCreatedColumn.Text" xml:space="preserve">
+    <value>Oluşturulma Tarihi</value>
+  </data>
+  <data name="MusicGalleryPageShowDateModifiedColumn.Text" xml:space="preserve">
+    <value>Değiştirilme Tarihi</value>
+  </data>
 </root>

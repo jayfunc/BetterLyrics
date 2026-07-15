@@ -350,9 +350,9 @@
                         Margin="0,0,6,0"
                         SelectedIndex="{x:Bind ViewModel.CurrentView, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}"
                         Visibility="{x:Bind ViewModel.IsMainView, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
-                        <controls:SegmentedItem x:Uid="MusicGalleryPageSongsTab" Content="歌曲" />
-                        <controls:SegmentedItem x:Uid="MusicGalleryPageAlbumsTab" Content="专辑" />
-                        <controls:SegmentedItem x:Uid="MusicGalleryPageArtistsTab" Content="艺术家" />
+                        <controls:SegmentedItem x:Uid="MusicGalleryPageSongsTab" />
+                        <controls:SegmentedItem x:Uid="MusicGalleryPageAlbumsTab" />
+                        <controls:SegmentedItem x:Uid="MusicGalleryPageArtistsTab" />
                         <controls:SegmentedItem Visibility="Collapsed" />
                         <controls:SegmentedItem Visibility="Collapsed" />
                     </controls:Segmented>

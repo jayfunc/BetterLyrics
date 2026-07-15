@@ -135,6 +135,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <HyperlinkButton
+                x:Uid="MusicGalleryPageSortByGenre"
                 Grid.Column="0"
                 Margin="0,0,4,0"
                 Padding="0"
@@ -142,10 +143,14 @@
                 Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
                 CommandParameter="{x:Bind enums:CommonSongProperty.Genre}"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                <TextBlock
-                    Text="流派"
-                    TextTrimming="CharacterEllipsis"
-                    TextWrapping="NoWrap" />
+                <HyperlinkButton.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Text="{Binding}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
+                    </DataTemplate>
+                </HyperlinkButton.ContentTemplate>
             </HyperlinkButton>
             <FontIcon
                 Grid.Column="1"
@@ -162,6 +167,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <HyperlinkButton
+                x:Uid="MusicGalleryPageSortByYear"
                 Grid.Column="0"
                 Margin="0,0,4,0"
                 Padding="0"
@@ -169,10 +175,14 @@
                 Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
                 CommandParameter="{x:Bind enums:CommonSongProperty.Year}"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                <TextBlock
-                    Text="年份"
-                    TextTrimming="CharacterEllipsis"
-                    TextWrapping="NoWrap" />
+                <HyperlinkButton.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Text="{Binding}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
+                    </DataTemplate>
+                </HyperlinkButton.ContentTemplate>
             </HyperlinkButton>
             <FontIcon
                 Grid.Column="1"
@@ -189,6 +199,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <HyperlinkButton
+                x:Uid="MusicGalleryPageSortByTrackNumber"
                 Grid.Column="0"
                 Margin="0,0,4,0"
                 Padding="0"
@@ -196,10 +207,14 @@
                 Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
                 CommandParameter="{x:Bind enums:CommonSongProperty.TrackNumber}"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                <TextBlock
-                    Text="音轨"
-                    TextTrimming="CharacterEllipsis"
-                    TextWrapping="NoWrap" />
+                <HyperlinkButton.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Text="{Binding}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
+                    </DataTemplate>
+                </HyperlinkButton.ContentTemplate>
             </HyperlinkButton>
             <FontIcon
                 Grid.Column="1"
@@ -216,6 +231,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <HyperlinkButton
+                x:Uid="MusicGalleryPageSortByBitrate"
                 Grid.Column="0"
                 Margin="0,0,4,0"
                 Padding="0"
@@ -223,10 +239,14 @@
                 Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
                 CommandParameter="{x:Bind enums:CommonSongProperty.Bitrate}"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                <TextBlock
-                    Text="比特率"
-                    TextTrimming="CharacterEllipsis"
-                    TextWrapping="NoWrap" />
+                <HyperlinkButton.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Text="{Binding}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
+                    </DataTemplate>
+                </HyperlinkButton.ContentTemplate>
             </HyperlinkButton>
             <FontIcon
                 Grid.Column="1"
@@ -243,6 +263,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <HyperlinkButton
+                x:Uid="MusicGalleryPageSortBySampleRate"
                 Grid.Column="0"
                 Margin="0,0,4,0"
                 Padding="0"
@@ -250,10 +271,14 @@
                 Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
                 CommandParameter="{x:Bind enums:CommonSongProperty.SampleRate}"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                <TextBlock
-                    Text="采样率"
-                    TextTrimming="CharacterEllipsis"
-                    TextWrapping="NoWrap" />
+                <HyperlinkButton.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Text="{Binding}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
+                    </DataTemplate>
+                </HyperlinkButton.ContentTemplate>
             </HyperlinkButton>
             <FontIcon
                 Grid.Column="1"
@@ -270,6 +295,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <HyperlinkButton
+                x:Uid="MusicGalleryPageSortByFormat"
                 Grid.Column="0"
                 Margin="0,0,4,0"
                 Padding="0"
@@ -277,10 +303,14 @@
                 Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
                 CommandParameter="{x:Bind enums:CommonSongProperty.AudioFormat}"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                <TextBlock
-                    Text="格式"
-                    TextTrimming="CharacterEllipsis"
-                    TextWrapping="NoWrap" />
+                <HyperlinkButton.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Text="{Binding}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
+                    </DataTemplate>
+                </HyperlinkButton.ContentTemplate>
             </HyperlinkButton>
             <FontIcon
                 Grid.Column="1"
@@ -297,6 +327,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <HyperlinkButton
+                x:Uid="MusicGalleryPageSortByFileSize"
                 Grid.Column="0"
                 Margin="0,0,4,0"
                 Padding="0"
@@ -304,10 +335,14 @@
                 Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
                 CommandParameter="{x:Bind enums:CommonSongProperty.FileSize}"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                <TextBlock
-                    Text="大小"
-                    TextTrimming="CharacterEllipsis"
-                    TextWrapping="NoWrap" />
+                <HyperlinkButton.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Text="{Binding}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
+                    </DataTemplate>
+                </HyperlinkButton.ContentTemplate>
             </HyperlinkButton>
             <FontIcon
                 Grid.Column="1"
@@ -356,6 +391,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <HyperlinkButton
+                x:Uid="MusicGalleryPageSortByDuration"
                 Grid.Column="0"
                 Margin="0,0,4,0"
                 Padding="0"
@@ -363,10 +399,14 @@
                 Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
                 CommandParameter="{x:Bind enums:CommonSongProperty.Duration}"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                <TextBlock
-                    Text="时长"
-                    TextTrimming="CharacterEllipsis"
-                    TextWrapping="NoWrap" />
+                <HyperlinkButton.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Text="{Binding}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
+                    </DataTemplate>
+                </HyperlinkButton.ContentTemplate>
             </HyperlinkButton>
             <FontIcon
                 Grid.Column="1"
@@ -383,6 +423,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <HyperlinkButton
+                x:Uid="MusicGalleryPageSortByDateCreated"
                 Grid.Column="0"
                 Margin="0,0,4,0"
                 Padding="0"
@@ -390,10 +431,14 @@
                 Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
                 CommandParameter="{x:Bind enums:CommonSongProperty.DateCreated}"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                <TextBlock
-                    Text="创建时间"
-                    TextTrimming="CharacterEllipsis"
-                    TextWrapping="NoWrap" />
+                <HyperlinkButton.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Text="{Binding}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
+                    </DataTemplate>
+                </HyperlinkButton.ContentTemplate>
             </HyperlinkButton>
             <FontIcon
                 Grid.Column="1"
@@ -410,6 +455,7 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <HyperlinkButton
+                x:Uid="MusicGalleryPageSortByDateModified"
                 Grid.Column="0"
                 Margin="0,0,4,0"
                 Padding="0"
@@ -417,10 +463,14 @@
                 Command="{x:Bind ViewModel.SetSongOrderTypeCommand}"
                 CommandParameter="{x:Bind enums:CommonSongProperty.DateModified}"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}">
-                <TextBlock
-                    Text="修改时间"
-                    TextTrimming="CharacterEllipsis"
-                    TextWrapping="NoWrap" />
+                <HyperlinkButton.ContentTemplate>
+                    <DataTemplate>
+                        <TextBlock
+                            Text="{Binding}"
+                            TextTrimming="CharacterEllipsis"
+                            TextWrapping="NoWrap" />
+                    </DataTemplate>
+                </HyperlinkButton.ContentTemplate>
             </HyperlinkButton>
             <FontIcon
                 Grid.Column="1"
@@ -440,18 +490,18 @@
             </Button.Content>
             <Button.Flyout>
                 <MenuFlyout>
-                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowAlbumColumn, Mode=TwoWay}" Text="专辑" />
-                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowGenreColumn, Mode=TwoWay}" Text="流派" />
-                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowYearColumn, Mode=TwoWay}" Text="年份" />
-                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowTrackNumberColumn, Mode=TwoWay}" Text="音轨" />
-                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowBitrateColumn, Mode=TwoWay}" Text="比特率" />
-                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowSampleRateColumn, Mode=TwoWay}" Text="采样率" />
-                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowFormatColumn, Mode=TwoWay}" Text="格式" />
-                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowFileSizeColumn, Mode=TwoWay}" Text="大小" />
-                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowFolderColumn, Mode=TwoWay}" Text="文件夹" />
-                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowDurationColumn, Mode=TwoWay}" Text="时长" />
-                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowDateCreatedColumn, Mode=TwoWay}" Text="创建时间" />
-                    <ToggleMenuFlyoutItem IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowDateModifiedColumn, Mode=TwoWay}" Text="修改时间" />
+                    <ToggleMenuFlyoutItem x:Uid="MusicGalleryPageShowAlbumColumn" IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowAlbumColumn, Mode=TwoWay}" />
+                    <ToggleMenuFlyoutItem x:Uid="MusicGalleryPageShowGenreColumn" IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowGenreColumn, Mode=TwoWay}" />
+                    <ToggleMenuFlyoutItem x:Uid="MusicGalleryPageShowYearColumn" IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowYearColumn, Mode=TwoWay}" />
+                    <ToggleMenuFlyoutItem x:Uid="MusicGalleryPageShowTrackNumberColumn" IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowTrackNumberColumn, Mode=TwoWay}" />
+                    <ToggleMenuFlyoutItem x:Uid="MusicGalleryPageShowBitrateColumn" IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowBitrateColumn, Mode=TwoWay}" />
+                    <ToggleMenuFlyoutItem x:Uid="MusicGalleryPageShowSampleRateColumn" IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowSampleRateColumn, Mode=TwoWay}" />
+                    <ToggleMenuFlyoutItem x:Uid="MusicGalleryPageShowFormatColumn" IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowFormatColumn, Mode=TwoWay}" />
+                    <ToggleMenuFlyoutItem x:Uid="MusicGalleryPageShowFileSizeColumn" IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowFileSizeColumn, Mode=TwoWay}" />
+                    <ToggleMenuFlyoutItem x:Uid="MusicGalleryPageShowFolderColumn" IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowFolderColumn, Mode=TwoWay}" />
+                    <ToggleMenuFlyoutItem x:Uid="MusicGalleryPageShowDurationColumn" IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowDurationColumn, Mode=TwoWay}" />
+                    <ToggleMenuFlyoutItem x:Uid="MusicGalleryPageShowDateCreatedColumn" IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowDateCreatedColumn, Mode=TwoWay}" />
+                    <ToggleMenuFlyoutItem x:Uid="MusicGalleryPageShowDateModifiedColumn" IsChecked="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ShowDateModifiedColumn, Mode=TwoWay}" />
                 </MenuFlyout>
             </Button.Flyout>
         </Button>
