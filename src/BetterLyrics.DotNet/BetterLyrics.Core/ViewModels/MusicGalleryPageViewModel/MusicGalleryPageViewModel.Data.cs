@@ -166,7 +166,6 @@ public partial class MusicGalleryPageViewModel
             a => LanguageHelper.GetOrderChar(a.Title),
             o => ((AlbumModel)o).Title
         );
-        GenerateScatteredAlbums(albumsList);
 
         var artistsQuery = _filteredTracks
             .GroupBy(t => t.Artist)
@@ -189,69 +188,7 @@ public partial class MusicGalleryPageViewModel
         );
     }
 
-    private void GenerateScatteredAlbums(IList<AlbumModel> albumsList)
-    {
-        var random = new Random();
-        var scatteredList = new List<ScatteredAlbumModel>();
-        
-        int count = albumsList.Count > 0 ? albumsList.Count : 1;
-        
-        // Use a dart-throwing algorithm for a truly organic, non-grid layout
-        double areaPerItem = 45000; // Determines overall density
-        double canvasSide = Math.Max(1200, Math.Sqrt(count * areaPerItem));
-        
-        GlobeCanvasWidth = canvasSide;
-        GlobeCanvasHeight = canvasSide;
-        
-        double itemSize = 150;
-        double minDistance = 130; // Minimum distance between album centers to prevent excessive occlusion
-        double minDistSq = minDistance * minDistance;
-        
-        foreach (var album in albumsList)
-        {
-            double x = 0;
-            double y = 0;
-            bool placed = false;
-            
-            // Try to find a valid spot
-            for (int attempt = 0; attempt < 100; attempt++)
-            {
-                x = random.NextDouble() * (GlobeCanvasWidth - itemSize);
-                y = random.NextDouble() * (GlobeCanvasHeight - itemSize);
-                
-                bool collision = false;
-                foreach (var existing in scatteredList)
-                {
-                    double dx = existing.X - x;
-                    double dy = existing.Y - y;
-                    if (dx * dx + dy * dy < minDistSq)
-                    {
-                        collision = true;
-                        break;
-                    }
-                }
-                
-                if (!collision)
-                {
-                    placed = true;
-                    break;
-                }
-            }
-            
-            // If it fails after 100 attempts, it just places it at the last random spot (allowing overlap)
-            
-            var scattered = new ScatteredAlbumModel(album)
-            {
-                X = x,
-                Y = y,
-                Rotation = (random.NextDouble() * 70) - 35, // -35 to +35 degrees for more messy look
-                ZIndex = 0
-            };
-            scatteredList.Add(scattered);
-        }
-        
-        ScatteredAlbums = new ObservableCollection<ScatteredAlbumModel>(scatteredList);
-    }
+
 
     private void RefreshTreeView()
     {
