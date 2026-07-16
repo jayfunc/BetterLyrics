@@ -31,27 +31,40 @@
                     Margin="0,4,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top"
-                    Background="{ThemeResource LayerOnMicaBaseAltFillColorDefaultBrush}"
-                    CornerRadius="6"
-                    Opacity="{x:Bind ViewModel.TimelineSliderThumbOpacity, Mode=OneWay}"
-                    Visibility="{x:Bind LyricsWindowStatus.IsTimelineLyricsPreviewEnabled, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                    Opacity="0">
                     <Grid.OpacityTransition>
                         <ScalarTransition />
                     </Grid.OpacityTransition>
                     <Grid.TranslationTransition>
                         <Vector3Transition />
                     </Grid.TranslationTransition>
-                    <StackPanel
-                        Margin="8,4"
-                        Orientation="Horizontal"
-                        Spacing="6">
+                    <Grid
+                        Margin="4,0,0,0"
+                        Padding="8,4"
+                        Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
+                        ColumnSpacing="6"
+                        CornerRadius="6">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
                         <TextBlock
+                            Grid.Column="0"
                             Margin="0,0,0,2"
                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                             Text="{x:Bind ViewModel.TimelineSliderThumbLyricsLine.StartMs, Converter={StaticResource MillisecondsToFormattedTimeConverter}, Mode=OneWay}" />
-                        <!--  TODO 原文翻译共同显示  -->
-                        <TextBlock Margin="0,0,0,2" Text="{x:Bind ViewModel.TimelineSliderThumbLyricsLine.PrimaryText, Mode=OneWay}" />
-                    </StackPanel>
+                        <Grid Grid.Column="1">
+                            <RichTextBlock
+                                MaxLines="2"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="Wrap">
+                                <Paragraph>
+                                    <Run Text="{x:Bind ViewModel.TimelineSliderThumbLyricsLine.PrimaryText, Mode=OneWay}" />
+                                    <Run Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.TimelineSliderThumbLyricsLine.SecondaryText, Mode=OneWay}" />
+                                </Paragraph>
+                            </RichTextBlock>
+                        </Grid>
+                    </Grid>
                 </Grid>
 
                 <Grid HorizontalAlignment="Left">
@@ -477,6 +490,7 @@
                     PointerExited="TimelineSliderOverlay_PointerExited"
                     PointerMoved="TimelineSliderOverlay_PointerMoved"
                     PointerPressed="TimelineSliderOverlay_PointerPressed" />
+
             </Grid>
 
         </Grid>

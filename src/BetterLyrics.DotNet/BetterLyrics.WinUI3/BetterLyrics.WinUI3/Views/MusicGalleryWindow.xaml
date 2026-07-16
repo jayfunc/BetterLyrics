@@ -20,6 +20,7 @@
 
         <local:NowPlayingPage
             x:Name="NowPlayingPage"
+            LyricsWindowStatus="{x:Bind ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus, Mode=OneWay}"
             Opacity="0"
             Visibility="Collapsed">
             <local:NowPlayingPage.OpacityTransition>

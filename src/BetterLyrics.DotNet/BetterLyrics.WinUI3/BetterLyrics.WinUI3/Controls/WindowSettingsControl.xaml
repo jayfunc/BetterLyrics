@@ -210,13 +210,41 @@
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAdaptToAlbumArt, Mode=TwoWay}" />
                     </controls:SettingsCard>
                     <!--  取色风格  -->
-                    <controls:SettingsCard x:Uid="SettingsPagePaletteGeneratorType" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE771;}">
+                    <controls:SettingsExpander x:Uid="SettingsPagePaletteGeneratorType" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE771;}">
                         <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.PaletteGeneratorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                            <ComboBoxItem x:Uid="SettingsPageAuto" />
-                            <ComboBoxItem Content="OctTree" />
-                            <ComboBoxItem Content="KMeans" />
+                            <ComboBoxItem Content="CelebiQuantizer" />
+                            <ComboBoxItem Content="WuQuantizer" />
+                            <ComboBoxItem Content="WsMeansQuantizer" />
                         </ComboBox>
-                    </controls:SettingsCard>
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="SettingsPagePaletteChromaWeight">
+                                <local:ExtendedSlider
+                                    Default="1.0"
+                                    Frequency="0.1"
+                                    Maximum="3.0"
+                                    Minimum="0.0"
+                                    Value="{x:Bind LyricsWindowStatus.PaletteChromaWeight, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+
+                            <controls:SettingsCard x:Uid="SettingsPagePaletteToneWeight">
+                                <local:ExtendedSlider
+                                    Default="-0.75"
+                                    Frequency="0.1"
+                                    Maximum="2.0"
+                                    Minimum="-2.0"
+                                    Value="{x:Bind LyricsWindowStatus.PaletteToneWeight, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+
+                            <controls:SettingsCard x:Uid="SettingsPagePalettePopulationWeight">
+                                <local:ExtendedSlider
+                                    Default="3.0"
+                                    Frequency="0.5"
+                                    Maximum="10.0"
+                                    Minimum="0.0"
+                                    Value="{x:Bind LyricsWindowStatus.PalettePopulationWeight, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
                     <!--  取色结果  -->
                     <controls:SettingsExpander x:Uid="WindowSettingsControlRealTimePalette" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE80A;}">
                         <controls:SettingsExpander.Items>

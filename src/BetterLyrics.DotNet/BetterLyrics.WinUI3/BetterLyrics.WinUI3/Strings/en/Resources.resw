@@ -2637,4 +2637,13 @@
   <data name="SettingsPageTopBottom.Content" xml:space="preserve">
     <value>Top-Bottom</value>
   </data>
+  <data name="SettingsPagePaletteToneWeight.Header" xml:space="preserve">
+    <value>Tone Weight (Lightness)</value>
+  </data>
+  <data name="SettingsPagePaletteChromaWeight.Header" xml:space="preserve">
+    <value>Chroma Weight (Saturation)</value>
+  </data>
+  <data name="SettingsPagePalettePopulationWeight.Header" xml:space="preserve">
+    <value>Population Weight (Area)</value>
+  </data>
 </root>

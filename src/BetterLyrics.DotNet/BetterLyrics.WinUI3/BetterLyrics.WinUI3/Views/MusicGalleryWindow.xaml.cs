@@ -37,8 +37,6 @@ public sealed partial class MusicGalleryWindow : Window,
         ViewModel = Ioc.Default.GetRequiredService<MusicGalleryWindowViewModel>();
         this.Init("MusicGalleryPageTitle");
 
-        NowPlayingPage.LyricsWindowStatus = ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus;
-
         AppWindow.Closing += AppWindow_Closing;
 
         WeakReferenceMessenger.Default.RegisterAll(this);
@@ -72,6 +70,17 @@ public sealed partial class MusicGalleryWindow : Window,
         if (message.Sender == ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus)
             if (message.PropertyName == nameof(LyricsWindowStatus.PaletteGeneratorType))
                 _ = UpdateAlbumArtThemeColorsAsync();
+    }
+
+    public void Receive(PropertyChangedMessage<double> message)
+    {
+        if (message.Sender == ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus)
+        {
+            if (message.PropertyName == nameof(LyricsWindowStatus.PaletteChromaWeight) ||
+                message.PropertyName == nameof(LyricsWindowStatus.PaletteToneWeight) ||
+                message.PropertyName == nameof(LyricsWindowStatus.PalettePopulationWeight))
+                _ = UpdateAlbumArtThemeColorsAsync();
+        }
     }
 
     private void UpdateTheme()

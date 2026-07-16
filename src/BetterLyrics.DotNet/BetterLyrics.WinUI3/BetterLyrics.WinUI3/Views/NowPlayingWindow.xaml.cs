@@ -1,4 +1,4 @@
-﻿// 2025/6/23 by Zhe Fang
+// 2025/6/23 by Zhe Fang
 
 using System.Runtime.InteropServices;
 using Windows.Graphics;
@@ -200,8 +200,14 @@ public sealed partial class NowPlayingWindow : Window,
     public void Receive(PropertyChangedMessage<double> message)
     {
         if (message.Sender == LyricsWindowStatus)
+        {
             if (message.PropertyName == nameof(LyricsWindowStatus.DockHeight))
                 OnWorkAreaChanged();
+            else if (message.PropertyName == nameof(LyricsWindowStatus.PaletteChromaWeight) ||
+                     message.PropertyName == nameof(LyricsWindowStatus.PaletteToneWeight) ||
+                     message.PropertyName == nameof(LyricsWindowStatus.PalettePopulationWeight))
+                RequestUpdateAlbumArtThemeColors();
+        }
     }
 
     public void Receive(PropertyChangedMessage<LyricsFontColorType> message)

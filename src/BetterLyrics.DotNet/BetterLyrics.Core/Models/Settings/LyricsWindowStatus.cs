@@ -1,4 +1,4 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 using System.Text.Json.Serialization;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
@@ -181,7 +181,19 @@ public partial class LyricsWindowStatus : ObservableRecipient, ICloneable
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
-    public partial PaletteGeneratorType PaletteGeneratorType { get; set; } = PaletteGeneratorType.Auto;
+    public partial PaletteGeneratorType PaletteGeneratorType { get; set; } = PaletteGeneratorType.CelebiQuantizer;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial double PaletteChromaWeight { get; set; } = 1.0;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial double PaletteToneWeight { get; set; } = -0.75;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial double PalettePopulationWeight { get; set; } = 3.0;
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
@@ -301,6 +313,9 @@ public partial class LyricsWindowStatus : ObservableRecipient, ICloneable
             EnvironmentSampleMode = EnvironmentSampleMode,
             WindowTheme = WindowTheme,
             PaletteGeneratorType = PaletteGeneratorType,
+            PaletteChromaWeight = PaletteChromaWeight,
+            PaletteToneWeight = PaletteToneWeight,
+            PalettePopulationWeight = PalettePopulationWeight,
             WindowPalette = WindowPalette,
 
             HideWindowWhenPaused = HideWindowWhenPaused,

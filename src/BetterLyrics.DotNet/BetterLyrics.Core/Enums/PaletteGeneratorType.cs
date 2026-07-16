@@ -2,7 +2,7 @@
 
 public enum PaletteGeneratorType
 {
-    Auto,
-    OctTree,
-    KMeans
+    CelebiQuantizer,
+    WuQuantizer,
+    WsMeansQuantizer
 }

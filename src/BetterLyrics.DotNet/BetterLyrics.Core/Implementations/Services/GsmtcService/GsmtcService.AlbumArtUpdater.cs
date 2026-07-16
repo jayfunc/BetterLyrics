@@ -1,4 +1,4 @@
-﻿using BetterLyrics.Core.Constants;
+using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Helpers;
@@ -29,18 +29,18 @@ public partial class GsmtcService : IGsmtcService
         var darkAccentColors = Enumerable.Repeat(Colors.Black, 4).ToList();
 
         accentColors =
-            (await PaletteHelper.GetAccentColorsAsync(AlbumArtBytes, 4, lyricsWindowStatus.PaletteGeneratorType, null))
-            .Palette.Select(ColorHelper.FromVector3).ToList();
+            (await PaletteHelper.GetAccentColorsAsync(AlbumArtBytes, 4, lyricsWindowStatus.PaletteGeneratorType, null, lyricsWindowStatus.PaletteChromaWeight, lyricsWindowStatus.PaletteToneWeight, lyricsWindowStatus.PalettePopulationWeight))
+            .Select(ColorHelper.FromVector3).ToList();
         token.ThrowIfCancellationRequested();
 
         lightAccentColors =
-            (await PaletteHelper.GetAccentColorsAsync(AlbumArtBytes, 4, lyricsWindowStatus.PaletteGeneratorType, false))
-            .Palette.Select(ColorHelper.FromVector3).ToList();
+            (await PaletteHelper.GetAccentColorsAsync(AlbumArtBytes, 4, lyricsWindowStatus.PaletteGeneratorType, false, lyricsWindowStatus.PaletteChromaWeight, lyricsWindowStatus.PaletteToneWeight, lyricsWindowStatus.PalettePopulationWeight))
+            .Select(ColorHelper.FromVector3).ToList();
         token.ThrowIfCancellationRequested();
 
         darkAccentColors =
-            (await PaletteHelper.GetAccentColorsAsync(AlbumArtBytes, 4, lyricsWindowStatus.PaletteGeneratorType, true))
-            .Palette.Select(ColorHelper.FromVector3).ToList();
+            (await PaletteHelper.GetAccentColorsAsync(AlbumArtBytes, 4, lyricsWindowStatus.PaletteGeneratorType, true, lyricsWindowStatus.PaletteChromaWeight, lyricsWindowStatus.PaletteToneWeight, lyricsWindowStatus.PalettePopulationWeight))
+            .Select(ColorHelper.FromVector3).ToList();
         token.ThrowIfCancellationRequested();
 
         var result = new NowPlayingPalette
@@ -168,12 +168,12 @@ public partial class GsmtcService : IGsmtcService
 
         lightAccentColors =
             (await PaletteHelper.GetAccentColorsAsync(AlbumArtBytes, 4, paletteGeneratorType, false))
-            .Palette.Select(ColorHelper.FromVector3).ToList();
+            .Select(ColorHelper.FromVector3).ToList();
         token.ThrowIfCancellationRequested();
 
         darkAccentColors =
             (await PaletteHelper.GetAccentColorsAsync(AlbumArtBytes, 4, paletteGeneratorType, true))
-            .Palette.Select(ColorHelper.FromVector3).ToList();
+            .Select(ColorHelper.FromVector3).ToList();
         token.ThrowIfCancellationRequested();
 
         return isDark ? darkAccentColors : lightAccentColors;

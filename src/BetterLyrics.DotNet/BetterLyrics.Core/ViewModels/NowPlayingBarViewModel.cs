@@ -31,8 +31,6 @@ public partial class NowPlayingBarViewModel : BaseViewModel
 
     [ObservableProperty] public partial int Volume { get; set; }
 
-    [ObservableProperty] public partial float TimelineSliderThumbOpacity { get; set; } = 0f;
-
     [ObservableProperty] public partial LyricsLine? TimelineSliderThumbLyricsLine { get; set; }
 
     [ObservableProperty] public partial double TimelineSliderThumbSeconds { get; set; } = 0;

@@ -38,7 +38,6 @@
         <PackageReference Include="CommunityToolkit.Labs.WinUI.Controls.OpacityMaskView" Version="0.1.260617-build.2640" />
         <PackageReference Include="CommunityToolkit.Labs.WinUI.MarqueeText" Version="0.1.250828-build.2223" />
         <PackageReference Include="CommunityToolkit.Labs.WinUI.Shimmer" Version="0.1.250828-build.2223" />
-        <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
         <PackageReference Include="CommunityToolkit.WinUI.Behaviors" Version="8.2.251219" />
         <PackageReference Include="CommunityToolkit.WinUI.Controls.ColorPicker" Version="8.2.251219" />
         <PackageReference Include="CommunityToolkit.WinUI.Controls.Primitives" Version="8.2.251219" />
@@ -51,21 +50,14 @@
         <PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.2.251219" />
         <PackageReference Include="CommunityToolkit.WinUI.Triggers" Version="8.2.251219" />
         <PackageReference Include="ComputeSharp.D2D1.WinUI" Version="3.2.0" />
-        <PackageReference Include="csharp-pinyin" Version="1.0.1" />
         <PackageReference Include="DevWinUI.Controls" Version="9.9.4" />
         <PackageReference Include="Dubya.WindowsMediaController.Jayfunc" Version="2.5.6" />
-        <PackageReference Include="F23.StringSimilarity" Version="7.0.1" />
         <PackageReference Include="FlaUI.UIA3" Version="5.0.0" />
-        <PackageReference Include="FluentFTP" Version="54.2.0" />
         <PackageReference Include="H.NotifyIcon.WinUI" Version="2.4.1" />
-        <PackageReference Include="Impressionist.Jayfunc" Version="1.0.0" />
         <PackageReference Include="Interop.UIAutomationClient" Version="10.19041.0" />
-        <PackageReference Include="LiteFM" Version="1.0.3" />
         <PackageReference Include="LiveChartsCore.SkiaSharpView.WinUI" Version="2.0.5" />
-        <PackageReference Include="Lyricify.Lyrics.Helper.Jayfunc" Version="0.1.4" />
 
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.9" />
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.9" />
         <PackageReference Include="Microsoft.Graphics.Win2D" Version="1.4.0" />
         <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="18.7.23">
             <PrivateAssets>all</PrivateAssets>
@@ -73,18 +65,13 @@
         </PackageReference>
         <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.2270" />
         <PackageReference Include="Microsoft.WindowsAppSDK" Version="2.2.0" />
-        <PackageReference Include="MimeMapping" Version="4.0.0" />
         <PackageReference Include="NAudio.Wasapi" Version="2.3.0" />
         <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-        <PackageReference Include="NTextCat" Version="0.3.65" />
         <PackageReference Include="QRCoder" Version="1.8.0" />
         <PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0" />
         <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
-        <PackageReference Include="SMBLibrary" Version="1.5.7" />
         <PackageReference Include="SpoutDx.Net.Interop.MultiPlatform" Version="0.1.0" />
         <PackageReference Include="System.Drawing.Common" Version="10.0.9" />
-        <PackageReference Include="System.IO.Hashing" Version="10.0.9" />
-        <PackageReference Include="TagLibSharp" Version="2.3.0" />
         <PackageReference Include="Ude.NetStandard" Version="1.2.0" />
         <PackageReference Include="Vanara.PInvoke.DwmApi" Version="5.0.5" />
         <PackageReference Include="Vanara.PInvoke.Gdi32" Version="5.0.5" />
@@ -93,10 +80,7 @@
         <PackageReference Include="Vanara.Windows.Shell" Version="5.0.5" />
         <PackageReference Include="VCollab.DiscordRichPresence" Version="1.7.0" />
         <PackageReference Include="Vortice.Direct3D11" Version="3.8.3" />
-        <PackageReference Include="WanaKana-net" Version="1.0.0" />
-        <PackageReference Include="WebDav.Client" Version="2.9.0" />
         <PackageReference Include="WinUIEx" Version="2.9.1" />
-        <PackageReference Include="z440.atl.core" Version="7.15.3" />
     </ItemGroup>
     <ItemGroup>
         <Page Update="Rendering\InAppLyricsRenderer.xaml">

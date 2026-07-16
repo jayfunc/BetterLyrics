@@ -14,6 +14,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using BetterLyrics.Core.ViewModels;
+using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -267,12 +268,15 @@ public sealed partial class NowPlayingBar : UserControl
 
     private void TimelineSliderOverlay_PointerEntered(object sender, PointerRoutedEventArgs e)
     {
-        ViewModel.TimelineSliderThumbOpacity = 1f;
+        if (LyricsWindowStatus?.IsTimelineLyricsPreviewEnabled == true)
+        {
+            TimelineSliderLyricsLineInfo.Opacity = 1f;
+        }
     }
 
     private void TimelineSliderOverlay_PointerExited(object sender, PointerRoutedEventArgs e)
     {
-        ViewModel.TimelineSliderThumbOpacity = 0f;
+        TimelineSliderLyricsLineInfo.Opacity = 0f;
     }
 
     private void ExtendedSlider_ValueChangedByUser(object sender, ExtendedSliderValueChangedByUserEventArgs e)
