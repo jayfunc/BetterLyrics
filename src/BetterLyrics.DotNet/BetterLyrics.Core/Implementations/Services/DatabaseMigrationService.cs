@@ -109,6 +109,7 @@ public class DatabaseMigrationService : Interfaces.Services.IDatabaseMigrationSe
                 await connection.CloseAsync();
             }
 
+            SqliteConnection.ClearAllPools();
             File.Move(dbPath, dbPath + ".bak", true);
             _logger.LogInformation("FilesIndex migration completed.");
         }
@@ -148,6 +149,7 @@ public class DatabaseMigrationService : Interfaces.Services.IDatabaseMigrationSe
                 await connection.CloseAsync();
             }
 
+            SqliteConnection.ClearAllPools();
             File.Move(dbPath, dbPath + ".bak", true);
             _logger.LogInformation("LyricsCache migration completed.");
         }
@@ -159,7 +161,7 @@ public class DatabaseMigrationService : Interfaces.Services.IDatabaseMigrationSe
 
     private class LegacyMappedSongSearchQuery
     {
-        public int Id { get; set; }
+        public string Id { get; set; } = string.Empty;
         public string OriginalTitle { get; set; } = string.Empty;
         public string OriginalArtist { get; set; } = string.Empty;
         public string OriginalAlbum { get; set; } = string.Empty;
@@ -210,6 +212,7 @@ public class DatabaseMigrationService : Interfaces.Services.IDatabaseMigrationSe
                 await connection.CloseAsync();
             }
 
+            SqliteConnection.ClearAllPools();
             File.Move(dbPath, dbPath + ".bak", true);
             _logger.LogInformation("SongSearchMap migration completed.");
         }
