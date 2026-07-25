@@ -148,18 +148,9 @@
 
 **协助翻译：** 找不到你的语言？[点此开始翻译](https://github.com/jayfunc/BetterLyrics?tab=contributing-ov-file)。
 
-**开发插件：** 想要扩展功能？[🧩 阅读插件开发指南](https://betterlyrics.github.io/zh-cn/plugin-dev/intro/)。
+**开发插件：** 想要扩展功能？[查看插件开发指南](https://betterlyrics.github.io/zh-cn/plugin-dev/intro/)。
 
-**从源码构建：**
-
-构建前，请执行以下替换：
-
-- `src/BetterLyrics.DotNet`
-  - `BetterLyrics.Core/Constants`
-    - `DiscordTemplate` -> `Discord.cs`
-    - `LastFMTemplate` -> `LastFM.cs`
-  - `BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets`
-    - `Wiki82.profile.xml.template` -> `Wiki82.profile.xml`（下载解压 https://github.com/ivanakcheurov/ntextcat/blob/master/src/LanguageModels/Wiki.profiles.7z 以获取该文件）
+**从源码构建：** [查看构建说明](https://betterlyrics.github.io/zh-cn/get-started/download/#visual-studio)
 
 ## 🤑 赞助与捐赠
 

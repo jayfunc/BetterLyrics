@@ -148,18 +148,9 @@
 
 **Help us translate:** Cannot find your language? [Start translating here](https://github.com/jayfunc/BetterLyrics?tab=contributing-ov-file).
 
-**Develop Plugins:** Want to extend functionality? [🧩 Read the Developer Guide](https://betterlyrics.github.io/plugin-dev/intro/).
+**Develop Plugins:** Want to extend functionality? [Read the Developer Guide](https://betterlyrics.github.io/plugin-dev/intro/).
 
-**Build from source:**
-
-Before building, please perform the following replacements:
-
-- `src/BetterLyrics.DotNet`
-  - `BetterLyrics.Core/Constants`
-    - `DiscordTemplate` -> `Discord.cs`
-    - `LastFMTemplate` -> `LastFM.cs`
-  - `BetterLyrics.WinUI3/BetterLyrics.WinUI3/Assets`
-    - `Wiki82.profile.xml.template` -> `Wiki82.profile.xml` (download the zip and extra the file from https://github.com/ivanakcheurov/ntextcat/blob/master/src/LanguageModels/Wiki.profiles.7z)
+**Build from source:** [View build instructions](https://betterlyrics.github.io/get-started/download/#visual-studio)
 
 ## 🤑 Donations
 
