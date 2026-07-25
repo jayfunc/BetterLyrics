@@ -126,7 +126,7 @@
                                     Default="0.5"
                                     Frequency="0.1"
                                     Maximum="2"
-                                    Minimum="-2"
+                                    Minimum="-0.1"
                                     Unit="x"
                                     Value="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsLineInnerSpacingFactor, Mode=TwoWay}" />
                             </controls:SettingsCard>

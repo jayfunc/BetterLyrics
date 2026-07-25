@@ -525,7 +525,7 @@ public sealed partial class NowPlayingWindow : Window,
                             || (status.HideWindowWhenNullSession &&
                                 _gsmtcService.CurrentMediaSourceProviderInfo == null))
                         {
-                            _windowManagerProvider.HideWindow(WindowStatus.HiddenBySystem);
+                            _windowManagerProvider.HideWindow(this, WindowStatus.HiddenBySystem);
                             StopOverlayInputHelper();
                         }
                     }

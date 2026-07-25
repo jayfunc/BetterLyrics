@@ -1,2 +1,0 @@
-package com.jayfunc.betterlyrics.constants
-class ExtendedGenreFiled {}
