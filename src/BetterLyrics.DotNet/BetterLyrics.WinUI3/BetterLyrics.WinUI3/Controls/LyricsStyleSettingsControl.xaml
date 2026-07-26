@@ -123,7 +123,7 @@
                             </controls:SettingsCard>
                             <controls:SettingsCard x:Uid="SettingsPageLyricsLineInnerSpacingFactor">
                                 <local:ExtendedSlider
-                                    Default="0.5"
+                                    Default="0.1"
                                     Frequency="0.1"
                                     Maximum="2"
                                     Minimum="-0.1"
