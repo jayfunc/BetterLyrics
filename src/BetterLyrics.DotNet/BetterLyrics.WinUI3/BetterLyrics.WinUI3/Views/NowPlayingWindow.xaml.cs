@@ -464,13 +464,20 @@ public sealed partial class NowPlayingWindow : Window,
 
                 if (!LyricsWindowStatus.IsAlwaysHideUnlockButton ||
                     LyricsWindowStatus.KeepNowPlayingBarInteractiveWhenLocked)
+                {
                     StartOverlayInputHelper();
+                }
+                else
+                {
+                    _windowManagerProvider.SetIsClickThrough(this, true);
+                }
             }
         }
         else
         {
             LockToggleButtonContainer.Visibility = Visibility.Collapsed;
             UnlockButton.Opacity = 0;
+            _windowManagerProvider.SetIsClickThrough(this, false);
             if (LyricsWindowStatus.IsWallpaper)
             {
                 WorkerWHook.UnpinFromDesktop(this);
@@ -835,7 +842,11 @@ public sealed partial class NowPlayingWindow : Window,
                 _windowManagerProvider.SetIsClickThrough(this, true);
             }
         };
-        _overlayInputHelper.OnInteractiveAreaExited = () => { UnlockButton.Opacity = 0; };
+        _overlayInputHelper.OnInteractiveAreaExited = () =>
+        {
+            UnlockButton.Opacity = 0;
+            _windowManagerProvider.SetIsClickThrough(this, true);
+        };
         _overlayInputHelper.Start();
         LyricsWindowStatus.IsOverlayInputHelperRunning = true;
     }

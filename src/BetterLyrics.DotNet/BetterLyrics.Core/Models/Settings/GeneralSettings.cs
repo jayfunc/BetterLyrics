@@ -1,4 +1,4 @@
-﻿using BetterLyrics.Core.Constants;
+using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 

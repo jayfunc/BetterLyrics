@@ -1,4 +1,4 @@
-﻿using BetterLyrics.Core.Collections;
+using BetterLyrics.Core.Collections;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Models.Entities;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -20,6 +20,10 @@ public partial class AppSettings : ObservableRecipient
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
     public partial MusicGallerySettings MusicGallerySettings { get; set; } = new();
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial LyricsCardSettings LyricsCardSettings { get; set; } = new();
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]

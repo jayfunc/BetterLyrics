@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Interfaces.Services;
@@ -29,6 +29,8 @@ public partial class LyricsSharePageViewModel : BaseViewModel,
 
         AppSettings = settingsService.AppSettings;
         GSMTCService = gsmtcService;
+
+        SelectedStyleDisplayTypeIndex = AppSettings.LyricsCardSettings.SelectedDisplayTypeIndex;
 
         _ = RefreshCardDataAsync();
         ActivateCardDataForBinding();
@@ -210,7 +212,14 @@ public partial class LyricsSharePageViewModel : BaseViewModel,
             chineseEleganceGroup
         };
 
-        SwitchStyle(classicGroup[0]);
+        var savedStyleKey = AppSettings.LyricsCardSettings.SelectedStyleKey;
+        var styleToSelect = StyleGroups.SelectMany(g => g).FirstOrDefault(s => s.StyleKey == savedStyleKey) ?? classicGroup[0];
+        SwitchStyle(styleToSelect);
+
+        var displayType = AppSettings.LyricsCardSettings.SelectedDisplayTypeIndex;
+        foreach (var group in StyleGroups)
+        foreach (var style in group)
+            style.IsExpanded = displayType != 0;
     }
 
     public void SwitchStyle(LyricsCardStyleItem styleItem)
@@ -256,6 +265,8 @@ public partial class LyricsSharePageViewModel : BaseViewModel,
     {
         SwitchStyle(value);
 
+        AppSettings.LyricsCardSettings.SelectedStyleKey = value.StyleKey;
+
         var found = _settingsService.AppSettings.LyricsCardConfigs.FirstOrDefault(c =>
             c.ResourceKey == value.StyleKey);
         if (found == null)
@@ -269,6 +280,9 @@ public partial class LyricsSharePageViewModel : BaseViewModel,
 
     partial void OnSelectedStyleDisplayTypeIndexChanged(int value)
     {
+        AppSettings.LyricsCardSettings.SelectedDisplayTypeIndex = value;
+
+        if (StyleGroups == null) return;
         foreach (var group in StyleGroups)
         foreach (var style in group)
             style.IsExpanded = value != 0;
