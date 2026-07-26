@@ -60,45 +60,45 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -1408,7 +1408,7 @@
     <value>模糊量</value>
   </data>
   <data name="SettingsPageBottom.Content" xml:space="preserve">
-    <value>靠下</value>
+    <value>靠底</value>
   </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
     <value>包括記錄檔，網路歌詞快取</value>
@@ -2284,7 +2284,7 @@
     <value>整個視窗</value>
   </data>
   <data name="SettingsPageTop.Content" xml:space="preserve">
-    <value>靠上</value>
+    <value>靠頂</value>
   </data>
   <data name="SettingsPageTranslatedText.Header" xml:space="preserve">
     <value>譯文</value>
@@ -2566,16 +2566,16 @@
     <value>演出者</value>
   </data>
   <data name="MusicGalleryPageSortByGenre.Content" xml:space="preserve">
-    <value>類型</value>
+    <value>流派</value>
   </data>
   <data name="MusicGalleryPageSortByYear.Content" xml:space="preserve">
     <value>年份</value>
   </data>
   <data name="MusicGalleryPageSortByTrackNumber.Content" xml:space="preserve">
-    <value>音軌</value>
+    <value>音軌編號</value>
   </data>
   <data name="MusicGalleryPageSortByBitrate.Content" xml:space="preserve">
-    <value>位元速率</value>
+    <value>位元率</value>
   </data>
   <data name="MusicGalleryPageSortBySampleRate.Content" xml:space="preserve">
     <value>取樣率</value>
@@ -2599,16 +2599,16 @@
     <value>專輯</value>
   </data>
   <data name="MusicGalleryPageShowGenreColumn.Text" xml:space="preserve">
-    <value>類型</value>
+    <value>流派</value>
   </data>
   <data name="MusicGalleryPageShowYearColumn.Text" xml:space="preserve">
     <value>年份</value>
   </data>
   <data name="MusicGalleryPageShowTrackNumberColumn.Text" xml:space="preserve">
-    <value>音軌</value>
+    <value>音軌編號</value>
   </data>
   <data name="MusicGalleryPageShowBitrateColumn.Text" xml:space="preserve">
-    <value>位元速率</value>
+    <value>位元率</value>
   </data>
   <data name="MusicGalleryPageShowSampleRateColumn.Text" xml:space="preserve">
     <value>取樣率</value>
@@ -2630,20 +2630,5 @@
   </data>
   <data name="MusicGalleryPageShowDateModifiedColumn.Text" xml:space="preserve">
     <value>修改時間</value>
-  </data>
-  <data name="SettingsPageLeftRight.Content" xml:space="preserve">
-    <value>靠左靠右</value>
-  </data>
-  <data name="SettingsPageTopBottom.Content" xml:space="preserve">
-    <value>靠上靠下</value>
-  </data>
-  <data name="SettingsPagePaletteToneWeight.Header" xml:space="preserve">
-    <value>明度權重（亮度）</value>
-  </data>
-  <data name="SettingsPagePaletteChromaWeight.Header" xml:space="preserve">
-    <value>色度權重（飽和度）</value>
-  </data>
-  <data name="SettingsPagePalettePopulationWeight.Header" xml:space="preserve">
-    <value>占比權重（面積）</value>
   </data>
 </root>
