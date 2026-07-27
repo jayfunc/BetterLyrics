@@ -1,4 +1,4 @@
-﻿// 2025/6/23 by Zhe Fang
+// 2025/6/23 by Zhe Fang
 
 using System.Collections.Specialized;
 using System.Text.Json;
@@ -739,21 +739,36 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
 
     private void UniversalMemoryReader_OnProgressChanged(double time, double total)
     {
-        //OnAnyTimelineChangedCore(_currentDesiredSession, TimeSpan.FromSeconds(time), TimeSpan.FromSeconds(total));
+        _appUIThreadProvider.Execute(() =>
+        {
+            if (total > 0)
+            {
+                CurrentSongInfo.DurationMs = total * 1000;
+                UpdateTargetScrobbledDuration();
+            }
+
+            if (IsMediaSourceTimelineSyncEnabled(CurrentSongInfo.PlayerId))
+            {
+                CurrentPosition = TimeSpan.FromSeconds(time);
+            }
+
+            if (CurrentPosition.TotalSeconds == 0)
+            {
+                IsScrobbled = false;
+                ScrobbledDuration = TimeSpan.Zero;
+            }
+        });
     }
 
-    //partial void OnCurrentIsPlayingChanged(bool value)
-    //{
-    //    if (_windowManagerProvider.GetWindowHandle<NowPlayingWindow>() is IntPtr hwnd)
-    //        TaskbarList.SetProgressState(hwnd,
-    //            value ? TaskbarButtonProgressState.Normal : TaskbarButtonProgressState.Paused);
-    //}
+    partial void OnCurrentIsPlayingChanged(bool value)
+    {
+        _windowManagerProvider.SetTaskbarProgressState(WindowType.NowPlayingWindow, value);
+    }
 
-    //partial void OnCurrentPositionChanged(TimeSpan value)
-    //{
-    //    if (_windowManagerProvider.GetWindowHandle<NowPlayingWindow>() is IntPtr hwnd)
-    //        TaskbarList.SetProgressValue(hwnd, (ulong)value.TotalSeconds, (ulong)CurrentSongInfo.Duration);
-    //}
+    partial void OnCurrentPositionChanged(TimeSpan value)
+    {
+        _windowManagerProvider.SetTaskbarProgressValue(WindowType.NowPlayingWindow, value.TotalSeconds / CurrentSongInfo.Duration);
+    }
 
     partial void OnCurrentMediaSourceProviderInfoChanged(MediaSourceProviderInfo? value)
     {

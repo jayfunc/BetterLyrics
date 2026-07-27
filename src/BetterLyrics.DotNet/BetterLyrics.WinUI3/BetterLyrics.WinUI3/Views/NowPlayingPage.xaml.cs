@@ -29,7 +29,6 @@ using Microsoft.UI.Xaml.Media;
 using ColorExtensions = BetterLyrics.WinUI3.Extensions.ColorExtensions;
 using BetterLyrics.Core.Effects;
 using BetterLyrics.Core.ViewModels;
-using BetterLyrics.WinUI3.Providers;
 
 namespace BetterLyrics.WinUI3.Views;
 
@@ -46,6 +45,14 @@ public sealed partial class NowPlayingPage : Page,
     public static readonly DependencyProperty LyricsWindowStatusProperty =
         DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus), typeof(NowPlayingPage),
             new PropertyMetadata(null, OnDependencyPropertyChanged));
+
+    public LyricsWindowStatus? LyricsWindowStatus
+    {
+        get => (LyricsWindowStatus?)GetValue(LyricsWindowStatusProperty);
+        set => SetValue(LyricsWindowStatusProperty, value);
+    }
+
+    private LyricsWindowStatus? _lyricsWindowStatus = null;
 
     private readonly IGlobalToastProvider _globalToastProvider =
         Ioc.Default.GetRequiredService<IGlobalToastProvider>();
@@ -76,12 +83,6 @@ public sealed partial class NowPlayingPage : Page,
 
     public NowPlayingPageViewModel ViewModel => (NowPlayingPageViewModel)DataContext;
 
-    public LyricsWindowStatus? LyricsWindowStatus
-    {
-        get => (LyricsWindowStatus?)GetValue(LyricsWindowStatusProperty);
-        set => SetValue(LyricsWindowStatusProperty, value);
-    }
-
     public void Receive(LayoutChangedMessage message)
     {
         OnLayoutChanged();
@@ -89,7 +90,7 @@ public sealed partial class NowPlayingPage : Page,
 
     public void Receive(PropertyChangedMessage<bool> message)
     {
-        if (message.Sender == LyricsWindowStatus?.AlbumArtAreaEffectSettings)
+        if (message.Sender == _lyricsWindowStatus?.AlbumArtAreaEffectSettings)
         {
             if (message.PropertyName == nameof(AlbumArtAreaEffectSettings.SongInfoAutoScroll))
             {
@@ -106,7 +107,7 @@ public sealed partial class NowPlayingPage : Page,
 
     public void Receive(PropertyChangedMessage<float> message)
     {
-        if (message.Sender == LyricsWindowStatus?.AlbumArtAreaEffectSettings)
+        if (message.Sender == _lyricsWindowStatus?.AlbumArtAreaEffectSettings)
         {
             if (message.PropertyName == nameof(AlbumArtAreaEffectSettings.FadeOutStartPointX))
                 UpdateAlbumArtFadeOutDirection();
@@ -121,8 +122,8 @@ public sealed partial class NowPlayingPage : Page,
 
     public void Receive(PropertyChangedMessage<Guid> message)
     {
-        if (message.Sender == LyricsWindowStatus)
-            if (message.PropertyName == nameof(LyricsWindowStatus.LayoutProfileId))
+        if (message.Sender == _lyricsWindowStatus)
+            if (message.PropertyName == nameof(_lyricsWindowStatus.LayoutProfileId))
                 OnLayoutChanged();
     }
 
@@ -135,8 +136,8 @@ public sealed partial class NowPlayingPage : Page,
 
     public void Receive(PropertyChangedMessage<NowPlayingPalette> message)
     {
-        if (message.Sender is LyricsWindowStatus)
-            if (message.PropertyName == nameof(LyricsWindowStatus.WindowPalette))
+        if (message.Sender == _lyricsWindowStatus)
+            if (message.PropertyName == nameof(_lyricsWindowStatus.WindowPalette))
                 _ = RenderSongInfoAsync();
     }
 
@@ -153,7 +154,7 @@ public sealed partial class NowPlayingPage : Page,
 
     public void Receive(PropertyChangedMessage<string> message)
     {
-        if (message.Sender == LyricsWindowStatus?.LyricsStyleSettings)
+        if (message.Sender == _lyricsWindowStatus?.LyricsStyleSettings)
         {
             if (message.PropertyName == nameof(LyricsStyleSettings.LyricsCJKFontFamily))
                 _ = RenderSongInfoAsync();
@@ -165,15 +166,20 @@ public sealed partial class NowPlayingPage : Page,
     private static void OnDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         if (d is NowPlayingPage page)
+        {
             if (e.Property == LyricsWindowStatusProperty)
+            {
+                page._lyricsWindowStatus = (LyricsWindowStatus?)e.NewValue;
                 page.OnLayoutChanged();
+            }
+        }
     }
 
     private void RenderTextBlock(TextBlock? sender, string? text, double fontSize)
     {
-        if (sender == null || !double.IsNormal(fontSize) || text == null || LyricsWindowStatus == null) return;
+        if (sender == null || !double.IsNormal(fontSize) || text == null || _lyricsWindowStatus == null) return;
 
-        var lyricsStyleSettings = LyricsWindowStatus.LyricsStyleSettings;
+        var lyricsStyleSettings = _lyricsWindowStatus.LyricsStyleSettings;
 
         sender.Inlines.Clear();
         foreach (var ch in text)
@@ -187,12 +193,12 @@ public sealed partial class NowPlayingPage : Page,
         sender.FontSize = fontSize;
         sender.Foreground =
             new SolidColorBrush(
-                ColorExtensions.FromAppColor(LyricsWindowStatus.WindowPalette.NonCurrentLineFillColor));
+                ColorExtensions.FromAppColor(_lyricsWindowStatus.WindowPalette.NonCurrentLineFillColor));
     }
 
     private async Task RenderSongInfoAsync()
     {
-        if (LyricsWindowStatus == null) return;
+        if (_lyricsWindowStatus == null) return;
 
         var (mappedTitle, mappedArtist, mappedAlbum) =
             await _songSearchMapService.GetMappingAsync(_gsmtcService.CurrentSongInfo);
@@ -225,7 +231,7 @@ public sealed partial class NowPlayingPage : Page,
     {
         var profile =
             _settingsService.AppSettings.LayoutProfiles.FirstOrDefault(x =>
-                x.Id == LyricsWindowStatus?.LayoutProfileId);
+                x.Id == _lyricsWindowStatus?.LayoutProfileId);
         if (profile == null) return;
 
         DynamicLayoutGrid.Padding = new Thickness(
@@ -242,11 +248,11 @@ public sealed partial class NowPlayingPage : Page,
 
         foreach (var row in profile.RowDefinitions)
             DynamicLayoutGrid.RowDefinitions.Add(new RowDefinition
-                { Height = GridLengthExtensions.ParseGridLength(row) });
+            { Height = GridLengthExtensions.ParseGridLength(row) });
 
         foreach (var col in profile.ColumnDefinitions)
             DynamicLayoutGrid.ColumnDefinitions.Add(new ColumnDefinition
-                { Width = GridLengthExtensions.ParseGridLength(col) });
+            { Width = GridLengthExtensions.ParseGridLength(col) });
 
         foreach (var placement in profile.Placements)
         {
@@ -291,7 +297,7 @@ public sealed partial class NowPlayingPage : Page,
     {
         var profile =
             _settingsService.AppSettings.LayoutProfiles.FirstOrDefault(x =>
-                x.Id == LyricsWindowStatus?.LayoutProfileId);
+                x.Id == _lyricsWindowStatus?.LayoutProfileId);
         if (profile == null) return;
 
         foreach (var placement in profile.Placements)
@@ -324,7 +330,7 @@ public sealed partial class NowPlayingPage : Page,
     private void UpdateLyricsLayout()
     {
         if (RootGrid == null || LyricsContainer == null || NowPlayingCanvas == null) return;
-        if (LyricsWindowStatus == null) return;
+        if (_lyricsWindowStatus == null) return;
 
         if (!LyricsContainer.IsLoaded || !RootGrid.IsLoaded) return;
 
@@ -345,13 +351,6 @@ public sealed partial class NowPlayingPage : Page,
             NowPlayingCanvas.LyricsStartY = relativeRect.Y;
             NowPlayingCanvas.LyricsWidth = LyricsContainer.ActualWidth;
             NowPlayingCanvas.LyricsHeight = LyricsContainer.ActualHeight;
-
-            //if (LyricsWindowStatus.LyricsEffectSettings.Lyrics3DAutoFitLayout)
-            //{
-            //    (NowPlayingCanvas.LyricsHeight, NowPlayingCanvas.LyricsWidth) = (NowPlayingCanvas.LyricsWidth, NowPlayingCanvas.LyricsHeight);
-            //    NowPlayingCanvas.LyricsStartX += (NowPlayingCanvas.LyricsHeight - NowPlayingCanvas.LyricsWidth) / 2;
-            //    NowPlayingCanvas.LyricsStartY += (NowPlayingCanvas.LyricsWidth - NowPlayingCanvas.LyricsHeight) / 2;
-            //}
         }
     }
 
@@ -406,7 +405,7 @@ public sealed partial class NowPlayingPage : Page,
 
     private void UpdateAutoScrollViewIsPlaying(AutoScrollView element, bool isPointerEntered)
     {
-        if (LyricsWindowStatus?.AlbumArtAreaEffectSettings.SongInfoAutoScroll == true)
+        if (_lyricsWindowStatus?.AlbumArtAreaEffectSettings.SongInfoAutoScroll == true)
             element.IsPlaying = true;
         else
             element.IsPlaying = isPointerEntered;
@@ -501,7 +500,7 @@ public sealed partial class NowPlayingPage : Page,
 
         var (_, filePath) =
             await _filePickerProvider.PickSaveFileAsync(fileTypeChoices, null, WindowType.NowPlayingWindow,
-                LyricsWindowStatus);
+                _lyricsWindowStatus);
 
         if (filePath != null)
             try
@@ -555,7 +554,7 @@ public sealed partial class NowPlayingPage : Page,
 
     private void UpdateAlbumArtFadeOutDirection()
     {
-        var settings = LyricsWindowStatus?.AlbumArtAreaEffectSettings;
+        var settings = _lyricsWindowStatus?.AlbumArtAreaEffectSettings;
         if (settings == null) return;
 
         AlbumArtGradientBrush.StartPoint =
@@ -567,7 +566,7 @@ public sealed partial class NowPlayingPage : Page,
     private void ToggleAlbumArtFadeOut()
     {
         AlbumArtGradientBrushEnd.Color = ColorExtensions.FromAppColor(
-            LyricsWindowStatus?.AlbumArtAreaEffectSettings.FadeOut == true
+            _lyricsWindowStatus?.AlbumArtAreaEffectSettings.FadeOut == true
                 ? Colors.Transparent
                 : Colors.White);
     }

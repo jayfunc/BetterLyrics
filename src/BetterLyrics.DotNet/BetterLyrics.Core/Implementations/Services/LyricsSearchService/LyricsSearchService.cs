@@ -117,8 +117,8 @@ public class LyricsSearchService : ILyricsSearchService
             }
             catch (Exception ex)
             {
-                Debug.WriteLine("Failed to check song mapping, falling back to normal search.");
-                _logger.LogWarning(ex, "Failed to check song mapping, falling back to normal search.");
+                Debug.WriteLine(ex.Message);
+                _logger.LogError(ex, "SearchSmartlyAsync");
             }
 
             var mediaSourceProviderInfo =

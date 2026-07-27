@@ -53,7 +53,7 @@ public class SongSearchMapService : ISongSearchMapService
         return Task.CompletedTask;
     }
 
-    public Task<MappedSongSearchQuery?> TryGetMappingAsync(SongInfo songInfo, CancellationToken token = default)
+    public async Task<MappedSongSearchQuery?> TryGetMappingAsync(SongInfo songInfo, CancellationToken token = default)
     {
         var col = GetCollection();
 
@@ -62,7 +62,7 @@ public class SongSearchMapService : ISongSearchMapService
                 x.OriginalArtist == songInfo.Artist &&
                 x.OriginalAlbum == songInfo.Album);
                 
-        return Task.FromResult(mapped);
+        return await Task.FromResult(mapped);
     }
 
     public async Task<(string Title, string Artist, string Album)> GetMappingAsync(SongInfo songInfo,

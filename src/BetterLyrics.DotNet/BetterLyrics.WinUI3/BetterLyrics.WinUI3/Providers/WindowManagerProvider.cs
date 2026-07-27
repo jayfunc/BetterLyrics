@@ -1,4 +1,4 @@
-﻿// 2025/6/23 by Zhe Fang
+// 2025/6/23 by Zhe Fang
 
 using System;
 using System.Collections.Generic;
@@ -21,6 +21,7 @@ using Microsoft.Windows.AppLifecycle;
 using Vanara.PInvoke;
 using WinRT.Interop;
 using WinUIEx;
+using Vanara.Windows.Shell;
 
 namespace BetterLyrics.WinUI3.Providers;
 
@@ -106,7 +107,7 @@ public class WindowManagerProvider : IWindowManagerProvider
         window.Minimize();
     }
 
-    public object? GetWindow(WindowType windowType, object? windowParameter) => windowType switch
+    public object? GetWindow(WindowType windowType, object? windowParameter = null) => windowType switch
     {
         WindowType.LyricsShareWindow => GetWindow<LyricsShareWindow>(),
         WindowType.MusicGalleryWindow => GetWindow<MusicGalleryWindow>(),
@@ -171,6 +172,11 @@ public class WindowManagerProvider : IWindowManagerProvider
         return GetWindowHandle(GetWindow<T>());
     }
 
+    public IntPtr? GetWindowHandle(WindowType windowType)
+    {
+        return GetWindowHandle(GetWindow(windowType));
+    }
+
     public T OpenOrShowWindow<T>(LyricsWindowStatus? status = null)
     {
         var window = _activeWindows.Find(w =>
@@ -223,7 +229,8 @@ public class WindowManagerProvider : IWindowManagerProvider
 
             var castedWindow = (Window)window;
 
-            if (typeof(T) != typeof(LyricsWindowSwitchWindow) && typeof(T) != typeof(SystemTrayWindow))
+            // Not activate NowPlayingWindow to avoid window flashing
+            if (typeof(T) != typeof(LyricsWindowSwitchWindow) && typeof(T) != typeof(SystemTrayWindow) && typeof(T) != typeof(NowPlayingWindow))
                 castedWindow.Activate();
         }
         else
@@ -415,6 +422,23 @@ public class WindowManagerProvider : IWindowManagerProvider
 
         Shell32.SHAppBarMessage(Shell32.ABM.ABM_QUERYPOS, ref abd);
         Shell32.SHAppBarMessage(Shell32.ABM.ABM_SETPOS, ref abd);
+    }
+
+    public void SetTaskbarProgressState(WindowType windowType, bool isPlaying)
+    {
+        if (GetWindowHandle(windowType) is IntPtr hwnd)
+        {
+            TaskbarList.SetProgressState(hwnd,
+                isPlaying ? TaskbarButtonProgressState.Normal : TaskbarButtonProgressState.Paused);
+        }
+    }
+
+    public void SetTaskbarProgressValue(WindowType windowType, double percentage)
+    {
+        if (GetWindowHandle(windowType) is IntPtr hwnd)
+        {
+            TaskbarList.SetProgressValue(hwnd, (ulong)(percentage * 100), 100);
+        }
     }
 
     // private

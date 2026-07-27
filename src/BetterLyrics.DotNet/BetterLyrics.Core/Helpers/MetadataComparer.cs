@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Entities;
 using F23.StringSimilarity;

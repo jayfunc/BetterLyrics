@@ -15,6 +15,7 @@ public interface IWindowManagerProvider
 
     IntPtr? GetWindowHandle(object? obj);
     IntPtr? GetWindowHandle<T>();
+    IntPtr? GetWindowHandle(WindowType windowType);
 
     List<object> GetWindows(WindowType windowType);
     object? GetWindow(WindowType windowType, object? windowParameter = null);
@@ -40,4 +41,7 @@ public interface IWindowManagerProvider
     void SetIsAppBar(object obj, bool enable);
     void SetIsAlwaysOnTop(object obj, bool enable);
     void UpdateAppBar(object obj);
+
+    void SetTaskbarProgressState(WindowType windowType, bool isPlaying);
+    void SetTaskbarProgressValue(WindowType windowType, double percentage);
 }

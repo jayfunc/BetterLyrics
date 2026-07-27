@@ -314,7 +314,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
     public void Receive(PropertyChangedMessage<bool> message)
     {
-        if (message.Sender == LyricsWindowStatus?.LyricsEffectSettings)
+        if (message.Sender == _lyricsWindowStatus?.LyricsEffectSettings)
         {
             if (message.PropertyName == nameof(LyricsEffectSettings.IsFanLyricsEnabled))
                 RequestRelayout();
@@ -329,7 +329,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
             else if (message.PropertyName == nameof(LyricsEffectSettings.IsLyricsGlowEffectEnabled))
                 RequestReloadLyrics();
         }
-        else if (message.Sender == LyricsWindowStatus?.LyricsStyleSettings)
+        else if (message.Sender == _lyricsWindowStatus?.LyricsStyleSettings)
         {
             if (message.PropertyName == nameof(LyricsStyleSettings.IsDynamicLyricsFontSize))
                 RequestRelayout();
@@ -348,7 +348,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
     public void Receive(PropertyChangedMessage<double> message)
     {
-        if (message.Sender == LyricsWindowStatus?.LyricsStyleSettings)
+        if (message.Sender == _lyricsWindowStatus?.LyricsStyleSettings)
         {
             if (message.PropertyName == nameof(LyricsStyleSettings.LyricsLineOverallSpacingFactor))
                 RequestRelayout();
@@ -359,7 +359,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
     public void Receive(PropertyChangedMessage<int> message)
     {
-        if (message.Sender == LyricsWindowStatus?.LyricsStyleSettings)
+        if (message.Sender == _lyricsWindowStatus?.LyricsStyleSettings)
         {
             if (message.PropertyName == nameof(LyricsStyleSettings.PhoneticLyricsFontSize))
                 RequestRelayout();
@@ -377,7 +377,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
                 RequestRelayout();
             else if (message.PropertyName == nameof(LyricsStyleSettings.TranslatedLyricsOpacity)) RequestRelayout();
         }
-        else if (message.Sender == LyricsWindowStatus?.LyricsEffectSettings)
+        else if (message.Sender == _lyricsWindowStatus?.LyricsEffectSettings)
         {
             if (message.PropertyName == nameof(LyricsEffectSettings.LyricsScrollDuration))
                 RequestRelayout();
@@ -404,7 +404,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
             else if (message.PropertyName == nameof(LyricsEffectSettings.LyricsGlowEffectLongSyllableDuration))
                 RequestReloadLyrics();
         }
-        else if (message.Sender == LyricsWindowStatus?.LyricsBackgroundSettings)
+        else if (message.Sender == _lyricsWindowStatus?.LyricsBackgroundSettings)
         {
             if (message.PropertyName == nameof(LyricsBackgroundSettings.SpectrumCount))
                 _spectrumAnalyzer.BarCount = message.NewValue;
@@ -422,14 +422,14 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
     public void Receive(PropertyChangedMessage<LyricsFontWeight> message)
     {
-        if (message.Sender == LyricsWindowStatus?.LyricsStyleSettings)
+        if (message.Sender == _lyricsWindowStatus?.LyricsStyleSettings)
             if (message.PropertyName == nameof(LyricsStyleSettings.LyricsFontWeight))
                 RequestRelayout();
     }
 
     public void Receive(PropertyChangedMessage<LyricsLayoutOrientation> message)
     {
-        if (message.Sender == LyricsWindowStatus?.LyricsStyleSettings)
+        if (message.Sender == _lyricsWindowStatus?.LyricsStyleSettings)
             if (message.PropertyName == nameof(LyricsStyleSettings.LyricsLayoutOrientation))
                 RequestRelayout();
     }
@@ -450,7 +450,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
     public void Receive(PropertyChangedMessage<string> message)
     {
-        if (message.Sender == LyricsWindowStatus?.LyricsStyleSettings)
+        if (message.Sender == _lyricsWindowStatus?.LyricsStyleSettings)
         {
             if (message.PropertyName == nameof(LyricsStyleSettings.LyricsCJKFontFamily))
                 RequestRelayout();
@@ -460,7 +460,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
     public void Receive(PropertyChangedMessage<TextAlignmentType> message)
     {
-        if (message.Sender == LyricsWindowStatus?.LyricsStyleSettings)
+        if (message.Sender == _lyricsWindowStatus?.LyricsStyleSettings)
             if (message.PropertyName == nameof(LyricsStyleSettings.LyricsAlignmentType))
                 RequestRelayout();
     }
@@ -1013,7 +1013,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
         var mouseWheelDelta = pointerPoint.Properties.MouseWheelDelta;
 
-        var isVertical = LyricsWindowStatus?.LyricsStyleSettings.LyricsLayoutOrientation ==
+        var isVertical = _lyricsWindowStatus?.LyricsStyleSettings.LyricsLayoutOrientation ==
                          LyricsLayoutOrientation.Vertical;
 
         double adjustedDelta;
