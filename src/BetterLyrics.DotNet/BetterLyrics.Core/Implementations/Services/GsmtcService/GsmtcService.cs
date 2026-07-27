@@ -440,6 +440,7 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
         _appUIThreadProvider.Execute(async () =>
         {
             CurrentIsPlaying = isPlaying;
+            _ = UpdateDiscordPresenceAsync();
         });
     }
 
@@ -555,7 +556,7 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
 
             CurrentMediaSourceProviderInfo = currentMediaSourceProviderInfo;
             UpdateCurrentMediaSourceProviderInfoPositionOffset();
-            UpdateDiscordPresence();
+            _ = UpdateDiscordPresenceAsync();
 
             UpdateLyrics();
             UpdateAlbumArt();
@@ -605,12 +606,12 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
             CurrentMediaSourceProviderInfo?.PositionOffset = 0;
     }
 
-    private void UpdateDiscordPresence()
+    private async Task UpdateDiscordPresenceAsync()
     {
         if (CurrentMediaSourceProviderInfo?.IsDiscordPresenceEnabled == true && CurrentSongInfo != null)
         {
             _discordService.Enable();
-            _discordService.UpdateRichPresence(CurrentSongInfo);
+            await _discordService.UpdateRichPresenceAsync(CurrentSongInfo, CurrentIsPlaying, CurrentPosition);
         }
         else
         {
@@ -709,7 +710,7 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
                     else if (e.Event == "duration")
                     {
                         CurrentSongInfo.DurationMs = data.GetDouble() * 1000;
-                        UpdateDiscordPresence();
+                        _ = UpdateDiscordPresenceAsync();
                     }
 
                     if (IsMediaSourceTimelineSyncEnabled(CurrentSongInfo.PlayerId))

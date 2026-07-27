@@ -1,4 +1,4 @@
-﻿using BetterLyrics.Core.Models;
+using BetterLyrics.Core.Models;
 
 namespace BetterLyrics.Core.Interfaces.Services;
 
@@ -6,5 +6,5 @@ public interface IDiscordService
 {
     void Enable();
     void Disable();
-    void UpdateRichPresence(SongInfo songInfo);
+    Task UpdateRichPresenceAsync(SongInfo songInfo, bool isPlaying = true, TimeSpan? currentPosition = null);
 }

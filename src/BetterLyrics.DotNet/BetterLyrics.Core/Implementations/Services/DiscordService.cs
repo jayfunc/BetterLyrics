@@ -1,4 +1,4 @@
-﻿using BetterLyrics.Core.Constants;
+using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
 using DiscordRPC;
@@ -24,15 +24,23 @@ public class DiscordService : IDiscordService
         }
     }
 
-    public async void UpdateRichPresence(SongInfo songInfo)
+    public async Task UpdateRichPresenceAsync(SongInfo songInfo, bool isPlaying = true, TimeSpan? currentPosition = null)
     {
-        var (mappedTitle, mappedArtist, mappedAlbum) = await _songSearchMapService.GetMappingAsync(songInfo);
+        var (mappedTitle, mappedArtist, _) = await _songSearchMapService.GetMappingAsync(songInfo);
+
+        Timestamps? timestamps = null;
+        if (isPlaying)
+        {
+            var start = DateTime.UtcNow.Subtract(currentPosition ?? TimeSpan.Zero);
+            var end = DateTime.UtcNow.AddMilliseconds(songInfo.DurationMs).Subtract(currentPosition ?? TimeSpan.Zero);
+            timestamps = new Timestamps { Start = start, End = end };
+        }
 
         _client?.SetPresence(new RichPresence
         {
             StatusDisplay = StatusDisplayType.Details,
             Type = ActivityType.Listening,
-            Buttons = new Button[] { new() { Label = "Get this status", Url = Link.MicrosoftStore } },
+            Buttons = [new() { Label = "Get this status", Url = Link.MicrosoftStore }],
             Assets = new Assets
             {
                 LargeImageKey = "banner",
@@ -40,7 +48,7 @@ public class DiscordService : IDiscordService
             },
             Details = mappedTitle,
             State = mappedArtist,
-            Timestamps = Timestamps.FromTimeSpan(songInfo.Duration)
+            Timestamps = timestamps
         });
     }
 
