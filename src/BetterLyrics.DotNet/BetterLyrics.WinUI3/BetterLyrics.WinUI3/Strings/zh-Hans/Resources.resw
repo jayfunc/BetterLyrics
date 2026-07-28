@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -2630,5 +2630,14 @@
   </data>
   <data name="MusicGalleryPageShowDateModifiedColumn.Text" xml:space="preserve">
     <value>修改时间</value>
+  </data>
+  <data name="SettingsPageDiscordAlbumArtSource.Header" xml:space="preserve">
+    <value>Discord 专辑图源</value>
+  </data>
+  <data name="DiscordAlbumArtSourceNone.Content" xml:space="preserve">
+    <value>无</value>
+  </data>
+  <data name="SettingsPageDiscordUsername.Header" xml:space="preserve">
+    <value>当前用户</value>
   </data>
 </root>

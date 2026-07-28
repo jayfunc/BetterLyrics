@@ -673,6 +673,26 @@
                             </controls:SettingsExpander.Items>
                         </controls:SettingsExpander>
 
+                        <!--  Discord  -->
+                        <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="Discord" />
+                        <controls:SettingsExpander
+                            Header="Discord"
+                            HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/Discord.png}"
+                            IsExpanded="{x:Bind ViewModel.IsDiscordConnected, Mode=OneWay}">
+                            <controls:SettingsExpander.Items>
+                                <controls:SettingsCard x:Uid="SettingsPageDiscordUsername" IsEnabled="{x:Bind ViewModel.IsDiscordConnected, Mode=OneWay}">
+                                    <TextBlock Text="{x:Bind ViewModel.DiscordUsername, Mode=OneWay}" />
+                                </controls:SettingsCard>
+                                <controls:SettingsCard x:Uid="SettingsPageDiscordAlbumArtSource" IsEnabled="{x:Bind ViewModel.IsDiscordConnected, Mode=OneWay}">
+                                    <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.DiscordSettings.AlbumArtSource, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                        <ComboBoxItem x:Uid="DiscordAlbumArtSourceNone" />
+                                        <ComboBoxItem Content="iTunes" />
+                                        <ComboBoxItem Content="酷狗音乐" />
+                                    </ComboBox>
+                                </controls:SettingsCard>
+                            </controls:SettingsExpander.Items>
+                        </controls:SettingsExpander>
+
                         <!--  amll-ttml-db  -->
                         <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="amll-ttml-db" />
                         <controls:SettingsCard x:Uid="SettingsPageAmllTtmlDbBaseUrl">

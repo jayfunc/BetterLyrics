@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using System.Net;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -144,6 +144,48 @@ public class AlbumArtSearchService : IAlbumArtSearchService
         return null;
     }
 
+    public async Task<string?> GetAlbumArtUrlAsync(SongInfo songInfo, DiscordAlbumArtSource source, int size, CancellationToken token)
+    {
+        try
+        {
+            switch (source)
+            {
+                case DiscordAlbumArtSource.iTunes:
+                    foreach (var countryCode in new List<string> { "us", "cn", "jp", "kr" })
+                    {
+                        try
+                        {
+                            if (token.IsCancellationRequested) break;
+                            var url = await GetiTunesUrlAsync(songInfo, countryCode, size, token);
+                            if (url != null) return url;
+                        }
+                        catch (OperationCanceledException)
+                        {
+                            throw;
+                        }
+                        catch (Exception ex)
+                        {
+                            _logger.LogDebug(ex, "iTunes URL search failed for country {CountryCode}", countryCode);
+                        }
+                    }
+                    break;
+
+                case DiscordAlbumArtSource.Kugou:
+                    return await GetKugouUrlAsync(songInfo, size, token);
+            }
+        }
+        catch (OperationCanceledException)
+        {
+            throw;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Unexpected error in GetAlbumArtUrlAsync.");
+        }
+
+        return null;
+    }
+
     private async Task<byte[]?> SearchFileAsync(SongInfo songInfo, CancellationToken token)
     {
         var enabledIds = _settingsService.AppSettings.LocalMediaFolders
@@ -190,8 +232,7 @@ public class AlbumArtSearchService : IAlbumArtSearchService
         return null;
     }
 
-    private async Task<byte[]?> SearchiTunesAsync(SongInfo songInfo, string countryCode, int size,
-        CancellationToken token)
+    private async Task<string?> GetiTunesUrlAsync(SongInfo songInfo, string countryCode, int size, CancellationToken token)
     {
         // Source: https://gist.github.com/mcworkaholic/82fbf203e3f1043bbe534b5b2974c0ce
 
@@ -217,18 +258,27 @@ public class AlbumArtSearchService : IAlbumArtSearchService
             var result = results[0];
             if (result.TryGetProperty("artworkUrl100", out var artworkUrlProp))
             {
-                var artworkUrl = artworkUrlProp.GetString()?.Replace("100x100bb.jpg", $"{size}x{size}bb.jpg") ??
-                                 string.Empty;
-                var fetched = await _iTunesHttpClinet.GetByteArrayAsync(artworkUrl, token);
-
-                if (fetched != null && fetched.Length > 0) return fetched;
+                return artworkUrlProp.GetString()?.Replace("100x100bb.jpg", $"{size}x{size}bb.jpg");
             }
         }
 
         return null;
     }
 
-    private async Task<byte[]?> SearchKugouAsync(SongInfo songInfo, int size, CancellationToken token)
+    private async Task<byte[]?> SearchiTunesAsync(SongInfo songInfo, string countryCode, int size,
+        CancellationToken token)
+    {
+        var artworkUrl = await GetiTunesUrlAsync(songInfo, countryCode, size, token);
+        if (!string.IsNullOrEmpty(artworkUrl))
+        {
+            var fetched = await _iTunesHttpClinet.GetByteArrayAsync(artworkUrl, token);
+            if (fetched != null && fetched.Length > 0) return fetched;
+        }
+
+        return null;
+    }
+
+    private async Task<string?> GetKugouUrlAsync(SongInfo songInfo, int size, CancellationToken token)
     {
         var keyword = songInfo.ToSearchString();
         if (string.IsNullOrWhiteSpace(keyword)) return null;
@@ -261,10 +311,18 @@ public class AlbumArtSearchService : IAlbumArtSearchService
 
         if (string.IsNullOrEmpty(imgUrl)) return null;
 
-        imgUrl = imgUrl.Replace("{size}", $"{size}");
+        return imgUrl.Replace("{size}", $"{size}");
+    }
 
-        var imageBytes = await _kugouHttpClient.GetByteArrayAsync(imgUrl, token);
+    private async Task<byte[]?> SearchKugouAsync(SongInfo songInfo, int size, CancellationToken token)
+    {
+        var imgUrl = await GetKugouUrlAsync(songInfo, size, token);
+        if (!string.IsNullOrEmpty(imgUrl))
+        {
+            var imageBytes = await _kugouHttpClient.GetByteArrayAsync(imgUrl, token);
+            return imageBytes;
+        }
 
-        return imageBytes;
+        return null;
     }
 }

@@ -9,6 +9,9 @@ public class DiscordService : IDiscordService
 {
     private readonly ISongSearchMapService _songSearchMapService;
     private DiscordRpcClient? _client;
+    
+    public User? CurrentUser { get; private set; }
+    public event EventHandler<User?>? UserChanged;
 
     public DiscordService(ISongSearchMapService songSearchMapService)
     {
@@ -20,11 +23,16 @@ public class DiscordService : IDiscordService
         if (_client == null)
         {
             _client = new DiscordRpcClient(Discord.AppID);
+            _client.OnReady += (sender, args) =>
+            {
+                CurrentUser = args.User;
+                UserChanged?.Invoke(this, CurrentUser);
+            };
             _client.Initialize();
         }
     }
 
-    public async Task UpdateRichPresenceAsync(SongInfo songInfo, bool isPlaying = true, TimeSpan? currentPosition = null)
+    public async Task UpdateRichPresenceAsync(SongInfo songInfo, bool isPlaying = true, TimeSpan? currentPosition = null, string? albumArtUrl = null)
     {
         var (mappedTitle, mappedArtist, _) = await _songSearchMapService.GetMappingAsync(songInfo);
 
@@ -43,7 +51,7 @@ public class DiscordService : IDiscordService
             Buttons = [new() { Label = "Get this status", Url = Link.MicrosoftStore }],
             Assets = new Assets
             {
-                LargeImageKey = "banner",
+                LargeImageKey = string.IsNullOrEmpty(albumArtUrl) ? "banner" : albumArtUrl,
                 SmallImageKey = "logo"
             },
             Details = mappedTitle,
@@ -54,8 +62,14 @@ public class DiscordService : IDiscordService
 
     public void Disable()
     {
-        _client?.ClearPresence();
-        _client?.Dispose();
-        _client = null;
+        if (_client != null)
+        {
+            _client.ClearPresence();
+            _client.Dispose();
+            _client = null;
+            
+            CurrentUser = null;
+            UserChanged?.Invoke(this, null);
+        }
     }
 }

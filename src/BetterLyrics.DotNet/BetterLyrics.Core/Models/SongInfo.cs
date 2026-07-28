@@ -1,4 +1,4 @@
-﻿// 2025/6/23 by Zhe Fang
+// 2025/6/23 by Zhe Fang
 
 using CommunityToolkit.Mvvm.ComponentModel;
 
@@ -22,6 +22,8 @@ public partial class SongInfo : ObservableRecipient, ICloneable
 
     public string? LinkedFileName { get; set; }
 
+    public string? AlbumArtUrl { get; set; }
+
     public double Duration => DurationMs / 1000;
 
     public object Clone()
@@ -35,7 +37,8 @@ public partial class SongInfo : ObservableRecipient, ICloneable
             PlayerId = PlayerId,
             SongId = SongId,
             LinkedFileName = LinkedFileName,
-            StartedAt = StartedAt
+            StartedAt = StartedAt,
+            AlbumArtUrl = AlbumArtUrl
         };
     }
 

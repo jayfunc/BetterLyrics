@@ -1,4 +1,4 @@
-﻿using System.Collections.Specialized;
+using System.Collections.Specialized;
 using System.Text.Json;
 using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
@@ -30,7 +30,7 @@ public partial class PlaybackSettingsControlViewModel : BaseViewModel
         ITranslationService libreTranslationService,
         ILastFmService lastFmService, IAppUIThreadProvider appUiThreadProvider,
         IPasswordVaultProvider passwordVaultProvider, IGlobalToastProvider globalToastProvider,
-        IFilePickerProvider filePickerProvider)
+        IFilePickerProvider filePickerProvider, IDiscordService discordService)
     {
         GsmtcService = gsmtcService;
 
@@ -43,6 +43,12 @@ public partial class PlaybackSettingsControlViewModel : BaseViewModel
         _lastFmService = lastFmService;
         _lastFmService.UserChanged += LastFMService_UserChanged;
         _lastFmService.IsAuthenticatedChanged += LastFMService_IsAuthenticatedChanged;
+
+        _discordService = discordService;
+        _discordService.UserChanged += DiscordService_UserChanged;
+        DiscordUser = _discordService.CurrentUser;
+        DiscordUsername = DiscordUser != null ? $"{DiscordUser.Username}" : null;
+        IsDiscordConnected = DiscordUser != null;
 
         AppSettings = settingsService.AppSettings;
         AppSettings.MediaSourceProvidersInfo.CollectionChanged += MediaSourceProvidersInfo_CollectionChanged;
@@ -68,6 +74,10 @@ public partial class PlaybackSettingsControlViewModel : BaseViewModel
 
     [ObservableProperty] public partial LastFMUser? LastFmUser { get; set; }
 
+    private readonly IDiscordService _discordService;
+
+    [ObservableProperty] public partial DiscordRPC.User? DiscordUser { get; set; }
+
     [ObservableProperty] public partial bool IsLibreTranslateServerTesting { get; set; } = false;
 
     [ObservableProperty] public partial bool IsLxMusicServerTesting { get; set; } = false;
@@ -91,6 +101,20 @@ public partial class PlaybackSettingsControlViewModel : BaseViewModel
     {
         LastFmUser = e.User;
     }
+
+    private void DiscordService_UserChanged(object? sender, DiscordRPC.User? e)
+    {
+        _appUiThreadProvider.Execute(() =>
+        {
+            DiscordUser = e;
+            DiscordUsername = e != null ? $"{e.Username}" : null;
+            IsDiscordConnected = e != null;
+        });
+    }
+
+    [ObservableProperty] public partial string? DiscordUsername { get; set; }
+
+    [ObservableProperty] public partial bool IsDiscordConnected { get; set; }
 
     [RelayCommand]
     private async Task StopTrackAsync()

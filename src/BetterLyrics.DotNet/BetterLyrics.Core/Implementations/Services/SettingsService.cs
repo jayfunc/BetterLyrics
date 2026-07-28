@@ -41,6 +41,7 @@ public class SettingsService : BaseViewModel, ISettingsService
         AppSettings.LyricsSaveConfig.PropertyChanged += AppSettings_PropertyChanged;
         AppSettings.SystemTraySettings.PropertyChanged += AppSettings_PropertyChanged;
         AppSettings.LyricsCardSettings.PropertyChanged += AppSettings_PropertyChanged;
+        AppSettings.DiscordSettings.PropertyChanged += AppSettings_PropertyChanged;
 
         AppSettings.MediaSourceProvidersInfo.CollectionChanged += AppSettings_CollectionChanged;
         AppSettings.MediaSourceProvidersInfo.ItemPropertyChanged += AppSettings_ItemPropertyChanged;

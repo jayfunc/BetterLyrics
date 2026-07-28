@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -2645,5 +2645,14 @@
   </data>
   <data name="SettingsPagePalettePopulationWeight.Header" xml:space="preserve">
     <value>Population Weight (Area)</value>
+  </data>
+  <data name="SettingsPageDiscordAlbumArtSource.Header" xml:space="preserve">
+    <value>Discord Album Art Source</value>
+  </data>
+  <data name="DiscordAlbumArtSourceNone.Content" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="SettingsPageDiscordUsername.Header" xml:space="preserve">
+    <value>Current User</value>
   </data>
 </root>

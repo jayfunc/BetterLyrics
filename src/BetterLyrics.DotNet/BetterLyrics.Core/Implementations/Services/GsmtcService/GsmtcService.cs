@@ -30,7 +30,8 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
     IRecipient<PropertyChangedMessage<DateTime?>>,
     IRecipient<PropertyChangedMessage<int>>,
     IRecipient<PropertyChangedMessage<WindowStatus>>,
-    IRecipient<PropertyChangedMessage<ChineseConversion>>
+    IRecipient<PropertyChangedMessage<ChineseConversion>>,
+    IRecipient<PropertyChangedMessage<DiscordAlbumArtSource>>
 {
     private readonly IAlbumArtSearchService _albumArtSearchService;
     private readonly IAppUIThreadProvider _appUIThreadProvider;
@@ -267,6 +268,21 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
         if (message.Sender is LyricsWindowStatus)
             if (message.PropertyName == nameof(MusicGallerySettings.LyricsWindowStatus.WindowStatus))
                 OnDesiredSessionChanged();
+    }
+
+    public void Receive(PropertyChangedMessage<DiscordAlbumArtSource> message)
+    {
+        if (message.Sender is DiscordSettings)
+        {
+            if (message.PropertyName == nameof(DiscordSettings.AlbumArtSource))
+            {
+                if (CurrentSongInfo != null)
+                {
+                    CurrentSongInfo.AlbumArtUrl = null;
+                }
+                _ = UpdateDiscordPresenceAsync();
+            }
+        }
     }
 
     private void ScrobbleTimerCallback(object? state)
@@ -611,7 +627,15 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
         if (CurrentMediaSourceProviderInfo?.IsDiscordPresenceEnabled == true && CurrentSongInfo != null)
         {
             _discordService.Enable();
-            await _discordService.UpdateRichPresenceAsync(CurrentSongInfo, CurrentIsPlaying, CurrentPosition);
+
+            var discordSource = _settingsService.AppSettings.DiscordSettings.AlbumArtSource;
+            if (discordSource != DiscordAlbumArtSource.None && string.IsNullOrEmpty(CurrentSongInfo.AlbumArtUrl))
+            {
+                CurrentSongInfo.AlbumArtUrl = await _albumArtSearchService.GetAlbumArtUrlAsync(
+                    CurrentSongInfo, discordSource, 500, CancellationToken.None);
+            }
+
+            await _discordService.UpdateRichPresenceAsync(CurrentSongInfo, CurrentIsPlaying, CurrentPosition, CurrentSongInfo.AlbumArtUrl);
         }
         else
         {

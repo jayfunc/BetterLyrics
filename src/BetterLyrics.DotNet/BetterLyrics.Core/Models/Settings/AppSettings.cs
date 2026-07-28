@@ -37,6 +37,10 @@ public partial class AppSettings : ObservableRecipient
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
+    public partial DiscordSettings DiscordSettings { get; set; } = new();
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
     public partial FullyObservableCollection<MediaFolder> LocalMediaFolders { get; set; } = [];
 
     [ObservableProperty]
