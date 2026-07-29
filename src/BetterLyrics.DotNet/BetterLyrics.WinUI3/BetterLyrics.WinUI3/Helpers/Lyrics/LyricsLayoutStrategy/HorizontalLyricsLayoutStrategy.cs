@@ -72,7 +72,7 @@ public class HorizontalLyricsLayoutStrategy : LyricsLayoutStrategyBase
             var alignment = style.UseInternalLyricsAlignment
                 ? line.HorizontalAlignmentType ?? style.LyricsAlignmentType
                 : style.LyricsAlignmentType;
-                
+
             if (alignment == TextAlignmentType.LeftRight)
             {
                 alignment = lines.IndexOf(line) % 2 == 0 ? TextAlignmentType.Left : TextAlignmentType.Right;
@@ -80,8 +80,10 @@ public class HorizontalLyricsLayoutStrategy : LyricsLayoutStrategyBase
 
             line.RecreateTextLayout(
                 resourceCreator,
-                appSettings.TranslationSettings.IsChineseRomanizationEnabled ||
-                appSettings.TranslationSettings.IsJapaneseRomanizationEnabled,
+                appSettings.TranslationSettings.IsMandarinRomanizationEnabled ||
+                appSettings.TranslationSettings.IsCantoneseRomanizationEnabled ||
+                appSettings.TranslationSettings.IsJapaneseRomanizationEnabled ||
+                appSettings.TranslationSettings.IsKoreanRomanizationEnabled,
                 appSettings.TranslationSettings.IsTranslationEnabled,
                 phoneticFontSize, originalFontSize, translatedFontSize,
                 fontWeight,
@@ -160,7 +162,8 @@ public class HorizontalLyricsLayoutStrategy : LyricsLayoutStrategyBase
                 var relativeX = alignment switch
                 {
                     TextAlignmentType.Center => (actualWidth - line.TertiaryTextLayout.LayoutBounds.Width) / 2,
-                    TextAlignmentType.Right => actualWidth - line.TertiaryTextLayout.LayoutBounds.Width, _ => 0
+                    TextAlignmentType.Right => actualWidth - line.TertiaryTextLayout.LayoutBounds.Width,
+                    _ => 0
                 };
                 line.TertiaryPosition = line.TertiaryPosition.AddX((float)(offsetX + relativeX));
             }
@@ -170,7 +173,8 @@ public class HorizontalLyricsLayoutStrategy : LyricsLayoutStrategyBase
                 var relativeX = alignment switch
                 {
                     TextAlignmentType.Center => (actualWidth - line.PrimaryTextLayout.LayoutBounds.Width) / 2,
-                    TextAlignmentType.Right => actualWidth - line.PrimaryTextLayout.LayoutBounds.Width, _ => 0
+                    TextAlignmentType.Right => actualWidth - line.PrimaryTextLayout.LayoutBounds.Width,
+                    _ => 0
                 };
                 line.PrimaryPosition = line.PrimaryPosition.AddX((float)(offsetX + relativeX));
             }
@@ -180,7 +184,8 @@ public class HorizontalLyricsLayoutStrategy : LyricsLayoutStrategyBase
                 var relativeX = alignment switch
                 {
                     TextAlignmentType.Center => (actualWidth - line.SecondaryTextLayout.LayoutBounds.Width) / 2,
-                    TextAlignmentType.Right => actualWidth - line.SecondaryTextLayout.LayoutBounds.Width, _ => 0
+                    TextAlignmentType.Right => actualWidth - line.SecondaryTextLayout.LayoutBounds.Width,
+                    _ => 0
                 };
                 line.SecondaryPosition = line.SecondaryPosition.AddX((float)(offsetX + relativeX));
             }

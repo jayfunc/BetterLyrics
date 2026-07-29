@@ -1689,7 +1689,7 @@
   <data name="SettingsPageJapanese.Header" xml:space="preserve">
     <value>Japanese Phonetic</value>
   </data>
-  <data name="SettingsPageJyutping.Content" xml:space="preserve">
+  <data name="SettingsPageJyutping.Header" xml:space="preserve">
     <value>Jyutping (Cantonese)</value>
   </data>
   <data name="SettingsPageKeepNowPlayingBarInteractive.Header" xml:space="preserve">
@@ -2040,7 +2040,7 @@
   <data name="SettingsPagePinToTaskbar.Header" xml:space="preserve">
     <value>Pin to Taskbar</value>
   </data>
-  <data name="SettingsPagePinyin.Content" xml:space="preserve">
+  <data name="SettingsPagePinyin.Header" xml:space="preserve">
     <value>Pinyin (Mandarin)</value>
   </data>
   <data name="SettingsPagePlaybackLib" xml:space="preserve">
@@ -2631,6 +2631,18 @@
   <data name="MusicGalleryPageShowDateModifiedColumn.Text" xml:space="preserve">
     <value>Date Modified</value>
   </data>
+  <data name="Romaja" xml:space="preserve">
+    <value>Romaja</value>
+  </data>
+  <data name="SettingsPageKorean.Header" xml:space="preserve">
+    <value>Korean Romanization</value>
+  </data>
+  <data name="SettingsPagePhonetics.Header" xml:space="preserve">
+    <value>Phonetics</value>
+  </data>
+  <data name="SettingsPagePhonetics.Description" xml:space="preserve">
+    <value>Display phonetics for different languages</value>
+  </data>
   <data name="SettingsPageLeftRight.Content" xml:space="preserve">
     <value>Left-Right</value>
   </data>
@@ -2654,5 +2666,14 @@
   </data>
   <data name="SettingsPageDiscordUsername.Header" xml:space="preserve">
     <value>Current User</value>
+  </data>
+  <data name="LyricsTrackTypeOriginal" xml:space="preserve">
+    <value>Original</value>
+  </data>
+  <data name="LyricsTrackTypeTransliteration" xml:space="preserve">
+    <value>Transliteration</value>
+  </data>
+  <data name="LyricsTrackTypeTranslation" xml:space="preserve">
+    <value>Translation</value>
   </data>
 </root>

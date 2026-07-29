@@ -26,7 +26,6 @@ namespace BetterLyrics.Core.Implementations.Services.GsmtcService;
 public partial class GsmtcService : BaseViewModel, IGsmtcService,
     IRecipient<PropertyChangedMessage<bool>>,
     IRecipient<PropertyChangedMessage<string>>,
-    IRecipient<PropertyChangedMessage<ChineseRomanization>>,
     IRecipient<PropertyChangedMessage<DateTime?>>,
     IRecipient<PropertyChangedMessage<int>>,
     IRecipient<PropertyChangedMessage<WindowStatus>>,
@@ -199,11 +198,16 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
                 UpdateLyrics();
             else if (message.PropertyName == nameof(TranslationSettings.IsTranslationEnabled))
                 UpdateLyrics();
-            else if (message.PropertyName == nameof(TranslationSettings.IsChineseRomanizationEnabled))
+            else if (message.PropertyName == nameof(TranslationSettings.IsMandarinRomanizationEnabled))
+                UpdateLyrics();
+            else if (message.PropertyName == nameof(TranslationSettings.IsCantoneseRomanizationEnabled))
                 UpdateLyrics();
             else if (message.PropertyName == nameof(TranslationSettings.IsJapaneseRomanizationEnabled))
                 UpdateLyrics();
-            else if (message.PropertyName == nameof(TranslationSettings.IsFilterEnabled)) UpdateLyrics();
+            else if (message.PropertyName == nameof(TranslationSettings.IsKoreanRomanizationEnabled))
+                UpdateLyrics();
+            else if (message.PropertyName == nameof(TranslationSettings.IsFilterEnabled))
+                UpdateLyrics();
         }
         else if (message.Sender is MediaFolder)
         {
@@ -222,12 +226,7 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
                 UpdateLyrics();
     }
 
-    public void Receive(PropertyChangedMessage<ChineseRomanization> message)
-    {
-        if (message.Sender is TranslationSettings)
-            if (message.PropertyName == nameof(TranslationSettings.ChineseRomanization))
-                UpdateLyrics();
-    }
+
 
     public void Receive(PropertyChangedMessage<DateTime?> message)
     {

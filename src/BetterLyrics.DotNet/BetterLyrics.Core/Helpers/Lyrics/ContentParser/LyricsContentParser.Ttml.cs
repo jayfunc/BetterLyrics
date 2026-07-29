@@ -1,7 +1,8 @@
-﻿using System.Globalization;
+using System.Globalization;
 using System.Text;
 using System.Xml.Linq;
 using BetterLyrics.Core.Models.Lyrics;
+using BetterLyrics.Core.Enums;
 
 namespace BetterLyrics.Core.Helpers.Lyrics.ContentParser;
 
@@ -20,34 +21,47 @@ public partial class LyricsContentParser
         try
         {
             List<LyricsLine> originalLines = [];
-            List<LyricsLine> translationLines = [];
-            List<LyricsLine> romanLines = [];
+            Dictionary<string, List<LyricsLine>> translationLinesDict = [];
+            Dictionary<string, List<LyricsLine>> romanLinesDict = [];
 
             var xdoc = XDocument.Parse(raw, LoadOptions.PreserveWhitespace);
 
             // 预解析头部的 Apple Music 扩展辅助轨道数据
-            Dictionary<string, List<XElement>> headTransDict = [];
-            Dictionary<string, List<XElement>> headRomanDict = [];
+            Dictionary<string, Dictionary<string, List<XElement>>> headTransDict = [];
+            Dictionary<string, Dictionary<string, List<XElement>>> headRomanDict = [];
 
             var head = xdoc.Descendants().FirstOrDefault(e => e.Name.LocalName == "head");
             if (head != null)
             {
-                var texts = head.Descendants().Where(e => e.Name.LocalName == "text");
-                foreach (var text in texts)
+                var translations = head.Descendants().Where(e => e.Name.LocalName == "translation");
+                foreach (var translation in translations)
                 {
-                    var forKey = text.Attribute("for")?.Value;
-                    if (string.IsNullOrEmpty(forKey)) continue;
+                    var lang = translation.Attribute(XNamespace.Xml + "lang")?.Value ?? "default";
+                    var texts = translation.Elements().Where(e => e.Name.LocalName == "text");
+                    foreach (var text in texts)
+                    {
+                        var forKey = text.Attribute("for")?.Value;
+                        if (string.IsNullOrEmpty(forKey)) continue;
 
-                    var grandParent = text.Parent?.Parent?.Name.LocalName;
-                    if (grandParent == "translations")
-                    {
                         if (!headTransDict.ContainsKey(forKey)) headTransDict[forKey] = [];
-                        headTransDict[forKey].Add(text);
+                        if (!headTransDict[forKey].ContainsKey(lang)) headTransDict[forKey][lang] = [];
+                        headTransDict[forKey][lang].Add(text);
                     }
-                    else if (grandParent == "transliterations")
+                }
+
+                var transliterations = head.Descendants().Where(e => e.Name.LocalName == "transliteration");
+                foreach (var transliteration in transliterations)
+                {
+                    var lang = transliteration.Attribute(XNamespace.Xml + "lang")?.Value ?? "default";
+                    var texts = transliteration.Elements().Where(e => e.Name.LocalName == "text");
+                    foreach (var text in texts)
                     {
+                        var forKey = text.Attribute("for")?.Value;
+                        if (string.IsNullOrEmpty(forKey)) continue;
+
                         if (!headRomanDict.ContainsKey(forKey)) headRomanDict[forKey] = [];
-                        headRomanDict[forKey].Add(text);
+                        if (!headRomanDict[forKey].ContainsKey(lang)) headRomanDict[forKey][lang] = [];
+                        headRomanDict[forKey][lang].Add(text);
                     }
                 }
             }
@@ -67,8 +81,8 @@ public partial class LyricsContentParser
                 ParseTtmlSegment(
                     p,
                     originalLines,
-                    translationLines,
-                    romanLines,
+                    translationLinesDict,
+                    romanLinesDict,
                     agentId
                 );
 
@@ -79,26 +93,50 @@ public partial class LyricsContentParser
                 // Apple Music 扩展轨道注入
                 if (!string.IsNullOrEmpty(pKey))
                 {
-                    if (headTransDict.TryGetValue(pKey, out var transTexts))
-                        foreach (var tText in transTexts)
+                    if (headTransDict.TryGetValue(pKey, out var transTextsByLang))
+                    {
+                        foreach (var kvp in transTextsByLang)
                         {
-                            ParseTtmlSegment(tText, translationLines, null, null, agentId, pStart, pEnd);
+                            var lang = kvp.Key;
+                            if (!translationLinesDict.TryGetValue(lang, out var list))
+                            {
+                                list = [];
+                                translationLinesDict[lang] = list;
+                            }
 
-                            // 处理可能嵌套在扩展 text 中的背景人声
-                            var textBgSpans = tText.Elements().Where(s => s.Attribute(_ttml + "role")?.Value == "x-bg");
-                            foreach (var bg in textBgSpans)
-                                ParseTtmlSegment(bg, translationLines, null, null, agentId, pStart, pEnd);
+                            foreach (var tText in kvp.Value)
+                            {
+                                ParseTtmlSegment(tText, list, null, null, agentId, pStart, pEnd);
+
+                                // 处理可能嵌套在扩展 text 中的背景人声
+                                var textBgSpans = tText.Elements().Where(s => s.Attribute(_ttml + "role")?.Value == "x-bg");
+                                foreach (var bg in textBgSpans)
+                                    ParseTtmlSegment(bg, list, null, null, agentId, pStart, pEnd);
+                            }
                         }
+                    }
 
-                    if (headRomanDict.TryGetValue(pKey, out var romanTexts))
-                        foreach (var rText in romanTexts)
+                    if (headRomanDict.TryGetValue(pKey, out var romanTextsByLang))
+                    {
+                        foreach (var kvp in romanTextsByLang)
                         {
-                            ParseTtmlSegment(rText, romanLines, null, null, agentId, pStart, pEnd);
+                            var lang = kvp.Key;
+                            if (!romanLinesDict.TryGetValue(lang, out var list))
+                            {
+                                list = [];
+                                romanLinesDict[lang] = list;
+                            }
 
-                            var textBgSpans = rText.Elements().Where(s => s.Attribute(_ttml + "role")?.Value == "x-bg");
-                            foreach (var bg in textBgSpans)
-                                ParseTtmlSegment(bg, romanLines, null, null, agentId, pStart, pEnd);
+                            foreach (var rText in kvp.Value)
+                            {
+                                ParseTtmlSegment(rText, list, null, null, agentId, pStart, pEnd);
+
+                                var textBgSpans = rText.Elements().Where(s => s.Attribute(_ttml + "role")?.Value == "x-bg");
+                                foreach (var bg in textBgSpans)
+                                    ParseTtmlSegment(bg, list, null, null, agentId, pStart, pEnd);
+                            }
                         }
+                    }
                 }
 
                 // 行内嵌的背景人声
@@ -107,20 +145,39 @@ public partial class LyricsContentParser
                     ParseTtmlSegment(
                         bgSpan,
                         originalLines,
-                        translationLines,
-                        romanLines,
+                        translationLinesDict,
+                        romanLinesDict,
+                        agentId,
                         fallbackStartMs: pStart,
-                        fallbackEndMs: pEnd,
-                        agentId: agentId
+                        fallbackEndMs: pEnd
                     );
             }
 
             _lyricsDataArr.Add(new LyricsData(originalLines));
 
-            if (translationLines.Count > 0) _lyricsDataArr.Add(new LyricsData(translationLines));
+            foreach (var kvp in translationLinesDict)
+            {
+                if (kvp.Value.Count > 0)
+                {
+                    _lyricsDataArr.Add(new LyricsData(kvp.Value)
+                    {
+                        LanguageCode = kvp.Key == "default" ? null : kvp.Key,
+                        TrackType = LyricsTrackType.Translation
+                    });
+                }
+            }
 
-            if (romanLines.Count > 0)
-                _lyricsDataArr.Add(new LyricsData(romanLines) { LanguageCode = LanguageHelper.RomanCode });
+            foreach (var kvp in romanLinesDict)
+            {
+                if (kvp.Value.Count > 0)
+                {
+                    _lyricsDataArr.Add(new LyricsData(kvp.Value)
+                    {
+                        LanguageCode = kvp.Key == "default" ? null : kvp.Key,
+                        TrackType = LyricsTrackType.Transliteration
+                    });
+                }
+            }
         }
         catch
         {
@@ -130,8 +187,8 @@ public partial class LyricsContentParser
     private void ParseTtmlSegment(
         XElement container,
         List<LyricsLine>? primaryDest,
-        List<LyricsLine>? transDest,
-        List<LyricsLine>? romanDest,
+        Dictionary<string, List<LyricsLine>>? transDestDict,
+        Dictionary<string, List<LyricsLine>>? romanDestDict,
         string agentId,
         int fallbackStartMs = 0,
         int fallbackEndMs = 0)
@@ -243,17 +300,35 @@ public partial class LyricsContentParser
             });
 
         // 行内嵌的翻译及罗马音
-        if (transDest != null)
+        if (transDestDict != null)
         {
-            var transSpan = container.Elements()
-                .FirstOrDefault(s => s.Attribute(_ttml + "role")?.Value == "x-translation");
-            AddAuxiliaryLine(transDest, transSpan, startMs, endMs);
+            var transSpans = container.Elements()
+                .Where(s => s.Attribute(_ttml + "role")?.Value == "x-translation");
+            foreach (var transSpan in transSpans)
+            {
+                var lang = transSpan.Attribute(XNamespace.Xml + "lang")?.Value ?? "default";
+                if (!transDestDict.TryGetValue(lang, out var list))
+                {
+                    list = [];
+                    transDestDict[lang] = list;
+                }
+                AddAuxiliaryLine(list, transSpan, startMs, endMs);
+            }
         }
 
-        if (romanDest != null)
+        if (romanDestDict != null)
         {
-            var romanSpan = container.Elements().FirstOrDefault(s => s.Attribute(_ttml + "role")?.Value == "x-roman");
-            AddAuxiliaryLine(romanDest, romanSpan, startMs, endMs);
+            var romanSpans = container.Elements().Where(s => s.Attribute(_ttml + "role")?.Value == "x-roman");
+            foreach (var romanSpan in romanSpans)
+            {
+                var lang = romanSpan.Attribute(XNamespace.Xml + "lang")?.Value ?? "default";
+                if (!romanDestDict.TryGetValue(lang, out var list))
+                {
+                    list = [];
+                    romanDestDict[lang] = list;
+                }
+                AddAuxiliaryLine(list, romanSpan, startMs, endMs);
+            }
         }
     }
 
@@ -275,6 +350,11 @@ public partial class LyricsContentParser
             return 0;
 
         t = t.Trim();
+        if (t.EndsWith("s", StringComparison.OrdinalIgnoreCase))
+        {
+            t = t.Substring(0, t.Length - 1);
+        }
+
         var parts = t.Split(':');
 
         try

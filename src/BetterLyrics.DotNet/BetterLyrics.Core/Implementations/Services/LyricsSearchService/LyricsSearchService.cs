@@ -1,4 +1,4 @@
-﻿// 2025/6/23 by Zhe Fang
+// 2025/6/23 by Zhe Fang
 
 using System.Diagnostics;
 using System.Runtime.CompilerServices;
@@ -513,9 +513,9 @@ public class LyricsSearchService : ILyricsSearchService
             var root = doc.RootElement;
             if (!root.TryGetProperty("metadata", out var metadataArr)) continue;
 
-            string? title = null;
-            string? artist = null;
-            string? album = null;
+            string[] titles = [];
+            string[] artists = [];
+            string[] albums = [];
             string? ncmMusicId = null;
 
             foreach (var meta in metadataArr.EnumerateArray())
@@ -523,30 +523,29 @@ public class LyricsSearchService : ILyricsSearchService
                 if (meta.GetArrayLength() != 2) continue;
                 var key = meta[0].GetString();
                 var valueArr = meta[1];
-                if (key == "musicName" && valueArr.GetArrayLength() > 0) title = valueArr[0].GetString();
-                if (key == "artists" && valueArr.GetArrayLength() > 0)
-                    artist = string.Join("/", valueArr.EnumerateArray());
-                if (key == "album" && valueArr.GetArrayLength() > 0) album = valueArr[0].GetString();
+                if (key == "musicName" && valueArr.GetArrayLength() > 0) titles = valueArr.EnumerateArray().Select(x => x.GetString() ?? "").ToArray();
+                if (key == "artists" && valueArr.GetArrayLength() > 0) artists = valueArr.EnumerateArray().Select(x => x.GetString() ?? "").ToArray();
+                if (key == "album" && valueArr.GetArrayLength() > 0) albums = valueArr.EnumerateArray().Select(x => x.GetString() ?? "").ToArray();
                 if (key == "ncmMusicId" && valueArr.GetArrayLength() > 0) ncmMusicId = valueArr[0].GetString();
             }
 
             var matchedById = ncmMusicId == songInfo.SongId && PlayerIdHelper.IsNeteaseFamily(songInfo.PlayerId);
 
-            var score = MetadataComparer.CalculateScore(songInfo, new LyricsCacheItem
-            {
-                Title = title,
-                Artist = artist,
-                Album = album
-            });
+            if (titles.Length == 0) titles = [""];
+            if (artists.Length == 0) artists = [""];
+            if (albums.Length == 0) albums = [""];
+            
+            int score = MetadataComparer.CalculateScore(songInfo, titles, artists, albums, lyricsSearchResult.Duration);
+
             if (matchedById || score > lyricsSearchResult.MatchPercentage)
             {
                 if (root.TryGetProperty("rawLyricFile", out var rawLyricFileProp))
                 {
                     bestNcmMusicId = ncmMusicId;
                     rawLyricFile = rawLyricFileProp.GetString();
-                    lyricsSearchResult.Title = title;
-                    lyricsSearchResult.Artist = artist;
-                    lyricsSearchResult.Album = album;
+                    lyricsSearchResult.Title = titles.FirstOrDefault();
+                    lyricsSearchResult.Artist = string.Join("/", artists.Where(x => !string.IsNullOrEmpty(x)));
+                    lyricsSearchResult.Album = albums.FirstOrDefault();
                     lyricsSearchResult.MatchPercentage = score;
                 }
 

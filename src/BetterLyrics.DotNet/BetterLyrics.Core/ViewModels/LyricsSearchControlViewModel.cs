@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using System.Net;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
@@ -53,6 +53,8 @@ public partial class LyricsSearchControlViewModel : BaseViewModel,
     [ObservableProperty] public partial LyricsCacheItem? SelectedLyricsSearchResult { get; set; }
 
     [ObservableProperty] public partial ObservableCollection<LyricsData>? LyricsDataArr { get; set; }
+
+    [ObservableProperty] public partial int SelectedTrackIndex { get; set; } = 0;
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
@@ -222,6 +224,7 @@ public partial class LyricsSearchControlViewModel : BaseViewModel,
         {
             var lyricsParser = new LyricsContentParser();
             LyricsDataArr = [.. lyricsParser.Parse(value)];
+            SelectedTrackIndex = 0;
         }
         else
         {

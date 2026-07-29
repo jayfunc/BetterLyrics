@@ -1,4 +1,4 @@
-﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Helpers;
 using CommunityToolkit.Mvvm.ComponentModel;
 
@@ -25,15 +25,19 @@ public partial class TranslationSettings : ObservableRecipient
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
-    public partial ChineseRomanization ChineseRomanization { get; set; }
+    public partial bool IsMandarinRomanizationEnabled { get; set; } = false;
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
-    public partial bool IsChineseRomanizationEnabled { get; set; } = false;
+    public partial bool IsCantoneseRomanizationEnabled { get; set; } = false;
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
     public partial bool IsJapaneseRomanizationEnabled { get; set; } = false;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial bool IsKoreanRomanizationEnabled { get; set; } = false;
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]

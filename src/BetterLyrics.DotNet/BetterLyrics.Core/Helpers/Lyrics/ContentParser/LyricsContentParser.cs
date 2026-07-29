@@ -1,4 +1,4 @@
-﻿// 2025/6/23 by Zhe Fang
+// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
@@ -11,6 +11,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Lyricify.Lyrics.Helpers.Optimization;
 using Lyricify.Lyrics.Parsers;
 using Microsoft.Extensions.Logging;
+using NLanguageTag;
 
 namespace BetterLyrics.Core.Helpers.Lyrics.ContentParser;
 
@@ -61,6 +62,20 @@ public partial class LyricsContentParser
         EnsureSyllables(lyricsSearchResult?.Duration);
         EnsureEndMs(lyricsSearchResult?.Duration);
 
+        if (_lyricsDataArr.Count > 0)
+        {
+            _lyricsDataArr[0].TrackType = LyricsTrackType.Original;
+            for (var i = 1; i < _lyricsDataArr.Count; i++)
+            {
+                if (_lyricsDataArr[i].TrackType == LyricsTrackType.Original)
+                {
+                    _lyricsDataArr[i].TrackType = LanguageHelper.IsPhoneticCode(_lyricsDataArr[i].LanguageCode)
+                        ? LyricsTrackType.Transliteration
+                        : LyricsTrackType.Translation;
+                }
+            }
+        }
+
         return _lyricsDataArr;
     }
 
@@ -81,22 +96,48 @@ public partial class LyricsContentParser
 
         // 歌词过滤
         if (settings.IsFilterEnabled)
-            main?.LyricsLines.RemoveAll(x =>
+            main.LyricsLines.RemoveAll(x =>
                 InfoLines.IsInfoLine(x.PrimaryText));
 
         // 应用音译
-        LyricsData? phoneticLyricsData = null;
-        // 已解析歌词内寻找
-        if (settings.IsChineseRomanizationEnabled && main.LanguageCode == LanguageHelper.ChineseCode)
+        bool isRomanizationEnabled = false;
+        LanguageTag? targetRomanizationTag = null;
+
+        if (settings.IsMandarinRomanizationEnabled && LanguageHelper.IsTagMatch(main.LanguageCode, LanguageHelper.MandarinChineseCode))
         {
-            phoneticLyricsData = settings.ChineseRomanization switch
+            isRomanizationEnabled = true;
+            targetRomanizationTag = LanguageHelper.MandarinChineseLatnTag;
+        }
+        else if (settings.IsCantoneseRomanizationEnabled && LanguageHelper.IsTagMatch(main.LanguageCode, LanguageHelper.YueChineseCode))
+        {
+            isRomanizationEnabled = true;
+            targetRomanizationTag = LanguageHelper.YueChineseLatnTag;
+        }
+        else if (settings.IsJapaneseRomanizationEnabled && LanguageHelper.IsTagMatch(main.LanguageCode, LanguageHelper.JapaneseCode))
+        {
+            isRomanizationEnabled = true;
+            targetRomanizationTag = LanguageHelper.JapaneseLatnTag;
+        }
+        else if (settings.IsKoreanRomanizationEnabled && LanguageHelper.IsTagMatch(main.LanguageCode, LanguageHelper.KoreanCode))
+        {
+            isRomanizationEnabled = true;
+            targetRomanizationTag = LanguageHelper.KoreanLatnTag;
+        }
+
+        if (isRomanizationEnabled && targetRomanizationTag != null)
+        {
+            LyricsData? phoneticLyricsData = null;
+            var phoneticTracks = _lyricsDataArr.Where(x => LanguageHelper.IsPhoneticCode(x.LanguageCode)).ToList();
+
+            if (phoneticTracks.Count == 1)
             {
-                ChineseRomanization.Pinyin => _lyricsDataArr.FirstOrDefault(x =>
-                    x.LanguageCode == LanguageHelper.PinyinCode),
-                ChineseRomanization.Jyutping => _lyricsDataArr.FirstOrDefault(x =>
-                    x.LanguageCode == LanguageHelper.JyutpingCode),
-                _ => null
-            };
+                phoneticLyricsData = phoneticTracks.First();
+            }
+            else if (phoneticTracks.Count > 1)
+            {
+                phoneticLyricsData = phoneticTracks.FirstOrDefault(x => LanguageHelper.IsTagMatch(x.LanguageCode, targetRomanizationTag));
+            }
+
             if (phoneticLyricsData != null)
             {
                 main.SetPhoneticText(phoneticLyricsData);
@@ -105,42 +146,37 @@ public partial class LyricsContentParser
                 else
                     transliterationSearchProvider = lyricsSearchResult?.Provider.ToTransliterationSearchProvider();
             }
-        }
-        else if (settings.IsJapaneseRomanizationEnabled && main.LanguageCode == LanguageHelper.JapaneseCode)
-        {
-            phoneticLyricsData = _lyricsDataArr.FirstOrDefault(x => x.LanguageCode == LanguageHelper.RomanCode);
-            if (phoneticLyricsData != null)
-            {
-                main.SetPhoneticText(phoneticLyricsData);
-                transliterationSearchProvider = lyricsSearchResult?.Provider.ToTransliterationSearchProvider();
-            }
             else
             {
-                var romaji = string.Empty;
-                try
+                // 如果没有找到对应的音译轨道，则尝试使用插件动态生成
+                if (LanguageHelper.IsTagMatch(targetRomanizationTag, LanguageHelper.JapaneseLatnTag) || LanguageHelper.IsTagMatch(targetRomanizationTag, LanguageHelper.KoreanLatnTag))
                 {
-                    (romaji, transliterationSearchProvider) =
-                        await transliterationService.TransliterateTextAsync(main.WrappedOriginalText,
-                            LanguageHelper.RomanCode, token);
-                    token.ThrowIfCancellationRequested();
+                    var generatedRomaja = string.Empty;
+                    try
+                    {
+                        (generatedRomaja, transliterationSearchProvider) =
+                            await transliterationService.TransliterateTextAsync(main.WrappedPrimaryText,
+                                targetRomanizationTag.ToString(), token);
+                        token.ThrowIfCancellationRequested();
 
-                    _lyricsDataArr.FirstOrDefault()?.SetTransliteration(romaji);
-                }
-                catch (OperationCanceledException)
-                {
-                    throw;
-                }
-                catch (Exception ex)
-                {
-                    _globalToastProvider.Show("Error", ex.Message, MessageSeverity.Error);
+                        _lyricsDataArr.FirstOrDefault()?.SetTransliteration(generatedRomaja);
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        throw;
+                    }
+                    catch (Exception ex)
+                    {
+                        _globalToastProvider.Show("Error", ex.Message, MessageSeverity.Error);
+                    }
                 }
             }
         }
 
         // 应用翻译
-        if (settings.IsTranslationEnabled && main.LanguageCode != settings.SelectedTargetLanguageCode)
+        if (settings.IsTranslationEnabled && !LanguageHelper.IsLanguageMatch(main.LanguageCode, settings.SelectedTargetLanguageCode))
         {
-            var found = _lyricsDataArr.Where(x => x.LanguageCode == settings.SelectedTargetLanguageCode)
+            var found = _lyricsDataArr.Where(x => LanguageHelper.IsLanguageMatch(x.LanguageCode, settings.SelectedTargetLanguageCode))
                 .OrderByDescending(x => x.LyricsLines.Count).FirstOrDefault();
             if (found != null)
             {
@@ -152,7 +188,7 @@ public partial class LyricsContentParser
                 var translated = string.Empty;
                 try
                 {
-                    translated = await translationService.TranslateTextAsync(main.WrappedOriginalText,
+                    translated = await translationService.TranslateTextAsync(main.WrappedPrimaryText,
                         settings.SelectedTargetLanguageCode, token);
                     token.ThrowIfCancellationRequested();
 
@@ -171,7 +207,7 @@ public partial class LyricsContentParser
         }
 
         // 应用简体中文/繁体中文
-        if (main.LanguageCode == LanguageHelper.ChineseCode)
+        if (LanguageHelper.IsTagMatch(main.LanguageCode, LanguageHelper.MandarinChineseCode))
             foreach (var item in main.LyricsLines)
                 switch (settings.ChineseConversion)
                 {
@@ -185,7 +221,7 @@ public partial class LyricsContentParser
                         break;
                 }
 
-        if (settings.SelectedTargetLanguageCode == LanguageHelper.ChineseCode)
+        if (LanguageHelper.IsTagMatch(settings.SelectedTargetLanguageCode, LanguageHelper.MandarinChineseCode))
             foreach (var item in main.LyricsLines)
                 switch (settings.ChineseConversion)
                 {
@@ -238,13 +274,14 @@ public partial class LyricsContentParser
         if (main != null)
         {
             var languageCode = main.LanguageCode;
-            if (languageCode == LanguageHelper.ChineseCode)
+            if (LanguageHelper.IsTagMatch(languageCode, LanguageHelper.MandarinChineseCode))
             {
-                if (!_lyricsDataArr.Any(x => x.LanguageCode == LanguageHelper.PinyinCode))
+                if (!_lyricsDataArr.Any(x => LanguageHelper.IsTagMatch(x.LanguageCode, LanguageHelper.MandarinChineseLatnTag)))
                     _lyricsDataArr.Add(new LyricsData
                     {
-                        LanguageCode = LanguageHelper.PinyinCode,
+                        LanguageCode = LanguageHelper.MandarinChineseLatnTag.ToString(),
                         AutoGenerated = true,
+                        TrackType = LyricsTrackType.Transliteration,
                         LyricsLines = main.LyricsLines.Select(line => new LyricsLine
                         {
                             StartMs = line.StartMs,
@@ -259,12 +296,15 @@ public partial class LyricsContentParser
                             }).ToList()
                         }).ToList()
                     });
-
-                if (!_lyricsDataArr.Any(x => x.LanguageCode == LanguageHelper.JyutpingCode))
+            }
+            else if (LanguageHelper.IsTagMatch(languageCode, LanguageHelper.YueChineseCode))
+            {
+                if (!_lyricsDataArr.Any(x => LanguageHelper.IsTagMatch(x.LanguageCode, LanguageHelper.YueChineseLatnTag)))
                     _lyricsDataArr.Add(new LyricsData
                     {
-                        LanguageCode = LanguageHelper.JyutpingCode,
+                        LanguageCode = LanguageHelper.YueChineseLatnTag.ToString(),
                         AutoGenerated = true,
+                        TrackType = LyricsTrackType.Transliteration,
                         LyricsLines = main.LyricsLines.Select(line => new LyricsLine
                         {
                             StartMs = line.StartMs,

@@ -610,20 +610,22 @@
                         </controls:SettingsExpander>
 
                         <!--  Lyrics phonetic  -->
-                        <controls:SettingsExpander x:Uid="SettingsPageChinese" IsExpanded="{x:Bind ViewModel.AppSettings.TranslationSettings.IsChineseRomanizationEnabled, Mode=OneWay}">
-                            <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsChineseRomanizationEnabled, Mode=TwoWay}" />
+                        <controls:SettingsExpander x:Uid="SettingsPagePhonetics" IsExpanded="True">
                             <controls:SettingsExpander.Items>
-                                <controls:SettingsCard IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsChineseRomanizationEnabled, Mode=OneWay}">
-                                    <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.TranslationSettings.ChineseRomanization, Converter={StaticResource EnumToIntConverter}, Mode=TwoWay}">
-                                        <ComboBoxItem x:Uid="SettingsPagePinyin" />
-                                        <ComboBoxItem x:Uid="SettingsPageJyutping" />
-                                    </ComboBox>
+                                <controls:SettingsCard x:Uid="SettingsPagePinyin">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsMandarinRomanizationEnabled, Mode=TwoWay}" />
+                                </controls:SettingsCard>
+                                <controls:SettingsCard x:Uid="SettingsPageJyutping">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsCantoneseRomanizationEnabled, Mode=TwoWay}" />
+                                </controls:SettingsCard>
+                                <controls:SettingsCard x:Uid="SettingsPageJapanese">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsJapaneseRomanizationEnabled, Mode=TwoWay}" />
+                                </controls:SettingsCard>
+                                <controls:SettingsCard x:Uid="SettingsPageKorean">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsKoreanRomanizationEnabled, Mode=TwoWay}" />
                                 </controls:SettingsCard>
                             </controls:SettingsExpander.Items>
                         </controls:SettingsExpander>
-                        <controls:SettingsCard x:Uid="SettingsPageJapanese">
-                            <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsJapaneseRomanizationEnabled, Mode=TwoWay}" />
-                        </controls:SettingsCard>
 
                         <!--  中文简体繁体偏好  -->
                         <controls:SettingsCard x:Uid="SettingsPageChinesePreference">

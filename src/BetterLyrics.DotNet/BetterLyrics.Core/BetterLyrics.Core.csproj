@@ -32,6 +32,7 @@
         <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.10" />
         <PackageReference Include="MimeMapping" Version="4.0.0" />
         <PackageReference Include="NAudio" Version="2.3.0" />
+        <PackageReference Include="NLanguageTag" Version="4.1.2" />
         <PackageReference Include="NTextCat" Version="0.3.65" />
         <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
         <PackageReference Include="SkiaSharp" Version="4.150.1" />

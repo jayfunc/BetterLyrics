@@ -2,6 +2,7 @@
 using Windows.Globalization;
 using BetterLyrics.Core.Helpers;
 using Microsoft.UI.Xaml.Data;
+using BetterLyrics.Core.Models;
 
 namespace BetterLyrics.WinUI3.Converters;
 
@@ -15,7 +16,7 @@ public partial class LanguageCodeToDisplayedNameConverter : IValueConverter
 
             if (LanguageHelper.IsPhoneticCode(langCode)) return LanguageHelper.GetDisplayName(langCode);
 
-            return new Language(langCode).DisplayName ?? langCode;
+            return new ExtendedLanguage(langCode).Name ?? langCode;
         }
 
         return value?.ToString() ?? "";

@@ -69,6 +69,62 @@ public static partial class MetadataComparer
         return (int)Math.Round(totalScore * 100);
     }
 
+    public static int CalculateScore(
+        SongInfo songInfo,
+        string[] compareTitles, string[] compareArtists, string[] compareAlbums, double? compareDuration,
+        string? compareFileName = null)
+    {
+        double totalScore = 0;
+
+        var localHasMetadata = !string.IsNullOrWhiteSpace(songInfo.Title);
+        var remoteHasMetadata = compareTitles != null && compareTitles.Length > 0 && !string.IsNullOrWhiteSpace(compareTitles[0]);
+
+        if (localHasMetadata && remoteHasMetadata)
+        {
+            var titleScore = compareTitles?.Max(t => GetStringSimilarity(songInfo.Title, t)) ?? 0;
+            var artistScore = compareArtists?.Max(a => GetStringSimilarity(songInfo.Artist, a)) ?? 0;
+            var albumScore = compareAlbums?.Max(a => GetStringSimilarity(songInfo.Album, a)) ?? 0;
+            var durationScore = GetDurationSimilarity(songInfo.Duration, compareDuration);
+
+            totalScore = titleScore * WeightTitle +
+                         artistScore * WeightArtist +
+                         albumScore * WeightAlbum +
+                         durationScore * WeightDuration;
+        }
+        else
+        {
+            var localQuery = localHasMetadata
+                ? $"{songInfo.Title} {songInfo.Artist}"
+                : Path.GetFileNameWithoutExtension(songInfo.LinkedFileName);
+
+            var bestRemoteScore = 0.0;
+            if (compareTitles != null && compareArtists != null)
+            {
+                var fp1 = CreateSortedFingerprint(localQuery);
+                if (!string.IsNullOrWhiteSpace(fp1))
+                {
+                    foreach (var t in compareTitles)
+                    {
+                        foreach (var a in compareArtists)
+                        {
+                            var remoteQuery = $"{t} {a}";
+                            var fp2 = CreateSortedFingerprint(remoteQuery);
+                            if (!string.IsNullOrWhiteSpace(fp2))
+                            {
+                                var score = _algo.Similarity(fp1, fp2);
+                                if (score > bestRemoteScore) bestRemoteScore = score;
+                            }
+                        }
+                    }
+                }
+            }
+
+            totalScore = bestRemoteScore;
+        }
+
+        return (int)Math.Round(totalScore * 100);
+    }
+
     private static double GetStringSimilarity(string? s1, string? s2)
     {
         s1 = s1?.Trim().ToLowerInvariant() ?? "";
