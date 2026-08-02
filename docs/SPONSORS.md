@@ -5,7 +5,7 @@ Special thanks to the following people for their support!
 <table>
   <tbody>
     <tr>
-      <td></td>
+      <td>Jul 17, 2026 *⭐</td>
       <td>Jun 18, 2026 *浩</td>
       <td>Jun 1, 2026 **方</td>
       <td>May 31, 2026 子林</td>

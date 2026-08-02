@@ -625,8 +625,6 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
     {
         if (CurrentMediaSourceProviderInfo?.IsDiscordPresenceEnabled == true && CurrentSongInfo != null)
         {
-            _discordService.Enable();
-
             var discordSource = _settingsService.AppSettings.DiscordSettings.AlbumArtSource;
             if (discordSource != DiscordAlbumArtSource.None && string.IsNullOrEmpty(CurrentSongInfo.AlbumArtUrl))
             {
@@ -635,10 +633,6 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
             }
 
             await _discordService.UpdateRichPresenceAsync(CurrentSongInfo, CurrentIsPlaying, CurrentPosition, CurrentSongInfo.AlbumArtUrl);
-        }
-        else
-        {
-            _discordService.Disable();
         }
     }
 

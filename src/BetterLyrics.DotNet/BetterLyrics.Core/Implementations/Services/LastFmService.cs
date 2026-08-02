@@ -1,5 +1,3 @@
-﻿using System;
-using System.Threading.Tasks;
 using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Events;
@@ -17,26 +15,24 @@ public class LastFmService : ILastFmService
 {
     private readonly LastFMClient _client;
     private readonly IGlobalToastProvider _globalToastProvider;
-    private readonly ILocalizationService _localizationService;
+    private readonly ILastFmDialogProvider _lastFmDialogProvider;
     private readonly IPasswordVaultProvider _passwordVaultProvider;
     private readonly ISettingsService _settingsService;
     private readonly ISongSearchMapService _songSearchMapService;
-    private readonly IWindowManagerProvider _windowManagerProvider;
     private readonly ILauncherProvider _launcherProvider;
     private string? _sessionKey;
 
-    public LastFmService(ISettingsService settingsService, ILocalizationService localizationService,
+    public LastFmService(ISettingsService settingsService,
         ISongSearchMapService songSearchMapService, IPasswordVaultProvider passwordVaultProvider,
-        IGlobalToastProvider globalToastProvider, IWindowManagerProvider windowManagerProvider,
-        ILauncherProvider launcherProvider)
+        IGlobalToastProvider globalToastProvider,
+        ILauncherProvider launcherProvider, ILastFmDialogProvider lastFmDialogProvider)
     {
-        _localizationService = localizationService;
         _settingsService = settingsService;
         _songSearchMapService = songSearchMapService;
         _passwordVaultProvider = passwordVaultProvider;
         _globalToastProvider = globalToastProvider;
-        _windowManagerProvider = windowManagerProvider;
         _launcherProvider = launcherProvider;
+        _lastFmDialogProvider = lastFmDialogProvider;
 
         _client = new LastFMClient(new LastFMOptions { ApiKey = LastFM.ApiKey, ApiSecret = LastFM.SharedSecret });
         _sessionKey = _passwordVaultProvider.Get(Core.Constants.App.AppName, LastFM.SessionKeyCredentialKey);
@@ -74,29 +70,16 @@ public class LastFmService : ILastFmService
 
     public async Task AuthAsync()
     {
-        var url =
-            $"https://www.last.fm/api/auth?api_key={_client.Options.ApiKey}&cb=betterlyrics://link.last.fm";
+        var url = $"https://www.last.fm/api/auth?api_key={_client.Options.ApiKey}&cb=betterlyrics://link.last.fm";
         _ = _launcherProvider.LaunchUriAsync(new Uri(url));
+
+        await _lastFmDialogProvider.ShowAuthDialogAsync();
     }
 
     public async Task UnAuthAsync()
     {
-        //var dialogXamlRoot = _windowManagerProvider.GetWindow<SettingsWindow>()?.Content.XamlRoot;
-        //if (dialogXamlRoot == null) return;
-
-        //var dialog = new ContentDialog
-        //{
-        //    Title = _localizationService.GetLocalizedString("LastFMRequestUnAuthTitle") ?? "",
-        //    Content = _localizationService.GetLocalizedString("LastFMRequestUnAuthDesc") ?? "",
-        //    PrimaryButtonText = _localizationService.GetLocalizedString("LastFMRequestUnAuthConfirm") ?? "",
-        //    CloseButtonText = _localizationService.GetLocalizedString("Cancel") ?? "",
-        //    DefaultButton = ContentDialogButton.Close,
-        //    XamlRoot = dialogXamlRoot
-        //};
-        //dialog.PrimaryButtonClick += async (s, args) => { await ConfirmUnAuthAsync(); };
-
-        //await _launcherProvider.LaunchUriAsync(new Uri(LastFM.UnAuthUrl));
-        //await dialog.ShowAsync();
+        await _launcherProvider.LaunchUriAsync(new Uri(LastFM.UnAuthUrl));
+        await _lastFmDialogProvider.ShowUnAuthDialogAsync(ConfirmUnAuthAsync);
     }
 
     public async Task TrackAsync(SongInfo songInfo)
@@ -132,7 +115,7 @@ public class LastFmService : ILastFmService
             var resp = await _client.RequestAsync(LastFMApi.GetUserInfoApi,
                 new GetUserInfoRequest { User = null }, _sessionKey);
             User = resp.Response?.User;
-            //if(!resp.IsSuccess) GlobalToastManager.Show("LastFMGetUserFailed", resp.Error?.Message, InfoBarSeverity.Error);
+            if(!resp.IsSuccess) _globalToastProvider.Show("Error", resp.Error?.Message, MessageSeverity.Error);
         }
         else
         {

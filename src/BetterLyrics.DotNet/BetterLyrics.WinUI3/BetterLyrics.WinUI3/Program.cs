@@ -245,6 +245,7 @@ public class Program
                 .AddSingleton<IGlobalToastProvider, GlobalToastProvider>()
                 .AddSingleton<IWindowManagerProvider, WindowManagerProvider>()
                 .AddSingleton<IAddMediaSourceDialogProvider, MediaSourceDialogProvider>()
+                .AddSingleton<ILastFmDialogProvider, LastFmDialogProvider>()
                 .AddSingleton<IAssetReaderProvider, AssetReaderProvider>()
                 .AddSingleton<IMediaManagerProvider, MediaManagerProvider>()
                 .AddSingleton<ILauncherProvider, LauncherProvider>()

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <UserControl
     x:Class="BetterLyrics.WinUI3.Controls.PlayQueue"
@@ -41,8 +41,7 @@
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Center"
                 Orientation="Horizontal">
-                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                           Text="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex, Mode=OneWay, Converter={StaticResource IndexToDisplayConverter}}" />
+                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex, Mode=OneWay, Converter={StaticResource IndexToDisplayConverter}}" />
                 <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="/" />
                 <TextBlock Text="{x:Bind ViewModel.SMTCService.TrackPlayingQueue.Count, Mode=OneWay}" />
             </StackPanel>
@@ -78,8 +77,7 @@
 
         <NavigationViewItemSeparator Grid.Row="2" />
 
-        <Grid Grid.Row="3"
-              Visibility="{x:Bind ViewModel.SMTCService.TrackPlayingQueue.Count, Mode=OneWay, Converter={StaticResource IntNegationToVisibilityConverter}}">
+        <Grid Grid.Row="3" Visibility="{x:Bind ViewModel.SMTCService.TrackPlayingQueue.Count, Mode=OneWay, Converter={StaticResource IntNegationToVisibilityConverter}}">
             <StackPanel
                 Margin="0,24"
                 HorizontalAlignment="Center"

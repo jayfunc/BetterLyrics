@@ -239,21 +239,6 @@ public static partial class LanguageHelper
         return "#";
     }
 
-    public static string GetLanguageScriptDisplayName(string? tag)
-    {
-        if (string.IsNullOrEmpty(tag)) return "";
-        try
-        {
-            if (IsPhoneticCode(tag)) return GetDisplayName(tag);
-
-            return new CultureInfo(tag).DisplayName;
-        }
-        catch
-        {
-            return "";
-        }
-    }
-
     public static bool IsPhoneticCode(string? code)
     {
         if (LanguageTag.TryParse(code, out var tag))
@@ -268,7 +253,10 @@ public static partial class LanguageHelper
     {
         if (LanguageTag.TryParse(sourceCode, out var sourceTag) && LanguageTag.TryParse(targetCode, out var targetTag))
         {
-            return sourceTag.Language == targetTag.Language && sourceTag.Script == targetTag.Script;
+            if (sourceTag.Script == targetTag.Script)
+            {
+                return (sourceTag.Language?.Macrolanguage ?? sourceTag.Language) == (targetTag.Language?.Macrolanguage ?? targetTag.Language);
+            }
         }
 
         return false;
@@ -278,7 +266,7 @@ public static partial class LanguageHelper
     {
         if (LanguageTag.TryParse(sourceCode, out var sourceTag) && targetTag != null)
         {
-            return sourceTag.Language == targetTag.Value.Language && sourceTag.Script == targetTag.Value.Script;
+            return IsTagMatch(sourceTag, sourceTag);
         }
 
         return false;
@@ -292,11 +280,6 @@ public static partial class LanguageHelper
         }
 
         return false;
-    }
-
-    public static string GetDisplayName(string code)
-    {
-        return new CultureInfo(code).DisplayName;
     }
 
     public static string ConvertHanziToPinyin(string text, ManTone.Style style = ManTone.Style.TONE)

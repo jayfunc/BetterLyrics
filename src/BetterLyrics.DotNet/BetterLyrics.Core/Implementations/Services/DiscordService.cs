@@ -16,6 +16,7 @@ public class DiscordService : IDiscordService
     public DiscordService(ISongSearchMapService songSearchMapService)
     {
         _songSearchMapService = songSearchMapService;
+        Enable();
     }
 
     public void Enable()

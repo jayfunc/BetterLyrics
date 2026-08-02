@@ -22,9 +22,9 @@
         <PackageReference Include="DiscordRichPresence" Version="1.6.1.70" />
         <PackageReference Include="F23.StringSimilarity" Version="7.0.1" />
         <PackageReference Include="FluentFTP" Version="54.2.0" />
+        <PackageReference Include="HarfBuzzSharp" Version="8.3.1.1" />
         <PackageReference Include="Impressionist.Next.Jayfunc" Version="1.0.0" />
         <PackageReference Include="LiteFM" Version="1.0.3" />
-        <PackageReference Include="LiveChartsCore" Version="2.0.5" />
         <PackageReference Include="LiveChartsCore.SkiaSharpView" Version="2.0.5" />
         <PackageReference Include="Lyricify.Lyrics.Helper.Jayfunc" Version="0.1.4" />
         <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.10" />
@@ -35,7 +35,8 @@
         <PackageReference Include="NLanguageTag" Version="4.1.2" />
         <PackageReference Include="NTextCat" Version="0.3.65" />
         <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
-        <PackageReference Include="SkiaSharp" Version="4.150.1" />
+        <PackageReference Include="SkiaSharp" Version="3.119.0" />
+        <PackageReference Include="SkiaSharp.HarfBuzz" Version="3.119.0" />
         <PackageReference Include="SMBLibrary" Version="1.5.7.1" />
         <PackageReference Include="System.IO.Hashing" Version="10.0.10" />
         <PackageReference Include="TagLibSharp" Version="2.3.0" />

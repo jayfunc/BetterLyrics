@@ -59,46 +59,46 @@
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
-  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
-    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+  <xsd:schema xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace"/>
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
           <xsd:element name="metadata">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0"/>
               </xsd:sequence>
-              <xsd:attribute name="name" use="required" type="xsd:string" />
-              <xsd:attribute name="type" type="xsd:string" />
-              <xsd:attribute name="mimetype" type="xsd:string" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" use="required" type="xsd:string"/>
+              <xsd:attribute name="type" type="xsd:string"/>
+              <xsd:attribute name="mimetype" type="xsd:string"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
             <xsd:complexType>
-              <xsd:attribute name="alias" type="xsd:string" />
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="alias" type="xsd:string"/>
+              <xsd:attribute name="name" type="xsd:string"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
-                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
-              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
-              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
-              <xsd:attribute ref="xml:space" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1"/>
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3"/>
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4"/>
+              <xsd:attribute ref="xml:space"/>
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
             <xsd:complexType>
               <xsd:sequence>
-                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1"/>
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" use="required" />
+              <xsd:attribute name="name" type="xsd:string" use="required"/>
             </xsd:complexType>
           </xsd:element>
         </xsd:choice>
@@ -152,9 +152,6 @@
   </data>
   <data name="AlbumArtAreaSettingsControlFadeOut.Header" xml:space="preserve">
     <value>淡出</value>
-  </data>
-  <data name="AlbumArtAreaSettingsControlFadeOutDirection.Header" xml:space="preserve">
-    <value>方向</value>
   </data>
   <data name="AlbumArtAreaSettingsControlStartPoint.Header" xml:space="preserve">
     <value>起點</value>
@@ -228,9 +225,6 @@
   <data name="AppUpdateServiceUpdateMS" xml:space="preserve">
     <value>在 Microsoft Store 更新</value>
   </data>
-  <data name="ArtistsSplitHint.Text" xml:space="preserve">
-    <value>輸入多位演出者時，請使用以下其中一種分隔符號進行分隔（請勿混合使用）</value>
-  </data>
   <data name="Cancel" xml:space="preserve">
     <value>取消</value>
   </data>
@@ -245,9 +239,6 @@
   </data>
   <data name="CreatePlaylistSuccessfully" xml:space="preserve">
     <value>播放清單建立成功</value>
-  </data>
-  <data name="CutletServerTextBox.PlaceholderText" xml:space="preserve">
-    <value>例如 http://localhost:23333</value>
   </data>
   <data name="DemoWindowControlDefault.Text" xml:space="preserve">
     <value>預設</value>
@@ -324,9 +315,6 @@
   <data name="ImportSettingsSuccess" xml:space="preserve">
     <value>匯入成功</value>
   </data>
-  <data name="Jyutping" xml:space="preserve">
-    <value>粵語拼音</value>
-  </data>
   <data name="LastFMAuthFailed" xml:space="preserve">
     <value>授權失敗，請重試</value>
   </data>
@@ -348,12 +336,6 @@
   <data name="LastFMRequestUnAuthTitle" xml:space="preserve">
     <value>撤銷 BetterLyrics 存取您 Last.fm 帳戶的權限</value>
   </data>
-  <data name="LayoutEditorControlAddColButton.Content" xml:space="preserve">
-    <value>新增欄</value>
-  </data>
-  <data name="LayoutEditorControlAddRowButton.Content" xml:space="preserve">
-    <value>新增列</value>
-  </data>
   <data name="LayoutEditorControlAdjustColumnWidth.Text" xml:space="preserve">
     <value>調整欄寬</value>
   </data>
@@ -362,9 +344,6 @@
   </data>
   <data name="LayoutEditorControlAlignmentHeader.Text" xml:space="preserve">
     <value>對齊方式</value>
-  </data>
-  <data name="LayoutEditorControlAllPlacedMessage.Text" xml:space="preserve">
-    <value>所有元件均已放置。</value>
   </data>
   <data name="LayoutEditorControlApplySizeButton.Content" xml:space="preserve">
     <value>套用</value>
@@ -423,29 +402,14 @@
   <data name="LayoutEditorControlComponentSongTitle" xml:space="preserve">
     <value>歌曲標題</value>
   </data>
-  <data name="LayoutEditorControlCopyHere" xml:space="preserve">
-    <value>放在這裡</value>
-  </data>
-  <data name="LayoutEditorControlDeleteBottomRow" xml:space="preserve">
-    <value>刪除下面的列</value>
-  </data>
   <data name="LayoutEditorControlDeleteCol.Text" xml:space="preserve">
     <value>刪除此欄</value>
   </data>
   <data name="LayoutEditorControlDeleteComponentHeader.Text" xml:space="preserve">
     <value>刪除元件</value>
   </data>
-  <data name="LayoutEditorControlDeleteLeftColumn" xml:space="preserve">
-    <value>删除左侧欄</value>
-  </data>
-  <data name="LayoutEditorControlDeleteRightColumn" xml:space="preserve">
-    <value>刪除右側的欄</value>
-  </data>
   <data name="LayoutEditorControlDeleteRow.Text" xml:space="preserve">
     <value>刪除此列</value>
-  </data>
-  <data name="LayoutEditorControlDeleteTopRow" xml:space="preserve">
-    <value>删除上方列</value>
   </data>
   <data name="LayoutEditorControlFocusComponentHeader.Text" xml:space="preserve">
     <value>定位至選取元件</value>
@@ -501,9 +465,6 @@
   <data name="LayoutEditorControlInsertColBefore.Text" xml:space="preserve">
     <value>向左插入欄</value>
   </data>
-  <data name="LayoutEditorControlInsertColumn" xml:space="preserve">
-    <value>在此插入欄位</value>
-  </data>
   <data name="LayoutEditorControlInsertRow" xml:space="preserve">
     <value>在此处插入列</value>
   </data>
@@ -540,9 +501,6 @@
   <data name="LayoutEditorControlMoveComponentInfoTag.Text" xml:space="preserve">
     <value>方向鍵 / WASD鍵</value>
   </data>
-  <data name="LayoutEditorControlMoveHere" xml:space="preserve">
-    <value>移動至此處</value>
-  </data>
   <data name="LayoutEditorControlNoSelection" xml:space="preserve">
     <value>在預覽或左側清單中選擇一個元件繼續。</value>
   </data>
@@ -564,12 +522,6 @@
   <data name="LayoutEditorControlRemoveButton.Content" xml:space="preserve">
     <value>移除元件</value>
   </data>
-  <data name="LayoutEditorControlRemoveColButton.Content" xml:space="preserve">
-    <value>移除欄</value>
-  </data>
-  <data name="LayoutEditorControlRemoveRowButton.Content" xml:space="preserve">
-    <value>移除列</value>
-  </data>
   <data name="LayoutEditorControlRowBox.Header" xml:space="preserve">
     <value>行</value>
   </data>
@@ -590,30 +542,6 @@
   </data>
   <data name="LayoutEditorControlSelectPrevComponentHeader.Text" xml:space="preserve">
     <value>選擇上一個元件</value>
-  </data>
-  <data name="LayoutEditorControlSetBottomRowToAuto" xml:space="preserve">
-    <value>將底部列設定為自動</value>
-  </data>
-  <data name="LayoutEditorControlSetBottomRowToStar" xml:space="preserve">
-    <value>將底部列設定為填充</value>
-  </data>
-  <data name="LayoutEditorControlSetLeftColumnToAuto" xml:space="preserve">
-    <value>將左側欄設定為自動</value>
-  </data>
-  <data name="LayoutEditorControlSetLeftColumnToStar" xml:space="preserve">
-    <value>將左側欄設定為填充</value>
-  </data>
-  <data name="LayoutEditorControlSetRightColumnToAuto" xml:space="preserve">
-    <value>將右側欄設定為自動</value>
-  </data>
-  <data name="LayoutEditorControlSetRightColumnToStar" xml:space="preserve">
-    <value>將右側欄設定為填充</value>
-  </data>
-  <data name="LayoutEditorControlSetTopRowToAuto" xml:space="preserve">
-    <value>將頂部列設定為自動</value>
-  </data>
-  <data name="LayoutEditorControlSetTopRowToStar" xml:space="preserve">
-    <value>將頂部列設定為填充</value>
   </data>
   <data name="LayoutEditorControlSizeHeader.Text" xml:space="preserve">
     <value>大小</value>
@@ -719,12 +647,6 @@
   </data>
   <data name="LyricsOnlyLayout" xml:space="preserve">
     <value>僅歌詞版面</value>
-  </data>
-  <data name="LyricsPageCachePath.Header" xml:space="preserve">
-    <value>快取路徑</value>
-  </data>
-  <data name="LyricsPageCachePath.Value" xml:space="preserve">
-    <value>快取路徑</value>
   </data>
   <data name="LyricsPageLanguageCode.Header" xml:space="preserve">
     <value>歌詞語言</value>
@@ -876,9 +798,6 @@
   <data name="LyricsSharePageImageQuality.Text" xml:space="preserve">
     <value>圖像品質</value>
   </data>
-  <data name="LyricsSharePagePinLyricsCardHint.Text" xml:space="preserve">
-    <value>拖曳歌詞卡片到歌詞視窗以釘住它。若要取消釘選，請用滑鼠右鍵按一下釘選的卡片，然後從功能表中選擇「刪除」。</value>
-  </data>
   <data name="LyricsSharePageSaveImage.Content" xml:space="preserve">
     <value>儲存圖像</value>
   </data>
@@ -969,23 +888,11 @@
   <data name="LyricsWindowSwitchWindowTitle" xml:space="preserve">
     <value>歌詞視窗切換器</value>
   </data>
-  <data name="MainPageAlbumArtOnly.Content" xml:space="preserve">
-    <value>僅顯示專輯封面區域</value>
-  </data>
-  <data name="MainPageLyriscOnly.Content" xml:space="preserve">
-    <value>僅顯示歌詞</value>
-  </data>
   <data name="MainPageNoLocalFilesMatched.Text" xml:space="preserve">
     <value>找不到相符的本機檔案</value>
   </data>
-  <data name="MainPageNoMusicPlaying.Text" xml:space="preserve">
-    <value>目前沒有正在播放的音樂</value>
-  </data>
   <data name="MainPagePositionOffsetSlider.Header" xml:space="preserve">
     <value>歌詞時間軸偏移</value>
-  </data>
-  <data name="MainPageSplitView.Content" xml:space="preserve">
-    <value>分割檢視</value>
   </data>
   <data name="MediaSettingsControlAdvOpt.Text" xml:space="preserve">
     <value>進階選項</value>
@@ -1137,9 +1044,6 @@
   <data name="MusicGalleryPageSortByTitle.Content" xml:space="preserve">
     <value>標題</value>
   </data>
-  <data name="MusicGalleryPageSortType.Text" xml:space="preserve">
-    <value>排序類型</value>
-  </data>
   <data name="MusicGalleryPageStopTrack.Text" xml:space="preserve">
     <value>停止</value>
   </data>
@@ -1181,12 +1085,6 @@
   </data>
   <data name="NowPlayingBarConfigCurrentPlaybackSource.Text" xml:space="preserve">
     <value>設定當前播放來源</value>
-  </data>
-  <data name="PictureInPictureMode" xml:space="preserve">
-    <value>子母畫面模式</value>
-  </data>
-  <data name="Pinyin" xml:space="preserve">
-    <value>漢語拼音</value>
   </data>
   <data name="PlaybackSettingsControlBetterLyricsRunningInBackground.Message" xml:space="preserve">
     <value>BetterLyrics 內建播放器仍在背景中執行，軟體會忽略其他播放來源。若要聆聽其他播放來源，請前往音樂圖庫，然後按一下右下角的停止按鈕</value>
@@ -1281,9 +1179,6 @@
   <data name="RemoteServerConfigControlUsername.Header" xml:space="preserve">
     <value>使用者名稱</value>
   </data>
-  <data name="Romaji" xml:space="preserve">
-    <value>羅馬音</value>
-  </data>
   <data name="Row" xml:space="preserve">
     <value>列</value>
   </data>
@@ -1296,20 +1191,11 @@
   <data name="SetingsPageFeedback.Text" xml:space="preserve">
     <value>意見反應</value>
   </data>
-  <data name="SetingsPageSpecialThanks.Text" xml:space="preserve">
-    <value>特別鳴謝</value>
-  </data>
   <data name="SetingsPageThanks.Text" xml:space="preserve">
     <value>如果您喜歡這個專案，請考慮透過捐贈來支持它。您的支持將有助於保持專案的持續運作並鼓勵進一步的發展。</value>
   </data>
   <data name="SettingsPage3DLyrics.Header" xml:space="preserve">
     <value>[實驗性] 縱深效果</value>
-  </data>
-  <data name="SettingsPage3DLyricsAutoFitLayout.Description" xml:space="preserve">
-    <value>適用於調整 Z 軸後歌詞無法佔滿螢幕的情況</value>
-  </data>
-  <data name="SettingsPage3DLyricsAutoFitLayout.Header" xml:space="preserve">
-    <value>自動調整以符合版面配置</value>
   </data>
   <data name="SettingsPage3DLyricsDepth.Header" xml:space="preserve">
     <value>深度</value>
@@ -1332,9 +1218,6 @@
   <data name="SettingsPageAlbumArt.Text" xml:space="preserve">
     <value>專輯封面</value>
   </data>
-  <data name="SettingsPageAlbumArtHeight.Header" xml:space="preserve">
-    <value>專輯封面高度</value>
-  </data>
   <data name="SettingsPageAlbumArtLayer.Header" xml:space="preserve">
     <value>專輯封面層</value>
   </data>
@@ -1352,9 +1235,6 @@
   </data>
   <data name="SettingsPageAlbumStyle.Text" xml:space="preserve">
     <value>專輯封面區域樣式</value>
-  </data>
-  <data name="SettingsPageAlignment.Header" xml:space="preserve">
-    <value>對齊方式</value>
   </data>
   <data name="SettingsPageAlwaysHideUnlockButton.Header" xml:space="preserve">
     <value>總是隱藏解鎖按鈕</value>
@@ -1425,9 +1305,6 @@
   <data name="SettingsPageChinese.Header" xml:space="preserve">
     <value>中文注音</value>
   </data>
-  <data name="SettingsPageChineseLyrics.Text" xml:space="preserve">
-    <value>中文歌詞</value>
-  </data>
   <data name="SettingsPageChinesePreference.Description" xml:space="preserve">
     <value>選擇 「未指定 」會保留原始歌詞；選擇 「簡體中文 」或 「繁體中文 」會在原始歌詞上執行機器轉換</value>
   </data>
@@ -1455,9 +1332,6 @@
   <data name="SettingsPageCloseStatus.Text" xml:space="preserve">
     <value>關閉</value>
   </data>
-  <data name="SettingsPageCollapseDropdown.Content" xml:space="preserve">
-    <value>摺疊下拉式清單</value>
-  </data>
   <data name="SettingsPageColor.Header" xml:space="preserve">
     <value>顏色</value>
   </data>
@@ -1482,9 +1356,6 @@
   <data name="SettingsPageCrossfade.Content" xml:space="preserve">
     <value>交叉淡入淡出</value>
   </data>
-  <data name="SettingsPageCutletDockerServer.Header" xml:space="preserve">
-    <value>cutlet-docker 音譯服務</value>
-  </data>
   <data name="SettingsPageDark.Content" xml:space="preserve">
     <value>深色</value>
   </data>
@@ -1500,26 +1371,11 @@
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>桌面模式（透明）</value>
   </data>
-  <data name="SettingsPageDirectionBottom.Content" xml:space="preserve">
-    <value>向下</value>
-  </data>
-  <data name="SettingsPageDirectionLeft.Content" xml:space="preserve">
-    <value>向左</value>
-  </data>
-  <data name="SettingsPageDirectionRight.Content" xml:space="preserve">
-    <value>向右</value>
-  </data>
-  <data name="SettingsPageDirectionTop.Content" xml:space="preserve">
-    <value>向上</value>
-  </data>
   <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
     <value>本專案按現狀提供，不提供任何形式的保證。所有歌詞、字型、圖示和其他第三方資源均為其各自版權所有者的財產。本專案的作者不主張此類資源的所有權。本專案為非商業性專案，不得用於侵犯任何權利。使用者有責任確保自己的使用符合適用的法律和許可。</value>
   </data>
   <data name="SettingsPageDiscordPresence.Header" xml:space="preserve">
     <value>透過 Discord Presence 顯示收聽狀態</value>
-  </data>
-  <data name="SettingsPageDisplayTypeSwitcher.Header" xml:space="preserve">
-    <value>版面配置模式</value>
   </data>
   <data name="SettingsPageDockedMode.Text" xml:space="preserve">
     <value>停靠模式</value>
@@ -1617,17 +1473,11 @@
   <data name="SettingsPageExitOnLyricsWindowClosed.Header" xml:space="preserve">
     <value>關閉歌詞視窗時結束程式</value>
   </data>
-  <data name="SettingsPageExportPlayHistoryButton.Content" xml:space="preserve">
-    <value>匯出播放記錄</value>
-  </data>
   <data name="SettingsPageExportSettingsButton.Content" xml:space="preserve">
     <value>匯出設定</value>
   </data>
   <data name="SettingsPageFan.Header" xml:space="preserve">
     <value>扇形歌詞</value>
-  </data>
-  <data name="SettingsPageFixedTimeStep.Header" xml:space="preserve">
-    <value>固定時間步長渲染</value>
   </data>
   <data name="SettingsPageFluidLayer.Header" xml:space="preserve">
     <value>流體層</value>
@@ -1687,10 +1537,10 @@
     <value>匯入成功後，該程式將自動重新啟動</value>
   </data>
   <data name="SettingsPageJapanese.Header" xml:space="preserve">
-    <value>日語注音</value>
+    <value>羅馬字（日文）</value>
   </data>
   <data name="SettingsPageJyutping.Header" xml:space="preserve">
-    <value>粵語拼音</value>
+    <value>粵拼</value>
   </data>
   <data name="SettingsPageKeepNowPlayingBarInteractive.Header" xml:space="preserve">
     <value>鎖定時保持媒體控制列的可互動狀態</value>
@@ -1773,9 +1623,6 @@
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
     <value>對齊方式</value>
   </data>
-  <data name="SettingsPageLyricsBackground.Header" xml:space="preserve">
-    <value>歌詞背景</value>
-  </data>
   <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve">
     <value>非目前行</value>
   </data>
@@ -1817,9 +1664,6 @@
   </data>
   <data name="SettingsPageLyricsFadeOutEffect.Header" xml:space="preserve">
     <value>淡出效果</value>
-  </data>
-  <data name="SettingsPageLyricsFgFontColor.Header" xml:space="preserve">
-    <value>目前行</value>
   </data>
   <data name="SettingsPageLyricsFilter.Description" xml:space="preserve">
     <value>移除作詞、作曲等非正文信息</value>
@@ -1962,23 +1806,14 @@
   <data name="SettingsPageMediaLib" xml:space="preserve">
     <value>媒體櫃</value>
   </data>
-  <data name="SettingsPageMedianCut.Content" xml:space="preserve">
-    <value>保守</value>
-  </data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve">
     <value>監聽此播放來源</value>
-  </data>
-  <data name="SettingsPageMockMusicPlaying.Header" xml:space="preserve">
-    <value>播放測試音樂</value>
   </data>
   <data name="SettingsPageMultiNowPlayingWindows.Text" xml:space="preserve">
     <value>多視窗共存模式</value>
   </data>
   <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
     <value>音樂庫</value>
-  </data>
-  <data name="SettingsPageMusicGalleryLyrics.Header" xml:space="preserve">
-    <value>音樂庫內嵌歌詞視窗</value>
   </data>
   <data name="SettingsPageMusicGalleryOpened.Message" xml:space="preserve">
     <value>音樂庫視窗處於開啟狀態，已忽略對其他播放來源的監聽</value>
@@ -1994,12 +1829,6 @@
   </data>
   <data name="SettingsPageNextSongHotKey.Header" xml:space="preserve">
     <value>下一曲目快速鍵</value>
-  </data>
-  <data name="SettingsPageOctTree.Content" xml:space="preserve">
-    <value>激進</value>
-  </data>
-  <data name="SettingsPageOneFontFamilyOnly.Message" xml:space="preserve">
-    <value>請僅選擇一種字型。選擇多種字型會導致此設定失效，並回退至系統預設字型</value>
   </data>
   <data name="SettingsPageOpacity.Header" xml:space="preserve">
     <value>不透明度</value>
@@ -2037,11 +1866,8 @@
   <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
     <value>發音標示</value>
   </data>
-  <data name="SettingsPagePinToTaskbar.Header" xml:space="preserve">
-    <value>釘選到工作列</value>
-  </data>
   <data name="SettingsPagePinyin.Header" xml:space="preserve">
-    <value>漢語拼音</value>
+    <value>拼音</value>
   </data>
   <data name="SettingsPagePlaybackLib" xml:space="preserve">
     <value>播放來源與歌詞處理</value>
@@ -2064,9 +1890,6 @@
   <data name="SettingsPagePlayedStrokeFontColor.Header" xml:space="preserve">
     <value>描邊 (已播放)</value>
   </data>
-  <data name="SettingsPagePlayingMockMusicButton.Content" xml:space="preserve">
-    <value>在 「soundcloud.com」 上播放 「Cut to the Feeling」</value>
-  </data>
   <data name="SettingsPagePlayOrPauseSongHotKey.Header" xml:space="preserve">
     <value>播放與暫停快速鍵</value>
   </data>
@@ -2087,9 +1910,6 @@
   </data>
   <data name="SettingsPageRecordedWindowStatus.Text" xml:space="preserve">
     <value>記錄的視窗狀態</value>
-  </data>
-  <data name="SettingsPageRefreshDropdown.Content" xml:space="preserve">
-    <value>重新整理下拉式清單</value>
   </data>
   <data name="SettingsPageRemoveInfo.Message" xml:space="preserve">
     <value>路徑中的原始檔案和資料夾不會被刪除</value>
@@ -2145,9 +1965,6 @@
   <data name="SettingsPageSettingsManager.Header" xml:space="preserve">
     <value>設定管理器</value>
   </data>
-  <data name="SettingsPageSettingsPlayHistory.Header" xml:space="preserve">
-    <value>播放記錄</value>
-  </data>
   <data name="SettingsPageShadowIntensity.Header" xml:space="preserve">
     <value>陰影強度</value>
   </data>
@@ -2163,12 +1980,6 @@
   <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve">
     <value>該熱鍵已成功註冊</value>
   </data>
-  <data name="SettingsPageShowAlbum.Header" xml:space="preserve">
-    <value>顯示專輯</value>
-  </data>
-  <data name="SettingsPageShowArtists.Header" xml:space="preserve">
-    <value>顯示演出者</value>
-  </data>
   <data name="SettingsPageShowHideHotKey.Header" xml:space="preserve">
     <value>歌詞視窗顯示和隱藏快速鍵</value>
   </data>
@@ -2177,9 +1988,6 @@
   </data>
   <data name="SettingsPageShowInSwitchers.Header" xml:space="preserve">
     <value>在系統環境中顯示</value>
-  </data>
-  <data name="SettingsPageShowTitle.Header" xml:space="preserve">
-    <value>顯示標題</value>
   </data>
   <data name="SettingsPageSize.Header" xml:space="preserve">
     <value>大小</value>
@@ -2253,9 +2061,6 @@
   <data name="SettingsPageStopTrackOnGalleryWindowClosed.Header" xml:space="preserve">
     <value>關閉音樂庫視窗時停止播放</value>
   </data>
-  <data name="SettingsPageStrokeFontColor.Header" xml:space="preserve">
-    <value>描邊顏色</value>
-  </data>
   <data name="SettingsPageSystemLanguage" xml:space="preserve">
     <value>預設</value>
   </data>
@@ -2267,9 +2072,6 @@
   </data>
   <data name="SettingsPageTaskbarPlacement.Header" xml:space="preserve">
     <value>工作列固定位置</value>
-  </data>
-  <data name="SettingsPageThanksList.Header" xml:space="preserve">
-    <value>致謝名單</value>
   </data>
   <data name="SettingsPageTitle" xml:space="preserve">
     <value>設定</value>
@@ -2310,9 +2112,6 @@
   <data name="SettingsPageUserWhoPurchased" xml:space="preserve">
     <value>以及購買支援 BetterLyrics 的使用者</value>
   </data>
-  <data name="SettingsPageVersion.Text" xml:space="preserve">
-    <value>版本號</value>
-  </data>
   <data name="SettingsPageWallpaperMode.Text" xml:space="preserve">
     <value>壁紙模式</value>
   </data>
@@ -2330,9 +2129,6 @@
   </data>
   <data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve">
     <value>應用程式列高度</value>
-  </data>
-  <data name="SettingsPageYouNowUsing.Text" xml:space="preserve">
-    <value>正在使用本軟體的您</value>
   </data>
   <data name="SetTo1Star" xml:space="preserve">
     <value>設定為 1*</value>
@@ -2427,9 +2223,6 @@
   <data name="SystemTrayMusicGallery.Text" xml:space="preserve">
     <value>開啟音樂庫</value>
   </data>
-  <data name="SystemTrayResetWindowPosition.Text" xml:space="preserve">
-    <value>重設視窗位置</value>
-  </data>
   <data name="SystemTrayRestart.Text" xml:space="preserve">
     <value>重新啟動</value>
   </data>
@@ -2465,9 +2258,6 @@
   </data>
   <data name="TracksAddToPlaylistSuccessfully" xml:space="preserve">
     <value>所選曲目已新增到此播放清單</value>
-  </data>
-  <data name="TryRunMultipleInstance" xml:space="preserve">
-    <value>BetterLyrics 已經在執行</value>
   </data>
   <data name="UserGuide.Content" xml:space="preserve">
     <value>使用指南</value>
@@ -2505,21 +2295,6 @@
   <data name="WindowSettingsControlNowPlayingBar.Text" xml:space="preserve">
     <value>媒體控制面板</value>
   </data>
-  <data name="WindowSettingsControlPadding.Header" xml:space="preserve">
-    <value>視窗內邊距</value>
-  </data>
-  <data name="WindowSettingsControlPaddingBottom.Header" xml:space="preserve">
-    <value>底部邊距</value>
-  </data>
-  <data name="WindowSettingsControlPaddingLeft.Header" xml:space="preserve">
-    <value>左邊距</value>
-  </data>
-  <data name="WindowSettingsControlPaddingRight.Header" xml:space="preserve">
-    <value>右邊距</value>
-  </data>
-  <data name="WindowSettingsControlPaddingTop.Header" xml:space="preserve">
-    <value>頂部邊距</value>
-  </data>
   <data name="WindowSettingsControlRealTimePalette.Header" xml:space="preserve">
     <value>即時調色板預覽</value>
   </data>
@@ -2543,12 +2318,6 @@
   </data>
   <data name="WindowSettingsControlShowAndHide.Text" xml:space="preserve">
     <value>顯示與隱藏</value>
-  </data>
-  <data name="WindowSettingsControlSplitViewRatio.Header" xml:space="preserve">
-    <value>佈局分配</value>
-  </data>
-  <data name="WindowSettingsControlSplitViewSwitch.Header" xml:space="preserve">
-    <value>交換佈局</value>
   </data>
   <data name="WindowSettingsControlSpoutOutput.Header" xml:space="preserve">
     <value>Spout 輸出</value>
@@ -2631,16 +2400,52 @@
   <data name="MusicGalleryPageShowDateModifiedColumn.Text" xml:space="preserve">
     <value>修改時間</value>
   </data>
-  <data name="Romaja" xml:space="preserve">
-    <value>Romaja</value>
-  </data>
   <data name="SettingsPageKorean.Header" xml:space="preserve">
-    <value>Korean Romanization</value>
+    <value>羅馬字（韓文）</value>
   </data>
   <data name="SettingsPagePhonetics.Header" xml:space="preserve">
-    <value>Phonetics</value>
+    <value>發音標示</value>
   </data>
   <data name="SettingsPagePhonetics.Description" xml:space="preserve">
-    <value>Display phonetics for different languages</value>
+    <value>顯示不同語言的發音標示</value>
+  </data>
+  <data name="SettingsPageLeftRight.Content" xml:space="preserve">
+    <value>左右</value>
+  </data>
+  <data name="SettingsPageTopBottom.Content" xml:space="preserve">
+    <value>上下</value>
+  </data>
+  <data name="SettingsPagePaletteToneWeight.Header" xml:space="preserve">
+    <value>明度權重（亮度）</value>
+  </data>
+  <data name="SettingsPagePaletteChromaWeight.Header" xml:space="preserve">
+    <value>色度權重（飽和度）</value>
+  </data>
+  <data name="SettingsPagePalettePopulationWeight.Header" xml:space="preserve">
+    <value>佔比權重（面積） </value>
+  </data>
+  <data name="SettingsPageDiscordAlbumArtSource.Header" xml:space="preserve">
+    <value>Discord 專輯封面來源</value>
+  </data>
+  <data name="DiscordAlbumArtSourceNone.Content" xml:space="preserve">
+    <value>無</value>
+  </data>
+  <data name="SettingsPageDiscordUsername.Header" xml:space="preserve">
+    <value>使用者名稱</value>
+  </data>
+  <data name="LyricsTrackTypeOriginal" xml:space="preserve">
+    <value>原文</value>
+  </data>
+  <data name="LyricsTrackTypeTransliteration" xml:space="preserve">
+    <value>音譯</value>
+  </data>
+  <data name="LyricsTrackTypeTranslation" xml:space="preserve">
+    <value>譯文</value>
+  </data>
+  <data name="LyricsSearchControlTranslationAvailable.Text" xml:space="preserve">
+    <value>譯文</value>
+  </data>
+  <data name="LyricsSearchControlTransliterationAvailable.Text" xml:space="preserve">
+    <value>音譯</value>
   </data>
 </root>

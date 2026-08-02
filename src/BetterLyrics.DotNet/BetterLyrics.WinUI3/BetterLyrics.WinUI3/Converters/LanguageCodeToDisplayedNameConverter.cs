@@ -14,9 +14,7 @@ public partial class LanguageCodeToDisplayedNameConverter : IValueConverter
         {
             if (langCode == "N/A") return langCode;
 
-            if (LanguageHelper.IsPhoneticCode(langCode)) return LanguageHelper.GetDisplayName(langCode);
-
-            return new ExtendedLanguage(langCode).Name ?? langCode;
+            return new ExtendedLanguage(langCode).DisplayName ?? langCode;
         }
 
         return value?.ToString() ?? "";

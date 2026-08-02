@@ -43,6 +43,64 @@ public partial class LyricsCacheItem : ObservableObject, ICloneable
     [JsonIgnore] [BsonIgnore] public LyricsSearchProvider? ProviderIfFound => IsFound ? Provider : null;
     [JsonIgnore] [BsonIgnore] public bool IsSearching { get; set; } = false;
 
+    private bool? _hasTranslation;
+    [JsonIgnore] [BsonIgnore]
+    public bool HasTranslation 
+    {
+        get
+        {
+            if (_hasTranslation == null) ParseFlags();
+            return _hasTranslation ?? false;
+        }
+    }
+
+    private bool? _hasTransliteration;
+    [JsonIgnore] [BsonIgnore]
+    public bool HasTransliteration 
+    {
+        get
+        {
+            if (_hasTransliteration == null) ParseFlags();
+            return _hasTransliteration ?? false;
+        }
+    }
+
+    private bool? _isWordByWord;
+    [JsonIgnore] [BsonIgnore]
+    public bool IsWordByWord 
+    {
+        get
+        {
+            if (_isWordByWord == null) ParseFlags();
+            return _isWordByWord ?? false;
+        }
+    }
+
+    private void ParseFlags()
+    {
+        if (Raw == null && Translation == null && Transliteration == null)
+        {
+            _hasTranslation = false;
+            _hasTransliteration = false;
+            _isWordByWord = false;
+            return;
+        }
+        try
+        {
+            var parser = new Helpers.Lyrics.ContentParser.LyricsContentParser();
+            var tracks = parser.Parse(this);
+            _hasTranslation = tracks.Any(x => x.TrackType == LyricsTrackType.Translation);
+            _hasTransliteration = tracks.Any(x => x.TrackType == LyricsTrackType.Transliteration);
+            _isWordByWord = tracks.Any(x => x.IsWordByWord);
+        }
+        catch
+        {
+            _hasTranslation = false;
+            _hasTransliteration = false;
+            _isWordByWord = false;
+        }
+    }
+
     public object Clone()
     {
         return new LyricsCacheItem

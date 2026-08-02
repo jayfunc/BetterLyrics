@@ -1,14 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <UserControl
     x:Class="BetterLyrics.WinUI3.Controls.PluginManagerControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:constants="using:BetterLyrics.Core.Constants"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:settings="using:BetterLyrics.Core.Models.Settings"
-    xmlns:constants="using:BetterLyrics.Core.Constants"
     mc:Ignorable="d">
 
     <Grid Padding="36,0">
@@ -66,10 +66,8 @@
             VerticalAlignment="Bottom"
             Orientation="Horizontal"
             Spacing="6">
-            <local:ExternalLinkButton x:Uid="PluginManagerControlVisitPluginDevGuide"
-                                      NavigateUri="{x:Bind constants:Link.PluginDevGuide}" />
-            <local:ExternalLinkButton x:Uid="PluginManagerControlVisitPluginStore"
-                                      NavigateUri="{x:Bind constants:Link.PluginsStore}" />
+            <local:ExternalLinkButton x:Uid="PluginManagerControlVisitPluginDevGuide" NavigateUri="{x:Bind constants:Link.PluginDevGuide}" />
+            <local:ExternalLinkButton x:Uid="PluginManagerControlVisitPluginStore" NavigateUri="{x:Bind constants:Link.PluginsStore}" />
             <Button
                 x:Uid="PluginManagerControlInstall"
                 Command="{x:Bind ViewModel.InstallPluginCommand}"

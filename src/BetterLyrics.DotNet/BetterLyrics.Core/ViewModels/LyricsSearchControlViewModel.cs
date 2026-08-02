@@ -24,19 +24,22 @@ public partial class LyricsSearchControlViewModel : BaseViewModel,
     private readonly ILyricsSearchService _lyricsSearchService;
     private readonly ISettingsService _settingsService;
     private readonly ISongSearchMapService _songSearchMapService;
+    private readonly ILocalizationService _localizationService;
 
     public LyricsSearchControlViewModel(
         ILyricsSearchService lyricsSearchService,
         IGsmtcService gsmtcService,
         ISettingsService settingsService,
         ISongSearchMapService songSearchMapService, IAppUIThreadProvider appUiThreadProvider,
-        IGlobalToastProvider globalToastProvider)
+        IGlobalToastProvider globalToastProvider,
+        ILocalizationService localizationService)
     {
         _lyricsSearchService = lyricsSearchService;
         _settingsService = settingsService;
         _songSearchMapService = songSearchMapService;
         _appUIThreadProvider = appUiThreadProvider;
         _globalToastProvider = globalToastProvider;
+        _localizationService = localizationService;
 
         GsmtcService = gsmtcService;
         AppSettings = _settingsService.AppSettings;

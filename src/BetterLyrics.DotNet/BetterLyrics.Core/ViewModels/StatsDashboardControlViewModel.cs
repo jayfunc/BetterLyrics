@@ -144,7 +144,7 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
     }
 
     private void ProcessHeatmapStats(List<PlayHistoryItem> logs, DateTime start, DateTime end,
-        CultureInfo culture = null)
+        CultureInfo? culture = null)
     {
         culture ??= CultureInfo.CurrentUICulture;
 
@@ -378,7 +378,7 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
             TopSongs = [.. await topSongsTask];
 
             var pStats = await playersTask;
-            _ = UpdatePlayerStatsAsync(pStats);
+            await UpdatePlayerStatsAsync(pStats);
 
             TopArtists = [.. await topArtistsTask];
 
@@ -387,7 +387,7 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "StatsDashboardControlViewModel.LoadDataCoreAsync");
+            _logger.LogError(ex, "StatsDashboardControlViewModel: LoadDataCoreAsync");
             Debug.WriteLine($"Error loading stats: {ex.Message}");
         }
         finally

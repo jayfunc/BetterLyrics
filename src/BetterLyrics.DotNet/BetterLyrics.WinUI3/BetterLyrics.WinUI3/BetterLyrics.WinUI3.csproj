@@ -68,6 +68,7 @@
         <PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0" />
         <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
         <PackageReference Include="SpoutDx.Net.Interop.MultiPlatform" Version="0.1.0" />
+        <PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.2" />
         <PackageReference Include="System.Drawing.Common" Version="10.0.10" />
         <PackageReference Include="Ude.NetStandard" Version="1.2.0" />
         <PackageReference Include="Vanara.PInvoke.DwmApi" Version="5.0.5" />
