@@ -13,7 +13,7 @@ public partial class LyricsSearchProviderInfo : ObservableRecipient
     {
     }
 
-    public LyricsSearchProviderInfo(LyricsSearchProvider provider, bool isEnabled)
+    public LyricsSearchProviderInfo(LyricsProvider provider, bool isEnabled)
     {
         Provider = provider;
         IsEnabled = isEnabled;
@@ -25,7 +25,7 @@ public partial class LyricsSearchProviderInfo : ObservableRecipient
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
-    public partial LyricsSearchProvider Provider { get; set; }
+    public partial LyricsProvider Provider { get; set; }
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]

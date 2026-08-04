@@ -16,5 +16,5 @@ public interface ILyricsSearchService
         bool checkCache,
         CancellationToken cancellationToken = default);
 
-    List<LyricsSearchProvider> GetActiveProviders();
+    List<LyricsProvider> GetActiveProviders();
 }

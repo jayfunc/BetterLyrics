@@ -24,9 +24,7 @@
     <bwc:MatchedLocalFilesPathToVisibilityConverter x:Key="MatchedLocalFilesPathToVisibilityConverter" />
 
     <bwc:CornerRadiusToDoubleConverter x:Key="CornerRadiusToDoubleConverter" />
-    <bwc:LyricsSearchProviderToDisplayNameConverter x:Key="LyricsSearchProviderToDisplayNameConverter" />
-    <bwc:TranslationSearchProviderToDisplayNameConverter x:Key="TranslationSearchProviderToDisplayNameConverter" />
-    <bwc:TransliterationSearchProviderToDisplayNameConverter x:Key="TransliterationSearchProviderToDisplayNameConverter" />
+    <bwc:LyricsProviderToDisplayNameConverter x:Key="LyricsProviderToDisplayNameConverter" />
     <bwc:SecondsToFormattedTimeConverter x:Key="SecondsToFormattedTimeConverter" />
     <bwc:MillisecondsToFormattedTimeConverter x:Key="MillisecondsToFormattedTimeConverter" />
     <bwc:FPSToTimeSpanConverter x:Key="FPSToTimeSpanConverter" />
@@ -49,6 +47,7 @@
 
     <bwc:RectToMarginConverter x:Key="RectToMarginConverter" />
     <bwc:LanguageCodeToDisplayedNameConverter x:Key="LanguageCodeToDisplayedNameConverter" />
+    <bwc:LanguageTagToDisplayedNameConverter x:Key="LanguageTagToDisplayedNameConverter" />
     <bwc:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter" />
     <bwc:DisplayLanguageCodeToIndexConverter x:Key="DisplayLanguageCodeToIndexConverter" />
     <bwc:PathToParentFolderConverter x:Key="PathToParentFolderConverter" />

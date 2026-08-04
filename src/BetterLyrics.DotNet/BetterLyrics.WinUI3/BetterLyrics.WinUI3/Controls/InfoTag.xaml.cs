@@ -25,9 +25,14 @@ public sealed partial class InfoTag : UserControl
         DependencyProperty.Register(nameof(Link), typeof(string), typeof(InfoTag),
             new PropertyMetadata(string.Empty, OnDependencyPropertyChanged));
 
+    public static readonly DependencyProperty ThemeProperty =
+        DependencyProperty.Register(nameof(Theme), typeof(InfoTagTheme), typeof(InfoTag),
+            new PropertyMetadata(InfoTagTheme.Default, OnDependencyPropertyChanged));
+
     public InfoTag()
     {
         InitializeComponent();
+        Loaded += (s, e) => UpdateThemeColors();
     }
 
     public string Text
@@ -48,10 +53,70 @@ public sealed partial class InfoTag : UserControl
         set => SetValue(LinkProperty, value);
     }
 
+    public InfoTagTheme Theme
+    {
+        get => (InfoTagTheme)GetValue(ThemeProperty);
+        set => SetValue(ThemeProperty, value);
+    }
+
     public Visibility HasIcon => string.IsNullOrEmpty(Glyph) ? Visibility.Collapsed : Visibility.Visible;
     public Visibility HasText => string.IsNullOrEmpty(Text) ? Visibility.Collapsed : Visibility.Visible;
 
     private bool HasLink => !string.IsNullOrEmpty(Link);
+
+    private Brush _hoverBackground;
+    private Brush _normalBackground;
+
+    private void UpdateThemeColors()
+    {
+        string backgroundKey = "CardBackgroundFillColorDefaultBrush";
+        string borderKey = "CardStrokeColorDefaultBrush";
+        string foregroundKey = "TextFillColorSecondaryBrush";
+        string hoverBackgroundKey = "CardBackgroundFillColorSecondaryBrush";
+        
+        switch (Theme)
+        {
+            case InfoTagTheme.Default:
+                break;
+            case InfoTagTheme.Accent:
+                backgroundKey = "AccentFillColorDefaultBrush";
+                borderKey = "AccentFillColorDefaultBrush";
+                foregroundKey = "TextOnAccentFillColorPrimaryBrush";
+                hoverBackgroundKey = "AccentFillColorSecondaryBrush";
+                break;
+            case InfoTagTheme.Success:
+                backgroundKey = "SystemFillColorSuccessBackgroundBrush";
+                borderKey = "SystemFillColorSuccessBrush";
+                foregroundKey = "SystemFillColorSuccessBrush";
+                hoverBackgroundKey = "SystemFillColorSuccessBackgroundBrush";
+                break;
+            case InfoTagTheme.Warning:
+                backgroundKey = "SystemFillColorCautionBackgroundBrush";
+                borderKey = "SystemFillColorCautionBrush";
+                foregroundKey = "SystemFillColorCautionBrush";
+                hoverBackgroundKey = "SystemFillColorCautionBackgroundBrush";
+                break;
+            case InfoTagTheme.Error:
+                backgroundKey = "SystemFillColorCriticalBackgroundBrush";
+                borderKey = "SystemFillColorCriticalBrush";
+                foregroundKey = "SystemFillColorCriticalBrush";
+                hoverBackgroundKey = "SystemFillColorCriticalBackgroundBrush";
+                break;
+        }
+
+        if (Application.Current.Resources.TryGetValue(backgroundKey, out var bg) && bg is Brush bgBrush)
+            BadgeBorder.Background = bgBrush;
+        if (Application.Current.Resources.TryGetValue(borderKey, out var border) && border is Brush borderBrush)
+            BadgeBorder.BorderBrush = borderBrush;
+        if (Application.Current.Resources.TryGetValue(foregroundKey, out var fg) && fg is Brush fgBrush)
+        {
+            TagText.Foreground = fgBrush;
+            TagIcon.Foreground = fgBrush;
+        }
+        
+        _hoverBackground = Application.Current.Resources.TryGetValue(hoverBackgroundKey, out var hbg) && hbg is Brush hbgBrush ? hbgBrush : BadgeBorder.Background;
+        _normalBackground = BadgeBorder.Background;
+    }
 
     private static void OnDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
@@ -62,22 +127,36 @@ public sealed partial class InfoTag : UserControl
             else
                 tag.ProtectedCursor = null;
 
+            if (e.Property == ThemeProperty)
+            {
+                tag.UpdateThemeColors();
+            }
+
             tag.Bindings.Update();
         }
     }
 
     private void OnPointerEntered(object sender, PointerRoutedEventArgs e)
     {
-        if (HasLink) BadgeBorder.Background = (Brush)Resources["CardBackgroundFillColorSecondaryBrush"];
+        if (HasLink && _hoverBackground != null) BadgeBorder.Background = _hoverBackground;
     }
 
     private void OnPointerExited(object sender, PointerRoutedEventArgs e)
     {
-        if (HasLink) BadgeBorder.Background = (Brush)Resources["CardBackgroundFillColorDefaultBrush"];
+        if (HasLink && _normalBackground != null) BadgeBorder.Background = _normalBackground;
     }
 
     private async void OnTapped(object sender, TappedRoutedEventArgs e)
     {
         if (HasLink && Uri.TryCreate(Link, UriKind.Absolute, out var uri)) await Launcher.LaunchUriAsync(uri);
     }
+}
+
+public enum InfoTagTheme
+{
+    Default,
+    Accent,
+    Success,
+    Warning,
+    Error
 }

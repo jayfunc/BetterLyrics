@@ -3,6 +3,7 @@ using System.Text;
 using System.Xml.Linq;
 using BetterLyrics.Core.Models.Lyrics;
 using BetterLyrics.Core.Enums;
+using NLanguageTag;
 
 namespace BetterLyrics.Core.Helpers.Lyrics.ContentParser;
 
@@ -16,10 +17,11 @@ public partial class LyricsContentParser
     private readonly XNamespace _ttml = "http://www.w3.org/ns/ttml#metadata";
     private readonly XNamespace _tts = "http://www.w3.org/ns/ttml#styling";
 
-    private void ParseTtml(string raw)
+    private void ParseTtml(string raw, LyricsProvider? provider, LyricsParseRule rule)
     {
         try
         {
+
             List<LyricsLine> originalLines = [];
             Dictionary<string, List<LyricsLine>> translationLinesDict = [];
             Dictionary<string, List<LyricsLine>> romanLinesDict = [];
@@ -153,17 +155,26 @@ public partial class LyricsContentParser
                     );
             }
 
-            _lyricsDataArr.Add(new LyricsData(originalLines));
+            var originalData = new LyricsData(originalLines) { Provider = provider };
+            AddLyricsData(originalData);
 
-            foreach (var kvp in translationLinesDict)
+            if (rule.IsTranslationEnabled)
             {
-                if (kvp.Value.Count > 0)
+                foreach (var kvp in translationLinesDict)
                 {
-                    _lyricsDataArr.Add(new LyricsData(kvp.Value)
+                    if (kvp.Value.Count > 0)
                     {
-                        LanguageCode = kvp.Key == "default" ? null : kvp.Key,
-                        TrackType = LyricsTrackType.Translation
-                    });
+                        LanguageTag? langTag = LanguageTag.TryParse(kvp.Key == "default" ? null : kvp.Key, out var parsedTag) ? parsedTag : null;
+                        if (rule.IsTranslationAllowed(langTag))
+                        {
+                            AddLyricsData(new LyricsData(kvp.Value)
+                            {
+                                LanguageTag = langTag,
+                                TrackType = LyricsTrackType.Translation,
+                                Provider = provider,
+                            });
+                        }
+                    }
                 }
             }
 
@@ -171,11 +182,16 @@ public partial class LyricsContentParser
             {
                 if (kvp.Value.Count > 0)
                 {
-                    _lyricsDataArr.Add(new LyricsData(kvp.Value)
+                    LanguageTag? langTag = LanguageTag.TryParse(kvp.Key == "default" ? null : kvp.Key, out var parsedTag) ? parsedTag : null;
+                    if (rule.IsRomanizationAllowed(langTag, originalData.LanguageTag))
                     {
-                        LanguageCode = kvp.Key == "default" ? null : kvp.Key,
-                        TrackType = LyricsTrackType.Transliteration
-                    });
+                        AddLyricsData(new LyricsData(kvp.Value)
+                        {
+                            LanguageTag = langTag,
+                            TrackType = LyricsTrackType.Transliteration,
+                            Provider = provider,
+                        });
+                    }
                 }
             }
         }

@@ -95,7 +95,7 @@ public static partial class LanguageHelper
     /// <summary>
     ///     智能检测语言代码，支持识别拼音、粤拼、罗马音
     /// </summary>
-    public static string? DetectLanguageCode(string? text)
+    public static LanguageTag? DetectLanguageTag(string? text)
     {
         if (string.IsNullOrWhiteSpace(text)) return null;
 
@@ -111,17 +111,17 @@ public static partial class LanguageHelper
 
         return code switch
         {
-            "simple" => EnglishCode.ToString(),
-            "zh" => MandarinChineseCode.ToString(),
-            "zh_classical" => MandarinChineseCode.ToString(),
-            "zh_yue" => YueChineseCode.ToString(),
-            _ => code
+            "simple" => EnglishCode,
+            "zh" => MandarinChineseCode,
+            "zh_classical" => MandarinChineseCode,
+            "zh_yue" => YueChineseCode,
+            _ => LanguageTag.TryParse(code, out var tag) ? tag : null
         };
     }
 
-    public static string? DetectLanguageCode(IEnumerable<string> lines)
+    public static LanguageTag? DetectLanguageTag(IEnumerable<string> lines)
     {
-        Dictionary<string, int> codeCount = new();
+        Dictionary<LanguageTag?, int> tagCount = [];
         int cantoneseFeatureCount = 0;
 
         foreach (var line in lines)
@@ -131,23 +131,23 @@ public static partial class LanguageHelper
                 cantoneseFeatureCount++;
             }
 
-            var code = DetectLanguageCode(line);
-            if (code != null)
+            var tag = DetectLanguageTag(line);
+            if (tag != null)
             {
-                if (!codeCount.ContainsKey(code)) codeCount[code] = 0;
-                codeCount[code]++;
+                if (!tagCount.ContainsKey(tag)) tagCount[tag] = 0;
+                tagCount[tag]++;
             }
         }
 
-        if (codeCount.Count == 0) return null;
+        if (tagCount.Count == 0) return null;
 
-        var bestCode = codeCount.OrderByDescending(kv => kv.Value).First().Key;
+        var bestCode = tagCount.OrderByDescending(kv => kv.Value).First().Key;
 
         // If the detected language is Mandarin but we found strong Cantonese features in at least a few lines,
         // it's highly likely to be Cantonese because Mandarin rarely uses these specific characters.
-        if (bestCode == MandarinChineseCode.ToString() && cantoneseFeatureCount >= 2)
+        if (bestCode == MandarinChineseCode && cantoneseFeatureCount >= 2)
         {
-            return YueChineseCode.ToString();
+            return YueChineseCode;
         }
 
         return bestCode;
@@ -156,17 +156,17 @@ public static partial class LanguageHelper
     /// <summary>
     ///     尝试识别音译系统 (拼音/粤拼/罗马音)
     /// </summary>
-    private static string? TryDetectTransliteration(string text)
+    private static LanguageTag? TryDetectTransliteration(string text)
     {
-        if (PinyinToneRegex().IsMatch(text)) return MandarinChineseLatnTag.ToString();
+        if (PinyinToneRegex().IsMatch(text)) return MandarinChineseLatnTag;
 
         var numberMatches = NumberedToneRegex().Matches(text);
         if (numberMatches.Count > 0)
         {
             foreach (Match match in numberMatches)
                 if (match.Value.EndsWith("6"))
-                    return YueChineseLatnTag.ToString();
-            return MandarinChineseLatnTag.ToString();
+                    return YueChineseLatnTag;
+            return MandarinChineseLatnTag;
         }
 
         if (IsLatinOnly(text))
@@ -176,8 +176,8 @@ public static partial class LanguageHelper
             var romajiScore = RomajiFeatureRegex().Matches(text).Count;
             var romajaScore = RomajaFeatureRegex().Matches(text).Count;
 
-            if (romajaScore > romajiScore && romajaScore > 0) return KoreanLatnTag.ToString();
-            if (romajiScore > 0) return JapaneseLatnTag.ToString();
+            if (romajaScore > romajiScore && romajaScore > 0) return KoreanLatnTag;
+            if (romajiScore > 0) return JapaneseLatnTag;
         }
 
         return null;
@@ -239,44 +239,53 @@ public static partial class LanguageHelper
         return "#";
     }
 
-    public static bool IsPhoneticCode(string? code)
+    public static bool IsPhoneticTag(LanguageTag? tag) => tag?.Script == Script.Latn;
+
+    public static LanguageTag? GetPhoneticTag(LanguageTag? tag)
     {
-        if (LanguageTag.TryParse(code, out var tag))
+        if (tag == null) return null;
+        if (tag.Value.Language != null)
         {
-            return tag.Script == Script.Latn;
+            return new LanguageTag(tag.Value.Language, Script.Latn);
+        }
+        return null;
+    }
+
+    public static bool IsLanguageMatch(LanguageTag? sourceTag, string? targetCode, bool fuzzy = false)
+    {
+        if (sourceTag != null && LanguageTag.TryParse(targetCode, out var targetTag))
+        {
+            return IsLanguageMatch(sourceTag, targetTag, fuzzy);
         }
 
         return false;
     }
 
-    public static bool IsLanguageMatch(string? sourceCode, string? targetCode)
-    {
-        if (LanguageTag.TryParse(sourceCode, out var sourceTag) && LanguageTag.TryParse(targetCode, out var targetTag))
-        {
-            if (sourceTag.Script == targetTag.Script)
-            {
-                return (sourceTag.Language?.Macrolanguage ?? sourceTag.Language) == (targetTag.Language?.Macrolanguage ?? targetTag.Language);
-            }
-        }
-
-        return false;
-    }
-
-    public static bool IsTagMatch(string? sourceCode, LanguageTag? targetTag)
+    public static bool IsLanguageMatch(string? sourceCode, LanguageTag? targetTag, bool fuzzy = false)
     {
         if (LanguageTag.TryParse(sourceCode, out var sourceTag) && targetTag != null)
         {
-            return IsTagMatch(sourceTag, sourceTag);
+            return IsLanguageMatch(sourceTag, targetTag, fuzzy);
         }
 
         return false;
     }
 
-    public static bool IsTagMatch(LanguageTag? sourceTag, LanguageTag? targetTag)
+    public static bool IsLanguageMatch(LanguageTag? sourceTag, LanguageTag? targetTag, bool fuzzy = false)
     {
         if (sourceTag != null && targetTag != null)
         {
-            return sourceTag.Value.Language == targetTag.Value.Language && sourceTag.Value.Script == targetTag.Value.Script;
+            if (sourceTag.Value.Script == targetTag.Value.Script)
+            {
+                if (fuzzy)
+                {
+                    return (sourceTag.Value.Language?.Macrolanguage ?? sourceTag.Value.Language) == (targetTag.Value.Language?.Macrolanguage ?? targetTag.Value.Language);
+                }
+                else
+                {
+                    return sourceTag.Value.Language == targetTag.Value.Language;
+                }
+            }
         }
 
         return false;

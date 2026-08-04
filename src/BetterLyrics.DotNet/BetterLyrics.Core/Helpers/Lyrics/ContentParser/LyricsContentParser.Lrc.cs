@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
+using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Models.Lyrics;
 
 namespace BetterLyrics.Core.Helpers.Lyrics.ContentParser;
@@ -11,7 +12,7 @@ public partial class LyricsContentParser
     [GeneratedRegex(@"(\[|\<)(\d*):(\d*)\.(\d*)(\]|\>)([^\[\]\<\>]*)")]
     private static partial Regex SyllableRegex();
 
-    private void ParseLrc(string raw)
+    private void ParseLrc(string raw, LyricsProvider? provider = null, LyricsParseRule? rule = null)
     {
         var lines = raw.Split(["\r\n", "\n"], StringSplitOptions.RemoveEmptyEntries);
         var lrcLines = new List<LyricsLine>();
@@ -85,9 +86,15 @@ public partial class LyricsContentParser
             // 计算最大语言数量
             languageCount = grouped.Max(g => g.Count());
 
+        // 如果既没有开启翻译，也没有开启任何音译，那么只保留第一轨（原文）
+        if (rule != null && !rule.IsTranslationEnabled && rule.AllowedRomanizationTags.Count == 0)
+        {
+            languageCount = Math.Min(languageCount, 1);
+        }
+
         // 初始化每种语言的歌词列表
-        var langStartIndex = _lyricsDataArr.Count;
-        for (var i = 0; i < languageCount; i++) _lyricsDataArr.Add(new LyricsData());
+        var langStartIndex = LyricsDataArr.Count;
+        for (var i = 0; i < languageCount; i++) AddLyricsData(new LyricsData { Provider = provider });
 
         // 遍历每个时间分组
         if (grouped != null)
@@ -99,9 +106,21 @@ public partial class LyricsContentParser
                     if (langIdx < linesInGroup.Count)
                     {
                         var lyricsLine = linesInGroup[langIdx];
-                        _lyricsDataArr[langStartIndex + langIdx].LyricsLines.Add(lyricsLine);
+                        LyricsDataArr[langStartIndex + langIdx].LyricsLines.Add(lyricsLine);
                     }
                 // 没有翻译行则不补原文，直接跳过
             }
+
+        // 行数据填充完毕后，才能评估语言Tag并设置TrackType
+        for (var i = 0; i < languageCount; i++)
+        {
+            var data = LyricsDataArr[langStartIndex + i];
+            if (langStartIndex + i > 0 && data.TrackType == LyricsTrackType.Original)
+            {
+                data.TrackType = LanguageHelper.IsPhoneticTag(data.LanguageTag)
+                    ? LyricsTrackType.Transliteration
+                    : LyricsTrackType.Translation;
+            }
+        }
     }
 }

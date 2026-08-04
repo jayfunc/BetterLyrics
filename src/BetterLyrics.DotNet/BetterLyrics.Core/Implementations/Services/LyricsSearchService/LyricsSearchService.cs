@@ -27,9 +27,11 @@ namespace BetterLyrics.Core.Implementations.Services.LyricsSearchService;
 public class LyricsSearchService : ILyricsSearchService
 {
     private readonly HttpClient _amllTtmlDbHttpClient;
+    private readonly HttpClient _lrcLibHttpClient;
+    private readonly Providers.AppleMusic _appleMusic;
+
     private readonly IFileSystemService _fileSystemService;
     private readonly ILogger _logger;
-    private readonly HttpClient _lrcLibHttpClient;
     private readonly ILyricsCacheService _lyricsCacheService;
     private readonly IPluginService _pluginService;
     private readonly IPasswordVaultProvider _passwordVaultProvider;
@@ -54,12 +56,13 @@ public class LyricsSearchService : ILyricsSearchService
         _pluginService = pluginService;
         _logger = logger;
 
-        _lrcLibHttpClient = new HttpClient();
+        _lrcLibHttpClient = new();
         _lrcLibHttpClient.DefaultRequestHeaders.Add(
             "User-Agent",
             $"{App.AppName} {MetadataHelper.AppVersion} ({Link.BetterLyricsGitHub})"
         );
-        _amllTtmlDbHttpClient = new HttpClient();
+        _amllTtmlDbHttpClient = new();
+        _appleMusic = new();
     }
 
     public async Task<LyricsCacheItem?> SearchSmartlyAsync(SongInfo songInfo, LyricsSearchType? lyricsSearchType,
@@ -77,7 +80,7 @@ public class LyricsSearchService : ILyricsSearchService
             var overridenArtist = songInfo.Artist;
             var overridenAlbum = songInfo.Album;
 
-            _logger.LogInformation("SearchSmartlyAsync {SongInfo}", songInfo);
+            _logger.LogInformation("SearchSmartlyAsync: {SongInfo}", songInfo);
 
             try
             {
@@ -89,7 +92,7 @@ public class LyricsSearchService : ILyricsSearchService
                     overridenArtist = found.MappedArtist;
                     overridenAlbum = found.MappedAlbum;
 
-                    _logger.LogInformation("Found mapped song search query: {MappedSongSearchQuery}", found);
+                    _logger.LogInformation("SearchSmartlyAsync: Found mapped song search query: {MappedSongSearchQuery}", found);
 
                     var pureMusic = found.IsMarkedAsPureMusic;
                     if (pureMusic)
@@ -118,7 +121,7 @@ public class LyricsSearchService : ILyricsSearchService
             catch (Exception ex)
             {
                 Debug.WriteLine(ex.Message);
-                _logger.LogError(ex, "SearchSmartlyAsync");
+                _logger.LogError(ex, "SearchSmartlyAsync: ");
             }
 
             var mediaSourceProviderInfo =
@@ -160,8 +163,7 @@ public class LyricsSearchService : ILyricsSearchService
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogWarning(ex, "Provider {Provider} failed during parallel search.", provider.Provider);
-                        Debug.WriteLine($"Provider {provider.Provider} failed during parallel search.");
+                        _logger.LogWarning(ex, "SearchSmartlyAsync: Provider {Provider} failed during parallel search.", provider.Provider);
                         return null;
                     }
 
@@ -202,13 +204,12 @@ public class LyricsSearchService : ILyricsSearchService
                     }
                     catch (Exception ex)
                     {
-                        _logger.LogWarning(ex, "Provider {Provider} failed during sequential search.",
+                        _logger.LogError(ex, "SearchSmartlyAsync: Provider {Provider} failed during sequential search.",
                             provider.Provider);
-                        Debug.WriteLine($"Provider {provider.Provider} failed during sequential search.");
                     }
             }
 
-            if (finalResult == null) throw new Exception("Could't find any lyric");
+            if (finalResult == null) throw new Exception("SearchSmartlyAsync: Could't find any lyrics");
         }
         catch (OperationCanceledException)
         {
@@ -216,8 +217,7 @@ public class LyricsSearchService : ILyricsSearchService
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "An unexpected error occurred in SearchSmartlyAsync.");
-            Debug.WriteLine($"An unexpected error occurred in SearchSmartlyAsync: {ex.Message}");
+            _logger.LogError(ex, "SearchSmartlyAsync: An unexpected error occurred.");
             throw;
         }
 
@@ -229,17 +229,17 @@ public class LyricsSearchService : ILyricsSearchService
         bool checkCache,
         [EnumeratorCancellation] CancellationToken cancellationToken = default)
     {
-        _logger.LogInformation("SearchAllAsync Concurrent {SongInfo}", songInfo);
+        _logger.LogInformation("SearchAllAsync: {SongInfo}", songInfo);
 
         var searchTasks = new List<Task<LyricsCacheItem>>();
 
-        foreach (var provider in Enum.GetValues<LyricsSearchProvider>())
+        foreach (var provider in Enum.GetValues<LyricsProvider>().Where(p => !p.IsInternal()))
             searchTasks.Add(SearchSingleAsync(songInfo, provider, checkCache, cancellationToken));
 
         foreach (var plugin in _settingsService.AppSettings.PluginsInfo)
             if (plugin.Plugin is ILyricsSource)
             {
-                var provider = (LyricsSearchProvider)_pluginService.GetPluginHashedId(plugin.Plugin.Id);
+                var provider = (LyricsProvider)_pluginService.GetPluginHashedId(plugin.Plugin.Id);
                 searchTasks.Add(SearchSingleAsync(songInfo, provider, checkCache, cancellationToken));
             }
 
@@ -260,23 +260,23 @@ public class LyricsSearchService : ILyricsSearchService
             }
             catch (Exception ex)
             {
-                _logger.LogDebug(ex, "A lyrics search provider failed or timed out.");
+                _logger.LogError(ex, "SearchAllAsync: A lyrics search provider failed or timed out.");
             }
 
             if (result != null) yield return result;
         }
     }
 
-    public List<LyricsSearchProvider> GetActiveProviders()
+    public List<LyricsProvider> GetActiveProviders()
     {
-        List<LyricsSearchProvider> providers = [];
+        List<LyricsProvider> providers = [];
 
-        foreach (var provider in Enum.GetValues<LyricsSearchProvider>()) providers.Add(provider);
+        foreach (var provider in Enum.GetValues<LyricsProvider>().Where(p => !p.IsInternal())) providers.Add(provider);
 
         foreach (var plugin in _settingsService.AppSettings.PluginsInfo)
             if (plugin.Plugin is ILyricsSource)
             {
-                var provider = (LyricsSearchProvider)_pluginService.GetPluginHashedId(plugin.Plugin.Id);
+                var provider = (LyricsProvider)_pluginService.GetPluginHashedId(plugin.Plugin.Id);
                 providers.Add(provider);
             }
 
@@ -326,7 +326,7 @@ public class LyricsSearchService : ILyricsSearchService
         }
     }
 
-    private async Task<LyricsCacheItem> SearchSingleAsync(SongInfo songInfo, LyricsSearchProvider provider,
+    private async Task<LyricsCacheItem> SearchSingleAsync(SongInfo songInfo, LyricsProvider provider,
         bool checkCache, CancellationToken token)
     {
         var lyricsSearchResult = new LyricsCacheItem
@@ -350,30 +350,30 @@ public class LyricsSearchService : ILyricsSearchService
         else
             switch (provider)
             {
-                case LyricsSearchProvider.QQ:
+                case LyricsProvider.QQ:
                     lyricsSearchResult = await SearchQQAsync(songInfo, token);
                     break;
-                case LyricsSearchProvider.Kugou:
+                case LyricsProvider.Kugou:
                     lyricsSearchResult = await SearchKugouAsync(songInfo, token);
                     break;
-                case LyricsSearchProvider.Netease:
+                case LyricsProvider.Netease:
                     lyricsSearchResult = await SearchNeteaseAsync(songInfo, token);
                     break;
-                case LyricsSearchProvider.LrcLib:
+                case LyricsProvider.LrcLib:
                     lyricsSearchResult = await SearchLrcLibAsync(songInfo, token);
                     break;
-                case LyricsSearchProvider.AmllTtmlDb:
+                case LyricsProvider.AmllTtmlDb:
                     lyricsSearchResult = await SearchAmllTtmlDbAsync(songInfo, token);
                     break;
-                case LyricsSearchProvider.LocalMusicFile:
+                case LyricsProvider.LocalMusicFile:
                     lyricsSearchResult = await SearchMusicFileAsync(songInfo, token);
                     break;
-                case LyricsSearchProvider.LocalLrcFile:
-                case LyricsSearchProvider.LocalEslrcFile:
-                case LyricsSearchProvider.LocalTtmlFile:
+                case LyricsProvider.LocalLrcFile:
+                case LyricsProvider.LocalEslrcFile:
+                case LyricsProvider.LocalTtmlFile:
                     lyricsSearchResult = await SearchLyricsFileAsync(songInfo, provider.GetLyricsFormat(), token);
                     break;
-                case LyricsSearchProvider.AppleMusic:
+                case LyricsProvider.AppleMusic:
                     lyricsSearchResult = await SearchAppleMusicAsync(songInfo, token);
                     break;
             }
@@ -392,7 +392,7 @@ public class LyricsSearchService : ILyricsSearchService
         MediaFolder? bestFolderConfig = null;
 
         var lyricsSearchResult = new LyricsCacheItem();
-        if (format.ToLyricsSearchProvider() is LyricsSearchProvider lyricsSearchProvider)
+        if (format.ToLyricsProvider() is LyricsProvider lyricsSearchProvider)
             lyricsSearchResult.Provider = lyricsSearchProvider;
 
         var targetExt = format.ToFileExtension();
@@ -445,7 +445,7 @@ public class LyricsSearchService : ILyricsSearchService
     {
         var lyricsSearchResult = new LyricsCacheItem
         {
-            Provider = LyricsSearchProvider.LocalMusicFile
+            Provider = LyricsProvider.LocalMusicFile
         };
 
         var enabledIds = _settingsService.AppSettings.LocalMediaFolders
@@ -494,7 +494,7 @@ public class LyricsSearchService : ILyricsSearchService
     {
         var lyricsSearchResult = new LyricsCacheItem
         {
-            Provider = LyricsSearchProvider.AmllTtmlDb
+            Provider = LyricsProvider.AmllTtmlDb
         };
 
         if (IsAmllTtmlDbIndexInvalid())
@@ -582,7 +582,7 @@ public class LyricsSearchService : ILyricsSearchService
     {
         var lyricsSearchResult = new LyricsCacheItem
         {
-            Provider = LyricsSearchProvider.LrcLib
+            Provider = LyricsProvider.LrcLib
         };
 
         // Build API query URL
@@ -636,7 +636,7 @@ public class LyricsSearchService : ILyricsSearchService
     {
         var lyricsSearchResult = new LyricsCacheItem
         {
-            Provider = LyricsSearchProvider.QQ
+            Provider = LyricsProvider.QQ
         };
 
         ISearchResult? result;
@@ -682,7 +682,7 @@ public class LyricsSearchService : ILyricsSearchService
     {
         var lyricsSearchResult = new LyricsCacheItem
         {
-            Provider = LyricsSearchProvider.Netease
+            Provider = LyricsProvider.Netease
         };
 
         ISearchResult? result;
@@ -729,7 +729,7 @@ public class LyricsSearchService : ILyricsSearchService
     {
         var lyricsSearchResult = new LyricsCacheItem
         {
-            Provider = LyricsSearchProvider.Kugou
+            Provider = LyricsProvider.Kugou
         };
 
         ISearchResult? result;
@@ -773,7 +773,7 @@ public class LyricsSearchService : ILyricsSearchService
                     }
                 }
 
-                lyricsSearchResult.Reference = "https://www.kugou.com/";
+                lyricsSearchResult.Reference = $"https://www.kugou.com/song/#hash={kugouResult.Hash}";
             }
 
             lyricsSearchResult.Raw = original;
@@ -792,46 +792,8 @@ public class LyricsSearchService : ILyricsSearchService
 
     private async Task<LyricsCacheItem> SearchAppleMusicAsync(SongInfo songInfo, CancellationToken token)
     {
-        var mediaUserToken = _passwordVaultProvider.Get(App.AppName, AppleMusic.MediaUserTokenKey);
-        if (mediaUserToken != null)
-        {
-            ProviderHelper.AppleMusicApi.SetMediaUserToken(mediaUserToken);
-        }
-
-        var lyricsSearchResult = new LyricsCacheItem
-        {
-            Provider = LyricsSearchProvider.AppleMusic
-        };
-
-        ISearchResult? result;
-
-        result = await SearchHelper.Search(new TrackMultiArtistMetadata
-        {
-            DurationMs = (int)songInfo.DurationMs,
-            Album = songInfo.Album,
-            Artist = songInfo.Artist,
-            Title = songInfo.Title
-        }, Searchers.AppleMusic, CompareHelper.MatchType.NoMatch);
-        token.ThrowIfCancellationRequested();
-
-        if (result is AppleMusicSearchResult appleMusicResult)
-        {
-            var id = appleMusicResult.Id;
-            var response = await ProviderHelper.AppleMusicApi.GetLyrics(id);
-            token.ThrowIfCancellationRequested();
-
-            lyricsSearchResult.Raw = response?.Ttml;
-            lyricsSearchResult.Reference = $"https://music.apple.com/song/{id}";
-        }
-
-        lyricsSearchResult.Title = result?.Title;
-        lyricsSearchResult.Artist = result?.Artist;
-        lyricsSearchResult.Album = result?.Album;
-        lyricsSearchResult.Duration = result?.DurationMs / 1000;
-
-        lyricsSearchResult.MatchPercentage = MetadataComparer.CalculateScore(songInfo, lyricsSearchResult);
-
-        return lyricsSearchResult;
+        await _appleMusic.InitAsync(token);
+        return await _appleMusic.SearchSongInfoAsync(songInfo, token);
     }
 
     private async Task<LyricsCacheItem> SearchPluginAsync(SongInfo songInfo, PluginInfo pluginInfo,
@@ -840,7 +802,7 @@ public class LyricsSearchService : ILyricsSearchService
         var plugin = (ILyricsSource)pluginInfo.Plugin!;
         var cacheItem = new LyricsCacheItem
         {
-            Provider = (LyricsSearchProvider)_pluginService.GetPluginHashedId(pluginInfo.Id)
+            Provider = (LyricsProvider)_pluginService.GetPluginHashedId(pluginInfo.Id)
         };
 
         var result =
@@ -864,7 +826,7 @@ public class LyricsSearchService : ILyricsSearchService
         return cacheItem;
     }
 
-    private async Task<LyricsCacheItem> SearchPluginAsync(SongInfo songInfo, LyricsSearchProvider provider,
+    private async Task<LyricsCacheItem> SearchPluginAsync(SongInfo songInfo, LyricsProvider provider,
         CancellationToken token)
     {
         var pluginInfo =

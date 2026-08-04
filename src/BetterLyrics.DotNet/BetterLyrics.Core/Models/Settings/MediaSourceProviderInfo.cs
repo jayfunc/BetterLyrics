@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Text.Json.Serialization;
 using BetterLyrics.Core.Collections;
 using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Models.Memory;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -101,7 +102,7 @@ public partial class MediaSourceProviderInfo : ObservableRecipient
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
     public partial FullyObservableCollection<LyricsSearchProviderInfo> LyricsSearchProvidersInfo { get; set; } =
-        [.. Enum.GetValues<LyricsSearchProvider>().Select(p => new LyricsSearchProviderInfo(p, true))];
+        [.. Enum.GetValues<LyricsProvider>().Where(p => !p.IsInternal()).Select(p => new LyricsSearchProviderInfo(p, true))];
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]

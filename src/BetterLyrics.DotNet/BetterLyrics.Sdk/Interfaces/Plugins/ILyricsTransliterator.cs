@@ -1,6 +1,8 @@
-﻿namespace BetterLyrics.Sdk.Interfaces.Plugins;
+﻿using NLanguageTag;
+
+namespace BetterLyrics.Sdk.Interfaces.Plugins;
 
 public interface ILyricsTransliterator
 {
-    Task<string?> GetTransliterationAsync(string text, string targetLangCode, CancellationToken token);
+    Task<string?> GetTransliterationAsync(string text, LanguageTag? targetLangTag, CancellationToken token);
 }

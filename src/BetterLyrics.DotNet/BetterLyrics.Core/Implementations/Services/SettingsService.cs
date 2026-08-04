@@ -1,4 +1,4 @@
-﻿// 2025/6/23 by Zhe Fang
+// 2025/6/23 by Zhe Fang
 
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -13,6 +13,7 @@ using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.Serialization;
 using BetterLyrics.Core.ViewModels;
+using Microsoft.Extensions.Logging;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
@@ -21,14 +22,16 @@ public class SettingsService : BaseViewModel, ISettingsService
     private readonly IAppUIThreadProvider _appUiThreadProvider;
     private readonly ILocalizationService _localizationService;
     private readonly ISystemUIProvider _systemUiProvider;
+    private readonly ILogger<SettingsService> _logger;
     private readonly Debouncer _writeAppSettingsDebouncer = new();
 
     public SettingsService(ILocalizationService localizationService, IAppUIThreadProvider appUiThreadProvider,
-        ISystemUIProvider systemUiProvider)
+        ISystemUIProvider systemUiProvider, ILogger<SettingsService> logger)
     {
         _localizationService = localizationService;
         _appUiThreadProvider = appUiThreadProvider;
         _systemUiProvider = systemUiProvider;
+        _logger = logger;
 
         AppSettings = ReadAppSettings();
 
@@ -70,6 +73,8 @@ public class SettingsService : BaseViewModel, ISettingsService
         AppSettings.MusicGallerySettings.PlayQueuePaths.CollectionChanged += AppSettings_CollectionChanged;
 
         AppSettings.Version = MetadataHelper.AppVersion;
+
+        _logger.LogInformation("App version: {AppVersion}", AppSettings.Version);
 
         EnsureMediaSourceProvidersInfo();
         EnsureStarredPlaylists();
@@ -123,7 +128,8 @@ public class SettingsService : BaseViewModel, ISettingsService
             SyncProviderInfo(
                 x.LyricsSearchProvidersInfo,
                 p => p.Provider,
-                p => new LyricsSearchProviderInfo(p, true)
+                p => new LyricsSearchProviderInfo(p, true),
+                p => p.IsInternal()
             );
 
             // 同步封面提供源
@@ -192,7 +198,8 @@ public class SettingsService : BaseViewModel, ISettingsService
     private void SyncProviderInfo<TEnum, TItem>(
         IList<TItem> collection,
         Func<TItem, TEnum> enumSelector,
-        Func<TEnum, TItem> itemFactory)
+        Func<TEnum, TItem> itemFactory,
+        Func<TEnum, bool>? shouldExclude = null)
         where TEnum : struct, Enum
         where TItem : INotifyPropertyChanged
     {
@@ -200,8 +207,11 @@ public class SettingsService : BaseViewModel, ISettingsService
         var targetValidEnums = new HashSet<TEnum>();
 
         foreach (var e in allEnums)
-            if (Convert.ToInt32(e) < 1000)
-                targetValidEnums.Add(e);
+        {
+            if (Convert.ToInt32(e) >= 1000) continue;
+            if (shouldExclude != null && shouldExclude(e)) continue;
+            targetValidEnums.Add(e);
+        }
 
         var itemsToRemove = collection.Where(item =>
         {

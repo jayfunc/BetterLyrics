@@ -1,5 +1,3 @@
-using System.Collections.ObjectModel;
-using System.Net;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Interfaces.Providers;
@@ -12,6 +10,11 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
+using DiscordRPC.Logging;
+using Microsoft.Extensions.Logging;
+using System.Collections.ObjectModel;
+using System.Net;
+using static SkiaSharp.HarfBuzz.SKShaper;
 using LyricsContentParser = BetterLyrics.Core.Helpers.Lyrics.ContentParser.LyricsContentParser;
 
 namespace BetterLyrics.Core.ViewModels;
@@ -25,6 +28,7 @@ public partial class LyricsSearchControlViewModel : BaseViewModel,
     private readonly ISettingsService _settingsService;
     private readonly ISongSearchMapService _songSearchMapService;
     private readonly ILocalizationService _localizationService;
+    private readonly ILogger<LyricsSearchControlViewModel> _logger;
 
     public LyricsSearchControlViewModel(
         ILyricsSearchService lyricsSearchService,
@@ -32,7 +36,7 @@ public partial class LyricsSearchControlViewModel : BaseViewModel,
         ISettingsService settingsService,
         ISongSearchMapService songSearchMapService, IAppUIThreadProvider appUiThreadProvider,
         IGlobalToastProvider globalToastProvider,
-        ILocalizationService localizationService)
+        ILocalizationService localizationService, ILogger<LyricsSearchControlViewModel> logger)
     {
         _lyricsSearchService = lyricsSearchService;
         _settingsService = settingsService;
@@ -40,6 +44,7 @@ public partial class LyricsSearchControlViewModel : BaseViewModel,
         _appUIThreadProvider = appUiThreadProvider;
         _globalToastProvider = globalToastProvider;
         _localizationService = localizationService;
+        _logger = logger;
 
         GsmtcService = gsmtcService;
         AppSettings = _settingsService.AppSettings;
@@ -130,35 +135,53 @@ public partial class LyricsSearchControlViewModel : BaseViewModel,
 
                 var checkCache = !_settingsService.AppSettings.GeneralSettings.IgnoreCacheWhenSearching;
 
-                await foreach (var item in _lyricsSearchService.SearchAllAsync(songInfo, checkCache))
-                    _appUIThreadProvider.Execute(() =>
+                await foreach (var item in _lyricsSearchService.SearchAllAsync(songInfo, checkCache, CancellationToken.None))
+                {
+                    var index = -1;
+                    for (var i = 0; i < LyricsSearchResults.Count; i++)
                     {
-                        var index = -1;
-                        for (var i = 0; i < LyricsSearchResults.Count; i++)
-                            if (LyricsSearchResults[i].Provider == item.Provider)
-                            {
-                                index = i;
-                                break;
-                            }
-
-                        if (index != -1)
+                        if (LyricsSearchResults[i].Provider == item.Provider)
                         {
-                            item.IsSearching = false;
-                            LyricsSearchResults[index] = item;
+                            index = i;
+                            break;
                         }
-                    });
+                    }
+
+                    if (index != -1)
+                    {
+                        var parser = new LyricsContentParser();
+                        await parser.ParseAsync(item, CancellationToken.None);
+                        _appUIThreadProvider.Execute(() =>
+                        {
+                            LyricsSearchResults[index] = item;
+                            item.IsSearching = false;
+                            item.LyricsDataArr = parser.LyricsDataArr;
+                        });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Search: An error occurred while searching for lyrics.");
             }
             finally
             {
                 _appUIThreadProvider.Execute(() =>
                 {
                     for (var i = LyricsSearchResults.Count - 1; i >= 0; i--)
-                        if (LyricsSearchResults[i].IsSearching)
-                            LyricsSearchResults[i].IsSearching = false;
-
-                    IsSearching = false;
+                    {
+                        var result = LyricsSearchResults[i];
+                        if (result.IsSearching)
+                        {
+                            result.IsSearching = false;
+                        }
+                    }
                 });
             }
+            _appUIThreadProvider.Execute(() =>
+            {
+                IsSearching = false;
+            });
         });
     }
 
@@ -225,8 +248,7 @@ public partial class LyricsSearchControlViewModel : BaseViewModel,
         MappedSongSearchQuery?.LyricsSearchProvider = value?.Provider;
         if (value?.Raw != null)
         {
-            var lyricsParser = new LyricsContentParser();
-            LyricsDataArr = [.. lyricsParser.Parse(value)];
+            LyricsDataArr = [.. value.LyricsDataArr ?? []];
             SelectedTrackIndex = 0;
         }
         else

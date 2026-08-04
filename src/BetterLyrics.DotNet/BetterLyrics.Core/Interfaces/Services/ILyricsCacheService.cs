@@ -13,7 +13,7 @@ public interface ILyricsCacheService
     /// <param name="token"></param>
     /// <exception cref="OperationCanceledException"></exception>
     /// <returns></returns>
-    Task<LyricsCacheItem?> GetLyricsAsync(SongInfo songInfo, LyricsSearchProvider provider, CancellationToken token);
+    Task<LyricsCacheItem?> GetLyricsAsync(SongInfo songInfo, LyricsProvider provider, CancellationToken token);
 
     /// <summary>
     ///     Write or update cache to DB

@@ -1,4 +1,5 @@
-﻿using BetterLyrics.Core.Models.Lyrics;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Models.Lyrics;
 using Lyricify.Lyrics.Models;
 using LyricsData = BetterLyrics.Core.Models.Lyrics.LyricsData;
 
@@ -6,7 +7,7 @@ namespace BetterLyrics.Core.Helpers.Lyrics.ContentParser;
 
 public partial class LyricsContentParser
 {
-    private void ParseQrcKrc(List<ILineInfo>? lines)
+    private void ParseQrcKrc(List<ILineInfo>? lines, LyricsProvider? provider)
     {
         lines = lines?.Where(x => x.Text != string.Empty).ToList();
         List<LyricsLine> lyricsLines = [];
@@ -52,6 +53,13 @@ public partial class LyricsContentParser
             }
         }
 
-        _lyricsDataArr.Add(new LyricsData(lyricsLines));
+        var data = new LyricsData(lyricsLines) { Provider = provider };
+        if (LyricsDataArr.Count > 0)
+        {
+            data.TrackType = LanguageHelper.IsPhoneticTag(data.LanguageTag)
+                ? LyricsTrackType.Transliteration
+                : LyricsTrackType.Translation;
+        }
+        AddLyricsData(data);
     }
 }

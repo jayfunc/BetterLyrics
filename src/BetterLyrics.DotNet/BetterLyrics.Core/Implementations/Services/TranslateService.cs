@@ -3,6 +3,7 @@ using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Serialization;
 using BetterLyrics.Core.ViewModels;
+using NLanguageTag;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
@@ -19,13 +20,13 @@ public class TranslationService : BaseViewModel, ITranslationService
         _httpClient = new HttpClient();
     }
 
-    public async Task<string> TranslateTextAsync(string text, string targetLangCode, CancellationToken token)
+    public async Task<string> TranslateTextAsync(string text, LanguageTag? targetLangTag, CancellationToken token)
     {
         if (string.IsNullOrWhiteSpace(text)) throw new Exception(text + " is empty or null.");
 
-        var originalLangCode = LanguageHelper.DetectLanguageCode(text);
-        if (string.IsNullOrWhiteSpace(originalLangCode) ||
-            originalLangCode == targetLangCode) return text; // No translation needed
+        var originalLangTag = LanguageHelper.DetectLanguageTag(text);
+        if (originalLangTag == null ||
+            originalLangTag == targetLangTag) return text; // No translation needed
 
         if (string.IsNullOrEmpty(_settingsService.AppSettings.TranslationSettings.LibreTranslateServer))
             throw new Exception("LibreTranslate server URL is not set in settings.");
@@ -34,8 +35,8 @@ public class TranslationService : BaseViewModel, ITranslationService
         var response = await _httpClient.PostAsync(url, new FormUrlEncodedContent(
         [
             new KeyValuePair<string, string>("q", text),
-            new KeyValuePair<string, string>("source", originalLangCode),
-            new KeyValuePair<string, string>("target", targetLangCode)
+            new KeyValuePair<string, string>("source", originalLangTag?.ToString() ?? ""),
+            new KeyValuePair<string, string>("target", targetLangTag?.ToString() ?? "")
         ]), token);
 
         response.EnsureSuccessStatusCode();
@@ -61,5 +62,10 @@ public class TranslationService : BaseViewModel, ITranslationService
         //{
         //    throw new Exception("No translation plugin available.");
         //}
+    }
+
+    public async Task<string> TranslateTextAsync(string text, string? targetLangCode, CancellationToken token)
+    {
+        return await TranslateTextAsync(text, LanguageTag.TryParse(targetLangCode, out var languageTag) ? languageTag : null, token);
     }
 }

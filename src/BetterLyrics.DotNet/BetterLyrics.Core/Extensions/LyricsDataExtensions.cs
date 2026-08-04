@@ -7,11 +7,12 @@ namespace BetterLyrics.Core.Extensions;
 
 public static class LyricsDataExtensions
 {
+    private static readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
+
     extension(LyricsData lyricsData)
     {
         public static LyricsData GetLoadingPlaceholder(int attempt = 1, int maxRetries = 1)
         {
-            var _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
             var loadingText = $"{_localizationService.GetLocalizedString("LyricsLoading")} ({attempt}/{maxRetries})";
             return new LyricsData
             {
@@ -32,29 +33,7 @@ public static class LyricsDataExtensions
                         IsPrimaryHasRealSyllableInfo = true
                     }
                 ],
-                LanguageCode = "N/A"
             };
-        }
-
-        public static LyricsData GetNotfoundPlaceholder()
-        {
-            var _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
-            var notFoundText = _localizationService.GetLocalizedString("LyricsNotFound");
-            return new LyricsData([
-                new LyricsLine
-                {
-                    StartMs = 0,
-                    EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds,
-                    PrimaryText = notFoundText,
-                    PrimarySyllables =
-                    [
-                        new BaseLyrics
-                        {
-                            Text = notFoundText, StartMs = 0, EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds
-                        }
-                    ]
-                }
-            ]);
         }
 
         public void SetTranslatedText(LyricsData translationData, int toleranceMs = 50)
@@ -130,4 +109,20 @@ public static class LyricsDataExtensions
             return null;
         }
     }
+
+    public static readonly LyricsData NotFoundPlaceholder = new([
+        new LyricsLine
+        {
+            StartMs = 0,
+            EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds,
+            PrimaryText = _localizationService.GetLocalizedString("LyricsNotFound"),
+            PrimarySyllables =
+            [
+                new BaseLyrics
+                {
+                    Text = _localizationService.GetLocalizedString("LyricsNotFound"), StartMs = 0, EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds
+                }
+            ]
+        }
+    ]);
 }

@@ -393,7 +393,7 @@
                                                                 <ColumnDefinition Width="Auto" />
                                                                 <ColumnDefinition Width="*" />
                                                             </Grid.ColumnDefinitions>
-                                                            <TextBlock Text="{Binding Provider, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}, Mode=OneWay}" />
+                                                            <TextBlock Text="{Binding Provider, Converter={StaticResource LyricsProviderToDisplayNameConverter}, Mode=OneWay}" />
                                                             <FontIcon
                                                                 Grid.Column="1"
                                                                 Margin="0,2,0,0"
@@ -480,14 +480,14 @@
                                 <local:PropertyRow x:Uid="SettingsPageArtist" Value="{x:Bind ViewModel.GsmtcService.CurrentLyricsSearchResult.Artist, TargetNullValue=N/A, Mode=OneWay}" />
                                 <local:PropertyRow x:Uid="SettingsPageAlbum" Value="{x:Bind ViewModel.GsmtcService.CurrentLyricsSearchResult.Album, TargetNullValue=N/A, Mode=OneWay}" />
                                 <local:PropertyRow x:Uid="LyricsSearchControlDurauion" Value="{x:Bind ViewModel.GsmtcService.CurrentLyricsSearchResult.Duration, Converter={StaticResource SecondsToFormattedTimeConverter}, TargetNullValue=N/A, Mode=OneWay}" />
-                                <local:PropertyRow x:Uid="LyricsPageLanguageCode" Value="{x:Bind ViewModel.GsmtcService.CurrentLyricsData.LanguageCode, TargetNullValue=N/A, Mode=OneWay, Converter={StaticResource LanguageCodeToDisplayedNameConverter}}" />
+                                <local:PropertyRow x:Uid="LyricsPageLanguageCode" Value="{x:Bind ViewModel.GsmtcService.CurrentLyricsData.LanguageTag, TargetNullValue=N/A, Mode=OneWay, Converter={StaticResource LanguageTagToDisplayedNameConverter}}" />
                                 <local:PropertyRow
                                     x:Uid="LyricsPageLyricsProviderPrefix"
                                     Link="{x:Bind ViewModel.GsmtcService.CurrentLyricsSearchResult.Reference, Mode=OneWay, Converter={StaticResource UriStringToDecodedAbsoluteUri}}"
                                     ToolTipService.ToolTip="{x:Bind ViewModel.GsmtcService.CurrentLyricsSearchResult.Reference, TargetNullValue=N/A, Mode=OneWay, Converter={StaticResource UriStringToDecodedAbsoluteUri}}"
-                                    Value="{x:Bind ViewModel.GsmtcService.CurrentLyricsSearchResult.ProviderIfFound, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}" />
-                                <local:PropertyRow x:Uid="LyricsPageTransliterationProviderPrefix" Value="{x:Bind ViewModel.GsmtcService.CurrentLyricsSearchResult.TransliterationProvider, Mode=OneWay, Converter={StaticResource TransliterationSearchProviderToDisplayNameConverter}}" />
-                                <local:PropertyRow x:Uid="LyricsPageTranslationProviderPrefix" Value="{x:Bind ViewModel.GsmtcService.CurrentLyricsSearchResult.TranslationProvider, Mode=OneWay, Converter={StaticResource TranslationSearchProviderToDisplayNameConverter}}" />
+                                    Value="{x:Bind ViewModel.GsmtcService.CurrentLyricsSearchResult.ProviderIfFound, Mode=OneWay, Converter={StaticResource LyricsProviderToDisplayNameConverter}}" />
+                                <local:PropertyRow x:Uid="LyricsPageTransliterationProviderPrefix" Value="{x:Bind ViewModel.GsmtcService.CurrentLyricsSearchResult.TransliterationProvider, Mode=OneWay, Converter={StaticResource LyricsProviderToDisplayNameConverter}}" />
+                                <local:PropertyRow x:Uid="LyricsPageTranslationProviderPrefix" Value="{x:Bind ViewModel.GsmtcService.CurrentLyricsSearchResult.TranslationProvider, Mode=OneWay, Converter={StaticResource LyricsProviderToDisplayNameConverter}}" />
                                 <local:PropertyRow
                                     x:Uid="LyricsPageMatchPercentage"
                                     Unit="%"

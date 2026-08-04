@@ -1,6 +1,7 @@
 ﻿using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Sdk.Interfaces.Plugins;
+using NLanguageTag;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
@@ -15,23 +16,29 @@ public class TransliterationService : ITransliterationService
         _pluginService = pluginService;
     }
 
-    public async Task<(string, TransliterationSearchProvider)> TransliterateTextAsync(string text,
-        string targetLangCode, CancellationToken token)
+    public async Task<(string, LyricsProvider)> TransliterateTextAsync(string text,
+        LanguageTag? targetLangTag, CancellationToken token)
     {
-        string? result = null;
-
-        var pluginInfo =
-            _settingsService.AppSettings.PluginsInfo.FirstOrDefault(x => x.Plugin is ILyricsTransliterator);
-        if (pluginInfo != null)
+        var pluginsInfo =
+            _settingsService.AppSettings.PluginsInfo.Where(x => x.Plugin is ILyricsTransliterator);
+        if (pluginsInfo != null)
         {
-            var plugin = (ILyricsTransliterator?)pluginInfo.Plugin;
-            if (plugin != null)
+            foreach (var pluginInfo in pluginsInfo)
             {
-                result = await plugin.GetTransliterationAsync(text, targetLangCode, token);
-                token.ThrowIfCancellationRequested();
+                var plugin = (ILyricsTransliterator?)pluginInfo.Plugin;
+                if (plugin != null)
+                {
+                    var result = await plugin.GetTransliterationAsync(text, targetLangTag, token);
+                    token.ThrowIfCancellationRequested();
+
+                    if (!string.IsNullOrEmpty(result))
+                    {
+                        return (result, (LyricsProvider)_pluginService.GetPluginHashedId(pluginInfo?.Id ?? ""));
+                    }
+                }
             }
         }
 
-        return (result ?? "", (TransliterationSearchProvider)_pluginService.GetPluginHashedId(pluginInfo?.Id ?? ""));
+        return (string.Empty, (LyricsProvider)_pluginService.GetPluginHashedId(""));
     }
 }

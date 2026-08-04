@@ -19,13 +19,13 @@ public static class LyricsFormatExtensions
             };
         }
 
-        public LyricsSearchProvider? ToLyricsSearchProvider()
+        public LyricsProvider? ToLyricsProvider()
         {
             return format switch
             {
-                LyricsFormat.Lrc => LyricsSearchProvider.LocalLrcFile,
-                LyricsFormat.Eslrc => LyricsSearchProvider.LocalEslrcFile,
-                LyricsFormat.Ttml => LyricsSearchProvider.LocalTtmlFile,
+                LyricsFormat.Lrc => LyricsProvider.LocalLrcFile,
+                LyricsFormat.Eslrc => LyricsProvider.LocalEslrcFile,
+                LyricsFormat.Ttml => LyricsProvider.LocalTtmlFile,
                 _ => null
             };
         }

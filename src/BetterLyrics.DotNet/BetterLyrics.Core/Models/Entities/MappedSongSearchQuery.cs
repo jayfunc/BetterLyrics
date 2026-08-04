@@ -38,7 +38,7 @@ public partial class MappedSongSearchQuery : ObservableRecipient, ICloneable
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
-    public partial LyricsSearchProvider? LyricsSearchProvider { get; set; }
+    public partial LyricsProvider? LyricsSearchProvider { get; set; }
 
     public object Clone()
     {

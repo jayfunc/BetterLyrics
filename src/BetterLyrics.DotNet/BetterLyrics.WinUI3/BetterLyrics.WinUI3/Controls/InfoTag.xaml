@@ -10,7 +10,7 @@
 
     <Border
         x:Name="BadgeBorder"
-        Padding="6,2"
+        Padding="8,2"
         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
         BorderThickness="1"
@@ -19,18 +19,22 @@
         PointerExited="OnPointerExited"
         Tapped="OnTapped">
 
-        <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+        <StackPanel
+            VerticalAlignment="Center"
+            Orientation="Horizontal"
+            Spacing="4">
 
             <FontIcon
-                Margin="0,0,4,0"
+                x:Name="TagIcon"
+                Margin="0,2"
                 FontFamily="{StaticResource SegoeFluentIcons}"
-                FontSize="10"
+                FontSize="12"
                 Foreground="{ThemeResource TextFillColorTertiaryBrush}"
                 Glyph="{x:Bind Glyph, Mode=OneWay}"
                 Visibility="{x:Bind HasIcon, Mode=OneWay}" />
 
             <TextBlock
-                FontWeight="SemiBold"
+                x:Name="TagText"
                 Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                 Style="{StaticResource CaptionTextBlockStyle}"
                 Text="{x:Bind Text, Mode=OneWay}"

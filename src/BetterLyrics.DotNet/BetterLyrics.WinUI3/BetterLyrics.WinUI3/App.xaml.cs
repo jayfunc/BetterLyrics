@@ -1,4 +1,3 @@
-using ATL;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
@@ -28,9 +27,11 @@ public partial class App : Application
     {
         InitializeComponent();
 
-        Settings.NullAbsentValues = true;
+        ATL.Settings.NullAbsentValues = true;
 
         _logger = Ioc.Default.GetRequiredService<ILogger<App>>();
+
+        _logger.LogInformation("App started");
 
         // 注册全局异常捕获
         UnhandledException += App_UnhandledException;
@@ -164,7 +165,7 @@ public partial class App : Application
                 if (!existingIds.Contains(plugin.Id))
                     targetList.Add(new LyricsSearchProviderInfo
                     {
-                        Provider = (LyricsSearchProvider)plugin.Id,
+                        Provider = (LyricsProvider)plugin.Id,
                         IsEnabled = true
                     });
         }

@@ -1,7 +1,4 @@
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Text;
+﻿using System.Net;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using BetterLyrics.Core.Constants;
@@ -15,7 +12,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 
 namespace BetterLyrics.Core.Implementations.Services.LyricsSearchService.Providers;
 
-public class AppleMusic
+public class LegacyAppleMusic
 {
     private readonly HttpClient _client;
 
@@ -27,7 +24,7 @@ public class AppleMusic
     private string _language = "";
     private string _storefront = "";
 
-    public AppleMusic()
+    public LegacyAppleMusic()
     {
         _client = new HttpClient();
         _client.DefaultRequestHeaders.Add("User-Agent",
@@ -57,96 +54,15 @@ public class AppleMusic
     private async Task GetAccessTokenAsync(CancellationToken cancellationToken)
     {
         var resp = await _client.GetStringAsync("https://music.apple.com/us/browse", cancellationToken);
-        var jsUrls = Regex.Matches(resp, "(?<url>(?:https://music\\.apple\\.com)?/?assets/index(?!-legacy)[^\\\"'<>\\s]*?\\.js)", RegexOptions.IgnoreCase)
-            .Cast<Match>()
-            .Select(x => NormalizeAppleMusicAssetUrl(x.Groups["url"].Value))
-            .Where(x => !string.IsNullOrWhiteSpace(x))
-            .Distinct(StringComparer.OrdinalIgnoreCase)
-            .ToList();
-
-        if (jsUrls.Count == 0)
-        {
-            jsUrls = Regex.Matches(resp, "(?<url>(?:https://music\\.apple\\.com)?/?assets/index[^\\\"'<>\\s]*?\\.js)", RegexOptions.IgnoreCase)
-                .Cast<Match>()
-                .Select(x => NormalizeAppleMusicAssetUrl(x.Groups["url"].Value))
-                .Where(x => !string.IsNullOrWhiteSpace(x))
-                .Distinct(StringComparer.OrdinalIgnoreCase)
-                .ToList();
-        }
-
-        if (jsUrls.Count == 0) throw new Exception("Failed to find index*.js");
-
-        foreach (var jsUrl in jsUrls)
-        {
-            var jsResp = await _client.GetStringAsync(jsUrl, cancellationToken);
-            
-            var token = Regex.Matches(jsResp, @"eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+")
-                .Cast<Match>()
-                .Select(x => x.Value)
-                .Distinct(StringComparer.Ordinal)
-                .Select(t => new { Token = t, Score = GetAccessTokenScore(t) })
-                .Where(x => x.Score >= 0)
-                .OrderByDescending(x => x.Score)
-                .Select(x => x.Token)
-                .FirstOrDefault();
-
-            if (!string.IsNullOrWhiteSpace(token))
-            {
-                _accessToken = token;
-                _client.DefaultRequestHeaders.Remove("Authorization");
-                _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {_accessToken}");
-                return;
-            }
-        }
-
-        throw new Exception("Failed to find access token");
-    }
-
-    private static string NormalizeAppleMusicAssetUrl(string url)
-    {
-        url = (url ?? string.Empty).Trim();
-        if (url.StartsWith("https://", StringComparison.OrdinalIgnoreCase)) return url;
-        if (url.StartsWith("/", StringComparison.Ordinal)) return "https://music.apple.com" + url;
-        return "https://music.apple.com/" + url;
-    }
-
-    private static int GetAccessTokenScore(string token)
-    {
-        try
-        {
-            var parts = token.Split('.');
-            if (parts.Length < 2) return -1;
-
-            var headerJson = Encoding.UTF8.GetString(Convert.FromBase64String(NormalizeBase64(parts[0])));
-            var payloadJson = Encoding.UTF8.GetString(Convert.FromBase64String(NormalizeBase64(parts[1])));
-
-            using var headerDoc = JsonDocument.Parse(headerJson);
-            using var payloadDoc = JsonDocument.Parse(payloadJson);
-
-            var exp = payloadDoc.RootElement.TryGetProperty("exp", out var expEl) ? expEl.GetInt64() : (long?)null;
-            if (!exp.HasValue || DateTimeOffset.UtcNow >= DateTimeOffset.FromUnixTimeSeconds(exp.Value).AddMinutes(-1))
-                return -1;
-
-            var score = 0;
-            var kid = headerDoc.RootElement.TryGetProperty("kid", out var kidEl) ? kidEl.GetString() : string.Empty;
-            var issuer = payloadDoc.RootElement.TryGetProperty("iss", out var issEl) ? issEl.GetString() : string.Empty;
-
-            if (string.Equals(kid, "WebPlayKid", StringComparison.OrdinalIgnoreCase)) score += 100;
-            if (string.Equals(issuer, "AMPWebPlay", StringComparison.OrdinalIgnoreCase)) score += 100;
-            if (payloadDoc.RootElement.TryGetProperty("root_https_origin", out _)) score += 10;
-
-            return score;
-        }
-        catch
-        {
-            return -1;
-        }
-    }
-
-    private static string NormalizeBase64(string value)
-    {
-        value = value.Replace('-', '+').Replace('_', '/');
-        return value.PadRight(value.Length + (4 - value.Length % 4) % 4, '=');
+        var jsMatch = Regex.Match(resp, "(?<=index)(.*?)(?=\\.js\")");
+        if (!jsMatch.Success) throw new Exception("Failed to find index.js");
+        var jsUrl = $"https://music.apple.com/assets/index{jsMatch.Value}.js";
+        var jsResp = await _client.GetStringAsync(jsUrl);
+        var tokenMatch = Regex.Match(jsResp, "(?=eyJh)(.*?)(?=\")");
+        if (!tokenMatch.Success) throw new Exception("Failed to find access token");
+        _accessToken = tokenMatch.Value;
+        _client.DefaultRequestHeaders.Remove("Authorization");
+        _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {_accessToken}");
     }
 
     private async Task SetMediaUserTokenAsync(string token, CancellationToken cancellationToken)
@@ -166,7 +82,7 @@ public class AppleMusic
     private async Task<string?> GetLyricsAsync(string id, CancellationToken token)
     {
         var apiUrl = $"https://amp-api.music.apple.com/v1/catalog/{_storefront}/songs/{id}";
-        var url = apiUrl + $"?include[songs]=lyrics,syllable-lyrics&l={WebUtility.UrlEncode(_language)}&extend=ttmlLocalizations";
+        var url = apiUrl + $"?include[songs]=lyrics,syllable-lyrics&l={_language}";
         var resp = await _client.GetStringAsync(url, token);
         var json = JsonSerializer.Deserialize(resp, SourceGenerationContext.Default.JsonElement);
         var data = json.GetProperty("data");
@@ -188,16 +104,16 @@ public class AppleMusic
             }
         }
 
-        if (relationships.TryGetProperty("lyrics", out var lyrics) &&
-            lyrics.GetProperty("data").GetArrayLength() > 0)
-        {
-            var lyric = lyrics.GetProperty("data")[0];
-            if (lyric.TryGetProperty("attributes", out var attributes) &&
-                attributes.TryGetProperty("ttml", out var ttml))
-            {
-                return ttml.GetString();
-            }
-        }
+        //if (relationships.TryGetProperty("lyrics", out var lyrics) &&
+        //    lyrics.GetProperty("data").GetArrayLength() > 0)
+        //{
+        //    var lyric = lyrics.GetProperty("data")[0];
+        //    if (lyric.TryGetProperty("attributes", out var attributes) &&
+        //        attributes.TryGetProperty("ttml", out var ttml))
+        //    {
+        //        return ttml.GetString();
+        //    }
+        //}
 
         return null;
     }

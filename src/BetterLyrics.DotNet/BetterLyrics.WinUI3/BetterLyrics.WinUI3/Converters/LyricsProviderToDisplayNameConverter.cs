@@ -10,7 +10,7 @@ using Microsoft.UI.Xaml.Data;
 
 namespace BetterLyrics.WinUI3.Converters;
 
-public partial class LyricsSearchProviderToDisplayNameConverter : IValueConverter
+public partial class LyricsProviderToDisplayNameConverter : IValueConverter
 {
     private readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
     private readonly IPluginService _pluginService = Ioc.Default.GetRequiredService<IPluginService>();
@@ -18,7 +18,7 @@ public partial class LyricsSearchProviderToDisplayNameConverter : IValueConverte
 
     public object Convert(object value, Type targetType, object parameter, string language)
     {
-        if (value is LyricsSearchProvider provider)
+        if (value is LyricsProvider provider)
         {
             if (provider.IsPlugin())
             {
@@ -33,21 +33,23 @@ public partial class LyricsSearchProviderToDisplayNameConverter : IValueConverte
 
             return provider switch
             {
-                LyricsSearchProvider.LrcLib => "LrcLib",
-                LyricsSearchProvider.QQ => "QQ 音乐",
-                LyricsSearchProvider.Netease => "网易云音乐",
-                LyricsSearchProvider.Kugou => "酷狗音乐",
-                LyricsSearchProvider.AmllTtmlDb => "amll-ttml-db",
-                LyricsSearchProvider.AppleMusic => "Apple Music",
-                LyricsSearchProvider.LocalLrcFile => _localizationService.GetLocalizedString(
+                LyricsProvider.LrcLib => "LrcLib",
+                LyricsProvider.QQ => "QQ 音乐",
+                LyricsProvider.Netease => "网易云音乐",
+                LyricsProvider.Kugou => "酷狗音乐",
+                LyricsProvider.AmllTtmlDb => "amll-ttml-db",
+                LyricsProvider.AppleMusic => "Apple Music",
+                LyricsProvider.BetterLyrics => "BetterLyrics",
+                LyricsProvider.LibreTranslate => "LibreTranslate",
+                LyricsProvider.LocalLrcFile => _localizationService.GetLocalizedString(
                     "LyricsSearchProviderLocalLrcFile"),
-                LyricsSearchProvider.LocalMusicFile => _localizationService.GetLocalizedString(
+                LyricsProvider.LocalMusicFile => _localizationService.GetLocalizedString(
                     "LyricsSearchProviderLocalMusicFile"),
-                LyricsSearchProvider.LocalEslrcFile => _localizationService.GetLocalizedString(
+                LyricsProvider.LocalEslrcFile => _localizationService.GetLocalizedString(
                     "LyricsSearchProviderEslrcFile"),
-                LyricsSearchProvider.LocalTtmlFile => _localizationService.GetLocalizedString(
+                LyricsProvider.LocalTtmlFile => _localizationService.GetLocalizedString(
                     "LyricsSearchProviderTtmlFile"),
-                _ => "N/A"
+                _ => _pluginService.GetPluginId((int)provider)
             };
         }
 

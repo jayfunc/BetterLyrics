@@ -1,4 +1,4 @@
-﻿using BetterLyrics.Core.Extensions;
+using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Entities;
@@ -57,14 +57,10 @@ public partial class GsmtcService : IGsmtcService
             {
                 var lyricsParser = new LyricsContentParser();
 
-                (CurrentLyricsData, CurrentLyricsSearchResult.TransliterationProvider,
-                        CurrentLyricsSearchResult.TranslationProvider) =
-                    await Task.Run(async () => await lyricsParser.ParseAsync(
-                        _translationService, _transliterationService, _settingsService.AppSettings.TranslationSettings,
-                        CurrentLyricsSearchResult, token), token);
+                CurrentLyricsData = await Task.Run(async () => await lyricsParser.ParseAsync(CurrentLyricsSearchResult, token), token);
             }
         }
 
-        if (CurrentLyricsSearchResult == null) CurrentLyricsData = LyricsData.GetNotfoundPlaceholder();
+        if (CurrentLyricsSearchResult == null) CurrentLyricsData = LyricsDataExtensions.NotFoundPlaceholder;
     }
 }

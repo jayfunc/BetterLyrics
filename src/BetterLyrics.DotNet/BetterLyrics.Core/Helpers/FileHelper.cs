@@ -19,7 +19,7 @@ public class FileHelper
     };
 
     public static readonly string[] LyricExtensions =
-        Enum.GetValues(typeof(LyricsSearchProvider)).Cast<LyricsSearchProvider>()
+        Enum.GetValues(typeof(LyricsProvider)).Cast<LyricsProvider>()
             .Where(x => x.IsLocal())
             .Select(x => x.GetLyricsFormat())
             .Where(x => x != LyricsFormat.NotSpecified)

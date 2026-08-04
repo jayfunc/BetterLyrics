@@ -2,7 +2,7 @@
 
 namespace BetterLyrics.Core.Enums;
 
-public enum LyricsSearchProvider
+public enum LyricsProvider
 {
     QQ,
     Kugou,
@@ -13,5 +13,7 @@ public enum LyricsSearchProvider
     LocalLrcFile,
     LocalEslrcFile,
     LocalTtmlFile,
-    AppleMusic
+    AppleMusic,
+    BetterLyrics,
+    LibreTranslate
 }

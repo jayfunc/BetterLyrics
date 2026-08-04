@@ -202,7 +202,7 @@ public class DatabaseMigrationService : Interfaces.Services.IDatabaseMigrationSe
                             MappedArtist = x.MappedArtist,
                             MappedAlbum = x.MappedAlbum,
                             IsMarkedAsPureMusic = x.IsMarkedAsPureMusic,
-                            LyricsSearchProvider = x.LyricsSearchProvider.HasValue ? (Enums.LyricsSearchProvider)x.LyricsSearchProvider.Value : null
+                            LyricsSearchProvider = x.LyricsSearchProvider.HasValue ? (Enums.LyricsProvider)x.LyricsSearchProvider.Value : null
                         });
 
                         col.InsertBulk(newItems);

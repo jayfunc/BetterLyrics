@@ -246,7 +246,7 @@
                                             IsEnabled="{x:Bind IsFound, Mode=OneWay}"
                                             Link="{x:Bind Reference, Mode=OneWay}"
                                             ToolTipService.ToolTip="{x:Bind Reference, TargetNullValue=N/A, Mode=OneWay}"
-                                            Value="{x:Bind Provider, Mode=OneWay, Converter={StaticResource LyricsSearchProviderToDisplayNameConverter}}" />
+                                            Value="{x:Bind Provider, Mode=OneWay, Converter={StaticResource LyricsProviderToDisplayNameConverter}}" />
                                         <FontIcon
                                             Grid.Column="1"
                                             Margin="0,2,0,0"
@@ -256,17 +256,46 @@
                                             Glyph="&#xE74C;"
                                             Visibility="{x:Bind IsPlugin, Converter={StaticResource BoolToVisibilityConverter}}" />
 
-                                        <StackPanel
+                                        <controls:WrapPanel
                                             Grid.Column="2"
-                                            Orientation="Horizontal"
-                                            Spacing="4">
+                                            HorizontalSpacing="4"
+                                            VerticalSpacing="4">
+
                                             <!--  Word-By-Word Indicator  -->
-                                            <local:InfoTag x:Uid="LyricsSearchControlWordByWord" Visibility="{x:Bind IsWordByWord, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                            <local:InfoTag
+                                                Glyph="&#xE916;"
+                                                Theme="Accent"
+                                                Visibility="{x:Bind IsWordByWord, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                                                <ToolTipService.ToolTip>
+                                                    <TextBlock x:Uid="LyricsSearchControlWordByWord" />
+                                                </ToolTipService.ToolTip>
+                                            </local:InfoTag>
+
                                             <!--  Translation Indicator  -->
-                                            <local:InfoTag x:Uid="LyricsSearchControlTranslationAvailable" Visibility="{x:Bind HasTranslation, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                            <Grid Visibility="{x:Bind TranslationProvider, Mode=OneWay, Converter={StaticResource EnumNegationToVisibilityConverter}, ConverterParameter=-1}">
+                                                <local:InfoTag
+                                                    Glyph="&#xE8C1;"
+                                                    Theme="Accent"
+                                                    Visibility="{x:Bind IsTranslationIntrinsic, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                <local:InfoTag Glyph="&#xE8C1;" Visibility="{x:Bind IsTranslationGenerated, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                <ToolTipService.ToolTip>
+                                                    <TextBlock x:Uid="LyricsSearchControlTranslationAvailable" />
+                                                </ToolTipService.ToolTip>
+                                            </Grid>
+
                                             <!--  Transliteration Indicator  -->
-                                            <local:InfoTag x:Uid="LyricsSearchControlTransliterationAvailable" Visibility="{x:Bind HasTransliteration, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                        </StackPanel>
+                                            <Grid Visibility="{x:Bind TransliterationProvider, Mode=OneWay, Converter={StaticResource EnumNegationToVisibilityConverter}, ConverterParameter=-1}">
+                                                <local:InfoTag
+                                                    Glyph="&#xE8D2;"
+                                                    Theme="Accent"
+                                                    Visibility="{x:Bind IsTransliterationIntrinsic, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                <local:InfoTag Glyph="&#xE8D2;" Visibility="{x:Bind IsTransliterationGenerated, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                <ToolTipService.ToolTip>
+                                                    <TextBlock x:Uid="LyricsSearchControlTransliterationAvailable" />
+                                                </ToolTipService.ToolTip>
+                                            </Grid>
+
+                                        </controls:WrapPanel>
 
                                     </Grid>
                                     <!--  Lyrics search result  -->
@@ -372,9 +401,18 @@
                             <DataTemplate x:DataType="lyrics:LyricsData">
                                 <StackPanel Orientation="Horizontal" Spacing="4">
                                     <TextBlock Style="{StaticResource BodyTextBlockStyle}" Text="{x:Bind TrackType, Mode=OneWay, Converter={StaticResource LyricsTrackTypeToNameConverter}}" />
-                                    <local:InfoTag Text="{x:Bind LanguageCode, Mode=OneWay, Converter={StaticResource LanguageCodeToDisplayedNameConverter}}" Visibility="{x:Bind LanguageCode, Converter={StaticResource StringToVisibilityConverter}, Mode=OneWay}" />
-                                    <local:InfoTag x:Uid="LyricsSearchControlAutoGenerated" Visibility="{x:Bind AutoGenerated, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
-                                    <local:InfoTag x:Uid="LyricsSearchControlWordByWord" Visibility="{x:Bind IsWordByWord, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
+                                    <local:InfoTag Text="{x:Bind LanguageTag, Mode=OneWay, Converter={StaticResource LanguageTagToDisplayedNameConverter}}" />
+                                    <local:InfoTag
+                                        x:Uid="LyricsSearchControlWordByWord"
+                                        Theme="Accent"
+                                        Visibility="{x:Bind IsWordByWord, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}" />
+                                    <Grid Visibility="{x:Bind HasProvider, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                                        <local:InfoTag Text="{x:Bind Provider, Mode=OneWay, Converter={StaticResource LyricsProviderToDisplayNameConverter}}" Visibility="{x:Bind IsProviderSameAsOriginal, Mode=OneWay, Converter={StaticResource BoolNegationToVisibilityConverter}}" />
+                                        <local:InfoTag
+                                            Text="{x:Bind Provider, Mode=OneWay, Converter={StaticResource LyricsProviderToDisplayNameConverter}}"
+                                            Theme="Accent"
+                                            Visibility="{x:Bind IsProviderSameAsOriginal, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                    </Grid>
                                 </StackPanel>
                             </DataTemplate>
                         </ComboBox.ItemTemplate>

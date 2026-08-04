@@ -25,7 +25,7 @@ public class LyricsCacheService : ILyricsCacheService
         return _databaseService.LyricsCacheDb.GetCollection<LyricsCacheItem>("lyricsCache");
     }
 
-    public Task<LyricsCacheItem?> GetLyricsAsync(SongInfo songInfo, LyricsSearchProvider provider,
+    public async Task<LyricsCacheItem?> GetLyricsAsync(SongInfo songInfo, LyricsProvider provider,
         CancellationToken token)
     {
         var col = GetCollection();
@@ -33,7 +33,7 @@ public class LyricsCacheService : ILyricsCacheService
 
         var existingItem = col.FindOne(x => x.CacheKey == key && x.Provider == provider);
 
-        return Task.FromResult(existingItem);
+        return await Task.FromResult(existingItem);
     }
 
     public Task SaveLyricsAsync(SongInfo songInfo, LyricsCacheItem result, CancellationToken token)
