@@ -1,8 +1,6 @@
-﻿using System.Numerics;
+using System.Numerics;
 using Windows.UI;
 using BetterLyrics.Core.Models.Domain;
-using LiveChartsCore.SkiaSharpView.Painting;
-using SkiaSharp;
 
 namespace BetterLyrics.WinUI3.Extensions;
 
@@ -25,11 +23,7 @@ public static class ColorExtensions
             return new Vector3((float)color.R / 0xff, (float)color.G / 0xff, (float)color.B / 0xff);
         }
 
-        public SolidColorPaint ToPaint()
-        {
-            var skColor = new SKColor(color.R, color.G, color.B, color.A);
-            return new SolidColorPaint(skColor);
-        }
+
 
         public AppColor ToAppColor()
         {

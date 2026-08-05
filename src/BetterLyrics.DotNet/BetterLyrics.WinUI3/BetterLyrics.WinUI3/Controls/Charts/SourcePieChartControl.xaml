@@ -1,0 +1,71 @@
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.Charts.SourcePieChartControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:BetterLyrics.WinUI3.Controls.Charts"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:stats="using:BetterLyrics.Core.Models.Stats"
+    SizeChanged="UserControl_SizeChanged"
+    mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <DataTemplate x:Key="TooltipTemplate" x:DataType="stats:PlayerSourceItem">
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind Name}" />
+                <Grid Width="4" />
+                <TextBlock FontWeight="SemiBold" Text="{x:Bind Count}" />
+                <Grid Width="2" />
+                <TextBlock x:Uid="StatsDashboardControlTrackCountText" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid
+            x:Name="ChartContainer"
+            Grid.Row="0"
+            MinHeight="150">
+            <Canvas
+                x:Name="ChartCanvas"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center" />
+        </Grid>
+
+        <ItemsControl
+            x:Name="LegendItemsControl"
+            Grid.Row="1"
+            Margin="0,16,0,0"
+            HorizontalAlignment="Center">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <StackPanel Orientation="Horizontal" Spacing="16" />
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate x:DataType="local:PieLegendItem">
+                    <StackPanel
+                        VerticalAlignment="Center"
+                        Orientation="Horizontal"
+                        Spacing="4">
+                        <Ellipse
+                            Width="10"
+                            Height="10"
+                            VerticalAlignment="Center"
+                            Fill="{x:Bind Brush}" />
+                        <TextBlock
+                            VerticalAlignment="Center"
+                            FontSize="12"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            Text="{x:Bind Text}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+    </Grid>
+</UserControl>

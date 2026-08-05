@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
 using BetterLyrics.Core.Constants;
@@ -8,25 +8,18 @@ using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Entities;
-using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.Models.Stats;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
-using LiveChartsCore;
-using LiveChartsCore.SkiaSharpView;
-using LiveChartsCore.SkiaSharpView.Painting;
-using LiveChartsCore.SkiaSharpView.Painting.ImageFilters;
 using Microsoft.Extensions.Logging;
-using SkiaSharp;
 
 namespace BetterLyrics.Core.ViewModels;
 
 public partial class StatsDashboardControlViewModel : BaseViewModel,
-    IRecipient<PropertyChangedMessage<bool>>,
-    IRecipient<PropertyChangedMessage<AppTheme>>
+    IRecipient<PropertyChangedMessage<bool>>
 {
     private readonly IAlbumArtSearchService _albumArtSearchService;
 
@@ -39,13 +32,15 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
     private readonly ISettingsService _settingsService;
     private readonly ISystemUIProvider _systemUiProvider;
     private readonly IProgramProvider _programProvider;
+    private readonly IAppUIThreadProvider _appUIThreadProvider;
 
     public StatsDashboardControlViewModel(
         IPlayHistoryService playHistoryService,
         ILocalizationService localizationService,
         IAlbumArtSearchService albumArtSearchService,
         IGsmtcService gsmtcService,
-        ISettingsService settingsService, ISystemUIProvider systemUiProvider, IProgramProvider programProvider)
+        ISettingsService settingsService, ISystemUIProvider systemUiProvider, IProgramProvider programProvider,
+        IAppUIThreadProvider appUIThreadProvider)
     {
         _playHistoryService = playHistoryService;
         _localizationService = localizationService;
@@ -53,6 +48,7 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
         _settingsService = settingsService;
         _systemUiProvider = systemUiProvider;
         _programProvider = programProvider;
+        _appUIThreadProvider = appUIThreadProvider;
         GSMTCService = gsmtcService;
 
         _logger = Ioc.Default.GetRequiredService<ILogger<StatsDashboardControlViewModel>>();
@@ -60,7 +56,6 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
         _localizedTimesValue = _localizationService.GetLocalizedString("StatsDashboardControlTimes");
 
         UpdateDateRange();
-        UpdatePaints();
     }
 
     [ObservableProperty] public partial IGsmtcService GSMTCService { get; set; }
@@ -85,29 +80,14 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
     [ObservableProperty] public partial ObservableCollection<MonthLabel> MonthLabels { get; set; } = new();
 
     // 时段分布
-    [ObservableProperty] public partial ObservableCollection<int> HourlySeriesValues { get; set; } = new();
-
-    [ObservableProperty]
-    public partial ObservableCollection<string> HourlyXAxisLabels { get; set; } =
-        [.. Enumerable.Range(0, 24).Select(x => $"{x:D2}:00")];
+    [ObservableProperty] public partial ObservableCollection<HourlyActivityItem> HourlySeriesValues { get; set; } = new();
 
     [ObservableProperty] public partial string PeakHourText { get; set; } = "--:--";
     [ObservableProperty] public partial string QuietHourText { get; set; } = "--:--";
 
     [ObservableProperty] public partial ObservableCollection<ArtistPlayCount> TopArtists { get; set; } = new();
-    [ObservableProperty] public partial ObservableCollection<ISeries> SourceSeries { get; set; } = new();
+    [ObservableProperty] public partial ObservableCollection<PlayerSourceItem> SourceSeries { get; set; } = new();
     [ObservableProperty] public partial ObservableCollection<SongPlayCount> TopSongs { get; set; } = new();
-
-    [ObservableProperty] public partial SolidColorPaint SecondaryTextPaint { get; set; } = new();
-    [ObservableProperty] public partial SolidColorPaint PrimaryTextPaint { get; set; } = new();
-    [ObservableProperty] public partial SolidColorPaint BackgroundPaint { get; set; } = new();
-
-    public void Receive(PropertyChangedMessage<AppTheme> message)
-    {
-        if (message.Sender is GeneralSettings)
-            if (message.PropertyName == nameof(GeneralSettings.AppTheme))
-                UpdatePaints();
-    }
 
     public void Receive(PropertyChangedMessage<bool> message)
     {
@@ -150,8 +130,11 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
 
         if (logs == null || !logs.Any())
         {
-            HeatmapData = new ObservableCollection<HeatmapNode>();
-            MonthLabels = new ObservableCollection<MonthLabel>();
+            _appUIThreadProvider.Execute(() =>
+            {
+                HeatmapData = new ObservableCollection<HeatmapNode>();
+                MonthLabels = new ObservableCollection<MonthLabel>();
+            });
             return;
         }
 
@@ -238,60 +221,92 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
             });
         }
 
-        HeatmapData = new ObservableCollection<HeatmapNode>(nodes);
-        MonthLabels = new ObservableCollection<MonthLabel>(monthLabels);
+        _appUIThreadProvider.Execute(() =>
+        {
+            HeatmapData = new ObservableCollection<HeatmapNode>(nodes);
+            MonthLabels = new ObservableCollection<MonthLabel>(monthLabels);
+        });
     }
 
     private void ProcessHourlyStats(List<PlayHistoryItem> logs)
     {
         if (logs == null || !logs.Any())
         {
-            PeakHourText = "--:--";
-            QuietHourText = "--:--";
-            HourlySeriesValues = new ObservableCollection<int>();
+            _appUIThreadProvider.Execute(() =>
+            {
+                PeakHourText = "--:--";
+                QuietHourText = "--:--";
+                HourlySeriesValues = new ObservableCollection<HourlyActivityItem>();
+            });
             return;
         }
 
         var hourCounts = new int[24];
         foreach (var log in logs) hourCounts[log.StartedAt.ToLocalTime().Hour]++;
 
-        var peakHour = Array.IndexOf(hourCounts, hourCounts.Max());
-        PeakHourText = $"{peakHour:D2}:00 - {peakHour + 1:D2}:00";
+        var maxHourCount = hourCounts.Max();
+        var peakHour = Array.IndexOf(hourCounts, maxHourCount);
+        var peakHourStr = $"{peakHour:D2}:00 - {peakHour + 1:D2}:00";
 
         var quietHour = Array.IndexOf(hourCounts, hourCounts.Min());
-        QuietHourText = $"{quietHour:D2}:00 - {quietHour + 1:D2}:00";
+        var quietHourStr = $"{quietHour:D2}:00 - {quietHour + 1:D2}:00";
 
-        HourlySeriesValues = [.. hourCounts];
+        var items = new List<HourlyActivityItem>();
+        for (int i = 0; i < 24; i++)
+        {
+            items.Add(new HourlyActivityItem
+            {
+                TimeLabel = $"{i:D2}:00",
+                Count = hourCounts[i],
+                HeightPercentage = maxHourCount == 0 ? 0 : (double)hourCounts[i] / maxHourCount,
+                TooltipText = $"{hourCounts[i]} {_localizedTimesValue}"
+            });
+        }
+
+        _appUIThreadProvider.Execute(() =>
+        {
+            PeakHourText = peakHourStr;
+            QuietHourText = quietHourStr;
+            HourlySeriesValues = [.. items];
+        });
     }
 
     private async Task UpdatePlayerStatsAsync(List<PlayerStats> stats)
     {
-        SourceSeries = new ObservableCollection<ISeries>();
-
         if (stats == null || stats.Count == 0)
         {
-            TopPlayerName = "N/A";
+            _appUIThreadProvider.Execute(() =>
+            {
+                SourceSeries = new ObservableCollection<PlayerSourceItem>();
+                TopPlayerName = "N/A";
+            });
             return;
         }
 
         var topPlayer = stats.OrderByDescending(x => x.Count).FirstOrDefault();
-        TopPlayerName = await _programProvider.GetDisplayNameByAumidAsync(topPlayer?.PlayerId) ?? "N/A";
+        var topPlayerName = await _programProvider.GetDisplayNameByAumidAsync(topPlayer?.PlayerId) ?? "N/A";
+
+        double totalCount = stats.Sum(x => x.Count);
 
         var tasks = stats.OrderByDescending(x => x.Count)
-            .Select(async (x, i) =>
+            .Select(async x =>
             {
                 var name = await _programProvider.GetDisplayNameByAumidAsync(x.PlayerId) ?? "N/A";
-                return new PieSeries<int>
+                return new PlayerSourceItem
                 {
-                    Values = [x.Count],
                     Name = name,
-                    ToolTipLabelFormatter = point => $"{x.Count} {_localizedTimesValue}",
-                    Pushout = 4
+                    Count = x.Count,
+                    Percentage = totalCount == 0 ? 0 : (double)x.Count / totalCount
                 };
             });
 
         var resultSeries = await Task.WhenAll(tasks);
-        SourceSeries = [.. resultSeries];
+        
+        _appUIThreadProvider.Execute(() =>
+        {
+            SourceSeries = [.. resultSeries];
+            TopPlayerName = topPlayerName;
+        });
     }
 
     private (DateTime? Start, DateTime? End) CalculateDateRange()
@@ -343,17 +358,19 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
                 break;
         }
 
-        CustomStartDate = startLocal.Date;
-        CustomEndDate = nowLocal.Date;
-
-        CustomStartTime = startLocal.TimeOfDay;
-        CustomEndTime = nowLocal.TimeOfDay;
+        _appUIThreadProvider.Execute(() =>
+        {
+            CustomStartDate = startLocal.Date;
+            CustomEndDate = nowLocal.Date;
+            CustomStartTime = startLocal.TimeOfDay;
+            CustomEndTime = nowLocal.TimeOfDay;
+        });
     }
 
     private async Task LoadDataCoreAsync()
     {
         if (IsLoading) return;
-        IsLoading = true;
+        _appUIThreadProvider.Execute(() => IsLoading = true);
 
         try
         {
@@ -371,16 +388,21 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
 
             await Task.WhenAll(durationTask, logsTask, topSongsTask, topArtistsTask, playersTask);
 
-            TotalDuration = await durationTask;
+            var duration = await durationTask;
             var logs = await logsTask;
-            TotalTracksPlayed = logs.Count;
-
-            TopSongs = [.. await topSongsTask];
-
+            var topSongs = await topSongsTask;
+            var topArtists = await topArtistsTask;
             var pStats = await playersTask;
+
             await UpdatePlayerStatsAsync(pStats);
 
-            TopArtists = [.. await topArtistsTask];
+            _appUIThreadProvider.Execute(() =>
+            {
+                TotalDuration = duration;
+                TotalTracksPlayed = logs.Count;
+                TopSongs = [.. topSongs];
+                TopArtists = [.. topArtists];
+            });
 
             ProcessHeatmapStats(logs, start.Value, end.Value);
             ProcessHourlyStats(logs);
@@ -392,34 +414,11 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
         }
         finally
         {
-            IsLoading = false;
+            _appUIThreadProvider.Execute(() => IsLoading = false);
         }
     }
 
-    private void UpdatePaints()
-    {
-        var isDark = false;
-
-        switch (_settingsService.AppSettings.GeneralSettings.AppTheme)
-        {
-            case AppTheme.Default:
-                isDark = _systemUiProvider.GetAppTheme() == AppTheme.Dark;
-                break;
-            case AppTheme.Dark:
-                isDark = true;
-                break;
-        }
-
-        var primaryTextColor = isDark ? new SKColor(255, 255, 255, 255) : new SKColor(26, 26, 26, 255);
-        var secondaryTextColor = isDark ? new SKColor(204, 204, 204, 255) : new SKColor(93, 93, 93, 255);
-        var backgroundColor = isDark ? new SKColor(39, 39, 39, 255) : new SKColor(244, 244, 244, 255);
-        var shadowColor = isDark ? new SKColor(0, 0, 0, 150) : new SKColor(0, 0, 0, 40);
-
-        PrimaryTextPaint = new SolidColorPaint(primaryTextColor);
-        SecondaryTextPaint = new SolidColorPaint(secondaryTextColor);
-        BackgroundPaint = new SolidColorPaint(backgroundColor);
-        BackgroundPaint.ImageFilter = new DropShadow(2, 2, 3, 3, shadowColor);
-    }
+    // UpdatePaints removed
 
     [RelayCommand]
     private void RefreshData()
@@ -440,6 +439,6 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
     private async Task GenerateTestDataAsync()
     {
         await _playHistoryService.GenerateTestDataAsync(1000);
-        LoadData(); // 生成完刷新
+        LoadData(); // Refresh data after generating test data
     }
 }

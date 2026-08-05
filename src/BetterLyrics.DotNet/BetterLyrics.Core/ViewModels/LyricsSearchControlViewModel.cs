@@ -10,11 +10,9 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
-using DiscordRPC.Logging;
 using Microsoft.Extensions.Logging;
 using System.Collections.ObjectModel;
 using System.Net;
-using static SkiaSharp.HarfBuzz.SKShaper;
 using LyricsContentParser = BetterLyrics.Core.Helpers.Lyrics.ContentParser.LyricsContentParser;
 
 namespace BetterLyrics.Core.ViewModels;

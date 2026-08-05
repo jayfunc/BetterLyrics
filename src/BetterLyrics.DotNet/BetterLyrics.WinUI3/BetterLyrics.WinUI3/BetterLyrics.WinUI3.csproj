@@ -54,7 +54,6 @@
         <PackageReference Include="FlaUI.UIA3" Version="5.0.0" />
         <PackageReference Include="H.NotifyIcon.WinUI" Version="2.4.1" />
         <PackageReference Include="Interop.UIAutomationClient" Version="10.19041.0" />
-        <PackageReference Include="LiveChartsCore.SkiaSharpView.WinUI" Version="2.0.5" />
 
         <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.10" />
         <PackageReference Include="Microsoft.Graphics.Win2D" Version="1.4.0" />
@@ -518,7 +517,8 @@
     <!-- Publish Properties -->
     <PropertyGroup>
         <PublishReadyToRun Condition="'$(Configuration)' == 'Debug'">False</PublishReadyToRun>
-        <PublishReadyToRun Condition="'$(Configuration)' != 'Debug'">True</PublishReadyToRun>
+        <!--<PublishReadyToRun Condition="'$(Configuration)' != 'Debug'">True</PublishReadyToRun>-->
+        <PublishReadyToRun Condition="'$(Configuration)' != 'Debug'">False</PublishReadyToRun>
         <PublishTrimmed Condition="'$(Configuration)' == 'Debug'">False</PublishTrimmed>
         <!--<PublishTrimmed Condition="'$(Configuration)' != 'Debug'">True</PublishTrimmed>-->
         <PublishTrimmed Condition="'$(Configuration)' != 'Debug'">False</PublishTrimmed>

@@ -4,9 +4,9 @@
     x:Class="BetterLyrics.WinUI3.Controls.StatsDashboardControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:charts="using:BetterLyrics.WinUI3.Controls.Charts"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:lvc="using:LiveChartsCore.SkiaSharpView.WinUI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models1="using:BetterLyrics.Core.Models"
     xmlns:stats="using:BetterLyrics.Core.Models.Stats"
@@ -342,47 +342,11 @@
                             </StackPanel>
                         </Grid>
 
-                        <lvc:CartesianChart
+                        <charts:HourlyBarChartControl
                             Grid.Row="2"
                             Height="180"
                             Margin="0,8,0,0"
-                            Background="Transparent"
-                            TooltipBackgroundPaint="{x:Bind ViewModel.BackgroundPaint, Mode=OneWay}"
-                            TooltipPosition="Top"
-                            TooltipTextPaint="{x:Bind ViewModel.PrimaryTextPaint, Mode=OneWay}">
-
-                            <lvc:CartesianChart.XAxes>
-                                <lvc:AxesCollection>
-                                    <lvc:XamlAxis
-                                        Labels="{x:Bind ViewModel.HourlyXAxisLabels, Mode=OneWay}"
-                                        LabelsPaint="{x:Bind ViewModel.SecondaryTextPaint, Mode=OneWay}"
-                                        TextSize="{StaticResource BodyTextBlockFontSize}" />
-                                </lvc:AxesCollection>
-                            </lvc:CartesianChart.XAxes>
-
-                            <lvc:CartesianChart.YAxes>
-                                <lvc:AxesCollection>
-                                    <lvc:XamlAxis
-                                        x:Uid="StatsDashboardControlTrackCountAxis"
-                                        LabelsPaint="{x:Bind ViewModel.SecondaryTextPaint, Mode=OneWay}"
-                                        NamePaint="{x:Bind ViewModel.SecondaryTextPaint, Mode=OneWay}"
-                                        NameTextSize="{StaticResource BodyTextBlockFontSize}"
-                                        ShowSeparatorLines="False"
-                                        TextSize="{StaticResource BodyTextBlockFontSize}" />
-                                </lvc:AxesCollection>
-                            </lvc:CartesianChart.YAxes>
-
-                            <lvc:CartesianChart.Series>
-                                <lvc:SeriesCollection>
-                                    <lvc:XamlColumnSeries
-                                        x:Name="HourlySeries"
-                                        Rx="4"
-                                        Ry="4"
-                                        Values="{x:Bind ViewModel.HourlySeriesValues, Mode=OneWay}" />
-                                </lvc:SeriesCollection>
-                            </lvc:CartesianChart.Series>
-
-                        </lvc:CartesianChart>
+                            ItemsSource="{x:Bind ViewModel.HourlySeriesValues, Mode=OneWay}" />
                     </Grid>
                 </Border>
 
@@ -508,16 +472,10 @@
                             Margin="0,0,0,12"
                             Style="{ThemeResource SubtitleTextBlockStyle}" />
 
-                        <lvc:PieChart
+                        <charts:SourcePieChartControl
                             Grid.Row="1"
                             MinHeight="250"
-                            Background="Transparent"
-                            LegendPosition="Bottom"
-                            LegendTextPaint="{x:Bind ViewModel.SecondaryTextPaint, Mode=OneWay}"
-                            Series="{x:Bind ViewModel.SourceSeries, Mode=OneWay}"
-                            TooltipBackgroundPaint="{x:Bind ViewModel.BackgroundPaint, Mode=OneWay}"
-                            TooltipPosition="Center"
-                            TooltipTextPaint="{x:Bind ViewModel.PrimaryTextPaint, Mode=OneWay}" />
+                            ItemsSource="{x:Bind ViewModel.SourceSeries, Mode=OneWay}" />
 
                     </Grid>
                 </Border>
@@ -555,8 +513,7 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Bottom"
             Command="{x:Bind ViewModel.GenerateTestDataCommand}"
-            Content="TEST"
-            Visibility="Collapsed" />
+            Content="TEST" />
 
     </Grid>
 </UserControl>

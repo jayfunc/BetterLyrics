@@ -13,8 +13,6 @@
     <bwc:ColorToHexConverter x:Key="ColorToHexConverter" />
     <bwc:AppColorToColorConverter x:Key="AppColorToColorConverter" />
 
-    <bwc:BrushToPaintConverter x:Key="BrushToPaintConverter" />
-
     <bwc:MessageSeverityToInfoBarSeverity x:Key="MessageSeverityToInfoBarSeverity" />
 
     <cwc:CollectionVisibilityConverter x:Key="CollectionVisibilityConverter" />

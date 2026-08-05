@@ -164,7 +164,13 @@ public class PlayHistoryService : IPlayHistoryService
             ("Stay", "The Kid LAROI & Justin Bieber", "F*ck Love 3: Over You")
         };
 
-        var playerIds = new[] { "" };
+        var playerIds = new[] 
+        { 
+            "Sakawish.SaltPlayerforWindows_q65q631pyh094!SaltPlayerforWindows",
+            "AppleInc.AppleMusicWin_nzyj5cx40ttqa!App",
+            "37412.BetterLyrics_mxmjbjshrz3mm!App",
+            "Chrome"
+        };
         var batchList = new List<PlayHistoryItem>();
         var attempts = 0;
         
