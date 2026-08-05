@@ -5,6 +5,7 @@ using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Shapes;
 using Windows.Foundation;
 using Windows.UI;
@@ -19,9 +20,22 @@ public class PieLegendItem
 
 public sealed partial class SourcePieChartControl : UserControl
 {
+    private DispatcherTimer _hoverTimer;
+
     public SourcePieChartControl()
     {
         this.InitializeComponent();
+        _hoverTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(50) };
+        _hoverTimer.Tick += HoverTimer_Tick;
+    }
+
+    private void HoverTimer_Tick(object sender, object e)
+    {
+        _hoverTimer.Stop();
+        foreach (var child in ChartCanvas.Children)
+        {
+            if (child is UIElement ui) AnimateOpacity(ui, 1.0);
+        }
     }
 
     public static readonly DependencyProperty ItemsSourceProperty = DependencyProperty.Register(
@@ -45,6 +59,21 @@ public sealed partial class SourcePieChartControl : UserControl
     private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
     {
         DrawChart();
+    }
+
+    private void AnimateOpacity(UIElement element, double toOpacity)
+    {
+        var storyboard = new Storyboard();
+        var animation = new DoubleAnimation
+        {
+            To = toOpacity,
+            Duration = new Duration(TimeSpan.FromMilliseconds(200)),
+            EasingFunction = new ExponentialEase { EasingMode = EasingMode.EaseOut, Exponent = 4 }
+        };
+        Storyboard.SetTarget(animation, element);
+        Storyboard.SetTargetProperty(animation, "Opacity");
+        storyboard.Children.Add(animation);
+        storyboard.Begin();
     }
 
     private void DrawChart()
@@ -119,6 +148,20 @@ public sealed partial class SourcePieChartControl : UserControl
                     ContentTemplate = (DataTemplate)Resources["TooltipTemplate"]
                 };
                 ToolTipService.SetToolTip(ellipse, tooltip);
+
+                ellipse.PointerEntered += (s, ev) =>
+                {
+                    _hoverTimer.Stop();
+                    foreach (var child in ChartCanvas.Children)
+                    {
+                        if (child is UIElement ui) AnimateOpacity(ui, ui == ellipse ? 1.0 : 0.3);
+                    }
+                };
+                ellipse.PointerExited += (s, ev) =>
+                {
+                    _hoverTimer.Start();
+                };
+
                 ChartCanvas.Children.Add(ellipse);
             }
             else
@@ -160,16 +203,13 @@ public sealed partial class SourcePieChartControl : UserControl
                     Data = pathGeometry
                 };
                 
-                // Add pushout effect for first element (Top Player)
-                if (i == 0)
+                // Exploded pie effect for all slices
+                double midRad = (currentAngle + sweepAngle / 2) * Math.PI / 180.0;
+                path.RenderTransform = new TranslateTransform
                 {
-                    double midRad = (currentAngle + sweepAngle / 2) * Math.PI / 180.0;
-                    path.RenderTransform = new TranslateTransform
-                    {
-                        X = 4 * Math.Cos(midRad),
-                        Y = 4 * Math.Sin(midRad)
-                    };
-                }
+                    X = 3 * Math.Cos(midRad),
+                    Y = 3 * Math.Sin(midRad)
+                };
 
                 var tooltip = new ToolTip
                 {
@@ -177,6 +217,20 @@ public sealed partial class SourcePieChartControl : UserControl
                     ContentTemplate = (DataTemplate)Resources["TooltipTemplate"]
                 };
                 ToolTipService.SetToolTip(path, tooltip);
+
+                path.PointerEntered += (s, ev) =>
+                {
+                    _hoverTimer.Stop();
+                    foreach (var child in ChartCanvas.Children)
+                    {
+                        if (child is UIElement ui) AnimateOpacity(ui, ui == path ? 1.0 : 0.3);
+                    }
+                };
+                path.PointerExited += (s, ev) =>
+                {
+                    _hoverTimer.Start();
+                };
+
                 ChartCanvas.Children.Add(path);
             }
 

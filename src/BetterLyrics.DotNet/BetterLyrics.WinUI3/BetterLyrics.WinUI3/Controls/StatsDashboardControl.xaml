@@ -7,6 +7,7 @@
     xmlns:charts="using:BetterLyrics.WinUI3.Controls.Charts"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:labs="using:CommunityToolkit.Labs.WinUI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models1="using:BetterLyrics.Core.Models"
     xmlns:stats="using:BetterLyrics.Core.Models.Stats"
@@ -18,9 +19,16 @@
             <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
             <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
             <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="CornerRadius" Value="4" />
-            <Setter Property="Padding" Value="16" />
+            <Setter Property="CornerRadius" Value="8" />
+            <Setter Property="Padding" Value="20" />
             <Setter Property="Margin" Value="0,0,4,4" />
+            <Setter Property="Transitions">
+                <Setter.Value>
+                    <TransitionCollection>
+                        <EntranceThemeTransition FromVerticalOffset="20" IsStaggeringEnabled="True" />
+                    </TransitionCollection>
+                </Setter.Value>
+            </Setter>
         </Style>
     </UserControl.Resources>
 
@@ -112,74 +120,105 @@
 
                     <!--  总时长  -->
                     <Border Grid.Column="0" Style="{StaticResource StatsCardStyle}">
-                        <StackPanel>
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <FontIcon
-                                    FontSize="14"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Glyph="&#xE916;" />
-                                <TextBlock
-                                    x:Uid="StatsDashboardControlTotalDuration"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Style="{ThemeResource CaptionTextBlockStyle}" />
-                            </StackPanel>
-                            <StackPanel
-                                Margin="0,8,0,0"
-                                Orientation="Horizontal"
-                                Spacing="4">
-                                <TextBlock
-                                    Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
-                                    Style="{ThemeResource SubtitleTextBlockStyle}"
-                                    Text="{x:Bind ViewModel.TotalDuration.TotalHours, Mode=OneWay, Converter={StaticResource DoubleToDecimalConverter}}" />
-                                <TextBlock
-                                    Margin="0,0,0,2"
+                        <Grid>
+                            <FontIcon
+                                Margin="0,0,-10,-10"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                FontSize="80"
+                                Glyph="&#xE916;"
+                                Opacity="0.03" />
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <FontIcon
+                                        FontSize="14"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Glyph="&#xE916;" />
+                                    <TextBlock
+                                        x:Uid="StatsDashboardControlTotalDuration"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{ThemeResource CaptionTextBlockStyle}" />
+                                </StackPanel>
+                                <StackPanel
+                                    Margin="0,16,0,0"
                                     VerticalAlignment="Bottom"
-                                    Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
-                                    Opacity="0.8"
-                                    Style="{ThemeResource CaptionTextBlockStyle}"
-                                    Text="Hrs" />
+                                    Orientation="Horizontal"
+                                    Spacing="6">
+                                    <TextBlock
+                                        FontSize="32"
+                                        FontWeight="SemiBold"
+                                        Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                                        Text="{x:Bind ViewModel.TotalDuration.TotalHours, Mode=OneWay, Converter={StaticResource DoubleToDecimalConverter}}" />
+                                    <TextBlock
+                                        Margin="0,0,0,6"
+                                        VerticalAlignment="Bottom"
+                                        Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                                        Opacity="0.8"
+                                        Style="{ThemeResource CaptionTextBlockStyle}"
+                                        Text="Hrs" />
+                                </StackPanel>
                             </StackPanel>
-                        </StackPanel>
+                        </Grid>
                     </Border>
 
                     <!--  已播放曲目数  -->
                     <Border Grid.Column="1" Style="{StaticResource StatsCardStyle}">
-                        <StackPanel>
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <FontIcon
-                                    FontSize="14"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Glyph="&#xE8D6;" />
+                        <Grid>
+                            <FontIcon
+                                Margin="0,0,-10,-10"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                FontSize="80"
+                                Glyph="&#xE8D6;"
+                                Opacity="0.03" />
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <FontIcon
+                                        FontSize="14"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Glyph="&#xE8D6;" />
+                                    <TextBlock
+                                        x:Uid="StatsDashboardControlTracksPlayed"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{ThemeResource CaptionTextBlockStyle}" />
+                                </StackPanel>
                                 <TextBlock
-                                    x:Uid="StatsDashboardControlTracksPlayed"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Style="{ThemeResource CaptionTextBlockStyle}" />
+                                    Margin="0,16,0,0"
+                                    FontSize="32"
+                                    FontWeight="SemiBold"
+                                    Text="{x:Bind ViewModel.TotalTracksPlayed, Mode=OneWay}" />
                             </StackPanel>
-                            <TextBlock
-                                Margin="0,8,0,0"
-                                Style="{ThemeResource SubtitleTextBlockStyle}"
-                                Text="{x:Bind ViewModel.TotalTracksPlayed, Mode=OneWay}" />
-                        </StackPanel>
+                        </Grid>
                     </Border>
 
                     <!--  常用播放源  -->
                     <Border Grid.Column="2" Style="{StaticResource StatsCardStyle}">
-                        <StackPanel>
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <FontIcon
-                                    FontSize="14"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Glyph="&#xEC4A;" />
+                        <Grid>
+                            <FontIcon
+                                Margin="0,0,-10,-10"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Bottom"
+                                FontSize="80"
+                                Glyph="&#xEC4A;"
+                                Opacity="0.03" />
+                            <StackPanel>
+                                <StackPanel Orientation="Horizontal" Spacing="8">
+                                    <FontIcon
+                                        FontSize="14"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Glyph="&#xEC4A;" />
+                                    <TextBlock
+                                        x:Uid="StatsDashboardControlTopSource"
+                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                        Style="{ThemeResource CaptionTextBlockStyle}" />
+                                </StackPanel>
                                 <TextBlock
-                                    x:Uid="StatsDashboardControlTopSource"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Style="{ThemeResource CaptionTextBlockStyle}" />
+                                    Margin="0,16,0,0"
+                                    FontSize="32"
+                                    FontWeight="SemiBold"
+                                    Text="{x:Bind ViewModel.TopPlayerName, Mode=OneWay}" />
                             </StackPanel>
-                            <TextBlock
-                                Margin="0,8,0,0"
-                                Style="{ThemeResource SubtitleTextBlockStyle}"
-                                Text="{x:Bind ViewModel.TopPlayerName, Mode=OneWay}" />
-                        </StackPanel>
+                        </Grid>
                     </Border>
                 </Grid>
 
@@ -285,7 +324,9 @@
                                                     VerticalAlignment="Center"
                                                     Background="{ThemeResource AccentFillColorDefaultBrush}"
                                                     CornerRadius="2"
-                                                    Opacity="{x:Bind Opacity}">
+                                                    Opacity="{x:Bind Opacity}"
+                                                    PointerEntered="HeatmapNode_PointerEntered"
+                                                    PointerExited="HeatmapNode_PointerExited">
                                                     <ToolTipService.ToolTip>
                                                         <StackPanel Orientation="Horizontal">
                                                             <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind Date.ToShortDateString()}" />
