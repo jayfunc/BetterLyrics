@@ -36,6 +36,10 @@ public partial class GeneralSettings : ObservableRecipient
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
+    public partial int MaxAutoRetryCount { get; set; } = 3;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
     public partial List<string> LyricsWindowSwitchShortcut { get; set; } = new() { "Ctrl", "Alt", "S" };
 
     [ObservableProperty]

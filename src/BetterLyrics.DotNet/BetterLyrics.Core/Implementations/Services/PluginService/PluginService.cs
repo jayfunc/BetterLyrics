@@ -1,4 +1,4 @@
-﻿using System.IO.Compression;
+using System.IO.Compression;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Settings;
@@ -91,7 +91,7 @@ public class PluginService : BaseViewModel, IPluginService, IRecipient<PropertyC
                 throw new Exception("Invalid plugin package: Could not identify Plugin ID.");
 
             var pendingDir = Path.Combine(PathHelper.PendingPluginsDirectory, pluginId);
-            if (Directory.Exists(pendingDir)) Directory.Delete(pendingDir, true);
+            ForceDeleteDirectory(pendingDir);
             Directory.Move(tempPath, pendingDir);
 
             _logger.LogInformation("Plugin {Id} prepared for installation in {Path}", pluginId, pendingDir);
@@ -116,7 +116,23 @@ public class PluginService : BaseViewModel, IPluginService, IRecipient<PropertyC
         }
 
         var info = _settingsService.AppSettings.PluginsInfo.FirstOrDefault(p => p.Id == pluginId);
-        if (info != null) _settingsService.AppSettings.PluginsInfo.Remove(info);
+        if (info != null)
+        {
+            if (info.Plugin != null && info.IsInitialized)
+            {
+                try
+                {
+                    _configurator.Remove(pluginId);
+                    _hashedId.Remove(pluginId);
+                    info.Plugin.DisposeAsync().AsTask().Wait();
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Error disposing plugin {Id} during uninstallation", pluginId);
+                }
+            }
+            _settingsService.AppSettings.PluginsInfo.Remove(info);
+        }
     }
 
     public async Task TogglePluginAsync(string pluginId)
@@ -215,7 +231,7 @@ public class PluginService : BaseViewModel, IPluginService, IRecipient<PropertyC
                 if (File.Exists(Path.Combine(dir, ".delete")))
                     try
                     {
-                        Directory.Delete(dir, true);
+                        ForceDeleteDirectory(dir);
                         _logger.LogInformation("Cleaned up uninstalled plugin: {Dir}", dir);
                     }
                     catch (Exception ex)
@@ -231,7 +247,7 @@ public class PluginService : BaseViewModel, IPluginService, IRecipient<PropertyC
 
                 try
                 {
-                    if (Directory.Exists(targetDir)) Directory.Delete(targetDir, true);
+                    ForceDeleteDirectory(targetDir);
 
                     Directory.Move(pendingDir, targetDir);
                     _logger.LogInformation("Applied plugin update/install: {Dir}", targetDir);
@@ -271,6 +287,39 @@ public class PluginService : BaseViewModel, IPluginService, IRecipient<PropertyC
             }
 
             throw;
+        }
+    }
+
+    private void ForceDeleteDirectory(string path)
+    {
+        if (!Directory.Exists(path)) return;
+
+        var dir = new DirectoryInfo(path);
+        foreach (var info in dir.GetFileSystemInfos("*", SearchOption.AllDirectories))
+        {
+            info.Attributes = FileAttributes.Normal;
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            try
+            {
+                dir.Delete(true);
+                return;
+            }
+            catch (DirectoryNotFoundException)
+            {
+                return;
+            }
+            catch (Exception ex)
+            {
+                if (i == 2)
+                {
+                    _logger.LogError(ex, "Failed to force delete directory {Path} after retries.", path);
+                    throw;
+                }
+                System.Threading.Thread.Sleep(100);
+            }
         }
     }
 }

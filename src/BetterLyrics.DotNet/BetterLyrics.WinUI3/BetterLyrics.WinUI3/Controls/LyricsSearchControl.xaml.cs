@@ -53,4 +53,9 @@ public sealed partial class LyricsSearchControl : UserControl
     {
         ConvertRomajiToKanji(MappedTitleTextBox);
     }
+
+    public static InfoTagTheme GetInfoTagTheme(bool isIntrinsic)
+    {
+        return isIntrinsic ? InfoTagTheme.Accent : InfoTagTheme.Default;
+    }
 }

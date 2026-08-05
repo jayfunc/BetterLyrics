@@ -23,11 +23,13 @@ public partial class LyricsCacheItem : ObservableObject, ICloneable
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsTranslationIntrinsic))]
     [NotifyPropertyChangedFor(nameof(IsTranslationGenerated))]
+    [NotifyPropertyChangedFor(nameof(IsTranslationNotAvailable))]
     public partial LyricsProvider? TranslationProvider { get; set; }
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsTransliterationIntrinsic))]
     [NotifyPropertyChangedFor(nameof(IsTransliterationGenerated))]
+    [NotifyPropertyChangedFor(nameof(IsTransliterationNotAvailable))]
     public partial LyricsProvider? TransliterationProvider { get; set; }
 
     public string? Raw { get; set; }
@@ -64,11 +66,13 @@ public partial class LyricsCacheItem : ObservableObject, ICloneable
     [NotifyPropertyChangedFor(nameof(IsWordByWord))]
     public partial List<LyricsData>? LyricsDataArr { get; set; }
 
-    [JsonIgnore][BsonIgnore] public bool IsTranslationIntrinsic => TranslationProvider == Provider;
-    [JsonIgnore][BsonIgnore] public bool IsTranslationGenerated => TranslationProvider != Provider;
+    [JsonIgnore][BsonIgnore] public bool IsTranslationIntrinsic => TranslationProvider != null && TranslationProvider == Provider;
+    [JsonIgnore][BsonIgnore] public bool IsTranslationGenerated => TranslationProvider != null && TranslationProvider != Provider;
+    [JsonIgnore][BsonIgnore] public bool IsTranslationNotAvailable => TranslationProvider == null;
 
-    [JsonIgnore][BsonIgnore] public bool IsTransliterationIntrinsic => TransliterationProvider == Provider;
-    [JsonIgnore][BsonIgnore] public bool IsTransliterationGenerated => TransliterationProvider != Provider;
+    [JsonIgnore][BsonIgnore] public bool IsTransliterationIntrinsic => TransliterationProvider != null && TransliterationProvider == Provider;
+    [JsonIgnore][BsonIgnore] public bool IsTransliterationGenerated => TransliterationProvider != null && TransliterationProvider != Provider;
+    [JsonIgnore][BsonIgnore] public bool IsTransliterationNotAvailable => TransliterationProvider == null;
 
     [JsonIgnore][BsonIgnore] public bool IsWordByWord => LyricsDataArr?.FirstOrDefault()?.IsWordByWord ?? false;
 

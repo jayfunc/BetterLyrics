@@ -27,7 +27,7 @@ public partial class GsmtcService : IGsmtcService
     {
         if (CurrentSongInfo != SongInfoExtensions.Placeholder)
         {
-            var maxRetries = 3;
+            var maxRetries = _settingsService.AppSettings.GeneralSettings.MaxAutoRetryCount;
             CurrentLyricsSearchResult = null;
 
             for (var attempt = 1; attempt <= maxRetries; attempt++)

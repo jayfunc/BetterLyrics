@@ -205,12 +205,20 @@ public partial class PlaybackSettingsControlViewModel : BaseViewModel
     }
 
     [RelayCommand]
+    private void SaveAmllTtmlDbBaseUrl()
+    {
+        _globalToastProvider.Show("ActionCompleted", null, MessageSeverity.Success);
+        GsmtcService.UpdateLyrics();
+    }
+
+    [RelayCommand]
     private void SaveAppleMusicMediaUserToken()
     {
-        _passwordVaultProvider.Delete(Core.Constants.App.AppName, AppleMusic.MediaUserTokenKey);
-        _passwordVaultProvider.Save(Core.Constants.App.AppName, AppleMusic.MediaUserTokenKey,
+        _passwordVaultProvider.Delete(App.AppName, AppleMusic.MediaUserTokenKey);
+        _passwordVaultProvider.Save(App.AppName, AppleMusic.MediaUserTokenKey,
             AppleMusicMediaUserToken);
         GsmtcService.UpdateLyrics();
+        _globalToastProvider.Show("ActionCompleted", null, MessageSeverity.Success);
     }
 
     partial void OnSelectedTargetLanguageIndexChanged(int value)

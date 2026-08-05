@@ -644,6 +644,14 @@
                             <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.TranslationSettings.IsFilterEnabled, Mode=TwoWay}" />
                         </controls:SettingsCard>
 
+                        <controls:SettingsCard x:Uid="SettingsPageLyricsAutoRetryCount">
+                            <NumberBox
+                                Maximum="10"
+                                Minimum="1"
+                                SpinButtonPlacementMode="Inline"
+                                Value="{x:Bind ViewModel.AppSettings.GeneralSettings.MaxAutoRetryCount, Mode=TwoWay}" />
+                        </controls:SettingsCard>
+
                         <!--  Last.fm  -->
                         <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="Last.fm" />
                         <controls:SettingsExpander
@@ -713,6 +721,7 @@
                                     TextWrapping="Wrap" />
                                 <Button
                                     Grid.Column="1"
+                                    Command="{x:Bind ViewModel.SaveAmllTtmlDbBaseUrlCommand}"
                                     Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                           FontSize=12,
                                                           Glyph=&#xE8FB;}"

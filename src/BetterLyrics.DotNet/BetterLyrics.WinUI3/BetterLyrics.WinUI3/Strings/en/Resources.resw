@@ -2410,10 +2410,10 @@
     <value>Display phonetics for different languages</value>
   </data>
   <data name="SettingsPageLeftRight.Content" xml:space="preserve">
-    <value>Left-Right</value>
+    <value>Alternating (Left/Right)</value>
   </data>
   <data name="SettingsPageTopBottom.Content" xml:space="preserve">
-    <value>Top-Bottom</value>
+    <value>Alternating (Top/Bottom)</value>
   </data>
   <data name="SettingsPagePaletteToneWeight.Header" xml:space="preserve">
     <value>Tone Weight (Lightness)</value>
@@ -2447,5 +2447,11 @@
   </data>
   <data name="LyricsSearchControlTransliterationAvailable.Text" xml:space="preserve">
     <value>Transliteration</value>
+  </data>
+  <data name="SettingsPageLyricsAutoRetryCount.Header" xml:space="preserve">
+    <value>Max Search Attempts</value>
+  </data>
+  <data name="SettingsPageLyricsAutoRetryCount.Description" xml:space="preserve">
+    <value>Maximum number of attempts when lyrics search fails</value>
   </data>
 </root>

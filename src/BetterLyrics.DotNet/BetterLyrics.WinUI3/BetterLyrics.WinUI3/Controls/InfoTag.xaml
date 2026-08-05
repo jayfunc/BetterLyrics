@@ -10,7 +10,6 @@
 
     <Border
         x:Name="BadgeBorder"
-        Padding="8,2"
         Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
         BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
         BorderThickness="1"
@@ -19,26 +18,42 @@
         PointerExited="OnPointerExited"
         Tapped="OnTapped">
 
-        <StackPanel
-            VerticalAlignment="Center"
-            Orientation="Horizontal"
-            Spacing="4">
+        <Grid>
+            <StackPanel
+                Margin="8,2"
+                VerticalAlignment="Center"
+                Orientation="Horizontal"
+                Spacing="4">
 
-            <FontIcon
-                x:Name="TagIcon"
-                Margin="0,2"
-                FontFamily="{StaticResource SegoeFluentIcons}"
-                FontSize="12"
-                Foreground="{ThemeResource TextFillColorTertiaryBrush}"
-                Glyph="{x:Bind Glyph, Mode=OneWay}"
-                Visibility="{x:Bind HasIcon, Mode=OneWay}" />
+                <FontIcon
+                    x:Name="TagIcon"
+                    Margin="0,2"
+                    FontFamily="{StaticResource SegoeFluentIcons}"
+                    FontSize="12"
+                    FontWeight="SemiBold"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Glyph="{x:Bind Glyph, Mode=OneWay}"
+                    Visibility="{x:Bind HasIcon, Mode=OneWay}" />
 
-            <TextBlock
-                x:Name="TagText"
-                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                Style="{StaticResource CaptionTextBlockStyle}"
-                Text="{x:Bind Text, Mode=OneWay}"
-                Visibility="{x:Bind HasText, Mode=OneWay}" />
-        </StackPanel>
+                <TextBlock
+                    x:Name="TagText"
+                    FontWeight="SemiBold"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{x:Bind Text, Mode=OneWay}"
+                    Visibility="{x:Bind HasText, Mode=OneWay}" />
+            </StackPanel>
+            <Line
+                x:Name="DisabledStrikethrough"
+                Margin="6,2"
+                Stretch="Fill"
+                Stroke="{ThemeResource TextFillColorSecondaryBrush}"
+                StrokeThickness="1.5"
+                Visibility="Collapsed"
+                X1="0"
+                X2="1"
+                Y1="0"
+                Y2="1" />
+        </Grid>
     </Border>
 </UserControl>

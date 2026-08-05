@@ -32,7 +32,24 @@ public sealed partial class InfoTag : UserControl
     public InfoTag()
     {
         InitializeComponent();
-        Loaded += (s, e) => UpdateThemeColors();
+        Loaded += (s, e) => 
+        {
+            UpdateThemeColors();
+            UpdateDisabledVisuals();
+        };
+        IsEnabledChanged += (s, e) =>
+        {
+            UpdateDisabledVisuals();
+        };
+    }
+
+    private void UpdateDisabledVisuals()
+    {
+        Opacity = IsEnabled ? 1.0 : 0.6;
+        if (DisabledStrikethrough != null)
+        {
+            DisabledStrikethrough.Visibility = IsEnabled ? Visibility.Collapsed : Visibility.Visible;
+        }
     }
 
     public string Text
