@@ -33,6 +33,15 @@ public static class PlayerIdHelper
         "lx-music-desktop.exe"
     ];
 
+    private static readonly List<string> _phoneLinkRegex =
+    [
+        "^Microsoft\\.YourPhone_",
+        "^Microsoft\\.PhoneLink_",
+        "^Microsoft\\.CrossDeviceApp_",
+        "CrossDevice\\.exe",
+        "PhoneLink\\.exe"
+    ];
+
     private static bool Is(string? id, List<string> regexes)
     {
         if (id is null) return false;
@@ -59,6 +68,11 @@ public static class PlayerIdHelper
     public static bool IsLXMusic(string? id)
     {
         return Is(id, _lxMusicRegex);
+    }
+
+    public static bool IsPhoneLink(string? id)
+    {
+        return Is(id, _phoneLinkRegex);
     }
 
     public static bool IsAppleMusic(string? id)

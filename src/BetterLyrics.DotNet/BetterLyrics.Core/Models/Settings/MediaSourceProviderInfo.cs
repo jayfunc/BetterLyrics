@@ -30,6 +30,12 @@ public partial class MediaSourceProviderInfo : ObservableRecipient
             TimelineSyncThreshold = 1000;
             PositionOffset = 1000;
         }
+        else if (PlayerIdHelper.IsPhoneLink(provider))
+        {
+            // 存在一定延迟与抖动，因此使用更宽松的阈值避免频繁校准
+            TimelineSyncThreshold = 3000;
+            PositionOffset = 500;
+        }
         else
         {
             // 设置 300 以防不必要的重复同步
@@ -114,6 +120,7 @@ public partial class MediaSourceProviderInfo : ObservableRecipient
         [.. Enum.GetValues<AlbumArtSearchProvider>().Select(p => new AlbumArtSearchProviderInfo(p, true))];
 
     [JsonIgnore] public bool IsLXMusic => PlayerIdHelper.IsLXMusic(Provider);
+    [JsonIgnore] public bool IsPhoneLink => PlayerIdHelper.IsPhoneLink(Provider);
     [JsonIgnore] public bool IsBetterLyrics => PlayerIdHelper.IsBetterLyrics(Provider);
     [JsonIgnore] [ObservableProperty] public partial bool IsFocused { get; set; } = false;
 
