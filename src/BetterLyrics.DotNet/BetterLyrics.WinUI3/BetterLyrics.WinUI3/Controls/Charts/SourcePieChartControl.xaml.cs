@@ -76,6 +76,20 @@ public sealed partial class SourcePieChartControl : UserControl
         storyboard.Begin();
     }
 
+    private static readonly Color[] Palette = new[]
+    {
+        ColorHelper.FromArgb(255, 0, 120, 212),
+        ColorHelper.FromArgb(255, 0, 178, 148),
+        ColorHelper.FromArgb(255, 255, 140, 0),
+        ColorHelper.FromArgb(255, 232, 17, 35),
+        ColorHelper.FromArgb(255, 180, 0, 158),
+        ColorHelper.FromArgb(255, 0, 204, 106),
+        ColorHelper.FromArgb(255, 107, 105, 214),
+        ColorHelper.FromArgb(255, 0, 183, 195),
+        ColorHelper.FromArgb(255, 216, 59, 1),
+        ColorHelper.FromArgb(255, 255, 185, 0)
+    };
+
     private void DrawChart()
     {
         ChartCanvas.Children.Clear();
@@ -109,9 +123,7 @@ public sealed partial class SourcePieChartControl : UserControl
         double currentAngle = -90; // Start at top
 
         var accentBrush = (SolidColorBrush)Application.Current.Resources["AccentFillColorDefaultBrush"];
-        Color baseColor = accentBrush.Color;
-        byte minAlpha = 40;
-
+        
         int validItemCount = 0;
         foreach (var item in items) if (item.Percentage > 0) validItemCount++;
 
@@ -124,13 +136,16 @@ public sealed partial class SourcePieChartControl : UserControl
 
             double sweepAngle = item.Percentage * 360;
             
-            byte alpha = 255;
-            if (validItemCount > 1)
+            Color sliceColor;
+            if (drawnCount == 0)
             {
-                alpha = (byte)(255 - (drawnCount * (255 - minAlpha) / (validItemCount - 1)));
+                sliceColor = accentBrush.Color;
+            }
+            else
+            {
+                sliceColor = Palette[(drawnCount - 1) % Palette.Length];
             }
 
-            Color sliceColor = ColorHelper.FromArgb(alpha, baseColor.R, baseColor.G, baseColor.B);
             Brush brush = new SolidColorBrush(sliceColor);
 
             if (item.Percentage >= 0.999)

@@ -63,7 +63,7 @@
                                                     FontSize="12"
                                                     FontWeight="Bold"
                                                     Foreground="White"
-                                                    Text="{Binding Artist}" />
+                                                    Text="{Binding Artist, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                                                 <TextBlock
                                                     Grid.Column="1"
                                                     FontFamily="{Binding Config.FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"

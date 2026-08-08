@@ -8,98 +8,25 @@
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:labs="using:CommunityToolkit.Labs.WinUI"
+    xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models1="using:BetterLyrics.Core.Models"
+    xmlns:media="using:CommunityToolkit.WinUI.Media"
+    xmlns:models="using:BetterLyrics.Core.Models"
     xmlns:stats="using:BetterLyrics.Core.Models.Stats"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
 
-    <UserControl.Resources>
-        <Style x:Key="StatsCardStyle" TargetType="Border">
-            <Setter Property="Background" Value="{ThemeResource CardBackgroundFillColorDefaultBrush}" />
-            <Setter Property="BorderBrush" Value="{ThemeResource CardStrokeColorDefaultBrush}" />
-            <Setter Property="BorderThickness" Value="1" />
-            <Setter Property="CornerRadius" Value="8" />
-            <Setter Property="Padding" Value="20" />
-            <Setter Property="Margin" Value="0,0,4,4" />
-            <Setter Property="Transitions">
-                <Setter.Value>
-                    <TransitionCollection>
-                        <EntranceThemeTransition FromVerticalOffset="20" IsStaggeringEnabled="True" />
-                    </TransitionCollection>
-                </Setter.Value>
-            </Setter>
-        </Style>
-    </UserControl.Resources>
-
-    <Grid Loaded="Grid_Loaded">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
+    <Grid>
 
         <!--  加载条  -->
         <ProgressBar
-            Grid.Row="0"
-            Grid.RowSpan="3"
             VerticalAlignment="Top"
             Background="Transparent"
             IsIndeterminate="{x:Bind ViewModel.IsLoading, Mode=OneWay}"
             Visibility="{x:Bind ViewModel.IsLoading, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
 
-        <!--  时间选取  -->
-        <controls:SettingsExpander
-            x:Uid="StatsDashboardControlTimeRange"
-            Grid.Row="1"
-            Margin="36,36,36,4"
-            HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                     Glyph=&#xEC92;}"
-            IsExpanded="{x:Bind ViewModel.SelectedTimeRange, Mode=OneWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=6}">
-            <StackPanel Orientation="Horizontal" Spacing="6">
-                <Button
-                    Command="{x:Bind ViewModel.RefreshDataCommand}"
-                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                          FontSize=12,
-                                          Glyph=&#xE72C;}"
-                    Style="{ThemeResource GhostButtonStyle}" />
-                <ComboBox SelectedIndex="{x:Bind ViewModel.SelectedTimeRange, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                    <ComboBoxItem x:Uid="StatsDashboardControlToday" />
-                    <ComboBoxItem x:Uid="StatsDashboardControlThisWeek" />
-                    <ComboBoxItem x:Uid="StatsDashboardControlThisMonth" />
-                    <ComboBoxItem x:Uid="StatsDashboardControlThisQuarter" />
-                    <ComboBoxItem x:Uid="StatsDashboardControlThisYear" />
-                    <ComboBoxItem x:Uid="StatsDashboardControlAllTime" />
-                    <ComboBoxItem x:Uid="StatsDashboardControlCustom" />
-                </ComboBox>
-            </StackPanel>
-
-            <controls:SettingsExpander.Items>
-                <controls:SettingsCard x:Uid="StatsDashboardControlStart">
-                    <StackPanel Orientation="Horizontal" Spacing="6">
-                        <CalendarDatePicker Date="{x:Bind ViewModel.CustomStartDate, Mode=TwoWay}" IsEnabled="{x:Bind ViewModel.IsCustomRangeSelected, Mode=OneWay}" />
-                        <TimePicker
-                            VerticalAlignment="Bottom"
-                            IsEnabled="{x:Bind ViewModel.IsCustomRangeSelected, Mode=OneWay}"
-                            Time="{x:Bind ViewModel.CustomStartTime, Mode=TwoWay}" />
-                    </StackPanel>
-                </controls:SettingsCard>
-
-                <controls:SettingsCard x:Uid="StatsDashboardControlEnd">
-                    <StackPanel Orientation="Horizontal" Spacing="6">
-                        <CalendarDatePicker Date="{x:Bind ViewModel.CustomEndDate, Mode=TwoWay}" IsEnabled="{x:Bind ViewModel.IsCustomRangeSelected, Mode=OneWay}" />
-                        <TimePicker
-                            VerticalAlignment="Bottom"
-                            IsEnabled="{x:Bind ViewModel.IsCustomRangeSelected, Mode=OneWay}"
-                            Time="{x:Bind ViewModel.CustomEndTime, Mode=TwoWay}" />
-                    </StackPanel>
-                </controls:SettingsCard>
-
-            </controls:SettingsExpander.Items>
-        </controls:SettingsExpander>
-
         <!--  结果展示  -->
-        <ScrollViewer Grid.Row="2" Padding="36,0,32,0">
+        <ScrollViewer x:Name="MainScrollViewer">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition />
@@ -109,121 +36,209 @@
                     <RowDefinition />
                     <RowDefinition />
                     <RowDefinition />
+                    <RowDefinition />
                 </Grid.RowDefinitions>
 
+                <!--  Hero Banner (Memoir + Top Stats)  -->
                 <Grid Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                    <Grid Padding="36,36,36,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
 
-                    <!--  总时长  -->
-                    <Border Grid.Column="0" Style="{StaticResource StatsCardStyle}">
-                        <Grid>
-                            <FontIcon
-                                Margin="0,0,-10,-10"
+                        <!--  Top Bar: Memoir & Time Selection  -->
+                        <Grid Grid.Row="0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" VerticalAlignment="Center">
+                                <TextBlock x:Uid="StatsDashboardControlMemoirTitle" Style="{ThemeResource TitleTextBlockStyle}" />
+                                <TextBlock
+                                    x:Uid="StatsDashboardControlMemoirDesc"
+                                    Margin="0,4,0,16"
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Style="{ThemeResource BodyTextBlockStyle}" />
+                                <Button
+                                    BorderThickness="0"
+                                    Click="PlayStoryButton_Click"
+                                    Style="{ThemeResource AccentButtonStyle}">
+                                    <StackPanel Orientation="Horizontal" Spacing="8">
+                                        <FontIcon FontSize="14" Glyph="&#xE768;" />
+                                        <TextBlock x:Uid="StatsDashboardControlMemoirPlay" />
+                                    </StackPanel>
+                                </Button>
+                            </StackPanel>
+
+                            <!--  Time Selection (Sleek)  -->
+                            <StackPanel
+                                Grid.Column="1"
                                 HorizontalAlignment="Right"
-                                VerticalAlignment="Bottom"
-                                FontSize="80"
-                                Glyph="&#xE916;"
-                                Opacity="0.03" />
-                            <StackPanel>
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <FontIcon
-                                        FontSize="14"
-                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                        Glyph="&#xE916;" />
+                                VerticalAlignment="Top"
+                                Spacing="12">
+                                <StackPanel
+                                    HorizontalAlignment="Right"
+                                    Orientation="Horizontal"
+                                    Spacing="8">
+                                    <Button
+                                        Command="{x:Bind ViewModel.RefreshDataCommand}"
+                                        Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                              FontSize=12,
+                                                              Glyph=&#xE72C;}"
+                                        Style="{ThemeResource GhostButtonStyle}" />
+                                    <ComboBox SelectedIndex="{x:Bind ViewModel.SelectedTimeRange, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                        <ComboBoxItem x:Uid="StatsDashboardControlToday" />
+                                        <ComboBoxItem x:Uid="StatsDashboardControlThisWeek" />
+                                        <ComboBoxItem x:Uid="StatsDashboardControlThisMonth" />
+                                        <ComboBoxItem x:Uid="StatsDashboardControlThisQuarter" />
+                                        <ComboBoxItem x:Uid="StatsDashboardControlThisYear" />
+                                        <ComboBoxItem x:Uid="StatsDashboardControlAllTime" />
+                                        <ComboBoxItem x:Uid="StatsDashboardControlCustom" />
+                                    </ComboBox>
+                                </StackPanel>
+
+                                <Grid HorizontalAlignment="Right" Visibility="{x:Bind ViewModel.IsCustomRangeSelected, Mode=OneWay}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <StackPanel
+                                        Grid.Row="0"
+                                        Margin="0,0,0,8"
+                                        Orientation="Horizontal"
+                                        Spacing="8">
+                                        <TextBlock
+                                            x:Uid="StatsDashboardControlStartText"
+                                            VerticalAlignment="Center"
+                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                        <CalendarDatePicker Date="{x:Bind ViewModel.CustomStartDate, Mode=TwoWay}" />
+                                        <TimePicker Time="{x:Bind ViewModel.CustomStartTime, Mode=TwoWay}" />
+                                    </StackPanel>
+                                    <StackPanel
+                                        Grid.Row="1"
+                                        Orientation="Horizontal"
+                                        Spacing="8">
+                                        <TextBlock
+                                            x:Uid="StatsDashboardControlEndText"
+                                            VerticalAlignment="Center"
+                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                        <CalendarDatePicker Date="{x:Bind ViewModel.CustomEndDate, Mode=TwoWay}" />
+                                        <TimePicker Time="{x:Bind ViewModel.CustomEndTime, Mode=TwoWay}" />
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+
+                        <!--  Counters  -->
+                        <Grid
+                            Grid.Row="2"
+                            Margin="16,48,16,0"
+                            ColumnSpacing="48">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <!--  总时长  -->
+                            <Grid Grid.Column="0">
+                                <FontIcon
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    FontSize="120"
+                                    Glyph="&#xE916;"
+                                    Opacity="0.15">
+                                    <FontIcon.Clip>
+                                        <RectangleGeometry Rect="0,0,90,90" />
+                                    </FontIcon.Clip>
+                                </FontIcon>
+                                <StackPanel>
                                     <TextBlock
                                         x:Uid="StatsDashboardControlTotalDuration"
                                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                         Style="{ThemeResource CaptionTextBlockStyle}" />
-                                </StackPanel>
-                                <StackPanel
-                                    Margin="0,16,0,0"
-                                    VerticalAlignment="Bottom"
-                                    Orientation="Horizontal"
-                                    Spacing="6">
-                                    <TextBlock
-                                        FontSize="32"
-                                        FontWeight="SemiBold"
-                                        Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
-                                        Text="{x:Bind ViewModel.TotalDuration.TotalHours, Mode=OneWay, Converter={StaticResource DoubleToDecimalConverter}}" />
-                                    <TextBlock
-                                        Margin="0,0,0,6"
+                                    <StackPanel
+                                        Margin="0,12,0,0"
                                         VerticalAlignment="Bottom"
-                                        Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
-                                        Opacity="0.8"
-                                        Style="{ThemeResource CaptionTextBlockStyle}"
-                                        Text="Hrs" />
+                                        Orientation="Horizontal"
+                                        Spacing="6">
+                                        <TextBlock
+                                            FontSize="42"
+                                            FontWeight="SemiBold"
+                                            Text="{x:Bind ViewModel.TotalDuration.TotalHours, Mode=OneWay, Converter={StaticResource DoubleToDecimalConverter}}" />
+                                        <TextBlock
+                                            x:Uid="StatsDashboardControlHours"
+                                            Margin="0,0,0,8"
+                                            VerticalAlignment="Bottom"
+                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                            Style="{ThemeResource BodyTextBlockStyle}" />
+                                    </StackPanel>
                                 </StackPanel>
-                            </StackPanel>
-                        </Grid>
-                    </Border>
+                            </Grid>
 
-                    <!--  已播放曲目数  -->
-                    <Border Grid.Column="1" Style="{StaticResource StatsCardStyle}">
-                        <Grid>
-                            <FontIcon
-                                Margin="0,0,-10,-10"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Bottom"
-                                FontSize="80"
-                                Glyph="&#xE8D6;"
-                                Opacity="0.03" />
-                            <StackPanel>
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <FontIcon
-                                        FontSize="14"
-                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                        Glyph="&#xE8D6;" />
+                            <!--  已播放曲目数  -->
+                            <Grid Grid.Column="1">
+                                <FontIcon
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    FontSize="120"
+                                    Glyph="&#xEC4F;"
+                                    Opacity="0.15">
+                                    <FontIcon.Clip>
+                                        <RectangleGeometry Rect="0,0,90,90" />
+                                    </FontIcon.Clip>
+                                </FontIcon>
+                                <StackPanel>
                                     <TextBlock
                                         x:Uid="StatsDashboardControlTracksPlayed"
                                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                         Style="{ThemeResource CaptionTextBlockStyle}" />
+                                    <TextBlock
+                                        Margin="0,12,0,0"
+                                        FontSize="42"
+                                        FontWeight="SemiBold"
+                                        Text="{x:Bind ViewModel.TotalTracksPlayed, Mode=OneWay}" />
                                 </StackPanel>
-                                <TextBlock
-                                    Margin="0,16,0,0"
-                                    FontSize="32"
-                                    FontWeight="SemiBold"
-                                    Text="{x:Bind ViewModel.TotalTracksPlayed, Mode=OneWay}" />
-                            </StackPanel>
-                        </Grid>
-                    </Border>
+                            </Grid>
 
-                    <!--  常用播放源  -->
-                    <Border Grid.Column="2" Style="{StaticResource StatsCardStyle}">
-                        <Grid>
-                            <FontIcon
-                                Margin="0,0,-10,-10"
-                                HorizontalAlignment="Right"
-                                VerticalAlignment="Bottom"
-                                FontSize="80"
-                                Glyph="&#xEC4A;"
-                                Opacity="0.03" />
-                            <StackPanel>
-                                <StackPanel Orientation="Horizontal" Spacing="8">
-                                    <FontIcon
-                                        FontSize="14"
-                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                        Glyph="&#xEC4A;" />
+                            <!--  常用播放源  -->
+                            <Grid Grid.Column="2">
+                                <FontIcon
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Bottom"
+                                    FontSize="120"
+                                    Glyph="&#xE774;"
+                                    Opacity="0.15">
+                                    <FontIcon.Clip>
+                                        <RectangleGeometry Rect="0,0,90,90" />
+                                    </FontIcon.Clip>
+                                </FontIcon>
+                                <StackPanel>
                                     <TextBlock
                                         x:Uid="StatsDashboardControlTopSource"
                                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                         Style="{ThemeResource CaptionTextBlockStyle}" />
+                                    <TextBlock
+                                        Margin="0,12,0,0"
+                                        FontSize="42"
+                                        FontWeight="SemiBold"
+                                        Text="{x:Bind ViewModel.TopPlayerName, Mode=OneWay}"
+                                        TextTrimming="CharacterEllipsis" />
                                 </StackPanel>
-                                <TextBlock
-                                    Margin="0,16,0,0"
-                                    FontSize="32"
-                                    FontWeight="SemiBold"
-                                    Text="{x:Bind ViewModel.TopPlayerName, Mode=OneWay}" />
-                            </StackPanel>
+                            </Grid>
                         </Grid>
-                    </Border>
+                    </Grid>
                 </Grid>
 
                 <!--  热度图  -->
-                <Border Grid.Row="1" Style="{StaticResource StatsCardStyle}">
+                <Grid
+                    Grid.Row="1"
+                    Margin="36,0"
+                    Padding="24"
+                    Style="{ThemeResource CardGridStyle}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -252,23 +267,23 @@
                                     <RowDefinition Height="18" />
                                 </Grid.RowDefinitions>
                                 <TextBlock
-                                    x:Name="HeatmapLabel1"
                                     Grid.Row="1"
                                     VerticalAlignment="Center"
                                     FontSize="10"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Text="{x:Bind ViewModel.HeatmapLabel1, Mode=OneWay}" />
                                 <TextBlock
-                                    x:Name="HeatmapLabel3"
                                     Grid.Row="3"
                                     VerticalAlignment="Center"
                                     FontSize="10"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Text="{x:Bind ViewModel.HeatmapLabel3, Mode=OneWay}" />
                                 <TextBlock
-                                    x:Name="HeatmapLabel5"
                                     Grid.Row="5"
                                     VerticalAlignment="Center"
                                     FontSize="10"
-                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                    Text="{x:Bind ViewModel.HeatmapLabel5, Mode=OneWay}" />
                             </Grid>
 
                             <ScrollViewer
@@ -291,7 +306,7 @@
                                         </ItemsControl.ItemsPanel>
 
                                         <ItemsControl.ItemTemplate>
-                                            <DataTemplate x:DataType="models1:MonthLabel">
+                                            <DataTemplate x:DataType="models:MonthLabel">
                                                 <Grid>
                                                     <Grid.RenderTransform>
                                                         <TranslateTransform X="{x:Bind Offset}" />
@@ -316,7 +331,7 @@
                                             </ItemsPanelTemplate>
                                         </ItemsControl.ItemsPanel>
                                         <ItemsControl.ItemTemplate>
-                                            <DataTemplate x:DataType="models1:HeatmapNode">
+                                            <DataTemplate x:DataType="models:HeatmapNode">
                                                 <Border
                                                     Width="14"
                                                     Height="14"
@@ -344,10 +359,14 @@
                             </ScrollViewer>
                         </Grid>
                     </Grid>
-                </Border>
+                </Grid>
 
                 <!--  Activity by hour  -->
-                <Border Grid.Row="2" Style="{StaticResource StatsCardStyle}">
+                <Grid
+                    Grid.Row="2"
+                    Margin="36,0"
+                    Padding="24"
+                    Style="{ThemeResource CardGridStyle}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -389,17 +408,20 @@
                             Margin="0,8,0,0"
                             ItemsSource="{x:Bind ViewModel.HourlySeriesValues, Mode=OneWay}" />
                     </Grid>
-                </Border>
+                </Grid>
 
                 <!--  Top artists and sources  -->
-                <Grid Grid.Row="3">
+                <Grid Grid.Row="3" Margin="36,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
                     <!--  Top artists  -->
-                    <Border Grid.Column="0" Style="{StaticResource StatsCardStyle}">
+                    <Grid
+                        Grid.Column="0"
+                        Padding="24"
+                        Style="{ThemeResource CardGridStyle}">
                         <StackPanel>
                             <TextBlock
                                 x:Uid="StatsDashboardControlTopArtists"
@@ -442,10 +464,13 @@
                             </ItemsControl>
 
                         </StackPanel>
-                    </Border>
+                    </Grid>
 
                     <!--  Top tracks  -->
-                    <Border Grid.Column="1" Style="{StaticResource StatsCardStyle}">
+                    <Grid
+                        Grid.Column="1"
+                        Padding="24"
+                        Style="{ThemeResource CardGridStyle}">
                         <StackPanel>
                             <TextBlock
                                 x:Uid="StatsDashboardControlTopSongs"
@@ -496,13 +521,16 @@
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
                         </StackPanel>
-                    </Border>
+                    </Grid>
 
                 </Grid>
 
-                <!--  TODO 滚动到此处抛异常  -->
                 <!--  播放源分布  -->
-                <Border Grid.Row="4" Style="{StaticResource StatsCardStyle}">
+                <Grid
+                    Grid.Row="4"
+                    Margin="36,0"
+                    Padding="24"
+                    Style="{ThemeResource CardGridStyle}">
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -513,18 +541,19 @@
                             Margin="0,0,0,12"
                             Style="{ThemeResource SubtitleTextBlockStyle}" />
 
-                        <charts:SourcePieChartControl
+                        <charts:SourceBarChartControl
                             Grid.Row="1"
                             MinHeight="250"
+                            Margin="0,16,0,0"
                             ItemsSource="{x:Bind ViewModel.SourceSeries, Mode=OneWay}" />
 
                     </Grid>
-                </Border>
+                </Grid>
 
                 <!--  记录条  -->
                 <Grid
-                    Grid.Row="5"
-                    Margin="0,0,4,0"
+                    Grid.Row="6"
+                    Margin="36,0,36,0"
                     Visibility="{x:Bind ViewModel.GSMTCService.IsScrobbled, Mode=OneWay, Converter={StaticResource BoolNegationToVisibilityConverter}}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -544,17 +573,21 @@
                         Value="{x:Bind ViewModel.GSMTCService.ScrobbledDuration.TotalSeconds, Mode=OneWay}" />
                 </Grid>
 
-                <Grid Grid.Row="6" Height="32" />
+                <Grid Grid.Row="7" Height="32" />
 
             </Grid>
         </ScrollViewer>
 
         <Button
-            Grid.RowSpan="3"
             HorizontalAlignment="Center"
             VerticalAlignment="Bottom"
             Command="{x:Bind ViewModel.GenerateTestDataCommand}"
             Content="TEST" />
+
+        <local:StoryViewerControl
+            x:Name="StoryViewer"
+            CloseRequested="StoryViewer_CloseRequested"
+            Visibility="Collapsed" />
 
     </Grid>
 </UserControl>

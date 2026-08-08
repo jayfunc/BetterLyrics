@@ -78,6 +78,9 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
     // GitHub 热度图
     [ObservableProperty] public partial ObservableCollection<HeatmapNode> HeatmapData { get; set; } = new();
     [ObservableProperty] public partial ObservableCollection<MonthLabel> MonthLabels { get; set; } = new();
+    [ObservableProperty] public partial string HeatmapLabel1 { get; set; } = "";
+    [ObservableProperty] public partial string HeatmapLabel3 { get; set; } = "";
+    [ObservableProperty] public partial string HeatmapLabel5 { get; set; } = "";
 
     // 时段分布
     [ObservableProperty] public partial ObservableCollection<HourlyActivityItem> HourlySeriesValues { get; set; } = new();
@@ -138,8 +141,8 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
             return;
         }
 
-        var startDate = start.Date;
-        var endDate = end.Date;
+        var startDate = start.ToLocalTime().Date;
+        var endDate = end.ToLocalTime().Date;
 
         var dailyCounts = logs
             .GroupBy(x => x.StartedAt.ToLocalTime().Date)
@@ -149,8 +152,15 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
         var nodes = new List<HeatmapNode>();
         var monthLabels = new List<MonthLabel>();
 
-        var startDayOfWeek = (int)culture.DateTimeFormat.FirstDayOfWeek;
-        for (var i = 0; i < startDayOfWeek; i++) nodes.Add(new HeatmapNode { IsEmpty = true });
+        var firstDayOfWeek = (int)culture.DateTimeFormat.FirstDayOfWeek;
+        var startDayOfWeek = (int)startDate.DayOfWeek;
+        
+        _appUIThreadProvider.Execute(() =>
+        {
+            HeatmapLabel1 = culture.DateTimeFormat.GetAbbreviatedDayName((DayOfWeek)((startDayOfWeek + 1) % 7));
+            HeatmapLabel3 = culture.DateTimeFormat.GetAbbreviatedDayName((DayOfWeek)((startDayOfWeek + 3) % 7));
+            HeatmapLabel5 = culture.DateTimeFormat.GetAbbreviatedDayName((DayOfWeek)((startDayOfWeek + 5) % 7));
+        });
 
         var currentMonth = startDate.Month;
         var currentYear = startDate.Year;

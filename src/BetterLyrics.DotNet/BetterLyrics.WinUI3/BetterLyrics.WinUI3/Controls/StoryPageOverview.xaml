@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.StoryPageOverview"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="Transparent">
+        <StackPanel
+            Margin="40"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Spacing="24">
+            <TextBlock
+                x:Name="Text1"
+                x:Uid="StoryPageOverviewText1"
+                FontSize="20"
+                Foreground="White"
+                Opacity="0" />
+
+            <TextBlock
+                x:Name="Text2"
+                x:Uid="StoryPageOverviewText2"
+                FontSize="28"
+                FontWeight="SemiBold"
+                Foreground="White"
+                Opacity="0" />
+
+            <StackPanel
+                x:Name="Panel1"
+                Margin="0,8,0,16"
+                Opacity="0"
+                Orientation="Horizontal"
+                Spacing="8">
+                <TextBlock
+                    x:Name="TracksTextBlock"
+                    FontSize="80"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Text="0" />
+                <TextBlock
+                    x:Uid="StoryPageOverviewCountUnit"
+                    Margin="0,0,0,14"
+                    VerticalAlignment="Bottom"
+                    FontSize="28"
+                    Foreground="White"
+                    Opacity="0.6" />
+            </StackPanel>
+
+            <TextBlock
+                x:Name="Text3"
+                x:Uid="StoryPageOverviewText3"
+                FontSize="28"
+                FontWeight="SemiBold"
+                Foreground="White"
+                Opacity="0" />
+
+            <StackPanel
+                x:Name="Panel2"
+                Margin="0,8,0,0"
+                Opacity="0"
+                Orientation="Horizontal"
+                Spacing="8">
+                <TextBlock
+                    x:Name="HoursTextBlock"
+                    FontSize="80"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    Text="0" />
+                <TextBlock
+                    x:Uid="StoryPageOverviewHourUnit"
+                    Margin="0,0,0,14"
+                    VerticalAlignment="Bottom"
+                    FontSize="28"
+                    Foreground="White"
+                    Opacity="0.6" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

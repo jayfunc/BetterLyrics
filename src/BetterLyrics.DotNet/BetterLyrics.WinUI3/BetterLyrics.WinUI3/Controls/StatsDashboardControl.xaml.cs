@@ -45,15 +45,6 @@ public sealed partial class StatsDashboardControl : UserControl
 
     public StatsDashboardControlViewModel ViewModel => (StatsDashboardControlViewModel)DataContext;
 
-    private void Grid_Loaded(object sender, RoutedEventArgs e)
-    {
-        var culture = CultureInfo.CurrentUICulture;
-        var dtfi = culture.DateTimeFormat;
-        HeatmapLabel1.Text = dtfi.GetDayName((DayOfWeek)(((int)dtfi.FirstDayOfWeek + 1) % 7));
-        HeatmapLabel3.Text = dtfi.GetDayName((DayOfWeek)(((int)dtfi.FirstDayOfWeek + 3) % 7));
-        HeatmapLabel5.Text = dtfi.GetDayName((DayOfWeek)(((int)dtfi.FirstDayOfWeek + 5) % 7));
-    }
-
     private void AnimateOpacity(UIElement element, double toOpacity)
     {
         var storyboard = new Storyboard();
@@ -114,5 +105,16 @@ public sealed partial class StatsDashboardControl : UserControl
     private void HeatmapNode_PointerExited(object sender, PointerRoutedEventArgs e)
     {
         _heatmapHoverTimer.Start();
+    }
+
+    private void PlayStoryButton_Click(object sender, RoutedEventArgs e)
+    {
+        StoryViewer.Visibility = Visibility.Visible;
+        StoryViewer.StartStory(ViewModel);
+    }
+
+    private void StoryViewer_CloseRequested()
+    {
+        StoryViewer.Visibility = Visibility.Collapsed;
     }
 }

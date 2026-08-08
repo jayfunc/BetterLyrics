@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.StoryPageSummary"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="Transparent">
+        <StackPanel
+            Margin="40"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Spacing="24">
+            <TextBlock
+                x:Name="Text1"
+                x:Uid="StoryPageSummaryTitle"
+                Margin="0,0,0,24"
+                HorizontalAlignment="Center"
+                FontSize="32"
+                FontWeight="Bold"
+                Foreground="White"
+                Opacity="0" />
+
+            <Border
+                x:Name="CardBorder"
+                Padding="40"
+                Background="{ThemeResource AcrylicBackgroundFillColorDefaultBrush}"
+                BorderBrush="#33FFFFFF"
+                BorderThickness="1"
+                CornerRadius="16"
+                Opacity="0">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="64" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" Spacing="16">
+                        <TextBlock
+                            x:Uid="StoryPageSummaryTotalPlays"
+                            FontSize="16"
+                            Foreground="White"
+                            Opacity="0.5" />
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <TextBlock
+                                x:Name="TotalTracksTextBlock"
+                                FontSize="32"
+                                FontWeight="Bold"
+                                Foreground="White"
+                                Text="0" />
+                            <TextBlock
+                                x:Uid="StoryPageSummaryUnitTracks"
+                                Margin="0,0,0,4"
+                                VerticalAlignment="Bottom"
+                                FontSize="20"
+                                Foreground="White" />
+                        </StackPanel>
+
+                        <TextBlock
+                            x:Uid="StoryPageSummaryTopArtist"
+                            Margin="0,16,0,0"
+                            FontSize="16"
+                            Foreground="White"
+                            Opacity="0.5" />
+                        <TextBlock
+                            x:Name="TopArtistTextBlock"
+                            FontSize="24"
+                            FontWeight="SemiBold"
+                            Foreground="White"
+                            Text="-" />
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="2" Spacing="16">
+                        <TextBlock
+                            x:Uid="StoryPageSummaryTotalHours"
+                            FontSize="16"
+                            Foreground="White"
+                            Opacity="0.5" />
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <TextBlock
+                                x:Name="TotalHoursTextBlock"
+                                FontSize="32"
+                                FontWeight="Bold"
+                                Foreground="White"
+                                Text="0.0" />
+                            <TextBlock
+                                x:Uid="StoryPageSummaryUnitHours"
+                                Margin="0,0,0,4"
+                                VerticalAlignment="Bottom"
+                                FontSize="20"
+                                Foreground="White" />
+                        </StackPanel>
+
+                        <TextBlock
+                            x:Uid="StoryPageSummaryTopSong"
+                            Margin="0,16,0,0"
+                            FontSize="16"
+                            Foreground="White"
+                            Opacity="0.5" />
+                        <TextBlock
+                            x:Name="TopSongTextBlock"
+                            FontSize="24"
+                            FontWeight="SemiBold"
+                            Foreground="White"
+                            Text="-" />
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <TextBlock
+                x:Name="Text2"
+                x:Uid="StoryPageSummaryExitHint"
+                Margin="0,32,0,0"
+                HorizontalAlignment="Center"
+                FontSize="14"
+                Foreground="White"
+                Opacity="0" />
+        </StackPanel>
+    </Grid>
+</UserControl>
+

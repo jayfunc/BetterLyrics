@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.StoryViewerControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:BetterLyrics.WinUI3.Controls"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    Background="Black"
+    RequestedTheme="Dark"
+    mc:Ignorable="d">
+
+    <Grid>
+        <local:AmbientBackgroundControl x:Name="BackgroundControl" />
+
+        <FlipView
+            x:Name="StoryFlipView"
+            Background="Transparent"
+            SelectionChanged="StoryFlipView_SelectionChanged">
+            <FlipView.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <VirtualizingStackPanel Orientation="Horizontal" />
+                </ItemsPanelTemplate>
+            </FlipView.ItemsPanel>
+
+            <FlipView.Resources>
+                <Style TargetType="FlipViewItem">
+                    <Setter Property="Padding" Value="0" />
+                </Style>
+            </FlipView.Resources>
+        </FlipView>
+
+        <!--  Invisible split buttons for Left/Right click  -->
+        <Grid Background="Transparent">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <!--  Tapped left half = previous  -->
+            <Border
+                Grid.Column="0"
+                Background="Transparent"
+                Tapped="LeftHalf_Tapped" />
+            <!--  Tapped right half = next  -->
+            <Border
+                Grid.Column="1"
+                Background="Transparent"
+                Tapped="RightHalf_Tapped" />
+        </Grid>
+
+        <!--  Progress indicators and controls at the top  -->
+        <Grid Margin="24,24,24,0" VerticalAlignment="Top">
+
+            <ItemsControl
+                x:Name="ProgressIndicatorList"
+                Margin="48,0,48,0"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel
+                            HorizontalAlignment="Center"
+                            Orientation="Horizontal"
+                            Spacing="4" />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+            </ItemsControl>
+
+            <Button
+                x:Name="CloseButton"
+                Padding="8"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Center"
+                Background="Transparent"
+                BorderThickness="0"
+                Click="CloseButton_Click">
+                <FontIcon FontSize="16" Glyph="&#xE711;" />
+            </Button>
+        </Grid>
+    </Grid>
+</UserControl>
