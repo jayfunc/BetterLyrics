@@ -92,6 +92,17 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
     [ObservableProperty] public partial ObservableCollection<PlayerSourceItem> SourceSeries { get; set; } = new();
     [ObservableProperty] public partial ObservableCollection<SongPlayCount> TopSongs { get; set; } = new();
 
+    // 新增维度数据
+    [ObservableProperty] public partial DateTime? MaxListeningDay { get; set; }
+    [ObservableProperty] public partial int MaxListeningDayCount { get; set; }
+    [ObservableProperty] public partial int LongestStreakDays { get; set; }
+    [ObservableProperty] public partial string PersonaTitle { get; set; } = "";
+    [ObservableProperty] public partial string PersonaDescription { get; set; } = "";
+    [ObservableProperty] public partial string FirstSongName { get; set; } = "";
+    [ObservableProperty] public partial DateTime? FirstSongDate { get; set; }
+    [ObservableProperty] public partial string LateNightSongName { get; set; } = "";
+    [ObservableProperty] public partial DateTime? LateNightSongDate { get; set; }
+
     public void Receive(PropertyChangedMessage<bool> message)
     {
         if (message.Sender is IGsmtcService)
@@ -236,6 +247,40 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
             HeatmapData = new ObservableCollection<HeatmapNode>(nodes);
             MonthLabels = new ObservableCollection<MonthLabel>(monthLabels);
         });
+
+        if (dailyCounts.Any())
+        {
+            var maxDay = dailyCounts.OrderByDescending(x => x.Value).First();
+            
+            int currentStreak = 0;
+            int maxStreak = 0;
+            var orderedDays = dailyCounts.Keys.OrderBy(d => d).ToList();
+            if (orderedDays.Count > 0)
+            {
+                currentStreak = 1;
+                maxStreak = 1;
+                for (int i = 1; i < orderedDays.Count; i++)
+                {
+                    if ((orderedDays[i] - orderedDays[i - 1]).TotalDays == 1)
+                    {
+                        currentStreak++;
+                        if (currentStreak > maxStreak)
+                            maxStreak = currentStreak;
+                    }
+                    else
+                    {
+                        currentStreak = 1;
+                    }
+                }
+            }
+            
+            _appUIThreadProvider.Execute(() =>
+            {
+                MaxListeningDay = maxDay.Key;
+                MaxListeningDayCount = maxDay.Value;
+                LongestStreakDays = maxStreak;
+            });
+        }
     }
 
     private void ProcessHourlyStats(List<PlayHistoryItem> logs)
@@ -416,6 +461,56 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
 
             ProcessHeatmapStats(logs, start.Value, end.Value);
             ProcessHourlyStats(logs);
+
+            var firstLog = logs.OrderBy(x => x.StartedAt).FirstOrDefault();
+            var lateNightLogs = logs.Where(x => x.StartedAt.ToLocalTime().Hour >= 0 && x.StartedAt.ToLocalTime().Hour < 5).ToList();
+            var topLateNight = lateNightLogs.OrderByDescending(x => x.StartedAt.ToLocalTime().TimeOfDay).FirstOrDefault();
+
+            var hourCounts = new int[24];
+            foreach (var log in logs) hourCounts[log.StartedAt.ToLocalTime().Hour]++;
+            var maxHourCount = hourCounts.Any() ? hourCounts.Max() : 0;
+            var peakHour = maxHourCount > 0 ? Array.IndexOf(hourCounts, maxHourCount) : -1;
+
+            string personaTitleKey = "PersonaDefaultTitle";
+            string personaDescKey = "PersonaDefaultDesc";
+
+            if (peakHour >= 23 || (peakHour >= 0 && peakHour < 5))
+            {
+                personaTitleKey = "PersonaNightOwlTitle";
+                personaDescKey = "PersonaNightOwlDesc";
+            }
+            else if (LongestStreakDays >= 7)
+            {
+                personaTitleKey = "PersonaStreakTitle";
+                personaDescKey = "PersonaStreakDesc";
+            }
+            else if (topArtists.Any() && logs.Count > 0 && ((double)topArtists.First().PlayCount / logs.Count) > 0.4)
+            {
+                personaTitleKey = "PersonaLoyalTitle";
+                personaDescKey = "PersonaLoyalDesc";
+            }
+            else if (topArtists.Count > 15)
+            {
+                personaTitleKey = "PersonaExplorerTitle";
+                personaDescKey = "PersonaExplorerDesc";
+            }
+
+            _appUIThreadProvider.Execute(() =>
+            {
+                if (firstLog != null)
+                {
+                    FirstSongName = firstLog.Title;
+                    FirstSongDate = firstLog.StartedAt.ToLocalTime();
+                }
+                if (topLateNight != null)
+                {
+                    LateNightSongName = topLateNight.Title;
+                    LateNightSongDate = topLateNight.StartedAt.ToLocalTime();
+                }
+                
+                PersonaTitle = _localizationService.GetLocalizedString(personaTitleKey);
+                PersonaDescription = _localizationService.GetLocalizedString(personaDescKey);
+            });
         }
         catch (Exception ex)
         {

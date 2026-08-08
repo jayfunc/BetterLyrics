@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.StoryPageStreak"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="Transparent">
+        <StackPanel
+            Margin="40"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Spacing="24">
+
+            <StackPanel
+                x:Name="Panel1"
+                HorizontalAlignment="Center"
+                Opacity="0"
+                Orientation="Horizontal">
+                <TextBlock
+                    x:Uid="StoryPageStreakText1"
+                    Margin="0,0,8,8"
+                    VerticalAlignment="Bottom"
+                    FontSize="20"
+                    Foreground="White" />
+                <TextBlock
+                    x:Name="MaxDateTextBlock"
+                    FontSize="48"
+                    FontWeight="Bold"
+                    Foreground="White" />
+                <TextBlock
+                    x:Uid="StoryPageStreakText2"
+                    Margin="0,0,0,8"
+                    VerticalAlignment="Bottom"
+                    FontSize="20"
+                    Foreground="White" />
+            </StackPanel>
+
+            <StackPanel
+                x:Name="Panel2"
+                Margin="0,16,0,16"
+                HorizontalAlignment="Left"
+                Opacity="0"
+                Orientation="Horizontal">
+                <TextBlock
+                    x:Uid="StoryPageStreakText3"
+                    Margin="0,0,0,12"
+                    VerticalAlignment="Bottom"
+                    FontSize="24"
+                    Foreground="White" />
+                <TextBlock
+                    x:Name="MaxCountTextBlock"
+                    FontSize="64"
+                    FontWeight="Bold"
+                    Foreground="White" />
+                <TextBlock
+                    x:Uid="StoryPageStreakText4"
+                    Margin="0,0,0,12"
+                    VerticalAlignment="Bottom"
+                    FontSize="24"
+                    Foreground="White" />
+            </StackPanel>
+
+            <StackPanel
+                x:Name="Panel3"
+                Margin="0,40,0,0"
+                HorizontalAlignment="Left"
+                Opacity="0"
+                Orientation="Horizontal">
+                <TextBlock
+                    x:Uid="StoryPageStreakText5"
+                    Margin="0,0,8,4"
+                    VerticalAlignment="Bottom"
+                    FontSize="20"
+                    Foreground="White"
+                    Opacity="0.5" />
+                <TextBlock
+                    x:Name="StreakTextBlock"
+                    FontSize="36"
+                    FontWeight="SemiBold"
+                    Foreground="White" />
+                <TextBlock
+                    x:Uid="StoryPageStreakText6"
+                    Margin="0,0,0,4"
+                    VerticalAlignment="Bottom"
+                    FontSize="20"
+                    Foreground="White"
+                    Opacity="0.5" />
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

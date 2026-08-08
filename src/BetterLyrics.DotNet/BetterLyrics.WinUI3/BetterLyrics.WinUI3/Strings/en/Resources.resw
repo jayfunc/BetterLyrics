@@ -2553,4 +2553,73 @@
   <data name="StoryPageTopSongText4.Text" xml:space="preserve">
     <value>times</value>
   </data>
+  <data name="StoryPageStreakText1.Text" xml:space="preserve">
+    <value>On </value>
+  </data>
+  <data name="StoryPageStreakText2.Text" xml:space="preserve">
+    <value>, you had the most immersive day.</value>
+  </data>
+  <data name="StoryPageStreakText3.Text" xml:space="preserve">
+    <value>Listened to </value>
+  </data>
+  <data name="StoryPageStreakText4.Text" xml:space="preserve">
+    <value> tracks.</value>
+  </data>
+  <data name="StoryPageStreakText5.Text" xml:space="preserve">
+    <value>You also kept a listening streak of </value>
+  </data>
+  <data name="StoryPageStreakText6.Text" xml:space="preserve">
+    <value> days.</value>
+  </data>
+  <data name="StoryPageSpecialMomentText1.Text" xml:space="preserve">
+    <value>The beginning of this journey</value>
+  </data>
+  <data name="StoryPageSpecialMomentText2.Text" xml:space="preserve">
+    <value>started with this song:</value>
+  </data>
+  <data name="StoryPageSpecialMomentText3.Text" xml:space="preserve">
+    <value>On </value>
+  </data>
+  <data name="StoryPageSpecialMomentText4.Text" xml:space="preserve">
+    <value>,</value>
+  </data>
+  <data name="StoryPageSpecialMomentText5.Text" xml:space="preserve">
+    <value>at </value>
+  </data>
+  <data name="StoryPageSpecialMomentText6.Text" xml:space="preserve">
+    <value> you were still listening to:</value>
+  </data>
+  <data name="StoryPagePersonaText1.Text" xml:space="preserve">
+    <value>Based on your habits, your musical persona is:</value>
+  </data>
+  <data name="PersonaDefaultTitle" xml:space="preserve">
+    <value>Music Explorer</value>
+  </data>
+  <data name="PersonaDefaultDesc" xml:space="preserve">
+    <value>You enjoy wandering in the world of melodies.</value>
+  </data>
+  <data name="PersonaNightOwlTitle" xml:space="preserve">
+    <value>Night Owl</value>
+  </data>
+  <data name="PersonaNightOwlDesc" xml:space="preserve">
+    <value>The late night is your best time for music.</value>
+  </data>
+  <data name="PersonaStreakTitle" xml:space="preserve">
+    <value>Melody Addict</value>
+  </data>
+  <data name="PersonaStreakDesc" xml:space="preserve">
+    <value>You can't live a day without music.</value>
+  </data>
+  <data name="PersonaLoyalTitle" xml:space="preserve">
+    <value>Loyal Fan</value>
+  </data>
+  <data name="PersonaLoyalDesc" xml:space="preserve">
+    <value>You have a deep love for a specific voice.</value>
+  </data>
+  <data name="PersonaExplorerTitle" xml:space="preserve">
+    <value>Music Explorer</value>
+  </data>
+  <data name="PersonaExplorerDesc" xml:space="preserve">
+    <value>You embrace diverse voices from everywhere.</value>
+  </data>
 </root>

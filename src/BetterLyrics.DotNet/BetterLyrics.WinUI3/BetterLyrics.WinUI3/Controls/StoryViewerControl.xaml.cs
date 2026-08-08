@@ -53,8 +53,8 @@ public sealed partial class StoryViewerControl : UserControl
             new SceneConfiguration { Background = BackgroundStyle.SunsetOrange, Ambient = AmbientElement.None, Overlay = OverlayEffect.FloatingEmbers } // Sunset
         };
 
-        // We need 5 distinct scenes for the 5 pages
-        for (int i = 0; i < 5; i++)
+        // We need 8 distinct scenes for the 8 pages
+        for (int i = 0; i < 8; i++)
         {
             if (curatedPresets.Count == 0) break;
             
@@ -72,19 +72,31 @@ public sealed partial class StoryViewerControl : UserControl
         var page1 = new StoryPageOverview();
         StoryFlipView.Items.Add(page1);
 
-        // Page 2: Top Song
+        // Page 2: Streak
+        var pageStreak = new StoryPageStreak();
+        StoryFlipView.Items.Add(pageStreak);
+
+        // Page 3: Special Moment
+        var pageSpecial = new StoryPageSpecialMoment();
+        StoryFlipView.Items.Add(pageSpecial);
+
+        // Page 4: Top Song
         var page2 = new StoryPageTopSong();
         StoryFlipView.Items.Add(page2);
 
-        // Page 3: Top Artist
+        // Page 5: Top Artist
         var page3 = new StoryPageTopArtist();
         StoryFlipView.Items.Add(page3);
 
-        // Page 4: Time
+        // Page 6: Time
         var page4 = new StoryPageTime();
         StoryFlipView.Items.Add(page4);
 
-        // Page 5: Summary
+        // Page 7: Persona
+        var pagePersona = new StoryPagePersona();
+        StoryFlipView.Items.Add(pagePersona);
+
+        // Page 8: Summary
         var page5 = new StoryPageSummary();
         StoryFlipView.Items.Add(page5);
 
@@ -147,6 +159,14 @@ public sealed partial class StoryViewerControl : UserControl
         {
             overviewPage.PlayAnimation(ViewModel.TotalTracksPlayed, ViewModel.TotalDuration.TotalHours);
         }
+        else if (currentPage is StoryPageStreak streakPage)
+        {
+            streakPage.PlayAnimation(ViewModel.MaxListeningDay, ViewModel.MaxListeningDayCount, ViewModel.LongestStreakDays);
+        }
+        else if (currentPage is StoryPageSpecialMoment specialPage)
+        {
+            specialPage.PlayAnimation(ViewModel.FirstSongName, ViewModel.LateNightSongName, ViewModel.LateNightSongDate);
+        }
         else if (currentPage is StoryPageTopSong topSongPage)
         {
             topSongPage.PlayAnimation(ViewModel.TopSongs?.FirstOrDefault());
@@ -158,6 +178,10 @@ public sealed partial class StoryViewerControl : UserControl
         else if (currentPage is StoryPageTime timePage)
         {
             timePage.PlayAnimation(ViewModel.PeakHourText, ViewModel.QuietHourText);
+        }
+        else if (currentPage is StoryPagePersona personaPage)
+        {
+            personaPage.PlayAnimation(ViewModel.PersonaTitle, ViewModel.PersonaDescription);
         }
         else if (currentPage is StoryPageSummary summaryPage)
         {
