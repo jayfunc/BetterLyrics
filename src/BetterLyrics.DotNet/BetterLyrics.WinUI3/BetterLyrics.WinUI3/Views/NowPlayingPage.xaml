@@ -6,6 +6,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:constants="using:BetterLyrics.Core.Constants"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
+    xmlns:converters="using:BetterLyrics.WinUI3.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:dev="using:DevWinUI"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -59,16 +60,16 @@
                 <Grid.ContextFlyout>
                     <Flyout FlyoutPresenterStyle="{StaticResource FlyoutGhostStyle}">
                         <StackPanel>
-                            <!--<StackPanel Margin="16,8,16,4">
+                            <StackPanel Margin="16,8,16,4">
                                 <uc:PropertyRow
                                     x:Uid="SettingsPageWidth"
                                     Unit="px"
-                                    Value="{x:Bind ViewModel.MediaSessionsService.AlbumArtBitmapImage.PixelWidth, Mode=OneWay}" />
+                                    Value="{x:Bind ViewModel.MediaSessionsService.AlbumArtBytes, Mode=OneWay, Converter={StaticResource ByteArrayToImageSizeConverter}, ConverterParameter=Width}" />
                                 <uc:PropertyRow
                                     x:Uid="SettingsPageHeight"
                                     Unit="px"
-                                    Value="{x:Bind ViewModel.MediaSessionsService.AlbumArtBitmapImage.PixelHeight, Mode=OneWay}" />
-                            </StackPanel>-->
+                                    Value="{x:Bind ViewModel.MediaSessionsService.AlbumArtBytes, Mode=OneWay, Converter={StaticResource ByteArrayToImageSizeConverter}, ConverterParameter=Height}" />
+                            </StackPanel>
                             <Button
                                 HorizontalAlignment="Stretch"
                                 Click="SaveAlbumArtButton_Click"

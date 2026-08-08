@@ -47,6 +47,7 @@
     <bwc:LanguageCodeToDisplayedNameConverter x:Key="LanguageCodeToDisplayedNameConverter" />
     <bwc:LanguageTagToDisplayedNameConverter x:Key="LanguageTagToDisplayedNameConverter" />
     <bwc:ByteArrayToImageConverter x:Key="ByteArrayToImageConverter" />
+    <bwc:ByteArrayToImageSizeConverter x:Key="ByteArrayToImageSizeConverter" />
     <bwc:DisplayLanguageCodeToIndexConverter x:Key="DisplayLanguageCodeToIndexConverter" />
     <bwc:PathToParentFolderConverter x:Key="PathToParentFolderConverter" />
     <bwc:IndexToDisplayConverter x:Key="IndexToDisplayConverter" />
