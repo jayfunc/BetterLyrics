@@ -17,6 +17,7 @@
             <TextBlock
                 x:Name="Text1"
                 x:Uid="StoryPagePersonaText1"
+                HorizontalAlignment="Center"
                 FontSize="20"
                 Foreground="White"
                 Opacity="0" />

@@ -46,7 +46,7 @@
                 Orientation="Horizontal">
                 <TextBlock
                     x:Uid="StoryPageStreakText3"
-                    Margin="0,0,0,12"
+                    Margin="0,0,8,12"
                     VerticalAlignment="Bottom"
                     FontSize="24"
                     Foreground="White" />

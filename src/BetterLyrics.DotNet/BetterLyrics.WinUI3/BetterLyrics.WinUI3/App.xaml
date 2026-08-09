@@ -74,6 +74,7 @@
                 TargetType="TextBlock">
                 <Style.Setters>
                     <Setter Property="Margin" Value="1,30,0,6" />
+                    <!--<Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}" />-->
                 </Style.Setters>
             </Style>
 
@@ -126,6 +127,8 @@
             <FontFamily x:Key="SegoeFluentIcons">ms-appx:///Assets/Fonts/SegoeFluentIcons.ttf#Segoe Fluent Icons</FontFamily>
             <FontFamily x:Key="SloganCNFont">ms-appx:///Assets/Fonts/SloganCNFont.ttf#LXGW WenKai Lite</FontFamily>
             <FontFamily x:Key="SloganENFont">ms-appx:///Assets/Fonts/SloganENFont.ttf#Lora</FontFamily>
+
+            <!--<FontFamily x:Key="ContentControlThemeFontFamily">ms-appx:///Assets/Fonts/Yozai-Regular.ttf#悠哉字体</FontFamily>-->
 
         </ResourceDictionary>
     </Application.Resources>
