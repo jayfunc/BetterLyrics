@@ -2622,4 +2622,7 @@
   <data name="PersonaExplorerDesc" xml:space="preserve">
     <value>You embrace diverse voices from everywhere</value>
   </data>
+  <data name="SettingsPageGlobalFont.Header" xml:space="preserve">
+    <value>Font Family</value>
+  </data>
 </root>

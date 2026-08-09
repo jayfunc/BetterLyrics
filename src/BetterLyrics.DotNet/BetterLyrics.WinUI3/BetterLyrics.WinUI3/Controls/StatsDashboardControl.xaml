@@ -410,7 +410,7 @@
                     </Grid>
                 </Grid>
 
-                <!--  Top artists and sources  -->
+                <!--  Top artists and tracks  -->
                 <Grid Grid.Row="3" Margin="36,0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />

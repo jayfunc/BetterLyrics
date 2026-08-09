@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 
 <ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -14,9 +14,11 @@
         <ResourceDictionary Source="/Themes/FluentHyperlinkButtonStyle.xaml" />
         <ResourceDictionary Source="/Themes/FluentListViewItemStyle.xaml" />
         <ResourceDictionary Source="/Themes/FluentMenuFlyoutItemStyle.xaml" />
+        <ResourceDictionary Source="/Themes/FluentMenuFlyoutSubItemStyle.xaml" />
         <ResourceDictionary Source="/Themes/FluentNavigationViewItemPresenterStyles.xaml" />
         <ResourceDictionary Source="/Themes/FluentSliderStyle.xaml" />
         <ResourceDictionary Source="/Themes/FluentToggleButtonStyle.xaml" />
+        <ResourceDictionary Source="/Themes/FluentToggleMenuFlyoutItem.xaml" />
         <ResourceDictionary Source="/Themes/FluentToolTipStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
@@ -75,7 +77,19 @@
     </Style>
 
     <!--  MenuFlyoutItem Styles  -->
-    <Style BasedOn="{StaticResource FluentMenuFlyoutItemStyle}" TargetType="MenuFlyoutItem" />
+    <Style BasedOn="{StaticResource FluentMenuFlyoutItemStyle}" TargetType="MenuFlyoutItem">
+        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}" />
+    </Style>
+
+    <!--  MenuFlyoutSubItem Styles  -->
+    <Style BasedOn="{StaticResource FluentMenuFlyoutSubItemStyle}" TargetType="MenuFlyoutSubItem">
+        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}" />
+    </Style>
+
+    <!--  ToggleMenuFlyoutItem Styles  -->
+    <Style BasedOn="{StaticResource FluentToggleMenuFlyoutItemStyle}" TargetType="ToggleMenuFlyoutItem">
+        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}" />
+    </Style>
 
     <!--  Slider Styles  -->
     <Style BasedOn="{StaticResource FluentSliderStyle}" TargetType="Slider" />

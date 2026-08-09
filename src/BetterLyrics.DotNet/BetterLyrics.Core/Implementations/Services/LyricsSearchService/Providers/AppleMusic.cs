@@ -188,16 +188,17 @@ public class AppleMusic
             }
         }
 
-        if (relationships.TryGetProperty("lyrics", out var lyrics) &&
-            lyrics.GetProperty("data").GetArrayLength() > 0)
-        {
-            var lyric = lyrics.GetProperty("data")[0];
-            if (lyric.TryGetProperty("attributes", out var attributes) &&
-                attributes.TryGetProperty("ttml", out var ttml))
-            {
-                return ttml.GetString();
-            }
-        }
+        // Uncomment the following code if you want to fallback to unsynchronized lyrics when synchronized lyrics are not available.
+        //if (relationships.TryGetProperty("lyrics", out var lyrics) &&
+        //    lyrics.GetProperty("data").GetArrayLength() > 0)
+        //{
+        //    var lyric = lyrics.GetProperty("data")[0];
+        //    if (lyric.TryGetProperty("attributes", out var attributes) &&
+        //        attributes.TryGetProperty("ttml", out var ttml))
+        //    {
+        //        return ttml.GetString();
+        //    }
+        //}
 
         return null;
     }

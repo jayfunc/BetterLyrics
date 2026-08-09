@@ -68,14 +68,65 @@
             <x:Double x:Key="SettingsCardSpacing">4</x:Double>
 
             <!--  TextBlock Styles  -->
+            <Style TargetType="TextBlock">
+                <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}" />
+            </Style>
+
+            <Style
+                x:Key="TitleTextBlockStyle"
+                BasedOn="{StaticResource BaseTextBlockStyle}"
+                TargetType="TextBlock">
+                <Setter Property="FontSize" Value="{StaticResource TitleTextBlockFontSize}" />
+                <Setter Property="OpticalMarginAlignment" Value="TrimSideBearings" />
+                <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}" />
+            </Style>
+
+            <Style
+                x:Key="SubtitleTextBlockStyle"
+                BasedOn="{StaticResource BaseTextBlockStyle}"
+                TargetType="TextBlock">
+                <Setter Property="FontSize" Value="{StaticResource SubtitleTextBlockFontSize}" />
+                <Setter Property="OpticalMarginAlignment" Value="TrimSideBearings" />
+                <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}" />
+            </Style>
+
+            <Style
+                x:Key="BodyTextBlockStyle"
+                BasedOn="{StaticResource BaseTextBlockStyle}"
+                TargetType="TextBlock">
+                <Setter Property="FontWeight" Value="Normal" />
+                <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}" />
+            </Style>
+
+            <Style
+                x:Key="CaptionTextBlockStyle"
+                BasedOn="{StaticResource BaseTextBlockStyle}"
+                TargetType="TextBlock">
+                <Setter Property="FontSize" Value="{StaticResource CaptionTextBlockFontSize}" />
+                <Setter Property="FontWeight" Value="Normal" />
+                <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}" />
+            </Style>
+
+            <Style
+                x:Key="BodyStrongTextBlockStyle"
+                BasedOn="{StaticResource BaseTextBlockStyle}"
+                TargetType="TextBlock">
+                <Setter Property="FontSize" Value="{StaticResource BodyStrongTextBlockFontSize}" />
+                <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}" />
+            </Style>
+
             <Style
                 x:Key="SettingsSectionHeaderTextBlockStyle"
                 BasedOn="{StaticResource BodyStrongTextBlockStyle}"
                 TargetType="TextBlock">
                 <Style.Setters>
                     <Setter Property="Margin" Value="1,30,0,6" />
-                    <!--<Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}" />-->
                 </Style.Setters>
+            </Style>
+
+            <!--  RichTextBlock Styles  -->
+            <Style TargetType="RichTextBlock">
+                <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}" />
             </Style>
 
             <!--  Grid Styles  -->
@@ -121,14 +172,22 @@
                 <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
             </Style>
 
+            <!--  InfoBar Styles  -->
+            <Style TargetType="InfoBar">
+                <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}" />
+            </Style>
+
+            <!--  CalendarDatePicker Styles  -->
+            <Style BasedOn="{StaticResource DefaultCalendarDatePicker}" TargetType="CalendarDatePicker">
+                <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}" />
+            </Style>
+
             <!--  Dimensions  -->
 
             <!--  Fonts  -->
             <FontFamily x:Key="SegoeFluentIcons">ms-appx:///Assets/Fonts/SegoeFluentIcons.ttf#Segoe Fluent Icons</FontFamily>
             <FontFamily x:Key="SloganCNFont">ms-appx:///Assets/Fonts/SloganCNFont.ttf#LXGW WenKai Lite</FontFamily>
             <FontFamily x:Key="SloganENFont">ms-appx:///Assets/Fonts/SloganENFont.ttf#Lora</FontFamily>
-
-            <!--<FontFamily x:Key="ContentControlThemeFontFamily">ms-appx:///Assets/Fonts/Yozai-Regular.ttf#悠哉字体</FontFamily>-->
 
         </ResourceDictionary>
     </Application.Resources>

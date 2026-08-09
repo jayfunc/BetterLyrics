@@ -1,13 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
 using BetterLyrics.WinUI3.Helpers;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Controls;
 
@@ -29,6 +29,7 @@ public sealed partial class FontPicker : UserControl
         _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
 
         LoadingTextBlock.Text = _localizationService.GetLocalizedString("Loading");
+        _ = UpdateDisplayAsync(SelectedFontId);
     }
 
     public string SelectedFontId
@@ -65,10 +66,9 @@ public sealed partial class FontPicker : UserControl
     {
         if (isLoading)
         {
-            SelectedFontsItemsControl.Visibility = Visibility.Collapsed;
             LoadingPanel.Visibility = Visibility.Visible;
             LoadingRing.IsActive = true;
-
+            SelectedFontsItemsControl.Visibility = Visibility.Collapsed;
             TriggerButton.IsEnabled = false;
         }
         else

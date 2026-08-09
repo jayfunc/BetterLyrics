@@ -21,6 +21,8 @@
     </ItemGroup>
     <ItemGroup>
       <None Remove="Assets\Wiki82.profile.xml" />
+      <None Remove="Themes\FluentMenuFlyoutSubItemStyle.xaml" />
+      <None Remove="Themes\FluentToggleMenuFlyoutItem.xaml" />
       <None Remove="Themes\InteractiveGridViewHeaderStyle.xaml" />
       <None Remove="Views\SystemTrayWindow.xaml" />
     </ItemGroup>
@@ -340,6 +342,12 @@
         </Page>
         <Page Update="Controls\ParallaxTiltControl.xaml">
             <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Update="Themes\FluentMenuFlyoutSubItemStyle.xaml">
+          <Generator>MSBuild:Compile</Generator>
+        </Page>
+        <Page Update="Themes\FluentToggleMenuFlyoutItem.xaml">
+          <Generator>MSBuild:Compile</Generator>
         </Page>
         <None Update="Themes\Generic.xaml">
             <Generator>MSBuild:Compile</Generator>

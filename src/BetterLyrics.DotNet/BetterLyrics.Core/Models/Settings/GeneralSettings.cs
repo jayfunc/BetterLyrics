@@ -8,6 +8,10 @@ public partial class GeneralSettings : ObservableRecipient
 {
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
+    public partial string GlobalFontFamily { get; set; } = string.Empty;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
     public partial string LanguageCode { get; set; } = "";
 
     [ObservableProperty]

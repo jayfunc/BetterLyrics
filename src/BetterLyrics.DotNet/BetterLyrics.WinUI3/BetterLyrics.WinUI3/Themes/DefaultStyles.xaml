@@ -82,4 +82,19 @@
         <Setter Property="BorderThickness" Value="1" />
     </Style>
 
+    <!--  MenuFlyoutItem Styles  -->
+    <Style BasedOn="{StaticResource DefaultMenuFlyoutItemStyle}" TargetType="MenuFlyoutItem">
+        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}" />
+    </Style>
+
+    <!--  MenuFlyoutSubItem Styles  -->
+    <Style BasedOn="{StaticResource DefaultMenuFlyoutSubItemStyle}" TargetType="MenuFlyoutSubItem">
+        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}" />
+    </Style>
+
+    <!--  ToggleMenuFlyoutItem Styles  -->
+    <Style BasedOn="{StaticResource DefaultToggleMenuFlyoutItemStyle}" TargetType="ToggleMenuFlyoutItem">
+        <Setter Property="FontFamily" Value="{StaticResource ContentControlThemeFontFamily}" />
+    </Style>
+
 </ResourceDictionary>

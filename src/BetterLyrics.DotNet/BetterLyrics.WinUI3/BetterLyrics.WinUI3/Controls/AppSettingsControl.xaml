@@ -62,6 +62,19 @@
                     </controls:SettingsExpander>
 
                     <controls:SettingsExpander
+                        x:Uid="SettingsPageGlobalFont"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                 Glyph=&#xE8D2;}"
+                        IsExpanded="True">
+                        <local:FontPicker AllowMultipleSelection="False" SelectedFontId="{x:Bind ViewModel.AppSettings.GeneralSettings.GlobalFontFamily, Mode=TwoWay}" />
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard>
+                                <Button x:Uid="SettingsPageRestart" Command="{x:Bind ViewModel.RestartAppCommand}" />
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
+
+                    <controls:SettingsExpander
                         x:Uid="AppSettingsControlEnhanceControlAnimations"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xF4A5;}"

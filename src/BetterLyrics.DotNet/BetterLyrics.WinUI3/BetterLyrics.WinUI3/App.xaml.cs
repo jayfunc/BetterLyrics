@@ -5,8 +5,12 @@ using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Sdk.Interfaces.Plugins;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using System;
 using System.Linq;
 using System.Runtime.ExceptionServices;
@@ -44,6 +48,11 @@ public partial class App : Application
 
     protected override async void OnLaunched(LaunchActivatedEventArgs args)
     {
+        // 应用增强动效/全局字体设置项
+        var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+        UpdateGlobalStyles(settingsService.AppSettings.GeneralSettings.EnhanceControlInteractiveAnimations);
+        UpdateGlobalFontFamily(settingsService.AppSettings.GeneralSettings.GlobalFontFamily);
+
         var windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
         var appUiThreadProvider = Ioc.Default.GetRequiredService<IAppUIThreadProvider>();
 
@@ -51,7 +60,6 @@ public partial class App : Application
         m_window = windowManagerProvider.OpenOrShowWindow<SystemTrayWindow>();
         appUiThreadProvider.Initialize(m_window.DispatcherQueue);
 
-        var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
         if (settingsService.AppSettings.GeneralSettings.ShowSplashScreen)
             _splashScreen = SimpleSplashScreen.ShowDefaultSplashScreen();
 
@@ -92,10 +100,7 @@ public partial class App : Application
 
     private async Task InitAppServicesAsync()
     {
-        // 应用增强动效设置项
         var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
-        UpdateGlobalStyles(settingsService.AppSettings.GeneralSettings
-            .EnhanceControlInteractiveAnimations);
 
         // 迁移逻辑
         var migrationService = Ioc.Default.GetRequiredService<IDatabaseMigrationService>();
@@ -198,6 +203,19 @@ public partial class App : Application
         }
     }
 
+    private void UpdateGlobalFontFamily(string fontFamily)
+    {
+        FontFamily targetFontFamily = FontFamily.XamlAutoFontFamily;
+        if (!string.IsNullOrEmpty(fontFamily))
+        {
+            targetFontFamily = new FontFamily(fontFamily);
+        }
+        Application.Current.Resources["ContentControlThemeFontFamily"] = targetFontFamily;
+        Application.Current.Resources["MTCMediaFontFamily"] = targetFontFamily;
+        Application.Current.Resources["PivotHeaderItemFontFamily"] = targetFontFamily;
+        Application.Current.Resources["PivotTitleFontFamily"] = targetFontFamily;
+        Application.Current.Resources["KeyTipFontFamily"] = targetFontFamily;
+    }
 
     private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {

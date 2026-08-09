@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <UserControl
     x:Class="BetterLyrics.WinUI3.Controls.AmbientBackgroundControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -7,12 +7,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
-    
-    <canvas:CanvasAnimatedControl 
-        x:Name="AnimatedCanvas" 
-        ClearColor="Black" 
-        Draw="AnimatedCanvas_Draw" 
-        Update="AnimatedCanvas_Update" 
+
+    <canvas:CanvasAnimatedControl
+        x:Name="AnimatedCanvas"
+        ClearColor="Black"
         CreateResources="AnimatedCanvas_CreateResources"
-        Unloaded="AnimatedCanvas_Unloaded" />
+        Draw="AnimatedCanvas_Draw"
+        Unloaded="AnimatedCanvas_Unloaded"
+        Update="AnimatedCanvas_Update" />
 </UserControl>
