@@ -36,10 +36,15 @@ public static class PlayerIdHelper
     private static readonly List<string> _phoneLinkRegex =
     [
         "^Microsoft\\.YourPhone_",
+        "^Microsoft\\.YourPhone!",
         "^Microsoft\\.PhoneLink_",
+        "^Microsoft\\.PhoneLink!",
         "^Microsoft\\.CrossDeviceApp_",
+        "^Microsoft\\.CrossDeviceApp!",
+        "YourPhone\\.exe",
+        "PhoneLink\\.exe",
         "CrossDevice\\.exe",
-        "PhoneLink\\.exe"
+        "CrossDeviceResShell\\.exe"
     ];
 
     private static bool Is(string? id, List<string> regexes)
@@ -48,7 +53,7 @@ public static class PlayerIdHelper
 
         foreach (var regex in regexes)
         {
-            var isMatch = Regex.IsMatch(id, regex);
+            var isMatch = Regex.IsMatch(id, regex, RegexOptions.IgnoreCase);
             if (isMatch) return true;
         }
 

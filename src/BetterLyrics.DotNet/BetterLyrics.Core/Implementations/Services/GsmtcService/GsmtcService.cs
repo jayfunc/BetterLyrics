@@ -60,6 +60,9 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
     private double _lxMusicPositionSeconds;
     private EventSourceReader? _lxMusicSse;
     private byte[]? _smtcAlbumArtBuffer;
+    private Timer? _phoneLinkPollingTimer;
+    private string? _lastPhoneLinkSongKey;
+    private int _isPhoneLinkPollingBusy;
 
     public GsmtcService(
         ISettingsService settingsService,
@@ -396,6 +399,7 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
         if (firstTime || desiredSession != _currentDesiredSession)
         {
             _currentDesiredSession = desiredSession;
+            HandlePhoneLinkIfDetected(desiredSession?.SessionId);
             SendFocusedMessages();
         }
     }
@@ -531,6 +535,7 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
             .Replace(ExtendedGenreFiled.FileName, "");
 
         HandleLXMusicIfDetected(sessionId);
+        HandlePhoneLinkIfDetected(sessionId);
 
         // 总是先停止 _memoryReader
         _memoryReader.Stop();
@@ -707,6 +712,87 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
         {
             await Task.Delay(e.ReconnectDelay);
             if (_lxMusicSse != null && !_lxMusicSse.IsDisposed) _lxMusicSse.Start();
+        });
+    }
+
+    private void HandlePhoneLinkIfDetected(string? sessionId)
+    {
+        if (PlayerIdHelper.IsPhoneLink(sessionId) && _currentDesiredSession?.SessionId == sessionId)
+            StartPhoneLinkPolling();
+        else
+            StopPhoneLinkPolling();
+    }
+
+    private void StartPhoneLinkPolling()
+    {
+        if (_phoneLinkPollingTimer != null) return;
+
+        _logger.LogInformation("Phone Link 媒体源已检测到，启动轮询监听");
+        _lastPhoneLinkSongKey = null;
+        _phoneLinkPollingTimer = new Timer(PhoneLinkPollingTimer_Tick, null, TimeSpan.Zero, TimeSpan.FromSeconds(1));
+    }
+
+    private void StopPhoneLinkPolling()
+    {
+        if (_phoneLinkPollingTimer == null) return;
+
+        _phoneLinkPollingTimer.Dispose();
+        _phoneLinkPollingTimer = null;
+        _isPhoneLinkPollingBusy = 0;
+        _logger.LogInformation("Phone Link 轮询监听已停止");
+    }
+
+    private void PhoneLinkPollingTimer_Tick(object? state)
+    {
+        _appUIThreadProvider.Execute(async () =>
+        {
+            if (Interlocked.Exchange(ref _isPhoneLinkPollingBusy, 1) == 1) return;
+
+            try
+            {
+                var session = _currentDesiredSession;
+                if (session == null || !PlayerIdHelper.IsPhoneLink(session.SessionId))
+                {
+                    StopPhoneLinkPolling();
+                    return;
+                }
+
+                await session.TryRefreshMediaPropsAsync();
+                await session.TryRefreshTimelinePropsAsync();
+                await session.TryRefreshPlaybackStateAsync();
+
+                var songKey = $"{session.Title}|{session.Artist}";
+                if (songKey != _lastPhoneLinkSongKey)
+                {
+                    _lastPhoneLinkSongKey = songKey;
+                    await OnAnyMediaPropertyChangedCoreAsync(session);
+                }
+                else
+                {
+                    var isPlaying = session.PlaybackStatus == SessionPlaybackStatus.Playing;
+
+                    if (isPlaying)
+                        _scrobbleTimer.Change(0, 1000);
+                    else
+                        _scrobbleTimer.Change(Timeout.Infinite, Timeout.Infinite);
+
+                    if (IsMediaSourceTimelineSyncEnabled(session.SessionId))
+                        CurrentPosition = session.CurrentTime;
+
+                    CurrentSongInfo.DurationMs = session.EndTime.TotalMilliseconds;
+                    UpdateTargetScrobbledDuration();
+                    CurrentIsPlaying = isPlaying;
+                    _ = UpdateDiscordPresenceAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Phone Link 轮询监听异常");
+            }
+            finally
+            {
+                Interlocked.Exchange(ref _isPhoneLinkPollingBusy, 0);
+            }
         });
     }
 

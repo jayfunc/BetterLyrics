@@ -40,18 +40,22 @@ public class MediaSessionProvider : IMediaSessionProvider
 
     public async Task TryRefreshMediaPropsAsync()
     {
-        try
+        for (var attempt = 0; attempt < 2; attempt++)
         {
-            var mediaProperties = await _session.ControlSession.TryGetMediaPropertiesAsync();
-            Title = mediaProperties.Title;
-            Artist = mediaProperties.Artist;
-            Album = mediaProperties.AlbumTitle;
+            try
+            {
+                var mediaProperties = await _session.ControlSession.TryGetMediaPropertiesAsync();
+                Title = mediaProperties.Title;
+                Artist = mediaProperties.Artist;
+                Album = mediaProperties.AlbumTitle;
 
-            Genres = mediaProperties.Genres.ToList();
-            Thumbnail = await mediaProperties.Thumbnail.ToByteArrayAsync();
-        }
-        catch (Exception)
-        {
+                Genres = mediaProperties.Genres.ToList();
+                Thumbnail = await mediaProperties.Thumbnail.ToByteArrayAsync();
+                return;
+            }
+            catch (Exception)
+            {
+            }
         }
     }
 

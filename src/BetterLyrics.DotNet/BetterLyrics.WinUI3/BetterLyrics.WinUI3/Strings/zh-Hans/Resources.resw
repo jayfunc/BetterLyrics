@@ -1089,6 +1089,9 @@
   <data name="PlaybackSettingsControlBetterLyricsRunningInBackground.Message" xml:space="preserve">
     <value>BetterLyrics 内置播放器仍在后台运行，软件将忽略其他播放源。要监听其他播放源，请进入 “音乐库” 并点击右下角的 “停止” 按钮</value>
   </data>
+  <data name="PlaybackSettingsControlPhoneLinkDetected.Message" xml:space="preserve">
+    <value>检测到 Windows 手机连接（Phone Link）作为播放源。手机媒体通过桥接同步，歌词与进度存在一定延迟属正常现象</value>
+  </data>
   <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
     <value>加载外部配置以直接从目标软件内存中读取播放进度。请谨慎使用，开发者不对第三方配置的安全性负责</value>
   </data>

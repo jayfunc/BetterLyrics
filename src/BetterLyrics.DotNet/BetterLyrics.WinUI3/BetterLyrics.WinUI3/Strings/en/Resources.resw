@@ -1089,6 +1089,9 @@
   <data name="PlaybackSettingsControlBetterLyricsRunningInBackground.Message" xml:space="preserve">
     <value>BetterLyrics built-in player is still running in the background, and the software will ignore other playback sources. To listen to other playback sources, go to Music Gallery and click the stop button in the lower right corner</value>
   </data>
+  <data name="PlaybackSettingsControlPhoneLinkDetected.Message" xml:space="preserve">
+    <value>Windows Phone Link detected as the playback source. Phone media is synced via bridging, so a certain delay in lyrics and progress is expected</value>
+  </data>
   <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
     <value>Loads external configurations to read playback progress directly from target process memory. Please use with caution; the developer is not responsible for the safety of third-party configurations</value>
   </data>

@@ -49,6 +49,11 @@
                         <HyperlinkButton x:Uid="PlaybackSettingsControlStopBetterLyricsPlayer" Command="{x:Bind ViewModel.StopTrackCommand}" />
                     </InfoBar.ActionButton>
                 </InfoBar>
+                <InfoBar
+                    x:Uid="PlaybackSettingsControlPhoneLinkDetected"
+                    IsClosable="False"
+                    IsOpen="{x:Bind ViewModel.GsmtcService.CurrentMediaSourceProviderInfo.IsPhoneLink, Mode=OneWay}"
+                    Severity="Informational" />
             </StackPanel>
 
             <!--  播放源列表  -->

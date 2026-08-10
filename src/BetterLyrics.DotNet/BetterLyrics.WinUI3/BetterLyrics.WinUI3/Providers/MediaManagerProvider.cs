@@ -2,14 +2,24 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using WindowsMediaController;
 
 namespace BetterLyrics.WinUI3.Providers;
 
 public class MediaManagerProvider : IMediaManagerProvider
 {
+    private readonly IAppUIThreadProvider _appUIThreadProvider;
     private readonly MediaManager _mediaManager = new();
     private readonly ConcurrentDictionary<string, IMediaSessionProvider> _mediaSessions = new();
+    private readonly Timer _sessionSyncTimer;
+
+    public MediaManagerProvider(IAppUIThreadProvider appUiThreadProvider)
+    {
+        _appUIThreadProvider = appUiThreadProvider;
+        _sessionSyncTimer = new Timer(_ => _appUIThreadProvider.Execute(ForceUpdate), null, Timeout.Infinite,
+            Timeout.Infinite);
+    }
 
     public IMediaSessionProvider? FocusedSession
     {
@@ -43,6 +53,8 @@ public class MediaManagerProvider : IMediaManagerProvider
     public void Init()
     {
         _mediaManager.Start();
+
+        _sessionSyncTimer.Change(TimeSpan.FromSeconds(5), TimeSpan.FromSeconds(5));
 
         _mediaManager.OnAnySessionOpened += MediaManager_OnAnySessionOpened;
         _mediaManager.OnAnySessionClosed += MediaManager_OnAnySessionClosed;
