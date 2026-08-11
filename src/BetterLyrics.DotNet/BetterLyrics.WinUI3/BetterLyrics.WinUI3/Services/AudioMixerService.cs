@@ -1,27 +1,27 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Text;
-using CommunityToolkit.Mvvm.DependencyInjection;
+using BetterLyrics.Core.Interfaces.Services;
 using Microsoft.Extensions.Logging;
 using NAudio.CoreAudioApi;
 using Vanara.PInvoke;
 
-namespace BetterLyrics.WinUI3.Hooks;
+namespace BetterLyrics.WinUI3.Services;
 
-public class AudioMixerHook
+public class AudioMixerService : IAudioMixerService
 {
-    private static readonly ILogger<AudioMixerHook> _logger;
+    private readonly ILogger<AudioMixerService> _logger;
 
-    private static MMDeviceEnumerator? _deviceEnumerator;
-    private static MMDevice? _defaultDevice;
+    private MMDeviceEnumerator? _deviceEnumerator;
+    private MMDevice? _defaultDevice;
 
-    static AudioMixerHook()
+    public AudioMixerService(ILogger<AudioMixerService> logger)
     {
-        _logger = Ioc.Default.GetRequiredService<ILogger<AudioMixerHook>>();
+        _logger = logger;
         InitializeAudioDevice();
     }
 
-    private static void InitializeAudioDevice()
+    private void InitializeAudioDevice()
     {
         try
         {
@@ -34,7 +34,7 @@ public class AudioMixerHook
         }
     }
 
-    private static string? GetProcessAumid(uint pid)
+    private string? GetProcessAumid(uint pid)
     {
         Kernel32.SafeHPROCESS? hProcess = null;
         try
@@ -64,22 +64,20 @@ public class AudioMixerHook
         return null;
     }
 
-    public static void SetApplicationVolume(int processId, int volume)
-
+    public void SetApplicationVolume(int processId, int volume)
     {
         if (_defaultDevice == null) return;
 
         var targetVol = Math.Clamp(volume, 0, 100) / 100f;
 
         RunOnAudioSessions(processId, session =>
-
         {
             session.SimpleAudioVolume.Volume = targetVol;
             if (session.SimpleAudioVolume.Mute) session.SimpleAudioVolume.Mute = false;
         });
     }
 
-    public static void SetApplicationVolume(string? processNameOrAumid, int volume)
+    public void SetApplicationVolume(string? processNameOrAumid, int volume)
     {
         if (string.IsNullOrEmpty(processNameOrAumid)) return;
 
@@ -139,7 +137,7 @@ public class AudioMixerHook
         }
     }
 
-    public static int GetApplicationVolume(int processId)
+    public int GetApplicationVolume(int processId)
     {
         if (_defaultDevice == null) return -1;
 
@@ -150,7 +148,7 @@ public class AudioMixerHook
         return result;
     }
 
-    public static int GetApplicationVolume(string? processNameOrAumid)
+    public int GetApplicationVolume(string? processNameOrAumid)
     {
         if (string.IsNullOrEmpty(processNameOrAumid)) return -1;
 
@@ -216,7 +214,7 @@ public class AudioMixerHook
         return -1;
     }
 
-    private static void RunOnAudioSessions(int targetPid, Action<AudioSessionControl> action,
+    private void RunOnAudioSessions(int targetPid, Action<AudioSessionControl> action,
         bool stopAfterFirst = false)
     {
         if (_defaultDevice == null) return;

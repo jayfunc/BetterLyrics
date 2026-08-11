@@ -234,6 +234,7 @@ public class Program
                 .AddSingleton<IAppUpdateService, AppUpdateService>()
                 .AddSingleton<INavigationService, NavigationService>()
                 .AddSingleton<IAppLifecycleService, AppLifecycleService>()
+                .AddSingleton<IAudioMixerService, AudioMixerService>()
 
                 // Providers
                 .AddSingleton<IPasswordVaultProvider, PasswordVaultProvider>()

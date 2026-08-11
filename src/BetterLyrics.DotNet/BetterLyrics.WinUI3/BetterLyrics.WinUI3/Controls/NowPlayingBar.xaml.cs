@@ -25,7 +25,8 @@ using System.Threading.Tasks;
 namespace BetterLyrics.WinUI3.Controls;
 
 public sealed partial class NowPlayingBar : UserControl,
-    IRecipient<PropertyChangedMessage<TimeSpan>>
+    IRecipient<PropertyChangedMessage<TimeSpan>>,
+    IRecipient<PropertyChangedMessage<MediaSourceProviderInfo?>>
 {
     public static readonly DependencyProperty ShowTimeProperty =
         DependencyProperty.Register(nameof(ShowTime), typeof(bool), typeof(NowPlayingBar), new PropertyMetadata(false));
@@ -200,6 +201,17 @@ public sealed partial class NowPlayingBar : UserControl,
         }
     }
 
+    public void Receive(PropertyChangedMessage<MediaSourceProviderInfo?> message)
+    {
+        if (message.Sender is IGsmtcService && message.PropertyName == nameof(IGsmtcService.CurrentMediaSourceProviderInfo))
+        {
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                ViewModel.UpdateVolume();
+            });
+        }
+    }
+
     private static void OnDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         if (d is NowPlayingBar self)
@@ -261,6 +273,7 @@ public sealed partial class NowPlayingBar : UserControl,
 
     private void VolumeButton_Click(object sender, RoutedEventArgs e)
     {
+        ViewModel.UpdateVolume();
         VolumeFlyout.ShowAt(BottomRightCommandStackPanel);
     }
 
@@ -337,7 +350,7 @@ public sealed partial class NowPlayingBar : UserControl,
 
     private void ExtendedSlider_ValueChangedByUser(object sender, ExtendedSliderValueChangedByUserEventArgs e)
     {
-        AudioMixerHook.SetApplicationVolume(GSMTCService.CurrentMediaSourceProviderInfo?.Provider, ViewModel.Volume);
+        ViewModel.ApplyVolume();
     }
 
     private void LyricsSearchShortcutButton_Click(object sender, RoutedEventArgs e)

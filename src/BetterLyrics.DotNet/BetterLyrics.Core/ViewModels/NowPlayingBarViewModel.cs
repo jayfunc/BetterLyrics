@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Lyrics;
@@ -12,12 +12,14 @@ public partial class NowPlayingBarViewModel : BaseViewModel
 {
     private readonly IGsmtcService _gsmtcService;
     private readonly ISettingsService _settingsService;
+    private readonly IAudioMixerService _audioMixerService;
 
     public NowPlayingBarViewModel(IGsmtcService mediaSessionsService, ISettingsService settingsService,
-        INavigationService navigationService)
+        INavigationService navigationService, IAudioMixerService audioMixerService)
     {
         _gsmtcService = mediaSessionsService;
         _settingsService = settingsService;
+        _audioMixerService = audioMixerService;
 
         NavigationService = navigationService;
         AppSettings = _settingsService.AppSettings;
@@ -29,7 +31,7 @@ public partial class NowPlayingBarViewModel : BaseViewModel
 
     [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 
-    [ObservableProperty] public partial int Volume { get; set; }
+    [ObservableProperty] public partial int Volume { get; set; } = -1;
 
     [ObservableProperty] public partial LyricsLine? TimelineSliderThumbLyricsLine { get; set; }
 
@@ -37,7 +39,12 @@ public partial class NowPlayingBarViewModel : BaseViewModel
 
     public void UpdateVolume()
     {
-        //Volume = AudioMixerHook.GetApplicationVolume(_gsmtcService.CurrentMediaSourceProviderInfo?.Provider);
+        Volume = _audioMixerService.GetApplicationVolume(_gsmtcService.CurrentMediaSourceProviderInfo?.Provider);
+    }
+
+    public void ApplyVolume()
+    {
+        _audioMixerService.SetApplicationVolume(_gsmtcService.CurrentMediaSourceProviderInfo?.Provider, Volume);
     }
 
     partial void OnTimelineSliderThumbSecondsChanged(double value)
