@@ -22,7 +22,7 @@ public static class Link
     public const string ModesStore = $"{OfficialWebsite}/add-ons/modes-store";
     public const string PluginsStore = $"{OfficialWebsite}/add-ons/plugins-store";
 
-    public const string AppleMusicCfg = $"{OfficialWebsite}/lyrics-cfg/apple-music";
+    public const string AppleMusicCfg = $"{OfficialWebsite}/features/lyrics-cfg/apple-music";
 
     public const string QQGroup1 = "https://qm.qq.com/q/yArcw3n8pq";
     public const string QQGroup2 = "https://qm.qq.com/q/27rzSjFXt6";
