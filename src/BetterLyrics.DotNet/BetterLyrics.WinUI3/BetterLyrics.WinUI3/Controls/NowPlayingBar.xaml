@@ -480,7 +480,7 @@
                     Minimum="0"
                     Style="{StaticResource GhostSliderStyle}"
                     ThumbToolTipValueConverter="{StaticResource SecondsToFormattedTimeConverter}"
-                    Value="{x:Bind GSMTCService.CurrentPosition.TotalSeconds, Mode=OneWay}" />
+                    Value="{x:Bind SimulatedPositionSeconds, Mode=OneWay}" />
 
                 <Grid
                     Height="12"

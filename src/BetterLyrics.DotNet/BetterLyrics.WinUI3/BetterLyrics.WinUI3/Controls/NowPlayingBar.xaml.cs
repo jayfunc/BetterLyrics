@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Numerics;
 using Windows.System;
 using BetterLyrics.Core.Enums;
@@ -10,6 +11,8 @@ using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -21,7 +24,8 @@ using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Controls;
 
-public sealed partial class NowPlayingBar : UserControl
+public sealed partial class NowPlayingBar : UserControl,
+    IRecipient<PropertyChangedMessage<TimeSpan>>
 {
     public static readonly DependencyProperty ShowTimeProperty =
         DependencyProperty.Register(nameof(ShowTime), typeof(bool), typeof(NowPlayingBar), new PropertyMetadata(false));
@@ -62,6 +66,10 @@ public sealed partial class NowPlayingBar : UserControl
         DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus), typeof(NowPlayingBar),
             new PropertyMetadata(null));
 
+    public static readonly DependencyProperty SimulatedPositionSecondsProperty =
+        DependencyProperty.Register(nameof(SimulatedPositionSeconds), typeof(double), typeof(NowPlayingBar),
+            new PropertyMetadata(0.0));
+
     private readonly IGlobalToastProvider _globalToastProvider = Ioc.Default.GetRequiredService<IGlobalToastProvider>();
 
     private readonly IWindowManagerProvider
@@ -70,12 +78,21 @@ public sealed partial class NowPlayingBar : UserControl
     private readonly IProgramProvider _programProvider = Ioc.Default.GetRequiredService<IProgramProvider>();
 
     private bool _isPointerInBottomCommandGrid;
+    private readonly DispatcherTimer _simulationTimer;
+    private long _lastTickTicks;
 
     public NowPlayingBar()
     {
         InitializeComponent();
         ViewModel = Ioc.Default.GetRequiredService<NowPlayingBarViewModel>();
         GSMTCService = Ioc.Default.GetRequiredService<IGsmtcService>();
+
+        WeakReferenceMessenger.Default.RegisterAll(this);
+
+        _simulationTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(16) };
+        _simulationTimer.Tick += SimulationTimer_Tick;
+        _simulationTimer.Start();
+        _lastTickTicks = Stopwatch.GetTimestamp();
     }
 
     public NowPlayingBarViewModel ViewModel { get; set; }
@@ -141,9 +158,47 @@ public sealed partial class NowPlayingBar : UserControl
         set => SetValue(LyricsWindowStatusProperty, value);
     }
 
+    public double SimulatedPositionSeconds
+    {
+        get => (double)GetValue(SimulatedPositionSecondsProperty);
+        set => SetValue(SimulatedPositionSecondsProperty, value);
+    }
+
     public event EventHandler? SongInfoTapped;
     public event EventHandler? TimeTapped;
     public event EventHandler? PlayQueueButtonClick;
+
+    private void SimulationTimer_Tick(object? sender, object e)
+    {
+        long currentTicks = Stopwatch.GetTimestamp();
+        double elapsedSeconds = (currentTicks - _lastTickTicks) / (double)Stopwatch.Frequency;
+        _lastTickTicks = currentTicks;
+
+        if (GSMTCService.CurrentIsPlaying)
+        {
+            var newPos = SimulatedPositionSeconds + elapsedSeconds;
+            if (newPos > GSMTCService.CurrentSongInfo.DurationMs / 1000.0)
+            {
+                newPos = GSMTCService.CurrentSongInfo.DurationMs / 1000.0;
+            }
+            SimulatedPositionSeconds = newPos;
+        }
+    }
+
+    public void Receive(PropertyChangedMessage<TimeSpan> message)
+    {
+        if (message.Sender is IGsmtcService && message.PropertyName == nameof(IGsmtcService.CurrentPosition))
+        {
+            var realPosition = message.NewValue.TotalSeconds;
+            var diff = Math.Abs(SimulatedPositionSeconds - realPosition);
+            var timelineSyncThreshold = (GSMTCService.CurrentMediaSourceProviderInfo?.TimelineSyncThreshold ?? 0) / 1000.0;
+
+            if (diff >= timelineSyncThreshold)
+            {
+                SimulatedPositionSeconds = realPosition;
+            }
+        }
+    }
 
     private static void OnDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
@@ -248,6 +303,7 @@ public sealed partial class NowPlayingBar : UserControl
         var grid = (Grid)sender;
         var pos = e.GetCurrentPoint(grid).Position;
         var ratio = pos.X / grid.ActualWidth;
+        SimulatedPositionSeconds = TimelineSlider.Maximum * ratio;
         _ = GSMTCService.ChangePositionAsync(TimelineSlider.Maximum * ratio);
     }
 
