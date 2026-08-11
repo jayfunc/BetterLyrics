@@ -578,11 +578,11 @@
             </Grid>
         </ScrollViewer>
 
-        <Button
+        <!--<Button
             HorizontalAlignment="Center"
             VerticalAlignment="Bottom"
             Command="{x:Bind ViewModel.GenerateTestDataCommand}"
-            Content="TEST" />
+            Content="TEST" />-->
 
         <local:StoryViewerControl
             x:Name="StoryViewer"

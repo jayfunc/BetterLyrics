@@ -2622,4 +2622,7 @@
   <data name="PersonaExplorerDesc" xml:space="preserve">
     <value>Anda merangkul suara-suara pelbagai dari mana-mana sahaja.</value>
   </data>
+  <data name="SettingsPageGlobalFont.Header" xml:space="preserve">
+    <value>Keluarga Fon</value>
+  </data>
 </root>

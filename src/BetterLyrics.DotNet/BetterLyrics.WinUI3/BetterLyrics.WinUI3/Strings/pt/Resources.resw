@@ -2622,4 +2622,7 @@
   <data name="PersonaExplorerDesc" xml:space="preserve">
     <value>Acolheis vozes diversas de todo o lado.</value>
   </data>
+  <data name="SettingsPageGlobalFont.Header" xml:space="preserve">
+    <value>Família de tipos de letra</value>
+  </data>
 </root>

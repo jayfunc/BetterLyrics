@@ -2622,4 +2622,7 @@
   <data name="PersonaExplorerDesc" xml:space="preserve">
     <value>여러분은 전 세계 각지에서 나오는 다양한 목소리를 포용합니다.</value>
   </data>
+  <data name="SettingsPageGlobalFont.Header" xml:space="preserve">
+    <value>글꼴 계열</value>
+  </data>
 </root>

@@ -772,7 +772,7 @@
     <value>复制图片</value>
   </data>
   <data name="LyricsSharePageFontFamily.Text" xml:space="preserve">
-    <value>字体</value>
+    <value>字体系列</value>
   </data>
   <data name="LyricsSharePageGroupAtmosphere" xml:space="preserve">
     <value>氛围创意</value>
@@ -1864,7 +1864,7 @@
     <value>歌词注音</value>
   </data>
   <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
-    <value>发音标示</value>
+    <value>音译</value>
   </data>
   <data name="SettingsPagePinyin.Header" xml:space="preserve">
     <value>拼音</value>
@@ -2404,10 +2404,10 @@
     <value>罗马字（韩语）</value>
   </data>
   <data name="SettingsPagePhonetics.Header" xml:space="preserve">
-    <value>发音标示</value>
+    <value>音译</value>
   </data>
   <data name="SettingsPagePhonetics.Description" xml:space="preserve">
-    <value>显示不同语言的发音标示</value>
+    <value>显示不同语言的音译</value>
   </data>
   <data name="SettingsPageLeftRight.Content" xml:space="preserve">
     <value>左右交替</value>
@@ -2623,6 +2623,6 @@
     <value>你拥抱来自远方的声响，每一程都值得收藏</value>
   </data>
   <data name="SettingsPageGlobalFont.Header" xml:space="preserve">
-    <value>字体家族</value>
+    <value>字体系列</value>
   </data>
 </root>

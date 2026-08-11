@@ -1864,7 +1864,7 @@
     <value>歌詞注音</value>
   </data>
   <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
-    <value>發音標示</value>
+    <value>音譯</value>
   </data>
   <data name="SettingsPagePinyin.Header" xml:space="preserve">
     <value>拼音</value>
@@ -2404,10 +2404,10 @@
     <value>羅馬字（韓文）</value>
   </data>
   <data name="SettingsPagePhonetics.Header" xml:space="preserve">
-    <value>發音標示</value>
+    <value>音譯</value>
   </data>
   <data name="SettingsPagePhonetics.Description" xml:space="preserve">
-    <value>顯示不同語言的發音標示</value>
+    <value>顯示不同語言的音譯</value>
   </data>
   <data name="SettingsPageLeftRight.Content" xml:space="preserve">
     <value>左右交替</value>
@@ -2621,5 +2621,8 @@
   </data>
   <data name="PersonaExplorerDesc" xml:space="preserve">
     <value>你擁抱來自遠方的聲響，每一程都值得收藏</value>
+  </data>
+  <data name="SettingsPageGlobalFont.Header" xml:space="preserve">
+    <value>字型系列</value>
   </data>
 </root>

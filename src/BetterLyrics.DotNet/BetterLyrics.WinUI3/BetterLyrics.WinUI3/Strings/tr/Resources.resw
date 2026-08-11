@@ -2622,4 +2622,7 @@
   <data name="PersonaExplorerDesc" xml:space="preserve">
     <value>Her yerden gelen farklı seslere kucak açıyorsunuz.</value>
   </data>
+  <data name="SettingsPageGlobalFont.Header" xml:space="preserve">
+    <value>Yazı Tipi Ailesi</value>
+  </data>
 </root>

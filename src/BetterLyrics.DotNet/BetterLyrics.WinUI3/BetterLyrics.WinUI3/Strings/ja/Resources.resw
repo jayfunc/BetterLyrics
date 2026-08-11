@@ -1552,7 +1552,7 @@
     <value>画面のスリープを防止</value>
   </data>
   <data name="SettingsPageLanguage.Header" xml:space="preserve">
-    <value>言語</value>
+    <value>アプリの言語</value>
   </data>
   <data name="SettingsPageLastFMAuth.Content" xml:space="preserve">
     <value>連携</value>
@@ -1969,7 +1969,7 @@
     <value>影の強さ</value>
   </data>
   <data name="SettingsPageShareHub.Content" xml:space="preserve">
-    <value>オンライン共有センターを閲覧する</value>
+    <value>オンライン共有センター</value>
   </data>
   <data name="SettingsPageShortcut.Text" xml:space="preserve">
     <value>ショートカットキー</value>
@@ -2497,7 +2497,7 @@
     <value>時間</value>
   </data>
   <data name="StoryPageOverviewText1.Text" xml:space="preserve">
-    <value>これまでは、</value>
+    <value>これまでは</value>
   </data>
   <data name="StoryPageOverviewText2.Text" xml:space="preserve">
     <value>音楽の旅に出かけた回数は</value>
@@ -2542,7 +2542,7 @@
     <value>曲の時間を共にしました</value>
   </data>
   <data name="StoryPageTopSongText1.Text" xml:space="preserve">
-    <value>あるメロディーが、</value>
+    <value>あるメロディーが</value>
   </data>
   <data name="StoryPageTopSongText2.Text" xml:space="preserve">
     <value>いつもふとした瞬間に耳元で響く...</value>
@@ -2621,5 +2621,8 @@
   </data>
   <data name="PersonaExplorerDesc" xml:space="preserve">
     <value>あらゆるジャンルの、多彩な歌声に耳を傾けているようです</value>
+  </data>
+  <data name="SettingsPageGlobalFont.Header" xml:space="preserve">
+    <value>アプリのフォント</value>
   </data>
 </root>

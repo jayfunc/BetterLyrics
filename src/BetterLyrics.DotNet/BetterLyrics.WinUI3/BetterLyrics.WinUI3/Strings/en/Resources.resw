@@ -1864,7 +1864,7 @@
     <value>Lyric Phonetics</value>
   </data>
   <data name="SettingsPagePhoneticText.Header" xml:space="preserve">
-    <value>Pronunciation</value>
+    <value>Transliteration</value>
   </data>
   <data name="SettingsPagePinyin.Header" xml:space="preserve">
     <value>Pinyin</value>
@@ -2404,10 +2404,10 @@
     <value>Romaja</value>
   </data>
   <data name="SettingsPagePhonetics.Header" xml:space="preserve">
-    <value>Phonetics</value>
+    <value>Transliteration</value>
   </data>
   <data name="SettingsPagePhonetics.Description" xml:space="preserve">
-    <value>Display phonetics for different languages</value>
+    <value>Display transliteration for different languages</value>
   </data>
   <data name="SettingsPageLeftRight.Content" xml:space="preserve">
     <value>Alternating (Left/Right)</value>
