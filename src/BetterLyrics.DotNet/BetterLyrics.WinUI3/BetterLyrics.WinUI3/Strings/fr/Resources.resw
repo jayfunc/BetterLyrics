@@ -687,6 +687,9 @@
   <data name="LyricsSaveConfigFolder.Header" xml:space="preserve">
     <value>Guardar ubicación</value>
   </data>
+  <data name="LyricsSaveConfigFileNamePattern.Header" xml:space="preserve">
+    <value>Modèle de nom de fichier</value>
+  </data>
   <data name="LyricsSaveConfigIncludeTranslation.Header" xml:space="preserve">
     <value>Incluir traducción</value>
   </data>
@@ -1076,6 +1079,9 @@
   </data>
   <data name="MusicSettingsControlRealTimeScan.Header" xml:space="preserve">
     <value>Control en tiempo real</value>
+  </data>
+  <data name="MusicSettingsControlScanSubDirectories.Header" xml:space="preserve">
+    <value>Analyser les sous-répertoires</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>Modo Estrecho</value>
@@ -1610,6 +1616,12 @@
   </data>
   <data name="SettingsPageLocalFolder.Text" xml:space="preserve">
     <value>Carpeta local</value>
+  </data>
+  <data name="SettingsPageLocalMusicFilePattern.Header" xml:space="preserve">
+    <value>Modèle d'analyse des fichiers musicaux</value>
+  </data>
+  <data name="SettingsPageLocalLyricsFilePattern.Header" xml:space="preserve">
+    <value>Modèle d'analyse des fichiers de paroles</value>
   </data>
   <data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve">
     <value>Umbral de sílaba larga</value>
@@ -2624,5 +2636,23 @@
   </data>
   <data name="SettingsPageGlobalFont.Header" xml:space="preserve">
     <value>Famille de polices</value>
+  </data>
+  <data name="FileNamePatternControlHelpTitle.Text" xml:space="preserve">
+    <value>Mots-clés autorisés</value>
+  </data>
+  <data name="FileNamePatternControlHelpArtist.Text" xml:space="preserve">
+    <value>Le nom de l'artiste</value>
+  </data>
+  <data name="FileNamePatternControlHelpTitleDesc.Text" xml:space="preserve">
+    <value>Le titre de la chanson</value>
+  </data>
+  <data name="FileNamePatternControlHelpAlbum.Text" xml:space="preserve">
+    <value>Le titre de l'album</value>
+  </data>
+  <data name="FileNamePatternControlHelpTip.Text" xml:space="preserve">
+    <value>Astuce : vous pouvez utiliser d'autres mots, tels que « {BPM} », comme caractères de remplacement pour ignorer certaines parties du nom de fichier.</value>
+  </data>
+  <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve">
+    <value>Aperçu de l'exemple :</value>
   </data>
 </root>

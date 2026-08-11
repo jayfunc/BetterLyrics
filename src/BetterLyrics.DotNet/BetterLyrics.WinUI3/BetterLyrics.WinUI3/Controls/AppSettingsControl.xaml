@@ -39,9 +39,10 @@
                         <ComboBox ItemsSource="{x:Bind helpers:LanguageHelper.SupportedDisplayLanguages}" SelectedIndex="{x:Bind ViewModel.AppSettings.GeneralSettings.LanguageCode, Mode=TwoWay, Converter={StaticResource DisplayLanguageCodeToIndexConverter}}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate x:DataType="models1:ExtendedLanguage">
-                                    <StackPanel Spacing="2">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
                                         <TextBlock Text="{x:Bind NativeName}" />
                                         <TextBlock
+                                            VerticalAlignment="Bottom"
                                             Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                             Style="{StaticResource CaptionTextBlockStyle}"
                                             Text="{x:Bind DisplayName}" />

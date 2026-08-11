@@ -10,6 +10,7 @@ using BetterLyrics.Core.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -84,7 +85,7 @@ public sealed partial class PlaybackSettingsControl : UserControl
         if (HideConfigPanelWhenLoaded) PlaybackConfigPanel.Hide();
     }
 
-    private async void SaveLyrics(LyricsFormat lyricsFormat)
+    private async Task SaveLyricsAsync(LyricsFormat lyricsFormat)
     {
         var lyricsSearchResult = ViewModel.GsmtcService.CurrentLyricsSearchResult;
         if (lyricsSearchResult == null) return;
@@ -101,7 +102,16 @@ public sealed partial class PlaybackSettingsControl : UserControl
         if (contentToWrite == null) return;
 
         var ext = lyricsFormat.ToFileExtension();
-        var safeTitle = FileHelper.SanitizeFileName($"{lyricsSearchResult.Artist} - {lyricsSearchResult.Title}");
+        var pattern = ViewModel.AppSettings.LyricsSaveConfig.FileNamePattern;
+        if (string.IsNullOrWhiteSpace(pattern)) pattern = "{Artist} - {Title}";
+        
+        var name = pattern
+            .Replace("{Artist}", lyricsSearchResult.Artist ?? string.Empty)
+            .Replace("{Title}", lyricsSearchResult.Title ?? string.Empty)
+            .Replace("{Album}", lyricsSearchResult.Album ?? string.Empty)
+            .Trim();
+            
+        var safeTitle = FileHelper.SanitizeFileName(name);
         var fileName = $"{safeTitle}{ext}";
 
         var folderPath = ViewModel.AppSettings.LyricsSaveConfig.SaveLocation;
@@ -128,14 +138,14 @@ public sealed partial class PlaybackSettingsControl : UserControl
         ViewModel.AppSettings.LyricsSaveConfig.SaveLocation = folderPath;
     }
 
-    private void SaveLyricsAsLrcMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+    private async void SaveLyricsAsLrcMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
     {
-        SaveLyrics(LyricsFormat.Lrc);
+        await SaveLyricsAsync(LyricsFormat.Lrc);
     }
 
-    private void SaveLyricsAsTtmlMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+    private async void SaveLyricsAsTtmlMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
     {
-        SaveLyrics(LyricsFormat.Ttml);
+        await SaveLyricsAsync(LyricsFormat.Ttml);
     }
 
     private void CloseConfigPanelButton_Click(object sender, RoutedEventArgs e)

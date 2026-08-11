@@ -687,6 +687,9 @@
   <data name="LyricsSaveConfigFolder.Header" xml:space="preserve">
     <value>حفظ الموقع</value>
   </data>
+  <data name="LyricsSaveConfigFileNamePattern.Header" xml:space="preserve">
+    <value>نمط اسم الملف</value>
+  </data>
   <data name="LyricsSaveConfigIncludeTranslation.Header" xml:space="preserve">
     <value>تضمين الترجمة</value>
   </data>
@@ -1076,6 +1079,9 @@
   </data>
   <data name="MusicSettingsControlRealTimeScan.Header" xml:space="preserve">
     <value>المراقبة في الوقت الحقيقي</value>
+  </data>
+  <data name="MusicSettingsControlScanSubDirectories.Header" xml:space="preserve">
+    <value>فحص المجلدات الفرعية</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>وضع الشاشة الضيقة</value>
@@ -1610,6 +1616,12 @@
   </data>
   <data name="SettingsPageLocalFolder.Text" xml:space="preserve">
     <value>مجلد محلي</value>
+  </data>
+  <data name="SettingsPageLocalMusicFilePattern.Header" xml:space="preserve">
+    <value>نمط تحليل ملفات الموسيقى</value>
+  </data>
+  <data name="SettingsPageLocalLyricsFilePattern.Header" xml:space="preserve">
+    <value>نمط تحليل ملف كلمات الأغاني</value>
   </data>
   <data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve">
     <value>عتبة المقطع الطويل</value>
@@ -2624,5 +2636,23 @@
   </data>
   <data name="SettingsPageGlobalFont.Header" xml:space="preserve">
     <value>عائلة الخطوط</value>
+  </data>
+  <data name="FileNamePatternControlHelpTitle.Text" xml:space="preserve">
+    <value>الكلمات المفتاحية المسموح بها</value>
+  </data>
+  <data name="FileNamePatternControlHelpArtist.Text" xml:space="preserve">
+    <value>اسم الفنان</value>
+  </data>
+  <data name="FileNamePatternControlHelpTitleDesc.Text" xml:space="preserve">
+    <value>عنوان الأغنية</value>
+  </data>
+  <data name="FileNamePatternControlHelpAlbum.Text" xml:space="preserve">
+    <value>اسم الألبوم</value>
+  </data>
+  <data name="FileNamePatternControlHelpTip.Text" xml:space="preserve">
+    <value>نصيحة: يمكنك استخدام كلمات أخرى مثل « {BPM} » كعناصر بديلة لتجاهل أجزاء من اسم الملف.</value>
+  </data>
+  <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve">
+    <value>معاينة المثال:</value>
   </data>
 </root>

@@ -687,6 +687,9 @@
   <data name="LyricsSaveConfigFolder.Header" xml:space="preserve">
     <value>Lưu vị trí</value>
   </data>
+  <data name="LyricsSaveConfigFileNamePattern.Header" xml:space="preserve">
+    <value>Mẫu tên tệp</value>
+  </data>
   <data name="LyricsSaveConfigIncludeTranslation.Header" xml:space="preserve">
     <value>Bao gồm bản dịch</value>
   </data>
@@ -1076,6 +1079,9 @@
   </data>
   <data name="MusicSettingsControlRealTimeScan.Header" xml:space="preserve">
     <value>Giám sát thời gian thực</value>
+  </data>
+  <data name="MusicSettingsControlScanSubDirectories.Header" xml:space="preserve">
+    <value>Quét các thư mục con</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>Chế độ hẹp</value>
@@ -1610,6 +1616,12 @@
   </data>
   <data name="SettingsPageLocalFolder.Text" xml:space="preserve">
     <value>Thư mục cục bộ</value>
+  </data>
+  <data name="SettingsPageLocalMusicFilePattern.Header" xml:space="preserve">
+    <value>Mẫu phân tích tệp nhạc</value>
+  </data>
+  <data name="SettingsPageLocalLyricsFilePattern.Header" xml:space="preserve">
+    <value>Mẫu phân tích tệp lời bài hát</value>
   </data>
   <data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve">
     <value>Ngưỡng âm tiết dài</value>
@@ -2624,5 +2636,23 @@
   </data>
   <data name="SettingsPageGlobalFont.Header" xml:space="preserve">
     <value>Họ phông chữ</value>
+  </data>
+  <data name="FileNamePatternControlHelpTitle.Text" xml:space="preserve">
+    <value>Các từ khóa được phép</value>
+  </data>
+  <data name="FileNamePatternControlHelpArtist.Text" xml:space="preserve">
+    <value>Tên của nghệ sĩ</value>
+  </data>
+  <data name="FileNamePatternControlHelpTitleDesc.Text" xml:space="preserve">
+    <value>Tên bài hát</value>
+  </data>
+  <data name="FileNamePatternControlHelpAlbum.Text" xml:space="preserve">
+    <value>Tên album</value>
+  </data>
+  <data name="FileNamePatternControlHelpTip.Text" xml:space="preserve">
+    <value>Mẹo: Bạn có thể sử dụng các từ khác như {BPM} làm ký hiệu thay thế để bỏ qua một phần tên tệp.</value>
+  </data>
+  <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve">
+    <value>Xem trước ví dụ:</value>
   </data>
 </root>

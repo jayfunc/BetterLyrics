@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 using BetterLyrics.Core.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 
@@ -57,6 +57,14 @@ public partial class MediaFolder : ObservableRecipient
     [NotifyPropertyChangedFor(nameof(UriString))]
     public partial string UriPath { get; set; }
 
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial string LocalLyricsFilePattern { get; set; } = "";
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial string LocalMusicFilePattern { get; set; } = "";
+
     [JsonIgnore] public string Password { get; set; }
 
     [JsonIgnore] public bool IsLocal => SourceType == FileSourceType.Local;
@@ -80,6 +88,10 @@ public partial class MediaFolder : ObservableRecipient
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
     public partial bool IsRealTimeScanEnabled { get; set; } = false;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial bool ScanSubDirectories { get; set; } = true;
 
     // 例：smb://user@host:445/share/path
     [JsonIgnore] public string UriString => GetStandardUri().AbsoluteUri;

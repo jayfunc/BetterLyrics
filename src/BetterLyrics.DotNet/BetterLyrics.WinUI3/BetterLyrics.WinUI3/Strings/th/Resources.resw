@@ -687,6 +687,9 @@
   <data name="LyricsSaveConfigFolder.Header" xml:space="preserve">
     <value>บันทึกตำแหน่ง</value>
   </data>
+  <data name="LyricsSaveConfigFileNamePattern.Header" xml:space="preserve">
+    <value>รูปแบบชื่อไฟล์</value>
+  </data>
   <data name="LyricsSaveConfigIncludeTranslation.Header" xml:space="preserve">
     <value>รวมการแปล</value>
   </data>
@@ -1076,6 +1079,9 @@
   </data>
   <data name="MusicSettingsControlRealTimeScan.Header" xml:space="preserve">
     <value>การตรวจสอบแบบเรียลไทม์</value>
+  </data>
+  <data name="MusicSettingsControlScanSubDirectories.Header" xml:space="preserve">
+    <value>สแกนโฟลเดอร์ย่อย</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>โหมดหน้าแคบ</value>
@@ -1610,6 +1616,12 @@
   </data>
   <data name="SettingsPageLocalFolder.Text" xml:space="preserve">
     <value>โฟลเดอร์ในเครื่อง</value>
+  </data>
+  <data name="SettingsPageLocalMusicFilePattern.Header" xml:space="preserve">
+    <value>รูปแบบการวิเคราะห์ไฟล์เพลง</value>
+  </data>
+  <data name="SettingsPageLocalLyricsFilePattern.Header" xml:space="preserve">
+    <value>รูปแบบการวิเคราะห์ไฟล์คำร้อง</value>
   </data>
   <data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve">
     <value>เกณฑ์พยางค์ยาว</value>
@@ -2624,5 +2636,23 @@
   </data>
   <data name="SettingsPageGlobalFont.Header" xml:space="preserve">
     <value>ตระกูลตัวอักษร</value>
+  </data>
+  <data name="FileNamePatternControlHelpTitle.Text" xml:space="preserve">
+    <value>คำสำคัญที่อนุญาต</value>
+  </data>
+  <data name="FileNamePatternControlHelpArtist.Text" xml:space="preserve">
+    <value>ชื่อของศิลปิน</value>
+  </data>
+  <data name="FileNamePatternControlHelpTitleDesc.Text" xml:space="preserve">
+    <value>ชื่อเพลง</value>
+  </data>
+  <data name="FileNamePatternControlHelpAlbum.Text" xml:space="preserve">
+    <value>ชื่ออัลบั้ม</value>
+  </data>
+  <data name="FileNamePatternControlHelpTip.Text" xml:space="preserve">
+    <value>เคล็ดลับ: คุณสามารถใช้คำอื่น ๆ เช่น {BPM} เป็นตัวแทน เพื่อข้ามส่วนต่าง ๆ ของชื่อไฟล์</value>
+  </data>
+  <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve">
+    <value>ตัวอย่างการดูตัวอย่าง:</value>
   </data>
 </root>

@@ -518,6 +518,12 @@
                                                     <controls:SettingsCard x:Uid="LyricsSaveConfigInOneLine">
                                                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.LyricsSaveConfig.InOneLine, Mode=TwoWay}" />
                                                     </controls:SettingsCard>
+                                                    <controls:SettingsCard
+                                                        x:Uid="LyricsSaveConfigFileNamePattern"
+                                                        ContentAlignment="Left"
+                                                        Header="File Name Pattern">
+                                                        <local:FileNamePatternControl PatternText="{x:Bind ViewModel.AppSettings.LyricsSaveConfig.FileNamePattern, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                    </controls:SettingsCard>
                                                     <controls:SettingsCard x:Uid="LyricsSaveConfigFolder">
                                                         <Grid ColumnSpacing="6">
                                                             <Grid.ColumnDefinitions>
@@ -571,9 +577,10 @@
                                     <ComboBox ItemsSource="{x:Bind helpers:LanguageHelper.SupportedTranslationTargetLanguages}" SelectedIndex="{x:Bind ViewModel.SelectedTargetLanguageIndex, Mode=TwoWay}">
                                         <ComboBox.ItemTemplate>
                                             <DataTemplate x:DataType="models1:ExtendedLanguage">
-                                                <StackPanel Spacing="2">
+                                                <StackPanel Orientation="Horizontal" Spacing="6">
                                                     <TextBlock Text="{x:Bind NativeName}" />
                                                     <TextBlock
+                                                        VerticalAlignment="Bottom"
                                                         Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                                         Style="{StaticResource CaptionTextBlockStyle}"
                                                         Text="{x:Bind DisplayName}" />

@@ -203,7 +203,18 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
                 foreach (var item in items)
                     if (item.IsDirectory)
                     {
-                        foldersToScan.Enqueue(item);
+                        if (folder.ScanSubDirectories)
+                        {
+                            // 检查当前目录是否已经被配置为另外一个独立的媒体库
+                            // 如果是，则跳过扫描，让那个独立的媒体库自己负责，避免重复扫描和配置冲突
+                            var isConfiguredSeparately = _settingsService.AppSettings.LocalMediaFolders
+                                .Any(x => x.Id != folder.Id && x.UriString.TrimEnd('/').Equals(item.Uri.TrimEnd('/'), StringComparison.OrdinalIgnoreCase));
+
+                            if (!isConfiguredSeparately)
+                            {
+                                foldersToScan.Enqueue(item);
+                            }
+                        }
                     }
                     else
                     {
@@ -274,6 +285,18 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
                             item.Title = track.Title;
                             item.Artists = track.Artist;
                             item.Album = track.Album;
+
+                            if (string.IsNullOrEmpty(item.Title) || string.IsNullOrEmpty(item.Artists))
+                            {
+                                var fileNameWithoutExt = Path.GetFileNameWithoutExtension(item.FileName);
+                                var pattern = folder.LocalMusicFilePattern;
+                                var parsed = MediaFileNamePatternParser.Parse(fileNameWithoutExt, pattern);
+                                
+                                if (!string.IsNullOrEmpty(parsed.Title)) item.Title = parsed.Title;
+                                if (!string.IsNullOrEmpty(parsed.Artist)) item.Artists = parsed.Artist;
+                                if (!string.IsNullOrEmpty(parsed.Album)) item.Album = parsed.Album;
+                            }
+
                             item.Year = track.Year;
                             item.Genre = track.Genre;
                             item.TrackNumber = track.TrackNumber;
@@ -301,9 +324,25 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
                                 item.EmbeddedLyrics = content;
 
                                 var metadata = LyricsMetadataParser.Parse(content, ext);
-                                item.Title = metadata.Title;
-                                item.Artists = metadata.Artist;
-                                item.Album = metadata.Album;
+                                
+                                var title = metadata.Title;
+                                var artists = metadata.Artist;
+                                var album = metadata.Album;
+                                
+                                if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(artists))
+                                {
+                                    var fileNameWithoutExt = Path.GetFileNameWithoutExtension(item.FileName);
+                                    var pattern = folder.LocalLyricsFilePattern;
+                                    var parsed = MediaFileNamePatternParser.Parse(fileNameWithoutExt, pattern);
+                                    
+                                    if (!string.IsNullOrEmpty(parsed.Title)) title = parsed.Title;
+                                    if (!string.IsNullOrEmpty(parsed.Artist)) artists = parsed.Artist;
+                                    if (!string.IsNullOrEmpty(parsed.Album)) album = parsed.Album;
+                                }
+
+                                item.Title = title;
+                                item.Artists = artists;
+                                item.Album = album;
                                 item.Duration = (int)metadata.TotalSeconds;
                             }
 
@@ -389,8 +428,19 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
     public void Receive(PropertyChangedMessage<bool> message)
     {
         if (message.Sender is MediaFolder mediaFolder)
+        {
             if (message.PropertyName == nameof(MediaFolder.IsEnabled))
+            {
                 UpdateFolderTimer(mediaFolder);
+            }
+            else if (message.PropertyName == nameof(MediaFolder.ScanSubDirectories))
+            {
+                foreach (var folder in _settingsService.AppSettings.LocalMediaFolders)
+                {
+                    _ = Task.Run(async () => await ScanMediaFolderAsync(folder));
+                }
+            }
+        }
     }
 
     private async Task<List<FilesIndexItem>> SyncAsync(IUnifiedFileSystem provider, FilesIndexItem? parentFolder,
@@ -422,7 +472,6 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
             var col = GetCollection();
 
             var dbItems = col.Find(x => x.MediaFolderId == configId && x.ParentUri == targetParentUri).ToList();
-            var dbMap = dbItems.ToDictionary(x => x.Uri, x => x);
 
             var remoteDistinct = remoteItems
                 .GroupBy(x => x.Uri)
@@ -430,11 +479,13 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
                 .ToList();
 
             var remoteUris = new HashSet<string>();
+            foreach (var remote in remoteDistinct) remoteUris.Add(remote.Uri);
+
+            var globalDbItems = col.Find(LiteDB.Query.In(nameof(FilesIndexItem.Uri), remoteUris.Select(u => new LiteDB.BsonValue(u)))).ToList();
+            var dbMap = globalDbItems.ToDictionary(x => x.Uri, x => x);
 
             foreach (var remote in remoteDistinct)
             {
-                remoteUris.Add(remote.Uri);
-
                 if (dbMap.TryGetValue(remote.Uri, out var existing))
                 {
                     bool lastModifiedTimeChanged = existing.LastModified != remote.LastModified;
@@ -449,17 +500,27 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
                         createTimeChanged = Math.Abs((existing.DateCreated.Value - remote.DateCreated.Value).TotalSeconds) > 1;
                     }
 
+                    bool folderOwnershipChanged = existing.MediaFolderId != configId;
+
                     var isChanged = existing.FileSize != remote.FileSize ||
                         createTimeChanged ||
                         lastModifiedTimeChanged ||
+                        folderOwnershipChanged ||
                         forceSync;
 
                     if (isChanged)
                     {
+                        existing.MediaFolderId = configId;
+                        existing.ParentUri = targetParentUri;
                         existing.FileSize = remote.FileSize;
                         existing.LastModified = remote.LastModified;
                         existing.DateCreated = remote.DateCreated;
-                        existing.IsMetadataParsed = false;
+                        
+                        // 当文件发生改变、强制同步，或归属的媒体库发生改变（可能需要应用新的匹配规则）时，重置解析状态
+                        if (existing.FileSize != remote.FileSize || createTimeChanged || lastModifiedTimeChanged || forceSync || folderOwnershipChanged)
+                        {
+                            existing.IsMetadataParsed = false;
+                        }
 
                         col.Update(existing);
                     }

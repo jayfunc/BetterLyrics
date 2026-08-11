@@ -50,6 +50,12 @@ public partial class MediaSettingsControlViewModel : BaseViewModel
             {
                 AppSettings.LocalMediaFolders.Remove(folder);
                 _passwordVaultProvider.Delete(Core.Constants.App.AppName, folder.VaultKey);
+
+                // 触发所有剩余的媒体库进行一次自动扫描，以确保任何重叠区域的接管都被处理
+                foreach (var remainingFolder in AppSettings.LocalMediaFolders)
+                {
+                    _ = Task.Run(async () => await _fileSystemService.ScanMediaFolderAsync(remainingFolder));
+                }
             });
         });
     }
@@ -87,24 +93,14 @@ public partial class MediaSettingsControlViewModel : BaseViewModel
                 {
                     return (false, _localizationService.GetLocalizedString("SettingsPagePathExistedInfo"));
                 }
-                // 是否是子文件夹
-                else if (AppSettings.LocalMediaFolders.Any(item =>
-                             normalizedPath.StartsWith(
-                                 Path.GetFullPath(item.UriPath).TrimEnd(Path.DirectorySeparatorChar) +
-                                 Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase)))
-                {
-                    return (false, _localizationService.GetLocalizedString("SettingsPagePathBeIncludedInfo"));
-                }
-                // 是否是父文件夹
-                else if (AppSettings.LocalMediaFolders.Any(item =>
-                             Path.GetFullPath(item.UriPath).TrimEnd(Path.DirectorySeparatorChar)
-                                 .StartsWith(normalizedPath, StringComparison.OrdinalIgnoreCase)))
-                {
-                    return (false, _localizationService.GetLocalizedString("SettingsPagePathIncludingOthersInfo"));
-                }
+                // 取消所有嵌套拦截，仅在文件系统扫描时通过比对是否是独立媒体库来自动跳过
+                // 这样用户可以随意添加父子目录，分别应用不同的匹配规则，且互不干扰
 
                 AppSettings.LocalMediaFolders.Add(tempFolder);
-                _ = Task.Run(async () => await _fileSystemService.ScanMediaFolderAsync(tempFolder));
+                foreach (var f in AppSettings.LocalMediaFolders)
+                {
+                    _ = Task.Run(async () => await _fileSystemService.ScanMediaFolderAsync(f));
+                }
 
                 return (true, null);
             }
@@ -142,18 +138,6 @@ public partial class MediaSettingsControlViewModel : BaseViewModel
                     {
                         return (false, _localizationService.GetLocalizedString("SettingsPagePathExistedInfo"));
                     }
-
-                    // 新路径是否是现有路径的“子文件夹”
-                    if (newUriString.StartsWith(existingUriString, StringComparison.OrdinalIgnoreCase))
-                    {
-                        return (false, _localizationService.GetLocalizedString("SettingsPagePathBeIncludedInfo"));
-                    }
-
-                    // 新路径是否是现有路径的“父文件夹”
-                    if (existingUriString.StartsWith(newUriString, StringComparison.OrdinalIgnoreCase))
-                    {
-                        return (false, _localizationService.GetLocalizedString("SettingsPagePathIncludingOthersInfo"));
-                    }
                 }
 
                 var isConnected = await Task.Run(async () =>
@@ -176,7 +160,12 @@ public partial class MediaSettingsControlViewModel : BaseViewModel
                     AppSettings.LocalMediaFolders.Add(tempFolder);
                     _passwordVaultProvider.Save(Core.Constants.App.AppName, tempFolder.VaultKey,
                         tempFolder.Password);
-                    _ = Task.Run(async () => await _fileSystemService.ScanMediaFolderAsync(tempFolder));
+                        
+                    foreach (var f in AppSettings.LocalMediaFolders)
+                    {
+                        _ = Task.Run(async () => await _fileSystemService.ScanMediaFolderAsync(f));
+                    }
+                    
                     return (true, null);
                 }
                 else

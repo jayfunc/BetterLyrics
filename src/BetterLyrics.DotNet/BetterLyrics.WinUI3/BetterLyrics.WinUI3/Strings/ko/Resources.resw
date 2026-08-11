@@ -687,6 +687,9 @@
   <data name="LyricsSaveConfigFolder.Header" xml:space="preserve">
     <value>위치 저장</value>
   </data>
+  <data name="LyricsSaveConfigFileNamePattern.Header" xml:space="preserve">
+    <value>파일 이름 패턴</value>
+  </data>
   <data name="LyricsSaveConfigIncludeTranslation.Header" xml:space="preserve">
     <value>번역 포함</value>
   </data>
@@ -1076,6 +1079,9 @@
   </data>
   <data name="MusicSettingsControlRealTimeScan.Header" xml:space="preserve">
     <value>실시간 모니터링</value>
+  </data>
+  <data name="MusicSettingsControlScanSubDirectories.Header" xml:space="preserve">
+    <value>하위 디렉터리 스캔</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>좁은 화면 모드</value>
@@ -1610,6 +1616,12 @@
   </data>
   <data name="SettingsPageLocalFolder.Text" xml:space="preserve">
     <value>로컬 폴더</value>
+  </data>
+  <data name="SettingsPageLocalMusicFilePattern.Header" xml:space="preserve">
+    <value>음악 파일 파싱 패턴</value>
+  </data>
+  <data name="SettingsPageLocalLyricsFilePattern.Header" xml:space="preserve">
+    <value>가사 파일 구문 분석 패턴</value>
   </data>
   <data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve">
     <value>장음절 임계값</value>
@@ -2624,5 +2636,23 @@
   </data>
   <data name="SettingsPageGlobalFont.Header" xml:space="preserve">
     <value>글꼴 계열</value>
+  </data>
+  <data name="FileNamePatternControlHelpTitle.Text" xml:space="preserve">
+    <value>허용된 키워드</value>
+  </data>
+  <data name="FileNamePatternControlHelpArtist.Text" xml:space="preserve">
+    <value>작가의 이름</value>
+  </data>
+  <data name="FileNamePatternControlHelpTitleDesc.Text" xml:space="preserve">
+    <value>노래 제목</value>
+  </data>
+  <data name="FileNamePatternControlHelpAlbum.Text" xml:space="preserve">
+    <value>앨범 제목</value>
+  </data>
+  <data name="FileNamePatternControlHelpTip.Text" xml:space="preserve">
+    <value>팁: 파일 이름의 일부를 무시하려면 ` {BPM} `과 같은 다른 단어를 자리 표시자로 사용할 수 있습니다.</value>
+  </data>
+  <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve">
+    <value>예시 미리보기:</value>
   </data>
 </root>

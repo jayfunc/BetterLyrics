@@ -687,6 +687,9 @@
   <data name="LyricsSaveConfigFolder.Header" xml:space="preserve">
     <value>सहेजने का स्थान</value>
   </data>
+  <data name="LyricsSaveConfigFileNamePattern.Header" xml:space="preserve">
+    <value>फ़ाइल नाम का पैटर्न</value>
+  </data>
   <data name="LyricsSaveConfigIncludeTranslation.Header" xml:space="preserve">
     <value>अनुवाद शामिल करें</value>
   </data>
@@ -1076,6 +1079,9 @@
   </data>
   <data name="MusicSettingsControlRealTimeScan.Header" xml:space="preserve">
     <value>वास्तविक समय में निगरानी</value>
+  </data>
+  <data name="MusicSettingsControlScanSubDirectories.Header" xml:space="preserve">
+    <value>उपनिर्देशिकाओं को स्कैन करें</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>संकीर्ण मोड</value>
@@ -1610,6 +1616,12 @@
   </data>
   <data name="SettingsPageLocalFolder.Text" xml:space="preserve">
     <value>स्थानीय फ़ोल्डर</value>
+  </data>
+  <data name="SettingsPageLocalMusicFilePattern.Header" xml:space="preserve">
+    <value>संगीत फ़ाइल पार्सिंग पैटर्न</value>
+  </data>
+  <data name="SettingsPageLocalLyricsFilePattern.Header" xml:space="preserve">
+    <value>गीत-लेख फ़ाइल पार्सिंग पैटर्न</value>
   </data>
   <data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve">
     <value>दीर्घ शब्दांश थ्रेसहोल्ड</value>
@@ -2624,5 +2636,23 @@
   </data>
   <data name="SettingsPageGlobalFont.Header" xml:space="preserve">
     <value>फ़ॉन्ट परिवार</value>
+  </data>
+  <data name="FileNamePatternControlHelpTitle.Text" xml:space="preserve">
+    <value>अनुमत कीवर्ड</value>
+  </data>
+  <data name="FileNamePatternControlHelpArtist.Text" xml:space="preserve">
+    <value>कलाकार का नाम</value>
+  </data>
+  <data name="FileNamePatternControlHelpTitleDesc.Text" xml:space="preserve">
+    <value>गीत का शीर्षक</value>
+  </data>
+  <data name="FileNamePatternControlHelpAlbum.Text" xml:space="preserve">
+    <value>एल्बम का नाम</value>
+  </data>
+  <data name="FileNamePatternControlHelpTip.Text" xml:space="preserve">
+    <value>सुझाव: आप फ़ाइल नाम के हिस्सों को अनदेखा करने के लिए प्लेसहोल्डर के रूप में {BPM} जैसे अन्य शब्द भी उपयोग कर सकते हैं।</value>
+  </data>
+  <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve">
+    <value>उदाहरण पूर्वावलोकन:</value>
   </data>
 </root>

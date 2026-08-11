@@ -5,6 +5,7 @@
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
+    xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:settings="using:BetterLyrics.Core.Models.Settings"
     xmlns:ui="using:CommunityToolkit.WinUI"
@@ -64,6 +65,12 @@
                                         <controls:SettingsCard x:Uid="MediaSettingsControlNameSetting">
                                             <TextBox VerticalAlignment="Center" Text="{x:Bind Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                         </controls:SettingsCard>
+                                        <controls:SettingsCard x:Uid="SettingsPageLocalMusicFilePattern">
+                                            <local:FileNamePatternControl PatternText="{x:Bind LocalMusicFilePattern, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        </controls:SettingsCard>
+                                        <controls:SettingsCard x:Uid="SettingsPageLocalLyricsFilePattern">
+                                            <local:FileNamePatternControl PatternText="{x:Bind LocalLyricsFilePattern, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                        </controls:SettingsCard>
                                         <controls:SettingsCard x:Uid="MediaSettingsControlLastSyncTime" Description="{x:Bind LastSyncTime.ToString(), Mode=OneWay, TargetNullValue=N/A}">
                                             <StackPanel>
                                                 <SplitButton
@@ -102,6 +109,9 @@
                                         </controls:SettingsCard>
                                         <controls:SettingsCard x:Uid="MusicSettingsControlRealTimeScan" IsEnabled="{x:Bind IsLocal, Mode=OneWay}">
                                             <ToggleSwitch IsOn="{x:Bind IsRealTimeScanEnabled, Mode=TwoWay}" />
+                                        </controls:SettingsCard>
+                                        <controls:SettingsCard x:Uid="MusicSettingsControlScanSubDirectories">
+                                            <ToggleSwitch IsOn="{x:Bind ScanSubDirectories, Mode=TwoWay}" />
                                         </controls:SettingsCard>
                                         <controls:SettingsCard>
                                             <Button x:Uid="SettingsPageRemovePath" Click="SettingsPageRemovePathButton_Click" />

@@ -1,0 +1,72 @@
+<UserControl
+    x:Class="BetterLyrics.WinUI3.Controls.FileNamePatternControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:ui="using:CommunityToolkit.WinUI"
+    mc:Ignorable="d">
+
+    <StackPanel Spacing="6">
+        <Grid ColumnSpacing="6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBox
+                x:Name="PatternTextBox"
+                Grid.Column="0"
+                HorizontalAlignment="Stretch"
+                PlaceholderText="{}{Artist} - {Title}"
+                Text="{x:Bind PatternText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+            <HyperlinkButton
+                x:Uid="Help"
+                Grid.Column="1"
+                Click="HelpButton_Click">
+                <FlyoutBase.AttachedFlyout>
+                    <Flyout Placement="Bottom" ShouldConstrainToRootBounds="False">
+                        <StackPanel MaxWidth="320">
+                            <TextBlock
+                                x:Uid="FileNamePatternControlHelpTitle"
+                                Margin="0,0,0,12"
+                                FontWeight="SemiBold" />
+                            <TextBlock Style="{StaticResource CaptionTextBlockStyle}" TextWrapping="Wrap">
+                                <Run FontWeight="SemiBold" Text="{}{Artist}" />
+                                <Run Text="-" />
+                                <Run x:Uid="FileNamePatternControlHelpArtist" />
+                                <LineBreak />
+                                <Run FontWeight="SemiBold" Text="{}{Title}" />
+                                <Run Text="-" />
+                                <Run x:Uid="FileNamePatternControlHelpTitleDesc" />
+                                <LineBreak />
+                                <Run FontWeight="SemiBold" Text="{}{Album}" />
+                                <Run Text="-" />
+                                <Run x:Uid="FileNamePatternControlHelpAlbum" />
+                                <LineBreak />
+                                <LineBreak />
+                                <Run x:Uid="FileNamePatternControlHelpTip" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                            </TextBlock>
+                        </StackPanel>
+                    </Flyout>
+                </FlyoutBase.AttachedFlyout>
+            </HyperlinkButton>
+        </Grid>
+
+        <StackPanel Orientation="Horizontal" Spacing="4">
+            <TextBlock
+                x:Uid="FileNamePatternControlExamplePreview"
+                VerticalAlignment="Center"
+                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                Style="{StaticResource CaptionTextBlockStyle}" />
+            <Grid Padding="8,4" Style="{ThemeResource CardGridStyle}">
+                <TextBlock
+                    x:Name="ExamplePreviewTextBlock"
+                    FontFamily="Consolas"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    TextWrapping="Wrap" />
+            </Grid>
+        </StackPanel>
+    </StackPanel>
+</UserControl>
