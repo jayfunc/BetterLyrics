@@ -64,17 +64,22 @@ public sealed partial class NowPlayingWindow : Window,
 
     private readonly IMonitorProvider _monitorProvider =
         Ioc.Default.GetRequiredService<IMonitorProvider>();
+        
+    private readonly ITaskbarThumbnailProvider _taskbarThumbnailProvider =
+        Ioc.Default.GetRequiredService<ITaskbarThumbnailProvider>();
 
     private AppColor _backdropAccentColor = Colors.Transparent;
     private OverlayInputHelper? _overlayInputHelper;
     private TaskbarHook? _taskbarHook;
     private WindowMessageMonitor? _wmm;
+    private uint _taskbarButtonCreatedMsg;
 
     public NowPlayingWindow(LyricsWindowStatus status)
     {
         InitializeComponent();
         _wmm = new WindowMessageMonitor(this);
         _wmm.WindowMessageReceived += Wmm_WindowMessageReceived;
+        _taskbarButtonCreatedMsg = User32.RegisterWindowMessage("TaskbarButtonCreated");
 
         LyricsWindowStatus = status;
         NowPlayingPage.LyricsWindowStatus = LyricsWindowStatus;
@@ -131,7 +136,11 @@ public sealed partial class NowPlayingWindow : Window,
     {
         if (message.Sender is IGsmtcService)
         {
-            if (message.PropertyName == nameof(IGsmtcService.CurrentIsPlaying)) OnAutoShowOrHideWindowChanged();
+            if (message.PropertyName == nameof(IGsmtcService.CurrentIsPlaying))
+            {
+                OnAutoShowOrHideWindowChanged();
+                _taskbarThumbnailProvider.UpdatePlayPauseState(WindowNative.GetWindowHandle(this), _gsmtcService.CurrentIsPlaying);
+            }
         }
         else if (message.Sender == LyricsWindowStatus)
         {
@@ -278,7 +287,13 @@ public sealed partial class NowPlayingWindow : Window,
     private void Wmm_WindowMessageReceived(object? sender, WindowMessageEventArgs e)
     {
         var msgId = e.Message.MessageId;
-        if (msgId == Message.WM_APPBAR_CALLBACK)
+        if (msgId == _taskbarButtonCreatedMsg)
+        {
+            var hwnd = WindowNative.GetWindowHandle(this);
+            _taskbarThumbnailProvider.InitializeButtons(hwnd);
+            _taskbarThumbnailProvider.UpdatePlayPauseState(hwnd, _gsmtcService.CurrentIsPlaying);
+        }
+        else if (msgId == Message.WM_APPBAR_CALLBACK)
         {
             var notification = (Shell32.ABN)e.Message.WParam;
 
@@ -302,6 +317,28 @@ public sealed partial class NowPlayingWindow : Window,
             }
 
             e.Handled = true;
+        }
+        else if (msgId == (uint)WindowMessage.WM_COMMAND)
+        {
+            var commandId = (int)((e.Message.WParam >> 16) & 0xFFFF);
+            if (commandId == Shell32.THBN_CLICKED)
+            {
+                var buttonId = (int)(e.Message.WParam & 0xFFFF);
+                switch (buttonId)
+                {
+                    case TaskbarThumbnailProvider.THB_PREVIOUS:
+                        _gsmtcService.PreviousAsync();
+                        break;
+                    case TaskbarThumbnailProvider.THB_PLAYPAUSE:
+                        if (_gsmtcService.CurrentIsPlaying) _gsmtcService.PauseAsync();
+                        else _gsmtcService.PlayAsync();
+                        break;
+                    case TaskbarThumbnailProvider.THB_NEXT:
+                        _gsmtcService.NextAsync();
+                        break;
+                }
+                e.Handled = true;
+            }
         }
         else
         {

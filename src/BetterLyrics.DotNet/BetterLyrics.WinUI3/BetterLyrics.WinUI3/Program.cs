@@ -254,6 +254,7 @@ public class Program
                 .AddSingleton<IProgramProvider, ProgramProvider>()
                 .AddSingleton<IMonitorProvider, MonitorProvider>()
                 .AddSingleton<ISpoutTextureProvider, SpoutTextureProvider>()
+                .AddSingleton<ITaskbarThumbnailProvider, TaskbarThumbnailProvider>()
 
                 // ViewModels
                 .AddSingleton<AppSettingsControlViewModel>()
