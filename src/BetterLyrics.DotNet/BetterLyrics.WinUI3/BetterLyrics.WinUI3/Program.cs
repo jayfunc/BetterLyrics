@@ -140,13 +140,7 @@ public class Program
 
         if (args.Data is IProtocolActivatedEventArgs protocolArgs)
         {
-            if (protocolArgs.Uri.Host == "link.last.fm")
-            {
-                var lastFMService = Ioc.Default.GetRequiredService<ILastFmService>();
-                await lastFMService.ConfirmAuthAsync(protocolArgs.Uri.Query.Replace("?token=", string.Empty));
-                windowManagerProvider.OpenOrShowWindow<SettingsWindow>();
-            }
-            else if (protocolArgs.Uri.Host == "settings")
+            if (protocolArgs.Uri.Host == "settings")
             {
                 var targetSegment = protocolArgs.Uri.Segments.LastOrDefault()?.Trim('/');
                 if (!string.IsNullOrEmpty(targetSegment) &&

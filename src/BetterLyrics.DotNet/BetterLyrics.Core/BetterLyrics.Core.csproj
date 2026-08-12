@@ -22,8 +22,8 @@
         <PackageReference Include="DiscordRichPresence" Version="1.6.1.70" />
         <PackageReference Include="F23.StringSimilarity" Version="7.0.1" />
         <PackageReference Include="FluentFTP" Version="54.2.0" />
+        <PackageReference Include="Hqub.Last.fm" Version="2.5.1" />
         <PackageReference Include="Impressionist.Next.Jayfunc" Version="1.0.0" />
-        <PackageReference Include="LiteFM" Version="1.0.3" />
         <PackageReference Include="Lyricify.Lyrics.Helper.Jayfunc" Version="0.1.4" />
         <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.10" />
         <PackageReference Include="LiteDB" Version="5.0.21" />

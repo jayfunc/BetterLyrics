@@ -10,7 +10,7 @@ using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.Serialization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using LiteFM.Abstractions;
+using Hqub.Lastfm.Entities;
 
 namespace BetterLyrics.Core.ViewModels;
 
@@ -72,7 +72,7 @@ public partial class PlaybackSettingsControlViewModel : BaseViewModel
 
     [ObservableProperty] public partial bool IsLastFmAuthenticated { get; set; }
 
-    [ObservableProperty] public partial LastFMUser? LastFmUser { get; set; }
+    [ObservableProperty] public partial User? LastFmUser { get; set; }
 
     private readonly IDiscordService _discordService;
 

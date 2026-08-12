@@ -4,16 +4,14 @@ using BetterLyrics.Core.Events;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
-using LiteFM;
-using LiteFM.Abstractions;
-using LiteFM.Abstractions.ApiContracts;
-using LiteFM.Api;
+using Hqub.Lastfm;
+using Hqub.Lastfm.Entities;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
 public class LastFmService : ILastFmService
 {
-    private readonly LastFMClient _client;
+    private readonly LastfmClient _client;
     private readonly IGlobalToastProvider _globalToastProvider;
     private readonly ILastFmDialogProvider _lastFmDialogProvider;
     private readonly IPasswordVaultProvider _passwordVaultProvider;
@@ -34,7 +32,7 @@ public class LastFmService : ILastFmService
         _launcherProvider = launcherProvider;
         _lastFmDialogProvider = lastFmDialogProvider;
 
-        _client = new LastFMClient(new LastFMOptions { ApiKey = LastFM.ApiKey, ApiSecret = LastFM.SharedSecret });
+        _client = new LastfmClient(LastFM.ApiKey, LastFM.SharedSecret);
         _sessionKey = _passwordVaultProvider.Get(Core.Constants.App.AppName, LastFM.SessionKeyCredentialKey);
         _ = UpdateAuthStatusAsync();
     }
@@ -42,22 +40,27 @@ public class LastFmService : ILastFmService
     public event EventHandler<LastFMUserChangedEventArgs>? UserChanged;
     public event EventHandler<LastFMIsAuthenticatedChangedEventArgs>? IsAuthenticatedChanged;
 
-    public LastFMUser? User { get; private set; }
+    public User? User { get; private set; }
 
     public bool IsAuthenticated { get; private set; }
 
-    public async Task ConfirmAuthAsync(string param)
+    public async Task ConfirmAuthAsync()
     {
-        var resp = await _client.RequestAsync(LastFMApi.GetSessionApi, new GetSessionRequest { Token = param });
-        if (resp.IsSuccess)
+        try
         {
-            _sessionKey = resp.Response!.Session!.Key;
-            _passwordVaultProvider.Save(Core.Constants.App.AppName, LastFM.SessionKeyCredentialKey, _sessionKey);
-            await UpdateAuthStatusAsync();
+            await _client.AuthenticateViaWebAsync();
+            if (_client.Session != null && _client.Session.Authenticated)
+            {
+                _sessionKey = _client.Session.SessionKey;
+                _passwordVaultProvider.Save(Core.Constants.App.AppName, LastFM.SessionKeyCredentialKey, _sessionKey);
+                await UpdateAuthStatusAsync();
+                return;
+            }
+            throw new Exception("Authentication failed");
         }
-        else
+        catch (Exception ex)
         {
-            _globalToastProvider.Show("LastFMAuthFailed", resp.Error?.Message, MessageSeverity.Error);
+            _globalToastProvider.Show("LastFMAuthFailed", ex.Message, MessageSeverity.Error);
         }
     }
 
@@ -70,10 +73,11 @@ public class LastFmService : ILastFmService
 
     public async Task AuthAsync()
     {
-        var url = $"https://www.last.fm/api/auth?api_key={_client.Options.ApiKey}&cb=betterlyrics://link.last.fm";
+        var url = await _client.GetWebAuthenticationUrlAsync();
+        
         _ = _launcherProvider.LaunchUriAsync(new Uri(url));
 
-        await _lastFmDialogProvider.ShowAuthDialogAsync();
+        await _lastFmDialogProvider.ShowAuthDialogAsync(ConfirmAuthAsync);
     }
 
     public async Task UnAuthAsync()
@@ -89,15 +93,25 @@ public class LastFmService : ILastFmService
             var (mappedTitle, mappedArtist, mappedAlbum) =
                 await _songSearchMapService.GetMappingAsync(songInfo);
 
-            var resp = await _client.RequestAsync(LastFMApi.ScrobbleApi, new ScrobbleRequest
+            try
             {
-                Track = mappedTitle,
-                Artist = mappedArtist,
-                Album = mappedAlbum,
-                TimeStamp = GetUnixTimeStamp()
-            }, _sessionKey);
-            if (!resp.IsSuccess)
-                _globalToastProvider.Show("LastFMScrobbleFailed", resp.Error?.Message, MessageSeverity.Error);
+                var scrobble = new Scrobble
+                {
+                    Track = mappedTitle,
+                    Artist = mappedArtist,
+                    Album = mappedAlbum,
+                    Date = DateTime.UtcNow
+                };
+                var resp = await _client.Track.ScrobbleAsync(scrobble);
+                if (resp != null && resp.Accepted == 0)
+                {
+                    _globalToastProvider.Show("LastFMScrobbleFailed", resp.Ignored > 0 ? "Scrobble ignored" : "Scrobble failed", MessageSeverity.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                _globalToastProvider.Show("LastFMScrobbleFailed", ex.Message, MessageSeverity.Error);
+            }
         }
     }
 
@@ -109,13 +123,22 @@ public class LastFmService : ILastFmService
     private async Task UpdateAuthStatusAsync()
     {
         IsAuthenticated = !string.IsNullOrEmpty(_sessionKey);
+        if (IsAuthenticated)
+        {
+             _client.Session.SessionKey = _sessionKey;
+        }
         IsAuthenticatedChanged?.Invoke(this, new LastFMIsAuthenticatedChangedEventArgs(IsAuthenticated));
         if (IsAuthenticated)
         {
-            var resp = await _client.RequestAsync(LastFMApi.GetUserInfoApi,
-                new GetUserInfoRequest { User = null }, _sessionKey);
-            User = resp.Response?.User;
-            if(!resp.IsSuccess) _globalToastProvider.Show("Error", resp.Error?.Message, MessageSeverity.Error);
+            try
+            {
+                User = await _client.User.GetInfoAsync(null);
+            }
+            catch (Exception ex)
+            {
+                _globalToastProvider.Show("Error", ex.Message, MessageSeverity.Error);
+                User = null;
+            }
         }
         else
         {

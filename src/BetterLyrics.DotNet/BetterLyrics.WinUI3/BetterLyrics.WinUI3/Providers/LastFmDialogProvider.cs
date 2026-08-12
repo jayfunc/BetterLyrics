@@ -22,7 +22,7 @@ public class LastFmDialogProvider : ILastFmDialogProvider
         _localizationService = localizationService;
     }
 
-    public async Task ShowAuthDialogAsync()
+    public async Task ShowAuthDialogAsync(Func<Task> onConfirm)
     {
         var dialogXamlRoot = _windowManagerProvider.GetWindow<SettingsWindow>()?.Content.XamlRoot ??
                              _windowManagerProvider.GetWindows<NowPlayingWindow>().FirstOrDefault()?.Content.XamlRoot;
@@ -37,6 +37,7 @@ public class LastFmDialogProvider : ILastFmDialogProvider
                 DefaultButton = ContentDialogButton.Primary,
                 XamlRoot = dialogXamlRoot
             };
+            dialog.PrimaryButtonClick += async (s, args) => { await onConfirm(); };
             await dialog.ShowAsync();
         }
     }

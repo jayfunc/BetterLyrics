@@ -683,10 +683,10 @@
                                         NavigateUri="{x:Bind ViewModel.LastFmUser.Url, Mode=OneWay}" />
                                 </controls:SettingsCard>
                                 <controls:SettingsCard x:Uid="SettingsPageLastFMPlaycount" IsEnabled="{x:Bind ViewModel.IsLastFmAuthenticated, Mode=OneWay}">
-                                    <TextBlock Text="{x:Bind ViewModel.LastFmUser.PlayCount, Mode=OneWay}" />
+                                    <TextBlock Text="{x:Bind ViewModel.LastFmUser.Playcount, Mode=OneWay}" />
                                 </controls:SettingsCard>
                                 <controls:SettingsCard x:Uid="SettingsPageLastFMRegistered" IsEnabled="{x:Bind ViewModel.IsLastFmAuthenticated, Mode=OneWay}">
-                                    <TextBlock Text="{x:Bind ViewModel.LastFmUser.UserRegisterTime.DateTime.ToLongDateString(), Mode=OneWay}" />
+                                    <TextBlock Text="{x:Bind ViewModel.LastFmUser.Registered.ToLongDateString(), Mode=OneWay}" />
                                 </controls:SettingsCard>
                                 <controls:SettingsCard IsEnabled="{x:Bind ViewModel.IsLastFmAuthenticated, Mode=OneWay}">
                                     <Button x:Uid="SettingsPageLastFMRefresh" Command="{x:Bind ViewModel.LastFmRefreshCommand}" />
