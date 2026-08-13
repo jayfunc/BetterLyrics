@@ -118,9 +118,8 @@ public partial class App : Application
         // 启动后台扫描
         var fileSystemService = Ioc.Default.GetRequiredService<IFileSystemService>();
         foreach (var item in settingsService.AppSettings.LocalMediaFolders)
-            if (item.LastSyncTime == null)
-                _ = Task.Run(async () =>
-                    await fileSystemService.ScanMediaFolderAsync(item, token: CancellationToken.None));
+            _ = Task.Run(async () =>
+                await fileSystemService.ScanMediaFolderAsync(item, token: CancellationToken.None));
 
         fileSystemService.StartAllFolderTimers();
 
