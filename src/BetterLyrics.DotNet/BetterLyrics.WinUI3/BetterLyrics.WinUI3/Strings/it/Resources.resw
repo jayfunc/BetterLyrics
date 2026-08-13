@@ -2655,4 +2655,22 @@
   <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve">
     <value>Anteprima dell'esempio:</value>
   </data>
+  <data name="FileNamePatternControlNoPatternProvided" xml:space="preserve">
+    <value>Non è stato fornito alcun modello</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Title" xml:space="preserve">
+    <value>È necessario riavviare il sistema</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Message" xml:space="preserve">
+    <value>Hai modificato alcune impostazioni; devi riavviare l'applicazione affinché le modifiche abbiano effetto</value>
+  </data>
+  <data name="SettingsPageFileNamePatternChangeHintInfoBar.Message" xml:space="preserve">
+    <value>Dopo aver modificato lo schema di analisi, clicca manualmente su "Sincronizza ora" qui sotto per applicare le nuove regole</value>
+  </data>
+  <data name="SettingsPageLocalMusicFilePattern.Description" xml:space="preserve">
+    <value>Specificare come estrarre le informazioni sui brani dai nomi dei file quando mancano i tag integrati (ad es., {Artist} - {Title}). Lasciare vuoto per utilizzare la strategia predefinita</value>
+  </data>
+  <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
+    <value>Specificare la convenzione di denominazione per i file dei testi locali (ad es., {Artist} - {Title}) per collegarli correttamente. Lasciare vuoto per utilizzare la strategia di corrispondenza predefinita</value>
+  </data>
 </root>

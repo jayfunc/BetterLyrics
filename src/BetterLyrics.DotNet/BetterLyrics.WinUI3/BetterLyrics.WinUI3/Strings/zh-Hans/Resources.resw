@@ -2655,4 +2655,22 @@
   <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve">
     <value>示例预览：</value>
   </data>
+  <data name="FileNamePatternControlNoPatternProvided" xml:space="preserve">
+    <value>未提供规则</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Title" xml:space="preserve">
+    <value>需要重新启动</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Message" xml:space="preserve">
+    <value>您已更改了一些设置；需要重新启动应用程序才能使这些设置生效</value>
+  </data>
+  <data name="SettingsPageFileNamePatternChangeHintInfoBar.Message" xml:space="preserve">
+    <value>修改解析规则后，请手动点击下方的 “立即同步” 以应用新规则</value>
+  </data>
+  <data name="SettingsPageLocalMusicFilePattern.Description" xml:space="preserve">
+    <value>指定当缺少内置标签时，如何从文件名中提取歌曲信息（例如： {Artist} - {Title}）。留空则使用默认策略</value>
+  </data>
+  <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
+    <value>指定本地歌词文件的命名规范（例如：{Artist} - {Title}）以进行精准匹配。留空则使用默认匹配策略</value>
+  </data>
 </root>

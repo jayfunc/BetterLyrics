@@ -75,7 +75,7 @@ public static partial class LanguageHelper
 
     public static readonly List<ExtendedLanguage> SupportedDisplayLanguages =
     [
-        new(CultureInfo.CurrentUICulture.Name, _localizationService.GetLocalizedString("SettingsPageSystemLanguage")),
+        new("", _localizationService.GetLocalizedString("SettingsPageSystemLanguage")),
         new("ar"), new("de"),
         new("en"), new("es"),
         new("fr"), new("hi"),

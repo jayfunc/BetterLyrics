@@ -2655,4 +2655,22 @@
   <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve">
     <value>معاينة المثال:</value>
   </data>
+  <data name="FileNamePatternControlNoPatternProvided" xml:space="preserve">
+    <value>لم يتم توفير أي نمط</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Title" xml:space="preserve">
+    <value>يلزم إعادة التشغيل</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Message" xml:space="preserve">
+    <value>لقد قمت بتغيير بعض الإعدادات؛ ويجب عليك إعادة تشغيل التطبيق حتى تدخل هذه التغييرات حيز التنفيذ</value>
+  </data>
+  <data name="SettingsPageFileNamePatternChangeHintInfoBar.Message" xml:space="preserve">
+    <value>بعد تغيير نمط التحليل، يرجى النقر يدويًّا على زر «المزامنة الآن» أدناه لتطبيق القواعد الجديدة</value>
+  </data>
+  <data name="SettingsPageLocalMusicFilePattern.Description" xml:space="preserve">
+    <value>حدد طريقة استخراج معلومات الأغنية من أسماء الملفات في حالة عدم وجود العلامات المدمجة (على سبيل المثال، {Artist} - {Title}). اترك الحقل فارغًا لاستخدام الإستراتيجية الافتراضية</value>
+  </data>
+  <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
+    <value>حدد قاعدة تسمية ملفات كلمات الأغاني المحلية (على سبيل المثال، {Artist} - {Title}) لربطها بدقة. اترك الحقل فارغًا لاستخدام استراتيجية المطابقة الافتراضية</value>
+  </data>
 </root>

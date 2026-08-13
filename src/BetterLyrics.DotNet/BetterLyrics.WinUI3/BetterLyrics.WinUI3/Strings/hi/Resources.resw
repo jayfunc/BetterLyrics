@@ -2655,4 +2655,22 @@
   <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve">
     <value>उदाहरण पूर्वावलोकन:</value>
   </data>
+  <data name="FileNamePatternControlNoPatternProvided" xml:space="preserve">
+    <value>कोई पैटर्न प्रदान नहीं किया गया</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Title" xml:space="preserve">
+    <value>पुनरारंभ आवश्यक है</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Message" xml:space="preserve">
+    <value>आपने कुछ सेटिंग्स बदल दी हैं; उन्हें लागू करने के लिए आपको एप्लिकेशन को पुनः आरंभ करना होगा।</value>
+  </data>
+  <data name="SettingsPageFileNamePatternChangeHintInfoBar.Message" xml:space="preserve">
+    <value>पार्सिंग पैटर्न बदलने के बाद, कृपया नए नियम लागू करने के लिए नीचे 'Sync now' पर मैन्युअली क्लिक करें।</value>
+  </data>
+  <data name="SettingsPageLocalMusicFilePattern.Description" xml:space="preserve">
+    <value>जब बिल्ट-इन टैग्स अनुपस्थित हों, तो फ़ाइलनामों से गीत की जानकारी कैसे निकालनी है, निर्दिष्ट करें (उदाहरण के लिए, {Artist} – {Title})। डिफ़ॉल्ट रणनीति का उपयोग करने के लिए इसे खाली छोड़ दें।</value>
+  </data>
+  <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
+    <value>स्थानीय गीत फ़ाइलों के नामकरण सम्मेलन को निर्दिष्ट करें (उदाहरण के लिए, {Artist} – {Title}) ताकि उन्हें सटीक रूप से लिंक किया जा सके। डिफ़ॉल्ट मिलान रणनीति का उपयोग करने के लिए इसे खाली छोड़ दें।</value>
+  </data>
 </root>

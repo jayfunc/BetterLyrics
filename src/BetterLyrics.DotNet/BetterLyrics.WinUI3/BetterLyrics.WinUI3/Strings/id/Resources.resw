@@ -2655,4 +2655,22 @@
   <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve">
     <value>Contoh Pratinjau:</value>
   </data>
+  <data name="FileNamePatternControlNoPatternProvided" xml:space="preserve">
+    <value>Tidak ada pola yang disertakan</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Title" xml:space="preserve">
+    <value>Perlu dilakukan restart</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Message" xml:space="preserve">
+    <value>Anda telah mengubah beberapa pengaturan; Anda perlu me-restart aplikasi agar perubahan tersebut berlaku</value>
+  </data>
+  <data name="SettingsPageFileNamePatternChangeHintInfoBar.Message" xml:space="preserve">
+    <value>Setelah mengubah pola penguraian, silakan klik 'Sinkronkan sekarang' di bawah ini secara manual untuk menerapkan aturan baru tersebut</value>
+  </data>
+  <data name="SettingsPageLocalMusicFilePattern.Description" xml:space="preserve">
+    <value>Tentukan cara mengekstrak informasi lagu dari nama file jika tag bawaan tidak ada (misalnya, {Artist} - {Title}). Biarkan kosong untuk menggunakan strategi default</value>
+  </data>
+  <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
+    <value>Tentukan konvensi penamaan untuk berkas lirik lokal (misalnya, {Artist} - {Title}) agar dapat ditautkan dengan tepat. Biarkan kosong untuk menggunakan strategi pencocokan default</value>
+  </data>
 </root>

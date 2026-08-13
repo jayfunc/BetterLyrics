@@ -2655,4 +2655,22 @@
   <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve">
     <value>Pratinjau Contoh:</value>
   </data>
+  <data name="FileNamePatternControlNoPatternProvided" xml:space="preserve">
+    <value>Tiada corak disediakan</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Title" xml:space="preserve">
+    <value>Butuh dihidupkan semula</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Message" xml:space="preserve">
+    <value>Anda telah mengubah beberapa tetapan; anda perlu memulakan semula aplikasi untuk tetapan tersebut berkuat kuasa.</value>
+  </data>
+  <data name="SettingsPageFileNamePatternChangeHintInfoBar.Message" xml:space="preserve">
+    <value>Selepas menukar corak pemarseman, sila klik secara manual 'Segerakkan sekarang' di bawah untuk menerapkan peraturan baru.</value>
+  </data>
+  <data name="SettingsPageLocalMusicFilePattern.Description" xml:space="preserve">
+    <value>Nyatakan cara mengekstrak maklumat lagu daripada nama fail apabila tag terbina dalam tiada (contohnya, {Artist} – {Title}). Biarkan kosong untuk menggunakan strategi lalai.</value>
+  </data>
+  <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
+    <value>Nyatakan konvensyen penamaan untuk fail lirik tempatan (contohnya, {Artist} – {Title}) bagi memautkannya dengan tepat. Biarkan kosong untuk menggunakan strategi padanan lalai.</value>
+  </data>
 </root>

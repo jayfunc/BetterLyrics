@@ -1081,7 +1081,7 @@
     <value>リアルタイム監視</value>
   </data>
   <data name="MusicSettingsControlScanSubDirectories.Header" xml:space="preserve">
-    <value>サブディレクトリをスキャンする</value>
+    <value>サブディレクトリをスキャン</value>
   </data>
   <data name="NarrowMode" xml:space="preserve">
     <value>狭い表示モード</value>
@@ -2638,7 +2638,7 @@
     <value>アプリのフォント</value>
   </data>
   <data name="FileNamePatternControlHelpTitle.Text" xml:space="preserve">
-    <value>許可されているキーワード</value>
+    <value>使用可能なキーワード</value>
   </data>
   <data name="FileNamePatternControlHelpArtist.Text" xml:space="preserve">
     <value>アーティスト名</value>
@@ -2650,9 +2650,27 @@
     <value>アルバムのタイトル</value>
   </data>
   <data name="FileNamePatternControlHelpTip.Text" xml:space="preserve">
-    <value>ヒント：ファイル名の一部を無視するには、「 {BPM} 」などの単語をプレースホルダーとして使用できます。</value>
+    <value>ヒント: {BPM} などの文字列をプレースホルダーとして使用すると、ファイル名の一部を無視できます。</value>
   </data>
   <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve">
     <value>プレビュー例：</value>
+  </data>
+  <data name="FileNamePatternControlNoPatternProvided" xml:space="preserve">
+    <value>パターンが指定されていません</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Title" xml:space="preserve">
+    <value>再起動が必要です</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Message" xml:space="preserve">
+    <value>いくつかの設定を変更しました。変更内容を反映させるには、アプリケーションを再起動する必要があります。</value>
+  </data>
+  <data name="SettingsPageFileNamePatternChangeHintInfoBar.Message" xml:space="preserve">
+    <value>解析パターンを変更した後、下の「今すぐ同期」を手動でクリックして、新しいルールを適用してください</value>
+  </data>
+  <data name="SettingsPageLocalMusicFilePattern.Description" xml:space="preserve">
+    <value>組み込みタグがない場合、ファイル名から曲情報を抽出する方法を指定します（例： {Artist} - {Title}）。デフォルトの処理方法を使用する場合は、空欄のままにしてください。</value>
+  </data>
+  <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
+    <value>ローカルの歌詞ファイルの命名規則を指定してください（例： {Artist} - {Title}）。これにより、ファイルが正確にリンクされます。空白のままにすると、デフォルトのマッチング方式が使用されます。</value>
   </data>
 </root>

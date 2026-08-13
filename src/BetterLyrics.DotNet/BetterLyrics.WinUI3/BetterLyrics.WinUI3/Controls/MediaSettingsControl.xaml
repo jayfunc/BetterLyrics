@@ -41,6 +41,12 @@
                         </interactivity:Interaction.Behaviors>
                     </InfoBar>
 
+                    <InfoBar
+                        x:Uid="SettingsPageFileNamePatternChangeHintInfoBar"
+                        IsClosable="False"
+                        IsOpen="True"
+                        Severity="Informational" />
+
                     <ListView
                         ItemContainerStyle="{ThemeResource ListViewStretchedItemContainerStyle}"
                         ItemsSource="{x:Bind ViewModel.AppSettings.LocalMediaFolders, Mode=OneWay}"
@@ -76,7 +82,8 @@
                                                 <SplitButton
                                                     x:Uid="MediaSettingsControlSyncNow"
                                                     Click="SyncNowButton_Click"
-                                                    IsEnabled="{x:Bind IsEnabled, Mode=OneWay}">
+                                                    IsEnabled="{x:Bind IsEnabled, Mode=OneWay}"
+                                                    Style="{ThemeResource AccentSplitButtonStyle}">
                                                     <SplitButton.Flyout>
                                                         <Flyout ShouldConstrainToRootBounds="False">
                                                             <StackPanel MaxWidth="250" Spacing="10">

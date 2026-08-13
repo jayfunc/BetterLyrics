@@ -2655,4 +2655,22 @@
   <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve">
     <value>Beispielvorschau:</value>
   </data>
+  <data name="FileNamePatternControlNoPatternProvided" xml:space="preserve">
+    <value>Es wurde kein Muster bereitgestellt</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Title" xml:space="preserve">
+    <value>Neustart erforderlich</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Message" xml:space="preserve">
+    <value>Sie haben einige Einstellungen geändert; damit diese wirksam werden, müssen Sie die Anwendung neu starten.</value>
+  </data>
+  <data name="SettingsPageFileNamePatternChangeHintInfoBar.Message" xml:space="preserve">
+    <value>Nachdem Sie das Parsing-Muster geändert haben, klicken Sie bitte unten manuell auf „Jetzt synchronisieren“, um die neuen Regeln zu übernehmen.</value>
+  </data>
+  <data name="SettingsPageLocalMusicFilePattern.Description" xml:space="preserve">
+    <value>Legen Sie fest, wie Titelinformationen aus Dateinamen extrahiert werden sollen, wenn integrierte Tags fehlen (z. B. {Artist} – {Title}). Lassen Sie das Feld leer, um die Standardstrategie zu verwenden.</value>
+  </data>
+  <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
+    <value>Geben Sie die Namenskonvention für lokale Liedtextdateien an (z. B. {Artist} – {Title}), damit diese korrekt verknüpft werden. Lassen Sie das Feld leer, um die Standard-Zuordnungsstrategie zu verwenden.</value>
+  </data>
 </root>

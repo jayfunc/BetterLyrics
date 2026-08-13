@@ -47,7 +47,7 @@ public static class SettingsIO
         try
         {
             var json = File.ReadAllText(path);
-            if (string.IsNullOrWhiteSpace(json) || json.StartsWith("\0"))
+            if (string.IsNullOrWhiteSpace(json) || json.StartsWith('\0'))
                 return false;
 
             var data = JsonSerializer.Deserialize(json, jsonTypeInfo);

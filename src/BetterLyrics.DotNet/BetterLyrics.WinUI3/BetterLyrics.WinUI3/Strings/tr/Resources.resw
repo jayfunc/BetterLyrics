@@ -2655,4 +2655,22 @@
   <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve">
     <value>Örnek Önizleme:</value>
   </data>
+  <data name="FileNamePatternControlNoPatternProvided" xml:space="preserve">
+    <value>Desen verilmemiştir</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Title" xml:space="preserve">
+    <value>Yeniden başlatma gerekiyor</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Message" xml:space="preserve">
+    <value>Bazı ayarları değiştirdiniz; bu ayarların geçerli olması için uygulamayı yeniden başlatmanız gerekiyor</value>
+  </data>
+  <data name="SettingsPageFileNamePatternChangeHintInfoBar.Message" xml:space="preserve">
+    <value>Ayrıştırma şablonunu değiştirdikten sonra, yeni kuralları uygulamak için lütfen aşağıdaki “Şimdi senkronize et” seçeneğine manuel olarak tıklayın</value>
+  </data>
+  <data name="SettingsPageLocalMusicFilePattern.Description" xml:space="preserve">
+    <value>Yerleşik etiketler eksik olduğunda dosya adlarından şarkı bilgilerinin nasıl çıkarılacağını belirtin (örn., {Artist} - {Title}). Varsayılan stratejiyi kullanmak için bu alanı boş bırakın</value>
+  </data>
+  <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
+    <value>Yerel şarkı sözü dosyalarını doğru şekilde eşleştirmek için adlandırma kuralını belirtin (örn., {Artist} - {Title}). Varsayılan eşleştirme stratejisini kullanmak için bu alanı boş bırakın.</value>
+  </data>
 </root>

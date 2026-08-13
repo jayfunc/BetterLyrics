@@ -1,3 +1,5 @@
+using BetterLyrics.Core.Interfaces.Services;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
@@ -5,6 +7,8 @@ namespace BetterLyrics.WinUI3.Controls;
 
 public sealed partial class FileNamePatternControl : UserControl
 {
+    private static ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
+
     public static readonly DependencyProperty PatternTextProperty = DependencyProperty.Register(
         nameof(PatternText),
         typeof(string),
@@ -34,12 +38,12 @@ public sealed partial class FileNamePatternControl : UserControl
     private void UpdateExamplePreview(string? pattern)
     {
         if (ExamplePreviewTextBlock == null) return;
-        
+
         ExamplePreviewTextBlock.Inlines.Clear();
 
         if (string.IsNullOrWhiteSpace(pattern))
         {
-            ExamplePreviewTextBlock.Text = "No pattern provided.";
+            ExamplePreviewTextBlock.Text = _localizationService.GetLocalizedString("FileNamePatternControlNoPatternProvided");
             return;
         }
 
@@ -48,7 +52,7 @@ public sealed partial class FileNamePatternControl : UserControl
         var regex = new System.Text.RegularExpressions.Regex(@"\{.*?\}", System.Text.RegularExpressions.RegexOptions.IgnoreCase);
         var matches = regex.Matches(pattern);
         int lastIndex = 0;
-        
+
         var accentBrush = Application.Current.Resources["AccentTextFillColorPrimaryBrush"] as Microsoft.UI.Xaml.Media.SolidColorBrush;
         var secondaryBrush = Application.Current.Resources["TextFillColorSecondaryBrush"] as Microsoft.UI.Xaml.Media.SolidColorBrush;
 
@@ -61,7 +65,7 @@ public sealed partial class FileNamePatternControl : UserControl
 
             var key = match.Value.ToLowerInvariant();
             var isSupported = key is "{artist}" or "{title}" or "{album}";
-            
+
             var replacementText = key switch
             {
                 "{artist}" => "Coldplay",

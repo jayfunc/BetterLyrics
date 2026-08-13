@@ -7,7 +7,7 @@ public class ExtendedLanguage
     public ExtendedLanguage(string languageCode, string? nativeName = null)
     {
         LanguageCode = languageCode;
-        
+
         if (nativeName != null)
         {
             NativeName = nativeName;
@@ -15,7 +15,7 @@ public class ExtendedLanguage
 
         try
         {
-            var cultureInfo = new CultureInfo(languageCode);
+            var cultureInfo = languageCode == "" ? null : new CultureInfo(languageCode);
             if (cultureInfo != null)
             {
                 NativeName ??= cultureInfo.NativeName;

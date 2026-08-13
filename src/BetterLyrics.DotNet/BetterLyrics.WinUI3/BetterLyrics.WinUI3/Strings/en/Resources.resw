@@ -2655,4 +2655,22 @@
   <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve">
     <value>Example Preview:</value>
   </data>
+  <data name="FileNamePatternControlNoPatternProvided" xml:space="preserve">
+    <value>No pattern provided</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Title" xml:space="preserve">
+    <value>Restart required</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Message" xml:space="preserve">
+    <value>You have changed some settings; you need to restart the application for them to take effect</value>
+  </data>
+  <data name="SettingsPageFileNamePatternChangeHintInfoBar.Message" xml:space="preserve">
+    <value>After changing the parsing pattern, please manually click 'Sync now' below to apply the new rules</value>
+  </data>
+  <data name="SettingsPageLocalMusicFilePattern.Description" xml:space="preserve">
+    <value>Specify how to extract song info from filenames when built-in tags are missing (e.g., {Artist} - {Title}). Leave blank to use the default strategy</value>
+  </data>
+  <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
+    <value>Specify the naming convention for local lyrics files (e.g., {Artist} - {Title}) to link them accurately. Leave blank to use the default matching strategy</value>
+  </data>
 </root>

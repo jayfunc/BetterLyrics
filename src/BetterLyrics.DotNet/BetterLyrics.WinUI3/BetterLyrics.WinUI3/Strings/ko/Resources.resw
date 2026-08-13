@@ -2655,4 +2655,22 @@
   <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve">
     <value>예시 미리보기:</value>
   </data>
+  <data name="FileNamePatternControlNoPatternProvided" xml:space="preserve">
+    <value>패턴이 제공되지 않았습니다</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Title" xml:space="preserve">
+    <value>재시작이 필요합니다</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Message" xml:space="preserve">
+    <value>일부 설정을 변경하셨습니다. 변경 사항을 적용하려면 애플리케이션을 다시 시작해야 합니다.</value>
+  </data>
+  <data name="SettingsPageFileNamePatternChangeHintInfoBar.Message" xml:space="preserve">
+    <value>구문 분석 패턴을 변경한 후, 아래의 ‘지금 동기화’를 직접 클릭하여 새로운 규칙을 적용해 주세요.</value>
+  </data>
+  <data name="SettingsPageLocalMusicFilePattern.Description" xml:space="preserve">
+    <value>내장 태그가 없는 경우 파일 이름에서 곡 정보를 추출하는 방법을 지정합니다(예: {Artist} → {Title}). 기본 전략을 사용하려면 비워 두십시오.</value>
+  </data>
+  <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
+    <value>로컬 가사 파일의 이름 지정 규칙을 지정하여(예: {Artist} - {Title}) 파일을 정확하게 연결하십시오. 기본 일치 전략을 사용하려면 이 필드를 비워 두십시오.</value>
+  </data>
 </root>

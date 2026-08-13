@@ -2655,4 +2655,22 @@
   <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve">
     <value>ตัวอย่างการดูตัวอย่าง:</value>
   </data>
+  <data name="FileNamePatternControlNoPatternProvided" xml:space="preserve">
+    <value>ไม่มีแบบให้</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Title" xml:space="preserve">
+    <value>ต้องรีสตาร์ท</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Message" xml:space="preserve">
+    <value>คุณได้ปรับเปลี่ยนการตั้งค่าบางอย่างแล้ว คุณต้องรีสตาร์ทแอปพลิเคชันเพื่อให้การตั้งค่าเหล่านั้นมีผล</value>
+  </data>
+  <data name="SettingsPageFileNamePatternChangeHintInfoBar.Message" xml:space="preserve">
+    <value>หลังจากเปลี่ยนรูปแบบการวิเคราะห์แล้ว โปรดคลิก 'Sync now' ด้านล่างด้วยตนเองเพื่อนำกฎใหม่ไปใช้</value>
+  </data>
+  <data name="SettingsPageLocalMusicFilePattern.Description" xml:space="preserve">
+    <value>กำหนดวิธีดึงข้อมูลเพลงจากชื่อไฟล์เมื่อแท็กในตัวขาดหายไป (เช่น {Artist} - {Title}) หากไม่กรอกอะไรไว้ จะใช้กลยุทธ์ตามค่าเริ่มต้น</value>
+  </data>
+  <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
+    <value>กำหนดกฎการตั้งชื่อสำหรับไฟล์เนื้อเพลงในเครื่อง (เช่น {Artist} - {Title}) เพื่อเชื่อมโยงให้ถูกต้อง หากไม่กรอกอะไรเลย จะใช้กลยุทธ์การจับคู่ตามค่าเริ่มต้น</value>
+  </data>
 </root>

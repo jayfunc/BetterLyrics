@@ -2655,4 +2655,22 @@
   <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve">
     <value>範例預覽：</value>
   </data>
+  <data name="FileNamePatternControlNoPatternProvided" xml:space="preserve">
+    <value>未提供規則</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Title" xml:space="preserve">
+    <value>需要重新啟動</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Message" xml:space="preserve">
+    <value>您已變更部分設定；需重新啟動應用程式，這些設定才會生效</value>
+  </data>
+  <data name="SettingsPageFileNamePatternChangeHintInfoBar.Message" xml:space="preserve">
+    <value>變更解析規則後，請手動點擊下方的「立即同步」以套用新規則</value>
+  </data>
+  <data name="SettingsPageLocalMusicFilePattern.Description" xml:space="preserve">
+    <value>指定當內建標籤缺失時，如何從檔案名稱中擷取歌曲資訊（例如： {Artist} - {Title}）。若留空，則使用預設策略</value>
+  </data>
+  <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
+    <value>請指定本機歌詞檔案的命名規則（例如： {Artist} - {Title}），以便正確連結這些檔案。若留空，則使用預設的匹配策略</value>
+  </data>
 </root>

@@ -2655,4 +2655,22 @@
   <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve">
     <value>Пример предварительного просмотра:</value>
   </data>
+  <data name="FileNamePatternControlNoPatternProvided" xml:space="preserve">
+    <value>Шаблон не предоставлен</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Title" xml:space="preserve">
+    <value>Требуется перезапуск</value>
+  </data>
+  <data name="SettingsPageRestartRequiredInfoBar.Message" xml:space="preserve">
+    <value>Вы изменили некоторые настройки; чтобы они вступили в силу, необходимо перезапустить приложение</value>
+  </data>
+  <data name="SettingsPageFileNamePatternChangeHintInfoBar.Message" xml:space="preserve">
+    <value>После изменения шаблона разбора, пожалуйста, вручную нажмите кнопку «Синхронизировать сейчас» ниже, чтобы применить новые правила</value>
+  </data>
+  <data name="SettingsPageLocalMusicFilePattern.Description" xml:space="preserve">
+    <value>Укажите, как извлекать информацию о композиции из имен файлов при отсутствии встроенных тегов (например, {Artist} — {Title}). Оставьте поле пустым, чтобы использовать стратегию по умолчанию</value>
+  </data>
+  <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
+    <value>Укажите схему именования локальных файлов с текстами песен (например, {Artist} — {Title}), чтобы обеспечить их правильное сопоставление. Оставьте поле пустым, чтобы использовать стратегию сопоставления по умолчанию.</value>
+  </data>
 </root>
