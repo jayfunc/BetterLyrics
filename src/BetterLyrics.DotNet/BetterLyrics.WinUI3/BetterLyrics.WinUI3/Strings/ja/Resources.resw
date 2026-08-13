@@ -2662,15 +2662,15 @@
     <value>再起動が必要です</value>
   </data>
   <data name="SettingsPageRestartRequiredInfoBar.Message" xml:space="preserve">
-    <value>いくつかの設定を変更しました。変更内容を反映させるには、アプリケーションを再起動する必要があります。</value>
+    <value>一部の設定が変更されました。反映するにはアプリを再起動する必要があります</value>
   </data>
   <data name="SettingsPageFileNamePatternChangeHintInfoBar.Message" xml:space="preserve">
-    <value>解析パターンを変更した後、下の「今すぐ同期」を手動でクリックして、新しいルールを適用してください</value>
+    <value>解析パターンを変更した後は、下の「今すぐ同期」をクリックして新しいルールを適用してください</value>
   </data>
   <data name="SettingsPageLocalMusicFilePattern.Description" xml:space="preserve">
-    <value>組み込みタグがない場合、ファイル名から曲情報を抽出する方法を指定します（例： {Artist} - {Title}）。デフォルトの処理方法を使用する場合は、空欄のままにしてください。</value>
+    <value>組み込みタグがない場合、ファイル名から楽曲情報を抽出する方法（例: {Artist} - {Title}）を指定します。空欄の場合はデフォルトのロジックが使用されます</value>
   </data>
   <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
-    <value>ローカルの歌詞ファイルの命名規則を指定してください（例： {Artist} - {Title}）。これにより、ファイルが正確にリンクされます。空白のままにすると、デフォルトのマッチング方式が使用されます。</value>
+    <value>ローカル歌詞ファイルの命名規則（例: {Artist} - {Title}）を指定して正確にリンクします。空欄の場合はデフォルトのマッチングロジックが使用されます</value>
   </data>
 </root>

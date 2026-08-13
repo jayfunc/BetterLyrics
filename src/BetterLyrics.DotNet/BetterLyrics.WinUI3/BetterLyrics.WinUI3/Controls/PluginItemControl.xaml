@@ -35,21 +35,30 @@
             <StackPanel
                 HorizontalAlignment="Right"
                 VerticalAlignment="Center"
-                Orientation="Vertical"
-                Spacing="4">
+                Orientation="Vertical">
 
                 <StackPanel
                     HorizontalAlignment="Right"
                     Orientation="Horizontal"
                     Spacing="4">
+                    <local:InfoTag
+                        HorizontalAlignment="Right"
+                        Glyph="&#xE787;"
+                        Text="{x:Bind PluginInfo.Plugin.LastUpdated, Mode=OneWay}" />
                     <local:InfoTag Glyph="&#xE8EC;" Text="{x:Bind PluginInfo.Plugin.Version, Mode=OneWay}" />
-                    <local:InfoTag Glyph="&#xE943;" Link="{x:Bind PluginInfo.Plugin.RepositoryUrl, Mode=OneWay}" />
                 </StackPanel>
 
-                <local:InfoTag
+                <StackPanel
                     HorizontalAlignment="Right"
-                    Glyph="&#xE787;"
-                    Text="{x:Bind PluginInfo.Plugin.LastUpdated, Mode=OneWay}" />
+                    Orientation="Horizontal"
+                    Spacing="4">
+                    <local:ExternalLinkButton
+                        Margin="0,0,4,0"
+                        Padding="0"
+                        Content="GitHub"
+                        NavigateUri="{x:Bind PluginInfo.Plugin.RepositoryUrl, Mode=OneWay}" />
+                </StackPanel>
+
             </StackPanel>
         </controls:SettingsExpander.Content>
 
@@ -63,7 +72,9 @@
 
         <controls:SettingsExpander.ItemsFooter>
             <controls:SettingsCard>
-                <Button x:Uid="PluginManagerControlUninstall" Click="UninstallClick" />
+                <StackPanel Orientation="Horizontal" Spacing="8">
+                    <Button x:Uid="PluginManagerControlUninstall" Click="UninstallClick" />
+                </StackPanel>
             </controls:SettingsCard>
         </controls:SettingsExpander.ItemsFooter>
 
