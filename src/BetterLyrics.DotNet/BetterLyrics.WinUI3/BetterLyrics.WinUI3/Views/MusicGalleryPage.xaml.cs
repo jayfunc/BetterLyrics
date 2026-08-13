@@ -85,12 +85,12 @@ public sealed partial class MusicGalleryPage : Page
                     if (listViewBase.Name == "AlbumGridView")
                     {
                         var selectedAlbums = listViewBase.SelectedItems.Cast<AlbumModel>().ToList();
-                        ViewModel.SelectedTracks = ViewModel.FilteredTracks.Where(t => selectedAlbums.Any(a => t.Album.Equals(a.Title, StringComparison.OrdinalIgnoreCase))).ToList();
+                        ViewModel.SelectedTracks = ViewModel.FilteredTracks.Where(t => selectedAlbums.Any(a => (t.Album ?? string.Empty).Equals(a.Title, StringComparison.OrdinalIgnoreCase))).ToList();
                     }
                     else
                     {
                         var selectedArtists = listViewBase.SelectedItems.Cast<ArtistModel>().ToList();
-                        ViewModel.SelectedTracks = ViewModel.FilteredTracks.Where(t => selectedArtists.Any(a => t.Artist.Equals(a.Name, StringComparison.OrdinalIgnoreCase))).ToList();
+                        ViewModel.SelectedTracks = ViewModel.FilteredTracks.Where(t => selectedArtists.Any(a => (t.Artist ?? string.Empty).Equals(a.Name, StringComparison.OrdinalIgnoreCase))).ToList();
                     }
                 }
                 else
@@ -105,14 +105,14 @@ public sealed partial class MusicGalleryPage : Page
                 {
                     if (listViewBase.SelectedItems.Count == listViewBase.Items.Count)
                         SelectAllCheckBox.IsChecked = true;
-                    else if (listViewBase.SelectedItems.Count == 0) 
+                    else if (listViewBase.SelectedItems.Count == 0)
                         SelectAllCheckBox.IsChecked = false;
                 }
             }
         }
     }
 
-    private void NavigateToPlaylist(string name, string icon, CommonSongProperty filterProperty, string filterValue, System.Windows.Input.ICommand? command, object? commandParam)
+    private void NavigateToPlaylist(string? name, string icon, CommonSongProperty filterProperty, string? filterValue, System.Windows.Input.ICommand? command, object? commandParam)
     {
         var playlist = new SongsTabInfo
         {
@@ -307,7 +307,4 @@ public sealed partial class MusicGalleryPage : Page
             ViewModel.SelectArtistCommand.Execute(model);
         }
     }
-
-
-
 }

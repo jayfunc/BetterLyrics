@@ -64,8 +64,11 @@ public partial class MediaSettingsControlViewModel : BaseViewModel
     {
         if (folder.IsProcessing) return;
 
+        bool actualForceSync = forceSync || folder.ForceNextSync;
+        if (actualForceSync) folder.ForceNextSync = false;
+
         _ = Task.Run(async () =>
-            await _fileSystemService.ScanMediaFolderAsync(folder, forceSync, CancellationToken.None));
+            await _fileSystemService.ScanMediaFolderAsync(folder, actualForceSync, CancellationToken.None));
     }
 
     [RelayCommand]

@@ -8,7 +8,7 @@ public static class EnumerableExtensions
     extension<T>(IEnumerable<T> items)
     {
         public ObservableCollection<GroupInfoList> GetGroupedBy(Func<T, object> groupKeySelector,
-            Func<object, object>? orderSelector = null, bool isDescending = false)
+            Func<object, object?>? orderSelector = null, bool isDescending = false)
         {
             var query = from item in items
                 group item by groupKeySelector(item)

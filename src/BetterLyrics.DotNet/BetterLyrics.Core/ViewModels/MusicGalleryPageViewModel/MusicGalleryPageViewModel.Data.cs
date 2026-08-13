@@ -116,8 +116,8 @@ public partial class MusicGalleryPageViewModel
 
         _filteredTracks = _middleTracks.Where(t =>
             t.Title.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
-            t.Artist.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
-            t.Album.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
+            (t.Artist ?? string.Empty).Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
+            (t.Album ?? string.Empty).Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
             t.FileName.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
             t.ParentFolderPath.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
     }
@@ -135,11 +135,11 @@ public partial class MusicGalleryPageViewModel
 
         if (CurrentView == MusicLibraryViewType.AlbumDetail && SelectedAlbum != null)
         {
-            DetailTracks = new ObservableCollection<ExtendedTrack>(_sortedTracks.Where(t => t.Album.Equals(SelectedAlbum.Title, StringComparison.OrdinalIgnoreCase)));
+            DetailTracks = new ObservableCollection<ExtendedTrack>(_sortedTracks.Where(t => (t.Album ?? string.Empty).Equals(SelectedAlbum.Title, StringComparison.OrdinalIgnoreCase)));
         }
         else if (CurrentView == MusicLibraryViewType.ArtistDetail && SelectedArtist != null)
         {
-            DetailTracks = new ObservableCollection<ExtendedTrack>(_sortedTracks.Where(t => t.Artist.Equals(SelectedArtist.Name, StringComparison.OrdinalIgnoreCase)));
+            DetailTracks = new ObservableCollection<ExtendedTrack>(_sortedTracks.Where(t => (t.Artist ?? string.Empty).Equals(SelectedArtist.Name, StringComparison.OrdinalIgnoreCase)));
         }
     }
 
@@ -152,7 +152,7 @@ public partial class MusicGalleryPageViewModel
             {
                 Album = new AlbumModel
                 {
-                    Title = g.Key,
+                    Title = g.Key ?? string.Empty,
                     LocalAlbumArtPath = g.FirstOrDefault(t => !string.IsNullOrEmpty(t.LocalAlbumArtPath))?.LocalAlbumArtPath ?? g.First().LocalAlbumArtPath,
                     SongCount = g.Count()
                 },
@@ -174,7 +174,7 @@ public partial class MusicGalleryPageViewModel
             {
                 Artist = new ArtistModel
                 {
-                    Name = g.Key,
+                    Name = g.Key ?? string.Empty,
                 },
                 FirstTrack = g.First()
             });
@@ -187,8 +187,6 @@ public partial class MusicGalleryPageViewModel
             o => ((ArtistModel)o).Name
         );
     }
-
-
 
     private void RefreshTreeView()
     {
@@ -269,7 +267,7 @@ public partial class MusicGalleryPageViewModel
         });
     }
 
-    private string GetTrackPropertyValue(ExtendedTrack track, CommonSongProperty property) => property switch
+    private static string? GetTrackPropertyValue(ExtendedTrack track, CommonSongProperty property) => property switch
     {
         CommonSongProperty.Title => track.Title,
         CommonSongProperty.Album => track.Album,
@@ -278,40 +276,40 @@ public partial class MusicGalleryPageViewModel
         _ => string.Empty
     };
 
-    private string GetTrackSortValue(ExtendedTrack track, CommonSongProperty property) => property switch
+    private static string? GetTrackSortValue(ExtendedTrack track, CommonSongProperty property) => property switch
     {
         CommonSongProperty.Title => track.Title,
         CommonSongProperty.Artist => track.Artist,
         CommonSongProperty.Album => track.Album,
         CommonSongProperty.Folder => track.ParentFolderName,
-        CommonSongProperty.Genre => track.Genre ?? string.Empty,
+        CommonSongProperty.Genre => track.Genre,
         CommonSongProperty.Year => track.Year.ToString(),
         CommonSongProperty.TrackNumber => track.TrackNumber.ToString(),
         CommonSongProperty.Bitrate => track.Bitrate.ToString(),
         CommonSongProperty.SampleRate => track.SampleRate.ToString(),
-        CommonSongProperty.AudioFormat => track.AudioFormatShortName ?? string.Empty,
+        CommonSongProperty.AudioFormat => track.AudioFormatShortName,
         CommonSongProperty.FileSize => track.FileSize.ToString(),
-        CommonSongProperty.DateCreated => track.DateCreated?.ToString() ?? string.Empty,
-        CommonSongProperty.DateModified => track.DateModified?.ToString() ?? string.Empty,
+        CommonSongProperty.DateCreated => track.DateCreated?.ToString(),
+        CommonSongProperty.DateModified => track.DateModified?.ToString(),
         CommonSongProperty.Duration => track.Duration.ToString(),
         _ => track.Title
     };
 
-    private object GetTrackDisplayValue(ExtendedTrack track, CommonSongProperty property) => property switch
+    private static object? GetTrackDisplayValue(ExtendedTrack track, CommonSongProperty property) => property switch
     {
         CommonSongProperty.Title => track.Title,
         CommonSongProperty.Artist => track.Artist,
         CommonSongProperty.Album => track.Album,
-        CommonSongProperty.Folder => track.Album,
-        CommonSongProperty.Genre => track.Genre ?? string.Empty,
+        CommonSongProperty.Folder => track.ParentFolderName,
+        CommonSongProperty.Genre => track.Genre,
         CommonSongProperty.Year => track.Year,
         CommonSongProperty.TrackNumber => track.TrackNumber,
         CommonSongProperty.Bitrate => track.Bitrate,
         CommonSongProperty.SampleRate => track.SampleRate,
-        CommonSongProperty.AudioFormat => track.AudioFormatShortName ?? string.Empty,
+        CommonSongProperty.AudioFormat => track.AudioFormatShortName,
         CommonSongProperty.FileSize => track.FileSize,
-        CommonSongProperty.DateCreated => track.DateCreated ?? DateTime.MinValue,
-        CommonSongProperty.DateModified => track.DateModified ?? DateTime.MinValue,
+        CommonSongProperty.DateCreated => track.DateCreated,
+        CommonSongProperty.DateModified => track.DateModified,
         CommonSongProperty.Duration => track.Duration,
         _ => track.Title
     };

@@ -221,7 +221,7 @@ public static partial class LanguageHelper
         return found?.LanguageCode ?? "en";
     }
 
-    public static string GetOrderChar(string text)
+    public static string GetOrderChar(string? text)
     {
         if (string.IsNullOrWhiteSpace(text)) return "#";
 

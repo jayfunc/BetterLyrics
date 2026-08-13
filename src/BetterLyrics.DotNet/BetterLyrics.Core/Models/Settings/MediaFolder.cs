@@ -61,9 +61,21 @@ public partial class MediaFolder : ObservableRecipient
     [NotifyPropertyChangedRecipients]
     public partial string LocalLyricsFilePattern { get; set; } = "";
 
+    partial void OnLocalLyricsFilePatternChanged(string value)
+    {
+        ForceNextSync = true;
+    }
+
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
     public partial string LocalMusicFilePattern { get; set; } = "";
+
+    partial void OnLocalMusicFilePatternChanged(string value)
+    {
+        ForceNextSync = true;
+    }
+
+    [JsonIgnore] public bool ForceNextSync { get; set; } = false;
 
     [JsonIgnore] public string Password { get; set; }
 

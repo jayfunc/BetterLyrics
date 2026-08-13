@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 
 namespace BetterLyrics.Core.Helpers;
 
-public static class MediaFileNamePatternParser
+public static partial class MediaFileNamePatternParser
 {
     public static (string? Artist, string? Title, string? Album) Parse(string fileNameWithoutExt, string pattern)
     {
@@ -36,14 +36,21 @@ public static class MediaFileNamePatternParser
     {
         if (string.IsNullOrWhiteSpace(pattern)) return string.Empty;
 
-        var escapedPattern = Regex.Escape(pattern);
-        escapedPattern = escapedPattern.Replace("\\{Artist\\}", "(?<Artist>.*?)");
-        escapedPattern = escapedPattern.Replace("\\{Title\\}", "(?<Title>.*?)");
-        escapedPattern = escapedPattern.Replace("\\{Album\\}", "(?<Album>.*?)");
+        var parts = PartsRegex().Split(pattern);
+        var sb = new System.Text.StringBuilder();
 
-        // Treat any other {xyz} as an ignored wildcard
-        escapedPattern = Regex.Replace(escapedPattern, @"\\\{.*?\\\}", ".*?");
+        foreach (var part in parts)
+        {
+            if (part == "{Artist}") sb.Append("(?<Artist>.*?)");
+            else if (part == "{Title}") sb.Append("(?<Title>.*?)");
+            else if (part == "{Album}") sb.Append("(?<Album>.*?)");
+            else if (part.StartsWith("{") && part.EndsWith("}")) sb.Append(".*?");
+            else sb.Append(Regex.Escape(part));
+        }
 
-        return "^" + escapedPattern + "$";
+        return "^" + sb.ToString() + "$";
     }
+
+    [GeneratedRegex(@"(\{.*?\})")]
+    private static partial Regex PartsRegex();
 }

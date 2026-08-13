@@ -20,8 +20,13 @@ public class LauncherProvider : ILauncherProvider
         await Launcher.LaunchFolderPathAsync(folderPath);
     }
 
-    public async Task SelectAndShowFileAsync(string filePath)
+    public async Task SelectAndShowFileAsync(string? filePath)
     {
+        if (string.IsNullOrEmpty(filePath))
+        {
+            return;
+        }
+
         var file = await StorageFile.GetFileFromPathAsync(filePath);
         var folder = await file.GetParentAsync();
 

@@ -16,6 +16,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
@@ -60,8 +61,8 @@
         </StackPanel>
 
         <StackPanel
-            Grid.RowSpan="3"
-            Margin="0,0,0,20"
+            Grid.Row="3"
+            Margin="0,20,0,20"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
             Orientation="Horizontal"
