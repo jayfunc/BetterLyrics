@@ -2673,4 +2673,37 @@
   <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
     <value>กำหนดกฎการตั้งชื่อสำหรับไฟล์เนื้อเพลงในเครื่อง (เช่น {Artist} - {Title}) เพื่อเชื่อมโยงให้ถูกต้อง หากไม่กรอกอะไรเลย จะใช้กลยุทธ์การจับคู่ตามค่าเริ่มต้น</value>
   </data>
+  <data name="NowPlayingToastTitle" xml:space="preserve">
+    <value>กำลังเล่น Toast</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Header" xml:space="preserve">
+    <value>แสดงหน้าต่างป๊อปอัพ "กำลังเล่นอยู่"</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Description" xml:space="preserve">
+    <value>แสดงการแจ้งเตือนแบบป๊อปอัพสั้นๆ ที่มุมหน้าจอเมื่อเพลงเปลี่ยน</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCorner.Header" xml:space="preserve">
+    <value>ตำแหน่งของหน้าต่างป๊อปอัพ</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Header" xml:space="preserve">
+    <value>แสดงบนทุกหน้าจอ</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve">
+    <value>หากปิดใช้งานไว้ หน้าต่างป๊อปอัพจะปรากฏขึ้นเฉพาะบนจอหลักเท่านั้น</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopLeft.Content" xml:space="preserve">
+    <value>มุมซ้ายบน</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopRight.Content" xml:space="preserve">
+    <value>มุมขวาบน</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomLeft.Content" xml:space="preserve">
+    <value>มุมล่างซ้าย</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomRight.Content" xml:space="preserve">
+    <value>มุมขวาล่าง</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCategory.Text" xml:space="preserve">
+    <value>แจ้งเตือนกำลังเล่นอยู่</value>
+  </data>
 </root>

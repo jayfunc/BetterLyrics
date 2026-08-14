@@ -2673,4 +2673,37 @@
   <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
     <value>स्थानीय गीत फ़ाइलों के नामकरण सम्मेलन को निर्दिष्ट करें (उदाहरण के लिए, {Artist} – {Title}) ताकि उन्हें सटीक रूप से लिंक किया जा सके। डिफ़ॉल्ट मिलान रणनीति का उपयोग करने के लिए इसे खाली छोड़ दें।</value>
   </data>
+  <data name="NowPlayingToastTitle" xml:space="preserve">
+    <value>अब टोस्ट बज रहा है</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Header" xml:space="preserve">
+    <value>"अब चल रहा है" पॉपअप दिखाएँ</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Description" xml:space="preserve">
+    <value>जब गाना बदलता है तो स्क्रीन के कोने में एक संक्षिप्त पॉपअप सूचना दिखाएँ</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCorner.Header" xml:space="preserve">
+    <value>पॉपअप स्थिति</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Header" xml:space="preserve">
+    <value>सभी मॉनिटरों पर दिखाएँ</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve">
+    <value>यदि अक्षम किया गया हो, तो पॉपअप केवल प्राथमिक मॉनिटर पर ही दिखाई देगा।</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopLeft.Content" xml:space="preserve">
+    <value>ऊपर बाएँ</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopRight.Content" xml:space="preserve">
+    <value>ऊपर दाएँ</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomLeft.Content" xml:space="preserve">
+    <value>नीचे बाएँ</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomRight.Content" xml:space="preserve">
+    <value>नीचे दाएँ</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCategory.Text" xml:space="preserve">
+    <value>अब चल रहा है सूचना</value>
+  </data>
 </root>

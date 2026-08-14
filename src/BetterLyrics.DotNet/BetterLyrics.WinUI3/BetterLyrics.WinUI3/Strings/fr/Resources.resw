@@ -2673,4 +2673,37 @@
   <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
     <value>Précisez la convention de nommage des fichiers de paroles locaux (par exemple, {Artist} - {Title}) afin de les associer correctement. Laissez ce champ vide pour utiliser la stratégie de correspondance par défaut.</value>
   </data>
+  <data name="NowPlayingToastTitle" xml:space="preserve">
+    <value>En cours de lecture : Toast</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Header" xml:space="preserve">
+    <value>Afficher la fenêtre contextuelle « En cours de lecture »</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Description" xml:space="preserve">
+    <value>Afficher une brève notification contextuelle dans un coin de l'écran lorsque le morceau change</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCorner.Header" xml:space="preserve">
+    <value>Position de la fenêtre contextuelle</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Header" xml:space="preserve">
+    <value>Afficher sur tous les écrans</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve">
+    <value>Si cette option est désactivée, la fenêtre contextuelle n'apparaîtra que sur l'écran principal.</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopLeft.Content" xml:space="preserve">
+    <value>En haut à gauche</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopRight.Content" xml:space="preserve">
+    <value>En haut à droite</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomLeft.Content" xml:space="preserve">
+    <value>En bas à gauche</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomRight.Content" xml:space="preserve">
+    <value>En bas à droite</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCategory.Text" xml:space="preserve">
+    <value>Notification « En cours de lecture »</value>
+  </data>
 </root>

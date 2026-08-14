@@ -2673,4 +2673,37 @@
   <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
     <value>Specificare la convenzione di denominazione per i file dei testi locali (ad es., {Artist} - {Title}) per collegarli correttamente. Lasciare vuoto per utilizzare la strategia di corrispondenza predefinita</value>
   </data>
+  <data name="NowPlayingToastTitle" xml:space="preserve">
+    <value>In riproduzione: Toast</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Header" xml:space="preserve">
+    <value>Mostra il popup "In riproduzione"</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Description" xml:space="preserve">
+    <value>Visualizza una breve notifica a comparsa nell'angolo dello schermo quando cambia il brano</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCorner.Header" xml:space="preserve">
+    <value>Posizione del popup</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Header" xml:space="preserve">
+    <value>Visualizza su tutti i monitor</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve">
+    <value>Se disattivata, la finestra a comparsa apparirà solo sul monitor principale</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopLeft.Content" xml:space="preserve">
+    <value>In alto a sinistra</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopRight.Content" xml:space="preserve">
+    <value>In alto a destra</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomLeft.Content" xml:space="preserve">
+    <value>In basso a sinistra</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomRight.Content" xml:space="preserve">
+    <value>In basso a destra</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCategory.Text" xml:space="preserve">
+    <value>Notifica "In riproduzione"</value>
+  </data>
 </root>

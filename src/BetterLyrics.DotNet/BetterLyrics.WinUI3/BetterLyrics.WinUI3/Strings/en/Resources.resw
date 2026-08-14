@@ -2673,4 +2673,37 @@
   <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
     <value>Specify the naming convention for local lyrics files (e.g., {Artist} - {Title}) to link them accurately. Leave blank to use the default matching strategy</value>
   </data>
+  <data name="NowPlayingToastTitle" xml:space="preserve">
+    <value>Now Playing Toast</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Header" xml:space="preserve">
+    <value>Show "Now Playing" popup</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Description" xml:space="preserve">
+    <value>Display a brief popup notification in the corner of the screen when the song changes</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCorner.Header" xml:space="preserve">
+    <value>Popup position</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Header" xml:space="preserve">
+    <value>Show on all monitors</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve">
+    <value>If disabled, the popup will only appear on the primary monitor</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopLeft.Content" xml:space="preserve">
+    <value>Top Left</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopRight.Content" xml:space="preserve">
+    <value>Top Right</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomLeft.Content" xml:space="preserve">
+    <value>Bottom Left</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomRight.Content" xml:space="preserve">
+    <value>Bottom Right</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCategory.Text" xml:space="preserve">
+    <value>Now Playing Notification</value>
+  </data>
 </root>

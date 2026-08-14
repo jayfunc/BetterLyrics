@@ -81,4 +81,16 @@ public partial class GeneralSettings : ObservableRecipient
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
     public partial DateTime LastAppUpateCheckDateTime { get; set; } = DateTime.Now;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial bool ShowNowPlayingNotification { get; set; } = true;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial NowPlayingNotificationCorner NowPlayingNotificationCorner { get; set; } = NowPlayingNotificationCorner.BottomLeft;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial bool NowPlayingNotificationAllMonitors { get; set; } = false;
 }

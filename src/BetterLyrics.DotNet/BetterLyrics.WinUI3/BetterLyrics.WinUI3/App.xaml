@@ -13,38 +13,38 @@
                 <ResourceDictionary Source="ms-appx:///CommunityToolkit.WinUI.Controls.Segmented/Segmented/Segmented.xaml" />
                 <ResourceDictionary Source="ms-appx:///CommunityToolkit.WinUI.Controls.SettingsControls/SettingsExpander/SettingsExpander.xaml" />
 
-                <ResourceDictionary Source="/Themes/DefaultStyles.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/DefaultStyles.xaml" />
 
-                <ResourceDictionary Source="/Themes/Converters.xaml" />
-                <ResourceDictionary Source="/Themes/GhostSliderStyle.xaml" />
-                <ResourceDictionary Source="/Themes/InteractiveGridViewHeaderStyle.xaml" />
-                <ResourceDictionary Source="/Themes/InteractiveListViewHeaderStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/Converters.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/GhostSliderStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/InteractiveGridViewHeaderStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/InteractiveListViewHeaderStyle.xaml" />
 
-                <ResourceDictionary Source="/Themes/LyricsCardAncientBookStyle.xaml" />
-                <ResourceDictionary Source="/Themes/LyricsCardBambooSlipsStyle.xaml" />
-                <ResourceDictionary Source="/Themes/LyricsCardCDStyle.xaml" />
-                <ResourceDictionary Source="/Themes/LyricsCardCinematicStyle.xaml" />
-                <ResourceDictionary Source="/Themes/LyricsCardCyberpunkStyle.xaml" />
-                <ResourceDictionary Source="/Themes/LyricsCardDunhuangStyle.xaml" />
-                <ResourceDictionary Source="/Themes/LyricsCardInkWashStyle.xaml" />
-                <ResourceDictionary Source="/Themes/LyricsCardJournalStyle.xaml" />
-                <ResourceDictionary Source="/Themes/LyricsCardLINEStyle.xaml" />
-                <ResourceDictionary Source="/Themes/LyricsCardMagazineStyle.xaml" />
-                <ResourceDictionary Source="/Themes/LyricsCardMinimalStyle.xaml" />
-                <ResourceDictionary Source="/Themes/LyricsCardPodStyle.xaml" />
-                <ResourceDictionary Source="/Themes/LyricsCardPolaroidStyle.xaml" />
-                <ResourceDictionary Source="/Themes/LyricsCardQQStyle.xaml" />
-                <ResourceDictionary Source="/Themes/LyricsCardReceiptStyle.xaml" />
-                <ResourceDictionary Source="/Themes/LyricsCardRetroMSNStyle.xaml" />
-                <ResourceDictionary Source="/Themes/LyricsCardRetroQQStyle.xaml" />
-                <ResourceDictionary Source="/Themes/LyricsCardStickyNoteStyle.xaml" />
-                <ResourceDictionary Source="/Themes/LyricsCardSwissStyle.xaml" />
-                <ResourceDictionary Source="/Themes/LyricsCardTelegramStyle.xaml" />
-                <ResourceDictionary Source="/Themes/LyricsCardTicketStyle.xaml" />
-                <ResourceDictionary Source="/Themes/LyricsCardVinylStyle.xaml" />
-                <ResourceDictionary Source="/Themes/LyricsCardWeChatStyle.xaml" />
-                <ResourceDictionary Source="/Themes/LyricsCardWhatsAppStyle.xaml" />
-                <ResourceDictionary Source="/Themes/LyricsCardWindowsPhoneStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/LyricsCardAncientBookStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/LyricsCardBambooSlipsStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/LyricsCardCDStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/LyricsCardCinematicStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/LyricsCardCyberpunkStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/LyricsCardDunhuangStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/LyricsCardInkWashStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/LyricsCardJournalStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/LyricsCardLINEStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/LyricsCardMagazineStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/LyricsCardMinimalStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/LyricsCardPodStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/LyricsCardPolaroidStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/LyricsCardQQStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/LyricsCardReceiptStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/LyricsCardRetroMSNStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/LyricsCardRetroQQStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/LyricsCardStickyNoteStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/LyricsCardSwissStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/LyricsCardTelegramStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/LyricsCardTicketStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/LyricsCardVinylStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/LyricsCardWeChatStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/LyricsCardWhatsAppStyle.xaml" />
+                <ResourceDictionary Source="ms-appx:///Themes/LyricsCardWindowsPhoneStyle.xaml" />
 
             </ResourceDictionary.MergedDictionaries>
 

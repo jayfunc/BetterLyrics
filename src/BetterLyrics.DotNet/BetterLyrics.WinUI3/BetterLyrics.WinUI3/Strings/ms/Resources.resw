@@ -2673,4 +2673,37 @@
   <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
     <value>Nyatakan konvensyen penamaan untuk fail lirik tempatan (contohnya, {Artist} – {Title}) bagi memautkannya dengan tepat. Biarkan kosong untuk menggunakan strategi padanan lalai.</value>
   </data>
+  <data name="NowPlayingToastTitle" xml:space="preserve">
+    <value>Kini Memainkan Roti Panggang</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Header" xml:space="preserve">
+    <value>Tunjukkan pop timbul "Sedang Bermain"</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Description" xml:space="preserve">
+    <value>Tunjukkan pemberitahuan pop timbul ringkas di sudut skrin apabila lagu bertukar</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCorner.Header" xml:space="preserve">
+    <value>Posisi popup</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Header" xml:space="preserve">
+    <value>Tunjukkan pada semua monitor</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve">
+    <value>Jika dilumpuhkan, tetingkap timbul hanya akan muncul pada monitor utama.</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopLeft.Content" xml:space="preserve">
+    <value>Bawah Kiri Atas</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopRight.Content" xml:space="preserve">
+    <value>Atas Kanan</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomLeft.Content" xml:space="preserve">
+    <value>Bawah Kiri</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomRight.Content" xml:space="preserve">
+    <value>Bawah kanan</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCategory.Text" xml:space="preserve">
+    <value>Notifikasi Main Sekarang</value>
+  </data>
 </root>

@@ -2673,4 +2673,37 @@
   <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
     <value>Hãy chỉ định quy ước đặt tên cho các tệp lời bài hát cục bộ (ví dụ: {Artist} - {Title}) để liên kết chúng một cách chính xác. Để trống để sử dụng chiến lược khớp mặc định</value>
   </data>
+  <data name="NowPlayingToastTitle" xml:space="preserve">
+    <value>Đang phát: Toast</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Header" xml:space="preserve">
+    <value>Hiển thị cửa sổ bật lên “Đang phát”</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Description" xml:space="preserve">
+    <value>Hiển thị một thông báo bật lên ngắn gọn ở góc màn hình khi bài hát thay đổi</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCorner.Header" xml:space="preserve">
+    <value>Vị trí cửa sổ bật lên</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Header" xml:space="preserve">
+    <value>Hiển thị trên tất cả các màn hình</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve">
+    <value>Nếu bị tắt, cửa sổ bật lên sẽ chỉ xuất hiện trên màn hình chính</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopLeft.Content" xml:space="preserve">
+    <value>Góc trên bên trái</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopRight.Content" xml:space="preserve">
+    <value>Góc trên bên phải</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomLeft.Content" xml:space="preserve">
+    <value>Góc dưới bên trái</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomRight.Content" xml:space="preserve">
+    <value>Góc dưới bên phải</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCategory.Text" xml:space="preserve">
+    <value>Thông báo đang phát</value>
+  </data>
 </root>

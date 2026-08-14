@@ -2673,4 +2673,37 @@
   <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
     <value>حدد قاعدة تسمية ملفات كلمات الأغاني المحلية (على سبيل المثال، {Artist} - {Title}) لربطها بدقة. اترك الحقل فارغًا لاستخدام استراتيجية المطابقة الافتراضية</value>
   </data>
+  <data name="NowPlayingToastTitle" xml:space="preserve">
+    <value>يُعرض الآن: «توست»</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Header" xml:space="preserve">
+    <value>إظهار النافذة المنبثقة «قيد التشغيل الآن»</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Description" xml:space="preserve">
+    <value>عرض إشعار منبثق موجز في زاوية الشاشة عند تغيير الأغنية</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCorner.Header" xml:space="preserve">
+    <value>موضع النافذة المنبثقة</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Header" xml:space="preserve">
+    <value>عرض على جميع الشاشات</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve">
+    <value>في حالة تعطيل هذه الميزة، لن تظهر النافذة المنبثقة إلا على الشاشة الرئيسية</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopLeft.Content" xml:space="preserve">
+    <value>أعلى اليسار</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopRight.Content" xml:space="preserve">
+    <value>أعلى اليمين</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomLeft.Content" xml:space="preserve">
+    <value>أسفل اليسار</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomRight.Content" xml:space="preserve">
+    <value>أسفل اليمين</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCategory.Text" xml:space="preserve">
+    <value>إشعار «قيد التشغيل الآن»</value>
+  </data>
 </root>

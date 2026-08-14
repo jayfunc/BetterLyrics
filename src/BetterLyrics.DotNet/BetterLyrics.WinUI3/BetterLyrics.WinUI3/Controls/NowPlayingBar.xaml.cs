@@ -90,7 +90,7 @@ public sealed partial class NowPlayingBar : UserControl,
 
         WeakReferenceMessenger.Default.RegisterAll(this);
 
-        _simulationTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(16) };
+        _simulationTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(1000) };
         _simulationTimer.Tick += SimulationTimer_Tick;
         _simulationTimer.Start();
         _lastTickTicks = Stopwatch.GetTimestamp();

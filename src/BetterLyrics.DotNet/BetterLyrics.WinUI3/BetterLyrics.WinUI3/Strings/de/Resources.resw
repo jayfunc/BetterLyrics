@@ -2673,4 +2673,37 @@
   <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
     <value>Geben Sie die Namenskonvention für lokale Liedtextdateien an (z. B. {Artist} – {Title}), damit diese korrekt verknüpft werden. Lassen Sie das Feld leer, um die Standard-Zuordnungsstrategie zu verwenden.</value>
   </data>
+  <data name="NowPlayingToastTitle" xml:space="preserve">
+    <value>Aktuell läuft „Toast“</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Header" xml:space="preserve">
+    <value>Popup-Fenster „Aktuelle Wiedergabe“ anzeigen</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Description" xml:space="preserve">
+    <value>Zeige eine kurze Popup-Benachrichtigung in der Ecke des Bildschirms an, wenn der Titel wechselt</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCorner.Header" xml:space="preserve">
+    <value>Position des Popups</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Header" xml:space="preserve">
+    <value>Auf allen Monitoren anzeigen</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve">
+    <value>Wenn diese Option deaktiviert ist, wird das Popup-Fenster nur auf dem Hauptmonitor angezeigt.</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopLeft.Content" xml:space="preserve">
+    <value>Oben links</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopRight.Content" xml:space="preserve">
+    <value>Oben rechts</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomLeft.Content" xml:space="preserve">
+    <value>Unten links</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomRight.Content" xml:space="preserve">
+    <value>Unten rechts</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCategory.Text" xml:space="preserve">
+    <value>Benachrichtigung „Wird gerade abgespielt“</value>
+  </data>
 </root>

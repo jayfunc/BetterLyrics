@@ -2673,4 +2673,37 @@
   <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
     <value>Especifique a convenção de nomenclatura para os ficheiros de letras locais (por exemplo, {Artist} - {Title}) para os associar corretamente. Deixe em branco para utilizar a estratégia de correspondência predefinida</value>
   </data>
+  <data name="NowPlayingToastTitle" xml:space="preserve">
+    <value>A tocar agora: Toast</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Header" xml:space="preserve">
+    <value>Mostrar janela pop-up «A reproduzir agora»</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Description" xml:space="preserve">
+    <value>Mostrar uma breve notificação pop-up no canto do ecrã quando a música mudar</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCorner.Header" xml:space="preserve">
+    <value>Posição do pop-up</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Header" xml:space="preserve">
+    <value>Mostrar em todos os monitores</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve">
+    <value>Se estiver desativado, a janela pop-up só aparecerá no monitor principal</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopLeft.Content" xml:space="preserve">
+    <value>Canto superior esquerdo</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopRight.Content" xml:space="preserve">
+    <value>Canto superior direito</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomLeft.Content" xml:space="preserve">
+    <value>Canto inferior esquerdo</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomRight.Content" xml:space="preserve">
+    <value>Canto inferior direito</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCategory.Text" xml:space="preserve">
+    <value>Notificação «A reproduzir agora»</value>
+  </data>
 </root>

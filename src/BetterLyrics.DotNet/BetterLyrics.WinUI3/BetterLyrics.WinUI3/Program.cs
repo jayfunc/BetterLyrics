@@ -241,6 +241,8 @@ public class Program
                 .AddSingleton<IUniversalMemoryReaderProvider, UniversalMemoryReaderProvider>()
                 .AddSingleton<IAppUIThreadProvider, AppUIThreadProvider>()
                 .AddSingleton<IGlobalToastProvider, GlobalToastProvider>()
+                .AddSingleton<INowPlayingToastProvider, NowPlayingToastProvider>()
+                .AddSingleton<INowPlayingNotificationService, NowPlayingNotificationService>()
                 .AddSingleton<IWindowManagerProvider, WindowManagerProvider>()
                 .AddSingleton<IAddMediaSourceDialogProvider, MediaSourceDialogProvider>()
                 .AddSingleton<ILastFmDialogProvider, LastFmDialogProvider>()

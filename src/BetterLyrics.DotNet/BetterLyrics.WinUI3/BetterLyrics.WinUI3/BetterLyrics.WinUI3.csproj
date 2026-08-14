@@ -491,6 +491,9 @@
         <Page Update="Views\ToastOverlayWindow.xaml">
             <Generator>MSBuild:Compile</Generator>
         </Page>
+        <Page Update="Views\NowPlayingToastWindow.xaml">
+            <Generator>MSBuild:Compile</Generator>
+        </Page>
     </ItemGroup>
     <ItemGroup>
         <Page Update="Controls\InAppNotificationStack.xaml">

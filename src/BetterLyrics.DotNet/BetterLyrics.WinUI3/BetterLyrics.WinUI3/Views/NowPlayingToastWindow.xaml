@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<Window
+    x:Class="BetterLyrics.WinUI3.Views.NowPlayingToastWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:media="using:Microsoft.UI.Xaml.Media"
+    xmlns:winui="using:Microsoft.UI.Xaml.Controls"
+    Title="NowPlayingToastWindow"
+    mc:Ignorable="d">
+
+    <Grid x:Name="RootGrid">
+        <Grid
+            x:Name="PopupContainer"
+            Width="360"
+            Height="80"
+            Margin="20,20,20,32"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="1"
+            CornerRadius="8">
+
+            <Grid.RenderTransform>
+                <TranslateTransform x:Name="PopupTranslateTransform" />
+            </Grid.RenderTransform>
+
+            <!--  Base background color  -->
+            <Border Background="{ThemeResource SolidBackgroundFillColorBaseBrush}" />
+
+            <!--  Dynamic Album Art Background  -->
+            <Image
+                x:Name="BackgroundArtImage"
+                Opacity="0.35"
+                Stretch="UniformToFill" />
+
+            <!--  Gradient/Tint overlay for text contrast  -->
+            <Border>
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                        <GradientStop Offset="0" Color="{ThemeResource SolidBackgroundFillColorBase}" />
+                        <GradientStop Offset="0.6" Color="#00000000" />
+                    </LinearGradientBrush>
+                </Border.Background>
+            </Border>
+            <Border Background="{ThemeResource SolidBackgroundFillColorBaseBrush}" Opacity="0.4" />
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <!--  Album Art  -->
+                <Grid Padding="12">
+                    <Border
+                        BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}"
+                        BorderThickness="1"
+                        CornerRadius="4">
+                        <Image x:Name="AlbumArtImage" Stretch="UniformToFill" />
+                    </Border>
+                </Grid>
+
+                <!--  Text Info  -->
+                <StackPanel
+                    Grid.Column="1"
+                    Padding="0,0,12,0"
+                    VerticalAlignment="Center"
+                    Spacing="4">
+                    <TextBlock
+                        x:Name="TitleTextBlock"
+                        MaxLines="1"
+                        Style="{StaticResource BodyStrongTextBlockStyle}"
+                        TextTrimming="CharacterEllipsis" />
+                    <TextBlock
+                        x:Name="ArtistTextBlock"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        MaxLines="1"
+                        Style="{StaticResource CaptionTextBlockStyle}"
+                        TextTrimming="CharacterEllipsis" />
+                </StackPanel>
+
+                <!--  Source Info (Right Side)  -->
+                <StackPanel
+                    Grid.Column="2"
+                    Padding="0,0,16,0"
+                    VerticalAlignment="Center"
+                    Opacity="0.8"
+                    Orientation="Horizontal"
+                    Spacing="6">
+                    <Image
+                        x:Name="SourceLogoImage"
+                        Width="14"
+                        Height="14"
+                        Stretch="Uniform" />
+                    <TextBlock
+                        x:Name="SourceNameTextBlock"
+                        MaxWidth="80"
+                        FontSize="11"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        MaxLines="1"
+                        TextTrimming="CharacterEllipsis" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+
+</Window>

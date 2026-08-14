@@ -2673,4 +2673,37 @@
   <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
     <value>Especifica la convención de nomenclatura para los archivos de letras locales (p. ej., {Artist} - {Title}) para vincularlos correctamente. Déjalo en blanco para utilizar la estrategia de coincidencia predeterminada.</value>
   </data>
+  <data name="NowPlayingToastTitle" xml:space="preserve">
+    <value>Ahora suena «Toast»</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Header" xml:space="preserve">
+    <value>Mostrar la ventana emergente «Ahora en reproducción»</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Description" xml:space="preserve">
+    <value>Mostrar una breve notificación emergente en la esquina de la pantalla cuando cambie la canción</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCorner.Header" xml:space="preserve">
+    <value>Posición de la ventana emergente</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Header" xml:space="preserve">
+    <value>Mostrar en todos los monitores</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve">
+    <value>Si se desactiva, la ventana emergente solo aparecerá en el monitor principal.</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopLeft.Content" xml:space="preserve">
+    <value>Arriba a la izquierda</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopRight.Content" xml:space="preserve">
+    <value>Arriba a la derecha</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomLeft.Content" xml:space="preserve">
+    <value>Abajo a la izquierda</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomRight.Content" xml:space="preserve">
+    <value>Parte inferior derecha</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCategory.Text" xml:space="preserve">
+    <value>Notificación de «Ahora en reproducción»</value>
+  </data>
 </root>

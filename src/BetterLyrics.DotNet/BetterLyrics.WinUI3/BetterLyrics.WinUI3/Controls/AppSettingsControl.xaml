@@ -71,6 +71,28 @@
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.EnhanceControlInteractiveAnimations, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
+                    <!--  Now Playing Notification  -->
+
+                    <TextBlock x:Uid="SettingsPageNowPlayingNotificationCategory" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                    <controls:SettingsExpander x:Uid="SettingsPageShowNowPlayingNotification" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8EE;}">
+                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.ShowNowPlayingNotification, Mode=TwoWay}" />
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="SettingsPageNowPlayingNotificationCorner">
+                                <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.GeneralSettings.NowPlayingNotificationCorner, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                    <ComboBoxItem x:Uid="NowPlayingNotificationCornerTopLeft" />
+                                    <ComboBoxItem x:Uid="NowPlayingNotificationCornerTopRight" />
+                                    <ComboBoxItem x:Uid="NowPlayingNotificationCornerBottomLeft" />
+                                    <ComboBoxItem x:Uid="NowPlayingNotificationCornerBottomRight" />
+                                </ComboBox>
+                            </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="SettingsPageNowPlayingNotificationAllMonitors">
+                                <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.NowPlayingNotificationAllMonitors, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
+
+
                     <!--  Startup  -->
 
                     <TextBlock x:Uid="SettingsPageStartup" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />

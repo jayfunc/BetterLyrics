@@ -2673,4 +2673,37 @@
   <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
     <value>Укажите схему именования локальных файлов с текстами песен (например, {Artist} — {Title}), чтобы обеспечить их правильное сопоставление. Оставьте поле пустым, чтобы использовать стратегию сопоставления по умолчанию.</value>
   </data>
+  <data name="NowPlayingToastTitle" xml:space="preserve">
+    <value>Сейчас играет «Toast»</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Header" xml:space="preserve">
+    <value>Показать всплывающее окно «Сейчас воспроизводится»</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Description" xml:space="preserve">
+    <value>Отображать краткое всплывающее уведомление в углу экрана при смене композиции</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCorner.Header" xml:space="preserve">
+    <value>Положение всплывающего окна</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Header" xml:space="preserve">
+    <value>Показать на всех мониторах</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve">
+    <value>Если эта функция отключена, всплывающее окно будет отображаться только на основном мониторе</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopLeft.Content" xml:space="preserve">
+    <value>Вверху слева</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopRight.Content" xml:space="preserve">
+    <value>Вверху справа</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomLeft.Content" xml:space="preserve">
+    <value>Внизу слева</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomRight.Content" xml:space="preserve">
+    <value>Внизу справа</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCategory.Text" xml:space="preserve">
+    <value>Уведомление о воспроизведении</value>
+  </data>
 </root>

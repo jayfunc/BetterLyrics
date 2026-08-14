@@ -6,8 +6,8 @@
     xmlns:uc="using:BetterLyrics.WinUI3.Controls">
 
     <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Themes/DefaultAccentSplitButtonStyle.xaml" />
-        <ResourceDictionary Source="/Themes/DefaultListViewItemStyle.xaml" />
+        <ResourceDictionary Source="ms-appx:///Themes/DefaultAccentSplitButtonStyle.xaml" />
+        <ResourceDictionary Source="ms-appx:///Themes/DefaultListViewItemStyle.xaml" />
     </ResourceDictionary.MergedDictionaries>
 
     <!--  Button Styles  -->

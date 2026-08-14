@@ -2673,4 +2673,37 @@
   <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
     <value>로컬 가사 파일의 이름 지정 규칙을 지정하여(예: {Artist} - {Title}) 파일을 정확하게 연결하십시오. 기본 일치 전략을 사용하려면 이 필드를 비워 두십시오.</value>
   </data>
+  <data name="NowPlayingToastTitle" xml:space="preserve">
+    <value>현재 재생 중인 곡: Toast</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Header" xml:space="preserve">
+    <value>“현재 재생 중” 팝업 표시</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Description" xml:space="preserve">
+    <value>곡이 바뀔 때 화면 모서리에 간단한 팝업 알림을 표시합니다.</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCorner.Header" xml:space="preserve">
+    <value>팝업 위치</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Header" xml:space="preserve">
+    <value>모든 모니터에 표시</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve">
+    <value>이 기능을 비활성화하면 팝업은 주 모니터에만 표시됩니다.</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopLeft.Content" xml:space="preserve">
+    <value>왼쪽 상단</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopRight.Content" xml:space="preserve">
+    <value>오른쪽 상단</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomLeft.Content" xml:space="preserve">
+    <value>왼쪽 아래</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomRight.Content" xml:space="preserve">
+    <value>오른쪽 아래</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCategory.Text" xml:space="preserve">
+    <value>현재 재생 중 알림</value>
+  </data>
 </root>

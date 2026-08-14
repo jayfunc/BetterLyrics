@@ -2673,4 +2673,37 @@
   <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
     <value>Tentukan konvensi penamaan untuk berkas lirik lokal (misalnya, {Artist} - {Title}) agar dapat ditautkan dengan tepat. Biarkan kosong untuk menggunakan strategi pencocokan default</value>
   </data>
+  <data name="NowPlayingToastTitle" xml:space="preserve">
+    <value>Sedang Diputar: Toast</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Header" xml:space="preserve">
+    <value>Tampilkan jendela popup "Sedang Diputar"</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Description" xml:space="preserve">
+    <value>Tampilkan pemberitahuan pop-up singkat di sudut layar saat lagu berganti</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCorner.Header" xml:space="preserve">
+    <value>Posisi jendela popup</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Header" xml:space="preserve">
+    <value>Tampilkan di semua monitor</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve">
+    <value>Jika dinonaktifkan, jendela popup hanya akan muncul di monitor utama</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopLeft.Content" xml:space="preserve">
+    <value>Kiri Atas</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopRight.Content" xml:space="preserve">
+    <value>Kanan Atas</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomLeft.Content" xml:space="preserve">
+    <value>Kiri Bawah</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomRight.Content" xml:space="preserve">
+    <value>Bawah Kanan</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCategory.Text" xml:space="preserve">
+    <value>Pemberitahuan Lagu yang Sedang Diputar</value>
+  </data>
 </root>

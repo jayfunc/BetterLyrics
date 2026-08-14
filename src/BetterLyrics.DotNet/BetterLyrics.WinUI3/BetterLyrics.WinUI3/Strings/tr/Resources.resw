@@ -2673,4 +2673,37 @@
   <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
     <value>Yerel şarkı sözü dosyalarını doğru şekilde eşleştirmek için adlandırma kuralını belirtin (örn., {Artist} - {Title}). Varsayılan eşleştirme stratejisini kullanmak için bu alanı boş bırakın.</value>
   </data>
+  <data name="NowPlayingToastTitle" xml:space="preserve">
+    <value>Şu anda çalan: Toast</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Header" xml:space="preserve">
+    <value>"Şu An Çalınan" açılır penceresini göster</value>
+  </data>
+  <data name="SettingsPageShowNowPlayingNotification.Description" xml:space="preserve">
+    <value>Şarkı değiştiğinde ekranın köşesinde kısa bir açılır bildirim göster</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCorner.Header" xml:space="preserve">
+    <value>Açılır pencerenin konumu</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Header" xml:space="preserve">
+    <value>Tüm monitörlerde göster</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve">
+    <value>Bu seçenek devre dışı bırakıldığında, açılır pencere yalnızca birincil monitörde görüntülenecektir</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopLeft.Content" xml:space="preserve">
+    <value>Sol üst köşe</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopRight.Content" xml:space="preserve">
+    <value>Sağ üst köşe</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomLeft.Content" xml:space="preserve">
+    <value>Sol alt köşe</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomRight.Content" xml:space="preserve">
+    <value>Sağ alt köşe</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationCategory.Text" xml:space="preserve">
+    <value>Şu An Çalıyor Bildirimi</value>
+  </data>
 </root>
