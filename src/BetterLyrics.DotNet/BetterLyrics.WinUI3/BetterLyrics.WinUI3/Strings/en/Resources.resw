@@ -2677,13 +2677,13 @@
     <value>Now Playing Toast</value>
   </data>
   <data name="SettingsPageShowNowPlayingNotification.Header" xml:space="preserve">
-    <value>Show "Now Playing" popup</value>
+    <value>Show Now Playing Popup</value>
   </data>
   <data name="SettingsPageShowNowPlayingNotification.Description" xml:space="preserve">
     <value>Display a brief popup notification in the corner of the screen when the song changes</value>
   </data>
   <data name="SettingsPageNowPlayingNotificationCorner.Header" xml:space="preserve">
-    <value>Popup position</value>
+    <value>Popup Position</value>
   </data>
   <data name="SettingsPageNowPlayingNotificationAllMonitors.Header" xml:space="preserve">
     <value>Show on all monitors</value>
@@ -2705,5 +2705,26 @@
   </data>
   <data name="SettingsPageNowPlayingNotificationCategory.Text" xml:space="preserve">
     <value>Now Playing Notification</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopCenter.Content" xml:space="preserve">
+    <value>Top Center</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomCenter.Content" xml:space="preserve">
+    <value>Bottom Center</value>
+  </data>
+  <data name="NowPlayingNotificationCornerLeftCenter.Content" xml:space="preserve">
+    <value>Left Center</value>
+  </data>
+  <data name="NowPlayingNotificationCornerRightCenter.Content" xml:space="preserve">
+    <value>Right Center</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationDuration.Header" xml:space="preserve">
+    <value>Popup Duration</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationDuration.Description" xml:space="preserve">
+    <value>Now Playing popup duration</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationTheme.Header" xml:space="preserve">
+    <value>Popup Theme</value>
   </data>
 </root>

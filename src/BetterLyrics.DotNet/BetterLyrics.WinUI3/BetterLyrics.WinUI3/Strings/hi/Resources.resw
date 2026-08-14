@@ -2706,4 +2706,25 @@
   <data name="SettingsPageNowPlayingNotificationCategory.Text" xml:space="preserve">
     <value>अब चल रहा है सूचना</value>
   </data>
+  <data name="NowPlayingNotificationCornerTopCenter.Content" xml:space="preserve">
+    <value>शीर्ष केंद्र</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomCenter.Content" xml:space="preserve">
+    <value>नीचला केंद्र</value>
+  </data>
+  <data name="NowPlayingNotificationCornerLeftCenter.Content" xml:space="preserve">
+    <value>बाएँ केंद्र</value>
+  </data>
+  <data name="NowPlayingNotificationCornerRightCenter.Content" xml:space="preserve">
+    <value>दक्षिण मध्य</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationDuration.Header" xml:space="preserve">
+    <value>पॉपअप अवधि</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationDuration.Description" xml:space="preserve">
+    <value>अब चल रहा पॉपअप का समय</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationTheme.Header" xml:space="preserve">
+    <value>पॉपअप थीम</value>
+  </data>
 </root>

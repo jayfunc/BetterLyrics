@@ -2706,4 +2706,25 @@
   <data name="SettingsPageNowPlayingNotificationCategory.Text" xml:space="preserve">
     <value>Notifikasi Main Sekarang</value>
   </data>
+  <data name="NowPlayingNotificationCornerTopCenter.Content" xml:space="preserve">
+    <value>Bahagian Atas Tengah</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomCenter.Content" xml:space="preserve">
+    <value>Pusat bawah</value>
+  </data>
+  <data name="NowPlayingNotificationCornerLeftCenter.Content" xml:space="preserve">
+    <value>Kiri Tengah</value>
+  </data>
+  <data name="NowPlayingNotificationCornerRightCenter.Content" xml:space="preserve">
+    <value>Tengah kanan</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationDuration.Header" xml:space="preserve">
+    <value>Tempoh popup</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationDuration.Description" xml:space="preserve">
+    <value>Kini Bermain Tempoh Popup</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationTheme.Header" xml:space="preserve">
+    <value>Tema Popup</value>
+  </data>
 </root>

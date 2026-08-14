@@ -2706,4 +2706,25 @@
   <data name="SettingsPageNowPlayingNotificationCategory.Text" xml:space="preserve">
     <value>إشعار «قيد التشغيل الآن»</value>
   </data>
+  <data name="NowPlayingNotificationCornerTopCenter.Content" xml:space="preserve">
+    <value>أعلى الوسط</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomCenter.Content" xml:space="preserve">
+    <value>أسفل الوسط</value>
+  </data>
+  <data name="NowPlayingNotificationCornerLeftCenter.Content" xml:space="preserve">
+    <value>يسار الوسط</value>
+  </data>
+  <data name="NowPlayingNotificationCornerRightCenter.Content" xml:space="preserve">
+    <value>الوسط الأيمن</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationDuration.Header" xml:space="preserve">
+    <value>مدة ظهور النافذة المنبثقة</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationDuration.Description" xml:space="preserve">
+    <value>مدة نافذة «قيد التشغيل»</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationTheme.Header" xml:space="preserve">
+    <value>مظهر النافذة المنبثقة</value>
+  </data>
 </root>

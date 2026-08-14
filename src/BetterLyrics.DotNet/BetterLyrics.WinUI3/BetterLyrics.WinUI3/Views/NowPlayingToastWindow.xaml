@@ -12,6 +12,7 @@
     mc:Ignorable="d">
 
     <Grid x:Name="RootGrid">
+        <Grid x:Name="ShadowCastGrid" />
         <Grid
             x:Name="PopupContainer"
             Width="360"
@@ -19,7 +20,11 @@
             Margin="20,20,20,32"
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
             BorderThickness="1"
-            CornerRadius="8">
+            CornerRadius="8"
+            Loaded="PopupContainer_Loaded">
+            <Grid.Shadow>
+                <ThemeShadow x:Name="SharedShadow" />
+            </Grid.Shadow>
 
             <Grid.RenderTransform>
                 <TranslateTransform x:Name="PopupTranslateTransform" />

@@ -108,16 +108,26 @@ public class SettingsService : BaseViewModel, ISettingsService
         if (!File.Exists(importPath))
             return false;
 
-        var importJson = File.ReadAllText(importPath);
-        var importData =
-            JsonSerializer.Deserialize(importJson, SourceGenerationContext.Default.AppSettings);
+        try
+        {
+            var importJson = File.ReadAllText(importPath);
+            if (string.IsNullOrWhiteSpace(importJson) || importJson.StartsWith('\0'))
+                return false;
 
-        if (importData == null)
+            var importData =
+                JsonSerializer.Deserialize(importJson, SourceGenerationContext.Default.AppSettings);
+
+            if (importData == null)
+                return false;
+
+            AppSettings = importData;
+            SaveAppSettings();
+            return true;
+        }
+        catch
+        {
             return false;
-
-        AppSettings = importData;
-        SaveAppSettings();
-        return true;
+        }
     }
 
     private void EnsureMediaSourceProvidersInfo()

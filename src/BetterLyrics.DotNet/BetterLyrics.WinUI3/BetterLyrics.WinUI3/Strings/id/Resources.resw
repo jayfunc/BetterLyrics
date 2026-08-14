@@ -2706,4 +2706,25 @@
   <data name="SettingsPageNowPlayingNotificationCategory.Text" xml:space="preserve">
     <value>Pemberitahuan Lagu yang Sedang Diputar</value>
   </data>
+  <data name="NowPlayingNotificationCornerTopCenter.Content" xml:space="preserve">
+    <value>Bagian Atas Tengah</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomCenter.Content" xml:space="preserve">
+    <value>Bagian Bawah Tengah</value>
+  </data>
+  <data name="NowPlayingNotificationCornerLeftCenter.Content" xml:space="preserve">
+    <value>Kiri Tengah</value>
+  </data>
+  <data name="NowPlayingNotificationCornerRightCenter.Content" xml:space="preserve">
+    <value>Tengah Kanan</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationDuration.Header" xml:space="preserve">
+    <value>Durasi Popup</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationDuration.Description" xml:space="preserve">
+    <value>Durasi Popup "Sedang Diputar"</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationTheme.Header" xml:space="preserve">
+    <value>Tema Popup</value>
+  </data>
 </root>

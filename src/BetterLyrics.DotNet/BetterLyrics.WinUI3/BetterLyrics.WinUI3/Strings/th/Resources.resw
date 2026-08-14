@@ -2706,4 +2706,25 @@
   <data name="SettingsPageNowPlayingNotificationCategory.Text" xml:space="preserve">
     <value>แจ้งเตือนกำลังเล่นอยู่</value>
   </data>
+  <data name="NowPlayingNotificationCornerTopCenter.Content" xml:space="preserve">
+    <value>ส่วนบนตรงกลาง</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomCenter.Content" xml:space="preserve">
+    <value>ส่วนล่างตรงกลาง</value>
+  </data>
+  <data name="NowPlayingNotificationCornerLeftCenter.Content" xml:space="preserve">
+    <value>ด้านซ้ายกลาง</value>
+  </data>
+  <data name="NowPlayingNotificationCornerRightCenter.Content" xml:space="preserve">
+    <value>กลางขวา</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationDuration.Header" xml:space="preserve">
+    <value>ระยะเวลาแสดงหน้าป๊อปอัพ</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationDuration.Description" xml:space="preserve">
+    <value>ระยะเวลาแสดงหน้าต่างป๊อปอัพที่กำลังเล่นอยู่</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationTheme.Header" xml:space="preserve">
+    <value>ธีมป๊อปอัพ</value>
+  </data>
 </root>

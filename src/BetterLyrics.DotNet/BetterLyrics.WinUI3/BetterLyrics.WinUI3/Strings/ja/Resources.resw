@@ -2674,36 +2674,57 @@
     <value>ローカル歌詞ファイルの命名規則（例: {Artist} - {Title}）を指定して正確にリンクします。空欄の場合はデフォルトのマッチングロジックが使用されます</value>
   </data>
   <data name="NowPlayingToastTitle" xml:space="preserve">
-    <value>現在再生中：Toast</value>
+    <value>「再生中」トースト</value>
   </data>
   <data name="SettingsPageShowNowPlayingNotification.Header" xml:space="preserve">
-    <value>「再生中」ポップアップを表示する</value>
+    <value>「再生中」通知を表示</value>
   </data>
   <data name="SettingsPageShowNowPlayingNotification.Description" xml:space="preserve">
-    <value>曲が切り替わったときに、画面の隅に短いポップアップ通知を表示する</value>
+    <value>楽曲が切り替わった際、画面の隅に短時間表示します</value>
   </data>
   <data name="SettingsPageNowPlayingNotificationCorner.Header" xml:space="preserve">
-    <value>ポップアップの位置</value>
+    <value>表示位置</value>
   </data>
   <data name="SettingsPageNowPlayingNotificationAllMonitors.Header" xml:space="preserve">
-    <value>すべてのモニターに表示する</value>
+    <value>すべてのモニターに表示</value>
   </data>
   <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve">
-    <value>この設定を無効にすると、ポップアップはメインモニターにのみ表示されます</value>
+    <value>オフの場合、通知はメインモニターにのみ表示されます</value>
   </data>
   <data name="NowPlayingNotificationCornerTopLeft.Content" xml:space="preserve">
-    <value>左上</value>
+    <value>画面左上</value>
   </data>
   <data name="NowPlayingNotificationCornerTopRight.Content" xml:space="preserve">
-    <value>右上</value>
+    <value>画面右上</value>
   </data>
   <data name="NowPlayingNotificationCornerBottomLeft.Content" xml:space="preserve">
-    <value>左下</value>
+    <value>画面左下</value>
   </data>
   <data name="NowPlayingNotificationCornerBottomRight.Content" xml:space="preserve">
-    <value>右下</value>
+    <value>画面右下</value>
   </data>
   <data name="SettingsPageNowPlayingNotificationCategory.Text" xml:space="preserve">
-    <value>再生中通知</value>
+    <value>「再生中」の通知</value>
+  </data>
+  <data name="NowPlayingNotificationCornerTopCenter.Content" xml:space="preserve">
+    <value>画面上中央</value>
+  </data>
+  <data name="NowPlayingNotificationCornerBottomCenter.Content" xml:space="preserve">
+    <value>画面下中央</value>
+  </data>
+  <data name="NowPlayingNotificationCornerLeftCenter.Content" xml:space="preserve">
+    <value>画面左中央</value>
+  </data>
+  <data name="NowPlayingNotificationCornerRightCenter.Content" xml:space="preserve">
+    <value>画面右中央</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationDuration.Header" xml:space="preserve">
+    <value>通知の表示時間</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationDuration.Description" xml:space="preserve">
+    <value>「再生中」通知の表示時間</value>
+  </data>
+  <data name="SettingsPageNowPlayingNotificationTheme.Header" xml:space="preserve">
+    <value>「再生中」通知のテーマ</value>
   </data>
 </root>

@@ -93,4 +93,12 @@ public partial class GeneralSettings : ObservableRecipient
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
     public partial bool NowPlayingNotificationAllMonitors { get; set; } = false;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial AppTheme NowPlayingNotificationTheme { get; set; } = AppTheme.Default;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial double NowPlayingNotificationDuration { get; set; } = 3500;
 }

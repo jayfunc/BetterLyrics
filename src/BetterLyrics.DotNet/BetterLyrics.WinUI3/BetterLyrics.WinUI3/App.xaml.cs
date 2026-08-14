@@ -48,25 +48,33 @@ public partial class App : Application
 
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
-        // 应用增强动效/全局字体设置项
-        var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
-        UpdateGlobalStyles(settingsService.AppSettings.GeneralSettings.EnhanceControlInteractiveAnimations);
-        UpdateGlobalFontFamily(settingsService.AppSettings.GeneralSettings.GlobalFontFamily);
+        try
+        {
+            // 应用增强动效/全局字体设置项
+            var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+            UpdateGlobalStyles(settingsService.AppSettings.GeneralSettings.EnhanceControlInteractiveAnimations);
+            UpdateGlobalFontFamily(settingsService.AppSettings.GeneralSettings.GlobalFontFamily);
 
-        var windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
-        var appUiThreadProvider = Ioc.Default.GetRequiredService<IAppUIThreadProvider>();
+            var windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
+            var appUiThreadProvider = Ioc.Default.GetRequiredService<IAppUIThreadProvider>();
 
-        // 初始化 IAppUIThreadProvider
-        m_window = windowManagerProvider.OpenOrShowWindow<SystemTrayWindow>();
-        appUiThreadProvider.Initialize(m_window.DispatcherQueue);
+            // 初始化 IAppUIThreadProvider
+            m_window = windowManagerProvider.OpenOrShowWindow<SystemTrayWindow>();
+            appUiThreadProvider.Initialize(m_window.DispatcherQueue);
 
-        if (settingsService.AppSettings.GeneralSettings.ShowSplashScreen)
-            _splashScreen = SimpleSplashScreen.ShowDefaultSplashScreen();
+            if (settingsService.AppSettings.GeneralSettings.ShowSplashScreen)
+                _splashScreen = SimpleSplashScreen.ShowDefaultSplashScreen();
 
-        var globalToastProvider = Ioc.Default.GetRequiredService<IGlobalToastProvider>();
-        globalToastProvider.Initialize();
+            var globalToastProvider = Ioc.Default.GetRequiredService<IGlobalToastProvider>();
+            globalToastProvider.Initialize();
 
-        _ = LaunchAsync();
+            _ = LaunchAsync();
+        }
+        catch (Exception ex)
+        {
+            _logger?.LogError(ex, "Fatal error during OnLaunched");
+            Environment.Exit(1);
+        }
     }
 
     private async Task LaunchAsync()
@@ -88,27 +96,35 @@ public partial class App : Application
 
     private static void HandleNormalLaunch()
     {
-        var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
-        var windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
-
-        // 初始化歌词切换窗口
-        _ = windowManagerProvider.OpenOrShowWindow<LyricsWindowSwitchWindow>();
-
-        // 自动打开歌词窗口逻辑
-        if (settingsService.AppSettings.GeneralSettings.AutoStartLyricsWindow)
+        try
         {
-            var defaultStatus = settingsService.AppSettings.WindowBoundsRecords.Where(x => x.IsDefault);
-            if (defaultStatus != null)
-                foreach (var item in defaultStatus)
-                {
-                    windowManagerProvider.OpenOrShowWindow<NowPlayingWindow>(item);
-                    if (!settingsService.AppSettings.GeneralSettings.MultiNowPlayingWindowMode) break;
-                }
-        }
+            var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+            var windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
 
-        // 自动打开音乐库逻辑
-        if (settingsService.AppSettings.MusicGallerySettings.AutoOpen)
-            windowManagerProvider.OpenOrShowWindow<MusicGalleryWindow>();
+            // 初始化歌词切换窗口
+            _ = windowManagerProvider.OpenOrShowWindow<LyricsWindowSwitchWindow>();
+
+            // 自动打开歌词窗口逻辑
+            if (settingsService.AppSettings.GeneralSettings.AutoStartLyricsWindow)
+            {
+                var defaultStatus = settingsService.AppSettings.WindowBoundsRecords.Where(x => x.IsDefault);
+                if (defaultStatus != null)
+                    foreach (var item in defaultStatus)
+                    {
+                        windowManagerProvider.OpenOrShowWindow<NowPlayingWindow>(item);
+                        if (!settingsService.AppSettings.GeneralSettings.MultiNowPlayingWindowMode) break;
+                    }
+            }
+
+            // 自动打开音乐库逻辑
+            if (settingsService.AppSettings.MusicGallerySettings.AutoOpen)
+                windowManagerProvider.OpenOrShowWindow<MusicGalleryWindow>();
+        }
+        catch (Exception ex)
+        {
+            var logger = Ioc.Default.GetService<ILogger<App>>();
+            logger?.LogError(ex, "HandleNormalLaunch failed");
+        }
     }
 
     private async Task InitAppServicesAsync()
@@ -155,7 +171,7 @@ public partial class App : Application
         nowPlayingNotificationService.Initialize();
     }
 
-    private void EnsureLyricsSearchProvidersInfo()
+    private static void EnsureLyricsSearchProvidersInfo()
     {
         var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
         var pluginService = Ioc.Default.GetRequiredService<IPluginService>();
@@ -192,7 +208,7 @@ public partial class App : Application
         }
     }
 
-    private void UpdateGlobalStyles(bool useCustom)
+    private static void UpdateGlobalStyles(bool useCustom)
     {
         var mergedDicts = Application.Current.Resources.MergedDictionaries;
 
@@ -219,7 +235,7 @@ public partial class App : Application
         }
     }
 
-    private void UpdateGlobalFontFamily(string fontFamily)
+    private static void UpdateGlobalFontFamily(string fontFamily)
     {
         FontFamily targetFontFamily = FontFamily.XamlAutoFontFamily;
         if (!string.IsNullOrEmpty(fontFamily))
@@ -236,7 +252,17 @@ public partial class App : Application
     private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
         _logger.LogError(e.Exception, "App_UnhandledException");
-        e.Handled = true;
+        
+        // 如果在初期（主窗口未创建前）发生异常，不能拦截，否则会产生僵尸进程
+        if (m_window == null)
+        {
+            e.Handled = false;
+            Environment.Exit(1);
+        }
+        else
+        {
+            e.Handled = true;
+        }
     }
 
     private void CurrentDomain_FirstChanceException(object? sender,

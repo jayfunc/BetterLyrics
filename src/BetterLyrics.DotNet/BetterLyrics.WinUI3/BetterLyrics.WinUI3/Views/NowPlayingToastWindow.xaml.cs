@@ -26,10 +26,10 @@ public sealed partial class NowPlayingToastWindow : Window,
 {
     private readonly IWindowManagerProvider _windowManagerProvider =
         Ioc.Default.GetRequiredService<IWindowManagerProvider>();
-        
-    private readonly IGsmtcService _gsmtcService = 
+
+    private readonly IGsmtcService _gsmtcService =
         Ioc.Default.GetRequiredService<IGsmtcService>();
-    
+
     private readonly DispatcherTimer _hideTimer;
     private bool _isShowing;
 
@@ -42,7 +42,7 @@ public sealed partial class NowPlayingToastWindow : Window,
         _windowManagerProvider.SetIsBorderless(this, true);
         AppWindow.IsShownInSwitchers = false;
         _windowManagerProvider.SetIsClickThrough(this, true);
-        this.SyncTheme();
+        SyncNowPlayingTheme();
 
         _hideTimer = new DispatcherTimer
         {
@@ -51,11 +51,30 @@ public sealed partial class NowPlayingToastWindow : Window,
         _hideTimer.Tick += HideTimer_Tick;
     }
 
+    private void PopupContainer_Loaded(object sender, RoutedEventArgs e)
+    {
+        SharedShadow.Receivers.Add(ShadowCastGrid);
+        PopupContainer.Translation = new System.Numerics.Vector3(0, 0, 32);
+    }
+
     public void Receive(PropertyChangedMessage<AppTheme> message)
     {
         if (message.Sender is GeneralSettings)
-            if (message.PropertyName == nameof(GeneralSettings.AppTheme))
-                this.SyncTheme();
+            if (message.PropertyName == nameof(GeneralSettings.AppTheme) || message.PropertyName == nameof(GeneralSettings.NowPlayingNotificationTheme))
+                SyncNowPlayingTheme();
+    }
+
+    private void SyncNowPlayingTheme()
+    {
+        var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+        if (settingsService == null || this.Content == null) return;
+
+        var theme = settingsService.AppSettings.GeneralSettings.NowPlayingNotificationTheme;
+        if (theme == AppTheme.Default)
+            theme = settingsService.AppSettings.GeneralSettings.AppTheme;
+
+        this.AppWindow.TitleBar.PreferredTheme = theme.ToTitleBarTheme();
+        ((FrameworkElement)this.Content).RequestedTheme = theme.ToElementTheme();
     }
 
     private NowPlayingNotificationCorner _currentCorner = NowPlayingNotificationCorner.BottomLeft;
@@ -72,12 +91,28 @@ public sealed partial class NowPlayingToastWindow : Window,
                 PopupContainer.HorizontalAlignment = HorizontalAlignment.Left;
                 PopupContainer.VerticalAlignment = VerticalAlignment.Top;
                 break;
+            case NowPlayingNotificationCorner.TopCenter:
+                PopupContainer.HorizontalAlignment = HorizontalAlignment.Center;
+                PopupContainer.VerticalAlignment = VerticalAlignment.Top;
+                break;
             case NowPlayingNotificationCorner.TopRight:
                 PopupContainer.HorizontalAlignment = HorizontalAlignment.Right;
                 PopupContainer.VerticalAlignment = VerticalAlignment.Top;
                 break;
+            case NowPlayingNotificationCorner.LeftCenter:
+                PopupContainer.HorizontalAlignment = HorizontalAlignment.Left;
+                PopupContainer.VerticalAlignment = VerticalAlignment.Center;
+                break;
+            case NowPlayingNotificationCorner.RightCenter:
+                PopupContainer.HorizontalAlignment = HorizontalAlignment.Right;
+                PopupContainer.VerticalAlignment = VerticalAlignment.Center;
+                break;
             case NowPlayingNotificationCorner.BottomLeft:
                 PopupContainer.HorizontalAlignment = HorizontalAlignment.Left;
+                PopupContainer.VerticalAlignment = VerticalAlignment.Bottom;
+                break;
+            case NowPlayingNotificationCorner.BottomCenter:
+                PopupContainer.HorizontalAlignment = HorizontalAlignment.Center;
                 PopupContainer.VerticalAlignment = VerticalAlignment.Bottom;
                 break;
             case NowPlayingNotificationCorner.BottomRight:
@@ -132,14 +167,14 @@ public sealed partial class NowPlayingToastWindow : Window,
         }
 
         User32.ShowWindow(WindowNative.GetWindowHandle(this), ShowWindowCommand.SW_SHOWNOACTIVATE);
-        
+
         // Simple entrance animation
         if (!_isShowing)
         {
             _isShowing = true;
             PopupContainer.Opacity = 0;
-            
-            var isTop = _currentCorner == NowPlayingNotificationCorner.TopLeft || _currentCorner == NowPlayingNotificationCorner.TopRight;
+
+            var isTop = _currentCorner == NowPlayingNotificationCorner.TopLeft || _currentCorner == NowPlayingNotificationCorner.TopCenter || _currentCorner == NowPlayingNotificationCorner.TopRight;
             var startY = isTop ? -30 : 30;
 
             PopupTranslateTransform.Y = startY;
@@ -167,6 +202,11 @@ public sealed partial class NowPlayingToastWindow : Window,
             sb.Children.Add(slideAnimation);
             sb.Begin();
         }
+        var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+        if (settingsService != null)
+        {
+            _hideTimer.Interval = TimeSpan.FromMilliseconds(settingsService.AppSettings.GeneralSettings.NowPlayingNotificationDuration);
+        }
 
         _hideTimer.Start();
     }
@@ -174,10 +214,10 @@ public sealed partial class NowPlayingToastWindow : Window,
     private void HideTimer_Tick(object? sender, object e)
     {
         _hideTimer.Stop();
-        
+
         if (_isShowing)
         {
-            var isTop = _currentCorner == NowPlayingNotificationCorner.TopLeft || _currentCorner == NowPlayingNotificationCorner.TopRight;
+            var isTop = _currentCorner == NowPlayingNotificationCorner.TopLeft || _currentCorner == NowPlayingNotificationCorner.TopCenter || _currentCorner == NowPlayingNotificationCorner.TopRight;
             var endY = isTop ? -20 : 20;
 
             var sb = new Storyboard();
@@ -201,8 +241,8 @@ public sealed partial class NowPlayingToastWindow : Window,
 
             sb.Children.Add(fadeAnimation);
             sb.Children.Add(slideAnimation);
-            
-            sb.Completed += (s, args) => 
+
+            sb.Completed += (s, args) =>
             {
                 this.Hide();
                 _isShowing = false;

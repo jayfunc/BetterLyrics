@@ -78,20 +78,39 @@
                     <controls:SettingsExpander x:Uid="SettingsPageShowNowPlayingNotification" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8EE;}">
                         <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.ShowNowPlayingNotification, Mode=TwoWay}" />
                         <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="SettingsPageNowPlayingNotificationTheme">
+                                <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.GeneralSettings.NowPlayingNotificationTheme, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                    <ComboBoxItem x:Uid="SettingsPageFollowSystem" />
+                                    <ComboBoxItem x:Uid="SettingsPageLight" />
+                                    <ComboBoxItem x:Uid="SettingsPageDark" />
+                                </ComboBox>
+                            </controls:SettingsCard>
                             <controls:SettingsCard x:Uid="SettingsPageNowPlayingNotificationCorner">
                                 <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.GeneralSettings.NowPlayingNotificationCorner, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                     <ComboBoxItem x:Uid="NowPlayingNotificationCornerTopLeft" />
+                                    <ComboBoxItem x:Uid="NowPlayingNotificationCornerTopCenter" />
                                     <ComboBoxItem x:Uid="NowPlayingNotificationCornerTopRight" />
+                                    <ComboBoxItem x:Uid="NowPlayingNotificationCornerLeftCenter" />
+                                    <ComboBoxItem x:Uid="NowPlayingNotificationCornerRightCenter" />
                                     <ComboBoxItem x:Uid="NowPlayingNotificationCornerBottomLeft" />
+                                    <ComboBoxItem x:Uid="NowPlayingNotificationCornerBottomCenter" />
                                     <ComboBoxItem x:Uid="NowPlayingNotificationCornerBottomRight" />
                                 </ComboBox>
                             </controls:SettingsCard>
                             <controls:SettingsCard x:Uid="SettingsPageNowPlayingNotificationAllMonitors">
                                 <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.NowPlayingNotificationAllMonitors, Mode=TwoWay}" />
                             </controls:SettingsCard>
+                            <controls:SettingsCard x:Uid="SettingsPageNowPlayingNotificationDuration">
+                                <local:ExtendedSlider
+                                    Default="3500"
+                                    Frequency="500"
+                                    Maximum="10000"
+                                    Minimum="2000"
+                                    Unit="ms"
+                                    Value="{x:Bind ViewModel.AppSettings.GeneralSettings.NowPlayingNotificationDuration, Mode=TwoWay}" />
+                            </controls:SettingsCard>
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
-
 
                     <!--  Startup  -->
 
