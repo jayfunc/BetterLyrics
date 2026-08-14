@@ -1,8 +1,9 @@
 namespace BetterLyrics.Core.Enums;
 
-public enum DiscordAlbumArtSource
+public enum OnlineAlbumArtProvider
 {
     None,
     iTunes,
-    Kugou
+    Kugou,
+    LastFm
 }

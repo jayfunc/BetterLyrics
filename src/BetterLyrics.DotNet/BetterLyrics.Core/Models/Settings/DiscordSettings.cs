@@ -7,5 +7,5 @@ public partial class DiscordSettings : ObservableRecipient
 {
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
-    public partial DiscordAlbumArtSource AlbumArtSource { get; set; } = DiscordAlbumArtSource.None;
+    public partial OnlineAlbumArtProvider AlbumArtSource { get; set; } = OnlineAlbumArtProvider.None;
 }

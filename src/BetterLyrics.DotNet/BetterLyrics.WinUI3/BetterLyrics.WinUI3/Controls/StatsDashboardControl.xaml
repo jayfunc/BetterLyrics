@@ -495,6 +495,7 @@
                                                     FontSize="16"
                                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                                     Glyph="&#xE8D6;" />
+                                                <Image Source="{x:Bind AlbumArtUrl, Mode=OneWay}" Stretch="UniformToFill" />
                                             </Grid>
 
                                             <StackPanel Grid.Column="1" VerticalAlignment="Center">

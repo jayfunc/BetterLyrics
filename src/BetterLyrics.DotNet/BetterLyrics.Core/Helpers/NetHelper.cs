@@ -1,4 +1,4 @@
-﻿namespace BetterLyrics.Core.Helpers;
+namespace BetterLyrics.Core.Helpers;
 
 public class NetHelper
 {
@@ -6,7 +6,8 @@ public class NetHelper
     {
         try
         {
-            using var client = new HttpClient();
+            var httpClientFactory = CommunityToolkit.Mvvm.DependencyInjection.Ioc.Default.GetService<IHttpClientFactory>();
+            using var client = httpClientFactory != null ? httpClientFactory.CreateClient() : new HttpClient();
             // Try to reach a reliable endpoint
             var res = await client.GetAsync(url);
             return res.IsSuccessStatusCode;

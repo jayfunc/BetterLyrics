@@ -709,6 +709,7 @@
                                         <ComboBoxItem x:Uid="DiscordAlbumArtSourceNone" />
                                         <ComboBoxItem Content="iTunes" />
                                         <ComboBoxItem Content="酷狗音乐" />
+                                        <ComboBoxItem Content="Last.fm" />
                                     </ComboBox>
                                 </controls:SettingsCard>
                             </controls:SettingsExpander.Items>

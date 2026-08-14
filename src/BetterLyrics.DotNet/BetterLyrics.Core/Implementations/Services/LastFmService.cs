@@ -148,8 +148,45 @@ public class LastFmService : ILastFmService
         UserChanged?.Invoke(this, new LastFMUserChangedEventArgs(User));
     }
 
-    public uint GetUnixTimeStamp()
+    public async Task<string?> GetAlbumArtUrlAsync(SongInfo songInfo)
     {
-        return (uint)(DateTime.UtcNow - DateTime.UnixEpoch).TotalSeconds;
+        try
+        {
+            var artist = songInfo.Artist ?? "";
+            var album = songInfo.Album ?? "";
+            var track = songInfo.Title ?? "";
+
+            if (!string.IsNullOrWhiteSpace(album))
+            {
+                var albumInfo = await _client.Album.GetInfoAsync(artist, album);
+                if (albumInfo?.Images != null && albumInfo.Images.Count > 0)
+                {
+                    var imgUrl = albumInfo.Images[albumInfo.Images.Count - 1].Url;
+                    if (!string.IsNullOrEmpty(imgUrl) && imgUrl.Contains("http"))
+                    {
+                        return imgUrl;
+                    }
+                }
+            }
+
+            if (!string.IsNullOrWhiteSpace(track))
+            {
+                var trackInfo = await _client.Track.GetInfoAsync(track, artist);
+                if (trackInfo?.Album?.Images != null && trackInfo.Album.Images.Count > 0)
+                {
+                    var imgUrl = trackInfo.Album.Images[trackInfo.Album.Images.Count - 1].Url;
+                    if (!string.IsNullOrEmpty(imgUrl) && imgUrl.Contains("http"))
+                    {
+                        return imgUrl;
+                    }
+                }
+            }
+        }
+        catch (Exception)
+        {
+            // Ignore errors for fetching album art
+        }
+
+        return null;
     }
 }

@@ -18,4 +18,5 @@ public interface ILastFmService
     Task ConfirmUnAuthAsync();
     Task TrackAsync(SongInfo songInfo);
     Task RefreshAsync();
+    Task<string?> GetAlbumArtUrlAsync(SongInfo songInfo);
 }

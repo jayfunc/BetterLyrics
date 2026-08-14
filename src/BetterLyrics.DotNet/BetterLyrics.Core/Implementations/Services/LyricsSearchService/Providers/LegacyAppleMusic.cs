@@ -1,4 +1,4 @@
-﻿using System.Net;
+using System.Net;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using BetterLyrics.Core.Constants;
@@ -14,7 +14,7 @@ namespace BetterLyrics.Core.Implementations.Services.LyricsSearchService.Provide
 
 public class LegacyAppleMusic
 {
-    private readonly HttpClient _client;
+    private readonly IHttpClientFactory _httpClientFactory;
 
     private readonly IPasswordVaultProvider _passwordVaultProvider =
         Ioc.Default.GetRequiredService<IPasswordVaultProvider>();
@@ -24,14 +24,40 @@ public class LegacyAppleMusic
     private string _language = "";
     private string _storefront = "";
 
-    public LegacyAppleMusic()
+    public LegacyAppleMusic(IHttpClientFactory httpClientFactory)
     {
-        _client = new HttpClient();
-        _client.DefaultRequestHeaders.Add("User-Agent",
+        _httpClientFactory = httpClientFactory;
+    }
+
+    private HttpClient GetClient()
+    {
+        var client = _httpClientFactory.CreateClient();
+        client.DefaultRequestHeaders.Add("User-Agent",
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36");
-        _client.DefaultRequestHeaders.Add("Accept", "application/json");
-        _client.DefaultRequestHeaders.Add("Origin", "https://music.apple.com");
-        _client.DefaultRequestHeaders.Add("Referer", "https://music.apple.com/");
+        client.DefaultRequestHeaders.Add("Accept", "application/json");
+        client.DefaultRequestHeaders.Add("Origin", "https://music.apple.com");
+        client.DefaultRequestHeaders.Add("Referer", "https://music.apple.com/");
+        
+        if (!string.IsNullOrEmpty(_accessToken))
+        {
+            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _accessToken);
+        }
+        
+        if (!string.IsNullOrEmpty(Constants.AppleMusic.MediaUserTokenKey))
+        {
+            var mediaUserToken = _passwordVaultProvider.Get(App.AppName, Constants.AppleMusic.MediaUserTokenKey);
+            if (!string.IsNullOrEmpty(mediaUserToken))
+            {
+                client.DefaultRequestHeaders.Add("media-user-token", mediaUserToken);
+            }
+        }
+        
+        if (!string.IsNullOrEmpty(_language))
+        {
+            client.DefaultRequestHeaders.Add("Accept-Language", $"{_language},en;q=0.9");
+        }
+        
+        return client;
     }
 
     public async Task<bool> InitAsync(CancellationToken cancellationToken)
@@ -53,37 +79,35 @@ public class LegacyAppleMusic
 
     private async Task GetAccessTokenAsync(CancellationToken cancellationToken)
     {
-        var resp = await _client.GetStringAsync("https://music.apple.com/us/browse", cancellationToken);
+        using var client = GetClient();
+        var resp = await client.GetStringAsync("https://music.apple.com/us/browse", cancellationToken);
         var jsMatch = Regex.Match(resp, "(?<=index)(.*?)(?=\\.js\")");
         if (!jsMatch.Success) throw new Exception("Failed to find index.js");
         var jsUrl = $"https://music.apple.com/assets/index{jsMatch.Value}.js";
-        var jsResp = await _client.GetStringAsync(jsUrl);
+        using var jsClient = GetClient();
+        var jsResp = await jsClient.GetStringAsync(jsUrl);
         var tokenMatch = Regex.Match(jsResp, "(?=eyJh)(.*?)(?=\")");
         if (!tokenMatch.Success) throw new Exception("Failed to find access token");
         _accessToken = tokenMatch.Value;
-        _client.DefaultRequestHeaders.Remove("Authorization");
-        _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {_accessToken}");
     }
 
     private async Task SetMediaUserTokenAsync(string token, CancellationToken cancellationToken)
     {
-        _client.DefaultRequestHeaders.Remove("media-user-token");
-        _client.DefaultRequestHeaders.Add("media-user-token", token);
-        var resp = await _client.GetStringAsync("https://amp-api.music.apple.com/v1/me/storefront",
+        using var client = GetClient();
+        var resp = await client.GetStringAsync("https://amp-api.music.apple.com/v1/me/storefront",
             cancellationToken);
         var json = JsonSerializer.Deserialize(resp, SourceGenerationContext.Default.JsonElement);
         _storefront = json.GetProperty("data")[0].GetProperty("id").ToString();
         _language = json.GetProperty("data")[0].GetProperty("attributes").GetProperty("defaultLanguageTag")
             .ToString();
-        _client.DefaultRequestHeaders.Remove("Accept-Language");
-        _client.DefaultRequestHeaders.Add("Accept-Language", $"{_language},en;q=0.9");
     }
 
     private async Task<string?> GetLyricsAsync(string id, CancellationToken token)
     {
         var apiUrl = $"https://amp-api.music.apple.com/v1/catalog/{_storefront}/songs/{id}";
         var url = apiUrl + $"?include[songs]=lyrics,syllable-lyrics&l={_language}";
-        var resp = await _client.GetStringAsync(url, token);
+        using var client = GetClient();
+        var resp = await client.GetStringAsync(url, token);
         var json = JsonSerializer.Deserialize(resp, SourceGenerationContext.Default.JsonElement);
         var data = json.GetProperty("data");
         if (data.GetArrayLength() == 0) return string.Empty;
@@ -128,7 +152,8 @@ public class LegacyAppleMusic
         var query = $"{songInfo.Artist} {songInfo.Title}";
         var apiUrl = $"https://amp-api.music.apple.com/v1/catalog/{_storefront}/search";
         var url = apiUrl + $"?term={WebUtility.UrlEncode(query)}&types=songs&limit=1&l={_language}";
-        var resp = await _client.GetStringAsync(url, token);
+        using var client = GetClient();
+        var resp = await client.GetStringAsync(url, token);
         var json = JsonSerializer.Deserialize(resp, SourceGenerationContext.Default.JsonElement);
         var results = json.GetProperty("results");
         if (results.TryGetProperty("songs", out var songs) && songs.GetProperty("data").GetArrayLength() > 0)

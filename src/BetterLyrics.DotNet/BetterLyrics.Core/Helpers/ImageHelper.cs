@@ -1,4 +1,4 @@
-﻿// 2025/6/23 by Zhe Fang
+// 2025/6/23 by Zhe Fang
 
 using System.Text;
 
@@ -8,8 +8,17 @@ public class ImageHelper
 {
     private static async Task<byte[]> DownloadImageAsByteArrayAsync(string url)
     {
-        using var httpClient = new HttpClient();
-        return await httpClient.GetByteArrayAsync(url);
+        var httpClientFactory = CommunityToolkit.Mvvm.DependencyInjection.Ioc.Default.GetService<IHttpClientFactory>();
+        if (httpClientFactory != null)
+        {
+            using var client = httpClientFactory.CreateClient();
+            return await client.GetByteArrayAsync(url);
+        }
+        else
+        {
+            using var client = new HttpClient();
+            return await client.GetByteArrayAsync(url);
+        }
     }
 
     private static byte[]? DataUrlToByteArray(string dataUrl)

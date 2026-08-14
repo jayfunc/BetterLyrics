@@ -197,6 +197,9 @@ public class Program
 
         Ioc.Default.ConfigureServices(
             new ServiceCollection()
+                // HTTP Client
+                .AddHttpClient()
+
                 // 数据库服务和迁移
                 .AddSingleton<IDatabaseService, DatabaseService>()
                 .AddSingleton<IDatabaseMigrationService, DatabaseMigrationService>()

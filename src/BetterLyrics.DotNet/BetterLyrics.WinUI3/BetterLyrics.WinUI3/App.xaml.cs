@@ -46,7 +46,7 @@ public partial class App : Application
 
     public new static App Current => (App)Application.Current;
 
-    protected override async void OnLaunched(LaunchActivatedEventArgs args)
+    protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
         // 应用增强动效/全局字体设置项
         var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
@@ -66,14 +66,27 @@ public partial class App : Application
         var globalToastProvider = Ioc.Default.GetRequiredService<IGlobalToastProvider>();
         globalToastProvider.Initialize();
 
-        await InitAppServicesAsync();
-
-        _splashScreen?.Dispose();
-
-        HandleNormalLaunch();
+        _ = LaunchAsync();
     }
 
-    private void HandleNormalLaunch()
+    private async Task LaunchAsync()
+    {
+        try
+        {
+            await InitAppServicesAsync();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "LaunchAsync failed");
+        }
+        finally
+        {
+            _splashScreen?.Dispose();
+            HandleNormalLaunch();
+        }
+    }
+
+    private static void HandleNormalLaunch()
     {
         var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
         var windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();

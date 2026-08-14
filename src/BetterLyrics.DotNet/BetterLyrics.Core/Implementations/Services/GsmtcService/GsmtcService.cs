@@ -30,7 +30,7 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
     IRecipient<PropertyChangedMessage<int>>,
     IRecipient<PropertyChangedMessage<WindowStatus>>,
     IRecipient<PropertyChangedMessage<ChineseConversion>>,
-    IRecipient<PropertyChangedMessage<DiscordAlbumArtSource>>
+    IRecipient<PropertyChangedMessage<OnlineAlbumArtProvider>>
 {
     private readonly IAlbumArtSearchService _albumArtSearchService;
     private readonly IAppUIThreadProvider _appUIThreadProvider;
@@ -269,7 +269,7 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
                 OnDesiredSessionChanged();
     }
 
-    public void Receive(PropertyChangedMessage<DiscordAlbumArtSource> message)
+    public void Receive(PropertyChangedMessage<OnlineAlbumArtProvider> message)
     {
         if (message.Sender is DiscordSettings)
         {
@@ -539,6 +539,7 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
         if (currentMediaSourceProviderInfo?.IsMemoryReaderEnabled == true)
             if (currentMediaSourceProviderInfo.MemoryReaderConfig is MemoryReaderConfig config)
             {
+                _memoryReader.Config = config;
                 _memoryReader.Start();
                 _memoryReader.OnProgressChanged += UniversalMemoryReader_OnProgressChanged;
             }
@@ -626,7 +627,7 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
         if (CurrentMediaSourceProviderInfo?.IsDiscordPresenceEnabled == true && CurrentSongInfo != null)
         {
             var discordSource = _settingsService.AppSettings.DiscordSettings.AlbumArtSource;
-            if (discordSource != DiscordAlbumArtSource.None && string.IsNullOrEmpty(CurrentSongInfo.AlbumArtUrl))
+            if (discordSource != OnlineAlbumArtProvider.None && string.IsNullOrEmpty(CurrentSongInfo.AlbumArtUrl))
             {
                 CurrentSongInfo.AlbumArtUrl = await _albumArtSearchService.GetAlbumArtUrlAsync(
                     CurrentSongInfo, discordSource, 500, CancellationToken.None);

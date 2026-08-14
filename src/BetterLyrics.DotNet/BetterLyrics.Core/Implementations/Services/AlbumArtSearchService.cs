@@ -1,6 +1,8 @@
+using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Net;
 using System.Text.Json;
+using System.Threading;
 using System.Text.Json.Nodes;
 using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
@@ -17,18 +19,21 @@ namespace BetterLyrics.Core.Implementations.Services;
 public class AlbumArtSearchService : IAlbumArtSearchService
 {
     private readonly IFileSystemService _fileSystemService;
-    private readonly HttpClient _iTunesHttpClinet = new();
-    private readonly HttpClient _kugouHttpClient = new();
     private readonly ILogger _logger;
+    private readonly ILastFmService _lastFmService;
+    private readonly IHttpClientFactory _httpClientFactory;
 
     private readonly ISettingsService _settingsService;
+    private readonly ConcurrentDictionary<string, string?> _albumArtUrlCache = new(StringComparer.OrdinalIgnoreCase);
 
     public AlbumArtSearchService(ISettingsService settingsService, IFileSystemService fileSystemService,
-        ILogger<AlbumArtSearchService> logger)
+        ILogger<AlbumArtSearchService> logger, ILastFmService lastFmService, IHttpClientFactory httpClientFactory)
     {
         _settingsService = settingsService;
         _fileSystemService = fileSystemService;
         _logger = logger;
+        _lastFmService = lastFmService;
+        _httpClientFactory = httpClientFactory;
     }
 
     public async Task<byte[]?> SearchAsync(SongInfo songInfo, byte[]? bufferFromSMTC, bool ignoreCache,
@@ -70,15 +75,15 @@ public class AlbumArtSearchService : IAlbumArtSearchService
 
                     switch (providerInfo.Provider)
                     {
-                        case AlbumArtSearchProvider.Local:
+                        case AlbumArtProvider.Local:
                             result = await SearchFileAsync(songInfo, token);
                             break;
 
-                        case AlbumArtSearchProvider.SMTC:
+                        case AlbumArtProvider.SMTC:
                             if (bufferFromSMTC != null) return bufferFromSMTC;
                             break;
 
-                        case AlbumArtSearchProvider.iTunes:
+                        case AlbumArtProvider.iTunes:
                             foreach (var countryCode in new List<string> { "us", "cn", "jp", "kr" })
                                 try
                                 {
@@ -97,8 +102,12 @@ public class AlbumArtSearchService : IAlbumArtSearchService
 
                             break;
 
-                        case AlbumArtSearchProvider.Kugou:
+                        case AlbumArtProvider.Kugou:
                             result = await SearchKugouAsync(songInfo, size, token);
+                            break;
+
+                        case AlbumArtProvider.LastFm:
+                            result = await SearchLastFmAsync(songInfo, token);
                             break;
 
                         // case AlbumArtSearchProvider.Netease:
@@ -144,20 +153,32 @@ public class AlbumArtSearchService : IAlbumArtSearchService
         return null;
     }
 
-    public async Task<string?> GetAlbumArtUrlAsync(SongInfo songInfo, DiscordAlbumArtSource source, int size, CancellationToken token)
+    public async Task<string?> GetAlbumArtUrlAsync(SongInfo songInfo, OnlineAlbumArtProvider source, int size, CancellationToken token)
     {
+        var cacheKey = $"{source}|{size}|{songInfo.Artist}|{songInfo.Album}|{songInfo.Title}";
+
+        if (_albumArtUrlCache.TryGetValue(cacheKey, out var cachedUrl))
+        {
+            return cachedUrl;
+        }
+
         try
         {
+            string? resultUrl = null;
             switch (source)
             {
-                case DiscordAlbumArtSource.iTunes:
+                case OnlineAlbumArtProvider.iTunes:
                     foreach (var countryCode in new List<string> { "us", "cn", "jp", "kr" })
                     {
                         try
                         {
                             if (token.IsCancellationRequested) break;
                             var url = await GetiTunesUrlAsync(songInfo, countryCode, size, token);
-                            if (url != null) return url;
+                            if (url != null)
+                            {
+                                resultUrl = url;
+                                break;
+                            }
                         }
                         catch (OperationCanceledException)
                         {
@@ -170,9 +191,22 @@ public class AlbumArtSearchService : IAlbumArtSearchService
                     }
                     break;
 
-                case DiscordAlbumArtSource.Kugou:
-                    return await GetKugouUrlAsync(songInfo, size, token);
+                case OnlineAlbumArtProvider.Kugou:
+                    resultUrl = await GetKugouUrlAsync(songInfo, size, token);
+                    break;
+                    
+                case OnlineAlbumArtProvider.LastFm:
+                    resultUrl = await GetLastFmUrlAsync(songInfo, token);
+                    break;
             }
+
+            if (_albumArtUrlCache.Count >= 1000)
+            {
+                _albumArtUrlCache.Clear();
+            }
+            
+            _albumArtUrlCache[cacheKey] = resultUrl;
+            return resultUrl;
         }
         catch (OperationCanceledException)
         {
@@ -181,9 +215,8 @@ public class AlbumArtSearchService : IAlbumArtSearchService
         catch (Exception ex)
         {
             _logger.LogError(ex, "Unexpected error in GetAlbumArtUrlAsync.");
+            return null;
         }
-
-        return null;
     }
 
     private async Task<byte[]?> SearchFileAsync(SongInfo songInfo, CancellationToken token)
@@ -244,7 +277,8 @@ public class AlbumArtSearchService : IAlbumArtSearchService
                   countryCode + "&entity=album&media=music&limit=1";
 
         // Make a request to the API
-        using var response = await _iTunesHttpClinet.GetAsync(url, token);
+        using var client = _httpClientFactory.CreateClient();
+        using var response = await client.GetAsync(url, token);
         response.EnsureSuccessStatusCode();
         var responseBody = await response.Content.ReadAsStringAsync(token);
 
@@ -271,7 +305,8 @@ public class AlbumArtSearchService : IAlbumArtSearchService
         var artworkUrl = await GetiTunesUrlAsync(songInfo, countryCode, size, token);
         if (!string.IsNullOrEmpty(artworkUrl))
         {
-            var fetched = await _iTunesHttpClinet.GetByteArrayAsync(artworkUrl, token);
+            using var client = _httpClientFactory.CreateClient();
+            var fetched = await client.GetByteArrayAsync(artworkUrl, token);
             if (fetched != null && fetched.Length > 0) return fetched;
         }
 
@@ -286,11 +321,11 @@ public class AlbumArtSearchService : IAlbumArtSearchService
         var searchUrl =
             $"http://mobilecdn.kugou.com/api/v3/search/song?format=json&keyword={Uri.EscapeDataString(keyword)}&page=1&pagesize=1&showtype=1";
 
-        if (!_kugouHttpClient.DefaultRequestHeaders.Contains("User-Agent"))
-            _kugouHttpClient.DefaultRequestHeaders.Add("User-Agent",
-                "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36");
+        using var client = _httpClientFactory.CreateClient();
+        client.DefaultRequestHeaders.Add("User-Agent",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36");
 
-        var searchResponse = await _kugouHttpClient.GetStringAsync(searchUrl, token);
+        var searchResponse = await client.GetStringAsync(searchUrl, token);
 
         var searchJson = JsonNode.Parse(searchResponse);
         var songs = searchJson?["data"]?["info"]?.AsArray();
@@ -304,7 +339,7 @@ public class AlbumArtSearchService : IAlbumArtSearchService
 
         var detailsUrl = $"http://m.kugou.com/app/i/getSongInfo.php?cmd=playInfo&hash={hash}";
 
-        var detailsResponse = await _kugouHttpClient.GetStringAsync(detailsUrl, token);
+        var detailsResponse = await client.GetStringAsync(detailsUrl, token);
         var detailsJson = JsonNode.Parse(detailsResponse);
 
         var imgUrl = detailsJson?["album_img"]?.ToString() ?? detailsJson?["img"]?.ToString();
@@ -319,10 +354,35 @@ public class AlbumArtSearchService : IAlbumArtSearchService
         var imgUrl = await GetKugouUrlAsync(songInfo, size, token);
         if (!string.IsNullOrEmpty(imgUrl))
         {
-            var imageBytes = await _kugouHttpClient.GetByteArrayAsync(imgUrl, token);
+            using var client = _httpClientFactory.CreateClient();
+            var imageBytes = await client.GetByteArrayAsync(imgUrl, token);
             return imageBytes;
         }
 
+        return null;
+    }
+
+    private async Task<string?> GetLastFmUrlAsync(SongInfo songInfo, CancellationToken token)
+    {
+        return await _lastFmService.GetAlbumArtUrlAsync(songInfo);
+    }
+
+    private async Task<byte[]?> SearchLastFmAsync(SongInfo songInfo, CancellationToken token)
+    {
+        var url = await GetLastFmUrlAsync(songInfo, token);
+        if (!string.IsNullOrEmpty(url))
+        {
+            try
+            {
+                using var client = _httpClientFactory.CreateClient();
+                var imageBytes = await client.GetByteArrayAsync(url, token);
+                return imageBytes;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogDebug(ex, "Failed to fetch Last.fm album art from url");
+            }
+        }
         return null;
     }
 }

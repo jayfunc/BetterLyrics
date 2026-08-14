@@ -25,20 +25,21 @@
         <PackageReference Include="Hqub.Last.fm" Version="2.5.1" />
         <PackageReference Include="Impressionist.Next.Jayfunc" Version="1.0.0" />
         <PackageReference Include="Lyricify.Lyrics.Helper.Jayfunc" Version="0.1.4" />
-        <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.10" />
+        <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.11" />
         <PackageReference Include="LiteDB" Version="5.0.21" />
-        <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.10" />
+        <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.11" />
+        <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.11" />
         <PackageReference Include="MimeMapping" Version="4.0.0" />
         <PackageReference Include="NAudio" Version="2.3.0" />
         <PackageReference Include="NTextCat" Version="0.3.65" />
         <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
         <PackageReference Include="SMBLibrary" Version="1.5.7.1" />
-        <PackageReference Include="System.IO.Hashing" Version="10.0.10" />
+        <PackageReference Include="System.IO.Hashing" Version="10.0.11" />
         <PackageReference Include="TagLibSharp" Version="2.3.0" />
         <PackageReference Include="TextCopy" Version="6.2.1" />
         <PackageReference Include="WanaKana-net" Version="1.0.0" />
         <PackageReference Include="WebDav.Client" Version="2.9.0" />
-        <PackageReference Include="z440.atl.core" Version="7.15.3" />
+        <PackageReference Include="z440.atl.core" Version="7.16.0" />
     </ItemGroup>
 
     <ItemGroup>

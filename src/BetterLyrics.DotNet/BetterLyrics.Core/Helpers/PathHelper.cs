@@ -62,6 +62,7 @@ public static class PathHelper
     public static string iTunesAlbumArtCacheDirectory => Path.Combine(AlbumArtCacheDirectory, "itunes");
     public static string KugouAlbumArtCacheDirectory => Path.Combine(AlbumArtCacheDirectory, "kugou");
     public static string NeteaseAlbumArtCacheDirectory => Path.Combine(AlbumArtCacheDirectory, "netease");
+    public static string LastFmAlbumArtCacheDirectory => Path.Combine(AlbumArtCacheDirectory, "lastfm");
 
     public static string PlayQueuePath => Path.Combine(LocalFolderPath, "play-queue.m3u");
 
@@ -89,6 +90,7 @@ public static class PathHelper
         Directory.CreateDirectory(iTunesAlbumArtCacheDirectory);
         Directory.CreateDirectory(KugouAlbumArtCacheDirectory);
         Directory.CreateDirectory(NeteaseAlbumArtCacheDirectory);
+        Directory.CreateDirectory(LastFmAlbumArtCacheDirectory);
 
         Directory.CreateDirectory(PluginsDirectory);
         Directory.CreateDirectory(PendingPluginsDirectory);

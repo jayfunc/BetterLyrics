@@ -51,34 +51,32 @@
         <PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.2.251219" />
         <PackageReference Include="CommunityToolkit.WinUI.Triggers" Version="8.2.251219" />
         <PackageReference Include="ComputeSharp.D2D1.WinUI" Version="3.2.0" />
-        <PackageReference Include="DevWinUI" Version="10.1.0" />
+        <PackageReference Include="DevWinUI" Version="10.3.0" />
         <PackageReference Include="Dubya.WindowsMediaController.Jayfunc" Version="2.5.6" />
         <PackageReference Include="FlaUI.UIA3" Version="5.0.0" />
         <PackageReference Include="H.NotifyIcon.WinUI" Version="2.4.1" />
         <PackageReference Include="Interop.UIAutomationClient" Version="10.19041.0" />
 
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.10" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.11" />
         <PackageReference Include="Microsoft.Graphics.Win2D" Version="1.4.0" />
         <PackageReference Include="Microsoft.VisualStudio.Threading.Analyzers" Version="18.7.23">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.28000.2526" />
-        <PackageReference Include="Microsoft.WindowsAppSDK" Version="2.3.1" />
+        <PackageReference Include="Microsoft.WindowsAppSDK" Version="2.4.0" />
         <PackageReference Include="NAudio.Wasapi" Version="2.3.0" />
         <PackageReference Include="Serilog.Extensions.Logging" Version="10.0.0" />
         <PackageReference Include="Serilog.Sinks.File" Version="7.0.0" />
         <PackageReference Include="SpoutDx.Net.Interop.MultiPlatform" Version="0.1.0" />
-        <PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.2" />
-        <PackageReference Include="System.Drawing.Common" Version="10.0.10" />
         <PackageReference Include="Ude.NetStandard" Version="1.2.0" />
-        <PackageReference Include="Vanara.PInvoke.DwmApi" Version="5.0.5" />
-        <PackageReference Include="Vanara.PInvoke.Gdi32" Version="5.0.5" />
-        <PackageReference Include="Vanara.PInvoke.Shell32" Version="5.0.5" />
-        <PackageReference Include="Vanara.PInvoke.User32" Version="5.0.5" />
-        <PackageReference Include="Vanara.Windows.Shell" Version="5.0.5" />
+        <PackageReference Include="Vanara.PInvoke.DwmApi" Version="5.0.6" />
+        <PackageReference Include="Vanara.PInvoke.Gdi32" Version="5.0.6" />
+        <PackageReference Include="Vanara.PInvoke.Shell32" Version="5.0.6" />
+        <PackageReference Include="Vanara.PInvoke.User32" Version="5.0.6" />
+        <PackageReference Include="Vanara.Windows.Shell" Version="5.0.6" />
         <PackageReference Include="Vortice.Direct3D11" Version="3.8.3" />
-        <PackageReference Include="WinUIEx" Version="2.9.2" />
+        <PackageReference Include="WinUIEx" Version="2.9.3" />
     </ItemGroup>
     <ItemGroup>
         <Page Update="Rendering\InAppLyricsRenderer.xaml">

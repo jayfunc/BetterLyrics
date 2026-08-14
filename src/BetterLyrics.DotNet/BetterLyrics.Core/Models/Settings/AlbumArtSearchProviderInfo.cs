@@ -11,7 +11,7 @@ public partial class AlbumArtSearchProviderInfo : ObservableRecipient
     {
     }
 
-    public AlbumArtSearchProviderInfo(AlbumArtSearchProvider provider, bool isEnabled)
+    public AlbumArtSearchProviderInfo(AlbumArtProvider provider, bool isEnabled)
     {
         Provider = provider;
         IsEnabled = isEnabled;
@@ -23,5 +23,5 @@ public partial class AlbumArtSearchProviderInfo : ObservableRecipient
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
-    public partial AlbumArtSearchProvider Provider { get; set; }
+    public partial AlbumArtProvider Provider { get; set; }
 }

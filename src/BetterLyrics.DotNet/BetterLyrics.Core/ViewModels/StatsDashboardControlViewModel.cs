@@ -165,7 +165,7 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
 
         var firstDayOfWeek = (int)culture.DateTimeFormat.FirstDayOfWeek;
         var startDayOfWeek = (int)startDate.DayOfWeek;
-        
+
         _appUIThreadProvider.Execute(() =>
         {
             HeatmapLabel1 = culture.DateTimeFormat.GetAbbreviatedDayName((DayOfWeek)((startDayOfWeek + 1) % 7));
@@ -251,7 +251,7 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
         if (dailyCounts.Any())
         {
             var maxDay = dailyCounts.OrderByDescending(x => x.Value).First();
-            
+
             int currentStreak = 0;
             int maxStreak = 0;
             var orderedDays = dailyCounts.Keys.OrderBy(d => d).ToList();
@@ -273,7 +273,7 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
                     }
                 }
             }
-            
+
             _appUIThreadProvider.Execute(() =>
             {
                 MaxListeningDay = maxDay.Key;
@@ -356,7 +356,7 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
             });
 
         var resultSeries = await Task.WhenAll(tasks);
-        
+
         _appUIThreadProvider.Execute(() =>
         {
             SourceSeries = [.. resultSeries];
@@ -459,6 +459,23 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
                 TopArtists = [.. topArtists];
             });
 
+            _ = Task.Run(async () =>
+            {
+                foreach (var song in topSongs)
+                {
+                    var url = await _albumArtSearchService.GetAlbumArtUrlAsync(
+                        new Models.SongInfo { Artist = song.Artist, Title = song.Title },
+                        OnlineAlbumArtProvider.LastFm,
+                        64,
+                        CancellationToken.None);
+
+                    if (!string.IsNullOrEmpty(url))
+                    {
+                        _appUIThreadProvider.Execute(() => song.AlbumArtUrl = url);
+                    }
+                }
+            });
+
             ProcessHeatmapStats(logs, start.Value, end.Value);
             ProcessHourlyStats(logs);
 
@@ -507,7 +524,7 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
                     LateNightSongName = topLateNight.Title;
                     LateNightSongDate = topLateNight.StartedAt.ToLocalTime();
                 }
-                
+
                 PersonaTitle = _localizationService.GetLocalizedString(personaTitleKey);
                 PersonaDescription = _localizationService.GetLocalizedString(personaDescKey);
             });

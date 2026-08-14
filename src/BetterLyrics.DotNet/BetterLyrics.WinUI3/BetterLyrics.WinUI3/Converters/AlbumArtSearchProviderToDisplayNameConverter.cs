@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Services;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -12,13 +12,14 @@ public partial class AlbumArtSearchProviderToDisplayNameConverter : IValueConver
 
     public object Convert(object value, Type targetType, object parameter, string language)
     {
-        if (value is AlbumArtSearchProvider provider)
+        if (value is AlbumArtProvider provider)
             return provider switch
             {
-                AlbumArtSearchProvider.Local => _localizationService.GetLocalizedString("AlbumArtSearchLocalProvider"),
-                AlbumArtSearchProvider.SMTC => _localizationService.GetLocalizedString("AlbumArtSearchSMTCProvider"),
-                AlbumArtSearchProvider.iTunes => "iTunes",
-                AlbumArtSearchProvider.Kugou => "酷狗音乐",
+                AlbumArtProvider.Local => _localizationService.GetLocalizedString("AlbumArtSearchLocalProvider"),
+                AlbumArtProvider.SMTC => _localizationService.GetLocalizedString("AlbumArtSearchSMTCProvider"),
+                AlbumArtProvider.iTunes => "iTunes",
+                AlbumArtProvider.Kugou => "酷狗音乐",
+                AlbumArtProvider.LastFm => "Last.fm",
                 //AlbumArtSearchProvider.Netease => "网易云音乐",
                 _ => throw new Exception($"Unknown AlbumArtSearchProvider: {provider}")
             };

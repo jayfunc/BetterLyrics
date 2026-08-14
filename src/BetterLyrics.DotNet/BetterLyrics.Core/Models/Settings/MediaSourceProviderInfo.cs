@@ -111,7 +111,7 @@ public partial class MediaSourceProviderInfo : ObservableRecipient
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
     public partial FullyObservableCollection<AlbumArtSearchProviderInfo> AlbumArtSearchProvidersInfo { get; set; } =
-        [.. Enum.GetValues<AlbumArtSearchProvider>().Select(p => new AlbumArtSearchProviderInfo(p, true))];
+        [.. Enum.GetValues<AlbumArtProvider>().Select(p => new AlbumArtSearchProviderInfo(p, true))];
 
     [JsonIgnore] public bool IsLXMusic => PlayerIdHelper.IsLXMusic(Provider);
     [JsonIgnore] public bool IsBetterLyrics => PlayerIdHelper.IsBetterLyrics(Provider);

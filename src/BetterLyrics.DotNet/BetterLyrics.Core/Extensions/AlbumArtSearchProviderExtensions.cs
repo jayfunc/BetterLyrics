@@ -1,17 +1,17 @@
-﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Helpers;
 
 namespace BetterLyrics.Core.Extensions;
 
 public static class AlbumArtSearchProviderExtensions
 {
-    extension(AlbumArtSearchProvider provider)
+    extension(AlbumArtProvider provider)
     {
         public bool IsLocal()
         {
             return provider
-                is AlbumArtSearchProvider.Local
-                or AlbumArtSearchProvider.SMTC;
+                is AlbumArtProvider.Local
+                or AlbumArtProvider.SMTC;
         }
 
         public bool IsRemote()
@@ -23,8 +23,9 @@ public static class AlbumArtSearchProviderExtensions
         {
             return provider switch
             {
-                AlbumArtSearchProvider.iTunes => PathHelper.iTunesAlbumArtCacheDirectory,
-                AlbumArtSearchProvider.Kugou => PathHelper.KugouAlbumArtCacheDirectory,
+                AlbumArtProvider.iTunes => PathHelper.iTunesAlbumArtCacheDirectory,
+                AlbumArtProvider.Kugou => PathHelper.KugouAlbumArtCacheDirectory,
+                AlbumArtProvider.LastFm => PathHelper.LastFmAlbumArtCacheDirectory,
                 //AlbumArtSearchProvider.Netease => PathHelper.NeteaseAlbumArtCacheDirectory,
                 _ => throw new ArgumentOutOfRangeException()
             };

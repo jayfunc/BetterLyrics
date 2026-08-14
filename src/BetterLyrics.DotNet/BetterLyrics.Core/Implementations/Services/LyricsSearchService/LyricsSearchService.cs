@@ -26,8 +26,7 @@ namespace BetterLyrics.Core.Implementations.Services.LyricsSearchService;
 
 public class LyricsSearchService : ILyricsSearchService
 {
-    private readonly HttpClient _amllTtmlDbHttpClient;
-    private readonly HttpClient _lrcLibHttpClient;
+    private readonly IHttpClientFactory _httpClientFactory;
     private readonly Providers.AppleMusic _appleMusic;
 
     private readonly IFileSystemService _fileSystemService;
@@ -45,6 +44,7 @@ public class LyricsSearchService : ILyricsSearchService
         IPasswordVaultProvider passwordVaultProvider,
         ISongSearchMapService songSearchMapService,
         IPluginService pluginService,
+        IHttpClientFactory httpClientFactory,
         ILogger<LyricsSearchService> logger
     )
     {
@@ -55,14 +55,9 @@ public class LyricsSearchService : ILyricsSearchService
         _passwordVaultProvider = passwordVaultProvider;
         _pluginService = pluginService;
         _logger = logger;
+        _httpClientFactory = httpClientFactory;
 
-        _lrcLibHttpClient = new();
-        _lrcLibHttpClient.DefaultRequestHeaders.Add(
-            "User-Agent",
-            $"{App.AppName} {MetadataHelper.AppVersion} ({Link.BetterLyricsGitHub})"
-        );
-        _amllTtmlDbHttpClient = new();
-        _appleMusic = new();
+        _appleMusic = new(_httpClientFactory);
     }
 
     public async Task<LyricsCacheItem?> SearchSmartlyAsync(SongInfo songInfo, LyricsSearchType? lyricsSearchType,
@@ -299,7 +294,8 @@ public class LyricsSearchService : ILyricsSearchService
     {
         try
         {
-            using var response = await _amllTtmlDbHttpClient.GetAsync(
+            using var client = _httpClientFactory.CreateClient();
+            using var response = await client.GetAsync(
                 $"{_settingsService.AppSettings.GeneralSettings.AmllTtmlDbBaseUrl}/{AmllTTmlDB.IndexSuffix}",
                 HttpCompletionOption.ResponseHeadersRead, token);
 
@@ -560,7 +556,8 @@ public class LyricsSearchService : ILyricsSearchService
         lyricsSearchResult.Reference = url;
 
         // 下载写入歌词
-        using var response = await _amllTtmlDbHttpClient.GetAsync(url, token);
+        using var client = _httpClientFactory.CreateClient();
+        using var response = await client.GetAsync(url, token);
         if (!response.IsSuccessStatusCode) return lyricsSearchResult;
         var lyrics = await response.Content.ReadAsStringAsync(token);
         lyricsSearchResult.Raw = lyrics;
@@ -593,7 +590,9 @@ public class LyricsSearchService : ILyricsSearchService
             $"&album_name={Uri.EscapeDataString(songInfo.Album)}" +
             $"&durationMs={Uri.EscapeDataString(songInfo.DurationMs.ToString())}";
 
-        using var response = await _lrcLibHttpClient.GetAsync(url, token);
+        using var client = _httpClientFactory.CreateClient();
+        client.DefaultRequestHeaders.Add("User-Agent", $"{App.AppName} {MetadataHelper.AppVersion} ({Link.BetterLyricsGitHub})");
+        using var response = await client.GetAsync(url, token);
         if (!response.IsSuccessStatusCode) return lyricsSearchResult;
 
         var json = await response.Content.ReadAsStringAsync(token);

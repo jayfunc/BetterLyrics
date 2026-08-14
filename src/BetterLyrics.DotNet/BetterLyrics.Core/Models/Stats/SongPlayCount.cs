@@ -1,8 +1,11 @@
-﻿namespace BetterLyrics.Core.Models.Stats;
+using CommunityToolkit.Mvvm.ComponentModel;
 
-public class SongPlayCount
+namespace BetterLyrics.Core.Models.Stats;
+
+public partial class SongPlayCount : ObservableObject
 {
-    public string Title { get; set; }
-    public string Artist { get; set; }
-    public int PlayCount { get; set; }
+    [ObservableProperty] public partial string Title { get; set; } = string.Empty;
+    [ObservableProperty] public partial string Artist { get; set; } = string.Empty;
+    [ObservableProperty] public partial int PlayCount { get; set; }
+    [ObservableProperty] public partial string? AlbumArtUrl { get; set; }
 }
