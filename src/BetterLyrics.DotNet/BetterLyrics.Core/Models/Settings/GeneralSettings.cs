@@ -84,7 +84,7 @@ public partial class GeneralSettings : ObservableRecipient
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
-    public partial bool ShowNowPlayingNotification { get; set; } = true;
+    public partial bool ShowNowPlayingNotification { get; set; } = false;
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
