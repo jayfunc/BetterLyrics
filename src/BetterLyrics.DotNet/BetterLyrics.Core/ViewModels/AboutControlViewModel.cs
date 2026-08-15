@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using System.IO.Compression;
 using System.Text.RegularExpressions;
 using BetterLyrics.Core.Constants;
@@ -24,12 +24,13 @@ public partial class AboutControlViewModel : BaseViewModel
     private readonly IAssetReaderProvider _assetReaderProvider;
     private readonly ILauncherProvider _launcherProvider;
     private readonly IFilePickerProvider _filePickerProvider;
+    private readonly IDatabaseService _databaseService;
 
     public AboutControlViewModel(ISettingsService settingsService, ILyricsCacheService lyricsCacheService,
         IAppUpdateService appUpdateService, ILocalizationService localizationService,
         IGlobalToastProvider globalToastProvider, IWindowManagerProvider windowManagerProvider,
         IAssetReaderProvider assetReaderProvider, ILauncherProvider launcherProvider,
-        IFilePickerProvider filePickerProvider)
+        IFilePickerProvider filePickerProvider, IDatabaseService databaseService)
     {
         _settingsService = settingsService;
         _lyricsCacheService = lyricsCacheService;
@@ -39,6 +40,7 @@ public partial class AboutControlViewModel : BaseViewModel
         _assetReaderProvider = assetReaderProvider;
         _launcherProvider = launcherProvider;
         _filePickerProvider = filePickerProvider;
+        _databaseService = databaseService;
 
         AppUpdateService = appUpdateService;
 
@@ -129,6 +131,7 @@ public partial class AboutControlViewModel : BaseViewModel
                 GC.WaitForPendingFinalizers();
 
                 SqliteConnection.ClearAllPools();
+                (_databaseService as IDisposable)?.Dispose();
 
                 var tempExtractPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
                 Directory.CreateDirectory(tempExtractPath);
