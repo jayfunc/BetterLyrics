@@ -25,7 +25,8 @@ public class SpectrumAnalyzer : IDisposable, IMMNotificationClient
     private readonly object _lock = new();
     private readonly ILogger<SpectrumAnalyzer> _logger;
     private readonly int _m; // FFT Log2 n
-    private WasapiLoopbackCapture? _capture;
+    private SafeWasapiLoopbackCapture? _capture;
+    //private WasapiLoopbackCapture? _capture;
     private float[]? _compensationMap; // 预计算的补偿表
     private float[]? _currentSpectrum;
 
@@ -159,7 +160,8 @@ public class SpectrumAnalyzer : IDisposable, IMMNotificationClient
 
         try
         {
-            _capture = new WasapiLoopbackCapture();
+            _capture = new SafeWasapiLoopbackCapture();
+            //_capture = new WasapiLoopbackCapture();
             _sampleRate = _capture.WaveFormat.SampleRate;
 
             lock (_lock)
