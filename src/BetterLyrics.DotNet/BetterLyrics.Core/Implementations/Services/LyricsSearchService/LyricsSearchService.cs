@@ -27,6 +27,7 @@ namespace BetterLyrics.Core.Implementations.Services.LyricsSearchService;
 public class LyricsSearchService : ILyricsSearchService
 {
     private readonly IHttpClientFactory _httpClientFactory;
+    private readonly HttpClient _client;
     private readonly Providers.AppleMusic _appleMusic;
 
     private readonly IFileSystemService _fileSystemService;
@@ -56,6 +57,7 @@ public class LyricsSearchService : ILyricsSearchService
         _pluginService = pluginService;
         _logger = logger;
         _httpClientFactory = httpClientFactory;
+        _client = _httpClientFactory.CreateClient();
 
         _appleMusic = new(_httpClientFactory);
     }
@@ -294,8 +296,7 @@ public class LyricsSearchService : ILyricsSearchService
     {
         try
         {
-            using var client = _httpClientFactory.CreateClient();
-            using var response = await client.GetAsync(
+            using var response = await _client.GetAsync(
                 $"{_settingsService.AppSettings.GeneralSettings.AmllTtmlDbBaseUrl}/{AmllTTmlDB.IndexSuffix}",
                 HttpCompletionOption.ResponseHeadersRead, token);
 
@@ -556,8 +557,7 @@ public class LyricsSearchService : ILyricsSearchService
         lyricsSearchResult.Reference = url;
 
         // 下载写入歌词
-        using var client = _httpClientFactory.CreateClient();
-        using var response = await client.GetAsync(url, token);
+        using var response = await _client.GetAsync(url, token);
         if (!response.IsSuccessStatusCode) return lyricsSearchResult;
         var lyrics = await response.Content.ReadAsStringAsync(token);
         lyricsSearchResult.Raw = lyrics;
@@ -590,9 +590,9 @@ public class LyricsSearchService : ILyricsSearchService
             $"&album_name={Uri.EscapeDataString(songInfo.Album)}" +
             $"&durationMs={Uri.EscapeDataString(songInfo.DurationMs.ToString())}";
 
-        using var client = _httpClientFactory.CreateClient();
-        client.DefaultRequestHeaders.Add("User-Agent", $"{App.AppName} {MetadataHelper.AppVersion} ({Link.BetterLyricsGitHub})");
-        using var response = await client.GetAsync(url, token);
+        var requestMessage = new HttpRequestMessage(HttpMethod.Get, url);
+        requestMessage.Headers.Add("User-Agent", $"{App.AppName} {MetadataHelper.AppVersion} ({Link.BetterLyricsGitHub})");
+        using var response = await _client.SendAsync(requestMessage, token);
         if (!response.IsSuccessStatusCode) return lyricsSearchResult;
 
         var json = await response.Content.ReadAsStringAsync(token);

@@ -9,7 +9,7 @@ namespace BetterLyrics.Core.Implementations.Services;
 
 public class TranslationService : BaseViewModel, ITranslationService
 {
-    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly HttpClient _client;
     private readonly IPluginService _pluginService;
     private readonly ISettingsService _settingsService;
 
@@ -17,7 +17,7 @@ public class TranslationService : BaseViewModel, ITranslationService
     {
         _settingsService = settingsService;
         _pluginService = pluginService;
-        _httpClientFactory = httpClientFactory;
+        _client = httpClientFactory.CreateClient();
     }
 
     public async Task<string> TranslateTextAsync(string text, LanguageTag? targetLangTag, CancellationToken token)
@@ -32,8 +32,7 @@ public class TranslationService : BaseViewModel, ITranslationService
             throw new Exception("LibreTranslate server URL is not set in settings.");
 
         var url = $"{_settingsService.AppSettings.TranslationSettings.LibreTranslateServer}/translate";
-        using var client = _httpClientFactory.CreateClient();
-        var response = await client.PostAsync(url, new FormUrlEncodedContent(
+        var response = await _client.PostAsync(url, new FormUrlEncodedContent(
         [
             new KeyValuePair<string, string>("q", text),
             new KeyValuePair<string, string>("source", originalLangTag?.ToString() ?? ""),

@@ -17,7 +17,7 @@ namespace BetterLyrics.Core.Implementations.Services.LyricsSearchService.Provide
 
 public class AppleMusic
 {
-    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly HttpClient _client;
 
     private readonly IPasswordVaultProvider _passwordVaultProvider =
         Ioc.Default.GetRequiredService<IPasswordVaultProvider>();
@@ -29,38 +29,12 @@ public class AppleMusic
 
     public AppleMusic(IHttpClientFactory httpClientFactory)
     {
-        _httpClientFactory = httpClientFactory;
-    }
-
-    private HttpClient GetClient()
-    {
-        var client = _httpClientFactory.CreateClient();
-        client.DefaultRequestHeaders.Add("User-Agent",
+        _client = httpClientFactory.CreateClient();
+        _client.DefaultRequestHeaders.Add("User-Agent",
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36");
-        client.DefaultRequestHeaders.Add("Accept", "application/json");
-        client.DefaultRequestHeaders.Add("Origin", "https://music.apple.com");
-        client.DefaultRequestHeaders.Add("Referer", "https://music.apple.com/");
-        
-        if (!string.IsNullOrEmpty(_accessToken))
-        {
-            client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _accessToken);
-        }
-        
-        if (!string.IsNullOrEmpty(Constants.AppleMusic.MediaUserTokenKey))
-        {
-            var mediaUserToken = _passwordVaultProvider.Get(App.AppName, Constants.AppleMusic.MediaUserTokenKey);
-            if (!string.IsNullOrEmpty(mediaUserToken))
-            {
-                client.DefaultRequestHeaders.Add("media-user-token", mediaUserToken);
-            }
-        }
-        
-        if (!string.IsNullOrEmpty(_language))
-        {
-            client.DefaultRequestHeaders.Add("Accept-Language", $"{_language},en;q=0.9");
-        }
-        
-        return client;
+        _client.DefaultRequestHeaders.Add("Accept", "application/json");
+        _client.DefaultRequestHeaders.Add("Origin", "https://music.apple.com");
+        _client.DefaultRequestHeaders.Add("Referer", "https://music.apple.com/");
     }
 
     public async Task<bool> InitAsync(CancellationToken cancellationToken)
@@ -71,6 +45,11 @@ public class AppleMusic
                 Constants.AppleMusic.MediaUserTokenKey);
             if (!string.IsNullOrEmpty(mediaUserToken))
             {
+                if (!_client.DefaultRequestHeaders.Contains("media-user-token"))
+                {
+                    _client.DefaultRequestHeaders.Add("media-user-token", mediaUserToken);
+                }
+
                 await GetAccessTokenAsync(cancellationToken);
                 await SetMediaUserTokenAsync(mediaUserToken, cancellationToken);
                 _isInited = !string.IsNullOrEmpty(_accessToken);
@@ -82,8 +61,7 @@ public class AppleMusic
 
     private async Task GetAccessTokenAsync(CancellationToken cancellationToken)
     {
-        using var client = GetClient();
-        var resp = await client.GetStringAsync("https://music.apple.com/us/browse", cancellationToken);
+        var resp = await _client.GetStringAsync("https://music.apple.com/us/browse", cancellationToken);
         var jsUrls = Regex.Matches(resp, "(?<url>(?:https://music\\.apple\\.com)?/?assets/index(?!-legacy)[^\\\"'<>\\s]*?\\.js)", RegexOptions.IgnoreCase)
             .Cast<Match>()
             .Select(x => NormalizeAppleMusicAssetUrl(x.Groups["url"].Value))
@@ -105,8 +83,7 @@ public class AppleMusic
 
         foreach (var jsUrl in jsUrls)
         {
-            using var jsClient = GetClient();
-            var jsResp = await jsClient.GetStringAsync(jsUrl, cancellationToken);
+            var jsResp = await _client.GetStringAsync(jsUrl, cancellationToken);
             
             var token = Regex.Matches(jsResp, @"eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+")
                 .Cast<Match>()
@@ -121,6 +98,7 @@ public class AppleMusic
             if (!string.IsNullOrWhiteSpace(token))
             {
                 _accessToken = token;
+                _client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", _accessToken);
                 return;
             }
         }
@@ -177,22 +155,25 @@ public class AppleMusic
 
     private async Task SetMediaUserTokenAsync(string token, CancellationToken cancellationToken)
     {
-        // the token is dynamically loaded from _passwordVaultProvider inside GetClient()
-        using var client = GetClient();
-        var resp = await client.GetStringAsync("https://amp-api.music.apple.com/v1/me/storefront",
+        // the token is dynamically loaded from _passwordVaultProvider inside InitAsync
+        var resp = await _client.GetStringAsync("https://amp-api.music.apple.com/v1/me/storefront",
             cancellationToken);
         var json = JsonSerializer.Deserialize(resp, SourceGenerationContext.Default.JsonElement);
         _storefront = json.GetProperty("data")[0].GetProperty("id").ToString();
         _language = json.GetProperty("data")[0].GetProperty("attributes").GetProperty("defaultLanguageTag")
             .ToString();
+
+        if (!string.IsNullOrEmpty(_language) && !_client.DefaultRequestHeaders.Contains("Accept-Language"))
+        {
+            _client.DefaultRequestHeaders.Add("Accept-Language", $"{_language},en;q=0.9");
+        }
     }
 
     private async Task<string?> GetLyricsAsync(string id, CancellationToken token)
     {
         var apiUrl = $"https://amp-api.music.apple.com/v1/catalog/{_storefront}/songs/{id}";
         var url = apiUrl + $"?include[songs]=lyrics,syllable-lyrics&l={WebUtility.UrlEncode(_language)}&extend=ttmlLocalizations";
-        using var client = GetClient();
-        var resp = await client.GetStringAsync(url, token);
+        var resp = await _client.GetStringAsync(url, token);
         var json = JsonSerializer.Deserialize(resp, SourceGenerationContext.Default.JsonElement);
         var data = json.GetProperty("data");
         if (data.GetArrayLength() == 0) return string.Empty;
@@ -213,17 +194,16 @@ public class AppleMusic
             }
         }
 
-        // Uncomment the following code if you want to fallback to unsynchronized lyrics when synchronized lyrics are not available.
-        //if (relationships.TryGetProperty("lyrics", out var lyrics) &&
-        //    lyrics.GetProperty("data").GetArrayLength() > 0)
-        //{
-        //    var lyric = lyrics.GetProperty("data")[0];
-        //    if (lyric.TryGetProperty("attributes", out var attributes) &&
-        //        attributes.TryGetProperty("ttml", out var ttml))
-        //    {
-        //        return ttml.GetString();
-        //    }
-        //}
+        if (relationships.TryGetProperty("lyrics", out var lyrics) &&
+            lyrics.GetProperty("data").GetArrayLength() > 0)
+        {
+            var lyric = lyrics.GetProperty("data")[0];
+            if (lyric.TryGetProperty("attributes", out var attributes) &&
+                attributes.TryGetProperty("ttml", out var ttml))
+            {
+                return ttml.GetString();
+            }
+        }
 
         return null;
     }
@@ -238,8 +218,7 @@ public class AppleMusic
         var query = $"{songInfo.Artist} {songInfo.Title}";
         var apiUrl = $"https://amp-api.music.apple.com/v1/catalog/{_storefront}/search";
         var url = apiUrl + $"?term={WebUtility.UrlEncode(query)}&types=songs&limit=1&l={_language}";
-        using var client = GetClient();
-        var resp = await client.GetStringAsync(url, token);
+        var resp = await _client.GetStringAsync(url, token);
         var json = JsonSerializer.Deserialize(resp, SourceGenerationContext.Default.JsonElement);
         var results = json.GetProperty("results");
         if (results.TryGetProperty("songs", out var songs) && songs.GetProperty("data").GetArrayLength() > 0)

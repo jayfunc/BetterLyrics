@@ -6,19 +6,15 @@ namespace BetterLyrics.Core.Helpers;
 
 public class ImageHelper
 {
-    private static async Task<byte[]> DownloadImageAsByteArrayAsync(string url)
+    private static readonly Lazy<HttpClient> _client = new(() =>
     {
         var httpClientFactory = CommunityToolkit.Mvvm.DependencyInjection.Ioc.Default.GetService<IHttpClientFactory>();
-        if (httpClientFactory != null)
-        {
-            using var client = httpClientFactory.CreateClient();
-            return await client.GetByteArrayAsync(url);
-        }
-        else
-        {
-            using var client = new HttpClient();
-            return await client.GetByteArrayAsync(url);
-        }
+        return httpClientFactory != null ? httpClientFactory.CreateClient() : new HttpClient();
+    });
+
+    private static async Task<byte[]> DownloadImageAsByteArrayAsync(string url)
+    {
+        return await _client.Value.GetByteArrayAsync(url);
     }
 
     private static byte[]? DataUrlToByteArray(string dataUrl)

@@ -28,6 +28,12 @@ public partial class LyricsContentParser
 
             var xdoc = XDocument.Parse(raw, LoadOptions.PreserveWhitespace);
 
+            // If the TTML document has the Apple Music timing attribute set to "None", we skip parsing it.
+            if (xdoc.Root?.Attributes().Any(a => a.Name.LocalName == "timing" && a.Value == "None") == true)
+            {
+                return;
+            }
+
             // 预解析头部的 Apple Music 扩展辅助轨道数据
             Dictionary<string, Dictionary<string, List<XElement>>> headTransDict = [];
             Dictionary<string, Dictionary<string, List<XElement>>> headRomanDict = [];

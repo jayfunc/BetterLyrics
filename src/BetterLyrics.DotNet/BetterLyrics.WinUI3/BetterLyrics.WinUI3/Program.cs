@@ -192,6 +192,7 @@ public class Program
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Is(LogEventLevel.Verbose)
             .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Error)
+            .MinimumLevel.Override("System.Net.Http.HttpClient", LogEventLevel.Error)
             .WriteTo.File(PathHelper.LogFilePattern, rollingInterval: RollingInterval.Day)
             .CreateLogger();
 

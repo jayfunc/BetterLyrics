@@ -13,6 +13,7 @@ public class NowPlayingNotificationService : INowPlayingNotificationService
     private readonly IGsmtcService _gsmtcService;
     private readonly INowPlayingToastProvider _nowPlayingToastProvider;
     private readonly ISettingsService _settingsService;
+    private readonly ISongSearchMapService _songSearchMapService;
     private readonly Debouncer _debouncer = new();
     
     private SongInfo _lastNotifiedSong = SongInfoExtensions.Placeholder;
@@ -20,11 +21,13 @@ public class NowPlayingNotificationService : INowPlayingNotificationService
     public NowPlayingNotificationService(
         IGsmtcService gsmtcService,
         INowPlayingToastProvider nowPlayingToastProvider,
-        ISettingsService settingsService)
+        ISettingsService settingsService,
+        ISongSearchMapService songSearchMapService)
     {
         _gsmtcService = gsmtcService;
         _nowPlayingToastProvider = nowPlayingToastProvider;
         _settingsService = settingsService;
+        _songSearchMapService = songSearchMapService;
     }
 
     public void Initialize()
@@ -66,7 +69,13 @@ public class NowPlayingNotificationService : INowPlayingNotificationService
                     _lastNotifiedSong = currentSong;
                     var albumArt = _gsmtcService.AlbumArtBytes;
 
-                    await _nowPlayingToastProvider.ShowAsync(currentSong, albumArt);
+                    var mappedInfo = await _songSearchMapService.GetMappingAsync(currentSong, token);
+                    var displaySong = (SongInfo)currentSong.Clone();
+                    displaySong.Title = mappedInfo.Title;
+                    displaySong.Artist = mappedInfo.Artist;
+                    displaySong.Album = mappedInfo.Album;
+
+                    await _nowPlayingToastProvider.ShowAsync(displaySong, albumArt);
                 });
             }
         }

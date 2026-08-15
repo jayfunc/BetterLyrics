@@ -21,7 +21,7 @@ public class AlbumArtSearchService : IAlbumArtSearchService
     private readonly IFileSystemService _fileSystemService;
     private readonly ILogger _logger;
     private readonly ILastFmService _lastFmService;
-    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly HttpClient _client;
 
     private readonly ISettingsService _settingsService;
     private readonly ConcurrentDictionary<string, string?> _albumArtUrlCache = new(StringComparer.OrdinalIgnoreCase);
@@ -33,7 +33,9 @@ public class AlbumArtSearchService : IAlbumArtSearchService
         _fileSystemService = fileSystemService;
         _logger = logger;
         _lastFmService = lastFmService;
-        _httpClientFactory = httpClientFactory;
+        _client = httpClientFactory.CreateClient();
+        _client.DefaultRequestHeaders.Add("User-Agent",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36");
     }
 
     public async Task<byte[]?> SearchAsync(SongInfo songInfo, byte[]? bufferFromSMTC, bool ignoreCache,
@@ -277,8 +279,7 @@ public class AlbumArtSearchService : IAlbumArtSearchService
                   countryCode + "&entity=album&media=music&limit=1";
 
         // Make a request to the API
-        using var client = _httpClientFactory.CreateClient();
-        using var response = await client.GetAsync(url, token);
+        using var response = await _client.GetAsync(url, token);
         response.EnsureSuccessStatusCode();
         var responseBody = await response.Content.ReadAsStringAsync(token);
 
@@ -305,8 +306,7 @@ public class AlbumArtSearchService : IAlbumArtSearchService
         var artworkUrl = await GetiTunesUrlAsync(songInfo, countryCode, size, token);
         if (!string.IsNullOrEmpty(artworkUrl))
         {
-            using var client = _httpClientFactory.CreateClient();
-            var fetched = await client.GetByteArrayAsync(artworkUrl, token);
+            var fetched = await _client.GetByteArrayAsync(artworkUrl, token);
             if (fetched != null && fetched.Length > 0) return fetched;
         }
 
@@ -321,11 +321,7 @@ public class AlbumArtSearchService : IAlbumArtSearchService
         var searchUrl =
             $"http://mobilecdn.kugou.com/api/v3/search/song?format=json&keyword={Uri.EscapeDataString(keyword)}&page=1&pagesize=1&showtype=1";
 
-        using var client = _httpClientFactory.CreateClient();
-        client.DefaultRequestHeaders.Add("User-Agent",
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36");
-
-        var searchResponse = await client.GetStringAsync(searchUrl, token);
+        var searchResponse = await _client.GetStringAsync(searchUrl, token);
 
         var searchJson = JsonNode.Parse(searchResponse);
         var songs = searchJson?["data"]?["info"]?.AsArray();
@@ -339,7 +335,7 @@ public class AlbumArtSearchService : IAlbumArtSearchService
 
         var detailsUrl = $"http://m.kugou.com/app/i/getSongInfo.php?cmd=playInfo&hash={hash}";
 
-        var detailsResponse = await client.GetStringAsync(detailsUrl, token);
+        var detailsResponse = await _client.GetStringAsync(detailsUrl, token);
         var detailsJson = JsonNode.Parse(detailsResponse);
 
         var imgUrl = detailsJson?["album_img"]?.ToString() ?? detailsJson?["img"]?.ToString();
@@ -354,8 +350,7 @@ public class AlbumArtSearchService : IAlbumArtSearchService
         var imgUrl = await GetKugouUrlAsync(songInfo, size, token);
         if (!string.IsNullOrEmpty(imgUrl))
         {
-            using var client = _httpClientFactory.CreateClient();
-            var imageBytes = await client.GetByteArrayAsync(imgUrl, token);
+            var imageBytes = await _client.GetByteArrayAsync(imgUrl, token);
             return imageBytes;
         }
 
@@ -374,8 +369,7 @@ public class AlbumArtSearchService : IAlbumArtSearchService
         {
             try
             {
-                using var client = _httpClientFactory.CreateClient();
-                var imageBytes = await client.GetByteArrayAsync(url, token);
+                var imageBytes = await _client.GetByteArrayAsync(url, token);
                 return imageBytes;
             }
             catch (Exception ex)
