@@ -123,11 +123,11 @@ public partial class TaskbarThumbnailProvider : ITaskbarThumbnailProvider
             Font? font = null;
             try
             {
-                font = new Font("Segoe Fluent Icons", 20, FontStyle.Regular, GraphicsUnit.Point);
+                font = new Font("Segoe Fluent Icons", 20, FontStyle.Bold, GraphicsUnit.Pixel);
             }
             catch
             {
-                font = new Font("Segoe MDL2 Assets", 20, FontStyle.Regular, GraphicsUnit.Point);
+                font = new Font("Segoe MDL2 Assets", 20, FontStyle.Bold, GraphicsUnit.Pixel);
             }
 
             var format = new StringFormat
