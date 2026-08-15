@@ -1,4 +1,4 @@
-﻿using System.Runtime.InteropServices;
+using System.Runtime.InteropServices;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NAudio.CoreAudioApi;
@@ -11,7 +11,7 @@ namespace BetterLyrics.Core.Helpers;
 public class SpectrumAnalyzer : IDisposable, IMMNotificationClient
 {
     private readonly Debouncer _deviceDebouncer = new();
-    private readonly MMDeviceEnumerator _deviceEnumerator;
+    private readonly MMDeviceEnumerator? _deviceEnumerator;
 
     // Buffers
     private readonly float[] _fftLeftBuffer;
@@ -43,8 +43,15 @@ public class SpectrumAnalyzer : IDisposable, IMMNotificationClient
     {
         _logger = Ioc.Default.GetRequiredService<ILogger<SpectrumAnalyzer>>();
 
-        _deviceEnumerator = new MMDeviceEnumerator();
-        _deviceEnumerator.RegisterEndpointNotificationCallback(this);
+        try
+        {
+            _deviceEnumerator = new MMDeviceEnumerator();
+            _deviceEnumerator.RegisterEndpointNotificationCallback(this);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to initialize MMDeviceEnumerator, audio device hot-plugging will not be tracked.");
+        }
 
         _m = (int)Math.Log(_fftLength, 2);
         _fftLeftBuffer = new float[_fftLength];
@@ -87,19 +94,29 @@ public class SpectrumAnalyzer : IDisposable, IMMNotificationClient
 
     public int Sensitivity { get; set; } = 100;
     public float SmoothingFactor { get; set; } = 0.92f; // 稍微降低一点，响应更快
-    public bool IsCapturing { get; private set; }
+    public bool IsCapturing { get; private set; } = false;
 
     public void Dispose()
     {
         if (!_disposed)
         {
-            _deviceEnumerator.UnregisterEndpointNotificationCallback(this);
-            _deviceEnumerator.Dispose();
-
-            _deviceDebouncer.Dispose();
-
             StopCapture();
-            _disposed = true;
+
+            try
+            {
+                _deviceDebouncer.Dispose();
+
+                _deviceEnumerator?.UnregisterEndpointNotificationCallback(this);
+                _deviceEnumerator?.Dispose();
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, "Error occurred during SpectrumAnalyzer disposal");
+            }
+            finally
+            {
+                _disposed = true;
+            }
         }
     }
 
@@ -109,14 +126,12 @@ public class SpectrumAnalyzer : IDisposable, IMMNotificationClient
         {
             _logger.LogInformation("System audio device is changing, waiting for stability...");
 
+            StopCapture();
+
             _ = _deviceDebouncer.RunAsync(async token =>
             {
                 _logger.LogInformation("Audio device stable, restarting capture...");
-
-                StopCapture();
-
                 await Task.Delay(500, token);
-
                 StartCapture();
             }, 1000);
         }
@@ -176,11 +191,21 @@ public class SpectrumAnalyzer : IDisposable, IMMNotificationClient
     {
         if (_capture != null)
         {
-            _capture?.DataAvailable -= OnDataAvailable;
-            _capture?.RecordingStopped -= OnRecordingStopped;
-            _capture?.StopRecording();
-            _capture?.Dispose();
-            _capture = null;
+            try
+            {
+                _capture.DataAvailable -= OnDataAvailable;
+                _capture.RecordingStopped -= OnRecordingStopped;
+                _capture.StopRecording();
+                _capture.Dispose();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while stopping NAudio capture");
+            }
+            finally
+            {
+                _capture = null;
+            }
         }
 
         IsCapturing = false;

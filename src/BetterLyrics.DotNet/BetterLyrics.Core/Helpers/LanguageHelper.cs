@@ -40,9 +40,7 @@ public static partial class LanguageHelper
         Ioc.Default.GetRequiredService<IAssetReaderProvider>();
 
     private static readonly RankedLanguageIdentifierFactory _factory = new();
-    private static readonly RankedLanguageIdentifier _identifier;
-
-
+    private static RankedLanguageIdentifier? _identifier;
 
     public static readonly List<ExtendedLanguage> SupportedTranslationTargetLanguages =
     [
@@ -87,9 +85,9 @@ public static partial class LanguageHelper
         new("zh-Hant")
     ];
 
-    static LanguageHelper()
+    public static async Task InitIdentifierAsync()
     {
-        _identifier = _factory.Load(_assetReaderProvider.GetAssetStreamAsync("Wiki82.profile.xml").Result);
+        _identifier ??= _factory.Load(await _assetReaderProvider.GetAssetStreamAsync("Wiki82.profile.xml"));
     }
 
     /// <summary>
@@ -102,7 +100,7 @@ public static partial class LanguageHelper
         var transliterationCode = TryDetectTransliteration(text);
         if (transliterationCode != null) return transliterationCode;
 
-        var guessList = _identifier.Identify(text);
+        var guessList = _identifier?.Identify(text);
         var bestMatch = guessList?.FirstOrDefault();
 
         if (bestMatch == null) return null;

@@ -1,4 +1,5 @@
 using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Settings;
@@ -127,8 +128,11 @@ public partial class App : Application
         }
     }
 
-    private async Task InitAppServicesAsync()
+    private static async Task InitAppServicesAsync()
     {
+        // 初始化语言标识符
+        await LanguageHelper.InitIdentifierAsync();
+
         var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
         // 迁移逻辑
