@@ -1092,9 +1092,6 @@
   <data name="NowPlayingBarConfigCurrentPlaybackSource.Text" xml:space="preserve">
     <value>Konfigurasi Sumber Pemutaran Saat Ini</value>
   </data>
-  <data name="PlaybackSettingsControlBetterLyricsRunningInBackground.Message" xml:space="preserve">
-    <value>Pemutar bawaan BetterLyrics masih berjalan di latar belakang, dan perangkat lunak akan mengabaikan sumber pemutaran lainnya. Untuk mendengarkan sumber pemutaran lain, buka Galeri Musik dan klik tombol berhenti di sudut kanan bawah</value>
-  </data>
   <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
     <value>Memuat konfigurasi eksternal untuk membaca kemajuan pemutaran secara langsung dari memori proses target. Harap gunakan dengan hati-hati; pengembang tidak bertanggung jawab atas keamanan konfigurasi pihak ketiga.</value>
   </data>
@@ -1826,9 +1823,6 @@
   </data>
   <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
     <value>Galeri Musik</value>
-  </data>
-  <data name="SettingsPageMusicGalleryOpened.Message" xml:space="preserve">
-    <value>Jendela Galeri Musik terbuka, pemantauan sumber pemutaran lain diabaikan</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>Tambahkan folder yang berisi musik atau lirik</value>
@@ -2726,5 +2720,8 @@
   </data>
   <data name="SettingsPageNowPlayingNotificationTheme.Header" xml:space="preserve">
     <value>Tema Popup</value>
+  </data>
+  <data name="MusicGalleryWindowExternalSourcePrompt.Text" xml:space="preserve">
+    <value>Saat ini sedang memutar sumber eksternal. Klik dua kali trek lokal atau jeda sumber eksternal untuk kembali ke trek lokal</value>
   </data>
 </root>

@@ -49,6 +49,23 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
         var col = _databaseService.FilesIndexDb.GetCollection<FilesIndexItem>("filesIndex");
         col.EnsureIndex(x => x.MediaFolderId);
         col.EnsureIndex(x => x.ParentUri);
+
+        // 主动扫描去重 Uri
+        var duplicates = col.FindAll()
+            .GroupBy(x => x.Uri)
+            .Where(g => g.Count() > 1)
+            .ToList();
+
+        foreach (var group in duplicates)
+        {
+            var keepId = group.First().Id;
+            var toDeleteIds = group.Where(x => x.Id != keepId).Select(x => new BsonValue(x.Id)).ToList();
+            foreach (var id in toDeleteIds)
+            {
+                col.Delete(id);
+            }
+        }
+
         col.EnsureIndex(x => x.Uri, true);
     }
 

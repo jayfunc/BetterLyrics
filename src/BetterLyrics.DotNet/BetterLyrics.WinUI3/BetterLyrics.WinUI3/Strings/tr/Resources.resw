@@ -1092,9 +1092,6 @@
   <data name="NowPlayingBarConfigCurrentPlaybackSource.Text" xml:space="preserve">
     <value>Mevcut Çalma Kaynağını Yapılandır</value>
   </data>
-  <data name="PlaybackSettingsControlBetterLyricsRunningInBackground.Message" xml:space="preserve">
-    <value>BetterLyrics yerleşik oynatıcı arka planda çalışmaya devam eder ve yazılım diğer oynatma kaynaklarını göz ardı eder. Diğer oynatma kaynaklarını dinlemek için Müzik Galerisi'ne gidin ve sağ alt köşedeki durdur düğmesine tıklayın</value>
-  </data>
   <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
     <value>Oynatma ilerlemesini doğrudan hedef işlem belleğinden okumak için harici yapılandırmaları yükler. Lütfen dikkatli kullanın; geliştirici üçüncü taraf yapılandırmalarının güvenliğinden sorumlu değildir.</value>
   </data>
@@ -1826,9 +1823,6 @@
   </data>
   <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
     <value>Müzik Galerisi</value>
-  </data>
-  <data name="SettingsPageMusicGalleryOpened.Message" xml:space="preserve">
-    <value>Müzik Galerisi penceresi açıktır. Diğer oynatma kaynaklarını yok sayma</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>Müzik veya şarkı sözleri içeren klasörler ekleyin</value>
@@ -2726,5 +2720,8 @@
   </data>
   <data name="SettingsPageNowPlayingNotificationTheme.Header" xml:space="preserve">
     <value>Açılır Pencere Teması</value>
+  </data>
+  <data name="MusicGalleryWindowExternalSourcePrompt.Text" xml:space="preserve">
+    <value>Şu anda harici bir kaynak izleniyor. Geri dönmek için yerel bir parçaya çift tıklayın veya harici kaynağı duraklatın</value>
   </data>
 </root>

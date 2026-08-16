@@ -1092,9 +1092,6 @@
   <data name="NowPlayingBarConfigCurrentPlaybackSource.Text" xml:space="preserve">
     <value>वर्तमान प्लेबैक स्रोत कॉन्फ़िगर करें</value>
   </data>
-  <data name="PlaybackSettingsControlBetterLyricsRunningInBackground.Message" xml:space="preserve">
-    <value>BetterLyrics का बिल्ट-इन प्लेयर अभी भी बैकग्राउंड में चल रहा है, और सॉफ्टवेयर दूसरे प्लेबैक सोर्स को इग्नोर कर देगा। दूसरे प्लेबैक सोर्स सुनने के लिए, म्यूज़िक गैलरी में जाएं और नीचे दाएं कोने में स्टॉप बटन पर क्लिक करें</value>
-  </data>
   <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
     <value>टारगेट प्रोसेस मेमोरी से सीधे प्लेबैक प्रोग्रेस पढ़ने के लिए एक्सटर्नल कॉन्फ़िगरेशन लोड करता है। कृपया सावधानी से इस्तेमाल करें; डेवलपर थर्ड-पार्टी कॉन्फ़िगरेशन की सुरक्षा के लिए ज़िम्मेदार नहीं है।</value>
   </data>
@@ -1826,9 +1823,6 @@
   </data>
   <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
     <value>संगीत गैलरी</value>
-  </data>
-  <data name="SettingsPageMusicGalleryOpened.Message" xml:space="preserve">
-    <value>संगीत गैलरी विंडो खुली है, अन्य प्लेबैक स्रोतों की निगरानी को अनदेखा किया गया है</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>संगीत या बोल वाले फ़ोल्डर जोड़ें</value>
@@ -2726,5 +2720,8 @@
   </data>
   <data name="SettingsPageNowPlayingNotificationTheme.Header" xml:space="preserve">
     <value>पॉपअप थीम</value>
+  </data>
+  <data name="MusicGalleryWindowExternalSourcePrompt.Text" xml:space="preserve">
+    <value>वर्तमान में बाहरी स्रोत को ट्रैक कर रहा है। वापस स्विच करने के लिए स्थानीय ट्रैक पर डबल-क्लिक करें या बाहरी स्रोत को रोकें।</value>
   </data>
 </root>

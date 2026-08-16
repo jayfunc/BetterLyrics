@@ -1092,9 +1092,6 @@
   <data name="NowPlayingBarConfigCurrentPlaybackSource.Text" xml:space="preserve">
     <value>Настроить текущий источник воспроизведения</value>
   </data>
-  <data name="PlaybackSettingsControlBetterLyricsRunningInBackground.Message" xml:space="preserve">
-    <value>Встроенный плеер BetterLyrics работает в фоновом режиме, и программа будет игнорировать другие источники воспроизведения. Чтобы прослушать другие источники воспроизведения, перейдите в раздел "Музыкальная галерея" и нажмите кнопку "Стоп" в правом нижнем углу.</value>
-  </data>
   <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
     <value>Загружает внешние конфигурации для чтения прогресса воспроизведения непосредственно из памяти целевого процесса. Пожалуйста, используйте с осторожностью; разработчик не несет ответственности за безопасность сторонних конфигураций.</value>
   </data>
@@ -1826,9 +1823,6 @@
   </data>
   <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
     <value>Музыкальная галерея</value>
-  </data>
-  <data name="SettingsPageMusicGalleryOpened.Message" xml:space="preserve">
-    <value>Окно Музыкальной галереи открыто. Отслеживание других источников воспроизведения игнорируется</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>Добавить папку с музыкой или текстами песен</value>
@@ -2726,5 +2720,8 @@
   </data>
   <data name="SettingsPageNowPlayingNotificationTheme.Header" xml:space="preserve">
     <value>Тема всплывающих окон</value>
+  </data>
+  <data name="MusicGalleryWindowExternalSourcePrompt.Text" xml:space="preserve">
+    <value>В данный момент ведётся воспроизведение внешнего источника. Чтобы вернуться к воспроизведению локальной дорожки, дважды щелкните по ней или приостановите воспроизведение внешнего источника</value>
   </data>
 </root>

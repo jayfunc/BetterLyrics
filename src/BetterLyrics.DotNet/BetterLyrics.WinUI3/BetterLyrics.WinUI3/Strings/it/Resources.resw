@@ -1092,9 +1092,6 @@
   <data name="NowPlayingBarConfigCurrentPlaybackSource.Text" xml:space="preserve">
     <value>Configura la sorgente di riproduzione corrente</value>
   </data>
-  <data name="PlaybackSettingsControlBetterLyricsRunningInBackground.Message" xml:space="preserve">
-    <value>Il lettore integrato di BetterLyrics è ancora in esecuzione in background e l'app ignorerà altre sorgenti di riproduzione. Per ascoltare altre sorgenti, apri la Galleria musicale e fai clic sul pulsante di arresto nell'angolo in basso a destra.</value>
-  </data>
   <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
     <value>Carica configurazioni esterne per leggere l'avanzamento della riproduzione direttamente dalla memoria del processo di destinazione. Usare con cautela; lo sviluppatore non è responsabile della sicurezza delle configurazioni di terze parti.</value>
   </data>
@@ -1826,9 +1823,6 @@
   </data>
   <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
     <value>Galleria musicale</value>
-  </data>
-  <data name="SettingsPageMusicGalleryOpened.Message" xml:space="preserve">
-    <value>La finestra Galleria musicale è aperta. Altre sorgenti di riproduzione verranno ignorate.</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>Aggiungi cartelle che contengono musica o testi.</value>
@@ -2726,5 +2720,8 @@
   </data>
   <data name="SettingsPageNowPlayingNotificationTheme.Header" xml:space="preserve">
     <value>Tema popup</value>
+  </data>
+  <data name="MusicGalleryWindowExternalSourcePrompt.Text" xml:space="preserve">
+    <value>Attualmente è in riproduzione una sorgente esterna. Per tornare alla riproduzione locale, fai doppio clic su una traccia locale oppure metti in pausa la sorgente esterna.</value>
   </data>
 </root>

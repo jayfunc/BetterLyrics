@@ -34,22 +34,7 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <StackPanel Grid.Row="0">
-                <InfoBar
-                    x:Uid="SettingsPageMusicGalleryOpened"
-                    IsClosable="False"
-                    IsOpen="{x:Bind ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.WindowStatus, Mode=OneWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=0}"
-                    Severity="Informational" />
-                <InfoBar
-                    x:Uid="PlaybackSettingsControlBetterLyricsRunningInBackground"
-                    IsClosable="False"
-                    IsOpen="{x:Bind ViewModel.GsmtcService.CurrentMediaSourceProviderInfo.IsBetterLyrics, Mode=OneWay}"
-                    Severity="Informational">
-                    <InfoBar.ActionButton>
-                        <HyperlinkButton x:Uid="PlaybackSettingsControlStopBetterLyricsPlayer" Command="{x:Bind ViewModel.StopTrackCommand}" />
-                    </InfoBar.ActionButton>
-                </InfoBar>
-            </StackPanel>
+
 
             <!--  播放源列表  -->
             <Grid Grid.Row="1">

@@ -1092,9 +1092,6 @@
   <data name="NowPlayingBarConfigCurrentPlaybackSource.Text" xml:space="preserve">
     <value>تكوين مصدر التشغيل الحالي</value>
   </data>
-  <data name="PlaybackSettingsControlBetterLyricsRunningInBackground.Message" xml:space="preserve">
-    <value>لا يزال مشغل BetterLyrics المدمج يعمل في الخلفية، وسيتجاهل البرنامج مصادر التشغيل الأخرى. للاستماع إلى مصادر التشغيل الأخرى، انتقل إلى معرض الموسيقى وانقر على زر الإيقاف في الزاوية اليمنى السفلى</value>
-  </data>
   <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
     <value>تحميل التكوينات الخارجية لقراءة تقدم التشغيل مباشرةً من ذاكرة العملية المستهدفة. يرجى الاستخدام بحذر؛ المطور غير مسؤول عن سلامة التكوينات الخارجية.</value>
   </data>
@@ -1826,9 +1823,6 @@
   </data>
   <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
     <value>مكتبة الموسيقى</value>
-  </data>
-  <data name="SettingsPageMusicGalleryOpened.Message" xml:space="preserve">
-    <value>نافذة مكتبة الموسيقى مفتوحة، تم تجاهل مراقبة مصادر التشغيل الأخرى</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>أضف المجلدات التي تحتوي على ملفات الموسيقى أو الكلمات</value>
@@ -2726,5 +2720,8 @@
   </data>
   <data name="SettingsPageNowPlayingNotificationTheme.Header" xml:space="preserve">
     <value>مظهر النافذة المنبثقة</value>
+  </data>
+  <data name="MusicGalleryWindowExternalSourcePrompt.Text" xml:space="preserve">
+    <value>يجري حالياً تتبع مصدر خارجي. انقر نقرًا مزدوجًا على مسار محلي أو أوقف المصدر الخارجي مؤقتًا للعودة إلى المسار المحلي</value>
   </data>
 </root>

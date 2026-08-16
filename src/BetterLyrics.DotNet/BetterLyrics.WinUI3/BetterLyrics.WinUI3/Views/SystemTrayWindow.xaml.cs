@@ -1,31 +1,17 @@
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Controls.Primitives;
-using Microsoft.UI.Xaml.Data;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
-
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+using WinUIEx;
 
 namespace BetterLyrics.WinUI3.Views
 {
-    /// <summary>
-    /// An empty window that can be used on its own or navigated to within a Frame.
-    /// </summary>
-    public sealed partial class SystemTrayWindow : Window
+    public sealed partial class SystemTrayWindow : WindowEx
     {
         public SystemTrayWindow()
         {
             InitializeComponent();
+            
+            // 将窗口移出屏幕可视范围，并从 Alt+Tab 和任务栏中隐藏
+            // 这样既能激活窗口，又不会让用户看到它
+            this.IsShownInSwitchers = false;
+            this.MoveAndResize(-10000, -10000, 10, 10);
         }
     }
 }

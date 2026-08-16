@@ -1092,9 +1092,6 @@
   <data name="NowPlayingBarConfigCurrentPlaybackSource.Text" xml:space="preserve">
     <value>현재 재생 소스 설정</value>
   </data>
-  <data name="PlaybackSettingsControlBetterLyricsRunningInBackground.Message" xml:space="preserve">
-    <value>BetterLyrics 내장 플레이어는 여전히 백그라운드에서 실행 중이며 소프트웨어는 다른 재생 소스를 무시합니다. 다른 재생 소스를 들으려면 뮤직 갤러리로 이동하여 오른쪽 하단에 있는 중지 버튼을 클릭합니다.</value>
-  </data>
   <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
     <value>외부 구성을 로드하여 대상 프로세스 메모리에서 직접 재생 진행 상황을 읽습니다. 개발자는 타사 구성의 안전에 대해 책임을 지지 않으므로 주의해서 사용하세요.</value>
   </data>
@@ -1826,9 +1823,6 @@
   </data>
   <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
     <value>음악 갤러리</value>
-  </data>
-  <data name="SettingsPageMusicGalleryOpened.Message" xml:space="preserve">
-    <value>뮤직 갤러리 창이 열려 있습니다. 다른 재생 소스 감지를 무시합니다</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>음악 또는 가사가 포함된 폴더 추가</value>
@@ -2726,5 +2720,8 @@
   </data>
   <data name="SettingsPageNowPlayingNotificationTheme.Header" xml:space="preserve">
     <value>팝업 테마</value>
+  </data>
+  <data name="MusicGalleryWindowExternalSourcePrompt.Text" xml:space="preserve">
+    <value>현재 외부 소스를 재생 중입니다. 로컬 트랙을 더블 클릭하거나 외부 소스의 재생을 일시 정지하면 다시 전환할 수 있습니다.</value>
   </data>
 </root>

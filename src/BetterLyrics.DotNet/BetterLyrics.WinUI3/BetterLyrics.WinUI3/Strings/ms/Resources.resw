@@ -1092,9 +1092,6 @@
   <data name="NowPlayingBarConfigCurrentPlaybackSource.Text" xml:space="preserve">
     <value>Konfig Sumber Main Balik Semasa</value>
   </data>
-  <data name="PlaybackSettingsControlBetterLyricsRunningInBackground.Message" xml:space="preserve">
-    <value>Pemain terbina dalam BetterLyrics masih berjalan di latar belakang dan perisian akan mengabaikan sumber main balik yang lain. Untuk mendengar sumber main balik yang lain, pergi ke Galeri Muzik dan klik butang berhenti di sudut kanan bawah</value>
-  </data>
   <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
     <value>Memuatkan konfigurasi luaran untuk membaca kemajuan main balik terus daripada memori proses sasaran. Sila gunakan dengan berhati-hati; pembangun tidak bertanggungjawab terhadap keselamatan konfigurasi pihak ketiga.</value>
   </data>
@@ -1826,9 +1823,6 @@
   </data>
   <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
     <value>Galeri Muzik</value>
-  </data>
-  <data name="SettingsPageMusicGalleryOpened.Message" xml:space="preserve">
-    <value>Tetingkap galeri muzik dibuka, pemantauan sumber main balik lain diabaikan</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>Tambah folder yang mengandungi muzik atau lirik</value>
@@ -2726,5 +2720,8 @@
   </data>
   <data name="SettingsPageNowPlayingNotificationTheme.Header" xml:space="preserve">
     <value>Tema Popup</value>
+  </data>
+  <data name="MusicGalleryWindowExternalSourcePrompt.Text" xml:space="preserve">
+    <value>Pada masa ini sedang menjejaki sumber luaran. Klik dua kali trek tempatan atau hentikan sumber luaran untuk bertukar kembali.</value>
   </data>
 </root>

@@ -1092,9 +1092,6 @@
   <data name="NowPlayingBarConfigCurrentPlaybackSource.Text" xml:space="preserve">
     <value>Configurar a fonte de reprodução atual</value>
   </data>
-  <data name="PlaybackSettingsControlBetterLyricsRunningInBackground.Message" xml:space="preserve">
-    <value>O leitor integrado do BetterLyrics continua a ser executado em segundo plano e o software irá ignorar outras fontes de reprodução. Para ouvir outras fontes de reprodução, vá para a Galeria de Música e clique no botão parar no canto inferior direito</value>
-  </data>
   <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
     <value>Carrega configurações externas para ler o progresso da reprodução diretamente da memória do processo de destino. Por favor, use com cuidado; o desenvolvedor não é responsável pela segurança de configurações de terceiros.</value>
   </data>
@@ -1826,9 +1823,6 @@
   </data>
   <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
     <value>Galeria de Música</value>
-  </data>
-  <data name="SettingsPageMusicGalleryOpened.Message" xml:space="preserve">
-    <value>A janela da galeria de música está aberta; a monitorização de outras fontes de reprodução foi ignorada</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>Adicionar pastas contendo música ou letras</value>
@@ -2726,5 +2720,8 @@
   </data>
   <data name="SettingsPageNowPlayingNotificationTheme.Header" xml:space="preserve">
     <value>Tema do pop-up</value>
+  </data>
+  <data name="MusicGalleryWindowExternalSourcePrompt.Text" xml:space="preserve">
+    <value>A seguir está a ser reproduzida uma fonte externa. Clique duas vezes numa faixa local ou pause a fonte externa para voltar à reprodução</value>
   </data>
 </root>

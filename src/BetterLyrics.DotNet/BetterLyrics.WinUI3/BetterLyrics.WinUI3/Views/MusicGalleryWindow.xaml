@@ -8,6 +8,7 @@
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
+    x:Name="ThisWindow"
     Closed="Window_Closed"
     mc:Ignorable="d">
 
@@ -39,7 +40,8 @@
             ShowSongInfo="True"
             ShowStopButton="True"
             SongInfoTapped="NowPlayingBar_SongInfoTapped"
-            TimeTapped="NowPlayingBar_TimeTapped">
+            TimeTapped="NowPlayingBar_TimeTapped"
+            Visibility="{Binding ElementName=ThisWindow, Path=GSMTCService.IsExternalSourceActive, Converter={StaticResource BoolNegationToVisibilityConverter}}">
             <uc:NowPlayingBar.ContextFlyout>
                 <Flyout x:Name="PlayQueueFlyout" ShouldConstrainToRootBounds="False">
                     <Flyout.FlyoutPresenterStyle>
@@ -54,6 +56,26 @@
                 </Flyout>
             </uc:NowPlayingBar.ContextFlyout>
         </uc:NowPlayingBar>
+
+        <Grid
+            Height="68"
+            VerticalAlignment="Bottom"
+            Background="{ThemeResource LayerFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+            BorderThickness="0,1,0,0"
+            Visibility="{Binding ElementName=ThisWindow, Path=GSMTCService.IsExternalSourceActive, Converter={StaticResource BoolToVisibilityConverter}}">
+            <StackPanel
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Orientation="Horizontal"
+                Spacing="12">
+                <FontIcon
+                    FontFamily="{StaticResource SegoeFluentIcons}"
+                    FontSize="16"
+                    Glyph="&#xE946;" />
+                <TextBlock x:Uid="MusicGalleryWindowExternalSourcePrompt" VerticalAlignment="Center" />
+            </StackPanel>
+        </Grid>
 
     </Grid>
 

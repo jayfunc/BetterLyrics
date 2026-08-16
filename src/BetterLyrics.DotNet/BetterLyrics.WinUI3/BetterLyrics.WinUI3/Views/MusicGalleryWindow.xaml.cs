@@ -24,9 +24,10 @@ namespace BetterLyrics.WinUI3.Views;
 public sealed partial class MusicGalleryWindow : Window,
     IRecipient<PropertyChangedMessage<byte[]?>>,
     IRecipient<PropertyChangedMessage<AppTheme>>,
-    IRecipient<PropertyChangedMessage<PaletteGeneratorType>>
+    IRecipient<PropertyChangedMessage<PaletteGeneratorType>>,
+    IRecipient<PropertyChangedMessage<MediaSourceProviderInfo?>>
 {
-    private readonly IGsmtcService _gsmtcService = Ioc.Default.GetRequiredService<IGsmtcService>();
+    public IGsmtcService GSMTCService { get; } = Ioc.Default.GetRequiredService<IGsmtcService>();
 
     private readonly IWindowManagerProvider _windowManagerProvider =
         Ioc.Default.GetRequiredService<IWindowManagerProvider>();
@@ -83,6 +84,26 @@ public sealed partial class MusicGalleryWindow : Window,
         }
     }
 
+    public void Receive(PropertyChangedMessage<MediaSourceProviderInfo?> message)
+    {
+        if (message.Sender is IGsmtcService)
+        {
+            if (message.PropertyName == nameof(IGsmtcService.CurrentMediaSourceProviderInfo))
+            {
+                if (GSMTCService.IsExternalSourceActive)
+                {
+                    DispatcherQueue.TryEnqueue(() =>
+                    {
+                        if (NowPlayingPage.Visibility == Visibility.Visible)
+                        {
+                            NowPlayingBar_TimeTapped(null, EventArgs.Empty);
+                        }
+                    });
+                }
+            }
+        }
+    }
+
     private void UpdateTheme()
     {
         var elementTheme = ViewModel.AppSettings.GeneralSettings.AppTheme.ToElementTheme();
@@ -98,7 +119,7 @@ public sealed partial class MusicGalleryWindow : Window,
 
     private async Task UpdateAlbumArtThemeColorsAsync()
     {
-        var result = await _gsmtcService.CalculateAlbumArtThemeColorsAsync(
+        var result = await GSMTCService.CalculateAlbumArtThemeColorsAsync(
             ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus, Colors.Transparent);
 
         NowPlayingPage.LyricsWindowStatus?.WindowPalette = result;

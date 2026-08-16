@@ -1092,9 +1092,6 @@
   <data name="NowPlayingBarConfigCurrentPlaybackSource.Text" xml:space="preserve">
     <value>配置当前播放源</value>
   </data>
-  <data name="PlaybackSettingsControlBetterLyricsRunningInBackground.Message" xml:space="preserve">
-    <value>BetterLyrics 内置播放器仍在后台运行，软件将忽略其他播放源。要监听其他播放源，请进入 “音乐库” 并点击右下角的 “停止” 按钮</value>
-  </data>
   <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
     <value>加载外部配置以直接从目标软件内存中读取播放进度。请谨慎使用，开发者不对第三方配置的安全性负责</value>
   </data>
@@ -1826,9 +1823,6 @@
   </data>
   <data name="SettingsPageMusicGallery.Text" xml:space="preserve">
     <value>音乐库</value>
-  </data>
-  <data name="SettingsPageMusicGalleryOpened.Message" xml:space="preserve">
-    <value>音乐库窗口处于开启状态，已忽略对其他播放源的监听</value>
   </data>
   <data name="SettingsPageMusicLib.Description" xml:space="preserve">
     <value>添加存放音乐或歌词的文件夹</value>
@@ -2726,5 +2720,8 @@
   </data>
   <data name="SettingsPageNowPlayingNotificationTheme.Header" xml:space="preserve">
     <value>弹窗主题</value>
+  </data>
+  <data name="MusicGalleryWindowExternalSourcePrompt.Text" xml:space="preserve">
+    <value>当前正在监听外部播放源。双击本地曲目，或暂停外部播放源即可切换回本地播放</value>
   </data>
 </root>

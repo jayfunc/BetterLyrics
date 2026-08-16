@@ -142,7 +142,10 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
+    [NotifyPropertyChangedFor(nameof(IsExternalSourceActive))]
     public partial MediaSourceProviderInfo? CurrentMediaSourceProviderInfo { get; set; }
+
+    public bool IsExternalSourceActive => CurrentMediaSourceProviderInfo != null && !CurrentMediaSourceProviderInfo.IsBetterLyrics;
 
     public async Task PlayAsync()
     {
@@ -432,14 +435,16 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
         OnAnyTimelineChangedCore(mediaSession);
     }
 
-    private void MediaManager_OnAnyPlaybackStateChanged(IMediaSessionProvider? mediaSession)
+    private async void MediaManager_OnAnyPlaybackStateChanged(IMediaSessionProvider? mediaSession)
     {
-        if (mediaSession != _currentDesiredSession) return;
-
         if (mediaSession != null)
         {
-            mediaSession.TryRefreshPlaybackStateAsync();
+            await mediaSession.TryRefreshPlaybackStateAsync();
         }
+
+        OnDesiredSessionChanged();
+
+        if (mediaSession != _currentDesiredSession) return;
 
         var isPlaying = mediaSession?.PlaybackStatus switch
         {
@@ -591,26 +596,57 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
 
     private IMediaSessionProvider? GetCurrentDesiredSession()
     {
-        // 检查内置播放器会话是否存在
-        var selfSession =
-            _mediaManagerProvider.CurrentMediaSessions.FirstOrDefault(x => PlayerIdHelper.IsBetterLyrics(x.SessionId));
-        var selfSessionKey = selfSession?.SessionId;
-        // 合法且设置中处于启用状态则
-        if (!string.IsNullOrEmpty(selfSessionKey) && IsMediaSourceEnabled(selfSessionKey))
-            // 直接返回，即使当前聚焦的会话非内置播放器
-            return selfSession;
+        var selfSession = _mediaManagerProvider.CurrentMediaSessions.FirstOrDefault(x => PlayerIdHelper.IsBetterLyrics(x.SessionId));
+        bool isSelfEnabled = selfSession != null && IsMediaSourceEnabled(selfSession.SessionId);
 
-        // 若音乐库处于开启状态且未开启内置播放源会话
-        if (_settingsService.AppSettings.MusicGallerySettings.LyricsWindowStatus.WindowStatus ==
-            WindowStatus.Opened)
-            return null;
+        // 优先级 1：如果内置播放器正在播放，绝对优先内部播放器
+        if (isSelfEnabled && selfSession!.PlaybackStatus == SessionPlaybackStatus.Playing)
+        {
+            return selfSession;
+        }
 
         var focusedSession = _mediaManagerProvider.FocusedSession;
-        if (focusedSession != null && IsMediaSourceEnabled(focusedSession.SessionId)) return focusedSession;
+        bool isFocusedEnabled = focusedSession != null && IsMediaSourceEnabled(focusedSession.SessionId);
 
+        // 优先级 2：如果有外部播放器正在播放，优先聚焦的正在播放的外部播放器
+        if (isFocusedEnabled && focusedSession!.PlaybackStatus == SessionPlaybackStatus.Playing)
+        {
+            return focusedSession;
+        }
+
+        // 优先级 3：如果没有聚焦的正在播放，但有其他正在播放的外部播放器，返回那个正在播放的
+        var playingSession = _mediaManagerProvider.CurrentMediaSessions.FirstOrDefault(x => IsMediaSourceEnabled(x.SessionId) && x.PlaybackStatus == SessionPlaybackStatus.Playing);
+        if (playingSession != null)
+        {
+            return playingSession;
+        }
+
+        // 优先级 4：系统焦点优先（如暂停状态下优先显示当前点击的窗口对应的音乐）
+        if (isFocusedEnabled)
+        {
+            return focusedSession;
+        }
+
+        // 优先级 5：如果没有系统焦点，但内置播放器存在，优先保持内部播放器
+        if (isSelfEnabled)
+        {
+            return selfSession;
+        }
+
+        // 降级：若音乐库处于开启状态且未开启内置播放源会话，返回空（遵循原有逻辑）
+        if (_settingsService.AppSettings.MusicGallerySettings.LyricsWindowStatus.WindowStatus == WindowStatus.Opened)
+        {
+            return null;
+        }
+
+        // 优先级 6：返回任何启用的会话
         foreach (var session in _mediaManagerProvider.CurrentMediaSessions)
+        {
             if (IsMediaSourceEnabled(session.SessionId))
+            {
                 return session;
+            }
+        }
 
         return null;
     }

@@ -230,7 +230,7 @@ public class WindowManagerProvider : IWindowManagerProvider
             var castedWindow = (Window)window;
 
             // Not activate NowPlayingWindow to avoid window flashing
-            if (typeof(T) != typeof(LyricsWindowSwitchWindow) && typeof(T) != typeof(SystemTrayWindow) && typeof(T) != typeof(NowPlayingWindow))
+            if (typeof(T) != typeof(LyricsWindowSwitchWindow) && typeof(T) != typeof(NowPlayingWindow))
                 castedWindow.Activate();
         }
         else

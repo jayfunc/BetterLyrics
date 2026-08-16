@@ -1,4 +1,4 @@
-﻿// 2025/6/23 by Zhe Fang
+// 2025/6/23 by Zhe Fang
 
 using System.ComponentModel;
 using BetterLyrics.Core.Enums;
@@ -16,6 +16,7 @@ namespace BetterLyrics.Core.Interfaces.Services;
 public interface IGsmtcService : INotifyPropertyChanged
 {
     MediaSourceProviderInfo? CurrentMediaSourceProviderInfo { get; }
+    bool IsExternalSourceActive { get; }
 
     bool IsScrobbled { get; }
     TimeSpan ScrobbledDuration { get; }

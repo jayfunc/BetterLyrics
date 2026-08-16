@@ -6,11 +6,8 @@ using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Sdk.Interfaces.Plugins;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using System;
 using System.Linq;
@@ -73,7 +70,8 @@ public partial class App : Application
         }
         catch (Exception ex)
         {
-            _logger?.LogError(ex, "Fatal error during OnLaunched");
+            _logger?.LogError(ex, "OnLaunched: ");
+            System.Windows.Forms.MessageBox.Show(ex.Message, "OnLaunched: Fatal error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
             Environment.Exit(1);
         }
     }
@@ -86,7 +84,9 @@ public partial class App : Application
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "LaunchAsync failed");
+            _logger.LogError(ex, "LaunchAsync: ");
+            System.Windows.Forms.MessageBox.Show(ex.Message, "LaunchAsync: Fatal error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+            Environment.Exit(1);
         }
         finally
         {
@@ -95,7 +95,7 @@ public partial class App : Application
         }
     }
 
-    private static void HandleNormalLaunch()
+    private void HandleNormalLaunch()
     {
         try
         {
@@ -123,8 +123,9 @@ public partial class App : Application
         }
         catch (Exception ex)
         {
-            var logger = Ioc.Default.GetService<ILogger<App>>();
-            logger?.LogError(ex, "HandleNormalLaunch failed");
+            _logger.LogError(ex, "HandleNormalLaunch: ");
+            System.Windows.Forms.MessageBox.Show(ex.Message, "HandleNormalLaunch: Fatal error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
+            Environment.Exit(1);
         }
     }
 
@@ -256,17 +257,7 @@ public partial class App : Application
     private void App_UnhandledException(object sender, UnhandledExceptionEventArgs e)
     {
         _logger.LogError(e.Exception, "App_UnhandledException");
-        
-        // 如果在初期（主窗口未创建前）发生异常，不能拦截，否则会产生僵尸进程
-        if (m_window == null)
-        {
-            e.Handled = false;
-            Environment.Exit(1);
-        }
-        else
-        {
-            e.Handled = true;
-        }
+        e.Handled = true;
     }
 
     private void CurrentDomain_FirstChanceException(object? sender,
