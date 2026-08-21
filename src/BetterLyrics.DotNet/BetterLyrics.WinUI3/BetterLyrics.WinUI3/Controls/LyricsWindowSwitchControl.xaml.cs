@@ -56,4 +56,52 @@ public sealed partial class LyricsWindowSwitchControl : UserControl
         var settingsPageViewModel = Ioc.Default.GetRequiredService<SettingsPageViewModel>();
         settingsPageViewModel.NavigateToSection(SettingsSection.LyricsWindowMgr);
     }
+
+    private async void UserControl_KeyDown(object sender, KeyRoutedEventArgs e)
+    {
+        int index = -1;
+        var key = e.Key;
+        if (key >= Windows.System.VirtualKey.Number1 && key <= Windows.System.VirtualKey.Number9)
+        {
+            index = key - Windows.System.VirtualKey.Number1;
+        }
+        else if (key == Windows.System.VirtualKey.Number0)
+        {
+            index = 9;
+        }
+        else if (key >= Windows.System.VirtualKey.NumberPad1 && key <= Windows.System.VirtualKey.NumberPad9)
+        {
+            index = key - Windows.System.VirtualKey.NumberPad1;
+        }
+        else if (key == Windows.System.VirtualKey.NumberPad0)
+        {
+            index = 9;
+        }
+        else if (key >= Windows.System.VirtualKey.A && key <= Windows.System.VirtualKey.Z)
+        {
+            index = 10 + (key - Windows.System.VirtualKey.A);
+        }
+
+        if (index >= 0 && index < ViewModel.AppSettings.WindowBoundsRecords.Count)
+        {
+            e.Handled = true;
+            var status = ViewModel.AppSettings.WindowBoundsRecords[index];
+            await HideAsync();
+
+            var settingsService = Ioc.Default.GetRequiredService<BetterLyrics.Core.Interfaces.Services.ISettingsService>();
+            
+            if (settingsService.AppSettings.GeneralSettings.MultiNowPlayingWindowMode)
+            {
+                _windowManagerProvider.OpenOrShowWindow<NowPlayingWindow>(status);
+            }
+            else
+            {
+                var openedWindows = _windowManagerProvider.GetWindows<NowPlayingWindow>();
+                foreach (var item in System.Linq.Enumerable.Where(openedWindows, x => x.LyricsWindowStatus != status))
+                    _windowManagerProvider.CloseWindow(item);
+
+                _windowManagerProvider.OpenOrShowWindow<NowPlayingWindow>(status);
+            }
+        }
+    }
 }

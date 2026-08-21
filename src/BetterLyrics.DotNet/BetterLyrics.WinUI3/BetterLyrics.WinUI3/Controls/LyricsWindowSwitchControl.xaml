@@ -9,6 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
+    KeyDown="UserControl_KeyDown"
     mc:Ignorable="d">
 
     <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
@@ -69,7 +70,21 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
-                            <TextBlock Text="{Binding Name, Mode=OneWay}" TextAlignment="Center" />
+                            <Grid Grid.Row="0">
+                                <Border
+                                    Padding="6,2"
+                                    HorizontalAlignment="Left"
+                                    VerticalAlignment="Center"
+                                    Background="{ThemeResource SystemControlBackgroundBaseLowBrush}"
+                                    CornerRadius="4">
+                                    <TextBlock FontSize="12" Text="{Binding Converter={StaticResource LyricsWindowStatusToShortcutConverter}}" />
+                                </Border>
+                                <TextBlock
+                                    Margin="24,0"
+                                    VerticalAlignment="Center"
+                                    Text="{Binding Name, Mode=OneWay}"
+                                    TextAlignment="Center" />
+                            </Grid>
                             <uc:DemoWindowGrid Grid.Row="1" LyricsWindowStatus="{Binding}" />
                         </Grid>
                     </DataTemplate>

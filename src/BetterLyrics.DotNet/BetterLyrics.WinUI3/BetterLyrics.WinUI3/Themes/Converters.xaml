@@ -9,6 +9,8 @@
     <bwc:AppListViewSelectionModeToListViewSelectionModeConverter x:Key="AppListViewSelectionModeToListViewSelectionModeConverter" />
     <bwc:AppThicknessToThicknessConverter x:Key="AppThicknessToThicknessConverter" />
 
+    <bwc:LyricsWindowStatusToShortcutConverter x:Key="LyricsWindowStatusToShortcutConverter" />
+
     <cwc:ColorToDisplayNameConverter x:Key="ColorToDisplayNameConverter" />
     <bwc:ColorToHexConverter x:Key="ColorToHexConverter" />
     <bwc:AppColorToColorConverter x:Key="AppColorToColorConverter" />
