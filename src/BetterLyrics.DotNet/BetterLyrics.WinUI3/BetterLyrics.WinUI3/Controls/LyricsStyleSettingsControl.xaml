@@ -168,11 +168,11 @@
                             Value="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsFontStrokeWidth, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
-                    <!--  字体颜色  -->
+                    <!--  Font color  -->
                     <controls:SettingsExpander x:Uid="SettingsPageFontColor" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8D3;}">
                         <controls:SettingsExpander.Items>
 
-                            <!--  描边（已播放）  -->
+                            <!--  Stroke (Played)  -->
                             <controls:SettingsCard x:Uid="SettingsPagePlayedStrokeFontColor">
                                 <StackPanel Orientation="Horizontal" Spacing="6">
                                     <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsPlayedStrokeFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
@@ -188,7 +188,7 @@
                                 </StackPanel>
                             </controls:SettingsCard>
 
-                            <!--  描边（未播放）  -->
+                            <!--  Stroke (Unplayed)  -->
                             <controls:SettingsCard x:Uid="SettingsPageUnplayedStrokeFontColor">
                                 <StackPanel Orientation="Horizontal" Spacing="6">
                                     <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsUnplayedStrokeFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
@@ -204,7 +204,7 @@
                                 </StackPanel>
                             </controls:SettingsCard>
 
-                            <!--  非当前行  -->
+                            <!--  Non-current line  -->
                             <controls:SettingsCard x:Uid="SettingsPageLyricsBgFontColor">
                                 <StackPanel Orientation="Horizontal" Spacing="6">
                                     <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsBgFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
@@ -220,7 +220,7 @@
                                 </StackPanel>
                             </controls:SettingsCard>
 
-                            <!--  当前行（已播放）  -->
+                            <!--  Current line (Played)  -->
                             <controls:SettingsCard x:Uid="SettingsPageLyricsPlayedFgFontColor">
                                 <StackPanel Orientation="Horizontal" Spacing="6">
                                     <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsPlayedFgFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
@@ -236,7 +236,7 @@
                                 </StackPanel>
                             </controls:SettingsCard>
 
-                            <!--  当前行（未播放）  -->
+                            <!--  Current line (Unplayed)  -->
                             <controls:SettingsCard x:Uid="SettingsPageLyricsUnplayedFgFontColor">
                                 <StackPanel Orientation="Horizontal" Spacing="6">
                                     <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsUnplayedFgFontColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
@@ -255,7 +255,7 @@
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
 
-                    <!--  字体大小  -->
+                    <!--  Font size  -->
                     <controls:SettingsExpander x:Uid="SettingsPageLyricsFontSize" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8E9;}">
                         <controls:SettingsExpander.Items>
                             <controls:SettingsCard x:Uid="SettingsPageAutoAdjust">
@@ -288,7 +288,7 @@
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
 
-                    <!--  字体不透明度  -->
+                    <!--  Font opacity  -->
                     <controls:SettingsExpander x:Uid="SettingsPageLyricsOpacity" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEF20;}">
                         <controls:SettingsExpander.Items>
                             <controls:SettingsCard x:Uid="SettingsPagePhoneticText">

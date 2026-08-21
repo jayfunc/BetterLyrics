@@ -1,4 +1,4 @@
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NAudio.CoreAudioApi;
@@ -17,6 +17,7 @@ public class SpectrumAnalyzer : IDisposable, IMMNotificationClient
     private readonly float[] _fftLeftBuffer;
     private readonly Complex[] _fftLeftData;
     private readonly int _fftLength = 2048;
+    private readonly Queue<(float Bass, float[] Spectrum, DateTime Time)> _delayQueue = new();
     private readonly float[] _fftRightBuffer;
     private readonly Complex[] _fftRightData;
 
@@ -94,6 +95,7 @@ public class SpectrumAnalyzer : IDisposable, IMMNotificationClient
     } = 64;
 
     public int Sensitivity { get; set; } = 100;
+    public int DelayMs { get; set; } = 0;
     public float SmoothingFactor { get; set; } = 0.92f; // 稍微降低一点，响应更快
     public bool IsCapturing { get; private set; } = false;
 
@@ -251,7 +253,21 @@ public class SpectrumAnalyzer : IDisposable, IMMNotificationClient
 
         lock (_lock)
         {
-            // 这里可以用 SIMD 优化，但在 64-128 bar 级别下，普通循环足够快
+            if (DelayMs > 0)
+            {
+                var threshold = DateTime.UtcNow.AddMilliseconds(-DelayMs);
+                while (_delayQueue.TryPeek(out var item) && item.Time <= threshold)
+                {
+                    _delayQueue.Dequeue();
+                    CurrentBassEnergy = item.Bass;
+                    for (int i = 0; i < BarCount; i++) _currentSpectrum[i] = item.Spectrum[i];
+                }
+            }
+            else
+            {
+                _delayQueue.Clear();
+            }
+
             for (var i = 0; i < BarCount; i++)
             {
                 // 简单的低通滤波
@@ -363,7 +379,7 @@ public class SpectrumAnalyzer : IDisposable, IMMNotificationClient
             }
 
         // 归一化
-        CurrentBassEnergy = Math.Clamp(bassSum / 1.0f, 0f, 1f);
+        var rawBass = Math.Clamp(bassSum / 1.0f, 0f, 1f);
 
         // 映射到 BarCount
         lock (_lock)
@@ -372,11 +388,24 @@ public class SpectrumAnalyzer : IDisposable, IMMNotificationClient
 
             var dataLen = _fullSpectrumData.Length;
 
-            for (var i = 0; i < BarCount; i++)
+            if (DelayMs > 0)
             {
-                var index = Math.Min(dataLen - 1, i * dataLen / BarCount);
-
-                _currentSpectrum[i] = _fullSpectrumData[index] * Sensitivity;
+                float[] tempSpectrum = new float[BarCount];
+                for (var i = 0; i < BarCount; i++)
+                {
+                    var index = Math.Min(dataLen - 1, i * dataLen / BarCount);
+                    tempSpectrum[i] = _fullSpectrumData[index] * Sensitivity;
+                }
+                _delayQueue.Enqueue((rawBass, tempSpectrum, DateTime.UtcNow));
+            }
+            else
+            {
+                CurrentBassEnergy = rawBass;
+                for (var i = 0; i < BarCount; i++)
+                {
+                    var index = Math.Min(dataLen - 1, i * dataLen / BarCount);
+                    _currentSpectrum[i] = _fullSpectrumData[index] * Sensitivity;
+                }
             }
         }
     }
@@ -387,7 +416,7 @@ public class SpectrumAnalyzer : IDisposable, IMMNotificationClient
 
         for (var i = 0; i < effectiveLength; i++)
         {
-            // 计算该 Bin 对应的频率
+            // 计算每个 Bin 对应的频率
             var freq = (float)i * _sampleRate / _fftLength;
             _compensationMap[i] = CalculateCompensationFactor(freq);
         }

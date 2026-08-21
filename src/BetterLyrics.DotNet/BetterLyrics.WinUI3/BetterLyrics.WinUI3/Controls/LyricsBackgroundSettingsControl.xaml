@@ -22,6 +22,16 @@
                         <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsPureColorOverlayEnabled, Mode=TwoWay}" />
                         <controls:SettingsExpander.Items>
 
+                            <controls:SettingsCard x:Uid="SettingsPageColor" IsEnabled="{x:Bind LyricsBackgroundSettings.IsPureColorOverlayEnabled, Mode=OneWay}">
+                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                    <ComboBox SelectedIndex="{x:Bind LyricsBackgroundSettings.PureColorOverlayColorType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsFontColorAdaptiveColored" />
+                                        <ComboBoxItem x:Uid="SettingsPageLyricsFontColorCustom" />
+                                    </ComboBox>
+                                    <controls:ColorPickerButton SelectedColor="{x:Bind LyricsBackgroundSettings.PureColorOverlayCustomColor, Converter={StaticResource AppColorToColorConverter}, Mode=TwoWay}" Visibility="{x:Bind LyricsBackgroundSettings.PureColorOverlayColorType, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=1}" />
+                                </StackPanel>
+                            </controls:SettingsCard>
+
                             <controls:SettingsCard x:Uid="SettingsPageOpacity" IsEnabled="{x:Bind LyricsBackgroundSettings.IsPureColorOverlayEnabled, Mode=OneWay}">
                                 <uc:ExtendedSlider
                                     Default="100"
@@ -175,7 +185,7 @@
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
 
-                    <!--  雾  -->
+                    <!--  Fog  -->
                     <controls:SettingsExpander x:Uid="SettingsPageFogLayer" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEA91;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsFogOverlayEnabled, Mode=TwoWay}" />
                         <controls:SettingsExpander.Items>
@@ -270,7 +280,7 @@
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
 
-                    <!--  频谱层  -->
+                    <!--  Spectrum  -->
                     <controls:SettingsExpander x:Uid="SettingsPageSpectrumLayer" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xF61F;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=TwoWay}" />
                         <controls:SettingsExpander.Items>
@@ -324,6 +334,15 @@
                                     Maximum="500"
                                     Minimum="50"
                                     Value="{x:Bind LyricsBackgroundSettings.SpectrumSensitivity, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+
+                            <controls:SettingsCard x:Uid="SettingsPageSpectrumDelay" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=OneWay}">
+                                <uc:ExtendedSlider
+                                    Default="0"
+                                    Maximum="2000"
+                                    Minimum="0"
+                                    Unit="ms"
+                                    Value="{x:Bind LyricsBackgroundSettings.SpectrumDelayMs, Mode=TwoWay}" />
                             </controls:SettingsCard>
 
                             <controls:SettingsCard x:Uid="SettingsPageSpectrumBrethingEffect" IsEnabled="{x:Bind LyricsBackgroundSettings.IsSpectrumOverlayEnabled, Mode=OneWay}">

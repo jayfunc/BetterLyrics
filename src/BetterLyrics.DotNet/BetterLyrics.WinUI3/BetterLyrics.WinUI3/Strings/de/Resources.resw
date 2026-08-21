@@ -2724,4 +2724,22 @@
   <data name="MusicGalleryWindowExternalSourcePrompt.Text" xml:space="preserve">
     <value>Derzeit wird eine externe Quelle wiedergegeben. Doppelklicken Sie auf eine lokale Spur oder halten Sie die externe Quelle an, um zurückzuschalten.</value>
   </data>
+  <data name="PlaybackSettingsControlShowMessage.Content" xml:space="preserve">
+    <value>Nachricht anzeigen</value>
+  </data>
+  <data name="PlaybackSettingsControlHideLyricsArea.Content" xml:space="preserve">
+    <value>Textfeld ausblenden</value>
+  </data>
+  <data name="PlaybackSettingsControlNoLyricsFoundHandling.Header" xml:space="preserve">
+    <value>Wenn kein Liedtext gefunden wurde</value>
+  </data>
+  <data name="PlaybackSettingsControlCustomNotFoundMessage.PlaceholderText" xml:space="preserve">
+    <value>Leer lassen, um die Standardeinstellung zu verwenden</value>
+  </data>
+  <data name="PlaybackSettingsControlCustomNotFoundMessageCard.Header" xml:space="preserve">
+    <value>Benutzerdefinierte Meldung</value>
+  </data>
+  <data name="SettingsPageSpectrumDelay.Header" xml:space="preserve">
+    <value>Spektrumverzögerung</value>
+  </data>
 </root>

@@ -38,6 +38,7 @@ using Microsoft.UI.Xaml.Input;
 using BetterLyrics.Core.Effects;
 using BetterLyrics.WinUI3.Providers;
 using BetterLyrics.Core.Interfaces.Providers;
+using BetterLyrics.Core.Extensions;
 
 namespace BetterLyrics.WinUI3.Controls;
 
@@ -53,7 +54,8 @@ public sealed partial class NowPlayingCanvas : UserControl,
     IRecipient<PropertyChangedMessage<string>>,
     IRecipient<PropertyChangedMessage<byte[]?>>,
     IRecipient<PropertyChangedMessage<NowPlayingPalette>>,
-    IRecipient<PropertyChangedMessage<LyricsLayoutOrientation>>
+    IRecipient<PropertyChangedMessage<LyricsLayoutOrientation>>,
+    IRecipient<PropertyChangedMessage<BetterLyrics.Core.Enums.NoLyricsFoundHandlingType>>
 {
     public static readonly DependencyProperty LyricsWindowStatusProperty =
         DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus),
@@ -206,7 +208,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
     private double _renderLyricsStartX;
     private double _renderLyricsStartY;
     private double _renderLyricsWidth = 9999;
-    private TimeSpan _songPosition; // ��ǰ����ʱ��
+    private TimeSpan _songPosition;
 
     private TimeSpan _songPositionWithOffset;
     private readonly ISpoutTextureProvider _spoutHook = Ioc.Default.GetRequiredService<ISpoutTextureProvider>();
@@ -241,53 +243,42 @@ public sealed partial class NowPlayingCanvas : UserControl,
         set => SetValue(AlbumArtRectProperty, value);
     }
 
-    // ���������ʼ�� X ����
     public double LyricsStartX
     {
         get => (double)GetValue(LyricsStartXProperty);
         set => SetValue(LyricsStartXProperty, value);
     }
 
-    // ���������ʼ Y ����
     public double LyricsStartY
     {
         get => (double)GetValue(LyricsStartYProperty);
         set => SetValue(LyricsStartYProperty, value);
     }
 
-    // �������������
     public double LyricsWidth
     {
         get => (double)GetValue(LyricsWidthProperty);
         set => SetValue(LyricsWidthProperty, value);
     }
 
-    // ����������߶�
     public double LyricsHeight
     {
         get => (double)GetValue(LyricsHeightProperty);
         set => SetValue(LyricsHeightProperty, value);
     }
 
-    // �������͸����
     public double LyricsOpacity
     {
         get => (double)GetValue(LyricsOpacityProperty);
         set => SetValue(LyricsOpacityProperty, value);
     }
 
-    /// <summary>
-    ///     �û��ٿ�����ѹ����ľ��루�� 0 ��ʼ�㣩
-    /// </summary>
     public double MouseScrollOffset
     {
         get => (double)GetValue(MouseScrollOffsetProperty);
         set => SetValue(MouseScrollOffsetProperty, value);
     }
 
-    /// <summary>
-    ///     �û���굱ǰ��λ�ã�����ڸ���������Ͻǣ�
-    /// </summary>
     public Point MousePosition
     {
         get => (Point)GetValue(MousePositionProperty);
@@ -336,6 +327,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
             else if (message.PropertyName == nameof(LyricsStyleSettings.AutoWrap))
                 RequestRelayout();
             else if (message.PropertyName == nameof(LyricsStyleSettings.UseInternalLyricsAlignment)) RequestRelayout();
+
         }
     }
 
@@ -410,6 +402,8 @@ public sealed partial class NowPlayingCanvas : UserControl,
                 _spectrumAnalyzer.BarCount = message.NewValue;
             else if (message.PropertyName == nameof(LyricsBackgroundSettings.SpectrumSensitivity))
                 _spectrumAnalyzer.Sensitivity = message.NewValue;
+            else if (message.PropertyName == nameof(LyricsBackgroundSettings.SpectrumDelayMs))
+                _spectrumAnalyzer.DelayMs = message.NewValue;
         }
     }
 
@@ -418,6 +412,14 @@ public sealed partial class NowPlayingCanvas : UserControl,
         if (message.Sender is IGsmtcService)
             if (message.PropertyName == nameof(IGsmtcService.CurrentLyricsData))
                 RequestReloadLyrics();
+    }
+
+    public void Receive(PropertyChangedMessage<BetterLyrics.Core.Enums.NoLyricsFoundHandlingType> message)
+    {
+        if (message.Sender is GeneralSettings && message.PropertyName == nameof(GeneralSettings.NoLyricsFoundHandlingType))
+        {
+            RequestReloadLyrics();
+        }
     }
 
     public void Receive(PropertyChangedMessage<LyricsFontWeight> message)
@@ -456,6 +458,10 @@ public sealed partial class NowPlayingCanvas : UserControl,
                 RequestRelayout();
             else if (message.PropertyName == nameof(LyricsStyleSettings.LyricsWesternFontFamily)) RequestRelayout();
         }
+        else if (message.Sender is GeneralSettings && message.PropertyName == nameof(GeneralSettings.CustomNotFoundMessage))
+        {
+            RequestReloadLyrics();
+        }
     }
 
     public void Receive(PropertyChangedMessage<TextAlignmentType> message)
@@ -476,10 +482,9 @@ public sealed partial class NowPlayingCanvas : UserControl,
                 var timelineSyncThreshold =
                     _gsmtcService.CurrentMediaSourceProviderInfo?.TimelineSyncThreshold ?? 0;
 
-                // ƫ�� or seek
+                // seek
                 if (diff >= timelineSyncThreshold) _songPosition = realPosition;
 
-                // �϶��������ȴ���
                 if (diff >= timelineSyncThreshold + 5000) RequestRelayout();
             }
     }
@@ -595,15 +600,20 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
         var bounds = new Rect(0, 0, sender.Size.Width, sender.Size.Height);
 
-        if (_lyricsWindowStatus.IsAdaptToEnvironment)
+        if (lyricsBg.PureColorOverlayColorType == BetterLyrics.Core.Enums.PureColorOverlayColorType.Custom)
         {
-            // ����Ӧɫ
+            overlayColor = lyricsBg.PureColorOverlayCustomColor;
+            finalOpacity = lyricsBg.PureColorOverlayOpacity / 100.0;
+        }
+        else if (_lyricsWindowStatus.IsAdaptToEnvironment)
+        {
+            // Adapt to env color
             overlayColor = _immersiveBgColorTransition.Value;
             finalOpacity = _immersiveBgOpacityTransition.Value * lyricsBg.PureColorOverlayOpacity / 100.0;
         }
         else
         {
-            // ר��ɫ
+            // Use accent color
             overlayColor = _accentColor1Transition.Value;
             finalOpacity = lyricsBg.PureColorOverlayOpacity / 100.0;
         }
@@ -660,12 +670,12 @@ public sealed partial class NowPlayingCanvas : UserControl,
                 $"User Scroll  : {_mouseYScrollTransition.Value:0.00}";
 
             using (var format = new CanvasTextFormat
-                   {
-                       FontFamily = "Consolas",
-                       FontSize = 13,
-                       VerticalAlignment = CanvasVerticalAlignment.Top,
-                       HorizontalAlignment = CanvasHorizontalAlignment.Left
-                   })
+            {
+                FontFamily = "Consolas",
+                FontSize = 13,
+                VerticalAlignment = CanvasVerticalAlignment.Top,
+                HorizontalAlignment = CanvasHorizontalAlignment.Left
+            })
             using (var layout =
                    new CanvasTextLayout(args.DrawingSession, debugText, format,
                        2000f, 2000f))
@@ -1133,6 +1143,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
         _spectrumAnalyzer.BarCount = lyricsBg.SpectrumCount;
         _spectrumAnalyzer.Sensitivity = lyricsBg.SpectrumSensitivity;
+        _spectrumAnalyzer.DelayMs = lyricsBg.SpectrumDelayMs;
 
         _spectrumAnalyzer.StartCapture();
     }
@@ -1151,7 +1162,32 @@ public sealed partial class NowPlayingCanvas : UserControl,
         if (_isLyricsChanged)
         {
             DisposeRenderLyricsLines();
-            _renderLyricsLines = _gsmtcService.CurrentLyricsData?.LyricsLines.Select(x => new RenderLyricsLine(x))
+
+            var lyricsData = _gsmtcService.CurrentLyricsData;
+            if (lyricsData == LyricsDataExtensions.NotFoundPlaceholder)
+            {
+                var settings = _settingsService.AppSettings.GeneralSettings;
+                if (settings.NoLyricsFoundHandlingType == NoLyricsFoundHandlingType.HideLyricsArea)
+                {
+                    lyricsData = null;
+                }
+                else if (!string.IsNullOrWhiteSpace(settings.CustomNotFoundMessage))
+                {
+                    lyricsData = new LyricsData([
+                        new LyricsLine
+                        {
+                            StartMs = 0,
+                            EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds,
+                            PrimaryText = settings.CustomNotFoundMessage,
+                            PrimarySyllables = [
+                                new BaseLyrics { Text = settings.CustomNotFoundMessage, StartMs = 0, EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds }
+                            ]
+                        }
+                    ]);
+                }
+            }
+
+            _renderLyricsLines = lyricsData?.LyricsLines.Select(x => new RenderLyricsLine(x))
                 .ToList();
             EnsureRenderLyricsLinesPreservedAnimation();
             _isLyricsChanged = false;
@@ -1214,7 +1250,6 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
         try
         {
-            // ֱ�ӻ�ȡ����Ĵ��ֽ�����
             var imageBytes = _gsmtcService.AlbumArtBytes;
             if (imageBytes == null || imageBytes.Length == 0) return;
 
@@ -1269,9 +1304,6 @@ public sealed partial class NowPlayingCanvas : UserControl,
         _isNowPlayingPaletteChanged = true;
     }
 
-    /// <summary>
-    ///     Ϊ���������ڵ���Ԥ�� UI ��������ʱ��
-    /// </summary>
     private void EnsureRenderLyricsLinesPreservedAnimation()
     {
         if (_lyricsWindowStatus == null) return;
@@ -1293,26 +1325,20 @@ public sealed partial class NowPlayingCanvas : UserControl,
             if (line == null) continue;
 
             var isLastLine = i + 1 >= lines.Count;
-            // ��������һ�䣬ʹ�ø����ܳ���Ϊ�ο�
             var nextLineStartMs = isLastLine ? (int)_gsmtcService.CurrentSongInfo.DurationMs : lines[i + 1].StartMs;
 
-            // ������һ�������Ƿ����㳤��������
             var isLongSyllable = line.PrimaryRenderSyllables.LastOrDefault()?.DurationMs >= longSyllableThreshold;
 
-            // �������һ�������ǳ�����ʱ�����ϵ�����������ʱ�䣨Padding��
             if (line.EndMs.HasValue && isLongSyllable)
             {
                 if (isLastLine || line.EndMs > nextLineStartMs)
                 {
-                    // ���һ��򱳾�/ƽ�и�ʣ�ֱ�Ӽ��ϻ���ʱ��
                     line.EndMs += animationPadding;
                 }
                 else
                 {
-                    // ������ʣ����Լ��϶���ʱ�䣬�����ܳ�����һ��Ŀ�ʼʱ��
                     var targetEndMs = line.EndMs.Value + animationPadding;
 
-                    // ���Ʋ�������һ��Ŀ�ʼʱ�䣬����ȷ�������ԭ�������� EndMs ����
                     line.EndMs = Math.Max(line.EndMs.Value, Math.Min(targetEndMs, nextLineStartMs));
                 }
             }

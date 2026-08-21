@@ -8,6 +8,13 @@ public partial class GeneralSettings : ObservableRecipient
 {
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
+    public partial NoLyricsFoundHandlingType NoLyricsFoundHandlingType { get; set; } = NoLyricsFoundHandlingType.ShowMessage;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial string CustomNotFoundMessage { get; set; } = string.Empty;
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
     public partial string GlobalFontFamily { get; set; } = string.Empty;
 
     [ObservableProperty]

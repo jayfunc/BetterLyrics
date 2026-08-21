@@ -2724,4 +2724,22 @@
   <data name="MusicGalleryWindowExternalSourcePrompt.Text" xml:space="preserve">
     <value>Şu anda harici bir kaynak izleniyor. Geri dönmek için yerel bir parçaya çift tıklayın veya harici kaynağı duraklatın</value>
   </data>
+  <data name="PlaybackSettingsControlShowMessage.Content" xml:space="preserve">
+    <value>Mesajı göster</value>
+  </data>
+  <data name="PlaybackSettingsControlHideLyricsArea.Content" xml:space="preserve">
+    <value>Şarkı sözleri bölümünü gizle</value>
+  </data>
+  <data name="PlaybackSettingsControlNoLyricsFoundHandling.Header" xml:space="preserve">
+    <value>Şarkı sözü bulunmadığında</value>
+  </data>
+  <data name="PlaybackSettingsControlCustomNotFoundMessage.PlaceholderText" xml:space="preserve">
+    <value>Varsayılan ayarı kullanmak için boş bırakın</value>
+  </data>
+  <data name="PlaybackSettingsControlCustomNotFoundMessageCard.Header" xml:space="preserve">
+    <value>Özel mesaj</value>
+  </data>
+  <data name="SettingsPageSpectrumDelay.Header" xml:space="preserve">
+    <value>Spektrum Gecikmesi</value>
+  </data>
 </root>

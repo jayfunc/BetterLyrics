@@ -2724,4 +2724,22 @@
   <data name="MusicGalleryWindowExternalSourcePrompt.Text" xml:space="preserve">
     <value>当前正在监听外部播放源。双击本地曲目，或暂停外部播放源即可切换回本地播放</value>
   </data>
+  <data name="PlaybackSettingsControlShowMessage.Content" xml:space="preserve">
+    <value>显示提示信息</value>
+  </data>
+  <data name="PlaybackSettingsControlHideLyricsArea.Content" xml:space="preserve">
+    <value>隐藏歌词区域</value>
+  </data>
+  <data name="PlaybackSettingsControlNoLyricsFoundHandling.Header" xml:space="preserve">
+    <value>当未找到歌词时</value>
+  </data>
+  <data name="PlaybackSettingsControlCustomNotFoundMessage.PlaceholderText" xml:space="preserve">
+    <value>留空以使用默认提示</value>
+  </data>
+  <data name="PlaybackSettingsControlCustomNotFoundMessageCard.Header" xml:space="preserve">
+    <value>自定义提示信息</value>
+  </data>
+  <data name="SettingsPageSpectrumDelay.Header" xml:space="preserve">
+    <value>频谱延迟</value>
+  </data>
 </root>

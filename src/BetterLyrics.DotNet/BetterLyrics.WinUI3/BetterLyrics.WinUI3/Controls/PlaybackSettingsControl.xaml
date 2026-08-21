@@ -604,6 +604,17 @@
                                 </controls:SettingsCard>
                             </controls:SettingsExpander.Items>
                         </controls:SettingsExpander>
+                        <controls:SettingsExpander x:Uid="PlaybackSettingsControlNoLyricsFoundHandling">
+                            <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.GeneralSettings.NoLyricsFoundHandlingType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                <ComboBoxItem x:Uid="PlaybackSettingsControlShowMessage" />
+                                <ComboBoxItem x:Uid="PlaybackSettingsControlHideLyricsArea" />
+                            </ComboBox>
+                            <controls:SettingsExpander.Items>
+                                <controls:SettingsCard x:Uid="PlaybackSettingsControlCustomNotFoundMessageCard" IsEnabled="{x:Bind ViewModel.AppSettings.GeneralSettings.NoLyricsFoundHandlingType, Mode=OneWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=0}">
+                                    <TextBox x:Uid="PlaybackSettingsControlCustomNotFoundMessage" Text="{x:Bind ViewModel.AppSettings.GeneralSettings.CustomNotFoundMessage, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </controls:SettingsCard>
+                            </controls:SettingsExpander.Items>
+                        </controls:SettingsExpander>
 
                         <!--  Lyrics phonetic  -->
                         <controls:SettingsExpander x:Uid="SettingsPagePhonetics" IsExpanded="True">

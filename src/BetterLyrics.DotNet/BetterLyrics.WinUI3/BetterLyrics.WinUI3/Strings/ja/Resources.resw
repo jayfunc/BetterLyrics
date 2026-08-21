@@ -124,7 +124,7 @@
     <value>更新の確認中にエラーが発生しました</value>
   </data>
   <data name="AboutControlLastCheckTime.Text" xml:space="preserve">
-    <value>最終確認日時</value>
+    <value>前回の確認日時</value>
   </data>
   <data name="AboutControlOpenAppStorePage.Content" xml:space="preserve">
     <value>Microsoft Store で更新する</value>
@@ -2416,7 +2416,7 @@
     <value>多言語のルビを表示</value>
   </data>
   <data name="SettingsPageLeftRight.Content" xml:space="preserve">
-    <value>両端揃え</value>
+    <value>左右交互</value>
   </data>
   <data name="SettingsPageTopBottom.Content" xml:space="preserve">
     <value>上下揃え</value>
@@ -2656,7 +2656,7 @@
     <value>再起動が必要です</value>
   </data>
   <data name="SettingsPageRestartRequiredInfoBar.Message" xml:space="preserve">
-    <value>一部の設定が変更されました。反映するにはアプリを再起動する必要があります</value>
+    <value>一部の設定が変更されたため、反映するにはアプリを再起動する必要があります</value>
   </data>
   <data name="SettingsPageFileNamePatternChangeHintInfoBar.Message" xml:space="preserve">
     <value>解析パターンを変更した後は、下の「今すぐ同期」をクリックして新しいルールを適用してください</value>
@@ -2722,6 +2722,24 @@
     <value>「再生中」通知のテーマ</value>
   </data>
   <data name="MusicGalleryWindowExternalSourcePrompt.Text" xml:space="preserve">
-    <value>現在、外部ソースを再生中です。ローカルトラックをダブルクリックするか、外部ソースを一時停止すると、元の再生状態に戻ります。</value>
+    <value>現在、外部の再生ソースを監視中です。ローカルミュージックファイルをダブルクリックするか、外部の再生ソースを一時停止すると、ローカル再生に戻ります</value>
+  </data>
+  <data name="PlaybackSettingsControlShowMessage.Content" xml:space="preserve">
+    <value>メッセージを表示</value>
+  </data>
+  <data name="PlaybackSettingsControlHideLyricsArea.Content" xml:space="preserve">
+    <value>歌詞エリアを非表示にする</value>
+  </data>
+  <data name="PlaybackSettingsControlNoLyricsFoundHandling.Header" xml:space="preserve">
+    <value>歌詞が見つからない場合</value>
+  </data>
+  <data name="PlaybackSettingsControlCustomNotFoundMessage.PlaceholderText" xml:space="preserve">
+    <value>デフォルト設定を使用する場合は空欄のままにしてください</value>
+  </data>
+  <data name="PlaybackSettingsControlCustomNotFoundMessageCard.Header" xml:space="preserve">
+    <value>カスタムメッセージ</value>
+  </data>
+  <data name="SettingsPageSpectrumDelay.Header" xml:space="preserve">
+    <value>スペクトル遅延</value>
   </data>
 </root>

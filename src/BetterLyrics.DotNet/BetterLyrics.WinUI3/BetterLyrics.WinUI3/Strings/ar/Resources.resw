@@ -2724,4 +2724,22 @@
   <data name="MusicGalleryWindowExternalSourcePrompt.Text" xml:space="preserve">
     <value>يجري حالياً تتبع مصدر خارجي. انقر نقرًا مزدوجًا على مسار محلي أو أوقف المصدر الخارجي مؤقتًا للعودة إلى المسار المحلي</value>
   </data>
+  <data name="PlaybackSettingsControlShowMessage.Content" xml:space="preserve">
+    <value>إظهار الرسالة</value>
+  </data>
+  <data name="PlaybackSettingsControlHideLyricsArea.Content" xml:space="preserve">
+    <value>إخفاء منطقة كلمات الأغنية</value>
+  </data>
+  <data name="PlaybackSettingsControlNoLyricsFoundHandling.Header" xml:space="preserve">
+    <value>عندما لا يتم العثور على كلمات الأغنية</value>
+  </data>
+  <data name="PlaybackSettingsControlCustomNotFoundMessage.PlaceholderText" xml:space="preserve">
+    <value>اترك الحقل فارغًا لاستخدام القيمة الافتراضية</value>
+  </data>
+  <data name="PlaybackSettingsControlCustomNotFoundMessageCard.Header" xml:space="preserve">
+    <value>رسالة مخصصة</value>
+  </data>
+  <data name="SettingsPageSpectrumDelay.Header" xml:space="preserve">
+    <value>تأخير الطيف</value>
+  </data>
 </root>

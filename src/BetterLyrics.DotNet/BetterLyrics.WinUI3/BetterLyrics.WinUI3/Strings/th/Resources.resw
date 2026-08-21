@@ -2724,4 +2724,22 @@
   <data name="MusicGalleryWindowExternalSourcePrompt.Text" xml:space="preserve">
     <value>กำลังเล่นจากแหล่งภายนอกอยู่ คลิกสองครั้งที่แทร็กในเครื่องหรือหยุดแหล่งภายนอกเพื่อกลับสู่แทร็กในเครื่อง</value>
   </data>
+  <data name="PlaybackSettingsControlShowMessage.Content" xml:space="preserve">
+    <value>แสดงข้อความ</value>
+  </data>
+  <data name="PlaybackSettingsControlHideLyricsArea.Content" xml:space="preserve">
+    <value>ซ่อนพื้นที่คำร้อง</value>
+  </data>
+  <data name="PlaybackSettingsControlNoLyricsFoundHandling.Header" xml:space="preserve">
+    <value>เมื่อไม่พบคำร้อง</value>
+  </data>
+  <data name="PlaybackSettingsControlCustomNotFoundMessage.PlaceholderText" xml:space="preserve">
+    <value>ทิ้งไว้ว่างเพื่อใช้ค่าเริ่มต้น</value>
+  </data>
+  <data name="PlaybackSettingsControlCustomNotFoundMessageCard.Header" xml:space="preserve">
+    <value>ข้อความที่กำหนดเอง</value>
+  </data>
+  <data name="SettingsPageSpectrumDelay.Header" xml:space="preserve">
+    <value>ความล่าช้าของสเปกตรัม</value>
+  </data>
 </root>

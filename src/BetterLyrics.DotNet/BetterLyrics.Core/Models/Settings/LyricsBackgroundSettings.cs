@@ -1,4 +1,4 @@
-﻿using BetterLyrics.Core.Constants;
+using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Models.Domain;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -14,6 +14,14 @@ public partial class LyricsBackgroundSettings : ObservableRecipient, ICloneable
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
     public partial int PureColorOverlayOpacity { get; set; } = 100; // 100 % = 1.0
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial PureColorOverlayColorType PureColorOverlayColorType { get; set; } = PureColorOverlayColorType.AdaptiveColored;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial AppColor PureColorOverlayCustomColor { get; set; } = Colors.White;
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
@@ -121,7 +129,11 @@ public partial class LyricsBackgroundSettings : ObservableRecipient, ICloneable
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
-    public partial bool IsSpectrumOverlayParallaxEnabled { get; set; } = false;
+        public partial bool IsSpectrumOverlayParallaxEnabled { get; set; } = false;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial int SpectrumDelayMs { get; set; } = 0;
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
@@ -205,6 +217,8 @@ public partial class LyricsBackgroundSettings : ObservableRecipient, ICloneable
         {
             IsPureColorOverlayEnabled = IsPureColorOverlayEnabled,
             PureColorOverlayOpacity = PureColorOverlayOpacity,
+            PureColorOverlayColorType = PureColorOverlayColorType,
+            PureColorOverlayCustomColor = PureColorOverlayCustomColor,
 
             IsCoverOverlayEnabled = IsCoverOverlayEnabled,
             CoverOverlayOpacity = CoverOverlayOpacity,
@@ -234,7 +248,8 @@ public partial class LyricsBackgroundSettings : ObservableRecipient, ICloneable
             SpectrumOpacity = SpectrumOpacity,
             SpectrumColorType = SpectrumColorType,
             SpectrumCustomColor = SpectrumCustomColor,
-            IsSpectrumOverlayParallaxEnabled = IsSpectrumOverlayParallaxEnabled,
+                        IsSpectrumOverlayParallaxEnabled = IsSpectrumOverlayParallaxEnabled,
+            SpectrumDelayMs = SpectrumDelayMs,
 
             IsSnowFlakeOverlayEnabled = IsSnowFlakeOverlayEnabled,
             SnowFlakeOverlayAmount = SnowFlakeOverlayAmount,

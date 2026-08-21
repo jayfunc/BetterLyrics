@@ -1,4 +1,4 @@
-ï»¿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 using BetterLyrics.Core.Collections;
 using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
@@ -31,12 +31,12 @@ public partial class LyricsStyleSettings : ObservableRecipient, ICloneable
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
-    public partial int PlayedOriginalLyricsOpacity { get; set; } = 100; // 100 % å·²æ’­æ”¾
+    public partial int PlayedOriginalLyricsOpacity { get; set; } = 100; // 100 % ÒÑ²¥·Å
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
     [JsonPropertyName("OriginalLyricsOpacity")]
-    public partial int UnplayedOriginalLyricsOpacity { get; set; } = 30; // 30 % æœªæ’­æ”¾
+    public partial int UnplayedOriginalLyricsOpacity { get; set; } = 30; // 30 % Î´²¥·Å
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
@@ -52,7 +52,7 @@ public partial class LyricsStyleSettings : ObservableRecipient, ICloneable
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
-    public partial LyricsLayoutOrientation LyricsLayoutOrientation { get; set; } = LyricsLayoutOrientation.Horizontal;
+        public partial LyricsLayoutOrientation LyricsLayoutOrientation { get; set; } = LyricsLayoutOrientation.Horizontal;
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
@@ -157,7 +157,7 @@ public partial class LyricsStyleSettings : ObservableRecipient, ICloneable
 
             LyricsAlignmentType = LyricsAlignmentType,
             UseInternalLyricsAlignment = UseInternalLyricsAlignment,
-            LyricsLayoutOrientation = LyricsLayoutOrientation,
+                        LyricsLayoutOrientation = LyricsLayoutOrientation,
             LyricsLayerOrder =
                 new FullyObservableCollection<LyricsLayerConfig>(
                     LyricsLayerOrder.Select(p => (LyricsLayerConfig)p.Clone())),
