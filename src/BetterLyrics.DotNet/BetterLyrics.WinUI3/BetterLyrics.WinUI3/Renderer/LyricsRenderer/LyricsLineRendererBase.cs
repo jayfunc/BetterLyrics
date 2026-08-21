@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Windows.Foundation;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
@@ -275,6 +275,8 @@ public abstract class LyricsLineRendererBase
         using var blurEffect = new GaussianBlurEffect
             { BlurAmount = (float)blur, Source = cropEffect, BorderMode = EffectBorderMode.Soft };
         using var opacityEffect = new OpacityEffect { Source = blurEffect, Opacity = (float)opacity };
-        ds.DrawImage(opacityEffect, destRect, srcRect);
+        
+        var padding = blur * 3;
+        ds.DrawImage(opacityEffect, destRect.Extend(padding), srcRect.Extend(padding));
     }
 }

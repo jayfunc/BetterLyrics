@@ -6,6 +6,7 @@ using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Sdk.Interfaces.Plugins;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using LiteDB;
 using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
@@ -30,6 +31,7 @@ public partial class App : Application
         InitializeComponent();
 
         ATL.Settings.NullAbsentValues = true;
+        BsonMapper.Global.EmptyStringToNull = false;
 
         _logger = Ioc.Default.GetRequiredService<ILogger<App>>();
 
