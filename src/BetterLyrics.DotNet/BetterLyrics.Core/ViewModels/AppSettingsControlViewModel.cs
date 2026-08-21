@@ -21,6 +21,9 @@ public partial class AppSettingsControlViewModel : BaseViewModel,
     private readonly bool _initialEnhanceControlInteractiveAnimations;
 
     [ObservableProperty]
+    public partial string SelectorBarSelectedItemTag { get; set; } = "Appearance";
+
+    [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsRestartRequired))]
     public partial bool IsLanguageChanged { get; set; }
 

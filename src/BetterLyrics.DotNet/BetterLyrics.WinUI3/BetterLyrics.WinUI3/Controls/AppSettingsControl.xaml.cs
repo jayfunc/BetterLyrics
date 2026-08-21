@@ -16,4 +16,12 @@ public sealed partial class AppSettingsControl : UserControl
     }
 
     public AppSettingsControlViewModel ViewModel => (AppSettingsControlViewModel)DataContext;
+
+    private void ConfigNavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+    {
+        if (args.SelectedItem is NavigationViewItem item && item.Tag is string tag)
+        {
+            ViewModel.SelectorBarSelectedItemTag = tag;
+        }
+    }
 }

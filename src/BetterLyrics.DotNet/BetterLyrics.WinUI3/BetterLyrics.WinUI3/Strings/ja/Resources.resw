@@ -2029,7 +2029,7 @@
     <value>[実験的] スペクトラムレイヤー</value>
   </data>
   <data name="SettingsPageSpectrumLayerPlacement.Header" xml:space="preserve">
-    <value>スペクトラムの位置</value>
+    <value>スペクトラム位置</value>
   </data>
   <data name="SettingsPageSpectrumLayerStyle.Header" xml:space="preserve">
     <value>スペクトラムスタイル</value>
@@ -2725,21 +2725,27 @@
     <value>現在、外部の再生ソースを監視中です。ローカルミュージックファイルをダブルクリックするか、外部の再生ソースを一時停止すると、ローカル再生に戻ります</value>
   </data>
   <data name="PlaybackSettingsControlShowMessage.Content" xml:space="preserve">
-    <value>メッセージを表示</value>
+    <value>メッセージを表示する</value>
   </data>
   <data name="PlaybackSettingsControlHideLyricsArea.Content" xml:space="preserve">
     <value>歌詞エリアを非表示にする</value>
   </data>
   <data name="PlaybackSettingsControlNoLyricsFoundHandling.Header" xml:space="preserve">
-    <value>歌詞が見つからない場合</value>
+    <value>歌詞が見つからないときの動作</value>
   </data>
   <data name="PlaybackSettingsControlCustomNotFoundMessage.PlaceholderText" xml:space="preserve">
-    <value>デフォルト設定を使用する場合は空欄のままにしてください</value>
+    <value>未入力の場合はデフォルトを使用</value>
   </data>
   <data name="PlaybackSettingsControlCustomNotFoundMessageCard.Header" xml:space="preserve">
     <value>カスタムメッセージ</value>
   </data>
   <data name="SettingsPageSpectrumDelay.Header" xml:space="preserve">
-    <value>スペクトル遅延</value>
+    <value>スペクトラム遅延</value>
+  </data>
+  <data name="SettingsPageIntegration.Text" xml:space="preserve">
+    <value>外部連携</value>
+  </data>
+  <data name="SettingsPageWindow.Text" xml:space="preserve">
+    <value>ウィンドウ</value>
   </data>
 </root>

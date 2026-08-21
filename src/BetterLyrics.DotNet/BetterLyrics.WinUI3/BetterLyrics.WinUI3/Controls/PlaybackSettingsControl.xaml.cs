@@ -38,21 +38,21 @@ public sealed partial class PlaybackSettingsControl : UserControl
     private void AlbumArtSearchProvidersListView_DragItemsCompleted(ListViewBase sender,
         DragItemsCompletedEventArgs args)
     {
-        // �� AlbumArtSearchProvidersInfo ���� CollectionChanged �¼�
+        //  AlbumArtSearchProvidersInfo  CollectionChanged ?
         ViewModel.SelectedMediaSourceProvider?.AlbumArtSearchProvidersInfo?.Refresh();
     }
 
     private void LyricsSearchProvidersListView_DragItemsCompleted(ListViewBase sender,
         DragItemsCompletedEventArgs args)
     {
-        // �� LyricsSearchProvidersInfo ���� CollectionChanged �¼�
+        //  LyricsSearchProvidersInfo  CollectionChanged ?
         ViewModel.SelectedMediaSourceProvider?.LyricsSearchProvidersInfo?.Refresh();
     }
 
     private void MediaSourceProvidersListView_DragItemsCompleted(ListViewBase sender,
         DragItemsCompletedEventArgs args)
     {
-        // �� MediaSourceProvidersInfo ���� CollectionChanged �¼�
+        //  MediaSourceProvidersInfo  CollectionChanged ?
         ViewModel.AppSettings.MediaSourceProvidersInfo?.Refresh();
     }
 
@@ -151,5 +151,13 @@ public sealed partial class PlaybackSettingsControl : UserControl
     private void CloseConfigPanelButton_Click(object sender, RoutedEventArgs e)
     {
         PlaybackConfigPanel.Hide();
+    }
+
+    private void ConfigNavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
+    {
+        if (args.SelectedItem is NavigationViewItem item && item.Tag is string tag)
+        {
+            ViewModel.SelectorBarSelectedItemTag = tag;
+        }
     }
 }

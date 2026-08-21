@@ -2731,7 +2731,7 @@
     <value>Hide lyrics area</value>
   </data>
   <data name="PlaybackSettingsControlNoLyricsFoundHandling.Header" xml:space="preserve">
-    <value>When no lyrics found</value>
+    <value>Lyrics not found handling method</value>
   </data>
   <data name="PlaybackSettingsControlCustomNotFoundMessage.PlaceholderText" xml:space="preserve">
     <value>Leave empty to use default</value>
@@ -2741,5 +2741,11 @@
   </data>
   <data name="SettingsPageSpectrumDelay.Header" xml:space="preserve">
     <value>Spectrum Delay</value>
+  </data>
+  <data name="SettingsPageIntegration.Text" xml:space="preserve">
+    <value>Integration</value>
+  </data>
+  <data name="SettingsPageWindow.Text" xml:space="preserve">
+    <value>Window</value>
   </data>
 </root>

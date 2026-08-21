@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8" ?>
 
 <UserControl
     x:Class="BetterLyrics.WinUI3.Controls.AppSettingsControl"
@@ -15,13 +15,43 @@
     mc:Ignorable="d">
 
     <Grid>
-        <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <NavigationView
+            x:Name="ConfigNavView"
+            Grid.Row="0"
+            Margin="36,16,36,0"
+            IsBackButtonVisible="Collapsed"
+            IsBackEnabled="False"
+            IsSettingsVisible="False"
+            PaneDisplayMode="Top"
+            SelectionChanged="ConfigNavView_SelectionChanged">
+            <NavigationView.MenuItems>
+                <NavigationViewItem IsSelected="True" Tag="Appearance">
+                    <TextBlock x:Uid="SettingsPageAppAppearance" />
+                </NavigationViewItem>
+                <NavigationViewItem Tag="Window">
+                    <TextBlock x:Uid="SettingsPageWindow" />
+                </NavigationViewItem>
+                <NavigationViewItem Tag="Shortcut">
+                    <TextBlock x:Uid="SettingsPageShortcut" />
+                </NavigationViewItem>
+                <NavigationViewItem Tag="SystemTray">
+                    <TextBlock x:Uid="AppSettingsControlSystemTray" />
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+        </NavigationView>
+
+        <ScrollViewer Grid.Row="1" Style="{StaticResource SettingsScrollViewerStyle}">
             <Grid Style="{StaticResource SettingsGridStyle}">
                 <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
                     <InfoBar
                         x:Uid="SettingsPageRestartRequiredInfoBar"
-                        Margin="0,30,0,0"
+                        Margin="0,0,0,0"
                         IsClosable="False"
                         IsOpen="{x:Bind ViewModel.IsRestartRequired, Mode=OneWay}"
                         Severity="Warning">
@@ -30,203 +60,236 @@
                         </InfoBar.ActionButton>
                     </InfoBar>
 
-                    <!--  App appearance  -->
+                    <controls:SwitchPresenter Value="{x:Bind ViewModel.SelectorBarSelectedItemTag, Mode=OneWay}">
+                        <controls:SwitchPresenter.ContentTransitions>
+                            <TransitionCollection>
+                                <PopupThemeTransition />
+                            </TransitionCollection>
+                        </controls:SwitchPresenter.ContentTransitions>
 
-                    <TextBlock x:Uid="SettingsPageAppAppearance" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                        <controls:Case Value="Appearance">
+                            <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+                                <!--  App appearance  -->
 
-                    <controls:SettingsCard x:Uid="AppSettingsControlTheme" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE790;}">
-                        <ComboBox x:Name="ThemeComboBox" SelectedIndex="{x:Bind ViewModel.AppSettings.GeneralSettings.AppTheme, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                            <ComboBoxItem x:Uid="SettingsPageFollowSystem" />
-                            <ComboBoxItem x:Uid="SettingsPageLight" />
-                            <ComboBoxItem x:Uid="SettingsPageDark" />
-                        </ComboBox>
-                    </controls:SettingsCard>
+                                <TextBlock x:Uid="SettingsPageAppAppearance" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <controls:SettingsCard x:Uid="SettingsPageLanguage" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xF2B7;}">
-                        <ComboBox ItemsSource="{x:Bind helpers:LanguageHelper.SupportedDisplayLanguages}" SelectedIndex="{x:Bind ViewModel.AppSettings.GeneralSettings.LanguageCode, Mode=TwoWay, Converter={StaticResource DisplayLanguageCodeToIndexConverter}}">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate x:DataType="models1:ExtendedLanguage">
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <TextBlock Text="{x:Bind NativeName}" />
-                                        <TextBlock
-                                            VerticalAlignment="Bottom"
-                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                            Style="{StaticResource CaptionTextBlockStyle}"
-                                            Text="{x:Bind DisplayName}" />
-                                    </StackPanel>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </controls:SettingsCard>
+                                <controls:SettingsCard x:Uid="AppSettingsControlTheme" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE790;}">
+                                    <ComboBox x:Name="ThemeComboBox" SelectedIndex="{x:Bind ViewModel.AppSettings.GeneralSettings.AppTheme, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                        <ComboBoxItem x:Uid="SettingsPageFollowSystem" />
+                                        <ComboBoxItem x:Uid="SettingsPageLight" />
+                                        <ComboBoxItem x:Uid="SettingsPageDark" />
+                                    </ComboBox>
+                                </controls:SettingsCard>
 
-                    <InfoBar IsClosable="False" IsOpen="True">
-                        <local:ExternalLinkButton x:Uid="SettingsPageHelpUsTranslate" NavigateUri="{x:Bind constants:Link.Crowdin}" />
-                    </InfoBar>
+                                <controls:SettingsCard x:Uid="SettingsPageLanguage" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xF2B7;}">
+                                    <ComboBox ItemsSource="{x:Bind helpers:LanguageHelper.SupportedDisplayLanguages}" SelectedIndex="{x:Bind ViewModel.AppSettings.GeneralSettings.LanguageCode, Mode=TwoWay, Converter={StaticResource DisplayLanguageCodeToIndexConverter}}">
+                                        <ComboBox.ItemTemplate>
+                                            <DataTemplate x:DataType="models1:ExtendedLanguage">
+                                                <StackPanel Orientation="Horizontal" Spacing="6">
+                                                    <TextBlock Text="{x:Bind NativeName}" />
+                                                    <TextBlock
+                                                        VerticalAlignment="Bottom"
+                                                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                        Style="{StaticResource CaptionTextBlockStyle}"
+                                                        Text="{x:Bind DisplayName}" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ComboBox.ItemTemplate>
+                                    </ComboBox>
+                                </controls:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="SettingsPageGlobalFont" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8D2;}">
-                        <local:FontPicker AllowMultipleSelection="False" SelectedFontId="{x:Bind ViewModel.AppSettings.GeneralSettings.GlobalFontFamily, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                                <InfoBar IsClosable="False" IsOpen="True">
+                                    <local:ExternalLinkButton x:Uid="SettingsPageHelpUsTranslate" NavigateUri="{x:Bind constants:Link.Crowdin}" />
+                                </InfoBar>
 
-                    <controls:SettingsCard x:Uid="AppSettingsControlEnhanceControlAnimations" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xF4A5;}">
-                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.EnhanceControlInteractiveAnimations, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                                <controls:SettingsCard x:Uid="SettingsPageGlobalFont" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8D2;}">
+                                    <local:FontPicker AllowMultipleSelection="False" SelectedFontId="{x:Bind ViewModel.AppSettings.GeneralSettings.GlobalFontFamily, Mode=TwoWay}" />
+                                </controls:SettingsCard>
 
-                    <!--  Now Playing Notification  -->
+                                <controls:SettingsCard x:Uid="AppSettingsControlEnhanceControlAnimations" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xF4A5;}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.EnhanceControlInteractiveAnimations, Mode=TwoWay}" />
+                                </controls:SettingsCard>
 
-                    <TextBlock x:Uid="SettingsPageNowPlayingNotificationCategory" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                                <!--  Now Playing Notification  -->
 
-                    <controls:SettingsExpander x:Uid="SettingsPageShowNowPlayingNotification" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8EE;}">
-                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.ShowNowPlayingNotification, Mode=TwoWay}" />
-                        <controls:SettingsExpander.Items>
-                            <controls:SettingsCard x:Uid="SettingsPageNowPlayingNotificationTheme" IsEnabled="{x:Bind ViewModel.AppSettings.GeneralSettings.ShowNowPlayingNotification, Mode=OneWay}">
-                                <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.GeneralSettings.NowPlayingNotificationTheme, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                    <ComboBoxItem x:Uid="SettingsPageFollowSystem" />
-                                    <ComboBoxItem x:Uid="SettingsPageLight" />
-                                    <ComboBoxItem x:Uid="SettingsPageDark" />
-                                </ComboBox>
-                            </controls:SettingsCard>
-                            <controls:SettingsCard x:Uid="SettingsPageNowPlayingNotificationCorner" IsEnabled="{x:Bind ViewModel.AppSettings.GeneralSettings.ShowNowPlayingNotification, Mode=OneWay}">
-                                <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.GeneralSettings.NowPlayingNotificationCorner, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                    <ComboBoxItem x:Uid="NowPlayingNotificationCornerTopLeft" />
-                                    <ComboBoxItem x:Uid="NowPlayingNotificationCornerTopCenter" />
-                                    <ComboBoxItem x:Uid="NowPlayingNotificationCornerTopRight" />
-                                    <ComboBoxItem x:Uid="NowPlayingNotificationCornerLeftCenter" />
-                                    <ComboBoxItem x:Uid="NowPlayingNotificationCornerRightCenter" />
-                                    <ComboBoxItem x:Uid="NowPlayingNotificationCornerBottomLeft" />
-                                    <ComboBoxItem x:Uid="NowPlayingNotificationCornerBottomCenter" />
-                                    <ComboBoxItem x:Uid="NowPlayingNotificationCornerBottomRight" />
-                                </ComboBox>
-                            </controls:SettingsCard>
-                            <controls:SettingsCard x:Uid="SettingsPageNowPlayingNotificationAllMonitors" IsEnabled="{x:Bind ViewModel.AppSettings.GeneralSettings.ShowNowPlayingNotification, Mode=OneWay}">
-                                <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.NowPlayingNotificationAllMonitors, Mode=TwoWay}" />
-                            </controls:SettingsCard>
-                            <controls:SettingsCard x:Uid="SettingsPageNowPlayingNotificationDuration" IsEnabled="{x:Bind ViewModel.AppSettings.GeneralSettings.ShowNowPlayingNotification, Mode=OneWay}">
-                                <local:ExtendedSlider
-                                    Default="3500"
-                                    Frequency="500"
-                                    Maximum="10000"
-                                    Minimum="2000"
-                                    Unit="ms"
-                                    Value="{x:Bind ViewModel.AppSettings.GeneralSettings.NowPlayingNotificationDuration, Mode=TwoWay}" />
-                            </controls:SettingsCard>
-                        </controls:SettingsExpander.Items>
-                    </controls:SettingsExpander>
+                                <TextBlock x:Uid="SettingsPageNowPlayingNotificationCategory" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <!--  Startup  -->
+                                <controls:SettingsExpander x:Uid="SettingsPageShowNowPlayingNotification" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8EE;}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.ShowNowPlayingNotification, Mode=TwoWay}" />
+                                    <controls:SettingsExpander.Items>
+                                        <controls:SettingsCard x:Uid="SettingsPageNowPlayingNotificationTheme" IsEnabled="{x:Bind ViewModel.AppSettings.GeneralSettings.ShowNowPlayingNotification, Mode=OneWay}">
+                                            <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.GeneralSettings.NowPlayingNotificationTheme, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                                <ComboBoxItem x:Uid="SettingsPageFollowSystem" />
+                                                <ComboBoxItem x:Uid="SettingsPageLight" />
+                                                <ComboBoxItem x:Uid="SettingsPageDark" />
+                                            </ComboBox>
+                                        </controls:SettingsCard>
+                                        <controls:SettingsCard x:Uid="SettingsPageNowPlayingNotificationCorner" IsEnabled="{x:Bind ViewModel.AppSettings.GeneralSettings.ShowNowPlayingNotification, Mode=OneWay}">
+                                            <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.GeneralSettings.NowPlayingNotificationCorner, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                                <ComboBoxItem x:Uid="NowPlayingNotificationCornerTopLeft" />
+                                                <ComboBoxItem x:Uid="NowPlayingNotificationCornerTopCenter" />
+                                                <ComboBoxItem x:Uid="NowPlayingNotificationCornerTopRight" />
+                                                <ComboBoxItem x:Uid="NowPlayingNotificationCornerLeftCenter" />
+                                                <ComboBoxItem x:Uid="NowPlayingNotificationCornerRightCenter" />
+                                                <ComboBoxItem x:Uid="NowPlayingNotificationCornerBottomLeft" />
+                                                <ComboBoxItem x:Uid="NowPlayingNotificationCornerBottomCenter" />
+                                                <ComboBoxItem x:Uid="NowPlayingNotificationCornerBottomRight" />
+                                            </ComboBox>
+                                        </controls:SettingsCard>
+                                        <controls:SettingsCard x:Uid="SettingsPageNowPlayingNotificationAllMonitors" IsEnabled="{x:Bind ViewModel.AppSettings.GeneralSettings.ShowNowPlayingNotification, Mode=OneWay}">
+                                            <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.NowPlayingNotificationAllMonitors, Mode=TwoWay}" />
+                                        </controls:SettingsCard>
+                                        <controls:SettingsCard x:Uid="SettingsPageNowPlayingNotificationDuration" IsEnabled="{x:Bind ViewModel.AppSettings.GeneralSettings.ShowNowPlayingNotification, Mode=OneWay}">
+                                            <local:ExtendedSlider
+                                                Default="3500"
+                                                Frequency="500"
+                                                Maximum="10000"
+                                                Minimum="2000"
+                                                Unit="ms"
+                                                Value="{x:Bind ViewModel.AppSettings.GeneralSettings.NowPlayingNotificationDuration, Mode=TwoWay}" />
+                                        </controls:SettingsCard>
+                                    </controls:SettingsExpander.Items>
+                                </controls:SettingsExpander>
 
-                    <TextBlock x:Uid="SettingsPageStartup" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <controls:SettingsCard
-                        x:Uid="SettingsPageAutoStart"
-                        Command="{x:Bind ViewModel.OpenTaskMgrStartupAppsCommand}"
-                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                                 Glyph=&#xF71C;}"
-                        IsClickEnabled="True" />
+                            </StackPanel>
+                        </controls:Case>
 
-                    <controls:SettingsCard x:Uid="SettingsPageAutoOpenSplashWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE786;}">
-                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.ShowSplashScreen, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                        <controls:Case Value="Window">
+                            <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+                                <!--  Startup  -->
 
-                    <controls:SettingsCard x:Uid="SettingsPageAutoOpenMusicGalleryWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8F1;}">
-                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.MusicGallerySettings.AutoOpen, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                                <TextBlock x:Uid="SettingsPageStartup" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <controls:SettingsCard x:Uid="SettingsPageAutoOpenLyricsWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE90B;}">
-                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.AutoStartLyricsWindow, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                                <controls:SettingsCard
+                                    x:Uid="SettingsPageAutoStart"
+                                    Command="{x:Bind ViewModel.OpenTaskMgrStartupAppsCommand}"
+                                    HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                             Glyph=&#xF71C;}"
+                                    IsClickEnabled="True" />
 
-                    <!--  Music gallery window  -->
+                                <controls:SettingsCard x:Uid="SettingsPageAutoOpenSplashWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE786;}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.ShowSplashScreen, Mode=TwoWay}" />
+                                </controls:SettingsCard>
 
-                    <TextBlock x:Uid="SettingsPageMusicGallery" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                                <controls:SettingsCard x:Uid="SettingsPageAutoOpenMusicGalleryWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8F1;}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.MusicGallerySettings.AutoOpen, Mode=TwoWay}" />
+                                </controls:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="SettingsPageAutoPlayWhenOpenMusicGalleryWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE768;}">
-                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.MusicGallerySettings.AutoPlay, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                                <controls:SettingsCard x:Uid="SettingsPageAutoOpenLyricsWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE90B;}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.AutoStartLyricsWindow, Mode=TwoWay}" />
+                                </controls:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="SettingsPageStopTrackOnGalleryWindowClosed" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE71A;}">
-                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.MusicGallerySettings.StopOnWindowClosed, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                                <!--  Music gallery window  -->
 
-                    <controls:SettingsCard x:Uid="SettingsPageExitOnGalleryWindowClosed" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE711;}">
-                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ExitOnWindowClosed, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                                <TextBlock x:Uid="SettingsPageMusicGallery" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <!--  Lyrics window  -->
+                                <controls:SettingsCard x:Uid="SettingsPageAutoPlayWhenOpenMusicGalleryWindow" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE768;}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.MusicGallerySettings.AutoPlay, Mode=TwoWay}" />
+                                </controls:SettingsCard>
 
-                    <TextBlock x:Uid="SettingsPageLyricsWindow" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                                <controls:SettingsCard x:Uid="SettingsPageStopTrackOnGalleryWindowClosed" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE71A;}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.MusicGallerySettings.StopOnWindowClosed, Mode=TwoWay}" />
+                                </controls:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="SettingsPageExitOnLyricsWindowClosed" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE711;}">
-                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.ExitOnLyricsWindowClosed, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                                <controls:SettingsCard x:Uid="SettingsPageExitOnGalleryWindowClosed" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE711;}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.MusicGallerySettings.ExitOnWindowClosed, Mode=TwoWay}" />
+                                </controls:SettingsCard>
 
-                    <!--  Playback shortcut  -->
+                                <!--  Lyrics window  -->
 
-                    <TextBlock x:Uid="SettingsPageShortcut" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                                <TextBlock x:Uid="SettingsPageLyricsWindow" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <controls:SettingsCard x:Uid="SettingsPageShowHideHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEDA7;}">
-                        <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.ShowOrHideLyricsWindowShortcut, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                                <controls:SettingsCard x:Uid="SettingsPageExitOnLyricsWindowClosed" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE711;}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.GeneralSettings.ExitOnLyricsWindowClosed, Mode=TwoWay}" />
+                                </controls:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="SettingsPageLyricsWindowSwitchHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEDA7;}">
-                        <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.LyricsWindowSwitchShortcut, Mode=TwoWay}" />
-                    </controls:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="SettingsPagePlayOrPauseSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEDA7;}">
-                        <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.PlayOrPauseShortcut, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                            </StackPanel>
+                        </controls:Case>
 
-                    <controls:SettingsCard x:Uid="SettingsPageNextSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEDA7;}">
-                        <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.NextSongShortcut, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                        <controls:Case Value="Shortcut">
+                            <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+                                <!--  Playback shortcut  -->
 
-                    <controls:SettingsCard x:Uid="SettingsPagePreviousSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEDA7;}">
-                        <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.PreviousSongShortcut, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                                <TextBlock x:Uid="SettingsPageShortcut" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
-                    <!--  System tray  -->
+                                <controls:SettingsCard x:Uid="SettingsPageShowHideHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEDA7;}">
+                                    <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.ShowOrHideLyricsWindowShortcut, Mode=TwoWay}" />
+                                </controls:SettingsCard>
 
-                    <TextBlock x:Uid="AppSettingsControlSystemTray" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                                <controls:SettingsCard x:Uid="SettingsPageLyricsWindowSwitchHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEDA7;}">
+                                    <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.LyricsWindowSwitchShortcut, Mode=TwoWay}" />
+                                </controls:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="AppSettingsControlSystemTrayColorfulIcon" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE790;}">
-                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.SystemTraySettings.ColorfulSystemTrayIcon, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                                <controls:SettingsCard x:Uid="SettingsPagePlayOrPauseSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEDA7;}">
+                                    <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.PlayOrPauseShortcut, Mode=TwoWay}" />
+                                </controls:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="AppSettingsControlSystemTrayClickCallback" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8B0;}">
-                        <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.SystemTraySettings.SystemTrayClickCallback, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackNone" />
-                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsWindowSwitchWindow" />
-                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsSearchWindow" />
-                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackMusicGalleryWindow" />
-                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackStatsWindow" />
-                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsCardWindow" />
-                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackSettingsWindow" />
-                        </ComboBox>
-                    </controls:SettingsCard>
+                                <controls:SettingsCard x:Uid="SettingsPageNextSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEDA7;}">
+                                    <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.NextSongShortcut, Mode=TwoWay}" />
+                                </controls:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="AppSettingsControlSystemTrayDoubleClickCallback" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE7C4;}">
-                        <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.SystemTraySettings.SystemTrayDoubleClickCallback, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackNone" />
-                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsWindowSwitchWindow" />
-                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsSearchWindow" />
-                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackMusicGalleryWindow" />
-                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackStatsWindow" />
-                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsCardWindow" />
-                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackSettingsWindow" />
-                        </ComboBox>
-                    </controls:SettingsCard>
+                                <controls:SettingsCard x:Uid="SettingsPagePreviousSongHotKey" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEDA7;}">
+                                    <local:ShortcutTextBox Shortcut="{x:Bind ViewModel.AppSettings.GeneralSettings.PreviousSongShortcut, Mode=TwoWay}" />
+                                </controls:SettingsCard>
 
-                    <controls:SettingsCard x:Uid="AppSettingsControlSystemTrayMiddleClickCallback" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE962;}">
-                        <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.SystemTraySettings.SystemTrayMiddleClickCallback, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackNone" />
-                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsWindowSwitchWindow" />
-                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsSearchWindow" />
-                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackMusicGalleryWindow" />
-                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackStatsWindow" />
-                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsCardWindow" />
-                            <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackSettingsWindow" />
-                        </ComboBox>
-                    </controls:SettingsCard>
 
+                            </StackPanel>
+                        </controls:Case>
+
+                        <controls:Case Value="SystemTray">
+                            <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+
+                                <!--  System tray  -->
+
+                                <TextBlock x:Uid="AppSettingsControlSystemTray" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                                <controls:SettingsCard x:Uid="AppSettingsControlSystemTrayColorfulIcon" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE790;}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.SystemTraySettings.ColorfulSystemTrayIcon, Mode=TwoWay}" />
+                                </controls:SettingsCard>
+
+                                <controls:SettingsCard x:Uid="AppSettingsControlSystemTrayClickCallback" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8B0;}">
+                                    <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.SystemTraySettings.SystemTrayClickCallback, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                        <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackNone" />
+                                        <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsWindowSwitchWindow" />
+                                        <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsSearchWindow" />
+                                        <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackMusicGalleryWindow" />
+                                        <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackStatsWindow" />
+                                        <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsCardWindow" />
+                                        <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackSettingsWindow" />
+                                    </ComboBox>
+                                </controls:SettingsCard>
+
+                                <controls:SettingsCard x:Uid="AppSettingsControlSystemTrayDoubleClickCallback" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE7C4;}">
+                                    <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.SystemTraySettings.SystemTrayDoubleClickCallback, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                        <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackNone" />
+                                        <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsWindowSwitchWindow" />
+                                        <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsSearchWindow" />
+                                        <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackMusicGalleryWindow" />
+                                        <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackStatsWindow" />
+                                        <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsCardWindow" />
+                                        <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackSettingsWindow" />
+                                    </ComboBox>
+                                </controls:SettingsCard>
+
+                                <controls:SettingsCard x:Uid="AppSettingsControlSystemTrayMiddleClickCallback" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE962;}">
+                                    <ComboBox SelectedIndex="{x:Bind ViewModel.AppSettings.SystemTraySettings.SystemTrayMiddleClickCallback, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                        <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackNone" />
+                                        <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsWindowSwitchWindow" />
+                                        <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsSearchWindow" />
+                                        <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackMusicGalleryWindow" />
+                                        <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackStatsWindow" />
+                                        <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackLyricsCardWindow" />
+                                        <ComboBoxItem x:Uid="AppSettingsControlSystemTrayCallbackSettingsWindow" />
+                                    </ComboBox>
+                                </controls:SettingsCard>
+
+
+                            </StackPanel>
+                        </controls:Case>
+
+                    </controls:SwitchPresenter>
                 </StackPanel>
             </Grid>
         </ScrollViewer>

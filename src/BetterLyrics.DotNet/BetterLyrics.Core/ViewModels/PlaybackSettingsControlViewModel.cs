@@ -66,6 +66,8 @@ public partial class PlaybackSettingsControlViewModel : BaseViewModel
         SelectedMediaSourceProvider = AppSettings.MediaSourceProvidersInfo.FirstOrDefault();
     }
 
+    [ObservableProperty] public partial string SelectorBarSelectedItemTag { get; set; } = "General";
+
     [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 
     [ObservableProperty] public partial MediaSourceProviderInfo? SelectedMediaSourceProvider { get; set; }

@@ -2731,7 +2731,7 @@
     <value>隱藏歌詞區域</value>
   </data>
   <data name="PlaybackSettingsControlNoLyricsFoundHandling.Header" xml:space="preserve">
-    <value>當未找到歌詞時</value>
+    <value>未找到歌詞時的處理方式</value>
   </data>
   <data name="PlaybackSettingsControlCustomNotFoundMessage.PlaceholderText" xml:space="preserve">
     <value>留空以使用預設提示</value>
@@ -2741,5 +2741,11 @@
   </data>
   <data name="SettingsPageSpectrumDelay.Header" xml:space="preserve">
     <value>頻譜延遲</value>
+  </data>
+  <data name="SettingsPageIntegration.Text" xml:space="preserve">
+    <value>集成</value>
+  </data>
+  <data name="SettingsPageWindow.Text" xml:space="preserve">
+    <value>視窗</value>
   </data>
 </root>

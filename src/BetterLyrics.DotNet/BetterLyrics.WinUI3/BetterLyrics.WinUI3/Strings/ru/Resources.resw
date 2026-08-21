@@ -2742,4 +2742,10 @@
   <data name="SettingsPageSpectrumDelay.Header" xml:space="preserve">
     <value>Задержка спектра</value>
   </data>
+  <data name="SettingsPageIntegration.Text" xml:space="preserve">
+    <value>Интеграция</value>
+  </data>
+  <data name="SettingsPageWindow.Text" xml:space="preserve">
+    <value>Окно</value>
+  </data>
 </root>
