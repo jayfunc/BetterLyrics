@@ -193,7 +193,14 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
     {
         if (message.Sender is MediaSourceProviderInfo)
         {
-            if (message.PropertyName == nameof(MediaSourceProviderInfo.IsEnabled)) OnDesiredSessionChanged();
+            if (message.PropertyName == nameof(MediaSourceProviderInfo.IsEnabled))
+            {
+                OnDesiredSessionChanged();
+            }
+            else if (message.PropertyName == nameof(MediaSourceProviderInfo.IsDiscordPresenceEnabled))
+            {
+                _ = UpdateDiscordPresenceAsync();
+            }
         }
         else if (message.Sender is TranslationSettings)
         {
@@ -228,8 +235,6 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
             if (message.PropertyName == nameof(TranslationSettings.ChineseConversion))
                 UpdateLyrics();
     }
-
-
 
     public void Receive(PropertyChangedMessage<DateTime?> message)
     {
@@ -278,10 +283,7 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
         {
             if (message.PropertyName == nameof(DiscordSettings.AlbumArtSource))
             {
-                if (CurrentSongInfo != null)
-                {
-                    CurrentSongInfo.AlbumArtUrl = null;
-                }
+                CurrentSongInfo.AlbumArtUrl = null;
                 _ = UpdateDiscordPresenceAsync();
             }
         }
@@ -290,7 +292,8 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
     private void ScrobbleTimerCallback(object? state)
     {
         if (!IsScrobbled)
-            if (!string.IsNullOrWhiteSpace(CurrentSongInfo.Title) && CurrentSongInfo.Title != "N/A")
+        {
+            if (CurrentSongInfo != SongInfoExtensions.Placeholder)
             {
                 _appUIThreadProvider.Execute(() =>
                 {
@@ -322,6 +325,7 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
                     }
                 });
             }
+        }
     }
 
     private void LocalMediaFolders_CollectionChanged(object? sender,
@@ -409,10 +413,7 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
         {
             if (mediaSession != _currentDesiredSession) return;
 
-            if (mediaSession != null)
-            {
-                mediaSession.TryRefreshTimelinePropsAsync();
-            }
+            mediaSession?.TryRefreshTimelinePropsAsync();
 
             CurrentPosition = mediaSession?.CurrentTime ?? TimeSpan.Zero;
             CurrentSongInfo.DurationMs = mediaSession?.EndTime.TotalMilliseconds ?? 0;
@@ -557,17 +558,24 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
 
         _appUIThreadProvider.Execute(() =>
         {
-            CurrentSongInfo = new SongInfo
+            if (fixedTitle == null && fixedArtist == null && fixedAlbum == null)
             {
-                Title = fixedTitle ?? "N/A",
-                Artist = fixedArtist ?? "N/A",
-                Album = fixedAlbum ?? "N/A",
-                DurationMs = mediaSession?.EndTime.TotalMilliseconds ?? 0,
-                PlayerId = sessionId,
-                SongId = songId,
-                LinkedFileName = linkedFileName,
-                StartedAt = DateTime.Now.ToBinary()
-            };
+                CurrentSongInfo = SongInfoExtensions.Placeholder;
+            }
+            else
+            {
+                CurrentSongInfo = new SongInfo
+                {
+                    Title = fixedTitle ?? "N/A",
+                    Artist = fixedArtist ?? "N/A",
+                    Album = fixedAlbum ?? "N/A",
+                    DurationMs = mediaSession?.EndTime.TotalMilliseconds ?? 0,
+                    PlayerId = sessionId,
+                    SongId = songId,
+                    LinkedFileName = linkedFileName,
+                    StartedAt = DateTime.Now.ToBinary()
+                };
+            }
 
             UpdateTargetScrobbledDuration();
             IsScrobbled = false;
@@ -665,7 +673,7 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
 
     private async Task UpdateDiscordPresenceAsync()
     {
-        if (CurrentMediaSourceProviderInfo?.IsDiscordPresenceEnabled == true && CurrentSongInfo != null)
+        if (CurrentMediaSourceProviderInfo?.IsDiscordPresenceEnabled == true && CurrentSongInfo != SongInfoExtensions.Placeholder)
         {
             var discordSource = _settingsService.AppSettings.DiscordSettings.AlbumArtSource;
             if (discordSource != OnlineAlbumArtProvider.None && string.IsNullOrEmpty(CurrentSongInfo.AlbumArtUrl))
@@ -675,6 +683,10 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
             }
 
             await _discordService.UpdateRichPresenceAsync(CurrentSongInfo, CurrentIsPlaying, CurrentPosition, CurrentSongInfo.AlbumArtUrl);
+        }
+        else
+        {
+            _discordService.ClearRichPresence();
         }
     }
 
@@ -726,7 +738,7 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
             _logger.LogError(ex, "StartLXMusicSSE");
             _appUIThreadProvider.Execute(() =>
             {
-                _globalToastProvider.Show("FailToStartLXMusicServer", null, MessageSeverity.Error);
+                _globalToastProvider.Show("FailToStartLXMusicServer", ex.Message, MessageSeverity.Error);
             });
             StopLXMusicSSE();
         }
@@ -782,7 +794,7 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
                         var picUrl = data.GetString();
                         if (picUrl != null)
                         {
-                            _logger.LogInformation("LX Music Album Art URL: {url}", picUrl);
+                            //_logger.LogInformation("LX Music Album Art URL: {url}", picUrl);
                             _lxMusicAlbumArtBytes = await ImageHelper.GetImageByteArrayFromUrlAsync(picUrl);
                             if (_lxMusicAlbumArtBytes != null)
                                 _smtcAlbumArtBuffer = _lxMusicAlbumArtBytes;

@@ -8,11 +8,12 @@ namespace BetterLyrics.Core.Extensions;
 
 public static class SongInfoExtensions
 {
-    public static SongInfo Placeholder => new()
+    public readonly static SongInfo Placeholder = new()
     {
         Title = "N/A",
         Album = "N/A",
-        Artist = "N/A"
+        Artist = "N/A",
+        DurationMs = 0,
     };
 
     extension(SongInfo songInfo)

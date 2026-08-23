@@ -60,6 +60,10 @@ public partial class GsmtcService : IGsmtcService
                 CurrentLyricsData = await Task.Run(async () => await lyricsParser.ParseAsync(CurrentLyricsSearchResult, token), token);
             }
         }
+        else
+        {
+            CurrentLyricsSearchResult = null;
+        }
 
         if (CurrentLyricsSearchResult == null) CurrentLyricsData = LyricsDataExtensions.NotFoundPlaceholder;
     }

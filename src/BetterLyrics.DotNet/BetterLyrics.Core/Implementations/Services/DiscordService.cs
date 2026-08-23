@@ -1,6 +1,9 @@
 using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
+using BetterLyrics.Core.ViewModels;
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
 using DiscordRPC;
 
 namespace BetterLyrics.Core.Implementations.Services;
@@ -9,7 +12,7 @@ public class DiscordService : IDiscordService
 {
     private readonly ISongSearchMapService _songSearchMapService;
     private DiscordRpcClient? _client;
-    
+
     public User? CurrentUser { get; private set; }
     public event EventHandler<User?>? UserChanged;
 
@@ -61,6 +64,11 @@ public class DiscordService : IDiscordService
         });
     }
 
+    public void ClearRichPresence()
+    {
+        _client?.ClearPresence();
+    }
+
     public void Disable()
     {
         if (_client != null)
@@ -68,7 +76,7 @@ public class DiscordService : IDiscordService
             _client.ClearPresence();
             _client.Dispose();
             _client = null;
-            
+
             CurrentUser = null;
             UserChanged?.Invoke(this, null);
         }

@@ -510,7 +510,7 @@ public sealed partial class NowPlayingPage : Page,
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"SaveAlbumArtButton_Click: {ex}");
+                _globalToastProvider.Show("Error", ex.Message, MessageSeverity.Error);
             }
     }
 

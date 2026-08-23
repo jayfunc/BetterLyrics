@@ -10,4 +10,5 @@ public interface IDiscordService
     void Enable();
     void Disable();
     Task UpdateRichPresenceAsync(SongInfo songInfo, bool isPlaying = true, TimeSpan? currentPosition = null, string? albumArtUrl = null);
+    void ClearRichPresence();
 }

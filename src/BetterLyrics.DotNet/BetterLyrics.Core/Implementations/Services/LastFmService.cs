@@ -105,12 +105,12 @@ public class LastFmService : ILastFmService
                 var resp = await _client.Track.ScrobbleAsync(scrobble);
                 if (resp != null && resp.Accepted == 0)
                 {
-                    _globalToastProvider.Show("LastFMScrobbleFailed", resp.Ignored > 0 ? "Scrobble ignored" : "Scrobble failed", MessageSeverity.Error);
+                    _globalToastProvider.Show("Error", resp.Ignored > 0 ? "Scrobble ignored" : "Scrobble failed", MessageSeverity.Error);
                 }
             }
             catch (Exception ex)
             {
-                _globalToastProvider.Show("LastFMScrobbleFailed", ex.Message, MessageSeverity.Error);
+                _globalToastProvider.Show("Error", ex.Message, MessageSeverity.Error);
             }
         }
     }

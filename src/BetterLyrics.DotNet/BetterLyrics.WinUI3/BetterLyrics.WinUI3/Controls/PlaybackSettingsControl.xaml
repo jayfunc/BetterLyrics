@@ -85,7 +85,7 @@
                             </interactivity:Interaction.Behaviors>
                             <ScrollViewer>
                                 <StackPanel Margin="36,0,36,36" Spacing="{StaticResource SettingsCardSpacing}">
-                                    <TextBlock x:Uid="SettingsPageConfigPlaybackSource" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                                    <!--<TextBlock x:Uid="SettingsPageConfigPlaybackSource" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />-->
                                     <ListView
                                         x:Name="MediaSourceProvidersListView"
                                         HorizontalAlignment="Stretch"
@@ -201,6 +201,259 @@
                             </controls:SettingsCard>
                         </Grid>
 
+                        <!--  Playback source config panel  -->
+                        <local:FloatSidePanel x:Name="PlaybackConfigPanel" Grid.RowSpan="2">
+                            <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
+                                <Grid Style="{StaticResource SettingsGridStyle}">
+                                    <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+                                        <Grid ColumnSpacing="6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <Image
+                                                Height="16"
+                                                Margin="0,26,0,0"
+                                                helpers1:AppExtensions.Aumid="{x:Bind ViewModel.SelectedMediaSourceProvider.Provider, Mode=OneWay}" />
+                                            <TextBlock
+                                                Grid.Column="1"
+                                                helpers1:AppExtensions.Aumid="{x:Bind ViewModel.SelectedMediaSourceProvider.Provider, Mode=OneWay}"
+                                                Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                                            <Image
+                                                Grid.Column="2"
+                                                Height="16"
+                                                Margin="0,26,0,0"
+                                                helpers1:GifHelper.IsPlaying="{x:Bind ViewModel.GsmtcService.CurrentIsPlaying, Mode=OneWay}"
+                                                Source="{ThemeResource MusicWave}"
+                                                Visibility="{x:Bind ViewModel.SelectedMediaSourceProvider.IsFocused, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                            <Button
+                                                Grid.Column="4"
+                                                Margin="0,24,0,0"
+                                                Click="CloseConfigPanelButton_Click"
+                                                Content="{ui:FontIcon FontSize=16,
+                                                                      FontFamily={StaticResource SegoeFluentIcons},
+                                                                      Glyph=&#xE70D;}"
+                                                Style="{ThemeResource AccentButtonStyle}" />
+                                        </Grid>
+
+                                        <!--  总开关  -->
+                                        <controls:SettingsExpander x:Uid="SettingsPageMediaSourceProvidersConfig">
+                                            <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsEnabled, Mode=TwoWay}" />
+                                            <controls:SettingsExpander.Items>
+                                                <controls:SettingsCard x:Uid="PlaybackSettingsControlMemoryReader">
+                                                    <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsMemoryReaderEnabled, Mode=TwoWay}" />
+                                                </controls:SettingsCard>
+                                                <controls:SettingsCard>
+                                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                                        <local:ExternalLinkButton x:Uid="Help" NavigateUri="https://gist.github.com/jayfunc/ad09a3df951b95c8cf6228695fecc067" />
+                                                        <Button x:Uid="SettingsPageImport" Command="{x:Bind ViewModel.ImportMemoryReaderConfigCommand}" />
+                                                    </StackPanel>
+                                                </controls:SettingsCard>
+                                            </controls:SettingsExpander.Items>
+                                        </controls:SettingsExpander>
+
+                                        <!--  Last.fm  -->
+                                        <controls:SettingsCard x:Uid="SettingsPageLastFMTrack" IsEnabled="{x:Bind ViewModel.IsLastFmAuthenticated, Mode=OneWay}">
+                                            <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsLastFMTrackEnabled, Mode=TwoWay}" />
+                                        </controls:SettingsCard>
+
+                                        <!--  Discord  -->
+                                        <controls:SettingsCard x:Uid="SettingsPageDiscordPresence">
+                                            <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsDiscordPresenceEnabled, Mode=TwoWay}" />
+                                        </controls:SettingsCard>
+
+                                        <!--  LX music server  -->
+                                        <controls:SettingsCard x:Uid="SettingsPageLXMusicServer" Visibility="{x:Bind ViewModel.SelectedMediaSourceProvider.IsLXMusic, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
+                                            <Grid ColumnSpacing="6">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBox
+                                                    x:Uid="SettingsPageLXMusicServerInput"
+                                                    IsEnabled="{x:Bind ViewModel.IsLxMusicServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
+                                                    Text="{x:Bind ViewModel.AppSettings.GeneralSettings.LXMusicServer, Mode=TwoWay}"
+                                                    TextWrapping="Wrap" />
+                                                <Button
+                                                    x:Uid="SettingsPageServerTestButton"
+                                                    Grid.Column="1"
+                                                    Command="{x:Bind ViewModel.LxMusicServerTestCommand}"
+                                                    IsEnabled="{x:Bind ViewModel.IsLxMusicServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}" />
+                                            </Grid>
+                                        </controls:SettingsCard>
+
+                                        <!--  时间轴相关配置  -->
+                                        <controls:SettingsExpander x:Uid="SettingsPageLyricsTimeline">
+                                            <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsTimelineSyncEnabled, Mode=TwoWay}" />
+                                            <controls:SettingsExpander.Items>
+                                                <controls:SettingsCard x:Uid="SettingsPageLyricsTimelineThreshold" IsEnabled="{x:Bind ViewModel.SelectedMediaSourceProvider.IsTimelineSyncEnabled, Mode=OneWay}">
+                                                    <local:ExtendedSlider
+                                                        Frequency="100"
+                                                        Maximum="1000"
+                                                        Minimum="0"
+                                                        ResetButtonVisibility="Collapsed"
+                                                        Unit="ms"
+                                                        Value="{x:Bind ViewModel.SelectedMediaSourceProvider.TimelineSyncThreshold, Mode=TwoWay}" />
+                                                </controls:SettingsCard>
+                                            </controls:SettingsExpander.Items>
+                                        </controls:SettingsExpander>
+                                        <controls:SettingsExpander x:Uid="MainPagePositionOffsetSlider">
+                                            <local:ExtendedSlider
+                                                x:Uid="SettingsPagePositionOffsetReset"
+                                                Default="0"
+                                                Frequency="100"
+                                                Maximum="5000"
+                                                Minimum="-5000"
+                                                Unit="ms"
+                                                Value="{x:Bind ViewModel.SelectedMediaSourceProvider.PositionOffset, Mode=TwoWay}" />
+                                            <controls:SettingsExpander.Items>
+                                                <controls:SettingsCard x:Uid="LyricsPagePositionOffsetHint">
+                                                    <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.ResetPositionOffsetOnSongChanged, Mode=TwoWay}" />
+                                                </controls:SettingsCard>
+                                            </controls:SettingsExpander.Items>
+                                        </controls:SettingsExpander>
+
+                                        <!--  专辑封面源配置  -->
+                                        <Expander
+                                            Padding="0"
+                                            HorizontalAlignment="Stretch"
+                                            HorizontalContentAlignment="Stretch"
+                                            Background="Transparent"
+                                            BorderBrush="Transparent">
+                                            <Expander.Header>
+                                                <TextBlock x:Uid="SettingsPageAlbumArtSearchProvidersConfig" />
+                                            </Expander.Header>
+                                            <StackPanel>
+                                                <controls:SettingsCard x:Uid="AlbumArtSearchProvidersTargetSize">
+                                                    <local:ExtendedSlider
+                                                        Default="512"
+                                                        Frequency="128"
+                                                        Maximum="2048"
+                                                        Minimum="64"
+                                                        Unit="px"
+                                                        Value="{x:Bind ViewModel.SelectedMediaSourceProvider.TargetAlbumArtSize, Mode=TwoWay}" />
+                                                </controls:SettingsCard>
+                                                <ListView
+                                                    AllowDrop="True"
+                                                    CanDragItems="True"
+                                                    CanReorderItems="True"
+                                                    DragItemsCompleted="AlbumArtSearchProvidersListView_DragItemsCompleted"
+                                                    ItemContainerStyle="{ThemeResource ListViewStretchedItemContainerStyle}"
+                                                    ItemsSource="{x:Bind ViewModel.SelectedMediaSourceProvider.AlbumArtSearchProvidersInfo, Mode=OneWay}"
+                                                    SelectionMode="None">
+                                                    <ListView.OpacityTransition>
+                                                        <ScalarTransition />
+                                                    </ListView.OpacityTransition>
+                                                    <ListView.ItemTemplate>
+                                                        <DataTemplate x:DataType="settings:AlbumArtSearchProviderInfo">
+                                                            <Grid>
+                                                                <controls:SettingsCard Header="{Binding Provider, Converter={StaticResource AlbumArtSearchProviderToDisplayNameConverter}, Mode=OneWay}">
+                                                                    <controls:SettingsCard.HeaderIcon>
+                                                                        <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#x283F;" />
+                                                                    </controls:SettingsCard.HeaderIcon>
+                                                                    <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" />
+                                                                </controls:SettingsCard>
+                                                                <local:DragIndicator />
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </ListView.ItemTemplate>
+                                                </ListView>
+                                            </StackPanel>
+                                        </Expander>
+
+                                        <!--  歌词源配置  -->
+                                        <Expander
+                                            Padding="0"
+                                            HorizontalAlignment="Stretch"
+                                            HorizontalContentAlignment="Stretch"
+                                            Background="Transparent"
+                                            BorderBrush="Transparent">
+                                            <Expander.Header>
+                                                <TextBlock x:Uid="SettingsPageLyricsSearchProvidersConfig" />
+                                            </Expander.Header>
+                                            <StackPanel>
+                                                <controls:SettingsCard x:Uid="SettingsPageLyricsSearchType">
+                                                    <ComboBox SelectedIndex="{x:Bind ViewModel.SelectedMediaSourceProvider.LyricsSearchType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                                                        <ComboBoxItem x:Uid="SettingsPageLyricsSearchSequential" />
+                                                        <ComboBoxItem x:Uid="SettingsPageLyricsSearchBestMatch" />
+                                                    </ComboBox>
+                                                </controls:SettingsCard>
+                                                <controls:SettingsCard x:Uid="SettingsPageMatchingThreshold">
+                                                    <local:ExtendedSlider
+                                                        Default="60"
+                                                        Maximum="100"
+                                                        Minimum="0"
+                                                        Unit="%"
+                                                        Value="{x:Bind ViewModel.SelectedMediaSourceProvider.MatchingThreshold, Mode=TwoWay}" />
+                                                </controls:SettingsCard>
+                                                <ListView
+                                                    AllowDrop="True"
+                                                    CanDragItems="True"
+                                                    CanReorderItems="True"
+                                                    DragItemsCompleted="LyricsSearchProvidersListView_DragItemsCompleted"
+                                                    ItemContainerStyle="{ThemeResource ListViewStretchedItemContainerStyle}"
+                                                    ItemsSource="{x:Bind ViewModel.SelectedMediaSourceProvider.LyricsSearchProvidersInfo, Mode=OneWay}"
+                                                    SelectionMode="None">
+                                                    <ListView.OpacityTransition>
+                                                        <ScalarTransition />
+                                                    </ListView.OpacityTransition>
+                                                    <ListView.ItemTemplate>
+                                                        <DataTemplate x:DataType="settings:LyricsSearchProviderInfo">
+                                                            <Grid>
+                                                                <controls:SettingsExpander IsExpanded="{Binding IsMatchingThresholdOverwritten, Mode=OneWay}">
+                                                                    <controls:SettingsExpander.Header>
+                                                                        <Grid ColumnSpacing="6">
+                                                                            <Grid.ColumnDefinitions>
+                                                                                <ColumnDefinition Width="Auto" />
+                                                                                <ColumnDefinition Width="*" />
+                                                                            </Grid.ColumnDefinitions>
+                                                                            <TextBlock Text="{Binding Provider, Converter={StaticResource LyricsProviderToDisplayNameConverter}, Mode=OneWay}" />
+                                                                            <FontIcon
+                                                                                Grid.Column="1"
+                                                                                Margin="0,2,0,0"
+                                                                                FontFamily="{StaticResource SegoeFluentIcons}"
+                                                                                FontSize="12"
+                                                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                                                Glyph="&#xE74C;"
+                                                                                Visibility="{Binding IsPlugin, Converter={StaticResource BoolToVisibilityConverter}}" />
+                                                                        </Grid>
+                                                                    </controls:SettingsExpander.Header>
+                                                                    <controls:SettingsExpander.HeaderIcon>
+                                                                        <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#x283F;" />
+                                                                    </controls:SettingsExpander.HeaderIcon>
+                                                                    <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" />
+                                                                    <controls:SettingsExpander.Items>
+                                                                        <controls:SettingsCard x:Uid="LyricsSearchControlIgnoreCache">
+                                                                            <CheckBox MinWidth="20" IsChecked="{Binding IgnoreCacheWhenSearching, Mode=TwoWay}" />
+                                                                        </controls:SettingsCard>
+                                                                        <controls:SettingsCard x:Uid="SettingsPageOverwriteMatchingThreshold">
+                                                                            <ToggleSwitch IsOn="{Binding IsMatchingThresholdOverwritten, Mode=TwoWay}" />
+                                                                        </controls:SettingsCard>
+                                                                        <controls:SettingsCard x:Uid="SettingsPageMatchingThreshold" IsEnabled="{Binding IsMatchingThresholdOverwritten, Mode=OneWay}">
+                                                                            <local:ExtendedSlider
+                                                                                Default="60"
+                                                                                Maximum="100"
+                                                                                Minimum="0"
+                                                                                Unit="%"
+                                                                                Value="{Binding MatchingThreshold, Mode=TwoWay}" />
+                                                                        </controls:SettingsCard>
+                                                                    </controls:SettingsExpander.Items>
+                                                                </controls:SettingsExpander>
+                                                                <local:DragIndicator />
+                                                            </Grid>
+                                                        </DataTemplate>
+                                                    </ListView.ItemTemplate>
+                                                </ListView>
+                                            </StackPanel>
+                                        </Expander>
+                                    </StackPanel>
+                                </Grid>
+                            </ScrollViewer>
+                        </local:FloatSidePanel>
+
                     </Grid>
                 </controls:Case>
 
@@ -209,7 +462,7 @@
                         <Grid Style="{StaticResource SettingsGridStyle}">
                             <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
-                                <TextBlock x:Uid="SettingsPageLyricsProcessing" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                                <!--<TextBlock x:Uid="SettingsPageLyricsProcessing" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />-->
 
                                 <!--  Lyrics translation  -->
                                 <controls:SettingsExpander x:Uid="LyricsPageTranslationEnabled" IsExpanded="True">
@@ -448,7 +701,7 @@
                             <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
                                 <!--  Realtime info  -->
-                                <TextBlock x:Uid="SettingsPageRealtimeStatus" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                                <!--<TextBlock x:Uid="SettingsPageRealtimeStatus" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />-->
 
                                 <!--  Playback source info  -->
                                 <Expander
@@ -577,258 +830,6 @@
 
             </controls:SwitchPresenter>
         </Grid>
-
-        <local:FloatSidePanel x:Name="PlaybackConfigPanel" Grid.Row="1">
-            <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
-                <Grid Style="{StaticResource SettingsGridStyle}">
-                    <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
-                        <Grid ColumnSpacing="6">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <Image
-                                Height="16"
-                                Margin="0,26,0,0"
-                                helpers1:AppExtensions.Aumid="{x:Bind ViewModel.SelectedMediaSourceProvider.Provider, Mode=OneWay}" />
-                            <TextBlock
-                                Grid.Column="1"
-                                helpers1:AppExtensions.Aumid="{x:Bind ViewModel.SelectedMediaSourceProvider.Provider, Mode=OneWay}"
-                                Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
-                            <Image
-                                Grid.Column="2"
-                                Height="16"
-                                Margin="0,26,0,0"
-                                helpers1:GifHelper.IsPlaying="{x:Bind ViewModel.GsmtcService.CurrentIsPlaying, Mode=OneWay}"
-                                Source="{ThemeResource MusicWave}"
-                                Visibility="{x:Bind ViewModel.SelectedMediaSourceProvider.IsFocused, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
-                            <Button
-                                Grid.Column="4"
-                                Margin="0,24,0,0"
-                                Click="CloseConfigPanelButton_Click"
-                                Content="{ui:FontIcon FontSize=16,
-                                                      FontFamily={StaticResource SegoeFluentIcons},
-                                                      Glyph=&#xE70D;}"
-                                Style="{ThemeResource AccentButtonStyle}" />
-                        </Grid>
-
-                        <!--  总开关  -->
-                        <controls:SettingsExpander x:Uid="SettingsPageMediaSourceProvidersConfig">
-                            <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsEnabled, Mode=TwoWay}" />
-                            <controls:SettingsExpander.Items>
-                                <controls:SettingsCard x:Uid="PlaybackSettingsControlMemoryReader">
-                                    <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsMemoryReaderEnabled, Mode=TwoWay}" />
-                                </controls:SettingsCard>
-                                <controls:SettingsCard>
-                                    <StackPanel Orientation="Horizontal" Spacing="6">
-                                        <local:ExternalLinkButton x:Uid="Help" NavigateUri="https://gist.github.com/jayfunc/ad09a3df951b95c8cf6228695fecc067" />
-                                        <Button x:Uid="SettingsPageImport" Command="{x:Bind ViewModel.ImportMemoryReaderConfigCommand}" />
-                                    </StackPanel>
-                                </controls:SettingsCard>
-                            </controls:SettingsExpander.Items>
-                        </controls:SettingsExpander>
-
-                        <!--  Last.fm  -->
-                        <controls:SettingsCard x:Uid="SettingsPageLastFMTrack" IsEnabled="{x:Bind ViewModel.IsLastFmAuthenticated, Mode=OneWay}">
-                            <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsLastFMTrackEnabled, Mode=TwoWay}" />
-                        </controls:SettingsCard>
-
-                        <!--  Discord  -->
-                        <controls:SettingsCard x:Uid="SettingsPageDiscordPresence">
-                            <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsDiscordPresenceEnabled, Mode=TwoWay}" />
-                        </controls:SettingsCard>
-
-                        <!--  LX music server  -->
-                        <controls:SettingsCard x:Uid="SettingsPageLXMusicServer" Visibility="{x:Bind ViewModel.SelectedMediaSourceProvider.IsLXMusic, Converter={StaticResource BoolToVisibilityConverter}, Mode=OneWay}">
-                            <Grid ColumnSpacing="6">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <TextBox
-                                    x:Uid="SettingsPageLXMusicServerInput"
-                                    IsEnabled="{x:Bind ViewModel.IsLxMusicServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}"
-                                    Text="{x:Bind ViewModel.AppSettings.GeneralSettings.LXMusicServer, Mode=TwoWay}"
-                                    TextWrapping="Wrap" />
-                                <Button
-                                    x:Uid="SettingsPageServerTestButton"
-                                    Grid.Column="1"
-                                    Command="{x:Bind ViewModel.LxMusicServerTestCommand}"
-                                    IsEnabled="{x:Bind ViewModel.IsLxMusicServerTesting, Converter={StaticResource BoolNegationConverter}, Mode=OneWay}" />
-                            </Grid>
-                        </controls:SettingsCard>
-
-                        <!--  时间轴相关配置  -->
-                        <controls:SettingsExpander x:Uid="SettingsPageLyricsTimeline">
-                            <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsTimelineSyncEnabled, Mode=TwoWay}" />
-                            <controls:SettingsExpander.Items>
-                                <controls:SettingsCard x:Uid="SettingsPageLyricsTimelineThreshold" IsEnabled="{x:Bind ViewModel.SelectedMediaSourceProvider.IsTimelineSyncEnabled, Mode=OneWay}">
-                                    <local:ExtendedSlider
-                                        Frequency="100"
-                                        Maximum="1000"
-                                        Minimum="0"
-                                        ResetButtonVisibility="Collapsed"
-                                        Unit="ms"
-                                        Value="{x:Bind ViewModel.SelectedMediaSourceProvider.TimelineSyncThreshold, Mode=TwoWay}" />
-                                </controls:SettingsCard>
-                            </controls:SettingsExpander.Items>
-                        </controls:SettingsExpander>
-                        <controls:SettingsExpander x:Uid="MainPagePositionOffsetSlider">
-                            <local:ExtendedSlider
-                                x:Uid="SettingsPagePositionOffsetReset"
-                                Default="0"
-                                Frequency="100"
-                                Maximum="5000"
-                                Minimum="-5000"
-                                Unit="ms"
-                                Value="{x:Bind ViewModel.SelectedMediaSourceProvider.PositionOffset, Mode=TwoWay}" />
-                            <controls:SettingsExpander.Items>
-                                <controls:SettingsCard x:Uid="LyricsPagePositionOffsetHint">
-                                    <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.ResetPositionOffsetOnSongChanged, Mode=TwoWay}" />
-                                </controls:SettingsCard>
-                            </controls:SettingsExpander.Items>
-                        </controls:SettingsExpander>
-
-                        <!--  专辑封面源配置  -->
-                        <Expander
-                            Padding="0"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Stretch"
-                            Background="Transparent"
-                            BorderBrush="Transparent">
-                            <Expander.Header>
-                                <TextBlock x:Uid="SettingsPageAlbumArtSearchProvidersConfig" />
-                            </Expander.Header>
-                            <StackPanel>
-                                <controls:SettingsCard x:Uid="AlbumArtSearchProvidersTargetSize">
-                                    <local:ExtendedSlider
-                                        Default="512"
-                                        Frequency="128"
-                                        Maximum="2048"
-                                        Minimum="64"
-                                        Unit="px"
-                                        Value="{x:Bind ViewModel.SelectedMediaSourceProvider.TargetAlbumArtSize, Mode=TwoWay}" />
-                                </controls:SettingsCard>
-                                <ListView
-                                    AllowDrop="True"
-                                    CanDragItems="True"
-                                    CanReorderItems="True"
-                                    DragItemsCompleted="AlbumArtSearchProvidersListView_DragItemsCompleted"
-                                    ItemContainerStyle="{ThemeResource ListViewStretchedItemContainerStyle}"
-                                    ItemsSource="{x:Bind ViewModel.SelectedMediaSourceProvider.AlbumArtSearchProvidersInfo, Mode=OneWay}"
-                                    SelectionMode="None">
-                                    <ListView.OpacityTransition>
-                                        <ScalarTransition />
-                                    </ListView.OpacityTransition>
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate x:DataType="settings:AlbumArtSearchProviderInfo">
-                                            <Grid>
-                                                <controls:SettingsCard Header="{Binding Provider, Converter={StaticResource AlbumArtSearchProviderToDisplayNameConverter}, Mode=OneWay}">
-                                                    <controls:SettingsCard.HeaderIcon>
-                                                        <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#x283F;" />
-                                                    </controls:SettingsCard.HeaderIcon>
-                                                    <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" />
-                                                </controls:SettingsCard>
-                                                <local:DragIndicator />
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-                            </StackPanel>
-                        </Expander>
-
-                        <!--  歌词源配置  -->
-                        <Expander
-                            Padding="0"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Stretch"
-                            Background="Transparent"
-                            BorderBrush="Transparent">
-                            <Expander.Header>
-                                <TextBlock x:Uid="SettingsPageLyricsSearchProvidersConfig" />
-                            </Expander.Header>
-                            <StackPanel>
-                                <controls:SettingsCard x:Uid="SettingsPageLyricsSearchType">
-                                    <ComboBox SelectedIndex="{x:Bind ViewModel.SelectedMediaSourceProvider.LyricsSearchType, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
-                                        <ComboBoxItem x:Uid="SettingsPageLyricsSearchSequential" />
-                                        <ComboBoxItem x:Uid="SettingsPageLyricsSearchBestMatch" />
-                                    </ComboBox>
-                                </controls:SettingsCard>
-                                <controls:SettingsCard x:Uid="SettingsPageMatchingThreshold">
-                                    <local:ExtendedSlider
-                                        Default="60"
-                                        Maximum="100"
-                                        Minimum="0"
-                                        Unit="%"
-                                        Value="{x:Bind ViewModel.SelectedMediaSourceProvider.MatchingThreshold, Mode=TwoWay}" />
-                                </controls:SettingsCard>
-                                <ListView
-                                    AllowDrop="True"
-                                    CanDragItems="True"
-                                    CanReorderItems="True"
-                                    DragItemsCompleted="LyricsSearchProvidersListView_DragItemsCompleted"
-                                    ItemContainerStyle="{ThemeResource ListViewStretchedItemContainerStyle}"
-                                    ItemsSource="{x:Bind ViewModel.SelectedMediaSourceProvider.LyricsSearchProvidersInfo, Mode=OneWay}"
-                                    SelectionMode="None">
-                                    <ListView.OpacityTransition>
-                                        <ScalarTransition />
-                                    </ListView.OpacityTransition>
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate x:DataType="settings:LyricsSearchProviderInfo">
-                                            <Grid>
-                                                <controls:SettingsExpander IsExpanded="{Binding IsMatchingThresholdOverwritten, Mode=OneWay}">
-                                                    <controls:SettingsExpander.Header>
-                                                        <Grid ColumnSpacing="6">
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="Auto" />
-                                                                <ColumnDefinition Width="*" />
-                                                            </Grid.ColumnDefinitions>
-                                                            <TextBlock Text="{Binding Provider, Converter={StaticResource LyricsProviderToDisplayNameConverter}, Mode=OneWay}" />
-                                                            <FontIcon
-                                                                Grid.Column="1"
-                                                                Margin="0,2,0,0"
-                                                                FontFamily="{StaticResource SegoeFluentIcons}"
-                                                                FontSize="12"
-                                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                                                Glyph="&#xE74C;"
-                                                                Visibility="{Binding IsPlugin, Converter={StaticResource BoolToVisibilityConverter}}" />
-                                                        </Grid>
-                                                    </controls:SettingsExpander.Header>
-                                                    <controls:SettingsExpander.HeaderIcon>
-                                                        <FontIcon FontFamily="Segoe UI Symbol" Glyph="&#x283F;" />
-                                                    </controls:SettingsExpander.HeaderIcon>
-                                                    <ToggleSwitch IsOn="{Binding IsEnabled, Mode=TwoWay}" />
-                                                    <controls:SettingsExpander.Items>
-                                                        <controls:SettingsCard x:Uid="LyricsSearchControlIgnoreCache">
-                                                            <CheckBox MinWidth="20" IsChecked="{Binding IgnoreCacheWhenSearching, Mode=TwoWay}" />
-                                                        </controls:SettingsCard>
-                                                        <controls:SettingsCard x:Uid="SettingsPageOverwriteMatchingThreshold">
-                                                            <ToggleSwitch IsOn="{Binding IsMatchingThresholdOverwritten, Mode=TwoWay}" />
-                                                        </controls:SettingsCard>
-                                                        <controls:SettingsCard x:Uid="SettingsPageMatchingThreshold" IsEnabled="{Binding IsMatchingThresholdOverwritten, Mode=OneWay}">
-                                                            <local:ExtendedSlider
-                                                                Default="60"
-                                                                Maximum="100"
-                                                                Minimum="0"
-                                                                Unit="%"
-                                                                Value="{Binding MatchingThreshold, Mode=TwoWay}" />
-                                                        </controls:SettingsCard>
-                                                    </controls:SettingsExpander.Items>
-                                                </controls:SettingsExpander>
-                                                <local:DragIndicator />
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-                            </StackPanel>
-                        </Expander>
-                    </StackPanel>
-                </Grid>
-            </ScrollViewer>
-        </local:FloatSidePanel>
 
     </Grid>
 

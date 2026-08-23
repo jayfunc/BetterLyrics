@@ -49,7 +49,7 @@ public partial class SongInfo : ObservableRecipient, ICloneable
             $"Artist: {Artist}, " +
             $"Album: {Album}, " +
             $"Duration: {Duration} sec, " +
-            $"Plauer ID: {PlayerId}, " +
+            $"Player ID: {PlayerId}, " +
             $"Song ID: {SongId}, " +
             $"Linked file name: {LinkedFileName}.";
     }

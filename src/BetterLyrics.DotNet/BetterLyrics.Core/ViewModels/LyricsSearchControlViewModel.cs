@@ -79,7 +79,7 @@ public partial class LyricsSearchControlViewModel : BaseViewModel,
     {
         LyricsSearchResults.Clear();
         LyricsDataArr = null;
-        if (GsmtcService.CurrentSongInfo != null)
+        if (GsmtcService.CurrentSongInfo != SongInfoExtensions.Placeholder)
         {
             var found = await _songSearchMapService.TryGetMappingAsync(GsmtcService.CurrentSongInfo);
 

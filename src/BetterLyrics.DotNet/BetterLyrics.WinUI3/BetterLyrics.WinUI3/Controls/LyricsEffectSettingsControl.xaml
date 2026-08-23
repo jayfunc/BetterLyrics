@@ -17,10 +17,7 @@
                 <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
                     <!--  Effect  -->
-                    <TextBlock
-                        x:Uid="SettingsPageLyricsEffect"
-                        Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"
-                        Text="Effect" />
+                    <!--<TextBlock x:Uid="SettingsPageLyricsEffect" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />-->
 
                     <controls:SettingsCard x:Uid="SettingsPageLyricsWordByWordEffectMode" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xF714;}">
                         <ComboBox SelectedIndex="{x:Bind LyricsEffectSettings.WordByWordEffectMode, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">

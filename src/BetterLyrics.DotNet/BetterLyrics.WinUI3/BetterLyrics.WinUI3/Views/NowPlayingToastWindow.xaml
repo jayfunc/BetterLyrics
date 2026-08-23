@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:Microsoft.UI.Xaml.Media"
+    xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:winui="using:Microsoft.UI.Xaml.Controls"
     Title="NowPlayingToastWindow"
     mc:Ignorable="d">
@@ -59,12 +60,10 @@
 
                 <!--  Album Art  -->
                 <Grid Padding="12">
-                    <Border
-                        BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}"
-                        BorderThickness="1"
-                        CornerRadius="4">
-                        <Image x:Name="AlbumArtImage" Stretch="UniformToFill" />
-                    </Border>
+                    <uc:ShadowImage
+                        x:Name="AlbumArtImage"
+                        CornerRadiusAmount="16"
+                        Stretch="UniformToFill" />
                 </Grid>
 
                 <!--  Text Info  -->

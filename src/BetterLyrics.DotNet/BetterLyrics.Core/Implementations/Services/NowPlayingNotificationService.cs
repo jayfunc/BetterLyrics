@@ -15,7 +15,7 @@ public class NowPlayingNotificationService : INowPlayingNotificationService
     private readonly ISettingsService _settingsService;
     private readonly ISongSearchMapService _songSearchMapService;
     private readonly Debouncer _debouncer = new();
-    
+
     private SongInfo _lastNotifiedSong = SongInfoExtensions.Placeholder;
 
     public NowPlayingNotificationService(
@@ -37,33 +37,26 @@ public class NowPlayingNotificationService : INowPlayingNotificationService
 
     private void GsmtcService_PropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(IGsmtcService.CurrentSongInfo) || 
+        if (e.PropertyName == nameof(IGsmtcService.CurrentSongInfo) ||
             e.PropertyName == nameof(IGsmtcService.AlbumArtBytes))
         {
             if (_settingsService.AppSettings.GeneralSettings.ShowNowPlayingNotification)
             {
-                _ = _debouncer.RunAsync(async token => 
+                _ = _debouncer.RunAsync(async token =>
                 {
                     await Task.Delay(200, token); // Small delay to let album art load
-                    
+
                     if (token.IsCancellationRequested) return;
 
                     var currentSong = _gsmtcService.CurrentSongInfo;
-                    
-                    if (currentSong == SongInfoExtensions.Placeholder || string.IsNullOrWhiteSpace(currentSong.Title)) 
+
+                    if (currentSong == SongInfoExtensions.Placeholder)
                         return;
 
-                    // Do not show again if it's the same song, unless it was just initialized
+                    // Do not show again if it's the same song
                     if (_lastNotifiedSong.Title == currentSong.Title && _lastNotifiedSong.Artist == currentSong.Artist)
                     {
-                        // It's probably better to just only notify on song change.
-                        if (e.PropertyName == nameof(IGsmtcService.AlbumArtBytes))
-                        {
-                            // If album art changed for the same song, and we already notified, we could update it,
-                            // but the toast only shows for 3 seconds. By the time art arrives, it might be gone.
-                            // We just ignore late album art updates.
-                            return;
-                        }
+                        return;
                     }
 
                     _lastNotifiedSong = currentSong;

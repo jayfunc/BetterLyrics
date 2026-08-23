@@ -16,7 +16,7 @@
             <Grid Style="{StaticResource SettingsGridStyle}">
                 <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
-                    <TextBlock x:Uid="SettingsPageBackgroundOverlay" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                    <!--<TextBlock x:Uid="SettingsPageBackgroundOverlay" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />-->
 
                     <controls:SettingsExpander x:Uid="SettingsPagePureLayer" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xEB42;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsPureColorOverlayEnabled, Mode=TwoWay}" />
