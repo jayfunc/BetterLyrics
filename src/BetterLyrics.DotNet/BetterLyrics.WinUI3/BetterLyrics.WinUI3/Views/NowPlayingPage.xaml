@@ -52,6 +52,7 @@
 
             <Grid
                 x:Name="AlbumArtContainer"
+                Margin="-32"
                 SizeChanged="AlbumArtContainer_SizeChanged"
                 Visibility="Collapsed">
                 <Grid.OpacityTransition>
