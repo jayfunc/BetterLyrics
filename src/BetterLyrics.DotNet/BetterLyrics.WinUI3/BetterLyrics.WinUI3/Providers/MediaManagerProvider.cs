@@ -1,4 +1,4 @@
-﻿using BetterLyrics.Core.Interfaces.Providers;
+using BetterLyrics.Core.Interfaces.Providers;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;

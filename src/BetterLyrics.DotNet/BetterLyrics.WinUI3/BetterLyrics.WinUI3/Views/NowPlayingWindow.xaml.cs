@@ -64,7 +64,7 @@ public sealed partial class NowPlayingWindow : Window,
 
     private readonly IMonitorProvider _monitorProvider =
         Ioc.Default.GetRequiredService<IMonitorProvider>();
-        
+
     private readonly ITaskbarThumbnailProvider _taskbarThumbnailProvider =
         Ioc.Default.GetRequiredService<ITaskbarThumbnailProvider>();
 
@@ -547,8 +547,7 @@ public sealed partial class NowPlayingWindow : Window,
                     if (status.WindowStatus == WindowStatus.HiddenBySystem)
                     {
                         if ((status.HideWindowWhenPaused && _gsmtcService.CurrentIsPlaying)
-                            || (status.HideWindowWhenNullSession &&
-                                _gsmtcService.CurrentMediaSourceProviderInfo != null))
+                            || (status.HideWindowWhenNullSession && _gsmtcService.CurrentMediaSourceProviderInfo != null))
                         {
                             _windowManagerProvider.OpenOrShowWindow<NowPlayingWindow>(status);
                             if (status.IsWorkArea)
@@ -557,9 +556,8 @@ public sealed partial class NowPlayingWindow : Window,
                                 _windowManagerProvider.MoveAndResize(this, status.GetAppBarBounds());
                             }
 
-                            if (status.IsLocked && status.IsWallpaper && (!status.IsAlwaysHideUnlockButton ||
-                                                                          status
-                                                                              .KeepNowPlayingBarInteractiveWhenLocked))
+                            if (status.IsLocked && !status.IsWallpaper &&
+                                (!status.IsAlwaysHideUnlockButton || status.KeepNowPlayingBarInteractiveWhenLocked))
                                 RestartOverlayInputHelper();
                         }
                     }

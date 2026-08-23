@@ -472,8 +472,6 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
 
     private void MediaManager_OnAnySessionClosed(IMediaSessionProvider? mediaSession)
     {
-        if (mediaSession == null) return;
-
         OnDesiredSessionChanged();
     }
 
