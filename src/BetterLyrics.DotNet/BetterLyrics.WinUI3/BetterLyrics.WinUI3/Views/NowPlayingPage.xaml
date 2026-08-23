@@ -52,7 +52,6 @@
 
             <Grid
                 x:Name="AlbumArtContainer"
-                Margin="-32"
                 SizeChanged="AlbumArtContainer_SizeChanged"
                 Visibility="Collapsed">
                 <Grid.OpacityTransition>
@@ -82,6 +81,7 @@
                 </Grid.ContextFlyout>
                 <uc:ParallaxTiltControl
                     x:Name="AlbumArtParallaxTiltControl"
+                    Margin="-32"
                     IsParallaxEnabled="{x:Bind LyricsWindowStatus.AlbumArtAreaEffectSettings.IsParallaxEnabled, Mode=OneWay}"
                     Loaded="AlbumArtParallaxTiltControl_Loaded">
                     <controls:OpacityMaskView>
@@ -96,6 +96,7 @@
                             </Rectangle>
                         </controls:OpacityMaskView.OpacityMask>
                         <uc:ImageSwitcher
+                            Margin="32"
                             CornerRadiusAmount="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageRadius, Mode=OneWay}"
                             ShadowAmount="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageShadowAmount, Mode=OneWay}"
                             Source="{x:Bind ViewModel.MediaSessionsService.AlbumArtBytes, Converter={StaticResource ByteArrayToImageConverter}, Mode=OneWay}"

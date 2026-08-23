@@ -557,10 +557,16 @@ public sealed partial class NowPlayingPage : Page,
         var settings = _lyricsWindowStatus?.AlbumArtAreaEffectSettings;
         if (settings == null) return;
 
-        AlbumArtGradientBrush.StartPoint =
-            new Point(settings.FadeOutStartPointX, settings.FadeOutStartPointY);
-        AlbumArtGradientBrush.EndPoint =
-            new Point(settings.FadeOutEndPointX, settings.FadeOutEndPointY);
+        var albumArtParallaxTiltControlWidth = AlbumArtParallaxTiltControl.ActualWidth;
+        var albumArtParallaxTiltControlHeight = AlbumArtParallaxTiltControl.ActualHeight;
+
+        var startPointX = ((albumArtParallaxTiltControlWidth - 32 * 2) * settings.FadeOutStartPointX + 32) / albumArtParallaxTiltControlWidth;
+        var startPointY = ((albumArtParallaxTiltControlHeight - 32 * 2) * settings.FadeOutStartPointY + 32) / albumArtParallaxTiltControlHeight;
+        var endPointX = ((albumArtParallaxTiltControlWidth - 32 * 2) * settings.FadeOutEndPointX + 32) / albumArtParallaxTiltControlWidth;
+        var endPointY = ((albumArtParallaxTiltControlHeight - 32 * 2) * settings.FadeOutEndPointY + 32) / albumArtParallaxTiltControlHeight;
+
+        AlbumArtGradientBrush.StartPoint = new Point(startPointX, startPointY);
+        AlbumArtGradientBrush.EndPoint = new Point(endPointX, endPointY);
     }
 
     private void ToggleAlbumArtFadeOut()

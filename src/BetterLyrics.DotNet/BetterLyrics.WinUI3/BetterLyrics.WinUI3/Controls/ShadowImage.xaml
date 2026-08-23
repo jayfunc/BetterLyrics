@@ -11,7 +11,7 @@
         <ScalarTransition />
     </UserControl.OpacityTransition>
 
-    <Grid Padding="32">
+    <Grid>
         <Grid
             x:Name="ShadowCastGrid"
             HorizontalAlignment="Center"

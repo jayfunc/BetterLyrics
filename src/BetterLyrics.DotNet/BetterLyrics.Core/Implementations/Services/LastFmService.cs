@@ -115,6 +115,28 @@ public class LastFmService : ILastFmService
         }
     }
 
+    public async Task UpdateNowPlayingAsync(SongInfo songInfo)
+    {
+        if (IsAuthenticated)
+        {
+            var (mappedTitle, mappedArtist, mappedAlbum) =
+                await _songSearchMapService.GetMappingAsync(songInfo);
+
+            try
+            {
+                var resp = await _client.Track.UpdateNowPlayingAsync(mappedTitle, mappedArtist, 0, mappedAlbum);
+                if (!resp)
+                {
+                    _globalToastProvider.Show("Error", "Update now playing failed", MessageSeverity.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                _globalToastProvider.Show("Error", ex.Message, MessageSeverity.Error);
+            }
+        }
+    }
+
     public async Task RefreshAsync()
     {
         await UpdateAuthStatusAsync();

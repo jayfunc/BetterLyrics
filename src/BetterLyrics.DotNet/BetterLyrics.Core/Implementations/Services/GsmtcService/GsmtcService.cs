@@ -577,6 +577,13 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
             UpdateCurrentMediaSourceProviderInfoPositionOffset();
             _ = UpdateDiscordPresenceAsync();
 
+            var isLastFMEnabled = CurrentMediaSourceProviderInfo?.IsLastFMTrackEnabled ?? false;
+            if (isLastFMEnabled)
+            {
+                _ = Task.Run(() => _lastFmService.UpdateNowPlayingAsync(CurrentSongInfo));
+                _logger.LogInformation("MediaManager_OnAnyMediaPropertyChanged: {Title} update now playing to last.fm", CurrentSongInfo.Title);
+            }
+
             UpdateLyrics();
             UpdateAlbumArt();
 
