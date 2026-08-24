@@ -16,13 +16,15 @@ public static class Link
     public const string PrivacyPolicy = $"{BetterLyricsGitHub}/blob/dev/docs/PRIVACY_POLICY.md";
     public const string OfficialWebsite = "https://betterlyrics.github.io";
     public const string UserGuide = $"{OfficialWebsite}";
-    public const string PluginDevGuide = $"{OfficialWebsite}/plugin-dev/intro";
+    public const string PluginDevGuide = $"{OfficialWebsite}/docs/plugin-dev/intro";
 
-    public const string LayoutsStore = $"{OfficialWebsite}/add-ons/layouts-store";
-    public const string ModesStore = $"{OfficialWebsite}/add-ons/modes-store";
-    public const string PluginsStore = $"{OfficialWebsite}/add-ons/plugins-store";
+    public const string LayoutsStore = $"{OfficialWebsite}/docs/add-ons/layouts-store";
+    public const string ModesStore = $"{OfficialWebsite}/docs/add-ons/modes-store";
+    public const string PluginsStore = $"{OfficialWebsite}/docs/add-ons/plugins-store";
 
-    public const string AppleMusicCfg = $"{OfficialWebsite}/features/lyrics-cfg/apple-music";
+    public const string AppleMusicCfg = $"{OfficialWebsite}/docs/features/lyrics-cfg/apple-music";
+
+    public const string LayoutEditor = $"{OfficialWebsite}/docs/features/layout-editor";
 
     public const string QQGroup1 = "https://qm.qq.com/q/yArcw3n8pq";
     public const string QQGroup2 = "https://qm.qq.com/q/27rzSjFXt6";

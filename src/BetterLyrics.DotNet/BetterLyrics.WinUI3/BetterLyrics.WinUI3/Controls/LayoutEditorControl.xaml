@@ -2,6 +2,7 @@
     x:Class="BetterLyrics.WinUI3.Controls.LayoutEditorControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:consts="using:BetterLyrics.Core.Constants"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -970,7 +971,7 @@
                             <uc:ExternalLinkButton
                                 x:Uid="LayoutEditorControlLearnMoreLink"
                                 Padding="0"
-                                NavigateUri="https://betterlyrics.github.io/layout-editor" />
+                                NavigateUri="{x:Bind consts:Link.LayoutEditor}" />
 
                         </StackPanel>
                     </Flyout>

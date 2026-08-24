@@ -540,14 +540,17 @@ public sealed partial class NowPlayingWindow : Window,
         var status = LyricsWindowStatus;
 
         if (status.HideWindowWhenPaused || status.HideWindowWhenNullSession)
+        {
             _ = _visibilityDebouncer.RunAsync(() =>
             {
                 DispatcherQueue.TryEnqueue(() =>
                 {
+                    bool shouldHide = (status.HideWindowWhenPaused && !_gsmtcService.CurrentIsPlaying) ||
+                        (status.HideWindowWhenNullSession && _gsmtcService.CurrentMediaSourceProviderInfo == null);
+
                     if (status.WindowStatus == WindowStatus.HiddenBySystem)
                     {
-                        if ((status.HideWindowWhenPaused && _gsmtcService.CurrentIsPlaying)
-                            || (status.HideWindowWhenNullSession && _gsmtcService.CurrentMediaSourceProviderInfo != null))
+                        if (!shouldHide)
                         {
                             _windowManagerProvider.OpenOrShowWindow<NowPlayingWindow>(status);
                             if (status.IsWorkArea)
@@ -563,9 +566,7 @@ public sealed partial class NowPlayingWindow : Window,
                     }
                     else if (status.WindowStatus == WindowStatus.Opened)
                     {
-                        if ((status.HideWindowWhenPaused && !_gsmtcService.CurrentIsPlaying)
-                            || (status.HideWindowWhenNullSession &&
-                                _gsmtcService.CurrentMediaSourceProviderInfo == null))
+                        if (shouldHide)
                         {
                             _windowManagerProvider.HideWindow(this, WindowStatus.HiddenBySystem);
                             StopOverlayInputHelper();
@@ -573,6 +574,7 @@ public sealed partial class NowPlayingWindow : Window,
                     }
                 });
             }, LyricsWindowStatus.AutoShowOrHideWindowDelay);
+        }
     }
 
     private void OnIsAdaptToEnvironmentChanged()
