@@ -558,7 +558,7 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
 
         _appUIThreadProvider.Execute(() =>
         {
-            if (fixedTitle == null && fixedArtist == null && fixedAlbum == null)
+            if (string.IsNullOrEmpty(fixedTitle) && string.IsNullOrEmpty(fixedArtist) && string.IsNullOrEmpty(fixedAlbum))
             {
                 CurrentSongInfo = SongInfoExtensions.Placeholder;
             }
