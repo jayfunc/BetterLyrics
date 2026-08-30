@@ -752,76 +752,73 @@
                                             x:Uid="LyricsPageMatchPercentage"
                                             Unit="%"
                                             Value="{x:Bind ViewModel.GsmtcService.CurrentLyricsSearchResult.MatchPercentage, TargetNullValue=-, FallbackValue=-, Mode=OneWay}" />
-                                        <Grid Margin="-16,0,-16,-16" ColumnSpacing="2">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="Auto" />
-                                                <ColumnDefinition Width="*" />
-                                            </Grid.ColumnDefinitions>
-                                            <Button Grid.Column="0" Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, FontSize=16, Glyph=&#xE713;}">
-                                                <Button.Flyout>
-                                                    <Flyout ShouldConstrainToRootBounds="False">
-                                                        <Flyout.FlyoutPresenterStyle>
-                                                            <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
-                                                                <Setter Property="MaxWidth" Value="500" />
-                                                            </Style>
-                                                        </Flyout.FlyoutPresenterStyle>
-                                                        <StackPanel MaxWidth="500">
-                                                            <controls:SettingsCard x:Uid="LyricsSaveConfigInSyllablesFormat">
-                                                                <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.LyricsSaveConfig.InSyllablesFormat, Mode=TwoWay}" />
-                                                            </controls:SettingsCard>
-                                                            <controls:SettingsCard x:Uid="LyricsSaveConfigIncludeTranslation">
-                                                                <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.LyricsSaveConfig.IncludeTranslation, Mode=TwoWay}" />
-                                                            </controls:SettingsCard>
-                                                            <controls:SettingsCard x:Uid="LyricsSaveConfigIncludeTransliteration">
-                                                                <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.LyricsSaveConfig.IncludeTransliteration, Mode=TwoWay}" />
-                                                            </controls:SettingsCard>
-                                                            <controls:SettingsCard x:Uid="LyricsSaveConfigInOneLine">
-                                                                <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.LyricsSaveConfig.InOneLine, Mode=TwoWay}" />
-                                                            </controls:SettingsCard>
-                                                            <controls:SettingsCard
-                                                                x:Uid="LyricsSaveConfigFileNamePattern"
-                                                                ContentAlignment="Left"
-                                                                Header="File Name Pattern">
-                                                                <local:FileNamePatternControl PatternText="{x:Bind ViewModel.AppSettings.LyricsSaveConfig.FileNamePattern, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                                            </controls:SettingsCard>
-                                                            <controls:SettingsCard x:Uid="LyricsSaveConfigFolder">
-                                                                <Grid ColumnSpacing="6">
-                                                                    <Grid.ColumnDefinitions>
-                                                                        <ColumnDefinition Width="Auto" />
-                                                                        <ColumnDefinition Width="*" />
-                                                                    </Grid.ColumnDefinitions>
-                                                                    <TextBox
-                                                                        Grid.Column="0"
-                                                                        IsReadOnly="True"
-                                                                        Text="{x:Bind ViewModel.AppSettings.LyricsSaveConfig.SaveLocation, Mode=OneWay}"
-                                                                        TextWrapping="Wrap" />
-                                                                    <Button
-                                                                        x:Uid="RemoteServerConfigControlBrowse"
-                                                                        Grid.Column="1"
-                                                                        Click="BrowseLyricsSaveLocationButton_Click" />
-                                                                </Grid>
-                                                            </controls:SettingsCard>
-                                                        </StackPanel>
-                                                    </Flyout>
-                                                </Button.Flyout>
-                                            </Button>
-                                            <!--  SaveLyricsButton  -->
-                                            <DropDownButton
-                                                Grid.Column="1"
-                                                HorizontalAlignment="Stretch"
-                                                Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                                                      FontSize=16,
-                                                                      Glyph=&#xE74E;}">
-                                                <DropDownButton.Flyout>
-                                                    <MenuFlyout>
-                                                        <MenuFlyoutItem x:Uid="PlaybackSettingsControlSaveLyricsAsLrc" Click="SaveLyricsAsLrcMenuFlyoutItem_Click" />
-                                                        <MenuFlyoutItem x:Uid="PlaybackSettingsControlSaveLyricsAsTtml" Click="SaveLyricsAsTtmlMenuFlyoutItem_Click" />
-                                                    </MenuFlyout>
-                                                </DropDownButton.Flyout>
-                                            </DropDownButton>
-                                        </Grid>
                                     </StackPanel>
                                 </Expander>
+
+                                <Grid ColumnSpacing="4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Button Grid.Column="1" Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, FontSize=16, Glyph=&#xE713;}">
+                                        <Button.Flyout>
+                                            <Flyout ShouldConstrainToRootBounds="False">
+                                                <Flyout.FlyoutPresenterStyle>
+                                                    <Style BasedOn="{StaticResource DefaultFlyoutPresenterStyle}" TargetType="FlyoutPresenter">
+                                                        <Setter Property="MaxWidth" Value="500" />
+                                                    </Style>
+                                                </Flyout.FlyoutPresenterStyle>
+                                                <StackPanel MaxWidth="500">
+                                                    <controls:SettingsCard x:Uid="LyricsSaveConfigInSyllablesFormat">
+                                                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.LyricsSaveConfig.InSyllablesFormat, Mode=TwoWay}" />
+                                                    </controls:SettingsCard>
+                                                    <controls:SettingsCard x:Uid="LyricsSaveConfigIncludeTranslation">
+                                                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.LyricsSaveConfig.IncludeTranslation, Mode=TwoWay}" />
+                                                    </controls:SettingsCard>
+                                                    <controls:SettingsCard x:Uid="LyricsSaveConfigIncludeTransliteration">
+                                                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.LyricsSaveConfig.IncludeTransliteration, Mode=TwoWay}" />
+                                                    </controls:SettingsCard>
+                                                    <controls:SettingsCard x:Uid="LyricsSaveConfigInOneLine">
+                                                        <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.LyricsSaveConfig.InOneLine, Mode=TwoWay}" />
+                                                    </controls:SettingsCard>
+                                                    <controls:SettingsCard
+                                                        x:Uid="LyricsSaveConfigFileNamePattern"
+                                                        ContentAlignment="Left"
+                                                        Header="File Name Pattern">
+                                                        <local:FileNamePatternControl PatternText="{x:Bind ViewModel.AppSettings.LyricsSaveConfig.FileNamePattern, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                                    </controls:SettingsCard>
+                                                    <controls:SettingsCard x:Uid="LyricsSaveConfigFolder">
+                                                        <Grid ColumnSpacing="6">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="*" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBox
+                                                                Grid.Column="0"
+                                                                IsReadOnly="True"
+                                                                Text="{x:Bind ViewModel.AppSettings.LyricsSaveConfig.SaveLocation, Mode=OneWay}"
+                                                                TextWrapping="Wrap" />
+                                                            <Button
+                                                                x:Uid="RemoteServerConfigControlBrowse"
+                                                                Grid.Column="1"
+                                                                Click="BrowseLyricsSaveLocationButton_Click" />
+                                                        </Grid>
+                                                    </controls:SettingsCard>
+                                                </StackPanel>
+                                            </Flyout>
+                                        </Button.Flyout>
+                                    </Button>
+                                    <!--  SaveLyricsButton  -->
+                                    <DropDownButton Grid.Column="2" Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, FontSize=16, Glyph=&#xE74E;}">
+                                        <DropDownButton.Flyout>
+                                            <MenuFlyout>
+                                                <MenuFlyoutItem x:Uid="PlaybackSettingsControlSaveLyricsAsLrc" Click="SaveLyricsAsLrcMenuFlyoutItem_Click" />
+                                                <MenuFlyoutItem x:Uid="PlaybackSettingsControlSaveLyricsAsTtml" Click="SaveLyricsAsTtmlMenuFlyoutItem_Click" />
+                                            </MenuFlyout>
+                                        </DropDownButton.Flyout>
+                                    </DropDownButton>
+                                </Grid>
 
                             </StackPanel>
                         </Grid>

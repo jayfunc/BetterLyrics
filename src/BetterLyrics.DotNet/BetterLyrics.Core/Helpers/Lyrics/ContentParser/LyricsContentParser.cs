@@ -159,8 +159,8 @@ public partial class LyricsContentParser
                 ? (Func<string, string>)LanguageHelper.ConvertSCToTC
                 : LanguageHelper.ConvertTCToSC;
 
-            bool isOriginalChinese = LanguageHelper.IsLanguageMatch(original.LanguageTag, LanguageHelper.MandarinChineseCode);
-            bool isTranslationChinese = LanguageHelper.IsLanguageMatch(rule.TargetTranslationTag, LanguageHelper.MandarinChineseCode);
+            bool isOriginalChinese = LanguageHelper.IsLanguageMatch(original.LanguageTag, LanguageHelper.MandarinChineseCode, true);
+            bool isTranslationChinese = LanguageHelper.IsLanguageMatch(rule.TargetTranslationTag, LanguageHelper.MandarinChineseCode, true);
 
             if (isOriginalChinese || isTranslationChinese)
             {
