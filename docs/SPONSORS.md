@@ -5,6 +5,12 @@ Special thanks to the following people for their support!
 <table>
   <tbody>
     <tr>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>Aug 15, 2026 &lt;Anon/匿名&gt;</td>
+    </tr>
+    <tr>
       <td>Jul 17, 2026 *⭐</td>
       <td>Jun 18, 2026 *浩</td>
       <td>Jun 1, 2026 **方</td>
