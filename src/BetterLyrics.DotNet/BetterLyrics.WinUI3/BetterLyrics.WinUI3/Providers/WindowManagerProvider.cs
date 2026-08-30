@@ -362,6 +362,20 @@ public class WindowManagerProvider : IWindowManagerProvider
             window.SetIsAlwaysOnTop(enable);
     }
 
+    public void SetIsShownInSwitchers(object obj, bool enable)
+    {
+        if (obj is not Window)
+            throw new ArgumentException(
+                $"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.",
+                nameof(obj));
+
+        var window = (Window)obj;
+
+        if (window.AppWindow == null) return;
+
+        window.AppWindow.IsShownInSwitchers = enable;
+    }
+
     public void MoveAndResize(object obj, AppRect rect)
     {
         if (obj is not Window)

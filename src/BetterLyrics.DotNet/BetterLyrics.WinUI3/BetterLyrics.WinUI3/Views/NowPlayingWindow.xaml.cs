@@ -451,12 +451,12 @@ public sealed partial class NowPlayingWindow : Window,
 
     private void OnIsShownInSwitchersChanged()
     {
-        AppWindow.IsShownInSwitchers = LyricsWindowStatus.IsShownInSwitchers;
+        _windowManagerProvider.SetIsShownInSwitchers(this, LyricsWindowStatus.IsShownInSwitchers);
     }
 
     private void OnIsAlwaysOnTopChanged()
     {
-        this.SetIsAlwaysOnTop(LyricsWindowStatus.IsAlwaysOnTop);
+        _windowManagerProvider.SetIsAlwaysOnTop(this, LyricsWindowStatus.IsAlwaysOnTop);
         PinFillFontIcon.Opacity = LyricsWindowStatus.IsAlwaysOnTop ? 1 : 0;
         OnIsAlwaysOnTopPollingChanged();
     }
@@ -471,7 +471,7 @@ public sealed partial class NowPlayingWindow : Window,
             _alwaysOnTopPoller.Start(async token =>
             {
                 if (LyricsWindowStatus?.IsWallpaper != true)
-                    _appUIThreadProvider.Execute(() => { this.SetIsAlwaysOnTop(true); });
+                    _appUIThreadProvider.Execute(() => { _windowManagerProvider.SetIsAlwaysOnTop(this, true); });
             });
             LyricsWindowStatus.IsAlwaysOnTopPollingTimerRunning = true;
         }

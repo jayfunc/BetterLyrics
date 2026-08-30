@@ -38,8 +38,10 @@ public interface IWindowManagerProvider
 
     object? GetNowPlayingWindow(LyricsWindowStatus status);
 
-    void SetIsAppBar(object obj, bool enable);
     void SetIsAlwaysOnTop(object obj, bool enable);
+    void SetIsShownInSwitchers(object obj, bool enable);
+
+    void SetIsAppBar(object obj, bool enable);
     void UpdateAppBar(object obj);
 
     void SetTaskbarProgressState(WindowType windowType, bool isPlaying);
