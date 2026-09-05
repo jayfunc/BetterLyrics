@@ -24,6 +24,14 @@
                 <ScalarTransition />
             </Grid.OpacityTransition>
 
+            <Grid x:Name="BottomCommandBackgroundGrid" 
+                  Background="{ThemeResource SolidBackgroundFillColorBaseBrush}" 
+                  Opacity="{x:Bind LyricsWindowStatus.NowPlayingBarBackgroundStyle, Converter={StaticResource NowPlayingBarBackgroundStyleToOpacityConverter}, Mode=OneWay}">
+                <Grid.OpacityTransition>
+                    <ScalarTransition />
+                </Grid.OpacityTransition>
+            </Grid>
+
             <Grid x:Name="BottomCommandContent">
 
                 <Grid

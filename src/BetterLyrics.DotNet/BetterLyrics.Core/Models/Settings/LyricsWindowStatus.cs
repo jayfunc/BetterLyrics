@@ -111,6 +111,14 @@ public partial class LyricsWindowStatus : ObservableRecipient, ICloneable
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
+    public partial bool IsNowPlayingBarResident { get; set; } = false;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial NowPlayingBarBackgroundStyle NowPlayingBarBackgroundStyle { get; set; } = NowPlayingBarBackgroundStyle.Transparent;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
     public partial bool IsPinToTaskbar { get; set; } = false;
 
     [ObservableProperty]
@@ -339,7 +347,9 @@ public partial class LyricsWindowStatus : ObservableRecipient, ICloneable
 
             IsTimelineLyricsPreviewEnabled = IsTimelineLyricsPreviewEnabled,
             KeepNowPlayingBarInteractiveWhenLocked = KeepNowPlayingBarInteractiveWhenLocked,
-            IsAlwaysHidePlayingBar = IsAlwaysHidePlayingBar
+            IsAlwaysHidePlayingBar = IsAlwaysHidePlayingBar,
+            IsNowPlayingBarResident = IsNowPlayingBarResident,
+            NowPlayingBarBackgroundStyle = NowPlayingBarBackgroundStyle
         };
     }
 

@@ -303,6 +303,18 @@
                     <controls:SettingsCard x:Uid="WindowSettingsControlAlwaysHideNowPlayingBar" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE70A;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAlwaysHidePlayingBar, Mode=TwoWay}" />
                     </controls:SettingsCard>
+                    <!--  常驻显示控制栏  -->
+                    <controls:SettingsCard x:Uid="WindowSettingsControlNowPlayingBarResident" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8A1;}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsNowPlayingBarResident, Mode=TwoWay}" />
+                    </controls:SettingsCard>
+                    <!--  控制栏背景样式  -->
+                    <controls:SettingsCard x:Uid="WindowSettingsControlNowPlayingBarBackgroundStyle" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE790;}">
+                        <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.NowPlayingBarBackgroundStyle, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
+                            <ComboBoxItem x:Uid="WindowSettingsControlNowPlayingBarBackgroundStyleTransparent" />
+                            <ComboBoxItem x:Uid="WindowSettingsControlNowPlayingBarBackgroundStyleTranslucent" />
+                            <ComboBoxItem x:Uid="WindowSettingsControlNowPlayingBarBackgroundStyleOpaque" />
+                        </ComboBox>
+                    </controls:SettingsCard>
 
                     <TextBlock x:Uid="WindowSettingsControlDebug" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 

@@ -189,6 +189,10 @@ public sealed partial class NowPlayingWindow : Window,
             {
                 UpdateNowPlayingBarStatus();
             }
+            else if (message.PropertyName == nameof(LyricsWindowStatus.IsNowPlayingBarResident))
+            {
+                UpdateNowPlayingBarStatus();
+            }
         }
     }
 
@@ -409,6 +413,7 @@ public sealed partial class NowPlayingWindow : Window,
         }
 
         OnAutoShowOrHideWindowChanged();
+        UpdateNowPlayingBarStatus();
     }
 
     public void UpdateBackdropAccentColor()
@@ -825,6 +830,7 @@ public sealed partial class NowPlayingWindow : Window,
     {
         NowPlayingBar.IsCompactMode = LyricsWindowStatus.IsAlwaysHidePlayingBar || RootGrid.ActualWidth < 180 ||
                                       RootGrid.ActualHeight <= 72;
+        NowPlayingBar.IsAutoHideEnabled = !LyricsWindowStatus.IsNowPlayingBarResident;
 
         NowPlayingBar.ShowTime = NowPlayingBar.ShowVolumeButton = NowPlayingBar.ShowMoreButton =
             NowPlayingBar.IsCompactMode || RootGrid.ActualWidth > 350;

@@ -58,6 +58,7 @@
     <bwc:LyricsFontWeightToFontWeightConverter x:Key="LyricsFontWeightToFontWeightConverter" />
     <bwc:FileSourceTypeToIconConverter x:Key="FileSourceTypeToIconConverter" />
     <bwc:PathToImageConverter x:Key="PathToImageConverter" />
+    <bwc:NowPlayingBarBackgroundStyleToOpacityConverter x:Key="NowPlayingBarBackgroundStyleToOpacityConverter" />
     <bwc:DoubleToDecimalConverter x:Key="DoubleToDecimalConverter" />
     <bwc:UriStringToDecodedAbsoluteUri x:Key="UriStringToDecodedAbsoluteUri" />
     <bwc:StringToVisibilityConverter x:Key="StringToVisibilityConverter" />
