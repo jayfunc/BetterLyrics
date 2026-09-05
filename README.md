@@ -70,9 +70,11 @@
 ## 🌟 Highlighted Features
 
 - 🎨 **Stunning Visuals & Expressive Lyrics**
-  - **Buttery-Smooth UI:** A modern experience powered by WinUI 3 & Win2D, featuring fluid animations and extensive personalization.
+  - **Buttery-Smooth UI:** A modern experience powered by WinUI 3 & Win2D, featuring fluid animations, highly customizable playback controls, and extensive personalization.
   - **Advanced Lyric Motion:** Every word breathes with the music. Includes **per-syllable highlighting**, **long-note duration glows**, and **perspective-based fading** for distant lines.
-  - **Total Visual Control:** Beyond presets, you have full control to fine-tune lyric animations, fonts, and individual visual behaviors to match your unique taste.
+  - **Interactive Layout Editor:** A full-fledged drag-and-drop editor allowing you to design your perfect layout by freely positioning and resizing lyrics, album art, and playback controls.
+  - **Total Visual Control:** Beyond presets, you have full control to fine-tune lyric animations, fonts, theme color extraction, and individual visual behaviors to match your unique taste.
+  - **Chameleon Adaptive Theme:** Smart theme engine that dynamically samples your screen edge environment or album art to seamlessly blend the player UI with your desktop.
   - **Immersive Backgrounds:** Beautiful visual effects including Dynamic Fluid, Blur, Fog, and Snowflake particles.
   - **Audio Visualizer:** Built-in real-time spectrum analyzer that brings your music to life.
   - **Lyrics Cards:** Generate and share gorgeous lyric cards with 10+ artistic themes (Vinyl, CD, Polaroid, Cyberpunk, and more).
@@ -99,7 +101,7 @@
 
 - 🧠 **Intelligence & Analytics**
   - **Smart Automation:** Automatically stays out of your way by hiding when the music stops.
-  - **Stats Dashboard:** A beautiful analytics hub to track your play history and rediscover your top artists and tracks.
+  - **Stats Dashboard & "Wrapped" Story:** A beautiful analytics hub to track your play history, complete with an immersive visual story revealing your top artists, listener persona, and special streaks.
 
 ## 🖼️ Screenshots
 

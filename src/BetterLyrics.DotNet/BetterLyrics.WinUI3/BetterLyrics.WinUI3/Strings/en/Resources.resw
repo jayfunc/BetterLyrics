@@ -2764,7 +2764,7 @@
     <value>Window</value>
   </data>
   <data name="LayoutEditorControlComponentPlaybackControl" xml:space="preserve">
-    <value>Playback Control</value>
+    <value>Media Control Bar</value>
   </data>
   <data name="WindowSettingsControlNowPlayingBarAutoAdaptive.Header" xml:space="preserve">
     <value>Auto adaptive media control bar</value>
@@ -2775,7 +2775,7 @@
   <data name="WindowSettingsControlNowPlayingBarShowTimeArea.Header" xml:space="preserve">
     <value>Show time area</value>
   </data>
-    <data name="WindowSettingsControlNowPlayingBarShowProgressBar.Header" xml:space="preserve">
+  <data name="WindowSettingsControlNowPlayingBarShowProgressBar.Header" xml:space="preserve">
     <value>Show progress bar</value>
   </data>
   <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
@@ -2803,5 +2803,3 @@
     <value>Minimum lightness threshold for filtering colors in light mode</value>
   </data>
 </root>
-
-
