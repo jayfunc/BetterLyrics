@@ -2778,4 +2778,26 @@
   <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
     <value>Nút “Hiển thị thêm” trong menu</value>
   </data>
+  <data name="SettingsPagePaletteDarkToneThreshold.Header" xml:space="preserve">
+    <value>Ngưỡng tông màu tối</value>
+  </data>
+  <data name="SettingsPagePaletteLightToneThreshold.Header" xml:space="preserve">
+    <value>Ngưỡng tông sáng</value>
+  </data>
+  <data name="SettingsPagePaletteChromaWeight.Description" xml:space="preserve">
+    <value>Điều chỉnh cài đặt ưu tiên cho các màu sắc rực rỡ khi trích xuất bảng màu</value>
+  </data>
+  <data name="SettingsPagePaletteToneWeight.Description" xml:space="preserve">
+    <value>Điều chỉnh cài đặt ưu tiên tông màu sáng hoặc tối khi trích xuất bảng màu</value>
+  </data>
+  <data name="SettingsPagePalettePopulationWeight.Description" xml:space="preserve">
+    <value>Điều chỉnh cài đặt cho các màu chiếm diện tích lớn hơn trên hình ảnh</value>
+  </data>
+  <data name="SettingsPagePaletteDarkToneThreshold.Description" xml:space="preserve">
+    <value>Ngưỡng độ sáng tối đa để lọc màu trong chế độ tối</value>
+  </data>
+  <data name="SettingsPagePaletteLightToneThreshold.Description" xml:space="preserve">
+    <value>Ngưỡng độ sáng tối thiểu để lọc màu trong chế độ sáng</value>
+  </data>
 </root>
+

@@ -217,6 +217,14 @@ public partial class LyricsWindowStatus : ObservableRecipient, ICloneable
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
+    public partial double PaletteDarkToneThreshold { get; set; } = 75.0;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial double PaletteLightToneThreshold { get; set; } = 25.0;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
     public partial NowPlayingPalette WindowPalette { get; set; } = new();
 
     [JsonPropertyName("AutoShowOrHideWindow")]
@@ -336,6 +344,8 @@ public partial class LyricsWindowStatus : ObservableRecipient, ICloneable
             PaletteChromaWeight = PaletteChromaWeight,
             PaletteToneWeight = PaletteToneWeight,
             PalettePopulationWeight = PalettePopulationWeight,
+            PaletteDarkToneThreshold = PaletteDarkToneThreshold,
+            PaletteLightToneThreshold = PaletteLightToneThreshold,
             WindowPalette = WindowPalette,
 
             HideWindowWhenPaused = HideWindowWhenPaused,

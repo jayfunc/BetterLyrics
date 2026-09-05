@@ -2778,4 +2778,26 @@
   <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
     <value>「メニューをさらに表示」ボタン</value>
   </data>
+  <data name="SettingsPagePaletteDarkToneThreshold.Header" xml:space="preserve">
+    <value>暗部閾値</value>
+  </data>
+  <data name="SettingsPagePaletteLightToneThreshold.Header" xml:space="preserve">
+    <value>明度閾値</value>
+  </data>
+  <data name="SettingsPagePaletteChromaWeight.Description" xml:space="preserve">
+    <value>パレットを抽出する際、鮮やかな色に対する優先度を調整します</value>
+  </data>
+  <data name="SettingsPagePaletteToneWeight.Description" xml:space="preserve">
+    <value>パレットを抽出する際、明るい色調か暗い色調のどちらを優先するかを設定します</value>
+  </data>
+  <data name="SettingsPagePalettePopulationWeight.Description" xml:space="preserve">
+    <value>画像の広い範囲を占める色の優先度を調整します</value>
+  </data>
+  <data name="SettingsPagePaletteDarkToneThreshold.Description" xml:space="preserve">
+    <value>ダークモードでの色フィルタリングにおける最大の明度閾値</value>
+  </data>
+  <data name="SettingsPagePaletteLightToneThreshold.Description" xml:space="preserve">
+    <value>ライトモードでの色のフィルタリングにおける最小明度閾値</value>
+  </data>
 </root>
+

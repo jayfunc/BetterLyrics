@@ -2778,4 +2778,26 @@
   <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
     <value>顯示更多選單按鈕</value>
   </data>
+  <data name="SettingsPagePaletteDarkToneThreshold.Header" xml:space="preserve">
+    <value>深色調閾值</value>
+  </data>
+  <data name="SettingsPagePaletteLightToneThreshold.Header" xml:space="preserve">
+    <value>淺色調閾值</value>
+  </data>
+  <data name="SettingsPagePaletteChromaWeight.Description" xml:space="preserve">
+    <value>用於調整取色時對鮮豔色彩的偏好程度</value>
+  </data>
+  <data name="SettingsPagePaletteToneWeight.Description" xml:space="preserve">
+    <value>用於調整取色時對亮暗色調的偏好程度</value>
+  </data>
+  <data name="SettingsPagePalettePopulationWeight.Description" xml:space="preserve">
+    <value>用於調整取色時對圖像中佔比更大顏色的偏好程度</value>
+  </data>
+  <data name="SettingsPagePaletteDarkToneThreshold.Description" xml:space="preserve">
+    <value>深色模式下過濾顏色的最高亮度閾值</value>
+  </data>
+  <data name="SettingsPagePaletteLightToneThreshold.Description" xml:space="preserve">
+    <value>淺色模式下過濾顏色的最低亮度閾值</value>
+  </data>
 </root>
+

@@ -2778,4 +2778,26 @@
   <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
     <value>Pulsante "Mostra altro" del menu</value>
   </data>
+  <data name="SettingsPagePaletteDarkToneThreshold.Header" xml:space="preserve">
+    <value>Soglia dei toni scuri</value>
+  </data>
+  <data name="SettingsPagePaletteLightToneThreshold.Header" xml:space="preserve">
+    <value>Soglia dei toni chiari</value>
+  </data>
+  <data name="SettingsPagePaletteChromaWeight.Description" xml:space="preserve">
+    <value>Regola la preferenza per i colori vivaci durante l'estrazione delle tavolozze</value>
+  </data>
+  <data name="SettingsPagePaletteToneWeight.Description" xml:space="preserve">
+    <value>Regola la preferenza per i toni chiari o scuri durante l'estrazione delle tavolozze</value>
+  </data>
+  <data name="SettingsPagePalettePopulationWeight.Description" xml:space="preserve">
+    <value>Regola la preferenza per i colori che coprono aree più estese dell'immagine</value>
+  </data>
+  <data name="SettingsPagePaletteDarkToneThreshold.Description" xml:space="preserve">
+    <value>Soglia massima di luminosità per il filtraggio dei colori in modalità scura</value>
+  </data>
+  <data name="SettingsPagePaletteLightToneThreshold.Description" xml:space="preserve">
+    <value>Soglia minima di luminosità per il filtraggio dei colori in modalità chiara</value>
+  </data>
 </root>
+

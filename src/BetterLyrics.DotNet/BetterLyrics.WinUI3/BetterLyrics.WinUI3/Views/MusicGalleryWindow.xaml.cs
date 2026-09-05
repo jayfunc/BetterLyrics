@@ -79,7 +79,9 @@ public sealed partial class MusicGalleryWindow : Window,
         {
             if (message.PropertyName == nameof(LyricsWindowStatus.PaletteChromaWeight) ||
                 message.PropertyName == nameof(LyricsWindowStatus.PaletteToneWeight) ||
-                message.PropertyName == nameof(LyricsWindowStatus.PalettePopulationWeight))
+                message.PropertyName == nameof(LyricsWindowStatus.PalettePopulationWeight) ||
+                message.PropertyName == nameof(LyricsWindowStatus.PaletteLightToneThreshold) ||
+                message.PropertyName == nameof(LyricsWindowStatus.PaletteDarkToneThreshold))
                 _ = UpdateAlbumArtThemeColorsAsync();
         }
     }

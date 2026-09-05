@@ -2778,4 +2778,26 @@
   <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
     <value>Schaltfläche „Mehr anzeigen“</value>
   </data>
+  <data name="SettingsPagePaletteDarkToneThreshold.Header" xml:space="preserve">
+    <value>Schwellenwert für dunkle Töne</value>
+  </data>
+  <data name="SettingsPagePaletteLightToneThreshold.Header" xml:space="preserve">
+    <value>Schwellenwert für helle Töne</value>
+  </data>
+  <data name="SettingsPagePaletteChromaWeight.Description" xml:space="preserve">
+    <value>Passt die Einstellung für lebendige Farben beim Extrahieren von Farbpaletten an</value>
+  </data>
+  <data name="SettingsPagePaletteToneWeight.Description" xml:space="preserve">
+    <value>Passt die Einstellung für helle oder dunkle Farbtöne beim Extrahieren von Paletten an</value>
+  </data>
+  <data name="SettingsPagePalettePopulationWeight.Description" xml:space="preserve">
+    <value>Passt die Einstellung für Farben an, die größere Bereiche des Bildes bedecken</value>
+  </data>
+  <data name="SettingsPagePaletteDarkToneThreshold.Description" xml:space="preserve">
+    <value>Maximaler Helligkeitsschwellenwert für die Filterung von Farben im Dunkelmodus</value>
+  </data>
+  <data name="SettingsPagePaletteLightToneThreshold.Description" xml:space="preserve">
+    <value>Mindestschwelle für die Helligkeit beim Filtern von Farben im Hellmodus</value>
+  </data>
 </root>
+

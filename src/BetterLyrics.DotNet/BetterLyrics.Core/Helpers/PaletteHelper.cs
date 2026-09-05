@@ -43,7 +43,7 @@ namespace BetterLyrics.Core.Helpers
             });
         }
 
-        public static async Task<List<Vector3>> GetAccentColorsAsync(byte[]? data, int count, PaletteGeneratorType generatorType, bool? isDark, double chromaWeight = 1.0, double toneWeight = -0.75, double populationWeight = 3.0)
+        public static async Task<List<Vector3>> GetAccentColorsAsync(byte[]? data, int count, PaletteGeneratorType generatorType, bool? isDark, double chromaWeight = 1.0, double toneWeight = -0.75, double populationWeight = 3.0, double darkToneThreshold = 75.0, double lightToneThreshold = 25.0)
         {
             var pixels = await GetPixelsAsync(data);
             if (pixels.Count == 0) return new List<Vector3>();
@@ -61,8 +61,9 @@ namespace BetterLyrics.Core.Helpers
             var filteredDict = quantizerResult.Colors;
             if (isDark != null)
             {
+                var threshold = isDark.Value ? darkToneThreshold : lightToneThreshold;
                 filteredDict = quantizerResult.Colors
-                    .Where(x => (Hct.From(x.Key).Tone < 50) == isDark)
+                    .Where(x => (Hct.From(x.Key).Tone < threshold) == isDark)
                     .ToDictionary(x => x.Key, x => x.Value);
 
                 // fallback

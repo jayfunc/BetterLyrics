@@ -2778,4 +2778,26 @@
   <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
     <value>ปุ่มแสดงเมนูเพิ่มเติม</value>
   </data>
+  <data name="SettingsPagePaletteDarkToneThreshold.Header" xml:space="preserve">
+    <value>ค่าขีดจำกัดโทนสีมืด</value>
+  </data>
+  <data name="SettingsPagePaletteLightToneThreshold.Header" xml:space="preserve">
+    <value>ค่าเกณฑ์โทนสีอ่อน</value>
+  </data>
+  <data name="SettingsPagePaletteChromaWeight.Description" xml:space="preserve">
+    <value>ปรับการตั้งค่าความชอบสำหรับสีที่สดใสเมื่อสกัดชุดสี</value>
+  </data>
+  <data name="SettingsPagePaletteToneWeight.Description" xml:space="preserve">
+    <value>ปรับการตั้งค่าความชอบสำหรับโทนสีสว่างหรือโทนสีมืดเมื่อดึงชุดสี</value>
+  </data>
+  <data name="SettingsPagePalettePopulationWeight.Description" xml:space="preserve">
+    <value>ปรับการตั้งค่าสำหรับสีที่ครอบคลุมพื้นที่กว้างขึ้นในภาพ</value>
+  </data>
+  <data name="SettingsPagePaletteDarkToneThreshold.Description" xml:space="preserve">
+    <value>ค่าความสว่างสูงสุดสำหรับการกรองสีในโหมดมืด</value>
+  </data>
+  <data name="SettingsPagePaletteLightToneThreshold.Description" xml:space="preserve">
+    <value>ค่าความสว่างขั้นต่ำสำหรับการกรองสีในโหมดแสง</value>
+  </data>
 </root>
+

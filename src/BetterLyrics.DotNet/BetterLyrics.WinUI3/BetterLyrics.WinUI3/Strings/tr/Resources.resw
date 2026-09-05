@@ -2778,4 +2778,26 @@
   <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
     <value>"Daha fazla göster" menü düğmesi</value>
   </data>
+  <data name="SettingsPagePaletteDarkToneThreshold.Header" xml:space="preserve">
+    <value>Koyu Ton Eşiği</value>
+  </data>
+  <data name="SettingsPagePaletteLightToneThreshold.Header" xml:space="preserve">
+    <value>Açık Ton Eşiği</value>
+  </data>
+  <data name="SettingsPagePaletteChromaWeight.Description" xml:space="preserve">
+    <value>Paletler çıkarılırken canlı renkler tercihini ayarlar</value>
+  </data>
+  <data name="SettingsPagePaletteToneWeight.Description" xml:space="preserve">
+    <value>Paletleri çıkarırken açık veya koyu tonlara yönelik tercihi ayarlar</value>
+  </data>
+  <data name="SettingsPagePalettePopulationWeight.Description" xml:space="preserve">
+    <value>Görüntünün daha geniş alanlarını kaplayan renkler için tercihi ayarlar</value>
+  </data>
+  <data name="SettingsPagePaletteDarkToneThreshold.Description" xml:space="preserve">
+    <value>Karanlık modda renkleri filtrelemek için maksimum açıklık eşiği</value>
+  </data>
+  <data name="SettingsPagePaletteLightToneThreshold.Description" xml:space="preserve">
+    <value>Aydınlık modunda renkleri filtrelemek için minimum açıklık eşiği</value>
+  </data>
 </root>
+

@@ -228,8 +228,10 @@ public sealed partial class NowPlayingWindow : Window,
             if (message.PropertyName == nameof(LyricsWindowStatus.DockHeight))
                 OnWorkAreaChanged();
             else if (message.PropertyName == nameof(LyricsWindowStatus.PaletteChromaWeight) ||
-                     message.PropertyName == nameof(LyricsWindowStatus.PaletteToneWeight) ||
-                     message.PropertyName == nameof(LyricsWindowStatus.PalettePopulationWeight))
+                message.PropertyName == nameof(LyricsWindowStatus.PaletteToneWeight) ||
+                message.PropertyName == nameof(LyricsWindowStatus.PalettePopulationWeight) ||
+                message.PropertyName == nameof(LyricsWindowStatus.PaletteLightToneThreshold) ||
+                message.PropertyName == nameof(LyricsWindowStatus.PaletteDarkToneThreshold))
                 RequestUpdateAlbumArtThemeColors();
         }
     }

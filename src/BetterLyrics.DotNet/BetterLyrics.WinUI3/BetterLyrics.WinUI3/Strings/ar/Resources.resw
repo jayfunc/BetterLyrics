@@ -2778,4 +2778,26 @@
   <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
     <value>زر «إظهار المزيد» في القائمة</value>
   </data>
+  <data name="SettingsPagePaletteDarkToneThreshold.Header" xml:space="preserve">
+    <value>عتبة الدرجة الداكنة</value>
+  </data>
+  <data name="SettingsPagePaletteLightToneThreshold.Header" xml:space="preserve">
+    <value>عتبة الدرجة الفاتحة</value>
+  </data>
+  <data name="SettingsPagePaletteChromaWeight.Description" xml:space="preserve">
+    <value>يضبط الإعداد الخاص بالألوان الزاهية عند استخراج لوحات الألوان</value>
+  </data>
+  <data name="SettingsPagePaletteToneWeight.Description" xml:space="preserve">
+    <value>يضبط الإعداد المفضل للدرجات الفاتحة أو الداكنة عند استخراج لوحات الألوان</value>
+  </data>
+  <data name="SettingsPagePalettePopulationWeight.Description" xml:space="preserve">
+    <value>يضبط الإعدادات الخاصة بالألوان التي تغطي مساحات أكبر من الصورة</value>
+  </data>
+  <data name="SettingsPagePaletteDarkToneThreshold.Description" xml:space="preserve">
+    <value>الحد الأقصى لدرجة السطوع لتصفية الألوان في الوضع المظلم</value>
+  </data>
+  <data name="SettingsPagePaletteLightToneThreshold.Description" xml:space="preserve">
+    <value>الحد الأدنى لدرجة السطوع لتصفية الألوان في الوضع الفاتح</value>
+  </data>
 </root>
+

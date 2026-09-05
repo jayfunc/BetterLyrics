@@ -29,17 +29,17 @@ public partial class GsmtcService : IGsmtcService
         var darkAccentColors = Enumerable.Repeat(Colors.Black, 4).ToList();
 
         accentColors =
-            (await PaletteHelper.GetAccentColorsAsync(AlbumArtBytes, 4, lyricsWindowStatus.PaletteGeneratorType, null, lyricsWindowStatus.PaletteChromaWeight, lyricsWindowStatus.PaletteToneWeight, lyricsWindowStatus.PalettePopulationWeight))
+            (await PaletteHelper.GetAccentColorsAsync(AlbumArtBytes, 4, lyricsWindowStatus.PaletteGeneratorType, null, lyricsWindowStatus.PaletteChromaWeight, lyricsWindowStatus.PaletteToneWeight, lyricsWindowStatus.PalettePopulationWeight, lyricsWindowStatus.PaletteDarkToneThreshold, lyricsWindowStatus.PaletteLightToneThreshold))
             .Select(ColorHelper.FromVector3).ToList();
         token.ThrowIfCancellationRequested();
 
         lightAccentColors =
-            (await PaletteHelper.GetAccentColorsAsync(AlbumArtBytes, 4, lyricsWindowStatus.PaletteGeneratorType, false, lyricsWindowStatus.PaletteChromaWeight, lyricsWindowStatus.PaletteToneWeight, lyricsWindowStatus.PalettePopulationWeight))
+            (await PaletteHelper.GetAccentColorsAsync(AlbumArtBytes, 4, lyricsWindowStatus.PaletteGeneratorType, false, lyricsWindowStatus.PaletteChromaWeight, lyricsWindowStatus.PaletteToneWeight, lyricsWindowStatus.PalettePopulationWeight, lyricsWindowStatus.PaletteDarkToneThreshold, lyricsWindowStatus.PaletteLightToneThreshold))
             .Select(ColorHelper.FromVector3).ToList();
         token.ThrowIfCancellationRequested();
 
         darkAccentColors =
-            (await PaletteHelper.GetAccentColorsAsync(AlbumArtBytes, 4, lyricsWindowStatus.PaletteGeneratorType, true, lyricsWindowStatus.PaletteChromaWeight, lyricsWindowStatus.PaletteToneWeight, lyricsWindowStatus.PalettePopulationWeight))
+            (await PaletteHelper.GetAccentColorsAsync(AlbumArtBytes, 4, lyricsWindowStatus.PaletteGeneratorType, true, lyricsWindowStatus.PaletteChromaWeight, lyricsWindowStatus.PaletteToneWeight, lyricsWindowStatus.PalettePopulationWeight, lyricsWindowStatus.PaletteDarkToneThreshold, lyricsWindowStatus.PaletteLightToneThreshold))
             .Select(ColorHelper.FromVector3).ToList();
         token.ThrowIfCancellationRequested();
 

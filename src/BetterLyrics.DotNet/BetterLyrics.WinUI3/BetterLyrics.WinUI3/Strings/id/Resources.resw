@@ -2778,4 +2778,26 @@
   <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
     <value>Tombol "Tampilkan menu lainnya"</value>
   </data>
+  <data name="SettingsPagePaletteDarkToneThreshold.Header" xml:space="preserve">
+    <value>Ambang Batas Nada Gelap</value>
+  </data>
+  <data name="SettingsPagePaletteLightToneThreshold.Header" xml:space="preserve">
+    <value>Ambang Batas Nada Terang</value>
+  </data>
+  <data name="SettingsPagePaletteChromaWeight.Description" xml:space="preserve">
+    <value>Menyesuaikan pengaturan untuk warna-warna cerah saat mengekstrak palet warna</value>
+  </data>
+  <data name="SettingsPagePaletteToneWeight.Description" xml:space="preserve">
+    <value>Menyesuaikan preferensi untuk nuansa terang atau gelap saat mengekstrak palet warna</value>
+  </data>
+  <data name="SettingsPagePalettePopulationWeight.Description" xml:space="preserve">
+    <value>Menyesuaikan pengaturan preferensi untuk warna-warna yang menutupi area yang lebih luas pada gambar</value>
+  </data>
+  <data name="SettingsPagePaletteDarkToneThreshold.Description" xml:space="preserve">
+    <value>Ambang batas kecerahan maksimum untuk menyaring warna dalam mode gelap</value>
+  </data>
+  <data name="SettingsPagePaletteLightToneThreshold.Description" xml:space="preserve">
+    <value>Ambang batas kecerahan minimum untuk menyaring warna dalam mode terang</value>
+  </data>
 </root>
+

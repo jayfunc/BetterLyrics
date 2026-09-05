@@ -243,6 +243,24 @@
                                     Minimum="0.0"
                                     Value="{x:Bind LyricsWindowStatus.PalettePopulationWeight, Mode=TwoWay}" />
                             </controls:SettingsCard>
+
+                            <controls:SettingsCard x:Uid="SettingsPagePaletteDarkToneThreshold">
+                                <local:ExtendedSlider
+                                    Default="75"
+                                    Frequency="1"
+                                    Maximum="100"
+                                    Minimum="50"
+                                    Value="{x:Bind LyricsWindowStatus.PaletteDarkToneThreshold, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+
+                            <controls:SettingsCard x:Uid="SettingsPagePaletteLightToneThreshold">
+                                <local:ExtendedSlider
+                                    Default="25"
+                                    Frequency="1"
+                                    Maximum="50"
+                                    Minimum="0"
+                                    Value="{x:Bind LyricsWindowStatus.PaletteLightToneThreshold, Mode=TwoWay}" />
+                            </controls:SettingsCard>
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
                     <!--  取色结果  -->

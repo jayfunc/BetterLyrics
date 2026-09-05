@@ -2778,4 +2778,26 @@
   <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
     <value>더 보기 메뉴 버튼</value>
   </data>
+  <data name="SettingsPagePaletteDarkToneThreshold.Header" xml:space="preserve">
+    <value>어두운 톤 임계값</value>
+  </data>
+  <data name="SettingsPagePaletteLightToneThreshold.Header" xml:space="preserve">
+    <value>밝기 임계값</value>
+  </data>
+  <data name="SettingsPagePaletteChromaWeight.Description" xml:space="preserve">
+    <value>팔레트를 추출할 때 선명한 색상에 대한 기본 설정을 조정합니다.</value>
+  </data>
+  <data name="SettingsPagePaletteToneWeight.Description" xml:space="preserve">
+    <value>팔레트를 추출할 때 밝은 톤이나 어두운 톤에 대한 기본 설정을 조정합니다.</value>
+  </data>
+  <data name="SettingsPagePalettePopulationWeight.Description" xml:space="preserve">
+    <value>이미지의 더 넓은 영역을 차지하는 색상에 대한 기본 설정을 조정합니다.</value>
+  </data>
+  <data name="SettingsPagePaletteDarkToneThreshold.Description" xml:space="preserve">
+    <value>다크 모드에서 색상을 필터링하기 위한 최대 명도 임계값</value>
+  </data>
+  <data name="SettingsPagePaletteLightToneThreshold.Description" xml:space="preserve">
+    <value>라이트 모드에서 색상을 필터링하기 위한 최소 명도 임계값</value>
+  </data>
 </root>
+

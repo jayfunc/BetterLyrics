@@ -2778,4 +2778,26 @@
   <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
     <value>अधिक मेनू दिखाएँ बटन</value>
   </data>
+  <data name="SettingsPagePaletteDarkToneThreshold.Header" xml:space="preserve">
+    <value>डार्क टोन थ्रेशोल्ड</value>
+  </data>
+  <data name="SettingsPagePaletteLightToneThreshold.Header" xml:space="preserve">
+    <value>हल्के स्वर की सीमा</value>
+  </data>
+  <data name="SettingsPagePaletteChromaWeight.Description" xml:space="preserve">
+    <value>पैलेट निकालते समय जीवंत रंगों के लिए प्राथमिकता समायोजित करता है।</value>
+  </data>
+  <data name="SettingsPagePaletteToneWeight.Description" xml:space="preserve">
+    <value>पैलेट निकालते समय हल्के या गहरे टोन के लिए प्राथमिकता समायोजित करता है।</value>
+  </data>
+  <data name="SettingsPagePalettePopulationWeight.Description" xml:space="preserve">
+    <value>छवि के बड़े क्षेत्रों को ढकने वाले रंगों की प्राथमिकता को समायोजित करता है।</value>
+  </data>
+  <data name="SettingsPagePaletteDarkToneThreshold.Description" xml:space="preserve">
+    <value>डार्क मोड में रंगों को फ़िल्टर करने के लिए अधिकतम हल्केपन की सीमा</value>
+  </data>
+  <data name="SettingsPagePaletteLightToneThreshold.Description" xml:space="preserve">
+    <value>लाइट मोड में रंगों को फ़िल्टर करने के लिए न्यूनतम हल्केपन की सीमा</value>
+  </data>
 </root>
+
