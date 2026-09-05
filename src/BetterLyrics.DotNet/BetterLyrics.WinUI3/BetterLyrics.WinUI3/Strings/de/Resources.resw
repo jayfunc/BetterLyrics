@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -2301,6 +2301,21 @@
   <data name="WindowSettingsControlNowPlayingBar.Text" xml:space="preserve">
     <value>Medienkontrollzentrum</value>
   </data>
+  <data name="WindowSettingsControlNowPlayingBarResident.Header" xml:space="preserve">
+    <value>Immer sichtbar</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarBackgroundStyle.Header" xml:space="preserve">
+    <value>Hintergrund der Medien-Steuerleiste</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarBackgroundStyleTransparent.Content" xml:space="preserve">
+    <value>Transparent</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarBackgroundStyleTranslucent.Content" xml:space="preserve">
+    <value>Durchscheinend</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarBackgroundStyleOpaque.Content" xml:space="preserve">
+    <value>Undurchsichtig</value>
+  </data>
   <data name="WindowSettingsControlRealTimePalette.Header" xml:space="preserve">
     <value>Live-Palette Vorschau</value>
   </data>
@@ -2747,5 +2762,20 @@
   </data>
   <data name="SettingsPageWindow.Text" xml:space="preserve">
     <value>Fenster</value>
+  </data>
+  <data name="LayoutEditorControlComponentPlaybackControl" xml:space="preserve">
+    <value>Wiedergabesteuerung</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarAutoAdaptive.Header" xml:space="preserve">
+    <value>Automatisch anpassbare Mediensteuerleiste</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarAutoAdaptive.Description" xml:space="preserve">
+    <value>Zeit und weitere Schaltflächen automatisch ausblenden, wenn die Breite zu gering ist</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarShowTimeArea.Header" xml:space="preserve">
+    <value>Veranstaltungsort</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
+    <value>Schaltfläche „Mehr anzeigen“</value>
   </data>
 </root>

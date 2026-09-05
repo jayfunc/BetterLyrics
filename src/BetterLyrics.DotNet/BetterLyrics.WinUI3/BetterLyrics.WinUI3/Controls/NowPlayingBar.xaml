@@ -24,9 +24,10 @@
                 <ScalarTransition />
             </Grid.OpacityTransition>
 
-            <Grid x:Name="BottomCommandBackgroundGrid" 
-                  Background="{ThemeResource SolidBackgroundFillColorBaseBrush}" 
-                  Opacity="{x:Bind LyricsWindowStatus.NowPlayingBarBackgroundStyle, Converter={StaticResource NowPlayingBarBackgroundStyleToOpacityConverter}, Mode=OneWay}">
+            <Grid
+                x:Name="BottomCommandBackgroundGrid"
+                Background="{ThemeResource SolidBackgroundFillColorBaseBrush}"
+                Opacity="{x:Bind LyricsWindowStatus.NowPlayingBarBackgroundStyle, Converter={StaticResource NowPlayingBarBackgroundStyleToOpacityConverter}, Mode=OneWay}">
                 <Grid.OpacityTransition>
                     <ScalarTransition />
                 </Grid.OpacityTransition>
@@ -214,7 +215,8 @@
                             Command="{x:Bind ViewModel.PauseSongCommand}"
                             Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                   Glyph=&#xF8AE;}"
-                            Style="{ThemeResource GhostButtonStyle}">
+                            Style="{ThemeResource GhostButtonStyle}"
+                            Visibility="Collapsed">
                             <interactivity:Interaction.Behaviors>
                                 <interactivity:DataTriggerBehavior
                                     Binding="{x:Bind GSMTCService.CurrentIsPlaying, Mode=OneWay}"
@@ -518,9 +520,11 @@
             </Grid.OpacityTransition>
             <Grid
                 x:Name="BottomCommandFlyoutTriggerHint"
-                MaxWidth="400"
-                Background="{ThemeResource ControlAAFillColorDefaultBrush}"
-                CornerRadius="4,4,0,0"
+                Width="108"
+                Height="4"
+                VerticalAlignment="Center"
+                Background="{ThemeResource TextFillColorSecondaryBrush}"
+                CornerRadius="2"
                 Translation="0,0,0">
                 <Grid.TranslationTransition>
                     <Vector3Transition />

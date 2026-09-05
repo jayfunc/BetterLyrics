@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -2301,6 +2301,21 @@
   <data name="WindowSettingsControlNowPlayingBar.Text" xml:space="preserve">
     <value>メディアコントロールパネル</value>
   </data>
+  <data name="WindowSettingsControlNowPlayingBarResident.Header" xml:space="preserve">
+    <value>常に表示される</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarBackgroundStyle.Header" xml:space="preserve">
+    <value>メディアコントロールバーの背景</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarBackgroundStyleTransparent.Content" xml:space="preserve">
+    <value>透明</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarBackgroundStyleTranslucent.Content" xml:space="preserve">
+    <value>半透明</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarBackgroundStyleOpaque.Content" xml:space="preserve">
+    <value>不透明</value>
+  </data>
   <data name="WindowSettingsControlRealTimePalette.Header" xml:space="preserve">
     <value>パレットのライブプレビュー</value>
   </data>
@@ -2747,5 +2762,20 @@
   </data>
   <data name="SettingsPageWindow.Text" xml:space="preserve">
     <value>ウィンドウ</value>
+  </data>
+  <data name="LayoutEditorControlComponentPlaybackControl" xml:space="preserve">
+    <value>再生操作</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarAutoAdaptive.Header" xml:space="preserve">
+    <value>自動適応型メディアコントロールバー</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarAutoAdaptive.Description" xml:space="preserve">
+    <value>幅が狭いときは、時刻やその他のボタンを自動的に非表示にする</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarShowTimeArea.Header" xml:space="preserve">
+    <value>ショータイムエリア</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
+    <value>「メニューをさらに表示」ボタン</value>
   </data>
 </root>

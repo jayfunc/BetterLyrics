@@ -65,7 +65,7 @@ public sealed partial class NowPlayingBar : UserControl,
 
     public static readonly DependencyProperty LyricsWindowStatusProperty =
         DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus), typeof(NowPlayingBar),
-            new PropertyMetadata(null));
+            new PropertyMetadata(null, (d, e) => (d as NowPlayingBar)?.UpdateStatus()));
 
     public static readonly DependencyProperty SimulatedPositionSecondsProperty =
         DependencyProperty.Register(nameof(SimulatedPositionSeconds), typeof(double), typeof(NowPlayingBar),
@@ -94,6 +94,8 @@ public sealed partial class NowPlayingBar : UserControl,
         _simulationTimer.Tick += SimulationTimer_Tick;
         _simulationTimer.Start();
         _lastTickTicks = Stopwatch.GetTimestamp();
+        
+        this.SizeChanged += (s, e) => UpdateStatus();
     }
 
     public NowPlayingBarViewModel ViewModel { get; set; }
@@ -145,6 +147,29 @@ public sealed partial class NowPlayingBar : UserControl,
     {
         get => (bool)GetValue(IsCompactModeProperty);
         set => SetValue(IsCompactModeProperty, value);
+    }
+
+    public void UpdateStatus()
+    {
+        if (LyricsWindowStatus == null) return;
+
+        var windowHeight = XamlRoot?.Size.Height ?? double.PositiveInfinity;
+        IsAutoHideEnabled = !LyricsWindowStatus.IsNowPlayingBarResident;
+
+        if (LyricsWindowStatus.IsNowPlayingBarAutoAdaptive)
+        {
+            IsCompactMode = ActualWidth < 180 || windowHeight <= 72;
+            ShowTime = IsCompactMode || ActualWidth > 350;
+            ShowMoreButton = IsCompactMode || ActualWidth > 350;
+            ShowVolumeButton = IsCompactMode || ActualWidth > 350;
+        }
+        else
+        {
+            IsCompactMode = LyricsWindowStatus.IsAlwaysHidePlayingBar;
+            ShowTime = LyricsWindowStatus.NowPlayingBarShowTimeArea;
+            ShowMoreButton = LyricsWindowStatus.NowPlayingBarShowMoreButton;
+            ShowVolumeButton = LyricsWindowStatus.NowPlayingBarShowMoreButton;
+        }
     }
 
     public bool IsAutoHideEnabled
@@ -227,10 +252,12 @@ public sealed partial class NowPlayingBar : UserControl,
         if (IsAutoHideEnabled)
         {
             if (!_isPointerInBottomCommandGrid) BottomCommandGrid.Opacity = 0;
+            BottomCommandFlyoutTrigger.Opacity = 0;
         }
         else
         {
             BottomCommandGrid.Opacity = 1;
+            if (IsCompactMode) BottomCommandFlyoutTrigger.Opacity = 1;
         }
     }
 
@@ -244,6 +271,8 @@ public sealed partial class NowPlayingBar : UserControl,
                 BottomCommandFlyoutContainer.Children.Add(BottomCommandContent);
             }
 
+            BottomCommandFlyoutTrigger.Visibility = Visibility.Visible;
+            if (!IsAutoHideEnabled) BottomCommandFlyoutTrigger.Opacity = 1;
             BottomCommandFlyoutTriggerHint.Translation = new Vector3(0, 0, 0);
         }
         else
@@ -255,6 +284,8 @@ public sealed partial class NowPlayingBar : UserControl,
                 BottomCommandGrid.Children.Add(BottomCommandContent);
             }
 
+            BottomCommandFlyoutTrigger.Visibility = Visibility.Collapsed;
+            BottomCommandFlyoutTrigger.Opacity = 0;
             BottomCommandFlyoutTriggerHint.Translation = new Vector3(0, 12, 0);
         }
     }
@@ -396,7 +427,7 @@ public sealed partial class NowPlayingBar : UserControl,
     private void BottomCommandFlyoutTrigger_PointerExited(object sender,
         PointerRoutedEventArgs e)
     {
-        if (BottomCommandFlyoutContainer.Children.Count != 0) BottomCommandFlyoutTrigger.Opacity = 0f;
+        if (BottomCommandFlyoutContainer.Children.Count != 0 && IsAutoHideEnabled) BottomCommandFlyoutTrigger.Opacity = 0f;
     }
 
     private void BottomCommandFlyoutTrigger_Tapped(object sender, TappedRoutedEventArgs e)

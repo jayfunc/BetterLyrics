@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -2301,6 +2301,21 @@
   <data name="WindowSettingsControlNowPlayingBar.Text" xml:space="preserve">
     <value>Panel de control multimedia</value>
   </data>
+  <data name="WindowSettingsControlNowPlayingBarResident.Header" xml:space="preserve">
+    <value>Toujours visible</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarBackgroundStyle.Header" xml:space="preserve">
+    <value>Arrière-plan de la barre de contrôle multimédia</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarBackgroundStyleTransparent.Content" xml:space="preserve">
+    <value>Transparent</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarBackgroundStyleTranslucent.Content" xml:space="preserve">
+    <value>Translucide</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarBackgroundStyleOpaque.Content" xml:space="preserve">
+    <value>Opaque</value>
+  </data>
   <data name="WindowSettingsControlRealTimePalette.Header" xml:space="preserve">
     <value>Vista previa de la paleta en vivo</value>
   </data>
@@ -2747,5 +2762,20 @@
   </data>
   <data name="SettingsPageWindow.Text" xml:space="preserve">
     <value>Fenêtre</value>
+  </data>
+  <data name="LayoutEditorControlComponentPlaybackControl" xml:space="preserve">
+    <value>Commandes de lecture</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarAutoAdaptive.Header" xml:space="preserve">
+    <value>Barre de contrôle multimédia à adaptation automatique</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarAutoAdaptive.Description" xml:space="preserve">
+    <value>Masquer automatiquement l'heure et d'autres boutons lorsque la largeur est réduite</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarShowTimeArea.Header" xml:space="preserve">
+    <value>Zone des spectacles</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
+    <value>Bouton « Afficher plus » du menu</value>
   </data>
 </root>

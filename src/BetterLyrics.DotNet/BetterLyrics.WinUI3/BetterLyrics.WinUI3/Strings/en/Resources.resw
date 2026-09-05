@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -2762,5 +2762,20 @@
   </data>
   <data name="SettingsPageWindow.Text" xml:space="preserve">
     <value>Window</value>
+  </data>
+  <data name="LayoutEditorControlComponentPlaybackControl" xml:space="preserve">
+    <value>Playback Control</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarAutoAdaptive.Header" xml:space="preserve">
+    <value>Auto adaptive media control bar</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarAutoAdaptive.Description" xml:space="preserve">
+    <value>Automatically hide time and more buttons when the width is narrow</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarShowTimeArea.Header" xml:space="preserve">
+    <value>Show time area</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
+    <value>Show more menu button</value>
   </data>
 </root>

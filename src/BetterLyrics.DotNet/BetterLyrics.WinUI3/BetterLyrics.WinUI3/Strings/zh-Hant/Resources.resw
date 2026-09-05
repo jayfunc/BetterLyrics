@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -2301,6 +2301,21 @@
   <data name="WindowSettingsControlNowPlayingBar.Text" xml:space="preserve">
     <value>媒體控制面板</value>
   </data>
+  <data name="WindowSettingsControlNowPlayingBarResident.Header" xml:space="preserve">
+    <value>常駐顯示</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarBackgroundStyle.Header" xml:space="preserve">
+    <value>媒體控制列背景</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarBackgroundStyleTransparent.Content" xml:space="preserve">
+    <value>透明</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarBackgroundStyleTranslucent.Content" xml:space="preserve">
+    <value>半透明</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarBackgroundStyleOpaque.Content" xml:space="preserve">
+    <value>不透明</value>
+  </data>
   <data name="WindowSettingsControlRealTimePalette.Header" xml:space="preserve">
     <value>即時調色板預覽</value>
   </data>
@@ -2747,5 +2762,20 @@
   </data>
   <data name="SettingsPageWindow.Text" xml:space="preserve">
     <value>視窗</value>
+  </data>
+  <data name="LayoutEditorControlComponentPlaybackControl" xml:space="preserve">
+    <value>播放控制</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarAutoAdaptive.Header" xml:space="preserve">
+    <value>自動調整媒體控制列</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarAutoAdaptive.Description" xml:space="preserve">
+    <value>在寬度較窄時自動隱藏時間及其他按鈕</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarShowTimeArea.Header" xml:space="preserve">
+    <value>顯示時間區域</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
+    <value>顯示更多選單按鈕</value>
   </data>
 </root>

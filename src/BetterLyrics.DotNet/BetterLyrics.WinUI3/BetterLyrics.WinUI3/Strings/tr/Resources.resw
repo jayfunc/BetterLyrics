@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -2301,6 +2301,21 @@
   <data name="WindowSettingsControlNowPlayingBar.Text" xml:space="preserve">
     <value>Medya Kontrol Paneli</value>
   </data>
+  <data name="WindowSettingsControlNowPlayingBarResident.Header" xml:space="preserve">
+    <value>Her zaman görünür</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarBackgroundStyle.Header" xml:space="preserve">
+    <value>Medya Kontrol Çubuğu Arka Planı</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarBackgroundStyleTransparent.Content" xml:space="preserve">
+    <value>Şeffaf</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarBackgroundStyleTranslucent.Content" xml:space="preserve">
+    <value>Yarı saydam</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarBackgroundStyleOpaque.Content" xml:space="preserve">
+    <value>Opak</value>
+  </data>
   <data name="WindowSettingsControlRealTimePalette.Header" xml:space="preserve">
     <value>Canlı Palet Önizlemesi</value>
   </data>
@@ -2747,5 +2762,20 @@
   </data>
   <data name="SettingsPageWindow.Text" xml:space="preserve">
     <value>Pencere</value>
+  </data>
+  <data name="LayoutEditorControlComponentPlaybackControl" xml:space="preserve">
+    <value>Oynatma Kontrolü</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarAutoAdaptive.Header" xml:space="preserve">
+    <value>Otomatik olarak uyarlanabilen medya kontrol çubuğu</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarAutoAdaptive.Description" xml:space="preserve">
+    <value>Genişlik dar olduğunda saat ve diğer düğmeleri otomatik olarak gizle</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarShowTimeArea.Header" xml:space="preserve">
+    <value>Gösteri alanı</value>
+  </data>
+  <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
+    <value>"Daha fazla göster" menü düğmesi</value>
   </data>
 </root>

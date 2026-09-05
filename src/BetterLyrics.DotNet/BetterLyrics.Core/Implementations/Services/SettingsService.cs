@@ -10,6 +10,7 @@ using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
+using BetterLyrics.Core.Models.Domain;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.Serialization;
 using BetterLyrics.Core.ViewModels;
@@ -198,6 +199,27 @@ public class SettingsService : BaseViewModel, ISettingsService
                 {
                     Id = id
                 };
+            }
+        }
+
+        foreach (var profile in AppSettings.LayoutProfiles)
+        {
+            if (profile.Mode == NowPlayingLayoutMode.Custom && !profile.IsPlaybackControlMigrated)
+            {
+                if (profile.Placements.All(p => p.ComponentType != ComponentType.PlaybackControl))
+                {
+                    profile.Placements.Add(new ComponentPlacement
+                    {
+                        ComponentType = ComponentType.PlaybackControl,
+                        Row = 0,
+                        Column = 0,
+                        RowSpan = profile.RowDefinitions.Count > 0 ? profile.RowDefinitions.Count : 1,
+                        ColumnSpan = profile.ColumnDefinitions.Count > 0 ? profile.ColumnDefinitions.Count : 1,
+                        HorizontalAlignment = AppHorizontalAlignment.Stretch,
+                        VerticalAlignment = AppVerticalAlignment.Bottom
+                    });
+                }
+                profile.IsPlaybackControlMigrated = true;
             }
         }
     }

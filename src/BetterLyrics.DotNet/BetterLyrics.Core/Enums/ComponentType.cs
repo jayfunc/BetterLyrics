@@ -1,4 +1,4 @@
-﻿namespace BetterLyrics.Core.Enums;
+namespace BetterLyrics.Core.Enums;
 
 public enum ComponentType
 {
@@ -8,5 +8,6 @@ public enum ComponentType
     AlbumArt,
     SongTitle,
     SongArtist,
-    SongAlbum
+    SongAlbum,
+    PlaybackControl
 }

@@ -299,10 +299,25 @@
                     <controls:SettingsCard x:Uid="SettingsPageKeepNowPlayingBarLyricsPreview" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8C5;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsTimelineLyricsPreviewEnabled, Mode=TwoWay}" />
                     </controls:SettingsCard>
-                    <!--  总是收起至小白条  -->
-                    <controls:SettingsCard x:Uid="WindowSettingsControlAlwaysHideNowPlayingBar" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE70A;}">
-                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAlwaysHidePlayingBar, Mode=TwoWay}" />
-                    </controls:SettingsCard>
+                    <!--  自动适应窗口与组件宽度  -->
+                    <controls:SettingsExpander x:Uid="WindowSettingsControlNowPlayingBarAutoAdaptive" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE784;}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsNowPlayingBarAutoAdaptive, Mode=TwoWay}" />
+
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="WindowSettingsControlNowPlayingBarShowTimeArea" IsEnabled="{x:Bind LyricsWindowStatus.IsNowPlayingBarAutoAdaptive, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
+                                <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.NowPlayingBarShowTimeArea, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+
+                            <controls:SettingsCard x:Uid="WindowSettingsControlNowPlayingBarShowMoreButton" IsEnabled="{x:Bind LyricsWindowStatus.IsNowPlayingBarAutoAdaptive, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
+                                <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.NowPlayingBarShowMoreButton, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+
+                            <!--  总是收起至小白条  -->
+                            <controls:SettingsCard x:Uid="WindowSettingsControlAlwaysHideNowPlayingBar" IsEnabled="{x:Bind LyricsWindowStatus.IsNowPlayingBarAutoAdaptive, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
+                                <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAlwaysHidePlayingBar, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
                     <!--  常驻显示控制栏  -->
                     <controls:SettingsCard x:Uid="WindowSettingsControlNowPlayingBarResident" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8A1;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsNowPlayingBarResident, Mode=TwoWay}" />

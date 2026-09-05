@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using BetterLyrics.Core.Collections;
 using BetterLyrics.Core.Enums;
@@ -59,6 +59,7 @@ public partial class LayoutProfile : ObservableRecipient, ICloneable
     }
 
     public Guid Id { get; set; } = Guid.NewGuid();
+    public bool IsPlaybackControlMigrated { get; set; }
 
     public NowPlayingLayoutMode Mode { get; set; } = NowPlayingLayoutMode.Custom;
 
@@ -150,6 +151,16 @@ public partial class LayoutProfile : ObservableRecipient, ICloneable
                 ColumnSpan = 1,
                 HorizontalAlignment = AppHorizontalAlignment.Stretch,
                 VerticalAlignment = AppVerticalAlignment.Stretch
+            },
+            new ComponentPlacement
+            {
+                ComponentType = ComponentType.PlaybackControl,
+                Row = 0,
+                Column = 0,
+                RowSpan = RowDefinitions.Count,
+                ColumnSpan = ColumnDefinitions.Count,
+                HorizontalAlignment = AppHorizontalAlignment.Stretch,
+                VerticalAlignment = AppVerticalAlignment.Bottom
             }
         ];
     }
@@ -208,6 +219,16 @@ public partial class LayoutProfile : ObservableRecipient, ICloneable
                 ColumnSpan = 1,
                 HorizontalAlignment = AppHorizontalAlignment.Center,
                 VerticalAlignment = AppVerticalAlignment.Stretch
+            },
+            new ComponentPlacement
+            {
+                ComponentType = ComponentType.PlaybackControl,
+                Row = 0,
+                Column = 0,
+                RowSpan = RowDefinitions.Count,
+                ColumnSpan = ColumnDefinitions.Count,
+                HorizontalAlignment = AppHorizontalAlignment.Stretch,
+                VerticalAlignment = AppVerticalAlignment.Bottom
             }
         ];
     }
@@ -286,6 +307,16 @@ public partial class LayoutProfile : ObservableRecipient, ICloneable
                 VerticalAlignment = AppVerticalAlignment.Stretch,
                 Width = double.NaN,
                 Height = double.NaN
+            },
+            new ComponentPlacement
+            {
+                ComponentType = ComponentType.PlaybackControl,
+                Row = 0,
+                Column = 0,
+                RowSpan = RowDefinitions.Count,
+                ColumnSpan = ColumnDefinitions.Count,
+                HorizontalAlignment = AppHorizontalAlignment.Stretch,
+                VerticalAlignment = AppVerticalAlignment.Bottom
             }
         ];
     }
@@ -361,6 +392,16 @@ public partial class LayoutProfile : ObservableRecipient, ICloneable
                 VerticalAlignment = AppVerticalAlignment.Stretch,
                 Width = double.NaN,
                 Height = double.NaN
+            },
+            new ComponentPlacement
+            {
+                ComponentType = ComponentType.PlaybackControl,
+                Row = 0,
+                Column = 0,
+                RowSpan = RowDefinitions.Count,
+                ColumnSpan = ColumnDefinitions.Count,
+                HorizontalAlignment = AppHorizontalAlignment.Stretch,
+                VerticalAlignment = AppVerticalAlignment.Bottom
             }
         ];
     }
@@ -405,6 +446,16 @@ public partial class LayoutProfile : ObservableRecipient, ICloneable
                 VerticalAlignment = AppVerticalAlignment.Stretch,
                 Width = double.NaN,
                 Height = double.NaN
+            },
+            new ComponentPlacement
+            {
+                ComponentType = ComponentType.PlaybackControl,
+                Row = 0,
+                Column = 0,
+                RowSpan = RowDefinitions.Count,
+                ColumnSpan = ColumnDefinitions.Count,
+                HorizontalAlignment = AppHorizontalAlignment.Stretch,
+                VerticalAlignment = AppVerticalAlignment.Bottom
             }
         ];
     }
@@ -449,6 +500,16 @@ public partial class LayoutProfile : ObservableRecipient, ICloneable
                 VerticalAlignment = AppVerticalAlignment.Stretch,
                 Width = double.NaN,
                 Height = double.NaN
+            },
+            new ComponentPlacement
+            {
+                ComponentType = ComponentType.PlaybackControl,
+                Row = 0,
+                Column = 0,
+                RowSpan = RowDefinitions.Count,
+                ColumnSpan = ColumnDefinitions.Count,
+                HorizontalAlignment = AppHorizontalAlignment.Stretch,
+                VerticalAlignment = AppVerticalAlignment.Bottom
             }
         ];
     }
@@ -527,6 +588,16 @@ public partial class LayoutProfile : ObservableRecipient, ICloneable
                 VerticalAlignment = AppVerticalAlignment.Stretch,
                 Width = double.NaN,
                 Height = double.NaN
+            },
+            new ComponentPlacement
+            {
+                ComponentType = ComponentType.PlaybackControl,
+                Row = 0,
+                Column = 0,
+                RowSpan = RowDefinitions.Count,
+                ColumnSpan = ColumnDefinitions.Count,
+                HorizontalAlignment = AppHorizontalAlignment.Stretch,
+                VerticalAlignment = AppVerticalAlignment.Bottom
             }
         ];
     }
@@ -605,6 +676,16 @@ public partial class LayoutProfile : ObservableRecipient, ICloneable
                 VerticalAlignment = AppVerticalAlignment.Stretch,
                 Width = double.NaN,
                 Height = double.NaN
+            },
+            new ComponentPlacement
+            {
+                ComponentType = ComponentType.PlaybackControl,
+                Row = 0,
+                Column = 0,
+                RowSpan = RowDefinitions.Count,
+                ColumnSpan = ColumnDefinitions.Count,
+                HorizontalAlignment = AppHorizontalAlignment.Stretch,
+                VerticalAlignment = AppVerticalAlignment.Bottom
             }
         ];
     }
@@ -630,6 +711,16 @@ public partial class LayoutProfile : ObservableRecipient, ICloneable
                 ColumnSpan = 1,
                 HorizontalAlignment = AppHorizontalAlignment.Stretch,
                 VerticalAlignment = AppVerticalAlignment.Stretch
+            },
+            new ComponentPlacement
+            {
+                ComponentType = ComponentType.PlaybackControl,
+                Row = 0,
+                Column = 0,
+                RowSpan = RowDefinitions.Count,
+                ColumnSpan = ColumnDefinitions.Count,
+                HorizontalAlignment = AppHorizontalAlignment.Stretch,
+                VerticalAlignment = AppVerticalAlignment.Bottom
             }
         ];
     }

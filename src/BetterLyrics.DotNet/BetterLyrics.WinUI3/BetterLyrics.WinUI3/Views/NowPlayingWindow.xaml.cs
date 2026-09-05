@@ -83,7 +83,6 @@ public sealed partial class NowPlayingWindow : Window,
 
         LyricsWindowStatus = status;
         NowPlayingPage.LyricsWindowStatus = LyricsWindowStatus;
-        NowPlayingBar.LyricsWindowStatus = LyricsWindowStatus;
 
         this.Init(title: status.Name, titleBarHeightOption: TitleBarHeightOption.Collapsed,
             backdropType: BackdropType.Transparent);
@@ -190,6 +189,18 @@ public sealed partial class NowPlayingWindow : Window,
                 UpdateNowPlayingBarStatus();
             }
             else if (message.PropertyName == nameof(LyricsWindowStatus.IsNowPlayingBarResident))
+            {
+                UpdateNowPlayingBarStatus();
+            }
+            else if (message.PropertyName == nameof(LyricsWindowStatus.NowPlayingBarShowTimeArea))
+            {
+                UpdateNowPlayingBarStatus();
+            }
+            else if (message.PropertyName == nameof(LyricsWindowStatus.NowPlayingBarShowMoreButton))
+            {
+                UpdateNowPlayingBarStatus();
+            }
+            else if (message.PropertyName == nameof(LyricsWindowStatus.IsNowPlayingBarAutoAdaptive))
             {
                 UpdateNowPlayingBarStatus();
             }
@@ -828,12 +839,8 @@ public sealed partial class NowPlayingWindow : Window,
 
     private void UpdateNowPlayingBarStatus()
     {
-        NowPlayingBar.IsCompactMode = LyricsWindowStatus.IsAlwaysHidePlayingBar || RootGrid.ActualWidth < 180 ||
-                                      RootGrid.ActualHeight <= 72;
-        NowPlayingBar.IsAutoHideEnabled = !LyricsWindowStatus.IsNowPlayingBarResident;
-
-        NowPlayingBar.ShowTime = NowPlayingBar.ShowVolumeButton = NowPlayingBar.ShowMoreButton =
-            NowPlayingBar.IsCompactMode || RootGrid.ActualWidth > 350;
+        var bar = NowPlayingPage.PlaybackControlBar;
+        bar?.UpdateStatus();
     }
 
     private void UpdateTopCommandGridStatus()
@@ -871,11 +878,12 @@ public sealed partial class NowPlayingWindow : Window,
         _overlayInputHelper = new OverlayInputHelper(this);
         _overlayInputHelper.Register(RootGrid);
         _overlayInputHelper.Register(LockToggleButtonContainer);
-        if (LyricsWindowStatus.KeepNowPlayingBarInteractiveWhenLocked) _overlayInputHelper.Register(NowPlayingBar);
+        var bar = NowPlayingPage.PlaybackControlBar;
+        if (LyricsWindowStatus.KeepNowPlayingBarInteractiveWhenLocked && bar != null) _overlayInputHelper.Register(bar);
 
         _overlayInputHelper.OnInteractiveAreaMoved = args =>
         {
-            if (args.Elements.Contains(LockToggleButtonContainer) || args.Elements.Contains(NowPlayingBar))
+            if (args.Elements.Contains(LockToggleButtonContainer) || (bar != null && args.Elements.Contains(bar)))
             {
                 _windowManagerProvider.SetIsClickThrough(this, false);
             }

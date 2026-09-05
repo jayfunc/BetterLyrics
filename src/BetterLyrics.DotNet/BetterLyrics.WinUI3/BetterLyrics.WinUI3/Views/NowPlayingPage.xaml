@@ -221,6 +221,18 @@
                 </uc:ParallaxTiltControl>
             </Grid>
 
+            <Grid x:Name="PlaybackControlContainer" Visibility="Collapsed">
+                <Grid.OpacityTransition>
+                    <ScalarTransition Duration="{x:Bind constants:Time.AnimationDuration}" />
+                </Grid.OpacityTransition>
+                <uc:NowPlayingBar
+                    x:Name="NowPlayingBar"
+                    Padding="16"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"
+                    LyricsWindowStatus="{x:Bind LyricsWindowStatus, Mode=OneWay}" />
+            </Grid>
+
         </Grid>
 
     </Grid>

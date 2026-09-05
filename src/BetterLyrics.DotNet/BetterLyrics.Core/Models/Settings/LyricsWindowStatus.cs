@@ -111,6 +111,18 @@ public partial class LyricsWindowStatus : ObservableRecipient, ICloneable
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
+    public partial bool IsNowPlayingBarAutoAdaptive { get; set; } = true;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial bool NowPlayingBarShowTimeArea { get; set; } = true;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial bool NowPlayingBarShowMoreButton { get; set; } = true;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
     public partial bool IsNowPlayingBarResident { get; set; } = false;
 
     [ObservableProperty]
@@ -348,6 +360,9 @@ public partial class LyricsWindowStatus : ObservableRecipient, ICloneable
             IsTimelineLyricsPreviewEnabled = IsTimelineLyricsPreviewEnabled,
             KeepNowPlayingBarInteractiveWhenLocked = KeepNowPlayingBarInteractiveWhenLocked,
             IsAlwaysHidePlayingBar = IsAlwaysHidePlayingBar,
+            IsNowPlayingBarAutoAdaptive = IsNowPlayingBarAutoAdaptive,
+            NowPlayingBarShowTimeArea = NowPlayingBarShowTimeArea,
+            NowPlayingBarShowMoreButton = NowPlayingBarShowMoreButton,
             IsNowPlayingBarResident = IsNowPlayingBarResident,
             NowPlayingBarBackgroundStyle = NowPlayingBarBackgroundStyle
         };

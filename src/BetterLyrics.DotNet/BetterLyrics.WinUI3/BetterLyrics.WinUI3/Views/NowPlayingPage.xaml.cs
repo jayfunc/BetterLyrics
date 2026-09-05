@@ -1,4 +1,4 @@
-﻿// 2025/6/23 by Zhe Fang
+// 2025/6/23 by Zhe Fang
 
 using System;
 using System.Collections.Generic;
@@ -82,6 +82,8 @@ public sealed partial class NowPlayingPage : Page,
     }
 
     public NowPlayingPageViewModel ViewModel => (NowPlayingPageViewModel)DataContext;
+    
+    public BetterLyrics.WinUI3.Controls.NowPlayingBar PlaybackControlBar => NowPlayingBar;
 
     public void Receive(LayoutChangedMessage message)
     {
@@ -264,6 +266,7 @@ public sealed partial class NowPlayingPage : Page,
                 ComponentType.SongTitle => SongTitleContainer,
                 ComponentType.SongArtist => SongArtistContainer,
                 ComponentType.SongAlbum => SongAlbumContainer,
+                ComponentType.PlaybackControl => PlaybackControlContainer,
                 _ => null
             };
 
@@ -310,6 +313,7 @@ public sealed partial class NowPlayingPage : Page,
                 ComponentType.SongTitle => SongTitleContainer,
                 ComponentType.SongArtist => SongArtistContainer,
                 ComponentType.SongAlbum => SongAlbumContainer,
+                ComponentType.PlaybackControl => PlaybackControlContainer,
                 _ => null
             };
 
@@ -325,6 +329,7 @@ public sealed partial class NowPlayingPage : Page,
         SongTitleContainer.Visibility = Visibility.Collapsed;
         SongArtistContainer.Visibility = Visibility.Collapsed;
         SongAlbumContainer.Visibility = Visibility.Collapsed;
+        PlaybackControlContainer.Visibility = Visibility.Collapsed;
     }
 
     private void UpdateLyricsLayout()
