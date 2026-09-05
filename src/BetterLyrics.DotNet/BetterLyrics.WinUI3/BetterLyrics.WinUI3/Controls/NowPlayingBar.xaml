@@ -490,6 +490,7 @@
                     Minimum="0"
                     Style="{StaticResource GhostSliderStyle}"
                     ThumbToolTipValueConverter="{StaticResource SecondsToFormattedTimeConverter}"
+                    Visibility="{x:Bind ShowProgressBar, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
                     Value="{x:Bind SimulatedPositionSeconds, Mode=OneWay}" />
 
                 <Grid
@@ -499,7 +500,8 @@
                     PointerEntered="TimelineSliderOverlay_PointerEntered"
                     PointerExited="TimelineSliderOverlay_PointerExited"
                     PointerMoved="TimelineSliderOverlay_PointerMoved"
-                    PointerPressed="TimelineSliderOverlay_PointerPressed" />
+                    PointerPressed="TimelineSliderOverlay_PointerPressed"
+                    Visibility="{x:Bind ShowProgressBar, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
 
             </Grid>
 

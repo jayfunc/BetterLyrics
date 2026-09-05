@@ -2775,6 +2775,9 @@
   <data name="WindowSettingsControlNowPlayingBarShowTimeArea.Header" xml:space="preserve">
     <value>Зона представлений</value>
   </data>
+    <data name="WindowSettingsControlNowPlayingBarShowProgressBar.Header" xml:space="preserve">
+    <value>Показать индикатор выполнения</value>
+  </data>
   <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
     <value>Кнопка «Показать больше»</value>
   </data>
@@ -2800,4 +2803,5 @@
     <value>Минимальный порог яркости для фильтрации цветов в светлом режиме</value>
   </data>
 </root>
+
 

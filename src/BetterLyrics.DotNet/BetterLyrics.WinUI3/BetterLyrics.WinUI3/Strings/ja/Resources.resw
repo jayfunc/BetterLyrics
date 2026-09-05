@@ -2775,6 +2775,9 @@
   <data name="WindowSettingsControlNowPlayingBarShowTimeArea.Header" xml:space="preserve">
     <value>ショータイムエリア</value>
   </data>
+    <data name="WindowSettingsControlNowPlayingBarShowProgressBar.Header" xml:space="preserve">
+    <value>進行状況バーを表示する</value>
+  </data>
   <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
     <value>「メニューをさらに表示」ボタン</value>
   </data>
@@ -2800,4 +2803,5 @@
     <value>ライトモードでの色のフィルタリングにおける最小明度閾値</value>
   </data>
 </root>
+
 

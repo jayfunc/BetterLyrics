@@ -2775,6 +2775,9 @@
   <data name="WindowSettingsControlNowPlayingBarShowTimeArea.Header" xml:space="preserve">
     <value>Show time area</value>
   </data>
+    <data name="WindowSettingsControlNowPlayingBarShowProgressBar.Header" xml:space="preserve">
+    <value>Show progress bar</value>
+  </data>
   <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
     <value>Show more menu button</value>
   </data>
@@ -2800,4 +2803,5 @@
     <value>Minimum lightness threshold for filtering colors in light mode</value>
   </data>
 </root>
+
 

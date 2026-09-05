@@ -204,6 +204,10 @@ public sealed partial class NowPlayingWindow : Window,
             {
                 UpdateNowPlayingBarStatus();
             }
+            else if (message.PropertyName == nameof(LyricsWindowStatus.NowPlayingBarShowProgressBar))
+            {
+                UpdateNowPlayingBarStatus();
+            }
         }
     }
 

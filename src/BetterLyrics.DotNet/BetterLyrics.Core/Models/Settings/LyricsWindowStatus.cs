@@ -119,6 +119,10 @@ public partial class LyricsWindowStatus : ObservableRecipient, ICloneable
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
+    public partial bool NowPlayingBarShowProgressBar { get; set; } = true;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
     public partial bool NowPlayingBarShowMoreButton { get; set; } = true;
 
     [ObservableProperty]
@@ -372,6 +376,7 @@ public partial class LyricsWindowStatus : ObservableRecipient, ICloneable
             IsAlwaysHidePlayingBar = IsAlwaysHidePlayingBar,
             IsNowPlayingBarAutoAdaptive = IsNowPlayingBarAutoAdaptive,
             NowPlayingBarShowTimeArea = NowPlayingBarShowTimeArea,
+            NowPlayingBarShowProgressBar = NowPlayingBarShowProgressBar,
             NowPlayingBarShowMoreButton = NowPlayingBarShowMoreButton,
             IsNowPlayingBarResident = IsNowPlayingBarResident,
             NowPlayingBarBackgroundStyle = NowPlayingBarBackgroundStyle

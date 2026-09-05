@@ -2775,6 +2775,9 @@
   <data name="WindowSettingsControlNowPlayingBarShowTimeArea.Header" xml:space="preserve">
     <value>منطقة عرض العروض</value>
   </data>
+    <data name="WindowSettingsControlNowPlayingBarShowProgressBar.Header" xml:space="preserve">
+    <value>إظهار شريط التقدم</value>
+  </data>
   <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
     <value>زر «إظهار المزيد» في القائمة</value>
   </data>
@@ -2800,4 +2803,5 @@
     <value>الحد الأدنى لدرجة السطوع لتصفية الألوان في الوضع الفاتح</value>
   </data>
 </root>
+
 

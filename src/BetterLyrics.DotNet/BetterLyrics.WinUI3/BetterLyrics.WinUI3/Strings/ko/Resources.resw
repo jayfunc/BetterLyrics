@@ -2775,6 +2775,9 @@
   <data name="WindowSettingsControlNowPlayingBarShowTimeArea.Header" xml:space="preserve">
     <value>공연 시간대</value>
   </data>
+    <data name="WindowSettingsControlNowPlayingBarShowProgressBar.Header" xml:space="preserve">
+    <value>진행률 표시줄 표시</value>
+  </data>
   <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
     <value>더 보기 메뉴 버튼</value>
   </data>
@@ -2800,4 +2803,5 @@
     <value>라이트 모드에서 색상을 필터링하기 위한 최소 명도 임계값</value>
   </data>
 </root>
+
 

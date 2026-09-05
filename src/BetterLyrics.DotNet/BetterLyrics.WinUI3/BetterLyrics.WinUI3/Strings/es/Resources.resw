@@ -2775,6 +2775,9 @@
   <data name="WindowSettingsControlNowPlayingBarShowTimeArea.Header" xml:space="preserve">
     <value>Área de espectáculos</value>
   </data>
+    <data name="WindowSettingsControlNowPlayingBarShowProgressBar.Header" xml:space="preserve">
+    <value>Mostrar barra de progreso</value>
+  </data>
   <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
     <value>Botón «Mostrar más» del menú</value>
   </data>
@@ -2800,4 +2803,5 @@
     <value>Umbral mínimo de claridad para filtrar colores en el modo claro</value>
   </data>
 </root>
+
 

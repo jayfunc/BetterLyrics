@@ -35,6 +35,10 @@ public sealed partial class NowPlayingBar : UserControl,
         DependencyProperty.Register(nameof(ShowSongInfo), typeof(bool), typeof(NowPlayingBar),
             new PropertyMetadata(false));
 
+    public static readonly DependencyProperty ShowProgressBarProperty =
+        DependencyProperty.Register(nameof(ShowProgressBar), typeof(bool), typeof(NowPlayingBar),
+            new PropertyMetadata(true));
+
     public static readonly DependencyProperty ShowPlayingQueueButtonProperty =
         DependencyProperty.Register(nameof(ShowPlayingQueueButton), typeof(bool), typeof(NowPlayingBar),
             new PropertyMetadata(false));
@@ -113,6 +117,12 @@ public sealed partial class NowPlayingBar : UserControl,
         set => SetValue(ShowSongInfoProperty, value);
     }
 
+    public bool ShowProgressBar
+    {
+        get => (bool)GetValue(ShowProgressBarProperty);
+        set => SetValue(ShowProgressBarProperty, value);
+    }
+
     public bool ShowPlayingQueueButton
     {
         get => (bool)GetValue(ShowPlayingQueueButtonProperty);
@@ -162,11 +172,13 @@ public sealed partial class NowPlayingBar : UserControl,
             ShowTime = IsCompactMode || ActualWidth > 350;
             ShowMoreButton = IsCompactMode || ActualWidth > 350;
             ShowVolumeButton = IsCompactMode || ActualWidth > 350;
+            ShowProgressBar = true; // when auto-adaptive, always show
         }
         else
         {
             IsCompactMode = LyricsWindowStatus.IsAlwaysHidePlayingBar;
             ShowTime = LyricsWindowStatus.NowPlayingBarShowTimeArea;
+            ShowProgressBar = LyricsWindowStatus.NowPlayingBarShowProgressBar;
             ShowMoreButton = LyricsWindowStatus.NowPlayingBarShowMoreButton;
             ShowVolumeButton = LyricsWindowStatus.NowPlayingBarShowMoreButton;
         }

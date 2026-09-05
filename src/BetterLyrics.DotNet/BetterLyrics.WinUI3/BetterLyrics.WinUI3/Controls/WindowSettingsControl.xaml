@@ -326,6 +326,10 @@
                                 <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.NowPlayingBarShowTimeArea, Mode=TwoWay}" />
                             </controls:SettingsCard>
 
+                            <controls:SettingsCard x:Uid="WindowSettingsControlNowPlayingBarShowProgressBar" IsEnabled="{x:Bind LyricsWindowStatus.IsNowPlayingBarAutoAdaptive, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
+                                <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.NowPlayingBarShowProgressBar, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+
                             <controls:SettingsCard x:Uid="WindowSettingsControlNowPlayingBarShowMoreButton" IsEnabled="{x:Bind LyricsWindowStatus.IsNowPlayingBarAutoAdaptive, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}">
                                 <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.NowPlayingBarShowMoreButton, Mode=TwoWay}" />
                             </controls:SettingsCard>

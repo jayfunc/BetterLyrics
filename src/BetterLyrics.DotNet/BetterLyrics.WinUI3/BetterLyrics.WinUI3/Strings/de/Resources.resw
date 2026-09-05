@@ -2775,6 +2775,9 @@
   <data name="WindowSettingsControlNowPlayingBarShowTimeArea.Header" xml:space="preserve">
     <value>Veranstaltungsort</value>
   </data>
+    <data name="WindowSettingsControlNowPlayingBarShowProgressBar.Header" xml:space="preserve">
+    <value>Fortschrittsbalken anzeigen</value>
+  </data>
   <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
     <value>Schaltfläche „Mehr anzeigen“</value>
   </data>
@@ -2800,4 +2803,5 @@
     <value>Mindestschwelle für die Helligkeit beim Filtern von Farben im Hellmodus</value>
   </data>
 </root>
+
 
