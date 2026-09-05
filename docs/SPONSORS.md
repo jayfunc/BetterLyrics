@@ -7,7 +7,7 @@ Special thanks to the following people for their support!
     <tr>
       <td></td>
       <td></td>
-      <td></td>
+      <td>Sep 3, 2026 *事</td>
       <td>Aug 15, 2026 &lt;Anon/匿名&gt;</td>
     </tr>
     <tr>
