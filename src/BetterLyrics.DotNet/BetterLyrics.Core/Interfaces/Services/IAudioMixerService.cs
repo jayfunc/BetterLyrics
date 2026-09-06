@@ -6,4 +6,6 @@ public interface IAudioMixerService
     void SetApplicationVolume(string? processNameOrAumid, int volume);
     int GetApplicationVolume(int processId);
     int GetApplicationVolume(string? processNameOrAumid);
+    void SetSystemVolume(int volume);
+    int GetSystemVolume();
 }

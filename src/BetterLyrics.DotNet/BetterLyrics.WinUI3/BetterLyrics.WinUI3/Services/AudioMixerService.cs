@@ -246,4 +246,34 @@ public class AudioMixerService : IAudioMixerService
             _logger.LogError(ex, "RunOnAudioSessions");
         }
     }
+
+    public void SetSystemVolume(int volume)
+    {
+        if (_defaultDevice == null) return;
+        try
+        {
+            var targetVol = Math.Clamp(volume, 0, 100) / 100f;
+            _defaultDevice.AudioEndpointVolume.MasterVolumeLevelScalar = targetVol;
+            if (_defaultDevice.AudioEndpointVolume.Mute)
+                _defaultDevice.AudioEndpointVolume.Mute = false;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "SetSystemVolume");
+        }
+    }
+
+    public int GetSystemVolume()
+    {
+        if (_defaultDevice == null) return -1;
+        try
+        {
+            return (int)(_defaultDevice.AudioEndpointVolume.MasterVolumeLevelScalar * 100);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "GetSystemVolume");
+            return -1;
+        }
+    }
 }

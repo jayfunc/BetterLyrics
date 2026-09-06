@@ -396,6 +396,11 @@ public sealed partial class NowPlayingBar : UserControl,
         ViewModel.ApplyVolume();
     }
 
+    private void ExtendedSlider_SystemValueChangedByUser(object sender, ExtendedSliderValueChangedByUserEventArgs e)
+    {
+        ViewModel.ApplySystemVolume();
+    }
+
     private void LyricsSearchShortcutButton_Click(object sender, RoutedEventArgs e)
     {
         _windowManagerProvider.OpenOrShowWindow<LyricsSearchWindow>();

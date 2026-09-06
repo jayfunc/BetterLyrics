@@ -32,6 +32,7 @@ public partial class NowPlayingBarViewModel : BaseViewModel
     [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 
     [ObservableProperty] public partial int Volume { get; set; } = -1;
+    [ObservableProperty] public partial int SystemVolume { get; set; } = -1;
 
     [ObservableProperty] public partial LyricsLine? TimelineSliderThumbLyricsLine { get; set; }
 
@@ -40,11 +41,17 @@ public partial class NowPlayingBarViewModel : BaseViewModel
     public void UpdateVolume()
     {
         Volume = _audioMixerService.GetApplicationVolume(_gsmtcService.CurrentMediaSourceProviderInfo?.Provider);
+        SystemVolume = _audioMixerService.GetSystemVolume();
     }
 
     public void ApplyVolume()
     {
         _audioMixerService.SetApplicationVolume(_gsmtcService.CurrentMediaSourceProviderInfo?.Provider, Volume);
+    }
+    
+    public void ApplySystemVolume()
+    {
+        _audioMixerService.SetSystemVolume(SystemVolume);
     }
 
     partial void OnTimelineSliderThumbSecondsChanged(double value)

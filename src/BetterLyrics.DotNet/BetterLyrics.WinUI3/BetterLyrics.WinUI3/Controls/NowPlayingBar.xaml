@@ -355,14 +355,55 @@
 
                                 <Button.ContextFlyout>
                                     <Flyout x:Name="VolumeFlyout" ShouldConstrainToRootBounds="False">
-                                        <local:ExtendedSlider
-                                            Frequency="1"
-                                            Maximum="100"
-                                            Minimum="0"
-                                            ResetButtonVisibility="Collapsed"
-                                            Unit="%"
-                                            ValueChangedByUser="ExtendedSlider_ValueChangedByUser"
-                                            Value="{x:Bind ViewModel.Volume, Mode=TwoWay}" />
+                                        <StackPanel Spacing="8">
+                                            <!--  System Volume  -->
+                                            <Grid ColumnSpacing="8">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="200" />
+                                                </Grid.ColumnDefinitions>
+                                                <FontIcon
+                                                    Grid.Column="0"
+                                                    Margin="0,9,0,0"
+                                                    VerticalAlignment="Top"
+                                                    FontFamily="{StaticResource SegoeFluentIcons}"
+                                                    FontSize="16"
+                                                    Glyph="&#xE995;" />
+                                                <local:ExtendedSlider
+                                                    Grid.Column="1"
+                                                    Frequency="1"
+                                                    Maximum="100"
+                                                    Minimum="0"
+                                                    ResetButtonVisibility="Collapsed"
+                                                    Unit="%"
+                                                    ValueChangedByUser="ExtendedSlider_SystemValueChangedByUser"
+                                                    Value="{x:Bind ViewModel.SystemVolume, Mode=TwoWay}" />
+                                            </Grid>
+
+                                            <!--  App Volume  -->
+                                            <Grid ColumnSpacing="8">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="200" />
+                                                </Grid.ColumnDefinitions>
+                                                <Image
+                                                    Grid.Column="0"
+                                                    Width="16"
+                                                    Height="16"
+                                                    Margin="0,9,0,0"
+                                                    VerticalAlignment="Top"
+                                                    helpers:AppExtensions.Aumid="{x:Bind GSMTCService.CurrentMediaSourceProviderInfo.Provider, Mode=OneWay}" />
+                                                <local:ExtendedSlider
+                                                    Grid.Column="1"
+                                                    Frequency="1"
+                                                    Maximum="100"
+                                                    Minimum="0"
+                                                    ResetButtonVisibility="Collapsed"
+                                                    Unit="%"
+                                                    ValueChangedByUser="ExtendedSlider_ValueChangedByUser"
+                                                    Value="{x:Bind ViewModel.Volume, Mode=TwoWay}" />
+                                            </Grid>
+                                        </StackPanel>
                                     </Flyout>
                                 </Button.ContextFlyout>
                             </Button>
