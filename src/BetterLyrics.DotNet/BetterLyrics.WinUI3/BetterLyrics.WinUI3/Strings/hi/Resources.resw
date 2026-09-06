@@ -2775,7 +2775,7 @@
   <data name="WindowSettingsControlNowPlayingBarShowTimeArea.Header" xml:space="preserve">
     <value>प्रदर्शन का समय क्षेत्र</value>
   </data>
-    <data name="WindowSettingsControlNowPlayingBarShowProgressBar.Header" xml:space="preserve">
+  <data name="WindowSettingsControlNowPlayingBarShowProgressBar.Header" xml:space="preserve">
     <value>प्रगति बार दिखाएँ</value>
   </data>
   <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
@@ -2803,5 +2803,3 @@
     <value>लाइट मोड में रंगों को फ़िल्टर करने के लिए न्यूनतम हल्केपन की सीमा</value>
   </data>
 </root>
-
-

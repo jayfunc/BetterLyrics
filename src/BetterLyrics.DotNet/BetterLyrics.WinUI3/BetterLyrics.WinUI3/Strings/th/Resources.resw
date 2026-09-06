@@ -2775,7 +2775,7 @@
   <data name="WindowSettingsControlNowPlayingBarShowTimeArea.Header" xml:space="preserve">
     <value>พื้นที่แสดงเวลา</value>
   </data>
-    <data name="WindowSettingsControlNowPlayingBarShowProgressBar.Header" xml:space="preserve">
+  <data name="WindowSettingsControlNowPlayingBarShowProgressBar.Header" xml:space="preserve">
     <value>แสดงความคืบหน้า</value>
   </data>
   <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
@@ -2803,5 +2803,3 @@
     <value>ค่าความสว่างขั้นต่ำสำหรับการกรองสีในโหมดแสง</value>
   </data>
 </root>
-
-

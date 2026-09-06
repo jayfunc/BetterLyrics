@@ -2775,7 +2775,7 @@
   <data name="WindowSettingsControlNowPlayingBarShowTimeArea.Header" xml:space="preserve">
     <value>Waktu pertunjukan</value>
   </data>
-    <data name="WindowSettingsControlNowPlayingBarShowProgressBar.Header" xml:space="preserve">
+  <data name="WindowSettingsControlNowPlayingBarShowProgressBar.Header" xml:space="preserve">
     <value>Tunjukkan bar kemajuan</value>
   </data>
   <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
@@ -2803,5 +2803,3 @@
     <value>Ambang kecerahan minimum untuk menapis warna dalam mod cahaya</value>
   </data>
 </root>
-
-

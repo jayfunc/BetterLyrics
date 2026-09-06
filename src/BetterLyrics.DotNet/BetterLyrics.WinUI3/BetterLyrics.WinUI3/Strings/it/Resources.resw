@@ -2775,7 +2775,7 @@
   <data name="WindowSettingsControlNowPlayingBarShowTimeArea.Header" xml:space="preserve">
     <value>Area spettacoli</value>
   </data>
-    <data name="WindowSettingsControlNowPlayingBarShowProgressBar.Header" xml:space="preserve">
+  <data name="WindowSettingsControlNowPlayingBarShowProgressBar.Header" xml:space="preserve">
     <value>Mostra la barra di avanzamento</value>
   </data>
   <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
@@ -2803,5 +2803,3 @@
     <value>Soglia minima di luminosità per il filtraggio dei colori in modalità chiara</value>
   </data>
 </root>
-
-

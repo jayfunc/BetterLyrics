@@ -1546,7 +1546,7 @@
     <value>中国語ピンイン（広東語）</value>
   </data>
   <data name="SettingsPageKeepNowPlayingBarInteractive.Header" xml:space="preserve">
-    <value>ロック中もメディアバー操作を可能にする</value>
+    <value>ロック中もメディアコントロールバー操作を可能にする</value>
   </data>
   <data name="SettingsPageKeepNowPlayingBarLyricsPreview.Header" xml:space="preserve">
     <value>プログレスバーの歌詞プレビュー</value>
@@ -2302,7 +2302,7 @@
     <value>メディアコントロールパネル</value>
   </data>
   <data name="WindowSettingsControlNowPlayingBarResident.Header" xml:space="preserve">
-    <value>常に表示される</value>
+    <value>常に表示</value>
   </data>
   <data name="WindowSettingsControlNowPlayingBarBackgroundStyle.Header" xml:space="preserve">
     <value>メディアコントロールバーの背景</value>
@@ -2764,44 +2764,42 @@
     <value>ウィンドウ</value>
   </data>
   <data name="LayoutEditorControlComponentPlaybackControl" xml:space="preserve">
-    <value>再生操作</value>
+    <value>メディアコントロールバー</value>
   </data>
   <data name="WindowSettingsControlNowPlayingBarAutoAdaptive.Header" xml:space="preserve">
-    <value>自動適応型メディアコントロールバー</value>
+    <value>メディアコントロールバーの自動調整</value>
   </data>
   <data name="WindowSettingsControlNowPlayingBarAutoAdaptive.Description" xml:space="preserve">
-    <value>幅が狭いときは、時刻やその他のボタンを自動的に非表示にする</value>
+    <value>幅が狭いときに時間と「その他」ボタンを自動で非表示</value>
   </data>
   <data name="WindowSettingsControlNowPlayingBarShowTimeArea.Header" xml:space="preserve">
-    <value>ショータイムエリア</value>
+    <value>時間エリアを表示</value>
   </data>
-    <data name="WindowSettingsControlNowPlayingBarShowProgressBar.Header" xml:space="preserve">
-    <value>進行状況バーを表示する</value>
+  <data name="WindowSettingsControlNowPlayingBarShowProgressBar.Header" xml:space="preserve">
+    <value>プログレスバーを表示</value>
   </data>
   <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
-    <value>「メニューをさらに表示」ボタン</value>
+    <value>「その他」メニューボタンを表示</value>
   </data>
   <data name="SettingsPagePaletteDarkToneThreshold.Header" xml:space="preserve">
-    <value>暗部閾値</value>
+    <value>ダークトーンのしきい値</value>
   </data>
   <data name="SettingsPagePaletteLightToneThreshold.Header" xml:space="preserve">
-    <value>明度閾値</value>
+    <value>ライトトーンのしきい値</value>
   </data>
   <data name="SettingsPagePaletteChromaWeight.Description" xml:space="preserve">
-    <value>パレットを抽出する際、鮮やかな色に対する優先度を調整します</value>
+    <value>パレット抽出時の鮮やかさの優先度を調整します</value>
   </data>
   <data name="SettingsPagePaletteToneWeight.Description" xml:space="preserve">
-    <value>パレットを抽出する際、明るい色調か暗い色調のどちらを優先するかを設定します</value>
+    <value>パレット抽出時の明暗の優先度を調整します</value>
   </data>
   <data name="SettingsPagePalettePopulationWeight.Description" xml:space="preserve">
-    <value>画像の広い範囲を占める色の優先度を調整します</value>
+    <value>パレット抽出時の占有面積が大きい色の優先度を調整します</value>
   </data>
   <data name="SettingsPagePaletteDarkToneThreshold.Description" xml:space="preserve">
-    <value>ダークモードでの色フィルタリングにおける最大の明度閾値</value>
+    <value>ダークモードで色を抽出する際の明度の上限しきい値</value>
   </data>
   <data name="SettingsPagePaletteLightToneThreshold.Description" xml:space="preserve">
-    <value>ライトモードでの色のフィルタリングにおける最小明度閾値</value>
+    <value>ライトモードで色を抽出する際の明度の下限しきい値</value>
   </data>
 </root>
-
-

@@ -2764,7 +2764,7 @@
     <value>視窗</value>
   </data>
   <data name="LayoutEditorControlComponentPlaybackControl" xml:space="preserve">
-    <value>播放控制</value>
+    <value>媒體控制列</value>
   </data>
   <data name="WindowSettingsControlNowPlayingBarAutoAdaptive.Header" xml:space="preserve">
     <value>自動調整媒體控制列</value>
@@ -2775,7 +2775,7 @@
   <data name="WindowSettingsControlNowPlayingBarShowTimeArea.Header" xml:space="preserve">
     <value>顯示時間區域</value>
   </data>
-    <data name="WindowSettingsControlNowPlayingBarShowProgressBar.Header" xml:space="preserve">
+  <data name="WindowSettingsControlNowPlayingBarShowProgressBar.Header" xml:space="preserve">
     <value>顯示進度條</value>
   </data>
   <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve">
@@ -2803,5 +2803,3 @@
     <value>淺色模式下過濾顏色的最低亮度閾值</value>
   </data>
 </root>
-
-
