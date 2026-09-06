@@ -109,6 +109,15 @@
                                     Value="{x:Bind LyricsBackgroundSettings.FluidOverlayOpacity, Mode=TwoWay}" />
                             </controls:SettingsCard>
 
+                            <controls:SettingsCard x:Uid="SettingsPageSpeed" IsEnabled="{x:Bind LyricsBackgroundSettings.IsFluidOverlayEnabled, Mode=OneWay}">
+                                <uc:ExtendedSlider
+                                    Default="100"
+                                    Maximum="400"
+                                    Minimum="0"
+                                    Unit="%"
+                                    Value="{x:Bind LyricsBackgroundSettings.FluidOverlaySpeed, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+
                             <controls:SettingsCard x:Uid="SettingsPageLightWaveEffect" IsEnabled="{x:Bind LyricsBackgroundSettings.IsFluidOverlayEnabled, Mode=OneWay}">
                                 <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsFluidOverlayLightWaveEnabled, Mode=TwoWay}" />
                             </controls:SettingsCard>

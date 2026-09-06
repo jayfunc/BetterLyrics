@@ -373,6 +373,23 @@ public sealed partial class NowPlayingPage : Page,
         UpdateAlbumArtFadeOutDirection();
     }
 
+    private void UpdateNowPlayingBarLayout()
+    {
+        if (RootGrid == null || PlaybackControlContainer == null) return;
+        if (!PlaybackControlContainer.IsLoaded || !RootGrid.IsLoaded) return;
+
+        if (PlaybackControlContainer.Visibility == Visibility.Collapsed)
+        {
+            NowPlayingCanvas.NowPlayingBarRect = new Rect(0, 0, 0, 0);
+            return;
+        }
+
+        var transform = PlaybackControlContainer.TransformToVisual(RootGrid);
+        var localRect =
+            new Rect(0, 0, PlaybackControlContainer.ActualWidth, PlaybackControlContainer.ActualHeight);
+        NowPlayingCanvas.NowPlayingBarRect = transform.TransformBounds(localRect);
+    }
+
     private void OnLayoutChanged()
     {
         _ = _layoutChangedDebouncer.RunAsync(async () =>
@@ -386,6 +403,7 @@ public sealed partial class NowPlayingPage : Page,
 
             UpdateLyricsLayout();
             UpdateAlbumArtLayout();
+            UpdateNowPlayingBarLayout();
 
             await RenderSongInfoAsync();
 
@@ -406,6 +424,11 @@ public sealed partial class NowPlayingPage : Page,
     private void AlbumArtContainer_SizeChanged(object sender, SizeChangedEventArgs e)
     {
         UpdateAlbumArtLayout();
+    }
+
+    private void PlaybackControlContainer_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        UpdateNowPlayingBarLayout();
     }
 
     private void UpdateAutoScrollViewIsPlaying(AutoScrollView element, bool isPointerEntered)

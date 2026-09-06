@@ -221,7 +221,7 @@
                 </uc:ParallaxTiltControl>
             </Grid>
 
-            <Grid x:Name="PlaybackControlContainer" Visibility="Collapsed">
+            <Grid x:Name="PlaybackControlContainer" Visibility="Collapsed" SizeChanged="PlaybackControlContainer_SizeChanged">
                 <Grid.OpacityTransition>
                     <ScalarTransition Duration="{x:Bind constants:Time.AnimationDuration}" />
                 </Grid.OpacityTransition>

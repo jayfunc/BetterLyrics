@@ -69,6 +69,10 @@ public sealed partial class NowPlayingCanvas : UserControl,
         DependencyProperty.Register(nameof(AlbumArtRect), typeof(Rect), typeof(NowPlayingCanvas),
             new PropertyMetadata(new Rect(), OnDependencyPropertyChanged));
 
+    public static readonly DependencyProperty NowPlayingBarRectProperty =
+        DependencyProperty.Register(nameof(NowPlayingBarRect), typeof(Rect), typeof(NowPlayingCanvas),
+            new PropertyMetadata(new Rect(), OnDependencyPropertyChanged));
+
     public static readonly DependencyProperty LyricsStartXProperty =
         DependencyProperty.Register(nameof(LyricsStartX), typeof(double), typeof(NowPlayingCanvas),
             new PropertyMetadata(0.0, OnDependencyPropertyChanged));
@@ -241,6 +245,12 @@ public sealed partial class NowPlayingCanvas : UserControl,
     {
         get => (Rect)GetValue(AlbumArtRectProperty);
         set => SetValue(AlbumArtRectProperty, value);
+    }
+
+    public Rect NowPlayingBarRect
+    {
+        get => (Rect)GetValue(NowPlayingBarRectProperty);
+        set => SetValue(NowPlayingBarRectProperty, value);
     }
 
     public double LyricsStartX
@@ -838,6 +848,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
         _fluidRenderer.EnableLightWave = lyricsBg.IsFluidOverlayLightWaveEnabled;
         _fluidRenderer.EnableDithering = lyricsBg.IsColorDitheringEnabled;
         _fluidRenderer.Opacity = lyricsBg.FluidOverlayOpacity / 100.0;
+        _fluidRenderer.Speed = lyricsBg.FluidOverlaySpeed / 100f;
         _fluidRenderer.IsStatic = isAccentColorsTransitioning ? false : lyricsBg.IsFluidOverlayStatic;
         _fluidRenderer.Update(
             sender, elapsedTime,
@@ -1062,9 +1073,12 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
     private bool IsPointerInsideLyricsContainer(Point position)
     {
-        return
-            _renderLyricsStartX <= position.X && position.X <= _renderLyricsStartX + _renderLyricsWidth &&
-            _renderLyricsStartY <= position.Y && position.Y <= _renderLyricsStartY + _renderLyricsHeight;
+        var inLyricsArea = _renderLyricsStartX <= position.X && position.X <= _renderLyricsStartX + _renderLyricsWidth &&
+                           _renderLyricsStartY <= position.Y && position.Y <= _renderLyricsStartY + _renderLyricsHeight;
+        
+        var inNowPlayingBarArea = NowPlayingBarRect.Contains(position);
+
+        return inLyricsArea && !inNowPlayingBarArea;
     }
 
     // ====

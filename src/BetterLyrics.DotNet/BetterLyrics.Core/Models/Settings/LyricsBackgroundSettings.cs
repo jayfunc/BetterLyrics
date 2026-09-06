@@ -61,6 +61,10 @@ public partial class LyricsBackgroundSettings : ObservableRecipient, ICloneable
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
+    public partial int FluidOverlaySpeed { get; set; } = 100;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
     public partial bool IsFluidOverlayBrethingEffectEnabled { get; set; } = false;
 
     [ObservableProperty]
@@ -230,6 +234,7 @@ public partial class LyricsBackgroundSettings : ObservableRecipient, ICloneable
 
             IsFluidOverlayEnabled = IsFluidOverlayEnabled,
             FluidOverlayOpacity = FluidOverlayOpacity,
+            FluidOverlaySpeed = FluidOverlaySpeed,
             FluidOverlayBreathingIntensity = FluidOverlayBreathingIntensity,
             IsFluidOverlayBrethingEffectEnabled = IsFluidOverlayBrethingEffectEnabled,
             IsFluidOverlayLightWaveEnabled = IsFluidOverlayLightWaveEnabled,

@@ -216,42 +216,13 @@
                             Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                   Glyph=&#xF8AE;}"
                             Style="{ThemeResource GhostButtonStyle}"
-                            Visibility="Collapsed">
-                            <interactivity:Interaction.Behaviors>
-                                <interactivity:DataTriggerBehavior
-                                    Binding="{x:Bind GSMTCService.CurrentIsPlaying, Mode=OneWay}"
-                                    ComparisonCondition="Equal"
-                                    Value="True">
-                                    <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                                </interactivity:DataTriggerBehavior>
-                                <interactivity:DataTriggerBehavior
-                                    Binding="{x:Bind GSMTCService.CurrentIsPlaying, Mode=OneWay}"
-                                    ComparisonCondition="Equal"
-                                    Value="False">
-                                    <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
-                                </interactivity:DataTriggerBehavior>
-                            </interactivity:Interaction.Behaviors>
-                        </Button>
+                            Visibility="{x:Bind GSMTCService.CurrentIsPlaying, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
                         <Button
                             Command="{x:Bind ViewModel.PlaySongCommand}"
                             Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                   Glyph=&#xF5B0;}"
-                            Style="{ThemeResource GhostButtonStyle}">
-                            <interactivity:Interaction.Behaviors>
-                                <interactivity:DataTriggerBehavior
-                                    Binding="{x:Bind GSMTCService.CurrentIsPlaying, Mode=OneWay}"
-                                    ComparisonCondition="Equal"
-                                    Value="True">
-                                    <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Collapsed" />
-                                </interactivity:DataTriggerBehavior>
-                                <interactivity:DataTriggerBehavior
-                                    Binding="{x:Bind GSMTCService.CurrentIsPlaying, Mode=OneWay}"
-                                    ComparisonCondition="Equal"
-                                    Value="False">
-                                    <interactivity:ChangePropertyAction PropertyName="Visibility" Value="Visible" />
-                                </interactivity:DataTriggerBehavior>
-                            </interactivity:Interaction.Behaviors>
-                        </Button>
+                            Style="{ThemeResource GhostButtonStyle}"
+                            Visibility="{x:Bind GSMTCService.CurrentIsPlaying, Mode=OneWay, Converter={StaticResource BoolNegationToVisibilityConverter}}" />
                         <!--  Next track  -->
                         <Button
                             Command="{x:Bind ViewModel.NextSongCommand}"

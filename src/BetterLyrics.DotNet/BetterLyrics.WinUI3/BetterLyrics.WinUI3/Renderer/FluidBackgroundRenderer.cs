@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Numerics;
 using Windows.UI;
 using BetterLyrics.WinUI3.Extensions;
@@ -29,6 +29,7 @@ public partial class FluidBackgroundRenderer : EffectRendererBase, IDisposable
     public bool UseHSVBlending { get; set; } = false;
     public bool EnableDithering { get; set; } = true;
     public bool IsStatic { get; set; } = false;
+    public float Speed { get; set; } = 1.0f;
 
     public void Dispose()
     {
@@ -62,7 +63,7 @@ public partial class FluidBackgroundRenderer : EffectRendererBase, IDisposable
 
         UpdateBreathing(bassEnergy, breathingIntensity);
 
-        if (!IsStatic) _timeAccumulator += (float)deltaTime.TotalSeconds;
+        if (!IsStatic) _timeAccumulator += (float)deltaTime.TotalSeconds * Speed;
 
         if (is3DEnabled)
         {
