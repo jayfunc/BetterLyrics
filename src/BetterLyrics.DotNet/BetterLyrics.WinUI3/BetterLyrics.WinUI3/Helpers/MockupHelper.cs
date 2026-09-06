@@ -1,4 +1,4 @@
-﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Enums;
 using Microsoft.UI.Text;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -134,15 +134,47 @@ public static class MockupHelper
                 innerContent = cardBorder;
                 break;
 
+            case ComponentType.PlaybackControl:
+                var playStack = new StackPanel
+                {
+                    Orientation = Orientation.Horizontal,
+                    Spacing = 16,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+                playStack.Children.Add(new FontIcon { Glyph = "\uE892", FontSize = 16, Foreground = primaryTextBrush });
+                playStack.Children.Add(new FontIcon { Glyph = "\uE768", FontSize = 24, Foreground = primaryTextBrush });
+                playStack.Children.Add(new FontIcon { Glyph = "\uE893", FontSize = 16, Foreground = primaryTextBrush });
+                
+                var playContainer = new StackPanel
+                {
+                    Spacing = 8,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+                playContainer.Children.Add(new TextBlock
+                {
+                    Text = $"[{displayName}]",
+                    Foreground = secondaryTextBrush,
+                    FontSize = 14,
+                    HorizontalAlignment = HorizontalAlignment.Center
+                });
+                playContainer.Children.Add(playStack);
+                
+                innerContent = new Grid { Width = 400, Children = { playContainer } };
+                break;
+
             default:
-                innerContent = new TextBlock
+                var defaultGrid = new Grid { Width = 400 };
+                defaultGrid.Children.Add(new TextBlock
                 {
                     Text = $"[{displayName}]",
                     Foreground = secondaryTextBrush,
                     FontSize = 14,
                     VerticalAlignment = VerticalAlignment.Center,
                     HorizontalAlignment = HorizontalAlignment.Center
-                };
+                });
+                innerContent = defaultGrid;
                 break;
         }
 
