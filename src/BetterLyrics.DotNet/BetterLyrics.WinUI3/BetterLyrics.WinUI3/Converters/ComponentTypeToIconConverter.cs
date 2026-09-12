@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using BetterLyrics.Core.Enums;
 using Microsoft.UI.Xaml.Data;
 
@@ -17,6 +17,7 @@ public partial class ComponentTypeToIconConverter : IValueConverter
                 ComponentType.SongAlbum => "\uE8D2",
                 ComponentType.Lyrics => "\uE8E3",
                 ComponentType.LyricsCard => "\uE7FB",
+                ComponentType.PlaybackControl => "\uE768",
                 _ => "\uE12B"
             };
         return "\uE12B";
