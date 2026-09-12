@@ -571,6 +571,47 @@
                                                 Value="{x:Bind SelectedPlacement.MarginBottom, Mode=TwoWay}" />
                                         </Grid>
 
+                                        <TextBlock x:Uid="LayoutEditorControlPaddingHeader" Margin="0,8,0,0" />
+                                        <Grid
+                                            HorizontalAlignment="Center"
+                                            ColumnSpacing="4"
+                                            RowSpacing="4">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <uc:SafeNumberBox
+                                                x:Uid="LayoutEditorControlPaddingLeftBox"
+                                                Grid.Row="1"
+                                                Grid.Column="0"
+                                                PlaceholderText="0"
+                                                Value="{x:Bind SelectedPlacement.PaddingLeft, Mode=TwoWay}" />
+                                            <uc:SafeNumberBox
+                                                x:Uid="LayoutEditorControlPaddingTopBox"
+                                                Grid.Row="0"
+                                                Grid.Column="1"
+                                                PlaceholderText="0"
+                                                Value="{x:Bind SelectedPlacement.PaddingTop, Mode=TwoWay}" />
+                                            <uc:SafeNumberBox
+                                                x:Uid="LayoutEditorControlPaddingRightBox"
+                                                Grid.Row="1"
+                                                Grid.Column="2"
+                                                PlaceholderText="0"
+                                                Value="{x:Bind SelectedPlacement.PaddingRight, Mode=TwoWay}" />
+                                            <uc:SafeNumberBox
+                                                x:Uid="LayoutEditorControlPaddingBottomBox"
+                                                Grid.Row="2"
+                                                Grid.Column="1"
+                                                PlaceholderText="0"
+                                                Value="{x:Bind SelectedPlacement.PaddingBottom, Mode=TwoWay}" />
+                                        </Grid>
+
                                         <TextBlock x:Uid="LayoutEditorControlSizeHeader" Margin="0,8,0,0" />
                                         <Grid ColumnSpacing="4">
                                             <Grid.ColumnDefinitions>

@@ -201,19 +201,23 @@
                 </StackPanel>
             </Grid>
 
-            <Grid
-                x:Name="TopCenterCommandGrid"
-                Padding="3"
-                HorizontalAlignment="Stretch">
-                <Button
-                    HorizontalAlignment="Stretch"
-                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                          FontSize=12,
-                                          Glyph=&#xE712;}"
-                    Style="{ThemeResource TitleBarButtonStyle}">
-                    <Button.OpacityTransition>
-                        <ScalarTransition />
-                    </Button.OpacityTransition>
+            <Grid x:Name="TopCenterCommandGrid" HorizontalAlignment="Stretch">
+
+                <Button HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Button.Template>
+                        <ControlTemplate TargetType="Button">
+                            <Grid Background="Transparent">
+                                <Grid
+                                    Width="120"
+                                    Height="4"
+                                    Margin="4"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Background="{ThemeResource TextFillColorSecondaryBrush}"
+                                    CornerRadius="2" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Button.Template>
 
                     <Button.Flyout>
                         <Flyout FlyoutPresenterStyle="{StaticResource FlyoutGhostStyle}" ShouldConstrainToRootBounds="False">
@@ -223,13 +227,10 @@
                                 Height="38" />
                         </Flyout>
                     </Button.Flyout>
-
                 </Button>
             </Grid>
 
         </Grid>
-
-        <!--  Bottom command was moved to NowPlayingPage layout  -->
 
         <Grid
             x:Name="LockToggleButtonContainer"

@@ -149,6 +149,11 @@ public sealed partial class LayoutPreviewControl : UserControl,
                 placement.MarginTop * scale,
                 placement.MarginRight * scale,
                 placement.MarginBottom * scale),
+            Padding = new Thickness(
+                placement.PaddingLeft * scale,
+                placement.PaddingTop * scale,
+                placement.PaddingRight * scale,
+                placement.PaddingBottom * scale),
             HorizontalAlignment =
                 HorizontalAlignmentExtensions.FromAppHorizontalAlignment(placement.HorizontalAlignment),
             VerticalAlignment = VerticalAlignmentExtensions.FromAppVerticalAlignment(placement.VerticalAlignment)

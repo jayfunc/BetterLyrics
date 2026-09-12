@@ -38,17 +38,19 @@
                 SizeChanged="LyricsContainer_SizeChanged"
                 Visibility="Collapsed" />
 
-            <Viewbox x:Name="LyricsCardContainer" Visibility="Collapsed">
-                <uc:LyricsCard
-                    x:Name="LyricsCard"
-                    CoverAccentColor="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor1, Converter={StaticResource AppColorToColorConverter}, Mode=OneWay}"
-                    CoverImage="{x:Bind ViewModel.MediaSessionsService.AlbumArtBytes, Converter={StaticResource ByteArrayToImageConverter}, Mode=OneWay}"
-                    IsAutoScrollEnabled="True"
-                    IsScrollable="True"
-                    LyricsLines="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsData.LyricsLines, Mode=OneWay}"
-                    PlaybackPosition="{x:Bind ViewModel.MediaSessionsService.CurrentPosition, Mode=OneWay}"
-                    StyleKey="{x:Bind LyricsWindowStatus.LyricsCardStyleKey, Mode=OneWay}" />
-            </Viewbox>
+            <Border x:Name="LyricsCardContainer" Visibility="Collapsed">
+                <Viewbox>
+                    <uc:LyricsCard
+                        x:Name="LyricsCard"
+                        CoverAccentColor="{x:Bind LyricsWindowStatus.WindowPalette.AccentColor1, Converter={StaticResource AppColorToColorConverter}, Mode=OneWay}"
+                        CoverImage="{x:Bind ViewModel.MediaSessionsService.AlbumArtBytes, Converter={StaticResource ByteArrayToImageConverter}, Mode=OneWay}"
+                        IsAutoScrollEnabled="True"
+                        IsScrollable="True"
+                        LyricsLines="{x:Bind ViewModel.MediaSessionsService.CurrentLyricsData.LyricsLines, Mode=OneWay}"
+                        PlaybackPosition="{x:Bind ViewModel.MediaSessionsService.CurrentPosition, Mode=OneWay}"
+                        StyleKey="{x:Bind LyricsWindowStatus.LyricsCardStyleKey, Mode=OneWay}" />
+                </Viewbox>
+            </Border>
 
             <Grid
                 x:Name="AlbumArtContainer"

@@ -35,6 +35,9 @@ public sealed partial class CanvasItemControl : UserControl
         MainBorder.Width = placement.Width;
         MainBorder.Height = placement.Height;
 
+        MainBorder.Padding = new Thickness(placement.PaddingLeft, placement.PaddingTop, placement.PaddingRight,
+            placement.PaddingBottom);
+
         var mockupGrid = new Grid
         {
             HorizontalAlignment =

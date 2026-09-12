@@ -851,7 +851,7 @@ public sealed partial class NowPlayingWindow : Window,
 
     private void UpdateTopCommandGridStatus()
     {
-        if (RootGrid.ActualWidth < 400)
+        if (RootGrid.ActualWidth < 400 || RootGrid.ActualHeight <= 64)
         {
             TopCenterCommandGrid.Visibility = Visibility.Visible;
             if (TopCommandGrid.Children.Contains(TopLeftCommandGrid))
@@ -876,6 +876,7 @@ public sealed partial class NowPlayingWindow : Window,
                 TopCommandGrid.Children.Add(TopRightCommandGrid);
         }
     }
+
 
     private void StartOverlayInputHelper()
     {

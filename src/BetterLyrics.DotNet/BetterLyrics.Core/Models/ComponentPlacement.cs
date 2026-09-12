@@ -1,4 +1,4 @@
-﻿using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Models.Domain;
@@ -60,7 +60,34 @@ public partial class ComponentPlacement : ObservableRecipient, ICloneable
     [ObservableProperty]
     public partial double Height { get; set; } = double.NaN;
 
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial double PaddingLeft { get; set; } = 0;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial double PaddingTop { get; set; } = 0;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial double PaddingRight { get; set; } = 0;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial double PaddingBottom { get; set; } = 0;
+
     [JsonIgnore] public string DisplayName => ComponentType.GetDisplayName();
+
+    partial void OnComponentTypeChanged(ComponentType value)
+    {
+        if (value == ComponentType.PlaybackControl)
+        {
+            PaddingLeft = 16;
+            PaddingTop = 16;
+            PaddingRight = 16;
+            PaddingBottom = 16;
+        }
+    }
 
     public object Clone()
     {
@@ -77,6 +104,11 @@ public partial class ComponentPlacement : ObservableRecipient, ICloneable
             MarginTop = MarginTop,
             MarginRight = MarginRight,
             MarginBottom = MarginBottom,
+
+            PaddingLeft = PaddingLeft,
+            PaddingTop = PaddingTop,
+            PaddingRight = PaddingRight,
+            PaddingBottom = PaddingBottom,
 
             HorizontalAlignment = HorizontalAlignment,
             VerticalAlignment = VerticalAlignment,

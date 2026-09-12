@@ -285,6 +285,24 @@ public sealed partial class NowPlayingPage : Page,
                     placement.MarginRight,
                     placement.MarginBottom);
 
+                var padding = new Thickness(
+                    placement.PaddingLeft,
+                    placement.PaddingTop,
+                    placement.PaddingRight,
+                    placement.PaddingBottom);
+
+                if (placement.ComponentType == ComponentType.PlaybackControl)
+                {
+                    NowPlayingBar.Padding = padding;
+                    if (targetElement is Grid grid) grid.Padding = new Thickness(0);
+                }
+                else
+                {
+                    if (targetElement is Grid grid) grid.Padding = padding;
+                    else if (targetElement is Border border) border.Padding = padding;
+                    else if (targetElement is Control control) control.Padding = padding;
+                }
+
                 targetElement.Width = placement.Width;
                 targetElement.Height = placement.Height;
 
