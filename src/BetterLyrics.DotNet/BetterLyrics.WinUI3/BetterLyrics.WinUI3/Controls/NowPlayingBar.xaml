@@ -544,7 +544,7 @@
                     <Vector3Transition />
                 </Grid.TranslationTransition>
             </Grid>
-            <Grid.ContextFlyout>
+            <Grid.Resources>
                 <Flyout x:Name="BottomCommandFlyout" ShouldConstrainToRootBounds="False">
                     <Flyout.FlyoutPresenterStyle>
                         <Style TargetType="FlyoutPresenter">
@@ -635,7 +635,7 @@
                             VerticalAlignment="Bottom" />
                     </Grid>
                 </Flyout>
-            </Grid.ContextFlyout>
+            </Grid.Resources>
         </Grid>
 
     </Grid>
