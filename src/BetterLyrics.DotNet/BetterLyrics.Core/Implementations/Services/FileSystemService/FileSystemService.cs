@@ -47,8 +47,16 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
         _appUIThreadProvider = appUiThreadProvider;
 
         var col = _databaseService.FilesIndexDb.GetCollection<FilesIndexItem>("filesIndex");
-        col.EnsureIndex(x => x.MediaFolderId);
-        col.EnsureIndex(x => x.ParentUri);
+        
+        try
+        {
+            col.EnsureIndex(x => x.MediaFolderId);
+            col.EnsureIndex(x => x.ParentUri);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "EnsureIndex failed for FilesIndexItem (MediaFolderId/ParentUri)");
+        }
 
         // 主动扫描去重 Uri
         var duplicates = col.FindAll()
@@ -66,7 +74,14 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
             }
         }
 
-        col.EnsureIndex(x => x.Uri, true);
+        try
+        {
+            col.EnsureIndex(x => x.Uri, true);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "EnsureIndex failed for FilesIndexItem (Uri)");
+        }
     }
 
     private ILiteCollection<FilesIndexItem> GetCollection()

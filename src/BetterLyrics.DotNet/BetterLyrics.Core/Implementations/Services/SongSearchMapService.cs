@@ -14,9 +14,14 @@ public class SongSearchMapService : ISongSearchMapService
         _databaseService = databaseService;
         
         var col = _databaseService.SongSearchMapDb.GetCollection<MappedSongSearchQuery>("songSearchMap");
-        col.EnsureIndex(x => x.OriginalTitle);
-        col.EnsureIndex(x => x.OriginalArtist);
-        col.EnsureIndex(x => x.OriginalAlbum);
+        
+        try
+        {
+            col.DropIndex("OriginalTitle");
+            col.DropIndex("OriginalArtist");
+            col.DropIndex("OriginalAlbum");
+        }
+        catch { }
     }
     
     private ILiteCollection<MappedSongSearchQuery> GetCollection()

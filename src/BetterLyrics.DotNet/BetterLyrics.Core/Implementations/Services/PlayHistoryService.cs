@@ -14,10 +14,16 @@ public class PlayHistoryService : IPlayHistoryService
         _databaseService = databaseService;
         
         var col = _databaseService.PlayHistoryDb.GetCollection<PlayHistoryItem>("playHistory");
-        col.EnsureIndex(x => x.Title);
-        col.EnsureIndex(x => x.Artist);
+        
+        try
+        {
+            col.DropIndex("Title");
+            col.DropIndex("Artist");
+            col.DropIndex("PlayerId");
+        }
+        catch { }
+
         col.EnsureIndex(x => x.StartedAt);
-        col.EnsureIndex(x => x.PlayerId);
     }
 
     private ILiteCollection<PlayHistoryItem> GetCollection()
