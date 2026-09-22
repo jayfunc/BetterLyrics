@@ -133,8 +133,7 @@
                             IsPlaying="False"
                             PointerCanceled="TitleAutoScrollHoverEffectView_PointerCanceled"
                             PointerEntered="TitleAutoScrollHoverEffectView_PointerEntered"
-                            PointerExited="TitleAutoScrollHoverEffectView_PointerExited"
-                            ScrollingPixelsPreSecond="25">
+                            PointerExited="TitleAutoScrollHoverEffectView_PointerExited">
                             <TextBlock
                                 x:Name="TitleTextBlock"
                                 Padding="2,0"
@@ -171,8 +170,7 @@
                             IsPlaying="False"
                             PointerCanceled="ArtistsAutoScrollHoverEffectView_PointerCanceled"
                             PointerEntered="ArtistsAutoScrollHoverEffectView_PointerEntered"
-                            PointerExited="ArtistsAutoScrollHoverEffectView_PointerExited"
-                            ScrollingPixelsPreSecond="25">
+                            PointerExited="ArtistsAutoScrollHoverEffectView_PointerExited">
                             <TextBlock
                                 x:Name="ArtistsTextBlock"
                                 Padding="2,0"
@@ -210,8 +208,7 @@
                             IsPlaying="False"
                             PointerCanceled="AlbumAutoScrollHoverEffectView_PointerCanceled"
                             PointerEntered="AlbumAutoScrollHoverEffectView_PointerEntered"
-                            PointerExited="AlbumAutoScrollHoverEffectView_PointerExited"
-                            ScrollingPixelsPreSecond="25">
+                            PointerExited="AlbumAutoScrollHoverEffectView_PointerExited">
                             <TextBlock
                                 x:Name="AlbumTextBlock"
                                 Padding="2,0"
