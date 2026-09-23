@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -494,6 +494,21 @@
   </data>
   <data name="LayoutEditorControlMarginTopBox.Header" xml:space="preserve">
     <value>Top</value>
+  </data>
+  <data name="LayoutEditorControlPaddingHeader.Text" xml:space="preserve">
+    <value>Polsterung</value>
+  </data>
+  <data name="LayoutEditorControlPaddingLeftBox.Header" xml:space="preserve">
+    <value>Links</value>
+  </data>
+  <data name="LayoutEditorControlPaddingRightBox.Header" xml:space="preserve">
+    <value>Richtig</value>
+  </data>
+  <data name="LayoutEditorControlPaddingTopBox.Header" xml:space="preserve">
+    <value>Nach oben</value>
+  </data>
+  <data name="LayoutEditorControlPaddingBottomBox.Header" xml:space="preserve">
+    <value>Unten</value>
   </data>
   <data name="LayoutEditorControlMoveComponentHeader.Text" xml:space="preserve">
     <value>Komponente verschieben</value>

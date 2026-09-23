@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -494,6 +494,21 @@
   </data>
   <data name="LayoutEditorControlMarginTopBox.Header" xml:space="preserve">
     <value>Atas</value>
+  </data>
+  <data name="LayoutEditorControlPaddingHeader.Text" xml:space="preserve">
+    <value>Pengisian</value>
+  </data>
+  <data name="LayoutEditorControlPaddingLeftBox.Header" xml:space="preserve">
+    <value>Kiri</value>
+  </data>
+  <data name="LayoutEditorControlPaddingRightBox.Header" xml:space="preserve">
+    <value>Betul</value>
+  </data>
+  <data name="LayoutEditorControlPaddingTopBox.Header" xml:space="preserve">
+    <value>Atas</value>
+  </data>
+  <data name="LayoutEditorControlPaddingBottomBox.Header" xml:space="preserve">
+    <value>Bahagian bawah</value>
   </data>
   <data name="LayoutEditorControlMoveComponentHeader.Text" xml:space="preserve">
     <value>Alihkan komponen</value>

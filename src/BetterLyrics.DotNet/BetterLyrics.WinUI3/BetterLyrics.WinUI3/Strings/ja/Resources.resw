@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -355,7 +355,7 @@
     <value>キャンバスナビゲーション</value>
   </data>
   <data name="LayoutEditorControlCanvasPaddingTextBlock.Text" xml:space="preserve">
-    <value>余白</value>
+    <value>パディング</value>
   </data>
   <data name="LayoutEditorControlCanvasSectionHeader.Text" xml:space="preserve">
     <value>キャンバス</value>
@@ -494,6 +494,21 @@
   </data>
   <data name="LayoutEditorControlMarginTopBox.Header" xml:space="preserve">
     <value>上端</value>
+  </data>
+  <data name="LayoutEditorControlPaddingHeader.Text" xml:space="preserve">
+    <value>パディング</value>
+  </data>
+  <data name="LayoutEditorControlPaddingLeftBox.Header" xml:space="preserve">
+    <value>左端</value>
+  </data>
+  <data name="LayoutEditorControlPaddingRightBox.Header" xml:space="preserve">
+    <value>右端</value>
+  </data>
+  <data name="LayoutEditorControlPaddingTopBox.Header" xml:space="preserve">
+    <value>上端</value>
+  </data>
+  <data name="LayoutEditorControlPaddingBottomBox.Header" xml:space="preserve">
+    <value>下端</value>
   </data>
   <data name="LayoutEditorControlMoveComponentHeader.Text" xml:space="preserve">
     <value>コンポーネントの移動</value>

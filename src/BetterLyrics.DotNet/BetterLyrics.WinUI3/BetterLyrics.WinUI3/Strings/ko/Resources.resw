@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -494,6 +494,21 @@
   </data>
   <data name="LayoutEditorControlMarginTopBox.Header" xml:space="preserve">
     <value>Top</value>
+  </data>
+  <data name="LayoutEditorControlPaddingHeader.Text" xml:space="preserve">
+    <value>패딩</value>
+  </data>
+  <data name="LayoutEditorControlPaddingLeftBox.Header" xml:space="preserve">
+    <value>왼쪽</value>
+  </data>
+  <data name="LayoutEditorControlPaddingRightBox.Header" xml:space="preserve">
+    <value>맞아요</value>
+  </data>
+  <data name="LayoutEditorControlPaddingTopBox.Header" xml:space="preserve">
+    <value>맨 위</value>
+  </data>
+  <data name="LayoutEditorControlPaddingBottomBox.Header" xml:space="preserve">
+    <value>하단</value>
   </data>
   <data name="LayoutEditorControlMoveComponentHeader.Text" xml:space="preserve">
     <value>컴포넌트 이동</value>

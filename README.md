@@ -34,6 +34,7 @@
 
   <div>
     <a href="https://hellogithub.com/repository/jayfunc/BetterLyrics" target="_blank"><img src="https://abroad.hellogithub.com/v1/widgets/recommend.svg?rid=d2af74f0aea146ad8e4b2086982f5777&claim_uid=SgtQs9c54C8wjnv" alt="HelloGitHub" height="40"></a>
+    <a href="https://atomgit.com/jayfunc/BetterLyrics" target="_blank"><img src="https://atomgit.com/jayfunc/BetterLyrics/star/new_badge.svg" alt="AtomGit G-Star" height="40"></a>
   </div>
 
   <div>
