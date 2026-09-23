@@ -83,7 +83,7 @@
 - 🎧 **Smart Playback & Library Management**
   - **Versatile Player:** Play from **Local Drives** or stream via **SMB, WebDav, and FTP**. Features **playback memory** to resume where you left off.
   - **Live Library Sync:** A high-performance media library that stays in sync with your local folder changes in real-time.
-  - **Universal Integration:** Seamlessly visualizes music from Spotify, Apple Music, NetEase, and [many other players](https://betterlyrics.github.io/player-cfg).
+  - **Universal Integration:** Seamlessly visualizes music from Spotify, Apple Music, NetEase, and [many other players](https://betterlyrics.github.io/docs/player-cfg).
   - **Social Presence:** Show what you're looping with **Discord Rich Presence** and sync your journey via **Last.fm** scrobbling.
 
 - 🌐 **Precision Lyrics & Plugin System**
