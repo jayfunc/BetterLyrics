@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -70,7 +70,9 @@ public class WorkerWHook
                 SetWindowSubclass(windowHandle, _subclassDelegate, _subclassId, IntPtr.Zero);
 
                 RepositionWindow(windowHandle, window);
+                var oldBehavior = SetThreadDpiHostingBehavior(DPI_HOSTING_BEHAVIOR.DPI_HOSTING_BEHAVIOR_MIXED);
                 SetParent(windowHandle, _hWorkerW);
+                SetThreadDpiHostingBehavior(oldBehavior);
             }
         }
     }
@@ -89,7 +91,9 @@ public class WorkerWHook
 
             var windowBounds = window.LyricsWindowStatus.WindowBounds;
 
+            var oldBehavior = SetThreadDpiHostingBehavior(DPI_HOSTING_BEHAVIOR.DPI_HOSTING_BEHAVIOR_MIXED);
             SetParent(windowHandle, HWND.NULL);
+            SetThreadDpiHostingBehavior(oldBehavior);
             _windowManagerProvider.MoveAndResize(window, windowBounds);
 
             _pinnedWindows.Remove(windowHandle);
@@ -107,6 +111,13 @@ public class WorkerWHook
     private static IntPtr WindowSubclassProc(HWND hWnd, uint uMsg, IntPtr wParam, IntPtr lParam, nuint uIdSubclass,
         IntPtr dwRefData)
     {
+        // Prevent Windows from scaling the window when reparented to WorkerW
+        if (uMsg == (uint)WindowMessage.WM_DPICHANGED || uMsg == (uint)WindowMessage.WM_GETDPISCALEDSIZE || 
+            uMsg == (uint)WindowMessage.WM_DPICHANGED_BEFOREPARENT || uMsg == (uint)WindowMessage.WM_DPICHANGED_AFTERPARENT)
+        {
+            return IntPtr.Zero;
+        }
+
         if (uMsg == (uint)WindowMessage.WM_SETTINGCHANGE)
             if (wParam.ToInt32() == (int)SPI.SPI_SETDESKWALLPAPER)
                 // 防止多个窗口同时接收到壁纸更改消息导致多次重新固定
@@ -172,11 +183,13 @@ public class WorkerWHook
             }
 
             foreach (var window in windowsToUpdate)
+            {
                 window.DispatcherQueue.TryEnqueue(() =>
                 {
                     var handle = (HWND)WindowNative.GetWindowHandle(window);
                     RepositionWindow(handle, window);
                 });
+            }
         };
     }
 

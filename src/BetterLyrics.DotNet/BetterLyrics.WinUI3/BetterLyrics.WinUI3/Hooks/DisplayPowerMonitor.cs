@@ -1,7 +1,8 @@
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Runtime.InteropServices;
 using Vanara.PInvoke;
-using Microsoft.Extensions.Logging;
 
 namespace BetterLyrics.WinUI3.Hooks;
 
@@ -10,6 +11,7 @@ public static class DisplayPowerMonitor
     private static Guid GUID_CONSOLE_DISPLAY_STATE = new Guid("6fe69556-704a-47a0-8f24-c28d936fda47");
     private static User32.SafeHPOWERSETTINGNOTIFY _powerNotifyHandle;
     private static Win32Window _messageWindow;
+    private static ILogger? _logger = Ioc.Default.GetService<ILoggerFactory>()?.CreateLogger(nameof(DisplayPowerMonitor));
 
     private static event EventHandler<bool> _displayStatusChanged;
     public static event EventHandler<bool> DisplayStatusChanged
@@ -38,12 +40,7 @@ public static class DisplayPowerMonitor
     private static void OnPowerSettingChanged(bool isDisplayOn)
     {
         IsDisplayOn = isDisplayOn;
-        try
-        {
-            var logger = CommunityToolkit.Mvvm.DependencyInjection.Ioc.Default.GetService<Microsoft.Extensions.Logging.ILoggerFactory>()?.CreateLogger(nameof(DisplayPowerMonitor));
-            logger?.LogInformation("Display status changed: {Status}", isDisplayOn ? "On" : "Off");
-        }
-        catch { }
+        _logger?.LogInformation("Display status changed: {Status}", isDisplayOn ? "On" : "Off");
         _displayStatusChanged?.Invoke(null, isDisplayOn);
     }
 
@@ -63,7 +60,7 @@ public static class DisplayPowerMonitor
                 lpfnWndProc = _wndProc
             };
             User32.RegisterClass(wndClass);
-            Handle = User32.CreateWindowEx(0, wndClass.lpszClassName, "BetterLyricsPowerMonitor", 0, 0, 0, 0, 0, (HWND)(IntPtr)(-3) /*HWND_MESSAGE*/, HMENU.NULL, HINSTANCE.NULL, IntPtr.Zero);
+            Handle = User32.CreateWindowEx(User32.WindowStylesEx.WS_EX_LEFT, wndClass.lpszClassName, "BetterLyricsPowerMonitor", User32.WindowStyles.WS_OVERLAPPED, 0, 0, 0, 0, HWND.HWND_MESSAGE, HMENU.NULL, HINSTANCE.NULL, IntPtr.Zero);
         }
 
         private IntPtr CustomWndProc(HWND hWnd, uint msg, IntPtr wParam, IntPtr lParam)
