@@ -222,6 +222,19 @@ public sealed partial class NowPlayingCanvas : UserControl,
     {
         InitializeComponent();
         WeakReferenceMessenger.Default.RegisterAll(this);
+        
+        DisplayPowerMonitor.DisplayStatusChanged += PowerManager_DisplayStatusChanged;
+    }
+
+    private void PowerManager_DisplayStatusChanged(object sender, bool isDisplayOn)
+    {
+        if (Canvas != null)
+        {
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                Canvas?.Paused = !isDisplayOn;
+            });
+        }
     }
 
     public TimeSpan SongPosition => _songPosition;
@@ -947,15 +960,19 @@ public sealed partial class NowPlayingCanvas : UserControl,
     private void UserControl_Unloaded(object sender, RoutedEventArgs e)
     {
         WeakReferenceMessenger.Default.UnregisterAll(this);
+        DisplayPowerMonitor.DisplayStatusChanged -= PowerManager_DisplayStatusChanged;
 
-        Canvas.Draw -= Canvas_Draw;
-        Canvas.Update -= Canvas_Update;
-        Canvas.CreateResources -= Canvas_CreateResources;
+        if (Canvas != null)
+        {
+            Canvas.Draw -= Canvas_Draw;
+            Canvas.Update -= Canvas_Update;
+            Canvas.CreateResources -= Canvas_CreateResources;
 
-        Canvas.Paused = true;
+            Canvas.Paused = true;
 
-        Canvas.RemoveFromVisualTree();
-        Canvas = null;
+            Canvas.RemoveFromVisualTree();
+            Canvas = null;
+        }
 
         _lyricsRenderer.Dispose();
         _fluidRenderer.Dispose();

@@ -8,6 +8,7 @@ using Microsoft.UI.Xaml.Controls;
 using Windows.UI;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Geometry;
+using BetterLyrics.WinUI3.Hooks;
 
 namespace BetterLyrics.WinUI3.Controls;
 
@@ -117,6 +118,22 @@ public sealed partial class AmbientBackgroundControl : UserControl
     {
         this.InitializeComponent();
         InitializeParticles();
+        
+        DisplayPowerMonitor.DisplayStatusChanged += PowerManager_DisplayStatusChanged;
+    }
+
+    private void PowerManager_DisplayStatusChanged(object sender, bool isDisplayOn)
+    {
+        if (AnimatedCanvas != null)
+        {
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                if (AnimatedCanvas != null)
+                {
+                    AnimatedCanvas.Paused = !isDisplayOn;
+                }
+            });
+        }
     }
     
     private void InitializeParticles()
@@ -623,7 +640,8 @@ public sealed partial class AmbientBackgroundControl : UserControl
 
     private void AnimatedCanvas_Unloaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
     {
-        AnimatedCanvas.RemoveFromVisualTree();
+        DisplayPowerMonitor.DisplayStatusChanged -= PowerManager_DisplayStatusChanged;
+        AnimatedCanvas?.RemoveFromVisualTree();
         AnimatedCanvas = null;
     }
 }
