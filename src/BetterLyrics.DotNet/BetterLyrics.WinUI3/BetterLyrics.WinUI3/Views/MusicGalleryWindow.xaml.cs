@@ -121,13 +121,20 @@ public sealed partial class MusicGalleryWindow : Window,
 
     private async Task UpdateAlbumArtThemeColorsAsync()
     {
-        var result = await GSMTCService.CalculateAlbumArtThemeColorsAsync(
-            ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus, Colors.Transparent);
+        try
+        {
+            var result = await GSMTCService.CalculateAlbumArtThemeColorsAsync(
+                ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus, Colors.Transparent);
 
-        NowPlayingPage.LyricsWindowStatus?.WindowPalette = result;
-        NowPlayingPage.RequestedTheme = result.ThemeType.ToElementTheme();
+            NowPlayingPage.LyricsWindowStatus?.WindowPalette = result;
+            NowPlayingPage.RequestedTheme = result.ThemeType.ToElementTheme();
 
-        UpdateTheme();
+            UpdateTheme();
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"UpdateAlbumArtThemeColorsAsync: {ex}");
+        }
     }
 
     private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)

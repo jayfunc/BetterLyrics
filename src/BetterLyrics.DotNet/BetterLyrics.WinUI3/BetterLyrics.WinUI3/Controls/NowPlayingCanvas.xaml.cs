@@ -1277,10 +1277,12 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
     private async Task ReloadCoverBackgroundResourcesAsync()
     {
-        if (Canvas == null || Canvas.Device == null) return;
+        if (Canvas == null) return;
 
         try
         {
+            if (Canvas.Device == null) return;
+
             var imageBytes = _gsmtcService.AlbumArtBytes;
             if (imageBytes == null || imageBytes.Length == 0) return;
 

@@ -200,40 +200,54 @@ public sealed partial class NowPlayingPage : Page,
 
     private async Task RenderSongInfoAsync()
     {
-        if (_lyricsWindowStatus == null) return;
+        try
+        {
+            if (_lyricsWindowStatus == null) return;
 
-        var (mappedTitle, mappedArtist, mappedAlbum) =
-            await _songSearchMapService.GetMappingAsync(_gsmtcService.CurrentSongInfo);
+            var (mappedTitle, mappedArtist, mappedAlbum) =
+                await _songSearchMapService.GetMappingAsync(_gsmtcService.CurrentSongInfo);
 
-        LyricsCard.Title = mappedTitle;
-        LyricsCard.Artist = mappedArtist;
+            LyricsCard.Title = mappedTitle;
+            LyricsCard.Artist = mappedArtist;
 
-        var titleFontSize = SongTitleContainer.ActualHeight * 0.75;
-        var artistFontSize = SongArtistContainer.ActualHeight * 0.75;
-        var albumFontSize = SongAlbumContainer.ActualHeight * 0.75;
+            var titleFontSize = SongTitleContainer.ActualHeight * 0.75;
+            var artistFontSize = SongArtistContainer.ActualHeight * 0.75;
+            var albumFontSize = SongAlbumContainer.ActualHeight * 0.75;
 
-        RenderTextBlock(TitleTextBlock, mappedTitle, titleFontSize);
-        RenderTextBlock(ArtistsTextBlock, mappedArtist, artistFontSize);
-        RenderTextBlock(AlbumTextBlock, mappedAlbum, albumFontSize);
+            RenderTextBlock(TitleTextBlock, mappedTitle, titleFontSize);
+            RenderTextBlock(ArtistsTextBlock, mappedArtist, artistFontSize);
+            RenderTextBlock(AlbumTextBlock, mappedAlbum, albumFontSize);
 
-        if (double.IsNormal(titleFontSize))
-            TitleAutoScrollHoverEffectView.ScrollingPixelsPreSecond = (int)titleFontSize;
-        if (double.IsNormal(artistFontSize))
-            ArtistsAutoScrollHoverEffectView.ScrollingPixelsPreSecond = (int)artistFontSize;
-        if (double.IsNormal(albumFontSize))
-            AlbumAutoScrollHoverEffectView.ScrollingPixelsPreSecond = (int)albumFontSize;
+            if (double.IsNormal(titleFontSize))
+                TitleAutoScrollHoverEffectView.ScrollingPixelsPreSecond = (int)titleFontSize;
+            if (double.IsNormal(artistFontSize))
+                ArtistsAutoScrollHoverEffectView.ScrollingPixelsPreSecond = (int)artistFontSize;
+            if (double.IsNormal(albumFontSize))
+                AlbumAutoScrollHoverEffectView.ScrollingPixelsPreSecond = (int)albumFontSize;
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"RenderSongInfoAsync: {ex}");
+        }
     }
 
     private async Task RefreshSongInfoAsync()
     {
-        SongTitleContainer.Opacity = 0;
-        SongArtistContainer.Opacity = 0;
-        SongAlbumContainer.Opacity = 0;
-        await Task.Delay(Time.AnimationDuration);
-        await RenderSongInfoAsync();
-        SongTitleContainer.Opacity = 1;
-        SongArtistContainer.Opacity = 1;
-        SongAlbumContainer.Opacity = 1;
+        try
+        {
+            SongTitleContainer.Opacity = 0;
+            SongArtistContainer.Opacity = 0;
+            SongAlbumContainer.Opacity = 0;
+            await Task.Delay(Time.AnimationDuration);
+            await RenderSongInfoAsync();
+            SongTitleContainer.Opacity = 1;
+            SongArtistContainer.Opacity = 1;
+            SongAlbumContainer.Opacity = 1;
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Debug.WriteLine($"RefreshSongInfoAsync: {ex}");
+        }
     }
 
     private void ApplyLayoutProfile()
