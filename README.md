@@ -8,7 +8,7 @@
   <h3>Strums the Heartstrings, Graces the Wordscapes</h3>
 
   <p>
-    An elegant, highly customizable lyrics visualizer and versatile music player built with WinUI 3 & Win2D.
+    An elegant, highly customizable lyrics visualizer and versatile music player built with WinUI 3 & Win2D
   </p>
 
   <p>
