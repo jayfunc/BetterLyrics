@@ -280,6 +280,17 @@ public partial class TaskbarHook : IDisposable
                 var inputSite =
                     taskbar.FindFirstChild(x => x.ByClassName("Windows.UI.Input.InputSite.WindowClass"));
                 pinned = inputSite?.FindFirstChild(x => x.ByClassName("Taskbar.TaskbarFrameAutomationPeer"));
+
+                // 系统托盘按钮（时钟、通知图标等）
+                // 副屏任务栏没有 TrayNotifyWnd，托盘按钮是 InputSite 的直接子元素
+                if (inputSite != null)
+                    foreach (var child in inputSite.FindAllChildren())
+                        if (child.Properties.ClassName.TryGetValue(out var className) &&
+                            className.StartsWith("SystemTray.", StringComparison.Ordinal))
+                        {
+                            var rect = child.BoundingRectangle;
+                            if (rect.Width > 0 && rect.Height > 0) occupiedSegments.Add((rect.Left, rect.Right));
+                        }
             }
             else // Win 10
             {
