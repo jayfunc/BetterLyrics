@@ -1,4 +1,4 @@
-﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Models;
 using static BetterLyrics.Core.Helpers.EasingHelper;
 
@@ -41,6 +41,10 @@ public class ValueTransition<T> where T : struct
     public double Progress { get; private set; }
 
     public Func<T, T, double, T> Interpolator { get; private set; }
+
+    public bool IsSpring { get; set; }
+
+    public double Velocity { get; private set; }
 
     #region Interpolators
 
@@ -120,6 +124,7 @@ public class ValueTransition<T> where T : struct
         TargetValue = value;
         IsTransitioning = false;
         Progress = 0;
+        Velocity = 0;
     }
 
     /// <summary>
@@ -204,6 +209,55 @@ public class ValueTransition<T> where T : struct
         if (!IsTransitioning) return;
 
         var timeStep = elapsedTime.TotalSeconds;
+
+        if (IsSpring && typeof(T) == typeof(double))
+        {
+            // Spring supports delay keyframes. A delay keyframe is when TargetValue == _startValue and Progress < 1
+            if (_startValue.Equals(TargetValue))
+            {
+                var progressDelta = _stepDuration > 0.000001 ? timeStep / _stepDuration : 1.0;
+                if (Progress + progressDelta >= 1.0)
+                {
+                    timeStep -= (1.0 - Progress) * _stepDuration;
+                    Progress = 1.0;
+                    MoveToNextSegment();
+                    if (!IsTransitioning || timeStep <= 0) return;
+                }
+                else
+                {
+                    Progress += progressDelta;
+                    return;
+                }
+            }
+
+            double seconds = timeStep;
+
+            // Reference: Apple Music-like critically damped spring physics
+            // Note: This algorithm is a collaborative open-source evolution. It was initially inspired by
+            // earlier versions of BetterLyrics, mathematically enhanced by Johnwikix in original-sound-hq-player,
+            // and has now been ported back to BetterLyrics.
+            // Ported back from: https://github.com/Johnwikix/original-sound-hq-player/blob/201e424e05cf56ad2679abab7f9bd8841f7ca887/External/AnimatedWin2dControls/AnimatedWin2dControls/Controls/AnimatedLyricsLineControl/Advance/Animation/LyricScrollMotion.cs
+            double omega = 7.0 / Math.Max(0.01, _stepDuration);
+            double target = (double)(object)TargetValue;
+            double current = (double)(object)Value;
+            
+            double displacement = current - target;
+            double coefficient = Velocity + omega * displacement;
+            double decay = Math.Exp(-omega * seconds);
+            
+            double newValue = target + (displacement + coefficient * seconds) * decay;
+            Velocity = (Velocity - omega * coefficient * seconds) * decay;
+            
+            Value = (T)(object)newValue;
+            
+            if (Math.Abs(newValue - target) < 0.01 && Math.Abs(Velocity) < 0.01)
+            {
+                Value = TargetValue;
+                Velocity = 0;
+                MoveToNextSegment();
+            }
+            return;
+        }
 
         // 使用 while 处理单帧时间过长跨越多段的情况
         while (timeStep > 0 && IsTransitioning)

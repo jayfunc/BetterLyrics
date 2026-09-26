@@ -125,25 +125,33 @@ public class LyricsAnimator
                 double scrollDuration;
                 double scrollDelay;
 
-                if (lineCountDelta < 0)
+                // Use the first visible line as the origin of the wave (delay = 0)
+                int visibleIndex = i - startIndex;
+                double totalVisible = Math.Max(1, endIndex - startIndex);
+                double factor = visibleIndex / totalVisible; // 0.0 at top, 1.0 at bottom
+
+                // Smoothly interpolate duration from TopDuration to BottomDuration
+                double topExtraDuration = distanceFactor * (scrollTopDurationSec - canvasTransDuration);
+                double bottomExtraDuration = distanceFactor * (scrollBottomDurationSec - canvasTransDuration);
+                scrollDuration = canvasTransDuration + (1.0 - factor) * topExtraDuration + factor * bottomExtraDuration;
+                
+                double baseDelay = scrollTopDelaySec; // Top delay acts as the base starting delay
+                double staggerDelay = 0;
+
+                // Reference: Apple Music-like exponential stagger delay curve
+                // Note: This algorithm is a collaborative open-source evolution. It was initially inspired by
+                // earlier versions of BetterLyrics, mathematically enhanced by Johnwikix in original-sound-hq-player,
+                // and has now been ported back to BetterLyrics.
+                // Ported back from: https://github.com/Johnwikix/original-sound-hq-player/blob/201e424e05cf56ad2679abab7f9bd8841f7ca887/External/AnimatedWin2dControls/AnimatedWin2dControls/Controls/AnimatedLyricsLineControl/Advance/Animation/LyricsAnimator.cs
+                if (scrollBottomDelaySec > 0)
                 {
-                    scrollDuration =
-                        canvasTransDuration +
-                        distanceFactor * (scrollTopDurationSec - canvasTransDuration);
-                    scrollDelay = distanceFactor * scrollTopDelaySec;
+                    double budget = Math.Min(0.4, Math.Max(0, scrollDuration) * 0.75);
+                    staggerDelay = budget > 0 
+                        ? budget * (1.0 - Math.Exp(-visibleIndex * scrollBottomDelaySec / budget)) 
+                        : 0;
                 }
-                else if (lineCountDelta == 0)
-                {
-                    scrollDuration = canvasTransDuration;
-                    scrollDelay = 0;
-                }
-                else
-                {
-                    scrollDuration =
-                        canvasTransDuration +
-                        distanceFactor * (scrollBottomDurationSec - canvasTransDuration);
-                    scrollDelay = distanceFactor * scrollBottomDelaySec;
-                }
+                
+                scrollDelay = baseDelay + staggerDelay;
 
                 line.BlurAmountTransition.SetDuration(scrollDuration);
                 line.BlurAmountTransition.SetDelay(scrollDelay);
@@ -229,6 +237,7 @@ public class LyricsAnimator
                     line.OffsetTransition.SetInterpolator(canvasScrollTransition.Interpolator);
                     line.OffsetTransition.SetDuration(scrollDuration);
                     line.OffsetTransition.SetDelay(scrollDelay);
+                    line.OffsetTransition.IsSpring = lyricsEffect.LyricsScrollEasingType == EasingType.Spring;
                     if (isLayoutChanged)
                         line.OffsetTransition.JumpTo(targetScrollOffset);
                     else

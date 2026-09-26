@@ -1,4 +1,4 @@
-﻿// 2025/6/23 by Zhe Fang
+// 2025/6/23 by Zhe Fang
 
 namespace BetterLyrics.Core.Enums;
 
@@ -15,5 +15,6 @@ public enum EasingType
     Circle,
     Back,
     Elastic,
-    Bounce
+    Bounce,
+    Spring
 }

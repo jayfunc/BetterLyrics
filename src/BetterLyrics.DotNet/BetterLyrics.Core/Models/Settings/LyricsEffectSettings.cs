@@ -92,8 +92,11 @@ public partial class LyricsEffectSettings : ObservableRecipient, ICloneable
     public partial int LyricsFloatAnimationDuration { get; set; } = 450; // 450ms
 
     [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsLyricsScrollEasingModeEnabled))]
     [NotifyPropertyChangedRecipients]
     public partial EasingType LyricsScrollEasingType { get; set; }
+
+    public bool IsLyricsScrollEasingModeEnabled => LyricsScrollEasingType != EasingType.Spring;
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]

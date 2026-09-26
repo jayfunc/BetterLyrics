@@ -1,4 +1,4 @@
-﻿// 2025/6/23 by Zhe Fang
+// 2025/6/23 by Zhe Fang
 
 using System.Numerics;
 using BetterLyrics.Core.Enums;
@@ -29,6 +29,7 @@ public class EasingHelper
                 EasingType.Bounce => EaseInBounce,
                 EasingType.SmoothStep => SmoothStep,
                 EasingType.Linear => Linear,
+                EasingType.Spring => Linear,
                 _ => EaseInQuad
             };
             var t = Ease(progress, easingMode, easeInFunc);

@@ -216,9 +216,10 @@
                             <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseBack" />
                             <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseElastic" />
                             <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseBounce" />
+                            <ComboBoxItem x:Uid="SettingsPageEasingTypeAppleMusicSpring" />
                         </ComboBox>
                         <controls:SettingsExpander.Items>
-                            <controls:SettingsCard x:Uid="SettingsPageEasingMode">
+                            <controls:SettingsCard x:Uid="SettingsPageEasingMode" IsEnabled="{x:Bind LyricsEffectSettings.IsLyricsScrollEasingModeEnabled, Mode=OneWay}">
                                 <ComboBox SelectedIndex="{x:Bind LyricsEffectSettings.LyricsScrollEasingMode, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                     <ComboBoxItem x:Uid="SettingsPageEasingModeIn" />
                                     <ComboBoxItem x:Uid="SettingsPageEasingModeOut" />
