@@ -51,7 +51,7 @@
 - [Contribute & Build](#contribute--build)
 - [Donations](#donations)
 - [Star History](#star-history)
-- [Media Mentions](#media-mentions)
+- [Media Mentions & Community Features](#media-mentions--community-features)
 - [License & Credits](#license--credits)
 
 ---
