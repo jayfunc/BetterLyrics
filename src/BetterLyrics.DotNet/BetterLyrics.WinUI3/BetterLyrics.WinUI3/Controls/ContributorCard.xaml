@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Padding="12" Style="{ThemeResource CardGridStyle}">
+    <Grid Padding="12" Background="Transparent">
 
         <Grid ColumnSpacing="12">
             <Grid.ColumnDefinitions>
@@ -19,12 +19,12 @@
 
             <Border
                 Grid.Column="0"
-                Width="40"
-                Height="40"
+                Width="32"
+                Height="32"
                 VerticalAlignment="Center"
                 BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}"
                 BorderThickness="1"
-                CornerRadius="20">
+                CornerRadius="16">
                 <Border.Background>
                     <ImageBrush ImageSource="{x:Bind AvatarSource, Mode=OneWay}" Stretch="UniformToFill" />
                 </Border.Background>

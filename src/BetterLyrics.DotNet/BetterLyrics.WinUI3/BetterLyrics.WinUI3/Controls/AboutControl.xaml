@@ -89,7 +89,20 @@
                         Description="© Zhe Fang 2025-2026. Licensed under GPL-3.0."
                         Header="{x:Bind constants:App.AppName}"
                         HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/Logo.png}">
-                        <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind helpers:MetadataHelper.AppVersion}" />
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock
+                                Margin="0,0,0,4"
+                                VerticalAlignment="Center"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                Text="{x:Bind helpers:MetadataHelper.AppVersion}" />
+                            <Button Click="PlayCreditsButton_Click" Style="{ThemeResource GhostButtonStyle}">
+                                <FontIcon
+                                    FontFamily="{StaticResource SegoeFluentIcons}"
+                                    FontSize="14"
+                                    Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                                    Glyph="&#xEB52;" />
+                            </Button>
+                        </StackPanel>
                         <controls:SettingsExpander.Items>
                             <controls:SettingsCard Description="{x:Bind ViewModel.AppSettings.GeneralSettings.LastAppUpateCheckDateTime.ToString(), Mode=OneWay}">
                                 <controls:SettingsCard.Header>
@@ -218,52 +231,6 @@
                         </StackPanel>
                     </Grid>
 
-                    <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
-                        <Expander.Header>
-                            <TextBlock x:Uid="SetingsPageContributors" />
-                        </Expander.Header>
-
-                        <ItemsControl ItemsSource="{x:Bind ViewModel.Contributors, Mode=OneWay}">
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <controls:WrapPanel HorizontalSpacing="1" VerticalSpacing="1" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate x:DataType="models1:Contributor">
-                                    <local:ContributorCard
-                                        AvatarSource="{x:Bind AvatarSource}"
-                                        Badges="{x:Bind Badges}"
-                                        Description="{x:Bind Description}"
-                                        Header="{x:Bind Header}" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-                        </ItemsControl>
-                    </Expander>
-
-                    <Expander HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch">
-                        <Expander.Header>
-                            <TextBlock x:Uid="SettingsPagePatrons" />
-                        </Expander.Header>
-
-                        <ItemsControl ItemsSource="{x:Bind ViewModel.Donors, Mode=OneWay}">
-
-                            <ItemsControl.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <controls:WrapPanel HorizontalSpacing="1" VerticalSpacing="1" />
-                                </ItemsPanelTemplate>
-                            </ItemsControl.ItemsPanel>
-
-                            <ItemsControl.ItemTemplate>
-                                <DataTemplate x:DataType="models1:Donor">
-                                    <uc:PatronControl Date="{x:Bind Date}" PatronName="{x:Bind PatronName}" />
-                                </DataTemplate>
-                            </ItemsControl.ItemTemplate>
-
-                        </ItemsControl>
-                    </Expander>
-
                     <controls:SettingsExpander x:Uid="SettingsPageCache" IsExpanded="True">
                         <Button x:Uid="SettingsPageOpenFolderButton" Command="{x:Bind ViewModel.OpenCacheFolderCommand}" />
                         <controls:SettingsExpander.Items>
@@ -302,5 +269,217 @@
             </Grid>
         </ScrollViewer>
 
+        <!--  CRT Credits Overlay  -->
+        <Grid
+            x:Name="CrtOverlay"
+            Background="Black"
+            RenderTransformOrigin="0.5,0.5"
+            RequestedTheme="Dark"
+            Visibility="Collapsed">
+            <Grid.RenderTransform>
+                <ScaleTransform x:Name="CrtScaleTransform" ScaleX="1" ScaleY="0" />
+            </Grid.RenderTransform>
+
+            <Grid.Resources>
+                <Storyboard x:Name="CrtTurnOnStoryboard" Completed="CrtTurnOnStoryboard_Completed">
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CrtScaleTransform" Storyboard.TargetProperty="ScaleY">
+                        <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0.0" />
+                        <LinearDoubleKeyFrame KeyTime="0:0:0.1" Value="0.01" />
+                        <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1.0">
+                            <EasingDoubleKeyFrame.EasingFunction>
+                                <QuadraticEase EasingMode="EaseOut" />
+                            </EasingDoubleKeyFrame.EasingFunction>
+                        </EasingDoubleKeyFrame>
+                    </DoubleAnimationUsingKeyFrames>
+
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CrtScaleTransform" Storyboard.TargetProperty="ScaleX">
+                        <DiscreteDoubleKeyFrame KeyTime="0:0:0" Value="0.0" />
+                        <LinearDoubleKeyFrame KeyTime="0:0:0.1" Value="1.0" />
+                    </DoubleAnimationUsingKeyFrames>
+                </Storyboard>
+
+                <Storyboard x:Name="CrtTurnOffStoryboard" Completed="CrtTurnOffStoryboard_Completed">
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CrtScaleTransform" Storyboard.TargetProperty="ScaleY">
+                        <EasingDoubleKeyFrame KeyTime="0:0:0.15" Value="0.01">
+                            <EasingDoubleKeyFrame.EasingFunction>
+                                <QuadraticEase EasingMode="EaseIn" />
+                            </EasingDoubleKeyFrame.EasingFunction>
+                        </EasingDoubleKeyFrame>
+                        <DiscreteDoubleKeyFrame KeyTime="0:0:0.25" Value="0.0" />
+                    </DoubleAnimationUsingKeyFrames>
+
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetName="CrtScaleTransform" Storyboard.TargetProperty="ScaleX">
+                        <DiscreteDoubleKeyFrame KeyTime="0:0:0.15" Value="1.0" />
+                        <LinearDoubleKeyFrame KeyTime="0:0:0.25" Value="0.0" />
+                    </DoubleAnimationUsingKeyFrames>
+                </Storyboard>
+            </Grid.Resources>
+
+            <controls:OpacityMaskView HorizontalAlignment="Center" VerticalAlignment="Stretch">
+                <controls:OpacityMaskView.OpacityMask>
+                    <Rectangle>
+                        <Rectangle.Fill>
+                            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                <GradientStop Offset="0" Color="Transparent" />
+                                <GradientStop Offset="0.1" Color="White" />
+                                <GradientStop Offset="0.9" Color="White" />
+                                <GradientStop Offset="1" Color="Transparent" />
+                            </LinearGradientBrush>
+                        </Rectangle.Fill>
+                    </Rectangle>
+                </controls:OpacityMaskView.OpacityMask>
+
+                <ScrollViewer
+                    x:Name="CreditsScrollViewer"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    HorizontalScrollBarVisibility="Disabled"
+                    PointerEntered="Credits_PointerEntered"
+                    PointerExited="Credits_PointerExited"
+                    VerticalScrollBarVisibility="Hidden"
+                    VerticalScrollMode="Disabled">
+                    <StackPanel
+                        x:Name="CreditsPanel"
+                        Padding="24,0"
+                        HorizontalAlignment="Center">
+                        <StackPanel.RenderTransform>
+                            <TranslateTransform x:Name="CreditsTransform" />
+                        </StackPanel.RenderTransform>
+
+                        <!--  Removed tall top margin so it enters immediately from the bottom  -->
+
+                        <TextBlock
+                            x:Uid="SetingsPageContributors"
+                            Margin="0,0,0,32"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            Style="{ThemeResource BodyStrongTextBlockStyle}" />
+
+                        <ItemsControl
+                            HorizontalAlignment="Center"
+                            HorizontalContentAlignment="Center"
+                            ItemsSource="{x:Bind ViewModel.Contributors, Mode=OneWay}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <controls:UniformGrid
+                                        HorizontalAlignment="Center"
+                                        ColumnSpacing="16"
+                                        Columns="3"
+                                        RowSpacing="16" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="models1:Contributor">
+                                    <TextBlock
+                                        Width="160"
+                                        HorizontalAlignment="Center"
+                                        FontSize="14"
+                                        Foreground="White"
+                                        Text="{x:Bind Header}"
+                                        TextAlignment="Center" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+
+                        <TextBlock
+                            x:Uid="SettingsPagePatrons"
+                            Margin="0,120,0,32"
+                            HorizontalAlignment="Center"
+                            FontWeight="Bold"
+                            Foreground="White"
+                            Style="{ThemeResource BodyStrongTextBlockStyle}" />
+
+                        <ItemsControl
+                            HorizontalAlignment="Center"
+                            HorizontalContentAlignment="Center"
+                            ItemsSource="{x:Bind ViewModel.Donors, Mode=OneWay}">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <controls:UniformGrid
+                                        HorizontalAlignment="Center"
+                                        ColumnSpacing="16"
+                                        Columns="3"
+                                        RowSpacing="16" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate x:DataType="models1:Donor">
+                                    <TextBlock
+                                        MaxWidth="160"
+                                        HorizontalAlignment="Center"
+                                        FontSize="14"
+                                        Foreground="White"
+                                        Text="{x:Bind PatronName}"
+                                        TextAlignment="Center"
+                                        TextWrapping="Wrap" />
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <!--  Special Thanks & Info  -->
+                        <StackPanel
+                            Margin="0,160,0,120"
+                            HorizontalAlignment="Center"
+                            Spacing="6">
+                            <Image
+                                Width="48"
+                                Height="48"
+                                Margin="0,0,0,12"
+                                HorizontalAlignment="Center"
+                                Source="ms-appx:///Assets/Logo.png" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                FontFamily="{StaticResource SloganENFont}"
+                                FontSize="20"
+                                FontWeight="Bold"
+                                Foreground="White"
+                                Text="{x:Bind constants:App.AppName}" />
+                            <TextBlock
+                                Margin="0,0,0,24"
+                                HorizontalAlignment="Center"
+                                FontFamily="{StaticResource SloganCNFont}"
+                                FontSize="14"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                Text="曲拨心弦，词落云笺" />
+
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                FontSize="12"
+                                Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                                Text="Thunder Bay, Canada × 中国 · 武汉" />
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                FontSize="12"
+                                Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                                Text="© 2025-2026 Zhe Fang" />
+                            <TextBlock
+                                Margin="0,0,0,24"
+                                HorizontalAlignment="Center"
+                                FontSize="12"
+                                Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                                Text="Licensed under GPL-3.0" />
+
+                            <TextBlock
+                                HorizontalAlignment="Center"
+                                FontSize="12"
+                                FontStyle="Italic"
+                                Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                                Text="Thank you for using and supporting BetterLyrics." />
+                        </StackPanel>
+                    </StackPanel>
+                </ScrollViewer>
+            </controls:OpacityMaskView>
+
+            <Button
+                Margin="24"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Click="CloseCreditsButton_Click"
+                Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                      FontSize=16,
+                                      Glyph=&#xE70D;}"
+                Foreground="White"
+                Style="{ThemeResource GhostButtonStyle}" />
+        </Grid>
     </Grid>
 </UserControl>

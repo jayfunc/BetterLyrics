@@ -8,7 +8,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Style="{ThemeResource CardGridStyle}">
+    <Grid Background="Transparent">
 
         <StackPanel
             Margin="12,8"

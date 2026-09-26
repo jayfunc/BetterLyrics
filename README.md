@@ -221,22 +221,33 @@ This project is licensed under the **[GNU General Public License v3.0](LICENSE)*
 
 > `C` Code ╹ `I` i18n ╹ `Q` QA ╹ `D` Docs
 
-#### Dependencies & References
+#### Dependencies
 
 | Projects / Packages | Description |
+| :--- | :--- |
+| [ComputeSharp](https://github.com/Sergio0694/ComputeSharp) | .NET library to run HLSL compute shaders, used for dynamic fluid backgrounds |
+| [Dubya.WindowsMediaController](https://github.com/DubyaDude/WindowsMediaController) | Interacts with Windows 10/11 Media Transport Controls (SMTC) |
+| [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper) | Lyrics fetch, decryption, and parsing for various sources |
+| [NAudio](https://github.com/naudio/NAudio) | Audio playback and WASAPI loopback for spectrum visualization |
+| [Win2D](https://github.com/microsoft/Win2D) | Hardware-accelerated 2D graphics rendering for WinUI |
+
+*See [dependencies](https://github.com/jayfunc/BetterLyrics/network/dependencies) for the full list.*
+
+#### References
+
+| Projects / Repositories | Description |
 | :--- | :--- |
 | [Isolation](https://github.com/Storyteller-Studios/Isolation) | Dynamic fluid background implementation |
 | [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate) | Offline lyrics translation provider |
 | [lrclib](https://github.com/tranxuanthang/lrclib) | LRCLIB lyrics API provider |
-| [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper) | Lyrics fetch, decryption, and parsing for various sources |
 | [Manzana-Apple-Music-Lyrics](https://github.com/dropcreations/Manzana-Apple-Music-Lyrics) | Apple Music lyrics fetch using Python |
+| [original-sound-hq-player](https://github.com/Johnwikix/original-sound-hq-player) | Apple Music style spring animation for lyrics scrolling reference |
 | [SpectrumVisualization](https://github.com/Johnwikix/SpectrumVisualization) | Audio visualization reference |
-
-*See [dependencies](https://github.com/jayfunc/BetterLyrics/network/dependencies) for the full list.*
 
 #### Inspired By
 
 Some design ideas are referenced from the following projects (design inspiration only):
+- [FluentFlyout](https://github.com/unchihugo/FluentFlyout) `FOSS`
 - [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease) `FOSS`
 - [Lyricify-App](https://github.com/WXRIW/Lyricify-App) `Prop`
 - [Salt Player for Windows](https://moriafly.com/program/spw.html) `Paid` `Prop`

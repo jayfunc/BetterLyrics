@@ -221,22 +221,33 @@
 
 > `C` 代码 (Code) ╹ `I` 国际化 (i18n) ╹ `Q` 测试 (QA) ╹ `D` 文档 (Docs)
 
-#### 依赖与引用
+#### 依赖 (Dependencies)
 
 | 项目/包 (Projects / Packages) | 描述 (Description) |
+| :--- | :--- |
+| [ComputeSharp](https://github.com/Sergio0694/ComputeSharp) | 用于运行 HLSL 着色器的 .NET 库，实现动态流体背景 |
+| [Dubya.WindowsMediaController](https://github.com/DubyaDude/WindowsMediaController) | 与 Windows 10/11 系统媒体传输控制 (SMTC) 交互 |
+| [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper) | 提供 QQ、网易云音乐和酷狗音乐源的歌词抓取、解密及解析功能 |
+| [NAudio](https://github.com/naudio/NAudio) | 用于音频播放以及音频频谱可视化的 WASAPI 环回采集 |
+| [Win2D](https://github.com/microsoft/Win2D) | WinUI 的硬件加速 2D 图形渲染库 |
+
+*查看 [完整依赖列表](https://github.com/jayfunc/BetterLyrics/network/dependencies)。*
+
+#### 引用 (References)
+
+| 项目/仓库 (Projects / Repositories) | 描述 (Description) |
 | :--- | :--- |
 | [Isolation](https://github.com/Storyteller-Studios/Isolation) | 动态流体背景的实现 |
 | [LibreTranslate](https://github.com/LibreTranslate/LibreTranslate) | 提供离线歌词翻译功能 |
 | [lrclib](https://github.com/tranxuanthang/lrclib) | LRCLIB 歌词 API 数据源 |
-| [Lyricify-Lyrics-Helper](https://github.com/WXRIW/Lyricify-Lyrics-Helper) | 提供 QQ、网易云音乐和酷狗音乐源的歌词抓取、解密及解析功能 |
 | [Manzana-Apple-Music-Lyrics](https://github.com/dropcreations/Manzana-Apple-Music-Lyrics) | 使用 Python 获取 Apple Music 歌词 |
+| [original-sound-hq-player](https://github.com/Johnwikix/original-sound-hq-player) | 类 Apple Music 的歌词滚动弹簧动画参考 |
 | [SpectrumVisualization](https://github.com/Johnwikix/SpectrumVisualization) | 音频频谱可视化参考 |
-
-*查看 [完整依赖列表](https://github.com/jayfunc/BetterLyrics/network/dependencies)。*
 
 #### 灵感来源
 
 部分设计理念参考了以下插件/软件（仅作为设计思路参考，不涉及代码引用）：
+- [FluentFlyout](https://github.com/unchihugo/FluentFlyout) `FOSS`
 - [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease) `FOSS`
 - [Lyricify-App](https://github.com/WXRIW/Lyricify-App) `Prop`
 - [Salt Player for Windows](https://moriafly.com/program/spw) `Paid` `Prop`
