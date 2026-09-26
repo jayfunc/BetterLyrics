@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -1951,7 +1951,7 @@
     <value>范围</value>
   </data>
   <data name="SettingsPageScrollBottomDelay.Header" xml:space="preserve">
-    <value>尾行延时</value>
+    <value>尾行延迟</value>
   </data>
   <data name="SettingsPageScrollBottomDuration.Header" xml:space="preserve">
     <value>尾行持续时间</value>
@@ -1963,7 +1963,7 @@
     <value>歌词动画类型</value>
   </data>
   <data name="SettingsPageScrollTopDelay.Header" xml:space="preserve">
-    <value>首行延时</value>
+    <value>首行延迟</value>
   </data>
   <data name="SettingsPageScrollTopDuration.Header" xml:space="preserve">
     <value>首行持续时间</value>
@@ -2816,5 +2816,11 @@
   </data>
   <data name="SettingsPagePaletteLightToneThreshold.Description" xml:space="preserve">
     <value>浅色模式下过滤颜色的最低亮度阈值</value>
+  </data>
+  <data name="SettingsPageEasingTypeAppleMusicSpring.Content" xml:space="preserve">
+    <value>类 Apple Music</value>
+  </data>
+  <data name="SettingsPageAppleMusicSpringRecommendationInfoBar.Message" xml:space="preserve">
+    <value>为了获得更接近 Apple Music 的体验，建议同步调整首行延迟及尾行延迟</value>
   </data>
 </root>

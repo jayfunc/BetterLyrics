@@ -218,6 +218,13 @@
                             <ComboBoxItem x:Uid="SettingsPageEasingTypeEaseBounce" />
                             <ComboBoxItem x:Uid="SettingsPageEasingTypeAppleMusicSpring" />
                         </ComboBox>
+                        <controls:SettingsExpander.ItemsHeader>
+                            <InfoBar
+                                x:Uid="SettingsPageAppleMusicSpringRecommendationInfoBar"
+                                IsClosable="False"
+                                IsOpen="{x:Bind LyricsEffectSettings.IsLyricsScrollEasingModeEnabled, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
+                                Severity="Informational" />
+                        </controls:SettingsExpander.ItemsHeader>
                         <controls:SettingsExpander.Items>
                             <controls:SettingsCard x:Uid="SettingsPageEasingMode" IsEnabled="{x:Bind LyricsEffectSettings.IsLyricsScrollEasingModeEnabled, Mode=OneWay}">
                                 <ComboBox SelectedIndex="{x:Bind LyricsEffectSettings.LyricsScrollEasingMode, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">

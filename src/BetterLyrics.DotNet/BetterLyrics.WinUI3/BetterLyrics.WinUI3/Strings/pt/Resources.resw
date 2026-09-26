@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -2816,5 +2816,11 @@
   </data>
   <data name="SettingsPagePaletteLightToneThreshold.Description" xml:space="preserve">
     <value>Limiar mínimo de claridade para filtrar cores no modo claro</value>
+  </data>
+  <data name="SettingsPageEasingTypeAppleMusicSpring.Content" xml:space="preserve">
+    <value>Semelhante ao Apple Music</value>
+  </data>
+  <data name="SettingsPageAppleMusicSpringRecommendationInfoBar.Message" xml:space="preserve">
+    <value>Para obter uma experiência mais semelhante à do Apple Music, recomenda-se ajustar o atraso superior e inferior de forma sincronizada.</value>
   </data>
 </root>

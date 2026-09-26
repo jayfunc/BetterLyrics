@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -2816,5 +2816,11 @@
   </data>
   <data name="SettingsPagePaletteLightToneThreshold.Description" xml:space="preserve">
     <value>Ngưỡng độ sáng tối thiểu để lọc màu trong chế độ sáng</value>
+  </data>
+  <data name="SettingsPageEasingTypeAppleMusicSpring.Content" xml:space="preserve">
+    <value>Tương tự như Apple Music</value>
+  </data>
+  <data name="SettingsPageAppleMusicSpringRecommendationInfoBar.Message" xml:space="preserve">
+    <value>Để có trải nghiệm gần giống với Apple Music, bạn nên điều chỉnh độ trễ trên và dưới một cách đồng bộ.</value>
   </data>
 </root>

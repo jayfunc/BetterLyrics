@@ -217,11 +217,11 @@ public sealed partial class NowPlayingPage : Page,
         RenderTextBlock(AlbumTextBlock, mappedAlbum, albumFontSize);
 
         if (double.IsNormal(titleFontSize))
-            TitleAutoScrollHoverEffectView.ScrollingPixelsPreSecond = titleFontSize;
+            TitleAutoScrollHoverEffectView.ScrollingPixelsPreSecond = (int)titleFontSize;
         if (double.IsNormal(artistFontSize))
-            ArtistsAutoScrollHoverEffectView.ScrollingPixelsPreSecond = artistFontSize;
+            ArtistsAutoScrollHoverEffectView.ScrollingPixelsPreSecond = (int)artistFontSize;
         if (double.IsNormal(albumFontSize))
-            AlbumAutoScrollHoverEffectView.ScrollingPixelsPreSecond = albumFontSize;
+            AlbumAutoScrollHoverEffectView.ScrollingPixelsPreSecond = (int)albumFontSize;
     }
 
     private async Task RefreshSongInfoAsync()

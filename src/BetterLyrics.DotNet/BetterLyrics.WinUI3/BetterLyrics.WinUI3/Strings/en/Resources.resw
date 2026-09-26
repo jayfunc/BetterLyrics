@@ -2820,4 +2820,7 @@
   <data name="SettingsPageEasingTypeAppleMusicSpring.Content" xml:space="preserve">
     <value>Apple Music-like</value>
   </data>
+  <data name="SettingsPageAppleMusicSpringRecommendationInfoBar.Message" xml:space="preserve">
+    <value>To get a closer experience to Apple Music, it is recommended to adjust the top and bottom delay synchronously.</value>
+  </data>
 </root>
