@@ -32,12 +32,13 @@ public class TranslationService : BaseViewModel, ITranslationService
             throw new Exception("LibreTranslate server URL is not set in settings.");
 
         var url = $"{_settingsService.AppSettings.TranslationSettings.LibreTranslateServer}/translate";
-        var response = await _client.PostAsync(url, new FormUrlEncodedContent(
+        var requestBody = new FormUrlEncodedContent(
         [
             new KeyValuePair<string, string>("q", text),
-            new KeyValuePair<string, string>("source", originalLangTag?.ToString() ?? ""),
-            new KeyValuePair<string, string>("target", targetLangTag?.ToString() ?? "")
-        ]), token);
+            new KeyValuePair<string, string>("source", originalLangTag?.Language?.Macrolanguage?.ToString() ?? (originalLangTag?.Language?.ToString() ?? "auto")),
+            new KeyValuePair<string, string>("target", targetLangTag?.Language?.Macrolanguage?.ToString() ?? (targetLangTag?.Language?.ToString() ?? ""))
+        ]);
+        var response = await _client.PostAsync(url, requestBody, token);
 
         response.EnsureSuccessStatusCode();
         var json = await response.Content.ReadAsStringAsync(token);
