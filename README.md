@@ -209,15 +209,25 @@ This project is licensed under the **[GNU General Public License v3.0](LICENSE)*
 
 #### Contributors
 
-- [jayfunc](https://github.com/jayfunc) `C` `I` `Q` `D`
-- [Raspberry-Monster](https://github.com/Raspberry-Monster) `C`
-- [zxbmmmmmmmmm](https://github.com/zxbmmmmmmmmm) `C`
-- [ZHider](https://github.com/ZHider) `C`
-- [YUZU384](https://github.com/YUZU384) `C`
-- [kusutori](https://github.com/kusutori) `C`
-- [PiYuanZhouLv](https://github.com/PiYuanZhouLv) `C`
-- [SuHeAndZl](https://crowdin.com/profile/SuHeAndZl) `I` `Q` `D`
-- [borcolasky](https://crowdin.com/profile/borcolasky) `I`
+##### Core Maintainer
+
+| Maintainer | Roles |
+| :--- | :--- |
+| **[jayfunc](https://github.com/jayfunc)** | Core Developer / Project Lead (`C` `I` `Q` `D`) |
+
+##### Contributors (Alphabetical)
+
+| Contributor | Contributions |
+| :--- | :--- |
+| [borcolasky](https://crowdin.com/profile/borcolasky) | `I` |
+| [H-MAli](https://github.com/H-MAli) | `C` |
+| [kusutori](https://github.com/kusutori) | `C` |
+| [PiYuanZhouLv](https://github.com/PiYuanZhouLv) | `C` |
+| [Raspberry-Monster](https://github.com/Raspberry-Monster) | `C` |
+| [SuHeAndZl](https://crowdin.com/profile/SuHeAndZl) | `I` `Q` `D` |
+| [YUZU384](https://github.com/YUZU384) | `C` |
+| [ZHider](https://github.com/ZHider) | `C` |
+| [zxbmmmmmmmmm](https://github.com/zxbmmmmmmmmm) | `C` |
 
 > `C` Code ╹ `I` i18n ╹ `Q` QA ╹ `D` Docs
 
@@ -247,11 +257,14 @@ This project is licensed under the **[GNU General Public License v3.0](LICENSE)*
 #### Inspired By
 
 Some design ideas are referenced from the following projects (design inspiration only):
-- [FluentFlyout](https://github.com/unchihugo/FluentFlyout) `FOSS`
-- [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease) `FOSS`
-- [Lyricify-App](https://github.com/WXRIW/Lyricify-App) `Prop`
-- [Salt Player for Windows](https://moriafly.com/program/spw.html) `Paid` `Prop`
-- [MyToolBar](https://github.com/TwilightLemon/MyToolBar) `FOSS`
+
+| Projects / Software | Description |
+| :--- | :--- |
+| [FluentFlyout](https://github.com/unchihugo/FluentFlyout) `FOSS` | Interaction and visual design concepts of the Now Playing flyout |
+| [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease) `FOSS` | Overall layout and typography design of the standard mode lyrics interface |
+| [Lyricify-App](https://github.com/WXRIW/Lyricify-App) `Prop` | Architectural approach to monitoring and handling multiple media sessions via SMTC |
+| [Salt Player for Windows](https://moriafly.com/program/spw.html) `Paid` `Prop` | Mouse hover parallax animation for album covers, and UI element designs in the now-playing bar |
+| [MyToolBar](https://github.com/TwilightLemon/MyToolBar) `FOSS` | AppBar concept, which inspired the interaction logic of the "Docked Mode" in this project |
 
 > `FOSS` Free and Open Source Software ╹ `Prop` Proprietary ╹ `Paid` Paid
 

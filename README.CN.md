@@ -209,15 +209,25 @@
 
 #### 贡献者
 
-- [jayfunc](https://github.com/jayfunc) `C` `I` `Q` `D`
-- [Raspberry-Monster](https://github.com/Raspberry-Monster) `C`
-- [zxbmmmmmmmmm](https://github.com/zxbmmmmmmmmm) `C`
-- [ZHider](https://github.com/ZHider) `C`
-- [YUZU384](https://github.com/YUZU384) `C`
-- [kusutori](https://github.com/kusutori) `C`
-- [PiYuanZhouLv](https://github.com/PiYuanZhouLv) `C`
-- [SuHeAndZl](https://crowdin.com/profile/SuHeAndZl) `I` `Q` `D`
-- [borcolasky](https://crowdin.com/profile/borcolasky) `I`
+##### 核心维护者
+
+| 维护者 | 角色 / 贡献 |
+| :--- | :--- |
+| **[jayfunc](https://github.com/jayfunc)** | 核心开发者 / 项目发起人 (`C` `I` `Q` `D`) |
+
+##### 贡献者 (按字母顺序)
+
+| 贡献者 | 贡献类型 |
+| :--- | :--- |
+| [borcolasky](https://crowdin.com/profile/borcolasky) | `I` |
+| [H-MAli](https://github.com/H-MAli) | `C` |
+| [kusutori](https://github.com/kusutori) | `C` |
+| [PiYuanZhouLv](https://github.com/PiYuanZhouLv) | `C` |
+| [Raspberry-Monster](https://github.com/Raspberry-Monster) | `C` |
+| [SuHeAndZl](https://crowdin.com/profile/SuHeAndZl) | `I` `Q` `D` |
+| [YUZU384](https://github.com/YUZU384) | `C` |
+| [ZHider](https://github.com/ZHider) | `C` |
+| [zxbmmmmmmmmm](https://github.com/zxbmmmmmmmmm) | `C` |
 
 > `C` 代码 (Code) ╹ `I` 国际化 (i18n) ╹ `Q` 测试 (QA) ╹ `D` 文档 (Docs)
 
@@ -247,11 +257,14 @@
 #### 灵感来源
 
 部分设计理念参考了以下插件/软件（仅作为设计思路参考，不涉及代码引用）：
-- [FluentFlyout](https://github.com/unchihugo/FluentFlyout) `FOSS`
-- [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease) `FOSS`
-- [Lyricify-App](https://github.com/WXRIW/Lyricify-App) `Prop`
-- [Salt Player for Windows](https://moriafly.com/program/spw) `Paid` `Prop`
-- [MyToolBar](https://github.com/TwilightLemon/MyToolBar) `FOSS`
+
+| 项目/软件 (Projects / Software) | 描述 (Description) |
+| :--- | :--- |
+| [FluentFlyout](https://github.com/unchihugo/FluentFlyout) `FOSS` | Now Playing 弹窗的交互与视觉设计理念 |
+| [refined-now-playing-netease](https://github.com/solstice23/refined-now-playing-netease) `FOSS` | 标准模式下歌词界面的整体布局与排版设计 |
+| [Lyricify-App](https://github.com/WXRIW/Lyricify-App) `Prop` | 基于 SMTC (系统媒体传输控制) 监听与处理多媒体会话的架构思路 |
+| [Salt Player for Windows](https://moriafly.com/program/spw) `Paid` `Prop` | 专辑封面的鼠标悬浮视差动画，以及底部正在播放栏的 UI 元素设计 |
+| [MyToolBar](https://github.com/TwilightLemon/MyToolBar) `FOSS` | AppBar (应用栏) 理念，并由此衍生出本项目的“停靠模式”交互逻辑 |
 
 > `FOSS` 开源 ╹ `Prop` 闭源 ╹ `Paid` 付费
 
