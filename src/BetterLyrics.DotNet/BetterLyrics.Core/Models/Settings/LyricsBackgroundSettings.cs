@@ -215,6 +215,10 @@ public partial class LyricsBackgroundSettings : ObservableRecipient, ICloneable
     [NotifyPropertyChangedRecipients]
     public partial bool IsRaindropOverlayParallaxEnabled { get; set; } = false;
 
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial bool IsSemanticEffectEnabled { get; set; } = false;
+
     public object Clone()
     {
         return new LyricsBackgroundSettings
@@ -276,7 +280,8 @@ public partial class LyricsBackgroundSettings : ObservableRecipient, ICloneable
             RaindropShadowIntensity = RaindropShadowIntensity,
             RaindropOverlayBreathingIntensity = RaindropOverlayBreathingIntensity,
             IsRaindropOverlayBrethingEffectEnabled = IsRaindropOverlayBrethingEffectEnabled,
-            IsRaindropOverlayParallaxEnabled = IsRaindropOverlayParallaxEnabled
+            IsRaindropOverlayParallaxEnabled = IsRaindropOverlayParallaxEnabled,
+            IsSemanticEffectEnabled = IsSemanticEffectEnabled
         };
     }
 }

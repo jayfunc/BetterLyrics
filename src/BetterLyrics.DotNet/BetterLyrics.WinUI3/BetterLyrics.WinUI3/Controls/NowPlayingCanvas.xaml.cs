@@ -151,6 +151,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
     private readonly FluidBackgroundRenderer _fluidRenderer = new();
     private readonly FogRenderer _fogRenderer = new();
     private readonly IGsmtcService _gsmtcService = Ioc.Default.GetRequiredService<IGsmtcService>();
+    private readonly SemanticEffectsRenderer _semanticEffectsRenderer = new();
 
     private readonly ValueTransition<AppColor> _immersiveBgColorTransition = new(
         Colors.Black,
@@ -765,6 +766,14 @@ public sealed partial class NowPlayingCanvas : UserControl,
         var isPrimaryPlayingLineChanged = primaryPlayingIndex != _primaryPlayingLineIndex;
         _primaryPlayingLineIndex = primaryPlayingIndex;
 
+        if (isPrimaryPlayingLineChanged && _primaryPlayingLineIndex >= 0 && _renderLyricsLines != null && _primaryPlayingLineIndex < _renderLyricsLines.Count)
+        {
+            if (_lyricsWindowStatus?.LyricsBackgroundSettings.IsSemanticEffectEnabled == true)
+            {
+                _semanticEffectsRenderer.TriggerEffect(_renderLyricsLines[_primaryPlayingLineIndex].PrimaryText, new Vector2((float)sender.Size.Width, (float)sender.Size.Height));
+            }
+        }
+
         #endregion
 
         #region UpdateTargetScrollOffset
@@ -912,6 +921,8 @@ public sealed partial class NowPlayingCanvas : UserControl,
             lyricsBg.SpectrumPlacement, _albumArtRect, _spectrumAnalyzer.CurrentBassEnergy,
             lyricsBg.SpectrumBreathingIntensity, lyricsBg.IsSpectrumOverlayParallaxEnabled);
 
+        _semanticEffectsRenderer.Update(sender, elapsedTime, _spectrumAnalyzer.CurrentBassEnergy, 0, false);
+
         if (_renderLyricsOpacity == 1)
         {
             _lyricsRenderer.MouseHoverLineIndex = CurrentHoveringLineIndex;
@@ -981,6 +992,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
         _fogRenderer.Dispose();
         _raindropRenderer.Dispose();
         _spectrumRenderer.Dispose();
+        _semanticEffectsRenderer.Dispose();
 
         DisposeRenderLyricsLines();
         DisposeSpectrumAnalyzer();
@@ -1142,6 +1154,8 @@ public sealed partial class NowPlayingCanvas : UserControl,
         _fogRenderer.Draw(sender, ds, lyricsBg.IsFogOverlayBrethingEffectEnabled);
 
         _raindropRenderer.Draw(sender, ds, lyricsBg.IsRaindropOverlayBrethingEffectEnabled);
+
+        _semanticEffectsRenderer.Draw(sender, ds, false);
 
         if (_renderLyricsOpacity == 1) _lyricsRenderer.Draw(sender, ds);
     }
