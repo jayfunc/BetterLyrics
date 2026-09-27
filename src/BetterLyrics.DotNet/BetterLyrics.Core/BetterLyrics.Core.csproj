@@ -31,7 +31,8 @@
         <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.11" />
         <PackageReference Include="MimeMapping" Version="4.0.0" />
         <PackageReference Include="NAudio" Version="2.3.0" />
-        <PackageReference Include="NTextCat" Version="0.3.65" />
+        <PackageReference Include="Panlingo.LanguageIdentification.CLD3" Version="0.8.1" />
+        <PackageReference Include="SearchPioneer.Lingua" Version="2.0.0" />
         <PackageReference Include="SixLabors.ImageSharp" Version="3.1.12" />
         <PackageReference Include="SMBLibrary" Version="1.5.7.1" />
         <PackageReference Include="System.IO.Hashing" Version="10.0.11" />

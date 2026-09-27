@@ -6,9 +6,11 @@ using BetterLyrics.Core.Models;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.International.Converters.TraditionalChineseToSimplifiedConverter;
 using NLanguageTag;
-using NTextCat;
 using Pinyin;
 using WanaKanaNet;
+using Lingua;
+using Panlingo.LanguageIdentification.CLD3;
+using Language = NLanguageTag.Language;
 
 namespace BetterLyrics.Core.Helpers;
 
@@ -36,11 +38,7 @@ public static partial class LanguageHelper
     private static readonly IStringConverterProvider _stringConverterProvider =
         Ioc.Default.GetRequiredService<IStringConverterProvider>();
 
-    private static readonly IAssetReaderProvider _assetReaderProvider =
-        Ioc.Default.GetRequiredService<IAssetReaderProvider>();
-
-    private static readonly RankedLanguageIdentifierFactory _factory = new();
-    private static RankedLanguageIdentifier? _identifier;
+    private static LanguageDetector? _detector;
 
     public static readonly List<ExtendedLanguage> SupportedTranslationTargetLanguages =
     [
@@ -87,7 +85,7 @@ public static partial class LanguageHelper
 
     public static async Task InitIdentifierAsync()
     {
-        _identifier ??= _factory.Load(await _assetReaderProvider.GetAssetStreamAsync("Wiki82.profile.xml"));
+        _detector = LanguageDetectorBuilder.FromAllLanguages().Build();
     }
 
     /// <summary>
@@ -97,95 +95,64 @@ public static partial class LanguageHelper
     {
         if (string.IsNullOrWhiteSpace(text)) return null;
 
-        var transliterationCode = TryDetectTransliteration(text);
-        if (transliterationCode != null) return transliterationCode;
-
-        var guessList = _identifier?.Identify(text);
-        var bestMatch = guessList?.FirstOrDefault();
-
-        if (bestMatch == null) return null;
-
-        var code = bestMatch.Item1.Iso639_2T;
-
-        return code switch
-        {
-            "simple" => EnglishCode,
-            "zh" => MandarinChineseCode,
-            "zh_classical" => MandarinChineseCode,
-            "zh_yue" => YueChineseCode,
-            _ => LanguageTag.TryParse(code, out var tag) ? tag : null
-        };
-    }
-
-    public static LanguageTag? DetectLanguageTag(IEnumerable<string> lines)
-    {
-        Dictionary<LanguageTag?, int> tagCount = [];
-        int cantoneseFeatureCount = 0;
-
-        foreach (var line in lines)
-        {
-            if (!string.IsNullOrWhiteSpace(line) && CantoneseFeatureRegex().IsMatch(line))
-            {
-                cantoneseFeatureCount++;
-            }
-
-            var tag = DetectLanguageTag(line);
-            if (tag != null)
-            {
-                if (!tagCount.ContainsKey(tag)) tagCount[tag] = 0;
-                tagCount[tag]++;
-            }
-        }
-
-        if (tagCount.Count == 0) return null;
-
-        var bestCode = tagCount.OrderByDescending(kv => kv.Value).First().Key;
-
-        // If the detected language is Mandarin but we found strong Cantonese features in at least a few lines,
-        // it's highly likely to be Cantonese because Mandarin rarely uses these specific characters.
-        if (bestCode == MandarinChineseCode && cantoneseFeatureCount >= 2)
+        // 1. 拦截粤语特有汉字
+        if (CantoneseFeatureRegex().IsMatch(text))
         {
             return YueChineseCode;
         }
 
-        return bestCode;
-    }
-
-    /// <summary>
-    ///     尝试识别音译系统 (拼音/粤拼/罗马音)
-    /// </summary>
-    private static LanguageTag? TryDetectTransliteration(string text)
-    {
-        if (PinyinToneRegex().IsMatch(text)) return MandarinChineseLatnTag;
-
+        // 2. 拦截带数字声调的粤拼/拼音
         var numberMatches = NumberedToneRegex().Matches(text);
         if (numberMatches.Count > 0)
         {
             foreach (Match match in numberMatches)
+            {
                 if (match.Value.EndsWith("6"))
                     return YueChineseLatnTag;
+            }
             return MandarinChineseLatnTag;
         }
 
-        if (IsLatinOnly(text))
+        using (var cld3Detector = new CLD3Detector(minNumBytes: 0, maxNumBytes: 10000))
         {
-            if (EnglishBlockerRegex().IsMatch(text)) return null;
+            var cld3Result = cld3Detector.PredictLanguage(text);
+            if (cld3Result.IsReliable)
+            {
+                var code = cld3Result.Language;
 
-            var romajiScore = RomajiFeatureRegex().Matches(text).Count;
-            var romajaScore = RomajaFeatureRegex().Matches(text).Count;
+                if (code.Equals("zh-Latn", StringComparison.OrdinalIgnoreCase)) return MandarinChineseLatnTag;
+                if (code.Equals("ja-Latn", StringComparison.OrdinalIgnoreCase)) return JapaneseLatnTag;
+                if (code.Equals("ko-Latn", StringComparison.OrdinalIgnoreCase)) return KoreanLatnTag;
 
-            if (romajaScore > romajiScore && romajaScore > 0) return KoreanLatnTag;
-            if (romajiScore > 0) return JapaneseLatnTag;
+                if (code == "zh") return MandarinChineseCode;
+                if (LanguageTag.TryParse(code, out var tag))
+                {
+                    return tag;
+                }
+            }
+        }
+
+        var guessLang = _detector?.DetectLanguageOf(text);
+
+        if (guessLang == null) return null;
+
+        var codeLingua = guessLang.Value.IsoCode6391().ToString().ToLower();
+
+        if (codeLingua == "zh") return MandarinChineseCode;
+        
+        if (LanguageTag.TryParse(codeLingua, out var tagLingua))
+        {
+            return tagLingua;
         }
 
         return null;
     }
 
-    private static bool IsLatinOnly(string text)
+    public static LanguageTag? DetectLanguageTag(IEnumerable<string> lines)
     {
-        return text.All(c =>
-            c < 128 && (char.IsLetter(c) || char.IsWhiteSpace(c) || char.IsPunctuation(c) || char.IsDigit(c)));
+        return DetectLanguageTag(string.Join("\n", lines));
     }
+
 
     public static bool IsCJK(string text)
     {
@@ -314,24 +281,8 @@ public static partial class LanguageHelper
         return _stringConverterProvider.RomajiToKanji(romaji);
     }
 
-    [GeneratedRegex(
-        @"\b(the|and|for|that|this|with|you|are|not|what|all|have|one|can|just|but|was)\b|ing\b|tion\b|ment\b",
-        RegexOptions.IgnoreCase | RegexOptions.Compiled)]
-    private static partial Regex EnglishBlockerRegex();
-
-    [GeneratedRegex(
-        @"(tsu|shi|chi|kyo|sho|chu|ryu|gyo|byo|myo|nyo|hyo|ja|ju|jo|kya|kyu|sha|shu|cha)\w*|\b(wa|wo|no|ni|ga|de|to|kara|made|yori|kara|he)\b",
-        RegexOptions.IgnoreCase | RegexOptions.Compiled)]
-    private static partial Regex RomajiFeatureRegex();
-
     [GeneratedRegex(@"[a-z]+[1-6]\b", RegexOptions.IgnoreCase | RegexOptions.Compiled)]
     private static partial Regex NumberedToneRegex();
-
-    [GeneratedRegex(@"\b(sarang|neoun|gaseum|nunmul|joha|neoreul|naega|niga|mian|gomawo|hajiman|geurae|bogo|shipeo)\b|(eo|eu|yae|yeo|kk|tt|pp|jj|ui|wae|weo)\w*|\b[a-z]+(k|m|ng|l|p|t)\b", RegexOptions.IgnoreCase | RegexOptions.Compiled)]
-    private static partial Regex RomajaFeatureRegex();
-
-    [GeneratedRegex(@"[āáǎàēéěèīíǐìōóǒòūúǔùǖǘǚǜ]", RegexOptions.Compiled)]
-    private static partial Regex PinyinToneRegex();
 
     [GeneratedRegex(@"[嘅喺唔咁哋咗嚟睇嘢佢乜冇畀吖㗎啱啲掟]", RegexOptions.Compiled)]
     private static partial Regex CantoneseFeatureRegex();
