@@ -62,9 +62,9 @@
 
 | Microsoft Store (推荐) | 手动安装 |
 | :---: | :---: |
-| <a href="https://apps.microsoft.com/detail/9P1WCD1P597R?referrer=appbadge&mode=direct"><img src="https://get.microsoft.com/images/en-us%20dark.svg" width="160" alt="Get it from Microsoft"/></a><br>无限期免费试用（功能与付费版一致） | [**最新版本 (.zip)**](https://github.com/jayfunc/BetterLyrics/releases/latest)<br>[查看安装指南](https://betterlyrics.github.io/zh-cn/get-started/install) |
+| <a href="https://apps.microsoft.com/detail/9P1WCD1P597R?referrer=appbadge&mode=direct"><img src="https://get.microsoft.com/images/en-us%20dark.svg" width="160" alt="Get it from Microsoft"/></a><br>无限期免费试用（功能与付费版一致） | [**最新版本 (.zip)**](https://github.com/jayfunc/BetterLyrics/releases/latest)<br>[查看安装指南](https://betterlyrics.github.io/zh-cn/docs/get-started/install) |
 
-**[使用文档](https://betterlyrics.github.io/zh-cn) | [插件商店](https://betterlyrics.github.io/zh-cn/plugins-store) | [隐私政策](docs/PRIVACY_POLICY.CN.md) | [服务条款](docs/TERMS_OF_SERVICE.CN.md)**
+**[使用文档](https://betterlyrics.github.io/zh-cn) | [插件商店](https://betterlyrics.github.io/zh-cn/docs/add-ons/plugins-store) | [隐私政策](docs/PRIVACY_POLICY.CN.md) | [服务条款](docs/TERMS_OF_SERVICE.CN.md)**
 
 </div>
 
@@ -136,7 +136,7 @@
 
 <div align="center">
 
-[QQ 群 1](https://qm.qq.com/q/yArcw3n8pq) (1054700388) • [QQ 群 2](https://qm.qq.com/q/27rzSjFXt6) (1076554669) • [QQ 频道](https://pd.qq.com/s/1u1ntkyzr?b=9) • [Discord](https://discord.gg/5yAQPnyCKv) • [Telegram](https://t.me/+svhSLZ7awPsxNGY1)
+**[QQ 群 1](https://qm.qq.com/q/yArcw3n8pq) (1054700388) | [QQ 群 2](https://qm.qq.com/q/27rzSjFXt6) (1076554669) | [QQ 频道](https://pd.qq.com/s/1u1ntkyzr?b=9) | [Discord](https://discord.gg/5yAQPnyCKv) | [Telegram](https://t.me/+svhSLZ7awPsxNGY1)**
 
 </div>
 
@@ -146,9 +146,9 @@
 
 欢迎社区的任何贡献！你可以通过以下方式帮助我们：
 
-- **协助翻译：** 找不到你的语言？[点此开始翻译](https://crowdin.com/project/betterlyrics)。
+- **协助翻译：** 找不到你的语言？[点此开始翻译](https://zh.crowdin.com/project/betterlyrics)。
 - **开发插件：** 想要扩展功能？[查看插件开发指南](https://betterlyrics.github.io/zh-cn/docs/plugin-dev/intro)。
-- **从源码构建：** [查看构建说明](https://betterlyrics.github.io/zh-cn/get-started/download/#visual-studio)。
+- **从源码构建：** [查看构建说明](https://betterlyrics.github.io/zh-cn/docs/get-started/download.html#visual-studio)。
 
 ---
 

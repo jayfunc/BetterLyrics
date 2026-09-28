@@ -62,9 +62,9 @@
 
 | Microsoft Store (Recommended) | Manual Install |
 | :---: | :---: |
-| <a href="https://apps.microsoft.com/detail/9P1WCD1P597R?referrer=appbadge&mode=direct"><img src="https://get.microsoft.com/images/en-us%20dark.svg" width="160" alt="Get it from Microsoft"/></a><br>Unlimited free trial (Same as paid) | [**Latest Release (.zip)**](https://github.com/jayfunc/BetterLyrics/releases/latest)<br>See [Installation Guide](https://betterlyrics.github.io/get-started/install) |
+| <a href="https://apps.microsoft.com/detail/9P1WCD1P597R?referrer=appbadge&mode=direct"><img src="https://get.microsoft.com/images/en-us%20dark.svg" width="160" alt="Get it from Microsoft"/></a><br>Unlimited free trial (Same as paid) | [**Latest Release (.zip)**](https://github.com/jayfunc/BetterLyrics/releases/latest)<br>See [Installation Guide](https://betterlyrics.github.io/docs/get-started/install) |
 
-**[Docs](https://betterlyrics.github.io) | [Plugin Store](https://betterlyrics.github.io/plugins-store) | [Privacy Policy](docs/PRIVACY_POLICY.md) | [Terms of Service](docs/TERMS_OF_SERVICE.md)**
+**[Docs](https://betterlyrics.github.io) | [Plugin Store](https://betterlyrics.github.io/docs/add-ons/plugins-store) | [Privacy Policy](docs/PRIVACY_POLICY.md) | [Terms of Service](docs/TERMS_OF_SERVICE.md)**
 
 </div>
 
@@ -136,7 +136,7 @@ Join our communities to get support, share your layouts, and stay updated:
 
 <div align="center">
 
-[QQ Group 1](https://qm.qq.com/q/yArcw3n8pq) (1054700388) • [QQ Group 2](https://qm.qq.com/q/27rzSjFXt6) (1076554669) • [QQ Channel](https://pd.qq.com/s/1u1ntkyzr?b=9) • [Discord](https://discord.gg/5yAQPnyCKv) • [Telegram](https://t.me/+svhSLZ7awPsxNGY1)
+**[Discord](https://discord.gg/5yAQPnyCKv) | [Telegram](https://t.me/+svhSLZ7awPsxNGY1) | [QQ Group 1](https://qm.qq.com/q/yArcw3n8pq) (1054700388) | [QQ Group 2](https://qm.qq.com/q/27rzSjFXt6) (1076554669) | [QQ Channel](https://pd.qq.com/s/1u1ntkyzr?b=9)**
 
 </div>
 
@@ -148,7 +148,7 @@ We welcome community contributions! Here is how you can help:
 
 - **Help us translate:** Cannot find your language? [Start translating here](https://crowdin.com/project/betterlyrics).
 - **Develop Plugins:** Want to extend functionality? [Read the Developer Guide](https://betterlyrics.github.io/docs/plugin-dev/intro).
-- **Build from source:** [View build instructions](https://betterlyrics.github.io/get-started/download/#visual-studio).
+- **Build from source:** [View build instructions](https://betterlyrics.github.io/docs/get-started/download.html#visual-studio).
 
 ---
 
