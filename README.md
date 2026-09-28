@@ -147,7 +147,7 @@ Join our communities to get support, share your layouts, and stay updated:
 We welcome community contributions! Here is how you can help:
 
 - **Help us translate:** Cannot find your language? [Start translating here](https://crowdin.com/project/betterlyrics).
-- **Develop Plugins:** Want to extend functionality? [Read the Developer Guide](https://betterlyrics.github.io/plugin-dev/intro/).
+- **Develop Plugins:** Want to extend functionality? [Read the Developer Guide](https://betterlyrics.github.io/docs/plugin-dev/intro).
 - **Build from source:** [View build instructions](https://betterlyrics.github.io/get-started/download/#visual-studio).
 
 ---

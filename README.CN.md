@@ -147,7 +147,7 @@
 欢迎社区的任何贡献！你可以通过以下方式帮助我们：
 
 - **协助翻译：** 找不到你的语言？[点此开始翻译](https://crowdin.com/project/betterlyrics)。
-- **开发插件：** 想要扩展功能？[查看插件开发指南](https://betterlyrics.github.io/zh-cn/plugin-dev/intro/)。
+- **开发插件：** 想要扩展功能？[查看插件开发指南](https://betterlyrics.github.io/zh-cn/docs/plugin-dev/intro)。
 - **从源码构建：** [查看构建说明](https://betterlyrics.github.io/zh-cn/get-started/download/#visual-studio)。
 
 ---
