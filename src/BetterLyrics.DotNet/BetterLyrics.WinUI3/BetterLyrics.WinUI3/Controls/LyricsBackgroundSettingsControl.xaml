@@ -380,10 +380,7 @@
                     </controls:SettingsExpander>
 
                     <!--  语义特效  -->
-                    <controls:SettingsCard
-                        x:Uid="SettingsPageSemanticEffects"
-                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                                 Glyph=&#xE8C0;}">
+                    <controls:SettingsCard x:Uid="SettingsPageSemanticEffects" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8C0;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsSemanticEffectEnabled, Mode=TwoWay}" />
                     </controls:SettingsCard>
 

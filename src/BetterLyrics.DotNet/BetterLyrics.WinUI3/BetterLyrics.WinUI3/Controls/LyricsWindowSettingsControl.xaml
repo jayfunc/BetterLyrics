@@ -57,9 +57,9 @@
                 </Grid>
 
                 <controls:SettingsExpander
+                    x:Uid="SettingsPageMonitorLayout"
                     Grid.Row="1"
                     Margin="36,0"
-                    x:Uid="SettingsPageMonitorLayout"
                     HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                              Glyph=&#xE7F4;}">
                     <controls:SettingsExpander.ItemsHeader>
