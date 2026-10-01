@@ -1,17 +1,23 @@
-﻿using System.Runtime.InteropServices;
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+using System.Threading.Tasks;
+using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.WinUI3.Helpers;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NAudio.CoreAudioApi;
-using NAudio.CoreAudioApi.Interfaces;
 using NAudio.Dsp;
 using NAudio.Wave;
 
-namespace BetterLyrics.Core.Helpers;
+namespace BetterLyrics.WinUI3.Providers;
 
-public class SpectrumAnalyzer : IDisposable, IMMNotificationClient
+public partial class SpectrumAnalyzerProvider : ISpectrumAnalyzer
 {
     private readonly Debouncer _deviceDebouncer = new();
     private readonly MMDeviceEnumerator? _deviceEnumerator;
+    private readonly MMDeviceNotificationClient? _notificationClient;
 
     // Buffers
     private readonly float[] _fftLeftBuffer;
@@ -24,7 +30,7 @@ public class SpectrumAnalyzer : IDisposable, IMMNotificationClient
     // Windowing & Compensation
     private readonly double[] _hammingWindow;
     private readonly object _lock = new();
-    private readonly ILogger<SpectrumAnalyzer> _logger;
+    private readonly ILogger<SpectrumAnalyzerProvider> _logger;
     private readonly int _m; // FFT Log2 n
     private SafeWasapiLoopbackCapture? _capture;
     //private WasapiLoopbackCapture? _capture;
@@ -41,14 +47,15 @@ public class SpectrumAnalyzer : IDisposable, IMMNotificationClient
 
     private int _sampleRate = 48000;
 
-    public SpectrumAnalyzer()
+    public SpectrumAnalyzerProvider()
     {
-        _logger = Ioc.Default.GetRequiredService<ILogger<SpectrumAnalyzer>>();
+        _logger = Ioc.Default.GetRequiredService<ILogger<SpectrumAnalyzerProvider>>();
 
         try
         {
             _deviceEnumerator = new MMDeviceEnumerator();
-            _deviceEnumerator.RegisterEndpointNotificationCallback(this);
+            _notificationClient = _deviceEnumerator.CreateNotificationClient();
+            _notificationClient.DefaultDeviceChanged += OnDefaultDeviceChanged;
         }
         catch (Exception ex)
         {
@@ -109,7 +116,10 @@ public class SpectrumAnalyzer : IDisposable, IMMNotificationClient
             {
                 _deviceDebouncer.Dispose();
 
-                _deviceEnumerator?.UnregisterEndpointNotificationCallback(this);
+                if (_notificationClient != null)
+                {
+                    _notificationClient.DefaultDeviceChanged -= OnDefaultDeviceChanged;
+                }
                 _deviceEnumerator?.Dispose();
             }
             catch (Exception ex)
@@ -123,9 +133,9 @@ public class SpectrumAnalyzer : IDisposable, IMMNotificationClient
         }
     }
 
-    public void OnDefaultDeviceChanged(DataFlow flow, Role role, string defaultDeviceId)
+    private void OnDefaultDeviceChanged(object? sender, DefaultDeviceChangedEventArgs e)
     {
-        if (flow == DataFlow.Render && role == Role.Multimedia)
+        if (e.Flow == DataFlow.Render && e.Role == Role.Multimedia)
         {
             _logger.LogInformation("System audio device is changing, waiting for stability...");
 
@@ -138,22 +148,6 @@ public class SpectrumAnalyzer : IDisposable, IMMNotificationClient
                 StartCapture();
             }, 1000);
         }
-    }
-
-    public void OnDeviceAdded(string pwstrDeviceId)
-    {
-    }
-
-    public void OnDeviceRemoved(string deviceId)
-    {
-    }
-
-    public void OnDeviceStateChanged(string deviceId, DeviceState newState)
-    {
-    }
-
-    public void OnPropertyValueChanged(string pwstrDeviceId, PropertyKey key)
-    {
     }
 
     public void StartCapture()

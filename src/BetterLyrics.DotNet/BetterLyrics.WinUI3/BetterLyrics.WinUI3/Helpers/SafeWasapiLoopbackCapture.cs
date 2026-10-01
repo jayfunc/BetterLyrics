@@ -4,13 +4,13 @@ using System.Threading;
 using NAudio.CoreAudioApi;
 using NAudio.Wave;
 
-namespace BetterLyrics.Core.Helpers;
+namespace BetterLyrics.WinUI3.Helpers;
 
 /// <summary>
 /// A custom implementation of WasapiLoopbackCapture that fixes the unhandled 
 /// InvalidCastException crash inside NAudio's background thread when an audio device is removed.
 /// </summary>
-public class SafeWasapiLoopbackCapture : IWaveIn
+public partial class SafeWasapiLoopbackCapture : IWaveIn
 {
     private const long REFTIMES_PER_SEC = 10000000;
     private const long REFTIMES_PER_MILLISEC = 10000;

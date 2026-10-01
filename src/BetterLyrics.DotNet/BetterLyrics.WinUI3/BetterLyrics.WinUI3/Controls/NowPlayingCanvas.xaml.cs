@@ -20,6 +20,7 @@ using BetterLyrics.Core.Models.Domain;
 using BetterLyrics.Core.Models.Lyrics;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Extensions;
+using BetterLyrics.WinUI3.Helpers;
 using BetterLyrics.WinUI3.Helpers.Lyrics.LyricsLayoutStrategy;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.Lyrics;
@@ -181,7 +182,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
     private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
     private readonly SnowRenderer _snowRenderer = new();
 
-    private readonly SpectrumAnalyzer _spectrumAnalyzer = new();
+    private readonly ISpectrumAnalyzer _spectrumAnalyzer = new SpectrumAnalyzerProvider();
     private readonly SpectrumRenderer _spectrumRenderer = new();
 
     private readonly LyricsSynchronizer _synchronizer = new();
