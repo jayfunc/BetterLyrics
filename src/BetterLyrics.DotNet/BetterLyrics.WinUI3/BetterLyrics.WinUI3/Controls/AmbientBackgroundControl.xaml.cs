@@ -119,7 +119,7 @@ public sealed partial class AmbientBackgroundControl : UserControl
         this.InitializeComponent();
         InitializeParticles();
         
-        DisplayPowerMonitor.DisplayStatusChanged += PowerManager_DisplayStatusChanged;
+        CommunityToolkit.Mvvm.DependencyInjection.Ioc.Default.GetRequiredService<BetterLyrics.Core.Interfaces.Providers.IMonitorProvider>().DisplayStatusChanged += PowerManager_DisplayStatusChanged;
     }
 
     private void PowerManager_DisplayStatusChanged(object sender, bool isDisplayOn)
@@ -640,7 +640,7 @@ public sealed partial class AmbientBackgroundControl : UserControl
 
     private void AnimatedCanvas_Unloaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
     {
-        DisplayPowerMonitor.DisplayStatusChanged -= PowerManager_DisplayStatusChanged;
+        CommunityToolkit.Mvvm.DependencyInjection.Ioc.Default.GetRequiredService<BetterLyrics.Core.Interfaces.Providers.IMonitorProvider>().DisplayStatusChanged -= PowerManager_DisplayStatusChanged;
         AnimatedCanvas?.RemoveFromVisualTree();
         AnimatedCanvas = null;
     }

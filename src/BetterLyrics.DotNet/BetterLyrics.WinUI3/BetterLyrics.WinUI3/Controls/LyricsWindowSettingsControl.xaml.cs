@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -236,10 +237,8 @@ public sealed partial class LyricsWindowSettingsControl : UserControl
         var menuFlyout = (MenuFlyout)sender;
         var menuFlyoutSubItem = (MenuFlyoutSubItem)menuFlyout.Items.Last();
         var status = (LyricsWindowStatus)menuFlyoutSubItem.DataContext;
-        menuFlyoutSubItem.IsEnabled = status.WindowStatus == WindowStatus.Opened;
 
         var window = (NowPlayingWindow?)_windowManagerProvider.GetNowPlayingWindow(status);
-        if (window == null) return;
 
         var monitorRectBefore = status.MonitorBounds;
         var windowRectBefore = status.WindowBounds;
@@ -256,46 +255,50 @@ public sealed partial class LyricsWindowSettingsControl : UserControl
 
                 status.MonitorDeviceName = name;
                 status.MonitorBounds = monitorRectAfter;
+                status.WindowBounds = windowRectAfter.ToAppRect();
 
-                if (status.IsWallpaper)
+                if (window != null)
                 {
-                    window.LyricsWindowStatus.IsLocked = false;
-                    await Task.Delay(500);
+                    if (status.IsWallpaper)
+                    {
+                        window.LyricsWindowStatus.IsLocked = false;
+                        await Task.Delay(500);
 
-                    _windowManagerProvider.MoveAndResize(window, windowRectAfter.ToAppRect());
-                    await Task.Delay(500);
+                        _windowManagerProvider.MoveAndResize(window, windowRectAfter.ToAppRect());
+                        await Task.Delay(500);
 
-                    window.LyricsWindowStatus.IsLocked = true;
-                }
-                else if (status.IsPinToTaskbar)
-                {
-                    window.LyricsWindowStatus.IsLocked = false;
-                    await Task.Delay(500);
+                        window.LyricsWindowStatus.IsLocked = true;
+                    }
+                    else if (status.IsPinToTaskbar)
+                    {
+                        window.LyricsWindowStatus.IsLocked = false;
+                        await Task.Delay(500);
 
-                    _windowManagerProvider.MoveAndResize(window, windowRectAfter.ToAppRect());
-                    await Task.Delay(500);
+                        _windowManagerProvider.MoveAndResize(window, windowRectAfter.ToAppRect());
+                        await Task.Delay(500);
 
-                    window.LyricsWindowStatus.IsLocked = true;
-                }
-                else if (status.IsWorkArea)
-                {
-                    _windowManagerProvider.MoveAndResize(window, status.GetAppBarBounds());
-                }
-                else if (status.IsFullscreen)
-                {
-                    window.SetWindowPresenter(AppWindowPresenterKind.Overlapped);
-                    _windowManagerProvider.MoveAndResize(window, windowRectAfter.ToAppRect());
-                    window.SetWindowPresenter(AppWindowPresenterKind.FullScreen);
-                }
-                else if (status.IsMaximized)
-                {
-                    window.Restore();
-                    _windowManagerProvider.MoveAndResize(window, windowRectAfter.ToAppRect());
-                    window.Maximize();
-                }
-                else
-                {
-                    _windowManagerProvider.MoveAndResize(window, windowRectAfter.ToAppRect());
+                        window.LyricsWindowStatus.IsLocked = true;
+                    }
+                    else if (status.IsWorkArea)
+                    {
+                        _windowManagerProvider.MoveAndResize(window, status.GetAppBarBounds());
+                    }
+                    else if (status.IsFullscreen)
+                    {
+                        window.SetWindowPresenter(AppWindowPresenterKind.Overlapped);
+                        _windowManagerProvider.MoveAndResize(window, windowRectAfter.ToAppRect());
+                        window.SetWindowPresenter(AppWindowPresenterKind.FullScreen);
+                    }
+                    else if (status.IsMaximized)
+                    {
+                        window.Restore();
+                        _windowManagerProvider.MoveAndResize(window, windowRectAfter.ToAppRect());
+                        window.Maximize();
+                    }
+                    else
+                    {
+                        _windowManagerProvider.MoveAndResize(window, windowRectAfter.ToAppRect());
+                    }
                 }
             };
             menuFlyoutSubItem.Items.Add(menuFlyoutItem);
@@ -305,5 +308,10 @@ public sealed partial class LyricsWindowSettingsControl : UserControl
     private void CloseConfigPanelButton_Click(object sender, RoutedEventArgs e)
     {
         ConfigPanel.Hide();
+    }
+
+    private async void OpenDisplaySettings_Click(object sender, RoutedEventArgs e)
+    {
+        await Windows.System.Launcher.LaunchUriAsync(new System.Uri("ms-settings:display"));
     }
 }

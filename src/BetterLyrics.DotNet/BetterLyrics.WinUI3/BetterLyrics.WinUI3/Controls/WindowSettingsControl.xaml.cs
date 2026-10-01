@@ -26,6 +26,31 @@ public sealed partial class WindowSettingsControl : UserControl
     {
         InitializeComponent();
         MonitorDeviceNames = [.. _monitorProvider.GetAllMonitorDeviceNames()];
+        Loaded += WindowSettingsControl_Loaded;
+        Unloaded += WindowSettingsControl_Unloaded;
+    }
+
+    private void WindowSettingsControl_Loaded(object sender, RoutedEventArgs e)
+    {
+        Ioc.Default.GetRequiredService<IMonitorProvider>().MonitorsChanged += MonitorProvider_MonitorsChanged;
+    }
+
+    private void WindowSettingsControl_Unloaded(object sender, RoutedEventArgs e)
+    {
+        Ioc.Default.GetRequiredService<IMonitorProvider>().MonitorsChanged -= MonitorProvider_MonitorsChanged;
+    }
+
+    private void MonitorProvider_MonitorsChanged(object? sender, System.EventArgs e)
+    {
+        // Wait a bit to ensure Windows display topology is fully updated
+        System.Threading.Tasks.Task.Run(async () =>
+        {
+            await System.Threading.Tasks.Task.Delay(500);
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                RefreshMonitorDeviceNames();
+            });
+        });
     }
 
     public LyricsWindowStatus LyricsWindowStatus
@@ -38,8 +63,18 @@ public sealed partial class WindowSettingsControl : UserControl
 
     private void RefreshMonitorDeviceNames()
     {
-        MonitorDeviceNames = [.. _monitorProvider.GetAllMonitorDeviceNames()];
-        LyricsWindowStatus.MonitorDeviceName = MonitorDeviceNames.FirstOrDefault() ?? "";
+        var currentNames = _monitorProvider.GetAllMonitorDeviceNames().ToList();
+        
+        MonitorDeviceNames.Clear();
+        foreach (var name in currentNames)
+        {
+            MonitorDeviceNames.Add(name);
+        }
+
+        if (LyricsWindowStatus != null && !currentNames.Contains(LyricsWindowStatus.MonitorDeviceName))
+        {
+            LyricsWindowStatus.MonitorDeviceName = currentNames.FirstOrDefault() ?? "";
+        }
     }
 
     private void RefreshMonitorButton_Click(object sender, RoutedEventArgs e)

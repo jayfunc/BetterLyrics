@@ -381,8 +381,7 @@
 
                     <!--  语义特效  -->
                     <controls:SettingsCard
-                        Description="Spawn particles (e.g. heart, rain, snow) when specific keywords appear in lyrics"
-                        Header="Semantic Lyrics Effects (Beta)"
+                        x:Uid="SettingsPageSemanticEffects"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xE8C0;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsBackgroundSettings.IsSemanticEffectEnabled, Mode=TwoWay}" />

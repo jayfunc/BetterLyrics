@@ -17,8 +17,9 @@
     <Grid>
 
         <Grid>
-            <Grid Margin="0,0,0,20" RowSpacing="4">
+            <Grid Margin="0,0,0,20" RowSpacing="16">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
@@ -55,7 +56,26 @@
                     </Grid>
                 </Grid>
 
-                <ScrollViewer Grid.Row="1">
+                <controls:SettingsExpander
+                    Grid.Row="1"
+                    Margin="36,0"
+                    x:Uid="SettingsPageMonitorLayout"
+                    HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                             Glyph=&#xE7F4;}">
+                    <controls:SettingsExpander.ItemsHeader>
+                        <Grid Padding="24" Background="{ThemeResource CardBackgroundFillColorDefaultBrush}">
+                            <uc:MonitorLayoutControl />
+                        </Grid>
+                    </controls:SettingsExpander.ItemsHeader>
+                    <controls:SettingsExpander.Items>
+                        <controls:SettingsCard
+                            x:Uid="SettingsPageOpenDisplaySettings"
+                            Click="OpenDisplaySettings_Click"
+                            IsClickEnabled="True" />
+                    </controls:SettingsExpander.Items>
+                </controls:SettingsExpander>
+
+                <ScrollViewer Grid.Row="2">
                     <ListView
                         x:Name="WindowStatusListView"
                         Margin="36,0"
@@ -196,8 +216,8 @@
                 </ScrollViewer>
 
                 <Grid
-                    Grid.Row="2"
-                    Margin="36,12,36,0"
+                    Grid.Row="3"
+                    Margin="36,0,36,0"
                     ColumnSpacing="4">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto" />

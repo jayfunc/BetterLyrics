@@ -186,6 +186,36 @@
             BorderThickness="2"
             CornerRadius="4"
             Visibility="{x:Bind LyricsWindowStatus.WindowStatus, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=0}" />
+
+        <!--  警告消息: 如果显示器未找到  -->
+        <Grid
+            x:Name="DisconnectedWarningGrid"
+            Background="{ThemeResource LayerFillColorDefaultBrush}"
+            CornerRadius="4"
+            Opacity="0.8"
+            Visibility="Collapsed">
+            <Grid VerticalAlignment="Center" Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}">
+                <StackPanel
+                    Padding="4,8"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    Orientation="Horizontal"
+                    Spacing="8">
+                    <FontIcon
+                        FontFamily="{StaticResource SegoeFluentIcons}"
+                        FontSize="16"
+                        Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                        Glyph="&#xE7BA;" />
+                    <TextBlock
+                        x:Uid="DemoWindowMonitorDisconnected"
+                        HorizontalAlignment="Center"
+                        FontSize="12"
+                        Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                        Text="未找到模式对应的显示器"
+                        TextWrapping="Wrap" />
+                </StackPanel>
+            </Grid>
+        </Grid>
     </Grid>
 
 </UserControl>

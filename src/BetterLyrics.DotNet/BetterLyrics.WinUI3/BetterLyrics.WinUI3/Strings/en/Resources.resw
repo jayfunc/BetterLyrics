@@ -2041,7 +2041,7 @@
     <value>Glow Effect</value>
   </data>
   <data name="SettingsPageSpectrumLayer.Header" xml:space="preserve">
-    <value>[Experimental] Spectrum Layer</value>
+    <value>Spectrum Layer</value>
   </data>
   <data name="SettingsPageSpectrumLayerPlacement.Header" xml:space="preserve">
     <value>Spectrum Position</value>
@@ -2822,5 +2822,17 @@
   </data>
   <data name="SettingsPageAppleMusicSpringRecommendationInfoBar.Message" xml:space="preserve">
     <value>To get a closer experience to Apple Music, it is recommended to adjust the top and bottom delay synchronously.</value>
+  </data>
+  <data name="SettingsPageMonitorLayout.Header" xml:space="preserve">
+    <value>Current monitor layout</value>
+  </data>
+  <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve">
+    <value>Open system display settings</value>
+  </data>
+  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve">
+    <value>Semantic Lyrics Effects</value>
+  </data>
+  <data name="SettingsPageSemanticEffects.Description" xml:space="preserve">
+    <value>Spawn particles (e.g. heart, rain, snow) when specific keywords appear in lyrics</value>
   </data>
 </root>

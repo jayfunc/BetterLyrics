@@ -224,7 +224,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
         InitializeComponent();
         WeakReferenceMessenger.Default.RegisterAll(this);
         
-        DisplayPowerMonitor.DisplayStatusChanged += PowerManager_DisplayStatusChanged;
+        CommunityToolkit.Mvvm.DependencyInjection.Ioc.Default.GetRequiredService<BetterLyrics.Core.Interfaces.Providers.IMonitorProvider>().DisplayStatusChanged += PowerManager_DisplayStatusChanged;
     }
 
     private void PowerManager_DisplayStatusChanged(object sender, bool isDisplayOn)
@@ -971,7 +971,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
     private void UserControl_Unloaded(object sender, RoutedEventArgs e)
     {
         WeakReferenceMessenger.Default.UnregisterAll(this);
-        DisplayPowerMonitor.DisplayStatusChanged -= PowerManager_DisplayStatusChanged;
+        CommunityToolkit.Mvvm.DependencyInjection.Ioc.Default.GetRequiredService<BetterLyrics.Core.Interfaces.Providers.IMonitorProvider>().DisplayStatusChanged -= PowerManager_DisplayStatusChanged;
 
         if (Canvas != null)
         {

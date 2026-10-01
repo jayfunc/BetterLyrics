@@ -1,4 +1,5 @@
 using System.Linq;
+using System.Threading.Tasks;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Settings;
@@ -16,16 +17,49 @@ public sealed partial class DemoWindowGrid : UserControl
 {
     public static readonly DependencyProperty LyricsWindowStatusProperty =
         DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus), typeof(DemoWindowGrid),
-            new PropertyMetadata(default));
+            new PropertyMetadata(default, OnLyricsWindowStatusChanged));
 
     private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
-    private readonly IWindowManagerProvider
-        _windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
+    private readonly IWindowManagerProvider _windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
+
+    private readonly IMonitorProvider _monitorProvider = Ioc.Default.GetRequiredService<IMonitorProvider>();
 
     public DemoWindowGrid()
     {
         InitializeComponent();
+        Loaded += DemoWindowGrid_Loaded;
+        Unloaded += DemoWindowGrid_Unloaded;
+    }
+
+    private static void OnLyricsWindowStatusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is DemoWindowGrid grid)
+        {
+            grid.UpdateMonitorWarningVisibility();
+        }
+    }
+
+    private void DemoWindowGrid_Loaded(object sender, RoutedEventArgs e)
+    {
+        _monitorProvider.MonitorsChanged += MonitorProvider_MonitorsChanged;
+    }
+
+    private void DemoWindowGrid_Unloaded(object sender, RoutedEventArgs e)
+    {
+        _monitorProvider.MonitorsChanged -= MonitorProvider_MonitorsChanged;
+    }
+
+    private void MonitorProvider_MonitorsChanged(object? sender, System.EventArgs e)
+    {
+        Task.Run(async () =>
+        {
+            await Task.Delay(500);
+            DispatcherQueue.TryEnqueue(() =>
+            {
+                UpdateMonitorWarningVisibility();
+            });
+        });
     }
 
     public LyricsWindowStatus LyricsWindowStatus
@@ -44,12 +78,12 @@ public sealed partial class DemoWindowGrid : UserControl
     private void OpenButton_Click(object sender, RoutedEventArgs e)
     {
         var status = (LyricsWindowStatus)((FrameworkElement)sender).DataContext;
-        // �࿪ģʽ
+        // 多窗口模式
         if (_settingsService.AppSettings.GeneralSettings.MultiNowPlayingWindowMode)
         {
             _windowManagerProvider.OpenOrShowWindow<NowPlayingWindow>(status);
         }
-        // ����ģʽ
+        // 单窗口模式
         else
         {
             var openedWindows = _windowManagerProvider.GetWindows<NowPlayingWindow>();
@@ -58,5 +92,20 @@ public sealed partial class DemoWindowGrid : UserControl
 
             _windowManagerProvider.OpenOrShowWindow<NowPlayingWindow>(status);
         }
+    }
+
+    public void UpdateMonitorWarningVisibility()
+    {
+        if (DisconnectedWarningGrid == null) return;
+        
+        var status = LyricsWindowStatus;
+        if (status == null || string.IsNullOrEmpty(status.MonitorDeviceName))
+        {
+            DisconnectedWarningGrid.Visibility = Visibility.Collapsed;
+            return;
+        }
+
+        var names = _monitorProvider.GetAllMonitorDeviceNames();
+        DisconnectedWarningGrid.Visibility = !names.Contains(status.MonitorDeviceName) ? Visibility.Visible : Visibility.Collapsed;
     }
 }
