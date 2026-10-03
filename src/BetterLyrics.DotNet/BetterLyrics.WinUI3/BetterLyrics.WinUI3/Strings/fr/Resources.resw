@@ -2823,4 +2823,28 @@
   <data name="SettingsPageAppleMusicSpringRecommendationInfoBar.Message" xml:space="preserve">
     <value>Pour obtenir une expérience plus proche de celle d'Apple Music, il est recommandé de régler le délai supérieur et inférieur de manière synchrone.</value>
   </data>
+  <data name="SettingsSearchBox.PlaceholderText" xml:space="preserve">
+    <value>Paramètres de recherche</value>
+  </data>
+  <data name="SettingsPageSearchLoading.Text" xml:space="preserve">
+    <value>Recherche en cours...</value>
+  </data>
+  <data name="SettingsPageSearchNotFound.Text" xml:space="preserve">
+    <value>Aucun résultat trouvé</value>
+  </data>
+  <data name="SettingsPageMonitorLayout.Header" xml:space="preserve">
+    <value>Disposition actuelle des moniteurs</value>
+  </data>
+  <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve">
+    <value>Ouvrir les paramètres d'affichage du système</value>
+  </data>
+  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve">
+    <value>Effets sémantiques sur les paroles</value>
+  </data>
+  <data name="SettingsPageSemanticEffects.Description" xml:space="preserve">
+    <value>Générer des particules (par exemple : cœurs, pluie, neige) lorsque des mots-clés spécifiques apparaissent dans les paroles</value>
+  </data>
+  <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve">
+    <value>Copier le lien profond</value>
+  </data>
 </root>

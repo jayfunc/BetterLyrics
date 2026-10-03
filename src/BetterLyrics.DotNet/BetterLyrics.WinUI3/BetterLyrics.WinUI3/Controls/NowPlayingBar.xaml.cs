@@ -338,13 +338,13 @@ public sealed partial class NowPlayingBar : UserControl,
 
     private async void LyricsSettingsFlyout_Opened(object sender, object e)
     {
-        var content = (LyricsWindowSettingsControl)LyricsSettingsFlyout.Content;
+        var content = (LyricsWindowManagerControl)LyricsSettingsFlyout.Content;
         content.ShowConfigPanel(LyricsWindowStatus);
     }
 
     private void LyricsSettingsShortcutMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
     {
-        var content = new LyricsWindowSettingsControl
+        var content = new LyricsWindowManagerControl
         {
             MaxHeight = 500,
             MaxWidth = 850,

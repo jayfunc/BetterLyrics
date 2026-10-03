@@ -1,3 +1,4 @@
+using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Settings;
@@ -21,7 +22,8 @@ public partial class AppSettingsControlViewModel : BaseViewModel,
     private readonly bool _initialEnhanceControlInteractiveAnimations;
 
     [ObservableProperty]
-    public partial string SelectorBarSelectedItemTag { get; set; } = "Appearance";
+    [NotifyPropertyChangedRecipients]
+    public partial AppSettingsSection SelectedAppSettingsSection { get; set; } = AppSettingsSection.Appearance;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsRestartRequired))]
@@ -36,6 +38,10 @@ public partial class AppSettingsControlViewModel : BaseViewModel,
     public partial bool IsEnhanceControlInteractiveAnimationsChanged { get; set; }
 
     public bool IsRestartRequired => IsLanguageChanged || IsGlobalFontChanged || IsEnhanceControlInteractiveAnimationsChanged;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial bool IsDeepLinkRequested { get; set; }
 
     public AppSettingsControlViewModel(ISettingsService settingsService,
         IWindowManagerProvider windowManagerProvider, ILauncherProvider launcherProvider)

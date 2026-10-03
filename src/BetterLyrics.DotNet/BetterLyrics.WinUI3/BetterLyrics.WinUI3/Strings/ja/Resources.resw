@@ -2821,6 +2821,30 @@
     <value>Apple Music 風</value>
   </data>
   <data name="SettingsPageAppleMusicSpringRecommendationInfoBar.Message" xml:space="preserve">
-    <value>Apple Musicに近い体験を得るには、上部と下部のディレイを同期させて調整することをお勧めします。</value>
+    <value>Apple Music に近い体験にするには、先頭行と最終行の遅延を同期して調整することをおすすめします。</value>
+  </data>
+  <data name="SettingsSearchBox.PlaceholderText" xml:space="preserve">
+    <value>検索設定</value>
+  </data>
+  <data name="SettingsPageSearchLoading.Text" xml:space="preserve">
+    <value>検索中...</value>
+  </data>
+  <data name="SettingsPageSearchNotFound.Text" xml:space="preserve">
+    <value>結果が見つかりませんでした</value>
+  </data>
+  <data name="SettingsPageMonitorLayout.Header" xml:space="preserve">
+    <value>現在のモニター配置</value>
+  </data>
+  <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve">
+    <value>システムのディスプレイ設定を開く</value>
+  </data>
+  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve">
+    <value>セマンティック歌詞エフェクト</value>
+  </data>
+  <data name="SettingsPageSemanticEffects.Description" xml:space="preserve">
+    <value>歌詞に特定のキーワードが含まれる場合にパーティクル（ハート、雨、雪など）を生成します</value>
+  </data>
+  <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve">
+    <value>ディープリンクをコピー</value>
   </data>
 </root>

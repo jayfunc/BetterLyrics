@@ -33,6 +33,7 @@ using Windows.Storage;
 using BetterLyrics.Core.ViewModels;
 using WinRT;
 using BetterLyrics.Core.ViewModels.MusicGalleryPageViewModel;
+using BetterLyrics.Core.Models;
 
 namespace BetterLyrics.WinUI3;
 
@@ -142,13 +143,42 @@ public class Program
         {
             if (protocolArgs.Uri.Host == "settings")
             {
-                var targetSegment = protocolArgs.Uri.Segments.LastOrDefault()?.Trim('/');
-                if (!string.IsNullOrEmpty(targetSegment) &&
-                    Enum.TryParse<SettingsSection>(targetSegment, true, out var section))
+                var segments = protocolArgs.Uri.Segments.Select(s => s.Trim('/')).Where(s => !string.IsNullOrEmpty(s)).ToArray();
+                if (segments.Length > 0 && Enum.TryParse<SettingsSection>(segments[0], true, out var section))
                 {
                     windowManagerProvider.OpenOrShowWindow<SettingsWindow>();
                     var settingsPageViewModel = Ioc.Default.GetRequiredService<SettingsPageViewModel>();
-                    settingsPageViewModel.NavigateToSection(section);
+                    
+                    string? subsectionString = segments.Length > 1 ? segments[1] : null;
+                    string? param = segments.Length > 2 ? segments[2] : null;
+
+                    // Support both Tag/Param and Param/Tag formats
+                    if (segments.Length > 2 && !TryParseSettingsSubsection(subsectionString, out _) && TryParseSettingsSubsection(param, out _))
+                    {
+                        (subsectionString, param) = (param, subsectionString);
+                    }
+
+                    if (!string.IsNullOrEmpty(subsectionString) && TryParseSettingsSubsection(subsectionString, out var subsection))
+                    {
+                        var searchItem = new SettingSearchItem
+                        {
+                            Section = section,
+                            Subsection = subsection,
+                            TargetParameter = param
+                        };
+                        
+                        // Parse guid if possible
+                        if (!string.IsNullOrEmpty(param) && Guid.TryParse(param, out var guidParam))
+                        {
+                            searchItem.TargetParameter = guidParam;
+                        }
+
+                        settingsPageViewModel.NavigateToSettingSearchItem(searchItem);
+                    }
+                    else
+                    {
+                        settingsPageViewModel.NavigateToSection(section);
+                    }
                 }
             }
             else if (protocolArgs.Uri.Host == "lyrics")
@@ -262,7 +292,7 @@ public class Program
                 .AddSingleton<PlaybackSettingsControlViewModel>()
                 .AddSingleton<MediaSettingsControlViewModel>()
                 .AddSingleton<LyricsSearchControlViewModel>()
-                .AddSingleton<LyricsWindowSettingsControlViewModel>()
+                .AddSingleton<LyricsWindowManagerControlViewModel>()
                 .AddSingleton<LyricsWindowSwitchControlViewModel>()
                 .AddSingleton<LyricsWindowSwitchWindowViewModel>()
                 .AddSingleton<SystemTrayViewModel>()
@@ -316,5 +346,15 @@ public class Program
         // Bring the window to the foreground
         var process = Process.GetProcessById((int)keyInstance.ProcessId);
         SetForegroundWindow(process.MainWindowHandle);
+    }
+
+    private static bool TryParseSettingsSubsection(string? value, out Enum? parsedSubsection)
+    {
+        if (value == null) { parsedSubsection = null; return false; }
+        if (Enum.TryParse<AppSettingsSection>(value, true, out var appSubsection)) { parsedSubsection = appSubsection; return true; }
+        if (Enum.TryParse<PlaybackLibSettingsSection>(value, true, out var playSubsection)) { parsedSubsection = playSubsection; return true; }
+        if (Enum.TryParse<LyricsWindowManagerSettingsSection>(value, true, out var mgrSubsection)) { parsedSubsection = mgrSubsection; return true; }
+        parsedSubsection = null;
+        return false;
     }
 }

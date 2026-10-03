@@ -2823,4 +2823,28 @@
   <data name="SettingsPageAppleMusicSpringRecommendationInfoBar.Message" xml:space="preserve">
     <value>Apple Music'e daha yakın bir deneyim elde etmek için, üst ve alt gecikme sürelerini senkronize bir şekilde ayarlamanız önerilir.</value>
   </data>
+  <data name="SettingsSearchBox.PlaceholderText" xml:space="preserve">
+    <value>Arama ayarları</value>
+  </data>
+  <data name="SettingsPageSearchLoading.Text" xml:space="preserve">
+    <value>Aranıyor...</value>
+  </data>
+  <data name="SettingsPageSearchNotFound.Text" xml:space="preserve">
+    <value>Sonuç bulunamadı</value>
+  </data>
+  <data name="SettingsPageMonitorLayout.Header" xml:space="preserve">
+    <value>Mevcut monitör düzeni</value>
+  </data>
+  <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve">
+    <value>Sistem ekran ayarlarını aç</value>
+  </data>
+  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve">
+    <value>Anlamsal Şarkı Sözü Efektleri</value>
+  </data>
+  <data name="SettingsPageSemanticEffects.Description" xml:space="preserve">
+    <value>Şarkı sözlerinde belirli anahtar kelimeler geçtiğinde parçacıklar (örn. kalp, yağmur, kar) oluştur</value>
+  </data>
+  <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve">
+    <value>Derin bağlantıyı kopyala</value>
+  </data>
 </root>

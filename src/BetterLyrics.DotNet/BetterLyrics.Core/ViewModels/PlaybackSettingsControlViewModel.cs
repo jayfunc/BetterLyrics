@@ -66,11 +66,19 @@ public partial class PlaybackSettingsControlViewModel : BaseViewModel
         SelectedMediaSourceProvider = AppSettings.MediaSourceProvidersInfo.FirstOrDefault();
     }
 
-    [ObservableProperty] public partial string SelectorBarSelectedItemTag { get; set; } = "General";
+    [ObservableProperty] 
+    [NotifyPropertyChangedRecipients]
+    public partial PlaybackLibSettingsSection SelectedPlaybackLibSettingsSection { get; set; } = PlaybackLibSettingsSection.General;
 
     [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 
-    [ObservableProperty] public partial MediaSourceProviderInfo? SelectedMediaSourceProvider { get; set; }
+    [ObservableProperty] 
+    [NotifyPropertyChangedRecipients]
+    public partial MediaSourceProviderInfo? SelectedMediaSourceProvider { get; set; }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial bool IsDeepLinkRequested { get; set; }
 
     [ObservableProperty] public partial bool IsLastFmAuthenticated { get; set; }
 

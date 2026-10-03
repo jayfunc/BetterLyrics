@@ -2823,4 +2823,28 @@
   <data name="SettingsPageAppleMusicSpringRecommendationInfoBar.Message" xml:space="preserve">
     <value>为了获得更接近 Apple Music 的体验，建议同步调整首行延迟及尾行延迟</value>
   </data>
+  <data name="SettingsSearchBox.PlaceholderText" xml:space="preserve">
+    <value>在设置中搜索</value>
+  </data>
+  <data name="SettingsPageSearchLoading.Text" xml:space="preserve">
+    <value>正在搜索...</value>
+  </data>
+  <data name="SettingsPageSearchNotFound.Text" xml:space="preserve">
+    <value>未找到结果</value>
+  </data>
+  <data name="SettingsPageMonitorLayout.Header" xml:space="preserve">
+    <value>当前显示器布局</value>
+  </data>
+  <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve">
+    <value>打开系统显示设置</value>
+  </data>
+  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve">
+    <value>语义特效</value>
+  </data>
+  <data name="SettingsPageSemanticEffects.Description" xml:space="preserve">
+    <value>当歌词中出现特定关键词时生成粒子（如心形、雨、雪等）</value>
+  </data>
+  <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve">
+    <value>复制深度链接</value>
+  </data>
 </root>

@@ -2823,4 +2823,28 @@
   <data name="SettingsPageAppleMusicSpringRecommendationInfoBar.Message" xml:space="preserve">
     <value>Agar pengalaman mendengarkan musiknya lebih mirip dengan Apple Music, disarankan untuk menyesuaikan penundaan suara bagian atas dan bawah secara bersamaan.</value>
   </data>
+  <data name="SettingsSearchBox.PlaceholderText" xml:space="preserve">
+    <value>Pengaturan pencarian</value>
+  </data>
+  <data name="SettingsPageSearchLoading.Text" xml:space="preserve">
+    <value>Mencari...</value>
+  </data>
+  <data name="SettingsPageSearchNotFound.Text" xml:space="preserve">
+    <value>Tidak ditemukan hasil</value>
+  </data>
+  <data name="SettingsPageMonitorLayout.Header" xml:space="preserve">
+    <value>Tata letak monitor saat ini</value>
+  </data>
+  <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve">
+    <value>Buka pengaturan tampilan sistem</value>
+  </data>
+  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve">
+    <value>Efek Lirik Semantik</value>
+  </data>
+  <data name="SettingsPageSemanticEffects.Description" xml:space="preserve">
+    <value>Menampilkan partikel (misalnya: hati, hujan, salju) saat kata kunci tertentu muncul dalam lirik lagu</value>
+  </data>
+  <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve">
+    <value>Salin tautan dalam</value>
+  </data>
 </root>

@@ -1,4 +1,4 @@
-﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
@@ -10,13 +10,13 @@ using CommunityToolkit.Mvvm.Messaging.Messages;
 
 namespace BetterLyrics.Core.ViewModels;
 
-public partial class LyricsWindowSettingsControlViewModel : BaseViewModel,
+public partial class LyricsWindowManagerControlViewModel : BaseViewModel,
     IRecipient<PropertyChangedMessage<bool>>
 {
     private readonly ISettingsService _settingsService;
     private readonly IWindowManagerProvider _windowManagerProvider;
 
-    public LyricsWindowSettingsControlViewModel(ISettingsService settingsService,
+    public LyricsWindowManagerControlViewModel(ISettingsService settingsService,
         IWindowManagerProvider windowManagerProvider)
     {
         _settingsService = settingsService;
@@ -27,7 +27,17 @@ public partial class LyricsWindowSettingsControlViewModel : BaseViewModel,
 
     [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 
-    [ObservableProperty] public partial object SelectorBarSelectedItemTag { get; set; } = "AlbumArtStyle";
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial LyricsWindowStatus? SelectedWindowStatus { get; set; }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial LyricsWindowManagerSettingsSection SelectedLyricsWindowManagerSettingsSection { get; set; } = LyricsWindowManagerSettingsSection.AlbumArt;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
+    public partial bool IsDeepLinkRequested { get; set; }
 
     public void Receive(PropertyChangedMessage<bool> message)
     {

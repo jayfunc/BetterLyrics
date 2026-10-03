@@ -193,7 +193,7 @@
         </Page>
     </ItemGroup>
     <ItemGroup>
-        <Page Update="Controls\LyricsWindowSettingsControl.xaml">
+        <Page Update="Controls\LyricsWindowManagerControl.xaml">
             <Generator>MSBuild:Compile</Generator>
         </Page>
     </ItemGroup>

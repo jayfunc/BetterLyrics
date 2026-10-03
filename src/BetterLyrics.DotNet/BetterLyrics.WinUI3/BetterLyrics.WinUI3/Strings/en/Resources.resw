@@ -2823,6 +2823,15 @@
   <data name="SettingsPageAppleMusicSpringRecommendationInfoBar.Message" xml:space="preserve">
     <value>To get a closer experience to Apple Music, it is recommended to adjust the top and bottom delay synchronously.</value>
   </data>
+  <data name="SettingsSearchBox.PlaceholderText" xml:space="preserve">
+    <value>Search settings</value>
+  </data>
+  <data name="SettingsPageSearchLoading.Text" xml:space="preserve">
+    <value>Searching...</value>
+  </data>
+  <data name="SettingsPageSearchNotFound.Text" xml:space="preserve">
+    <value>No results found</value>
+  </data>
   <data name="SettingsPageMonitorLayout.Header" xml:space="preserve">
     <value>Current monitor layout</value>
   </data>
@@ -2834,5 +2843,8 @@
   </data>
   <data name="SettingsPageSemanticEffects.Description" xml:space="preserve">
     <value>Spawn particles (e.g. heart, rain, snow) when specific keywords appear in lyrics</value>
+  </data>
+  <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve">
+    <value>Copy deep link</value>
   </data>
 </root>

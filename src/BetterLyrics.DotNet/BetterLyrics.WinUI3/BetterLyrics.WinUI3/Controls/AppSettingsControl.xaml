@@ -7,11 +7,13 @@
     xmlns:constants="using:BetterLyrics.Core.Constants"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:enums="using:BetterLyrics.Core.Enums"
     xmlns:helpers="using:BetterLyrics.Core.Helpers"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models1="using:BetterLyrics.Core.Models"
+    xmlns:models="using:BetterLyrics.Core.Models"
     xmlns:ui="using:CommunityToolkit.WinUI"
+    Loaded="UserControl_Loaded"
     mc:Ignorable="d">
 
     <Grid>
@@ -30,16 +32,16 @@
             PaneDisplayMode="Top"
             SelectionChanged="ConfigNavView_SelectionChanged">
             <NavigationView.MenuItems>
-                <NavigationViewItem IsSelected="True" Tag="Appearance">
+                <NavigationViewItem x:Name="AppearanceNavViewItem" Tag="{x:Bind enums:AppSettingsSection.Appearance}">
                     <TextBlock x:Uid="SettingsPageAppAppearance" />
                 </NavigationViewItem>
-                <NavigationViewItem Tag="Window">
+                <NavigationViewItem Tag="{x:Bind enums:AppSettingsSection.Window}">
                     <TextBlock x:Uid="SettingsPageWindow" />
                 </NavigationViewItem>
-                <NavigationViewItem Tag="Shortcut">
+                <NavigationViewItem Tag="{x:Bind enums:AppSettingsSection.Shortcut}">
                     <TextBlock x:Uid="SettingsPageShortcut" />
                 </NavigationViewItem>
-                <NavigationViewItem Tag="SystemTray">
+                <NavigationViewItem Tag="{x:Bind enums:AppSettingsSection.SystemTray}">
                     <TextBlock x:Uid="AppSettingsControlSystemTray" />
                 </NavigationViewItem>
             </NavigationView.MenuItems>
@@ -60,14 +62,14 @@
                         </InfoBar.ActionButton>
                     </InfoBar>
 
-                    <controls:SwitchPresenter Value="{x:Bind ViewModel.SelectorBarSelectedItemTag, Mode=OneWay}">
+                    <controls:SwitchPresenter Value="{x:Bind ViewModel.SelectedAppSettingsSection, Mode=OneWay}">
                         <controls:SwitchPresenter.ContentTransitions>
                             <TransitionCollection>
                                 <PopupThemeTransition />
                             </TransitionCollection>
                         </controls:SwitchPresenter.ContentTransitions>
 
-                        <controls:Case Value="Appearance">
+                        <controls:Case Value="{x:Bind enums:AppSettingsSection.Appearance}">
                             <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
                                 <!--  App appearance  -->
 
@@ -84,7 +86,7 @@
                                 <controls:SettingsCard x:Uid="SettingsPageLanguage" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xF2B7;}">
                                     <ComboBox ItemsSource="{x:Bind helpers:LanguageHelper.SupportedDisplayLanguages}" SelectedIndex="{x:Bind ViewModel.AppSettings.GeneralSettings.LanguageCode, Mode=TwoWay, Converter={StaticResource DisplayLanguageCodeToIndexConverter}}">
                                         <ComboBox.ItemTemplate>
-                                            <DataTemplate x:DataType="models1:ExtendedLanguage">
+                                            <DataTemplate x:DataType="models:ExtendedLanguage">
                                                 <StackPanel Orientation="Horizontal" Spacing="6">
                                                     <TextBlock Text="{x:Bind NativeName}" />
                                                     <TextBlock
@@ -155,7 +157,7 @@
                             </StackPanel>
                         </controls:Case>
 
-                        <controls:Case Value="Window">
+                        <controls:Case Value="{x:Bind enums:AppSettingsSection.Window}">
                             <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
                                 <!--  Startup  -->
 
@@ -208,7 +210,7 @@
                             </StackPanel>
                         </controls:Case>
 
-                        <controls:Case Value="Shortcut">
+                        <controls:Case Value="{x:Bind enums:AppSettingsSection.Shortcut}">
                             <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
                                 <!--  Playback shortcut  -->
 
@@ -238,7 +240,7 @@
                             </StackPanel>
                         </controls:Case>
 
-                        <controls:Case Value="SystemTray">
+                        <controls:Case Value="{x:Bind enums:AppSettingsSection.SystemTray}">
                             <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
 
                                 <!--  System tray  -->

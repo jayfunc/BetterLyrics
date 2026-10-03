@@ -24,13 +24,16 @@ using WinUIEx;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
+
 namespace BetterLyrics.WinUI3.Controls;
 
-public sealed partial class LyricsWindowSettingsControl : UserControl
+public sealed partial class LyricsWindowManagerControl : UserControl, IRecipient<PropertyChangedMessage<bool>>
 {
     public static readonly DependencyProperty LyricsWindowStatusProperty =
         DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus),
-            typeof(LyricsWindowSettingsControl), new PropertyMetadata(null));
+            typeof(LyricsWindowManagerControl), new PropertyMetadata(null));
 
     private readonly IGlobalToastProvider _globalToastProvider =
         Ioc.Default.GetRequiredService<IGlobalToastProvider>();
@@ -50,13 +53,49 @@ public sealed partial class LyricsWindowSettingsControl : UserControl
     private readonly IMonitorProvider _monitorProvider =
         Ioc.Default.GetRequiredService<IMonitorProvider>();
 
-    public LyricsWindowSettingsControl()
+    public LyricsWindowManagerControl()
     {
         InitializeComponent();
-        DataContext = Ioc.Default.GetRequiredService<LyricsWindowSettingsControlViewModel>();
+        DataContext = Ioc.Default.GetRequiredService<LyricsWindowManagerControlViewModel>();
+        WeakReferenceMessenger.Default.RegisterAll(this);
     }
 
-    public LyricsWindowSettingsControlViewModel ViewModel => (LyricsWindowSettingsControlViewModel)DataContext;
+    public void Receive(PropertyChangedMessage<bool> message)
+    {
+        if (message.Sender == ViewModel && message.PropertyName == nameof(ViewModel.IsDeepLinkRequested))
+        {
+            if (this.IsLoaded)
+            {
+                CheckAndProcessDeepLink();
+            }
+        }
+    }
+
+    private bool CheckAndProcessDeepLink()
+    {
+        if (ViewModel.IsDeepLinkRequested && ViewModel.SelectedWindowStatus != null)
+        {
+            ViewModel.IsDeepLinkRequested = false;
+
+            LyricsWindowStatus = ViewModel.SelectedWindowStatus;
+
+            var section = ViewModel.SelectedLyricsWindowManagerSettingsSection;
+            foreach (NavigationViewItem item in ConfigNavView.MenuItems.Cast<NavigationViewItem>())
+            {
+                if ((LyricsWindowManagerSettingsSection)item.Tag == section)
+                {
+                    ConfigNavView.SelectedItem = item;
+                    break;
+                }
+            }
+
+            ConfigPanel.Show();
+            return true;
+        }
+        return false;
+    }
+
+    public LyricsWindowManagerControlViewModel ViewModel => (LyricsWindowManagerControlViewModel)DataContext;
 
     public bool HideConfigPanelWhenLoaded { get; set; } = true;
 
@@ -152,6 +191,7 @@ public sealed partial class LyricsWindowSettingsControl : UserControl
 
         ConfigNavView.SelectedItem = WindowSegmentedItem;
         LyricsWindowStatus = status;
+        ViewModel.SelectedWindowStatus = status;
         ConfigPanel.Show();
     }
 
@@ -159,17 +199,25 @@ public sealed partial class LyricsWindowSettingsControl : UserControl
     {
         ConfigNavView.SelectedItem = WindowSegmentedItem;
         LyricsWindowStatus = _settingsService.AppSettings.MusicGallerySettings.LyricsWindowStatus;
+        ViewModel.SelectedWindowStatus = LyricsWindowStatus;
         ConfigPanel.Show();
     }
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e)
     {
-        if (HideConfigPanelWhenLoaded) ConfigPanel.Hide();
+        if (HideConfigPanelWhenLoaded)
+        {
+            if (!CheckAndProcessDeepLink())
+            {
+                ViewModel.SelectedWindowStatus = null;
+                ConfigPanel.Hide();
+            }
+        }
     }
 
     private void ConfigNavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
     {
-        ViewModel.SelectorBarSelectedItemTag = (string)((NavigationViewItem)sender.SelectedItem).Tag;
+        ViewModel.SelectedLyricsWindowManagerSettingsSection = (LyricsWindowManagerSettingsSection)((NavigationViewItem)sender.SelectedItem).Tag;
     }
 
     private void CopyAndTransformMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
@@ -307,6 +355,7 @@ public sealed partial class LyricsWindowSettingsControl : UserControl
 
     private void CloseConfigPanelButton_Click(object sender, RoutedEventArgs e)
     {
+        ViewModel.SelectedWindowStatus = null;
         ConfigPanel.Hide();
     }
 

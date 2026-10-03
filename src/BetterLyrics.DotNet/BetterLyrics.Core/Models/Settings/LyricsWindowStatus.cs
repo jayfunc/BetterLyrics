@@ -59,6 +59,8 @@ public partial class LyricsWindowStatus : ObservableRecipient, ICloneable
     [NotifyPropertyChangedRecipients]
     public partial string Name { get; set; } = string.Empty;
 
+    public Guid Id { get; set; } = Guid.NewGuid();
+
     [ObservableProperty] public partial bool IsDefault { get; set; } = false;
 
     [ObservableProperty]
@@ -309,6 +311,7 @@ public partial class LyricsWindowStatus : ObservableRecipient, ICloneable
     {
         return new LyricsWindowStatus
         {
+            Id = Id,
             Name = Name,
             IsDefault = IsDefault,
             MonitorDeviceName = MonitorDeviceName,

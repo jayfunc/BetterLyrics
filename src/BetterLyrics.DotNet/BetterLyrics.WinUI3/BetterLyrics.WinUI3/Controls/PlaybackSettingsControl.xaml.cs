@@ -11,13 +11,17 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System.Threading.Tasks;
+using System.Linq;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
+using CommunityToolkit.Mvvm.Messaging;
+using CommunityToolkit.Mvvm.Messaging.Messages;
+
 namespace BetterLyrics.WinUI3.Controls;
 
-public sealed partial class PlaybackSettingsControl : UserControl
+public sealed partial class PlaybackSettingsControl : UserControl, IRecipient<PropertyChangedMessage<bool>>
 {
     private readonly IGlobalToastProvider _globalToastProvider =
         Ioc.Default.GetRequiredService<IGlobalToastProvider>();
@@ -29,6 +33,42 @@ public sealed partial class PlaybackSettingsControl : UserControl
     {
         InitializeComponent();
         DataContext = Ioc.Default.GetRequiredService<PlaybackSettingsControlViewModel>();
+        WeakReferenceMessenger.Default.RegisterAll(this);
+    }
+
+    public void Receive(PropertyChangedMessage<bool> message)
+    {
+        if (message.Sender == ViewModel && message.PropertyName == nameof(ViewModel.IsDeepLinkRequested))
+        {
+            if (this.IsLoaded)
+            {
+                CheckAndProcessDeepLink();
+            }
+        }
+    }
+
+    private bool CheckAndProcessDeepLink()
+    {
+        if (ViewModel.IsDeepLinkRequested)
+        {
+            ViewModel.IsDeepLinkRequested = false;
+
+            foreach (NavigationViewItem item in ConfigNavView.MenuItems.Cast<NavigationViewItem>())
+            {
+                if ((PlaybackLibSettingsSection)item.Tag == ViewModel.SelectedPlaybackLibSettingsSection)
+                {
+                    ConfigNavView.SelectedItem = item;
+                    break;
+                }
+            }
+
+            if (ViewModel.SelectedMediaSourceProvider != null)
+            {
+                PlaybackConfigPanel.Show();
+                return true;
+            }
+        }
+        return false;
     }
 
     public PlaybackSettingsControlViewModel ViewModel => (PlaybackSettingsControlViewModel)DataContext;
@@ -82,7 +122,19 @@ public sealed partial class PlaybackSettingsControl : UserControl
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e)
     {
-        if (HideConfigPanelWhenLoaded) PlaybackConfigPanel.Hide();
+        if (HideConfigPanelWhenLoaded)
+        {
+            if (!CheckAndProcessDeepLink())
+            {
+                ViewModel.SelectedMediaSourceProvider = null;
+                PlaybackConfigPanel.Hide();
+            }
+        }
+
+        if (ConfigNavView.SelectedItem == null)
+        {
+            GeneralNavViewItem.IsSelected = true;
+        }
     }
 
     private async Task SaveLyricsAsync(LyricsFormat lyricsFormat)
@@ -104,13 +156,13 @@ public sealed partial class PlaybackSettingsControl : UserControl
         var ext = lyricsFormat.ToFileExtension();
         var pattern = ViewModel.AppSettings.LyricsSaveConfig.FileNamePattern;
         if (string.IsNullOrWhiteSpace(pattern)) pattern = "{Artist} - {Title}";
-        
+
         var name = pattern
             .Replace("{Artist}", lyricsSearchResult.Artist ?? string.Empty)
             .Replace("{Title}", lyricsSearchResult.Title ?? string.Empty)
             .Replace("{Album}", lyricsSearchResult.Album ?? string.Empty)
             .Trim();
-            
+
         var safeTitle = FileHelper.SanitizeFileName(name);
         var fileName = $"{safeTitle}{ext}";
 
@@ -150,14 +202,15 @@ public sealed partial class PlaybackSettingsControl : UserControl
 
     private void CloseConfigPanelButton_Click(object sender, RoutedEventArgs e)
     {
+        ViewModel.SelectedMediaSourceProvider = null;
         PlaybackConfigPanel.Hide();
     }
 
     private void ConfigNavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
     {
-        if (args.SelectedItem is NavigationViewItem item && item.Tag is string tag)
+        if (args.SelectedItem is NavigationViewItem item && item.Tag is PlaybackLibSettingsSection section)
         {
-            ViewModel.SelectorBarSelectedItemTag = tag;
+            ViewModel.SelectedPlaybackLibSettingsSection = section;
         }
     }
 }

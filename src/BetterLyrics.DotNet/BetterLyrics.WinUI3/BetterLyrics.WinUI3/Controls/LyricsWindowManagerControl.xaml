@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
 <UserControl
-    x:Class="BetterLyrics.WinUI3.Controls.LyricsWindowSettingsControl"
+    x:Class="BetterLyrics.WinUI3.Controls.LyricsWindowManagerControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:constants1="using:BetterLyrics.Core.Constants"
+    xmlns:constants="using:BetterLyrics.Core.Constants"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:enums1="using:BetterLyrics.Core.Enums"
+    xmlns:enums="using:BetterLyrics.Core.Enums"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
@@ -235,7 +235,7 @@
                     <uc:ExternalLinkButton
                         x:Uid="SettingsPageShareHub"
                         Grid.Column="2"
-                        NavigateUri="{x:Bind constants1:Link.ModesStore}" />
+                        NavigateUri="{x:Bind constants:Link.ModesStore}" />
 
                     <!--  Create from templates  -->
                     <Button x:Uid="SettingsPageCreateFromTemplates" Grid.Column="3">
@@ -244,31 +244,31 @@
                                 <MenuFlyoutItem
                                     x:Uid="SettingsPageStandardMode"
                                     Command="{x:Bind ViewModel.CreateLyricsWindowStatusCommand}"
-                                    CommandParameter="{x:Bind enums1:LyricsWindowMode.Standard}" />
+                                    CommandParameter="{x:Bind enums:LyricsWindowMode.Standard}" />
                                 <MenuFlyoutItem
                                     x:Uid="SettingsPageDesktopMode"
                                     Command="{x:Bind ViewModel.CreateLyricsWindowStatusCommand}"
-                                    CommandParameter="{x:Bind enums1:LyricsWindowMode.Desktop}" />
+                                    CommandParameter="{x:Bind enums:LyricsWindowMode.Desktop}" />
                                 <MenuFlyoutItem
                                     x:Uid="SettingsPageDockedMode"
                                     Command="{x:Bind ViewModel.CreateLyricsWindowStatusCommand}"
-                                    CommandParameter="{x:Bind enums1:LyricsWindowMode.Docked}" />
+                                    CommandParameter="{x:Bind enums:LyricsWindowMode.Docked}" />
                                 <MenuFlyoutItem
                                     x:Uid="SettingsPageFullscreenMode"
                                     Command="{x:Bind ViewModel.CreateLyricsWindowStatusCommand}"
-                                    CommandParameter="{x:Bind enums1:LyricsWindowMode.Fullscreen}" />
+                                    CommandParameter="{x:Bind enums:LyricsWindowMode.Fullscreen}" />
                                 <MenuFlyoutItem
                                     x:Uid="SettingsPageNarrowMode"
                                     Command="{x:Bind ViewModel.CreateLyricsWindowStatusCommand}"
-                                    CommandParameter="{x:Bind enums1:LyricsWindowMode.Narrow}" />
+                                    CommandParameter="{x:Bind enums:LyricsWindowMode.Narrow}" />
                                 <MenuFlyoutItem
                                     x:Uid="SettingsPageTaskbarMode"
                                     Command="{x:Bind ViewModel.CreateLyricsWindowStatusCommand}"
-                                    CommandParameter="{x:Bind enums1:LyricsWindowMode.Taskbar}" />
+                                    CommandParameter="{x:Bind enums:LyricsWindowMode.Taskbar}" />
                                 <MenuFlyoutItem
                                     x:Uid="SettingsPageWallpaperMode"
                                     Command="{x:Bind ViewModel.CreateLyricsWindowStatusCommand}"
-                                    CommandParameter="{x:Bind enums1:LyricsWindowMode.Wallpaper}" />
+                                    CommandParameter="{x:Bind enums:LyricsWindowMode.Wallpaper}" />
                             </MenuFlyout>
                         </Button.Flyout>
                     </Button>
@@ -330,22 +330,22 @@
                         PaneDisplayMode="Top"
                         SelectionChanged="ConfigNavView_SelectionChanged">
                         <NavigationView.MenuItems>
-                            <NavigationViewItem x:Name="WindowSegmentedItem" Tag="Window">
+                            <NavigationViewItem x:Name="WindowSegmentedItem" Tag="{x:Bind enums:LyricsWindowManagerSettingsSection.Window}">
                                 <TextBlock x:Uid="AppSettingsControlGeneral" />
                             </NavigationViewItem>
-                            <NavigationViewItem Tag="Layout">
+                            <NavigationViewItem Tag="{x:Bind enums:LyricsWindowManagerSettingsSection.Layout}">
                                 <TextBlock x:Uid="SettingsPageLayout" />
                             </NavigationViewItem>
-                            <NavigationViewItem Tag="AlbumArt">
+                            <NavigationViewItem Tag="{x:Bind enums:LyricsWindowManagerSettingsSection.AlbumArt}">
                                 <TextBlock x:Uid="SettingsPageAlbumArt" />
                             </NavigationViewItem>
-                            <NavigationViewItem Tag="LyricsStyle">
+                            <NavigationViewItem Tag="{x:Bind enums:LyricsWindowManagerSettingsSection.LyricsStyle}">
                                 <TextBlock x:Uid="SettingsPageLyricsStyle" />
                             </NavigationViewItem>
-                            <NavigationViewItem Tag="LyricsEffect">
+                            <NavigationViewItem Tag="{x:Bind enums:LyricsWindowManagerSettingsSection.LyricsEffect}">
                                 <TextBlock x:Uid="SettingsPageLyricsEffect" />
                             </NavigationViewItem>
-                            <NavigationViewItem Tag="LyricsBackground">
+                            <NavigationViewItem Tag="{x:Bind enums:LyricsWindowManagerSettingsSection.LyricsBackground}">
                                 <TextBlock x:Uid="SettingsPageBackgroundOverlay" />
                             </NavigationViewItem>
                         </NavigationView.MenuItems>
@@ -353,7 +353,7 @@
                     </NavigationView>
                 </Grid>
 
-                <controls:SwitchPresenter Grid.Row="1" Value="{x:Bind ViewModel.SelectorBarSelectedItemTag, Mode=OneWay}">
+                <controls:SwitchPresenter Grid.Row="1" Value="{x:Bind ViewModel.SelectedLyricsWindowManagerSettingsSection, Mode=OneWay}">
                     <controls:SwitchPresenter.ContentTransitions>
                         <TransitionCollection>
                             <PopupThemeTransition />
@@ -361,32 +361,32 @@
                     </controls:SwitchPresenter.ContentTransitions>
 
                     <!--  Window  -->
-                    <controls:Case Value="Window">
+                    <controls:Case Value="{x:Bind enums:LyricsWindowManagerSettingsSection.Window}">
                         <uc:WindowSettingsControl LyricsWindowStatus="{x:Bind LyricsWindowStatus, Mode=OneWay}" />
                     </controls:Case>
 
                     <!--  Layout  -->
-                    <controls:Case Value="Layout">
+                    <controls:Case Value="{x:Bind enums:LyricsWindowManagerSettingsSection.Layout}">
                         <uc:LayoutSettingsControl LayoutProfiles="{x:Bind ViewModel.AppSettings.LayoutProfiles, Mode=OneWay}" LyricsWindowStatus="{x:Bind LyricsWindowStatus, Mode=OneWay}" />
                     </controls:Case>
 
                     <!--  Album art  -->
-                    <controls:Case Value="AlbumArt">
+                    <controls:Case Value="{x:Bind enums:LyricsWindowManagerSettingsSection.AlbumArt}">
                         <uc:AlbumArtAreaSettingsControl LyricsWindowStatus="{x:Bind LyricsWindowStatus, Mode=OneWay}" />
                     </controls:Case>
 
                     <!--  Lyrics style  -->
-                    <controls:Case Value="LyricsStyle">
+                    <controls:Case Value="{x:Bind enums:LyricsWindowManagerSettingsSection.LyricsStyle}">
                         <uc:LyricsStyleSettingsControl LyricsWindowStatus="{x:Bind LyricsWindowStatus, Mode=OneWay}" />
                     </controls:Case>
 
                     <!--  Lyrics effect  -->
-                    <controls:Case Value="LyricsEffect">
+                    <controls:Case Value="{x:Bind enums:LyricsWindowManagerSettingsSection.LyricsEffect}">
                         <uc:LyricsEffectSettingsControl LyricsEffectSettings="{x:Bind LyricsWindowStatus.LyricsEffectSettings, Mode=OneWay}" />
                     </controls:Case>
 
                     <!--  Lyrics background  -->
-                    <controls:Case Value="LyricsBackground">
+                    <controls:Case Value="{x:Bind enums:LyricsWindowManagerSettingsSection.LyricsBackground}">
                         <uc:LyricsBackgroundSettingsControl LyricsBackgroundSettings="{x:Bind LyricsWindowStatus.LyricsBackgroundSettings, Mode=OneWay}" />
                     </controls:Case>
 

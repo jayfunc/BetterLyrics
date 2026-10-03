@@ -2823,4 +2823,28 @@
   <data name="SettingsPageAppleMusicSpringRecommendationInfoBar.Message" xml:space="preserve">
     <value>เพื่อให้ได้ประสบการณ์ที่ใกล้เคียงกับ Apple Music มากขึ้น แนะนำให้ปรับความล่าช้าส่วนบนและส่วนล่างให้สอดคล้องกัน</value>
   </data>
+  <data name="SettingsSearchBox.PlaceholderText" xml:space="preserve">
+    <value>การตั้งค่าการค้นหา</value>
+  </data>
+  <data name="SettingsPageSearchLoading.Text" xml:space="preserve">
+    <value>กำลังค้นหา...</value>
+  </data>
+  <data name="SettingsPageSearchNotFound.Text" xml:space="preserve">
+    <value>ไม่พบผลลัพธ์</value>
+  </data>
+  <data name="SettingsPageMonitorLayout.Header" xml:space="preserve">
+    <value>การจัดวางหน้าจอปัจจุบัน</value>
+  </data>
+  <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve">
+    <value>เปิดการตั้งค่าการแสดงผลของระบบ</value>
+  </data>
+  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve">
+    <value>เอฟเฟกต์เนื้อเพลงเชิงความหมาย</value>
+  </data>
+  <data name="SettingsPageSemanticEffects.Description" xml:space="preserve">
+    <value>สร้างอนุภาค (เช่น หัวใจ ฝน หิมะ) เมื่อคำสำคัญเฉพาะปรากฏในเนื้อเพลง</value>
+  </data>
+  <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve">
+    <value>คัดลอกลิงก์ลึก</value>
+  </data>
 </root>

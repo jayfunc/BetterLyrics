@@ -2823,4 +2823,28 @@
   <data name="SettingsPageAppleMusicSpringRecommendationInfoBar.Message" xml:space="preserve">
     <value>Apple Music का अधिक सटीक अनुभव प्राप्त करने के लिए, शीर्ष और निचले विलंब को समकालिक रूप से समायोजित करने की अनुशंसा की जाती है।</value>
   </data>
+  <data name="SettingsSearchBox.PlaceholderText" xml:space="preserve">
+    <value>खोज सेटिंग्स</value>
+  </data>
+  <data name="SettingsPageSearchLoading.Text" xml:space="preserve">
+    <value>खोज रहा है...</value>
+  </data>
+  <data name="SettingsPageSearchNotFound.Text" xml:space="preserve">
+    <value>कोई परिणाम नहीं मिला</value>
+  </data>
+  <data name="SettingsPageMonitorLayout.Header" xml:space="preserve">
+    <value>वर्तमान मॉनिटर लेआउट</value>
+  </data>
+  <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve">
+    <value>ओपन सिस्टम डिस्प्ले सेटिंग्स</value>
+  </data>
+  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve">
+    <value>अर्थपूर्ण गीत प्रभाव</value>
+  </data>
+  <data name="SettingsPageSemanticEffects.Description" xml:space="preserve">
+    <value>जब गीतों के बोलों में विशिष्ट कीवर्ड दिखाई दें, तो स्पॉन पार्टिकल्स (जैसे दिल, बारिश, बर्फ) उत्पन्न करें।</value>
+  </data>
+  <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve">
+    <value>डीप लिंक कॉपी करें</value>
+  </data>
 </root>

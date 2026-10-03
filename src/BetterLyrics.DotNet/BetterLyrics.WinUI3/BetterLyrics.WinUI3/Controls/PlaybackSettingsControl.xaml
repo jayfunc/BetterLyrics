@@ -4,15 +4,16 @@
     x:Class="BetterLyrics.WinUI3.Controls.PlaybackSettingsControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:constants1="using:BetterLyrics.Core.Constants"
+    xmlns:constants="using:BetterLyrics.Core.Constants"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:enums="using:BetterLyrics.Core.Enums"
     xmlns:helpers="using:BetterLyrics.Core.Helpers"
     xmlns:helpers1="using:BetterLyrics.WinUI3.Helpers"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models1="using:BetterLyrics.Core.Models"
+    xmlns:models="using:BetterLyrics.Core.Models"
     xmlns:settings="using:BetterLyrics.Core.Models.Settings"
     xmlns:ui="using:CommunityToolkit.WinUI"
     Loaded="UserControl_Loaded"
@@ -34,30 +35,30 @@
             PaneDisplayMode="Top"
             SelectionChanged="ConfigNavView_SelectionChanged">
             <NavigationView.MenuItems>
-                <NavigationViewItem IsSelected="True" Tag="General">
+                <NavigationViewItem x:Name="GeneralNavViewItem" Tag="{x:Bind enums:PlaybackLibSettingsSection.General}">
                     <TextBlock x:Uid="SettingsPageConfigPlaybackSource" />
                 </NavigationViewItem>
-                <NavigationViewItem Tag="LyricsProcessing">
+                <NavigationViewItem Tag="{x:Bind enums:PlaybackLibSettingsSection.LyricsProcessing}">
                     <TextBlock x:Uid="SettingsPageLyricsProcessing" />
                 </NavigationViewItem>
-                <NavigationViewItem Tag="Integration">
+                <NavigationViewItem Tag="{x:Bind enums:PlaybackLibSettingsSection.Integration}">
                     <TextBlock x:Uid="SettingsPageIntegration" />
                 </NavigationViewItem>
-                <NavigationViewItem Tag="RealtimeStatus">
+                <NavigationViewItem Tag="{x:Bind enums:PlaybackLibSettingsSection.RealtimeStatus}">
                     <TextBlock x:Uid="SettingsPageRealtimeStatus" />
                 </NavigationViewItem>
             </NavigationView.MenuItems>
         </NavigationView>
 
         <Grid Grid.Row="1">
-            <controls:SwitchPresenter Value="{x:Bind ViewModel.SelectorBarSelectedItemTag, Mode=OneWay}">
+            <controls:SwitchPresenter Value="{x:Bind ViewModel.SelectedPlaybackLibSettingsSection, Mode=OneWay}">
                 <controls:SwitchPresenter.ContentTransitions>
                     <TransitionCollection>
                         <PopupThemeTransition />
                     </TransitionCollection>
                 </controls:SwitchPresenter.ContentTransitions>
 
-                <controls:Case Value="General">
+                <controls:Case Value="{x:Bind enums:PlaybackLibSettingsSection.General}">
                     <Grid RowSpacing="6">
                         <Grid.OpacityTransition>
                             <ScalarTransition />
@@ -457,7 +458,7 @@
                     </Grid>
                 </controls:Case>
 
-                <controls:Case Value="LyricsProcessing">
+                <controls:Case Value="{x:Bind enums:PlaybackLibSettingsSection.LyricsProcessing}">
                     <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
                         <Grid Style="{StaticResource SettingsGridStyle}">
                             <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
@@ -471,7 +472,7 @@
                                         <controls:SettingsCard x:Uid="SettingsPageTargetLanguage" IsEnabled="{x:Bind ViewModel.AppSettings.TranslationSettings.IsTranslationEnabled, Mode=OneWay}">
                                             <ComboBox ItemsSource="{x:Bind helpers:LanguageHelper.SupportedTranslationTargetLanguages}" SelectedIndex="{x:Bind ViewModel.SelectedTargetLanguageIndex, Mode=TwoWay}">
                                                 <ComboBox.ItemTemplate>
-                                                    <DataTemplate x:DataType="models1:ExtendedLanguage">
+                                                    <DataTemplate x:DataType="models:ExtendedLanguage">
                                                         <StackPanel Orientation="Horizontal" Spacing="6">
                                                             <TextBlock Text="{x:Bind NativeName}" />
                                                             <TextBlock
@@ -570,7 +571,7 @@
                     </ScrollViewer>
                 </controls:Case>
 
-                <controls:Case Value="Integration">
+                <controls:Case Value="{x:Bind enums:PlaybackLibSettingsSection.Integration}">
                     <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
                         <Grid Style="{StaticResource SettingsGridStyle}">
                             <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
@@ -673,7 +674,7 @@
                                         x:Uid="Help"
                                         Grid.Column="1"
                                         VerticalAlignment="Bottom"
-                                        NavigateUri="{x:Bind constants1:Link.AppleMusicCfg}" />
+                                        NavigateUri="{x:Bind constants:Link.AppleMusicCfg}" />
                                     <Button
                                         Grid.Column="2"
                                         VerticalAlignment="Bottom"
@@ -695,7 +696,7 @@
                     </ScrollViewer>
                 </controls:Case>
 
-                <controls:Case Value="RealtimeStatus">
+                <controls:Case Value="{x:Bind enums:PlaybackLibSettingsSection.RealtimeStatus}">
                     <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
                         <Grid Style="{StaticResource SettingsGridStyle}">
                             <StackPanel Spacing="{StaticResource SettingsCardSpacing}">

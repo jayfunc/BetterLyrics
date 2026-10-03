@@ -2041,7 +2041,7 @@
     <value>Hiệu ứng phát sáng</value>
   </data>
   <data name="SettingsPageSpectrumLayer.Header" xml:space="preserve">
-    <value>[Thử nghiệm] Lớp phổ âm thanh</value>
+    <value>Lớp phổ âm thanh</value>
   </data>
   <data name="SettingsPageSpectrumLayerPlacement.Header" xml:space="preserve">
     <value>Vị trí phổ</value>
@@ -2822,5 +2822,29 @@
   </data>
   <data name="SettingsPageAppleMusicSpringRecommendationInfoBar.Message" xml:space="preserve">
     <value>Để có trải nghiệm gần giống với Apple Music, bạn nên điều chỉnh độ trễ trên và dưới một cách đồng bộ.</value>
+  </data>
+  <data name="SettingsSearchBox.PlaceholderText" xml:space="preserve">
+    <value>Cài đặt tìm kiếm</value>
+  </data>
+  <data name="SettingsPageSearchLoading.Text" xml:space="preserve">
+    <value>Đang tìm kiếm...</value>
+  </data>
+  <data name="SettingsPageSearchNotFound.Text" xml:space="preserve">
+    <value>Không tìm thấy kết quả nào</value>
+  </data>
+  <data name="SettingsPageMonitorLayout.Header" xml:space="preserve">
+    <value>Bố cục màn hình hiện tại</value>
+  </data>
+  <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve">
+    <value>Mở cài đặt hiển thị hệ thống</value>
+  </data>
+  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve">
+    <value>Hiệu ứng lời bài hát dựa trên ngữ nghĩa</value>
+  </data>
+  <data name="SettingsPageSemanticEffects.Description" xml:space="preserve">
+    <value>Tạo các hạt hiệu ứng (ví dụ: trái tim, mưa, tuyết) khi các từ khóa cụ thể xuất hiện trong lời bài hát</value>
+  </data>
+  <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve">
+    <value>Sao chép liên kết sâu</value>
   </data>
 </root>

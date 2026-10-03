@@ -6,9 +6,11 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:enums1="using:BetterLyrics.Core.Enums"
+    xmlns:enums="using:BetterLyrics.Core.Enums"
+    xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models1="using:BetterLyrics.Core.Models"
+    xmlns:models="using:BetterLyrics.Core.Models"
+    xmlns:selectors="using:BetterLyrics.WinUI3.Selectors"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     mc:Ignorable="d">
 
@@ -21,7 +23,7 @@
             MenuItemsSource="{x:Bind ViewModel.MenuItems}"
             SelectedItem="{x:Bind ViewModel.SelectedMenuItem, Mode=TwoWay}">
             <NavigationView.MenuItemTemplate>
-                <DataTemplate x:DataType="models1:NavMenuItem">
+                <DataTemplate x:DataType="models:NavMenuItem">
                     <NavigationViewItem Content="{x:Bind Label}">
                         <NavigationViewItem.Icon>
                             <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="{x:Bind Glyph}" />
@@ -30,45 +32,151 @@
                 </DataTemplate>
             </NavigationView.MenuItemTemplate>
 
-            <controls:SwitchPresenter Value="{x:Bind ViewModel.SelectedMenuItem.Section, Mode=OneWay}">
-                <controls:SwitchPresenter.ContentTransitions>
-                    <TransitionCollection>
-                        <PopupThemeTransition />
-                    </TransitionCollection>
-                </controls:SwitchPresenter.ContentTransitions>
+            <NavigationView.AutoSuggestBox>
+                <AutoSuggestBox
+                    x:Uid="SettingsSearchBox"
+                    GotFocus="AutoSuggestBox_GotFocus"
+                    ItemsSource="{x:Bind ViewModel.FilteredSettings, Mode=OneWay}"
+                    QueryIcon="Find"
+                    SuggestionChosen="AutoSuggestBox_SuggestionChosen"
+                    Text="{x:Bind ViewModel.SearchQuery, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    UpdateTextOnSelect="False">
+                    <AutoSuggestBox.ItemTemplateSelector>
+                        <selectors:SettingSearchItemTemplateSelector>
+                            <selectors:SettingSearchItemTemplateSelector.NormalTemplate>
+                                <DataTemplate x:DataType="models:SettingSearchItem">
+                                    <StackPanel Margin="0,4" Spacing="2">
+                                        <TextBlock Text="{x:Bind Title}" />
+                                        <TextBlock
+                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                            Style="{ThemeResource CaptionTextBlockStyle}"
+                                            Text="{x:Bind Path}"
+                                            TextWrapping="Wrap" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </selectors:SettingSearchItemTemplateSelector.NormalTemplate>
+                            <selectors:SettingSearchItemTemplateSelector.LoadingTemplate>
+                                <DataTemplate x:DataType="models:SettingSearchItem">
+                                    <StackPanel
+                                        Margin="0,8"
+                                        Orientation="Horizontal"
+                                        Spacing="12">
+                                        <ProgressRing
+                                            Width="16"
+                                            Height="16"
+                                            IsActive="True" />
+                                        <TextBlock
+                                            x:Uid="SettingsPageSearchLoading"
+                                            VerticalAlignment="Center"
+                                            Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </selectors:SettingSearchItemTemplateSelector.LoadingTemplate>
+                            <selectors:SettingSearchItemTemplateSelector.NotFoundTemplate>
+                                <DataTemplate x:DataType="models:SettingSearchItem">
+                                    <StackPanel Margin="0,8">
+                                        <TextBlock x:Uid="SettingsPageSearchNotFound" Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
+                                    </StackPanel>
+                                </DataTemplate>
+                            </selectors:SettingSearchItemTemplateSelector.NotFoundTemplate>
+                        </selectors:SettingSearchItemTemplateSelector>
+                    </AutoSuggestBox.ItemTemplateSelector>
+                </AutoSuggestBox>
+            </NavigationView.AutoSuggestBox>
 
-                <!--  App appearance and behavior  -->
-                <controls:Case Value="{x:Bind enums1:SettingsSection.App}">
-                    <uc:AppSettingsControl />
-                </controls:Case>
 
-                <!--  Lyrics window manager  -->
-                <controls:Case Value="{x:Bind enums1:SettingsSection.LyricsWindowMgr}">
-                    <uc:LyricsWindowSettingsControl />
-                </controls:Case>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
-                <!--  Playback sources  -->
-                <controls:Case Value="{x:Bind enums1:SettingsSection.PlaybackLib}">
-                    <uc:PlaybackSettingsControl />
-                </controls:Case>
+                <controls:SwitchPresenter Grid.Row="0" Value="{x:Bind ViewModel.SelectedMenuItem.Section, Mode=OneWay}">
+                    <controls:SwitchPresenter.ContentTransitions>
+                        <TransitionCollection>
+                            <PopupThemeTransition />
+                        </TransitionCollection>
+                    </controls:SwitchPresenter.ContentTransitions>
 
-                <!--  Media lib  -->
-                <controls:Case Value="{x:Bind enums1:SettingsSection.MediaLib}">
-                    <uc:MediaSettingsControl />
-                </controls:Case>
+                    <!--  App appearance and behavior  -->
+                    <controls:Case Value="{x:Bind enums:SettingsSection.App}">
+                        <uc:AppSettingsControl />
+                    </controls:Case>
 
-                <!--  Plugins  -->
-                <controls:Case Value="{x:Bind enums1:SettingsSection.Plugins}">
-                    <uc:PluginManagerControl />
-                </controls:Case>
+                    <!--  Lyrics window manager  -->
+                    <controls:Case Value="{x:Bind enums:SettingsSection.LyricsWindowMgr}">
+                        <uc:LyricsWindowManagerControl />
+                    </controls:Case>
 
-                <!--  About  -->
-                <controls:Case Value="{x:Bind enums1:SettingsSection.About}">
-                    <uc:AboutControl />
-                </controls:Case>
+                    <!--  Playback sources  -->
+                    <controls:Case Value="{x:Bind enums:SettingsSection.PlaybackLib}">
+                        <uc:PlaybackSettingsControl />
+                    </controls:Case>
 
-            </controls:SwitchPresenter>
+                    <!--  Media lib  -->
+                    <controls:Case Value="{x:Bind enums:SettingsSection.MediaLib}">
+                        <uc:MediaSettingsControl />
+                    </controls:Case>
+
+                    <!--  Plugins  -->
+                    <controls:Case Value="{x:Bind enums:SettingsSection.Plugins}">
+                        <uc:PluginManagerControl />
+                    </controls:Case>
+
+                    <!--  About  -->
+                    <controls:Case Value="{x:Bind enums:SettingsSection.About}">
+                        <uc:AboutControl />
+                    </controls:Case>
+
+                </controls:SwitchPresenter>
+
+                <Border
+                    Grid.Row="1"
+                    Padding="6"
+                    Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                    BorderThickness="0,1,0,0">
+                    <Grid ColumnSpacing="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Button
+                            Grid.Column="0"
+                            Margin="0,2,0,0"
+                            VerticalAlignment="Center"
+                            Command="{x:Bind ViewModel.CopyDeepLinkCommand}"
+                            Style="{StaticResource GhostButtonStyle}">
+                            <ToolTipService.ToolTip>
+                                <TextBlock x:Uid="SettingsPageCopyDeepLink" />
+                            </ToolTipService.ToolTip>
+                            <FontIcon
+                                FontFamily="{StaticResource SegoeFluentIcons}"
+                                FontSize="12"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                Glyph="&#xE62F;" />
+                        </Button>
+                        <TextBlock
+                            Grid.Column="1"
+                            VerticalAlignment="Center"
+                            FontSize="12"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            Text="{x:Bind ViewModel.CurrentPath, Mode=OneWay}"
+                            TextTrimming="CharacterEllipsis"
+                            ToolTipService.ToolTip="{x:Bind ViewModel.CurrentPath, Mode=OneWay}" />
+                    </Grid>
+                </Border>
+            </Grid>
         </NavigationView>
 
+        <Grid
+            x:Name="LoadingOverlay"
+            Background="Transparent"
+            Visibility="Collapsed">
+            <ProgressBar
+                x:Name="LoadingBar"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Top" />
+        </Grid>
     </Grid>
 </Page>

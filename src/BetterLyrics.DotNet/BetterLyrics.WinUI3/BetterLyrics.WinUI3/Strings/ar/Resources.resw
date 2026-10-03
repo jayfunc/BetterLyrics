@@ -2823,4 +2823,28 @@
   <data name="SettingsPageAppleMusicSpringRecommendationInfoBar.Message" xml:space="preserve">
     <value>للحصول على تجربة أقرب إلى Apple Music، يُنصح بضبط التأخير العلوي والسفلي بشكل متزامن.</value>
   </data>
+  <data name="SettingsSearchBox.PlaceholderText" xml:space="preserve">
+    <value>إعدادات البحث</value>
+  </data>
+  <data name="SettingsPageSearchLoading.Text" xml:space="preserve">
+    <value>جاري البحث...</value>
+  </data>
+  <data name="SettingsPageSearchNotFound.Text" xml:space="preserve">
+    <value>لم يتم العثور على أي نتائج</value>
+  </data>
+  <data name="SettingsPageMonitorLayout.Header" xml:space="preserve">
+    <value>التخطيط الحالي للشاشة</value>
+  </data>
+  <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve">
+    <value>فتح إعدادات عرض النظام</value>
+  </data>
+  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve">
+    <value>تأثيرات الكلمات الدلالية</value>
+  </data>
+  <data name="SettingsPageSemanticEffects.Description" xml:space="preserve">
+    <value>إنشاء جسيمات (مثل: القلب، المطر، الثلج) عند ظهور كلمات محددة في كلمات الأغاني</value>
+  </data>
+  <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve">
+    <value>نسخ الرابط المباشر</value>
+  </data>
 </root>
