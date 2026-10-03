@@ -1,4 +1,4 @@
-﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Enums;
 
 namespace BetterLyrics.Core.Models;
 
@@ -9,5 +9,6 @@ public class SettingSearchItem
     public string Path { get; set; }
     public SettingsSection Section { get; set; }
     public Enum? Subsection { get; set; }
+    public string? ParentUid { get; set; }
     public object TargetParameter { get; set; }
 }

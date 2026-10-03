@@ -126,7 +126,7 @@ public partial class SettingsPageViewModel : BaseViewModel,
             var vm = _playbackSettingsControlViewModel;
 
             string subsectionName = GetLocalizedSubsectionName(vm.SelectedPlaybackLibSettingsSection);
-            
+
             if (vm.SelectedPlaybackLibSettingsSection == PlaybackLibSettingsSection.General && vm.SelectedMediaSourceProvider != null)
             {
                 uriSegments.Add(vm.SelectedPlaybackLibSettingsSection.ToString().ToLowerInvariant());
@@ -267,94 +267,76 @@ public partial class SettingsPageViewModel : BaseViewModel,
             try
             {
                 IsSearching = true;
-
-                if (!string.IsNullOrWhiteSpace(value))
-                {
-                    FilteredSettings.Clear();
-
-                    FilteredSettings.Add(SettingSearchItemExtensions.LoadingPlaceholder);
-
-                    //await Task.Delay(300, token); // Artificial delay to show spinner and prevent anxiety
-                }
+                FilteredSettings.Clear();
 
                 if (string.IsNullOrWhiteSpace(value))
                 {
-                    FilteredSettings.Clear();
                     return;
                 }
 
-                var query = value.ToLowerInvariant();
+                FilteredSettings.Add(SettingSearchItemExtensions.LoadingPlaceholder);
 
                 var matchedItems = await Task.Run(() =>
                 {
-                    var allSearchItems = new List<SettingSearchItem>();
+                    var results = new List<SettingSearchItem>();
 
                     foreach (var staticItem in SettingSearchItemExtensions.AllItems)
                     {
                         if (token.IsCancellationRequested) return null;
 
-                        if (staticItem.Title == null)
+                        staticItem.Title = GetLocalizedTitle(staticItem.Uid);
+
+                        if (staticItem.Title.Contains(value, StringComparison.OrdinalIgnoreCase) != true) continue;
+
+                        string secName = GetLocalizedSectionName(staticItem.Section);
+                        string basePath = GetLocalizedTitle("SettingsPageTitle") + $" > {secName}";
+
+                        string subsecName = staticItem.Subsection != null ? GetLocalizedSubsectionName(staticItem.Subsection) : "";
+                        string parentName = !string.IsNullOrEmpty(staticItem.ParentUid) ? GetLocalizedTitle(staticItem.ParentUid) : "";
+
+                        bool isLyricsWindowMgr = staticItem.Section == SettingsSection.LyricsWindowMgr && staticItem.Subsection != null;
+                        bool isPlaybackLib = staticItem.Section == SettingsSection.PlaybackLib && staticItem.Subsection is PlaybackLibSettingsSection.General && staticItem.Uid != "SettingsPageListenNewSession";
+
+                        if (isLyricsWindowMgr || isPlaybackLib)
                         {
-                            staticItem.Title = GetLocalizedTitle(staticItem.Uid);
-
-                            string sectionName = GetLocalizedSectionName(staticItem.Section);
-                            string subsectionName = staticItem.Subsection != null ? GetLocalizedSubsectionName(staticItem.Subsection) : "";
-
-                            staticItem.Path = GetLocalizedTitle("SettingsPageTitle") + $" > {sectionName}";
-                            if (!string.IsNullOrEmpty(subsectionName)) staticItem.Path += $" > {subsectionName}";
-                        }
-
-                        if (staticItem.Section == SettingsSection.LyricsWindowMgr && staticItem.Subsection != null)
-                        {
-                            string sectionName = GetLocalizedSectionName(staticItem.Section);
-                            string subsectionName = GetLocalizedSubsectionName(staticItem.Subsection);
-                            
-                            foreach (var window in _lyricsWindowSettingsControlViewModel.AppSettings.WindowBoundsRecords)
+                            if (isLyricsWindowMgr)
                             {
-                                var newItem = new SettingSearchItem
+                                foreach (var window in _lyricsWindowSettingsControlViewModel.AppSettings.WindowBoundsRecords)
                                 {
-                                    Uid = staticItem.Uid,
-                                    Title = staticItem.Title,
-                                    Section = staticItem.Section,
-                                    Subsection = staticItem.Subsection,
-                                    TargetParameter = window.Id,
-                                    Path = GetLocalizedTitle("SettingsPageTitle") + $" > {sectionName} > {window.Name} > {subsectionName}"
-                                };
-                                allSearchItems.Add(newItem);
+                                    results.Add(new SettingSearchItem
+                                    {
+                                        Uid = staticItem.Uid,
+                                        Title = staticItem.Title,
+                                        Section = staticItem.Section,
+                                        Subsection = staticItem.Subsection,
+                                        TargetParameter = window.Id,
+                                        Path = basePath + $" > {window.Name} > {subsecName}" + (!string.IsNullOrEmpty(parentName) ? $" > {parentName}" : "")
+                                    });
+                                }
                             }
-                        }
-                        else if (staticItem.Section == SettingsSection.PlaybackLib && staticItem.Subsection is PlaybackLibSettingsSection.General && staticItem.Uid != "SettingsPageListenNewSession")
-                        {
-                            string sectionName = GetLocalizedSectionName(staticItem.Section);
-                            string subsectionName = GetLocalizedSubsectionName(staticItem.Subsection);
-                            
-                            foreach (var provider in _playbackSettingsControlViewModel.AppSettings.MediaSourceProvidersInfo)
+                            else if (isPlaybackLib)
                             {
-                                var newItem = new SettingSearchItem
+                                foreach (var provider in _playbackSettingsControlViewModel.AppSettings.MediaSourceProvidersInfo)
                                 {
-                                    Uid = staticItem.Uid,
-                                    Title = staticItem.Title,
-                                    Section = staticItem.Section,
-                                    Subsection = staticItem.Subsection,
-                                    TargetParameter = provider.Provider,
-                                    Path = GetLocalizedTitle("SettingsPageTitle") + $" > {sectionName} > {subsectionName} > {GetLocalizedTitle(provider.Provider)}"
-                                };
-                                allSearchItems.Add(newItem);
+                                    results.Add(new SettingSearchItem
+                                    {
+                                        Uid = staticItem.Uid,
+                                        Title = staticItem.Title,
+                                        Section = staticItem.Section,
+                                        Subsection = staticItem.Subsection,
+                                        TargetParameter = provider.Provider,
+                                        Path = basePath + $" > {subsecName} > {GetLocalizedTitle(provider.Provider)}" + (!string.IsNullOrEmpty(parentName) ? $" > {parentName}" : "")
+                                    });
+                                }
                             }
                         }
                         else
                         {
-                            allSearchItems.Add(staticItem);
-                        }
-                    }
+                            staticItem.Path = basePath;
+                            if (!string.IsNullOrEmpty(subsecName)) staticItem.Path += $" > {subsecName}";
+                            if (!string.IsNullOrEmpty(parentName)) staticItem.Path += $" > {parentName}";
 
-                    var results = new List<SettingSearchItem>();
-                    foreach (var item in allSearchItems)
-                    {
-                        if (token.IsCancellationRequested) return null;
-                        if (item.Title.ToLowerInvariant().Contains(query))
-                        {
-                            results.Add(item);
+                            results.Add(staticItem);
                         }
                     }
 
@@ -423,7 +405,7 @@ public partial class SettingsPageViewModel : BaseViewModel,
                 {
                     status = _lyricsWindowSettingsControlViewModel.AppSettings.WindowBoundsRecords.FirstOrDefault(w => w.Id == windowId);
                 }
-                
+
                 if (status == null)
                 {
                     status = _lyricsWindowSettingsControlViewModel.AppSettings.WindowBoundsRecords.FirstOrDefault() ?? _lyricsWindowSettingsControlViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus;
