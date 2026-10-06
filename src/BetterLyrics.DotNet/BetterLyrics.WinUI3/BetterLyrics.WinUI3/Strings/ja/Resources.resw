@@ -2821,16 +2821,16 @@
     <value>Apple Music 風</value>
   </data>
   <data name="SettingsPageAppleMusicSpringRecommendationInfoBar.Message" xml:space="preserve">
-    <value>Apple Music に近い体験にするには、先頭行と最終行の遅延を同期して調整することをおすすめします。</value>
+    <value>Apple Music に近い体験にするには、先頭行の遅延を 0ms、最終行の遅延を 50ms に設定することをおすすめします</value>
   </data>
   <data name="SettingsSearchBox.PlaceholderText" xml:space="preserve">
-    <value>検索設定</value>
+    <value>設定を検索</value>
   </data>
   <data name="SettingsPageSearchLoading.Text" xml:space="preserve">
     <value>検索中...</value>
   </data>
   <data name="SettingsPageSearchNotFound.Text" xml:space="preserve">
-    <value>結果が見つかりませんでした</value>
+    <value>一致する結果が見つかりません</value>
   </data>
   <data name="SettingsPageMonitorLayout.Header" xml:space="preserve">
     <value>現在のモニター配置</value>

@@ -2821,7 +2821,7 @@
     <value>Apple Music-like</value>
   </data>
   <data name="SettingsPageAppleMusicSpringRecommendationInfoBar.Message" xml:space="preserve">
-    <value>To get a closer experience to Apple Music, it is recommended to adjust the top and bottom delay synchronously.</value>
+    <value>To get an experience closer to Apple Music, it is recommended to set the top line delay to 0ms and the bottom line delay to 50ms</value>
   </data>
   <data name="SettingsSearchBox.PlaceholderText" xml:space="preserve">
     <value>Search settings</value>

@@ -2,13 +2,14 @@
 
 感谢以下媒体、开源周刊及社区开发者的推荐与评测：
 
-#### 媒体报道 & 深度评测
+#### 媒体报道 & 社区推荐
 
 - **HelloGitHub** | [《HelloGitHub》第 117 期](https://hellogithub.com/repository/jayfunc/BetterLyrics)
 - **少数派** | [BetterLyrics - 一款专为 Windows 打造的沉浸式流畅歌词显示软件](https://sspai.com/post/101028)
+- **AtomGit** | [G-Star 项目](https://atomgit.com/?tn=67bc3fa197a0293d6bfebd05)
 - **LINUX DO** | [推荐一款大佬 C# 开发的 Windows 原生歌词应用](https://linux.do/t/topic/1785379)
 
-#### 优质周刊 & 应用收录
+#### 公开周刊 & 应用收录
 
 - **ireflux/weekly** | [weekly 第 342 期](https://github.com/ireflux/weekly/blob/d1912dd15d33c7cefc8aa4d8fe65c8baf3678d76/weekly_2025/weekly_342.md?plain=1#L17)
 - **jishnu-kv/WinUI-3-Apps-List** | [精心收录了 500 多款采用 WinUI 3 设计理念的桌面应用](https://github.com/jishnu-kv/WinUI-3-Apps-List#-music-players)
@@ -18,8 +19,9 @@
 #### 开发者引用 & 独立博客
 
 - **Johnwikix/original-sound-hq-player** | [原音 HQ 播放器](https://github.com/Johnwikix/original-sound-hq-player#%E4%BB%A3%E7%A0%81%E5%8F%82%E8%80%83)
-- **Kifranei/Ella** | [Halcyon](https://github.com/Kifranei/Ella#-%E8%87%B4%E8%B0%A2)
-- **wxj881027/QmClient** | [Q1menG Client](https://github.com/wxj881027/QmClient/blob/a895549a6c4b934e367d11fabb56ed8112d55556/docs/superpowers/specs/qm_lyrics_hud.md?plain=1#L5)
+- **Kifranei/Halcyon** | [Halcyon](https://github.com/Kifranei/Halcyon#-%E8%87%B4%E8%B0%A2)
+- **aodianjun/com.aodianjun.hyperglow.cnplus** | [HyperGlow CN+](https://github.com/aodianjun/com.aodianjun.hyperglow.cnplus#%E8%87%B4%E8%B0%A2)
+- **wxj881027/QmClient** | [Q1menG Client](https://github.com/wxj881027/QmClient#-%E8%87%B4%E8%B0%A2)
 - **LYlostyu** | [Git 教程 - Slidev](https://tdx-bus-demo.vercel.app/37)
 - **沉石鱼惊旋 的博客** | [『置顶』[闲话] 如何获得更优质的生活](https://blog.cyx2009.top/archives/better_life)
 - **锋风Fengfeng** | [怎么在Apple Music听南京市民和升哥的歌](https://wesley666.github.io/article/20c98ff0)

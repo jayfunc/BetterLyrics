@@ -2,13 +2,14 @@
 
 Thanks to the following media, open-source weeklies, and community developers for their recommendations and reviews:
 
-#### Media Coverage & In-Depth Reviews
+#### Media Coverage & Community Reviews
 
 - **HelloGitHub** | [HelloGitHub Issue #117](https://hellogithub.com/repository/jayfunc/BetterLyrics)
 - **sspai (Minority)** | [BetterLyrics - An immersive and smooth lyrics display software built exclusively for Windows](https://sspai.com/post/101028)
+- **AtomGit** | [G-Star Projects](https://atomgit.com/?tn=67bc3fa197a0293d6bfebd05)
 - **LINUX DO** | [Recommending a native Windows lyrics app developed in C# by a pro](https://linux.do/t/topic/1785379)
 
-#### Featured Weeklies & App Collections
+#### Public Weeklies & App Collections
 
 - **ireflux/weekly** | [weekly Issue #342](https://github.com/ireflux/weekly/blob/d1912dd15d33c7cefc8aa4d8fe65c8baf3678d76/weekly_2025/weekly_342.md?plain=1#L17)
 - **jishnu-kv/WinUI-3-Apps-List** | [A curated list of over 500 desktop apps featuring WinUI 3 design principles](https://github.com/jishnu-kv/WinUI-3-Apps-List#-music-players)
@@ -17,9 +18,10 @@ Thanks to the following media, open-source weeklies, and community developers fo
 
 #### Developer References & Independent Blogs
 
-- **Johnwikix/original-sound-hq-player** | [Original Sound HQ Player](https://github.com/Johnwikix/original-sound-hq-player#%E4%BB%A3%E7%A0%81%E5%8F%82%E8%80%83)
-- **Kifranei/Ella** | [Halcyon](https://github.com/Kifranei/Ella#-%E8%87%B4%E8%B0%A2)
-- **wxj881027/QmClient** | [Q1menG Client](https://github.com/wxj881027/QmClient/blob/a895549a6c4b934e367d11fabb56ed8112d55556/docs/superpowers/specs/qm_lyrics_hud.md?plain=1#L5)
+- **Johnwikix/original-sound-hq-player** | [Original Sound HQ Player](https://github.com/Johnwikix/original-sound-hq-player/blob/master/README.en.md#code-references)
+- **Kifranei/Halcyon** | [Halcyon](https://github.com/Kifranei/Halcyon/blob/main/README_en.md#-credits)
+- **aodianjun/com.aodianjun.hyperglow.cnplus** | [HyperGlow CN+](https://github.com/aodianjun/com.aodianjun.hyperglow.cnplus#acknowledgements)
+- **wxj881027/QmClient** | [Q1menG Client](https://github.com/wxj881027/QmClient/blob/master/README_en.md#-credits)
 - **LYlostyu** | [Git Tutorial - Slidev](https://tdx-bus-demo.vercel.app/37)
 - **Chen Shi Yu Jing Xuan's Blog** | [[Pinned] [Chitchat] How to Get a Better Quality of Life](https://blog.cyx2009.top/archives/better_life)
 - **Fengfeng** | [How to listen to the songs of Nanjing citizens and Bobby Chen on Apple Music](https://wesley666.github.io/article/20c98ff0)

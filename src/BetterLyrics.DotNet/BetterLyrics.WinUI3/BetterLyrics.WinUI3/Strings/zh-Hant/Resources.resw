@@ -2821,7 +2821,7 @@
     <value>類 Apple Music</value>
   </data>
   <data name="SettingsPageAppleMusicSpringRecommendationInfoBar.Message" xml:space="preserve">
-    <value>為了獲得更接近 Apple Music 的體驗，建議同步調整首行延遲及尾行延遲</value>
+    <value>為了獲得更接近 Apple Music 的體驗，建議將首行延遲設定為 0 ms，並將尾行延遲設定為 50 ms</value>
   </data>
   <data name="SettingsSearchBox.PlaceholderText" xml:space="preserve">
     <value>在設定中搜尋</value>
