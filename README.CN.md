@@ -284,6 +284,7 @@
 <br>
 
 <div align="center">
-  <mark><i>本项目正处于积极开发阶段；可能会出现意外问题。</i></mark><br>
+  <sub>桑德贝 × 武汉</sub><br>
+  <sub>© 2025-2026 BetterLyrics 贡献者。保留所有权利。</sub><br>
   <sub>免责声明：本项目“按原样”提供。所有第三方资源归其各自所有者所有。</sub>
 </div>

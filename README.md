@@ -283,6 +283,7 @@ Some design ideas are referenced from the following projects (design inspiration
 <br>
 
 <div align="center">
-  <mark><i>This project is under active development; unexpected issues may occur.</i></mark><br>
+  <sub>Thunder Bay × Wuhan</sub><br>
+  <sub>© 2025-2026 The BetterLyrics Contributors. All rights reserved.</sub><br>
   <sub>Disclaimer: This project is provided "as is". All third-party resources belong to their respective owners.</sub>
 </div>

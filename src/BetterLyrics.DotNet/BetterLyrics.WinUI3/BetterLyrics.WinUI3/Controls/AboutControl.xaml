@@ -86,7 +86,7 @@
                     </StackPanel>
 
                     <controls:SettingsExpander
-                        Description="© Zhe Fang 2025-2026. Licensed under GPL-3.0."
+                        Description="© 2025-2026 The BetterLyrics Contributors. All rights reserved. Licensed under GPL-3.0."
                         Header="{x:Bind constants:App.AppName}"
                         HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/Logo.png}">
                         <StackPanel Orientation="Horizontal" Spacing="8">
@@ -446,12 +446,12 @@
                                 HorizontalAlignment="Center"
                                 FontSize="12"
                                 Foreground="{ThemeResource TextFillColorTertiaryBrush}"
-                                Text="Thunder Bay, Canada × 中国 · 武汉" />
+                                Text="Thunder Bay × 武汉" />
                             <TextBlock
                                 HorizontalAlignment="Center"
                                 FontSize="12"
                                 Foreground="{ThemeResource TextFillColorTertiaryBrush}"
-                                Text="© 2025-2026 Zhe Fang" />
+                                Text="© 2025-2026 The BetterLyrics Contributors. All rights reserved." />
                             <TextBlock
                                 Margin="0,0,0,24"
                                 HorizontalAlignment="Center"

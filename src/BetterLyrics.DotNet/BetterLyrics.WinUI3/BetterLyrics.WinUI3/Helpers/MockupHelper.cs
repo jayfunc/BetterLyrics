@@ -53,7 +53,7 @@ public static class MockupHelper
                 else if (type == ComponentType.SongArtist)
                     textGrid.Children.Add(new TextBlock
                     {
-                        Text = $"[{displayName}] Zhe Fang",
+                        Text = $"[{displayName}] The BetterLyrics Contributors",
                         FontSize = 14,
                         Foreground = secondaryTextBrush,
                         HorizontalAlignment = contentAlign
@@ -61,7 +61,7 @@ public static class MockupHelper
                 else if (type == ComponentType.SongAlbum)
                     textGrid.Children.Add(new TextBlock
                     {
-                        Text = $"[{displayName}] JayFunc Labs",
+                        Text = $"[{displayName}] BetterLyrics",
                         FontSize = 14,
                         Foreground = tertiaryTextBrush,
                         HorizontalAlignment = contentAlign
