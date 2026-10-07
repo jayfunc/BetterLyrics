@@ -4,7 +4,7 @@
 
 **生效日期：** 2025 年 6 月 3 日
 
-欢迎使用由 Zhe Fang（“我们”、“我们的”）开发的 BetterLyrics（“本应用”）。我们致力于保护您的隐私。本隐私政策解释了您在使用本应用时，我们如何处理信息。
+欢迎使用由 BetterLyrics 贡献者（“我们”、“我们的”）开发的 BetterLyrics（“本应用”）。我们致力于保护您的隐私。本隐私政策解释了您在使用本应用时，我们如何处理信息。
 
 本应用是一款桌面应用程序。您的数据主要存储在您的本地设备上。
 
@@ -64,6 +64,4 @@ BetterLyrics 的核心功能依赖于与第三方歌词提供商的交互。这�
 我们可能会不时更新本隐私政策。我们将通过在本应用或我们的 GitHub 仓库中发布新的隐私政策来通知您任何变更。
 
 ## 8. 联系我们
-如果您对本隐私政策有任何疑问，请联系：
-Zhe Fang
-[zhefang.zf@gmail.com](mailto:zhefang.zf@gmail.com)
+如果您对本隐私政策有任何疑问，请联系：[betterlyrics@foxmail.com](mailto:betterlyrics@foxmail.com)
