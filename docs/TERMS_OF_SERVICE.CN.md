@@ -4,7 +4,7 @@
 
 **生效日期：** 2025 年 6 月 3 日
 
-请在使用由 Zhe Fang（“我们”、“我们的”）开发的 BetterLyrics 应用程序（“本应用”）之前，仔细阅读本服务条款（“本条款”）。
+请在使用由 BetterLyrics 贡献者（“我们”、“我们的”）开发的 BetterLyrics 应用程序（“本应用”）之前，仔细阅读本服务条款（“本条款”）。
 
 您对本应用的访问和使用，均以您接受并遵守本条款为前提。本条款适用于所有下载、安装或使用本应用的用户。
 
@@ -54,6 +54,4 @@ BetterLyrics 是开源软件。本应用根据 **GPL-3.0 许可证 (GPL-3.0 Lice
 我们保留自行决定随时修改或替换本条款的权利。我们将通过（例如，更新日期、在 GitHub 上发布）的方式通知任何重大变更。
 
 ## 9. 联系我们
-如果您对本条款有任何疑问，请联系：
-Zhe Fang
-[zhefang.zf@gmail.com](mailto:zhefang.zf@gmail.com)
+如果您对本条款有任何疑问，请联系：[betterlyrics@foxmail.com](mailto:betterlyrics@foxmail.com)
