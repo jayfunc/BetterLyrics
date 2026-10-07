@@ -4,7 +4,7 @@
 
 **Effective Date:** June 3, 2025
 
-Welcome to BetterLyrics ("we", "us", "our"), an application developed by Zhe Fang. We are committed to protecting your privacy. This Privacy Policy explains how we handle information when you use our BetterLyrics application (the "App").
+Welcome to BetterLyrics ("we", "us", "our"), an application developed by the BetterLyrics contributors. We are committed to protecting your privacy. This Privacy Policy explains how we handle information when you use our BetterLyrics application (the "App").
 
 This App is a desktop application. Your data is primarily stored locally on your device.
 
@@ -64,6 +64,4 @@ The App is not intended for use by children under the age of 16. We do not knowi
 We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy in the App or on our GitHub repository.
 
 ## 8. Contact Us
-If you have any questions about this Privacy Policy, please contact:
-Zhe Fang
-[zhefang.zf@gmail.com](mailto:zhefang.zf@gmail.com)
+If you have any questions about this Privacy Policy, please contact: [betterlyrics@foxmail.com](mailto:betterlyrics@foxmail.com)
