@@ -4,7 +4,7 @@
 
 **Effective Date:** June 3, 2025
 
-Please read these Terms of Service ("Terms") carefully before using the BetterLyrics application (the "App") developed by Zhe Fang ("we", "us", "our").
+Please read these Terms of Service ("Terms") carefully before using the BetterLyrics application (the "App") developed by the BetterLyrics contributors ("we", "us", "our").
 
 Your access to and use of the App is conditioned on your acceptance of and compliance with these Terms. These Terms apply to all users who download, install, or use the App.
 
@@ -54,6 +54,4 @@ These Terms shall be governed and construed in accordance with the laws of the P
 We reserve the right, at our sole discretion, to modify or replace these Terms at any time. We will provide notice of any significant changes by (e.g., updating the date, posting on GitHub).
 
 ## 9. Contact Us
-If you have any questions about these Terms, please contact:
-Zhe Fang
-[zhefang.zf@gmail.com](mailto:zhefang.zf@gmail.com)
+If you have any questions about these Terms, please contact: [betterlyrics@foxmail.com](mailto:betterlyrics@foxmail.com)
