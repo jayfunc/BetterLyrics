@@ -2847,4 +2847,7 @@
   <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve">
     <value>نسخ الرابط المباشر</value>
   </data>
+  <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve">
+    <value>لم يتم العثور على شاشة تتوافق مع هذا الوضع</value>
+  </data>
 </root>

@@ -2847,4 +2847,7 @@
   <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve">
     <value>Copier le lien profond</value>
   </data>
+  <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve">
+    <value>Aucun écran correspondant à ce mode n'a été détecté.</value>
+  </data>
 </root>

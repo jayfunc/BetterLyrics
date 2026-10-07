@@ -17,7 +17,7 @@
     <Grid>
 
         <Grid>
-            <Grid Margin="0,0,0,20" RowSpacing="16">
+            <Grid Margin="0,0,0,36">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -34,10 +34,11 @@
                     <TextBlock
                         x:Uid="SettingsPageRecordedWindowStatus"
                         Grid.Column="0"
+                        Margin="1,52,0,6"
                         Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
                     <Grid
                         Grid.Column="2"
-                        Margin="0,30,0,0"
+                        Margin="0,46,0,0"
                         ColumnSpacing="8">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -78,7 +79,7 @@
                 <ScrollViewer Grid.Row="2">
                     <ListView
                         x:Name="WindowStatusListView"
-                        Margin="36,0"
+                        Margin="36,16"
                         HorizontalAlignment="Center"
                         HorizontalContentAlignment="Center"
                         AllowDrop="True"
@@ -294,7 +295,6 @@
                 <Grid
                     Grid.Row="0"
                     Padding="36,0"
-                    RowSpacing="{StaticResource SettingsCardSpacing}"
                     Style="{StaticResource SettingsGridStyle}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -309,11 +309,12 @@
                         </Grid.ColumnDefinitions>
                         <TextBlock
                             Grid.Column="0"
+                            Margin="1,52,0,6"
                             Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"
                             Text="{x:Bind LyricsWindowStatus.Name, Mode=OneWay}" />
                         <Button
                             Grid.Column="2"
-                            Margin="0,24,0,0"
+                            Margin="0,46,0,0"
                             Click="CloseConfigPanelButton_Click"
                             Content="{ui:FontIcon FontSize=16,
                                                   FontFamily={StaticResource SegoeFluentIcons},
@@ -324,6 +325,7 @@
                     <NavigationView
                         x:Name="ConfigNavView"
                         Grid.Row="1"
+                        Margin="-8,0,-8,0"
                         IsBackButtonVisible="Collapsed"
                         IsBackEnabled="False"
                         IsSettingsVisible="False"

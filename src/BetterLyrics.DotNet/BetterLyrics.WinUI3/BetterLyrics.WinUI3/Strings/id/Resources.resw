@@ -2847,4 +2847,7 @@
   <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve">
     <value>Salin tautan dalam</value>
   </data>
+  <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve">
+    <value>Tidak ditemukan monitor yang sesuai dengan mode tersebut</value>
+  </data>
 </root>

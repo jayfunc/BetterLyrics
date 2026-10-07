@@ -2847,4 +2847,7 @@
   <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve">
     <value>Salin pautan mendalam</value>
   </data>
+  <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve">
+    <value>Tiada monitor ditemui yang sepadan dengan mod</value>
+  </data>
 </root>

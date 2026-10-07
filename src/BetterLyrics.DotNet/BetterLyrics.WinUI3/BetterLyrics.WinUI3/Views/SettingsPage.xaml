@@ -21,6 +21,7 @@
             IsBackButtonVisible="Collapsed"
             IsSettingsVisible="False"
             MenuItemsSource="{x:Bind ViewModel.MenuItems}"
+            PaneTitle=" "
             SelectedItem="{x:Bind ViewModel.SelectedMenuItem, Mode=TwoWay}">
             <NavigationView.MenuItemTemplate>
                 <DataTemplate x:DataType="models:NavMenuItem">

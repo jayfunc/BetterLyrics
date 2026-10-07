@@ -14,9 +14,7 @@
     <Grid>
         <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
             <Grid Style="{StaticResource SettingsGridStyle}">
-                <StackPanel>
-
-                    <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                <StackPanel Margin="0,46,0,0">
 
                     <controls:SettingsCard x:Uid="SettingsPageMusicLib" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8B7;}" />
 

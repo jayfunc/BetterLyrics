@@ -24,9 +24,9 @@ public partial class GsmtcService : IGsmtcService
     public async Task<NowPlayingPalette> CalculateAlbumArtThemeColorsAsync(LyricsWindowStatus lyricsWindowStatus,
         AppColor backdropAccentColor, CancellationToken token = default)
     {
-        var accentColors = Enumerable.Repeat(Colors.Black, 4).ToList();
-        var lightAccentColors = Enumerable.Repeat(Colors.Black, 4).ToList();
-        var darkAccentColors = Enumerable.Repeat(Colors.Black, 4).ToList();
+        var accentColors = Enumerable.Repeat(Colors.Transparent, 4).ToList();
+        var lightAccentColors = Enumerable.Repeat(Colors.Transparent, 4).ToList();
+        var darkAccentColors = Enumerable.Repeat(Colors.Transparent, 4).ToList();
 
         accentColors =
             (await PaletteHelper.GetAccentColorsAsync(AlbumArtBytes, 4, lyricsWindowStatus.PaletteGeneratorType, null, lyricsWindowStatus.PaletteChromaWeight, lyricsWindowStatus.PaletteToneWeight, lyricsWindowStatus.PalettePopulationWeight, lyricsWindowStatus.PaletteDarkToneThreshold, lyricsWindowStatus.PaletteLightToneThreshold))

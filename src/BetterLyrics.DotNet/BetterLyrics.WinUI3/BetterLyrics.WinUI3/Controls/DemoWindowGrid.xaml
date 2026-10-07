@@ -207,11 +207,10 @@
                         Foreground="{ThemeResource SystemFillColorCriticalBrush}"
                         Glyph="&#xE7BA;" />
                     <TextBlock
-                        x:Uid="DemoWindowMonitorDisconnected"
+                        x:Uid="DemoWindowGridMonitorDisconnected"
                         HorizontalAlignment="Center"
                         FontSize="12"
                         Foreground="{ThemeResource SystemFillColorCriticalBrush}"
-                        Text="未找到模式对应的显示器"
                         TextWrapping="Wrap" />
                 </StackPanel>
             </Grid>

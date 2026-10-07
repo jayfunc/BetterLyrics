@@ -2847,4 +2847,7 @@
   <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve">
     <value>คัดลอกลิงก์ลึก</value>
   </data>
+  <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve">
+    <value>ไม่พบจอภาพที่ตรงกับโหมดนี้</value>
+  </data>
 </root>

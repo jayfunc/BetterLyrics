@@ -11,9 +11,9 @@ public static class LyricsDataExtensions
 
     extension(LyricsData lyricsData)
     {
-        public static LyricsData GetLoadingPlaceholder(int attempt = 1, int maxRetries = 1)
+        public static LyricsData GetLoadingPlaceholder(int attempt = 1, int maxRetries = 1, bool showStatus = true)
         {
-            var loadingText = $"{_localizationService.GetLocalizedString("LyricsLoading")} ({attempt}/{maxRetries})";
+            var loadingText = _localizationService.GetLocalizedString("LyricsLoading") + (showStatus ? $" ({attempt}/{maxRetries})" : "");
             return new LyricsData
             {
                 LyricsLines =

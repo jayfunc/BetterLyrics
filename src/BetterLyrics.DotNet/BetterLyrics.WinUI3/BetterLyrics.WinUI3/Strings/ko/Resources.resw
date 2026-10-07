@@ -2847,4 +2847,7 @@
   <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve">
     <value>딥 링크 복사</value>
   </data>
+  <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve">
+    <value>해당 모드에 해당하는 모니터를 찾을 수 없습니다.</value>
+  </data>
 </root>

@@ -6,15 +6,6 @@ namespace BetterLyrics.Core.Models.Settings;
 
 public partial class LyricsEffectSettings : ObservableRecipient, ICloneable
 {
-    public LyricsEffectSettings(int lyricsScrollTopDuration = 500, int lyricsScrollDuration = 500,
-        int lyricsScrollBottomDuration = 500, EasingType lyricsScrollEasingType = EasingType.Quad)
-    {
-        LyricsScrollTopDuration = lyricsScrollTopDuration;
-        LyricsScrollDuration = lyricsScrollDuration;
-        LyricsScrollBottomDuration = lyricsScrollBottomDuration;
-        LyricsScrollEasingType = lyricsScrollEasingType;
-    }
-
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
     public partial WordByWordEffectMode WordByWordEffectMode { get; set; } = WordByWordEffectMode.Auto;
@@ -94,7 +85,7 @@ public partial class LyricsEffectSettings : ObservableRecipient, ICloneable
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsLyricsScrollEasingModeEnabled))]
     [NotifyPropertyChangedRecipients]
-    public partial EasingType LyricsScrollEasingType { get; set; }
+    public partial EasingType LyricsScrollEasingType { get; set; } = EasingType.Spring;
 
     public bool IsLyricsScrollEasingModeEnabled => LyricsScrollEasingType != EasingType.Spring;
 
@@ -104,15 +95,15 @@ public partial class LyricsEffectSettings : ObservableRecipient, ICloneable
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
-    public partial int LyricsScrollDuration { get; set; }
+    public partial int LyricsScrollDuration { get; set; } = 500;
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
-    public partial int LyricsScrollTopDuration { get; set; }
+    public partial int LyricsScrollTopDuration { get; set; } = 500;
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
-    public partial int LyricsScrollBottomDuration { get; set; }
+    public partial int LyricsScrollBottomDuration { get; set; } = 500;
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
@@ -120,7 +111,7 @@ public partial class LyricsEffectSettings : ObservableRecipient, ICloneable
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
-    public partial int LyricsScrollBottomDelay { get; set; } = 0;
+    public partial int LyricsScrollBottomDelay { get; set; } = 50;
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
@@ -168,8 +159,7 @@ public partial class LyricsEffectSettings : ObservableRecipient, ICloneable
 
     public object Clone()
     {
-        return new LyricsEffectSettings(LyricsScrollTopDuration, LyricsScrollDuration, LyricsScrollBottomDuration,
-            LyricsScrollEasingType)
+        return new LyricsEffectSettings()
         {
             WordByWordEffectMode = WordByWordEffectMode,
 

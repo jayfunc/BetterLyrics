@@ -28,7 +28,7 @@
         <NavigationView
             x:Name="ConfigNavView"
             Grid.Row="0"
-            Margin="36,16,36,0"
+            Margin="28,36,28,0"
             IsBackButtonVisible="Collapsed"
             IsBackEnabled="False"
             IsSettingsVisible="False"
@@ -207,7 +207,7 @@
                             <ScrollViewer Style="{StaticResource SettingsScrollViewerStyle}">
                                 <Grid Style="{StaticResource SettingsGridStyle}">
                                     <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
-                                        <Grid ColumnSpacing="6">
+                                        <Grid Margin="0,2,0,6" ColumnSpacing="6">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="Auto" />
                                                 <ColumnDefinition Width="Auto" />
@@ -217,22 +217,24 @@
                                             </Grid.ColumnDefinitions>
                                             <Image
                                                 Height="16"
-                                                Margin="0,26,0,0"
+                                                Margin="2,0,0,0"
+                                                VerticalAlignment="Bottom"
                                                 helpers1:AppExtensions.Aumid="{x:Bind ViewModel.SelectedMediaSourceProvider.Provider, Mode=OneWay}" />
                                             <TextBlock
                                                 Grid.Column="1"
+                                                Margin="0,0,0,-2"
+                                                VerticalAlignment="Bottom"
                                                 helpers1:AppExtensions.Aumid="{x:Bind ViewModel.SelectedMediaSourceProvider.Provider, Mode=OneWay}"
-                                                Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+                                                Style="{StaticResource BodyStrongTextBlockStyle}" />
                                             <Image
                                                 Grid.Column="2"
                                                 Height="16"
-                                                Margin="0,26,0,0"
+                                                VerticalAlignment="Bottom"
                                                 helpers1:GifHelper.IsPlaying="{x:Bind ViewModel.GsmtcService.CurrentIsPlaying, Mode=OneWay}"
                                                 Source="{ThemeResource MusicWave}"
                                                 Visibility="{x:Bind ViewModel.SelectedMediaSourceProvider.IsFocused, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
                                             <Button
                                                 Grid.Column="4"
-                                                Margin="0,24,0,0"
                                                 Click="CloseConfigPanelButton_Click"
                                                 Content="{ui:FontIcon FontSize=16,
                                                                       FontFamily={StaticResource SegoeFluentIcons},

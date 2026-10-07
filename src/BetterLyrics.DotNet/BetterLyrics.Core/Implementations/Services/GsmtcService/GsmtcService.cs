@@ -10,6 +10,7 @@ using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
+using BetterLyrics.Core.Models.Lyrics;
 using BetterLyrics.Core.Models.Memory;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.Serialization;
@@ -467,8 +468,17 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
 
     private void MediaManager_OnAnyMediaPropertyChanged(IMediaSessionProvider? mediaSession)
     {
+        // For better user experience, we show a loading placeholder immediately to avoid previous lyrics being displayed while switching to a new song.
+        _appUIThreadProvider.Execute(() =>
+        {
+            CurrentLyricsData = LyricsData.GetLoadingPlaceholder(showStatus: false);
+        });
+        // Actual lyrics update
         _ = _onMediaPropsChangedDebouncer.RunAsync(
-            () => { _ = OnAnyMediaPropertyChangedCoreAsync(mediaSession); }, 1000);
+            () =>
+            {
+                _ = OnAnyMediaPropertyChangedCoreAsync(mediaSession);
+            }, 1000);
     }
 
     private void MediaManager_OnAnySessionClosed(IMediaSessionProvider? mediaSession)

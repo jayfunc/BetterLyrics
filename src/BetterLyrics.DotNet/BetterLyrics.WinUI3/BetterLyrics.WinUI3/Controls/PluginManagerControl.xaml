@@ -20,7 +20,10 @@
         </Grid.RowDefinitions>
 
         <Grid Grid.Row="0">
-            <TextBlock x:Uid="PluginManagerControlTitle" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+            <TextBlock
+                x:Uid="PluginManagerControlTitle"
+                Margin="1,52,0,6"
+                Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
         </Grid>
 
         <InfoBar
@@ -62,7 +65,7 @@
 
         <StackPanel
             Grid.Row="3"
-            Margin="0,20,0,20"
+            Margin="0,16,0,36"
             HorizontalAlignment="Right"
             VerticalAlignment="Bottom"
             Orientation="Horizontal"

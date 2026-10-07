@@ -2847,4 +2847,7 @@
   <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve">
     <value>डीप लिंक कॉपी करें</value>
   </data>
+  <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve">
+    <value>मोड से मेल खाने वाला कोई मॉनिटर नहीं मिला</value>
+  </data>
 </root>
