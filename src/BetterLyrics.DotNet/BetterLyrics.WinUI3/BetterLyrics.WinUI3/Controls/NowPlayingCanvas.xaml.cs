@@ -20,9 +20,7 @@ using BetterLyrics.Core.Models.Domain;
 using BetterLyrics.Core.Models.Lyrics;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Extensions;
-using BetterLyrics.WinUI3.Helpers;
 using BetterLyrics.WinUI3.Helpers.Lyrics.LyricsLayoutStrategy;
-using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Models.Lyrics;
 using BetterLyrics.WinUI3.Renderer;
 using BetterLyrics.WinUI3.Renderer.LyricsRenderer;
@@ -40,6 +38,7 @@ using BetterLyrics.Core.Effects;
 using BetterLyrics.WinUI3.Providers;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Extensions;
+using BetterLyrics.WinUI3.Renderer.SemanticEffectsRenderer;
 
 namespace BetterLyrics.WinUI3.Controls;
 
@@ -771,7 +770,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
         {
             if (_lyricsWindowStatus?.LyricsBackgroundSettings.IsSemanticEffectEnabled == true)
             {
-                _semanticEffectsRenderer.TriggerEffect(_renderLyricsLines[_primaryPlayingLineIndex].PrimaryText, new Vector2((float)sender.Size.Width, (float)sender.Size.Height));
+                _semanticEffectsRenderer.PrepareLine(_renderLyricsLines[_primaryPlayingLineIndex]);
             }
         }
 
@@ -922,7 +921,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
             lyricsBg.SpectrumPlacement, _albumArtRect, _spectrumAnalyzer.CurrentBassEnergy,
             lyricsBg.SpectrumBreathingIntensity, lyricsBg.IsSpectrumOverlayParallaxEnabled);
 
-        _semanticEffectsRenderer.Update(sender, elapsedTime, _spectrumAnalyzer.CurrentBassEnergy, 0, false);
+        _semanticEffectsRenderer.Update(sender, elapsedTime, _spectrumAnalyzer.CurrentBassEnergy, 0, false, _songPositionWithOffset.TotalMilliseconds);
 
         if (_renderLyricsOpacity == 1)
         {

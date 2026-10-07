@@ -11,7 +11,7 @@
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:media="using:CommunityToolkit.WinUI.Media"
-    xmlns:models1="using:BetterLyrics.Core.Models"
+    xmlns:models="using:BetterLyrics.Core.Models"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
     mc:Ignorable="d">
@@ -370,7 +370,7 @@
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
-                                <DataTemplate x:DataType="models1:Contributor">
+                                <DataTemplate x:DataType="models:Contributor">
                                     <TextBlock
                                         Width="160"
                                         HorizontalAlignment="Center"
@@ -404,7 +404,7 @@
                                 </ItemsPanelTemplate>
                             </ItemsControl.ItemsPanel>
                             <ItemsControl.ItemTemplate>
-                                <DataTemplate x:DataType="models1:Donor">
+                                <DataTemplate x:DataType="models:Donor">
                                     <TextBlock
                                         MaxWidth="160"
                                         HorizontalAlignment="Center"

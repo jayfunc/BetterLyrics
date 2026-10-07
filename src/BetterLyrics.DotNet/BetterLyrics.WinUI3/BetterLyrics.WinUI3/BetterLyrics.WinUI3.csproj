@@ -516,9 +516,6 @@
             <Generator>MSBuild:Compile</Generator>
         </Page>
     </ItemGroup>
-    <ItemGroup>
-        <Folder Include="Events\" />
-    </ItemGroup>
     <!-- Publish Properties -->
     <PropertyGroup>
         <PublishReadyToRun Condition="'$(Configuration)' == 'Debug'">False</PublishReadyToRun>

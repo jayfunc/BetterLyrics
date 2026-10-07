@@ -8,7 +8,7 @@
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models1="using:BetterLyrics.Core.Models"
+    xmlns:models="using:BetterLyrics.Core.Models"
     xmlns:ui="using:CommunityToolkit.WinUI"
     DefaultButton="Primary"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
@@ -42,7 +42,7 @@
                 Loaded="FontListView_Loaded"
                 SelectionChanged="FontListView_SelectionChanged">
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="models1:ExtendedFontFamily">
+                    <DataTemplate x:DataType="models:ExtendedFontFamily">
                         <Grid Padding="12" RowSpacing="6">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -99,7 +99,7 @@
                 ItemContainerStyle="{ThemeResource ListViewCardStyle}"
                 SelectionMode="None">
                 <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="models1:ExtendedFontFamily">
+                    <DataTemplate x:DataType="models:ExtendedFontFamily">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="*" />

@@ -7,7 +7,7 @@
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:models1="using:BetterLyrics.Core.Models"
+    xmlns:models="using:BetterLyrics.Core.Models"
     mc:Ignorable="d">
 
     <Button
@@ -35,7 +35,7 @@
                 </ItemsControl.ItemsPanel>
 
                 <ItemsControl.ItemTemplate>
-                    <DataTemplate x:DataType="models1:ExtendedFontFamily">
+                    <DataTemplate x:DataType="models:ExtendedFontFamily">
                         <StackPanel Padding="8,4" CornerRadius="4">
                             <TextBlock FontFamily="{x:Bind FontFamily}" Text="{x:Bind LocalizedFontFamily}" />
                             <TextBlock
