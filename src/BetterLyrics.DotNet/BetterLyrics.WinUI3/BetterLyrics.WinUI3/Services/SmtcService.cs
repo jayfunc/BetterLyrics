@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -33,14 +33,17 @@ public partial class SmtcService : BaseViewModel, ISmtcService
     private readonly MediaPlaybackList _playbackList;
     private readonly Timer _positionTimer;
     private readonly ISettingsService _settingsService;
+    private readonly IAudioMixerService _audioMixerService;
 
     public SmtcService(ISettingsService settingsService, IFileSystemService fileSystemService,
-        IAppUIThreadProvider appUiThreadProvider, IGlobalToastProvider globalToastProvider)
+        IAppUIThreadProvider appUiThreadProvider, IGlobalToastProvider globalToastProvider,
+        IAudioMixerService audioMixerService)
     {
         _settingsService = settingsService;
         _fileSystemService = fileSystemService;
         _appUIThreadProvider = appUiThreadProvider;
         _globalToastProvider = globalToastProvider;
+        _audioMixerService = audioMixerService;
 
         _mediaPlayer = new MediaPlayer();
         _playbackList = new MediaPlaybackList();
@@ -91,7 +94,11 @@ public partial class SmtcService : BaseViewModel, ISmtcService
             _playbackList.MoveTo((uint)savedIndex);
             if (recoverPlaybackPosition) _mediaPlayer.Position = musicGallerySettings.PlaybackPosition;
 
-            if (allowAutoPlay && _settingsService.AppSettings.MusicGallerySettings.AutoPlay) _mediaPlayer.Play();
+            if (allowAutoPlay && _settingsService.AppSettings.MusicGallerySettings.AutoPlay)
+            {
+                _mediaPlayer.Play();
+                EnsureVolumeApplied();
+            }
         }
 
         ApplyPlaybackOrder(musicGallerySettings.PlaybackOrder);
@@ -141,6 +148,7 @@ public partial class SmtcService : BaseViewModel, ISmtcService
                 _mediaPlayer.Position = _settingsService.AppSettings.MusicGallerySettings.PlaybackPosition;
 
             _mediaPlayer.Play();
+            EnsureVolumeApplied();
         }
         else if (index == -1) // 停止播放
         {
@@ -157,12 +165,41 @@ public partial class SmtcService : BaseViewModel, ISmtcService
         if (args.Button == SystemMediaTransportControlsButton.Stop) PlayTrackAt(-1);
     }
 
+    public bool IsVolumeRestored { get; set; }
+
+    public void EnsureVolumeApplied()
+    {
+        var targetVolume = _settingsService.AppSettings.MusicGallerySettings.Volume;
+        _ = Task.Run(async () =>
+        {
+            for (var i = 0; i < 10; i++)
+            {
+                var currentVol = _audioMixerService.GetApplicationVolume(Environment.ProcessId);
+                if (currentVol != -1)
+                {
+                    if (!IsVolumeRestored || currentVol != targetVolume)
+                    {
+                        _audioMixerService.SetApplicationVolume(Environment.ProcessId, targetVolume);
+                        IsVolumeRestored = true;
+                    }
+                    break;
+                }
+                await Task.Delay(100);
+            }
+        });
+    }
+
     private void PlaybackSession_PlaybackStateChanged(MediaPlaybackSession sender, object args)
     {
         if (sender.PlaybackState == MediaPlaybackState.Playing)
+        {
             _positionTimer.Start();
+            EnsureVolumeApplied();
+        }
         else
+        {
             _positionTimer.Stop();
+        }
     }
 
     private void PositionTimer_Elapsed(object? sender, ElapsedEventArgs e)

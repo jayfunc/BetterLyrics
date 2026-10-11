@@ -1,6 +1,7 @@
 using System;
 using System.Diagnostics;
 using System.Text;
+using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Services;
 using Microsoft.Extensions.Logging;
 using NAudio.CoreAudioApi;
@@ -81,6 +82,12 @@ public class AudioMixerService : IAudioMixerService
     {
         if (string.IsNullOrEmpty(processNameOrAumid)) return;
 
+        if (PlayerIdHelper.IsBetterLyrics(processNameOrAumid))
+        {
+            SetApplicationVolume(Environment.ProcessId, volume);
+            return;
+        }
+
         if (!processNameOrAumid.Contains("!"))
         {
             var procName = processNameOrAumid;
@@ -151,6 +158,12 @@ public class AudioMixerService : IAudioMixerService
     public int GetApplicationVolume(string? processNameOrAumid)
     {
         if (string.IsNullOrEmpty(processNameOrAumid)) return -1;
+
+        if (PlayerIdHelper.IsBetterLyrics(processNameOrAumid))
+        {
+            var vol = GetApplicationVolume(Environment.ProcessId);
+            if (vol != -1) return vol;
+        }
 
         if (!processNameOrAumid.Contains("!"))
         {

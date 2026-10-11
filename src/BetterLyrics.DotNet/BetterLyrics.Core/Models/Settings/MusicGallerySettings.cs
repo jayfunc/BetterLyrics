@@ -36,6 +36,10 @@ public partial class MusicGallerySettings : ObservableRecipient
 
     [ObservableProperty]
     [NotifyPropertyChangedRecipients]
+    public partial int Volume { get; set; } = 100;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedRecipients]
     public partial LyricsWindowStatus LyricsWindowStatus { get; set; } = new(LyricsWindowMode.Standard);
 
     [ObservableProperty]

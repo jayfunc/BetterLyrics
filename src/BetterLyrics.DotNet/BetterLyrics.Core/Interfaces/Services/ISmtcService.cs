@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Models;
@@ -21,4 +21,7 @@ public interface ISmtcService : INotifyPropertyChanged
     void PlayNextTrack();
     void PlayTrack(PlayQueueItem? playQueueItem);
     void PlayTrackAt(int index, bool recoverPlaybackPosition = false);
+
+    bool IsVolumeRestored { get; set; }
+    void EnsureVolumeApplied();
 }

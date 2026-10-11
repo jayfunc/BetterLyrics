@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Interfaces.Services;
@@ -13,13 +14,16 @@ public partial class NowPlayingBarViewModel : BaseViewModel
     private readonly IGsmtcService _gsmtcService;
     private readonly ISettingsService _settingsService;
     private readonly IAudioMixerService _audioMixerService;
+    private readonly ISmtcService _smtcService;
 
     public NowPlayingBarViewModel(IGsmtcService mediaSessionsService, ISettingsService settingsService,
-        INavigationService navigationService, IAudioMixerService audioMixerService)
+        INavigationService navigationService, IAudioMixerService audioMixerService,
+        ISmtcService smtcService)
     {
         _gsmtcService = mediaSessionsService;
         _settingsService = settingsService;
         _audioMixerService = audioMixerService;
+        _smtcService = smtcService;
 
         NavigationService = navigationService;
         AppSettings = _settingsService.AppSettings;
@@ -40,13 +44,47 @@ public partial class NowPlayingBarViewModel : BaseViewModel
 
     public void UpdateVolume()
     {
-        Volume = _audioMixerService.GetApplicationVolume(_gsmtcService.CurrentMediaSourceProviderInfo?.Provider);
+        var provider = _gsmtcService.CurrentMediaSourceProviderInfo?.Provider;
+        var isBetterLyrics = _gsmtcService.CurrentMediaSourceProviderInfo?.IsBetterLyrics == true ||
+            (_gsmtcService.CurrentMediaSourceProviderInfo == null && _smtcService.PlayingTrack != null);
+
+        var appVolume = _audioMixerService.GetApplicationVolume(provider);
+
+        if (isBetterLyrics)
+        {
+            var savedVolume = _settingsService.AppSettings.MusicGallerySettings.Volume;
+            if (appVolume == -1)
+            {
+                appVolume = savedVolume;
+            }
+            else if (!_smtcService.IsVolumeRestored && appVolume != savedVolume)
+            {
+                _audioMixerService.SetApplicationVolume(Environment.ProcessId, savedVolume);
+                _smtcService.IsVolumeRestored = true;
+                appVolume = savedVolume;
+            }
+        }
+
+        Volume = appVolume;
         SystemVolume = _audioMixerService.GetSystemVolume();
     }
 
     public void ApplyVolume()
     {
-        _audioMixerService.SetApplicationVolume(_gsmtcService.CurrentMediaSourceProviderInfo?.Provider, Volume);
+        var provider = _gsmtcService.CurrentMediaSourceProviderInfo?.Provider;
+        var isBetterLyrics = _gsmtcService.CurrentMediaSourceProviderInfo?.IsBetterLyrics == true ||
+            (_gsmtcService.CurrentMediaSourceProviderInfo == null && _smtcService.PlayingTrack != null);
+
+        if (isBetterLyrics)
+        {
+            _audioMixerService.SetApplicationVolume(Environment.ProcessId, Volume);
+            _settingsService.AppSettings.MusicGallerySettings.Volume = Volume;
+            _smtcService.IsVolumeRestored = true;
+        }
+        else
+        {
+            _audioMixerService.SetApplicationVolume(provider, Volume);
+        }
     }
     
     public void ApplySystemVolume()
