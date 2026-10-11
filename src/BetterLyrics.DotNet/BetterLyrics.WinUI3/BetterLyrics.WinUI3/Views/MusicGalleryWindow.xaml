@@ -9,7 +9,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     x:Name="ThisWindow"
-    Closed="Window_Closed"
     mc:Ignorable="d">
 
     <Grid

@@ -3,6 +3,7 @@
 using System;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Threading.Tasks;
 using Windows.Graphics;
 using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
@@ -472,7 +473,7 @@ public sealed partial class NowPlayingWindow : Window,
     private void UpdateMonitorNameAndBounds()
     {
         var (name, rect) = _monitorProvider.GetMonitorInfoFromWindow(this);
-        
+
         // Prevent overwriting the saved monitor if it was just disconnected and OS moved us
         var allMonitors = _monitorProvider.GetAllMonitorDeviceNames();
         if (!string.IsNullOrEmpty(LyricsWindowStatus.MonitorDeviceName) &&
@@ -775,6 +776,8 @@ public sealed partial class NowPlayingWindow : Window,
 
         StopOverlayInputHelper();
 
+        DetachXamlEventHandlers();
+
         RootGrid.XamlRoot?.Changed -= XamlRoot_Changed;
 
         AppWindow?.Changed -= AppWindow_Changed;
@@ -798,6 +801,36 @@ public sealed partial class NowPlayingWindow : Window,
 
         _taskbarHook?.Dispose();
         _taskbarHook = null;
+    }
+
+    /// <summary>
+    ///     解除 XAML 编译器自动挂接的所有事件处理器。
+    ///     点击顶栏按钮关闭时，指针仍停留在窗口内，按钮处于焦点 / PointerOver 状态，
+    ///     WinUI 原生输入系统会继续持有这些元素；而元素上的事件委托又指向本窗口，
+    ///     从而导致窗口无法被 GC 回收。这里主动断开元素 -> 窗口的引用链。
+    /// </summary>
+    private void DetachXamlEventHandlers()
+    {
+        RootGrid.Loaded -= RootGrid_Loaded;
+        RootGrid.SizeChanged -= RootGrid_SizeChanged;
+
+        TopCommandGrid.PointerEntered -= TopCommandGrid_PointerEntered;
+        TopCommandGrid.PointerExited -= TopCommandGrid_PointerExited;
+
+        MusicGalleryButton.Click -= MusicGalleryButton_Click;
+        SettingsWindowButton.Click -= SettingsWindowButton_Click;
+        LyricsWindowSwitchButton.Click -= LyricsWindowSwitchButton_Click;
+
+        LockButton.Click -= LockButton_Click;
+        AOTButton.Click -= AOTButton_Click;
+        FullscreenButton.Click -= FullscreenButton_Click;
+        MinimizeButton.Click -= MinimizeButton_Click;
+        MaximizeButton.Click -= MaximizeButton_Click;
+        CloseButton.Click -= CloseButton_Click;
+
+        UnlockButton.Click -= UnlockButton_Click;
+        UnlockButton.PointerEntered -= UnlockButton_PointerEntered;
+        UnlockButton.PointerExited -= UnlockButton_PointerExited;
     }
 
     private void AppWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
@@ -901,12 +934,23 @@ public sealed partial class NowPlayingWindow : Window,
         _windowManagerProvider.OpenOrShowWindow<MusicGalleryWindow>();
     }
 
-    private void CloseButton_Click(object sender, RoutedEventArgs e)
+    private async void CloseButton_Click(object sender, RoutedEventArgs e)
     {
         if (_settingsService.AppSettings.GeneralSettings.ExitOnLyricsWindowClosed)
             _windowManagerProvider.ExitApp();
         else
-            _windowManagerProvider.CloseWindow(this);
+        {
+            // 实测：任务栏缩略图关闭（指针在窗口外）、指针在窗口内但未点击按钮时 Alt+F4、
+            // 点击按钮后移出窗口再从任务栏关闭，均可正常回收；唯独"点击顶栏关闭按钮、指针仍停在按钮上"时无法回收。
+            // 因此先隐藏窗口，让 XAML 收到指针离开并复位按钮的 PointerOver/Pressed 状态，
+            // 再投递 WM_CLOSE，与任务栏缩略图关闭走完全相同的路径（AppWindow.Closing -> PrepareWindowClosing）。
+            TopCommandFlyout.Hide();
+            AppWindow?.Hide();
+
+            await Task.Delay(200);
+
+            User32.PostMessage(WindowNative.GetWindowHandle(this), (uint)WindowMessage.WM_CLOSE);
+        }
     }
 
     private void LyricsWindowSwitchButton_Click(object sender, RoutedEventArgs e)

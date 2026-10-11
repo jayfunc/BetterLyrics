@@ -5,7 +5,7 @@ Special thanks to the following people for their support!
 <table>
   <tbody>
     <tr>
-      <td></td>
+      <td>Oct 9, 2026 **纬</td>
       <td>Sep 21, 2026 J*y</td>
       <td>Sep 3, 2026 *事</td>
       <td>Aug 15, 2026 &lt;Anon/匿名&gt;</td>

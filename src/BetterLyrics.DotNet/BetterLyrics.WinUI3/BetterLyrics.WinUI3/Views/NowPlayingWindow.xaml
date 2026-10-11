@@ -43,7 +43,10 @@
                         <ScalarTransition />
                     </StackPanel.OpacityTransition>
 
-                    <Button Click="MusicGalleryButton_Click" Style="{ThemeResource TitleBarButtonStyle}">
+                    <Button
+                        x:Name="MusicGalleryButton"
+                        Click="MusicGalleryButton_Click"
+                        Style="{ThemeResource TitleBarButtonStyle}">
                         <FontIcon
                             FontFamily="{StaticResource SegoeFluentIcons}"
                             FontSize="12"
@@ -66,7 +69,10 @@
                         </ToolTipService.ToolTip>
                     </Button>
 
-                    <Button Click="LyricsWindowSwitchButton_Click" Style="{ThemeResource TitleBarButtonStyle}">
+                    <Button
+                        x:Name="LyricsWindowSwitchButton"
+                        Click="LyricsWindowSwitchButton_Click"
+                        Style="{ThemeResource TitleBarButtonStyle}">
                         <FontIcon
                             FontFamily="{StaticResource SegoeFluentIcons}"
                             FontSize="12"
@@ -220,7 +226,10 @@
                     </Button.Template>
 
                     <Button.Flyout>
-                        <Flyout FlyoutPresenterStyle="{StaticResource FlyoutGhostStyle}" ShouldConstrainToRootBounds="False">
+                        <Flyout
+                            x:Name="TopCommandFlyout"
+                            FlyoutPresenterStyle="{StaticResource FlyoutGhostStyle}"
+                            ShouldConstrainToRootBounds="False">
                             <Grid
                                 x:Name="TopCommandFlyoutContainer"
                                 Width="450"

@@ -142,7 +142,10 @@ public sealed partial class MusicGalleryWindow : Window,
         if (ViewModel.AppSettings.MusicGallerySettings.ExitOnWindowClosed)
             _windowManagerProvider.ExitApp();
         else
-            _windowManagerProvider.PrepareWindowClosing(this);
+        {
+            args.Cancel = true;
+            _windowManagerProvider.HideWindow(this);
+        }
     }
 
     private void NowPlayingBar_SongInfoTapped(object sender, EventArgs e)
@@ -185,14 +188,5 @@ public sealed partial class MusicGalleryWindow : Window,
             else
                 PlayQueueFlyout.ShowAt(NowPlayingBar);
         }
-    }
-
-    private void Window_Closed(object sender, WindowEventArgs args)
-    {
-        Closed -= Window_Closed;
-
-        WeakReferenceMessenger.Default.UnregisterAll(this);
-
-        AppWindow.Closing -= AppWindow_Closing;
     }
 }
