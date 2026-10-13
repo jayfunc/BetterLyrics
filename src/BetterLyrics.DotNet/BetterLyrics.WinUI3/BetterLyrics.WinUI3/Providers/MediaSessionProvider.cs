@@ -1,4 +1,4 @@
-﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.WinUI3.Extensions;
 using System;
@@ -59,18 +59,27 @@ public class MediaSessionProvider : IMediaSessionProvider
     {
         try
         {
-            var playbackStatus = _session.ControlSession.GetPlaybackInfo().PlaybackStatus;
-            PlaybackStatus = playbackStatus switch
+            var playbackInfo = _session.ControlSession?.GetPlaybackInfo();
+            if (playbackInfo != null)
             {
-                Windows.Media.Control.GlobalSystemMediaTransportControlsSessionPlaybackStatus.Playing => SessionPlaybackStatus.Playing,
-                Windows.Media.Control.GlobalSystemMediaTransportControlsSessionPlaybackStatus.Paused => SessionPlaybackStatus.Paused,
-                _ => SessionPlaybackStatus.Stopped
-            };
+                PlaybackStatus = playbackInfo.PlaybackStatus switch
+                {
+                    Windows.Media.Control.GlobalSystemMediaTransportControlsSessionPlaybackStatus.Playing => SessionPlaybackStatus.Playing,
+                    Windows.Media.Control.GlobalSystemMediaTransportControlsSessionPlaybackStatus.Paused => SessionPlaybackStatus.Paused,
+                    _ => SessionPlaybackStatus.Stopped
+                };
+            }
+            else
+            {
+                PlaybackStatus = SessionPlaybackStatus.Stopped;
+            }
         }
         catch (Exception ex)
         {
             Debug.WriteLine($"Error refreshing playback state: {ex.Message}");
+            PlaybackStatus = SessionPlaybackStatus.Stopped;
         }
+        await Task.CompletedTask;
     }
 
     public async Task TryRefreshTimelinePropsAsync()

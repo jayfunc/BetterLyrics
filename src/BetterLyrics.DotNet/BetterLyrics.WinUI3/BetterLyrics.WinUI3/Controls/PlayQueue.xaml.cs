@@ -20,7 +20,6 @@ public sealed partial class PlayQueue : UserControl, IRecipient<PropertyChangedM
     {
         InitializeComponent();
         DataContext = Ioc.Default.GetRequiredService<PlayQueueViewModel>();
-        WeakReferenceMessenger.Default.RegisterAll(this);
     }
 
     public PlayQueueViewModel ViewModel => (PlayQueueViewModel)DataContext;
@@ -76,6 +75,7 @@ public sealed partial class PlayQueue : UserControl, IRecipient<PropertyChangedM
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e)
     {
+        WeakReferenceMessenger.Default.RegisterAll(this);
         ScrollToPlayingItem();
     }
 

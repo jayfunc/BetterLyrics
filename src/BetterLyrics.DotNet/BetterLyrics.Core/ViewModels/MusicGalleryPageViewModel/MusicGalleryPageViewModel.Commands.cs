@@ -9,15 +9,31 @@ namespace BetterLyrics.Core.ViewModels.MusicGalleryPageViewModel;
 
 public partial class MusicGalleryPageViewModel
 {
+    private bool IsSameQueue(IReadOnlyList<ExtendedTrack> targetTracks)
+    {
+        var currentQueue = SMTCService.TrackPlayingQueue;
+        if (currentQueue.Count != targetTracks.Count) return false;
+        for (var i = 0; i < targetTracks.Count; i++)
+        {
+            if (currentQueue[i].Track.Uri != targetTracks[i].Uri)
+                return false;
+        }
+        return true;
+    }
+
     [RelayCommand]
     private async Task ShuffleAsync()
     {
         AppSettings.MusicGallerySettings.PlaybackOrder = PlaybackOrder.Shuffle;
 
-        var playQueue = GetTargetTracksForPlayback().Select(x => new PlayQueueItem(x)).ToList();
-        await SMTCService.UpdatePlaybackListAsync(playQueue);
+        var targetTracks = GetTargetTracksForPlayback();
+        if (!IsSameQueue(targetTracks))
+        {
+            var playQueue = targetTracks.Select(x => new PlayQueueItem(x)).ToList();
+            await SMTCService.UpdatePlaybackListAsync(playQueue);
+        }
 
-        var queueCount = playQueue.Count;
+        var queueCount = SMTCService.TrackPlayingQueue.Count;
         var startIndex = queueCount > 0 ? Random.Shared.Next(0, queueCount) : -1;
 
         SMTCService.PlayTrackAt(startIndex);
@@ -28,8 +44,12 @@ public partial class MusicGalleryPageViewModel
     {
         AppSettings.MusicGallerySettings.PlaybackOrder = PlaybackOrder.RepeatAll;
 
-        var playQueue = GetTargetTracksForPlayback().Select(x => new PlayQueueItem(x));
-        await SMTCService.UpdatePlaybackListAsync(playQueue);
+        var targetTracks = GetTargetTracksForPlayback();
+        if (!IsSameQueue(targetTracks))
+        {
+            var playQueue = targetTracks.Select(x => new PlayQueueItem(x)).ToList();
+            await SMTCService.UpdatePlaybackListAsync(playQueue);
+        }
 
         SMTCService.PlayTrackAt(0);
     }
@@ -37,10 +57,14 @@ public partial class MusicGalleryPageViewModel
     [RelayCommand]
     private async Task PlayAsync(ExtendedTrack invokedTrack)
     {
-        var playQueue = GetTargetTracksForPlayback().Select(x => new PlayQueueItem(x));
-        await SMTCService.UpdatePlaybackListAsync(playQueue);
+        var targetTracks = GetTargetTracksForPlayback();
+        if (!IsSameQueue(targetTracks))
+        {
+            var playQueue = targetTracks.Select(x => new PlayQueueItem(x)).ToList();
+            await SMTCService.UpdatePlaybackListAsync(playQueue);
+        }
 
-        var target = SMTCService.TrackPlayingQueue.FirstOrDefault(x => x.Track == invokedTrack);
+        var target = SMTCService.TrackPlayingQueue.FirstOrDefault(x => x.Track == invokedTrack || x.Track.Uri == invokedTrack.Uri);
         if (target != null)
         {
             var index = SMTCService.TrackPlayingQueue.IndexOf(target);

@@ -4,8 +4,10 @@ using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
+using Timer = System.Timers.Timer;
 using Windows.Media;
 using Windows.Media.Core;
 using Windows.Media.Playback;
@@ -35,6 +37,12 @@ public partial class SmtcService : BaseViewModel, ISmtcService
     private readonly ISettingsService _settingsService;
     private readonly IAudioMixerService _audioMixerService;
 
+    public bool IsVolumeRestored { get; set; }
+    private bool _isApplyingVolume;
+
+    [ObservableProperty] public partial ObservableCollection<PlayQueueItem> TrackPlayingQueue { get; set; } = [];
+    [ObservableProperty] public partial ExtendedTrack? PlayingTrack { get; set; }
+
     public SmtcService(ISettingsService settingsService, IFileSystemService fileSystemService,
         IAppUIThreadProvider appUiThreadProvider, IGlobalToastProvider globalToastProvider,
         IAudioMixerService audioMixerService)
@@ -50,6 +58,7 @@ public partial class SmtcService : BaseViewModel, ISmtcService
         _playbackList.CurrentItemChanged += PlaybackList_CurrentItemChanged;
 
         _mediaPlayer.Source = _playbackList;
+        _mediaPlayer.SystemMediaTransportControls.IsEnabled = true;
         _mediaPlayer.SystemMediaTransportControls.IsStopEnabled = true;
         _mediaPlayer.SystemMediaTransportControls.ButtonPressed += SystemMediaTransportControls_ButtonPressed;
 
@@ -59,8 +68,44 @@ public partial class SmtcService : BaseViewModel, ISmtcService
         _mediaPlayer.PlaybackSession.PlaybackStateChanged += PlaybackSession_PlaybackStateChanged;
     }
 
-    [ObservableProperty] public partial ObservableCollection<PlayQueueItem> TrackPlayingQueue { get; set; } = [];
-    [ObservableProperty] public partial ExtendedTrack? PlayingTrack { get; set; }
+    private void ResetPlaybackList()
+    {
+        _appUIThreadProvider.Execute(() =>
+        {
+            try
+            {
+                var oldItems = _playbackList.Items.ToList();
+                _playbackList.Items.Clear();
+                _ = Task.Run(() => DisposePlaybackItems(oldItems));
+
+                foreach (var item in TrackPlayingQueue.ToList())
+                {
+                    _playbackList.Items.Add(CreatePlaybackItem(item));
+                }
+            }
+            catch { }
+        });
+    }
+
+    private static void DisposePlaybackItems(IEnumerable<MediaPlaybackItem> items)
+    {
+        foreach (var item in items.ToList())
+        {
+            try
+            {
+                if (item.Source?.CustomProperties.TryGetValue("Stream", out var s) == true && s is IDisposable stream)
+                {
+                    stream.Dispose();
+                }
+                if (item.Source?.CustomProperties.TryGetValue("FileSystem", out var fs) == true && fs is IDisposable fileSystem)
+                {
+                    fileSystem.Dispose();
+                }
+                item.Source?.Dispose();
+            }
+            catch { }
+        }
+    }
 
     public async Task UpdatePlaybackListAsync(IEnumerable<PlayQueueItem> playQueue,
         bool recoverPlaybackPosition = false, bool allowAutoPlay = false)
@@ -77,7 +122,15 @@ public partial class SmtcService : BaseViewModel, ISmtcService
         _settingsService.AppSettings.MusicGallerySettings.PlayQueuePaths =
             [.. TrackPlayingQueue.Select(x => x.Track.Uri.ToDecodedAbsoluteUri())];
 
+        _mediaPlayer.Pause();
+        _positionTimer.Stop();
+
+        _playbackList.ShuffleEnabled = false;
+        _playbackList.AutoRepeatEnabled = false;
+
+        var oldItems = _playbackList.Items.ToList();
         _playbackList.Items.Clear();
+        _ = Task.Run(() => DisposePlaybackItems(oldItems));
 
         var playbackItems = await Task.Run(() =>
         {
@@ -89,13 +142,14 @@ public partial class SmtcService : BaseViewModel, ISmtcService
 
         foreach (var item in playbackItems) _playbackList.Items.Add(item);
 
-        if (savedIndex > 0 && savedIndex < _playbackList.Items.Count)
+        if (savedIndex >= 0 && savedIndex < _playbackList.Items.Count)
         {
             _playbackList.MoveTo((uint)savedIndex);
             if (recoverPlaybackPosition) _mediaPlayer.Position = musicGallerySettings.PlaybackPosition;
 
             if (allowAutoPlay && _settingsService.AppSettings.MusicGallerySettings.AutoPlay)
             {
+                _mediaPlayer.SystemMediaTransportControls.IsEnabled = true;
                 _mediaPlayer.Play();
                 EnsureVolumeApplied();
             }
@@ -153,9 +207,11 @@ public partial class SmtcService : BaseViewModel, ISmtcService
         else if (index == -1) // 停止播放
         {
             _mediaPlayer.Pause();
+            _positionTimer.Stop();
             _mediaPlayer.SystemMediaTransportControls.IsEnabled = false;
-            _mediaPlayer.Pause();
-            _mediaPlayer.SystemMediaTransportControls.IsEnabled = false;
+            _settingsService.AppSettings.MusicGallerySettings.PlaybackPosition = TimeSpan.Zero;
+            PlayingTrack = null;
+            ResetPlaybackList();
         }
     }
 
@@ -165,26 +221,34 @@ public partial class SmtcService : BaseViewModel, ISmtcService
         if (args.Button == SystemMediaTransportControlsButton.Stop) PlayTrackAt(-1);
     }
 
-    public bool IsVolumeRestored { get; set; }
-
-    public void EnsureVolumeApplied()
+    private void EnsureVolumeApplied()
     {
+        if (_isApplyingVolume) return;
+        _isApplyingVolume = true;
+
         var targetVolume = _settingsService.AppSettings.MusicGallerySettings.Volume;
         _ = Task.Run(async () =>
         {
-            for (var i = 0; i < 10; i++)
+            try
             {
-                var currentVol = _audioMixerService.GetApplicationVolume(Environment.ProcessId);
-                if (currentVol != -1)
+                for (var i = 0; i < 20; i++)
                 {
-                    if (!IsVolumeRestored || currentVol != targetVolume)
+                    var currentVol = _audioMixerService.GetApplicationVolume(Environment.ProcessId);
+                    if (currentVol != -1)
                     {
-                        _audioMixerService.SetApplicationVolume(Environment.ProcessId, targetVolume);
-                        IsVolumeRestored = true;
+                        if (!IsVolumeRestored || currentVol != targetVolume)
+                        {
+                            _audioMixerService.SetApplicationVolume(Environment.ProcessId, targetVolume);
+                            IsVolumeRestored = true;
+                        }
+                        break;
                     }
-                    break;
+                    await Task.Delay(100);
                 }
-                await Task.Delay(100);
+            }
+            finally
+            {
+                _isApplyingVolume = false;
             }
         });
     }
@@ -199,7 +263,25 @@ public partial class SmtcService : BaseViewModel, ISmtcService
         else
         {
             _positionTimer.Stop();
+            SaveCurrentPlaybackPosition();
         }
+    }
+
+    private void SaveCurrentPlaybackPosition()
+    {
+        try
+        {
+            var session = _mediaPlayer.PlaybackSession;
+            if (session != null)
+            {
+                var pos = session.Position;
+                _appUIThreadProvider.Execute(() =>
+                {
+                    _settingsService.AppSettings.MusicGallerySettings.PlaybackPosition = pos;
+                });
+            }
+        }
+        catch { }
     }
 
     private void PositionTimer_Elapsed(object? sender, ElapsedEventArgs e)
@@ -214,11 +296,6 @@ public partial class SmtcService : BaseViewModel, ISmtcService
                     Position = session.Position,
                     EndTime = session.NaturalDuration
                 });
-
-            _appUIThreadProvider.Execute(() =>
-            {
-                _settingsService.AppSettings.MusicGallerySettings.PlaybackPosition = session.Position;
-            });
         }
         catch
         {
@@ -236,12 +313,57 @@ public partial class SmtcService : BaseViewModel, ISmtcService
             {
                 PlayingTrack = queueItem.Track;
                 _settingsService.AppSettings.MusicGallerySettings.PlayQueueIndex = (int)sender.CurrentItemIndex;
+                UpdateItemDisplayProperties(newItem, queueItem.Track);
             }
             else
             {
                 PlayingTrack = null;
             }
         });
+    }
+
+    private void UpdateItemDisplayProperties(MediaPlaybackItem item, ExtendedTrack track)
+    {
+        try
+        {
+            var props = item.GetDisplayProperties();
+            props.Type = MediaPlaybackType.Music;
+            props.MusicProperties.Title = track.Title ?? track.FileName;
+            props.MusicProperties.Artist = track.Artist ?? "";
+            props.MusicProperties.AlbumTitle = track.Album ?? "";
+            props.MusicProperties.Genres.Clear();
+            props.MusicProperties.Genres.Add(
+                $"{ExtendedGenreFiled.FileName}{Path.GetFileNameWithoutExtension(track.FileName)}");
+
+            item.ApplyDisplayProperties(props);
+
+            if (!string.IsNullOrEmpty(track.LocalAlbumArtPath))
+            {
+                _ = Task.Run(async () =>
+                {
+                    try
+                    {
+                        if (File.Exists(track.LocalAlbumArtPath))
+                        {
+                            var storageFile = await StorageFile.GetFileFromPathAsync(track.LocalAlbumArtPath);
+                            var thumbProps = item.GetDisplayProperties();
+                            thumbProps.Thumbnail = RandomAccessStreamReference.CreateFromFile(storageFile);
+
+                            _appUIThreadProvider.Execute(() =>
+                            {
+                                try
+                                {
+                                    item.ApplyDisplayProperties(thumbProps);
+                                }
+                                catch { }
+                            });
+                        }
+                    }
+                    catch { }
+                });
+            }
+        }
+        catch { }
     }
 
     private void TrackPlayingQueue_CollectionChanged(object? sender,
@@ -263,13 +385,31 @@ public partial class SmtcService : BaseViewModel, ISmtcService
                 break;
             case NotifyCollectionChangedAction.Remove:
                 if (e.OldItems != null)
-                    foreach (var _ in e.OldItems)
-                        _playbackList.Items.RemoveAt(e.OldStartingIndex);
+                {
+                    var itemsToDispose = new List<MediaPlaybackItem>();
+                    for (var i = 0; i < e.OldItems.Count; i++)
+                    {
+                        var index = e.OldStartingIndex;
+                        if (index >= 0 && index < _playbackList.Items.Count)
+                        {
+                            var item = _playbackList.Items[index];
+                            _playbackList.Items.RemoveAt(index);
+                            itemsToDispose.Add(item);
+                        }
+                    }
+
+                    if (itemsToDispose.Count > 0)
+                    {
+                        _ = Task.Run(() => DisposePlaybackItems(itemsToDispose));
+                    }
+                }
 
                 break;
             case NotifyCollectionChangedAction.Reset:
+                var oldResetItems = _playbackList.Items.ToList();
                 _playbackList.Items.Clear();
-                foreach (var item in TrackPlayingQueue) _playbackList.Items.Add(CreatePlaybackItem(item));
+                _ = Task.Run(() => DisposePlaybackItems(oldResetItems));
+                foreach (var item in TrackPlayingQueue.ToList()) _playbackList.Items.Add(CreatePlaybackItem(item));
 
                 break;
         }
@@ -279,72 +419,75 @@ public partial class SmtcService : BaseViewModel, ISmtcService
     {
         var track = queueItem.Track;
         var binder = new MediaBinder { Token = track.Uri };
-        binder.Binding += Binder_Binding;
-
         var source = MediaSource.CreateFromMediaBinder(binder);
         source.CustomProperties["QueueItem"] = queueItem;
 
-        var item = new MediaPlaybackItem(source);
-        var props = item.GetDisplayProperties();
+        binder.Binding += (s, e) => Binder_Binding(s, e, source, queueItem);
 
-        props.Type = MediaPlaybackType.Music;
-        props.MusicProperties.Title = track.Title ?? track.FileName;
-        props.MusicProperties.Artist = track.Artist ?? "";
-        props.MusicProperties.AlbumTitle = track.Album ?? "";
-        props.MusicProperties.Genres.Add(
-            $"{ExtendedGenreFiled.FileName}{Path.GetFileNameWithoutExtension(track.FileName)}");
-
-        if (!string.IsNullOrEmpty(track.LocalAlbumArtPath))
-            _ = Task.Run(async () =>
-            {
-                if (File.Exists(track.LocalAlbumArtPath))
-                {
-                    var storageFile = await StorageFile.GetFileFromPathAsync(track.LocalAlbumArtPath);
-                    props.Thumbnail = RandomAccessStreamReference.CreateFromFile(storageFile);
-
-                    _appUIThreadProvider.Execute(() => { item.ApplyDisplayProperties(props); });
-                }
-            });
-
-        item.ApplyDisplayProperties(props);
-        return item;
+        return new MediaPlaybackItem(source);
     }
 
-    private async void Binder_Binding(MediaBinder sender, MediaBindingEventArgs args)
+    private async void Binder_Binding(MediaBinder sender, MediaBindingEventArgs args, MediaSource source, PlayQueueItem queueItem)
     {
         var deferral = args.GetDeferral();
+        IUnifiedFileSystem? provider = null;
+        Stream? sourceStream = null;
         try
         {
-            var uri = sender.Token;
-            var track = TrackPlayingQueue.FirstOrDefault(x => x.Track.Uri == uri)?.Track;
-            if (track == null) throw new FileNotFoundException("Track not found in queue", uri);
+            var track = queueItem.Track;
+            var uri = track.Uri;
 
             var targetFolder = _settingsService.AppSettings.LocalMediaFolders.FirstOrDefault(f =>
                 track.Uri.StartsWith(f.GetStandardUri().AbsoluteUri, StringComparison.OrdinalIgnoreCase));
             if (targetFolder == null) throw new FileNotFoundException(null, track.Uri.ToDecodedAbsoluteUri());
 
-            var provider = targetFolder.CreateFileSystem();
-            if (provider == null) return;
+            provider = targetFolder.CreateFileSystem();
+            if (provider == null) throw new IOException($"Failed to create file system for '{targetFolder.Name ?? targetFolder.UriPath}'.");
             await provider.ConnectAsync();
 
             var fileCacheStub = new FilesIndexItem { Uri = uri };
-            var sourceStream = await _fileSystemService.OpenFileAsync(provider, fileCacheStub);
-            if (sourceStream == null) throw new FileNotFoundException(null, uri);
+            sourceStream = await _fileSystemService.OpenFileAsync(provider, fileCacheStub);
+            if (sourceStream == null)
+            {
+                throw new FileNotFoundException(null, uri);
+            }
 
             if (!sourceStream.CanSeek)
             {
-                var memStream = new MemoryStream();
-                await sourceStream.CopyToAsync(memStream);
-                memStream.Position = 0;
-                sourceStream.Dispose();
-                sourceStream = memStream;
+                var tempFile = Path.Combine(Path.GetTempPath(), $"BetterLyrics_stream_{Guid.NewGuid():N}.tmp");
+                FileStream? tempStream = null;
+                try
+                {
+                    tempStream = new FileStream(tempFile, FileMode.Create, FileAccess.ReadWrite, FileShare.None, 4096, FileOptions.DeleteOnClose);
+                    await sourceStream.CopyToAsync(tempStream);
+                    tempStream.Position = 0;
+                    sourceStream.Dispose();
+                    sourceStream = tempStream;
+                }
+                catch
+                {
+                    tempStream?.Dispose();
+                    throw;
+                }
             }
+
+            source.CustomProperties["Stream"] = sourceStream;
+            source.CustomProperties["FileSystem"] = provider;
 
             args.SetStream(sourceStream.AsRandomAccessStream(),
                 MimeUtility.GetMimeMapping(track.FileName));
         }
         catch (Exception ex)
         {
+            if (source.CustomProperties.ContainsKey("Stream") == false)
+            {
+                sourceStream?.Dispose();
+            }
+            if (source.CustomProperties.ContainsKey("FileSystem") == false)
+            {
+                provider?.Dispose();
+            }
+
             _appUIThreadProvider.Execute(() =>
                 _globalToastProvider.Show("Error", ex.Message, MessageSeverity.Error));
         }

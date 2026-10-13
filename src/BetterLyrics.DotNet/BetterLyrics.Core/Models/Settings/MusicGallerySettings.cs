@@ -23,7 +23,6 @@ public partial class MusicGallerySettings : ObservableRecipient
     public partial int PlayQueueIndex { get; set; } = -1;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial TimeSpan PlaybackPosition { get; set; } = TimeSpan.Zero;
 
     [ObservableProperty]

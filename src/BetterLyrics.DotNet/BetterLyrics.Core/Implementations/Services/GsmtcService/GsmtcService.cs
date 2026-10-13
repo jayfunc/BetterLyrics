@@ -468,12 +468,6 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
 
     private void MediaManager_OnAnyMediaPropertyChanged(IMediaSessionProvider? mediaSession)
     {
-        // For better user experience, we show a loading placeholder immediately to avoid previous lyrics being displayed while switching to a new song.
-        _appUIThreadProvider.Execute(() =>
-        {
-            CurrentLyricsData = LyricsData.GetLoadingPlaceholder(showStatus: false);
-        });
-        // Actual lyrics update
         _ = _onMediaPropsChangedDebouncer.RunAsync(
             () =>
             {

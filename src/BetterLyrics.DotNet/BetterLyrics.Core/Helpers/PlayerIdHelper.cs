@@ -1,4 +1,4 @@
-﻿using System.Text.RegularExpressions;
+using System.Text.RegularExpressions;
 
 namespace BetterLyrics.Core.Helpers;
 
@@ -24,7 +24,8 @@ public static class PlayerIdHelper
 
     private static readonly List<string> _betterLyricsRegex =
     [
-        "^37412\\.BetterLyrics_"
+        "^37412\\.BetterLyrics_",
+        "BetterLyrics"
     ];
 
     private static readonly List<string> _lxMusicRegex =
