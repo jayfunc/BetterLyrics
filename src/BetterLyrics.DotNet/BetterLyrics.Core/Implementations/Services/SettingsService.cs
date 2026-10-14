@@ -305,6 +305,11 @@ public class SettingsService : BaseViewModel, ISettingsService
         _ = _writeAppSettingsDebouncer.RunAsync(() => { _appUiThreadProvider.Execute(SaveAppSettings); });
     }
 
+    public void TryWriteAppSettingsImmediately()
+    {
+        _appUiThreadProvider.Execute(SaveAppSettings);
+    }
+
     private void SaveAppSettings()
     {
         SettingsIO.SaveSettings(PathHelper.SettingsFilePath, AppSettings,

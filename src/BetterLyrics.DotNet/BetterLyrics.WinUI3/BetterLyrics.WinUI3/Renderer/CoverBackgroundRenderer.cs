@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Numerics;
 using Windows.Foundation;
 using Windows.UI;
@@ -82,6 +82,9 @@ public partial class CoverBackgroundRenderer : EffectRendererBase, IDisposable
     {
         if (_currentBitmap == newBitmap) return;
 
+        _previousBitmap?.Dispose();
+        _previousTargetCache?.Dispose();
+
         _previousBitmap = _currentBitmap;
         _previousTargetCache = _currentTargetCache;
         _currentTargetCache = null;
@@ -127,6 +130,7 @@ public partial class CoverBackgroundRenderer : EffectRendererBase, IDisposable
 
         if (_crossfadeTransition.Value >= 1.0 && _previousBitmap != null)
         {
+            _previousBitmap?.Dispose();
             _previousBitmap = null;
             _previousTargetCache?.Dispose();
             _previousTargetCache = null;

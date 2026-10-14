@@ -1,3 +1,4 @@
+using System;
 using System.Runtime.CompilerServices;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Settings;
@@ -55,64 +56,29 @@ public static class GridColumnVisibilityHelper
         {
             var settings = Ioc.Default.GetRequiredService<ISettingsService>().AppSettings.MusicGallerySettings;
 
-            void UpdateColumns()
-            {
-                if (grid.ColumnDefinitions.Count < 15) return;
-                
-                grid.ColumnDefinitions[2].Width = settings.ShowAlbumColumn ? new GridLength(2, GridUnitType.Star) : new GridLength(0);
-                grid.ColumnDefinitions[3].Width = settings.ShowGenreColumn ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
-                grid.ColumnDefinitions[4].Width = settings.ShowYearColumn ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
-                grid.ColumnDefinitions[5].Width = settings.ShowTrackNumberColumn ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
-                grid.ColumnDefinitions[6].Width = settings.ShowBitrateColumn ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
-                grid.ColumnDefinitions[7].Width = settings.ShowSampleRateColumn ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
-                grid.ColumnDefinitions[8].Width = settings.ShowFormatColumn ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
-                grid.ColumnDefinitions[9].Width = settings.ShowFileSizeColumn ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
-                grid.ColumnDefinitions[10].Width = settings.ShowFolderColumn ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
-                grid.ColumnDefinitions[11].Width = settings.ShowDurationColumn ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
-                grid.ColumnDefinitions[12].Width = settings.ShowDateCreatedColumn ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
-                grid.ColumnDefinitions[13].Width = settings.ShowDateModifiedColumn ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
-
-                foreach (UIElement child in grid.Children)
-                {
-                    if (child is FrameworkElement fe)
-                    {
-                        int col = Grid.GetColumn(fe);
-                        bool isVisible = true;
-                        switch (col)
-                        {
-                            case 2: isVisible = settings.ShowAlbumColumn; break;
-                            case 3: isVisible = settings.ShowGenreColumn; break;
-                            case 4: isVisible = settings.ShowYearColumn; break;
-                            case 5: isVisible = settings.ShowTrackNumberColumn; break;
-                            case 6: isVisible = settings.ShowBitrateColumn; break;
-                            case 7: isVisible = settings.ShowSampleRateColumn; break;
-                            case 8: isVisible = settings.ShowFormatColumn; break;
-                            case 9: isVisible = settings.ShowFileSizeColumn; break;
-                            case 10: isVisible = settings.ShowFolderColumn; break;
-                            case 11: isVisible = settings.ShowDurationColumn; break;
-                            case 12: isVisible = settings.ShowDateCreatedColumn; break;
-                            case 13: isVisible = settings.ShowDateModifiedColumn; break;
-                        }
-                        fe.Visibility = isVisible ? Visibility.Visible : Visibility.Collapsed;
-                    }
-                }
-            }
-
             if (_handlers.TryGetValue(grid, out var oldHandler))
             {
                 settings.PropertyChanged -= oldHandler;
                 _handlers.Remove(grid);
             }
 
-            System.ComponentModel.PropertyChangedEventHandler handler = (s, args) =>
+            var weakGrid = new WeakReference<Grid>(grid);
+            System.ComponentModel.PropertyChangedEventHandler? handler = null;
+            handler = (s, args) =>
             {
-                grid.DispatcherQueue.TryEnqueue(() => UpdateColumns());
+                if (!weakGrid.TryGetTarget(out var targetGrid) || targetGrid.XamlRoot == null)
+                {
+                    settings.PropertyChanged -= handler;
+                    return;
+                }
+
+                targetGrid.DispatcherQueue?.TryEnqueue(() => UpdateColumns(targetGrid, settings));
             };
 
             settings.PropertyChanged += handler;
             _handlers.Add(grid, handler);
 
-            UpdateColumns();
+            UpdateColumns(grid, settings);
         }
     }
 
@@ -120,11 +86,59 @@ public static class GridColumnVisibilityHelper
     {
         if (sender is Grid grid)
         {
-            var settings = Ioc.Default.GetRequiredService<ISettingsService>().AppSettings.MusicGallerySettings;
-            if (_handlers.TryGetValue(grid, out var handler))
+            Clear(grid);
+        }
+    }
+
+    public static void Clear(Grid grid)
+    {
+        var settings = Ioc.Default.GetRequiredService<ISettingsService>().AppSettings.MusicGallerySettings;
+        if (_handlers.TryGetValue(grid, out var handler))
+        {
+            settings.PropertyChanged -= handler;
+            _handlers.Remove(grid);
+        }
+    }
+
+    private static void UpdateColumns(Grid grid, MusicGallerySettings settings)
+    {
+        if (grid.ColumnDefinitions.Count < 15) return;
+        
+        grid.ColumnDefinitions[2].Width = settings.ShowAlbumColumn ? new GridLength(2, GridUnitType.Star) : new GridLength(0);
+        grid.ColumnDefinitions[3].Width = settings.ShowGenreColumn ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
+        grid.ColumnDefinitions[4].Width = settings.ShowYearColumn ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
+        grid.ColumnDefinitions[5].Width = settings.ShowTrackNumberColumn ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
+        grid.ColumnDefinitions[6].Width = settings.ShowBitrateColumn ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
+        grid.ColumnDefinitions[7].Width = settings.ShowSampleRateColumn ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
+        grid.ColumnDefinitions[8].Width = settings.ShowFormatColumn ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
+        grid.ColumnDefinitions[9].Width = settings.ShowFileSizeColumn ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
+        grid.ColumnDefinitions[10].Width = settings.ShowFolderColumn ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
+        grid.ColumnDefinitions[11].Width = settings.ShowDurationColumn ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
+        grid.ColumnDefinitions[12].Width = settings.ShowDateCreatedColumn ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
+        grid.ColumnDefinitions[13].Width = settings.ShowDateModifiedColumn ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
+
+        foreach (UIElement child in grid.Children)
+        {
+            if (child is FrameworkElement fe)
             {
-                settings.PropertyChanged -= handler;
-                _handlers.Remove(grid);
+                int col = Grid.GetColumn(fe);
+                bool isVisible = true;
+                switch (col)
+                {
+                    case 2: isVisible = settings.ShowAlbumColumn; break;
+                    case 3: isVisible = settings.ShowGenreColumn; break;
+                    case 4: isVisible = settings.ShowYearColumn; break;
+                    case 5: isVisible = settings.ShowTrackNumberColumn; break;
+                    case 6: isVisible = settings.ShowBitrateColumn; break;
+                    case 7: isVisible = settings.ShowSampleRateColumn; break;
+                    case 8: isVisible = settings.ShowFormatColumn; break;
+                    case 9: isVisible = settings.ShowFileSizeColumn; break;
+                    case 10: isVisible = settings.ShowFolderColumn; break;
+                    case 11: isVisible = settings.ShowDurationColumn; break;
+                    case 12: isVisible = settings.ShowDateCreatedColumn; break;
+                    case 13: isVisible = settings.ShowDateModifiedColumn; break;
+                }
+                fe.Visibility = isVisible ? Visibility.Visible : Visibility.Collapsed;
             }
         }
     }

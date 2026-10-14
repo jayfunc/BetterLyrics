@@ -95,7 +95,7 @@
             x:Name="PlayingQueueListView"
             Grid.Row="3"
             ItemsSource="{x:Bind ViewModel.SMTCService.TrackPlayingQueue, Mode=OneWay}"
-            SelectedIndex="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex, Mode=TwoWay}">
+            SelectedIndex="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex, Mode=OneWay}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="0,6">

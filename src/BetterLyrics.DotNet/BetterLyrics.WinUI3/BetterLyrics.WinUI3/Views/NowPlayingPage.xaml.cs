@@ -583,7 +583,14 @@ public sealed partial class NowPlayingPage : Page,
 
     private void Page_Unloaded(object sender, RoutedEventArgs e)
     {
+        Cleanup();
+    }
+
+    public void Cleanup()
+    {
         WeakReferenceMessenger.Default.UnregisterAll(this);
+        PlaybackControlBar?.Cleanup();
+        Bindings?.StopTracking();
         DataContext = null;
 
         _layoutChangedDebouncer.Dispose();

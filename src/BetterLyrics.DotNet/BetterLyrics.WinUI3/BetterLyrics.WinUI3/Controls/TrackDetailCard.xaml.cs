@@ -18,6 +18,12 @@ public sealed partial class TrackDetailCard : UserControl
         InitializeComponent();
     }
 
+    public void Cleanup()
+    {
+        Bindings?.StopTracking();
+        ClearValue(ExtendedTrackProperty);
+    }
+
     public ExtendedTrack ExtendedTrack
     {
         get => (ExtendedTrack)GetValue(ExtendedTrackProperty);

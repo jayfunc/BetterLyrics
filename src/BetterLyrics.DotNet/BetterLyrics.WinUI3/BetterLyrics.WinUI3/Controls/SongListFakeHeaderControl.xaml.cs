@@ -1,4 +1,3 @@
-using BetterLyrics.Core.ViewModels;
 using BetterLyrics.Core.ViewModels.MusicGalleryPageViewModel;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -19,5 +18,11 @@ public sealed partial class SongListFakeHeaderControl : UserControl
     public SongListFakeHeaderControl()
     {
         this.InitializeComponent();
+    }
+
+    public void Cleanup()
+    {
+        Bindings?.StopTracking();
+        ClearValue(ViewModelProperty);
     }
 }

@@ -1,4 +1,4 @@
-﻿// 2025/6/23 by Zhe Fang
+// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.Core.Models.Settings;
 
@@ -10,4 +10,5 @@ public interface ISettingsService
 
     bool ImportSettings(string importPath);
     void ExportSettings(string exportPath);
+    void TryWriteAppSettingsImmediately();
 }

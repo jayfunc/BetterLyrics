@@ -1298,7 +1298,11 @@ public sealed partial class NowPlayingCanvas : UserControl,
             if (Canvas.Device == null) return;
 
             var imageBytes = _gsmtcService.AlbumArtBytes;
-            if (imageBytes == null || imageBytes.Length == 0) return;
+            if (imageBytes == null || imageBytes.Length == 0)
+            {
+                _coverRenderer.SetCoverBitmap(null);
+                return;
+            }
 
             using (var localMemoryStream = new InMemoryRandomAccessStream())
             {

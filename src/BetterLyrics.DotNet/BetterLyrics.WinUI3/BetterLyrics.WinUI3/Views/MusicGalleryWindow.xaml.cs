@@ -12,6 +12,8 @@ using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using Vanara.PInvoke;
+using WinRT.Interop;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -25,6 +27,7 @@ public sealed partial class MusicGalleryWindow : Window,
     IRecipient<PropertyChangedMessage<byte[]?>>,
     IRecipient<PropertyChangedMessage<AppTheme>>,
     IRecipient<PropertyChangedMessage<PaletteGeneratorType>>,
+    IRecipient<PropertyChangedMessage<double>>,
     IRecipient<PropertyChangedMessage<MediaSourceProviderInfo?>>
 {
     public IGsmtcService GSMTCService { get; } = Ioc.Default.GetRequiredService<IGsmtcService>();
@@ -32,11 +35,17 @@ public sealed partial class MusicGalleryWindow : Window,
     private readonly IWindowManagerProvider _windowManagerProvider =
         Ioc.Default.GetRequiredService<IWindowManagerProvider>();
 
+    private bool _isClosing;
+    private bool _isDisposed;
+
     public MusicGalleryWindow()
     {
         InitializeComponent();
         ViewModel = Ioc.Default.GetRequiredService<MusicGalleryWindowViewModel>();
         this.Init("MusicGalleryPageTitle");
+
+        NowPlayingPage.LyricsWindowStatus = ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus;
+        UpdateExternalSourceVisibility();
 
         AppWindow.Closing += AppWindow_Closing;
 
@@ -47,8 +56,17 @@ public sealed partial class MusicGalleryWindow : Window,
 
     public MusicGalleryWindowViewModel ViewModel { get; }
 
+    private void UpdateExternalSourceVisibility()
+    {
+        var isActive = GSMTCService.IsExternalSourceActive;
+        NowPlayingBar.Visibility = isActive ? Visibility.Collapsed : Visibility.Visible;
+        ExternalSourcePromptGrid.Visibility = isActive ? Visibility.Visible : Visibility.Collapsed;
+    }
+
     public void Receive(PropertyChangedMessage<AppTheme> message)
     {
+        if (_isDisposed) return;
+
         if (message.Sender == ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus)
         {
             if (message.PropertyName == nameof(LyricsWindowStatus.WindowTheme)) _ = UpdateAlbumArtThemeColorsAsync();
@@ -61,6 +79,8 @@ public sealed partial class MusicGalleryWindow : Window,
 
     public void Receive(PropertyChangedMessage<byte[]?> message)
     {
+        if (_isDisposed) return;
+
         if (message.Sender is IGsmtcService)
             if (message.PropertyName == nameof(IGsmtcService.AlbumArtBytes))
                 _ = UpdateAlbumArtThemeColorsAsync();
@@ -68,6 +88,8 @@ public sealed partial class MusicGalleryWindow : Window,
 
     public void Receive(PropertyChangedMessage<PaletteGeneratorType> message)
     {
+        if (_isDisposed) return;
+
         if (message.Sender == ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus)
             if (message.PropertyName == nameof(LyricsWindowStatus.PaletteGeneratorType))
                 _ = UpdateAlbumArtThemeColorsAsync();
@@ -75,6 +97,8 @@ public sealed partial class MusicGalleryWindow : Window,
 
     public void Receive(PropertyChangedMessage<double> message)
     {
+        if (_isDisposed) return;
+
         if (message.Sender == ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus)
         {
             if (message.PropertyName == nameof(LyricsWindowStatus.PaletteChromaWeight) ||
@@ -88,26 +112,32 @@ public sealed partial class MusicGalleryWindow : Window,
 
     public void Receive(PropertyChangedMessage<MediaSourceProviderInfo?> message)
     {
+        if (_isDisposed) return;
+
         if (message.Sender is IGsmtcService)
         {
             if (message.PropertyName == nameof(IGsmtcService.CurrentMediaSourceProviderInfo))
             {
-                if (GSMTCService.IsExternalSourceActive)
+                DispatcherQueue.TryEnqueue(() =>
                 {
-                    DispatcherQueue.TryEnqueue(() =>
+                    if (_isDisposed) return;
+                    UpdateExternalSourceVisibility();
+                    if (GSMTCService.IsExternalSourceActive)
                     {
                         if (NowPlayingPage.Visibility == Visibility.Visible)
                         {
                             NowPlayingBar_TimeTapped(null, EventArgs.Empty);
                         }
-                    });
-                }
+                    }
+                });
             }
         }
     }
 
     private void UpdateTheme()
     {
+        if (_isDisposed) return;
+
         var elementTheme = ViewModel.AppSettings.GeneralSettings.AppTheme.ToElementTheme();
         RootGrid.RequestedTheme = elementTheme;
         if (NowPlayingPage.Opacity == 1)
@@ -126,6 +156,8 @@ public sealed partial class MusicGalleryWindow : Window,
             var result = await GSMTCService.CalculateAlbumArtThemeColorsAsync(
                 ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus, Colors.Transparent);
 
+            if (_isDisposed) return;
+
             NowPlayingPage.LyricsWindowStatus?.WindowPalette = result;
             NowPlayingPage.RequestedTheme = result.ThemeType.ToElementTheme();
 
@@ -137,15 +169,79 @@ public sealed partial class MusicGalleryWindow : Window,
         }
     }
 
-    private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
+    private async void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
     {
         if (ViewModel.AppSettings.MusicGallerySettings.ExitOnWindowClosed)
-            _windowManagerProvider.ExitApp();
-        else
         {
-            args.Cancel = true;
-            _windowManagerProvider.HideWindow(this);
+            _windowManagerProvider.ExitApp();
+            return;
         }
+
+        if (!_isClosing && Content != null)
+        {
+            _isClosing = true;
+            args.Cancel = true;
+
+            AppWindow?.Hide();
+            await Task.Delay(200);
+
+            User32.PostMessage(WindowNative.GetWindowHandle(this), (uint)User32.WindowMessage.WM_CLOSE);
+            return;
+        }
+
+        Cleanup();
+        _windowManagerProvider.PrepareWindowClosing(this);
+    }
+
+    private void Window_Closed(object sender, WindowEventArgs args)
+    {
+        Cleanup();
+    }
+
+    private void Cleanup()
+    {
+        if (_isDisposed) return;
+        _isDisposed = true;
+
+        Closed -= Window_Closed;
+        AppWindow.Closing -= AppWindow_Closing;
+
+        WeakReferenceMessenger.Default.UnregisterAll(this);
+
+        DetachXamlEventHandlers();
+
+        try
+        {
+            var smtcService = Ioc.Default.GetService<ISmtcService>();
+            smtcService?.SaveCurrentPlaybackPosition();
+        }
+        catch { }
+
+        if (PlayQueueFlyout != null)
+        {
+            if (PlayQueueFlyout.IsOpen)
+                PlayQueueFlyout.Hide();
+            NowPlayingBar.ContextFlyout = null;
+        }
+
+        PlayQueue?.Cleanup();
+        NowPlayingBar?.Cleanup();
+        NowPlayingPage?.Cleanup();
+        MusicGalleryPage?.Cleanup();
+
+        NowPlayingPage.LyricsWindowStatus = null;
+
+        RootGrid.Children.Clear();
+    }
+
+    private void DetachXamlEventHandlers()
+    {
+        RootGrid.Loaded -= RootGrid_Loaded;
+        RootGrid.Unloaded -= RootGrid_Unloaded;
+
+        NowPlayingBar.PlayQueueButtonClick -= NowPlayingBar_PlayingQueueClick;
+        NowPlayingBar.SongInfoTapped -= NowPlayingBar_SongInfoTapped;
+        NowPlayingBar.TimeTapped -= NowPlayingBar_TimeTapped;
     }
 
     private void NowPlayingBar_SongInfoTapped(object sender, EventArgs e)
@@ -165,6 +261,7 @@ public sealed partial class MusicGalleryWindow : Window,
         NowPlayingBar.IsAutoHideEnabled = false;
         NowPlayingPage.Opacity = 0;
         await Task.Delay(Time.AnimationDuration);
+        if (_isDisposed) return;
         NowPlayingPage.Visibility = Visibility.Collapsed;
         UpdateTheme();
     }

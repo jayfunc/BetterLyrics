@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using BetterLyrics.Core.Interfaces.Providers;
 using Microsoft.UI.Dispatching;
@@ -17,6 +17,11 @@ public class AppUIThreadProvider : IAppUIThreadProvider
     public void Execute(Action action)
     {
         if (_dispatcherQueue == null) throw new InvalidOperationException("DispatcherQueue is not initialized.");
+        if (_dispatcherQueue.HasThreadAccess)
+        {
+            action();
+            return;
+        }
         _dispatcherQueue.TryEnqueue(() => action());
     }
 

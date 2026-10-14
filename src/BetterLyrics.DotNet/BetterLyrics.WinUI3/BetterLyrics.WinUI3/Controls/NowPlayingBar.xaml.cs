@@ -92,14 +92,37 @@ public sealed partial class NowPlayingBar : UserControl,
         ViewModel = Ioc.Default.GetRequiredService<NowPlayingBarViewModel>();
         GSMTCService = Ioc.Default.GetRequiredService<IGsmtcService>();
 
+        _simulationTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(1000) };
+
+        Loaded += NowPlayingBar_Loaded;
+        Unloaded += NowPlayingBar_Unloaded;
+        this.SizeChanged += (s, e) => UpdateStatus();
+    }
+
+    private void NowPlayingBar_Loaded(object sender, RoutedEventArgs e)
+    {
+        WeakReferenceMessenger.Default.UnregisterAll(this);
         WeakReferenceMessenger.Default.RegisterAll(this);
 
-        _simulationTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(1000) };
+        _lastTickTicks = Stopwatch.GetTimestamp();
+        _simulationTimer.Tick -= SimulationTimer_Tick;
         _simulationTimer.Tick += SimulationTimer_Tick;
         _simulationTimer.Start();
-        _lastTickTicks = Stopwatch.GetTimestamp();
-        
-        this.SizeChanged += (s, e) => UpdateStatus();
+    }
+
+    private void NowPlayingBar_Unloaded(object sender, RoutedEventArgs e)
+    {
+        Cleanup();
+    }
+
+    public void Cleanup()
+    {
+        _simulationTimer.Stop();
+        _simulationTimer.Tick -= SimulationTimer_Tick;
+
+        WeakReferenceMessenger.Default.UnregisterAll(this);
+        Bindings?.StopTracking();
+        DataContext = null;
     }
 
     public NowPlayingBarViewModel ViewModel { get; set; }

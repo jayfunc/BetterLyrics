@@ -8,7 +8,7 @@
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
-    x:Name="ThisWindow"
+    Closed="Window_Closed"
     mc:Ignorable="d">
 
     <Grid
@@ -20,7 +20,6 @@
 
         <local:NowPlayingPage
             x:Name="NowPlayingPage"
-            LyricsWindowStatus="{x:Bind ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus, Mode=OneWay}"
             Opacity="0"
             Visibility="Collapsed">
             <local:NowPlayingPage.OpacityTransition>
@@ -39,8 +38,7 @@
             ShowSongInfo="True"
             ShowStopButton="True"
             SongInfoTapped="NowPlayingBar_SongInfoTapped"
-            TimeTapped="NowPlayingBar_TimeTapped"
-            Visibility="{Binding ElementName=ThisWindow, Path=GSMTCService.IsExternalSourceActive, Converter={StaticResource BoolNegationToVisibilityConverter}}">
+            TimeTapped="NowPlayingBar_TimeTapped">
             <uc:NowPlayingBar.ContextFlyout>
                 <Flyout x:Name="PlayQueueFlyout" ShouldConstrainToRootBounds="False">
                     <Flyout.FlyoutPresenterStyle>
@@ -57,12 +55,12 @@
         </uc:NowPlayingBar>
 
         <Grid
+            x:Name="ExternalSourcePromptGrid"
             Height="68"
             VerticalAlignment="Bottom"
             Background="{ThemeResource LayerFillColorDefaultBrush}"
             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-            BorderThickness="0,1,0,0"
-            Visibility="{Binding ElementName=ThisWindow, Path=GSMTCService.IsExternalSourceActive, Converter={StaticResource BoolToVisibilityConverter}}">
+            BorderThickness="0,1,0,0">
             <StackPanel
                 HorizontalAlignment="Center"
                 VerticalAlignment="Center"

@@ -5,19 +5,34 @@ namespace BetterLyrics.Core.Helpers;
 
 public static class SettingsIO
 {
+    private static readonly object _ioLock = new();
+
     public static void SaveSettings<T>(string path, T settings, JsonTypeInfo<T> jsonTypeInfo)
     {
-        var tempPath = path + ".tmp";
-        var bakPath = path + ".bak";
-        File.WriteAllText(tempPath, JsonSerializer.Serialize(settings, jsonTypeInfo));
+        lock (_ioLock)
+        {
+            var tempPath = $"{path}.{Guid.NewGuid():N}.tmp";
+            var bakPath = path + ".bak";
+            try
+            {
+                File.WriteAllText(tempPath, JsonSerializer.Serialize(settings, jsonTypeInfo));
 
-        if (File.Exists(path))
-        {
-            File.Replace(tempPath, path, bakPath, ignoreMetadataErrors: true);
-        }
-        else
-        {
-            File.Move(tempPath, path, overwrite: true);
+                if (File.Exists(path))
+                {
+                    File.Replace(tempPath, path, bakPath, ignoreMetadataErrors: true);
+                }
+                else
+                {
+                    File.Move(tempPath, path, overwrite: true);
+                }
+            }
+            finally
+            {
+                if (File.Exists(tempPath))
+                {
+                    try { File.Delete(tempPath); } catch { }
+                }
+            }
         }
     }
 

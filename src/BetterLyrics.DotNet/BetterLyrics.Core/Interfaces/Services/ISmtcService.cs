@@ -21,6 +21,8 @@ public interface ISmtcService : INotifyPropertyChanged
     void ApplyPlaybackOrder(PlaybackOrder order);
 
     void PlayNextTrack();
+    void PlayPreviousTrack();
     void PlayTrack(PlayQueueItem? playQueueItem);
     void PlayTrackAt(int index, bool recoverPlaybackPosition = false);
+    void SaveCurrentPlaybackPosition();
 }

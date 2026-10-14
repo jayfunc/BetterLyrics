@@ -384,6 +384,7 @@
                             </Grid.RowDefinitions>
                             <!--  Fake Header  -->
                             <uc:SongListFakeHeaderControl
+                                x:Name="SongListHeader1"
                                 Grid.Row="0"
                                 Margin="12,0"
                                 ViewModel="{x:Bind ViewModel, Mode=OneWay}" />
@@ -606,6 +607,7 @@
                                 </Grid.RowDefinitions>
                                 <!--  Fake Header  -->
                                 <uc:SongListFakeHeaderControl
+                                    x:Name="SongListHeader2"
                                     Grid.Row="0"
                                     Margin="12,0"
                                     ViewModel="{x:Bind ViewModel, Mode=OneWay}" />
@@ -676,6 +678,7 @@
                                 </Grid.RowDefinitions>
                                 <!--  Fake Header  -->
                                 <uc:SongListFakeHeaderControl
+                                    x:Name="SongListHeader3"
                                     Grid.Row="0"
                                     Margin="12,0"
                                     ViewModel="{x:Bind ViewModel, Mode=OneWay}" />
@@ -798,10 +801,10 @@
                             </TransitionCollection>
                         </controls:SwitchPresenter.ContentTransitions>
                         <controls:Case Value="{x:Bind enums:TrackInfoDisplayTarget.SelectedItem}">
-                            <uc:TrackDetailCard ExtendedTrack="{x:Bind ViewModel.SelectedFirstTrack, Mode=OneWay}" />
+                            <uc:TrackDetailCard x:Name="TrackDetailCard1" ExtendedTrack="{x:Bind ViewModel.SelectedFirstTrack, Mode=OneWay}" />
                         </controls:Case>
                         <controls:Case Value="{x:Bind enums:TrackInfoDisplayTarget.PlayingItem}">
-                            <uc:TrackDetailCard ExtendedTrack="{x:Bind ViewModel.SMTCService.PlayingTrack, Mode=OneWay}" />
+                            <uc:TrackDetailCard x:Name="TrackDetailCard2" ExtendedTrack="{x:Bind ViewModel.SMTCService.PlayingTrack, Mode=OneWay}" />
                         </controls:Case>
                     </controls:SwitchPresenter>
                     <controls:Segmented

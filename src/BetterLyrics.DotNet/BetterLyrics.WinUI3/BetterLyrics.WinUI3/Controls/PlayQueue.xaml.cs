@@ -83,4 +83,20 @@ public sealed partial class PlayQueue : UserControl, IRecipient<PropertyChangedM
     {
         WeakReferenceMessenger.Default.UnregisterAll(this);
     }
+
+    private bool _isCleanedUp;
+
+    public void Cleanup()
+    {
+        if (_isCleanedUp) return;
+        _isCleanedUp = true;
+
+        Bindings?.StopTracking();
+        WeakReferenceMessenger.Default.UnregisterAll(this);
+        if (PlayingQueueListView != null)
+        {
+            PlayingQueueListView.ItemsSource = null;
+        }
+        DataContext = null;
+    }
 }

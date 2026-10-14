@@ -10,8 +10,10 @@ using Windows.Graphics;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
+using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Domain;
 using BetterLyrics.Core.Models.Settings;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using BetterLyrics.WinUI3.Constants;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Views;
@@ -302,6 +304,16 @@ public class WindowManagerProvider : IWindowManagerProvider
 
     public void ExitApp()
     {
+        try
+        {
+            var smtcService = Ioc.Default.GetService<ISmtcService>();
+            smtcService?.SaveCurrentPlaybackPosition();
+
+            var settingsService = Ioc.Default.GetService<ISettingsService>();
+            settingsService?.TryWriteAppSettingsImmediately();
+        }
+        catch { }
+
         EnsureAllWorkAreasReleased();
         Environment.Exit(0);
     }

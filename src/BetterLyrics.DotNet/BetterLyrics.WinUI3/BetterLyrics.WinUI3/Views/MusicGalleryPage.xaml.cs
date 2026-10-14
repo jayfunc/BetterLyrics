@@ -160,8 +160,47 @@ public sealed partial class MusicGalleryPage : Page
 
     private void Page_Unloaded(object sender, RoutedEventArgs e)
     {
-        ViewModel.CancelRefreshSongs();
-        if (ViewModel.AppSettings.MusicGallerySettings.StopOnWindowClosed) ViewModel.StopTrackCommand.Execute(null);
+        Cleanup();
+    }
+
+    private bool _isCleanedUp;
+
+    public void Cleanup()
+    {
+        if (_isCleanedUp) return;
+        _isCleanedUp = true;
+
+        Bindings?.StopTracking();
+
+        if (ViewModel is { } viewModel)
+        {
+            viewModel.CancelRefreshSongs();
+            if (viewModel.AppSettings.MusicGallerySettings.StopOnWindowClosed)
+                viewModel.StopTrackCommand.Execute(null);
+        }
+
+        GroupedTracksCVS.Source = null;
+        GroupedAlbumsCVS.Source = null;
+        GroupedArtistsCVS.Source = null;
+
+        if (SongListView != null) SongListView.ItemsSource = null;
+        if (AlbumGridView != null) AlbumGridView.ItemsSource = null;
+        if (ArtistGridView != null) ArtistGridView.ItemsSource = null;
+        if (AlbumDetailSongListView != null) AlbumDetailSongListView.ItemsSource = null;
+        if (ArtistDetailSongListView != null) ArtistDetailSongListView.ItemsSource = null;
+        if (FolderTreeView != null) FolderTreeView.ItemsSource = null;
+        if (StarredPlaylistsListView != null) StarredPlaylistsListView.ItemsSource = null;
+
+        SongListHeader1?.Cleanup();
+        SongListHeader2?.Cleanup();
+        SongListHeader3?.Cleanup();
+
+        TrackDetailCard1?.Cleanup();
+        TrackDetailCard2?.Cleanup();
+
+        PlayQueue?.Cleanup();
+
+        DataContext = null;
     }
 
     private void RemoveFromPlaylistMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
