@@ -641,7 +641,20 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
         // 优先级 4：系统焦点优先（如暂停状态下优先显示当前点击的窗口对应的音乐）
         if (isFocusedEnabled)
         {
-            return focusedSession;
+            if (_windowManagerProvider.IsWindowFocused(WindowType.MusicGalleryWindow) &&
+                PlayerIdHelper.IsBetterLyrics(focusedSession!.SessionId))
+            {
+                return focusedSession;
+            }
+            else
+            {
+                if (_currentDesiredSession != null &&
+                    IsMediaSourceEnabled(_currentDesiredSession.SessionId) &&
+                    _mediaManagerProvider.IsMediaSessionExisting(_currentDesiredSession.SessionId))
+                {
+                    return _currentDesiredSession;
+                }
+            }
         }
 
         // 优先级 5：如果没有系统焦点，但内置播放器存在，优先保持内部播放器

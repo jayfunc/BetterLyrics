@@ -177,6 +177,28 @@ public class WindowManagerProvider : IWindowManagerProvider
         return GetWindowHandle(GetWindow(windowType));
     }
 
+    public bool IsWindowFocused(object? obj)
+    {
+        if (obj == null) return false;
+        var hwnd = GetWindowHandle(obj);
+        if (!hwnd.HasValue) return false;
+
+        var foregroundHwnd = User32.GetForegroundWindow();
+        if (foregroundHwnd.IsNull || foregroundHwnd == HWND.NULL) return false;
+
+        var rootHwnd = User32.GetAncestor(foregroundHwnd, User32.GetAncestorFlag.GA_ROOT);
+        var rootOwnerHwnd = User32.GetAncestor(foregroundHwnd, User32.GetAncestorFlag.GA_ROOTOWNER);
+
+        var targetHwnd = (HWND)hwnd.Value;
+        return targetHwnd == foregroundHwnd || targetHwnd == rootHwnd || targetHwnd == rootOwnerHwnd;
+    }
+
+    public bool IsWindowFocused(WindowType windowType)
+    {
+        var targetWindows = GetWindows(windowType);
+        return targetWindows.Any(IsWindowFocused);
+    }
+
     public T OpenOrShowWindow<T>(LyricsWindowStatus? status = null)
     {
         var window = _activeWindows.Find(w =>

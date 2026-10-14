@@ -26,6 +26,9 @@ public interface IWindowManagerProvider
 
     List<T> GetWindows<T>();
 
+    bool IsWindowFocused(object? obj);
+    bool IsWindowFocused(WindowType windowType);
+
     void RestartApp(string args = "");
     void ExitApp();
 
