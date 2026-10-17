@@ -1,12 +1,15 @@
+using BetterLyrics.Core.Interfaces.Providers;
+using BetterLyrics.WinUI3.Hooks;
 using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using BetterLyrics.Core.Interfaces.Providers;
-using BetterLyrics.WinUI3.Hooks;
 using WanaKanaNet;
 
 namespace BetterLyrics.WinUI3.Providers;
 
+/// <summary>
+/// Singleton Provider
+/// </summary>
 public class StringConverterProvider : IStringConverterProvider
 {
     public string RomajiToKanji(string romaji)

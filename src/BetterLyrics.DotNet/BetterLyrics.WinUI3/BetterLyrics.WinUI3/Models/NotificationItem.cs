@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Microsoft.UI.Xaml.Controls;
+using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Microsoft.UI.Xaml.Controls;
 
 namespace BetterLyrics.WinUI3.Models;
 

@@ -1,7 +1,7 @@
 // 2025/6/23 by Zhe Fang
 
-using System.Numerics;
 using BetterLyrics.Core.Enums;
+using System.Numerics;
 
 namespace BetterLyrics.Core.Helpers;
 

@@ -1,7 +1,7 @@
-﻿using Windows.Foundation;
-using Windows.UI;
-using BetterLyrics.WinUI3.Extensions;
+﻿using BetterLyrics.WinUI3.Extensions;
 using Microsoft.Graphics.Canvas;
+using Windows.Foundation;
+using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Renderer;
 

@@ -1,7 +1,7 @@
-﻿using System;
-using Windows.UI;
-using CommunityToolkit.WinUI.Helpers;
+﻿using CommunityToolkit.WinUI.Helpers;
 using Microsoft.UI.Xaml.Data;
+using System;
+using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Converters;
 

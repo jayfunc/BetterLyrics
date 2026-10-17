@@ -1,7 +1,7 @@
-﻿using System.Globalization;
-using System.Text.Json;
-using BetterLyrics.Core.Serialization;
+﻿using BetterLyrics.Core.Serialization;
 using BetterLyrics.Sdk.Interfaces.Plugins;
+using System.Globalization;
+using System.Text.Json;
 
 namespace BetterLyrics.Core.Implementations.Services.PluginService;
 

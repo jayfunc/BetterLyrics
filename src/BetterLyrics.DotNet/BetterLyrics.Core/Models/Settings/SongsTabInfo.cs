@@ -1,9 +1,9 @@
-﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BetterLyrics.Core.Models.Settings;
 
-public class SongsTabInfo : ObservableRecipient
+public class SongsTabInfo : ObservableObject
 {
     public string? Name { get; set; } = "";
 

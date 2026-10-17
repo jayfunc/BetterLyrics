@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Numerics;
-using Windows.Foundation;
-using Windows.UI;
-using BetterLyrics.Core.Enums;
+﻿using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Models.Lyrics;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.UI.Xaml;
+using System;
+using System.Collections.Generic;
+using System.Numerics;
+using Windows.Foundation;
+using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Renderer.LyricsRenderer;
 

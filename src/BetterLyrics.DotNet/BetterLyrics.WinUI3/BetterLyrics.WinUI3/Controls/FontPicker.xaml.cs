@@ -58,7 +58,10 @@ public sealed partial class FontPicker : UserControl
         if (!isMultiAllowed && !string.IsNullOrWhiteSpace(control.SelectedFontId))
         {
             var fontIds = control.SelectedFontId.Split(',', StringSplitOptions.RemoveEmptyEntries);
-            if (fontIds.Length > 1) control.SelectedFontId = fontIds[0].Trim();
+            if (fontIds.Length > 1)
+            {
+                control.SelectedFontId = fontIds[0].Trim();
+            }
         }
     }
 
@@ -110,25 +113,33 @@ public sealed partial class FontPicker : UserControl
             var idsToProcess = AllowMultipleSelection ? fontIds : fontIds.Take(1);
 
             if (fontIds.Count != 0)
+            {
                 foreach (var fontId in idsToProcess)
                 {
                     var matchedFont = fonts.FirstOrDefault(f => f.FontFamily == fontId);
 
                     if (matchedFont != null)
+                    {
                         displayItems.Add(matchedFont);
+                    }
                     else
+                    {
                         displayItems.Add(new ExtendedFontFamily
                         {
                             LocalizedFontFamily = fontId,
                             FontFamily = fontId
                         });
+                    }
                 }
+            }
             else
+            {
                 displayItems.Add(new ExtendedFontFamily
                 {
                     LocalizedFontFamily = fontIdString,
                     FontFamily = "Unknown"
                 });
+            }
 
             SelectedFontsItemsControl.ItemsSource = displayItems;
         }
@@ -156,6 +167,9 @@ public sealed partial class FontPicker : UserControl
 
         var result = await dialog.ShowAsync(ContentDialogPlacement.Popup);
 
-        if (result == ContentDialogResult.Primary) SelectedFontId = string.Join(", ", dialog.SelectedFontIds);
+        if (result == ContentDialogResult.Primary)
+        {
+            SelectedFontId = string.Join(", ", dialog.SelectedFontIds);
+        }
     }
 }

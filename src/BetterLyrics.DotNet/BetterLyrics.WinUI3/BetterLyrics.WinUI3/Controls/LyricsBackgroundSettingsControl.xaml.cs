@@ -13,14 +13,14 @@ public sealed partial class LyricsBackgroundSettingsControl : UserControl
         DependencyProperty.Register(nameof(LyricsBackgroundSettings), typeof(LyricsBackgroundSettings),
             typeof(LyricsBackgroundSettingsControl), new PropertyMetadata(default));
 
-    public LyricsBackgroundSettingsControl()
-    {
-        InitializeComponent();
-    }
-
     public LyricsBackgroundSettings LyricsBackgroundSettings
     {
         get => (LyricsBackgroundSettings)GetValue(LyricsBackgroundSettingsProperty);
         set => SetValue(LyricsBackgroundSettingsProperty, value);
+    }
+
+    public LyricsBackgroundSettingsControl()
+    {
+        InitializeComponent();
     }
 }

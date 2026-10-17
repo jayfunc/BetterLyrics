@@ -1,10 +1,10 @@
-using System.Collections.Generic;
 using BetterLyrics.Core.Models.Stats;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
+using System.Collections.Generic;
 using Windows.Foundation;
 using Windows.UI;
 
@@ -90,7 +90,7 @@ public sealed partial class HourlyBarChartControl : UserControl
 
         var accentBrush = (SolidColorBrush)Application.Current.Resources["AccentFillColorDefaultBrush"];
         Color baseColor = accentBrush.Color;
-        
+
         var gradientBrush = new LinearGradientBrush
         {
             StartPoint = new Point(0.5, 0),
@@ -125,7 +125,7 @@ public sealed partial class HourlyBarChartControl : UserControl
                 VerticalAlignment = VerticalAlignment.Bottom
             };
 
-            bar.PointerEntered += (s, ev) => 
+            bar.PointerEntered += (s, ev) =>
             {
                 _hoverTimer.Stop();
                 foreach (var child in ChartRoot.Children)
@@ -137,7 +137,7 @@ public sealed partial class HourlyBarChartControl : UserControl
                 }
             };
 
-            bar.PointerExited += (s, ev) => 
+            bar.PointerExited += (s, ev) =>
             {
                 _hoverTimer.Start();
             };

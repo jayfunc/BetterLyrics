@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Microsoft.UI.Xaml.Data;
+using System;
 using System.IO;
-using Microsoft.UI.Xaml.Data;
 
 namespace BetterLyrics.WinUI3.Converters;
 

@@ -1,6 +1,6 @@
-﻿using System.Collections.ObjectModel;
-using BetterLyrics.Core.Enums;
+﻿using BetterLyrics.Core.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace BetterLyrics.Core.Models;
 

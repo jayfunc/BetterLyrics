@@ -1,9 +1,9 @@
-using System.Numerics;
 using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using System.Numerics;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -81,34 +81,27 @@ public sealed partial class ImageSwitcher : UserControl
 
     private void UpdateSourceCrossfade()
     {
-        // Ϊ����ͼƬ���þ�Դ
         LastAlbumArtImage.Source = AlbumArtImage.Source;
-        // ʹ�������ɼ�
         LastAlbumArtImage.TranslationTransition = null;
         LastAlbumArtImage.OpacityTransition = null;
         LastAlbumArtImage.Translation = new Vector3();
         LastAlbumArtImage.Opacity = 1;
         LastAlbumArtImage.OpacityTransition = new ScalarTransition { Duration = Time.AnimationDuration };
 
-        // ʹǰ��ͼƬ�������ɼ�
         AlbumArtImage.TranslationTransition = null;
         AlbumArtImage.OpacityTransition = null;
         AlbumArtImage.Translation = new Vector3();
         AlbumArtImage.Opacity = 0;
         AlbumArtImage.OpacityTransition = new ScalarTransition { Duration = Time.AnimationDuration };
-        // ֮��Ϊ��������Դ
         AlbumArtImage.Source = Source;
 
-        // ���浭������
         LastAlbumArtImage.Opacity = 0;
         AlbumArtImage.Opacity = 1;
     }
 
     private void UpdateSourceSlide()
     {
-        // Ϊ����ͼƬ���þ�Դ
         LastAlbumArtImage.Source = AlbumArtImage.Source;
-        // ʹ���λ
         LastAlbumArtImage.TranslationTransition = null;
         LastAlbumArtImage.OpacityTransition = null;
         LastAlbumArtImage.Translation = new Vector3();
@@ -116,17 +109,14 @@ public sealed partial class ImageSwitcher : UserControl
         LastAlbumArtImage.TranslationTransition = new Vector3Transition { Duration = Time.AnimationDuration };
         LastAlbumArtImage.OpacityTransition = new ScalarTransition { Duration = Time.AnimationDuration };
 
-        // ʹǰ��ͼƬ�������ɼ�
         AlbumArtImage.TranslationTransition = null;
         AlbumArtImage.OpacityTransition = null;
         AlbumArtImage.Translation = new Vector3(-(float)ActualWidth, 0, 0);
         AlbumArtImage.Opacity = 0;
         AlbumArtImage.TranslationTransition = new Vector3Transition { Duration = Time.AnimationDuration };
         AlbumArtImage.OpacityTransition = new ScalarTransition { Duration = Time.AnimationDuration };
-        // ֮��Ϊ��������Դ
         AlbumArtImage.Source = Source;
 
-        // ����
         LastAlbumArtImage.Opacity = 0;
         AlbumArtImage.Opacity = 1;
         LastAlbumArtImage.Translation = new Vector3(-(float)ActualWidth, 0, 0);
@@ -136,7 +126,11 @@ public sealed partial class ImageSwitcher : UserControl
     private static void OnDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         if (d is ImageSwitcher imageSwitcher)
+        {
             if (e.Property == SourceProperty)
+            {
                 imageSwitcher.UpdateSource();
+            }
+        }
     }
 }

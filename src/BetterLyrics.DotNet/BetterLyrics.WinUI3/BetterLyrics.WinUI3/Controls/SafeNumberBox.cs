@@ -1,7 +1,7 @@
-﻿using System;
-using Windows.Globalization.NumberFormatting;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System;
+using Windows.Globalization.NumberFormatting;
 
 namespace BetterLyrics.WinUI3.Controls;
 
@@ -21,12 +21,6 @@ public partial class SafeNumberBox : NumberBox
 
     private bool _isSyncing;
 
-    public SafeNumberBox()
-    {
-        ValueChanged += OnValueChanged;
-        Loaded += OnSafeNumberBoxLoaded;
-    }
-
     public double DefaultValue
     {
         get => (double)GetValue(DefaultValueProperty);
@@ -43,6 +37,12 @@ public partial class SafeNumberBox : NumberBox
     {
         get => (int)GetValue(IntValueProperty);
         set => SetValue(IntValueProperty, value);
+    }
+
+    public SafeNumberBox()
+    {
+        ValueChanged += OnValueChanged;
+        Loaded += OnSafeNumberBoxLoaded;
     }
 
     private void OnSafeNumberBoxLoaded(object sender, RoutedEventArgs e)

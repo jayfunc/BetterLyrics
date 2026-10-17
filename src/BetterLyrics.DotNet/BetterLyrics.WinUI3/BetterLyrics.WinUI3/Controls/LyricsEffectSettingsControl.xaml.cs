@@ -13,14 +13,14 @@ public sealed partial class LyricsEffectSettingsControl : UserControl
         DependencyProperty.Register(nameof(LyricsEffectSettings), typeof(LyricsEffectSettings),
             typeof(LyricsEffectSettingsControl), new PropertyMetadata(default));
 
-    public LyricsEffectSettingsControl()
-    {
-        InitializeComponent();
-    }
-
     public LyricsEffectSettings LyricsEffectSettings
     {
         get => (LyricsEffectSettings)GetValue(LyricsEffectSettingsProperty);
         set => SetValue(LyricsEffectSettingsProperty, value);
+    }
+
+    public LyricsEffectSettingsControl()
+    {
+        InitializeComponent();
     }
 }

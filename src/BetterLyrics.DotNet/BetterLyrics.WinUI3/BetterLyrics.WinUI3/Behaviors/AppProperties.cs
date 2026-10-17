@@ -1,26 +1,22 @@
 ﻿using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.WinUI3.Controls;
 using BetterLyrics.WinUI3.Extensions;
-using BetterLyrics.WinUI3.Hooks;
-using BetterLyrics.WinUI3.Providers;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media.Imaging;
 
-namespace BetterLyrics.WinUI3.Helpers;
+namespace BetterLyrics.WinUI3.Behaviors;
 
-public static class AppExtensions
+public static class AppProperties
 {
     public static readonly DependencyProperty AumidProperty =
         DependencyProperty.RegisterAttached(
             "Aumid",
             typeof(string),
-            typeof(AppExtensions),
+            typeof(AppProperties),
             new PropertyMetadata(null, OnAumidChanged));
 
-    private static readonly IProgramProvider _programProvider =
-        Ioc.Default.GetRequiredService<IProgramProvider>();
+    private static readonly IProgramProvider _programProvider = Ioc.Default.GetRequiredService<IProgramProvider>();
 
     public static string GetAumid(DependencyObject obj)
     {
@@ -36,7 +32,10 @@ public static class AppExtensions
     {
         var aumid = e.NewValue as string;
 
-        if (string.IsNullOrWhiteSpace(aumid)) return;
+        if (string.IsNullOrWhiteSpace(aumid))
+        {
+            return;
+        }
 
         if (d is Image imageControl)
         {
@@ -47,7 +46,9 @@ public static class AppExtensions
                 var bytes = await _programProvider.GetIconByAumidAsync(aumid);
 
                 if (GetAumid(imageControl) == aumid && bytes != null)
+                {
                     imageControl.Source = BitmapImageExtensions.FromByteArray(bytes);
+                }
             }
             catch
             {
@@ -62,7 +63,10 @@ public static class AppExtensions
             {
                 var name = await _programProvider.GetDisplayNameByAumidAsync(aumid);
 
-                if (GetAumid(textBlock) == aumid) textBlock.Text = name ?? aumid;
+                if (GetAumid(textBlock) == aumid)
+                {
+                    textBlock.Text = name ?? aumid;
+                }
             }
             catch
             {
@@ -78,7 +82,10 @@ public static class AppExtensions
             {
                 var name = await _programProvider.GetDisplayNameByAumidAsync(aumid);
 
-                if (GetAumid(propertyRow) == aumid) propertyRow.Value = name ?? aumid;
+                if (GetAumid(propertyRow) == aumid)
+                {
+                    propertyRow.Value = name ?? aumid;
+                }
             }
             catch
             {
@@ -94,7 +101,10 @@ public static class AppExtensions
             {
                 var name = await _programProvider.GetDisplayNameByAumidAsync(aumid);
 
-                if (GetAumid(personPicture) == aumid) personPicture.DisplayName = name ?? aumid;
+                if (GetAumid(personPicture) == aumid)
+                {
+                    personPicture.DisplayName = name ?? aumid;
+                }
             }
             catch
             {

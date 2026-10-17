@@ -1,6 +1,6 @@
-﻿using System.Reflection;
-using BetterLyrics.Sdk.Interfaces.Plugins;
+﻿using BetterLyrics.Sdk.Interfaces.Plugins;
 using BetterLyrics.Sdk.Models.SettingsSchema;
+using System.Reflection;
 
 namespace BetterLyrics.Sdk.Helpers;
 

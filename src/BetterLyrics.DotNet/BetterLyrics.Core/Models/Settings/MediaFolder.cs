@@ -1,10 +1,12 @@
-using System.Text.Json.Serialization;
 using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Messages.MediaLibrary;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
+using System.Text.Json.Serialization;
 
 namespace BetterLyrics.Core.Models.Settings;
 
-public partial class MediaFolder : ObservableRecipient
+public partial class MediaFolder : ObservableObject
 {
     public MediaFolder()
     {
@@ -19,18 +21,15 @@ public partial class MediaFolder : ObservableRecipient
     [ObservableProperty] public partial string Id { get; set; } = Guid.NewGuid().ToString();
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsEnabled { get; set; } = true;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     [NotifyPropertyChangedFor(nameof(IsLocal))]
     [NotifyPropertyChangedFor(nameof(ConnectionSummary))]
     [NotifyPropertyChangedFor(nameof(UriString))]
     public partial FileSourceType SourceType { get; set; } = FileSourceType.Local;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial string Name { get; set; }
 
     // 连接属性
@@ -52,13 +51,11 @@ public partial class MediaFolder : ObservableRecipient
 
     [JsonPropertyName("Path")]
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     [NotifyPropertyChangedFor(nameof(ConnectionSummary))]
     [NotifyPropertyChangedFor(nameof(UriString))]
     public partial string UriPath { get; set; }
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial string LocalLyricsFilePattern { get; set; } = "";
 
     partial void OnLocalLyricsFilePatternChanged(string value)
@@ -67,7 +64,6 @@ public partial class MediaFolder : ObservableRecipient
     }
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial string LocalMusicFilePattern { get; set; } = "";
 
     partial void OnLocalMusicFilePatternChanged(string value)
@@ -82,7 +78,6 @@ public partial class MediaFolder : ObservableRecipient
     [JsonIgnore] public bool IsLocal => SourceType == FileSourceType.Local;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsProcessing { get; set; } = false;
 
     [ObservableProperty] public partial double IndexingProgress { get; set; } = 0;
@@ -90,20 +85,37 @@ public partial class MediaFolder : ObservableRecipient
     [ObservableProperty] public partial MessageSeverity StatusSeverity { get; set; } = MessageSeverity.Informational;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial DateTime? LastSyncTime { get; set; }
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial AutoScanInterval ScanInterval { get; set; } = AutoScanInterval.Disabled;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsRealTimeScanEnabled { get; set; } = false;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool ScanSubDirectories { get; set; } = true;
+
+    partial void OnIsEnabledChanged(bool value) =>
+        WeakReferenceMessenger.Default.Send(new MediaFolderEnabledChangedMessage(this, value));
+
+    partial void OnNameChanged(string value) =>
+        WeakReferenceMessenger.Default.Send(new MediaFolderNameChangedMessage(this, value));
+
+    partial void OnIsProcessingChanged(bool value) =>
+        WeakReferenceMessenger.Default.Send(new MediaFolderProcessingChangedMessage(this, value));
+
+    partial void OnLastSyncTimeChanged(DateTime? value) =>
+        WeakReferenceMessenger.Default.Send(new MediaFolderLastSyncTimeChangedMessage(this, value));
+
+    partial void OnScanIntervalChanged(AutoScanInterval value) =>
+        WeakReferenceMessenger.Default.Send(new MediaFolderScanIntervalChangedMessage(this, value));
+
+    partial void OnIsRealTimeScanEnabledChanged(bool value) =>
+        WeakReferenceMessenger.Default.Send(new MediaFolderRealTimeScanChangedMessage(this, value));
+
+    partial void OnScanSubDirectoriesChanged(bool value) =>
+        WeakReferenceMessenger.Default.Send(new MediaFolderScanSubDirectoriesChangedMessage(this, value));
 
     // 例：smb://user@host:445/share/path
     [JsonIgnore] public string UriString => GetStandardUri().AbsoluteUri;

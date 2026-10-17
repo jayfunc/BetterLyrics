@@ -134,7 +134,7 @@ public class LyricsAnimator
                 double topExtraDuration = distanceFactor * (scrollTopDurationSec - canvasTransDuration);
                 double bottomExtraDuration = distanceFactor * (scrollBottomDurationSec - canvasTransDuration);
                 scrollDuration = canvasTransDuration + (1.0 - factor) * topExtraDuration + factor * bottomExtraDuration;
-                
+
                 double baseDelay = scrollTopDelaySec; // Top delay acts as the base starting delay
                 double staggerDelay = 0;
 
@@ -146,11 +146,11 @@ public class LyricsAnimator
                 if (scrollBottomDelaySec > 0)
                 {
                     double budget = Math.Min(0.4, Math.Max(0, scrollDuration) * 0.75);
-                    staggerDelay = budget > 0 
-                        ? budget * (1.0 - Math.Exp(-visibleIndex * scrollBottomDelaySec / budget)) 
+                    staggerDelay = budget > 0
+                        ? budget * (1.0 - Math.Exp(-visibleIndex * scrollBottomDelaySec / budget))
                         : 0;
                 }
-                
+
                 scrollDelay = baseDelay + staggerDelay;
 
                 line.BlurAmountTransition.SetDuration(scrollDuration);

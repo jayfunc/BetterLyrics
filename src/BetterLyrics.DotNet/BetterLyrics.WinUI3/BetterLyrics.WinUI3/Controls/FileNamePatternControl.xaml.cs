@@ -24,7 +24,6 @@ public sealed partial class FileNamePatternControl : UserControl
     public FileNamePatternControl()
     {
         InitializeComponent();
-        this.Loaded += (s, e) => UpdateExamplePreview(PatternText);
     }
 
     private static void OnPatternTextChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -98,5 +97,10 @@ public sealed partial class FileNamePatternControl : UserControl
     private void HelpButton_Click(object sender, RoutedEventArgs e)
     {
         Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase.ShowAttachedFlyout((FrameworkElement)sender);
+    }
+
+    private void UserControl_Loaded(object sender, RoutedEventArgs e)
+    {
+        UpdateExamplePreview(PatternText);
     }
 }

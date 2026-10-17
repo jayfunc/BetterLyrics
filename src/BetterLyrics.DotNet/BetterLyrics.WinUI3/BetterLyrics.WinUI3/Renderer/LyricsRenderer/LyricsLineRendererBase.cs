@@ -1,5 +1,3 @@
-using System;
-using Windows.Foundation;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Models.Settings;
@@ -8,6 +6,8 @@ using BetterLyrics.WinUI3.Models.Lyrics;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
+using System;
+using Windows.Foundation;
 
 namespace BetterLyrics.WinUI3.Renderer.LyricsRenderer;
 
@@ -271,11 +271,11 @@ public abstract class LyricsLineRendererBase
         if (source == null) return;
 
         using var cropEffect = new CropEffect
-            { Source = source, BorderMode = EffectBorderMode.Hard, SourceRectangle = srcRect };
+        { Source = source, BorderMode = EffectBorderMode.Hard, SourceRectangle = srcRect };
         using var blurEffect = new GaussianBlurEffect
-            { BlurAmount = (float)blur, Source = cropEffect, BorderMode = EffectBorderMode.Soft };
+        { BlurAmount = (float)blur, Source = cropEffect, BorderMode = EffectBorderMode.Soft };
         using var opacityEffect = new OpacityEffect { Source = blurEffect, Opacity = (float)opacity };
-        
+
         var padding = blur * 3;
         ds.DrawImage(opacityEffect, destRect.Extend(padding), srcRect.Extend(padding));
     }

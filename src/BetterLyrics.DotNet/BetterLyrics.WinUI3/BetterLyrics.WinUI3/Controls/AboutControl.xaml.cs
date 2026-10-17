@@ -49,7 +49,7 @@ public sealed partial class AboutControl : UserControl
     private void CompositionTarget_Rendering(object sender, object e)
     {
         if (CreditsScrollViewer == null || CreditsPanel == null) return;
-        
+
         double containerHeight = CreditsScrollViewer.ActualHeight;
         double panelHeight = CreditsPanel.ActualHeight;
 
@@ -69,7 +69,7 @@ public sealed partial class AboutControl : UserControl
             {
                 _creditsOffset = targetOffset; // Stop rolling
             }
-            if (CreditsTransform != null) CreditsTransform.Y = _creditsOffset;
+            CreditsTransform?.Y = _creditsOffset;
         }
     }
 

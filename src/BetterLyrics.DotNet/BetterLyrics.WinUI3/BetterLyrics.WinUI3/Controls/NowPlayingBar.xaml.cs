@@ -1,32 +1,29 @@
-using System;
-using System.Diagnostics;
-using System.Numerics;
-using Windows.System;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Events;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Messages.Playback;
+using BetterLyrics.Core.Messages.SettingsNavigation;
 using BetterLyrics.Core.Models.Settings;
-using BetterLyrics.WinUI3.Hooks;
+using BetterLyrics.Core.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
-using BetterLyrics.Core.ViewModels;
-using System.Threading.Tasks;
+using System;
+using System.Diagnostics;
+using System.Numerics;
+using Windows.System;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace BetterLyrics.WinUI3.Controls;
 
-public sealed partial class NowPlayingBar : UserControl,
-    IRecipient<PropertyChangedMessage<TimeSpan>>,
-    IRecipient<PropertyChangedMessage<MediaSourceProviderInfo?>>
+public sealed partial class NowPlayingBar : UserControl
 {
     public static readonly DependencyProperty ShowTimeProperty =
         DependencyProperty.Register(nameof(ShowTime), typeof(bool), typeof(NowPlayingBar), new PropertyMetadata(false));
@@ -71,59 +68,13 @@ public sealed partial class NowPlayingBar : UserControl,
         DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus), typeof(NowPlayingBar),
             new PropertyMetadata(null, (d, e) => (d as NowPlayingBar)?.UpdateStatus()));
 
-    public static readonly DependencyProperty SimulatedPositionSecondsProperty =
-        DependencyProperty.Register(nameof(SimulatedPositionSeconds), typeof(double), typeof(NowPlayingBar),
-            new PropertyMetadata(0.0));
-
     private readonly IGlobalToastProvider _globalToastProvider = Ioc.Default.GetRequiredService<IGlobalToastProvider>();
-
-    private readonly IWindowManagerProvider
-        _windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
-
+    private readonly IWindowManagerProvider _windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
     private readonly IProgramProvider _programProvider = Ioc.Default.GetRequiredService<IProgramProvider>();
 
     private bool _isPointerInBottomCommandGrid;
     private readonly DispatcherTimer _simulationTimer;
     private long _lastTickTicks;
-
-    public NowPlayingBar()
-    {
-        InitializeComponent();
-        ViewModel = Ioc.Default.GetRequiredService<NowPlayingBarViewModel>();
-        GSMTCService = Ioc.Default.GetRequiredService<IGsmtcService>();
-
-        _simulationTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(1000) };
-
-        Loaded += NowPlayingBar_Loaded;
-        Unloaded += NowPlayingBar_Unloaded;
-        this.SizeChanged += (s, e) => UpdateStatus();
-    }
-
-    private void NowPlayingBar_Loaded(object sender, RoutedEventArgs e)
-    {
-        WeakReferenceMessenger.Default.UnregisterAll(this);
-        WeakReferenceMessenger.Default.RegisterAll(this);
-
-        _lastTickTicks = Stopwatch.GetTimestamp();
-        _simulationTimer.Tick -= SimulationTimer_Tick;
-        _simulationTimer.Tick += SimulationTimer_Tick;
-        _simulationTimer.Start();
-    }
-
-    private void NowPlayingBar_Unloaded(object sender, RoutedEventArgs e)
-    {
-        Cleanup();
-    }
-
-    public void Cleanup()
-    {
-        _simulationTimer.Stop();
-        _simulationTimer.Tick -= SimulationTimer_Tick;
-
-        WeakReferenceMessenger.Default.UnregisterAll(this);
-        Bindings?.StopTracking();
-        DataContext = null;
-    }
 
     public NowPlayingBarViewModel ViewModel { get; set; }
     public IGsmtcService GSMTCService { get; set; }
@@ -219,15 +170,34 @@ public sealed partial class NowPlayingBar : UserControl,
         set => SetValue(LyricsWindowStatusProperty, value);
     }
 
-    public double SimulatedPositionSeconds
-    {
-        get => (double)GetValue(SimulatedPositionSecondsProperty);
-        set => SetValue(SimulatedPositionSecondsProperty, value);
-    }
-
     public event EventHandler? SongInfoTapped;
     public event EventHandler? TimeTapped;
     public event EventHandler? PlayQueueButtonClick;
+
+    public NowPlayingBar()
+    {
+        InitializeComponent();
+        ViewModel = Ioc.Default.GetRequiredService<NowPlayingBarViewModel>();
+        GSMTCService = Ioc.Default.GetRequiredService<IGsmtcService>();
+
+        _simulationTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(1000) };
+        _simulationTimer.Tick += SimulationTimer_Tick;
+    }
+
+    private void UserControl_Loaded(object sender, RoutedEventArgs e)
+    {
+        _lastTickTicks = Stopwatch.GetTimestamp();
+        _simulationTimer.Start();
+
+        ViewModel.IsActive = true;
+    }
+
+    private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+    {
+        _simulationTimer.Stop();
+
+        ViewModel.IsActive = false;
+    }
 
     private void SimulationTimer_Tick(object? sender, object e)
     {
@@ -237,38 +207,12 @@ public sealed partial class NowPlayingBar : UserControl,
 
         if (GSMTCService.CurrentIsPlaying)
         {
-            var newPos = SimulatedPositionSeconds + elapsedSeconds;
+            var newPos = ViewModel.SimulatedPositionSeconds + elapsedSeconds;
             if (newPos > GSMTCService.CurrentSongInfo.DurationMs / 1000.0)
             {
                 newPos = GSMTCService.CurrentSongInfo.DurationMs / 1000.0;
             }
-            SimulatedPositionSeconds = newPos;
-        }
-    }
-
-    public void Receive(PropertyChangedMessage<TimeSpan> message)
-    {
-        if (message.Sender is IGsmtcService && message.PropertyName == nameof(IGsmtcService.CurrentPosition))
-        {
-            var realPosition = message.NewValue.TotalSeconds;
-            var diff = Math.Abs(SimulatedPositionSeconds - realPosition);
-            var timelineSyncThreshold = (GSMTCService.CurrentMediaSourceProviderInfo?.TimelineSyncThreshold ?? 0) / 1000.0;
-
-            if (diff >= timelineSyncThreshold)
-            {
-                SimulatedPositionSeconds = realPosition;
-            }
-        }
-    }
-
-    public void Receive(PropertyChangedMessage<MediaSourceProviderInfo?> message)
-    {
-        if (message.Sender is IGsmtcService && message.PropertyName == nameof(IGsmtcService.CurrentMediaSourceProviderInfo))
-        {
-            DispatcherQueue.TryEnqueue(() =>
-            {
-                ViewModel.UpdateVolume();
-            });
+            ViewModel.SimulatedPositionSeconds = newPos;
         }
     }
 
@@ -331,7 +275,6 @@ public sealed partial class NowPlayingBar : UserControl,
         {
             MaxHeight = 500,
             MaxWidth = 850,
-            HideConfigPanelWhenLoaded = false
         };
         PlaybackSettingsFlyout.Content = content;
         PlaybackSettingsFlyout.ShowAt(BottomRightCommandStackPanel);
@@ -359,10 +302,9 @@ public sealed partial class NowPlayingBar : UserControl,
         LyricsSettingsFlyout.Content = null;
     }
 
-    private async void LyricsSettingsFlyout_Opened(object sender, object e)
+    private void LyricsSettingsFlyout_Opened(object sender, object e)
     {
-        var content = (LyricsWindowManagerControl)LyricsSettingsFlyout.Content;
-        content.ShowConfigPanel(LyricsWindowStatus);
+        WeakReferenceMessenger.Default.Send(new LyricsWindowNavigationRequestedMessage(LyricsWindowManagerSettingsSection.Window, LyricsWindowStatus?.Id));
     }
 
     private void LyricsSettingsShortcutMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
@@ -371,7 +313,6 @@ public sealed partial class NowPlayingBar : UserControl,
         {
             MaxHeight = 500,
             MaxWidth = 850,
-            HideConfigPanelWhenLoaded = false
         };
         LyricsSettingsFlyout.Content = content;
         LyricsSettingsFlyout.ShowAt(BottomRightCommandStackPanel);
@@ -382,8 +323,9 @@ public sealed partial class NowPlayingBar : UserControl,
         var grid = (Grid)sender;
         var pos = e.GetCurrentPoint(grid).Position;
         var ratio = pos.X / grid.ActualWidth;
-        SimulatedPositionSeconds = TimelineSlider.Maximum * ratio;
-        _ = GSMTCService.ChangePositionAsync(TimelineSlider.Maximum * ratio);
+        var targetSeconds = TimelineSlider.Maximum * ratio;
+
+        _ = ViewModel.SeekToPositionCommand.ExecuteAsync(targetSeconds);
     }
 
     private void TimelineSliderOverlay_PointerMoved(object sender, PointerRoutedEventArgs e)
@@ -458,14 +400,12 @@ public sealed partial class NowPlayingBar : UserControl,
         e.Handled = true;
     }
 
-    private void BottomCommandFlyoutTrigger_PointerEntered(object sender,
-        PointerRoutedEventArgs e)
+    private void BottomCommandFlyoutTrigger_PointerEntered(object sender, PointerRoutedEventArgs e)
     {
         if (BottomCommandFlyoutContainer.Children.Count != 0) BottomCommandFlyoutTrigger.Opacity = 1f;
     }
 
-    private void BottomCommandFlyoutTrigger_PointerExited(object sender,
-        PointerRoutedEventArgs e)
+    private void BottomCommandFlyoutTrigger_PointerExited(object sender, PointerRoutedEventArgs e)
     {
         if (BottomCommandFlyoutContainer.Children.Count != 0 && IsAutoHideEnabled) BottomCommandFlyoutTrigger.Opacity = 0f;
     }
@@ -502,5 +442,10 @@ public sealed partial class NowPlayingBar : UserControl,
             }
         else
             _globalToastProvider.Show("Error", $"Could't get the path for {amuid}", MessageSeverity.Warning);
+    }
+
+    private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
+    {
+        UpdateStatus();
     }
 }

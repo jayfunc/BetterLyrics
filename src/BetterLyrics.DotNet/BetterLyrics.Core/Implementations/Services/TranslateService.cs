@@ -1,35 +1,37 @@
-using System.Text.Json;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Serialization;
-using BetterLyrics.Core.ViewModels;
 using NLanguageTag;
+using System.Text.Json;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
-public class TranslationService : BaseViewModel, ITranslationService
+/// <summary>
+/// Singleton Service
+/// </summary>
+public class TranslationService(ISettingsService settingsService, IPluginService pluginService, IHttpClientFactory httpClientFactory) : ITranslationService
 {
-    private readonly HttpClient _client;
-    private readonly IPluginService _pluginService;
-    private readonly ISettingsService _settingsService;
-
-    public TranslationService(ISettingsService settingsService, IPluginService pluginService, IHttpClientFactory httpClientFactory)
-    {
-        _settingsService = settingsService;
-        _pluginService = pluginService;
-        _client = httpClientFactory.CreateClient();
-    }
+    private readonly HttpClient _client = httpClientFactory.CreateClient();
+    private readonly IPluginService _pluginService = pluginService;
+    private readonly ISettingsService _settingsService = settingsService;
 
     public async Task<string> TranslateTextAsync(string text, LanguageTag? targetLangTag, CancellationToken token)
     {
-        if (string.IsNullOrWhiteSpace(text)) throw new Exception(text + " is empty or null.");
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            throw new Exception(text + " is empty or null.");
+        }
 
         var originalLangTag = LanguageHelper.DetectLanguageTag(text);
-        if (originalLangTag == null ||
-            originalLangTag == targetLangTag) return text; // No translation needed
+        if (originalLangTag == null || originalLangTag == targetLangTag)
+        {
+            return text; // No translation needed
+        }
 
         if (string.IsNullOrEmpty(_settingsService.AppSettings.TranslationSettings.LibreTranslateServer))
+        {
             throw new Exception("LibreTranslate server URL is not set in settings.");
+        }
 
         var url = $"{_settingsService.AppSettings.TranslationSettings.LibreTranslateServer}/translate";
         var requestBody = new FormUrlEncodedContent(

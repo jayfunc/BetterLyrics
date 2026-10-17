@@ -1,14 +1,17 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Windowing;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Providers;
 
+/// <summary>
+/// Singleton Provider
+/// </summary>
 public class NowPlayingToastProvider : INowPlayingToastProvider
 {
     private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
@@ -45,7 +48,7 @@ public class NowPlayingToastProvider : INowPlayingToastProvider
         var primaryDisplay = DisplayArea.Primary;
 
         var displayAreas = DisplayArea.FindAll();
-        
+
         // Ensure we have enough windows if display count changed
         if (displayAreas.Count > _overlayWindows.Count)
         {

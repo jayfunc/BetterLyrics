@@ -1,6 +1,6 @@
-﻿using System;
-using BetterLyrics.Core.Enums;
+﻿using BetterLyrics.Core.Enums;
 using Microsoft.UI.Xaml.Data;
+using System;
 
 namespace BetterLyrics.WinUI3.Converters;
 

@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using Windows.Foundation;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Helpers.Lyrics;
@@ -10,13 +5,18 @@ using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Models.Lyrics;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
+using Windows.Foundation;
 
 namespace BetterLyrics.WinUI3.Helpers.Lyrics.LyricsLayoutStrategy;
 
 public class HorizontalLyricsLayoutStrategy : LyricsLayoutStrategyBase
 {
     /// <summary>
-    ///     重排歌词，Y 轴从 0 刻度开始算
+    /// 重排歌词，Y 轴从 0 刻度开始算
     /// </summary>
     /// <param name="resourceCreator"></param>
     /// <param name="lyricsData"></param>
@@ -206,7 +206,7 @@ public class HorizontalLyricsLayoutStrategy : LyricsLayoutStrategyBase
     }
 
     /// <summary>
-    ///     计算为了让当前歌词行的竖直几何中心点对齐到 0（原点），画布应该移动的距离（从画布最初始状态计算的值）
+    /// 计算为了让当前歌词行的竖直几何中心点对齐到 0（原点），画布应该移动的距离（从画布最初始状态计算的值）
     /// </summary>
     public override double? CalculateTargetScrollOffset(IList<RenderLyricsLine>? lines, int playingLineIndex)
     {
@@ -218,8 +218,8 @@ public class HorizontalLyricsLayoutStrategy : LyricsLayoutStrategyBase
     }
 
     /// <summary>
-    ///     计算当前屏幕可见的行范围
-    ///     返回值: (StartVisibleIndex, EndVisibleIndex)
+    /// 计算当前屏幕可见的行范围
+    /// 返回值: (StartVisibleIndex, EndVisibleIndex)
     /// </summary>
     public override (int Start, int End) CalculateVisibleRange(
         IList<RenderLyricsLine>? lines,

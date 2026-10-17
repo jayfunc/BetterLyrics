@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Windows.System;
-using BetterLyrics.Core.Enums;
+﻿using BetterLyrics.Core.Enums;
 using Microsoft.UI.Xaml;
+using System;
+using System.Collections.Generic;
 using Vanara.PInvoke;
+using Windows.System;
 using WinRT.Interop;
 
 namespace BetterLyrics.WinUI3.Hooks;
@@ -14,7 +14,7 @@ public class GlobalHotKeyHook
     private static readonly Dictionary<int, List<string>> _keys = [];
 
     /// <summary>
-    ///     Register a global hotkey for a specific window type
+    /// Register a global hotkey for a specific window type
     /// </summary>
     /// <typeparam name="T">Target window type</typeparam>
     /// <param name="id"></param>

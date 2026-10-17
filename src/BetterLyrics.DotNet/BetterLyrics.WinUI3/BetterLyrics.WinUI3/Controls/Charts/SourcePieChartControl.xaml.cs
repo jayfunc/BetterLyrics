@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using BetterLyrics.Core.Models.Stats;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
@@ -7,6 +5,8 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Shapes;
+using System;
+using System.Collections.Generic;
 using Windows.Foundation;
 using Windows.UI;
 
@@ -34,7 +34,10 @@ public sealed partial class SourcePieChartControl : UserControl
         _hoverTimer.Stop();
         foreach (var child in ChartCanvas.Children)
         {
-            if (child is UIElement ui) AnimateOpacity(ui, 1.0);
+            if (child is UIElement ui)
+            {
+                AnimateOpacity(ui, 1.0);
+            }
         }
     }
 
@@ -123,9 +126,15 @@ public sealed partial class SourcePieChartControl : UserControl
         double currentAngle = -90; // Start at top
 
         var accentBrush = (SolidColorBrush)Application.Current.Resources["AccentFillColorDefaultBrush"];
-        
+
         int validItemCount = 0;
-        foreach (var item in items) if (item.Percentage > 0) validItemCount++;
+        foreach (var item in items)
+        {
+            if (item.Percentage > 0)
+            {
+                validItemCount++;
+            }
+        }
 
         int drawnCount = 0;
 
@@ -135,7 +144,7 @@ public sealed partial class SourcePieChartControl : UserControl
             if (item.Percentage <= 0) continue;
 
             double sweepAngle = item.Percentage * 360;
-            
+
             Color sliceColor;
             if (drawnCount == 0)
             {
@@ -169,7 +178,10 @@ public sealed partial class SourcePieChartControl : UserControl
                     _hoverTimer.Stop();
                     foreach (var child in ChartCanvas.Children)
                     {
-                        if (child is UIElement ui) AnimateOpacity(ui, ui == ellipse ? 1.0 : 0.3);
+                        if (child is UIElement ui)
+                        {
+                            AnimateOpacity(ui, ui == ellipse ? 1.0 : 0.3);
+                        }
                     }
                 };
                 ellipse.PointerExited += (s, ev) =>
@@ -217,7 +229,7 @@ public sealed partial class SourcePieChartControl : UserControl
                     Fill = brush,
                     Data = pathGeometry
                 };
-                
+
                 // Exploded pie effect for all slices
                 double midRad = (currentAngle + sweepAngle / 2) * Math.PI / 180.0;
                 path.RenderTransform = new TranslateTransform
@@ -256,7 +268,7 @@ public sealed partial class SourcePieChartControl : UserControl
                 Brush = brush,
                 Text = item.Name
             });
-            
+
             drawnCount++;
         }
 

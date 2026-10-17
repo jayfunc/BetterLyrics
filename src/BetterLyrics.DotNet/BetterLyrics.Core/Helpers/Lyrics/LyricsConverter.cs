@@ -1,9 +1,9 @@
-﻿using System.Net;
-using System.Text;
-using BetterLyrics.Core.Constants;
+﻿using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Models.Lyrics;
 using BetterLyrics.Core.Models.Settings;
+using System.Net;
+using System.Text;
 
 namespace BetterLyrics.Core.Helpers.Lyrics;
 

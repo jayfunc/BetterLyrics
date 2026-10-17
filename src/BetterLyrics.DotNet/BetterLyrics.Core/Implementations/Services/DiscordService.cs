@@ -1,13 +1,13 @@
 using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
-using BetterLyrics.Core.ViewModels;
-using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 using DiscordRPC;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
+/// <summary>
+/// Singleton Service
+/// </summary>
 public class DiscordService : IDiscordService
 {
     private readonly ISongSearchMapService _songSearchMapService;

@@ -1,5 +1,3 @@
-using System;
-using System.Threading.Tasks;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
@@ -7,9 +5,14 @@ using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Controls;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System;
+using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Providers;
 
+/// <summary>
+/// Singleton Provider
+/// </summary>
 public class MediaSourceDialogProvider : IAddMediaSourceDialogProvider
 {
     private readonly IWindowManagerProvider _windowManagerProvider;

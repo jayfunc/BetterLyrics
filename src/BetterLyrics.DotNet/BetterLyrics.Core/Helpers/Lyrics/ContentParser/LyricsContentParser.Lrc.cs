@@ -1,6 +1,6 @@
-using System.Text.RegularExpressions;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Models.Lyrics;
+using System.Text.RegularExpressions;
 
 namespace BetterLyrics.Core.Helpers.Lyrics.ContentParser;
 

@@ -23,7 +23,7 @@ public class FullyObservableCollection<T> : ObservableCollection<T>
     }
 
     /// <summary>
-    ///     Occurs when a property is changed within an item.
+    /// Occurs when a property is changed within an item.
     /// </summary>
     public event EventHandler<ItemPropertyChangedEventArgs> ItemPropertyChanged;
 
@@ -96,7 +96,7 @@ public class FullyObservableCollection<T> : ObservableCollection<T>
 public class ItemPropertyChangedEventArgs : PropertyChangedEventArgs
 {
     /// <summary>
-    ///     Initializes a new instance of the <see cref="ItemPropertyChangedEventArgs" /> class.
+    /// Initializes a new instance of the <see cref="ItemPropertyChangedEventArgs" /> class.
     /// </summary>
     /// <param name="index">The index in the collection of changed item.</param>
     /// <param name="name">The name of the property that changed.</param>
@@ -106,7 +106,7 @@ public class ItemPropertyChangedEventArgs : PropertyChangedEventArgs
     }
 
     /// <summary>
-    ///     Initializes a new instance of the <see cref="ItemPropertyChangedEventArgs" /> class.
+    /// Initializes a new instance of the <see cref="ItemPropertyChangedEventArgs" /> class.
     /// </summary>
     /// <param name="index">The index.</param>
     /// <param name="args">The <see cref="PropertyChangedEventArgs" /> instance containing the event data.</param>
@@ -115,10 +115,10 @@ public class ItemPropertyChangedEventArgs : PropertyChangedEventArgs
     }
 
     /// <summary>
-    ///     Gets the index in the collection for which the property change has occurred.
+    /// Gets the index in the collection for which the property change has occurred.
     /// </summary>
     /// <value>
-    ///     Index in parent collection.
+    /// Index in parent collection.
     /// </value>
     public int CollectionIndex { get; }
 }

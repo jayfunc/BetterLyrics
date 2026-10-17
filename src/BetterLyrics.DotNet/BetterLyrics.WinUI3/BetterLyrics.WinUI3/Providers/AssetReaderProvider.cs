@@ -7,6 +7,9 @@ using Windows.Storage;
 
 namespace BetterLyrics.WinUI3.Providers;
 
+/// <summary>
+/// Singleton Provider
+/// </summary>
 public class AssetReaderProvider : IAssetReaderProvider
 {
     private static string FormatAssetPath(string assetFilename)

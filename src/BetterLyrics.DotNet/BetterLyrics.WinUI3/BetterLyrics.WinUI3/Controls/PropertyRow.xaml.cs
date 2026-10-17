@@ -1,13 +1,13 @@
-using System;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.DataTransfer;
-using Windows.System;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using System;
+using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.System;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -38,11 +38,6 @@ public sealed partial class PropertyRow : UserControl
     private readonly ILauncherProvider _launcherProvider =
         Ioc.Default.GetRequiredService<ILauncherProvider>();
 
-    public PropertyRow()
-    {
-        InitializeComponent();
-    }
-
     public string Header
     {
         get => (string)GetValue(HeaderProperty);
@@ -69,6 +64,11 @@ public sealed partial class PropertyRow : UserControl
 
     private Visibility TextVisibility => Link == string.Empty ? Visibility.Visible : Visibility.Collapsed;
     private Visibility LinkVisibility => Link != string.Empty ? Visibility.Visible : Visibility.Collapsed;
+
+    public PropertyRow()
+    {
+        InitializeComponent();
+    }
 
     private void OnPointerEntered(object sender, PointerRoutedEventArgs e)
     {

@@ -5,6 +5,9 @@ using LiteDB;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
+/// <summary>
+/// Singleton Service
+/// </summary>
 public class PlayHistoryService : IPlayHistoryService
 {
     private readonly IDatabaseService _databaseService;
@@ -12,9 +15,9 @@ public class PlayHistoryService : IPlayHistoryService
     public PlayHistoryService(IDatabaseService databaseService)
     {
         _databaseService = databaseService;
-        
+
         var col = _databaseService.PlayHistoryDb.GetCollection<PlayHistoryItem>("playHistory");
-        
+
         try
         {
             col.DropIndex("Title");
@@ -37,7 +40,7 @@ public class PlayHistoryService : IPlayHistoryService
 
         var col = GetCollection();
         col.Insert(item);
-        
+
         return Task.CompletedTask;
     }
 
@@ -48,7 +51,7 @@ public class PlayHistoryService : IPlayHistoryService
             .OrderByDescending(x => x.StartedAt)
             .Limit(limit)
             .ToList();
-            
+
         return Task.FromResult(result);
     }
 
@@ -58,7 +61,7 @@ public class PlayHistoryService : IPlayHistoryService
         var result = col.Query()
             .Where(x => x.StartedAt >= start && x.StartedAt <= end)
             .ToList();
-            
+
         return Task.FromResult(result);
     }
 
@@ -170,8 +173,8 @@ public class PlayHistoryService : IPlayHistoryService
             ("Stay", "The Kid LAROI & Justin Bieber", "F*ck Love 3: Over You")
         };
 
-        var playerIds = new[] 
-        { 
+        var playerIds = new[]
+        {
             "Sakawish.SaltPlayerforWindows_q65q631pyh094!SaltPlayerforWindows",
             "AppleInc.AppleMusicWin_nzyj5cx40ttqa!App",
             "37412.BetterLyrics_mxmjbjshrz3mm!App",
@@ -179,7 +182,7 @@ public class PlayHistoryService : IPlayHistoryService
         };
         var batchList = new List<PlayHistoryItem>();
         var attempts = 0;
-        
+
         while (batchList.Count < count && attempts < count * 5)
         {
             attempts++;
@@ -201,13 +204,23 @@ public class PlayHistoryService : IPlayHistoryService
             double playedRatio;
             var roll = random.NextDouble();
 
-            if (roll > 0.3) playedRatio = 0.9 + random.NextDouble() * 0.1;
-            else if (roll > 0.1) playedRatio = 0.3 + random.NextDouble() * 0.5;
-            else playedRatio = 0.05 + random.NextDouble() * 0.25;
+            if (roll > 0.3)
+            {
+                playedRatio = 0.9 + random.NextDouble() * 0.1;
+            }
+            else if (roll > 0.1)
+            {
+                playedRatio = 0.3 + random.NextDouble() * 0.5;
+            }
+            else
+            {
+                playedRatio = 0.05 + random.NextDouble() * 0.25;
+            }
 
             var playedDurationMs = totalDurationMs * playedRatio;
 
             if (playedDurationMs >= totalDurationMs / 2)
+            {
                 batchList.Add(new PlayHistoryItem
                 {
                     Title = song.Title,
@@ -218,6 +231,7 @@ public class PlayHistoryService : IPlayHistoryService
                     TotalDurationMs = totalDurationMs,
                     DurationPlayedMs = playedDurationMs
                 });
+            }
         }
 
         if (batchList.Count > 0)
@@ -225,7 +239,7 @@ public class PlayHistoryService : IPlayHistoryService
             var col = GetCollection();
             col.InsertBulk(batchList);
         }
-        
+
         return Task.CompletedTask;
     }
 }

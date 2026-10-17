@@ -12,10 +12,10 @@ public partial class ByteArrayToImageSizeConverter : IValueConverter
         {
             var bitmapImage = BitmapImageExtensions.FromByteArray(byteArray);
             string param = parameter?.ToString() ?? "";
-            
+
             if (param.Equals("Width", StringComparison.OrdinalIgnoreCase))
                 return bitmapImage.PixelWidth.ToString();
-                
+
             if (param.Equals("Height", StringComparison.OrdinalIgnoreCase))
                 return bitmapImage.PixelHeight.ToString();
         }

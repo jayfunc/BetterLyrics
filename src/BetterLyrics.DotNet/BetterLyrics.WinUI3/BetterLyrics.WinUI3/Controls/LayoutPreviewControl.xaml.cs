@@ -1,20 +1,19 @@
-using System.Linq;
-using Windows.Foundation;
-using BetterLyrics.Core.Messages;
+using BetterLyrics.Core.Messages.LayoutChanged;
+using BetterLyrics.Core.Messages.LyricsWindow;
 using BetterLyrics.Core.Models;
+using BetterLyrics.Core.Models.Domain;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helpers;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System;
+using System.Linq;
 
 namespace BetterLyrics.WinUI3.Controls;
 
-public sealed partial class LayoutPreviewControl : UserControl,
-    IRecipient<PropertyChangedMessage<Rect>>,
-    IRecipient<LayoutChangedMessage>
+public sealed partial class LayoutPreviewControl : UserControl
 {
     public static readonly DependencyProperty LayoutProfileProperty =
         DependencyProperty.Register(
@@ -23,17 +22,16 @@ public sealed partial class LayoutPreviewControl : UserControl,
             typeof(LayoutPreviewControl),
             new PropertyMetadata(null, OnLayoutProfileChanged));
 
-    public static readonly DependencyProperty LyricsWindowStatusProperty =
+    public static readonly DependencyProperty TargetBoundsProperty =
         DependencyProperty.Register(
-            nameof(LyricsWindowStatus),
-            typeof(LyricsWindowStatus),
+            nameof(TargetBounds),
+            typeof(AppRect),
             typeof(LayoutPreviewControl),
-            new PropertyMetadata(null, OnLyricsWindowStatusChanged));
+            new PropertyMetadata(null, OnTargetBoundsChanged));
 
     public LayoutPreviewControl()
     {
         InitializeComponent();
-        WeakReferenceMessenger.Default.RegisterAll(this);
     }
 
     public LayoutProfile LayoutProfile
@@ -42,22 +40,10 @@ public sealed partial class LayoutPreviewControl : UserControl,
         set => SetValue(LayoutProfileProperty, value);
     }
 
-    public LyricsWindowStatus LyricsWindowStatus
+    public AppRect TargetBounds
     {
-        get => (LyricsWindowStatus)GetValue(LyricsWindowStatusProperty);
-        set => SetValue(LyricsWindowStatusProperty, value);
-    }
-
-    public void Receive(LayoutChangedMessage message)
-    {
-        RenderPreview();
-    }
-
-    public void Receive(PropertyChangedMessage<Rect> message)
-    {
-        if (LyricsWindowStatus != null && message.Sender == LyricsWindowStatus)
-            if (message.PropertyName == nameof(LyricsWindowStatus.WindowBounds))
-                RenderPreview();
+        get => (AppRect)GetValue(TargetBoundsProperty);
+        set => SetValue(TargetBoundsProperty, value);
     }
 
     private static void OnLayoutProfileChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -65,19 +51,30 @@ public sealed partial class LayoutPreviewControl : UserControl,
         if (d is LayoutPreviewControl control) control.RenderPreview();
     }
 
-    private static void OnLyricsWindowStatusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    private static void OnTargetBoundsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
-        if (d is LayoutPreviewControl control) control.RenderPreview();
+        if (d is LayoutPreviewControl control)
+        {
+            var oldBounds = e.OldValue as AppRect;
+            var newBounds = e.NewValue as AppRect;
+            // 如果新旧 bounds 存在，且宽度与高度均未发生改变（仅坐标变化，如拖拽窗口），则忽略重绘
+            if (oldBounds != null && newBounds != null &&
+                oldBounds.Width == newBounds.Width &&
+                oldBounds.Height == newBounds.Height)
+            {
+                return;
+            }
+            control.RenderPreview();
+        }
     }
 
     private void UpdateAspectRatio()
     {
         double previewBaseWidth = 200; // 设定预览图的固定宽度
 
-        if (LyricsWindowStatus != null && LyricsWindowStatus.WindowBounds.Width > 0 &&
-            LyricsWindowStatus.WindowBounds.Height > 0)
+        if (TargetBounds != null && TargetBounds.Width > 0 && TargetBounds.Height > 0)
         {
-            var ratio = LyricsWindowStatus.WindowBounds.Height / LyricsWindowStatus.WindowBounds.Width;
+            var ratio = TargetBounds.Height / TargetBounds.Width;
             PreviewGrid.Width = previewBaseWidth;
             PreviewGrid.Height = previewBaseWidth * ratio; // 根据主窗口比例算出高度
         }
@@ -95,10 +92,14 @@ public sealed partial class LayoutPreviewControl : UserControl,
         UpdateAspectRatio();
 
         var scale = 1.0;
-        if (LyricsWindowStatus != null && LyricsWindowStatus.WindowBounds.Width > 0)
-            scale = PreviewGrid.Width / LyricsWindowStatus.WindowBounds.Width;
+        if (TargetBounds != null && TargetBounds.Width > 0)
+        {
+            scale = PreviewGrid.Width / TargetBounds.Width;
+        }
         else
+        {
             scale = PreviewGrid.Width / 1280.0; // 假定一个默认的 1280 窗口宽度作为参照
+        }
 
         PreviewGrid.Children.Clear();
         PreviewGrid.RowDefinitions.Clear();
@@ -120,12 +121,14 @@ public sealed partial class LayoutPreviewControl : UserControl,
             LayoutProfile.PaddingBottom * scale);
 
         foreach (var rowDef in LayoutProfile.RowDefinitions)
-            PreviewGrid.RowDefinitions.Add(new RowDefinition
-                { Height = GridLengthExtensions.ParseGridLength(rowDef, scale) });
+        {
+            PreviewGrid.RowDefinitions.Add(new RowDefinition { Height = GridLengthExtensions.ParseGridLength(rowDef, scale) });
+        }
 
         foreach (var colDef in LayoutProfile.ColumnDefinitions)
-            PreviewGrid.ColumnDefinitions.Add(new ColumnDefinition
-                { Width = GridLengthExtensions.ParseGridLength(colDef, scale) });
+        {
+            PreviewGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLengthExtensions.ParseGridLength(colDef, scale) });
+        }
 
         foreach (var placement in LayoutProfile.Placements.OrderBy(x => x.ComponentType))
         {
@@ -154,8 +157,7 @@ public sealed partial class LayoutPreviewControl : UserControl,
                 placement.PaddingTop * scale,
                 placement.PaddingRight * scale,
                 placement.PaddingBottom * scale),
-            HorizontalAlignment =
-                HorizontalAlignmentExtensions.FromAppHorizontalAlignment(placement.HorizontalAlignment),
+            HorizontalAlignment = HorizontalAlignmentExtensions.FromAppHorizontalAlignment(placement.HorizontalAlignment),
             VerticalAlignment = VerticalAlignmentExtensions.FromAppVerticalAlignment(placement.VerticalAlignment)
         };
 

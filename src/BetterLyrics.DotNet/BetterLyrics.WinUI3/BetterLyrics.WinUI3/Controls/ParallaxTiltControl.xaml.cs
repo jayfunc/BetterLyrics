@@ -20,11 +20,6 @@ public sealed partial class ParallaxTiltControl : UserControl
     private bool _isLoaded;
     private bool _isRenderingSubscribed;
 
-    public ParallaxTiltControl()
-    {
-        InitializeComponent();
-    }
-
     public UIElement Child
     {
         get => (UIElement)GetValue(ChildProperty);
@@ -38,6 +33,11 @@ public sealed partial class ParallaxTiltControl : UserControl
     }
 
     public ParallaxTiltEffect? ParallaxContext { get; set; }
+
+    public ParallaxTiltControl()
+    {
+        InitializeComponent();
+    }
 
     private static void OnIsParallaxEnabledChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {

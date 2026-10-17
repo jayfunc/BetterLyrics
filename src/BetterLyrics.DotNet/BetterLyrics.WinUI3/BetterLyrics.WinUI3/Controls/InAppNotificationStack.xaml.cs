@@ -1,3 +1,9 @@
+using BetterLyrics.WinUI3.Models;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Animation;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -5,12 +11,6 @@ using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 using Windows.Foundation;
-using BetterLyrics.WinUI3.Models;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Media.Animation;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -29,8 +29,7 @@ public sealed partial class InAppNotificationStack : UserControl
 
     public ObservableCollection<NotificationItem> Notifications { get; } = new();
 
-    public void Show(string title, string? message, InfoBarSeverity severity = InfoBarSeverity.Informational,
-        TimeSpan? duration = null, bool isClosable = true)
+    public void Show(string title, string? message, InfoBarSeverity severity = InfoBarSeverity.Informational, TimeSpan? duration = null, bool isClosable = true)
     {
         var item = new NotificationItem
         {
@@ -44,7 +43,10 @@ public sealed partial class InAppNotificationStack : UserControl
         item.OnCloseRequest = i => RemoveItem(i);
         Notifications.Add(item);
 
-        if (duration > TimeSpan.Zero) _ = HandleAutoCloseAsync(item, duration.Value);
+        if (duration > TimeSpan.Zero)
+        {
+            _ = HandleAutoCloseAsync(item, duration.Value);
+        }
     }
 
     private async Task HandleAutoCloseAsync(NotificationItem item, TimeSpan duration)
@@ -54,7 +56,10 @@ public sealed partial class InAppNotificationStack : UserControl
             await Task.Delay(duration);
             DispatcherQueue.TryEnqueue(() =>
             {
-                if (Notifications.Contains(item)) RemoveItem(item);
+                if (Notifications.Contains(item))
+                {
+                    RemoveItem(item);
+                }
             });
         }
         catch
@@ -68,7 +73,10 @@ public sealed partial class InAppNotificationStack : UserControl
 
         item.IsRemoving = true;
 
-        if (_itemContainerMap.TryGetValue(item, out var container)) await PlayExitAnimationAsync(container);
+        if (_itemContainerMap.TryGetValue(item, out var container))
+        {
+            await PlayExitAnimationAsync(container);
+        }
 
         if (Notifications.Contains(item))
         {
@@ -96,8 +104,12 @@ public sealed partial class InAppNotificationStack : UserControl
 
         var transform = element.RenderTransform as TranslateTransform;
         if (transform == null)
+        {
             if (element is Grid g && g.RenderTransform is TranslateTransform gridTrans)
+            {
                 transform = gridTrans;
+            }
+        }
 
         if (transform != null)
         {
@@ -121,7 +133,10 @@ public sealed partial class InAppNotificationStack : UserControl
 
     private void OnInfoBarCloseButtonClick(InfoBar sender, object args)
     {
-        if (sender.DataContext is NotificationItem item) RemoveItem(item);
+        if (sender.DataContext is NotificationItem item)
+        {
+            RemoveItem(item);
+        }
     }
 
     private void OnPointerEntered(object sender, PointerRoutedEventArgs e)
@@ -221,7 +236,9 @@ public sealed partial class InAppNotificationStack : UserControl
             var receiver = rootGrid.Children[1];
 
             if (receiver != null && infoBar != null && infoBar.Shadow is ThemeShadow themeShadow)
+            {
                 themeShadow.Receivers.Add(receiver);
+            }
 
             rootGrid.RenderTransformOrigin = new Point(0.5, 1.0);
             _itemContainerMap[item] = rootGrid;

@@ -1,31 +1,35 @@
-using System;
-using System.Runtime.CompilerServices;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Settings;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System;
+using System.Runtime.CompilerServices;
 
-namespace BetterLyrics.WinUI3.Helpers;
+namespace BetterLyrics.WinUI3.Behaviors;
 
-public static class GridColumnVisibilityHelper
+public static class MusicGalleryGrid
 {
     private static readonly ConditionalWeakTable<Grid, System.ComponentModel.PropertyChangedEventHandler> _handlers = new();
 
-    public static readonly DependencyProperty SyncWithMusicGallerySettingsProperty =
+    public static readonly DependencyProperty SyncColumnVisibilityProperty =
         DependencyProperty.RegisterAttached(
-            "SyncWithMusicGallerySettings",
+            "SyncColumnVisibility",
             typeof(bool),
-            typeof(GridColumnVisibilityHelper),
-            new PropertyMetadata(false, OnSyncWithMusicGallerySettingsChanged));
+            typeof(MusicGalleryGrid),
+            new PropertyMetadata(false, OnSyncColumnVisibilityChanged));
 
-    public static bool GetSyncWithMusicGallerySettings(DependencyObject obj)
-        => (bool)obj.GetValue(SyncWithMusicGallerySettingsProperty);
+    public static bool GetSyncColumnVisibility(DependencyObject obj)
+    {
+        return (bool)obj.GetValue(SyncColumnVisibilityProperty);
+    }
 
-    public static void SetSyncWithMusicGallerySettings(DependencyObject obj, bool value)
-        => obj.SetValue(SyncWithMusicGallerySettingsProperty, value);
+    public static void SetSyncColumnVisibility(DependencyObject obj, bool value)
+    {
+        obj.SetValue(SyncColumnVisibilityProperty, value);
+    }
 
-    private static void OnSyncWithMusicGallerySettingsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    private static void OnSyncColumnVisibilityChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         if (d is Grid grid)
         {
@@ -72,7 +76,10 @@ public static class GridColumnVisibilityHelper
                     return;
                 }
 
-                targetGrid.DispatcherQueue?.TryEnqueue(() => UpdateColumns(targetGrid, settings));
+                targetGrid.DispatcherQueue?.TryEnqueue(() =>
+                {
+                    UpdateColumns(targetGrid, settings);
+                });
             };
 
             settings.PropertyChanged += handler;
@@ -102,8 +109,11 @@ public static class GridColumnVisibilityHelper
 
     private static void UpdateColumns(Grid grid, MusicGallerySettings settings)
     {
-        if (grid.ColumnDefinitions.Count < 15) return;
-        
+        if (grid.ColumnDefinitions.Count < 15)
+        {
+            return;
+        }
+
         grid.ColumnDefinitions[2].Width = settings.ShowAlbumColumn ? new GridLength(2, GridUnitType.Star) : new GridLength(0);
         grid.ColumnDefinitions[3].Width = settings.ShowGenreColumn ? new GridLength(1, GridUnitType.Star) : new GridLength(0);
         grid.ColumnDefinitions[4].Width = settings.ShowYearColumn ? new GridLength(1, GridUnitType.Star) : new GridLength(0);

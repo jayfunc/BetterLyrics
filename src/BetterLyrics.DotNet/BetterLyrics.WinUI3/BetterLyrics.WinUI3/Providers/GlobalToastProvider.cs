@@ -1,17 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using BetterLyrics.Core.Enums;
+﻿using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Windowing;
+using System;
+using System.Collections.Generic;
 using Vanara.PInvoke;
 using WinRT.Interop;
 
 namespace BetterLyrics.WinUI3.Providers;
 
+/// <summary>
+/// Singleton Provider
+/// </summary>
 public class GlobalToastProvider : IGlobalToastProvider
 {
     private static readonly ILocalizationService _localizationService =

@@ -1,20 +1,17 @@
-using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
-using BetterLyrics.Core.Models.Settings;
+using BetterLyrics.Core.Messages.AppSettings;
 using BetterLyrics.WinUI3.Extensions;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 
 namespace BetterLyrics.WinUI3.Views;
 
 public sealed partial class SettingsWindow : Window,
-    IRecipient<PropertyChangedMessage<AppTheme>>
+    IRecipient<AppThemeChangedMessage>
 {
-    private readonly IWindowManagerProvider _windowManagerProvider =
-        Ioc.Default.GetRequiredService<IWindowManagerProvider>();
+    private readonly IWindowManagerProvider _windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
 
     public SettingsWindow()
     {
@@ -28,11 +25,14 @@ public sealed partial class SettingsWindow : Window,
         AppWindow.Closing += AppWindow_Closing;
     }
 
-    public void Receive(PropertyChangedMessage<AppTheme> message)
+    ~SettingsWindow()
     {
-        if (message.Sender is GeneralSettings)
-            if (message.PropertyName == nameof(GeneralSettings.AppTheme))
-                this.SyncTheme();
+        WeakReferenceMessenger.Default.UnregisterAll(this);
+    }
+
+    public void Receive(AppThemeChangedMessage message)
+    {
+        this.SyncTheme();
     }
 
     private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)

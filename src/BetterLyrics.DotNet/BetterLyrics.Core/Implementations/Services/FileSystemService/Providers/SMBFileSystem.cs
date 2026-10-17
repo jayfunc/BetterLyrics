@@ -54,11 +54,11 @@ public class SMBFileSystem : IUnifiedFileSystem
     }
 
     /// <summary>
-    ///     获取文件列表
+    /// 获取文件列表
     /// </summary>
     /// <param name="parentFolder">
-    ///     传入要列出的文件夹实体。
-    ///     如果传入 null，则默认列出 MediaFolder 配置的根目录。
+    /// 传入要列出的文件夹实体。
+    /// 如果传入 null，则默认列出 MediaFolder 配置的根目录。
     /// </param>
     public async Task<List<FilesIndexItem>> GetFilesAsync(FilesIndexItem? parentFolder = null)
     {
@@ -133,7 +133,7 @@ public class SMBFileSystem : IUnifiedFileSystem
     }
 
     /// <summary>
-    ///     打开文件流
+    /// 打开文件流
     /// </summary>
     /// <param name="file">只需要传入文件实体即可</param>
     public async Task<Stream?> OpenReadAsync(FilesIndexItem file)

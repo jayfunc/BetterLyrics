@@ -1,14 +1,17 @@
-﻿using System;
+﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Interfaces.Providers;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.Storage.Pickers;
-using BetterLyrics.Core.Enums;
-using BetterLyrics.Core.Interfaces.Providers;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using WinRT.Interop;
 
 namespace BetterLyrics.WinUI3.Providers;
 
+/// <summary>
+/// Singleton Provider
+/// </summary>
 public class FilePickerProvider : IFilePickerProvider
 {
     private readonly IWindowManagerProvider _windowManagerProvider =

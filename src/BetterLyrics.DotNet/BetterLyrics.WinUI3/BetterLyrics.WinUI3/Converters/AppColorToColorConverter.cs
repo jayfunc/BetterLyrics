@@ -1,9 +1,9 @@
-﻿using System;
-using Windows.UI;
-using BetterLyrics.Core.Models.Domain;
+﻿using BetterLyrics.Core.Models.Domain;
 using BetterLyrics.WinUI3.Extensions;
 using Microsoft.UI;
 using Microsoft.UI.Xaml.Data;
+using System;
+using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Converters;
 

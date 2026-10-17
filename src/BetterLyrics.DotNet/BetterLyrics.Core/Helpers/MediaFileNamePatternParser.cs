@@ -11,7 +11,7 @@ public static partial class MediaFileNamePatternParser
         try
         {
             var escapedPattern = ToRegexPattern(pattern);
-            
+
             var regex = new Regex(escapedPattern, RegexOptions.IgnoreCase);
             var match = regex.Match(fileNameWithoutExt);
 
@@ -20,7 +20,7 @@ public static partial class MediaFileNamePatternParser
                 var artist = match.Groups["Artist"].Success ? match.Groups["Artist"].Value.Trim() : null;
                 var title = match.Groups["Title"].Success ? match.Groups["Title"].Value.Trim() : null;
                 var album = match.Groups["Album"].Success ? match.Groups["Album"].Value.Trim() : null;
-                
+
                 return (artist, title, album);
             }
         }

@@ -1,14 +1,16 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.WinUI3.Views;
 using Microsoft.UI.Xaml.Controls;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Providers;
 
+/// <summary>
+/// Singleton Provider
+/// </summary>
 public class LastFmDialogProvider : ILastFmDialogProvider
 {
     private readonly IWindowManagerProvider _windowManagerProvider;

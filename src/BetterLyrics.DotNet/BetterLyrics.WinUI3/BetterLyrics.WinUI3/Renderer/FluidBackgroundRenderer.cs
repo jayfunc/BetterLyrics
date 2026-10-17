@@ -1,6 +1,3 @@
-using System;
-using System.Numerics;
-using Windows.UI;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Shaders;
 using ComputeSharp.D2D1.WinUI;
@@ -8,6 +5,9 @@ using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI;
+using System;
+using System.Numerics;
+using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Renderer;
 

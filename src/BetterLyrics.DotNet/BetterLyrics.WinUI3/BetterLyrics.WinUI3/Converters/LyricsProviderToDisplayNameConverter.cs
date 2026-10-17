@@ -1,12 +1,12 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using System;
-using System.Linq;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Interfaces.Services;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml.Data;
+using System;
+using System.Linq;
 
 namespace BetterLyrics.WinUI3.Converters;
 

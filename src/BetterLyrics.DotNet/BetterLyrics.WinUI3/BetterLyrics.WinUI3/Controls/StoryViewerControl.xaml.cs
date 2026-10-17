@@ -1,11 +1,10 @@
-using System;
-using System.Collections.Generic;
 using BetterLyrics.Core.ViewModels;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace BetterLyrics.WinUI3.Controls;
@@ -16,8 +15,8 @@ public sealed partial class StoryViewerControl : UserControl
     public event CloseRequestedHandler CloseRequested;
 
     public StatsDashboardControlViewModel ViewModel { get; set; }
-    
-    private List<SceneConfiguration> _pageScenes;
+
+    private List<AmbientSceneConfiguration> _pageScenes;
 
     public StoryViewerControl()
     {
@@ -36,28 +35,28 @@ public sealed partial class StoryViewerControl : UserControl
     private void GenerateScenes()
     {
         var rnd = new System.Random();
-        _pageScenes = new List<SceneConfiguration>();
+        _pageScenes = new List<AmbientSceneConfiguration>();
 
         // Hand-crafted preset combinations that are guaranteed to look good
-        var curatedPresets = new List<SceneConfiguration>
+        var curatedPresets = new List<AmbientSceneConfiguration>
         {
-            new SceneConfiguration { Background = BackgroundStyle.WarmDark, Ambient = AmbientElement.GodRays, Overlay = OverlayEffect.DustParticles }, // Sunlight
-            new SceneConfiguration { Background = BackgroundStyle.DeepGreen, Ambient = AmbientElement.BlurredBlobs, Overlay = OverlayEffect.None }, // TreeShade
-            new SceneConfiguration { Background = BackgroundStyle.DeepBlue, Ambient = AmbientElement.TrainPole, Overlay = OverlayEffect.TrainStreaks }, // Train
-            new SceneConfiguration { Background = BackgroundStyle.DeepSpace, Ambient = AmbientElement.None, Overlay = OverlayEffect.Stars }, // StarryNight
-            new SceneConfiguration { Background = BackgroundStyle.Gloomy, Ambient = AmbientElement.None, Overlay = OverlayEffect.RainDrops }, // RainyWindow
-            new SceneConfiguration { Background = BackgroundStyle.PitchBlack, Ambient = AmbientElement.StageSpotlights, Overlay = OverlayEffect.None }, // StageSpotlight
-            new SceneConfiguration { Background = BackgroundStyle.GoldBlack, Ambient = AmbientElement.SweepingHighlight, Overlay = OverlayEffect.VinylRings }, // VinylGrooves
-            new SceneConfiguration { Background = BackgroundStyle.NeonPurple, Ambient = AmbientElement.NeonGrid, Overlay = OverlayEffect.DataParticles }, // Cyberpunk
-            new SceneConfiguration { Background = BackgroundStyle.FrostBlue, Ambient = AmbientElement.NorthernLights, Overlay = OverlayEffect.Snowflakes }, // Winter
-            new SceneConfiguration { Background = BackgroundStyle.SunsetOrange, Ambient = AmbientElement.None, Overlay = OverlayEffect.FloatingEmbers } // Sunset
+            new AmbientSceneConfiguration { Background = AmbientBackgroundStyle.WarmDark, Ambient = AmbientElement.GodRays, Overlay = AmbientOverlayEffect.DustParticles }, // Sunlight
+            new AmbientSceneConfiguration { Background = AmbientBackgroundStyle.DeepGreen, Ambient = AmbientElement.BlurredBlobs, Overlay = AmbientOverlayEffect.None }, // TreeShade
+            new AmbientSceneConfiguration { Background = AmbientBackgroundStyle.DeepBlue, Ambient = AmbientElement.TrainPole, Overlay = AmbientOverlayEffect.TrainStreaks }, // Train
+            new AmbientSceneConfiguration { Background = AmbientBackgroundStyle.DeepSpace, Ambient = AmbientElement.None, Overlay = AmbientOverlayEffect.Stars }, // StarryNight
+            new AmbientSceneConfiguration { Background = AmbientBackgroundStyle.Gloomy, Ambient = AmbientElement.None, Overlay = AmbientOverlayEffect.RainDrops }, // RainyWindow
+            new AmbientSceneConfiguration { Background = AmbientBackgroundStyle.PitchBlack, Ambient = AmbientElement.StageSpotlights, Overlay = AmbientOverlayEffect.None }, // StageSpotlight
+            new AmbientSceneConfiguration { Background = AmbientBackgroundStyle.GoldBlack, Ambient = AmbientElement.SweepingHighlight, Overlay = AmbientOverlayEffect.VinylRings }, // VinylGrooves
+            new AmbientSceneConfiguration { Background = AmbientBackgroundStyle.NeonPurple, Ambient = AmbientElement.NeonGrid, Overlay = AmbientOverlayEffect.DataParticles }, // Cyberpunk
+            new AmbientSceneConfiguration { Background = AmbientBackgroundStyle.FrostBlue, Ambient = AmbientElement.NorthernLights, Overlay = AmbientOverlayEffect.Snowflakes }, // Winter
+            new AmbientSceneConfiguration { Background = AmbientBackgroundStyle.SunsetOrange, Ambient = AmbientElement.None, Overlay = AmbientOverlayEffect.FloatingEmbers } // Sunset
         };
 
         // We need 8 distinct scenes for the 8 pages
         for (int i = 0; i < 8; i++)
         {
             if (curatedPresets.Count == 0) break;
-            
+
             int index = rnd.Next(curatedPresets.Count);
             _pageScenes.Add(curatedPresets[index]);
             curatedPresets.RemoveAt(index);
@@ -67,7 +66,7 @@ public sealed partial class StoryViewerControl : UserControl
     private void BuildPages()
     {
         StoryFlipView.Items.Clear();
-        
+
         // Page 1: Overview
         var page1 = new StoryPageOverview();
         StoryFlipView.Items.Add(page1);
@@ -154,7 +153,7 @@ public sealed partial class StoryViewerControl : UserControl
         BackgroundControl.SetScene(_pageScenes[StoryFlipView.SelectedIndex]);
 
         var currentPage = StoryFlipView.Items[StoryFlipView.SelectedIndex];
-        
+
         if (currentPage is StoryPageOverview overviewPage)
         {
             overviewPage.PlayAnimation(ViewModel.TotalTracksPlayed, ViewModel.TotalDuration.TotalHours);

@@ -15,17 +15,17 @@ public sealed partial class LyricsStyleSettingsControl : UserControl
         DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus),
             typeof(LyricsStyleSettingsControl), new PropertyMetadata(null));
 
+    public LyricsWindowStatus LyricsWindowStatus
+    {
+        get => (LyricsWindowStatus)GetValue(LyricsWindowStatusProperty);
+        set => SetValue(LyricsWindowStatusProperty, value);
+    }
+
     private readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
 
     public LyricsStyleSettingsControl()
     {
         InitializeComponent();
-    }
-
-    public LyricsWindowStatus LyricsWindowStatus
-    {
-        get => (LyricsWindowStatus)GetValue(LyricsWindowStatusProperty);
-        set => SetValue(LyricsWindowStatusProperty, value);
     }
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -37,11 +37,13 @@ public sealed partial class LyricsStyleSettingsControl : UserControl
         LyricsCardStyleComboBox.Items.Add(new ComboBoxItem
         {
             Content = _localizationService.GetLocalizedString("LyricsSharePageStyleMinimal"),
-            Tag = "LyricsCardMinimalStyle", IsSelected = true
+            Tag = "LyricsCardMinimalStyle",
+            IsSelected = true
         });
         LyricsCardStyleComboBox.Items.Add(new ComboBoxItem
         {
-            Content = _localizationService.GetLocalizedString("LyricsSharePageStyleSwiss"), Tag = "LyricsCardSwissStyle"
+            Content = _localizationService.GetLocalizedString("LyricsSharePageStyleSwiss"),
+            Tag = "LyricsCardSwissStyle"
         });
         LyricsCardStyleComboBox.Items.Add(new ComboBoxItem
         {
@@ -53,10 +55,11 @@ public sealed partial class LyricsStyleSettingsControl : UserControl
         AddGroupHeader("LyricsSharePageGroupPhysical");
         LyricsCardStyleComboBox.Items.Add(new ComboBoxItem
         {
-            Content = _localizationService.GetLocalizedString("LyricsSharePageStyleVinyl"), Tag = "LyricsCardVinylStyle"
+            Content = _localizationService.GetLocalizedString("LyricsSharePageStyleVinyl"),
+            Tag = "LyricsCardVinylStyle"
         });
         LyricsCardStyleComboBox.Items.Add(new ComboBoxItem
-            { Content = _localizationService.GetLocalizedString("LyricsSharePageStyleCD"), Tag = "LyricsCardCDStyle" });
+        { Content = _localizationService.GetLocalizedString("LyricsSharePageStyleCD"), Tag = "LyricsCardCDStyle" });
         LyricsCardStyleComboBox.Items.Add(new ComboBoxItem
         {
             Content = _localizationService.GetLocalizedString("LyricsSharePageStylePolaroid"),
@@ -90,7 +93,7 @@ public sealed partial class LyricsStyleSettingsControl : UserControl
         AddGroupHeader("LyricsSharePageGroupRetro");
         LyricsCardStyleComboBox.Items.Add(new ComboBoxItem { Content = "iPod", Tag = "LyricsCardPodStyle" });
         LyricsCardStyleComboBox.Items.Add(new ComboBoxItem
-            { Content = "Windows Phone", Tag = "LyricsCardWindowsPhoneStyle" });
+        { Content = "Windows Phone", Tag = "LyricsCardWindowsPhoneStyle" });
         LyricsCardStyleComboBox.Items.Add(new ComboBoxItem
         {
             Content = _localizationService.GetLocalizedString("LyricsSharePageStyleRetroQQ"),
@@ -163,7 +166,10 @@ public sealed partial class LyricsStyleSettingsControl : UserControl
         if (LyricsCardStyleComboBox.SelectedItem is ComboBoxItem selectedItem)
         {
             var styleKey = selectedItem.Tag?.ToString();
-            if (!string.IsNullOrEmpty(styleKey)) LyricsWindowStatus.LyricsCardStyleKey = styleKey;
+            if (!string.IsNullOrEmpty(styleKey))
+            {
+                LyricsWindowStatus.LyricsCardStyleKey = styleKey;
+            }
         }
     }
 

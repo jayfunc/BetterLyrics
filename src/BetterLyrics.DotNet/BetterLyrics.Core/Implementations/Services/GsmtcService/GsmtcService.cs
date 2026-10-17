@@ -1,7 +1,5 @@
 // 2025/6/23 by Zhe Fang
 
-using System.Collections.Specialized;
-using System.Text.Json;
 using BetterLyrics.Core.Collections;
 using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
@@ -9,8 +7,11 @@ using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Messages.AppSettings;
+using BetterLyrics.Core.Messages.LyricsWindow;
+using BetterLyrics.Core.Messages.MediaLibrary;
+using BetterLyrics.Core.Messages.Playback;
 using BetterLyrics.Core.Models;
-using BetterLyrics.Core.Models.Lyrics;
 using BetterLyrics.Core.Models.Memory;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.Serialization;
@@ -18,20 +19,25 @@ using BetterLyrics.Core.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 using EvtSource;
 using Microsoft.Extensions.Logging;
+using System.Collections.Specialized;
+using System.Text.Json;
 
 namespace BetterLyrics.Core.Implementations.Services.GsmtcService;
 
-public partial class GsmtcService : BaseViewModel, IGsmtcService,
-    IRecipient<PropertyChangedMessage<bool>>,
-    IRecipient<PropertyChangedMessage<string>>,
-    IRecipient<PropertyChangedMessage<DateTime?>>,
-    IRecipient<PropertyChangedMessage<int>>,
-    IRecipient<PropertyChangedMessage<WindowStatus>>,
-    IRecipient<PropertyChangedMessage<ChineseConversion>>,
-    IRecipient<PropertyChangedMessage<OnlineAlbumArtProvider>>
+/// <summary>
+/// Singleton Service
+/// </summary>
+public partial class GsmtcService : ObservableObject, IGsmtcService,
+    IRecipient<MediaSourceProviderEnabledChangedMessage>,
+    IRecipient<MediaSourceDiscordPresenceChangedMessage>,
+    IRecipient<TranslationSettingsChangedMessage>,
+    IRecipient<MediaFolderEnabledChangedMessage>,
+    IRecipient<MediaFolderLastSyncTimeChangedMessage>,
+    IRecipient<MediaSourceTargetAlbumArtSizeChangedMessage>,
+    IRecipient<LyricsWindowStatusStateChangedMessage>,
+    IRecipient<DiscordAlbumArtSourceChangedMessage>
 {
     private readonly IAlbumArtSearchService _albumArtSearchService;
     private readonly IAppUIThreadProvider _appUIThreadProvider;
@@ -62,18 +68,39 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
     private EventSourceReader? _lxMusicSse;
     private byte[]? _smtcAlbumArtBuffer;
 
+    [ObservableProperty]
+    public partial bool IsScrobbled { get; set; } = false;
+
+    [ObservableProperty] public partial TimeSpan ScrobbledDuration { get; set; } = TimeSpan.Zero;
+    [ObservableProperty] public partial TimeSpan TargetScrobbledDuration { get; set; } = TimeSpan.Zero;
+
+    [ObservableProperty]
+    public partial bool CurrentIsPlaying { get; private set; } = false;
+
+    [ObservableProperty]
+    public partial TimeSpan CurrentPosition { get; private set; } = TimeSpan.Zero;
+
+    [ObservableProperty]
+    public partial SongInfo CurrentSongInfo { get; private set; } = SongInfoExtensions.Placeholder;
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsExternalSourceActive))]
+    public partial MediaSourceProviderInfo? CurrentMediaSourceProviderInfo { get; set; }
+
+    public bool IsExternalSourceActive => CurrentMediaSourceProviderInfo != null && !CurrentMediaSourceProviderInfo.IsBetterLyrics;
+
     public GsmtcService(
-        ISettingsService settingsService,
-        IAlbumArtSearchService albumArtSearchService,
-        ILyricsSearchService lyricsSearchService,
-        IDiscordService discordService,
-        ITranslationService libreTranslateService,
-        ITransliterationService transliterationService,
-        IPlayHistoryService playHistoryService,
-        ILastFmService lastFmService,
-        IAppUIThreadProvider appUiThreadProvider,
-        ILogger<GsmtcService> logger, IGlobalToastProvider globalToastProvider,
-        IWindowManagerProvider windowManagerProvider)
+    ISettingsService settingsService,
+    IAlbumArtSearchService albumArtSearchService,
+    ILyricsSearchService lyricsSearchService,
+    IDiscordService discordService,
+    ITranslationService libreTranslateService,
+    ITransliterationService transliterationService,
+    IPlayHistoryService playHistoryService,
+    ILastFmService lastFmService,
+    IAppUIThreadProvider appUiThreadProvider,
+    ILogger<GsmtcService> logger, IGlobalToastProvider globalToastProvider,
+    IWindowManagerProvider windowManagerProvider)
     {
         _settingsService = settingsService;
         _albumArtSearchService = albumArtSearchService;
@@ -120,33 +147,15 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
         _settingsService.AppSettings.LocalMediaFolders.CollectionChanged += LocalMediaFolders_CollectionChanged;
 
         InitMediaManager();
+
+        WeakReferenceMessenger.Default.RegisterAll(this);
     }
 
-    [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
-    public partial bool IsScrobbled { get; set; } = false;
+    partial void OnIsScrobbledChanged(bool value) =>
+        WeakReferenceMessenger.Default.Send(new SongScrobbledMessage(value));
 
-    [ObservableProperty] public partial TimeSpan ScrobbledDuration { get; set; } = TimeSpan.Zero;
-    [ObservableProperty] public partial TimeSpan TargetScrobbledDuration { get; set; } = TimeSpan.Zero;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
-    public partial bool CurrentIsPlaying { get; private set; } = false;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
-    public partial TimeSpan CurrentPosition { get; private set; } = TimeSpan.Zero;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
-    public partial SongInfo CurrentSongInfo { get; private set; } = SongInfoExtensions.Placeholder;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
-    [NotifyPropertyChangedFor(nameof(IsExternalSourceActive))]
-    public partial MediaSourceProviderInfo? CurrentMediaSourceProviderInfo { get; set; }
-
-    public bool IsExternalSourceActive => CurrentMediaSourceProviderInfo != null && !CurrentMediaSourceProviderInfo.IsBetterLyrics;
+    partial void OnCurrentSongInfoChanged(SongInfo value) =>
+        WeakReferenceMessenger.Default.Send(new CurrentSongInfoChangedMessage(value));
 
     public async Task PlayAsync()
     {
@@ -190,104 +199,52 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
             await ChangePositionAsync(startMs / 1000.0);
     }
 
-    public void Receive(PropertyChangedMessage<bool> message)
+    public void Receive(MediaSourceProviderEnabledChangedMessage message)
     {
-        if (message.Sender is MediaSourceProviderInfo)
+        OnDesiredSessionChanged();
+    }
+
+    public void Receive(MediaSourceDiscordPresenceChangedMessage message)
+    {
+        _ = UpdateDiscordPresenceAsync();
+    }
+
+    public void Receive(TranslationSettingsChangedMessage message)
+    {
+        if (message.PropertyName == nameof(TranslationSettings.SelectedTargetLanguageCode))
         {
-            if (message.PropertyName == nameof(MediaSourceProviderInfo.IsEnabled))
-            {
-                OnDesiredSessionChanged();
-            }
-            else if (message.PropertyName == nameof(MediaSourceProviderInfo.IsDiscordPresenceEnabled))
-            {
-                _ = UpdateDiscordPresenceAsync();
-            }
+            _logger.LogInformation("Target LibreTranslate language code changed: {code}",
+                _settingsService.AppSettings.TranslationSettings.SelectedTargetLanguageCode);
         }
-        else if (message.Sender is TranslationSettings)
-        {
-            if (message.PropertyName == nameof(TranslationSettings.IsLibreTranslateEnabled))
-                UpdateLyrics();
-            else if (message.PropertyName == nameof(TranslationSettings.IsTranslationEnabled))
-                UpdateLyrics();
-            else if (message.PropertyName == nameof(TranslationSettings.IsMandarinRomanizationEnabled))
-                UpdateLyrics();
-            else if (message.PropertyName == nameof(TranslationSettings.IsCantoneseRomanizationEnabled))
-                UpdateLyrics();
-            else if (message.PropertyName == nameof(TranslationSettings.IsJapaneseRomanizationEnabled))
-                UpdateLyrics();
-            else if (message.PropertyName == nameof(TranslationSettings.IsKoreanRomanizationEnabled))
-                UpdateLyrics();
-            else if (message.PropertyName == nameof(TranslationSettings.IsFilterEnabled))
-                UpdateLyrics();
-        }
-        else if (message.Sender is MediaFolder)
-        {
-            if (message.PropertyName == nameof(MediaFolder.IsEnabled))
-            {
-                UpdateAlbumArt();
-                UpdateLyrics();
-            }
-        }
+        UpdateLyrics();
     }
 
-    public void Receive(PropertyChangedMessage<ChineseConversion> message)
+    public void Receive(MediaFolderEnabledChangedMessage message)
     {
-        if (message.Sender is TranslationSettings)
-            if (message.PropertyName == nameof(TranslationSettings.ChineseConversion))
-                UpdateLyrics();
+        UpdateAlbumArt();
+        UpdateLyrics();
     }
 
-    public void Receive(PropertyChangedMessage<DateTime?> message)
+    public void Receive(MediaFolderLastSyncTimeChangedMessage message)
     {
-        if (message.Sender is MediaFolder)
-            if (message.PropertyName == nameof(MediaFolder.LastSyncTime))
-            {
-                UpdateAlbumArt();
-                UpdateLyrics();
-            }
+        UpdateAlbumArt();
+        UpdateLyrics();
     }
 
-    public void Receive(PropertyChangedMessage<int> message)
+    public void Receive(MediaSourceTargetAlbumArtSizeChangedMessage message)
     {
-        if (message.Sender is MediaSourceProviderInfo)
-            if (message.PropertyName == nameof(MediaSourceProviderInfo.TargetAlbumArtSize))
-                UpdateAlbumArt(true);
+        UpdateAlbumArt(true);
     }
 
-    public void Receive(PropertyChangedMessage<string> message)
+    public void Receive(LyricsWindowStatusStateChangedMessage message)
     {
-        if (message.Sender is TranslationSettings)
-        {
-            if (message.PropertyName == nameof(TranslationSettings.SelectedTargetLanguageCode))
-            {
-                _logger.LogInformation("Target LibreTranslate language code changed: {code}",
-                    _settingsService.AppSettings.TranslationSettings.SelectedTargetLanguageCode);
-                UpdateLyrics();
-            }
-            else if (message.PropertyName == nameof(TranslationSettings.LibreTranslateServer))
-            {
-                UpdateLyrics();
-            }
-        }
+        OnDesiredSessionChanged();
     }
 
-    public void Receive(PropertyChangedMessage<WindowStatus> message)
+    public void Receive(DiscordAlbumArtSourceChangedMessage message)
     {
-        if (message.Sender is LyricsWindowStatus)
-            if (message.PropertyName == nameof(MusicGallerySettings.LyricsWindowStatus.WindowStatus))
-                OnDesiredSessionChanged();
-    }
-
-    public void Receive(PropertyChangedMessage<OnlineAlbumArtProvider> message)
-    {
-        if (message.Sender is DiscordSettings)
-        {
-            if (message.PropertyName == nameof(DiscordSettings.AlbumArtSource))
-            {
-                CurrentSongInfo.AlbumArtUrl = null;
-                _ = UpdateDiscordPresenceAsync();
-            }
-        }
+        CurrentSongInfo.AlbumArtUrl = null;
+        _ = UpdateDiscordPresenceAsync();
     }
 
     private void ScrobbleTimerCallback(object? state)
@@ -852,16 +809,19 @@ public partial class GsmtcService : BaseViewModel, IGsmtcService,
     partial void OnCurrentIsPlayingChanged(bool value)
     {
         _windowManagerProvider.SetTaskbarProgressState(WindowType.NowPlayingWindow, value);
+        WeakReferenceMessenger.Default.Send(new CurrentIsPlayingChangedMessage(value));
     }
 
     partial void OnCurrentPositionChanged(TimeSpan value)
     {
         _windowManagerProvider.SetTaskbarProgressValue(WindowType.NowPlayingWindow, value.TotalSeconds / CurrentSongInfo.Duration);
+        WeakReferenceMessenger.Default.Send(new CurrentPositionChangedMessage(value));
     }
 
     partial void OnCurrentMediaSourceProviderInfoChanged(MediaSourceProviderInfo? value)
     {
         foreach (var item in _settingsService.AppSettings.MediaSourceProvidersInfo)
             item.IsFocused = item.Provider == value?.Provider;
+        WeakReferenceMessenger.Default.Send(new CurrentMediaSourceProviderChangedMessage(value));
     }
 }

@@ -1,5 +1,3 @@
-using LiteDB;
-
 namespace BetterLyrics.Core.Models.Entities;
 
 public class PlayHistoryItem

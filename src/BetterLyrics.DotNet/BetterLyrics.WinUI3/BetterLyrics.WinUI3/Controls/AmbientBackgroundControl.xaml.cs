@@ -1,80 +1,29 @@
-using System;
-using System.Numerics;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Interfaces.Providers;
+using BetterLyrics.Core.Models;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
+using Microsoft.Graphics.Canvas.Geometry;
+using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System;
+using System.Numerics;
 using Windows.UI;
-using Microsoft.Graphics.Canvas.Brushes;
-using Microsoft.Graphics.Canvas.Geometry;
-using BetterLyrics.WinUI3.Hooks;
 
 namespace BetterLyrics.WinUI3.Controls;
 
-public enum BackgroundStyle
-{
-    WarmDark,
-    DeepGreen,
-    DeepBlue,
-    DeepSpace,
-    Gloomy,
-    PitchBlack,
-    GoldBlack,
-    NeonPurple,
-    SunsetOrange,
-    FrostBlue
-}
-
-public enum AmbientElement
-{
-    None,
-    GodRays,
-    BlurredBlobs,
-    SweepingHighlight,
-    StageSpotlights,
-    TrainPole,
-    NeonGrid,
-    NorthernLights
-}
-
-public enum OverlayEffect
-{
-    None,
-    DustParticles,
-    TrainStreaks,
-    Stars,
-    RainDrops,
-    VinylRings,
-    Snowflakes,
-    FloatingEmbers,
-    DataParticles
-}
-
-public struct SceneConfiguration
-{
-    public BackgroundStyle Background { get; set; }
-    public AmbientElement Ambient { get; set; }
-    public OverlayEffect Overlay { get; set; }
-    
-    public override bool Equals(object obj)
-    {
-        if (obj is SceneConfiguration other)
-            return Background == other.Background && Ambient == other.Ambient && Overlay == other.Overlay;
-        return false;
-    }
-    
-    public override int GetHashCode() => (Background, Ambient, Overlay).GetHashCode();
-    public static bool operator ==(SceneConfiguration left, SceneConfiguration right) => left.Equals(right);
-    public static bool operator !=(SceneConfiguration left, SceneConfiguration right) => !(left == right);
-}
-
 public sealed partial class AmbientBackgroundControl : UserControl
 {
-    private SceneConfiguration _currentScene = new SceneConfiguration { Background = BackgroundStyle.WarmDark, Ambient = AmbientElement.GodRays, Overlay = OverlayEffect.DustParticles };
-    private SceneConfiguration _previousScene = new SceneConfiguration { Background = BackgroundStyle.WarmDark, Ambient = AmbientElement.GodRays, Overlay = OverlayEffect.DustParticles };
-    private float _transitionAlpha = 1.0f; 
-    
+    private readonly IMonitorProvider _monitorProvider = Ioc.Default.GetRequiredService<IMonitorProvider>();
+
+    private AmbientSceneConfiguration _currentScene = new() { Background = AmbientBackgroundStyle.WarmDark, Ambient = AmbientElement.GodRays, Overlay = AmbientOverlayEffect.DustParticles };
+    private AmbientSceneConfiguration _previousScene = new() { Background = AmbientBackgroundStyle.WarmDark, Ambient = AmbientElement.GodRays, Overlay = AmbientOverlayEffect.DustParticles };
+    private float _transitionAlpha = 1.0f;
+
     private float _time = 0;
     private Random _rnd = new Random();
 
@@ -118,8 +67,6 @@ public sealed partial class AmbientBackgroundControl : UserControl
     {
         this.InitializeComponent();
         InitializeParticles();
-        
-        CommunityToolkit.Mvvm.DependencyInjection.Ioc.Default.GetRequiredService<BetterLyrics.Core.Interfaces.Providers.IMonitorProvider>().DisplayStatusChanged += PowerManager_DisplayStatusChanged;
     }
 
     private void PowerManager_DisplayStatusChanged(object sender, bool isDisplayOn)
@@ -128,20 +75,18 @@ public sealed partial class AmbientBackgroundControl : UserControl
         {
             DispatcherQueue.TryEnqueue(() =>
             {
-                if (AnimatedCanvas != null)
-                {
-                    AnimatedCanvas.Paused = !isDisplayOn;
-                }
+                AnimatedCanvas?.Paused = !isDisplayOn;
             });
         }
     }
-    
+
     private void InitializeParticles()
     {
         _dustParticles = new DustParticle[80];
-        for(int i=0; i<80; i++)
+        for (int i = 0; i < 80; i++)
         {
-            _dustParticles[i] = new DustParticle {
+            _dustParticles[i] = new DustParticle
+            {
                 Pos = new Vector2((float)_rnd.NextDouble(), (float)_rnd.NextDouble()),
                 Size = 1f + (float)_rnd.NextDouble() * 3f,
                 SpeedX = ((float)_rnd.NextDouble() - 0.5f) * 0.05f,
@@ -151,9 +96,10 @@ public sealed partial class AmbientBackgroundControl : UserControl
         }
 
         _streaks = new TrainStreak[50];
-        for(int i=0; i<50; i++)
+        for (int i = 0; i < 50; i++)
         {
-            _streaks[i] = new TrainStreak {
+            _streaks[i] = new TrainStreak
+            {
                 Y = (float)_rnd.NextDouble(),
                 X = (float)_rnd.NextDouble(),
                 Speed = 0.5f + (float)_rnd.NextDouble() * 2.0f,
@@ -163,9 +109,10 @@ public sealed partial class AmbientBackgroundControl : UserControl
         }
 
         _stars = new Star[150];
-        for(int i=0; i<150; i++)
+        for (int i = 0; i < 150; i++)
         {
-            _stars[i] = new Star {
+            _stars[i] = new Star
+            {
                 Pos = new Vector2((float)_rnd.NextDouble(), (float)_rnd.NextDouble()),
                 Size = 0.5f + (float)_rnd.NextDouble() * 1.5f,
                 BlinkRate = 0.5f + (float)_rnd.NextDouble() * 2f,
@@ -174,18 +121,20 @@ public sealed partial class AmbientBackgroundControl : UserControl
         }
 
         _rainDrops = new RainDrop[100];
-        for(int i=0; i<100; i++)
+        for (int i = 0; i < 100; i++)
         {
-            _rainDrops[i] = new RainDrop {
+            _rainDrops[i] = new RainDrop
+            {
                 Pos = new Vector2((float)_rnd.NextDouble(), (float)_rnd.NextDouble()),
                 Speed = 1.0f + (float)_rnd.NextDouble() * 1.5f,
                 Size = 1f
             };
         }
         _windowDrops = new RainDrop[30];
-        for(int i=0; i<30; i++)
+        for (int i = 0; i < 30; i++)
         {
-            _windowDrops[i] = new RainDrop {
+            _windowDrops[i] = new RainDrop
+            {
                 Pos = new Vector2((float)_rnd.NextDouble(), (float)_rnd.NextDouble()),
                 Speed = 0.05f + (float)_rnd.NextDouble() * 0.1f,
                 Size = 2f + (float)_rnd.NextDouble() * 4f
@@ -193,9 +142,10 @@ public sealed partial class AmbientBackgroundControl : UserControl
         }
 
         _snowflakes = new Snowflake[100];
-        for(int i=0; i<100; i++)
+        for (int i = 0; i < 100; i++)
         {
-            _snowflakes[i] = new Snowflake {
+            _snowflakes[i] = new Snowflake
+            {
                 Pos = new Vector2((float)_rnd.NextDouble(), (float)_rnd.NextDouble()),
                 Speed = 0.2f + (float)_rnd.NextDouble() * 0.5f,
                 Size = 1f + (float)_rnd.NextDouble() * 2f,
@@ -204,9 +154,10 @@ public sealed partial class AmbientBackgroundControl : UserControl
         }
 
         _embers = new Ember[60];
-        for(int i=0; i<60; i++)
+        for (int i = 0; i < 60; i++)
         {
-            _embers[i] = new Ember {
+            _embers[i] = new Ember
+            {
                 Pos = new Vector2((float)_rnd.NextDouble(), (float)_rnd.NextDouble()),
                 Size = 1f + (float)_rnd.NextDouble() * 3f,
                 SpeedY = 0.3f + (float)_rnd.NextDouble() * 0.6f,
@@ -216,9 +167,10 @@ public sealed partial class AmbientBackgroundControl : UserControl
         }
 
         _dataParticles = new DataParticle[50];
-        for(int i=0; i<50; i++)
+        for (int i = 0; i < 50; i++)
         {
-            _dataParticles[i] = new DataParticle {
+            _dataParticles[i] = new DataParticle
+            {
                 Pos = new Vector2((float)_rnd.NextDouble(), (float)_rnd.NextDouble()),
                 Speed = 1.0f + (float)_rnd.NextDouble() * 2.0f,
                 Value = _rnd.Next(2)
@@ -226,7 +178,7 @@ public sealed partial class AmbientBackgroundControl : UserControl
         }
     }
 
-    public void SetScene(SceneConfiguration newScene)
+    public void SetScene(AmbientSceneConfiguration newScene)
     {
         if (_currentScene == newScene) return;
         _previousScene = _currentScene;
@@ -246,8 +198,11 @@ public sealed partial class AmbientBackgroundControl : UserControl
 
         if (_transitionAlpha < 1.0f)
         {
-            _transitionAlpha += dt * 1.5f; 
-            if (_transitionAlpha > 1.0f) _transitionAlpha = 1.0f;
+            _transitionAlpha += dt * 1.5f;
+            if (_transitionAlpha > 1.0f)
+            {
+                _transitionAlpha = 1.0f;
+            }
         }
 
         UpdateDust(dt);
@@ -264,7 +219,7 @@ public sealed partial class AmbientBackgroundControl : UserControl
         var ds = args.DrawingSession;
         float w = (float)sender.Size.Width;
         float h = (float)sender.Size.Height;
-        
+
         if (w == 0 || h == 0) return;
 
         if (_transitionAlpha >= 1.0f)
@@ -274,67 +229,81 @@ public sealed partial class AmbientBackgroundControl : UserControl
         else
         {
             using (var clPrev = new CanvasCommandList(sender))
-            using (var clCurr = new CanvasCommandList(sender))
             {
-                using (var dsPrev = clPrev.CreateDrawingSession())
+                using (var clCurr = new CanvasCommandList(sender))
                 {
-                    DrawScene(_previousScene, sender, dsPrev, w, h);
-                }
-                using (var dsCurr = clCurr.CreateDrawingSession())
-                {
-                    DrawScene(_currentScene, sender, dsCurr, w, h);
-                }
+                    using (var dsPrev = clPrev.CreateDrawingSession())
+                    {
+                        DrawScene(_previousScene, sender, dsPrev, w, h);
+                    }
+                    using (var dsCurr = clCurr.CreateDrawingSession())
+                    {
+                        DrawScene(_currentScene, sender, dsCurr, w, h);
+                    }
 
-                ds.DrawImage(clPrev, 0, 0, new Windows.Foundation.Rect(0,0,w,h), 1.0f - _transitionAlpha);
-                ds.DrawImage(clCurr, 0, 0, new Windows.Foundation.Rect(0,0,w,h), _transitionAlpha);
+                    ds.DrawImage(clPrev, 0, 0, new Windows.Foundation.Rect(0, 0, w, h), 1.0f - _transitionAlpha);
+                    ds.DrawImage(clCurr, 0, 0, new Windows.Foundation.Rect(0, 0, w, h), _transitionAlpha);
+                }
             }
         }
     }
 
-    private void DrawScene(SceneConfiguration config, ICanvasAnimatedControl sender, CanvasDrawingSession ds, float w, float h)
+    private void DrawScene(AmbientSceneConfiguration config, ICanvasAnimatedControl sender, CanvasDrawingSession ds, float w, float h)
     {
         DrawBackground(config.Background, sender, ds, w, h);
         DrawAmbient(config.Ambient, sender, ds, w, h);
         DrawOverlay(config.Overlay, sender, ds, w, h);
     }
 
-    private void DrawBackground(BackgroundStyle style, ICanvasAnimatedControl rc, CanvasDrawingSession ds, float w, float h)
+    private void DrawBackground(AmbientBackgroundStyle style, ICanvasAnimatedControl rc, CanvasDrawingSession ds, float w, float h)
     {
         switch (style)
         {
-            case BackgroundStyle.WarmDark:
+            case AmbientBackgroundStyle.WarmDark:
                 ds.FillRectangle(0, 0, w, h, Color.FromArgb(255, 35, 15, 5));
                 break;
-            case BackgroundStyle.DeepGreen:
+            case AmbientBackgroundStyle.DeepGreen:
                 ds.FillRectangle(0, 0, w, h, Color.FromArgb(255, 10, 25, 15));
                 break;
-            case BackgroundStyle.DeepBlue:
+            case AmbientBackgroundStyle.DeepBlue:
                 ds.FillRectangle(0, 0, w, h, Color.FromArgb(255, 5, 10, 20));
                 break;
-            case BackgroundStyle.DeepSpace:
+            case AmbientBackgroundStyle.DeepSpace:
                 ds.FillRectangle(0, 0, w, h, Color.FromArgb(255, 2, 5, 15));
                 break;
-            case BackgroundStyle.Gloomy:
+            case AmbientBackgroundStyle.Gloomy:
                 ds.FillRectangle(0, 0, w, h, Color.FromArgb(255, 15, 20, 25));
                 break;
-            case BackgroundStyle.PitchBlack:
+            case AmbientBackgroundStyle.PitchBlack:
                 ds.FillRectangle(0, 0, w, h, Color.FromArgb(255, 5, 5, 5));
                 break;
-            case BackgroundStyle.GoldBlack:
+            case AmbientBackgroundStyle.GoldBlack:
                 ds.FillRectangle(0, 0, w, h, Color.FromArgb(255, 10, 10, 10));
                 break;
-            case BackgroundStyle.NeonPurple:
+            case AmbientBackgroundStyle.NeonPurple:
                 ds.FillRectangle(0, 0, w, h, Color.FromArgb(255, 20, 5, 30));
                 break;
-            case BackgroundStyle.SunsetOrange:
-                var sunsetStops = new[] { new CanvasGradientStop { Position = 0, Color = Color.FromArgb(255, 20, 10, 40) }, new CanvasGradientStop { Position = 1, Color = Color.FromArgb(255, 120, 30, 10) } };
+            case AmbientBackgroundStyle.SunsetOrange:
+                var sunsetStops = new[]
+                {
+                    new CanvasGradientStop
+                    {
+                        Position = 0,
+                        Color = Color.FromArgb(255, 20, 10, 40)
+                    },
+                    new CanvasGradientStop
+                    {
+                        Position = 1,
+                        Color = Color.FromArgb(255, 120, 30, 10)
+                    }
+                };
                 using (var brush = new CanvasLinearGradientBrush(rc, sunsetStops))
                 {
                     brush.StartPoint = new Vector2(0, 0); brush.EndPoint = new Vector2(0, h);
                     ds.FillRectangle(0, 0, w, h, brush);
                 }
                 break;
-            case BackgroundStyle.FrostBlue:
+            case AmbientBackgroundStyle.FrostBlue:
                 ds.FillRectangle(0, 0, w, h, Color.FromArgb(255, 10, 15, 25));
                 break;
         }
@@ -358,13 +327,14 @@ public sealed partial class AmbientBackgroundControl : UserControl
                     ds.FillRectangle(0, 0, w, h, brush);
                 }
 
-                Vector2[] rayPoints = {
+                Vector2[] rayPoints =
+                {
                     new Vector2(w * 0.4f, 0), new Vector2(w * 0.8f, 0),
                     new Vector2(w * 0.2f, h), new Vector2(-w * 0.2f, h)
                 };
                 ds.FillGeometry(CanvasGeometry.CreatePolygon(rc, rayPoints), Color.FromArgb(15, 255, 220, 150));
                 break;
-                
+
             case AmbientElement.BlurredBlobs:
                 using (var cl = new CanvasCommandList(rc))
                 {
@@ -383,7 +353,7 @@ public sealed partial class AmbientBackgroundControl : UserControl
                     ds.DrawImage(_treeBlur);
                 }
                 break;
-                
+
             case AmbientElement.StageSpotlights:
                 float swing1 = MathF.Sin(_time * 0.5f) * w * 0.3f;
                 float swing2 = MathF.Cos(_time * 0.4f) * w * 0.3f;
@@ -391,7 +361,18 @@ public sealed partial class AmbientBackgroundControl : UserControl
                 Vector2[] cone1 = { new Vector2(w * 0.2f, -50), new Vector2(w * 0.5f + swing1 - w * 0.3f, h), new Vector2(w * 0.5f + swing1 + w * 0.3f, h) };
                 Vector2[] cone2 = { new Vector2(w * 0.8f, -50), new Vector2(w * 0.5f + swing2 - w * 0.3f, h), new Vector2(w * 0.5f + swing2 + w * 0.3f, h) };
 
-                var coneStops = new[] { new CanvasGradientStop { Position = 0, Color = Color.FromArgb(80, 255, 255, 255) }, new CanvasGradientStop { Position = 1, Color = Color.FromArgb(0, 255, 255, 255) } };
+                var coneStops = new[]
+                {
+                    new CanvasGradientStop
+                    {
+                        Position = 0,
+                        Color = Color.FromArgb(80, 255, 255, 255) },
+                    new CanvasGradientStop
+                    {
+                        Position = 1,
+                        Color = Color.FromArgb(0, 255, 255, 255)
+                    }
+                };
                 using (var brush = new CanvasLinearGradientBrush(rc, coneStops))
                 {
                     brush.StartPoint = new Vector2(0, 0);
@@ -400,11 +381,11 @@ public sealed partial class AmbientBackgroundControl : UserControl
                     ds.FillGeometry(CanvasGeometry.CreatePolygon(rc, cone2), brush);
                 }
                 break;
-                
+
             case AmbientElement.TrainPole:
                 ds.FillRectangle(_poleX * w, 0, w * 0.1f, h, Color.FromArgb(120, 0, 0, 0));
                 break;
-                
+
             case AmbientElement.SweepingHighlight:
                 float cx = w * 0.5f;
                 float cy = h * 0.5f;
@@ -413,7 +394,8 @@ public sealed partial class AmbientBackgroundControl : UserControl
                 float hx = MathF.Cos(angle) * maxR;
                 float hy = MathF.Sin(angle) * maxR;
 
-                var sweepStops = new[] {
+                var sweepStops = new[]
+                {
                     new CanvasGradientStop { Position = 0, Color = Color.FromArgb(0, 255, 215, 0) },
                     new CanvasGradientStop { Position = 0.5f, Color = Color.FromArgb(60, 255, 215, 0) },
                     new CanvasGradientStop { Position = 1, Color = Color.FromArgb(0, 255, 215, 0) }
@@ -425,14 +407,14 @@ public sealed partial class AmbientBackgroundControl : UserControl
                     ds.FillCircle(cx, cy, maxR, brush);
                 }
                 break;
-                
+
             case AmbientElement.NeonGrid:
-                for(int i=0; i<10; i++)
+                for (int i = 0; i < 10; i++)
                 {
                     float y = h * 0.5f + MathF.Pow(i / 10f, 2) * h * 0.5f;
                     ds.DrawLine(0, y, w, y, Color.FromArgb(50, 255, 0, 255), 1f);
                 }
-                for(int i=-10; i<=10; i++)
+                for (int i = -10; i <= 10; i++)
                 {
                     float xBot = w * 0.5f + i * w * 0.15f;
                     ds.DrawLine(w * 0.5f, h * 0.5f, xBot, h, Color.FromArgb(50, 0, 255, 255), 1f);
@@ -441,7 +423,8 @@ public sealed partial class AmbientBackgroundControl : UserControl
                 break;
 
             case AmbientElement.NorthernLights:
-                var nStops = new[] {
+                var nStops = new[]
+                {
                     new CanvasGradientStop { Position = 0, Color = Color.FromArgb(0, 50, 255, 150) },
                     new CanvasGradientStop { Position = 0.5f, Color = Color.FromArgb(50, 50, 255, 150) },
                     new CanvasGradientStop { Position = 1, Color = Color.FromArgb(0, 50, 255, 150) }
@@ -450,7 +433,13 @@ public sealed partial class AmbientBackgroundControl : UserControl
                 {
                     brush.StartPoint = new Vector2(0, 0); brush.EndPoint = new Vector2(0, h * 0.6f);
                     float sway = MathF.Sin(_time * 0.5f) * w * 0.2f;
-                    Vector2[] points = { new Vector2(w * 0.2f + sway, 0), new Vector2(w * 0.8f + sway, 0), new Vector2(w * 0.6f - sway, h * 0.6f), new Vector2(w * 0.4f - sway, h * 0.6f) };
+                    Vector2[] points =
+                    {
+                        new(w * 0.2f + sway, 0),
+                        new(w * 0.8f + sway, 0),
+                        new(w * 0.6f - sway, h * 0.6f),
+                        new(w * 0.4f - sway, h * 0.6f)
+                    };
                     ds.FillGeometry(CanvasGeometry.CreatePolygon(rc, points), brush);
                 }
                 break;
@@ -461,26 +450,26 @@ public sealed partial class AmbientBackgroundControl : UserControl
         }
     }
 
-    private void DrawOverlay(OverlayEffect overlay, ICanvasAnimatedControl rc, CanvasDrawingSession ds, float w, float h)
+    private void DrawOverlay(AmbientOverlayEffect overlay, ICanvasAnimatedControl rc, CanvasDrawingSession ds, float w, float h)
     {
         switch (overlay)
         {
-            case OverlayEffect.DustParticles:
+            case AmbientOverlayEffect.DustParticles:
                 foreach (var p in _dustParticles)
                 {
                     float alpha = 0.2f + 0.3f * (MathF.Sin(_time * 2f + p.AlphaOffset) * 0.5f + 0.5f);
                     ds.FillCircle(p.Pos.X * w, p.Pos.Y * h, p.Size, Color.FromArgb((byte)(alpha * 255), 255, 220, 180));
                 }
                 break;
-                
-            case OverlayEffect.TrainStreaks:
+
+            case AmbientOverlayEffect.TrainStreaks:
                 foreach (var s in _streaks)
                 {
                     ds.DrawLine(new Vector2(s.X * w, s.Y * h), new Vector2((s.X + s.Length) * w, s.Y * h), Color.FromArgb((byte)(s.Alpha * 255), 100, 150, 255), 2f);
                 }
                 break;
-                
-            case OverlayEffect.Stars:
+
+            case AmbientOverlayEffect.Stars:
                 foreach (var s in _stars)
                 {
                     float alpha = 0.3f + 0.7f * (MathF.Sin(_time * s.BlinkRate + s.Phase) * 0.5f + 0.5f);
@@ -488,11 +477,12 @@ public sealed partial class AmbientBackgroundControl : UserControl
                 }
                 if (_shootingStarX > -0.5f)
                 {
-                    ds.DrawLine(new Vector2(_shootingStarX * w, _shootingStarY * h), new Vector2((_shootingStarX + 0.2f) * w, (_shootingStarY - 0.1f) * h), Color.FromArgb(200, 255, 255, 255), 2f);
+                    ds.DrawLine(new Vector2(_shootingStarX * w, _shootingStarY * h), new Vector2((_shootingStarX + 0.2f) * w, (_shootingStarY - 0.1f) * h),
+                        Color.FromArgb(200, 255, 255, 255), 2f);
                 }
                 break;
-                
-            case OverlayEffect.RainDrops:
+
+            case AmbientOverlayEffect.RainDrops:
                 foreach (var r in _rainDrops)
                 {
                     ds.DrawLine(new Vector2(r.Pos.X * w, r.Pos.Y * h), new Vector2((r.Pos.X - 0.02f) * w, (r.Pos.Y + 0.1f) * h), Color.FromArgb(60, 150, 180, 200), r.Size);
@@ -502,8 +492,8 @@ public sealed partial class AmbientBackgroundControl : UserControl
                     ds.FillCircle(wDrop.Pos.X * w, wDrop.Pos.Y * h, wDrop.Size, Color.FromArgb(80, 200, 220, 255));
                 }
                 break;
-                
-            case OverlayEffect.VinylRings:
+
+            case AmbientOverlayEffect.VinylRings:
                 float cx = w * 0.5f;
                 float cy = h * 0.5f;
                 float maxR = MathF.Max(w, h) * 0.8f;
@@ -512,30 +502,30 @@ public sealed partial class AmbientBackgroundControl : UserControl
                     ds.DrawCircle(cx, cy, r, Color.FromArgb(30, 255, 215, 0), 1f);
                 }
                 break;
-                
-            case OverlayEffect.Snowflakes:
+
+            case AmbientOverlayEffect.Snowflakes:
                 foreach (var s in _snowflakes)
                 {
                     ds.FillCircle(s.Pos.X * w, s.Pos.Y * h, s.Size, Color.FromArgb(150, 255, 255, 255));
                 }
                 break;
-                
-            case OverlayEffect.FloatingEmbers:
+
+            case AmbientOverlayEffect.FloatingEmbers:
                 foreach (var e in _embers)
                 {
                     float alpha = MathF.Max(0, 1.0f - e.Life);
                     ds.FillCircle(e.Pos.X * w, e.Pos.Y * h, e.Size, Color.FromArgb((byte)(alpha * 255), 255, 100, 0));
                 }
                 break;
-                
-            case OverlayEffect.DataParticles:
+
+            case AmbientOverlayEffect.DataParticles:
                 foreach (var d in _dataParticles)
                 {
-                    ds.DrawText(d.Value.ToString(), d.Pos.X * w, d.Pos.Y * h, Color.FromArgb(150, 0, 255, 100), new Microsoft.Graphics.Canvas.Text.CanvasTextFormat { FontSize = 12 });
+                    ds.DrawText(d.Value.ToString(), d.Pos.X * w, d.Pos.Y * h, Color.FromArgb(150, 0, 255, 100), new CanvasTextFormat { FontSize = 12 });
                 }
                 break;
 
-            case OverlayEffect.None:
+            case AmbientOverlayEffect.None:
             default:
                 break;
         }
@@ -565,9 +555,12 @@ public sealed partial class AmbientBackgroundControl : UserControl
                 _streaks[i].Y = (float)_rnd.NextDouble();
             }
         }
-        
-        _poleX -= 1.5f * dt; 
-        if (_poleX < -0.5f) _poleX = 1.0f + (float)_rnd.NextDouble() * 2f;
+
+        _poleX -= 1.5f * dt;
+        if (_poleX < -0.5f)
+        {
+            _poleX = 1.0f + (float)_rnd.NextDouble() * 2f;
+        }
     }
 
     private void UpdateStars(float dt)
@@ -593,12 +586,19 @@ public sealed partial class AmbientBackgroundControl : UserControl
         {
             _rainDrops[i].Pos.Y += _rainDrops[i].Speed * dt;
             _rainDrops[i].Pos.X -= _rainDrops[i].Speed * 0.2f * dt;
-            if (_rainDrops[i].Pos.Y > 1.2f) { _rainDrops[i].Pos.Y = -0.2f; _rainDrops[i].Pos.X = (float)_rnd.NextDouble() * 1.2f; }
+            if (_rainDrops[i].Pos.Y > 1.2f)
+            {
+                _rainDrops[i].Pos.Y = -0.2f;
+                _rainDrops[i].Pos.X = (float)_rnd.NextDouble() * 1.2f;
+            }
         }
         for (int i = 0; i < _windowDrops.Length; i++)
         {
             _windowDrops[i].Pos.Y += _windowDrops[i].Speed * dt;
-            if (_windowDrops[i].Pos.Y > 1.2f) _windowDrops[i].Pos.Y = -0.2f;
+            if (_windowDrops[i].Pos.Y > 1.2f)
+            {
+                _windowDrops[i].Pos.Y = -0.2f;
+            }
         }
     }
 
@@ -608,7 +608,11 @@ public sealed partial class AmbientBackgroundControl : UserControl
         {
             _snowflakes[i].Pos.Y += _snowflakes[i].Speed * dt;
             _snowflakes[i].Pos.X += MathF.Sin(_time + _snowflakes[i].WobbleOffset) * 0.05f * dt;
-            if (_snowflakes[i].Pos.Y > 1.1f) { _snowflakes[i].Pos.Y = -0.1f; _snowflakes[i].Pos.X = (float)_rnd.NextDouble(); }
+            if (_snowflakes[i].Pos.Y > 1.1f)
+            {
+                _snowflakes[i].Pos.Y = -0.1f;
+                _snowflakes[i].Pos.X = (float)_rnd.NextDouble();
+            }
         }
     }
 
@@ -619,10 +623,10 @@ public sealed partial class AmbientBackgroundControl : UserControl
             _embers[i].Pos.Y -= _embers[i].SpeedY * dt;
             _embers[i].Pos.X += _embers[i].SpeedX * dt;
             _embers[i].Life += dt * 0.5f;
-            if (_embers[i].Pos.Y < -0.1f || _embers[i].Life > 1.0f) 
-            { 
-                _embers[i].Pos.Y = 1.1f; 
-                _embers[i].Pos.X = (float)_rnd.NextDouble(); 
+            if (_embers[i].Pos.Y < -0.1f || _embers[i].Life > 1.0f)
+            {
+                _embers[i].Pos.Y = 1.1f;
+                _embers[i].Pos.X = (float)_rnd.NextDouble();
                 _embers[i].Life = 0;
             }
         }
@@ -633,15 +637,27 @@ public sealed partial class AmbientBackgroundControl : UserControl
         for (int i = 0; i < _dataParticles.Length; i++)
         {
             _dataParticles[i].Pos.Y += _dataParticles[i].Speed * dt;
-            if (_rnd.NextDouble() < 0.05) _dataParticles[i].Value = _rnd.Next(2);
-            if (_dataParticles[i].Pos.Y > 1.1f) { _dataParticles[i].Pos.Y = -0.1f; _dataParticles[i].Pos.X = (float)_rnd.NextDouble(); }
+            if (_rnd.NextDouble() < 0.05)
+            {
+                _dataParticles[i].Value = _rnd.Next(2);
+            }
+            if (_dataParticles[i].Pos.Y > 1.1f)
+            {
+                _dataParticles[i].Pos.Y = -0.1f;
+                _dataParticles[i].Pos.X = (float)_rnd.NextDouble();
+            }
         }
     }
 
     private void AnimatedCanvas_Unloaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
     {
-        CommunityToolkit.Mvvm.DependencyInjection.Ioc.Default.GetRequiredService<BetterLyrics.Core.Interfaces.Providers.IMonitorProvider>().DisplayStatusChanged -= PowerManager_DisplayStatusChanged;
+        _monitorProvider.DisplayStatusChanged -= PowerManager_DisplayStatusChanged;
         AnimatedCanvas?.RemoveFromVisualTree();
         AnimatedCanvas = null;
+    }
+
+    private void AnimatedCanvas_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
+    {
+        _monitorProvider.DisplayStatusChanged += PowerManager_DisplayStatusChanged;
     }
 }

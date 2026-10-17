@@ -1,20 +1,28 @@
-using System.Collections.Specialized;
-using System.Text.Json;
 using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Events;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Messages.SettingsNavigation;
+using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.Serialization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Hqub.Lastfm.Entities;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Text.Json;
 
 namespace BetterLyrics.Core.ViewModels;
 
-public partial class PlaybackSettingsControlViewModel : BaseViewModel
+/// <summary>
+/// Singleton ViewModel
+/// </summary>
+public partial class PlaybackSettingsControlViewModel : ObservableRecipient,
+    IRecipient<PlaybackLibSettingsNavigationRequestedMessage>
 {
     private readonly IAppUIThreadProvider _appUiThreadProvider;
     private readonly IGlobalToastProvider _globalToastProvider;
@@ -22,20 +30,51 @@ public partial class PlaybackSettingsControlViewModel : BaseViewModel
     private readonly IPasswordVaultProvider _passwordVaultProvider;
     private readonly ITranslationService _translationService;
     private readonly IFilePickerProvider _filePickerProvider;
+    private readonly ILocalizationService _localizationService;
+
     public IGsmtcService GsmtcService { get; }
 
+    [ObservableProperty] public partial AppSettings AppSettings { get; set; }
+
+    [ObservableProperty] public partial MediaSourceProviderInfo? SelectedMediaSourceProvider { get; set; }
+
+    public ObservableCollection<PlaybackLibSettingsNavMenuItem> NavItems = [];
+
+    [ObservableProperty] public partial PlaybackLibSettingsNavMenuItem? SelectedNavItem { get; set; }
+
+    [ObservableProperty] public partial bool IsLastFmAuthenticated { get; set; }
+
+    [ObservableProperty] public partial User? LastFmUser { get; set; }
+
+    private readonly IDiscordService _discordService;
+
+    [ObservableProperty] public partial DiscordRPC.User? DiscordUser { get; set; }
+
+    [ObservableProperty] public partial bool IsLibreTranslateServerTesting { get; set; } = false;
+
+    [ObservableProperty] public partial bool IsLxMusicServerTesting { get; set; } = false;
+
+    [ObservableProperty] public partial int SelectedTargetLanguageIndex { get; set; }
+
+    [ObservableProperty] public partial string AppleMusicMediaUserToken { get; set; }
+
+    [ObservableProperty] public partial string? DiscordUsername { get; set; }
+
+    [ObservableProperty] public partial bool IsDiscordConnected { get; set; }
+
+    [ObservableProperty] public partial bool IsConfigPanelOpen { get; set; }
+
     public PlaybackSettingsControlViewModel(
-        ISettingsService settingsService,
-        IGsmtcService gsmtcService,
-        ITranslationService libreTranslationService,
-        ILastFmService lastFmService, IAppUIThreadProvider appUiThreadProvider,
-        IPasswordVaultProvider passwordVaultProvider, IGlobalToastProvider globalToastProvider,
-        IFilePickerProvider filePickerProvider, IDiscordService discordService)
+    ISettingsService settingsService, IGsmtcService gsmtcService, ITranslationService libreTranslationService,
+    ILastFmService lastFmService, IAppUIThreadProvider appUiThreadProvider, IPasswordVaultProvider passwordVaultProvider,
+    IGlobalToastProvider globalToastProvider, IFilePickerProvider filePickerProvider, IDiscordService discordService,
+    ILocalizationService localizationService)
     {
         GsmtcService = gsmtcService;
 
         _translationService = libreTranslationService;
         _appUiThreadProvider = appUiThreadProvider;
+        _localizationService = localizationService;
         _passwordVaultProvider = passwordVaultProvider;
         _globalToastProvider = globalToastProvider;
         _filePickerProvider = filePickerProvider;
@@ -54,7 +93,7 @@ public partial class PlaybackSettingsControlViewModel : BaseViewModel
         AppSettings.MediaSourceProvidersInfo.CollectionChanged += MediaSourceProvidersInfo_CollectionChanged;
 
         AppleMusicMediaUserToken =
-            _passwordVaultProvider.Get(Core.Constants.App.AppName, AppleMusic.MediaUserTokenKey) ??
+            _passwordVaultProvider.Get(App.AppName, AppleMusic.MediaUserTokenKey) ??
             "";
 
         SelectedTargetLanguageIndex = LanguageHelper.SupportedTranslationTargetLanguages.ToList().FindIndex(x =>
@@ -64,40 +103,49 @@ public partial class PlaybackSettingsControlViewModel : BaseViewModel
         LastFmUser = _lastFmService.User;
 
         SelectedMediaSourceProvider = AppSettings.MediaSourceProvidersInfo.FirstOrDefault();
+
+        NavItems.Add(new PlaybackLibSettingsNavMenuItem
+        {
+            Label = _localizationService.GetLocalizedString("SettingsPageConfigPlaybackSource/Text"),
+            Section = PlaybackLibSettingsSection.General
+        });
+        NavItems.Add(new PlaybackLibSettingsNavMenuItem
+        {
+            Label = _localizationService.GetLocalizedString("SettingsPageLyricsProcessing/Text"),
+            Section = PlaybackLibSettingsSection.LyricsProcessing
+        });
+        NavItems.Add(new PlaybackLibSettingsNavMenuItem
+        {
+            Label = _localizationService.GetLocalizedString("SettingsPageIntegration/Text"),
+            Section = PlaybackLibSettingsSection.Integration
+        });
+        NavItems.Add(new PlaybackLibSettingsNavMenuItem
+        {
+            Label = _localizationService.GetLocalizedString("SettingsPageRealtimeStatus/Text"),
+            Section = PlaybackLibSettingsSection.RealtimeStatus
+        });
+        SelectedNavItem = NavItems[0];
+
+        IsActive = true;
     }
 
-    [ObservableProperty] 
-    [NotifyPropertyChangedRecipients]
-    public partial PlaybackLibSettingsSection SelectedPlaybackLibSettingsSection { get; set; } = PlaybackLibSettingsSection.General;
+    partial void OnSelectedTargetLanguageIndexChanged(int value)
+    {
+        AppSettings.TranslationSettings.SelectedTargetLanguageCode =
+            LanguageHelper.SupportedTranslationTargetLanguages[value].LanguageCode;
+    }
 
-    [ObservableProperty] public partial AppSettings AppSettings { get; set; }
+    partial void OnSelectedNavItemChanged(PlaybackLibSettingsNavMenuItem? value)
+    {
+        WeakReferenceMessenger.Default.Send(new SettingsSectionChangedMessage(this));
+    }
 
-    [ObservableProperty] 
-    [NotifyPropertyChangedRecipients]
-    public partial MediaSourceProviderInfo? SelectedMediaSourceProvider { get; set; }
+    partial void OnSelectedMediaSourceProviderChanged(MediaSourceProviderInfo? value)
+    {
+        WeakReferenceMessenger.Default.Send(new SettingsSectionChangedMessage(this));
+    }
 
-    [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
-    public partial bool IsDeepLinkRequested { get; set; }
-
-    [ObservableProperty] public partial bool IsLastFmAuthenticated { get; set; }
-
-    [ObservableProperty] public partial User? LastFmUser { get; set; }
-
-    private readonly IDiscordService _discordService;
-
-    [ObservableProperty] public partial DiscordRPC.User? DiscordUser { get; set; }
-
-    [ObservableProperty] public partial bool IsLibreTranslateServerTesting { get; set; } = false;
-
-    [ObservableProperty] public partial bool IsLxMusicServerTesting { get; set; } = false;
-
-    [ObservableProperty] public partial int SelectedTargetLanguageIndex { get; set; }
-
-    [ObservableProperty] public partial string AppleMusicMediaUserToken { get; set; }
-
-    private void MediaSourceProvidersInfo_CollectionChanged(object? sender,
-        NotifyCollectionChangedEventArgs e)
+    private void MediaSourceProvidersInfo_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         SelectedMediaSourceProvider = AppSettings.MediaSourceProvidersInfo.FirstOrDefault();
     }
@@ -121,10 +169,6 @@ public partial class PlaybackSettingsControlViewModel : BaseViewModel
             IsDiscordConnected = e != null;
         });
     }
-
-    [ObservableProperty] public partial string? DiscordUsername { get; set; }
-
-    [ObservableProperty] public partial bool IsDiscordConnected { get; set; }
 
     [RelayCommand]
     private async Task StopTrackAsync()
@@ -172,7 +216,10 @@ public partial class PlaybackSettingsControlViewModel : BaseViewModel
                 });
             }
 
-            _appUiThreadProvider.Execute(() => { IsLibreTranslateServerTesting = false; });
+            _appUiThreadProvider.Execute(() =>
+            {
+                IsLibreTranslateServerTesting = false;
+            });
         });
     }
 
@@ -231,9 +278,28 @@ public partial class PlaybackSettingsControlViewModel : BaseViewModel
         _globalToastProvider.Show("ActionCompleted", null, MessageSeverity.Success);
     }
 
-    partial void OnSelectedTargetLanguageIndexChanged(int value)
+    [RelayCommand]
+    private void CloseConfigPanel()
     {
-        AppSettings.TranslationSettings.SelectedTargetLanguageCode =
-            LanguageHelper.SupportedTranslationTargetLanguages[value].LanguageCode;
+        SelectedMediaSourceProvider = null;
+        IsConfigPanelOpen = false;
+    }
+
+    [RelayCommand]
+    private void ShowConfigPanel(MediaSourceProviderInfo? info)
+    {
+        SelectedMediaSourceProvider = info;
+        IsConfigPanelOpen = info != null;
+        SelectedNavItem = NavItems[0];
+    }
+
+    public void Receive(PlaybackLibSettingsNavigationRequestedMessage message)
+    {
+        var target = message.TargetSessionId != null
+            ? AppSettings.MediaSourceProvidersInfo.FirstOrDefault(w => w.Provider == message.TargetSessionId)
+            : null;
+
+        ShowConfigPanel(target);
+        SelectedNavItem = NavItems.FirstOrDefault(x => x.Section == message.TargetSection);
     }
 }

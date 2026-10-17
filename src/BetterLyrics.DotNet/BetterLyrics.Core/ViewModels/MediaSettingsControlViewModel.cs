@@ -1,4 +1,3 @@
-using System.Diagnostics;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Helpers;
@@ -7,10 +6,14 @@ using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using System.Diagnostics;
 
 namespace BetterLyrics.Core.ViewModels;
 
-public partial class MediaSettingsControlViewModel : BaseViewModel
+/// <summary>
+/// Singleton ViewModel
+/// </summary>
+public partial class MediaSettingsControlViewModel : ObservableObject
 {
     private readonly IAppUIThreadProvider _appUIThreadProvider;
     private readonly IFileSystemService _fileSystemService;
@@ -18,6 +21,9 @@ public partial class MediaSettingsControlViewModel : BaseViewModel
     private readonly IPasswordVaultProvider _passwordVaultProvider;
     private readonly ISettingsService _settingsService;
     private readonly IAddMediaSourceDialogProvider _addMediaSourceDialogProvider;
+
+    public INavigationService NavigationService { get; }
+    [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 
     public MediaSettingsControlViewModel(
         ISettingsService settingsService,
@@ -37,9 +43,6 @@ public partial class MediaSettingsControlViewModel : BaseViewModel
         _addMediaSourceDialogProvider = addMediaSourceDialogProvider;
         AppSettings = _settingsService.AppSettings;
     }
-
-    public INavigationService NavigationService { get; }
-    [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 
     public void RemoveFolder(MediaFolder folder)
     {
@@ -163,12 +166,12 @@ public partial class MediaSettingsControlViewModel : BaseViewModel
                     AppSettings.LocalMediaFolders.Add(tempFolder);
                     _passwordVaultProvider.Save(Core.Constants.App.AppName, tempFolder.VaultKey,
                         tempFolder.Password);
-                        
+
                     foreach (var f in AppSettings.LocalMediaFolders)
                     {
                         _ = Task.Run(async () => await _fileSystemService.ScanMediaFolderAsync(f));
                     }
-                    
+
                     return (true, null);
                 }
                 else

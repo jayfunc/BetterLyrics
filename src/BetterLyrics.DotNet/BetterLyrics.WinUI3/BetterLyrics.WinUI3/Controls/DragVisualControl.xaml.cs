@@ -16,10 +16,9 @@ public sealed partial class DragVisualControl : UserControl
         TitleBlock.Text = displayName;
         RootBorder.Background = background;
         if (background is SolidColorBrush solidColorBrush)
-            RootBorder.BorderBrush =
-                new SolidColorBrush(
-                    ColorExtensions.FromAppColor(
-                        ColorHelper.GetHarmoniousColor(solidColorBrush.Color.ToAppColor())));
+        {
+            RootBorder.BorderBrush = new SolidColorBrush(ColorExtensions.FromAppColor(ColorHelper.GetHarmoniousColor(solidColorBrush.Color.ToAppColor())));
+        }
 
         Width = width;
         Height = height;

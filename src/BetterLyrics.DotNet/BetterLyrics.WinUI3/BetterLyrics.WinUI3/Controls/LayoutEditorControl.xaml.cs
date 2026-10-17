@@ -1,15 +1,8 @@
-using System;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using Windows.ApplicationModel.DataTransfer;
-using Windows.Foundation;
-using Windows.System;
-using Windows.UI.Core;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Services;
-using BetterLyrics.Core.Messages;
+using BetterLyrics.Core.Messages.LayoutChanged;
+using BetterLyrics.Core.Messages.LyricsWindow;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Domain;
 using BetterLyrics.Core.Models.Settings;
@@ -20,7 +13,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
@@ -29,19 +21,27 @@ using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Shapes;
+using System;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using System.Linq;
+using Windows.ApplicationModel.DataTransfer;
+using Windows.Foundation;
+using Windows.System;
+using Windows.UI.Core;
 
 namespace BetterLyrics.WinUI3.Controls;
 
 [INotifyPropertyChanged]
-public sealed partial class LayoutEditorControl : UserControl, IRecipient<PropertyChangedMessage<Rect>>
+public sealed partial class LayoutEditorControl : UserControl
 {
     public static readonly DependencyProperty LayoutProfileProperty =
         DependencyProperty.Register(nameof(LayoutProfile), typeof(LayoutProfile), typeof(LayoutEditorControl),
             new PropertyMetadata(null, OnLayoutProfileChanged));
 
-    public static readonly DependencyProperty LyricsWindowStatusProperty =
-        DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus),
-            typeof(LayoutEditorControl), new PropertyMetadata(null, OnWindowStatusChanged));
+    public static readonly DependencyProperty PreviewBoundsProperty =
+        DependencyProperty.Register(nameof(PreviewBounds), typeof(AppRect), typeof(LayoutEditorControl),
+            new PropertyMetadata(default, OnPreviewBoundsChanged));
 
     private readonly Brush? _draggedBrush = null;
     private readonly DispatcherTimer _historyDebounceTimer;
@@ -49,8 +49,7 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
     private readonly LayoutHistoryManager _historyManager = new();
     private readonly bool _isHoveringAddBtn = false;
 
-    private readonly ILocalizationService _localizationService =
-        Ioc.Default.GetRequiredService<ILocalizationService>();
+    private readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
 
     private int _dragCellOffsetRow, _dragCellOffsetCol;
     private double _dragExactOffsetX, _dragExactOffsetY;
@@ -89,7 +88,6 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
     public LayoutEditorControl()
     {
         InitializeComponent();
-        WeakReferenceMessenger.Default.RegisterAll(this);
 
         _historyDebounceTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(400) };
         _historyDebounceTimer.Tick += (s, e) =>
@@ -124,11 +122,9 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
     public int MaxRowIndex => Math.Max(0, (LayoutProfile?.RowDefinitions?.Count ?? 1) - 1);
     public int MaxColIndex => Math.Max(0, (LayoutProfile?.ColumnDefinitions?.Count ?? 1) - 1);
 
-    public int MaxRowSpan =>
-        Math.Max(1, (LayoutProfile?.RowDefinitions?.Count ?? 1) - (SelectedPlacement?.Row ?? 0));
+    public int MaxRowSpan => Math.Max(1, (LayoutProfile?.RowDefinitions?.Count ?? 1) - (SelectedPlacement?.Row ?? 0));
 
-    public int MaxColSpan =>
-        Math.Max(1, (LayoutProfile?.ColumnDefinitions?.Count ?? 1) - (SelectedPlacement?.Column ?? 0));
+    public int MaxColSpan => Math.Max(1, (LayoutProfile?.ColumnDefinitions?.Count ?? 1) - (SelectedPlacement?.Column ?? 0));
 
     public bool HasSelection => SelectedPlacement != null;
 
@@ -138,16 +134,10 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
         set => SetValue(LayoutProfileProperty, value);
     }
 
-    public LyricsWindowStatus LyricsWindowStatus
+    public AppRect PreviewBounds
     {
-        get => (LyricsWindowStatus)GetValue(LyricsWindowStatusProperty);
-        set => SetValue(LyricsWindowStatusProperty, value);
-    }
-
-    public void Receive(PropertyChangedMessage<Rect> message)
-    {
-        if (message.Sender == LyricsWindowStatus && message.PropertyName == nameof(LyricsWindowStatus.WindowBounds))
-            UpdatePreviewAspectRatio();
+        get => (AppRect)GetValue(PreviewBoundsProperty);
+        set => SetValue(PreviewBoundsProperty, value);
     }
 
     public string FormatZoom(double zoom)
@@ -160,10 +150,14 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
         if (d is LayoutEditorControl control)
         {
             if (e.OldValue is INotifyPropertyChanged oldProfile)
+            {
                 oldProfile.PropertyChanged -= control.OnModelPropertyChanged;
+            }
 
             if (e.NewValue is INotifyPropertyChanged newProfile)
+            {
                 newProfile.PropertyChanged += control.OnModelPropertyChanged;
+            }
 
             control.UpdateToolbox();
             control.UpdateHeaders();
@@ -178,10 +172,17 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
         }
     }
 
-    private static void OnWindowStatusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    private static void OnPreviewBoundsChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         if (d is LayoutEditorControl control)
         {
+            var oldBounds = e.OldValue as AppRect;
+            var newBounds = e.NewValue as AppRect;
+            // 仅在尺寸实际发生改变时才更新编辑器布局
+            if (oldBounds != null && newBounds != null && oldBounds.Width == newBounds.Width && oldBounds.Height == newBounds.Height)
+            {
+                return;
+            }
             control.UpdateToolbox();
             control.RequestRender();
         }
@@ -199,10 +200,14 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
     partial void OnSelectedPlacementChanged(ComponentPlacement? oldValue, ComponentPlacement? newValue)
     {
         if (oldValue is INotifyPropertyChanged oldModel)
+        {
             oldModel.PropertyChanged -= OnModelPropertyChanged;
+        }
 
         if (newValue is INotifyPropertyChanged newModel)
+        {
             newModel.PropertyChanged += OnModelPropertyChanged;
+        }
 
         UpdatePropertiesPanel();
         UpdateSelectionVisuals();
@@ -229,6 +234,7 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
     public void RequestRender()
     {
         if (_isStartingDrag) return;
+
         RenderPreviewGrid();
         UpdatePropertiesPanel();
         WeakReferenceMessenger.Default.Send(new LayoutChangedMessage());
@@ -259,8 +265,12 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
     private void UpdateSelectionVisuals()
     {
         foreach (var child in PreviewGrid.Children)
+        {
             if (child is CanvasItemControl cic && cic.Placement != null)
+            {
                 cic.IsSelected = cic.Placement == SelectedPlacement;
+            }
+        }
     }
 
     public void UpdateScaledLayout()
@@ -269,10 +279,8 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
 
         ScaledRowSpacing = LayoutProfile.RowSpacing * CurrentZoom;
         ScaledColSpacing = LayoutProfile.ColumnSpacing * CurrentZoom;
-        ScaledColPadding = new Thickness(LayoutProfile.PaddingLeft * CurrentZoom, 0,
-            LayoutProfile.PaddingRight * CurrentZoom, 0);
-        ScaledRowPadding = new Thickness(0, LayoutProfile.PaddingTop * CurrentZoom, 0,
-            LayoutProfile.PaddingBottom * CurrentZoom);
+        ScaledColPadding = new Thickness(LayoutProfile.PaddingLeft * CurrentZoom, 0, LayoutProfile.PaddingRight * CurrentZoom, 0);
+        ScaledRowPadding = new Thickness(0, LayoutProfile.PaddingTop * CurrentZoom, 0, LayoutProfile.PaddingBottom * CurrentZoom);
 
         for (var i = 0; i < ColumnHeaderItems.Count; i++)
         {
@@ -296,12 +304,15 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
         }
 
         var expectedTypes = Enum.GetValues<ComponentType>().Where(t => t != ComponentType.None).ToList();
-        var typesToShow = expectedTypes.Where(t => !LayoutProfile.Placements.Any(p => p.ComponentType == t))
-            .ToList();
+        var typesToShow = expectedTypes.Where(t => !LayoutProfile.Placements.Any(p => p.ComponentType == t)).ToList();
 
         for (var i = AvailableToolboxItems.Count - 1; i >= 0; i--)
+        {
             if (!typesToShow.Contains(AvailableToolboxItems[i].ComponentType))
+            {
                 AvailableToolboxItems.RemoveAt(i);
+            }
+        }
 
         for (var i = 0; i < typesToShow.Count; i++)
         {
@@ -310,9 +321,13 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
             {
                 var existingItem = AvailableToolboxItems.FirstOrDefault(x => x.ComponentType == targetType);
                 if (existingItem != null)
+                {
                     AvailableToolboxItems.Move(AvailableToolboxItems.IndexOf(existingItem), i);
+                }
                 else
+                {
                     AvailableToolboxItems.Insert(i, new ToolboxItem { ComponentType = targetType });
+                }
             }
         }
     }
@@ -324,6 +339,7 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
         var colDefs = LayoutProfile.ColumnDefinitions;
         ColumnHeaderItems.Clear();
         for (var i = 0; i < colDefs.Count; i++)
+        {
             ColumnHeaderItems.Add(new HeaderItemModel
             {
                 Index = i,
@@ -331,10 +347,12 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
                 Parent = this,
                 CanDelete = colDefs.Count > 1
             });
+        }
 
         var rowDefs = LayoutProfile.RowDefinitions;
         RowHeaderItems.Clear();
         for (var i = 0; i < rowDefs.Count; i++)
+        {
             RowHeaderItems.Add(new HeaderItemModel
             {
                 Index = i,
@@ -342,6 +360,7 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
                 Parent = this,
                 CanDelete = rowDefs.Count > 1
             });
+        }
     }
 
     [RelayCommand]
@@ -369,12 +388,18 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
         {
             var lastRow = LayoutProfile.RowDefinitions.Count - 1;
             for (var i = LayoutProfile.Placements.Count - 1; i >= 0; i--)
+            {
                 if (LayoutProfile.Placements[i].Row >= lastRow)
+                {
                     LayoutProfile.Placements.RemoveAt(i);
+                }
+            }
 
             LayoutProfile.RowDefinitions.RemoveAt(lastRow);
             foreach (var p in LayoutProfile.Placements.Where(p => p.Row + p.RowSpan > lastRow))
+            {
                 p.RowSpan = Math.Max(1, lastRow - p.Row);
+            }
 
             NotifyLimitsChanged();
             CheckSelectionValidity();
@@ -391,12 +416,18 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
         {
             var lastCol = LayoutProfile.ColumnDefinitions.Count - 1;
             for (var i = LayoutProfile.Placements.Count - 1; i >= 0; i--)
+            {
                 if (LayoutProfile.Placements[i].Column >= lastCol)
+                {
                     LayoutProfile.Placements.RemoveAt(i);
+                }
+            }
 
             LayoutProfile.ColumnDefinitions.RemoveAt(lastCol);
             foreach (var p in LayoutProfile.Placements.Where(p => p.Column + p.ColumnSpan > lastCol))
+            {
                 p.ColumnSpan = Math.Max(1, lastCol - p.Column);
+            }
 
             NotifyLimitsChanged();
             CheckSelectionValidity();
@@ -440,8 +471,7 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
     private void ToggleRowStarAction(int index)
     {
         var current = LayoutProfile.RowDefinitions[index];
-        LayoutProfile.RowDefinitions[index] =
-            current.Equals("Auto", StringComparison.OrdinalIgnoreCase) ? "1*" : "Auto";
+        LayoutProfile.RowDefinitions[index] = current.Equals("Auto", StringComparison.OrdinalIgnoreCase) ? "1*" : "Auto";
         UpdateHeaders();
         RequestRender();
     }
@@ -468,8 +498,7 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
     private void ToggleColStarAction(int index)
     {
         var current = LayoutProfile.ColumnDefinitions[index];
-        LayoutProfile.ColumnDefinitions[index] =
-            current.Equals("Auto", StringComparison.OrdinalIgnoreCase) ? "1*" : "Auto";
+        LayoutProfile.ColumnDefinitions[index] = current.Equals("Auto", StringComparison.OrdinalIgnoreCase) ? "1*" : "Auto";
         UpdateHeaders();
         RequestRender();
     }
@@ -478,8 +507,16 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
     {
         LayoutProfile.RowDefinitions.Insert(index, "1*");
         foreach (var p in LayoutProfile.Placements)
-            if (p.Row >= index) p.Row++;
-            else if (p.Row + p.RowSpan > index) p.RowSpan++;
+        {
+            if (p.Row >= index)
+            {
+                p.Row++;
+            }
+            else if (p.Row + p.RowSpan > index)
+            {
+                p.RowSpan++;
+            }
+        }
 
         NotifyLimitsChanged();
         UpdateHeaders();
@@ -490,8 +527,16 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
     {
         LayoutProfile.ColumnDefinitions.Insert(index, "1*");
         foreach (var p in LayoutProfile.Placements)
-            if (p.Column >= index) p.Column++;
-            else if (p.Column + p.ColumnSpan > index) p.ColumnSpan++;
+        {
+            if (p.Column >= index)
+            {
+                p.Column++;
+            }
+            else if (p.Column + p.ColumnSpan > index)
+            {
+                p.ColumnSpan++;
+            }
+        }
 
         NotifyLimitsChanged();
         UpdateHeaders();
@@ -503,12 +548,23 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
         if (LayoutProfile.RowDefinitions.Count <= 1) return;
 
         var toRemove = LayoutProfile.Placements.Where(p => p.Row == index && p.RowSpan == 1).ToList();
-        foreach (var p in toRemove) LayoutProfile.Placements.Remove(p);
+        foreach (var p in toRemove)
+        {
+            LayoutProfile.Placements.Remove(p);
+        }
 
         LayoutProfile.RowDefinitions.RemoveAt(index);
         foreach (var p in LayoutProfile.Placements)
-            if (p.Row > index) p.Row--;
-            else if (p.Row <= index && p.Row + p.RowSpan > index) p.RowSpan = Math.Max(1, p.RowSpan - 1);
+        {
+            if (p.Row > index)
+            {
+                p.Row--;
+            }
+            else if (p.Row <= index && p.Row + p.RowSpan > index)
+            {
+                p.RowSpan = Math.Max(1, p.RowSpan - 1);
+            }
+        }
 
         CheckSelectionValidity();
         UpdateToolbox();
@@ -521,13 +577,23 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
         if (LayoutProfile.ColumnDefinitions.Count <= 1) return;
 
         var toRemove = LayoutProfile.Placements.Where(p => p.Column == index && p.ColumnSpan == 1).ToList();
-        foreach (var p in toRemove) LayoutProfile.Placements.Remove(p);
+        foreach (var p in toRemove)
+        {
+            LayoutProfile.Placements.Remove(p);
+        }
 
         LayoutProfile.ColumnDefinitions.RemoveAt(index);
         foreach (var p in LayoutProfile.Placements)
-            if (p.Column > index) p.Column--;
+        {
+            if (p.Column > index)
+            {
+                p.Column--;
+            }
             else if (p.Column <= index && p.Column + p.ColumnSpan > index)
+            {
                 p.ColumnSpan = Math.Max(1, p.ColumnSpan - 1);
+            }
+        }
 
         CheckSelectionValidity();
         UpdateToolbox();
@@ -538,7 +604,9 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
     private void CheckSelectionValidity()
     {
         if (SelectedPlacement != null && !LayoutProfile.Placements.Contains(SelectedPlacement))
+        {
             SelectedPlacement = null;
+        }
     }
 
     private void NotifyLimitsChanged()
@@ -562,51 +630,54 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
         PreviewGrid.RowSpacing = LayoutProfile.RowSpacing;
         PreviewGrid.ColumnSpacing = LayoutProfile.ColumnSpacing;
 
-        PreviewGrid.Padding = new Thickness(LayoutProfile.PaddingLeft, LayoutProfile.PaddingTop,
-            LayoutProfile.PaddingRight, LayoutProfile.PaddingBottom);
+        PreviewGrid.Padding = new Thickness(LayoutProfile.PaddingLeft, LayoutProfile.PaddingTop, LayoutProfile.PaddingRight, LayoutProfile.PaddingBottom);
 
         foreach (var rowDef in LayoutProfile.RowDefinitions)
-            PreviewGrid.RowDefinitions.Add(new RowDefinition
-                { Height = GridLengthExtensions.ParseGridLength(rowDef) });
+        {
+            PreviewGrid.RowDefinitions.Add(new RowDefinition { Height = GridLengthExtensions.ParseGridLength(rowDef) });
+        }
 
         foreach (var colDef in LayoutProfile.ColumnDefinitions)
-            PreviewGrid.ColumnDefinitions.Add(new ColumnDefinition
-                { Width = GridLengthExtensions.ParseGridLength(colDef) });
+        {
+            PreviewGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLengthExtensions.ParseGridLength(colDef) });
+        }
 
         for (var r = 0; r < LayoutProfile.RowDefinitions.Count; r++)
-        for (var c = 0; c < LayoutProfile.ColumnDefinitions.Count; c++)
         {
-            var cellSlot = new Border
+            for (var c = 0; c < LayoutProfile.ColumnDefinitions.Count; c++)
             {
-                BorderBrush = BrushHelper.GetThemeBrush(this, "CardStrokeColorDefaultBrush"),
-                BorderThickness = new Thickness(1),
-                Background = new SolidColorBrush(Colors.Transparent),
-                MinHeight = 4,
-                MinWidth = 4,
-                CornerRadius = new CornerRadius(4)
-            };
-            Grid.SetRow(cellSlot, r);
-            Grid.SetColumn(cellSlot, c);
+                var cellSlot = new Border
+                {
+                    BorderBrush = BrushHelper.GetThemeBrush(this, "CardStrokeColorDefaultBrush"),
+                    BorderThickness = new Thickness(1),
+                    Background = new SolidColorBrush(Colors.Transparent),
+                    MinHeight = 4,
+                    MinWidth = 4,
+                    CornerRadius = new CornerRadius(4)
+                };
+                Grid.SetRow(cellSlot, r);
+                Grid.SetColumn(cellSlot, c);
 
-            cellSlot.PointerPressed += (s, e) =>
-            {
-                SelectedPlacement = null;
-                Focus(FocusState.Programmatic);
-            };
+                cellSlot.PointerPressed += (s, e) =>
+                {
+                    SelectedPlacement = null;
+                    Focus(FocusState.Programmatic);
+                };
 
-            if (r == 0)
-            {
-                var colIndex = c;
-                cellSlot.SizeChanged += (s, e) => SyncColumnSize(colIndex, e.NewSize.Width);
+                if (r == 0)
+                {
+                    var colIndex = c;
+                    cellSlot.SizeChanged += (s, e) => SyncColumnSize(colIndex, e.NewSize.Width);
+                }
+
+                if (c == 0)
+                {
+                    var rowIndex = r;
+                    cellSlot.SizeChanged += (s, e) => SyncRowSize(rowIndex, e.NewSize.Height);
+                }
+
+                PreviewGrid.Children.Add(cellSlot);
             }
-
-            if (c == 0)
-            {
-                var rowIndex = r;
-                cellSlot.SizeChanged += (s, e) => SyncRowSize(rowIndex, e.NewSize.Height);
-            }
-
-            PreviewGrid.Children.Add(cellSlot);
         }
 
         foreach (var placement in LayoutProfile.Placements.OrderBy(x => x.ComponentType))
@@ -749,8 +820,7 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
         RequestRender();
     }
 
-    private void Handle_PointerPressed(object sender, PointerRoutedEventArgs e, string direction,
-        ComponentPlacement placement)
+    private void Handle_PointerPressed(object sender, PointerRoutedEventArgs e, string direction, ComponentPlacement placement)
     {
         var handle = sender as UIElement;
         handle?.CapturePointer(e.Pointer);
@@ -777,12 +847,9 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
                 BorderBrush = new SolidColorBrush(color),
                 BorderThickness = new Thickness(3),
                 CornerRadius = new CornerRadius(4),
-                Margin = new Thickness(placement.MarginLeft, placement.MarginTop, placement.MarginRight,
-                    placement.MarginBottom),
-                HorizontalAlignment =
-                    HorizontalAlignmentExtensions.FromAppHorizontalAlignment(placement.HorizontalAlignment),
-                VerticalAlignment =
-                    VerticalAlignmentExtensions.FromAppVerticalAlignment(placement.VerticalAlignment),
+                Margin = new Thickness(placement.MarginLeft, placement.MarginTop, placement.MarginRight, placement.MarginBottom),
+                HorizontalAlignment = HorizontalAlignmentExtensions.FromAppHorizontalAlignment(placement.HorizontalAlignment),
+                VerticalAlignment = VerticalAlignmentExtensions.FromAppVerticalAlignment(placement.VerticalAlignment),
                 Child = new TextBlock
                 {
                     Text = placement.DisplayName,
@@ -819,9 +886,13 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
         var maxColSpan = LayoutProfile.ColumnDefinitions.Count - _resizeTarget.Column;
 
         if (_resizeDirection == "Right" || _resizeDirection == "Corner")
+        {
             newColSpan = Math.Clamp(hoverCol - _resizeTarget.Column + 1, 1, maxColSpan);
+        }
         if (_resizeDirection == "Bottom" || _resizeDirection == "Corner")
+        {
             newRowSpan = Math.Clamp(hoverRow - _resizeTarget.Row + 1, 1, maxRowSpan);
+        }
 
         Grid.SetRowSpan(_dropPreviewGhost, newRowSpan);
         Grid.SetColumnSpan(_dropPreviewGhost, newColSpan);
@@ -907,10 +978,8 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
                 _draggedRowSpan = placement.RowSpan;
                 _draggedColSpan = placement.ColumnSpan;
                 _draggedText = placement.DisplayName;
-                _draggedMargin = new Thickness(placement.MarginLeft, placement.MarginTop, placement.MarginRight,
-                    placement.MarginBottom);
-                _draggedHAlign =
-                    HorizontalAlignmentExtensions.FromAppHorizontalAlignment(placement.HorizontalAlignment);
+                _draggedMargin = new Thickness(placement.MarginLeft, placement.MarginTop, placement.MarginRight, placement.MarginBottom);
+                _draggedHAlign = HorizontalAlignmentExtensions.FromAppHorizontalAlignment(placement.HorizontalAlignment);
                 _draggedVAlign = VerticalAlignmentExtensions.FromAppVerticalAlignment(placement.VerticalAlignment);
 
                 var (mouseRow, mouseCol) = GetGridCellFromPoint(pointerPos);
@@ -963,10 +1032,8 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
 
         Grid.SetRow(_dropPreviewGhost, targetRow);
         Grid.SetColumn(_dropPreviewGhost, targetCol);
-        Grid.SetRowSpan(_dropPreviewGhost,
-            Math.Min(_draggedRowSpan, LayoutProfile.RowDefinitions.Count - targetRow));
-        Grid.SetColumnSpan(_dropPreviewGhost,
-            Math.Min(_draggedColSpan, LayoutProfile.ColumnDefinitions.Count - targetCol));
+        Grid.SetRowSpan(_dropPreviewGhost, Math.Min(_draggedRowSpan, LayoutProfile.RowDefinitions.Count - targetRow));
+        Grid.SetColumnSpan(_dropPreviewGhost, Math.Min(_draggedColSpan, LayoutProfile.ColumnDefinitions.Count - targetCol));
 
         if (_floatingDragVisual == null)
         {
@@ -1002,8 +1069,7 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
                 var targetRow = Math.Max(0, mouseRow - _dragCellOffsetRow);
                 var targetCol = Math.Max(0, mouseCol - _dragCellOffsetCol);
 
-                var existingPlacement =
-                    LayoutProfile.Placements.FirstOrDefault(p => p.ComponentType == droppedType);
+                var existingPlacement = LayoutProfile.Placements.FirstOrDefault(p => p.ComponentType == droppedType);
                 ComponentPlacement placementToInsert;
 
                 if (existingPlacement != null)
@@ -1011,10 +1077,8 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
                     LayoutProfile.Placements.Remove(existingPlacement);
                     existingPlacement.Row = targetRow;
                     existingPlacement.Column = targetCol;
-                    existingPlacement.RowSpan = Math.Min(existingPlacement.RowSpan,
-                        LayoutProfile.RowDefinitions.Count - targetRow);
-                    existingPlacement.ColumnSpan = Math.Min(existingPlacement.ColumnSpan,
-                        LayoutProfile.ColumnDefinitions.Count - targetCol);
+                    existingPlacement.RowSpan = Math.Min(existingPlacement.RowSpan, LayoutProfile.RowDefinitions.Count - targetRow);
+                    existingPlacement.ColumnSpan = Math.Min(existingPlacement.ColumnSpan, LayoutProfile.ColumnDefinitions.Count - targetCol);
                     placementToInsert = existingPlacement;
                 }
                 else
@@ -1143,10 +1207,8 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
     {
         var ctrlState = InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Control);
         var shiftState = InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Shift);
-        var isCtrlDown = (ctrlState & CoreVirtualKeyStates.Down) ==
-                         CoreVirtualKeyStates.Down;
-        var isShiftDown = (shiftState & CoreVirtualKeyStates.Down) ==
-                          CoreVirtualKeyStates.Down;
+        var isCtrlDown = (ctrlState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
+        var isShiftDown = (shiftState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
         var delta = e.GetCurrentPoint(PreviewScrollViewer).Properties.MouseWheelDelta;
 
         if (isCtrlDown)
@@ -1168,11 +1230,13 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
         if (PreviewScrollViewer == null) return;
         CurrentZoom = PreviewScrollViewer.ZoomFactor;
         if (ColHeadersItemsControl != null)
-            ColHeadersItemsControl.RenderTransform = new TranslateTransform
-                { X = -PreviewScrollViewer.HorizontalOffset, Y = 0 };
+        {
+            ColHeadersItemsControl.RenderTransform = new TranslateTransform { X = -PreviewScrollViewer.HorizontalOffset, Y = 0 };
+        }
         if (RowHeadersItemsControl != null)
-            RowHeadersItemsControl.RenderTransform = new TranslateTransform
-                { X = 0, Y = -PreviewScrollViewer.VerticalOffset };
+        {
+            RowHeadersItemsControl.RenderTransform = new TranslateTransform { X = 0, Y = -PreviewScrollViewer.VerticalOffset };
+        }
 
         UpdateMinimap();
     }
@@ -1272,7 +1336,7 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
 
     private void FitToScreen()
     {
-        if (LyricsWindowStatus == null || PreviewGrid.Width <= 0 || PreviewGrid.Height <= 0) return;
+        if (PreviewBounds == null || PreviewGrid.Width <= 0 || PreviewGrid.Height <= 0) return;
         var zoomX = Math.Max(10, PreviewScrollViewer.ActualWidth - 48) / PreviewGrid.Width;
         var zoomY = Math.Max(10, PreviewScrollViewer.ActualHeight - 48) / PreviewGrid.Height;
         var fitZoom = (float)Math.Min(zoomX, zoomY);
@@ -1302,10 +1366,9 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
 
     private void UpdatePreviewAspectRatio()
     {
-        if (LyricsWindowStatus == null || LyricsWindowStatus.WindowBounds.Width <= 0 ||
-            LyricsWindowStatus.WindowBounds.Height <= 0) return;
-        PreviewGrid.Width = LyricsWindowStatus.WindowBounds.Width;
-        PreviewGrid.Height = LyricsWindowStatus.WindowBounds.Height;
+        if (PreviewBounds == null || PreviewBounds.Width <= 0 || PreviewBounds.Height <= 0) return;
+        PreviewGrid.Width = PreviewBounds.Width;
+        PreviewGrid.Height = PreviewBounds.Height;
     }
 
     private void SetHandToolState(bool isActive)
@@ -1329,14 +1392,12 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
 
     private void ZoomIn_Click(object sender, RoutedEventArgs e)
     {
-        PreviewScrollViewer.ChangeView(null, null,
-            Math.Min(PreviewScrollViewer.ZoomFactor + 0.2f, PreviewScrollViewer.MaxZoomFactor));
+        PreviewScrollViewer.ChangeView(null, null, Math.Min(PreviewScrollViewer.ZoomFactor + 0.2f, PreviewScrollViewer.MaxZoomFactor));
     }
 
     private void ZoomOut_Click(object sender, RoutedEventArgs e)
     {
-        PreviewScrollViewer.ChangeView(null, null,
-            Math.Max(PreviewScrollViewer.ZoomFactor - 0.2f, PreviewScrollViewer.MinZoomFactor));
+        PreviewScrollViewer.ChangeView(null, null, Math.Max(PreviewScrollViewer.ZoomFactor - 0.2f, PreviewScrollViewer.MinZoomFactor));
     }
 
     private void ZoomReset_Click(object sender, RoutedEventArgs e)
@@ -1391,7 +1452,10 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
             {
                 nb.IsEnabled = item.Tag?.ToString() != "Auto";
 
-                if (nb.IsEnabled && double.IsNaN(nb.Value)) nb.Value = 1;
+                if (nb.IsEnabled && double.IsNaN(nb.Value))
+                {
+                    nb.Value = 1;
+                }
             }
         }
     }
@@ -1417,12 +1481,19 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
             };
 
             if (RowHeaderItems.Contains(model))
+            {
                 ApplyRowDefinition(model.Index, newDef);
+            }
             else if (ColumnHeaderItems.Contains(model))
+            {
                 ApplyColDefinition(model.Index, newDef);
+            }
 
             var popups = VisualTreeHelper.GetOpenPopupsForXamlRoot(btn.XamlRoot);
-            if (popups.Any()) popups.Last().IsOpen = false;
+            if (popups.Any())
+            {
+                popups.Last().IsOpen = false;
+            }
         }
     }
 
@@ -1455,12 +1526,10 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
         if (IsInputControlFocused()) return;
 
         var ctrlState = InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Control);
-        var isCtrlDown = (ctrlState & CoreVirtualKeyStates.Down) ==
-                         CoreVirtualKeyStates.Down;
+        var isCtrlDown = (ctrlState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
 
         var shiftState = InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Shift);
-        var isShiftDown = (shiftState & CoreVirtualKeyStates.Down) ==
-                          CoreVirtualKeyStates.Down;
+        var isShiftDown = (shiftState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
 
         if ((int)e.OriginalKey == 191 && isCtrlDown)
         {
@@ -1474,9 +1543,13 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
             if (e.Key == VirtualKey.Z)
             {
                 if (isShiftDown)
+                {
                     PerformRedo();
+                }
                 else
+                {
                     PerformUndo();
+                }
 
                 e.Handled = true;
                 return;
@@ -1611,12 +1684,18 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
         if (isReverse)
         {
             nextIndex = currentIndex - 1;
-            if (nextIndex < 0) nextIndex = placements.Count - 1;
+            if (nextIndex < 0)
+            {
+                nextIndex = placements.Count - 1;
+            }
         }
         else
         {
             nextIndex = currentIndex + 1;
-            if (nextIndex >= placements.Count) nextIndex = 0;
+            if (nextIndex >= placements.Count)
+            {
+                nextIndex = 0;
+            }
         }
 
         SelectedPlacement = placements[nextIndex];
@@ -1626,13 +1705,15 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
     {
         if (SelectedPlacement == null) return;
 
-        CanvasItemControl targetVisual = null;
+        CanvasItemControl? targetVisual = null;
         foreach (var child in PreviewGrid.Children)
+        {
             if (child is CanvasItemControl itemControl && itemControl.Placement == SelectedPlacement)
             {
                 targetVisual = itemControl;
                 break;
             }
+        }
 
         if (targetVisual == null) return;
 
@@ -1660,7 +1741,10 @@ public sealed partial class LayoutEditorControl : UserControl, IRecipient<Proper
 
     private void RecordState()
     {
-        if (LayoutProfile != null) _historyManager.SaveSnapshot(LayoutProfile);
+        if (LayoutProfile != null)
+        {
+            _historyManager.SaveSnapshot(LayoutProfile);
+        }
     }
 
     private void PerformUndo()

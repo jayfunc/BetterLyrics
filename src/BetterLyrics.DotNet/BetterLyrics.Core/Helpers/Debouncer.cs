@@ -1,5 +1,5 @@
-﻿using System.Diagnostics;
-using BetterLyrics.Core.Constants;
+﻿using BetterLyrics.Core.Constants;
+using System.Diagnostics;
 
 namespace BetterLyrics.Core.Helpers;
 

@@ -25,22 +25,22 @@ public partial class MonitorHook : IDisposable
             lpfnWndProc = _wndProc
         };
         User32.RegisterClass(wndClass);
-        
+
         // MUST be a top-level window (HWND.NULL) to receive WM_DISPLAYCHANGE broadcast, not a message-only window
         _handle = User32.CreateWindowEx(
-            User32.WindowStylesEx.WS_EX_LEFT, 
-            _className, 
-            "BetterLyricsMonitorWatcher", 
-            User32.WindowStyles.WS_OVERLAPPED, 
-            0, 0, 0, 0, 
-            HWND.NULL, 
-            HMENU.NULL, 
-            HINSTANCE.NULL, 
+            User32.WindowStylesEx.WS_EX_LEFT,
+            _className,
+            "BetterLyricsMonitorWatcher",
+            User32.WindowStyles.WS_OVERLAPPED,
+            0, 0, 0, 0,
+            HWND.NULL,
+            HMENU.NULL,
+            HINSTANCE.NULL,
             IntPtr.Zero);
 
         _powerNotifyHandle = User32.RegisterPowerSettingNotification(
-            new HANDLE((IntPtr)_handle), 
-            in GUID_CONSOLE_DISPLAY_STATE, 
+            new HANDLE((IntPtr)_handle),
+            in GUID_CONSOLE_DISPLAY_STATE,
             User32.DEVICE_NOTIFY.DEVICE_NOTIFY_WINDOW_HANDLE);
     }
 

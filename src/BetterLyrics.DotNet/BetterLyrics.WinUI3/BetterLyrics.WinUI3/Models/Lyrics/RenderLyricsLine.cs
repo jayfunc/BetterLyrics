@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using BetterLyrics.Core.Constants;
+﻿using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Models.Lyrics;
 using BetterLyrics.WinUI3.Extensions;
@@ -9,6 +7,8 @@ using Microsoft.Graphics.Canvas.Effects;
 using Microsoft.Graphics.Canvas.Geometry;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BetterLyrics.WinUI3.Models.Lyrics;
 
@@ -232,11 +232,11 @@ public class RenderLyricsLine : BaseRenderLyricsLine
         }
 
         UnplayedFillTint = new TintEffect
-            { Source = CachedFill, Color = ColorExtensions.FromAppColor(Colors.White) };
+        { Source = CachedFill, Color = ColorExtensions.FromAppColor(Colors.White) };
         UnplayedStrokeTint = new TintEffect
-            { Source = CachedStroke, Color = ColorExtensions.FromAppColor(Colors.White) };
+        { Source = CachedStroke, Color = ColorExtensions.FromAppColor(Colors.White) };
         UnplayedComposite = new CompositeEffect
-            { Sources = { UnplayedStrokeTint, UnplayedFillTint }, Mode = CanvasComposite.SourceOver };
+        { Sources = { UnplayedStrokeTint, UnplayedFillTint }, Mode = CanvasComposite.SourceOver };
 
         if (PrimaryTextRegions != null &&
             (RenderLyricsRegions == null || RenderLyricsRegions.Length != PrimaryTextRegions.Length))

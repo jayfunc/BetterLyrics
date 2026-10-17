@@ -20,11 +20,11 @@
             x:Name="NavView"
             IsBackButtonVisible="Collapsed"
             IsSettingsVisible="False"
-            MenuItemsSource="{x:Bind ViewModel.MenuItems}"
+            MenuItemsSource="{x:Bind ViewModel.NavItems}"
             PaneTitle=" "
-            SelectedItem="{x:Bind ViewModel.SelectedMenuItem, Mode=TwoWay}">
+            SelectedItem="{x:Bind ViewModel.SelectedNavItem, Mode=TwoWay}">
             <NavigationView.MenuItemTemplate>
-                <DataTemplate x:DataType="models:NavMenuItem">
+                <DataTemplate x:DataType="models:SettingsNavMenuItem">
                     <NavigationViewItem Content="{x:Bind Label}">
                         <NavigationViewItem.Icon>
                             <FontIcon FontFamily="{StaticResource SegoeFluentIcons}" Glyph="{x:Bind Glyph}" />
@@ -92,7 +92,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <controls:SwitchPresenter Grid.Row="0" Value="{x:Bind ViewModel.SelectedMenuItem.Section, Mode=OneWay}">
+                <controls:SwitchPresenter Grid.Row="0" Value="{x:Bind ViewModel.SelectedNavItem.Section, Mode=OneWay}">
                     <controls:SwitchPresenter.ContentTransitions>
                         <TransitionCollection>
                             <PopupThemeTransition />

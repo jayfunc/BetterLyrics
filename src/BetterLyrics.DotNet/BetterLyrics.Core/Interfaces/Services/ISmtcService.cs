@@ -1,7 +1,7 @@
-using System.Collections.ObjectModel;
-using System.ComponentModel;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Models;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace BetterLyrics.Core.Interfaces.Services;
 

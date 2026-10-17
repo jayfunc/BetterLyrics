@@ -5,7 +5,7 @@ namespace BetterLyrics.Core.Helpers;
 public static class WebDavProbeHelper
 {
     /// <summary>
-    ///     自动检测目标主机是 HTTP 还是 HTTPS
+    /// 自动检测目标主机是 HTTP 还是 HTTPS
     /// </summary>
     /// <returns>返回 "https" 或 "http"，如果都连不上返回 null</returns>
     public static async Task<string?> DetectSchemeAsync(string host, int port, string? path, string? user, string? pwd)

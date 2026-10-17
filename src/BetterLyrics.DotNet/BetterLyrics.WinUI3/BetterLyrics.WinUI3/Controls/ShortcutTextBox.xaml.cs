@@ -1,6 +1,3 @@
-using System.Collections.Generic;
-using Windows.System;
-using Windows.UI.Core;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
@@ -10,6 +7,9 @@ using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using System.Collections.Generic;
+using Windows.System;
+using Windows.UI.Core;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -22,21 +22,18 @@ public sealed partial class ShortcutTextBox : UserControl
         DependencyProperty.Register(nameof(Shortcut), typeof(List<string>), typeof(ShortcutTextBox),
             new PropertyMetadata(default));
 
-    private readonly IGlobalToastProvider _globalToastProvider =
-        Ioc.Default.GetRequiredService<IGlobalToastProvider>();
-
-    private readonly ILocalizationService _localizationService =
-        Ioc.Default.GetRequiredService<ILocalizationService>();
-
-    public ShortcutTextBox()
-    {
-        InitializeComponent();
-    }
+    private readonly IGlobalToastProvider _globalToastProvider = Ioc.Default.GetRequiredService<IGlobalToastProvider>();
+    private readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
 
     public List<string> Shortcut
     {
         get => (List<string>)GetValue(ShortcutProperty);
         set => SetValue(ShortcutProperty, value);
+    }
+
+    public ShortcutTextBox()
+    {
+        InitializeComponent();
     }
 
     private void TextBox_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -94,8 +91,12 @@ public sealed partial class ShortcutTextBox : UserControl
     {
         var registered = GlobalHotKeyHook.IsHotKeyRegistered(Shortcut);
         if (registered)
+        {
             _globalToastProvider.Show("SettingsPageShortcutRegSuccessInfo", null, MessageSeverity.Success);
+        }
         else
+        {
             _globalToastProvider.Show("SettingsPageShortcutRegFailInfo", null, MessageSeverity.Error);
+        }
     }
 }

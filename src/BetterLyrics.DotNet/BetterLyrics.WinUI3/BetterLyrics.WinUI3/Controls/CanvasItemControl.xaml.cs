@@ -1,4 +1,3 @@
-using Windows.UI;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
 using BetterLyrics.WinUI3.Extensions;
@@ -8,13 +7,13 @@ using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Controls;
 
 public sealed partial class CanvasItemControl : UserControl
 {
-    private readonly ILocalizationService _localizationService =
-        Ioc.Default.GetRequiredService<ILocalizationService>();
+    private readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
 
     private bool _isSelected;
 
@@ -25,23 +24,18 @@ public sealed partial class CanvasItemControl : UserControl
 
         MainBorder.Tag = placement;
 
-        MainBorder.HorizontalAlignment =
-            HorizontalAlignmentExtensions.FromAppHorizontalAlignment(placement.HorizontalAlignment);
-        MainBorder.VerticalAlignment =
-            VerticalAlignmentExtensions.FromAppVerticalAlignment(placement.VerticalAlignment);
-        MainBorder.Margin = new Thickness(placement.MarginLeft, placement.MarginTop, placement.MarginRight,
-            placement.MarginBottom);
+        MainBorder.HorizontalAlignment = HorizontalAlignmentExtensions.FromAppHorizontalAlignment(placement.HorizontalAlignment);
+        MainBorder.VerticalAlignment = VerticalAlignmentExtensions.FromAppVerticalAlignment(placement.VerticalAlignment);
+        MainBorder.Margin = new Thickness(placement.MarginLeft, placement.MarginTop, placement.MarginRight, placement.MarginBottom);
 
         MainBorder.Width = placement.Width;
         MainBorder.Height = placement.Height;
 
-        MainBorder.Padding = new Thickness(placement.PaddingLeft, placement.PaddingTop, placement.PaddingRight,
-            placement.PaddingBottom);
+        MainBorder.Padding = new Thickness(placement.PaddingLeft, placement.PaddingTop, placement.PaddingRight, placement.PaddingBottom);
 
         var mockupGrid = new Grid
         {
-            HorizontalAlignment =
-                HorizontalAlignmentExtensions.FromAppHorizontalAlignment(placement.HorizontalAlignment),
+            HorizontalAlignment = HorizontalAlignmentExtensions.FromAppHorizontalAlignment(placement.HorizontalAlignment),
             VerticalAlignment = VerticalAlignment.Stretch
         };
 

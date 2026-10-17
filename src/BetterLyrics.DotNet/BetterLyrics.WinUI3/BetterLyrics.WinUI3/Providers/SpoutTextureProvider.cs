@@ -1,7 +1,7 @@
-﻿using System;
-using BetterLyrics.Core.Interfaces.Providers;
+﻿using BetterLyrics.Core.Interfaces.Providers;
 using Microsoft.Graphics.Canvas;
 using SpoutDx.Net.Interop;
+using System;
 using Vanara.PInvoke;
 using Vortice.Direct3D11;
 using WinRT;
@@ -9,9 +9,9 @@ using WinRT;
 namespace BetterLyrics.WinUI3.Providers;
 
 /// <summary>
-///     Co-author:
-///     1) <see href="https://github.com/cnbluefire" />
-///     2) <see href="https://github.com/Raspberry-Monster" />
+/// Co-author:
+/// 1) <see href="https://github.com/cnbluefire" />
+/// 2) <see href="https://github.com/Raspberry-Monster" />
 /// </summary>
 public partial class SpoutTextureProvider : ISpoutTextureProvider
 {

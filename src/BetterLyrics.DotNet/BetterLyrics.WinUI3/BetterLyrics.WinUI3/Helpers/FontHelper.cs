@@ -1,14 +1,14 @@
-﻿using System;
+﻿using BetterLyrics.Core.Interfaces.Providers;
+using BetterLyrics.Core.Models;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.Graphics.Canvas.Text;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using BetterLyrics.Core.Interfaces.Providers;
-using BetterLyrics.Core.Models;
-using CommunityToolkit.Mvvm.DependencyInjection;
-using Microsoft.Graphics.Canvas.Text;
 
 namespace BetterLyrics.WinUI3.Helpers;
 

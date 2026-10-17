@@ -5,6 +5,9 @@ using NLanguageTag;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
+/// <summary>
+/// Singleton Service
+/// </summary>
 public class TransliterationService : ITransliterationService
 {
     private readonly IPluginService _pluginService;
@@ -16,11 +19,9 @@ public class TransliterationService : ITransliterationService
         _pluginService = pluginService;
     }
 
-    public async Task<(string, LyricsProvider)> TransliterateTextAsync(string text,
-        LanguageTag? targetLangTag, CancellationToken token)
+    public async Task<(string, LyricsProvider)> TransliterateTextAsync(string text, LanguageTag? targetLangTag, CancellationToken token)
     {
-        var pluginsInfo =
-            _settingsService.AppSettings.PluginsInfo.Where(x => x.Plugin is ILyricsTransliterator);
+        var pluginsInfo = _settingsService.AppSettings.PluginsInfo.Where(x => x.Plugin is ILyricsTransliterator);
         if (pluginsInfo != null)
         {
             foreach (var pluginInfo in pluginsInfo)

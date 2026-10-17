@@ -1,8 +1,8 @@
-﻿using System.Globalization;
+﻿using BetterLyrics.Core.Models;
+using BetterLyrics.Core.Models.Entities;
+using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
-using BetterLyrics.Core.Models;
-using BetterLyrics.Core.Models.Entities;
 
 namespace BetterLyrics.Core.Extensions;
 

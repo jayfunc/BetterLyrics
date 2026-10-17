@@ -1,11 +1,9 @@
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Globalization;
 using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Messages.Playback;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Entities;
 using BetterLyrics.Core.Models.Stats;
@@ -13,13 +11,18 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.Extensions.Logging;
+using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace BetterLyrics.Core.ViewModels;
 
-public partial class StatsDashboardControlViewModel : BaseViewModel,
-    IRecipient<PropertyChangedMessage<bool>>
+/// <summary>
+/// Singleton ViewModel
+/// </summary>
+public partial class StatsDashboardControlViewModel : ObservableRecipient,
+    IRecipient<SongScrobbledMessage>
 {
     private readonly IAlbumArtSearchService _albumArtSearchService;
 
@@ -29,34 +32,8 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
     private readonly string _localizedTimesValue;
     private readonly ILogger<StatsDashboardControlViewModel> _logger;
     private readonly IPlayHistoryService _playHistoryService;
-    private readonly ISettingsService _settingsService;
-    private readonly ISystemUIProvider _systemUiProvider;
     private readonly IProgramProvider _programProvider;
     private readonly IAppUIThreadProvider _appUIThreadProvider;
-
-    public StatsDashboardControlViewModel(
-        IPlayHistoryService playHistoryService,
-        ILocalizationService localizationService,
-        IAlbumArtSearchService albumArtSearchService,
-        IGsmtcService gsmtcService,
-        ISettingsService settingsService, ISystemUIProvider systemUiProvider, IProgramProvider programProvider,
-        IAppUIThreadProvider appUIThreadProvider)
-    {
-        _playHistoryService = playHistoryService;
-        _localizationService = localizationService;
-        _albumArtSearchService = albumArtSearchService;
-        _settingsService = settingsService;
-        _systemUiProvider = systemUiProvider;
-        _programProvider = programProvider;
-        _appUIThreadProvider = appUIThreadProvider;
-        GSMTCService = gsmtcService;
-
-        _logger = Ioc.Default.GetRequiredService<ILogger<StatsDashboardControlViewModel>>();
-
-        _localizedTimesValue = _localizationService.GetLocalizedString("StatsDashboardControlTimes");
-
-        UpdateDateRange();
-    }
 
     [ObservableProperty] public partial IGsmtcService GSMTCService { get; set; }
 
@@ -103,12 +80,28 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
     [ObservableProperty] public partial string LateNightSongName { get; set; } = "";
     [ObservableProperty] public partial DateTime? LateNightSongDate { get; set; }
 
-    public void Receive(PropertyChangedMessage<bool> message)
+    public StatsDashboardControlViewModel(
+    IPlayHistoryService playHistoryService,
+    ILocalizationService localizationService,
+    IAlbumArtSearchService albumArtSearchService,
+    IGsmtcService gsmtcService,
+    IProgramProvider programProvider,
+    IAppUIThreadProvider appUIThreadProvider)
     {
-        if (message.Sender is IGsmtcService)
-            if (message.PropertyName == nameof(IGsmtcService.IsScrobbled))
-                if (message.NewValue)
-                    RefreshData();
+        _playHistoryService = playHistoryService;
+        _localizationService = localizationService;
+        _albumArtSearchService = albumArtSearchService;
+        _programProvider = programProvider;
+        _appUIThreadProvider = appUIThreadProvider;
+        GSMTCService = gsmtcService;
+
+        _logger = Ioc.Default.GetRequiredService<ILogger<StatsDashboardControlViewModel>>();
+
+        _localizedTimesValue = _localizationService.GetLocalizedString("StatsDashboardControlTimes");
+
+        UpdateDateRange();
+
+        IsActive = true;
     }
 
     partial void OnSelectedTimeRangeChanged(StatsRange value)
@@ -137,8 +130,7 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
         LoadData();
     }
 
-    private void ProcessHeatmapStats(List<PlayHistoryItem> logs, DateTime start, DateTime end,
-        CultureInfo? culture = null)
+    private void ProcessHeatmapStats(List<PlayHistoryItem> logs, DateTime start, DateTime end, CultureInfo? culture = null)
     {
         culture ??= CultureInfo.CurrentUICulture;
 
@@ -425,7 +417,10 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
     private async Task LoadDataCoreAsync()
     {
         if (IsLoading) return;
-        _appUIThreadProvider.Execute(() => IsLoading = true);
+        _appUIThreadProvider.Execute(() =>
+        {
+            IsLoading = true;
+        });
 
         try
         {
@@ -471,7 +466,10 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
 
                     if (!string.IsNullOrEmpty(url))
                     {
-                        _appUIThreadProvider.Execute(() => song.AlbumArtUrl = url);
+                        _appUIThreadProvider.Execute(() =>
+                        {
+                            song.AlbumArtUrl = url;
+                        });
                     }
                 }
             });
@@ -536,7 +534,10 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
         }
         finally
         {
-            _appUIThreadProvider.Execute(() => IsLoading = false);
+            _appUIThreadProvider.Execute(() =>
+            {
+                IsLoading = false;
+            });
         }
     }
 
@@ -562,5 +563,11 @@ public partial class StatsDashboardControlViewModel : BaseViewModel,
     {
         await _playHistoryService.GenerateTestDataAsync(1000);
         LoadData(); // Refresh data after generating test data
+    }
+
+    public void Receive(SongScrobbledMessage message)
+    {
+        if (message.Value)
+            RefreshData();
     }
 }

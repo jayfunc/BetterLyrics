@@ -1,32 +1,35 @@
 // 2025/6/23 by Zhe Fang
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Runtime.InteropServices;
-using Windows.ApplicationModel.Core;
-using Windows.Graphics;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Domain;
 using BetterLyrics.Core.Models.Settings;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using BetterLyrics.WinUI3.Constants;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Views;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Runtime.InteropServices;
 using Vanara.PInvoke;
+using Vanara.Windows.Shell;
+using Windows.ApplicationModel.Core;
+using Windows.Graphics;
 using WinRT.Interop;
 using WinUIEx;
-using Vanara.Windows.Shell;
 
 namespace BetterLyrics.WinUI3.Providers;
 
+/// <summary>
+/// Singleton Provider
+/// </summary>
 public class WindowManagerProvider : IWindowManagerProvider
 {
     private static readonly List<object> _activeWindows = [];
@@ -428,7 +431,7 @@ public class WindowManagerProvider : IWindowManagerProvider
     }
 
     /// <summary>
-    ///     更新应用栏
+    /// 更新应用栏
     /// </summary>
     /// <param name="obj"></param>
     public void UpdateAppBar(object obj)
@@ -492,7 +495,7 @@ public class WindowManagerProvider : IWindowManagerProvider
     // private
 
     /// <summary>
-    ///     注册应用栏
+    /// 注册应用栏
     /// </summary>
     /// <param name="hwnd"></param>
     /// <param name="status"></param>
@@ -532,7 +535,7 @@ public class WindowManagerProvider : IWindowManagerProvider
     }
 
     /// <summary>
-    ///     取消注册应用栏
+    /// 取消注册应用栏
     /// </summary>
     /// <param name="hwnd"></param>
     private static void UnregisterAppBar(IntPtr hwnd)

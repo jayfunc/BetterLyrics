@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BetterLyrics.Core.Enums;
+﻿using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Models.Domain;
@@ -15,6 +9,12 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using FlaUI.Core.AutomationElements;
 using FlaUI.UIA3;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Vanara.PInvoke;
 using WinRT.Interop;
 

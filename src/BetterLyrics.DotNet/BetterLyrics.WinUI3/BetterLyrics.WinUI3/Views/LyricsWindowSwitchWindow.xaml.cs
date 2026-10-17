@@ -1,18 +1,17 @@
-using System.Collections.Generic;
-using System.Linq;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
-using BetterLyrics.Core.Models.Settings;
+using BetterLyrics.Core.Messages.AppSettings;
+using BetterLyrics.Core.Messages.LyricsWindow;
 using BetterLyrics.Core.ViewModels;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helpers;
 using BetterLyrics.WinUI3.Hooks;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using System.Linq;
 using Vanara.PInvoke;
 using WinUIEx;
 using WinUIEx.Messaging;
@@ -26,10 +25,10 @@ namespace BetterLyrics.WinUI3.Views;
 ///     An empty window that can be used on its own or navigated to within a Frame.
 /// </summary>
 public sealed partial class LyricsWindowSwitchWindow : Window,
-    IRecipient<PropertyChangedMessage<AppTheme>>,
-    IRecipient<PropertyChangedMessage<WindowStatus>>,
-    IRecipient<PropertyChangedMessage<List<string>>>,
-    IRecipient<PropertyChangedMessage<bool>>
+    IRecipient<AppThemeChangedMessage>,
+    IRecipient<LyricsWindowStatusStateChangedMessage>,
+    IRecipient<LyricsWindowKeepScreenOpenChangedMessage>,
+    IRecipient<GlobalShortcutChangedMessage>
 {
     private readonly IGsmtcService _gsmtcService = Ioc.Default.GetRequiredService<IGsmtcService>();
     private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
@@ -65,42 +64,41 @@ public sealed partial class LyricsWindowSwitchWindow : Window,
     public LyricsWindowSwitchWindowViewModel ViewModel { get; } =
         Ioc.Default.GetRequiredService<LyricsWindowSwitchWindowViewModel>();
 
-    public void Receive(PropertyChangedMessage<AppTheme> message)
+    public void Receive(AppThemeChangedMessage message)
     {
-        if (message.Sender is GeneralSettings)
-            if (message.PropertyName == nameof(GeneralSettings.AppTheme))
-                this.SyncTheme();
+        this.SyncTheme();
     }
 
-    public void Receive(PropertyChangedMessage<bool> message)
+    public void Receive(LyricsWindowKeepScreenOpenChangedMessage message)
     {
-        if (message.Sender is LyricsWindowStatus)
-            if (message.PropertyName == nameof(LyricsWindowStatus.IsKeepScreenOpen))
-                UpdateScreenKeeperStatus();
+        UpdateScreenKeeperStatus();
     }
 
-    public void Receive(PropertyChangedMessage<List<string>> message)
+    public void Receive(GlobalShortcutChangedMessage message)
     {
-        if (message.Sender is GeneralSettings)
+        switch (message.ShortcutId)
         {
-            if (message.PropertyName == nameof(GeneralSettings.LyricsWindowSwitchShortcut))
+            case ShortcutId.LyricsWindowSwitch:
                 UpdateLyricsWindowSwitchShortcut();
-            else if (message.PropertyName == nameof(GeneralSettings.PlayOrPauseShortcut))
+                break;
+            case ShortcutId.PlayOrPauseSong:
                 UpdatePlayOrPauseSongShortcut();
-            else if (message.PropertyName == nameof(GeneralSettings.PreviousSongShortcut))
+                break;
+            case ShortcutId.PreviousSong:
                 UpdatePreviousSongShortcut();
-            else if (message.PropertyName == nameof(GeneralSettings.NextSongShortcut))
+                break;
+            case ShortcutId.NextSong:
                 UpdateNextSongShortcut();
-            else if (message.PropertyName == nameof(GeneralSettings.ShowOrHideLyricsWindowShortcut))
+                break;
+            case ShortcutId.LyricsWindowShowOrHide:
                 UpdateLyricsWindowShowHideShortcut();
+                break;
         }
     }
 
-    public void Receive(PropertyChangedMessage<WindowStatus> message)
+    public void Receive(LyricsWindowStatusStateChangedMessage message)
     {
-        if (message.Sender is LyricsWindowStatus)
-            if (message.PropertyName == nameof(LyricsWindowStatus.WindowStatus))
-                UpdateScreenKeeperStatus();
+        UpdateScreenKeeperStatus();
     }
 
     private void InitShortcuts()

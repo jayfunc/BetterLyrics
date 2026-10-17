@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BetterLyrics.Core.Models;
 
-public partial class SongInfo : ObservableRecipient, ICloneable
+public partial class SongInfo : ObservableObject, ICloneable
 {
     [ObservableProperty] public partial string Album { get; set; }
 

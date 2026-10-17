@@ -1,7 +1,7 @@
-using System;
-using Windows.UI.Text;
 using BetterLyrics.Core.Enums;
 using Microsoft.UI.Text;
+using System;
+using Windows.UI.Text;
 
 namespace BetterLyrics.WinUI3.Extensions;
 

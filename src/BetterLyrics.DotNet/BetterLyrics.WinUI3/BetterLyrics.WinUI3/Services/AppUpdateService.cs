@@ -1,8 +1,4 @@
-﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
-using Windows.Services.Store;
-using BetterLyrics.Core.Constants;
+﻿using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
@@ -10,10 +6,17 @@ using BetterLyrics.Core.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.Windows.AppNotifications;
 using Microsoft.Windows.AppNotifications.Builder;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
+using Windows.Services.Store;
 
 namespace BetterLyrics.WinUI3.Services;
 
-public partial class AppUpdateService : BaseViewModel, IAppUpdateService, IDisposable
+/// <summary>
+/// Singleton Service
+/// </summary>
+public partial class AppUpdateService : ObservableObject, IAppUpdateService, IDisposable
 {
     private readonly IAppUIThreadProvider _appUIThreadProvider;
     private readonly ILocalizationService _localizationService;
@@ -21,7 +24,13 @@ public partial class AppUpdateService : BaseViewModel, IAppUpdateService, IDispo
     private readonly StoreContext _storeContext;
     private CancellationTokenSource? _cts;
 
-    public AppUpdateService(ILocalizationService localizationService, ISettingsService settingsService,
+    [ObservableProperty] public partial AppUpdateStatus AppUpdateStatus { get; set; } = AppUpdateStatus.ErrorOccured;
+
+    [ObservableProperty] public partial string LatestVersion { get; set; } = "-";
+
+    public AppUpdateService(
+        ILocalizationService localizationService,
+        ISettingsService settingsService,
         IAppUIThreadProvider appUIThreadProvider)
     {
         _localizationService = localizationService;
@@ -29,10 +38,6 @@ public partial class AppUpdateService : BaseViewModel, IAppUpdateService, IDispo
         _appUIThreadProvider = appUIThreadProvider;
         _storeContext = StoreContext.GetDefault();
     }
-
-    [ObservableProperty] public partial AppUpdateStatus AppUpdateStatus { get; set; } = AppUpdateStatus.ErrorOccured;
-
-    [ObservableProperty] public partial string LatestVersion { get; set; } = "-";
 
     public void StartDailyCheck()
     {

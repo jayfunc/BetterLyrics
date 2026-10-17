@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Sdk.Models.SettingsSchema;
@@ -7,6 +5,8 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.WinUI.Controls;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System;
+using System.Collections.Generic;
 using TextBox = Microsoft.UI.Xaml.Controls.TextBox;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -22,12 +22,6 @@ public sealed partial class PluginItemControl : UserControl
 
     private readonly IPluginService _pluginService;
 
-    public PluginItemControl()
-    {
-        InitializeComponent();
-        _pluginService = Ioc.Default.GetRequiredService<IPluginService>();
-    }
-
     public PluginInfo PluginInfo
     {
         get => (PluginInfo)GetValue(PluginInfoProperty);
@@ -35,6 +29,12 @@ public sealed partial class PluginItemControl : UserControl
     }
 
     public event RoutedEventHandler? UninstallClicked;
+
+    public PluginItemControl()
+    {
+        InitializeComponent();
+        _pluginService = Ioc.Default.GetRequiredService<IPluginService>();
+    }
 
     private static void OnPluginInfoChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {

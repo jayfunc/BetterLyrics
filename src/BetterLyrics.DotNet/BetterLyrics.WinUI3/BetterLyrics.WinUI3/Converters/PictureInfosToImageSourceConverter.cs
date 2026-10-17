@@ -1,11 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using ATL;
+﻿using ATL;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.WinUI3.Extensions;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media.Imaging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BetterLyrics.WinUI3.Converters;
 

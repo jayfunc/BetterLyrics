@@ -1,8 +1,8 @@
-﻿using System.Globalization;
-using System.Reflection;
-using BetterLyrics.Sdk.Helpers;
+﻿using BetterLyrics.Sdk.Helpers;
 using BetterLyrics.Sdk.Interfaces.Plugins;
 using BetterLyrics.Sdk.Models.SettingsSchema;
+using System.Globalization;
+using System.Reflection;
 
 namespace BetterLyrics.Sdk.Abstractions.Plugins;
 

@@ -1,5 +1,3 @@
-using System;
-using System.Threading.Tasks;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Models.Settings;
 

@@ -1,4 +1,5 @@
 using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Entities;
 using Dapper;
 using LiteDB;
@@ -7,12 +8,15 @@ using Microsoft.Extensions.Logging;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
-public class DatabaseMigrationService : Interfaces.Services.IDatabaseMigrationService
+/// <summary>
+/// Singleton Service
+/// </summary>
+public class DatabaseMigrationService : IDatabaseMigrationService
 {
-    private readonly Interfaces.Services.IDatabaseService _databaseService;
+    private readonly IDatabaseService _databaseService;
     private readonly ILogger<DatabaseMigrationService> _logger;
 
-    public DatabaseMigrationService(Interfaces.Services.IDatabaseService databaseService, ILogger<DatabaseMigrationService> logger)
+    public DatabaseMigrationService(IDatabaseService databaseService, ILogger<DatabaseMigrationService> logger)
     {
         _databaseService = databaseService;
         _logger = logger;

@@ -8,9 +8,9 @@ public interface IPluginContext
     ILocalizer Localizer { get; }
 
     /// <summary>
-    ///     If you are modifying config in plugin side, please use
-    ///     <see cref="PluginBase{TConfig}.Config" />
-    ///     directly.
+    /// If you are modifying config in plugin side, please use
+    /// <see cref="PluginBase{TConfig}.Config" />
+    /// directly.
     /// </summary>
     IConfigurator Configurator { get; }
 }

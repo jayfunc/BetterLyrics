@@ -1,13 +1,13 @@
-﻿using System;
+﻿using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Interfaces.Providers;
+using BetterLyrics.Core.Models.Memory;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
 using System.Timers;
-using BetterLyrics.Core.Enums;
-using BetterLyrics.Core.Interfaces.Providers;
-using BetterLyrics.Core.Models.Memory;
 using Vanara.InteropServices;
 using Vanara.PInvoke;
 using static Vanara.PInvoke.Kernel32;
@@ -15,6 +15,9 @@ using Timer = System.Timers.Timer;
 
 namespace BetterLyrics.WinUI3.Providers;
 
+/// <summary>
+/// Singleton Provider
+/// </summary>
 public class UniversalMemoryReaderProvider : IUniversalMemoryReaderProvider
 {
     private readonly object _lock = new();

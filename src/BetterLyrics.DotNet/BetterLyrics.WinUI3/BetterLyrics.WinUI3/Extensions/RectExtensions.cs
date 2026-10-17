@@ -1,9 +1,9 @@
-﻿using System.Drawing;
+﻿using BetterLyrics.Core.Models.Domain;
+using System.Drawing;
 using System.Numerics;
+using Vanara.PInvoke;
 using Windows.Foundation;
 using Windows.Graphics;
-using BetterLyrics.Core.Models.Domain;
-using Vanara.PInvoke;
 
 namespace BetterLyrics.WinUI3.Extensions;
 

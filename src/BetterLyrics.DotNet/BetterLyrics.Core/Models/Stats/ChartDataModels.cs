@@ -1,5 +1,3 @@
-using System;
-
 namespace BetterLyrics.Core.Models.Stats;
 
 public class HourlyActivityItem

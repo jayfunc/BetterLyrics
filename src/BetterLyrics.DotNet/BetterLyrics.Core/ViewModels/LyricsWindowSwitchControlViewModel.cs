@@ -4,9 +4,16 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BetterLyrics.Core.ViewModels;
 
-public partial class LyricsWindowSwitchControlViewModel : BaseViewModel
+/// <summary>
+/// Singleton ViewModel
+/// </summary>
+public partial class LyricsWindowSwitchControlViewModel : ObservableObject
 {
     private readonly ISettingsService _settingsService;
+
+    private INavigationService NavigationService { get; }
+
+    [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 
     public LyricsWindowSwitchControlViewModel(ISettingsService settingsService, INavigationService navigationService)
     {
@@ -14,8 +21,4 @@ public partial class LyricsWindowSwitchControlViewModel : BaseViewModel
         NavigationService = navigationService;
         AppSettings = _settingsService.AppSettings;
     }
-
-    private INavigationService NavigationService { get; }
-
-    [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 }

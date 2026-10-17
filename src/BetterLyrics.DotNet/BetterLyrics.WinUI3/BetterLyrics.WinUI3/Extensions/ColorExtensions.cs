@@ -1,6 +1,6 @@
+using BetterLyrics.Core.Models.Domain;
 using System.Numerics;
 using Windows.UI;
-using BetterLyrics.Core.Models.Domain;
 
 namespace BetterLyrics.WinUI3.Extensions;
 

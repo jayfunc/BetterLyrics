@@ -354,8 +354,8 @@ public partial class LyricsContentParser
     }
 
     /// <summary>
-    ///     基于已经处理好的音节，确保整句话的 EndMs
-    ///     Invoke this after <see cref="EnsureSyllables" />
+    /// 基于已经处理好的音节，确保整句话的 EndMs
+    /// Invoke this after <see cref="EnsureSyllables" />
     /// </summary>
     private void EnsureEndMs(double? duration)
     {
@@ -386,7 +386,7 @@ public partial class LyricsContentParser
     }
 
     /// <summary>
-    ///     优先确保音节的完整性（补全缺失的 EndMs，或者为纯文本歌词生成平均音节）
+    /// 优先确保音节的完整性（补全缺失的 EndMs，或者为纯文本歌词生成平均音节）
     /// </summary>
     private void EnsureSyllables(double? duration)
     {

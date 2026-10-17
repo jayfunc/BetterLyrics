@@ -4,9 +4,14 @@ using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BetterLyrics.Core.ViewModels;
 
-public partial class MusicGalleryWindowViewModel : BaseViewModel
+/// <summary>
+/// Singleton ViewModel
+/// </summary>
+public partial class MusicGalleryWindowViewModel : ObservableObject
 {
     private readonly ISettingsService _settingsService;
+
+    [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 
     public MusicGalleryWindowViewModel(ISettingsService settingsService)
     {
@@ -14,6 +19,4 @@ public partial class MusicGalleryWindowViewModel : BaseViewModel
 
         AppSettings = _settingsService.AppSettings;
     }
-
-    [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 }

@@ -1,45 +1,44 @@
 // 2025/6/23 by Zhe Fang
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Windows.Foundation;
 using BetterLyrics.Core.Constants;
+using BetterLyrics.Core.Effects;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
-using BetterLyrics.Core.Messages;
-using BetterLyrics.Core.Models;
-using BetterLyrics.Core.Models.Entities;
+using BetterLyrics.Core.Messages.LayoutChanged;
+using BetterLyrics.Core.Messages.LyricsWindow;
+using BetterLyrics.Core.Messages.Playback;
 using BetterLyrics.Core.Models.Settings;
+using BetterLyrics.Core.ViewModels;
 using BetterLyrics.WinUI3.Extensions;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 using DevWinUI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using Windows.Foundation;
 using ColorExtensions = BetterLyrics.WinUI3.Extensions.ColorExtensions;
-using BetterLyrics.Core.Effects;
-using BetterLyrics.Core.ViewModels;
 
 namespace BetterLyrics.WinUI3.Views;
 
 public sealed partial class NowPlayingPage : Page,
-    IRecipient<PropertyChangedMessage<SongInfo>>,
-    IRecipient<PropertyChangedMessage<bool>>,
-    IRecipient<PropertyChangedMessage<string>>,
-    IRecipient<PropertyChangedMessage<Guid>>,
-    IRecipient<PropertyChangedMessage<MappedSongSearchQuery?>>,
-    IRecipient<PropertyChangedMessage<NowPlayingPalette>>,
-    IRecipient<PropertyChangedMessage<float>>,
+    IRecipient<CurrentSongInfoChangedMessage>,
+    IRecipient<AlbumArtSongInfoAutoScrollChangedMessage>,
+    IRecipient<AlbumArtFadeOutChangedMessage>,
+    IRecipient<AlbumArtFadeOutDirectionChangedMessage>,
+    IRecipient<LyricsWindowLayoutProfileIdChangedMessage>,
+    IRecipient<MappedSongSearchQueryChangedMessage>,
+    IRecipient<LyricsWindowPaletteChangedMessage>,
+    IRecipient<LyricsFontFamilyChangedMessage>,
     IRecipient<LayoutChangedMessage>
 {
     public static readonly DependencyProperty LyricsWindowStatusProperty =
@@ -82,7 +81,7 @@ public sealed partial class NowPlayingPage : Page,
     }
 
     public NowPlayingPageViewModel ViewModel => (NowPlayingPageViewModel)DataContext;
-    
+
     public BetterLyrics.WinUI3.Controls.NowPlayingBar PlaybackControlBar => NowPlayingBar;
 
     public void Receive(LayoutChangedMessage message)
@@ -90,79 +89,61 @@ public sealed partial class NowPlayingPage : Page,
         OnLayoutChanged();
     }
 
-    public void Receive(PropertyChangedMessage<bool> message)
+    public void Receive(AlbumArtSongInfoAutoScrollChangedMessage message)
     {
         if (message.Sender == _lyricsWindowStatus?.AlbumArtAreaEffectSettings)
         {
-            if (message.PropertyName == nameof(AlbumArtAreaEffectSettings.SongInfoAutoScroll))
-            {
-                UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, false);
-                UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
-                UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
-            }
-            else if (message.PropertyName == nameof(AlbumArtAreaEffectSettings.FadeOut))
-            {
-                ToggleAlbumArtFadeOut();
-            }
-        }
-    }
-
-    public void Receive(PropertyChangedMessage<float> message)
-    {
-        if (message.Sender == _lyricsWindowStatus?.AlbumArtAreaEffectSettings)
-        {
-            if (message.PropertyName == nameof(AlbumArtAreaEffectSettings.FadeOutStartPointX))
-                UpdateAlbumArtFadeOutDirection();
-            else if (message.PropertyName == nameof(AlbumArtAreaEffectSettings.FadeOutStartPointY))
-                UpdateAlbumArtFadeOutDirection();
-            else if (message.PropertyName == nameof(AlbumArtAreaEffectSettings.FadeOutEndPointX))
-                UpdateAlbumArtFadeOutDirection();
-            else if (message.PropertyName == nameof(AlbumArtAreaEffectSettings.FadeOutEndPointY))
-                UpdateAlbumArtFadeOutDirection();
-        }
-    }
-
-    public void Receive(PropertyChangedMessage<Guid> message)
-    {
-        if (message.Sender == _lyricsWindowStatus)
-            if (message.PropertyName == nameof(_lyricsWindowStatus.LayoutProfileId))
-                OnLayoutChanged();
-    }
-
-    public void Receive(PropertyChangedMessage<MappedSongSearchQuery?> message)
-    {
-        if (message.Sender is LyricsSearchControlViewModel)
-            if (message.PropertyName == nameof(LyricsSearchControlViewModel.MappedSongSearchQuery))
-                _ = RefreshSongInfoAsync();
-    }
-
-    public void Receive(PropertyChangedMessage<NowPlayingPalette> message)
-    {
-        if (message.Sender == _lyricsWindowStatus)
-            if (message.PropertyName == nameof(_lyricsWindowStatus.WindowPalette))
-                _ = RenderSongInfoAsync();
-    }
-
-    public void Receive(PropertyChangedMessage<SongInfo> message)
-    {
-        if (message.Sender is IGsmtcService && message.PropertyName == nameof(IGsmtcService.CurrentSongInfo))
-        {
-            _ = RefreshSongInfoAsync();
             UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, false);
             UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
             UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
         }
     }
 
-    public void Receive(PropertyChangedMessage<string> message)
+    public void Receive(AlbumArtFadeOutChangedMessage message)
+    {
+        if (message.Sender == _lyricsWindowStatus?.AlbumArtAreaEffectSettings)
+        {
+            ToggleAlbumArtFadeOut();
+        }
+    }
+
+    public void Receive(AlbumArtFadeOutDirectionChangedMessage message)
+    {
+        if (message.Sender == _lyricsWindowStatus?.AlbumArtAreaEffectSettings)
+        {
+            UpdateAlbumArtFadeOutDirection();
+        }
+    }
+
+    public void Receive(LyricsWindowLayoutProfileIdChangedMessage message)
+    {
+        if (message.Sender == _lyricsWindowStatus)
+            OnLayoutChanged();
+    }
+
+    public void Receive(MappedSongSearchQueryChangedMessage message)
+    {
+        _ = RefreshSongInfoAsync();
+    }
+
+    public void Receive(LyricsWindowPaletteChangedMessage message)
+    {
+        if (message.Sender == _lyricsWindowStatus)
+            _ = RenderSongInfoAsync();
+    }
+
+    public void Receive(CurrentSongInfoChangedMessage message)
+    {
+        _ = RefreshSongInfoAsync();
+        UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, false);
+        UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
+        UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
+    }
+
+    public void Receive(LyricsFontFamilyChangedMessage message)
     {
         if (message.Sender == _lyricsWindowStatus?.LyricsStyleSettings)
-        {
-            if (message.PropertyName == nameof(LyricsStyleSettings.LyricsCJKFontFamily))
-                _ = RenderSongInfoAsync();
-            else if (message.PropertyName == nameof(LyricsStyleSettings.LyricsWesternFontFamily))
-                _ = RenderSongInfoAsync();
-        }
+            _ = RenderSongInfoAsync();
     }
 
     private static void OnDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -589,7 +570,6 @@ public sealed partial class NowPlayingPage : Page,
     public void Cleanup()
     {
         WeakReferenceMessenger.Default.UnregisterAll(this);
-        PlaybackControlBar?.Cleanup();
         Bindings?.StopTracking();
         DataContext = null;
 

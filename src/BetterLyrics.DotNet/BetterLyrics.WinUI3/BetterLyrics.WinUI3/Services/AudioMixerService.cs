@@ -1,10 +1,10 @@
-using System;
-using System.Diagnostics;
-using System.Text;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Services;
 using Microsoft.Extensions.Logging;
 using NAudio.CoreAudioApi;
+using System;
+using System.Diagnostics;
+using System.Text;
 using Vanara.PInvoke;
 
 namespace BetterLyrics.WinUI3.Services;

@@ -1,11 +1,11 @@
+using BetterLyrics.Core.Interfaces.Providers;
+using BetterLyrics.WinUI3.Views;
+using CommunityToolkit.Mvvm.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Timers;
-using BetterLyrics.Core.Interfaces.Providers;
-using BetterLyrics.WinUI3.Views;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using Vanara.PInvoke;
 using WinRT.Interop;
 using static Vanara.PInvoke.ComCtl32;
@@ -112,7 +112,7 @@ public class WorkerWHook
         IntPtr dwRefData)
     {
         // Prevent Windows from scaling the window when reparented to WorkerW
-        if (uMsg == (uint)WindowMessage.WM_DPICHANGED || uMsg == (uint)WindowMessage.WM_GETDPISCALEDSIZE || 
+        if (uMsg == (uint)WindowMessage.WM_DPICHANGED || uMsg == (uint)WindowMessage.WM_GETDPISCALEDSIZE ||
             uMsg == (uint)WindowMessage.WM_DPICHANGED_BEFOREPARENT || uMsg == (uint)WindowMessage.WM_DPICHANGED_AFTERPARENT)
         {
             return IntPtr.Zero;

@@ -1,9 +1,9 @@
-using System.Text.Json.Serialization;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Models.Lyrics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using LiteDB;
+using System.Text.Json.Serialization;
 
 namespace BetterLyrics.Core.Models.Entities;
 
@@ -35,12 +35,12 @@ public partial class LyricsCacheItem : ObservableObject, ICloneable
     public string? Raw { get; set; }
 
     /// <summary>
-    ///     翻译也可能位于 <see cref="Raw" />
+    /// 翻译也可能位于 <see cref="Raw" />
     /// </summary>
     public string? Translation { get; set; }
 
     /// <summary>
-    ///     音译也可能位于 <see cref="Raw" />
+    /// 音译也可能位于 <see cref="Raw" />
     /// </summary>
     public string? Transliteration { get; set; }
 

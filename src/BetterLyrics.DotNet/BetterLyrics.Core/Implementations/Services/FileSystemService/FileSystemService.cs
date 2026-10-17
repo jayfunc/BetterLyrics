@@ -1,26 +1,29 @@
-using System.Collections.Concurrent;
-using System.Diagnostics;
-using System.Security.Cryptography;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Messages.MediaLibrary;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Entities;
 using BetterLyrics.Core.Models.Settings;
-using BetterLyrics.Core.ViewModels;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 using LiteDB;
 using Microsoft.Extensions.Logging;
+using System.Collections.Concurrent;
+using System.Diagnostics;
+using System.Security.Cryptography;
 using LyricsMetadataParser = BetterLyrics.Core.Helpers.Lyrics.MetadataParser.LyricsMetadataParser;
 
 namespace BetterLyrics.Core.Implementations.Services.FileSystemService;
 
-public class FileSystemService : BaseViewModel, IFileSystemService,
-    IRecipient<PropertyChangedMessage<AutoScanInterval>>,
-    IRecipient<PropertyChangedMessage<bool>>
+/// <summary>
+/// Singleton Service
+/// </summary>
+public class FileSystemService : IFileSystemService,
+    IRecipient<MediaFolderScanIntervalChangedMessage>,
+    IRecipient<MediaFolderEnabledChangedMessage>,
+    IRecipient<MediaFolderScanSubDirectoriesChangedMessage>
 {
     private static readonly SemaphoreSlim _folderScanLock = new(1, 1);
 
@@ -47,7 +50,7 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
         _appUIThreadProvider = appUiThreadProvider;
 
         var col = _databaseService.FilesIndexDb.GetCollection<FilesIndexItem>("filesIndex");
-        
+
         try
         {
             col.EnsureIndex(x => x.MediaFolderId);
@@ -82,6 +85,8 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
         {
             _logger.LogError(ex, "EnsureIndex failed for FilesIndexItem (Uri)");
         }
+
+        WeakReferenceMessenger.Default.RegisterAll(this);
     }
 
     private ILiteCollection<FilesIndexItem> GetCollection()
@@ -323,7 +328,7 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
                                 var fileNameWithoutExt = Path.GetFileNameWithoutExtension(item.FileName);
                                 var pattern = folder.LocalMusicFilePattern;
                                 var parsed = MediaFileNamePatternParser.Parse(fileNameWithoutExt, pattern);
-                                
+
                                 if (!string.IsNullOrEmpty(parsed.Title)) item.Title = parsed.Title;
                                 if (!string.IsNullOrEmpty(parsed.Artist)) item.Artists = parsed.Artist;
                                 if (!string.IsNullOrEmpty(parsed.Album)) item.Album = parsed.Album;
@@ -356,17 +361,17 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
                                 item.EmbeddedLyrics = content;
 
                                 var metadata = LyricsMetadataParser.Parse(content, ext);
-                                
+
                                 var title = metadata.Title;
                                 var artists = metadata.Artist;
                                 var album = metadata.Album;
-                                
+
                                 if (string.IsNullOrEmpty(title) || string.IsNullOrEmpty(artists))
                                 {
                                     var fileNameWithoutExt = Path.GetFileNameWithoutExtension(item.FileName);
                                     var pattern = folder.LocalLyricsFilePattern;
                                     var parsed = MediaFileNamePatternParser.Parse(fileNameWithoutExt, pattern);
-                                    
+
                                     if (!string.IsNullOrEmpty(parsed.Title)) title = parsed.Title;
                                     if (!string.IsNullOrEmpty(parsed.Artist)) artists = parsed.Artist;
                                     if (!string.IsNullOrEmpty(parsed.Album)) album = parsed.Album;
@@ -450,28 +455,21 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
                 UpdateFolderTimer(folder);
     }
 
-    public void Receive(PropertyChangedMessage<AutoScanInterval> message)
+    public void Receive(MediaFolderScanIntervalChangedMessage message)
     {
-        if (message.Sender is MediaFolder mediaFolder)
-            if (message.PropertyName == nameof(MediaFolder.ScanInterval))
-                UpdateFolderTimer(mediaFolder);
+        UpdateFolderTimer(message.Folder);
     }
 
-    public void Receive(PropertyChangedMessage<bool> message)
+    public void Receive(MediaFolderEnabledChangedMessage message)
     {
-        if (message.Sender is MediaFolder mediaFolder)
+        UpdateFolderTimer(message.Folder);
+    }
+
+    public void Receive(MediaFolderScanSubDirectoriesChangedMessage message)
+    {
+        foreach (var folder in _settingsService.AppSettings.LocalMediaFolders)
         {
-            if (message.PropertyName == nameof(MediaFolder.IsEnabled))
-            {
-                UpdateFolderTimer(mediaFolder);
-            }
-            else if (message.PropertyName == nameof(MediaFolder.ScanSubDirectories))
-            {
-                foreach (var folder in _settingsService.AppSettings.LocalMediaFolders)
-                {
-                    _ = Task.Run(async () => await ScanMediaFolderAsync(folder));
-                }
-            }
+            _ = Task.Run(async () => await ScanMediaFolderAsync(folder));
         }
     }
 
@@ -547,7 +545,7 @@ public class FileSystemService : BaseViewModel, IFileSystemService,
                         existing.FileSize = remote.FileSize;
                         existing.LastModified = remote.LastModified;
                         existing.DateCreated = remote.DateCreated;
-                        
+
                         // 当文件发生改变、强制同步，或归属的媒体库发生改变（可能需要应用新的匹配规则）时，重置解析状态
                         if (existing.FileSize != remote.FileSize || createTimeChanged || lastModifiedTimeChanged || forceSync || folderOwnershipChanged)
                         {

@@ -2,7 +2,10 @@
 
 namespace BetterLyrics.Core.ViewModels;
 
-public partial class LyricsWindowSwitchWindowViewModel : BaseViewModel
+/// <summary>
+/// Singleton ViewModel
+/// </summary>
+public partial class LyricsWindowSwitchWindowViewModel : ObservableObject
 {
     [ObservableProperty] public partial float RootGridOpacity { get; set; } = 1;
 }

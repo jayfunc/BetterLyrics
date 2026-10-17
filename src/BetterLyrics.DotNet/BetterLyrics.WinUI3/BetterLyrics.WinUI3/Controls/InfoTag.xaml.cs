@@ -1,10 +1,11 @@
-using System;
-using Windows.System;
+using BetterLyrics.Core.Enums;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Microsoft.UI.Xaml.Media;
+using System;
+using Windows.System;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -32,7 +33,7 @@ public sealed partial class InfoTag : UserControl
     public InfoTag()
     {
         InitializeComponent();
-        Loaded += (s, e) => 
+        Loaded += (s, e) =>
         {
             UpdateThemeColors();
             UpdateDisabledVisuals();
@@ -90,7 +91,7 @@ public sealed partial class InfoTag : UserControl
         string borderKey = "CardStrokeColorDefaultBrush";
         string foregroundKey = "TextFillColorSecondaryBrush";
         string hoverBackgroundKey = "CardBackgroundFillColorSecondaryBrush";
-        
+
         switch (Theme)
         {
             case InfoTagTheme.Default:
@@ -122,16 +123,21 @@ public sealed partial class InfoTag : UserControl
         }
 
         if (Application.Current.Resources.TryGetValue(backgroundKey, out var bg) && bg is Brush bgBrush)
+        {
             BadgeBorder.Background = bgBrush;
+        }
         if (Application.Current.Resources.TryGetValue(borderKey, out var border) && border is Brush borderBrush)
+        {
             BadgeBorder.BorderBrush = borderBrush;
+        }
         if (Application.Current.Resources.TryGetValue(foregroundKey, out var fg) && fg is Brush fgBrush)
         {
             TagText.Foreground = fgBrush;
             TagIcon.Foreground = fgBrush;
         }
-        
-        _hoverBackground = Application.Current.Resources.TryGetValue(hoverBackgroundKey, out var hbg) && hbg is Brush hbgBrush ? hbgBrush : BadgeBorder.Background;
+
+        _hoverBackground = 
+            Application.Current.Resources.TryGetValue(hoverBackgroundKey, out var hbg) && hbg is Brush hbgBrush ? hbgBrush : BadgeBorder.Background;
         _normalBackground = BadgeBorder.Background;
     }
 
@@ -140,9 +146,13 @@ public sealed partial class InfoTag : UserControl
         if (d is InfoTag tag)
         {
             if (tag.HasLink)
+            {
                 tag.ProtectedCursor = InputSystemCursor.Create(InputSystemCursorShape.Hand);
+            }
             else
+            {
                 tag.ProtectedCursor = null;
+            }
 
             if (e.Property == ThemeProperty)
             {
@@ -155,25 +165,25 @@ public sealed partial class InfoTag : UserControl
 
     private void OnPointerEntered(object sender, PointerRoutedEventArgs e)
     {
-        if (HasLink && _hoverBackground != null) BadgeBorder.Background = _hoverBackground;
+        if (HasLink && _hoverBackground != null)
+        {
+            BadgeBorder.Background = _hoverBackground;
+        }
     }
 
     private void OnPointerExited(object sender, PointerRoutedEventArgs e)
     {
-        if (HasLink && _normalBackground != null) BadgeBorder.Background = _normalBackground;
+        if (HasLink && _normalBackground != null)
+        {
+            BadgeBorder.Background = _normalBackground;
+        }
     }
 
     private async void OnTapped(object sender, TappedRoutedEventArgs e)
     {
-        if (HasLink && Uri.TryCreate(Link, UriKind.Absolute, out var uri)) await Launcher.LaunchUriAsync(uri);
+        if (HasLink && Uri.TryCreate(Link, UriKind.Absolute, out var uri))
+        {
+            await Launcher.LaunchUriAsync(uri);
+        }
     }
-}
-
-public enum InfoTagTheme
-{
-    Default,
-    Accent,
-    Success,
-    Warning,
-    Error
 }

@@ -1,10 +1,8 @@
-using System.Net;
-using System.Net.Http;
-using System.IO;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Entities;
 using BetterLyrics.Core.Models.Settings;
+using System.Net;
 using WebDav;
 
 namespace BetterLyrics.Core.Implementations.Services.FileSystemService.Providers;

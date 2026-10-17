@@ -1,5 +1,35 @@
 // 2025/6/23 by Zhe Fang
 
+using BetterLyrics.Core.Constants;
+using BetterLyrics.Core.Effects;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Extensions;
+using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Helpers.Lyrics;
+using BetterLyrics.Core.Interfaces.Providers;
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Messages.AppSettings;
+using BetterLyrics.Core.Messages.LyricsWindow;
+using BetterLyrics.Core.Messages.Playback;
+using BetterLyrics.Core.Models.Domain;
+using BetterLyrics.Core.Models.Lyrics;
+using BetterLyrics.Core.Models.Settings;
+using BetterLyrics.WinUI3.Extensions;
+using BetterLyrics.WinUI3.Helpers.Lyrics.LyricsLayoutStrategy;
+using BetterLyrics.WinUI3.Models.Lyrics;
+using BetterLyrics.WinUI3.Providers;
+using BetterLyrics.WinUI3.Renderer;
+using BetterLyrics.WinUI3.Renderer.LyricsRenderer;
+using BetterLyrics.WinUI3.Renderer.SemanticEffectsRenderer;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Text;
+using Microsoft.Graphics.Canvas.UI;
+using Microsoft.Graphics.Canvas.UI.Xaml;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -10,52 +40,21 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Storage.Streams;
 using Windows.UI;
-using BetterLyrics.Core.Constants;
-using BetterLyrics.Core.Enums;
-using BetterLyrics.Core.Helpers;
-using BetterLyrics.Core.Helpers.Lyrics;
-using BetterLyrics.Core.Interfaces.Services;
-using BetterLyrics.Core.Models;
-using BetterLyrics.Core.Models.Domain;
-using BetterLyrics.Core.Models.Lyrics;
-using BetterLyrics.Core.Models.Settings;
-using BetterLyrics.WinUI3.Extensions;
-using BetterLyrics.WinUI3.Helpers.Lyrics.LyricsLayoutStrategy;
-using BetterLyrics.WinUI3.Models.Lyrics;
-using BetterLyrics.WinUI3.Renderer;
-using BetterLyrics.WinUI3.Renderer.LyricsRenderer;
-using CommunityToolkit.Mvvm.DependencyInjection;
-using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
-using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.Text;
-using Microsoft.Graphics.Canvas.UI;
-using Microsoft.Graphics.Canvas.UI.Xaml;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Input;
-using BetterLyrics.Core.Effects;
-using BetterLyrics.WinUI3.Providers;
-using BetterLyrics.Core.Interfaces.Providers;
-using BetterLyrics.Core.Extensions;
-using BetterLyrics.WinUI3.Renderer.SemanticEffectsRenderer;
 
 namespace BetterLyrics.WinUI3.Controls;
 
 public sealed partial class NowPlayingCanvas : UserControl,
-    IRecipient<PropertyChangedMessage<TimeSpan>>,
-    IRecipient<PropertyChangedMessage<LyricsData?>>,
-    IRecipient<PropertyChangedMessage<SongInfo>>,
-    IRecipient<PropertyChangedMessage<int>>,
-    IRecipient<PropertyChangedMessage<double>>,
-    IRecipient<PropertyChangedMessage<bool>>,
-    IRecipient<PropertyChangedMessage<TextAlignmentType>>,
-    IRecipient<PropertyChangedMessage<LyricsFontWeight>>,
-    IRecipient<PropertyChangedMessage<string>>,
-    IRecipient<PropertyChangedMessage<byte[]?>>,
-    IRecipient<PropertyChangedMessage<NowPlayingPalette>>,
-    IRecipient<PropertyChangedMessage<LyricsLayoutOrientation>>,
-    IRecipient<PropertyChangedMessage<BetterLyrics.Core.Enums.NoLyricsFoundHandlingType>>
+    IRecipient<CurrentPositionChangedMessage>,
+    IRecipient<CurrentLyricsDataChangedMessage>,
+    IRecipient<CurrentSongInfoChangedMessage>,
+    IRecipient<AlbumArtBytesChangedMessage>,
+    IRecipient<NoLyricsFoundHandlingChangedMessage>,
+    IRecipient<LyricsWindowPaletteChangedMessage>,
+    IRecipient<LyricsStyleRelayoutChangedMessage>,
+    IRecipient<LyricsFontFamilyChangedMessage>,
+    IRecipient<LyricsEffectRelayoutChangedMessage>,
+    IRecipient<LyricsEffectReloadChangedMessage>,
+    IRecipient<SpectrumConfigChangedMessage>
 {
     public static readonly DependencyProperty LyricsWindowStatusProperty =
         DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus),
@@ -150,8 +149,10 @@ public sealed partial class NowPlayingCanvas : UserControl,
     private readonly EdgeFadeMaskRenderer _edgeFadeMaskRenderer = new();
     private readonly FluidBackgroundRenderer _fluidRenderer = new();
     private readonly FogRenderer _fogRenderer = new();
-    private readonly IGsmtcService _gsmtcService = Ioc.Default.GetRequiredService<IGsmtcService>();
     private readonly SemanticEffectsRenderer _semanticEffectsRenderer = new();
+
+    private readonly IGsmtcService _gsmtcService = Ioc.Default.GetRequiredService<IGsmtcService>();
+    private readonly IMonitorProvider _monitorProvider = Ioc.Default.GetRequiredService<IMonitorProvider>();
 
     private readonly ValueTransition<AppColor> _immersiveBgColorTransition = new(
         Colors.Black,
@@ -218,25 +219,6 @@ public sealed partial class NowPlayingCanvas : UserControl,
     private TimeSpan _songPositionWithOffset;
     private readonly ISpoutTextureProvider _spoutHook = Ioc.Default.GetRequiredService<ISpoutTextureProvider>();
     private (int Start, int End) _visibleRange;
-
-    public NowPlayingCanvas()
-    {
-        InitializeComponent();
-        WeakReferenceMessenger.Default.RegisterAll(this);
-        
-        CommunityToolkit.Mvvm.DependencyInjection.Ioc.Default.GetRequiredService<BetterLyrics.Core.Interfaces.Providers.IMonitorProvider>().DisplayStatusChanged += PowerManager_DisplayStatusChanged;
-    }
-
-    private void PowerManager_DisplayStatusChanged(object sender, bool isDisplayOn)
-    {
-        if (Canvas != null)
-        {
-            DispatcherQueue.TryEnqueue(() =>
-            {
-                Canvas?.Paused = !isDisplayOn;
-            });
-        }
-    }
 
     public TimeSpan SongPosition => _songPosition;
     public double CurrentCanvasScroll => _canvasScrollTransition.Value;
@@ -327,190 +309,26 @@ public sealed partial class NowPlayingCanvas : UserControl,
         set => SetValue(IsMouseScrollingProperty, value);
     }
 
-    public void Receive(PropertyChangedMessage<bool> message)
+    public NowPlayingCanvas()
     {
-        if (message.Sender == _lyricsWindowStatus?.LyricsEffectSettings)
+        InitializeComponent();
+    }
+
+    ~NowPlayingCanvas()
+    {
+        MemoryLeakDetector.Track(this);
+        MemoryLeakDetector.ScheduleCheck(4000);
+    }
+
+    private void PowerManager_DisplayStatusChanged(object sender, bool isDisplayOn)
+    {
+        if (Canvas != null)
         {
-            if (message.PropertyName == nameof(LyricsEffectSettings.IsFanLyricsEnabled))
-                RequestRelayout();
-            else if (message.PropertyName == nameof(LyricsEffectSettings.IsLyricsBlurEffectEnabled))
-                RequestRelayout();
-            else if (message.PropertyName == nameof(LyricsEffectSettings.IsLyricsFadeOutEffectEnabled))
-                RequestRelayout();
-            else if (message.PropertyName == nameof(LyricsEffectSettings.IsLyricsOutOfSightEffectEnabled))
-                RequestRelayout();
-            else if (message.PropertyName == nameof(LyricsEffectSettings.IsLyricsScaleEffectEnabled))
-                RequestReloadLyrics();
-            else if (message.PropertyName == nameof(LyricsEffectSettings.IsLyricsGlowEffectEnabled))
-                RequestReloadLyrics();
-        }
-        else if (message.Sender == _lyricsWindowStatus?.LyricsStyleSettings)
-        {
-            if (message.PropertyName == nameof(LyricsStyleSettings.IsDynamicLyricsFontSize))
-                RequestRelayout();
-            else if (message.PropertyName == nameof(LyricsStyleSettings.AutoWrap))
-                RequestRelayout();
-            else if (message.PropertyName == nameof(LyricsStyleSettings.UseInternalLyricsAlignment)) RequestRelayout();
-
-        }
-    }
-
-    public void Receive(PropertyChangedMessage<byte[]?> message)
-    {
-        if (message.Sender is IGsmtcService)
-            if (message.PropertyName == nameof(IGsmtcService.AlbumArtBytes))
-                _ = ReloadCoverBackgroundResourcesAsync();
-    }
-
-    public void Receive(PropertyChangedMessage<double> message)
-    {
-        if (message.Sender == _lyricsWindowStatus?.LyricsStyleSettings)
-        {
-            if (message.PropertyName == nameof(LyricsStyleSettings.LyricsLineOverallSpacingFactor))
-                RequestRelayout();
-            else if (message.PropertyName == nameof(LyricsStyleSettings.LyricsLineInnerSpacingFactor))
-                RequestRelayout();
-        }
-    }
-
-    public void Receive(PropertyChangedMessage<int> message)
-    {
-        if (message.Sender == _lyricsWindowStatus?.LyricsStyleSettings)
-        {
-            if (message.PropertyName == nameof(LyricsStyleSettings.PhoneticLyricsFontSize))
-                RequestRelayout();
-            else if (message.PropertyName == nameof(LyricsStyleSettings.OriginalLyricsFontSize))
-                RequestRelayout();
-            else if (message.PropertyName == nameof(LyricsStyleSettings.TranslatedLyricsFontSize))
-                RequestRelayout();
-            else if (message.PropertyName == nameof(LyricsStyleSettings.LyricsFontStrokeWidth))
-                RequestRelayout();
-            else if (message.PropertyName == nameof(LyricsStyleSettings.PlayingLineTopOffset))
-                RequestRelayout();
-            else if (message.PropertyName == nameof(LyricsStyleSettings.PhoneticLyricsOpacity))
-                RequestRelayout();
-            else if (message.PropertyName == nameof(LyricsStyleSettings.UnplayedOriginalLyricsOpacity))
-                RequestRelayout();
-            else if (message.PropertyName == nameof(LyricsStyleSettings.TranslatedLyricsOpacity)) RequestRelayout();
-        }
-        else if (message.Sender == _lyricsWindowStatus?.LyricsEffectSettings)
-        {
-            if (message.PropertyName == nameof(LyricsEffectSettings.LyricsScrollDuration))
-                RequestRelayout();
-            else if (message.PropertyName == nameof(LyricsEffectSettings.LyricsScrollTopDuration))
-                RequestRelayout();
-            else if (message.PropertyName == nameof(LyricsEffectSettings.LyricsScrollBottomDuration))
-                RequestRelayout();
-            else if (message.PropertyName == nameof(LyricsEffectSettings.LyricsScrollTopDelay))
-                RequestRelayout();
-            else if (message.PropertyName == nameof(LyricsEffectSettings.LyricsScrollBottomDelay))
-                RequestRelayout();
-            else if (message.PropertyName == nameof(LyricsEffectSettings.FanLyricsAngle))
-                RequestRelayout();
-            else if (message.PropertyName == nameof(LyricsEffectSettings.Lyrics3DXAngle))
-                RequestRelayout();
-            else if (message.PropertyName == nameof(LyricsEffectSettings.Lyrics3DYAngle))
-                RequestRelayout();
-            else if (message.PropertyName == nameof(LyricsEffectSettings.Lyrics3DZAngle))
-                RequestRelayout();
-            else if (message.PropertyName == nameof(LyricsEffectSettings.Lyrics3DDepth))
-                RequestRelayout();
-            else if (message.PropertyName == nameof(LyricsEffectSettings.LyricsScaleEffectLongSyllableDuration))
-                RequestReloadLyrics();
-            else if (message.PropertyName == nameof(LyricsEffectSettings.LyricsGlowEffectLongSyllableDuration))
-                RequestReloadLyrics();
-        }
-        else if (message.Sender == _lyricsWindowStatus?.LyricsBackgroundSettings)
-        {
-            if (message.PropertyName == nameof(LyricsBackgroundSettings.SpectrumCount))
-                _spectrumAnalyzer.BarCount = message.NewValue;
-            else if (message.PropertyName == nameof(LyricsBackgroundSettings.SpectrumSensitivity))
-                _spectrumAnalyzer.Sensitivity = message.NewValue;
-            else if (message.PropertyName == nameof(LyricsBackgroundSettings.SpectrumDelayMs))
-                _spectrumAnalyzer.DelayMs = message.NewValue;
-        }
-    }
-
-    public void Receive(PropertyChangedMessage<LyricsData?> message)
-    {
-        if (message.Sender is IGsmtcService)
-            if (message.PropertyName == nameof(IGsmtcService.CurrentLyricsData))
-                RequestReloadLyrics();
-    }
-
-    public void Receive(PropertyChangedMessage<BetterLyrics.Core.Enums.NoLyricsFoundHandlingType> message)
-    {
-        if (message.Sender is GeneralSettings && message.PropertyName == nameof(GeneralSettings.NoLyricsFoundHandlingType))
-        {
-            RequestReloadLyrics();
-        }
-    }
-
-    public void Receive(PropertyChangedMessage<LyricsFontWeight> message)
-    {
-        if (message.Sender == _lyricsWindowStatus?.LyricsStyleSettings)
-            if (message.PropertyName == nameof(LyricsStyleSettings.LyricsFontWeight))
-                RequestRelayout();
-    }
-
-    public void Receive(PropertyChangedMessage<LyricsLayoutOrientation> message)
-    {
-        if (message.Sender == _lyricsWindowStatus?.LyricsStyleSettings)
-            if (message.PropertyName == nameof(LyricsStyleSettings.LyricsLayoutOrientation))
-                RequestRelayout();
-    }
-
-    public void Receive(PropertyChangedMessage<NowPlayingPalette> message)
-    {
-        if (message.Sender == _lyricsWindowStatus)
-            if (message.PropertyName == nameof(LyricsWindowStatus.WindowPalette))
-                UpdatePalette();
-    }
-
-    public void Receive(PropertyChangedMessage<SongInfo> message)
-    {
-        if (message.Sender is IGsmtcService)
-            if (message.PropertyName == nameof(IGsmtcService.CurrentSongInfo))
-                ResetPlaybackState();
-    }
-
-    public void Receive(PropertyChangedMessage<string> message)
-    {
-        if (message.Sender == _lyricsWindowStatus?.LyricsStyleSettings)
-        {
-            if (message.PropertyName == nameof(LyricsStyleSettings.LyricsCJKFontFamily))
-                RequestRelayout();
-            else if (message.PropertyName == nameof(LyricsStyleSettings.LyricsWesternFontFamily)) RequestRelayout();
-        }
-        else if (message.Sender is GeneralSettings && message.PropertyName == nameof(GeneralSettings.CustomNotFoundMessage))
-        {
-            RequestReloadLyrics();
-        }
-    }
-
-    public void Receive(PropertyChangedMessage<TextAlignmentType> message)
-    {
-        if (message.Sender == _lyricsWindowStatus?.LyricsStyleSettings)
-            if (message.PropertyName == nameof(LyricsStyleSettings.LyricsAlignmentType))
-                RequestRelayout();
-    }
-
-    public void Receive(PropertyChangedMessage<TimeSpan> message)
-    {
-        if (message.Sender is IGsmtcService)
-            if (message.PropertyName == nameof(IGsmtcService.CurrentPosition))
+            DispatcherQueue.TryEnqueue(() =>
             {
-                var realPosition = message.NewValue;
-
-                var diff = Math.Abs(_songPosition.TotalMilliseconds - realPosition.TotalMilliseconds);
-                var timelineSyncThreshold =
-                    _gsmtcService.CurrentMediaSourceProviderInfo?.TimelineSyncThreshold ?? 0;
-
-                // seek
-                if (diff >= timelineSyncThreshold) _songPosition = realPosition;
-
-                if (diff >= timelineSyncThreshold + 5000) RequestRelayout();
-            }
+                Canvas?.Paused = !isDisplayOn;
+            });
+        }
     }
 
     private static void OnDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -522,10 +340,8 @@ public sealed partial class NowPlayingCanvas : UserControl,
                 var oldValue = (LyricsWindowStatus?)e.OldValue;
                 var newValue = (LyricsWindowStatus?)e.NewValue;
 
-                oldValue?.LyricsStyleSettings.LyricsLayerOrder.CollectionChanged -=
-                    canvas.LyricsLayerOrder_CollectionChanged;
-                newValue?.LyricsStyleSettings.LyricsLayerOrder.CollectionChanged +=
-                    canvas.LyricsLayerOrder_CollectionChanged;
+                oldValue?.LyricsStyleSettings.LyricsLayerOrder.CollectionChanged -= canvas.LyricsLayerOrder_CollectionChanged;
+                newValue?.LyricsStyleSettings.LyricsLayerOrder.CollectionChanged += canvas.LyricsLayerOrder_CollectionChanged;
 
                 canvas._lyricsWindowStatus = newValue;
                 canvas.RequestRelayout();
@@ -592,7 +408,10 @@ public sealed partial class NowPlayingCanvas : UserControl,
                 var newValue = (bool)e.NewValue;
                 var oldValue = (bool)e.OldValue;
                 canvas._isMouseScrolling = newValue;
-                if (newValue != oldValue) canvas._isMouseScrollingChanged = true;
+                if (newValue != oldValue)
+                {
+                    canvas._isMouseScrollingChanged = true;
+                }
             }
         }
     }
@@ -780,9 +599,11 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
         if (isPrimaryPlayingLineChanged || _isLayoutChanged)
         {
-            var targetScroll =
-                _layoutStrategy.CalculateTargetScrollOffset(_renderLyricsLines, _primaryPlayingLineIndex);
-            if (targetScroll.HasValue) _canvasTargetScrollOffset = targetScroll.Value;
+            var targetScroll = _layoutStrategy.CalculateTargetScrollOffset(_renderLyricsLines, _primaryPlayingLineIndex);
+            if (targetScroll.HasValue)
+            {
+                _canvasTargetScrollOffset = targetScroll.Value;
+            }
 
             if (_isLayoutChanged)
             {
@@ -939,8 +760,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
             _lyricsRenderer.CurrentProgressMs = _songPositionWithOffset.TotalMilliseconds;
             _lyricsRenderer.LyricsWindowStatus = _lyricsWindowStatus;
             _lyricsRenderer.RenderLyricsLines = _renderLyricsLines;
-            _lyricsRenderer.Update(sender, _spectrumAnalyzer.CurrentBassEnergy,
-                lyricsEffect.LyricsBreathingIntensity);
+            _lyricsRenderer.Update(sender, _spectrumAnalyzer.CurrentBassEnergy, lyricsEffect.LyricsBreathingIntensity);
         }
     }
 
@@ -968,10 +788,16 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
     // ====
 
+    private void UserControl_Loaded(object sender, RoutedEventArgs e)
+    {
+        WeakReferenceMessenger.Default.RegisterAll(this);
+        _monitorProvider.DisplayStatusChanged += PowerManager_DisplayStatusChanged;
+    }
+
     private void UserControl_Unloaded(object sender, RoutedEventArgs e)
     {
         WeakReferenceMessenger.Default.UnregisterAll(this);
-        CommunityToolkit.Mvvm.DependencyInjection.Ioc.Default.GetRequiredService<BetterLyrics.Core.Interfaces.Providers.IMonitorProvider>().DisplayStatusChanged -= PowerManager_DisplayStatusChanged;
+        _monitorProvider.DisplayStatusChanged -= PowerManager_DisplayStatusChanged;
 
         if (Canvas != null)
         {
@@ -1032,7 +858,10 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
         IsMouseInLyricsArea = isInsideLyricsArea;
 
-        if (isInsideLyricsArea) MousePosition = pointerPoint.Position;
+        if (isInsideLyricsArea)
+        {
+            MousePosition = pointerPoint.Position;
+        }
 
         _parallaxContext?.OnPointerMoved(pointerPoint.Position.ToAppPoint(), ActualSize.ToAppSize());
     }
@@ -1041,7 +870,10 @@ public sealed partial class NowPlayingCanvas : UserControl,
     {
         var pointerPoint = e.GetCurrentPoint(this);
 
-        if (IsPointerInsideLyricsContainer(pointerPoint.Position)) IsMousePressing = true;
+        if (IsPointerInsideLyricsContainer(pointerPoint.Position))
+        {
+            IsMousePressing = true;
+        }
     }
 
     public void HandlePointerReleased(PointerRoutedEventArgs e)
@@ -1050,7 +882,9 @@ public sealed partial class NowPlayingCanvas : UserControl,
         var pointerPoint = e.GetCurrentPoint(this);
 
         if (IsPointerInsideLyricsContainer(pointerPoint.Position))
+        {
             _ = _gsmtcService.ChangeLyricsLineAsync(CurrentHoveringLineIndex);
+        }
     }
 
     public void HandlePointerWheelChanged(PointerRoutedEventArgs e)
@@ -1063,8 +897,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
         var mouseWheelDelta = pointerPoint.Properties.MouseWheelDelta;
 
-        var isVertical = _lyricsWindowStatus?.LyricsStyleSettings.LyricsLayoutOrientation ==
-                         LyricsLayoutOrientation.Vertical;
+        var isVertical = _lyricsWindowStatus?.LyricsStyleSettings.LyricsLayoutOrientation == LyricsLayoutOrientation.Vertical;
 
         double adjustedDelta;
         double minOffset;
@@ -1104,7 +937,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
     {
         var inLyricsArea = _renderLyricsStartX <= position.X && position.X <= _renderLyricsStartX + _renderLyricsWidth &&
                            _renderLyricsStartY <= position.Y && position.Y <= _renderLyricsStartY + _renderLyricsHeight;
-        
+
         var inNowPlayingBarArea = NowPlayingBarRect.Contains(position);
 
         return inLyricsArea && !inNowPlayingBarArea;
@@ -1167,12 +1000,16 @@ public sealed partial class NowPlayingCanvas : UserControl,
         if (_lyricsWindowStatus == null) return;
 
         if (_lyricsWindowStatus.IsEdgeFeatheringEnabled && _edgeFadeMaskRenderer.Brush != null)
+        {
             using (ds.CreateLayer(_edgeFadeMaskRenderer.Brush))
             {
                 DrawCore(sender, ds, bounds, overlayColor, finalOpacity, lyricsStyle, albumStyle, lyricsBg);
             }
+        }
         else
+        {
             DrawCore(sender, ds, bounds, overlayColor, finalOpacity, lyricsStyle, albumStyle, lyricsBg);
+        }
     }
 
     private void InitSpoutHook(CanvasAnimatedControl sender)
@@ -1224,7 +1061,8 @@ public sealed partial class NowPlayingCanvas : UserControl,
                             StartMs = 0,
                             EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds,
                             PrimaryText = settings.CustomNotFoundMessage,
-                            PrimarySyllables = [
+                            PrimarySyllables =
+                            [
                                 new BaseLyrics { Text = settings.CustomNotFoundMessage, StartMs = 0, EndMs = (int)TimeSpan.FromMinutes(99).TotalMilliseconds }
                             ]
                         }
@@ -1243,11 +1081,8 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
         if (_isLayoutChanged)
         {
-            _layoutStrategy =
-                _lyricsWindowStatus.LyricsStyleSettings.LyricsLayoutOrientation ==
-                LyricsLayoutOrientation.Horizontal
-                    ? new HorizontalLyricsLayoutStrategy()
-                    : new VerticalLyricsLayoutStrategy();
+            _layoutStrategy = _lyricsWindowStatus.LyricsStyleSettings.LyricsLayoutOrientation ==
+                LyricsLayoutOrientation.Horizontal ? new HorizontalLyricsLayoutStrategy() : new VerticalLyricsLayoutStrategy();
             LyricsLayoutStrategyBase.CalculateLanes(_renderLyricsLines);
             LyricsLayoutStrategyBase.CalculateAlignments(_renderLyricsLines);
             _layoutStrategy.MeasureAndArrange(
@@ -1279,8 +1114,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
         {
             _songPosition += elapsedTime;
             _songPositionWithOffset = _songPosition +
-                                      TimeSpan.FromMilliseconds(_gsmtcService.CurrentMediaSourceProviderInfo
-                                          ?.PositionOffset ?? 0);
+                TimeSpan.FromMilliseconds(_gsmtcService.CurrentMediaSourceProviderInfo?.PositionOffset ?? 0);
         }
     }
 
@@ -1361,7 +1195,10 @@ public sealed partial class NowPlayingCanvas : UserControl,
         if (_renderLyricsLines == null) return;
 
         if (!_lyricsWindowStatus.LyricsEffectSettings.IsLyricsScaleEffectEnabled &&
-            !_lyricsWindowStatus.LyricsEffectSettings.IsLyricsGlowEffectEnabled) return;
+            !_lyricsWindowStatus.LyricsEffectSettings.IsLyricsGlowEffectEnabled)
+        {
+            return;
+        }
 
         var animationPadding = (int)Time.AnimationDuration.TotalMilliseconds;
         var longSyllableThreshold = Math.Max(
@@ -1394,5 +1231,88 @@ public sealed partial class NowPlayingCanvas : UserControl,
                 }
             }
         }
+    }
+
+    public void Receive(LyricsEffectRelayoutChangedMessage message)
+    {
+        if (message.Sender == _lyricsWindowStatus?.LyricsEffectSettings)
+        {
+            RequestRelayout();
+        }
+    }
+
+    public void Receive(LyricsEffectReloadChangedMessage message)
+    {
+        if (message.Sender == _lyricsWindowStatus?.LyricsEffectSettings)
+        {
+            RequestReloadLyrics();
+        }
+    }
+
+    public void Receive(LyricsStyleRelayoutChangedMessage message)
+    {
+        if (message.Sender == _lyricsWindowStatus?.LyricsStyleSettings)
+        {
+            RequestRelayout();
+        }
+    }
+
+    public void Receive(LyricsFontFamilyChangedMessage message)
+    {
+        if (message.Sender == _lyricsWindowStatus?.LyricsStyleSettings)
+        {
+            RequestRelayout();
+        }
+    }
+
+    public void Receive(SpectrumConfigChangedMessage message)
+    {
+        if (message.Sender == _lyricsWindowStatus?.LyricsBackgroundSettings)
+        {
+            _spectrumAnalyzer.BarCount = message.Sender.SpectrumCount;
+            _spectrumAnalyzer.Sensitivity = message.Sender.SpectrumSensitivity;
+            _spectrumAnalyzer.DelayMs = message.Sender.SpectrumDelayMs;
+        }
+    }
+
+    public void Receive(AlbumArtBytesChangedMessage message)
+    {
+        _ = ReloadCoverBackgroundResourcesAsync();
+    }
+
+    public void Receive(CurrentLyricsDataChangedMessage message)
+    {
+        RequestReloadLyrics();
+    }
+
+    public void Receive(NoLyricsFoundHandlingChangedMessage message)
+    {
+        RequestReloadLyrics();
+    }
+
+    public void Receive(LyricsWindowPaletteChangedMessage message)
+    {
+        if (message.Sender == _lyricsWindowStatus)
+        {
+            UpdatePalette();
+        }
+    }
+
+    public void Receive(CurrentSongInfoChangedMessage message)
+    {
+        ResetPlaybackState();
+    }
+
+    public void Receive(CurrentPositionChangedMessage message)
+    {
+        var realPosition = message.Value;
+
+        var diff = Math.Abs(_songPosition.TotalMilliseconds - realPosition.TotalMilliseconds);
+        var timelineSyncThreshold = _gsmtcService.CurrentMediaSourceProviderInfo?.TimelineSyncThreshold ?? 0;
+
+        // seek
+        if (diff >= timelineSyncThreshold) _songPosition = realPosition;
+
+        if (diff >= timelineSyncThreshold + 5000) RequestRelayout();
     }
 }

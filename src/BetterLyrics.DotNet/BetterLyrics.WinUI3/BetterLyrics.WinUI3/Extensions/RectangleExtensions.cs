@@ -1,5 +1,5 @@
-﻿using System.Drawing;
-using BetterLyrics.Core.Models.Domain;
+﻿using BetterLyrics.Core.Models.Domain;
+using System.Drawing;
 
 namespace BetterLyrics.WinUI3.Extensions;
 

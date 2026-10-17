@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.ViewModels;
@@ -7,6 +6,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -15,16 +15,15 @@ namespace BetterLyrics.WinUI3.Controls;
 
 public sealed partial class LyricsWindowSwitchControl : UserControl
 {
-    private readonly IWindowManagerProvider _windowManagerProvider =
-        Ioc.Default.GetRequiredService<IWindowManagerProvider>();
+    private readonly IWindowManagerProvider _windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
+
+    public LyricsWindowSwitchControlViewModel ViewModel => (LyricsWindowSwitchControlViewModel)DataContext;
 
     public LyricsWindowSwitchControl()
     {
         InitializeComponent();
         DataContext = Ioc.Default.GetRequiredService<LyricsWindowSwitchControlViewModel>();
     }
-
-    public LyricsWindowSwitchControlViewModel ViewModel => (LyricsWindowSwitchControlViewModel)DataContext;
 
     private async void Grid_Tapped(object sender, TappedRoutedEventArgs e)
     {
@@ -89,7 +88,7 @@ public sealed partial class LyricsWindowSwitchControl : UserControl
             await HideAsync();
 
             var settingsService = Ioc.Default.GetRequiredService<BetterLyrics.Core.Interfaces.Services.ISettingsService>();
-            
+
             if (settingsService.AppSettings.GeneralSettings.MultiNowPlayingWindowMode)
             {
                 _windowManagerProvider.OpenOrShowWindow<NowPlayingWindow>(status);

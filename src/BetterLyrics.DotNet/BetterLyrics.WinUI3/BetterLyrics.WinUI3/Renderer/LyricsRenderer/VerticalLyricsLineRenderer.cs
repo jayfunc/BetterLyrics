@@ -1,10 +1,10 @@
-﻿using System;
-using System.Numerics;
-using Windows.Foundation;
-using BetterLyrics.Core.Enums;
+﻿using BetterLyrics.Core.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
+using System;
+using System.Numerics;
+using Windows.Foundation;
 
 namespace BetterLyrics.WinUI3.Renderer.LyricsRenderer;
 

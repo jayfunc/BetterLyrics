@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Windows.Foundation;
-using Windows.UI;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Lyrics;
@@ -13,6 +8,11 @@ using Microsoft.UI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using Windows.Foundation;
+using Windows.UI;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -104,13 +104,6 @@ public sealed partial class LyricsCard : Control
     private int _currentActiveIndex = -1;
     private ItemsControl? _itemsControl;
 
-    public LyricsCard()
-    {
-        DefaultStyleKey = typeof(LyricsCard);
-        _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
-        _gsmtcService = Ioc.Default.GetRequiredService<IGsmtcService>();
-    }
-
     public string Title
     {
         get => (string)GetValue(TitleProperty);
@@ -198,6 +191,13 @@ public sealed partial class LyricsCard : Control
     public string TimeWithSeconds => DateTime.Now.ToString("HH:mm:ss");
     public string TimeWithSecondsReply => DateTime.Now.AddSeconds(2).ToString("HH:mm:ss");
 
+    public LyricsCard()
+    {
+        DefaultStyleKey = typeof(LyricsCard);
+        _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+        _gsmtcService = Ioc.Default.GetRequiredService<IGsmtcService>();
+    }
+
     private static void OnDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         if (d is LyricsCard card)
@@ -217,7 +217,7 @@ public sealed partial class LyricsCard : Control
             {
                 var color = (Color)e.NewValue;
                 LinearGradientBrush gradientBrush = new()
-                    { StartPoint = new Point(0, 0), EndPoint = new Point(0, 1) };
+                { StartPoint = new Point(0, 0), EndPoint = new Point(0, 1) };
 
                 gradientBrush.GradientStops.Add(new GradientStop { Color = color.WithAlpha(180), Offset = 0.0 });
                 gradientBrush.GradientStops.Add(new GradientStop

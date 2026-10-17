@@ -3,7 +3,7 @@
 public class DirectoryHelper
 {
     /// <summary>
-    ///     递归查找指定文件夹下所有文件（包括子文件夹）。
+    /// 递归查找指定文件夹下所有文件（包括子文件夹）。
     /// </summary>
     /// <param name="folderPath">要查找的文件夹路径</param>
     /// <returns>所有文件的完整路径列表</returns>
@@ -49,7 +49,7 @@ public class DirectoryHelper
     }
 
     /// <summary>
-    ///     https://learn.microsoft.com/zh-cn/dotnet/standard/io/how-to-copy-directories
+    /// https://learn.microsoft.com/zh-cn/dotnet/standard/io/how-to-copy-directories
     /// </summary>
     /// <param name="sourceDir"></param>
     /// <param name="destinationDir"></param>

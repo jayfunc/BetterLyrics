@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using BetterLyrics.Core.Models.Stats;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media.Animation;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace BetterLyrics.WinUI3.Controls.Charts;
 
@@ -24,7 +22,7 @@ public sealed partial class SourceBarChartControl : UserControl
         get => (IEnumerable<PlayerSourceItem>)GetValue(ItemsSourceProperty);
         set => SetValue(ItemsSourceProperty, value);
     }
-    
+
     private double MaxCount { get; set; } = 0;
 
     private static void OnItemsSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -56,7 +54,7 @@ public sealed partial class SourceBarChartControl : UserControl
     {
         UpdateBarWidth(sender as Grid);
     }
-    
+
     private void TrackBg_Loaded(object sender, RoutedEventArgs e)
     {
         UpdateBarWidth(sender as Grid);

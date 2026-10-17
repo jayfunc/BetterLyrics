@@ -1,15 +1,12 @@
-using System;
-using System.IO;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Settings;
-using BetterLyrics.WinUI3.Helpers;
-using BetterLyrics.WinUI3.Providers;
-using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System;
+using System.IO;
 
 namespace BetterLyrics.WinUI3.Controls;
 

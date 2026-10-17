@@ -13,6 +13,7 @@
         ClearColor="Black"
         CreateResources="AnimatedCanvas_CreateResources"
         Draw="AnimatedCanvas_Draw"
+        Loaded="AnimatedCanvas_Loaded"
         Unloaded="AnimatedCanvas_Unloaded"
         Update="AnimatedCanvas_Update" />
 </UserControl>

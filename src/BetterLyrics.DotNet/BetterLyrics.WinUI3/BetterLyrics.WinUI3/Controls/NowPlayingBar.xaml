@@ -4,12 +4,15 @@
     x:Class="BetterLyrics.WinUI3.Controls.NowPlayingBar"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:behaviors="using:BetterLyrics.WinUI3.Behaviors"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:helpers="using:BetterLyrics.WinUI3.Helpers"
     xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
     xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
+    Loaded="UserControl_Loaded"
+    SizeChanged="UserControl_SizeChanged"
+    Unloaded="UserControl_Unloaded"
     mc:Ignorable="d">
 
     <Grid x:Name="RootGrid">
@@ -392,7 +395,7 @@
                                                     Height="16"
                                                     Margin="0,9,0,0"
                                                     VerticalAlignment="Top"
-                                                    helpers:AppExtensions.Aumid="{x:Bind GSMTCService.CurrentMediaSourceProviderInfo.Provider, Mode=OneWay}" />
+                                                    behaviors:AppProperties.Aumid="{x:Bind GSMTCService.CurrentMediaSourceProviderInfo.Provider, Mode=OneWay}" />
                                                 <local:ExtendedSlider
                                                     Grid.Column="1"
                                                     Frequency="1"
@@ -503,7 +506,7 @@
                     Style="{StaticResource GhostSliderStyle}"
                     ThumbToolTipValueConverter="{StaticResource SecondsToFormattedTimeConverter}"
                     Visibility="{x:Bind ShowProgressBar, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}"
-                    Value="{x:Bind SimulatedPositionSeconds, Mode=OneWay}" />
+                    Value="{x:Bind ViewModel.SimulatedPositionSeconds, Mode=OneWay}" />
 
                 <Grid
                     Height="12"
@@ -621,10 +624,10 @@
                                         Grid.Column="0"
                                         Width="16"
                                         Height="16"
-                                        helpers:AppExtensions.Aumid="{x:Bind GSMTCService.CurrentMediaSourceProviderInfo.Provider, Mode=OneWay}" />
+                                        behaviors:AppProperties.Aumid="{x:Bind GSMTCService.CurrentMediaSourceProviderInfo.Provider, Mode=OneWay}" />
                                     <TextBlock
                                         Grid.Column="1"
-                                        helpers:AppExtensions.Aumid="{x:Bind GSMTCService.CurrentMediaSourceProviderInfo.Provider, Mode=OneWay}"
+                                        behaviors:AppProperties.Aumid="{x:Bind GSMTCService.CurrentMediaSourceProviderInfo.Provider, Mode=OneWay}"
                                         Foreground="{ThemeResource TextFillColorSecondaryBrush}" />
                                 </Grid>
                             </Grid>

@@ -1,6 +1,6 @@
-﻿using System.Net;
+﻿using BetterLyrics.Core.Enums;
+using System.Net;
 using System.Text.RegularExpressions;
-using BetterLyrics.Core.Enums;
 
 namespace BetterLyrics.Core.Extensions;
 

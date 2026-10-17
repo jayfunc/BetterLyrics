@@ -1,11 +1,11 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using System.Numerics;
 using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Models.Domain;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using System.Numerics;
 
 namespace BetterLyrics.Core.Helpers;
 

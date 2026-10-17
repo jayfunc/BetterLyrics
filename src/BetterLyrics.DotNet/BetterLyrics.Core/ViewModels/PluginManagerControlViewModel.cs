@@ -4,33 +4,35 @@ using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Sdk.Interfaces.Plugins;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
 namespace BetterLyrics.Core.ViewModels;
 
-public partial class PluginManagerControlViewModel : BaseViewModel
+/// <summary>
+/// Singleton ViewModel
+/// </summary>
+public partial class PluginManagerControlViewModel : ObservableObject
 {
     private readonly IGlobalToastProvider _globalToastProvider;
-    private readonly ILocalizationService _localizationService;
     private readonly IPluginService _pluginService;
     private readonly ISettingsService _settingsService;
     private readonly IWindowManagerProvider _windowManagerProvider;
     private readonly IFilePickerProvider _filePickerProvider;
 
     public PluginManagerControlViewModel(IPluginService pluginService, ISettingsService settingsService,
-        ILocalizationService localizationService, IGlobalToastProvider globalToastProvider,
+        IGlobalToastProvider globalToastProvider,
         IWindowManagerProvider windowManagerProvider, IFilePickerProvider filePickerProvider)
     {
         _pluginService = pluginService;
         _settingsService = settingsService;
-        _localizationService = localizationService;
         _globalToastProvider = globalToastProvider;
         _windowManagerProvider = windowManagerProvider;
         _filePickerProvider = filePickerProvider;
         AppSettings = _settingsService.AppSettings;
     }
 
-    public AppSettings AppSettings { get; }
+    [ObservableProperty][NotifyPropertyChangedFor(nameof(IsListEmpty))] public partial AppSettings AppSettings { get; set; }
 
     public bool IsListEmpty => AppSettings.PluginsInfo.Count == 0;
 

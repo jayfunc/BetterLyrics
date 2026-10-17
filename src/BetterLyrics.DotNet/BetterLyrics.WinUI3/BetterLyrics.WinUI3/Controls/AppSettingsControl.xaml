@@ -13,7 +13,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BetterLyrics.Core.Models"
     xmlns:ui="using:CommunityToolkit.WinUI"
-    Loaded="UserControl_Loaded"
     mc:Ignorable="d">
 
     <Grid>
@@ -29,22 +28,14 @@
             IsBackButtonVisible="Collapsed"
             IsBackEnabled="False"
             IsSettingsVisible="False"
+            MenuItemsSource="{x:Bind ViewModel.NavItems, Mode=OneWay}"
             PaneDisplayMode="Top"
-            SelectionChanged="ConfigNavView_SelectionChanged">
-            <NavigationView.MenuItems>
-                <NavigationViewItem x:Name="AppearanceNavViewItem" Tag="{x:Bind enums:AppSettingsSection.Appearance}">
-                    <TextBlock x:Uid="SettingsPageAppAppearance" />
-                </NavigationViewItem>
-                <NavigationViewItem Tag="{x:Bind enums:AppSettingsSection.Window}">
-                    <TextBlock x:Uid="SettingsPageWindow" />
-                </NavigationViewItem>
-                <NavigationViewItem Tag="{x:Bind enums:AppSettingsSection.Shortcut}">
-                    <TextBlock x:Uid="SettingsPageShortcut" />
-                </NavigationViewItem>
-                <NavigationViewItem Tag="{x:Bind enums:AppSettingsSection.SystemTray}">
-                    <TextBlock x:Uid="AppSettingsControlSystemTray" />
-                </NavigationViewItem>
-            </NavigationView.MenuItems>
+            SelectedItem="{x:Bind ViewModel.SelectedNavItem, Mode=TwoWay}">
+            <NavigationView.MenuItemTemplate>
+                <DataTemplate x:DataType="models:AppSettingsNavMenuItem">
+                    <NavigationViewItem Content="{x:Bind Label}" />
+                </DataTemplate>
+            </NavigationView.MenuItemTemplate>
         </NavigationView>
 
         <ScrollViewer Grid.Row="1" Style="{StaticResource SettingsScrollViewerStyle}">
@@ -62,7 +53,7 @@
                         </InfoBar.ActionButton>
                     </InfoBar>
 
-                    <controls:SwitchPresenter Value="{x:Bind ViewModel.SelectedAppSettingsSection, Mode=OneWay}">
+                    <controls:SwitchPresenter Value="{x:Bind ViewModel.SelectedNavItem.Section, Mode=OneWay}">
                         <controls:SwitchPresenter.ContentTransitions>
                             <TransitionCollection>
                                 <PopupThemeTransition />

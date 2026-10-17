@@ -1,13 +1,15 @@
-using System.ComponentModel;
-using System.Threading.Tasks;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
+using System.ComponentModel;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
+/// <summary>
+/// Singleton Service
+/// </summary>
 public class NowPlayingNotificationService : INowPlayingNotificationService
 {
     private readonly IGsmtcService _gsmtcService;
@@ -37,8 +39,7 @@ public class NowPlayingNotificationService : INowPlayingNotificationService
 
     private void GsmtcService_PropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (e.PropertyName == nameof(IGsmtcService.CurrentSongInfo) ||
-            e.PropertyName == nameof(IGsmtcService.AlbumArtBytes))
+        if (e.PropertyName == nameof(IGsmtcService.CurrentSongInfo) || e.PropertyName == nameof(IGsmtcService.AlbumArtBytes))
         {
             if (_settingsService.AppSettings.GeneralSettings.ShowNowPlayingNotification)
             {
@@ -46,12 +47,17 @@ public class NowPlayingNotificationService : INowPlayingNotificationService
                 {
                     await Task.Delay(200, token); // Small delay to let album art load
 
-                    if (token.IsCancellationRequested) return;
+                    if (token.IsCancellationRequested)
+                    {
+                        return;
+                    }
 
                     var currentSong = _gsmtcService.CurrentSongInfo;
 
                     if (currentSong == SongInfoExtensions.Placeholder)
+                    {
                         return;
+                    }
 
                     // Do not show again if it's the same song
                     if (_lastNotifiedSong.Title == currentSong.Title && _lastNotifiedSong.Artist == currentSong.Artist)

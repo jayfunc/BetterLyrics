@@ -1,16 +1,15 @@
-using System;
-using System.Collections.Specialized;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
-using BetterLyrics.Core.Models.Settings;
+using BetterLyrics.Core.Messages.AppSettings;
 using BetterLyrics.WinUI3.Controls;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helpers;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using System;
+using System.Collections.Specialized;
 using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
@@ -22,32 +21,28 @@ namespace BetterLyrics.WinUI3.Views;
 ///     An empty window that can be used on its own or navigated to within a Frame.
 /// </summary>
 public sealed partial class ToastOverlayWindow : Window,
-    IRecipient<PropertyChangedMessage<AppTheme>>
+    IRecipient<AppThemeChangedMessage>
 {
-    private readonly IWindowManagerProvider _windowManagerProvider =
-        Ioc.Default.GetRequiredService<IWindowManagerProvider>();
+    private readonly IWindowManagerProvider _windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
 
     private OverlayInputHelper? _overlayInputHelper;
+
+    public InAppNotificationStack Stack => NotificationStack;
 
     public ToastOverlayWindow()
     {
         InitializeComponent();
         WeakReferenceMessenger.Default.RegisterAll(this);
-        this.Init("ToastOverlayTitle", titleBarHeightOption: TitleBarHeightOption.Collapsed,
-            backdropType: BackdropType.Transparent);
+        this.Init("ToastOverlayTitle", titleBarHeightOption: TitleBarHeightOption.Collapsed, backdropType: BackdropType.Transparent);
         _windowManagerProvider.SetIsBorderless(this, true);
         AppWindow.IsShownInSwitchers = false;
         _windowManagerProvider.SetIsClickThrough(this, true);
         this.SyncTheme();
     }
 
-    public InAppNotificationStack Stack => NotificationStack;
-
-    public void Receive(PropertyChangedMessage<AppTheme> message)
+    public void Receive(AppThemeChangedMessage message)
     {
-        if (message.Sender is GeneralSettings)
-            if (message.PropertyName == nameof(GeneralSettings.AppTheme))
-                this.SyncTheme();
+        this.SyncTheme();
     }
 
     public void Init(DisplayArea displayArea, int targetWidth = 592)
@@ -72,11 +67,13 @@ public sealed partial class ToastOverlayWindow : Window,
         NotificationStack.Notifications.CollectionChanged += (_, a) =>
         {
             if (a.Action == NotifyCollectionChangedAction.Remove)
+            {
                 if (NotificationStack.Notifications.Count == 0)
                 {
                     this.Hide();
                     _overlayInputHelper?.Stop();
                 }
+            }
         };
         _overlayInputHelper = new OverlayInputHelper(this)
         {

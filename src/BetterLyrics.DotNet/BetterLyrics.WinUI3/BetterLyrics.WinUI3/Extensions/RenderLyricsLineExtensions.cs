@@ -1,6 +1,6 @@
-using System.Linq;
 using BetterLyrics.Core.Models.Lyrics;
 using BetterLyrics.WinUI3.Models.Lyrics;
+using System.Linq;
 
 namespace BetterLyrics.WinUI3.Extensions;
 

@@ -1,29 +1,34 @@
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Messages.AppSettings;
+using BetterLyrics.Core.Messages.SettingsNavigation;
+using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
+using System.Collections.ObjectModel;
 
 namespace BetterLyrics.Core.ViewModels;
 
-public partial class AppSettingsControlViewModel : BaseViewModel,
-    IRecipient<PropertyChangedMessage<string>>,
-    IRecipient<PropertyChangedMessage<bool>>
+/// <summary>
+/// Singleton ViewModel
+/// </summary>
+public partial class AppSettingsControlViewModel : ObservableRecipient,
+    IRecipient<LanguageCodeChangedMessage>,
+    IRecipient<GlobalFontFamilyChangedMessage>,
+    IRecipient<EnhanceControlInteractiveAnimationsChangedMessage>,
+    IRecipient<AppSettingsNavigationRequestedMessage>
 {
     private readonly IWindowManagerProvider _windowManagerProvider;
     private readonly ISettingsService _settingsService;
     private readonly ILauncherProvider _launcherProvider;
+    private readonly ILocalizationService _localizationService;
 
     private readonly string _initialLanguageCode;
     private readonly string _initialGlobalFontFamily;
     private readonly bool _initialEnhanceControlInteractiveAnimations;
-
-    [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
-    public partial AppSettingsSection SelectedAppSettingsSection { get; set; } = AppSettingsSection.Appearance;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsRestartRequired))]
@@ -39,41 +44,70 @@ public partial class AppSettingsControlViewModel : BaseViewModel,
 
     public bool IsRestartRequired => IsLanguageChanged || IsGlobalFontChanged || IsEnhanceControlInteractiveAnimationsChanged;
 
-    [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
-    public partial bool IsDeepLinkRequested { get; set; }
+    public ObservableCollection<AppSettingsNavMenuItem> NavItems { get; } = [];
+    [ObservableProperty] public partial AppSettingsNavMenuItem? SelectedNavItem { get; set; }
 
     public AppSettingsControlViewModel(ISettingsService settingsService,
-        IWindowManagerProvider windowManagerProvider, ILauncherProvider launcherProvider)
+        IWindowManagerProvider windowManagerProvider, ILauncherProvider launcherProvider, ILocalizationService localizationService)
     {
         _settingsService = settingsService;
         _windowManagerProvider = windowManagerProvider;
         _launcherProvider = launcherProvider;
+        _localizationService = localizationService;
         AppSettings = _settingsService.AppSettings;
 
         _initialLanguageCode = AppSettings.GeneralSettings.LanguageCode;
         _initialGlobalFontFamily = AppSettings.GeneralSettings.GlobalFontFamily;
         _initialEnhanceControlInteractiveAnimations = AppSettings.GeneralSettings.EnhanceControlInteractiveAnimations;
+
+        NavItems.Add(new AppSettingsNavMenuItem
+        {
+            Label = _localizationService.GetLocalizedString("SettingsPageAppAppearance/Text"),
+            Section = AppSettingsSection.Appearance
+        });
+        NavItems.Add(new AppSettingsNavMenuItem
+        {
+            Label = _localizationService.GetLocalizedString("SettingsPageWindow/Text"),
+            Section = AppSettingsSection.Window
+        });
+        NavItems.Add(new AppSettingsNavMenuItem
+        {
+            Label = _localizationService.GetLocalizedString("SettingsPageShortcut/Text"),
+            Section = AppSettingsSection.Shortcut
+        });
+        NavItems.Add(new AppSettingsNavMenuItem
+        {
+            Label = _localizationService.GetLocalizedString("AppSettingsControlSystemTray/Text"),
+            Section = AppSettingsSection.SystemTray
+        });
+        SelectedNavItem = NavItems[0];
+
+        IsActive = true;
     }
 
-    public void Receive(PropertyChangedMessage<string> message)
+    partial void OnSelectedNavItemChanged(AppSettingsNavMenuItem? value)
     {
-        if (message.Sender == AppSettings.GeneralSettings)
-        {
-            if (message.PropertyName == nameof(AppSettings.GeneralSettings.LanguageCode))
-                IsLanguageChanged = message.NewValue != _initialLanguageCode;
-            else if (message.PropertyName == nameof(AppSettings.GeneralSettings.GlobalFontFamily))
-                IsGlobalFontChanged = message.NewValue != _initialGlobalFontFamily;
-        }
+        WeakReferenceMessenger.Default.Send(new SettingsSectionChangedMessage(this));
     }
 
-    public void Receive(PropertyChangedMessage<bool> message)
+    public void Receive(LanguageCodeChangedMessage message)
     {
-        if (message.Sender == AppSettings.GeneralSettings)
-        {
-            if (message.PropertyName == nameof(AppSettings.GeneralSettings.EnhanceControlInteractiveAnimations))
-                IsEnhanceControlInteractiveAnimationsChanged = message.NewValue != _initialEnhanceControlInteractiveAnimations;
-        }
+        IsLanguageChanged = message.Value != _initialLanguageCode;
+    }
+
+    public void Receive(GlobalFontFamilyChangedMessage message)
+    {
+        IsGlobalFontChanged = message.Value != _initialGlobalFontFamily;
+    }
+
+    public void Receive(EnhanceControlInteractiveAnimationsChangedMessage message)
+    {
+        IsEnhanceControlInteractiveAnimationsChanged = message.Value != _initialEnhanceControlInteractiveAnimations;
+    }
+
+    public void Receive(AppSettingsNavigationRequestedMessage message)
+    {
+        SelectedNavItem = NavItems.FirstOrDefault(item => item.Section == message.Value);
     }
 
     [ObservableProperty] public partial AppSettings AppSettings { get; set; }

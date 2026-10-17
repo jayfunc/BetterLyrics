@@ -6,6 +6,9 @@ using WindowsMediaController;
 
 namespace BetterLyrics.WinUI3.Providers;
 
+/// <summary>
+/// Singleton Provider
+/// </summary>
 public class MediaManagerProvider : IMediaManagerProvider
 {
     private readonly MediaManager _mediaManager = new();

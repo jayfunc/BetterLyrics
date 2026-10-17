@@ -1,27 +1,25 @@
 // 2025/6/23 by Zhe Fang
 
 using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Messages.SettingsNavigation;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
-
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
-using BetterLyrics.Core.Extensions;
+using System.Collections.ObjectModel;
 
 namespace BetterLyrics.Core.ViewModels;
 
-public partial class SettingsPageViewModel : BaseViewModel,
-    IRecipient<PropertyChangedMessage<AppSettingsSection>>,
-    IRecipient<PropertyChangedMessage<PlaybackLibSettingsSection>>,
-    IRecipient<PropertyChangedMessage<MediaSourceProviderInfo>>,
-    IRecipient<PropertyChangedMessage<LyricsWindowManagerSettingsSection>>,
-    IRecipient<PropertyChangedMessage<LyricsWindowStatus>>
+/// <summary>
+/// Singleton ViewModel
+/// </summary>
+public partial class SettingsPageViewModel : ObservableRecipient,
+    IRecipient<SettingsSectionChangedMessage>
 {
     private readonly ILocalizationService _localizationService;
     private readonly IGlobalToastProvider _globalToastProvider;
@@ -32,14 +30,14 @@ public partial class SettingsPageViewModel : BaseViewModel,
 
     private readonly Debouncer _searchDebouncer = new();
 
-    [ObservableProperty] public partial NavMenuItem? SelectedMenuItem { get; set; }
+    [ObservableProperty] public partial SettingsNavMenuItem? SelectedNavItem { get; set; }
 
     [ObservableProperty] public partial string CurrentPath { get; set; } = string.Empty;
     [ObservableProperty] public partial string CurrentDeepLink { get; set; } = string.Empty;
 
     [ObservableProperty] public partial string SearchQuery { get; set; } = string.Empty;
 
-    public ObservableCollection<NavMenuItem> MenuItems { get; } = [];
+    public ObservableCollection<SettingsNavMenuItem> NavItems { get; } = [];
 
     public ObservableCollection<SettingSearchItem> FilteredSettings { get; } = [];
 
@@ -59,77 +57,78 @@ public partial class SettingsPageViewModel : BaseViewModel,
         _appSettingsControlViewModel = appSettingsControlViewModel;
         _playbackSettingsControlViewModel = playbackSettingsControlViewModel;
 
-        MenuItems.Add(new NavMenuItem
+        NavItems.Add(new SettingsNavMenuItem
         {
             Label = _localizationService.GetLocalizedString("SettingsPageApp"),
             Glyph = "\uECAA",
             Section = SettingsSection.App
         });
-        MenuItems.Add(new NavMenuItem
+        NavItems.Add(new SettingsNavMenuItem
         {
             Label = _localizationService.GetLocalizedString("SettingsPageLyricsWindowMgr"),
             Glyph = "\uE61F",
             Section = SettingsSection.LyricsWindowMgr
         });
-        MenuItems.Add(new NavMenuItem
+        NavItems.Add(new SettingsNavMenuItem
         {
             Label = _localizationService.GetLocalizedString("SettingsPageMediaLib"),
             Glyph = "\uE8B7",
             Section = SettingsSection.MediaLib
         });
-        MenuItems.Add(new NavMenuItem
+        NavItems.Add(new SettingsNavMenuItem
         {
             Label = _localizationService.GetLocalizedString("SettingsPagePlaybackLib"),
             Glyph = "\uEA69",
             Section = SettingsSection.PlaybackLib
         });
-        MenuItems.Add(new NavMenuItem
+        NavItems.Add(new SettingsNavMenuItem
         {
             Label = _localizationService.GetLocalizedString("SettingsPagePlugins"),
             Glyph = "\uE74C",
             Section = SettingsSection.Plugins
         });
-        MenuItems.Add(new NavMenuItem
+        NavItems.Add(new SettingsNavMenuItem
         {
             Label = _localizationService.GetLocalizedString("SettingsPageAbout"),
             Glyph = "\uE946",
             Section = SettingsSection.About
         });
+        SelectedNavItem = NavItems[0];
 
-        SelectedMenuItem = MenuItems[0];
         UpdateCurrentPath();
 
+        IsActive = true;
     }
 
-    partial void OnSelectedMenuItemChanged(NavMenuItem? value)
+    partial void OnSelectedNavItemChanged(SettingsNavMenuItem? value)
     {
         UpdateCurrentPath();
     }
 
     public void UpdateCurrentPath()
     {
-        if (SelectedMenuItem == null) return;
+        if (SelectedNavItem == null) return;
 
-        var displayPathSegments = new List<string> { GetLocalizedTitle("SettingsPageTitle"), GetLocalizedSectionName(SelectedMenuItem.Section) };
-        var uriSegments = new List<string> { "betterlyrics://settings", SelectedMenuItem.Section.ToString().ToLowerInvariant() };
+        var displayPathSegments = new List<string> { GetLocalizedTitle("SettingsPageTitle"), GetLocalizedSectionName(SelectedNavItem.Section) };
+        var uriSegments = new List<string> { "betterlyrics://settings", SelectedNavItem.Section.ToString().ToLowerInvariant() };
 
-        if (SelectedMenuItem.Section == SettingsSection.App)
+        if (SelectedNavItem.Section == SettingsSection.App)
         {
             var vm = _appSettingsControlViewModel;
 
-            uriSegments.Add(vm.SelectedAppSettingsSection.ToString().ToLowerInvariant());
+            uriSegments.Add(vm.SelectedNavItem?.Section.ToString().ToLowerInvariant() ?? "");
 
-            displayPathSegments.Add(GetLocalizedSubsectionName(vm.SelectedAppSettingsSection));
+            displayPathSegments.Add(GetLocalizedSubsectionName(vm.SelectedNavItem?.Section));
         }
-        else if (SelectedMenuItem.Section == SettingsSection.PlaybackLib)
+        else if (SelectedNavItem.Section == SettingsSection.PlaybackLib)
         {
             var vm = _playbackSettingsControlViewModel;
 
-            string subsectionName = GetLocalizedSubsectionName(vm.SelectedPlaybackLibSettingsSection);
+            string subsectionName = GetLocalizedSubsectionName(vm.SelectedNavItem?.Section);
 
-            if (vm.SelectedPlaybackLibSettingsSection == PlaybackLibSettingsSection.General && vm.SelectedMediaSourceProvider != null)
+            if (vm.SelectedNavItem?.Section == PlaybackLibSettingsSection.General && vm.SelectedMediaSourceProvider != null)
             {
-                uriSegments.Add(vm.SelectedPlaybackLibSettingsSection.ToString().ToLowerInvariant());
+                uriSegments.Add(vm.SelectedNavItem?.Section.ToString().ToLowerInvariant() ?? "");
                 uriSegments.Add(vm.SelectedMediaSourceProvider.Provider);
 
                 displayPathSegments.Add(subsectionName);
@@ -137,66 +136,26 @@ public partial class SettingsPageViewModel : BaseViewModel,
             }
             else
             {
-                uriSegments.Add(vm.SelectedPlaybackLibSettingsSection.ToString().ToLowerInvariant());
+                uriSegments.Add(vm.SelectedNavItem?.Section.ToString().ToLowerInvariant() ?? "");
                 displayPathSegments.Add(subsectionName);
             }
         }
-        else if (SelectedMenuItem.Section == SettingsSection.LyricsWindowMgr)
+        else if (SelectedNavItem.Section == SettingsSection.LyricsWindowMgr)
         {
             var vm = _lyricsWindowSettingsControlViewModel;
 
             if (vm.SelectedWindowStatus != null)
             {
                 uriSegments.Add(vm.SelectedWindowStatus.Id.ToString());
-                uriSegments.Add(vm.SelectedLyricsWindowManagerSettingsSection.ToString().ToLowerInvariant());
+                uriSegments.Add(vm.SelectedNavItem?.Section.ToString().ToLowerInvariant() ?? "");
 
                 displayPathSegments.Add(vm.SelectedWindowStatus.Name);
-                displayPathSegments.Add(GetLocalizedSubsectionName(vm.SelectedLyricsWindowManagerSettingsSection));
+                displayPathSegments.Add(GetLocalizedSubsectionName(vm.SelectedNavItem?.Section));
             }
         }
 
         CurrentPath = string.Join(" > ", displayPathSegments);
         CurrentDeepLink = string.Join("/", uriSegments);
-    }
-
-    public void Receive(PropertyChangedMessage<AppSettingsSection> message)
-    {
-        if (message.Sender == _appSettingsControlViewModel && message.PropertyName == nameof(AppSettingsControlViewModel.SelectedAppSettingsSection))
-        {
-            UpdateCurrentPath();
-        }
-    }
-
-    public void Receive(PropertyChangedMessage<PlaybackLibSettingsSection> message)
-    {
-        if (message.Sender == _playbackSettingsControlViewModel && message.PropertyName == nameof(PlaybackSettingsControlViewModel.SelectedPlaybackLibSettingsSection))
-        {
-            UpdateCurrentPath();
-        }
-    }
-
-    public void Receive(PropertyChangedMessage<MediaSourceProviderInfo> message)
-    {
-        if (message.Sender == _playbackSettingsControlViewModel && message.PropertyName == nameof(PlaybackSettingsControlViewModel.SelectedMediaSourceProvider))
-        {
-            UpdateCurrentPath();
-        }
-    }
-
-    public void Receive(PropertyChangedMessage<LyricsWindowManagerSettingsSection> message)
-    {
-        if (message.Sender == _lyricsWindowSettingsControlViewModel && message.PropertyName == nameof(LyricsWindowManagerControlViewModel.SelectedLyricsWindowManagerSettingsSection))
-        {
-            UpdateCurrentPath();
-        }
-    }
-
-    public void Receive(PropertyChangedMessage<LyricsWindowStatus> message)
-    {
-        if (message.Sender == _lyricsWindowSettingsControlViewModel && message.PropertyName == nameof(LyricsWindowManagerControlViewModel.SelectedWindowStatus))
-        {
-            UpdateCurrentPath();
-        }
     }
 
     private string GetLocalizedTitle(string uid)
@@ -365,58 +324,35 @@ public partial class SettingsPageViewModel : BaseViewModel,
 
     public void NavigateToSection(SettingsSection section)
     {
-        var targetItem = MenuItems.FirstOrDefault(m => m.Section == section);
+        var targetItem = NavItems.FirstOrDefault(m => m.Section == section);
 
-        if (targetItem != null) SelectedMenuItem = targetItem;
+        if (targetItem != null) SelectedNavItem = targetItem;
     }
 
     public void NavigateToSettingSearchItem(SettingSearchItem item)
     {
         NavigateToSection(item.Section);
 
-        if (item.Subsection != null)
+        if (item.Section == SettingsSection.App)
         {
-            if (item.Section == SettingsSection.App)
+            if (item.Subsection != null)
             {
-                _appSettingsControlViewModel.SelectedAppSettingsSection = (AppSettingsSection)item.Subsection;
-                _appSettingsControlViewModel.IsDeepLinkRequested = true;
+                WeakReferenceMessenger.Default.Send(new AppSettingsNavigationRequestedMessage((AppSettingsSection)item.Subsection));
             }
-            else if (item.Section == SettingsSection.PlaybackLib)
-            {
-                _playbackSettingsControlViewModel.SelectedPlaybackLibSettingsSection = (PlaybackLibSettingsSection)item.Subsection;
-
-                if (item.TargetParameter is string providerName)
-                {
-                    var provider = _playbackSettingsControlViewModel.AppSettings.MediaSourceProvidersInfo.FirstOrDefault(p => p.Provider == providerName);
-                    if (provider != null)
-                    {
-                        _playbackSettingsControlViewModel.SelectedMediaSourceProvider = provider;
-                    }
-                }
-
-                _playbackSettingsControlViewModel.IsDeepLinkRequested = true;
-            }
-            else if (item.Section == SettingsSection.LyricsWindowMgr)
-            {
-                _lyricsWindowSettingsControlViewModel.SelectedLyricsWindowManagerSettingsSection = (LyricsWindowManagerSettingsSection)item.Subsection;
-
-                LyricsWindowStatus? status = null;
-                if (item.TargetParameter is Guid windowId)
-                {
-                    status = _lyricsWindowSettingsControlViewModel.AppSettings.WindowBoundsRecords.FirstOrDefault(w => w.Id == windowId);
-                }
-
-                if (status == null)
-                {
-                    status = _lyricsWindowSettingsControlViewModel.AppSettings.WindowBoundsRecords.FirstOrDefault() ?? _lyricsWindowSettingsControlViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus;
-                }
-
-                if (status != null)
-                {
-                    _lyricsWindowSettingsControlViewModel.SelectedWindowStatus = status;
-                    _lyricsWindowSettingsControlViewModel.IsDeepLinkRequested = true;
-                }
-            }
+        }
+        else if (item.Section == SettingsSection.PlaybackLib)
+        {
+            WeakReferenceMessenger.Default.Send(new PlaybackLibSettingsNavigationRequestedMessage(
+                (PlaybackLibSettingsSection)(item.Subsection ?? PlaybackLibSettingsSection.General),
+                item.TargetParameter as string
+            ));
+        }
+        else if (item.Section == SettingsSection.LyricsWindowMgr)
+        {
+            WeakReferenceMessenger.Default.Send(new LyricsWindowNavigationRequestedMessage(
+                (LyricsWindowManagerSettingsSection)(item.Subsection ?? LyricsWindowManagerSettingsSection.Window),
+                item.TargetParameter as Guid?
+            ));
         }
     }
 
@@ -435,5 +371,10 @@ public partial class SettingsPageViewModel : BaseViewModel,
                 _globalToastProvider.Show("Error", ex.Message, MessageSeverity.Error);
             }
         }
+    }
+
+    public void Receive(SettingsSectionChangedMessage message)
+    {
+        UpdateCurrentPath();
     }
 }

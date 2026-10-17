@@ -13,20 +13,14 @@ public sealed partial class TrackDetailCard : UserControl
         DependencyProperty.Register(nameof(ExtendedTrack), typeof(ExtendedTrack), typeof(TrackDetailCard),
             new PropertyMetadata(null));
 
-    public TrackDetailCard()
-    {
-        InitializeComponent();
-    }
-
-    public void Cleanup()
-    {
-        Bindings?.StopTracking();
-        ClearValue(ExtendedTrackProperty);
-    }
-
     public ExtendedTrack ExtendedTrack
     {
         get => (ExtendedTrack)GetValue(ExtendedTrackProperty);
         set => SetValue(ExtendedTrackProperty, value);
+    }
+
+    public TrackDetailCard()
+    {
+        InitializeComponent();
     }
 }

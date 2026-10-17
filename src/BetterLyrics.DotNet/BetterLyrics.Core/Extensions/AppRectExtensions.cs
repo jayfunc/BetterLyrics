@@ -1,5 +1,5 @@
-using System.Numerics;
 using BetterLyrics.Core.Models.Domain;
+using System.Numerics;
 
 namespace BetterLyrics.Core.Extensions;
 

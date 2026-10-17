@@ -1,12 +1,12 @@
 // 2025/6/23 by Zhe Fang
 
-using System.ComponentModel;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Domain;
 using BetterLyrics.Core.Models.Entities;
 using BetterLyrics.Core.Models.Lyrics;
 using BetterLyrics.Core.Models.Settings;
+using System.ComponentModel;
 
 namespace BetterLyrics.Core.Interfaces.Services;
 

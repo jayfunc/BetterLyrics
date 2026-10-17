@@ -1,9 +1,8 @@
-using System.Collections.ObjectModel;
 using BetterLyrics.Core.Enums;
-using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Models;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Input;
+using System.Collections.ObjectModel;
 
 namespace BetterLyrics.Core.ViewModels.MusicGalleryPageViewModel;
 
@@ -116,10 +115,10 @@ public partial class MusicGalleryPageViewModel
     private void SelectAlbum(AlbumModel album)
     {
         var completeAlbum = Albums.FirstOrDefault(a => a.Title.Equals(album.Title, StringComparison.OrdinalIgnoreCase));
-        if (completeAlbum == null) 
+        if (completeAlbum == null)
         {
             var tracks = _sortedTracks.Where(t => t.Album.Equals(album.Title, StringComparison.OrdinalIgnoreCase)).ToList();
-            completeAlbum = new AlbumModel 
+            completeAlbum = new AlbumModel
             {
                 Title = album.Title,
                 LocalAlbumArtPath = tracks.FirstOrDefault(t => !string.IsNullOrEmpty(t.LocalAlbumArtPath))?.LocalAlbumArtPath,
@@ -138,7 +137,7 @@ public partial class MusicGalleryPageViewModel
         if (completeArtist == null)
         {
             var tracks = _sortedTracks.Where(t => t.Artist.Equals(artist.Name, StringComparison.OrdinalIgnoreCase)).ToList();
-            completeArtist = new ArtistModel 
+            completeArtist = new ArtistModel
             {
                 Name = artist.Name,
             };
@@ -175,7 +174,7 @@ public partial class MusicGalleryPageViewModel
             IsSortDescending = false;
             SongOrderType = property;
         }
-        
+
         ApplySongOrderType();
     }
 }

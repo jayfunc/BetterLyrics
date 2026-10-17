@@ -1,16 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Models.Domain;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Hooks;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.InteropServices;
 using Vanara.PInvoke;
 using WinRT.Interop;
 
 namespace BetterLyrics.WinUI3.Providers;
 
+/// <summary>
+/// Singleton Provider
+/// </summary>
 public partial class MonitorProvider : IMonitorProvider, IDisposable
 {
     public bool IsDisplayOn { get; private set; } = true;
@@ -49,11 +52,11 @@ public partial class MonitorProvider : IMonitorProvider, IDisposable
             {
                 deviceNames.Add(d.DeviceName);
             }
-            
+
             devNum++;
             d.cb = (uint)Marshal.SizeOf(d);
         }
-        
+
         return deviceNames.Distinct();
     }
 
@@ -115,12 +118,12 @@ public partial class MonitorProvider : IMonitorProvider, IDisposable
         var hwnd = WindowNative.GetWindowHandle(window);
         var hMonitor = User32.MonitorFromWindow(hwnd, User32.MonitorFlags.MONITOR_DEFAULTTONEAREST);
         User32.MONITORINFOEX monitorInfoEx = new() { cbSize = (uint)Marshal.SizeOf<User32.MONITORINFOEX>() };
-        
+
         if (User32.GetMonitorInfo(hMonitor, ref monitorInfoEx))
         {
             return (monitorInfoEx.szDevice, monitorInfoEx.rcMonitor.ToAppRect());
         }
-        
+
         return GetPrimaryMonitorInfo();
     }
 

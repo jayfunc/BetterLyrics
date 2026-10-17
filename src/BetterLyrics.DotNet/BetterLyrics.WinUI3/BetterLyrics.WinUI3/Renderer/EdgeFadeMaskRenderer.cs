@@ -1,11 +1,11 @@
-﻿using System;
+﻿using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Brushes;
+using Microsoft.UI;
+using System;
 using System.Linq;
 using System.Numerics;
 using Windows.Foundation;
 using Windows.UI;
-using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.Brushes;
-using Microsoft.UI;
 
 namespace BetterLyrics.WinUI3.Renderer;
 
@@ -97,28 +97,28 @@ public partial class EdgeFadeMaskRenderer : IDisposable
             if (fadeTop > 0 && centerW > 0)
             {
                 using var topBrush = new CanvasLinearGradientBrush(resourceCreator, Colors.Transparent, Colors.White)
-                    { StartPoint = new Vector2(0, 0), EndPoint = new Vector2(0, fadeTop) };
+                { StartPoint = new Vector2(0, 0), EndPoint = new Vector2(0, fadeTop) };
                 ds.FillRectangle(fadeLeft, 0, centerW, fadeTop, topBrush);
             }
 
             if (fadeBottom > 0 && centerW > 0)
             {
                 using var bottomBrush = new CanvasLinearGradientBrush(resourceCreator, Colors.White, Colors.Transparent)
-                    { StartPoint = new Vector2(0, height - fadeBottom), EndPoint = new Vector2(0, height) };
+                { StartPoint = new Vector2(0, height - fadeBottom), EndPoint = new Vector2(0, height) };
                 ds.FillRectangle(fadeLeft, height - fadeBottom, centerW, fadeBottom, bottomBrush);
             }
 
             if (fadeLeft > 0 && centerH > 0)
             {
                 using var leftBrush = new CanvasLinearGradientBrush(resourceCreator, Colors.Transparent, Colors.White)
-                    { StartPoint = new Vector2(0, 0), EndPoint = new Vector2(fadeLeft, 0) };
+                { StartPoint = new Vector2(0, 0), EndPoint = new Vector2(fadeLeft, 0) };
                 ds.FillRectangle(0, fadeTop, fadeLeft, centerH, leftBrush);
             }
 
             if (fadeRight > 0 && centerH > 0)
             {
                 using var rightBrush = new CanvasLinearGradientBrush(resourceCreator, Colors.White, Colors.Transparent)
-                    { StartPoint = new Vector2(width - fadeRight, 0), EndPoint = new Vector2(width, 0) };
+                { StartPoint = new Vector2(width - fadeRight, 0), EndPoint = new Vector2(width, 0) };
                 ds.FillRectangle(width - fadeRight, fadeTop, fadeRight, centerH, rightBrush);
             }
 
@@ -151,12 +151,12 @@ public partial class EdgeFadeMaskRenderer : IDisposable
     {
         if (w <= 0 || h <= 0) return;
         using var radialBrush = new CanvasRadialGradientBrush(resourceCreator, Colors.White, Colors.Transparent)
-            { Center = center, RadiusX = w, RadiusY = h };
+        { Center = center, RadiusX = w, RadiusY = h };
         ds.FillRectangle(x, y, w, h, radialBrush);
     }
 
     /// <summary>
-    ///     使用 CanvasGradientStop 数组自定义多个完全可见的区域和渐变
+    /// 使用 CanvasGradientStop 数组自定义多个完全可见的区域和渐变
     /// </summary>
     /// <param name="stops">渐变节点（Position从 0.0 到 1.0，必须递增）</param>
     /// <param name="isVertical">True表示垂直渐变（Y 轴），False表示水平渐变（X 轴）</param>

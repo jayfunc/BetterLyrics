@@ -1,3 +1,4 @@
+using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Models.Lyrics;
 using BetterLyrics.Core.ViewModels;
@@ -12,13 +13,13 @@ namespace BetterLyrics.WinUI3.Controls;
 
 public sealed partial class LyricsSearchControl : UserControl
 {
+    public LyricsSearchControlViewModel ViewModel => (LyricsSearchControlViewModel)DataContext;
+
     public LyricsSearchControl()
     {
         InitializeComponent();
         DataContext = Ioc.Default.GetRequiredService<LyricsSearchControlViewModel>();
     }
-
-    public LyricsSearchControlViewModel ViewModel => (LyricsSearchControlViewModel)DataContext;
 
     private void ConvertRomajiToKanji(TextBox textBox)
     {

@@ -1,16 +1,18 @@
-using System.ComponentModel;
-using System.Text.Json.Serialization;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Messages.LyricsWindow;
 using BetterLyrics.Core.Models.Domain;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Messaging;
+using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace BetterLyrics.Core.Models.Settings;
 
-public partial class LyricsWindowStatus : ObservableRecipient, ICloneable
+public partial class LyricsWindowStatus : ObservableObject, ICloneable
 {
     private readonly IMonitorProvider _monitorProvider = Ioc.Default.GetRequiredService<IMonitorProvider>();
 
@@ -56,7 +58,6 @@ public partial class LyricsWindowStatus : ObservableRecipient, ICloneable
     }
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial string Name { get; set; } = string.Empty;
 
     public Guid Id { get; set; } = Guid.NewGuid();
@@ -64,104 +65,79 @@ public partial class LyricsWindowStatus : ObservableRecipient, ICloneable
     [ObservableProperty] public partial bool IsDefault { get; set; } = false;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial string MonitorDeviceName { get; set; } = string.Empty;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsWorkArea { get; set; } = false;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsAlwaysOnTop { get; set; } = false;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsAlwaysOnTopPolling { get; set; } = false;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsShownInSwitchers { get; set; } = true;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsWallpaper { get; set; } = false;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsLocked { get; set; } = false;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsBorderlessWhenLocked { get; set; } = true;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsAlwaysHideUnlockButton { get; set; } = false;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool KeepNowPlayingBarInteractiveWhenLocked { get; set; } = false;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsTimelineLyricsPreviewEnabled { get; set; } = true;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsAlwaysHidePlayingBar { get; set; } = false;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsNowPlayingBarAutoAdaptive { get; set; } = true;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool NowPlayingBarShowTimeArea { get; set; } = true;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool NowPlayingBarShowProgressBar { get; set; } = true;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool NowPlayingBarShowMoreButton { get; set; } = true;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsNowPlayingBarResident { get; set; } = false;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial NowPlayingBarBackgroundStyle NowPlayingBarBackgroundStyle { get; set; } = NowPlayingBarBackgroundStyle.Transparent;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsPinToTaskbar { get; set; } = false;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial TaskbarPlacement TaskbarPlacement { get; set; } = TaskbarPlacement.Left;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsMaximized { get; set; } = false;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsFullscreen { get; set; } = false;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial Guid LayoutProfileId { get; set; } = Guid.Empty;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     [NotifyPropertyChangedFor(nameof(DemoWindowMargin))]
     public partial AppRect WindowBounds { get; set; } = new(100, 100, 800, 500);
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial double DockHeight { get; set; } = 64;
 
     [ObservableProperty]
@@ -169,134 +145,105 @@ public partial class LyricsWindowStatus : ObservableRecipient, ICloneable
     public partial AppRect MonitorBounds { get; set; }
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial DockPlacement DockPlacement { get; set; } = DockPlacement.Top;
 
     [ObservableProperty] public partial LyricsStyleSettings LyricsStyleSettings { get; set; } = new();
     [ObservableProperty] public partial LyricsEffectSettings LyricsEffectSettings { get; set; } = new();
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial LyricsBackgroundSettings LyricsBackgroundSettings { get; set; } = new();
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial AlbumArtAreaStyleSettings AlbumArtLayoutSettings { get; set; } = new();
 
     [ObservableProperty] public partial AlbumArtAreaEffectSettings AlbumArtAreaEffectSettings { get; set; } = new();
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     [NotifyPropertyChangedFor(nameof(IsAdaptToAlbumArtAdjustable))]
     [NotifyPropertyChangedFor(nameof(IsWindowThemeAdjustable))]
     public partial bool IsAdaptToEnvironment { get; set; } = false;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     [NotifyPropertyChangedFor(nameof(IsAdaptToEnvironmentAdjustable))]
     [NotifyPropertyChangedFor(nameof(IsWindowThemeAdjustable))]
     public partial bool IsAdaptToAlbumArt { get; set; } = false;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial WindowPixelSampleMode EnvironmentSampleMode { get; set; } = WindowPixelSampleMode.WindowEdge;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial AppTheme WindowTheme { get; set; } = AppTheme.Dark;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial PaletteGeneratorType PaletteGeneratorType { get; set; } = PaletteGeneratorType.CelebiQuantizer;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial double PaletteChromaWeight { get; set; } = 1.0;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial double PaletteToneWeight { get; set; } = -0.75;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial double PalettePopulationWeight { get; set; } = 3.0;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial double PaletteDarkToneThreshold { get; set; } = 75.0;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial double PaletteLightToneThreshold { get; set; } = 25.0;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial NowPlayingPalette WindowPalette { get; set; } = new();
 
     [JsonPropertyName("AutoShowOrHideWindow")]
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool HideWindowWhenPaused { get; set; } = false;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool HideWindowWhenNullSession { get; set; } = false;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial int AutoShowOrHideWindowDelay { get; set; } = 250; // 250ms
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial TitleBarArea TitleBarArea { get; set; } = TitleBarArea.Top;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsKeepScreenOpen { get; set; } = false;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsEdgeFeatheringEnabled { get; set; } = false;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial int EdgeFeatheringLeft { get; set; } = 0;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial int EdgeFeatheringTop { get; set; } = 0;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial int EdgeFeatheringRight { get; set; } = 0;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial int EdgeFeatheringBottom { get; set; } = 0;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial string LyricsCardStyleKey { get; set; } = "LyricsCardStickyNoteStyle";
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsSpoutOutputEnabled { get; set; } = false;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial FPS FPS { get; set; } = FPS.Hz60;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool ShowDebugOverlay { get; set; } = false;
 
-    [JsonIgnore] [ObservableProperty] public partial bool IsOverlayInputHelperRunning { get; set; } = false;
-    [JsonIgnore] [ObservableProperty] public partial bool IsAlwaysOnTopPollingTimerRunning { get; set; } = false;
-    [JsonIgnore] [ObservableProperty] public partial bool IsUnderlayColorTimerRunning { get; set; } = false;
+    [JsonIgnore][ObservableProperty] public partial bool IsOverlayInputHelperRunning { get; set; } = false;
+    [JsonIgnore][ObservableProperty] public partial bool IsAlwaysOnTopPollingTimerRunning { get; set; } = false;
+    [JsonIgnore][ObservableProperty] public partial bool IsUnderlayColorTimerRunning { get; set; } = false;
 
     [JsonIgnore]
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial WindowStatus WindowStatus { get; set; } = WindowStatus.Closed;
 
     [JsonIgnore]
@@ -306,6 +253,105 @@ public partial class LyricsWindowStatus : ObservableRecipient, ICloneable
     [JsonIgnore] public bool IsWindowThemeAdjustable => !IsAdaptToEnvironment && !IsAdaptToAlbumArt;
     [JsonIgnore] public bool IsAdaptToEnvironmentAdjustable => !IsAdaptToAlbumArt;
     [JsonIgnore] public bool IsAdaptToAlbumArtAdjustable => !IsAdaptToEnvironment;
+
+    partial void OnNameChanged(string value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowNameChangedMessage(this, value));
+
+    partial void OnMonitorDeviceNameChanged(string value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowWorkAreaConfigChangedMessage(this));
+
+    partial void OnDockHeightChanged(double value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowWorkAreaConfigChangedMessage(this));
+
+    partial void OnDockPlacementChanged(DockPlacement value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowWorkAreaConfigChangedMessage(this));
+
+    partial void OnIsShownInSwitchersChanged(bool value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowShownInSwitchersChangedMessage(this, value));
+
+    partial void OnIsAlwaysOnTopChanged(bool value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowAlwaysOnTopChangedMessage(this, value));
+
+    partial void OnIsAlwaysOnTopPollingChanged(bool value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowAlwaysOnTopPollingChangedMessage(this, value));
+
+    partial void OnIsLockedChanged(bool value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowLockConfigChangedMessage(this));
+
+    partial void OnIsAlwaysHideUnlockButtonChanged(bool value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowLockConfigChangedMessage(this));
+
+    partial void OnKeepNowPlayingBarInteractiveWhenLockedChanged(bool value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowLockConfigChangedMessage(this));
+
+    partial void OnIsAlwaysHidePlayingBarChanged(bool value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowPlayingBarConfigChangedMessage(this));
+
+    partial void OnIsNowPlayingBarAutoAdaptiveChanged(bool value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowPlayingBarConfigChangedMessage(this));
+
+    partial void OnNowPlayingBarShowTimeAreaChanged(bool value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowPlayingBarConfigChangedMessage(this));
+
+    partial void OnNowPlayingBarShowProgressBarChanged(bool value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowPlayingBarConfigChangedMessage(this));
+
+    partial void OnNowPlayingBarShowMoreButtonChanged(bool value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowPlayingBarConfigChangedMessage(this));
+
+    partial void OnIsNowPlayingBarResidentChanged(bool value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowPlayingBarConfigChangedMessage(this));
+
+    partial void OnTaskbarPlacementChanged(TaskbarPlacement value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowTaskbarPlacementChangedMessage(this, value));
+
+    partial void OnLayoutProfileIdChanged(Guid value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowLayoutProfileIdChangedMessage(this, value));
+
+    partial void OnIsAdaptToEnvironmentChanged(bool value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowAdaptToEnvironmentChangedMessage(this, value));
+
+    partial void OnIsAdaptToAlbumArtChanged(bool value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowPaletteConfigChangedMessage(this));
+
+    partial void OnWindowThemeChanged(AppTheme value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowPaletteConfigChangedMessage(this));
+
+    partial void OnPaletteGeneratorTypeChanged(PaletteGeneratorType value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowPaletteConfigChangedMessage(this));
+
+    partial void OnPaletteChromaWeightChanged(double value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowPaletteConfigChangedMessage(this));
+
+    partial void OnPaletteToneWeightChanged(double value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowPaletteConfigChangedMessage(this));
+
+    partial void OnPalettePopulationWeightChanged(double value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowPaletteConfigChangedMessage(this));
+
+    partial void OnPaletteDarkToneThresholdChanged(double value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowPaletteConfigChangedMessage(this));
+
+    partial void OnPaletteLightToneThresholdChanged(double value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowPaletteConfigChangedMessage(this));
+
+    partial void OnWindowPaletteChanged(NowPlayingPalette value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowPaletteChangedMessage(this, value));
+
+    partial void OnHideWindowWhenPausedChanged(bool value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowAutoHideConfigChangedMessage(this));
+
+    partial void OnHideWindowWhenNullSessionChanged(bool value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowAutoHideConfigChangedMessage(this));
+
+    partial void OnTitleBarAreaChanged(TitleBarArea value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowTitleBarAreaChangedMessage(this, value));
+
+    partial void OnIsKeepScreenOpenChanged(bool value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowKeepScreenOpenChangedMessage(this, value));
+
+    partial void OnWindowStatusChanged(WindowStatus value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowStatusStateChangedMessage(this, value));
 
     public object Clone()
     {

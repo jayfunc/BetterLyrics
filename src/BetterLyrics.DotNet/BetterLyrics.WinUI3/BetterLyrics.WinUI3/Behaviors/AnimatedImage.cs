@@ -2,15 +2,15 @@
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
 
-namespace BetterLyrics.WinUI3.Helpers;
+namespace BetterLyrics.WinUI3.Behaviors;
 
-public static class GifHelper
+public static class AnimatedImage
 {
     public static readonly DependencyProperty IsPlayingProperty =
         DependencyProperty.RegisterAttached(
             "IsPlaying",
             typeof(bool),
-            typeof(GifHelper),
+            typeof(AnimatedImage),
             new PropertyMetadata(true, OnIsPlayingChanged));
 
     public static bool GetIsPlaying(DependencyObject obj)
@@ -38,7 +38,10 @@ public static class GifHelper
 
     private static void Image_ImageOpened(object sender, RoutedEventArgs e)
     {
-        if (sender is Image image) UpdatePlayback(image, GetIsPlaying(image));
+        if (sender is Image image)
+        {
+            UpdatePlayback(image, GetIsPlaying(image));
+        }
     }
 
     private static void UpdatePlayback(Image image, bool isPlaying)
@@ -46,9 +49,13 @@ public static class GifHelper
         if (image.Source is BitmapImage bitmap && bitmap.IsAnimatedBitmap)
         {
             if (isPlaying)
+            {
                 bitmap.Play();
+            }
             else
+            {
                 bitmap.Stop();
+            }
         }
     }
 }

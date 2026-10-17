@@ -1,14 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
-using Windows.Foundation;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Messages.SettingsNavigation;
 using BetterLyrics.Core.Models.Domain;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.Serialization;
@@ -16,93 +10,40 @@ using BetterLyrics.Core.ViewModels;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text.Json;
+using System.Threading.Tasks;
+using Windows.Foundation;
 using WinUIEx;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
-
 namespace BetterLyrics.WinUI3.Controls;
 
-public sealed partial class LyricsWindowManagerControl : UserControl, IRecipient<PropertyChangedMessage<bool>>
+public sealed partial class LyricsWindowManagerControl : UserControl
 {
-    public static readonly DependencyProperty LyricsWindowStatusProperty =
-        DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus),
-            typeof(LyricsWindowManagerControl), new PropertyMetadata(null));
+    private readonly IGlobalToastProvider _globalToastProvider = Ioc.Default.GetRequiredService<IGlobalToastProvider>();
+    private readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
+    private readonly IFilePickerProvider _filePickerProvider = Ioc.Default.GetRequiredService<IFilePickerProvider>();
+    private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+    private readonly IWindowManagerProvider _windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
+    private readonly IMonitorProvider _monitorProvider = Ioc.Default.GetRequiredService<IMonitorProvider>();
 
-    private readonly IGlobalToastProvider _globalToastProvider =
-        Ioc.Default.GetRequiredService<IGlobalToastProvider>();
-
-    private readonly ILocalizationService _localizationService =
-        Ioc.Default.GetRequiredService<ILocalizationService>();
-
-    private readonly IFilePickerProvider _filePickerProvider =
-        Ioc.Default.GetRequiredService<IFilePickerProvider>();
-
-    private readonly ISettingsService _settingsService =
-        Ioc.Default.GetRequiredService<ISettingsService>();
-
-    private readonly IWindowManagerProvider _windowManagerProvider =
-        Ioc.Default.GetRequiredService<IWindowManagerProvider>();
-
-    private readonly IMonitorProvider _monitorProvider =
-        Ioc.Default.GetRequiredService<IMonitorProvider>();
+    public LyricsWindowManagerControlViewModel ViewModel => (LyricsWindowManagerControlViewModel)DataContext;
 
     public LyricsWindowManagerControl()
     {
         InitializeComponent();
         DataContext = Ioc.Default.GetRequiredService<LyricsWindowManagerControlViewModel>();
-        WeakReferenceMessenger.Default.RegisterAll(this);
-    }
-
-    public void Receive(PropertyChangedMessage<bool> message)
-    {
-        if (message.Sender == ViewModel && message.PropertyName == nameof(ViewModel.IsDeepLinkRequested))
-        {
-            if (this.IsLoaded)
-            {
-                CheckAndProcessDeepLink();
-            }
-        }
-    }
-
-    private bool CheckAndProcessDeepLink()
-    {
-        if (ViewModel.IsDeepLinkRequested && ViewModel.SelectedWindowStatus != null)
-        {
-            ViewModel.IsDeepLinkRequested = false;
-
-            LyricsWindowStatus = ViewModel.SelectedWindowStatus;
-
-            var section = ViewModel.SelectedLyricsWindowManagerSettingsSection;
-            foreach (NavigationViewItem item in ConfigNavView.MenuItems.Cast<NavigationViewItem>())
-            {
-                if ((LyricsWindowManagerSettingsSection)item.Tag == section)
-                {
-                    ConfigNavView.SelectedItem = item;
-                    break;
-                }
-            }
-
-            ConfigPanel.Show();
-            return true;
-        }
-        return false;
-    }
-
-    public LyricsWindowManagerControlViewModel ViewModel => (LyricsWindowManagerControlViewModel)DataContext;
-
-    public bool HideConfigPanelWhenLoaded { get; set; } = true;
-
-    public LyricsWindowStatus? LyricsWindowStatus
-    {
-        get => (LyricsWindowStatus?)GetValue(LyricsWindowStatusProperty);
-        set => SetValue(LyricsWindowStatusProperty, value);
     }
 
     private void DeleteMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
@@ -182,42 +123,7 @@ public sealed partial class LyricsWindowManagerControl : UserControl, IRecipient
 
     private void ConfigButton_Click(object sender, RoutedEventArgs e)
     {
-        ShowConfigPanel((LyricsWindowStatus)((Button)sender).DataContext);
-    }
-
-    public void ShowConfigPanel(LyricsWindowStatus? status)
-    {
-        if (status == null) return;
-
-        ConfigNavView.SelectedItem = WindowSegmentedItem;
-        LyricsWindowStatus = status;
-        ViewModel.SelectedWindowStatus = status;
-        ConfigPanel.Show();
-    }
-
-    private void EmbeddedConfigButton_Click(object sender, RoutedEventArgs e)
-    {
-        ConfigNavView.SelectedItem = WindowSegmentedItem;
-        LyricsWindowStatus = _settingsService.AppSettings.MusicGallerySettings.LyricsWindowStatus;
-        ViewModel.SelectedWindowStatus = LyricsWindowStatus;
-        ConfigPanel.Show();
-    }
-
-    private void UserControl_Loaded(object sender, RoutedEventArgs e)
-    {
-        if (HideConfigPanelWhenLoaded)
-        {
-            if (!CheckAndProcessDeepLink())
-            {
-                ViewModel.SelectedWindowStatus = null;
-                ConfigPanel.Hide();
-            }
-        }
-    }
-
-    private void ConfigNavView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
-    {
-        ViewModel.SelectedLyricsWindowManagerSettingsSection = (LyricsWindowManagerSettingsSection)((NavigationViewItem)sender.SelectedItem).Tag;
+        ViewModel.ShowConfigPanelCommand.Execute((LyricsWindowStatus)((Button)sender).DataContext);
     }
 
     private void CopyAndTransformMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
@@ -351,16 +257,5 @@ public sealed partial class LyricsWindowManagerControl : UserControl, IRecipient
             };
             menuFlyoutSubItem.Items.Add(menuFlyoutItem);
         }
-    }
-
-    private void CloseConfigPanelButton_Click(object sender, RoutedEventArgs e)
-    {
-        ViewModel.SelectedWindowStatus = null;
-        ConfigPanel.Hide();
-    }
-
-    private async void OpenDisplaySettings_Click(object sender, RoutedEventArgs e)
-    {
-        await Windows.System.Launcher.LaunchUriAsync(new System.Uri("ms-settings:display"));
     }
 }

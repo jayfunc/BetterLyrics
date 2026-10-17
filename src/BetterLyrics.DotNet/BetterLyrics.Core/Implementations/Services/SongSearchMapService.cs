@@ -5,6 +5,9 @@ using LiteDB;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
+/// <summary>
+/// Singleton Service
+/// </summary>
 public class SongSearchMapService : ISongSearchMapService
 {
     private readonly IDatabaseService _databaseService;
@@ -12,9 +15,9 @@ public class SongSearchMapService : ISongSearchMapService
     public SongSearchMapService(IDatabaseService databaseService)
     {
         _databaseService = databaseService;
-        
+
         var col = _databaseService.SongSearchMapDb.GetCollection<MappedSongSearchQuery>("songSearchMap");
-        
+
         try
         {
             col.DropIndex("OriginalTitle");
@@ -23,7 +26,7 @@ public class SongSearchMapService : ISongSearchMapService
         }
         catch { }
     }
-    
+
     private ILiteCollection<MappedSongSearchQuery> GetCollection()
     {
         return _databaseService.SongSearchMapDb.GetCollection<MappedSongSearchQuery>("songSearchMap");
@@ -66,7 +69,7 @@ public class SongSearchMapService : ISongSearchMapService
                 x.OriginalTitle == songInfo.Title &&
                 x.OriginalArtist == songInfo.Artist &&
                 x.OriginalAlbum == songInfo.Album);
-                
+
         return await Task.FromResult(mapped);
     }
 
@@ -102,7 +105,7 @@ public class SongSearchMapService : ISongSearchMapService
         {
             col.Delete(target.Id);
         }
-        
+
         return Task.CompletedTask;
     }
 }

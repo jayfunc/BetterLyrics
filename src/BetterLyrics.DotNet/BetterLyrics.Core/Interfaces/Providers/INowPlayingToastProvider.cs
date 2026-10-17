@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using BetterLyrics.Core.Models;
 
 namespace BetterLyrics.Core.Interfaces.Providers;

@@ -16,8 +16,8 @@ public class LocalizationService : ILocalizationService
     public string GetLocalizedString(string id)
     {
         if (string.IsNullOrEmpty(id)) return string.Empty;
-        
-        try 
+
+        try
         {
             var candidate = _resourceMap.TryGetValue(id);
             if (candidate != null)
@@ -25,7 +25,7 @@ public class LocalizationService : ILocalizationService
                 return candidate.ValueAsString;
             }
         }
-        catch 
+        catch
         {
             // Fallback in case TryGetValue throws or something unexpected happens
         }

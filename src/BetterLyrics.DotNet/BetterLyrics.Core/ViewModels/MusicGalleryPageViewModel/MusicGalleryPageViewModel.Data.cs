@@ -1,10 +1,10 @@
-using System.Collections.ObjectModel;
-using System.Net;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Settings;
+using System.Collections.ObjectModel;
+using System.Net;
 
 namespace BetterLyrics.Core.ViewModels.MusicGalleryPageViewModel;
 

@@ -11,7 +11,7 @@ public class ThrottleHelper
     }
 
     /// <summary>
-    ///     判断是否可以触发（距离上次触发已超过设定间隔），如果可以则更新时间戳并返回 true，否则返回 false。
+    /// 判断是否可以触发（距离上次触发已超过设定间隔），如果可以则更新时间戳并返回 true，否则返回 false。
     /// </summary>
     public bool CanTrigger()
     {
@@ -26,7 +26,7 @@ public class ThrottleHelper
     }
 
     /// <summary>
-    ///     重置触发时间
+    /// 重置触发时间
     /// </summary>
     public void Reset()
     {

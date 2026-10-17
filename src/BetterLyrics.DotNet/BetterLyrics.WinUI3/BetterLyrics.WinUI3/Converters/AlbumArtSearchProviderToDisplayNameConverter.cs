@@ -1,8 +1,8 @@
-using System;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Services;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml.Data;
+using System;
 
 namespace BetterLyrics.WinUI3.Converters;
 
@@ -13,6 +13,7 @@ public partial class AlbumArtSearchProviderToDisplayNameConverter : IValueConver
     public object Convert(object value, Type targetType, object parameter, string language)
     {
         if (value is AlbumArtProvider provider)
+        {
             return provider switch
             {
                 AlbumArtProvider.Local => _localizationService.GetLocalizedString("AlbumArtSearchLocalProvider"),
@@ -23,6 +24,7 @@ public partial class AlbumArtSearchProviderToDisplayNameConverter : IValueConver
                 //AlbumArtSearchProvider.Netease => "网易云音乐",
                 _ => throw new Exception($"Unknown AlbumArtSearchProvider: {provider}")
             };
+        }
         throw new ArgumentException("Value must be of type AlbumArtSearchProvider", nameof(value));
     }
 

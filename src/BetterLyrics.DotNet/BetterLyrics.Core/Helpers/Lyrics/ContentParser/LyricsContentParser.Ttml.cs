@@ -1,9 +1,9 @@
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Models.Lyrics;
+using NLanguageTag;
 using System.Globalization;
 using System.Text;
 using System.Xml.Linq;
-using BetterLyrics.Core.Models.Lyrics;
-using BetterLyrics.Core.Enums;
-using NLanguageTag;
 
 namespace BetterLyrics.Core.Helpers.Lyrics.ContentParser;
 

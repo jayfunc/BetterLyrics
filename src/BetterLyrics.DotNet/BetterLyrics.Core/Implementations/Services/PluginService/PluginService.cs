@@ -1,17 +1,20 @@
-using System.IO.Compression;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Messages.AppSettings;
 using BetterLyrics.Core.Models.Settings;
-using BetterLyrics.Core.ViewModels;
 using BetterLyrics.Sdk.Enums;
 using BetterLyrics.Sdk.Interfaces.Plugins;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.Extensions.Logging;
+using System.IO.Compression;
 
 namespace BetterLyrics.Core.Implementations.Services.PluginService;
 
-public class PluginService : BaseViewModel, IPluginService, IRecipient<PropertyChangedMessage<bool>>
+/// <summary>
+/// Singleton Service
+/// </summary>
+public class PluginService : IPluginService,
+    IRecipient<PluginEnabledChangedMessage>
 {
     private readonly Dictionary<string, IConfigurator?> _configurator = [];
     private readonly Dictionary<string, int> _hashedId = [];
@@ -22,6 +25,8 @@ public class PluginService : BaseViewModel, IPluginService, IRecipient<PropertyC
     {
         _settingsService = settingsService;
         _logger = logger;
+
+        WeakReferenceMessenger.Default.RegisterAll(this);
     }
 
     public T? GetPlugin<T>() where T : class
@@ -185,11 +190,9 @@ public class PluginService : BaseViewModel, IPluginService, IRecipient<PropertyC
             .FirstOrDefault(x => x.Value == hashedId, new KeyValuePair<string, int>("N/A", -1)).Key;
     }
 
-    public void Receive(PropertyChangedMessage<bool> message)
+    public void Receive(PluginEnabledChangedMessage message)
     {
-        if (message.Sender is PluginInfo pluginInfo)
-            if (message.PropertyName == nameof(PluginInfo.IsEnabled))
-                _ = TogglePluginAsync(pluginInfo.Id);
+        _ = TogglePluginAsync(message.PluginInfo.Id);
     }
 
     private async Task InitializePluginsAsync(PluginInfo pluginInfo)
@@ -222,7 +225,7 @@ public class PluginService : BaseViewModel, IPluginService, IRecipient<PropertyC
     }
 
     /// <summary>
-    ///     文件同步逻辑：处理 Pending 的移动和标记为 .delete 的删除
+    /// 文件同步逻辑：处理 Pending 的移动和标记为 .delete 的删除
     /// </summary>
     private void PerformFileSynchronization()
     {

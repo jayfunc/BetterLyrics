@@ -1,6 +1,6 @@
-﻿using System.Runtime.CompilerServices;
-using BetterLyrics.Sdk.Enums;
+﻿using BetterLyrics.Sdk.Enums;
 using BetterLyrics.Sdk.Interfaces.Plugins;
+using System.Runtime.CompilerServices;
 
 namespace BetterLyrics.Sdk.Abstractions.Plugins;
 

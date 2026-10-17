@@ -1,7 +1,7 @@
-﻿using System.Text.Json.Serialization;
-using BetterLyrics.Core.Enums;
+﻿using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using CommunityToolkit.Mvvm.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace BetterLyrics.Core.Models.Settings;
 

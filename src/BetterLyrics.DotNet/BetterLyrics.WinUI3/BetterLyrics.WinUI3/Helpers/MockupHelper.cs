@@ -71,37 +71,50 @@ public static class MockupHelper
 
             case ComponentType.Lyrics:
                 var lyricsStack = new StackPanel
-                    { Spacing = 12, HorizontalAlignment = HorizontalAlignment.Center, Width = 500 };
+                { Spacing = 12, HorizontalAlignment = HorizontalAlignment.Center, Width = 500 };
                 var textAlign = align == HorizontalAlignment.Left ? TextAlignment.Left :
                     align == HorizontalAlignment.Right ? TextAlignment.Right : TextAlignment.Center;
 
                 lyricsStack.Children.Add(new TextBlock
                 {
-                    Text = $"[{displayName}]", FontSize = 18, Foreground = tertiaryTextBrush, TextAlignment = textAlign
-                });
-                lyricsStack.Children.Add(new TextBlock
-                {
-                    Text = $"{Core.Constants.App.SloganEN}", FontSize = 18, Foreground = tertiaryTextBrush,
+                    Text = $"[{displayName}]",
+                    FontSize = 18,
+                    Foreground = tertiaryTextBrush,
                     TextAlignment = textAlign
                 });
                 lyricsStack.Children.Add(new TextBlock
                 {
-                    Text = $"{Core.Constants.App.SloganJP}", FontSize = 20, Foreground = secondaryTextBrush,
+                    Text = $"{Core.Constants.App.SloganEN}",
+                    FontSize = 18,
+                    Foreground = tertiaryTextBrush,
                     TextAlignment = textAlign
                 });
                 lyricsStack.Children.Add(new TextBlock
                 {
-                    Text = $"{Core.Constants.App.SloganCN}", FontSize = 22, Foreground = primaryTextBrush,
+                    Text = $"{Core.Constants.App.SloganJP}",
+                    FontSize = 20,
+                    Foreground = secondaryTextBrush,
                     TextAlignment = textAlign
                 });
                 lyricsStack.Children.Add(new TextBlock
                 {
-                    Text = $"{Core.Constants.App.SloganJP}", FontSize = 20, Foreground = secondaryTextBrush,
+                    Text = $"{Core.Constants.App.SloganCN}",
+                    FontSize = 22,
+                    Foreground = primaryTextBrush,
                     TextAlignment = textAlign
                 });
                 lyricsStack.Children.Add(new TextBlock
                 {
-                    Text = $"{Core.Constants.App.SloganEN}", FontSize = 18, Foreground = tertiaryTextBrush,
+                    Text = $"{Core.Constants.App.SloganJP}",
+                    FontSize = 20,
+                    Foreground = secondaryTextBrush,
+                    TextAlignment = textAlign
+                });
+                lyricsStack.Children.Add(new TextBlock
+                {
+                    Text = $"{Core.Constants.App.SloganEN}",
+                    FontSize = 18,
+                    Foreground = tertiaryTextBrush,
                     TextAlignment = textAlign
                 });
                 innerContent = lyricsStack;
@@ -121,13 +134,17 @@ public static class MockupHelper
                 var cardStack = new StackPanel { Spacing = 8 };
                 cardStack.Children.Add(new TextBlock
                 {
-                    Text = $"[{displayName}]「{Core.Constants.App.SloganCN}」", FontSize = 16,
-                    FontWeight = FontWeights.Bold, Foreground = primaryTextBrush,
+                    Text = $"[{displayName}]「{Core.Constants.App.SloganCN}」",
+                    FontSize = 16,
+                    FontWeight = FontWeights.Bold,
+                    Foreground = primaryTextBrush,
                     HorizontalAlignment = HorizontalAlignment.Center
                 });
                 cardStack.Children.Add(new TextBlock
                 {
-                    Text = $"[{displayName}] BetterLyrics", FontSize = 10, Foreground = secondaryTextBrush,
+                    Text = $"[{displayName}] BetterLyrics",
+                    FontSize = 10,
+                    Foreground = secondaryTextBrush,
                     HorizontalAlignment = HorizontalAlignment.Center
                 });
                 cardBorder.Child = cardStack;
@@ -145,7 +162,7 @@ public static class MockupHelper
                 playStack.Children.Add(new FontIcon { Glyph = "\uE892", FontSize = 16, Foreground = primaryTextBrush });
                 playStack.Children.Add(new FontIcon { Glyph = "\uE768", FontSize = 24, Foreground = primaryTextBrush });
                 playStack.Children.Add(new FontIcon { Glyph = "\uE893", FontSize = 16, Foreground = primaryTextBrush });
-                
+
                 var playContainer = new StackPanel
                 {
                     Spacing = 8,
@@ -160,7 +177,7 @@ public static class MockupHelper
                     HorizontalAlignment = HorizontalAlignment.Center
                 });
                 playContainer.Children.Add(playStack);
-                
+
                 innerContent = new Grid { Width = 400, Children = { playContainer } };
                 break;
 

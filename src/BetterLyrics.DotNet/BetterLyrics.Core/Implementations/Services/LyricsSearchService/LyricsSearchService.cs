@@ -1,8 +1,5 @@
 // 2025/6/23 by Zhe Fang
 
-using System.Diagnostics;
-using System.Runtime.CompilerServices;
-using System.Text.Json;
 using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
@@ -21,9 +18,15 @@ using Lyricify.Lyrics.Parsers;
 using Lyricify.Lyrics.Searchers;
 using Lyricify.Lyrics.Searchers.Helpers;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics;
+using System.Runtime.CompilerServices;
+using System.Text.Json;
 
 namespace BetterLyrics.Core.Implementations.Services.LyricsSearchService;
 
+/// <summary>
+/// Singleton Service
+/// </summary>
 public class LyricsSearchService : ILyricsSearchService
 {
     private readonly IHttpClientFactory _httpClientFactory;

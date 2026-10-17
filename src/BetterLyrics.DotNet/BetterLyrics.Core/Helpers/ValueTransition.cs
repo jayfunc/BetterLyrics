@@ -96,8 +96,8 @@ public class ValueTransition<T> where T : struct
     }
 
     /// <summary>
-    ///     设置启动延迟。
-    ///     原理：在动画队列最前方插入一个“数值不变”的关键帧。
+    /// 设置启动延迟。
+    /// 原理：在动画队列最前方插入一个“数值不变”的关键帧。
     /// </summary>
     public void SetDelay(double seconds)
     {
@@ -114,7 +114,7 @@ public class ValueTransition<T> where T : struct
     #region Control Methods
 
     /// <summary>
-    ///     立即跳转到指定值（停止动画）
+    /// 立即跳转到指定值（停止动画）
     /// </summary>
     public void JumpTo(T value)
     {
@@ -128,8 +128,8 @@ public class ValueTransition<T> where T : struct
     }
 
     /// <summary>
-    ///     模式 A: 精确控制模式
-    ///     显式指定每一段的目标值和时长。
+    /// 模式 A: 精确控制模式
+    /// 显式指定每一段的目标值和时长。
     /// </summary>
     public void Start(params Keyframe<T>[] keyframes)
     {
@@ -147,8 +147,8 @@ public class ValueTransition<T> where T : struct
     }
 
     /// <summary>
-    ///     模式 B: 自动均分模式 (兼容旧写法)
-    ///     指定一串目标值，系统根据 SetDuration 的总时长平均分配。
+    /// 模式 B: 自动均分模式 (兼容旧写法)
+    /// 指定一串目标值，系统根据 SetDuration 的总时长平均分配。
     /// </summary>
     public void Start(params T[] values)
     {
@@ -240,16 +240,16 @@ public class ValueTransition<T> where T : struct
             double omega = 7.0 / Math.Max(0.01, _stepDuration);
             double target = (double)(object)TargetValue;
             double current = (double)(object)Value;
-            
+
             double displacement = current - target;
             double coefficient = Velocity + omega * displacement;
             double decay = Math.Exp(-omega * seconds);
-            
+
             double newValue = target + (displacement + coefficient * seconds) * decay;
             Velocity = (Velocity - omega * coefficient * seconds) * decay;
-            
+
             Value = (T)(object)newValue;
-            
+
             if (Math.Abs(newValue - target) < 0.01 && Math.Abs(Velocity) < 0.01)
             {
                 Value = TargetValue;

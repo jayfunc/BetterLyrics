@@ -38,7 +38,7 @@ public class LyricsParseRule
     public bool IsRomanizationAllowed(LanguageTag? tag, LanguageTag? originalTag)
     {
         if (tag == null) return false;
-        
+
         bool isAllowedBySettings = false;
         foreach (var allowed in AllowedRomanizationTags)
         {

@@ -4,11 +4,13 @@ using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Messages.Playback;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Domain;
 using BetterLyrics.Core.Models.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace BetterLyrics.Core.Implementations.Services.GsmtcService;
 
@@ -18,8 +20,10 @@ public partial class GsmtcService : IGsmtcService
     private readonly ISystemUIProvider _systemUIProvider = Ioc.Default.GetService<ISystemUIProvider>();
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial byte[]? AlbumArtBytes { get; set; }
+
+    partial void OnAlbumArtBytesChanged(byte[]? value) =>
+        WeakReferenceMessenger.Default.Send(new AlbumArtBytesChangedMessage(value));
 
     public async Task<NowPlayingPalette> CalculateAlbumArtThemeColorsAsync(LyricsWindowStatus lyricsWindowStatus,
         AppColor backdropAccentColor, CancellationToken token = default)

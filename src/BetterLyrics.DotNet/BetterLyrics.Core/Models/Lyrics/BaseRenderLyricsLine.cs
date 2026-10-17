@@ -1,8 +1,8 @@
-﻿using System.Numerics;
-using BetterLyrics.Core.Constants;
+﻿using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Models.Domain;
+using System.Numerics;
 
 namespace BetterLyrics.Core.Models.Lyrics;
 
@@ -121,32 +121,32 @@ public class BaseRenderLyricsLine : BaseRenderLyrics
     public ValueTransition<AppColor> UnplayedStrokeColorTransition { get; set; }
 
     /// <summary>
-    ///     原文坐标（相对于坐标原点）
+    /// 原文坐标（相对于坐标原点）
     /// </summary>
     public Vector2 PrimaryPosition { get; set; }
 
     /// <summary>
-    ///     译文坐标（相对于坐标原点）
+    /// 译文坐标（相对于坐标原点）
     /// </summary>
     public Vector2 SecondaryPosition { get; set; }
 
     /// <summary>
-    ///     注音坐标（相对于坐标原点）
+    /// 注音坐标（相对于坐标原点）
     /// </summary>
     public Vector2 TertiaryPosition { get; set; }
 
     /// <summary>
-    ///     顶部坐标（相对于坐标原点）
+    /// 顶部坐标（相对于坐标原点）
     /// </summary>
     public Vector2 TopLeftPosition { get; set; }
 
     /// <summary>
-    ///     中心坐标（相对于坐标原点）
+    /// 中心坐标（相对于坐标原点）
     /// </summary>
     public Vector2 CenterPosition { get; set; }
 
     /// <summary>
-    ///     底部坐标（相对于坐标原点）
+    /// 底部坐标（相对于坐标原点）
     /// </summary>
     public Vector2 BottomRightPosition { get; set; }
 
@@ -159,8 +159,8 @@ public class BaseRenderLyricsLine : BaseRenderLyrics
     public AppRect? TertiaryTextLayoutBounds { get; set; }
 
     /// <summary>
-    ///     轨道索引 (0 = 主轨道, 1 = 第一副轨道, etc.)
-    ///     用于布局计算时的堆叠逻辑
+    /// 轨道索引 (0 = 主轨道, 1 = 第一副轨道, etc.)
+    /// 用于布局计算时的堆叠逻辑
     /// </summary>
     public int LaneIndex { get; set; } = 0;
 

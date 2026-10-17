@@ -15,11 +15,6 @@ public sealed partial class PatronControl : UserControl
     public static readonly DependencyProperty DateProperty =
         DependencyProperty.Register(nameof(Date), typeof(string), typeof(PatronControl), new PropertyMetadata(""));
 
-    public PatronControl()
-    {
-        InitializeComponent();
-    }
-
     public string PatronName
     {
         get => (string)GetValue(PatronNameProperty);
@@ -30,5 +25,10 @@ public sealed partial class PatronControl : UserControl
     {
         get => (string)GetValue(DateProperty);
         set => SetValue(DateProperty, value);
+    }
+
+    public PatronControl()
+    {
+        InitializeComponent();
     }
 }

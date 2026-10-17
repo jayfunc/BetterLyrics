@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.UI.Xaml;
+﻿using Microsoft.UI.Xaml;
+using System;
 
 namespace BetterLyrics.WinUI3.Extensions;
 

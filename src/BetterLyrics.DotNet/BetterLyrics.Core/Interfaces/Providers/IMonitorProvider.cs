@@ -1,5 +1,3 @@
-using System;
-using System.Collections.Generic;
 using BetterLyrics.Core.Models.Domain;
 
 namespace BetterLyrics.Core.Interfaces.Providers

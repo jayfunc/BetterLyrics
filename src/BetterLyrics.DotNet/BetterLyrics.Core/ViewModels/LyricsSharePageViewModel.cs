@@ -1,24 +1,35 @@
-using System.Collections.ObjectModel;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Messages.Playback;
 using BetterLyrics.Core.Models;
-using BetterLyrics.Core.Models.Entities;
 using BetterLyrics.Core.Models.Lyrics;
 using BetterLyrics.Core.Models.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
+using System.Collections.ObjectModel;
 
 namespace BetterLyrics.Core.ViewModels;
 
-public partial class LyricsSharePageViewModel : BaseViewModel,
-    IRecipient<PropertyChangedMessage<byte[]?>>,
-    IRecipient<PropertyChangedMessage<MappedSongSearchQuery?>>
+/// <summary>
+/// Singleton ViewModel
+/// </summary>
+public partial class LyricsSharePageViewModel : ObservableRecipient,
+    IRecipient<AlbumArtBytesChangedMessage>,
+    IRecipient<MappedSongSearchQueryChangedMessage>
 {
     private readonly ILocalizationService _localizationService;
     private readonly ISettingsService _settingsService;
     private readonly ISongSearchMapService _songSearchMapService;
+
+    public IGsmtcService GSMTCService { get; }
+
+    [ObservableProperty] public partial AppSettings AppSettings { get; set; }
+    [ObservableProperty] public partial LyricsCardData CardData { get; set; } = new();
+    [ObservableProperty] public partial LyricsCardConfig CardConfig { get; set; } = new();
+    [ObservableProperty] public partial ObservableCollection<LyricsCardStyleGroup> StyleGroups { get; set; }
+    [ObservableProperty] public partial LyricsCardStyleItem SelectedStyleItem { get; set; }
+    [ObservableProperty] public partial int SelectedStyleDisplayTypeIndex { get; set; } = 1;
 
     public LyricsSharePageViewModel(IGsmtcService gsmtcService, ISongSearchMapService songSearchMapService,
         ISettingsService settingsService, ILocalizationService localizationService)
@@ -35,29 +46,39 @@ public partial class LyricsSharePageViewModel : BaseViewModel,
         _ = RefreshCardDataAsync();
         ActivateCardDataForBinding();
         LoadStyleData();
+
+        IsActive = true;
     }
 
-    public IGsmtcService GSMTCService { get; }
-
-    [ObservableProperty] public partial AppSettings AppSettings { get; set; }
-    [ObservableProperty] public partial LyricsCardData CardData { get; set; } = new();
-    [ObservableProperty] public partial LyricsCardConfig CardConfig { get; set; } = new();
-    [ObservableProperty] public partial ObservableCollection<LyricsCardStyleGroup> StyleGroups { get; set; }
-    [ObservableProperty] public partial LyricsCardStyleItem SelectedStyleItem { get; set; }
-    [ObservableProperty] public partial int SelectedStyleDisplayTypeIndex { get; set; } = 1;
-
-    public void Receive(PropertyChangedMessage<byte[]?> message)
+    partial void OnSelectedStyleItemChanged(LyricsCardStyleItem value)
     {
-        if (message.Sender is IGsmtcService)
-            if (message.PropertyName == nameof(IGsmtcService.AlbumArtBytes))
-                _ = RefreshCardDataAsync();
+        SwitchStyle(value);
+
+        AppSettings.LyricsCardSettings.SelectedStyleKey = value.StyleKey;
+
+        var found = _settingsService.AppSettings.LyricsCardConfigs.FirstOrDefault(c =>
+            c.ResourceKey == value.StyleKey);
+        if (found == null)
+        {
+            found = LyricsCardConfigExtensions.GetDefaultLyricsCardConfig(value.StyleKey);
+            _settingsService.AppSettings.LyricsCardConfigs.Add(found);
+        }
+
+        CardConfig = found;
     }
 
-    public void Receive(PropertyChangedMessage<MappedSongSearchQuery?> message)
+    partial void OnSelectedStyleDisplayTypeIndexChanged(int value)
     {
-        if (message.Sender is LyricsSearchControlViewModel)
-            if (message.PropertyName == nameof(LyricsSearchControlViewModel.MappedSongSearchQuery))
-                _ = RefreshCardDataAsync();
+        AppSettings.LyricsCardSettings.SelectedDisplayTypeIndex = value;
+
+        if (StyleGroups == null) return;
+        foreach (var group in StyleGroups)
+        {
+            foreach (var style in group)
+            {
+                style.IsExpanded = value != 0;
+            }
+        }
     }
 
     private void LoadStyleData()
@@ -201,8 +222,8 @@ public partial class LyricsSharePageViewModel : BaseViewModel,
                 }
             });
 
-        StyleGroups = new ObservableCollection<LyricsCardStyleGroup>
-        {
+        StyleGroups =
+        [
             classicGroup,
             physicalGroup,
             tracesOfTimeGroup,
@@ -210,7 +231,7 @@ public partial class LyricsSharePageViewModel : BaseViewModel,
             modernGroup,
             atmosphereGroup,
             chineseEleganceGroup
-        };
+        ];
 
         var savedStyleKey = AppSettings.LyricsCardSettings.SelectedStyleKey;
         var styleToSelect = StyleGroups.SelectMany(g => g).FirstOrDefault(s => s.StyleKey == savedStyleKey) ?? classicGroup[0];
@@ -218,15 +239,23 @@ public partial class LyricsSharePageViewModel : BaseViewModel,
 
         var displayType = AppSettings.LyricsCardSettings.SelectedDisplayTypeIndex;
         foreach (var group in StyleGroups)
-        foreach (var style in group)
-            style.IsExpanded = displayType != 0;
+        {
+            foreach (var style in group)
+            {
+                style.IsExpanded = displayType != 0;
+            }
+        }
     }
 
     public void SwitchStyle(LyricsCardStyleItem styleItem)
     {
         foreach (var styleGroup in StyleGroups)
-        foreach (var item in styleGroup)
-            item.IsChecked = false;
+        {
+            foreach (var item in styleGroup)
+            {
+                item.IsChecked = false;
+            }
+        }
 
         SelectedStyleItem = styleItem;
     }
@@ -234,19 +263,6 @@ public partial class LyricsSharePageViewModel : BaseViewModel,
     public void UpdateSelectedLyrics(List<LyricsLine> lyrics)
     {
         CardData.Lyrics = lyrics;
-    }
-
-    private async Task RefreshCardDataAsync()
-    {
-        var (mappedTitle, mappedArtist, _) =
-            await _songSearchMapService.GetMappingAsync(GSMTCService.CurrentSongInfo);
-        CardData.Title = mappedTitle;
-        CardData.Artist = mappedArtist;
-        CardData.CoverImageBytes = GSMTCService.AlbumArtBytes;
-        CardData.AccentCoverColor =
-            (await GSMTCService.GetAlbumArtAccentColorsAsync(PaletteGeneratorType.CelebiQuantizer, true)).First();
-
-        CardData.Lyrics = [];
     }
 
     private void ActivateCardDataForBinding()
@@ -261,30 +277,24 @@ public partial class LyricsSharePageViewModel : BaseViewModel,
         _ = CardConfig.FontFamily;
     }
 
-    partial void OnSelectedStyleItemChanged(LyricsCardStyleItem value)
+    private async Task RefreshCardDataAsync()
     {
-        SwitchStyle(value);
+        var (mappedTitle, mappedArtist, _) = await _songSearchMapService.GetMappingAsync(GSMTCService.CurrentSongInfo);
+        CardData.Title = mappedTitle;
+        CardData.Artist = mappedArtist;
+        CardData.CoverImageBytes = GSMTCService.AlbumArtBytes;
+        CardData.AccentCoverColor = (await GSMTCService.GetAlbumArtAccentColorsAsync(PaletteGeneratorType.CelebiQuantizer, true)).First();
 
-        AppSettings.LyricsCardSettings.SelectedStyleKey = value.StyleKey;
-
-        var found = _settingsService.AppSettings.LyricsCardConfigs.FirstOrDefault(c =>
-            c.ResourceKey == value.StyleKey);
-        if (found == null)
-        {
-            found = LyricsCardConfigExtensions.GetDefaultLyricsCardConfig(value.StyleKey);
-            _settingsService.AppSettings.LyricsCardConfigs.Add(found);
-        }
-
-        CardConfig = found;
+        CardData.Lyrics = [];
     }
 
-    partial void OnSelectedStyleDisplayTypeIndexChanged(int value)
+    public void Receive(AlbumArtBytesChangedMessage message)
     {
-        AppSettings.LyricsCardSettings.SelectedDisplayTypeIndex = value;
+        _ = RefreshCardDataAsync();
+    }
 
-        if (StyleGroups == null) return;
-        foreach (var group in StyleGroups)
-        foreach (var style in group)
-            style.IsExpanded = value != 0;
+    public void Receive(MappedSongSearchQueryChangedMessage message)
+    {
+        _ = RefreshCardDataAsync();
     }
 }

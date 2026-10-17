@@ -1,6 +1,3 @@
-using System;
-using System.IO;
-using System.Linq;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Interfaces.Providers;
@@ -12,7 +9,9 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
+using System;
+using System.IO;
+using System.Linq;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -190,15 +189,6 @@ public sealed partial class MusicGalleryPage : Page
         if (ArtistDetailSongListView != null) ArtistDetailSongListView.ItemsSource = null;
         if (FolderTreeView != null) FolderTreeView.ItemsSource = null;
         if (StarredPlaylistsListView != null) StarredPlaylistsListView.ItemsSource = null;
-
-        SongListHeader1?.Cleanup();
-        SongListHeader2?.Cleanup();
-        SongListHeader3?.Cleanup();
-
-        TrackDetailCard1?.Cleanup();
-        TrackDetailCard2?.Cleanup();
-
-        PlayQueue?.Cleanup();
 
         DataContext = null;
     }

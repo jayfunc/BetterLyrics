@@ -10,6 +10,9 @@ using WindowsMediaController;
 
 namespace BetterLyrics.WinUI3.Providers;
 
+/// <summary>
+/// Singleton Provider
+/// </summary>
 public class MediaSessionProvider : IMediaSessionProvider
 {
     private readonly MediaManager.MediaSession _session;

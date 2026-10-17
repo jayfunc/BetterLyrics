@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using Windows.Foundation;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Helpers.Lyrics;
@@ -10,6 +5,11 @@ using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Models.Lyrics;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
+using Windows.Foundation;
 
 namespace BetterLyrics.WinUI3.Helpers.Lyrics.LyricsLayoutStrategy;
 
@@ -61,7 +61,7 @@ public class VerticalLyricsLayoutStrategy : LyricsLayoutStrategyBase
             var alignment = style.UseInternalLyricsAlignment
                 ? line.HorizontalAlignmentType ?? style.LyricsAlignmentType
                 : style.LyricsAlignmentType;
-                
+
             if (alignment == TextAlignmentType.LeftRight)
             {
                 alignment = lines.IndexOf(line) % 2 == 0 ? TextAlignmentType.Left : TextAlignmentType.Right;

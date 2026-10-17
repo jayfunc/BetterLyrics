@@ -11,13 +11,13 @@ namespace BetterLyrics.WinUI3.Controls;
 
 public sealed partial class MediaSettingsControl : UserControl
 {
+    public MediaSettingsControlViewModel ViewModel => (MediaSettingsControlViewModel)DataContext;
+
     public MediaSettingsControl()
     {
         InitializeComponent();
         DataContext = Ioc.Default.GetRequiredService<MediaSettingsControlViewModel>();
     }
-
-    public MediaSettingsControlViewModel ViewModel => (MediaSettingsControlViewModel)DataContext;
 
     private void SettingsPageRemovePathButton_Click(object sender, RoutedEventArgs e)
     {

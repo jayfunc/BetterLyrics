@@ -54,7 +54,7 @@
                         Grid.Column="1"
                         Grid.ColumnSpan="2"
                         LayoutProfile="{x:Bind}"
-                        LyricsWindowStatus="{Binding ElementName=RootLayoutSettings, Path=LyricsWindowStatus, Mode=OneWay}" />
+                        TargetBounds="{Binding ElementName=RootLayoutSettings, Path=LyricsWindowStatus.WindowBounds, Mode=OneWay}" />
                     <StackPanel
                         Grid.Row="2"
                         Grid.Column="2"
@@ -215,7 +215,7 @@
 
         <uc:FloatSidePanel x:Name="ConfigPanel">
             <Grid>
-                <uc:LayoutEditorControl LayoutProfile="{x:Bind EditingLayoutProfile, Mode=OneWay}" LyricsWindowStatus="{x:Bind LyricsWindowStatus, Mode=OneWay}" />
+                <uc:LayoutEditorControl LayoutProfile="{x:Bind EditingLayoutProfile, Mode=OneWay}" PreviewBounds="{x:Bind LyricsWindowStatus.WindowBounds, Mode=OneWay}" />
                 <Button
                     Height="42"
                     Margin="0,0,36,0"

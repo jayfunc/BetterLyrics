@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using Windows.Foundation;
-using BetterLyrics.Core.Events;
+﻿using BetterLyrics.Core.Events;
 using Microsoft.UI.Xaml;
+using System;
+using System.Collections.Generic;
 using Vanara.PInvoke;
+using Windows.Foundation;
 using WinRT.Interop;
 
 namespace BetterLyrics.WinUI3.Helpers;

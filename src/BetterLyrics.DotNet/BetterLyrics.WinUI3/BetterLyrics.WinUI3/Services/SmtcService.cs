@@ -1,17 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Timers;
-using Timer = System.Timers.Timer;
-using Windows.Media;
-using Windows.Media.Core;
-using Windows.Media.Playback;
-using Windows.Storage;
-using Windows.Storage.Streams;
 using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
@@ -22,10 +8,27 @@ using BetterLyrics.Core.Models.Entities;
 using BetterLyrics.Core.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using MimeMapping;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.IO;
+using System.Linq;
+using System.Threading.Tasks;
+using System.Timers;
+using Windows.Media;
+using Windows.Media.Core;
+using Windows.Media.Playback;
+using Windows.Storage;
+using Windows.Storage.Streams;
+using Timer = System.Timers.Timer;
 
 namespace BetterLyrics.WinUI3.Services;
 
-public partial class SmtcService : BaseViewModel, ISmtcService
+/// <summary>
+/// Singleton Service
+/// </summary>
+public partial class SmtcService : ObservableObject, ISmtcService
 {
     private readonly IAppUIThreadProvider _appUIThreadProvider;
     private readonly IFileSystemService _fileSystemService;
@@ -80,14 +83,20 @@ public partial class SmtcService : BaseViewModel, ISmtcService
         MediaPlaybackCommandManagerNextReceivedEventArgs args)
     {
         args.Handled = true;
-        _appUIThreadProvider.Execute(PlayNextTrack);
+        _appUIThreadProvider.Execute(() =>
+        {
+            PlayNextTrack();
+        });
     }
 
     private void CommandManager_PreviousReceived(MediaPlaybackCommandManager sender,
         MediaPlaybackCommandManagerPreviousReceivedEventArgs args)
     {
         args.Handled = true;
-        _appUIThreadProvider.Execute(PlayPreviousTrack);
+        _appUIThreadProvider.Execute(() =>
+        {
+            PlayPreviousTrack();
+        });
     }
 
     private void MediaPlayer_MediaEnded(MediaPlayer sender, object args)
@@ -390,7 +399,10 @@ public partial class SmtcService : BaseViewModel, ISmtcService
     {
         if (args.Button == SystemMediaTransportControlsButton.Stop)
         {
-            _appUIThreadProvider.Execute(() => PlayTrackAt(-1));
+            _appUIThreadProvider.Execute(() =>
+            {
+                PlayTrackAt(-1);
+            });
         }
     }
 
@@ -680,7 +692,9 @@ public partial class SmtcService : BaseViewModel, ISmtcService
             }
 
             _appUIThreadProvider.Execute(() =>
-                _globalToastProvider.Show("Error", ex.Message, MessageSeverity.Error));
+            {
+                _globalToastProvider.Show("Error", ex.Message, MessageSeverity.Error);
+            });
         }
         finally
         {

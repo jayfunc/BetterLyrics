@@ -1,12 +1,12 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.WinUI3.Models.Lyrics;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Numerics;
 
 namespace BetterLyrics.WinUI3.Renderer.SemanticEffectsRenderer;
 
@@ -14,7 +14,7 @@ public partial class SemanticEffectsRenderer : EffectRendererBase, IDisposable
 {
     private readonly List<SemanticParticle> _particles = new();
     private readonly Random _random = new();
-    
+
     private RenderLyricsLine? _currentLine;
     private readonly List<Renderer.SemanticEffectsRenderer.PendingSemanticEffect> _pendingEffects = new();
 
@@ -67,7 +67,7 @@ public partial class SemanticEffectsRenderer : EffectRendererBase, IDisposable
     private CanvasTextLayout GetEmojiLayout(ICanvasResourceCreator resourceCreator, string emoji)
     {
         if (_emojiCache.TryGetValue(emoji, out var layout)) return layout;
-        
+
         using var format = new CanvasTextFormat
         {
             FontFamily = "Segoe UI Emoji",
@@ -93,11 +93,11 @@ public partial class SemanticEffectsRenderer : EffectRendererBase, IDisposable
         if (_currentLine == line) return;
         _currentLine = line;
         _pendingEffects.Clear();
-        
+
         if (line == null) return;
-        
+
         var lowerText = line.PrimaryText.ToLower();
-        
+
         foreach (var rule in _rules)
         {
             foreach (var keyword in rule.Keywords)
@@ -107,16 +107,16 @@ public partial class SemanticEffectsRenderer : EffectRendererBase, IDisposable
                 {
                     var syllable = line.PrimaryRenderSyllables?.FirstOrDefault(s => s.StartIndex <= index && s.EndIndex >= index);
                     double triggerTimeMs = syllable != null ? syllable.StartMs : line.StartMs;
-                    
+
                     triggerTimeMs -= 150; // trigger slightly before the word is sung for better visual rhythm
-                    
-                    _pendingEffects.Add(new PendingSemanticEffect 
+
+                    _pendingEffects.Add(new PendingSemanticEffect
                     {
                         TriggerTimeMs = triggerTimeMs,
                         Rule = rule,
                         IsTriggered = false
                     });
-                    
+
                     index = lowerText.IndexOf(keyword, index + keyword.Length);
                 }
             }
@@ -142,7 +142,7 @@ public partial class SemanticEffectsRenderer : EffectRendererBase, IDisposable
                 MaxLife = (float)(_random.NextDouble() * 2.5 + 1.5), // 1.5 to 4 seconds
                 Scale = (float)(_random.NextDouble() * 1.5 + 0.8),
                 Rotation = (float)(_random.NextDouble() * Math.PI * 2),
-                RotationSpeed = (float)((_random.NextDouble() - 0.5) * 4), 
+                RotationSpeed = (float)((_random.NextDouble() - 0.5) * 4),
                 Opacity = 1.0f,
                 TimeOffset = (float)(_random.NextDouble() * Math.PI * 2),
                 Color = rule.ParticleColor
@@ -152,7 +152,7 @@ public partial class SemanticEffectsRenderer : EffectRendererBase, IDisposable
             {
                 case ParticleBehavior.RainDown:
                     p.Position = new Vector2(
-                        (float)(_random.NextDouble() * canvasSize.X), 
+                        (float)(_random.NextDouble() * canvasSize.X),
                         (float)(_random.NextDouble() * -canvasSize.Y * 0.5f) - 50
                     );
                     p.Velocity = new Vector2((float)((_random.NextDouble() - 0.5) * 60), (float)(_random.NextDouble() * 150 + 200));
@@ -171,7 +171,7 @@ public partial class SemanticEffectsRenderer : EffectRendererBase, IDisposable
 
                 case ParticleBehavior.Swirl:
                     p.Position = new Vector2(
-                        (float)(_random.NextDouble() * canvasSize.X), 
+                        (float)(_random.NextDouble() * canvasSize.X),
                         canvasSize.Y + (float)(_random.NextDouble() * canvasSize.Y * 0.2f)
                     );
                     p.Velocity = new Vector2((float)((_random.NextDouble() - 0.5) * 100), (float)(_random.NextDouble() * -100 - 50));
@@ -181,13 +181,13 @@ public partial class SemanticEffectsRenderer : EffectRendererBase, IDisposable
                 case ParticleBehavior.FloatUp:
                 default:
                     p.Position = new Vector2(
-                        (float)(_random.NextDouble() * canvasSize.X), 
+                        (float)(_random.NextDouble() * canvasSize.X),
                         canvasSize.Y + (float)(_random.NextDouble() * canvasSize.Y * 0.3f) + 50
                     );
                     p.Velocity = new Vector2((float)((_random.NextDouble() - 0.5) * 120), (float)(_random.NextDouble() * -150 - 50));
                     break;
             }
-            
+
             _particles.Add(p);
         }
     }
@@ -263,7 +263,7 @@ public partial class SemanticEffectsRenderer : EffectRendererBase, IDisposable
         if (_particles.Count == 0) return;
 
         var center = new Vector2((float)control.Size.Width / 2, (float)control.Size.Height / 2);
-        
+
         ApplyBreathingTransform(ds, center, isBreathingEffectEnabled);
 
         var oldTransform = ds.Transform;
@@ -272,19 +272,19 @@ public partial class SemanticEffectsRenderer : EffectRendererBase, IDisposable
         {
             var transform = Matrix3x2.CreateRotation(p.Rotation, p.Position) *
                             Matrix3x2.CreateScale(p.Scale, p.Position);
-            
-            ds.Transform = transform * oldTransform; 
+
+            ds.Transform = transform * oldTransform;
 
             var layout = GetEmojiLayout(control, p.Emoji);
-            
+
             var c = p.Color;
             var finalColor = Windows.UI.Color.FromArgb((byte)Math.Clamp(p.Opacity * 255, 0, 255), c.R, c.G, c.B);
-            
+
             ds.DrawTextLayout(layout, p.Position, finalColor);
         }
 
         ds.Transform = oldTransform;
-        
+
         ResetTransform(ds, isBreathingEffectEnabled);
     }
 }

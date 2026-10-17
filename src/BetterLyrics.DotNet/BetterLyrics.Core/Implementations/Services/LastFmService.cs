@@ -9,6 +9,9 @@ using Hqub.Lastfm.Entities;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
+/// <summary>
+/// Singleton Service
+/// </summary>
 public class LastFmService : ILastFmService
 {
     private readonly LastfmClient _client;
@@ -19,6 +22,13 @@ public class LastFmService : ILastFmService
     private readonly ISongSearchMapService _songSearchMapService;
     private readonly ILauncherProvider _launcherProvider;
     private string? _sessionKey;
+
+    public event EventHandler<LastFMUserChangedEventArgs>? UserChanged;
+    public event EventHandler<LastFMIsAuthenticatedChangedEventArgs>? IsAuthenticatedChanged;
+
+    public User? User { get; private set; }
+
+    public bool IsAuthenticated { get; private set; }
 
     public LastFmService(ISettingsService settingsService,
         ISongSearchMapService songSearchMapService, IPasswordVaultProvider passwordVaultProvider,
@@ -36,13 +46,6 @@ public class LastFmService : ILastFmService
         _sessionKey = _passwordVaultProvider.Get(Core.Constants.App.AppName, LastFM.SessionKeyCredentialKey);
         _ = UpdateAuthStatusAsync();
     }
-
-    public event EventHandler<LastFMUserChangedEventArgs>? UserChanged;
-    public event EventHandler<LastFMIsAuthenticatedChangedEventArgs>? IsAuthenticatedChanged;
-
-    public User? User { get; private set; }
-
-    public bool IsAuthenticated { get; private set; }
 
     public async Task ConfirmAuthAsync()
     {
@@ -74,7 +77,7 @@ public class LastFmService : ILastFmService
     public async Task AuthAsync()
     {
         var url = await _client.GetWebAuthenticationUrlAsync();
-        
+
         _ = _launcherProvider.LaunchUriAsync(new Uri(url));
 
         await _lastFmDialogProvider.ShowAuthDialogAsync(ConfirmAuthAsync);
@@ -90,8 +93,7 @@ public class LastFmService : ILastFmService
     {
         if (IsAuthenticated)
         {
-            var (mappedTitle, mappedArtist, mappedAlbum) =
-                await _songSearchMapService.GetMappingAsync(songInfo);
+            var (mappedTitle, mappedArtist, mappedAlbum) = await _songSearchMapService.GetMappingAsync(songInfo);
 
             try
             {
@@ -119,8 +121,7 @@ public class LastFmService : ILastFmService
     {
         if (IsAuthenticated)
         {
-            var (mappedTitle, mappedArtist, mappedAlbum) =
-                await _songSearchMapService.GetMappingAsync(songInfo);
+            var (mappedTitle, mappedArtist, mappedAlbum) = await _songSearchMapService.GetMappingAsync(songInfo);
 
             try
             {
@@ -147,7 +148,7 @@ public class LastFmService : ILastFmService
         IsAuthenticated = !string.IsNullOrEmpty(_sessionKey);
         if (IsAuthenticated)
         {
-             _client.Session.SessionKey = _sessionKey;
+            _client.Session.SessionKey = _sessionKey;
         }
         IsAuthenticatedChanged?.Invoke(this, new LastFMIsAuthenticatedChangedEventArgs(IsAuthenticated));
         if (IsAuthenticated)

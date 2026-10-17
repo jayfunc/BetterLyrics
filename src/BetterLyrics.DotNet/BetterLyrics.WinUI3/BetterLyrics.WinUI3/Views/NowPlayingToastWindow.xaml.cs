@@ -1,28 +1,29 @@
-using System;
-using System.IO;
-using System.Threading.Tasks;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
+using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Messages.AppSettings;
 using BetterLyrics.Core.Models;
-using BetterLyrics.Core.Models.Settings;
+using BetterLyrics.WinUI3.Behaviors;
 using BetterLyrics.WinUI3.Extensions;
+using BetterLyrics.WinUI3.Helpers;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media.Animation;
 using Microsoft.UI.Xaml.Media.Imaging;
-using WinUIEx;
+using System;
+using System.IO;
+using System.Threading.Tasks;
 using Vanara.PInvoke;
 using WinRT.Interop;
-using BetterLyrics.Core.Interfaces.Services;
-using BetterLyrics.WinUI3.Helpers;
+using WinUIEx;
 
 namespace BetterLyrics.WinUI3.Views;
 
 public sealed partial class NowPlayingToastWindow : Window,
-    IRecipient<PropertyChangedMessage<AppTheme>>
+    IRecipient<AppThemeChangedMessage>,
+    IRecipient<NowPlayingNotificationThemeChangedMessage>
 {
     private readonly IWindowManagerProvider _windowManagerProvider =
         Ioc.Default.GetRequiredService<IWindowManagerProvider>();
@@ -57,11 +58,14 @@ public sealed partial class NowPlayingToastWindow : Window,
         PopupContainer.Translation = new System.Numerics.Vector3(0, 0, 32);
     }
 
-    public void Receive(PropertyChangedMessage<AppTheme> message)
+    public void Receive(AppThemeChangedMessage message)
     {
-        if (message.Sender is GeneralSettings)
-            if (message.PropertyName == nameof(GeneralSettings.AppTheme) || message.PropertyName == nameof(GeneralSettings.NowPlayingNotificationTheme))
-                SyncNowPlayingTheme();
+        SyncNowPlayingTheme();
+    }
+
+    public void Receive(NowPlayingNotificationThemeChangedMessage message)
+    {
+        SyncNowPlayingTheme();
     }
 
     private void SyncNowPlayingTheme()
@@ -135,8 +139,8 @@ public sealed partial class NowPlayingToastWindow : Window,
         var aumid = _gsmtcService.CurrentMediaSourceProviderInfo?.Provider;
         if (!string.IsNullOrEmpty(aumid))
         {
-            AppExtensions.SetAumid(SourceLogoImage, aumid);
-            AppExtensions.SetAumid(SourceNameTextBlock, aumid);
+            AppProperties.SetAumid(SourceLogoImage, aumid);
+            AppProperties.SetAumid(SourceNameTextBlock, aumid);
         }
         else
         {

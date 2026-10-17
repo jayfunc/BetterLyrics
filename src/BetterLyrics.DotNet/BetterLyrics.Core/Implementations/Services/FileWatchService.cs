@@ -1,18 +1,22 @@
-﻿using System.Collections.Concurrent;
-using System.Collections.Specialized;
-using System.Diagnostics;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Events;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Messages.MediaLibrary;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.ViewModels;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
+using System.Collections.Concurrent;
+using System.Collections.Specialized;
+using System.Diagnostics;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
-public class FileWatchService : BaseViewModel, IDisposable, IFileWatchService,
-    IRecipient<PropertyChangedMessage<bool>>
+/// <summary>
+/// Singleton Service
+/// </summary>
+public class FileWatchService : IDisposable, IFileWatchService,
+    IRecipient<MediaFolderRealTimeScanChangedMessage>,
+    IRecipient<MediaFolderEnabledChangedMessage>
 {
     private const int DebounceDelay = 2000;
     private readonly ConcurrentDictionary<string, CancellationTokenSource> _debounceTokens = new();
@@ -28,6 +32,51 @@ public class FileWatchService : BaseViewModel, IDisposable, IFileWatchService,
 
         _settingsService.AppSettings.LocalMediaFolders.CollectionChanged += LocalMediaFolders_CollectionChanged;
         UpdateWatchers();
+
+        WeakReferenceMessenger.Default.RegisterAll(this);
+    }
+
+    private void OnChangedWithDebounce(MediaFolder folder, FileSystemEventArgs e)
+    {
+        if (e.Name != null && (e.Name.StartsWith("~$") || e.Name.EndsWith(".tmp"))) return;
+
+        var key = folder.Id;
+
+        if (_debounceTokens.TryGetValue(key, out var oldCts))
+        {
+            if (!oldCts.IsCancellationRequested)
+            {
+                oldCts.Cancel();
+            }
+        }
+
+        var newCts = new CancellationTokenSource();
+        _debounceTokens.AddOrUpdate(key, newCts, (k, v) => newCts);
+
+        _ = Task.Run(async () =>
+        {
+            try
+            {
+                await Task.Delay(DebounceDelay, newCts.Token);
+
+                await _fileSystemService.ScanMediaFolderAsync(folder);
+            }
+            catch (TaskCanceledException)
+            {
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"FileWatch Error: {ex.Message}");
+            }
+            finally
+            {
+                if (_debounceTokens.TryGetValue(key, out var currentCts) && currentCts == newCts)
+                {
+                    _debounceTokens.TryRemove(key, out _);
+                }
+                newCts.Dispose();
+            }
+        }, newCts.Token);
     }
 
     public void Dispose()
@@ -47,14 +96,6 @@ public class FileWatchService : BaseViewModel, IDisposable, IFileWatchService,
         }
 
         _debounceTokens.Clear();
-    }
-
-    public void Receive(PropertyChangedMessage<bool> message)
-    {
-        if (message.Sender is MediaFolder)
-            if (message.PropertyName == nameof(MediaFolder.IsRealTimeScanEnabled) ||
-                message.PropertyName == nameof(MediaFolder.IsEnabled))
-                UpdateWatchers();
     }
 
     private void LocalMediaFolders_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
@@ -111,40 +152,13 @@ public class FileWatchService : BaseViewModel, IDisposable, IFileWatchService,
                 }
     }
 
-    private void OnChangedWithDebounce(MediaFolder folder, FileSystemEventArgs e)
+    public void Receive(MediaFolderRealTimeScanChangedMessage message)
     {
-        if (e.Name != null && (e.Name.StartsWith("~$") || e.Name.EndsWith(".tmp"))) return;
+        UpdateWatchers();
+    }
 
-        var key = folder.Id;
-
-        if (_debounceTokens.TryGetValue(key, out var oldCts))
-            if (!oldCts.IsCancellationRequested)
-                oldCts.Cancel();
-
-        var newCts = new CancellationTokenSource();
-        _debounceTokens.AddOrUpdate(key, newCts, (k, v) => newCts);
-
-        _ = Task.Run(async () =>
-        {
-            try
-            {
-                await Task.Delay(DebounceDelay, newCts.Token);
-
-                await _fileSystemService.ScanMediaFolderAsync(folder);
-            }
-            catch (TaskCanceledException)
-            {
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine($"FileWatch Error: {ex.Message}");
-            }
-            finally
-            {
-                if (_debounceTokens.TryGetValue(key, out var currentCts) && currentCts == newCts)
-                    _debounceTokens.TryRemove(key, out _);
-                newCts.Dispose();
-            }
-        }, newCts.Token);
+    public void Receive(MediaFolderEnabledChangedMessage message)
+    {
+        UpdateWatchers();
     }
 }

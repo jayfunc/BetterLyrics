@@ -1,9 +1,3 @@
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Text.Json;
-using System.Text.RegularExpressions;
 using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Helpers;
@@ -12,6 +6,10 @@ using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Entities;
 using BetterLyrics.Core.Serialization;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using System.Net;
+using System.Text;
+using System.Text.Json;
+using System.Text.RegularExpressions;
 
 namespace BetterLyrics.Core.Implementations.Services.LyricsSearchService.Providers;
 
@@ -84,7 +82,7 @@ public class AppleMusic
         foreach (var jsUrl in jsUrls)
         {
             var jsResp = await _client.GetStringAsync(jsUrl, cancellationToken);
-            
+
             var token = Regex.Matches(jsResp, @"eyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+")
                 .Cast<Match>()
                 .Select(x => x.Value)

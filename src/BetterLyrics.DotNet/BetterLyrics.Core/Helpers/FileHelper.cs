@@ -1,9 +1,9 @@
 ﻿// 2025/6/23 by Zhe Fang
 
-using System.Text;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Models;
+using System.Text;
 using Ude;
 
 namespace BetterLyrics.Core.Helpers;

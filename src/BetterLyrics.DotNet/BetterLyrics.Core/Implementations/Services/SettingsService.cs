@@ -1,8 +1,5 @@
 // 2025/6/23 by Zhe Fang
 
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Text.Json;
 using BetterLyrics.Core.Collections;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
@@ -13,12 +10,17 @@ using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Domain;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.Serialization;
-using BetterLyrics.Core.ViewModels;
 using Microsoft.Extensions.Logging;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Text.Json;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
-public class SettingsService : BaseViewModel, ISettingsService
+/// <summary>
+/// Singleton Service
+/// </summary>
+public class SettingsService : ISettingsService
 {
     private readonly IAppUIThreadProvider _appUiThreadProvider;
     private readonly ILocalizationService _localizationService;
@@ -26,8 +28,13 @@ public class SettingsService : BaseViewModel, ISettingsService
     private readonly ILogger<SettingsService> _logger;
     private readonly Debouncer _writeAppSettingsDebouncer = new();
 
-    public SettingsService(ILocalizationService localizationService, IAppUIThreadProvider appUiThreadProvider,
-        ISystemUIProvider systemUiProvider, ILogger<SettingsService> logger)
+    public AppSettings AppSettings { get; set; }
+
+    public SettingsService(
+        ILocalizationService localizationService,
+        IAppUIThreadProvider appUiThreadProvider,
+        ISystemUIProvider systemUiProvider,
+        ILogger<SettingsService> logger)
     {
         _localizationService = localizationService;
         _appUiThreadProvider = appUiThreadProvider;
@@ -83,43 +90,45 @@ public class SettingsService : BaseViewModel, ISettingsService
         EnsureLyricsWindowStatus();
     }
 
-    public AppSettings AppSettings { get; set; }
-
     /// <summary>
-    ///     Export settings to specific folder
+    /// Export settings to specific folder
     /// </summary>
     /// <param name="exportPath">Target folder path (not file path)</param>
     public void ExportSettings(string exportPath)
     {
         // 导出到文件
-        var exportJson =
-            JsonSerializer.Serialize(AppSettings, SourceGenerationContext.Default.AppSettings);
+        var exportJson = JsonSerializer.Serialize(AppSettings, SourceGenerationContext.Default.AppSettings);
         File.WriteAllText(
             Path.Combine(exportPath, $"BetterLyrics_Settings_Export_{DateTime.Now:yyyyMMdd_HHmmss}.json"),
             exportJson);
     }
 
     /// <summary>
-    ///     Indicate a value whether import action is successfullt done
+    /// Indicate a value whether import action is successfullt done
     /// </summary>
     /// <param name="importPath"></param>
     /// <returns></returns>
     public bool ImportSettings(string importPath)
     {
         if (!File.Exists(importPath))
+        {
             return false;
+        }
 
         try
         {
             var importJson = File.ReadAllText(importPath);
             if (string.IsNullOrWhiteSpace(importJson) || importJson.StartsWith('\0'))
+            {
                 return false;
+            }
 
-            var importData =
-                JsonSerializer.Deserialize(importJson, SourceGenerationContext.Default.AppSettings);
+            var importData = JsonSerializer.Deserialize(importJson, SourceGenerationContext.Default.AppSettings);
 
             if (importData == null)
+            {
                 return false;
+            }
 
             AppSettings = importData;
             SaveAppSettings();
@@ -157,26 +166,37 @@ public class SettingsService : BaseViewModel, ISettingsService
         var records = AppSettings.WindowBoundsRecords;
         var layoutProfiles = AppSettings.LayoutProfiles;
         if (records.Count == 0)
+        {
             foreach (var mode in Enum.GetValues<LyricsWindowMode>())
+            {
                 records.Add(new LyricsWindowStatus(mode)
                 {
                     IsDefault = mode == LyricsWindowMode.Standard
                 });
+            }
+        }
 
         foreach (var item in records)
+        {
             if (item.LayoutProfileId == Guid.Empty)
             {
                 var mode = item.GetDefaultLayoutProfileMode();
                 var layoutProfile = layoutProfiles.FirstOrDefault(p => p.Mode == mode);
-                if (layoutProfile != null) item.LayoutProfileId = layoutProfile.Id;
+                if (layoutProfile != null)
+                {
+                    item.LayoutProfileId = layoutProfile.Id;
+                }
             }
+        }
 
         var playerLyricsWindowStatus = AppSettings.MusicGallerySettings.LyricsWindowStatus;
         if (playerLyricsWindowStatus.LayoutProfileId == Guid.Empty)
         {
-            var layoutProfile =
-                layoutProfiles.FirstOrDefault(p => p.Mode == NowPlayingLayoutMode.LeftAlbumArtRightLyrics);
-            if (layoutProfile != null) playerLyricsWindowStatus.LayoutProfileId = layoutProfile.Id;
+            var layoutProfile = layoutProfiles.FirstOrDefault(p => p.Mode == NowPlayingLayoutMode.LeftAlbumArtRightLyrics);
+            if (layoutProfile != null)
+            {
+                playerLyricsWindowStatus.LayoutProfileId = layoutProfile.Id;
+            }
         }
     }
 
@@ -184,7 +204,10 @@ public class SettingsService : BaseViewModel, ISettingsService
     {
         foreach (var mode in Enum.GetValues<NowPlayingLayoutMode>())
         {
-            if (mode == NowPlayingLayoutMode.Custom) continue;
+            if (mode == NowPlayingLayoutMode.Custom)
+            {
+                continue;
+            }
 
             var existing = AppSettings.LayoutProfiles.FirstOrDefault(p => p.Mode == mode);
             if (existing == null)
@@ -225,7 +248,7 @@ public class SettingsService : BaseViewModel, ISettingsService
     }
 
     /// <summary>
-    ///     通用同步方法：仅管理枚举值 < 1000 的项
+    /// 通用同步方法：仅管理枚举值 < 1000 的项
     /// </summary>
     private void SyncProviderInfo<TEnum, TItem>(
         IList<TItem> collection,
@@ -240,8 +263,14 @@ public class SettingsService : BaseViewModel, ISettingsService
 
         foreach (var e in allEnums)
         {
-            if (Convert.ToInt32(e) >= 1000) continue;
-            if (shouldExclude != null && shouldExclude(e)) continue;
+            if (Convert.ToInt32(e) >= 1000)
+            {
+                continue;
+            }
+            if (shouldExclude != null && shouldExclude(e))
+            {
+                continue;
+            }
             targetValidEnums.Add(e);
         }
 
@@ -250,23 +279,34 @@ public class SettingsService : BaseViewModel, ISettingsService
             var enumVal = enumSelector(item);
             var intVal = Convert.ToInt32(enumVal);
 
-            if (intVal >= 1000) return false;
+            if (intVal >= 1000)
+            {
+                return false;
+            }
 
             return !targetValidEnums.Contains(enumVal);
         }).ToList();
 
-        foreach (var item in itemsToRemove) collection.Remove(item);
+        foreach (var item in itemsToRemove)
+        {
+            collection.Remove(item);
+        }
 
         var existingEnums = collection.Select(enumSelector).ToHashSet();
 
         foreach (var p in targetValidEnums)
+        {
             if (!existingEnums.Contains(p))
+            {
                 collection.Add(itemFactory(p));
+            }
+        }
     }
 
     private void EnsureStarredPlaylists()
     {
         if (!AppSettings.StarredPlaylists.Any(x => x.IsDefault))
+        {
             AppSettings.StarredPlaylists.Insert(0, new SongsTabInfo
             {
                 Name = _localizationService.GetLocalizedString("MusicGalleryPageAllSongs"),
@@ -274,6 +314,7 @@ public class SettingsService : BaseViewModel, ISettingsService
                 FilterProperty = CommonSongProperty.Title,
                 FilterValue = string.Empty
             });
+        }
     }
 
     private void AppSettings_ItemPropertyChanged(object? sender, ItemPropertyChangedEventArgs e)
@@ -281,8 +322,7 @@ public class SettingsService : BaseViewModel, ISettingsService
         WriteAppSettings();
     }
 
-    private void AppSettings_CollectionChanged(object? sender,
-        NotifyCollectionChangedEventArgs e)
+    private void AppSettings_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         WriteAppSettings();
     }
@@ -290,29 +330,38 @@ public class SettingsService : BaseViewModel, ISettingsService
     private void AppSettings_PropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         if (e.PropertyName == nameof(GeneralSettings.LanguageCode))
+        {
             _systemUiProvider.SetAppLanguage(AppSettings.GeneralSettings.LanguageCode);
+        }
         WriteAppSettings();
     }
 
     private static AppSettings ReadAppSettings()
     {
-        return SettingsIO.ReadSettings(PathHelper.SettingsFilePath,
-            SourceGenerationContext.Default.AppSettings);
+        return SettingsIO.ReadSettings(PathHelper.SettingsFilePath, SourceGenerationContext.Default.AppSettings);
     }
 
     private void WriteAppSettings()
     {
-        _ = _writeAppSettingsDebouncer.RunAsync(() => { _appUiThreadProvider.Execute(SaveAppSettings); });
+        _ = _writeAppSettingsDebouncer.RunAsync(() =>
+        {
+            _appUiThreadProvider.Execute(() =>
+            {
+                SaveAppSettings();
+            });
+        });
     }
 
     public void TryWriteAppSettingsImmediately()
     {
-        _appUiThreadProvider.Execute(SaveAppSettings);
+        _appUiThreadProvider.Execute(() =>
+        {
+            SaveAppSettings();
+        });
     }
 
     private void SaveAppSettings()
     {
-        SettingsIO.SaveSettings(PathHelper.SettingsFilePath, AppSettings,
-            SourceGenerationContext.Default.AppSettings);
+        SettingsIO.SaveSettings(PathHelper.SettingsFilePath, AppSettings, SourceGenerationContext.Default.AppSettings);
     }
 }

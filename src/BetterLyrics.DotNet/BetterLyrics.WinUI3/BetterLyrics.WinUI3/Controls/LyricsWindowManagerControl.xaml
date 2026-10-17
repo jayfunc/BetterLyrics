@@ -9,9 +9,9 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enums="using:BetterLyrics.Core.Enums"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:models="using:BetterLyrics.Core.Models"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
     xmlns:ui="using:CommunityToolkit.WinUI"
-    Loaded="UserControl_Loaded"
     mc:Ignorable="d">
 
     <Grid>
@@ -71,7 +71,7 @@
                     <controls:SettingsExpander.Items>
                         <controls:SettingsCard
                             x:Uid="SettingsPageOpenDisplaySettings"
-                            Click="OpenDisplaySettings_Click"
+                            Command="{x:Bind ViewModel.OpenSystemDisplaySettingsCommand}"
                             IsClickEnabled="True" />
                     </controls:SettingsExpander.Items>
                 </controls:SettingsExpander>
@@ -228,7 +228,7 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <Button Grid.Column="0" Click="EmbeddedConfigButton_Click">
+                    <Button Grid.Column="0" Command="{x:Bind ViewModel.ShowEmbeddedConfigPanelCommand}">
                         <TextBlock x:Uid="LyricsWindowSettingsControlConfigMusicGalleryLyrics" TextWrapping="Wrap" />
                     </Button>
 
@@ -285,7 +285,7 @@
             </Grid>
         </Grid>
 
-        <uc:FloatSidePanel x:Name="ConfigPanel">
+        <uc:FloatSidePanel x:Name="ConfigPanel" IsOpen="{x:Bind ViewModel.IsConfigPanelOpen, Mode=TwoWay}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -301,25 +301,25 @@
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
 
-                    <Grid Grid.Row="0">
+                    <Grid Grid.Row="0" ColumnSpacing="6">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
-                            <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <TextBlock
+                        <Button
                             Grid.Column="0"
+                            Margin="0,50,0,0"
+                            Command="{x:Bind ViewModel.CloseConfigPanelCommand}"
+                            Content="{ui:FontIcon FontSize=12,
+                                                  FontFamily={StaticResource SegoeFluentIcons},
+                                                  Glyph=&#xE72B;}"
+                            Style="{ThemeResource GhostButtonStyle}" />
+                        <TextBlock
+                            Grid.Column="1"
                             Margin="1,52,0,6"
                             Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"
-                            Text="{x:Bind LyricsWindowStatus.Name, Mode=OneWay}" />
-                        <Button
-                            Grid.Column="2"
-                            Margin="0,46,0,0"
-                            Click="CloseConfigPanelButton_Click"
-                            Content="{ui:FontIcon FontSize=16,
-                                                  FontFamily={StaticResource SegoeFluentIcons},
-                                                  Glyph=&#xE70D;}"
-                            Style="{ThemeResource AccentButtonStyle}" />
+                            Text="{x:Bind ViewModel.SelectedWindowStatus.Name, Mode=OneWay}" />
                     </Grid>
 
                     <NavigationView
@@ -329,33 +329,18 @@
                         IsBackButtonVisible="Collapsed"
                         IsBackEnabled="False"
                         IsSettingsVisible="False"
+                        MenuItemsSource="{x:Bind ViewModel.NavItems}"
                         PaneDisplayMode="Top"
-                        SelectionChanged="ConfigNavView_SelectionChanged">
-                        <NavigationView.MenuItems>
-                            <NavigationViewItem x:Name="WindowSegmentedItem" Tag="{x:Bind enums:LyricsWindowManagerSettingsSection.Window}">
-                                <TextBlock x:Uid="AppSettingsControlGeneral" />
-                            </NavigationViewItem>
-                            <NavigationViewItem Tag="{x:Bind enums:LyricsWindowManagerSettingsSection.Layout}">
-                                <TextBlock x:Uid="SettingsPageLayout" />
-                            </NavigationViewItem>
-                            <NavigationViewItem Tag="{x:Bind enums:LyricsWindowManagerSettingsSection.AlbumArt}">
-                                <TextBlock x:Uid="SettingsPageAlbumArt" />
-                            </NavigationViewItem>
-                            <NavigationViewItem Tag="{x:Bind enums:LyricsWindowManagerSettingsSection.LyricsStyle}">
-                                <TextBlock x:Uid="SettingsPageLyricsStyle" />
-                            </NavigationViewItem>
-                            <NavigationViewItem Tag="{x:Bind enums:LyricsWindowManagerSettingsSection.LyricsEffect}">
-                                <TextBlock x:Uid="SettingsPageLyricsEffect" />
-                            </NavigationViewItem>
-                            <NavigationViewItem Tag="{x:Bind enums:LyricsWindowManagerSettingsSection.LyricsBackground}">
-                                <TextBlock x:Uid="SettingsPageBackgroundOverlay" />
-                            </NavigationViewItem>
-                        </NavigationView.MenuItems>
-                        <!--<Frame x:Name="ConfigFrame" />-->
+                        SelectedItem="{x:Bind ViewModel.SelectedNavItem, Mode=TwoWay}">
+                        <NavigationView.MenuItemTemplate>
+                            <DataTemplate x:DataType="models:LyricsWindowManagerSettingsNavMenuItem">
+                                <NavigationViewItem Content="{x:Bind Label}" />
+                            </DataTemplate>
+                        </NavigationView.MenuItemTemplate>
                     </NavigationView>
                 </Grid>
 
-                <controls:SwitchPresenter Grid.Row="1" Value="{x:Bind ViewModel.SelectedLyricsWindowManagerSettingsSection, Mode=OneWay}">
+                <controls:SwitchPresenter Grid.Row="1" Value="{x:Bind ViewModel.SelectedNavItem.Section, Mode=OneWay}">
                     <controls:SwitchPresenter.ContentTransitions>
                         <TransitionCollection>
                             <PopupThemeTransition />
@@ -364,32 +349,32 @@
 
                     <!--  Window  -->
                     <controls:Case Value="{x:Bind enums:LyricsWindowManagerSettingsSection.Window}">
-                        <uc:WindowSettingsControl LyricsWindowStatus="{x:Bind LyricsWindowStatus, Mode=OneWay}" />
+                        <uc:WindowSettingsControl LyricsWindowStatus="{x:Bind ViewModel.SelectedWindowStatus, Mode=OneWay}" />
                     </controls:Case>
 
                     <!--  Layout  -->
                     <controls:Case Value="{x:Bind enums:LyricsWindowManagerSettingsSection.Layout}">
-                        <uc:LayoutSettingsControl LayoutProfiles="{x:Bind ViewModel.AppSettings.LayoutProfiles, Mode=OneWay}" LyricsWindowStatus="{x:Bind LyricsWindowStatus, Mode=OneWay}" />
+                        <uc:LayoutSettingsControl LayoutProfiles="{x:Bind ViewModel.AppSettings.LayoutProfiles, Mode=OneWay}" LyricsWindowStatus="{x:Bind ViewModel.SelectedWindowStatus, Mode=OneWay}" />
                     </controls:Case>
 
                     <!--  Album art  -->
                     <controls:Case Value="{x:Bind enums:LyricsWindowManagerSettingsSection.AlbumArt}">
-                        <uc:AlbumArtAreaSettingsControl LyricsWindowStatus="{x:Bind LyricsWindowStatus, Mode=OneWay}" />
+                        <uc:AlbumArtAreaSettingsControl LyricsWindowStatus="{x:Bind ViewModel.SelectedWindowStatus, Mode=OneWay}" />
                     </controls:Case>
 
                     <!--  Lyrics style  -->
                     <controls:Case Value="{x:Bind enums:LyricsWindowManagerSettingsSection.LyricsStyle}">
-                        <uc:LyricsStyleSettingsControl LyricsWindowStatus="{x:Bind LyricsWindowStatus, Mode=OneWay}" />
+                        <uc:LyricsStyleSettingsControl LyricsWindowStatus="{x:Bind ViewModel.SelectedWindowStatus, Mode=OneWay}" />
                     </controls:Case>
 
                     <!--  Lyrics effect  -->
                     <controls:Case Value="{x:Bind enums:LyricsWindowManagerSettingsSection.LyricsEffect}">
-                        <uc:LyricsEffectSettingsControl LyricsEffectSettings="{x:Bind LyricsWindowStatus.LyricsEffectSettings, Mode=OneWay}" />
+                        <uc:LyricsEffectSettingsControl LyricsEffectSettings="{x:Bind ViewModel.SelectedWindowStatus.LyricsEffectSettings, Mode=OneWay}" />
                     </controls:Case>
 
                     <!--  Lyrics background  -->
                     <controls:Case Value="{x:Bind enums:LyricsWindowManagerSettingsSection.LyricsBackground}">
-                        <uc:LyricsBackgroundSettingsControl LyricsBackgroundSettings="{x:Bind LyricsWindowStatus.LyricsBackgroundSettings, Mode=OneWay}" />
+                        <uc:LyricsBackgroundSettingsControl LyricsBackgroundSettings="{x:Bind ViewModel.SelectedWindowStatus.LyricsBackgroundSettings, Mode=OneWay}" />
                     </controls:Case>
 
                 </controls:SwitchPresenter>

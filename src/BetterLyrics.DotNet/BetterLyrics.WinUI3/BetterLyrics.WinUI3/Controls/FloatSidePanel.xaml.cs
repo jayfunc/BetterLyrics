@@ -23,10 +23,9 @@ public sealed partial class FloatSidePanel : UserControl
             typeof(FloatSidePanel),
             new PropertyMetadata(SidePanelPlacement.Bottom, OnPlacementChanged));
 
-    public FloatSidePanel()
-    {
-        InitializeComponent();
-    }
+    public static readonly DependencyProperty IsOpenProperty =
+    DependencyProperty.Register(nameof(IsOpen), typeof(bool), typeof(FloatSidePanel),
+        new PropertyMetadata(false, OnIsOpenChanged));
 
     public object PanelContent
     {
@@ -38,6 +37,17 @@ public sealed partial class FloatSidePanel : UserControl
     {
         get => (SidePanelPlacement)GetValue(PlacementProperty);
         set => SetValue(PlacementProperty, value);
+    }
+
+    public bool IsOpen
+    {
+        get => (bool)GetValue(IsOpenProperty);
+        set => SetValue(IsOpenProperty, value);
+    }
+
+    public FloatSidePanel()
+    {
+        InitializeComponent();
     }
 
     private static void OnPlacementChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -65,6 +75,21 @@ public sealed partial class FloatSidePanel : UserControl
                     panel.PanelGrid.VerticalAlignment = VerticalAlignment.Bottom;
                     panel.PanelGrid.BorderThickness = new Thickness(0, 1, 0, 0);
                     break;
+            }
+        }
+    }
+
+    private static void OnIsOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is FloatSidePanel panel)
+        {
+            if ((bool)e.NewValue)
+            {
+                panel.Show();
+            }
+            else
+            {
+                panel.Hide();
             }
         }
     }

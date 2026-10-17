@@ -1,22 +1,16 @@
 // 2025/6/23 by Zhe Fang
 
-using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Models;
-using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.ViewModels;
-using BetterLyrics.WinUI3.Controls;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.WinUI.Controls;
+using Microsoft.UI.Composition;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Composition;
-using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Hosting;
 using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Media.Animation;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Views;
@@ -56,11 +50,11 @@ public sealed partial class SettingsPage : Page
             // Show loading bar and wait for panels to become visible and layout to update
             LoadingOverlay.Visibility = Visibility.Visible;
             LoadingBar.IsIndeterminate = true;
-            
+
             try
             {
                 await Task.Delay(500);
-            
+
                 bool wasHiddenExpanded = ExpandHiddenExpanders(this, item.Title);
                 if (wasHiddenExpanded)
                 {
@@ -197,12 +191,12 @@ public sealed partial class SettingsPage : Page
 
         var overlayVisual = compositor.CreateSpriteVisual();
         overlayVisual.Size = new System.Numerics.Vector2((float)element.ActualWidth, (float)element.ActualHeight);
-        
+
         var accentColor = (Windows.UI.Color)Application.Current.Resources["SystemAccentColor"];
         // Use a semi-transparent color for the overlay tint
         var highlightColor = Windows.UI.Color.FromArgb(80, accentColor.R, accentColor.G, accentColor.B);
         overlayVisual.Brush = compositor.CreateColorBrush(highlightColor);
-        
+
         // Add rounded corners clip
         float radius = 4.0f; // Default WinUI corner radius
         if (element is Control control && control.CornerRadius.TopLeft > 0)
@@ -212,7 +206,7 @@ public sealed partial class SettingsPage : Page
         else if (element.GetType().Name.Contains("SettingsCard") || element.GetType().Name.Contains("SettingsExpander"))
         {
             // Settings items typically use 4 or 8 in Win11
-            radius = 8.0f; 
+            radius = 8.0f;
         }
 
         var geometry = compositor.CreateRoundedRectangleGeometry();
@@ -261,12 +255,12 @@ public sealed partial class SettingsPage : Page
     private FrameworkElement? FindChildByHeader(DependencyObject parent, string header)
     {
         if (parent == null) return null;
-        
+
         int count = VisualTreeHelper.GetChildrenCount(parent);
         for (int i = 0; i < count; i++)
         {
             var child = VisualTreeHelper.GetChild(parent, i);
-            
+
             if (child is SettingsCard card && card.Header is string cardHeader && cardHeader == header)
             {
                 return card;

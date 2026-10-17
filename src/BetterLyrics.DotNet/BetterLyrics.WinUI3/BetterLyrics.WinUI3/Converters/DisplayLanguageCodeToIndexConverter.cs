@@ -1,7 +1,7 @@
-﻿using System;
-using System.Linq;
-using BetterLyrics.Core.Helpers;
+﻿using BetterLyrics.Core.Helpers;
 using Microsoft.UI.Xaml.Data;
+using System;
+using System.Linq;
 
 namespace BetterLyrics.WinUI3.Converters;
 

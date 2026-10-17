@@ -1,6 +1,6 @@
-using System;
 using BetterLyrics.Core.Models.Domain;
 using Microsoft.UI.Xaml;
+using System;
 
 namespace BetterLyrics.WinUI3.Extensions;
 

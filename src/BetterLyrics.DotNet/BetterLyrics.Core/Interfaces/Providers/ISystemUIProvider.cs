@@ -8,6 +8,7 @@ public interface ISystemUIProvider
     AppColor GetAccentColor(IntPtr myHwnd, WindowPixelSampleMode mode);
 
     AppTheme GetAppTheme();
+    AppTheme GetSystemTheme();
 
     void SetAppLanguage(string languageCode);
 }

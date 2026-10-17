@@ -1,11 +1,11 @@
-﻿// 2025/6/23 by Zhe Fang
+// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.Core.Enums;
 using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BetterLyrics.Core.Models.Settings;
 
-public partial class AlbumArtSearchProviderInfo : ObservableRecipient
+public partial class AlbumArtSearchProviderInfo : ObservableObject
 {
     public AlbumArtSearchProviderInfo()
     {
@@ -18,10 +18,8 @@ public partial class AlbumArtSearchProviderInfo : ObservableRecipient
     }
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsEnabled { get; set; }
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial AlbumArtProvider Provider { get; set; }
 }

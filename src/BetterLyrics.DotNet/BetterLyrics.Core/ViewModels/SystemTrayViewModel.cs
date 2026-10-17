@@ -1,21 +1,48 @@
 ﻿using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Messages.AppSettings;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace BetterLyrics.Core.ViewModels;
 
-public partial class SystemTrayViewModel(
-    INavigationService navigationService,
-    IAppLifecycleService appLifecycleService,
-    IWindowManagerProvider windowManagerProvider,
-    ISettingsService settingsService) : BaseViewModel
+/// <summary>
+/// Singleton ViewModel
+/// </summary>
+/// <param name="navigationService"></param>
+/// <param name="appLifecycleService"></param>
+/// <param name="windowManagerProvider"></param>
+/// <param name="settingsService"></param>
+/// <param name="systemUiProvider"></param>
+public partial class SystemTrayViewModel : ObservableRecipient,
+    IRecipient<ColorfulSystemTrayIconChangedMessage>
 {
-    private readonly IWindowManagerProvider _windowManagerProvider = windowManagerProvider;
-    private readonly ISettingsService _settingsService = settingsService;
+    private readonly IWindowManagerProvider _windowManagerProvider;
+    private readonly ISettingsService _settingsService;
+    private readonly ISystemUIProvider _systemUiProvider;
 
-    public INavigationService NavigationService { get; } = navigationService;
-    public IAppLifecycleService AppLifecycleService { get; } = appLifecycleService;
+    public INavigationService NavigationService { get; }
+    public IAppLifecycleService AppLifecycleService { get; }
+
+    [ObservableProperty] public partial string TrayIconPath { get; set; } = "ms-appx:///Assets/Logo.ico";
+
+    public SystemTrayViewModel(
+        INavigationService navigationService,
+        IAppLifecycleService appLifecycleService,
+        IWindowManagerProvider windowManagerProvider,
+        ISettingsService settingsService,
+        ISystemUIProvider systemUiProvider)
+    {
+        _windowManagerProvider = windowManagerProvider;
+        _settingsService = settingsService;
+        _systemUiProvider = systemUiProvider;
+        NavigationService = navigationService;
+        AppLifecycleService = appLifecycleService;
+
+        IsActive = true;
+    }
 
     private void TrayIconClickedCallback(SystemTrayClickCallback callback)
     {
@@ -44,6 +71,19 @@ public partial class SystemTrayViewModel(
         }
     }
 
+    public void UpdateSystemTrayIcon()
+    {
+        if (_settingsService.AppSettings.SystemTraySettings.ColorfulSystemTrayIcon)
+        {
+            TrayIconPath = "ms-appx:///Assets/Logo.ico";
+        }
+        else
+        {
+            var isDark = _systemUiProvider.GetSystemTheme() == AppTheme.Dark;
+            TrayIconPath = $"ms-appx:///Assets/Logo{(isDark ? "White" : "Black")}.ico";
+        }
+    }
+
     [RelayCommand]
     private void TrayIconClicked()
     {
@@ -60,5 +100,10 @@ public partial class SystemTrayViewModel(
     private void TrayIconMiddleClicked()
     {
         TrayIconClickedCallback(_settingsService.AppSettings.SystemTraySettings.SystemTrayMiddleClickCallback);
+    }
+
+    public void Receive(ColorfulSystemTrayIconChangedMessage message)
+    {
+        UpdateSystemTrayIcon();
     }
 }

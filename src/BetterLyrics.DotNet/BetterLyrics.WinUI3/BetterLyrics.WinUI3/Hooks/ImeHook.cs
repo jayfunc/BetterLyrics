@@ -19,7 +19,7 @@ public class ImeHook
     }
 
     /// <summary>
-    ///     Request for conversion (dwRequest).
+    /// Request for conversion (dwRequest).
     /// </summary>
     public enum ConversionRequest
     {
@@ -29,7 +29,7 @@ public class ImeHook
     }
 
     /// <summary>
-    ///     Conversion mode (dwCMode).
+    /// Conversion mode (dwCMode).
     /// </summary>
     [Flags]
     public enum ConversionMode
@@ -65,7 +65,7 @@ public class ImeHook
     }
 
     /// <summary>
-    ///     Error code.
+    /// Error code.
     /// </summary>
     public enum Error
     {
@@ -76,8 +76,8 @@ public class ImeHook
     }
 
     /// <summary>
-    ///     IFELanguage interface.
-    ///     Ref: http://msdn.microsoft.com/en-us/library/ms970145.aspx
+    /// IFELanguage interface.
+    /// Ref: http://msdn.microsoft.com/en-us/library/ms970145.aspx
     /// </summary>
     /// <remarks>The order of methods is relevant!</remarks>
     [ComImport]
@@ -96,7 +96,7 @@ public class ImeHook
             [In] uint dwRequest,
             [In] uint dwCMode,
             [In] int cwchInput,
-            [In] [MarshalAs(UnmanagedType.LPWStr)] string pwchInput,
+            [In][MarshalAs(UnmanagedType.LPWStr)] string pwchInput,
             [In] IntPtr pfCInfo,
             [Out] out IntPtr ppResult
         );
@@ -137,10 +137,10 @@ public class ImeHook
 		    [FieldOffset(44)]	public IntPtr PtrToBlkBuffer;
 	    }
 #else
-	/// <summary>
-	///     64-bit managed version of MORRSLT structure (see msime.h).
-	/// </summary>
-	[StructLayout(LayoutKind.Explicit, Size = 84, Pack = 1)]
+    /// <summary>
+    /// 64-bit managed version of MORRSLT structure (see msime.h).
+    /// </summary>
+    [StructLayout(LayoutKind.Explicit, Size = 84, Pack = 1)]
     public struct MorphResult
     {
         //TODO: Test on 64-bit Windows platform.

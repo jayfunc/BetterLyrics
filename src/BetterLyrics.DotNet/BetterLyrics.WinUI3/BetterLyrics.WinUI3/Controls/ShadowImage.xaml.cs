@@ -1,8 +1,8 @@
-using System;
-using System.Numerics;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using System;
+using System.Numerics;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -27,11 +27,6 @@ public sealed partial class ShadowImage : UserControl
         DependencyProperty.Register(nameof(Stretch), typeof(Stretch), typeof(ShadowImage),
             new PropertyMetadata(Stretch.Uniform));
 
-    public ShadowImage()
-    {
-        InitializeComponent();
-    }
-
     public int CornerRadiusAmount
     {
         get => (int)GetValue(CornerRadiusAmountProperty);
@@ -54,6 +49,11 @@ public sealed partial class ShadowImage : UserControl
     {
         get => (Stretch)GetValue(StretchProperty);
         set => SetValue(StretchProperty, value);
+    }
+
+    public ShadowImage()
+    {
+        InitializeComponent();
     }
 
     private static void OnDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

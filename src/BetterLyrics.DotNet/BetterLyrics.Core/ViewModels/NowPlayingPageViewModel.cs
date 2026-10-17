@@ -1,19 +1,20 @@
 ﻿// 2025/6/23 by Zhe Fang
 
+using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Services;
-using BetterLyrics.Core.Models.Settings;
-using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BetterLyrics.Core.ViewModels;
 
-public partial class NowPlayingPageViewModel : BaseViewModel
+/// <summary>
+/// Transient ViewModel
+/// </summary>
+public partial class NowPlayingPageViewModel(IGsmtcService mediaSessionsService)
 {
-    public NowPlayingPageViewModel(IGsmtcService mediaSessionsService)
+    public IGsmtcService MediaSessionsService { get; } = mediaSessionsService;
+
+    ~NowPlayingPageViewModel()
     {
-        MediaSessionsService = mediaSessionsService;
+        MemoryLeakDetector.Track(this);
+        MemoryLeakDetector.ScheduleCheck(4000);
     }
-
-    public IGsmtcService MediaSessionsService { get; }
-
-    [ObservableProperty] public partial LyricsCardConfig LyricsCardConfig { get; set; }
 }

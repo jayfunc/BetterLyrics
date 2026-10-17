@@ -1,6 +1,6 @@
-using System.Diagnostics;
 using SMBLibrary;
 using SMBLibrary.Client;
+using System.Diagnostics;
 
 namespace BetterLyrics.Core.Implementations.Services.FileSystemService.Providers;
 
@@ -45,7 +45,7 @@ public class SMBReadOnlyStream : Stream
     private long _bufferStart = -1;
     private int _bufferLength = 0;
     // 256KB 缓存区
-    private const int BufferSize = 256 * 1024; 
+    private const int BufferSize = 256 * 1024;
 
     public override int Read(byte[] buffer, int offset, int count)
     {
@@ -63,7 +63,7 @@ public class SMBReadOnlyStream : Stream
         // 缓存没命中，去网络请求
         long remainingFile = _length - _position;
         int bytesToRequest = (int)Math.Min(Math.Max(count, BufferSize), remainingFile);
-        
+
         // 由于 SMB 可能会限制单次请求大小，但这没关系，SMBLibrary 会返回它能给的最大实际数据
         var status = _store.ReadFile(out var data, _handle, _position, bytesToRequest);
 
@@ -111,10 +111,10 @@ public class SMBReadOnlyStream : Stream
         // 缓存没命中，去网络请求
         long remainingFile = _length - _position;
         int bytesToRequest = (int)Math.Min(Math.Max(count, BufferSize), remainingFile);
-        
+
         // 由于 SMB 可能会限制单次请求大小，但这没关系，SMBLibrary 会返回它能给的最大实际数据
         // 使用包装方法以避免在 Task.Run 里遇到 out 参数的编译错误
-        var (status, data) = await Task.Run(() => 
+        var (status, data) = await Task.Run(() =>
         {
             var st = _store.ReadFile(out var d, _handle, _position, bytesToRequest);
             return (st, d);

@@ -7,6 +7,9 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
+/// <summary>
+/// Singleton Service
+/// </summary>
 public partial class NavigationService : ObservableObject, INavigationService
 {
     private readonly IWindowManagerProvider _windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();

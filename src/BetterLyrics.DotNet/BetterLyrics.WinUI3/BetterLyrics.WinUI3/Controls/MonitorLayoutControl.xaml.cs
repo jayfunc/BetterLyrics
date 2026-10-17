@@ -1,6 +1,3 @@
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 using BetterLyrics.Core.Interfaces.Providers;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI;
@@ -8,7 +5,9 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Shapes;
-using Windows.UI;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Controls;
 

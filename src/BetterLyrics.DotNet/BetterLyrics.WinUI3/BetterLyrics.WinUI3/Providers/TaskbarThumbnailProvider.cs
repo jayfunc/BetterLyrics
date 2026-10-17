@@ -1,14 +1,17 @@
+using BetterLyrics.Core.Interfaces.Providers;
 using System;
+using System.Collections.Concurrent;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Text;
-using System.Collections.Concurrent;
 using Vanara.PInvoke;
-using BetterLyrics.Core.Interfaces.Providers;
 using Vanara.Windows.Shell;
 
 namespace BetterLyrics.WinUI3.Providers;
 
+/// <summary>
+/// Singleton Provider
+/// </summary>
 public partial class TaskbarThumbnailProvider : ITaskbarThumbnailProvider
 {
     public const int THB_PREVIOUS = 0;

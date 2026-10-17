@@ -16,7 +16,7 @@ public interface ILyricsCacheService
     Task<LyricsCacheItem?> GetLyricsAsync(SongInfo songInfo, LyricsProvider provider, CancellationToken token);
 
     /// <summary>
-    ///     Write or update cache to DB
+    /// Write or update cache to DB
     /// </summary>
     /// <param name="songInfo"></param>
     /// <param name="result"></param>

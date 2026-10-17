@@ -1,7 +1,7 @@
-﻿using System.Collections.ObjectModel;
-using System.Net;
-using BetterLyrics.Core.Models;
+﻿using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Settings;
+using System.Collections.ObjectModel;
+using System.Net;
 
 namespace BetterLyrics.Core.Helpers;
 

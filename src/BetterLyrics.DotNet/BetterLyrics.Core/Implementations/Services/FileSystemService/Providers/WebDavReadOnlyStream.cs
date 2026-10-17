@@ -12,7 +12,7 @@ public class WebDavReadOnlyStream : Stream
     private long _bufferStart = -1;
     private int _bufferLength = 0;
     // 256KB 缓存区
-    private const int BufferSize = 256 * 1024; 
+    private const int BufferSize = 256 * 1024;
 
     public WebDavReadOnlyStream(HttpClient httpClient, string uri, long length)
     {
@@ -66,7 +66,7 @@ public class WebDavReadOnlyStream : Stream
         request.Headers.Range = new RangeHeaderValue(_position, _position + bytesToRequest - 1);
 
         using var response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseContentRead, cancellationToken).ConfigureAwait(false);
-        
+
         if (!response.IsSuccessStatusCode)
         {
             throw new IOException($"WebDAV Range Read failed. Status: {response.StatusCode}");
@@ -103,10 +103,10 @@ public class WebDavReadOnlyStream : Stream
             case SeekOrigin.Current: newPos = _position + offset; break;
             case SeekOrigin.End: newPos = _length + offset; break;
         }
-        
+
         if (newPos < 0) throw new IOException("Seek before beginning.");
         _position = newPos;
-        
+
         return _position;
     }
 

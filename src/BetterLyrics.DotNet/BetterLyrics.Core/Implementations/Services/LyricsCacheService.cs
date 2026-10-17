@@ -7,6 +7,9 @@ using LiteDB;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
+/// <summary>
+/// Singleton Service
+/// </summary>
 public class LyricsCacheService : ILyricsCacheService
 {
     private readonly IDatabaseService _databaseService;
@@ -14,7 +17,7 @@ public class LyricsCacheService : ILyricsCacheService
     public LyricsCacheService(IDatabaseService databaseService)
     {
         _databaseService = databaseService;
-        
+
         var col = _databaseService.LyricsCacheDb.GetCollection<LyricsCacheItem>("lyricsCache");
         col.EnsureIndex(x => x.CacheKey);
         col.EnsureIndex(x => x.Provider);
@@ -25,8 +28,7 @@ public class LyricsCacheService : ILyricsCacheService
         return _databaseService.LyricsCacheDb.GetCollection<LyricsCacheItem>("lyricsCache");
     }
 
-    public async Task<LyricsCacheItem?> GetLyricsAsync(SongInfo songInfo, LyricsProvider provider,
-        CancellationToken token)
+    public async Task<LyricsCacheItem?> GetLyricsAsync(SongInfo songInfo, LyricsProvider provider, CancellationToken token)
     {
         var col = GetCollection();
         var key = songInfo.GetCacheKey();

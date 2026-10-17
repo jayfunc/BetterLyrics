@@ -1,9 +1,3 @@
-using System.Collections.Concurrent;
-using System.Diagnostics;
-using System.Net;
-using System.Text.Json;
-using System.Threading;
-using System.Text.Json.Nodes;
 using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
@@ -13,9 +7,17 @@ using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Entities;
 using BetterLyrics.Core.Serialization;
 using Microsoft.Extensions.Logging;
+using System.Collections.Concurrent;
+using System.Diagnostics;
+using System.Net;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
+/// <summary>
+/// Singleton Service
+/// </summary>
 public class AlbumArtSearchService : IAlbumArtSearchService
 {
     private readonly IFileSystemService _fileSystemService;
@@ -112,9 +114,9 @@ public class AlbumArtSearchService : IAlbumArtSearchService
                             result = await SearchLastFmAsync(songInfo, token);
                             break;
 
-                        // case AlbumArtSearchProvider.Netease:
-                        //     result = await SearchNeteaseAsync(songInfo, size);
-                        //     break;
+                            // case AlbumArtSearchProvider.Netease:
+                            //     result = await SearchNeteaseAsync(songInfo, size);
+                            //     break;
                     }
 
                     if (result != null)
@@ -196,7 +198,7 @@ public class AlbumArtSearchService : IAlbumArtSearchService
                 case OnlineAlbumArtProvider.Kugou:
                     resultUrl = await GetKugouUrlAsync(songInfo, size, token);
                     break;
-                    
+
                 case OnlineAlbumArtProvider.LastFm:
                     resultUrl = await GetLastFmUrlAsync(songInfo, token);
                     break;
@@ -206,7 +208,7 @@ public class AlbumArtSearchService : IAlbumArtSearchService
             {
                 _albumArtUrlCache.Clear();
             }
-            
+
             _albumArtUrlCache[cacheKey] = resultUrl;
             return resultUrl;
         }

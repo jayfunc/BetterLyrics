@@ -1,35 +1,31 @@
-using System;
-using System.Threading.Tasks;
 using BetterLyrics.Core.Extensions;
+using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Implementations.Services.GsmtcService;
+using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Messages.Playback;
 using BetterLyrics.Core.Models.Lyrics;
 using BetterLyrics.Core.Models.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using CommunityToolkit.Mvvm.Messaging;
 
 namespace BetterLyrics.Core.ViewModels;
 
-public partial class NowPlayingBarViewModel : BaseViewModel
+/// <summary>
+/// Transient ViewModel
+/// </summary>
+public partial class NowPlayingBarViewModel : ObservableRecipient,
+    IRecipient<CurrentPositionChangedMessage>,
+    IRecipient<CurrentMediaSourceProviderChangedMessage>
 {
     private readonly IGsmtcService _gsmtcService;
     private readonly ISettingsService _settingsService;
     private readonly IAudioMixerService _audioMixerService;
     private readonly ISmtcService _smtcService;
+    private readonly IAppUIThreadProvider _appUIThreadProvider;
 
-    public NowPlayingBarViewModel(IGsmtcService mediaSessionsService, ISettingsService settingsService,
-        INavigationService navigationService, IAudioMixerService audioMixerService,
-        ISmtcService smtcService)
-    {
-        _gsmtcService = mediaSessionsService;
-        _settingsService = settingsService;
-        _audioMixerService = audioMixerService;
-        _smtcService = smtcService;
-
-        NavigationService = navigationService;
-        AppSettings = _settingsService.AppSettings;
-
-        UpdateVolume();
-    }
+    [ObservableProperty] public partial double SimulatedPositionSeconds { get; set; } = 0.0;
 
     public INavigationService NavigationService { get; }
 
@@ -41,6 +37,28 @@ public partial class NowPlayingBarViewModel : BaseViewModel
     [ObservableProperty] public partial LyricsLine? TimelineSliderThumbLyricsLine { get; set; }
 
     [ObservableProperty] public partial double TimelineSliderThumbSeconds { get; set; } = 0;
+
+    public NowPlayingBarViewModel(IGsmtcService mediaSessionsService, ISettingsService settingsService,
+    INavigationService navigationService, IAudioMixerService audioMixerService,
+    ISmtcService smtcService, IAppUIThreadProvider appUIThreadProvider)
+    {
+        _gsmtcService = mediaSessionsService;
+        _settingsService = settingsService;
+        _audioMixerService = audioMixerService;
+        _smtcService = smtcService;
+        _appUIThreadProvider = appUIThreadProvider;
+
+        NavigationService = navigationService;
+        AppSettings = _settingsService.AppSettings;
+
+        UpdateVolume();
+    }
+
+    ~NowPlayingBarViewModel()
+    {
+        MemoryLeakDetector.Track(this);
+        MemoryLeakDetector.ScheduleCheck(4000);
+    }
 
     public void UpdateVolume()
     {
@@ -86,7 +104,7 @@ public partial class NowPlayingBarViewModel : BaseViewModel
             _audioMixerService.SetApplicationVolume(provider, Volume);
         }
     }
-    
+
     public void ApplySystemVolume()
     {
         _audioMixerService.SetSystemVolume(SystemVolume);
@@ -126,5 +144,32 @@ public partial class NowPlayingBarViewModel : BaseViewModel
     private async Task StopTrackAsync()
     {
         await _gsmtcService.StopAsync();
+    }
+
+    [RelayCommand]
+    public async Task SeekToPositionAsync(double seconds)
+    {
+        SimulatedPositionSeconds = seconds;
+        await _gsmtcService.ChangePositionAsync(seconds);
+    }
+
+    public void Receive(CurrentPositionChangedMessage message)
+    {
+        var realPosition = message.Value.TotalSeconds;
+        var diff = Math.Abs(SimulatedPositionSeconds - realPosition);
+        var timelineSyncThreshold = (_gsmtcService.CurrentMediaSourceProviderInfo?.TimelineSyncThreshold ?? 0) / 1000.0;
+
+        if (diff >= timelineSyncThreshold)
+        {
+            SimulatedPositionSeconds = realPosition;
+        }
+    }
+
+    public void Receive(CurrentMediaSourceProviderChangedMessage message)
+    {
+        _appUIThreadProvider.Execute(() =>
+        {
+            UpdateVolume();
+        });
     }
 }

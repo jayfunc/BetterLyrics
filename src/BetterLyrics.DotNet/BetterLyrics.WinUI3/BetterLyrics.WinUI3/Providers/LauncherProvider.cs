@@ -1,13 +1,14 @@
 ﻿using BetterLyrics.Core.Interfaces.Providers;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.System;
 
 namespace BetterLyrics.WinUI3.Providers;
 
+/// <summary>
+/// Singleton Provider
+/// </summary>
 public class LauncherProvider : ILauncherProvider
 {
     public async Task LaunchUriAsync(Uri uri)

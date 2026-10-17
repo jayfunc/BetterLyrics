@@ -1,7 +1,7 @@
-﻿using System;
-using Microsoft.Graphics.Canvas;
+﻿using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Brushes;
 using Microsoft.Graphics.Canvas.Effects;
+using System;
 
 namespace BetterLyrics.WinUI3.Models.Lyrics;
 

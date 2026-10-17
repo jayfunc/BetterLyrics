@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BetterLyrics.Core.Interfaces.Providers;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using System;
 using System.Collections.Concurrent;
 using System.Diagnostics;
 using System.Drawing;
@@ -7,8 +9,6 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
-using BetterLyrics.Core.Interfaces.Providers;
-using CommunityToolkit.Mvvm.DependencyInjection;
 using Vanara.PInvoke;
 using Vanara.Windows.Shell;
 using static Vanara.PInvoke.Gdi32;
@@ -16,6 +16,9 @@ using static Vanara.PInvoke.Shell32;
 
 namespace BetterLyrics.WinUI3.Providers;
 
+/// <summary>
+/// Singleton Provider
+/// </summary>
 public class ProgramProvider : IProgramProvider
 {
     private static readonly IAppUIThreadProvider _appUIThreadProvider = Ioc.Default.GetRequiredService<IAppUIThreadProvider>();
@@ -111,7 +114,7 @@ public class ProgramProvider : IProgramProvider
     }
 
     /// <summary>
-    ///     通过 AUMID 获取应用名称 (DisplayName)
+    /// 通过 AUMID 获取应用名称 (DisplayName)
     /// </summary>
     public async Task<string?> GetDisplayNameByAumidAsync(string? aumid)
     {
@@ -140,7 +143,7 @@ public class ProgramProvider : IProgramProvider
     }
 
     /// <summary>
-    ///     通过 AUMID 获取 BitmapImage
+    /// 通过 AUMID 获取 BitmapImage
     /// </summary>
     public async Task<byte[]?> GetIconByAumidAsync(string aumid)
     {
@@ -196,7 +199,7 @@ public class ProgramProvider : IProgramProvider
     }
 
     /// <summary>
-    ///     通过 AUMID 获取应用程序的物理路径
+    /// 通过 AUMID 获取应用程序的物理路径
     /// </summary>
     public async Task<string?> GetAppPathByAumidAsync(string? aumid)
     {

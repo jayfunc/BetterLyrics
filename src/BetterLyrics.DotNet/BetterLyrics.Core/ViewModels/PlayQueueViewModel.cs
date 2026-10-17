@@ -1,12 +1,21 @@
 ﻿using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 
 namespace BetterLyrics.Core.ViewModels;
 
-public partial class PlayQueueViewModel : BaseViewModel
+/// <summary>
+/// Singleton ViewModel
+/// </summary>
+public partial class PlayQueueViewModel : ObservableObject
 {
     private readonly ISettingsService _settingsService;
+
+    public ISmtcService SMTCService { get; set; }
+
+    [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 
     public PlayQueueViewModel(ISmtcService smtcService, ISettingsService settingsService)
     {
@@ -15,7 +24,28 @@ public partial class PlayQueueViewModel : BaseViewModel
         AppSettings = _settingsService.AppSettings;
     }
 
-    public ISmtcService SMTCService { get; set; }
+    [RelayCommand]
+    private void EmptyPlayingQueue()
+    {
+        SMTCService.TrackPlayingQueue.Clear(); // Reset
+        AppSettings.MusicGallerySettings.PlayQueueIndex = -1;
+        SMTCService.PlayTrackAt(-1); // Stop playing
+    }
 
-    [ObservableProperty] public partial AppSettings AppSettings { get; set; }
+    [RelayCommand]
+    private void RemoveFromPlayingQueue(PlayQueueItem item)
+    {
+        SMTCService.TrackPlayingQueue.Remove(item);
+        if (SMTCService.TrackPlayingQueue.Count == 0)
+        {
+            AppSettings.MusicGallerySettings.PlayQueueIndex = -1;
+            SMTCService.PlayTrackAt(-1); // Stop playing
+        }
+    }
+
+    [RelayCommand]
+    private void PlayTrack(PlayQueueItem item)
+    {
+        SMTCService.PlayTrack(item);
+    }
 }

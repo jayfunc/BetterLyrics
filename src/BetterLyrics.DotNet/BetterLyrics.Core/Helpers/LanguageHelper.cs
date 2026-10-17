@@ -1,15 +1,15 @@
-using System.Globalization;
-using System.Text.RegularExpressions;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Lingua;
 using Microsoft.International.Converters.TraditionalChineseToSimplifiedConverter;
 using NLanguageTag;
-using Pinyin;
-using WanaKanaNet;
-using Lingua;
 using Panlingo.LanguageIdentification.CLD3;
+using Pinyin;
+using System.Globalization;
+using System.Text.RegularExpressions;
+using WanaKanaNet;
 using Language = NLanguageTag.Language;
 
 namespace BetterLyrics.Core.Helpers;
@@ -89,7 +89,7 @@ public static partial class LanguageHelper
     }
 
     /// <summary>
-    ///     智能检测语言代码，支持识别拼音、粤拼、罗马音
+    /// 智能检测语言代码，支持识别拼音、粤拼、罗马音
     /// </summary>
     public static LanguageTag? DetectLanguageTag(string? text)
     {
@@ -139,7 +139,7 @@ public static partial class LanguageHelper
         var codeLingua = guessLang.Value.IsoCode6391().ToString().ToLower();
 
         if (codeLingua == "zh") return MandarinChineseCode;
-        
+
         if (LanguageTag.TryParse(codeLingua, out var tagLingua))
         {
             return tagLingua;

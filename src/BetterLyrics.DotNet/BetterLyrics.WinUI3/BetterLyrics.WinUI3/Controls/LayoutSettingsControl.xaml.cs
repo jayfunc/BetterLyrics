@@ -1,11 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.IO;
-using System.Linq;
-using System.Text.Json;
-using Windows.Storage;
 using BetterLyrics.Core.Collections;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
@@ -13,12 +5,16 @@ using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.Serialization;
-using BetterLyrics.WinUI3.Helpers;
-using BetterLyrics.WinUI3.Providers;
-using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.IO;
+using System.Linq;
+using System.Text.Json;
 
 namespace BetterLyrics.WinUI3.Controls;
 
@@ -40,24 +36,13 @@ public sealed partial class LayoutSettingsControl : UserControl
         DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus),
             typeof(LayoutSettingsControl), new PropertyMetadata(default, OnDependencyPropertyChanged));
 
-    private readonly IGlobalToastProvider _globalToastProvider =
-        Ioc.Default.GetRequiredService<IGlobalToastProvider>();
-
-    private readonly ILocalizationService _localizationService =
-        Ioc.Default.GetRequiredService<ILocalizationService>();
-
-    private readonly IFilePickerProvider _filePickerProvider =
-        Ioc.Default.GetRequiredService<IFilePickerProvider>();
-
+    private readonly IGlobalToastProvider _globalToastProvider = Ioc.Default.GetRequiredService<IGlobalToastProvider>();
+    private readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
+    private readonly IFilePickerProvider _filePickerProvider = Ioc.Default.GetRequiredService<IFilePickerProvider>();
     private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
     private bool _isSyncing;
     private bool _isUpdatingSelection;
-
-    public LayoutSettingsControl()
-    {
-        InitializeComponent();
-    }
 
     public ObservableCollection<LayoutProfile> SystemProfiles { get; } = new();
     public ObservableCollection<LayoutProfile> CustomProfiles { get; } = new();
@@ -84,6 +69,11 @@ public sealed partial class LayoutSettingsControl : UserControl
     {
         get => (LyricsWindowStatus)GetValue(LyricsWindowStatusProperty);
         set => SetValue(LyricsWindowStatusProperty, value);
+    }
+
+    public LayoutSettingsControl()
+    {
+        InitializeComponent();
     }
 
     private static void OnDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -246,7 +236,7 @@ public sealed partial class LayoutSettingsControl : UserControl
 
         if (!status.Any())
             menuFlyoutSubItem.Items.Add(new MenuFlyoutItem
-                { Text = _localizationService.GetLocalizedString("LayoutSettingsControlNoLyricsWindow") });
+            { Text = _localizationService.GetLocalizedString("LayoutSettingsControlNoLyricsWindow") });
 
         var deleteMenuFlyoutItem = (MenuFlyoutItem)menuFlyout.Items[2];
         deleteMenuFlyoutItem.IsEnabled = !status.Any();
@@ -323,7 +313,7 @@ public sealed partial class LayoutSettingsControl : UserControl
                 if (mode != NowPlayingLayoutMode.Custom)
                 {
                     var item = new MenuFlyoutItem
-                        { Text = _localizationService.GetLocalizedString($"{mode}Layout"), Tag = mode };
+                    { Text = _localizationService.GetLocalizedString($"{mode}Layout"), Tag = mode };
                     item.Click += CreateFromTemplateMenuFlyoutItem_Click;
                     CreateFromTemplatesMenuFlyout.Items.Add(item);
                 }

@@ -4,6 +4,9 @@ using LiteDB;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
+/// <summary>
+/// Singleton Service
+/// </summary>
 public class DatabaseService : IDatabaseService, IDisposable
 {
     private LiteDatabase? _playHistoryDb;

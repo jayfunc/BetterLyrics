@@ -1,13 +1,16 @@
-﻿using System;
+﻿using BetterLyrics.Core.Interfaces.Providers;
+using System;
 using Windows.Security.Credentials;
-using BetterLyrics.Core.Interfaces.Providers;
 
 namespace BetterLyrics.WinUI3.Providers;
 
+/// <summary>
+/// Singleton Provider
+/// </summary>
 public class PasswordVaultProvider : IPasswordVaultProvider
 {
     /// <summary>
-    ///     保存敏感数据到 PasswordVault
+    /// 保存敏感数据到 PasswordVault
     /// </summary>
     /// <param name="resource">资源标识，比如 "MyApp"</param>
     /// <param name="key">键名，比如 "SessionKey"</param>
@@ -26,7 +29,7 @@ public class PasswordVaultProvider : IPasswordVaultProvider
     }
 
     /// <summary>
-    ///     从 PasswordVault 获取敏感数据
+    /// 从 PasswordVault 获取敏感数据
     /// </summary>
     /// <param name="resource">资源标识</param>
     /// <param name="key">键名</param>
@@ -48,7 +51,7 @@ public class PasswordVaultProvider : IPasswordVaultProvider
     }
 
     /// <summary>
-    ///     删除指定的敏感数据
+    /// 删除指定的敏感数据
     /// </summary>
     public void Delete(string resource, string key)
     {

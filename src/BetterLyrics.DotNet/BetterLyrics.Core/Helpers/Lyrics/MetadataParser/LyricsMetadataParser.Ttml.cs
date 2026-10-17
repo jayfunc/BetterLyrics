@@ -1,5 +1,5 @@
-﻿using System.Xml;
-using BetterLyrics.Core.Models.Lyrics;
+﻿using BetterLyrics.Core.Models.Lyrics;
+using System.Xml;
 
 namespace BetterLyrics.Core.Helpers.Lyrics.MetadataParser;
 

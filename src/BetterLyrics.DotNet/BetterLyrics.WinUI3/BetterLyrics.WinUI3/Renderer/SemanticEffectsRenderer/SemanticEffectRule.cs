@@ -1,5 +1,5 @@
-using System;
 using BetterLyrics.Core.Enums;
+using System;
 
 namespace BetterLyrics.WinUI3.Renderer.SemanticEffectsRenderer;
 

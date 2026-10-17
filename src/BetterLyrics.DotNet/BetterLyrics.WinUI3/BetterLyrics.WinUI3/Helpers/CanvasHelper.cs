@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.Graphics.Canvas;
+using Microsoft.Graphics.Canvas.Effects;
+using System;
 using Windows.Graphics.Effects;
 using Windows.UI;
-using Microsoft.Graphics.Canvas;
-using Microsoft.Graphics.Canvas.Effects;
 
 namespace BetterLyrics.WinUI3.Helpers;
 

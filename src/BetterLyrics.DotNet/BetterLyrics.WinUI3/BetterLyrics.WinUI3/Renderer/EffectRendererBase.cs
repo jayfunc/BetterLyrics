@@ -1,8 +1,8 @@
-﻿using System;
-using System.Numerics;
-using BetterLyrics.Core.Effects;
+﻿using BetterLyrics.Core.Effects;
 using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Effects;
+using System;
+using System.Numerics;
 
 namespace BetterLyrics.WinUI3.Renderer;
 

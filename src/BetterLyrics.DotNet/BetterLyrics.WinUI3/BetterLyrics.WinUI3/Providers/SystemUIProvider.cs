@@ -1,20 +1,23 @@
+using BetterLyrics.Core.Constants;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Interfaces.Providers;
+using BetterLyrics.Core.Models.Domain;
+using Microsoft.UI.Xaml;
+using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using Windows.Globalization;
-using BetterLyrics.Core.Constants;
-using BetterLyrics.Core.Enums;
-using BetterLyrics.Core.Interfaces.Providers;
-using BetterLyrics.Core.Models.Domain;
-using BetterLyrics.WinUI3.Extensions;
-using Microsoft.UI.Xaml;
 using Vanara.PInvoke;
+using Windows.Globalization;
 
 namespace BetterLyrics.WinUI3.Providers;
 
+/// <summary>
+/// Singleton Provider
+/// </summary>
 public class SystemUIProvider : ISystemUIProvider
 {
     public AppColor GetAccentColor(IntPtr myHwnd, WindowPixelSampleMode mode)
@@ -36,73 +39,73 @@ public class SystemUIProvider : ISystemUIProvider
                 }
 
             case WindowPixelSampleMode.WindowArea:
-            {
-                var width = myRect.Right - myRect.Left;
-                var height = myRect.Bottom - myRect.Top;
-                if (width <= 0 || height <= 0) return Colors.Transparent;
-
-                var inset = 10;
-
-                if (width <= inset * 2 || height <= inset * 2)
                 {
-                    using var bmp = CaptureScreenRegion(myRect.Left, myRect.Top, width, height);
-                    return ComputeAverageColor(bmp);
-                }
+                    var width = myRect.Right - myRect.Left;
+                    var height = myRect.Bottom - myRect.Top;
+                    if (width <= 0 || height <= 0) return Colors.Transparent;
 
-                List<Bitmap> innerBmps = [];
-                try
-                {
-                    innerBmps.Add(CaptureScreenRegion(myRect.Left, myRect.Top, width, inset));
-                    innerBmps.Add(CaptureScreenRegion(myRect.Left, myRect.Bottom - inset, width, inset));
-                    innerBmps.Add(CaptureScreenRegion(myRect.Left, myRect.Top + inset, inset, height - 2 * inset));
-                    innerBmps.Add(CaptureScreenRegion(myRect.Right - inset, myRect.Top + inset, inset,
-                        height - 2 * inset));
+                    var inset = 10;
 
-                    return ComputeAverageColor([.. innerBmps]);
+                    if (width <= inset * 2 || height <= inset * 2)
+                    {
+                        using var bmp = CaptureScreenRegion(myRect.Left, myRect.Top, width, height);
+                        return ComputeAverageColor(bmp);
+                    }
+
+                    List<Bitmap> innerBmps = [];
+                    try
+                    {
+                        innerBmps.Add(CaptureScreenRegion(myRect.Left, myRect.Top, width, inset));
+                        innerBmps.Add(CaptureScreenRegion(myRect.Left, myRect.Bottom - inset, width, inset));
+                        innerBmps.Add(CaptureScreenRegion(myRect.Left, myRect.Top + inset, inset, height - 2 * inset));
+                        innerBmps.Add(CaptureScreenRegion(myRect.Right - inset, myRect.Top + inset, inset,
+                            height - 2 * inset));
+
+                        return ComputeAverageColor([.. innerBmps]);
+                    }
+                    finally
+                    {
+                        foreach (var bmp in innerBmps) bmp.Dispose();
+                    }
                 }
-                finally
-                {
-                    foreach (var bmp in innerBmps) bmp.Dispose();
-                }
-            }
 
             case WindowPixelSampleMode.WindowEdge:
-            {
-                var width = myRect.Right - myRect.Left;
-                var height = myRect.Bottom - myRect.Top;
-                if (width <= 0 || height <= 0) return Colors.Transparent;
-
-                var edgeThickness = new AppThickness(36, 36, 36, 36);
-                List<Bitmap> edgeBmps = [];
-
-                try
                 {
-                    if (edgeThickness.Top > 0)
-                        edgeBmps.Add(CaptureScreenRegion(myRect.Left, myRect.Top - (int)edgeThickness.Top, width,
-                            (int)edgeThickness.Top));
-                    if (edgeThickness.Bottom > 0)
-                        edgeBmps.Add(CaptureScreenRegion(myRect.Left, myRect.Bottom, width,
-                            (int)edgeThickness.Bottom));
-                    if (edgeThickness.Left > 0)
-                        edgeBmps.Add(CaptureScreenRegion(myRect.Left - (int)edgeThickness.Left, myRect.Top,
-                            (int)edgeThickness.Left, height));
-                    if (edgeThickness.Right > 0)
-                        edgeBmps.Add(
-                            CaptureScreenRegion(myRect.Right, myRect.Top, (int)edgeThickness.Right, height));
+                    var width = myRect.Right - myRect.Left;
+                    var height = myRect.Bottom - myRect.Top;
+                    if (width <= 0 || height <= 0) return Colors.Transparent;
 
-                    return ComputeAverageColor([.. edgeBmps]);
+                    var edgeThickness = new AppThickness(36, 36, 36, 36);
+                    List<Bitmap> edgeBmps = [];
+
+                    try
+                    {
+                        if (edgeThickness.Top > 0)
+                            edgeBmps.Add(CaptureScreenRegion(myRect.Left, myRect.Top - (int)edgeThickness.Top, width,
+                                (int)edgeThickness.Top));
+                        if (edgeThickness.Bottom > 0)
+                            edgeBmps.Add(CaptureScreenRegion(myRect.Left, myRect.Bottom, width,
+                                (int)edgeThickness.Bottom));
+                        if (edgeThickness.Left > 0)
+                            edgeBmps.Add(CaptureScreenRegion(myRect.Left - (int)edgeThickness.Left, myRect.Top,
+                                (int)edgeThickness.Left, height));
+                        if (edgeThickness.Right > 0)
+                            edgeBmps.Add(
+                                CaptureScreenRegion(myRect.Right, myRect.Top, (int)edgeThickness.Right, height));
+
+                        return ComputeAverageColor([.. edgeBmps]);
+                    }
+                    finally
+                    {
+                        foreach (var bmp in edgeBmps) bmp.Dispose();
+                    }
                 }
-                finally
-                {
-                    foreach (var bmp in edgeBmps) bmp.Dispose();
-                }
-            }
 
             case WindowPixelSampleMode.Wallpaper:
-            {
-                var wallpaperPath = GetCurrentWallpaper();
-                return GetDominantColorFromImage(wallpaperPath);
-            }
+                {
+                    var wallpaperPath = GetCurrentWallpaper();
+                    return GetDominantColorFromImage(wallpaperPath);
+                }
             default:
                 return Colors.Transparent;
         }
@@ -116,6 +119,25 @@ public class SystemUIProvider : ISystemUIProvider
             ApplicationTheme.Dark => AppTheme.Dark,
             _ => AppTheme.Default
         };
+    }
+
+    public AppTheme GetSystemTheme()
+    {
+        try
+        {
+            using var key =
+                Registry.CurrentUser.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Themes\Personalize");
+            if (key != null)
+            {
+                var value = (int)key.GetValue("SystemUsesLightTheme", 1);
+                return value == 1 ? AppTheme.Light : AppTheme.Dark;
+            }
+        }
+        catch
+        {
+        }
+
+        return AppTheme.Dark;
     }
 
     public void SetAppLanguage(string languageCode)
@@ -175,16 +197,16 @@ public class SystemUIProvider : ISystemUIProvider
 
         foreach (var bmp in bmps)
             for (var y = 0; y < bmp.Height; y++)
-            for (var x = 0; x < bmp.Width; x++)
-            {
-                var pixel = bmp.GetPixel(x, y);
+                for (var x = 0; x < bmp.Width; x++)
+                {
+                    var pixel = bmp.GetPixel(x, y);
 
-                // 纯粹的累加所有像素的 RGB
-                totalR += pixel.R;
-                totalG += pixel.G;
-                totalB += pixel.B;
-                totalPixels++;
-            }
+                    // 纯粹的累加所有像素的 RGB
+                    totalR += pixel.R;
+                    totalG += pixel.G;
+                    totalB += pixel.B;
+                    totalPixels++;
+                }
 
         if (totalPixels == 0) return Colors.Transparent;
 

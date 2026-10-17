@@ -1,15 +1,15 @@
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using BetterLyrics.Core.Collections;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Domain;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 namespace BetterLyrics.Core.Models;
 
-public partial class LayoutProfile : ObservableRecipient, ICloneable
+public partial class LayoutProfile : ObservableObject, ICloneable
 {
     public LayoutProfile()
     {
@@ -64,43 +64,43 @@ public partial class LayoutProfile : ObservableRecipient, ICloneable
     public NowPlayingLayoutMode Mode { get; set; } = NowPlayingLayoutMode.Custom;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
+
     public partial string Name { get; set; } = "";
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
+
     public partial ObservableCollection<string> RowDefinitions { get; set; } = new() { "1*" };
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
+
     public partial ObservableCollection<string> ColumnDefinitions { get; set; } = new() { "1*" };
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
+
     public partial double RowSpacing { get; set; } = 16;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
+
     public partial double ColumnSpacing { get; set; } = 16;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
+
     public partial FullyObservableCollection<ComponentPlacement> Placements { get; set; } = new();
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
+
     public partial double PaddingLeft { get; set; } = 0;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
+
     public partial double PaddingTop { get; set; } = 0;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
+
     public partial double PaddingRight { get; set; } = 0;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
+
     public partial double PaddingBottom { get; set; } = 0;
 
     public object Clone()
@@ -758,14 +758,14 @@ public partial class LayoutProfile : ObservableRecipient, ICloneable
     private void Placements_ItemPropertyChanged(object? sender, ItemPropertyChangedEventArgs e)
     {
         OnPropertyChanged(nameof(Placements));
-        Broadcast(Placements, Placements, nameof(Placements));
+
     }
 
     private void Placements_CollectionChanged(object? sender,
         NotifyCollectionChangedEventArgs e)
     {
         OnPropertyChanged(nameof(Placements));
-        Broadcast(Placements, Placements, nameof(Placements));
+
     }
 
     partial void OnColumnDefinitionsChanged(ObservableCollection<string> oldValue,
@@ -779,7 +779,7 @@ public partial class LayoutProfile : ObservableRecipient, ICloneable
         NotifyCollectionChangedEventArgs e)
     {
         OnPropertyChanged(nameof(ColumnDefinitions));
-        Broadcast(ColumnDefinitions, ColumnDefinitions, nameof(ColumnDefinitions));
+
     }
 
     partial void OnRowDefinitionsChanged(ObservableCollection<string> oldValue,
@@ -793,6 +793,6 @@ public partial class LayoutProfile : ObservableRecipient, ICloneable
         NotifyCollectionChangedEventArgs e)
     {
         OnPropertyChanged(nameof(RowDefinitions));
-        Broadcast(RowDefinitions, RowDefinitions, nameof(RowDefinitions));
+
     }
 }

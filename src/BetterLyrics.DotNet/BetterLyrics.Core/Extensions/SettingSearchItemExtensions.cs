@@ -91,16 +91,16 @@ public static class SettingSearchItemExtensions
         new SettingSearchItem { Uid = "SettingsPageTargetLanguage", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.LyricsProcessing, ParentUid = "LyricsPageTranslationEnabled" },
         new SettingSearchItem { Uid = "SettingsPageTranslationConfig", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.LyricsProcessing, ParentUid = "LyricsPageTranslationEnabled" },
         new SettingSearchItem { Uid = "SettingsPageLibreTranslateServer", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.LyricsProcessing, ParentUid = "LyricsPageTranslationEnabled" },
-        
+
         new SettingSearchItem { Uid = "PlaybackSettingsControlNoLyricsFoundHandling", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.LyricsProcessing },
         new SettingSearchItem { Uid = "PlaybackSettingsControlCustomNotFoundMessageCard", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.LyricsProcessing, ParentUid = "PlaybackSettingsControlNoLyricsFoundHandling" },
-        
+
         new SettingSearchItem { Uid = "SettingsPagePhonetics", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.LyricsProcessing },
         new SettingSearchItem { Uid = "SettingsPagePinyin", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.LyricsProcessing, ParentUid = "SettingsPagePhonetics" },
         new SettingSearchItem { Uid = "SettingsPageJyutping", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.LyricsProcessing, ParentUid = "SettingsPagePhonetics" },
         new SettingSearchItem { Uid = "SettingsPageJapanese", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.LyricsProcessing, ParentUid = "SettingsPagePhonetics" },
         new SettingSearchItem { Uid = "SettingsPageKorean", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.LyricsProcessing, ParentUid = "SettingsPagePhonetics" },
-        
+
         new SettingSearchItem { Uid = "SettingsPageChinesePreference", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.LyricsProcessing },
         new SettingSearchItem { Uid = "SettingsPageLyricsFilter", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.LyricsProcessing },
         new SettingSearchItem { Uid = "SettingsPageLyricsAutoRetryCount", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.LyricsProcessing },
@@ -110,10 +110,10 @@ public static class SettingSearchItemExtensions
         new SettingSearchItem { Uid = "SettingsPageLastFMUsername", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.Integration },
         new SettingSearchItem { Uid = "SettingsPageLastFMPlaycount", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.Integration },
         new SettingSearchItem { Uid = "SettingsPageLastFMRegistered", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.Integration },
-        
+
         new SettingSearchItem { Uid = "SettingsPageDiscordUsername", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.Integration },
         new SettingSearchItem { Uid = "SettingsPageDiscordAlbumArtSource", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.Integration },
-        
+
         new SettingSearchItem { Uid = "SettingsPageAmllTtmlDbBaseUrl", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.Integration },
 
         // Playback source and lyrics processing settings - Realtime status settings
@@ -130,17 +130,17 @@ public static class SettingSearchItemExtensions
         // Lyrics window manager settings - Window settings
 
         new SettingSearchItem { Uid = "SettingsPageConfigName", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.Window },
-        
+
         new SettingSearchItem { Uid = "SettingsPageWorkArea", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.Window },
         new SettingSearchItem { Uid = "SettingsPageWorkAreaHeight", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.Window, ParentUid = "SettingsPageWorkArea" },
         new SettingSearchItem { Uid = "SettingsPageDockPlacement", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.Window, ParentUid = "SettingsPageWorkArea" },
         new SettingSearchItem { Uid = "SettingsPageDockMonitor", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.Window, ParentUid = "SettingsPageWorkArea" },
-        
+
         new SettingSearchItem { Uid = "SettingsPageTaskbarPlacement", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.Window },
 
         new SettingSearchItem { Uid = "SettingsPageAOT", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.Window },
         new SettingSearchItem { Uid = "SettingsPageForceAlwaysOnTop", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.Window, ParentUid = "SettingsPageAOT" },
-        
+
         new SettingSearchItem { Uid = "SettingsPageKeepScreenOpen", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.Window },
         new SettingSearchItem { Uid = "SettingsPageShowInSwitchers", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.Window },
         new SettingSearchItem { Uid = "SettingsPageDragArea", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.Window },

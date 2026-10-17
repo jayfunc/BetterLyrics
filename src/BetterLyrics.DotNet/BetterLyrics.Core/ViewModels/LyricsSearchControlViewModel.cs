@@ -2,6 +2,7 @@ using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Messages.Playback;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Entities;
 using BetterLyrics.Core.Models.Lyrics;
@@ -9,7 +10,6 @@ using BetterLyrics.Core.Models.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
-using CommunityToolkit.Mvvm.Messaging.Messages;
 using Microsoft.Extensions.Logging;
 using System.Collections.ObjectModel;
 using System.Net;
@@ -17,38 +17,18 @@ using LyricsContentParser = BetterLyrics.Core.Helpers.Lyrics.ContentParser.Lyric
 
 namespace BetterLyrics.Core.ViewModels;
 
-public partial class LyricsSearchControlViewModel : BaseViewModel,
-    IRecipient<PropertyChangedMessage<SongInfo>>
+/// <summary>
+/// Singleton ViewModel
+/// </summary>
+public partial class LyricsSearchControlViewModel : ObservableRecipient,
+    IRecipient<CurrentSongInfoChangedMessage>
 {
     private readonly IAppUIThreadProvider _appUIThreadProvider;
     private readonly IGlobalToastProvider _globalToastProvider;
     private readonly ILyricsSearchService _lyricsSearchService;
     private readonly ISettingsService _settingsService;
     private readonly ISongSearchMapService _songSearchMapService;
-    private readonly ILocalizationService _localizationService;
     private readonly ILogger<LyricsSearchControlViewModel> _logger;
-
-    public LyricsSearchControlViewModel(
-        ILyricsSearchService lyricsSearchService,
-        IGsmtcService gsmtcService,
-        ISettingsService settingsService,
-        ISongSearchMapService songSearchMapService, IAppUIThreadProvider appUiThreadProvider,
-        IGlobalToastProvider globalToastProvider,
-        ILocalizationService localizationService, ILogger<LyricsSearchControlViewModel> logger)
-    {
-        _lyricsSearchService = lyricsSearchService;
-        _settingsService = settingsService;
-        _songSearchMapService = songSearchMapService;
-        _appUIThreadProvider = appUiThreadProvider;
-        _globalToastProvider = globalToastProvider;
-        _localizationService = localizationService;
-        _logger = logger;
-
-        GsmtcService = gsmtcService;
-        AppSettings = _settingsService.AppSettings;
-
-        _ = InitMappedSongSearchQueryAsync();
-    }
 
     public IGsmtcService GsmtcService { get; set; }
 
@@ -63,16 +43,32 @@ public partial class LyricsSearchControlViewModel : BaseViewModel,
     [ObservableProperty] public partial int SelectedTrackIndex { get; set; } = 0;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial MappedSongSearchQuery? MappedSongSearchQuery { get; set; }
 
     [ObservableProperty] public partial bool IsSearching { get; set; } = false;
 
-    public void Receive(PropertyChangedMessage<SongInfo> message)
+    public LyricsSearchControlViewModel(
+    ILyricsSearchService lyricsSearchService,
+    IGsmtcService gsmtcService,
+    ISettingsService settingsService,
+    ISongSearchMapService songSearchMapService,
+    IAppUIThreadProvider appUiThreadProvider,
+    IGlobalToastProvider globalToastProvider,
+    ILogger<LyricsSearchControlViewModel> logger)
     {
-        if (message.Sender is IGsmtcService)
-            if (message.PropertyName == nameof(IGsmtcService.CurrentSongInfo))
-                _ = InitMappedSongSearchQueryAsync();
+        _lyricsSearchService = lyricsSearchService;
+        _settingsService = settingsService;
+        _songSearchMapService = songSearchMapService;
+        _appUIThreadProvider = appUiThreadProvider;
+        _globalToastProvider = globalToastProvider;
+        _logger = logger;
+
+        GsmtcService = gsmtcService;
+        AppSettings = _settingsService.AppSettings;
+
+        _ = InitMappedSongSearchQueryAsync();
+
+        IsActive = true;
     }
 
     private async Task InitMappedSongSearchQueryAsync()
@@ -103,6 +99,25 @@ public partial class LyricsSearchControlViewModel : BaseViewModel,
         if (value?.StartMs == null) return;
 
         _ = GsmtcService.ChangePositionAsync(value.StartMs / 1000.0);
+    }
+
+    partial void OnMappedSongSearchQueryChanged(MappedSongSearchQuery? value)
+    {
+        WeakReferenceMessenger.Default.Send(new MappedSongSearchQueryChangedMessage(value));
+    }
+
+    partial void OnSelectedLyricsSearchResultChanged(LyricsCacheItem? value)
+    {
+        MappedSongSearchQuery?.LyricsSearchProvider = value?.Provider;
+        if (value?.Raw != null)
+        {
+            LyricsDataArr = [.. value.LyricsDataArr ?? []];
+            SelectedTrackIndex = 0;
+        }
+        else
+        {
+            LyricsDataArr = null;
+        }
     }
 
     [RelayCommand]
@@ -241,17 +256,8 @@ public partial class LyricsSearchControlViewModel : BaseViewModel,
         }
     }
 
-    partial void OnSelectedLyricsSearchResultChanged(LyricsCacheItem? value)
+    public void Receive(CurrentSongInfoChangedMessage message)
     {
-        MappedSongSearchQuery?.LyricsSearchProvider = value?.Provider;
-        if (value?.Raw != null)
-        {
-            LyricsDataArr = [.. value.LyricsDataArr ?? []];
-            SelectedTrackIndex = 0;
-        }
-        else
-        {
-            LyricsDataArr = null;
-        }
+        _ = InitMappedSongSearchQueryAsync();
     }
 }

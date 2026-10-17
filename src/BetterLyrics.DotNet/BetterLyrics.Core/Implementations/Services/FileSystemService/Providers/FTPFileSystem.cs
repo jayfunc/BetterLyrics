@@ -1,10 +1,10 @@
-using System.Diagnostics;
-using System.Net;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Entities;
 using BetterLyrics.Core.Models.Settings;
 using FluentFTP;
+using System.Diagnostics;
+using System.Net;
 
 namespace BetterLyrics.Core.Implementations.Services.FileSystemService.Providers;
 

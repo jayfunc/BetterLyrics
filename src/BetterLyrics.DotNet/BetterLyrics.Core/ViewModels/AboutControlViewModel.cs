@@ -1,6 +1,3 @@
-using System.Collections.ObjectModel;
-using System.IO.Compression;
-using System.Text.RegularExpressions;
 using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Helpers;
@@ -11,10 +8,16 @@ using BetterLyrics.Core.Models.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Data.Sqlite;
+using System.Collections.ObjectModel;
+using System.IO.Compression;
+using System.Text.RegularExpressions;
 
 namespace BetterLyrics.Core.ViewModels;
 
-public partial class AboutControlViewModel : BaseViewModel
+/// <summary>
+/// Singleton ViewModel
+/// </summary>
+public partial class AboutControlViewModel : ObservableObject
 {
     private readonly IGlobalToastProvider _globalToastProvider;
     private readonly ILocalizationService _localizationService;
@@ -25,6 +28,12 @@ public partial class AboutControlViewModel : BaseViewModel
     private readonly ILauncherProvider _launcherProvider;
     private readonly IFilePickerProvider _filePickerProvider;
     private readonly IDatabaseService _databaseService;
+
+    [ObservableProperty] public partial IAppUpdateService AppUpdateService { get; set; }
+    [ObservableProperty] public partial AppSettings AppSettings { get; set; }
+
+    public ObservableCollection<Contributor> Contributors { get; set; } = new();
+    public ObservableCollection<Donor> Donors { get; set; } = new();
 
     public AboutControlViewModel(ISettingsService settingsService, ILyricsCacheService lyricsCacheService,
         IAppUpdateService appUpdateService, ILocalizationService localizationService,
@@ -48,13 +57,6 @@ public partial class AboutControlViewModel : BaseViewModel
         _ = LoadContributorsAsync();
         _ = LoadDonorsAsync();
     }
-
-    [ObservableProperty] public partial IAppUpdateService AppUpdateService { get; set; }
-
-    [ObservableProperty] public partial AppSettings AppSettings { get; set; }
-
-    public ObservableCollection<Contributor> Contributors { get; set; } = new();
-    public ObservableCollection<Donor> Donors { get; set; } = new();
 
     private async Task LoadContributorsAsync()
     {
@@ -98,7 +100,7 @@ public partial class AboutControlViewModel : BaseViewModel
         }
 
         Donors.Add(new Donor
-            { PatronName = _localizationService.GetLocalizedString("SettingsPageUserWhoPurchased") });
+        { PatronName = _localizationService.GetLocalizedString("SettingsPageUserWhoPurchased") });
     }
 
     [RelayCommand]

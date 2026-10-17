@@ -19,10 +19,4 @@ public sealed partial class SongListFakeHeaderControl : UserControl
     {
         this.InitializeComponent();
     }
-
-    public void Cleanup()
-    {
-        Bindings?.StopTracking();
-        ClearValue(ViewModelProperty);
-    }
 }

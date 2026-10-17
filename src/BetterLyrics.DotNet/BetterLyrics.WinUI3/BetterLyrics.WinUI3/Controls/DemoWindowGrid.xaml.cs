@@ -1,5 +1,3 @@
-using System.Linq;
-using System.Threading.Tasks;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Settings;
@@ -7,6 +5,8 @@ using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System.Linq;
+using System.Threading.Tasks;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -20,16 +20,12 @@ public sealed partial class DemoWindowGrid : UserControl
             new PropertyMetadata(default, OnLyricsWindowStatusChanged));
 
     private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
-
     private readonly IWindowManagerProvider _windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
-
     private readonly IMonitorProvider _monitorProvider = Ioc.Default.GetRequiredService<IMonitorProvider>();
 
     public DemoWindowGrid()
     {
         InitializeComponent();
-        Loaded += DemoWindowGrid_Loaded;
-        Unloaded += DemoWindowGrid_Unloaded;
     }
 
     private static void OnLyricsWindowStatusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -40,12 +36,12 @@ public sealed partial class DemoWindowGrid : UserControl
         }
     }
 
-    private void DemoWindowGrid_Loaded(object sender, RoutedEventArgs e)
+    private void UserControl_Loaded(object sender, RoutedEventArgs e)
     {
         _monitorProvider.MonitorsChanged += MonitorProvider_MonitorsChanged;
     }
 
-    private void DemoWindowGrid_Unloaded(object sender, RoutedEventArgs e)
+    private void UserControl_Unloaded(object sender, RoutedEventArgs e)
     {
         _monitorProvider.MonitorsChanged -= MonitorProvider_MonitorsChanged;
     }
@@ -88,7 +84,9 @@ public sealed partial class DemoWindowGrid : UserControl
         {
             var openedWindows = _windowManagerProvider.GetWindows<NowPlayingWindow>();
             foreach (var item in openedWindows.Where(x => x.LyricsWindowStatus != status))
+            {
                 _windowManagerProvider.CloseWindow(item);
+            }
 
             _windowManagerProvider.OpenOrShowWindow<NowPlayingWindow>(status);
         }
@@ -97,7 +95,7 @@ public sealed partial class DemoWindowGrid : UserControl
     public void UpdateMonitorWarningVisibility()
     {
         if (DisconnectedWarningGrid == null) return;
-        
+
         var status = LyricsWindowStatus;
         if (status == null || string.IsNullOrEmpty(status.MonitorDeviceName))
         {

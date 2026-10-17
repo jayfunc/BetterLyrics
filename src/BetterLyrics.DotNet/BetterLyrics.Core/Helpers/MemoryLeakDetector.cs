@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
-using CommunityToolkit.Mvvm.DependencyInjection;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System.Diagnostics;
 
 namespace BetterLyrics.Core.Helpers;
 
@@ -28,7 +28,7 @@ public class MemoryLeakDetector
         _logger.LogInformation("[MemoryLeakDetector] GC is preparing: {Name}", name);
     }
 
-    public static async Task CheckLeaksAsync()
+    private static async Task CheckAsync()
     {
         GC.Collect();
         GC.WaitForPendingFinalizers();
@@ -69,7 +69,7 @@ public class MemoryLeakDetector
         _ = Task.Run(async () =>
         {
             await Task.Delay(delayMs);
-            await CheckLeaksAsync();
+            await CheckAsync();
         });
     }
 }

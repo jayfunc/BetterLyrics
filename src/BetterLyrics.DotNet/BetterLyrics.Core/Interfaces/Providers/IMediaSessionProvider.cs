@@ -1,7 +1,4 @@
 ﻿using BetterLyrics.Core.Enums;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BetterLyrics.Core.Interfaces.Providers
 {

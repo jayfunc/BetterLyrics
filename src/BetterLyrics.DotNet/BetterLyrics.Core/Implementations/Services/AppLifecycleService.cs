@@ -6,10 +6,12 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
+/// <summary>
+/// Singleton Service
+/// </summary>
 public partial class AppLifecycleService : ObservableObject, IAppLifecycleService
 {
-    private readonly IWindowManagerProvider _windowManagerProvider =
-        Ioc.Default.GetRequiredService<IWindowManagerProvider>();
+    private readonly IWindowManagerProvider _windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
 
     [RelayCommand]
     public void RestartApp()

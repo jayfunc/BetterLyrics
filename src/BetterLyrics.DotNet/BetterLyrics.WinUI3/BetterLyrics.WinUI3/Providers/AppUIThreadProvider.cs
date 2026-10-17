@@ -1,10 +1,13 @@
-using System;
-using System.Threading.Tasks;
 using BetterLyrics.Core.Interfaces.Providers;
 using Microsoft.UI.Dispatching;
+using System;
+using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Providers;
 
+/// <summary>
+/// Singleton Provider
+/// </summary>
 public class AppUIThreadProvider : IAppUIThreadProvider
 {
     private static DispatcherQueue? _dispatcherQueue;

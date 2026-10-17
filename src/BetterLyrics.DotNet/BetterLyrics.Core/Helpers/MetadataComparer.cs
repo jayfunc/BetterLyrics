@@ -1,7 +1,7 @@
-using System.Text.RegularExpressions;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Entities;
 using F23.StringSimilarity;
+using System.Text.RegularExpressions;
 
 namespace BetterLyrics.Core.Helpers;
 

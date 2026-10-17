@@ -1,18 +1,20 @@
-﻿// 2025/6/23 by Zhe Fang
+// 2025/6/23 by Zhe Fang
 
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Text.Json.Serialization;
 using BetterLyrics.Core.Collections;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Messages.MediaLibrary;
 using BetterLyrics.Core.Models.Memory;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace BetterLyrics.Core.Models.Settings;
 
-public partial class MediaSourceProviderInfo : ObservableRecipient
+public partial class MediaSourceProviderInfo : ObservableObject
 {
     public MediaSourceProviderInfo()
     {
@@ -47,75 +49,69 @@ public partial class MediaSourceProviderInfo : ObservableRecipient
     }
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsEnabled { get; set; } = true;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsMemoryReaderEnabled { get; set; } = false;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsMemoryReaderRiskAccepted { get; set; } = false;
 
     [ObservableProperty] public partial MemoryReaderConfig? MemoryReaderConfig { get; set; } = new();
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial string Provider { get; set; }
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsLastFMTrackEnabled { get; set; } = false;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsDiscordPresenceEnabled { get; set; } = false;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool IsTimelineSyncEnabled { get; set; } = true;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial int TimelineSyncThreshold { get; set; }
 
     /// <summary>
-    ///     Unit: ms
+    /// Unit: ms
     /// </summary>
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial int PositionOffset { get; set; }
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial bool ResetPositionOffsetOnSongChanged { get; set; } = false;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial LyricsSearchType LyricsSearchType { get; set; } = LyricsSearchType.Sequential;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial int MatchingThreshold { get; set; } = 60;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial FullyObservableCollection<LyricsSearchProviderInfo> LyricsSearchProvidersInfo { get; set; } =
         [.. Enum.GetValues<LyricsProvider>().Where(p => !p.IsInternal()).Select(p => new LyricsSearchProviderInfo(p, true))];
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial int TargetAlbumArtSize { get; set; } = 500;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial FullyObservableCollection<AlbumArtSearchProviderInfo> AlbumArtSearchProvidersInfo { get; set; } =
         [.. Enum.GetValues<AlbumArtProvider>().Select(p => new AlbumArtSearchProviderInfo(p, true))];
 
     [JsonIgnore] public bool IsLXMusic => PlayerIdHelper.IsLXMusic(Provider);
     [JsonIgnore] public bool IsBetterLyrics => PlayerIdHelper.IsBetterLyrics(Provider);
-    [JsonIgnore] [ObservableProperty] public partial bool IsFocused { get; set; } = false;
+    [JsonIgnore][ObservableProperty] public partial bool IsFocused { get; set; } = false;
+
+    partial void OnIsEnabledChanged(bool value) =>
+        WeakReferenceMessenger.Default.Send(new MediaSourceProviderEnabledChangedMessage(this, value));
+
+    partial void OnIsDiscordPresenceEnabledChanged(bool value) =>
+        WeakReferenceMessenger.Default.Send(new MediaSourceDiscordPresenceChangedMessage(this, value));
+
+    partial void OnTargetAlbumArtSizeChanged(int value) =>
+        WeakReferenceMessenger.Default.Send(new MediaSourceTargetAlbumArtSizeChangedMessage(this, value));
 
     partial void OnAlbumArtSearchProvidersInfoChanged(FullyObservableCollection<AlbumArtSearchProviderInfo> oldValue,
         FullyObservableCollection<AlbumArtSearchProviderInfo> newValue)

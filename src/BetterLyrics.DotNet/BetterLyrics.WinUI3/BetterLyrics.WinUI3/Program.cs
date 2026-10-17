@@ -9,6 +9,9 @@ using BetterLyrics.Core.Implementations.Services.LyricsSearchService;
 using BetterLyrics.Core.Implementations.Services.PluginService;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models;
+using BetterLyrics.Core.ViewModels;
+using BetterLyrics.Core.ViewModels.MusicGalleryPageViewModel;
 using BetterLyrics.WinUI3.Providers;
 using BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.Views;
@@ -30,10 +33,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Activation;
 using Windows.Foundation;
 using Windows.Storage;
-using BetterLyrics.Core.ViewModels;
 using WinRT;
-using BetterLyrics.Core.ViewModels.MusicGalleryPageViewModel;
-using BetterLyrics.Core.Models;
 
 namespace BetterLyrics.WinUI3;
 
@@ -96,7 +96,10 @@ public class Program
     private static void OnActivated(object? sender, AppActivationArguments args)
     {
         var appUiThreadProvider = Ioc.Default.GetRequiredService<IAppUIThreadProvider>();
-        appUiThreadProvider.Execute(() => { HandleActivation(args); });
+        appUiThreadProvider.Execute(() =>
+        {
+            HandleActivation(args);
+        });
     }
 
     private static void HandleActivation(AppActivationArguments args, bool init = false)
@@ -148,7 +151,7 @@ public class Program
                 {
                     windowManagerProvider.OpenOrShowWindow<SettingsWindow>();
                     var settingsPageViewModel = Ioc.Default.GetRequiredService<SettingsPageViewModel>();
-                    
+
                     string? subsectionString = segments.Length > 1 ? segments[1] : null;
                     string? param = segments.Length > 2 ? segments[2] : null;
 
@@ -166,7 +169,7 @@ public class Program
                             Subsection = subsection,
                             TargetParameter = param
                         };
-                        
+
                         // Parse guid if possible
                         if (!string.IsNullOrEmpty(param) && Guid.TryParse(param, out var guidParam))
                         {
@@ -304,8 +307,10 @@ public class Program
                 .AddSingleton<PluginManagerControlViewModel>()
                 .AddSingleton<LyricsSharePageViewModel>()
                 .AddSingleton<MusicGalleryWindowViewModel>()
+
                 .AddTransient<NowPlayingPageViewModel>()
                 .AddTransient<NowPlayingBarViewModel>()
+                
                 .BuildServiceProvider()
         );
     }

@@ -1,9 +1,11 @@
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Messages.Playback;
 using BetterLyrics.Core.Models.Entities;
 using BetterLyrics.Core.Models.Lyrics;
 using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 using LyricsContentParser = BetterLyrics.Core.Helpers.Lyrics.ContentParser.LyricsContentParser;
 
 namespace BetterLyrics.Core.Implementations.Services.GsmtcService;
@@ -13,8 +15,10 @@ public partial class GsmtcService : IGsmtcService
     private readonly Debouncer _lyricsDebouncer = new();
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial LyricsData? CurrentLyricsData { get; private set; }
+
+    partial void OnCurrentLyricsDataChanged(LyricsData? value) =>
+        WeakReferenceMessenger.Default.Send(new CurrentLyricsDataChangedMessage(value));
 
     [ObservableProperty] public partial LyricsCacheItem? CurrentLyricsSearchResult { get; private set; }
 

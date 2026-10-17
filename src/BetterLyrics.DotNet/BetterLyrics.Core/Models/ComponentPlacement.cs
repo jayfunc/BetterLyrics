@@ -1,55 +1,44 @@
-using System.Text.Json.Serialization;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Models.Domain;
 using CommunityToolkit.Mvvm.ComponentModel;
+using System.Text.Json.Serialization;
 
 namespace BetterLyrics.Core.Models;
 
-public partial class ComponentPlacement : ObservableRecipient, ICloneable
+public partial class ComponentPlacement : ObservableObject, ICloneable
 {
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial ComponentType ComponentType { get; set; }
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial int Row { get; set; } = 0;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial int Column { get; set; } = 0;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial int RowSpan { get; set; } = 1;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial int ColumnSpan { get; set; } = 1;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial double MarginLeft { get; set; } = 0;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial double MarginTop { get; set; } = 0;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial double MarginRight { get; set; } = 0;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial double MarginBottom { get; set; } = 0;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial AppHorizontalAlignment HorizontalAlignment { get; set; } = AppHorizontalAlignment.Stretch;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial AppVerticalAlignment VerticalAlignment { get; set; } = AppVerticalAlignment.Stretch;
 
     [JsonNumberHandling(JsonNumberHandling.AllowNamedFloatingPointLiterals)]
@@ -61,19 +50,15 @@ public partial class ComponentPlacement : ObservableRecipient, ICloneable
     public partial double Height { get; set; } = double.NaN;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial double PaddingLeft { get; set; } = 0;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial double PaddingTop { get; set; } = 0;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial double PaddingRight { get; set; } = 0;
 
     [ObservableProperty]
-    [NotifyPropertyChangedRecipients]
     public partial double PaddingBottom { get; set; } = 0;
 
     [JsonIgnore] public string DisplayName => ComponentType.GetDisplayName();
