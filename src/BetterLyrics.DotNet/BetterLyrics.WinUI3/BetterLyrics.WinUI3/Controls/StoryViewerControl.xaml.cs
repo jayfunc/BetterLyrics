@@ -1,3 +1,5 @@
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Models;
 using BetterLyrics.Core.ViewModels;
 using Microsoft.UI;
 using Microsoft.UI.Xaml;
