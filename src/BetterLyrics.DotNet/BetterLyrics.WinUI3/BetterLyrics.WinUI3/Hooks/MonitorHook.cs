@@ -30,7 +30,7 @@ public partial class MonitorHook : IDisposable
         _handle = User32.CreateWindowEx(
             User32.WindowStylesEx.WS_EX_LEFT,
             _className,
-            "BetterLyricsMonitorWatcher",
+            "Monitor Watcher Virtual Window - BetterLyrics",
             User32.WindowStyles.WS_OVERLAPPED,
             0, 0, 0, 0,
             HWND.NULL,

@@ -34,7 +34,7 @@ public partial class GlobalShortcutProvider : IGlobalShortcutProvider, IDisposab
         _handle = User32.CreateWindowEx(
             User32.WindowStylesEx.WS_EX_LEFT,
             _className,
-            "BetterLyricsGlobalShortcutWatcher",
+            "Global Shortcut Watcher Virtual Window - BetterLyrics",
             User32.WindowStyles.WS_OVERLAPPED,
             0, 0, 0, 0,
             HWND.NULL,
