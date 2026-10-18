@@ -22,10 +22,10 @@ namespace BetterLyrics.Core.Helpers
                 {
                     int width = image.Width;
                     int height = image.Height;
-                    int sampleStep = 10;
+                    int sampleStep = Math.Max(1, Math.Max(width, height) / 64); // 10
                     image.ProcessPixelRows(accessor =>
                     {
-                        for (int y = 0; y < height; y++)
+                        for (int y = 0; y < height; y += sampleStep)
                         {
                             var rowSpan = accessor.GetRowSpan(y);
                             for (int x = 0; x < width; x += sampleStep)
@@ -33,7 +33,6 @@ namespace BetterLyrics.Core.Helpers
                                 Rgba32 pixel = rowSpan[x];
                                 if (pixel.A == 0) continue;
 
-                                // 直接添加到列表，使用 ArgbColor
                                 pixels.Add(new ArgbColor(255, pixel.R, pixel.G, pixel.B));
                             }
                         }
@@ -43,7 +42,56 @@ namespace BetterLyrics.Core.Helpers
             });
         }
 
-        public static async Task<List<Vector3>> GetAccentColorsAsync(byte[]? data, int count, PaletteGeneratorType generatorType, bool? isDark, double chromaWeight = 1.0, double toneWeight = -0.75, double populationWeight = 3.0, double darkToneThreshold = 75.0, double lightToneThreshold = 25.0)
+        public static async Task<(List<Vector3> Accent, List<Vector3> Light, List<Vector3> Dark)> GetThemeColorsBatchAsync(
+            byte[]? data, int count, PaletteGeneratorType generatorType,
+            double chromaWeight = 1.0, double toneWeight = -0.75, double populationWeight = 3.0,
+            double darkToneThreshold = 75.0, double lightToneThreshold = 25.0)
+        {
+            var pixels = await GetPixelsAsync(data);
+            if (pixels.Count == 0)
+            {
+                return ([], [], []);
+            }
+            IQuantizer quantizer = generatorType switch
+            {
+                PaletteGeneratorType.WuQuantizer => new WuQuantizer(),
+                PaletteGeneratorType.WsMeansQuantizer => new WsMeansQuantizer(),
+                PaletteGeneratorType.CelebiQuantizer => new CelebiQuantizer(),
+                _ => new CelebiQuantizer(),
+            };
+
+            var quantizerResult = quantizer.Quantize(pixels, count * 3);
+            var selector = new HctColorSelector
+            {
+                ChromaWeight = chromaWeight,
+                ToneWeight = toneWeight,
+                PopulationWeight = populationWeight
+            };
+
+            var finalAccentColors = selector.SelectColors(quantizerResult.Colors, count)
+                .Select(c => new Vector3(c.Red, c.Green, c.Blue)).ToList();
+
+            var lightDict = quantizerResult.Colors
+                .Where(x => Hct.From(x.Key).Tone >= lightToneThreshold)
+                .ToDictionary(x => x.Key, x => x.Value);
+            if (lightDict.Count == 0) lightDict.Add(new ArgbColor(255, 255, 255, 255), 1);
+            var finalLightColors = selector.SelectColors(lightDict, count)
+                .Select(c => new Vector3(c.Red, c.Green, c.Blue)).ToList();
+
+            var darkDict = quantizerResult.Colors
+                .Where(x => Hct.From(x.Key).Tone < darkToneThreshold)
+                .ToDictionary(x => x.Key, x => x.Value);
+            if (darkDict.Count == 0) darkDict.Add(new ArgbColor(255, 0, 0, 0), 1);
+            var finalDarkColors = selector.SelectColors(darkDict, count)
+                .Select(c => new Vector3(c.Red, c.Green, c.Blue)).ToList();
+
+            return (finalAccentColors, finalLightColors, finalDarkColors);
+        }
+
+        public static async Task<List<Vector3>> GetAccentColorsAsync(
+            byte[]? data, int count, PaletteGeneratorType generatorType, bool? isDark, 
+            double chromaWeight = 1.0, double toneWeight = -0.75, double populationWeight = 3.0, 
+            double darkToneThreshold = 75.0, double lightToneThreshold = 25.0)
         {
             var pixels = await GetPixelsAsync(data);
             if (pixels.Count == 0) return new List<Vector3>();

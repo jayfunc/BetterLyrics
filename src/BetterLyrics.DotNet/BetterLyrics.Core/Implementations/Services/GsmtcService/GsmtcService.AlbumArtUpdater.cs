@@ -28,24 +28,15 @@ public partial class GsmtcService : IGsmtcService
     public async Task<NowPlayingPalette> CalculateAlbumArtThemeColorsAsync(LyricsWindowStatus lyricsWindowStatus,
         AppColor backdropAccentColor, CancellationToken token = default)
     {
-        var accentColors = Enumerable.Repeat(Colors.Transparent, 4).ToList();
-        var lightAccentColors = Enumerable.Repeat(Colors.Transparent, 4).ToList();
-        var darkAccentColors = Enumerable.Repeat(Colors.Transparent, 4).ToList();
-
-        accentColors =
-            (await PaletteHelper.GetAccentColorsAsync(AlbumArtBytes, 4, lyricsWindowStatus.PaletteGeneratorType, null, lyricsWindowStatus.PaletteChromaWeight, lyricsWindowStatus.PaletteToneWeight, lyricsWindowStatus.PalettePopulationWeight, lyricsWindowStatus.PaletteDarkToneThreshold, lyricsWindowStatus.PaletteLightToneThreshold))
-            .Select(ColorHelper.FromVector3).ToList();
+        var (accents, lights, darks) = await PaletteHelper.GetThemeColorsBatchAsync(
+            AlbumArtBytes, 4, lyricsWindowStatus.PaletteGeneratorType,
+            lyricsWindowStatus.PaletteChromaWeight, lyricsWindowStatus.PaletteToneWeight, lyricsWindowStatus.PalettePopulationWeight,
+            lyricsWindowStatus.PaletteDarkToneThreshold, lyricsWindowStatus.PaletteLightToneThreshold);
         token.ThrowIfCancellationRequested();
 
-        lightAccentColors =
-            (await PaletteHelper.GetAccentColorsAsync(AlbumArtBytes, 4, lyricsWindowStatus.PaletteGeneratorType, false, lyricsWindowStatus.PaletteChromaWeight, lyricsWindowStatus.PaletteToneWeight, lyricsWindowStatus.PalettePopulationWeight, lyricsWindowStatus.PaletteDarkToneThreshold, lyricsWindowStatus.PaletteLightToneThreshold))
-            .Select(ColorHelper.FromVector3).ToList();
-        token.ThrowIfCancellationRequested();
-
-        darkAccentColors =
-            (await PaletteHelper.GetAccentColorsAsync(AlbumArtBytes, 4, lyricsWindowStatus.PaletteGeneratorType, true, lyricsWindowStatus.PaletteChromaWeight, lyricsWindowStatus.PaletteToneWeight, lyricsWindowStatus.PalettePopulationWeight, lyricsWindowStatus.PaletteDarkToneThreshold, lyricsWindowStatus.PaletteLightToneThreshold))
-            .Select(ColorHelper.FromVector3).ToList();
-        token.ThrowIfCancellationRequested();
+        var accentColors = accents.Select(ColorHelper.FromVector3).ToList();
+        var lightAccentColors = lights.Select(ColorHelper.FromVector3).ToList();
+        var darkAccentColors = darks.Select(ColorHelper.FromVector3).ToList();
 
         var result = new NowPlayingPalette
         {
@@ -167,20 +158,11 @@ public partial class GsmtcService : IGsmtcService
     public async Task<List<AppColor>> GetAlbumArtAccentColorsAsync(PaletteGeneratorType paletteGeneratorType,
         bool isDark, CancellationToken token = default)
     {
-        var lightAccentColors = Enumerable.Repeat(Colors.Black, 4).ToList();
-        var darkAccentColors = Enumerable.Repeat(Colors.Black, 4).ToList();
-
-        lightAccentColors =
-            (await PaletteHelper.GetAccentColorsAsync(AlbumArtBytes, 4, paletteGeneratorType, false))
+        var colors = (await PaletteHelper.GetAccentColorsAsync(AlbumArtBytes, 4, paletteGeneratorType, isDark))
             .Select(ColorHelper.FromVector3).ToList();
         token.ThrowIfCancellationRequested();
 
-        darkAccentColors =
-            (await PaletteHelper.GetAccentColorsAsync(AlbumArtBytes, 4, paletteGeneratorType, true))
-            .Select(ColorHelper.FromVector3).ToList();
-        token.ThrowIfCancellationRequested();
-
-        return isDark ? darkAccentColors : lightAccentColors;
+        return colors;
     }
 
     private void UpdateAlbumArt(bool ignoreCache = false)
