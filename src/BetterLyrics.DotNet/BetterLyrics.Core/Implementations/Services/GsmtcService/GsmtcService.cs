@@ -22,6 +22,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using EvtSource;
 using Microsoft.Extensions.Logging;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Text.Json;
 
 namespace BetterLyrics.Core.Implementations.Services.GsmtcService;
@@ -358,6 +359,7 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
     private void OnDesiredSessionChanged(bool firstTime = false)
     {
         var desiredSession = GetCurrentDesiredSession();
+        //Debug.WriteLine("OnDesiredSessionChanged: " + desiredSession?.SessionId);
         if (firstTime || desiredSession != _currentDesiredSession)
         {
             _currentDesiredSession = desiredSession;
@@ -568,74 +570,65 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
                 _settingsService.AppSettings.GeneralSettings.ListenOnNewPlaybackSource));
     }
 
+    private IMediaSessionProvider? GetValidFocusedSession()
+    {
+        var focusedSession = _mediaManagerProvider.FocusedSession;
+        if (focusedSession == null || !IsMediaSourceEnabled(focusedSession.SessionId))
+        {
+            return null;
+        }
+
+        if (PlayerIdHelper.IsBetterLyrics(focusedSession.SessionId) && !_windowManagerProvider.IsWindowFocused(WindowType.MusicGalleryWindow))
+        {
+            return null;
+        }
+
+        return focusedSession;
+    }
+
     private IMediaSessionProvider? GetCurrentDesiredSession()
     {
-        var selfSession = _mediaManagerProvider.CurrentMediaSessions.FirstOrDefault(x => PlayerIdHelper.IsBetterLyrics(x.SessionId));
-        bool isSelfEnabled = selfSession != null && IsMediaSourceEnabled(selfSession.SessionId);
+        var enabledSessions = _mediaManagerProvider.CurrentMediaSessions
+            .Where(x => IsMediaSourceEnabled(x.SessionId))
+            .ToList();
+        var validFocusedSession = GetValidFocusedSession();
+        bool isCurrentSessionValid = _currentDesiredSession != null &&
+            IsMediaSourceEnabled(_currentDesiredSession.SessionId) &&
+            _mediaManagerProvider.IsMediaSessionExisting(_currentDesiredSession.SessionId);
 
-        // 优先级 1：如果内置播放器正在播放，绝对优先内部播放器
-        if (isSelfEnabled && selfSession!.PlaybackStatus == SessionPlaybackStatus.Playing)
+        // Priority 1: Playing sessions
+        // 1.1 Valid focused session that is playing
+        if (validFocusedSession?.PlaybackStatus == SessionPlaybackStatus.Playing)
         {
-            return selfSession;
+            return validFocusedSession;
         }
-
-        var focusedSession = _mediaManagerProvider.FocusedSession;
-        bool isFocusedEnabled = focusedSession != null && IsMediaSourceEnabled(focusedSession.SessionId);
-
-        // 优先级 2：如果有外部播放器正在播放，优先聚焦的正在播放的外部播放器
-        if (isFocusedEnabled && focusedSession!.PlaybackStatus == SessionPlaybackStatus.Playing)
+        // 1.2 Valid current desired session that is playing
+        if (isCurrentSessionValid && _currentDesiredSession!.PlaybackStatus == SessionPlaybackStatus.Playing)
         {
-            return focusedSession;
+            return _currentDesiredSession;
         }
-
-        // 优先级 3：如果没有聚焦的正在播放，但有其他正在播放的外部播放器，返回那个正在播放的
-        var playingSession = _mediaManagerProvider.CurrentMediaSessions.FirstOrDefault(x => IsMediaSourceEnabled(x.SessionId) && x.PlaybackStatus == SessionPlaybackStatus.Playing);
+        // 1.3 Any other session that is playing
+        var playingSession = enabledSessions.FirstOrDefault(x => x.PlaybackStatus == SessionPlaybackStatus.Playing);
         if (playingSession != null)
         {
             return playingSession;
         }
 
-        // 优先级 4：系统焦点优先（如暂停状态下优先显示当前点击的窗口对应的音乐）
-        if (isFocusedEnabled)
+        // Priority 2: Paused sessions
+        // 2.1 Valid focused session that is paused
+        if (validFocusedSession != null)
         {
-            if (_windowManagerProvider.IsWindowFocused(WindowType.MusicGalleryWindow) &&
-                PlayerIdHelper.IsBetterLyrics(focusedSession!.SessionId))
-            {
-                return focusedSession;
-            }
-            else
-            {
-                if (_currentDesiredSession != null &&
-                    IsMediaSourceEnabled(_currentDesiredSession.SessionId) &&
-                    _mediaManagerProvider.IsMediaSessionExisting(_currentDesiredSession.SessionId))
-                {
-                    return _currentDesiredSession;
-                }
-            }
+            return validFocusedSession;
+        }
+        // 2.2 Valid current desired session that is paused
+        if (isCurrentSessionValid)
+        {
+            return _currentDesiredSession;
         }
 
-        // 优先级 5：如果没有系统焦点，但内置播放器存在，优先保持内部播放器
-        if (isSelfEnabled)
-        {
-            return selfSession;
-        }
-
-        // 降级：若音乐库处于开启状态且未开启内置播放源会话，返回空（遵循原有逻辑）
-        if (_settingsService.AppSettings.MusicGallerySettings.LyricsWindowStatus.WindowStatus == WindowStatus.Opened)
-        {
-            return null;
-        }
-
-        // 优先级 6：返回任何启用的会话
-        foreach (var session in _mediaManagerProvider.CurrentMediaSessions)
-        {
-            if (IsMediaSourceEnabled(session.SessionId))
-            {
-                return session;
-            }
-        }
-
-        return null;
+        // Priority 3: Fallback strategy
+        // Return the first available session
+        return enabledSessions.FirstOrDefault();
     }
 
     private void UpdateCurrentMediaSourceProviderInfoPositionOffset()
