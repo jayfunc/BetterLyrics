@@ -1,16 +1,19 @@
+using BetterLyrics.Core.Enums;
+using BetterLyrics.WinUI3.Extensions;
+using Microsoft.UI.Windowing;
 using WinUIEx;
 
 namespace BetterLyrics.WinUI3.Views
 {
-    public sealed partial class SystemTrayWindow : WindowEx
+    public sealed partial class SystemTrayWindow : BaseWindow
     {
         public SystemTrayWindow()
         {
             InitializeComponent();
-
-            // 将窗口移出屏幕可视范围，并从 Alt+Tab 和任务栏中隐藏
-            this.IsShownInSwitchers = false;
-            this.MoveAndResize(-10000, -10000, 10, 10);
+            this.Init("AppSettingsControlSystemTray/Text", titleBarHeightOption: TitleBarHeightOption.Collapsed, backdropType: BackdropType.Transparent);
+            _windowManagerProvider.SetIsBorderless(this, true);
+            _windowManagerProvider.SetIsClickThrough(this, true);
+            AppWindow.IsShownInSwitchers = false;
         }
     }
 }

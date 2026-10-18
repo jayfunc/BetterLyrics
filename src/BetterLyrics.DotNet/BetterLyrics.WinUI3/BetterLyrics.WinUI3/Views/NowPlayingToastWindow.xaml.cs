@@ -35,8 +35,9 @@ public sealed partial class NowPlayingToastWindow : BaseWindow,
         InitializeComponent();
         this.Init("NowPlayingToastTitle", titleBarHeightOption: TitleBarHeightOption.Collapsed, backdropType: BackdropType.Transparent);
         _windowManagerProvider.SetIsBorderless(this, true);
-        AppWindow.IsShownInSwitchers = false;
         _windowManagerProvider.SetIsClickThrough(this, true);
+        AppWindow.IsShownInSwitchers = false;
+
         SyncNowPlayingTheme();
 
         _hideTimer = new DispatcherTimer

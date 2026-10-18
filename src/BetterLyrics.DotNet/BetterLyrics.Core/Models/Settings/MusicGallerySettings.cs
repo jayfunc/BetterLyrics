@@ -15,9 +15,9 @@ public partial class MusicGallerySettings : ObservableObject
     [ObservableProperty]
     public partial TrackInfoDisplayTarget TrackInfoDisplayTarget { get; set; } = TrackInfoDisplayTarget.PlayingItem;
 
-    [Obsolete][JsonIgnore(Condition = JsonIgnoreCondition.WhenWriting)][ObservableProperty] public partial ObservableCollection<string> PlayQueuePaths { get; set; } = [];
-    [Obsolete][JsonIgnore(Condition = JsonIgnoreCondition.WhenWriting)][ObservableProperty] public partial int PlayQueueIndex { get; set; } = -1;
-    [Obsolete][JsonIgnore(Condition = JsonIgnoreCondition.WhenWriting)][ObservableProperty] public partial TimeSpan PlaybackPosition { get; set; } = TimeSpan.Zero;
+    [Obsolete][ObservableProperty] public partial ObservableCollection<string> PlayQueuePaths { get; set; } = [];
+    [Obsolete][ObservableProperty] public partial int PlayQueueIndex { get; set; } = -1;
+    [Obsolete][ObservableProperty] public partial TimeSpan PlaybackPosition { get; set; } = TimeSpan.Zero;
 
     [ObservableProperty]
     public partial bool AutoOpen { get; set; } = false;

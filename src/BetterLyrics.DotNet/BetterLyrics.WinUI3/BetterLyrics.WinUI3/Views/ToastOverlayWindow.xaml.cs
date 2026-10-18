@@ -31,8 +31,8 @@ public sealed partial class ToastOverlayWindow : BaseWindow
         InitializeComponent();
         this.Init("ToastOverlayTitle", titleBarHeightOption: TitleBarHeightOption.Collapsed, backdropType: BackdropType.Transparent);
         _windowManagerProvider.SetIsBorderless(this, true);
-        AppWindow.IsShownInSwitchers = false;
         _windowManagerProvider.SetIsClickThrough(this, true);
+        AppWindow.IsShownInSwitchers = false;
     }
 
     public void Init(DisplayArea displayArea, int targetWidth = 592)
