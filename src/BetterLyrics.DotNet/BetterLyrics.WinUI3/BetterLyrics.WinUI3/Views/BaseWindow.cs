@@ -32,7 +32,7 @@ public class BaseWindow : Window
 
             if (EnableAppThemeChangeSync)
             {
-                this.SyncTheme();
+                OnAppThemeChanged();
             }
             
             WeakReferenceMessenger.Default.RegisterAll(this);
@@ -47,7 +47,7 @@ public class BaseWindow : Window
         }
     }
 
-    protected virtual void OnAppThemeChanged(AppThemeChangedMessage message)
+    protected virtual void OnAppThemeChanged(AppThemeChangedMessage? message = null)
     {
         this.SyncTheme();
     }
@@ -72,9 +72,4 @@ public class BaseWindow : Window
     }
 
     protected virtual void Cleanup() { }
-
-    public void Receive(AppThemeChangedMessage message)
-    {
-        this.SyncTheme();
-    }
 }

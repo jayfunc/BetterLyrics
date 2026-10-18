@@ -46,7 +46,7 @@ public sealed partial class MusicGalleryWindow : BaseWindow,
         _ = UpdateAlbumArtThemeColorsAsync();
     }
 
-    protected override void OnAppThemeChanged(AppThemeChangedMessage message)
+    protected override void OnAppThemeChanged(AppThemeChangedMessage? message = null)
     {
         this.UpdateTheme();
     }

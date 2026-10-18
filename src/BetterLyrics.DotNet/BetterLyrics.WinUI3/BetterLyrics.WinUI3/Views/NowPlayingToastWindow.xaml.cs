@@ -46,7 +46,7 @@ public sealed partial class NowPlayingToastWindow : BaseWindow,
         _hideTimer.Tick += HideTimer_Tick;
     }
 
-    protected override void OnAppThemeChanged(AppThemeChangedMessage message)
+    protected override void OnAppThemeChanged(AppThemeChangedMessage? message = null)
     {
         SyncNowPlayingTheme();
     }
