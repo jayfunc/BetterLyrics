@@ -1,11 +1,11 @@
 // 2025/6/23 by Zhe Fang
 
 using BetterLyrics.Core.Enums;
-using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Domain;
 using BetterLyrics.Core.Models.Settings;
+using BetterLyrics.Core.ViewModels.MusicGalleryPageViewModel;
 using BetterLyrics.WinUI3.Constants;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Views;
@@ -322,6 +322,11 @@ public class WindowManagerProvider : IWindowManagerProvider
             if (typeof(T) == typeof(NowPlayingWindow))
             {
                 ((NowPlayingWindow)window).LyricsWindowStatus.WindowStatus = WindowStatus.Opened;
+            }
+            else if (typeof(T) == typeof(MusicGalleryWindow))
+            {
+                var musicGalleryPageViewModel = Ioc.Default.GetService<MusicGalleryPageViewModel>();
+                musicGalleryPageViewModel?.HandleAutoPlay();
             }
 
             var castedWindow = (Window)window;

@@ -44,8 +44,10 @@ public partial class SmtcService : ObservableObject, ISmtcService
     private readonly List<int> _shuffleOrder = [];
     private int _shufflePointer = -1;
     private MediaPlaybackItem? _currentPlaybackItem;
+    private TimeSpan? _positionToRestoreOnMediaOpened;
 
     public bool IsVolumeRestored { get; set; }
+    public bool IsPlaying => _mediaPlayer.PlaybackSession.PlaybackState == MediaPlaybackState.Playing;
     private bool _isApplyingVolume;
     private int _positionSaveTicks;
 
@@ -77,12 +79,36 @@ public partial class SmtcService : ObservableObject, ISmtcService
         _mediaPlayer.SystemMediaTransportControls.IsStopEnabled = true;
         _mediaPlayer.SystemMediaTransportControls.ButtonPressed += SystemMediaTransportControls_ButtonPressed;
 
+        _mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
+        _mediaPlayer.MediaFailed += MediaPlayer_MediaFailed;
         _mediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
 
         _positionTimer = new Timer(1000);
         _positionTimer.Elapsed += PositionTimer_Elapsed;
 
         _mediaPlayer.PlaybackSession.PlaybackStateChanged += PlaybackSession_PlaybackStateChanged;
+    }
+
+    private void MediaPlayer_MediaOpened(MediaPlayer sender, object args)
+    {
+        if (_positionToRestoreOnMediaOpened.HasValue)
+        {
+            var targetPos = _positionToRestoreOnMediaOpened.Value;
+            _positionToRestoreOnMediaOpened = null;
+            try
+            {
+                if (targetPos > TimeSpan.Zero)
+                {
+                    sender.Position = targetPos;
+                }
+            }
+            catch { }
+        }
+    }
+
+    private void MediaPlayer_MediaFailed(MediaPlayer sender, MediaPlayerFailedEventArgs args)
+    {
+        _positionToRestoreOnMediaOpened = null;
     }
 
     private void CommandManager_NextReceived(MediaPlaybackCommandManager sender,
@@ -164,6 +190,7 @@ public partial class SmtcService : ObservableObject, ISmtcService
 
         var savedPlaybackState = _playbackStateService.CurrentState;
         var savedPlaybackIndex = savedPlaybackState.PlayQueueIndex;
+        var savedPlaybackPosition = savedPlaybackState.PlaybackPosition;
 
         var playQueueList = playQueue.ToList();
 
@@ -173,12 +200,32 @@ public partial class SmtcService : ObservableObject, ISmtcService
 
         PlaybackState.PlayQueuePaths = [.. TrackPlayingQueue.Select(x => x.Track.Uri.ToDecodedAbsoluteUri())];
 
+        ApplyPlaybackOrder(musicGallerySettings.PlaybackOrder);
+
+        if (_currentPlaybackItem != null && PlayingTrack != null)
+        {
+            var existingItem = TrackPlayingQueue.FirstOrDefault(x => x.Track.Uri == PlayingTrack.Uri);
+            if (existingItem != null)
+            {
+                var existingIndex = TrackPlayingQueue.IndexOf(existingItem);
+                _currentIndex = existingIndex;
+                PlaybackState.PlayQueueIndex = existingIndex;
+
+                if (allowAutoPlay && musicGallerySettings.AutoPlay && !IsPlaying)
+                {
+                    _mediaPlayer.Play();
+                    EnsureVolumeApplied();
+                }
+
+                await Task.CompletedTask;
+                return;
+            }
+        }
+
         _mediaPlayer.Pause();
         _positionTimer.Stop();
         _mediaPlayer.Source = null;
         CleanupCurrentPlaybackItem();
-
-        ApplyPlaybackOrder(musicGallerySettings.PlaybackOrder);
 
         if (savedPlaybackIndex >= 0 && savedPlaybackIndex < TrackPlayingQueue.Count)
         {
@@ -196,7 +243,11 @@ public partial class SmtcService : ObservableObject, ISmtcService
 
             if (recoverPlaybackPosition)
             {
-                _mediaPlayer.Position = savedPlaybackState.PlaybackPosition;
+                _positionToRestoreOnMediaOpened = savedPlaybackPosition;
+            }
+            else
+            {
+                _positionToRestoreOnMediaOpened = null;
             }
 
             if (allowAutoPlay && musicGallerySettings.AutoPlay)
@@ -267,6 +318,18 @@ public partial class SmtcService : ObservableObject, ISmtcService
             var j = Random.Shared.Next(i + 1);
             (list[i], list[j]) = (list[j], list[i]);
         }
+    }
+
+    public void Play()
+    {
+        _mediaPlayer.Play();
+        EnsureVolumeApplied();
+    }
+
+    public void Pause()
+    {
+        _mediaPlayer.Pause();
+        SaveCurrentPlaybackPosition();
     }
 
     public void PlayNextTrack()
@@ -382,7 +445,11 @@ public partial class SmtcService : ObservableObject, ISmtcService
 
             if (recoverPlaybackPosition)
             {
-                _mediaPlayer.Position = PlaybackState.PlaybackPosition;
+                _positionToRestoreOnMediaOpened = PlaybackState.PlaybackPosition;
+            }
+            else
+            {
+                _positionToRestoreOnMediaOpened = null;
             }
 
             _mediaPlayer.Play();
@@ -467,6 +534,8 @@ public partial class SmtcService : ObservableObject, ISmtcService
     {
         try
         {
+            if (_currentPlaybackItem == null || PlayingTrack == null || _mediaPlayer.Source == null) return;
+
             var session = _mediaPlayer.PlaybackSession;
             if (session != null)
             {

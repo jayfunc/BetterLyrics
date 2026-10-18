@@ -12,6 +12,7 @@ namespace BetterLyrics.Core.Interfaces.Services;
 public interface ISmtcService : INotifyPropertyChanged
 {
     bool IsVolumeRestored { get; set; }
+    bool IsPlaying { get; }
 
     public ObservableCollection<PlayQueueItem> TrackPlayingQueue { get; set; }
     public ExtendedTrack? PlayingTrack { get; set; }
@@ -21,6 +22,8 @@ public interface ISmtcService : INotifyPropertyChanged
 
     void ApplyPlaybackOrder(PlaybackOrder order);
 
+    void Play();
+    void Pause();
     void PlayNextTrack();
     void PlayPreviousTrack();
     void PlayTrack(PlayQueueItem? playQueueItem);

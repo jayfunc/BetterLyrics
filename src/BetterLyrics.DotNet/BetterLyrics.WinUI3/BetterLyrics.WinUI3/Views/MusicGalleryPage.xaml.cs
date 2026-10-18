@@ -162,6 +162,11 @@ public sealed partial class MusicGalleryPage : Page
         }
     }
 
+    private void Page_Loaded(object sender, RoutedEventArgs e)
+    {
+        ViewModel?.HandleAutoPlay();
+    }
+
     private void Page_Unloaded(object sender, RoutedEventArgs e)
     {
         Cleanup();
@@ -181,7 +186,7 @@ public sealed partial class MusicGalleryPage : Page
             viewModel.CancelRefreshSongs();
             if (viewModel.AppSettings.MusicGallerySettings.StopOnWindowClosed)
             {
-                viewModel.StopTrackCommand.Execute(null);
+                viewModel.PausePlayback();
             }
         }
 

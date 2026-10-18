@@ -31,6 +31,8 @@ public partial class MusicGalleryPageViewModel : ObservableRecipient,
     private readonly ISettingsService _settingsService;
     private readonly IWindowManagerProvider _windowManagerProvider;
     private readonly IPlaybackStateService _playbackStateService;
+    private readonly IGsmtcService _gsmtcService;
+    private bool _shouldAutoPlayOnSongsLoaded;
 
     private readonly Debouncer _refreshSongsDebouncer = new();
 
@@ -100,7 +102,8 @@ public partial class MusicGalleryPageViewModel : ObservableRecipient,
     IFileSystemService fileSystemService,
     ISmtcService smtcService, IAppUIThreadProvider appUiThreadProvider,
     IGlobalToastProvider globalToastProvider, IWindowManagerProvider windowManagerProvider,
-    IFilePickerProvider filePickerProvider, IPlaybackStateService playbackStateService)
+    IFilePickerProvider filePickerProvider, IPlaybackStateService playbackStateService,
+    IGsmtcService gsmtcService)
     {
         _localizationService = localizationService;
         _fileSystemService = fileSystemService;
@@ -110,16 +113,55 @@ public partial class MusicGalleryPageViewModel : ObservableRecipient,
         _windowManagerProvider = windowManagerProvider;
         _filePickerProvider = filePickerProvider;
         _playbackStateService = playbackStateService;
+        _gsmtcService = gsmtcService;
 
         _settingsService = settingsService;
         AppSettings = _settingsService.AppSettings;
 
-        RefreshSongs(true, true);
+        RefreshSongs(true, AppSettings.MusicGallerySettings.AutoPlay);
 
         _settingsService.AppSettings.LocalMediaFolders.CollectionChanged += LocalMediaFolders_CollectionChanged;
         _settingsService.AppSettings.LocalMediaFolders.ItemPropertyChanged += LocalMediaFolders_ItemPropertyChanged;
 
         IsActive = true;
+    }
+
+    public void HandleAutoPlay()
+    {
+        if (!AppSettings.MusicGallerySettings.AutoPlay)
+        {
+            return;
+        }
+
+        if (_gsmtcService.IsExternalSourceActive)
+        {
+            return;
+        }
+
+        if (SMTCService.IsPlaying)
+        {
+            return;
+        }
+
+        if (SMTCService.PlayingTrack != null)
+        {
+            SMTCService.Play();
+            return;
+        }
+
+        var savedIndex = _playbackStateService.CurrentState.PlayQueueIndex;
+        if (SMTCService.TrackPlayingQueue.Count > 0 && savedIndex >= 0 && savedIndex < SMTCService.TrackPlayingQueue.Count)
+        {
+            SMTCService.PlayTrackAt(savedIndex, recoverPlaybackPosition: true);
+            return;
+        }
+
+        _shouldAutoPlayOnSongsLoaded = true;
+    }
+
+    public void PausePlayback()
+    {
+        SMTCService.Pause();
     }
 
     private void LocalMediaFolders_ItemPropertyChanged(object? sender, ItemPropertyChangedEventArgs e)

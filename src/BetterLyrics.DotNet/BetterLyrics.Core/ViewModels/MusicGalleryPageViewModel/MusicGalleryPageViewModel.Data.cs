@@ -31,15 +31,20 @@ public partial class MusicGalleryPageViewModel
                 var newTrackList = cachedFiles
                     .Select(x => new ExtendedTrack(x))
                     .ToList();
-                var sourceDict = newTrackList.ToDictionary(s => s.Uri, s => s);
+                var sourceDict = newTrackList.DistinctBy(s => s.Uri).ToDictionary(s => s.Uri, s => s);
 
                 var savedPaths = _playbackStateService.CurrentState.PlayQueuePaths;
                 var playQueue = savedPaths
                     .Where(x => !string.IsNullOrWhiteSpace(x))
                     .Select(x =>
                     {
-                        var encodedUri = new Uri(x).AbsoluteUri;
-                        if (sourceDict.TryGetValue(encodedUri, out var found)) return new PlayQueueItem(found);
+                        if (sourceDict.TryGetValue(x, out var directFound)) return new PlayQueueItem(directFound);
+                        try
+                        {
+                            var encodedUri = new Uri(x).AbsoluteUri;
+                            if (sourceDict.TryGetValue(encodedUri, out var found)) return new PlayQueueItem(found);
+                        }
+                        catch { }
                         return null;
                     })
                     .Where(x => x != null)
@@ -60,7 +65,10 @@ public partial class MusicGalleryPageViewModel
 
                     ApplySongOrderType();
 
-                    await SMTCService.UpdatePlaybackListAsync(playQueue, recoverPlaybackPosition, allowAutoPlay);
+                    var shouldAutoPlay = (allowAutoPlay || _shouldAutoPlayOnSongsLoaded) && !_gsmtcService.IsExternalSourceActive;
+                    _shouldAutoPlayOnSongsLoaded = false;
+
+                    await SMTCService.UpdatePlaybackListAsync(playQueue, recoverPlaybackPosition, shouldAutoPlay);
                 });
             });
         });
