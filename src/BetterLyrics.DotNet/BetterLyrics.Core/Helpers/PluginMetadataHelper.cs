@@ -4,7 +4,7 @@ using System.Reflection.PortableExecutable;
 namespace BetterLyrics.Core.Helpers;
 
 /// <summary>
-///     辅助类：使用 MetadataReader 读取 DLL 信息而不锁定文件
+/// 辅助类：使用 MetadataReader 读取 DLL 信息而不锁定文件
 /// </summary>
 public static class PluginMetadataHelper
 {

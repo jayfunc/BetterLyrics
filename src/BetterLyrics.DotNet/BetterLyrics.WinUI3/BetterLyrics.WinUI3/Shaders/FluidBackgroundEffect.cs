@@ -4,8 +4,8 @@ using ComputeSharp.D2D1;
 namespace BetterLyrics.WinUI3.Shaders;
 
 /// <summary>
-///     Ported from
-///     <see href="https://github.com/Storyteller-Studios/Isolation/blob/main/ShaderTest.UWP/Shaders/effect.hlsl" />.
+/// Ported from
+/// <see href="https://github.com/Storyteller-Studios/Isolation/blob/main/ShaderTest.UWP/Shaders/effect.hlsl" />.
 /// </summary>
 /// <param name="resolution"></param>
 /// <param name="time"></param>

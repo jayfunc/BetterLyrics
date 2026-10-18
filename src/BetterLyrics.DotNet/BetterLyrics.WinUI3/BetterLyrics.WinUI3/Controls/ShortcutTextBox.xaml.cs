@@ -23,7 +23,7 @@ public sealed partial class ShortcutTextBox : UserControl
             new PropertyMetadata(default));
 
     private readonly IGlobalToastProvider _globalToastProvider = Ioc.Default.GetRequiredService<IGlobalToastProvider>();
-    private readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
+    private readonly IGlobalShortcutService _globalShortcutService = Ioc.Default.GetRequiredService<IGlobalShortcutService>();
 
     public List<string> Shortcut
     {
@@ -64,7 +64,9 @@ public sealed partial class ShortcutTextBox : UserControl
             e.Key != VirtualKey.Menu &&
             e.Key != VirtualKey.LeftWindows &&
             e.Key != VirtualKey.RightWindows)
+        {
             shortcut.Add(e.Key.ToString());
+        }
 
         Shortcut = shortcut;
 
@@ -89,7 +91,7 @@ public sealed partial class ShortcutTextBox : UserControl
 
     private void CheckButton_Click(object sender, RoutedEventArgs e)
     {
-        var registered = GlobalHotKeyHook.IsHotKeyRegistered(Shortcut);
+        var registered = _globalShortcutService.IsHotKeyRegistered(Shortcut);
         if (registered)
         {
             _globalToastProvider.Show("SettingsPageShortcutRegSuccessInfo", null, MessageSeverity.Success);

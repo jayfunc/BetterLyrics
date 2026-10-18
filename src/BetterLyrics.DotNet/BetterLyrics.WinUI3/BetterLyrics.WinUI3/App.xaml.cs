@@ -63,7 +63,9 @@ public partial class App : Application
             appUiThreadProvider.Initialize(m_window.DispatcherQueue);
 
             if (settingsService.AppSettings.GeneralSettings.ShowSplashScreen)
+            {
                 _splashScreen = SimpleSplashScreen.ShowDefaultSplashScreen();
+            }
 
             var globalToastProvider = Ioc.Default.GetRequiredService<IGlobalToastProvider>();
             globalToastProvider.Initialize();
@@ -125,16 +127,23 @@ public partial class App : Application
             {
                 var defaultStatus = settingsService.AppSettings.WindowBoundsRecords.Where(x => x.IsDefault);
                 if (defaultStatus != null)
+                {
                     foreach (var item in defaultStatus)
                     {
                         windowManagerProvider.OpenOrShowWindow<NowPlayingWindow>(item);
-                        if (!settingsService.AppSettings.GeneralSettings.MultiNowPlayingWindowMode) break;
+                        if (!settingsService.AppSettings.GeneralSettings.MultiNowPlayingWindowMode)
+                        {
+                            break;
+                        }
                     }
+                }
             }
 
             // 自动打开音乐库逻辑
             if (settingsService.AppSettings.MusicGallerySettings.AutoOpen)
+            {
                 windowManagerProvider.OpenOrShowWindow<MusicGalleryWindow>();
+            }
         }
         catch (Exception ex)
         {
@@ -159,7 +168,10 @@ public partial class App : Application
         var obsoleteSongSearchMap = settingsService.AppSettings.MappedSongSearchQueries;
         if (obsoleteSongSearchMap.Count > 0)
         {
-            foreach (var item in obsoleteSongSearchMap) await songSearchMapService.SaveMappingAsync(item);
+            foreach (var item in obsoleteSongSearchMap)
+            {
+                await songSearchMapService.SaveMappingAsync(item);
+            }
 
             obsoleteSongSearchMap.Clear();
         }
@@ -167,8 +179,9 @@ public partial class App : Application
         // 启动后台扫描
         var fileSystemService = Ioc.Default.GetRequiredService<IFileSystemService>();
         foreach (var item in settingsService.AppSettings.LocalMediaFolders)
-            _ = Task.Run(async () =>
-                await fileSystemService.ScanMediaFolderAsync(item, token: CancellationToken.None));
+        {
+            _ = Task.Run(async () => await fileSystemService.ScanMediaFolderAsync(item, token: CancellationToken.None));
+        }
 
         fileSystemService.StartAllFolderTimers();
 
@@ -189,6 +202,9 @@ public partial class App : Application
         // 启动切歌通知服务
         var nowPlayingNotificationService = Ioc.Default.GetRequiredService<INowPlayingNotificationService>();
         nowPlayingNotificationService.Initialize();
+
+        // 启动全局快捷键服务
+        _ = Ioc.Default.GetRequiredService<IGlobalShortcutService>();
     }
 
     private static void EnsureLyricsSearchProvidersInfo()

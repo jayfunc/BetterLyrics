@@ -38,17 +38,21 @@ public class WindowManagerProvider : IWindowManagerProvider
     public void HideWindow(object obj, WindowStatus hiddenBy = WindowStatus.HiddenByUser)
     {
         if (obj is not Window)
-            throw new ArgumentException(
-                $"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.",
-                nameof(obj));
+        {
+            throw new ArgumentException($"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.", nameof(obj));
+        }
 
         if (hiddenBy is WindowStatus.Closed or WindowStatus.Opened)
+        {
             throw new ArgumentOutOfRangeException(nameof(hiddenBy));
+        }
 
         if (obj is NowPlayingWindow nowPlayingWindow)
         {
             if (nowPlayingWindow.LyricsWindowStatus.IsWorkArea && GetWindowHandle(obj) is IntPtr hwnd)
+            {
                 UnregisterAppBar(hwnd);
+            }
 
             nowPlayingWindow.LyricsWindowStatus.WindowStatus = hiddenBy;
         }
@@ -58,44 +62,80 @@ public class WindowManagerProvider : IWindowManagerProvider
         window.Hide();
     }
 
+    public void ToggleWindow(object obj)
+    {
+        if (obj is not Window window)
+        {
+            throw new ArgumentException($"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.", nameof(obj));
+        }
+
+        if (window.Visible)
+        {
+            HideWindow(window);
+        }
+        else
+        {
+            if (window is NowPlayingWindow nowPlayingWindow)
+            {
+                OpenOrShowWindow(WindowType.NowPlayingWindow, nowPlayingWindow.LyricsWindowStatus);
+            }
+            else
+            {
+                window.Show();
+                window.Activate();
+                window.SetForegroundWindow();
+            }
+        }
+    }
+
+    public void ToggleWindows(WindowType windowType)
+    {
+        var windows = GetWindows(windowType);
+        foreach (var window in windows)
+        {
+            ToggleWindow(window);
+        }
+    }
+
     public void PrepareWindowClosing(object obj)
     {
         if (obj is not Window)
-            throw new ArgumentException(
-                $"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.",
-                nameof(obj));
+        {
+            throw new ArgumentException($"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.", nameof(obj));
+        }
 
         if (obj is NowPlayingWindow nowPlayingWindow)
         {
             if (nowPlayingWindow.LyricsWindowStatus.IsWorkArea && GetWindowHandle(obj) is IntPtr hwnd)
+            {
                 UnregisterAppBar(hwnd);
+            }
 
             if (nowPlayingWindow.LyricsWindowStatus.IsWallpaper)
+            {
                 // 先取消固定至桌面以防后续关闭该窗口时报错
                 WorkerWHook.UnpinFromDesktop(nowPlayingWindow);
+            }
 
             nowPlayingWindow.LyricsWindowStatus.WindowStatus = WindowStatus.Closed;
         }
 
         _activeWindows.Remove(obj);
+    }
 
-        var window = (Window)obj;
-
-        if (window.Content is FrameworkElement rootElement)
+    public void OnWindowClosed(object obj)
+    {
+        if (obj is not Window)
         {
-            rootElement.DataContext = null;
-            window.Content = null;
+            throw new ArgumentException($"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.", nameof(obj));
         }
+
+        PrepareWindowClosing(obj);
     }
 
     public void CloseWindow(object obj)
     {
-        if (obj is not Window)
-            throw new ArgumentException(
-                $"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.",
-                nameof(obj));
-
-        PrepareWindowClosing(obj);
+        OnWindowClosed(obj);
 
         var window = (Window)obj;
         window.Close();
@@ -104,9 +144,9 @@ public class WindowManagerProvider : IWindowManagerProvider
     public void MinimizeWindow(object obj)
     {
         if (obj is not Window)
-            throw new ArgumentException(
-                $"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.",
-                nameof(obj));
+        {
+            throw new ArgumentException($"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.", nameof(obj));
+        }
 
         var window = (Window)obj;
         window.Minimize();
@@ -129,8 +169,12 @@ public class WindowManagerProvider : IWindowManagerProvider
     public T? GetWindow<T>()
     {
         foreach (var window in _activeWindows)
+        {
             if (window is T castedWindow)
+            {
                 return castedWindow;
+            }
+        }
 
         return default;
     }
@@ -144,8 +188,12 @@ public class WindowManagerProvider : IWindowManagerProvider
     {
         var windows = new List<T>();
         foreach (var window in _activeWindows)
+        {
             if (window is T castedWindow)
+            {
                 windows.Add(castedWindow);
+            }
+        }
 
         return windows;
     }
@@ -165,7 +213,9 @@ public class WindowManagerProvider : IWindowManagerProvider
     public IntPtr? GetWindowHandle(object? obj)
     {
         if (obj is FrameworkElement frameworkElement)
+        {
             return frameworkElement.XamlRoot.ContentIslandEnvironment.AppWindowId.GetWindowHandle();
+        }
 
         if (obj is Window window) return WindowNative.GetWindowHandle(window);
 
@@ -202,6 +252,11 @@ public class WindowManagerProvider : IWindowManagerProvider
     {
         var targetWindows = GetWindows(windowType);
         return targetWindows.Any(IsWindowFocused);
+    }
+
+    public bool IsWindowVisible(object? obj)
+    {
+        return obj is Window window && window.Visible;
     }
 
     public T OpenOrShowWindow<T>(LyricsWindowStatus? status = null)
@@ -258,12 +313,16 @@ public class WindowManagerProvider : IWindowManagerProvider
 
             // Not activate NowPlayingWindow to avoid window flashing
             if (typeof(T) != typeof(LyricsWindowSwitchWindow) && typeof(T) != typeof(NowPlayingWindow))
+            {
                 castedWindow.Activate();
+            }
         }
         else
         {
             if (typeof(T) == typeof(NowPlayingWindow))
+            {
                 ((NowPlayingWindow)window).LyricsWindowStatus.WindowStatus = WindowStatus.Opened;
+            }
 
             var castedWindow = (Window)window;
             castedWindow.Activate();
@@ -290,8 +349,7 @@ public class WindowManagerProvider : IWindowManagerProvider
     public void RestartApp(string args = "")
     {
         // The restart will be executed immediately.
-        var failureReason =
-            AppInstance.Restart(args);
+        var failureReason = AppInstance.Restart(args);
 
         // If the restart fails, handle it here.
         switch (failureReason)
@@ -328,17 +386,21 @@ public class WindowManagerProvider : IWindowManagerProvider
         var hwnd = WindowNative.GetWindowHandle(obj);
 
         if (enable)
+        {
             RegisterAppBar(hwnd, ((NowPlayingWindow)obj).LyricsWindowStatus);
+        }
         else
+        {
             UnregisterAppBar(hwnd);
+        }
     }
 
     public void SetIsClickThrough(object obj, bool enable)
     {
         if (obj is not Window)
-            throw new ArgumentException(
-                $"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.",
-                nameof(obj));
+        {
+            throw new ArgumentException($"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.", nameof(obj));
+        }
 
         var window = (Window)obj;
 
@@ -346,9 +408,13 @@ public class WindowManagerProvider : IWindowManagerProvider
         var style = User32.GetWindowLong(hwnd, User32.WindowLongFlags.GWL_EXSTYLE);
 
         if (enable)
+        {
             style |= (int)(ExtendedWindowStyle.Layered | ExtendedWindowStyle.Transparent);
+        }
         else
+        {
             style &= ~(int)(ExtendedWindowStyle.Layered | ExtendedWindowStyle.Transparent);
+        }
 
         User32.SetWindowLong(hwnd, User32.WindowLongFlags.GWL_EXSTYLE, style);
     }
@@ -359,9 +425,13 @@ public class WindowManagerProvider : IWindowManagerProvider
         var style = User32.GetWindowLong(hwnd, User32.WindowLongFlags.GWL_STYLE);
 
         if (enable)
+        {
             style &= ~(int)(User32.WindowStyles.WS_CAPTION | User32.WindowStyles.WS_THICKFRAME);
+        }
         else
+        {
             style |= (int)(User32.WindowStyles.WS_CAPTION | User32.WindowStyles.WS_THICKFRAME);
+        }
 
         User32.SetWindowLong(hwnd, User32.WindowLongFlags.GWL_STYLE, style);
     }
@@ -388,23 +458,24 @@ public class WindowManagerProvider : IWindowManagerProvider
     public void SetIsAlwaysOnTop(object obj, bool enable)
     {
         if (obj is not Window)
-            throw new ArgumentException(
-                $"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.",
-                nameof(obj));
+        {
+            throw new ArgumentException($"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.", nameof(obj));
+        }
 
         var window = (Window)obj;
 
-        if (window.AppWindow is AppWindow appWindow &&
-            appWindow.Presenter.Kind == AppWindowPresenterKind.Overlapped)
+        if (window.AppWindow is AppWindow appWindow && appWindow.Presenter.Kind == AppWindowPresenterKind.Overlapped)
+        {
             window.SetIsAlwaysOnTop(enable);
+        }
     }
 
     public void SetIsShownInSwitchers(object obj, bool enable)
     {
         if (obj is not Window)
-            throw new ArgumentException(
-                $"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.",
-                nameof(obj));
+        {
+            throw new ArgumentException($"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.", nameof(obj));
+        }
 
         var window = (Window)obj;
 
@@ -416,9 +487,9 @@ public class WindowManagerProvider : IWindowManagerProvider
     public void MoveAndResize(object obj, AppRect rect)
     {
         if (obj is not Window)
-            throw new ArgumentException(
-                $"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.",
-                nameof(obj));
+        {
+            throw new ArgumentException($"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.", nameof(obj));
+        }
 
         if (obj == null) return;
 
@@ -437,14 +508,16 @@ public class WindowManagerProvider : IWindowManagerProvider
     public void UpdateAppBar(object obj)
     {
         if (obj is not Window)
-            throw new ArgumentException(
-                $"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.",
-                nameof(obj));
+        {
+            throw new ArgumentException($"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.", nameof(obj));
+        }
 
         var hwnd = WindowNative.GetWindowHandle(obj);
 
         if (!_activeAppBars.Contains(hwnd))
+        {
             return;
+        }
 
         var status = ((NowPlayingWindow)obj).LyricsWindowStatus;
 
@@ -479,8 +552,7 @@ public class WindowManagerProvider : IWindowManagerProvider
     {
         if (GetWindowHandle(windowType) is IntPtr hwnd)
         {
-            TaskbarList.SetProgressState(hwnd,
-                isPlaying ? TaskbarButtonProgressState.Normal : TaskbarButtonProgressState.Paused);
+            TaskbarList.SetProgressState(hwnd, isPlaying ? TaskbarButtonProgressState.Normal : TaskbarButtonProgressState.Paused);
         }
     }
 
@@ -558,8 +630,12 @@ public class WindowManagerProvider : IWindowManagerProvider
     private void EnsureAllWorkAreasReleased()
     {
         foreach (var item in _activeAppBars)
+        {
             if (GetWindowHandle(item) is IntPtr hwnd)
+            {
                 UnregisterAppBar(hwnd);
+            }
+        }
     }
 
     private static void TrackWindow(object window)
@@ -567,19 +643,6 @@ public class WindowManagerProvider : IWindowManagerProvider
         if (!_activeWindows.Contains(window))
         {
             _activeWindows.Add(window);
-            var castedWindow = (Window)window;
-            castedWindow.Closed += WindowHelper_Closed;
         }
-    }
-
-    private static void WindowHelper_Closed(object sender, WindowEventArgs args)
-    {
-        var window = (Window)sender;
-        window.Closed -= WindowHelper_Closed;
-
-        _activeWindows.Remove(sender);
-
-        MemoryLeakDetector.Track(window);
-        MemoryLeakDetector.ScheduleCheck(4000);
     }
 }

@@ -18,13 +18,10 @@ using WinUIEx;
 namespace BetterLyrics.WinUI3.Views;
 
 /// <summary>
-///     An empty window that can be used on its own or navigated to within a Frame.
+/// An empty window that can be used on its own or navigated to within a Frame.
 /// </summary>
-public sealed partial class ToastOverlayWindow : Window,
-    IRecipient<AppThemeChangedMessage>
+public sealed partial class ToastOverlayWindow : BaseWindow
 {
-    private readonly IWindowManagerProvider _windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
-
     private OverlayInputHelper? _overlayInputHelper;
 
     public InAppNotificationStack Stack => NotificationStack;
@@ -32,17 +29,10 @@ public sealed partial class ToastOverlayWindow : Window,
     public ToastOverlayWindow()
     {
         InitializeComponent();
-        WeakReferenceMessenger.Default.RegisterAll(this);
         this.Init("ToastOverlayTitle", titleBarHeightOption: TitleBarHeightOption.Collapsed, backdropType: BackdropType.Transparent);
         _windowManagerProvider.SetIsBorderless(this, true);
         AppWindow.IsShownInSwitchers = false;
         _windowManagerProvider.SetIsClickThrough(this, true);
-        this.SyncTheme();
-    }
-
-    public void Receive(AppThemeChangedMessage message)
-    {
-        this.SyncTheme();
     }
 
     public void Init(DisplayArea displayArea, int targetWidth = 592)

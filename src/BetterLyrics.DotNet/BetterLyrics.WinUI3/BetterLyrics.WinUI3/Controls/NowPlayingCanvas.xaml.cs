@@ -314,12 +314,6 @@ public sealed partial class NowPlayingCanvas : UserControl,
         InitializeComponent();
     }
 
-    ~NowPlayingCanvas()
-    {
-        MemoryLeakDetector.Track(this);
-        MemoryLeakDetector.ScheduleCheck(4000);
-    }
-
     private void PowerManager_DisplayStatusChanged(object sender, bool isDisplayOn)
     {
         if (Canvas != null)

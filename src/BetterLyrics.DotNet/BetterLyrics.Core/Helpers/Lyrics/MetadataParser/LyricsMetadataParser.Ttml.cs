@@ -4,8 +4,8 @@ using System.Xml;
 namespace BetterLyrics.Core.Helpers.Lyrics.MetadataParser;
 
 /// <summary>
-///     This TTML metadata parser follows the format specification:
-///     https://github.com/amll-dev/amll-ttml-db/wiki/%E6%A0%BC%E5%BC%8F%E8%A7%84%E8%8C%83
+/// This TTML metadata parser follows the format specification:
+/// https://github.com/amll-dev/amll-ttml-db/wiki/%E6%A0%BC%E5%BC%8F%E8%A7%84%E8%8C%83
 /// </summary>
 public partial class LyricsMetadataParser
 {

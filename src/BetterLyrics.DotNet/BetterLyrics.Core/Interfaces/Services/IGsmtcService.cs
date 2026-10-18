@@ -11,7 +11,7 @@ using System.ComponentModel;
 namespace BetterLyrics.Core.Interfaces.Services;
 
 /// <summary>
-///     Interface for GlobalSystemMediaTransportControlsSession Service
+/// Interface for GlobalSystemMediaTransportControlsSession Service
 /// </summary>
 public interface IGsmtcService : INotifyPropertyChanged
 {

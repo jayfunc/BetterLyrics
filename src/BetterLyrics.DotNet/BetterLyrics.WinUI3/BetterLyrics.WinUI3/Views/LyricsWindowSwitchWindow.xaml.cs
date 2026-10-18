@@ -22,35 +22,17 @@ using WinUIEx.Messaging;
 namespace BetterLyrics.WinUI3.Views;
 
 /// <summary>
-///     An empty window that can be used on its own or navigated to within a Frame.
+/// An empty window that can be used on its own or navigated to within a Frame.
 /// </summary>
-public sealed partial class LyricsWindowSwitchWindow : Window,
-    IRecipient<AppThemeChangedMessage>,
-    IRecipient<LyricsWindowStatusStateChangedMessage>,
-    IRecipient<LyricsWindowKeepScreenOpenChangedMessage>,
-    IRecipient<GlobalShortcutChangedMessage>
+public sealed partial class LyricsWindowSwitchWindow : BaseWindow
 {
-    private readonly IGsmtcService _gsmtcService = Ioc.Default.GetRequiredService<IGsmtcService>();
-    private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
-
-    private readonly IWindowManagerProvider _windowManagerProvider =
-        Ioc.Default.GetRequiredService<IWindowManagerProvider>();
-
-    private readonly WindowMessageMonitor _wmm;
+    public LyricsWindowSwitchWindowViewModel ViewModel { get; } = Ioc.Default.GetRequiredService<LyricsWindowSwitchWindowViewModel>();
 
     public LyricsWindowSwitchWindow()
     {
         InitializeComponent();
-        WeakReferenceMessenger.Default.RegisterAll(this);
 
-        _wmm = new WindowMessageMonitor(this);
-        _wmm.WindowMessageReceived += Wmm_WindowMessageReceived;
-
-        InitShortcuts();
-
-        this.Init("LyricsWindowSwitchWindowTitle", titleBarHeightOption: TitleBarHeightOption.Collapsed,
-            backdropType: BackdropType.Transparent);
-        this.SyncTheme();
+        this.Init("LyricsWindowSwitchWindowTitle", titleBarHeightOption: TitleBarHeightOption.Collapsed, backdropType: BackdropType.Transparent);
 
         SetTitleBar(PlaceholderGrid);
         this.CenterOnScreen();
@@ -61,128 +43,14 @@ public sealed partial class LyricsWindowSwitchWindow : Window,
         AppWindow.Changed += AppWindow_Changed;
     }
 
-    public LyricsWindowSwitchWindowViewModel ViewModel { get; } =
-        Ioc.Default.GetRequiredService<LyricsWindowSwitchWindowViewModel>();
-
-    public void Receive(AppThemeChangedMessage message)
-    {
-        this.SyncTheme();
-    }
-
-    public void Receive(LyricsWindowKeepScreenOpenChangedMessage message)
-    {
-        UpdateScreenKeeperStatus();
-    }
-
-    public void Receive(GlobalShortcutChangedMessage message)
-    {
-        switch (message.ShortcutId)
-        {
-            case ShortcutId.LyricsWindowSwitch:
-                UpdateLyricsWindowSwitchShortcut();
-                break;
-            case ShortcutId.PlayOrPauseSong:
-                UpdatePlayOrPauseSongShortcut();
-                break;
-            case ShortcutId.PreviousSong:
-                UpdatePreviousSongShortcut();
-                break;
-            case ShortcutId.NextSong:
-                UpdateNextSongShortcut();
-                break;
-            case ShortcutId.LyricsWindowShowOrHide:
-                UpdateLyricsWindowShowHideShortcut();
-                break;
-        }
-    }
-
-    public void Receive(LyricsWindowStatusStateChangedMessage message)
-    {
-        UpdateScreenKeeperStatus();
-    }
-
-    private void InitShortcuts()
-    {
-        UpdateLyricsWindowSwitchShortcut();
-        UpdatePlayOrPauseSongShortcut();
-        UpdatePreviousSongShortcut();
-        UpdateNextSongShortcut();
-        UpdateLyricsWindowShowHideShortcut();
-    }
-
-    private void UpdateLyricsWindowSwitchShortcut()
-    {
-        GlobalHotKeyHook.UpdateHotKey(this, ShortcutId.LyricsWindowSwitch,
-            _settingsService.AppSettings.GeneralSettings.LyricsWindowSwitchShortcut,
-            () => { _windowManagerProvider.OpenOrShowWindow<LyricsWindowSwitchWindow>(); }
-        );
-    }
-
-    private void UpdatePlayOrPauseSongShortcut()
-    {
-        GlobalHotKeyHook.UpdateHotKey(this, ShortcutId.PlayOrPauseSong,
-            _settingsService.AppSettings.GeneralSettings.PlayOrPauseShortcut, () =>
-            {
-                if (_gsmtcService.CurrentIsPlaying)
-                    _ = _gsmtcService.PauseAsync();
-                else
-                    _ = _gsmtcService.PlayAsync();
-            });
-    }
-
-    private void UpdatePreviousSongShortcut()
-    {
-        GlobalHotKeyHook.UpdateHotKey(this, ShortcutId.PreviousSong,
-            _settingsService.AppSettings.GeneralSettings.PreviousSongShortcut,
-            () => { _ = _gsmtcService.PreviousAsync(); });
-    }
-
-    private void UpdateNextSongShortcut()
-    {
-        GlobalHotKeyHook.UpdateHotKey(this, ShortcutId.NextSong,
-            _settingsService.AppSettings.GeneralSettings.NextSongShortcut,
-            () => { _ = _gsmtcService.NextAsync(); });
-    }
-
-    private void UpdateLyricsWindowShowHideShortcut()
-    {
-        GlobalHotKeyHook.UpdateHotKey(this, ShortcutId.LyricsWindowShowOrHide,
-            _settingsService.AppSettings.GeneralSettings.ShowOrHideLyricsWindowShortcut,
-            () =>
-            {
-                var windows = _windowManagerProvider.GetWindows<NowPlayingWindow>();
-
-                foreach (var window in windows)
-                    if (window.Visible)
-                        _windowManagerProvider.HideWindow(window);
-                    else
-                        _windowManagerProvider.OpenOrShowWindow<NowPlayingWindow>(window.LyricsWindowStatus);
-            }
-        );
-    }
-
-    private void UpdateScreenKeeperStatus()
-    {
-        // 检测已打开的窗口中是否存在配置为不休眠的窗口
-        var isKeepScreenOpen = _settingsService.AppSettings.WindowBoundsRecords
-            .Where(x => x.WindowStatus == WindowStatus.Opened)
-            .Any(x => x.IsKeepScreenOpen);
-        ScreenKeeper.SetState(isKeepScreenOpen);
-    }
-
-    private void Wmm_WindowMessageReceived(object? sender, WindowMessageEventArgs e)
-    {
-        if ((User32.WindowMessage)e.Message.MessageId == User32.WindowMessage.WM_HOTKEY)
-        {
-            var id = (int)e.Message.WParam;
-            GlobalHotKeyHook.TryInvokeAction(id);
-        }
-    }
-
     private void AppWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
     {
         if (args.DidVisibilityChange)
+        {
             if (sender.IsVisible)
+            {
                 ViewModel.RootGridOpacity = 1;
+            }
+        }
     }
 }

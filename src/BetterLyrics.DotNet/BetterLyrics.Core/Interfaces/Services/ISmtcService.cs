@@ -6,7 +6,7 @@ using System.ComponentModel;
 namespace BetterLyrics.Core.Interfaces.Services;
 
 /// <summary>
-///     Interface for SystemMediaTransportControlsSession Service
+/// Interface for SystemMediaTransportControlsSession Service
 /// </summary>
 public interface ISmtcService : INotifyPropertyChanged
 {

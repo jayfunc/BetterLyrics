@@ -17,13 +17,13 @@ namespace BetterLyrics.WinUI3.Views;
 
 public sealed partial class SettingsPage : Page
 {
+    public SettingsPageViewModel ViewModel => (SettingsPageViewModel)DataContext;
+
     public SettingsPage()
     {
         InitializeComponent();
         DataContext = Ioc.Default.GetRequiredService<SettingsPageViewModel>();
     }
-
-    public SettingsPageViewModel ViewModel => (SettingsPageViewModel)DataContext;
 
     private void AutoSuggestBox_GotFocus(object sender, RoutedEventArgs e)
     {

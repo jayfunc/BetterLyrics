@@ -5,8 +5,8 @@ using System.Runtime.InteropServices;
 namespace BetterLyrics.WinUI3.Hooks;
 
 /// <summary>
-///     Ref:
-///     https://github.com/huanlin/nchinese/blob/b706c08b81eb301fe08dc282b0c00da639dece1d/src/obsolete/NChinese.Imm/WinApi/MsIme.cs
+/// Ref:
+/// https://github.com/huanlin/nchinese/blob/b706c08b81eb301fe08dc282b0c00da639dece1d/src/obsolete/NChinese.Imm/WinApi/MsIme.cs
 /// </summary>
 public class ImeHook
 {

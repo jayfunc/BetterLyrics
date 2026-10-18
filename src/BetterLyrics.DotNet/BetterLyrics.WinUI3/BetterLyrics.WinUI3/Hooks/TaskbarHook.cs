@@ -37,8 +37,7 @@ public partial class TaskbarHook : IDisposable
 
     private readonly Dictionary<HWND, TrackedWindowInfo> _trackedThirdPartyWindows = new();
 
-    private readonly IWindowManagerProvider _windowManagerProvider =
-        Ioc.Default.GetRequiredService<IWindowManagerProvider>();
+    private readonly IWindowManagerProvider _windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
 
     private AutomationElement? _cachedTaskbar;
 

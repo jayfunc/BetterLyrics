@@ -267,6 +267,8 @@ public class Program
                 .AddSingleton<INavigationService, NavigationService>()
                 .AddSingleton<IAppLifecycleService, AppLifecycleService>()
                 .AddSingleton<IAudioMixerService, AudioMixerService>()
+                .AddSingleton<IGlobalShortcutService, GlobalShortcutService>()
+                .AddSingleton<IScreenKeeperService, ScreenKeeperService>()
 
                 // Providers
                 .AddSingleton<IPasswordVaultProvider, PasswordVaultProvider>()
@@ -289,6 +291,7 @@ public class Program
                 .AddSingleton<IMonitorProvider, MonitorProvider>()
                 .AddSingleton<ISpoutTextureProvider, SpoutTextureProvider>()
                 .AddSingleton<ITaskbarThumbnailProvider, TaskbarThumbnailProvider>()
+                .AddSingleton<IGlobalShortcutProvider, GlobalShortcutProvider>()
 
                 // ViewModels
                 .AddSingleton<AppSettingsControlViewModel>()

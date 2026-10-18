@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Vanara.PInvoke;
+using Windows.System.Display;
 using WinRT.Interop;
 
 namespace BetterLyrics.WinUI3.Providers;
@@ -16,12 +17,16 @@ namespace BetterLyrics.WinUI3.Providers;
 /// </summary>
 public partial class MonitorProvider : IMonitorProvider, IDisposable
 {
+    private readonly MonitorHook _monitorHook;
+
+    private readonly DisplayRequest _displayRequest = new();
+    private bool _isKeepScreenOn;
+    private readonly object _lock = new();
+
     public bool IsDisplayOn { get; private set; } = true;
 
     public event EventHandler<bool>? DisplayStatusChanged;
     public event EventHandler? MonitorsChanged;
-
-    private readonly MonitorHook _monitorHook;
 
     public MonitorProvider()
     {
@@ -127,8 +132,33 @@ public partial class MonitorProvider : IMonitorProvider, IDisposable
         return GetPrimaryMonitorInfo();
     }
 
+    public void SetKeepScreenOn(bool keepOn)
+    {
+        lock (_lock)
+        {
+            if (keepOn && !_isKeepScreenOn)
+            {
+                _displayRequest.RequestActive();
+                _isKeepScreenOn = true;
+            }
+            else if (!keepOn && _isKeepScreenOn)
+            {
+                _displayRequest.RequestRelease();
+                _isKeepScreenOn = false;
+            }
+        }
+    }
+
     public void Dispose()
     {
+        lock (_lock)
+        {
+            if (_isKeepScreenOn)
+            {
+                _displayRequest.RequestRelease();
+                _isKeepScreenOn = false;
+            }
+        }
         _monitorHook.Dispose();
     }
 }

@@ -53,11 +53,9 @@ public sealed partial class NowPlayingPage : Page,
 
     private LyricsWindowStatus? _lyricsWindowStatus = null;
 
-    private readonly IGlobalToastProvider _globalToastProvider =
-        Ioc.Default.GetRequiredService<IGlobalToastProvider>();
+    private readonly IGlobalToastProvider _globalToastProvider = Ioc.Default.GetRequiredService<IGlobalToastProvider>();
 
-    private readonly IFilePickerProvider _filePickerProvider =
-        Ioc.Default.GetRequiredService<IFilePickerProvider>();
+    private readonly IFilePickerProvider _filePickerProvider = Ioc.Default.GetRequiredService<IFilePickerProvider>();
 
     private readonly IGsmtcService _gsmtcService = Ioc.Default.GetRequiredService<IGsmtcService>();
 
@@ -67,11 +65,7 @@ public sealed partial class NowPlayingPage : Page,
 
     private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
 
-    private readonly ISongSearchMapService _songSearchMapService =
-        Ioc.Default.GetRequiredService<ISongSearchMapService>();
-
-    private readonly IWindowManagerProvider _windowManagerProvider =
-        Ioc.Default.GetRequiredService<IWindowManagerProvider>();
+    private readonly ISongSearchMapService _songSearchMapService = Ioc.Default.GetRequiredService<ISongSearchMapService>();
 
     public NowPlayingPage()
     {

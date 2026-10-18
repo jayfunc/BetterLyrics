@@ -12,33 +12,13 @@ using Microsoft.UI.Xaml;
 namespace BetterLyrics.WinUI3.Views;
 
 /// <summary>
-///     An empty window that can be used on its own or navigated to within a Frame.
+/// An empty window that can be used on its own or navigated to within a Frame.
 /// </summary>
-public sealed partial class LyricsSearchWindow : Window,
-    IRecipient<AppThemeChangedMessage>
+public sealed partial class LyricsSearchWindow : BaseWindow
 {
-    private readonly IWindowManagerProvider _windowManagerProvider =
-        Ioc.Default.GetRequiredService<IWindowManagerProvider>();
-
     public LyricsSearchWindow()
     {
         InitializeComponent();
-
-        WeakReferenceMessenger.Default.RegisterAll(this);
-
         this.Init("LyricsSearchPageTitle");
-        this.SyncTheme();
-
-        AppWindow.Closing += AppWindow_Closing;
-    }
-
-    public void Receive(AppThemeChangedMessage message)
-    {
-        this.SyncTheme();
-    }
-
-    private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
-    {
-        _windowManagerProvider.CloseWindow(this);
     }
 }

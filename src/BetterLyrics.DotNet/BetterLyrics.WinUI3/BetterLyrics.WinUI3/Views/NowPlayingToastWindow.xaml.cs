@@ -5,7 +5,6 @@ using BetterLyrics.Core.Messages.AppSettings;
 using BetterLyrics.Core.Models;
 using BetterLyrics.WinUI3.Behaviors;
 using BetterLyrics.WinUI3.Extensions;
-using BetterLyrics.WinUI3.Helpers;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Windowing;
@@ -21,25 +20,20 @@ using WinUIEx;
 
 namespace BetterLyrics.WinUI3.Views;
 
-public sealed partial class NowPlayingToastWindow : Window,
-    IRecipient<AppThemeChangedMessage>,
+public sealed partial class NowPlayingToastWindow : BaseWindow,
     IRecipient<NowPlayingNotificationThemeChangedMessage>
 {
-    private readonly IWindowManagerProvider _windowManagerProvider =
-        Ioc.Default.GetRequiredService<IWindowManagerProvider>();
-
-    private readonly IGsmtcService _gsmtcService =
-        Ioc.Default.GetRequiredService<IGsmtcService>();
+    private readonly IGsmtcService _gsmtcService = Ioc.Default.GetRequiredService<IGsmtcService>();
 
     private readonly DispatcherTimer _hideTimer;
     private bool _isShowing;
 
+    private NowPlayingNotificationCorner _currentCorner = NowPlayingNotificationCorner.BottomLeft;
+
     public NowPlayingToastWindow()
     {
         InitializeComponent();
-        WeakReferenceMessenger.Default.RegisterAll(this);
-        this.Init("NowPlayingToastTitle", titleBarHeightOption: TitleBarHeightOption.Collapsed,
-            backdropType: BackdropType.Transparent);
+        this.Init("NowPlayingToastTitle", titleBarHeightOption: TitleBarHeightOption.Collapsed, backdropType: BackdropType.Transparent);
         _windowManagerProvider.SetIsBorderless(this, true);
         AppWindow.IsShownInSwitchers = false;
         _windowManagerProvider.SetIsClickThrough(this, true);
@@ -52,20 +46,15 @@ public sealed partial class NowPlayingToastWindow : Window,
         _hideTimer.Tick += HideTimer_Tick;
     }
 
+    protected override void OnAppThemeChanged(AppThemeChangedMessage message)
+    {
+        SyncNowPlayingTheme();
+    }
+
     private void PopupContainer_Loaded(object sender, RoutedEventArgs e)
     {
         SharedShadow.Receivers.Add(ShadowCastGrid);
         PopupContainer.Translation = new System.Numerics.Vector3(0, 0, 32);
-    }
-
-    public void Receive(AppThemeChangedMessage message)
-    {
-        SyncNowPlayingTheme();
-    }
-
-    public void Receive(NowPlayingNotificationThemeChangedMessage message)
-    {
-        SyncNowPlayingTheme();
     }
 
     private void SyncNowPlayingTheme()
@@ -75,13 +64,13 @@ public sealed partial class NowPlayingToastWindow : Window,
 
         var theme = settingsService.AppSettings.GeneralSettings.NowPlayingNotificationTheme;
         if (theme == AppTheme.Default)
+        {
             theme = settingsService.AppSettings.GeneralSettings.AppTheme;
+        }
 
         this.AppWindow.TitleBar.PreferredTheme = theme.ToTitleBarTheme();
         ((FrameworkElement)this.Content).RequestedTheme = theme.ToElementTheme();
     }
-
-    private NowPlayingNotificationCorner _currentCorner = NowPlayingNotificationCorner.BottomLeft;
 
     public void Init(DisplayArea displayArea, NowPlayingNotificationCorner corner)
     {
@@ -253,5 +242,10 @@ public sealed partial class NowPlayingToastWindow : Window,
             };
             sb.Begin();
         }
+    }
+
+    public void Receive(NowPlayingNotificationThemeChangedMessage message)
+    {
+        SyncNowPlayingTheme();
     }
 }

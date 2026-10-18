@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<Window
+<local:BaseWindow
     x:Class="BetterLyrics.WinUI3.Views.MusicGalleryWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -8,7 +8,6 @@
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
-    Closed="Window_Closed"
     mc:Ignorable="d">
 
     <Grid
@@ -76,4 +75,4 @@
 
     </Grid>
 
-</Window>
+</local:BaseWindow>

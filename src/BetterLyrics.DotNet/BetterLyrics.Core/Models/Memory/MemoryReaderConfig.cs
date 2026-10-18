@@ -1,7 +1,7 @@
 ﻿namespace BetterLyrics.Core.Models.Memory;
 
 /// <summary>
-///     内存读取器的配置对象
+/// 内存读取器的配置对象
 /// </summary>
 public class MemoryReaderConfig
 {

@@ -4,8 +4,8 @@ using ComputeSharp.D2D1;
 namespace BetterLyrics.WinUI3.Shaders;
 
 /// <summary>
-///     Ported from <see href="https://www.shadertoy.com/view/Mdt3Df" />.
-///     Credit/Copyright to the original author.
+/// Ported from <see href="https://www.shadertoy.com/view/Mdt3Df" />.
+/// Credit/Copyright to the original author.
 /// </summary>
 /// <param name="time"></param>
 /// <param name="dispatchSize"></param>

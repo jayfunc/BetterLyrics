@@ -54,12 +54,6 @@ public partial class NowPlayingBarViewModel : ObservableRecipient,
         UpdateVolume();
     }
 
-    ~NowPlayingBarViewModel()
-    {
-        MemoryLeakDetector.Track(this);
-        MemoryLeakDetector.ScheduleCheck(4000);
-    }
-
     public void UpdateVolume()
     {
         var provider = _gsmtcService.CurrentMediaSourceProviderInfo?.Provider;

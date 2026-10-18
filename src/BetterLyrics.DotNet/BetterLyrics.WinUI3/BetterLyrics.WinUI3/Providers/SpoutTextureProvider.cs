@@ -9,6 +9,7 @@ using WinRT;
 namespace BetterLyrics.WinUI3.Providers;
 
 /// <summary>
+/// Singleton Provider
 /// Co-author:
 /// 1) <see href="https://github.com/cnbluefire" />
 /// 2) <see href="https://github.com/Raspberry-Monster" />

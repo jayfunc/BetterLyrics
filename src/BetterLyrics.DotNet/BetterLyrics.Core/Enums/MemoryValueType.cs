@@ -1,7 +1,7 @@
 ﻿namespace BetterLyrics.Core.Enums;
 
 /// <summary>
-///     支持读取的内存数值类型
+/// 支持读取的内存数值类型
 /// </summary>
 public enum MemoryValueType
 {

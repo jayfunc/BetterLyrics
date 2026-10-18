@@ -34,7 +34,7 @@ using Message = BetterLyrics.WinUI3.Constants.Message;
 
 namespace BetterLyrics.WinUI3.Views;
 
-public sealed partial class NowPlayingWindow : Window,
+public sealed partial class NowPlayingWindow : BaseWindow,
     IRecipient<CurrentIsPlayingChangedMessage>,
     IRecipient<AlbumArtBytesChangedMessage>,
     IRecipient<CurrentMediaSourceProviderChangedMessage>,
@@ -56,13 +56,11 @@ public sealed partial class NowPlayingWindow : Window,
     private readonly Debouncer _albumArtThemeColorsDebounder = new();
     private readonly AsyncPoller _alwaysOnTopPoller = new();
 
-    private readonly IAppUIThreadProvider _appUIThreadProvider =
-        Ioc.Default.GetRequiredService<IAppUIThreadProvider>();
+    private readonly IAppUIThreadProvider _appUIThreadProvider = Ioc.Default.GetRequiredService<IAppUIThreadProvider>();
 
     private readonly IGsmtcService _gsmtcService = Ioc.Default.GetRequiredService<IGsmtcService>();
 
-    private readonly ILogger<NowPlayingWindow>
-        _logger = Ioc.Default.GetRequiredService<ILogger<NowPlayingWindow>>();
+    private readonly ILogger<NowPlayingWindow> _logger = Ioc.Default.GetRequiredService<ILogger<NowPlayingWindow>>();
 
     private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
     private readonly AsyncPoller _underlayColorPoller = new();
@@ -70,20 +68,19 @@ public sealed partial class NowPlayingWindow : Window,
     private readonly Debouncer _displayChangeDebouncer = new();
     private readonly Debouncer _windowBoundsChangeDebouncer = new();
 
-    private readonly IWindowManagerProvider _windowManagerProvider =
-        Ioc.Default.GetRequiredService<IWindowManagerProvider>();
+    private readonly IMonitorProvider _monitorProvider = Ioc.Default.GetRequiredService<IMonitorProvider>();
 
-    private readonly IMonitorProvider _monitorProvider =
-        Ioc.Default.GetRequiredService<IMonitorProvider>();
-
-    private readonly ITaskbarThumbnailProvider _taskbarThumbnailProvider =
-        Ioc.Default.GetRequiredService<ITaskbarThumbnailProvider>();
+    private readonly ITaskbarThumbnailProvider _taskbarThumbnailProvider = Ioc.Default.GetRequiredService<ITaskbarThumbnailProvider>();
 
     private AppColor _backdropAccentColor = Colors.Transparent;
     private OverlayInputHelper? _overlayInputHelper;
     private TaskbarHook? _taskbarHook;
     private WindowMessageMonitor? _wmm;
     private uint _taskbarButtonCreatedMsg;
+
+    protected override bool EnableAppThemeChangeSync => false;
+
+    public LyricsWindowStatus LyricsWindowStatus { get; }
 
     public NowPlayingWindow(LyricsWindowStatus status)
     {
@@ -100,116 +97,9 @@ public sealed partial class NowPlayingWindow : Window,
 
         AppWindow.Closing += AppWindow_Closing;
 
-        WeakReferenceMessenger.Default.RegisterAll(this);
-
         RequestUpdateAlbumArtThemeColors();
 
         LyricsWindowStatus.WindowStatus = WindowStatus.Opened;
-    }
-
-    public LyricsWindowStatus LyricsWindowStatus { get; }
-
-    public void Receive(LyricsStyleColorConfigChangedMessage message)
-    {
-        if (message.Sender == LyricsWindowStatus.LyricsStyleSettings)
-            RequestUpdateAlbumArtThemeColors();
-    }
-
-    public void Receive(LyricsBackgroundColorConfigChangedMessage message)
-    {
-        if (message.Sender == LyricsWindowStatus.LyricsBackgroundSettings)
-            RequestUpdateAlbumArtThemeColors();
-    }
-
-    public void Receive(LyricsWindowPaletteConfigChangedMessage message)
-    {
-        if (message.Sender == LyricsWindowStatus)
-            RequestUpdateAlbumArtThemeColors();
-    }
-
-    public void Receive(LyricsWindowAdaptToEnvironmentChangedMessage message)
-    {
-        if (message.Sender == LyricsWindowStatus)
-        {
-            OnIsAdaptToEnvironmentChanged();
-            RequestUpdateAlbumArtThemeColors();
-        }
-    }
-
-    public void Receive(CurrentIsPlayingChangedMessage message)
-    {
-        OnAutoShowOrHideWindowChanged();
-        _taskbarThumbnailProvider.UpdatePlayPauseState(WindowNative.GetWindowHandle(this), _gsmtcService.CurrentIsPlaying);
-    }
-
-    public void Receive(LyricsWindowShownInSwitchersChangedMessage message)
-    {
-        if (message.Sender == LyricsWindowStatus)
-            OnIsShownInSwitchersChanged();
-    }
-
-    public void Receive(LyricsWindowAlwaysOnTopChangedMessage message)
-    {
-        if (message.Sender == LyricsWindowStatus)
-            OnIsAlwaysOnTopChanged();
-    }
-
-    public void Receive(LyricsWindowAlwaysOnTopPollingChangedMessage message)
-    {
-        if (message.Sender == LyricsWindowStatus)
-            OnIsAlwaysOnTopPollingChanged();
-    }
-
-    public void Receive(LyricsWindowLockConfigChangedMessage message)
-    {
-        if (message.Sender == LyricsWindowStatus)
-            OnIsLockedChanged();
-    }
-
-    public void Receive(LyricsWindowAutoHideConfigChangedMessage message)
-    {
-        if (message.Sender == LyricsWindowStatus)
-            OnAutoShowOrHideWindowChanged();
-    }
-
-    public void Receive(LyricsWindowPlayingBarConfigChangedMessage message)
-    {
-        if (message.Sender == LyricsWindowStatus)
-            UpdateNowPlayingBarStatus();
-    }
-
-    public void Receive(AlbumArtBytesChangedMessage message)
-    {
-        RequestUpdateAlbumArtThemeColors();
-    }
-
-    public void Receive(LyricsWindowWorkAreaConfigChangedMessage message)
-    {
-        if (message.Sender == LyricsWindowStatus)
-            OnWorkAreaChanged();
-    }
-
-    public void Receive(CurrentMediaSourceProviderChangedMessage message)
-    {
-        OnAutoShowOrHideWindowChanged();
-    }
-
-    public void Receive(LyricsWindowNameChangedMessage message)
-    {
-        if (message.Sender == LyricsWindowStatus)
-            Title = $"{LyricsWindowStatus.Name} - {Core.Constants.App.AppName}";
-    }
-
-    public void Receive(LyricsWindowTaskbarPlacementChangedMessage message)
-    {
-        if (message.Sender == LyricsWindowStatus)
-            _taskbarHook?.UpdatePlacement(LyricsWindowStatus.TaskbarPlacement);
-    }
-
-    public void Receive(LyricsWindowTitleBarAreaChangedMessage message)
-    {
-        if (message.Sender == LyricsWindowStatus)
-            OnTitleBarAreaChanged();
     }
 
     private void Wmm_WindowMessageReceived(object? sender, WindowMessageEventArgs e)
@@ -674,20 +564,14 @@ public sealed partial class NowPlayingWindow : Window,
     private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
     {
         if (_settingsService.AppSettings.GeneralSettings.ExitOnLyricsWindowClosed)
+        {
             _windowManagerProvider.ExitApp();
-        else
-            _windowManagerProvider.PrepareWindowClosing(this);
+        }
     }
 
-    private void Window_Closed(object sender, WindowEventArgs args)
+    protected override void Cleanup()
     {
-        Closed -= Window_Closed;
-
-        WeakReferenceMessenger.Default.UnregisterAll(this);
-
         StopOverlayInputHelper();
-
-        DetachXamlEventHandlers();
 
         RootGrid.XamlRoot?.Changed -= XamlRoot_Changed;
 
@@ -712,36 +596,6 @@ public sealed partial class NowPlayingWindow : Window,
 
         _taskbarHook?.Dispose();
         _taskbarHook = null;
-    }
-
-    /// <summary>
-    /// 解除 XAML 编译器自动挂接的所有事件处理器。
-    /// 点击顶栏按钮关闭时，指针仍停留在窗口内，按钮处于焦点 / PointerOver 状态，
-    /// WinUI 原生输入系统会继续持有这些元素；而元素上的事件委托又指向本窗口，
-    /// 从而导致窗口无法被 GC 回收。这里主动断开元素 -> 窗口的引用链。
-    /// </summary>
-    private void DetachXamlEventHandlers()
-    {
-        RootGrid.Loaded -= RootGrid_Loaded;
-        RootGrid.SizeChanged -= RootGrid_SizeChanged;
-
-        TopCommandGrid.PointerEntered -= TopCommandGrid_PointerEntered;
-        TopCommandGrid.PointerExited -= TopCommandGrid_PointerExited;
-
-        MusicGalleryButton.Click -= MusicGalleryButton_Click;
-        SettingsWindowButton.Click -= SettingsWindowButton_Click;
-        LyricsWindowSwitchButton.Click -= LyricsWindowSwitchButton_Click;
-
-        LockButton.Click -= LockButton_Click;
-        AOTButton.Click -= AOTButton_Click;
-        FullscreenButton.Click -= FullscreenButton_Click;
-        MinimizeButton.Click -= MinimizeButton_Click;
-        MaximizeButton.Click -= MaximizeButton_Click;
-        CloseButton.Click -= CloseButton_Click;
-
-        UnlockButton.Click -= UnlockButton_Click;
-        UnlockButton.PointerEntered -= UnlockButton_PointerEntered;
-        UnlockButton.PointerExited -= UnlockButton_PointerExited;
     }
 
     private void AppWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
@@ -1017,5 +871,108 @@ public sealed partial class NowPlayingWindow : Window,
     private void XamlRoot_Changed(XamlRoot sender, XamlRootChangedEventArgs args)
     {
         OnTitleBarAreaChanged();
+    }
+
+    public void Receive(LyricsStyleColorConfigChangedMessage message)
+    {
+        if (message.Sender == LyricsWindowStatus.LyricsStyleSettings)
+            RequestUpdateAlbumArtThemeColors();
+    }
+
+    public void Receive(LyricsBackgroundColorConfigChangedMessage message)
+    {
+        if (message.Sender == LyricsWindowStatus.LyricsBackgroundSettings)
+            RequestUpdateAlbumArtThemeColors();
+    }
+
+    public void Receive(LyricsWindowPaletteConfigChangedMessage message)
+    {
+        if (message.Sender == LyricsWindowStatus)
+            RequestUpdateAlbumArtThemeColors();
+    }
+
+    public void Receive(LyricsWindowAdaptToEnvironmentChangedMessage message)
+    {
+        if (message.Sender == LyricsWindowStatus)
+        {
+            OnIsAdaptToEnvironmentChanged();
+            RequestUpdateAlbumArtThemeColors();
+        }
+    }
+
+    public void Receive(CurrentIsPlayingChangedMessage message)
+    {
+        OnAutoShowOrHideWindowChanged();
+        _taskbarThumbnailProvider.UpdatePlayPauseState(WindowNative.GetWindowHandle(this), _gsmtcService.CurrentIsPlaying);
+    }
+
+    public void Receive(LyricsWindowShownInSwitchersChangedMessage message)
+    {
+        if (message.Sender == LyricsWindowStatus)
+            OnIsShownInSwitchersChanged();
+    }
+
+    public void Receive(LyricsWindowAlwaysOnTopChangedMessage message)
+    {
+        if (message.Sender == LyricsWindowStatus)
+            OnIsAlwaysOnTopChanged();
+    }
+
+    public void Receive(LyricsWindowAlwaysOnTopPollingChangedMessage message)
+    {
+        if (message.Sender == LyricsWindowStatus)
+            OnIsAlwaysOnTopPollingChanged();
+    }
+
+    public void Receive(LyricsWindowLockConfigChangedMessage message)
+    {
+        if (message.Sender == LyricsWindowStatus)
+            OnIsLockedChanged();
+    }
+
+    public void Receive(LyricsWindowAutoHideConfigChangedMessage message)
+    {
+        if (message.Sender == LyricsWindowStatus)
+            OnAutoShowOrHideWindowChanged();
+    }
+
+    public void Receive(LyricsWindowPlayingBarConfigChangedMessage message)
+    {
+        if (message.Sender == LyricsWindowStatus)
+            UpdateNowPlayingBarStatus();
+    }
+
+    public void Receive(AlbumArtBytesChangedMessage message)
+    {
+        RequestUpdateAlbumArtThemeColors();
+    }
+
+    public void Receive(LyricsWindowWorkAreaConfigChangedMessage message)
+    {
+        if (message.Sender == LyricsWindowStatus)
+            OnWorkAreaChanged();
+    }
+
+    public void Receive(CurrentMediaSourceProviderChangedMessage message)
+    {
+        OnAutoShowOrHideWindowChanged();
+    }
+
+    public void Receive(LyricsWindowNameChangedMessage message)
+    {
+        if (message.Sender == LyricsWindowStatus)
+            Title = $"{LyricsWindowStatus.Name} - {Core.Constants.App.AppName}";
+    }
+
+    public void Receive(LyricsWindowTaskbarPlacementChangedMessage message)
+    {
+        if (message.Sender == LyricsWindowStatus)
+            _taskbarHook?.UpdatePlacement(LyricsWindowStatus.TaskbarPlacement);
+    }
+
+    public void Receive(LyricsWindowTitleBarAreaChangedMessage message)
+    {
+        if (message.Sender == LyricsWindowStatus)
+            OnTitleBarAreaChanged();
     }
 }

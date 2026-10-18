@@ -4,8 +4,8 @@ using ComputeSharp.D2D1;
 namespace BetterLyrics.WinUI3.Shaders;
 
 /// <summary>
-///     Ported and modified from <see href="https://www.shadertoy.com/view/ltffzl" />.
-///     Credit/Copyright to the original author.
+/// Ported and modified from <see href="https://www.shadertoy.com/view/ltffzl" />.
+/// Credit/Copyright to the original author.
 /// </summary>
 [D2DInputCount(0)]
 [D2DShaderProfile(D2D1ShaderProfile.PixelShader50)]

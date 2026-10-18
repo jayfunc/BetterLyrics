@@ -11,10 +11,4 @@ namespace BetterLyrics.Core.ViewModels;
 public partial class NowPlayingPageViewModel(IGsmtcService mediaSessionsService)
 {
     public IGsmtcService MediaSessionsService { get; } = mediaSessionsService;
-
-    ~NowPlayingPageViewModel()
-    {
-        MemoryLeakDetector.Track(this);
-        MemoryLeakDetector.ScheduleCheck(4000);
-    }
 }

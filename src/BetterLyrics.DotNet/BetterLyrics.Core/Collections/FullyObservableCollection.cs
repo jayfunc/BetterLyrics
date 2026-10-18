@@ -91,7 +91,7 @@ public class FullyObservableCollection<T> : ObservableCollection<T>
 }
 
 /// <summary>
-///     Provides data for the <see cref="FullyObservableCollection{T}.ItemPropertyChanged" /> event.
+/// Provides data for the <see cref="FullyObservableCollection{T}.ItemPropertyChanged" /> event.
 /// </summary>
 public class ItemPropertyChangedEventArgs : PropertyChangedEventArgs
 {

@@ -14,11 +14,9 @@ namespace BetterLyrics.WinUI3.Providers;
 /// </summary>
 public class FilePickerProvider : IFilePickerProvider
 {
-    private readonly IWindowManagerProvider _windowManagerProvider =
-        Ioc.Default.GetRequiredService<IWindowManagerProvider>();
+    private readonly IWindowManagerProvider _windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
 
-    public async Task<(string? name, string? path)> PickSingleFolderAsync(WindowType targetWindowType,
-        object? targetWindowParameter = null)
+    public async Task<(string? name, string? path)> PickSingleFolderAsync(WindowType targetWindowType, object? targetWindowParameter = null)
     {
         var window = _windowManagerProvider.GetWindow(targetWindowType, targetWindowParameter);
         if (window == null) return (null, null);

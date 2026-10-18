@@ -3,7 +3,7 @@
 namespace BetterLyrics.Core.Models.Memory;
 
 /// <summary>
-///     定义如何读取一个具体的数值（地址、偏移、类型）
+/// 定义如何读取一个具体的数值（地址、偏移、类型）
 /// </summary>
 public class MemoryAddressDefinition
 {

@@ -9,7 +9,7 @@ using WinRT.Interop;
 namespace BetterLyrics.WinUI3.Helpers;
 
 /// <summary>
-///     用于管理覆盖层窗口的鼠标交互区域检测
+/// 用于管理覆盖层窗口的鼠标交互区域检测
 /// </summary>
 public class OverlayInputHelper
 {

@@ -9,7 +9,11 @@ public interface IWindowManagerProvider
     // For general windows
 
     void HideWindow(object obj, WindowStatus hiddenBy = WindowStatus.HiddenByUser);
+    void ToggleWindow(object obj);
+    void ToggleWindows(WindowType windowType);
+
     void PrepareWindowClosing(object obj);
+    void OnWindowClosed(object obj);
     void CloseWindow(object obj);
     void MinimizeWindow(object obj);
 
@@ -28,6 +32,7 @@ public interface IWindowManagerProvider
 
     bool IsWindowFocused(object? obj);
     bool IsWindowFocused(WindowType windowType);
+    bool IsWindowVisible(object? obj);
 
     void RestartApp(string args = "");
     void ExitApp();
@@ -37,10 +42,6 @@ public interface IWindowManagerProvider
     void SetIsChildWindow(object obj, bool enable);
     void MoveAndResize(object obj, AppRect rect);
 
-    // For NowPlayingWindow
-
-    object? GetNowPlayingWindow(LyricsWindowStatus status);
-
     void SetIsAlwaysOnTop(object obj, bool enable);
     void SetIsShownInSwitchers(object obj, bool enable);
 
@@ -49,4 +50,7 @@ public interface IWindowManagerProvider
 
     void SetTaskbarProgressState(WindowType windowType, bool isPlaying);
     void SetTaskbarProgressValue(WindowType windowType, double percentage);
+
+    // For NowPlayingWindow
+    object? GetNowPlayingWindow(LyricsWindowStatus status);
 }

@@ -12,5 +12,6 @@ namespace BetterLyrics.Core.Interfaces.Providers
         (string, AppRect) GetPrimaryMonitorInfo();
         string GetPrimaryMonitorDeviceName();
         (string, AppRect) GetMonitorInfoFromWindow(object? window);
+        void SetKeepScreenOn(bool keepOn);
     }
 }
