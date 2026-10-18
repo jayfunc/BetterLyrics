@@ -182,7 +182,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
     private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
     private readonly SnowRenderer _snowRenderer = new();
 
-    private readonly ISpectrumAnalyzer _spectrumAnalyzer = new SpectrumAnalyzerProvider();
+    private readonly ISpectrumAnalyzerProvider _spectrumAnalyzer = new SpectrumAnalyzerProvider();
     private readonly SpectrumRenderer _spectrumRenderer = new();
 
     private readonly LyricsSynchronizer _synchronizer = new();

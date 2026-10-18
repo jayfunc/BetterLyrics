@@ -70,19 +70,6 @@ public partial class App : Application
             var globalToastProvider = Ioc.Default.GetRequiredService<IGlobalToastProvider>();
             globalToastProvider.Initialize();
 
-            AppDomain.CurrentDomain.ProcessExit += (s, e) =>
-            {
-                try
-                {
-                    var smtc = Ioc.Default.GetService<ISmtcService>();
-                    smtc?.SaveCurrentPlaybackPosition();
-
-                    var settings = Ioc.Default.GetService<ISettingsService>();
-                    settings?.TryWriteAppSettingsImmediately();
-                }
-                catch { }
-            };
-
             _ = LaunchAsync();
         }
         catch (Exception ex)

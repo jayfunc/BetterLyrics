@@ -3,6 +3,7 @@ using BetterLyrics.Core.Messages.MediaLibrary;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
+using System.Text.Json.Serialization;
 
 namespace BetterLyrics.Core.Models.Settings;
 
@@ -14,14 +15,9 @@ public partial class MusicGallerySettings : ObservableObject
     [ObservableProperty]
     public partial TrackInfoDisplayTarget TrackInfoDisplayTarget { get; set; } = TrackInfoDisplayTarget.PlayingItem;
 
-    [ObservableProperty]
-    public partial ObservableCollection<string> PlayQueuePaths { get; set; } = [];
-
-    [ObservableProperty]
-    public partial int PlayQueueIndex { get; set; } = -1;
-
-    [ObservableProperty]
-    public partial TimeSpan PlaybackPosition { get; set; } = TimeSpan.Zero;
+    [Obsolete][JsonIgnore(Condition = JsonIgnoreCondition.WhenWriting)][ObservableProperty] public partial ObservableCollection<string> PlayQueuePaths { get; set; } = [];
+    [Obsolete][JsonIgnore(Condition = JsonIgnoreCondition.WhenWriting)][ObservableProperty] public partial int PlayQueueIndex { get; set; } = -1;
+    [Obsolete][JsonIgnore(Condition = JsonIgnoreCondition.WhenWriting)][ObservableProperty] public partial TimeSpan PlaybackPosition { get; set; } = TimeSpan.Zero;
 
     [ObservableProperty]
     public partial bool AutoOpen { get; set; } = false;

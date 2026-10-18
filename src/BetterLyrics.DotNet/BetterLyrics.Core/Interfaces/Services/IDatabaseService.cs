@@ -8,4 +8,5 @@ public interface IDatabaseService
     LiteDatabase FilesIndexDb { get; }
     LiteDatabase LyricsCacheDb { get; }
     LiteDatabase SongSearchMapDb { get; }
+    LiteDatabase PlaybackStateDb { get; }
 }

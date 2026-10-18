@@ -28,10 +28,11 @@ public partial class MusicGalleryPageViewModel : ObservableRecipient,
     private readonly IGlobalToastProvider _globalToastProvider;
     private readonly ILocalizationService _localizationService;
     private readonly IFilePickerProvider _filePickerProvider;
-
-    private readonly Debouncer _refreshSongsDebouncer = new();
     private readonly ISettingsService _settingsService;
     private readonly IWindowManagerProvider _windowManagerProvider;
+    private readonly IPlaybackStateService _playbackStateService;
+
+    private readonly Debouncer _refreshSongsDebouncer = new();
 
     // All songs
     private List<ExtendedTrack> _allTracks = [];
@@ -99,7 +100,7 @@ public partial class MusicGalleryPageViewModel : ObservableRecipient,
     IFileSystemService fileSystemService,
     ISmtcService smtcService, IAppUIThreadProvider appUiThreadProvider,
     IGlobalToastProvider globalToastProvider, IWindowManagerProvider windowManagerProvider,
-    IFilePickerProvider filePickerProvider)
+    IFilePickerProvider filePickerProvider, IPlaybackStateService playbackStateService)
     {
         _localizationService = localizationService;
         _fileSystemService = fileSystemService;
@@ -108,6 +109,7 @@ public partial class MusicGalleryPageViewModel : ObservableRecipient,
         _globalToastProvider = globalToastProvider;
         _windowManagerProvider = windowManagerProvider;
         _filePickerProvider = filePickerProvider;
+        _playbackStateService = playbackStateService;
 
         _settingsService = settingsService;
         AppSettings = _settingsService.AppSettings;

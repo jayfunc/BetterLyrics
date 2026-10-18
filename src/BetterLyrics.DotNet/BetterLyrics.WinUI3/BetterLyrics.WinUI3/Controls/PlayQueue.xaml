@@ -40,7 +40,7 @@
                 HorizontalAlignment="Stretch"
                 VerticalAlignment="Center"
                 Orientation="Horizontal">
-                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex, Mode=OneWay, Converter={StaticResource IndexToDisplayConverter}}" />
+                <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="{x:Bind ViewModel.SMTCService.PlaybackState.PlayQueueIndex, Mode=OneWay, Converter={StaticResource IndexToDisplayConverter}}" />
                 <TextBlock Foreground="{ThemeResource TextFillColorSecondaryBrush}" Text="/" />
                 <TextBlock Text="{x:Bind ViewModel.SMTCService.TrackPlayingQueue.Count, Mode=OneWay}" />
             </StackPanel>
@@ -94,7 +94,7 @@
             x:Name="PlayingQueueListView"
             Grid.Row="3"
             ItemsSource="{x:Bind ViewModel.SMTCService.TrackPlayingQueue, Mode=OneWay}"
-            SelectedIndex="{x:Bind ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex, Mode=OneWay}"
+            SelectedIndex="{x:Bind ViewModel.SMTCService.PlaybackState.PlayQueueIndex, Mode=OneWay}"
             SelectionChanged="PlayingQueueListView_SelectionChanged">
             <ListView.ItemTemplate>
                 <DataTemplate>

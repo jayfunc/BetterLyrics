@@ -9,30 +9,44 @@ using Vanara.PInvoke;
 
 namespace BetterLyrics.WinUI3.Services;
 
-public class AudioMixerService : IAudioMixerService
+public class AudioMixerService : IAudioMixerService, IDisposable
 {
     private readonly ILogger<AudioMixerService> _logger;
 
     private MMDeviceEnumerator? _deviceEnumerator;
-    private MMDevice? _defaultDevice;
 
     public AudioMixerService(ILogger<AudioMixerService> logger)
     {
         _logger = logger;
-        InitializeAudioDevice();
-    }
-
-    private void InitializeAudioDevice()
-    {
         try
         {
             _deviceEnumerator = new MMDeviceEnumerator();
-            _defaultDevice = _deviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "InitializeAudioDevice");
+            _logger.LogError(ex, "Failed to initialize MMDeviceEnumerator");
         }
+    }
+
+    private MMDevice? GetDefaultDevice()
+    {
+        try
+        {
+            _deviceEnumerator ??= new MMDeviceEnumerator();
+            return _deviceEnumerator.GetDefaultAudioEndpoint(DataFlow.Render, Role.Multimedia);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "GetDefaultDevice failed");
+            return null;
+        }
+    }
+
+    public void Dispose()
+    {
+        _deviceEnumerator?.Dispose();
+        _deviceEnumerator = null;
+        GC.SuppressFinalize(this);
     }
 
     private string? GetProcessAumid(uint pid)
@@ -67,8 +81,6 @@ public class AudioMixerService : IAudioMixerService
 
     public void SetApplicationVolume(int processId, int volume)
     {
-        if (_defaultDevice == null) return;
-
         var targetVol = Math.Clamp(volume, 0, 100) / 100f;
 
         RunOnAudioSessions(processId, session =>
@@ -107,13 +119,13 @@ public class AudioMixerService : IAudioMixerService
             }
         }
 
-        if (_defaultDevice == null) return;
-
-        var targetVol = Math.Clamp(volume, 0, 100) / 100f;
-
         try
         {
-            var sessionManager = _defaultDevice.AudioSessionManager;
+            using var defaultDevice = GetDefaultDevice();
+            if (defaultDevice == null) return;
+
+            var targetVol = Math.Clamp(volume, 0, 100) / 100f;
+            var sessionManager = defaultDevice.AudioSessionManager;
             sessionManager.RefreshSessions();
 
             for (var i = 0; i < sessionManager.Sessions.Count; i++)
@@ -146,8 +158,6 @@ public class AudioMixerService : IAudioMixerService
 
     public int GetApplicationVolume(int processId)
     {
-        if (_defaultDevice == null) return -1;
-
         var result = -1;
 
         RunOnAudioSessions(processId, session => { result = (int)(session.SimpleAudioVolume.Volume * 100); }, true);
@@ -193,11 +203,12 @@ public class AudioMixerService : IAudioMixerService
                 }
         }
 
-        if (_defaultDevice == null) return -1;
-
         try
         {
-            var sessionManager = _defaultDevice.AudioSessionManager;
+            using var defaultDevice = GetDefaultDevice();
+            if (defaultDevice == null) return -1;
+
+            var sessionManager = defaultDevice.AudioSessionManager;
             sessionManager.RefreshSessions();
 
             for (var i = 0; i < sessionManager.Sessions.Count; i++)
@@ -230,11 +241,12 @@ public class AudioMixerService : IAudioMixerService
     private void RunOnAudioSessions(int targetPid, Action<AudioSessionControl> action,
         bool stopAfterFirst = false)
     {
-        if (_defaultDevice == null) return;
-
         try
         {
-            var sessionManager = _defaultDevice.AudioSessionManager;
+            using var defaultDevice = GetDefaultDevice();
+            if (defaultDevice == null) return;
+
+            var sessionManager = defaultDevice.AudioSessionManager;
             sessionManager.RefreshSessions();
 
             for (var i = 0; i < sessionManager.Sessions.Count; i++)
@@ -262,13 +274,15 @@ public class AudioMixerService : IAudioMixerService
 
     public void SetSystemVolume(int volume)
     {
-        if (_defaultDevice == null) return;
         try
         {
+            using var defaultDevice = GetDefaultDevice();
+            if (defaultDevice == null) return;
+
             var targetVol = Math.Clamp(volume, 0, 100) / 100f;
-            _defaultDevice.AudioEndpointVolume.MasterVolumeLevelScalar = targetVol;
-            if (_defaultDevice.AudioEndpointVolume.Mute)
-                _defaultDevice.AudioEndpointVolume.Mute = false;
+            defaultDevice.AudioEndpointVolume.MasterVolumeLevelScalar = targetVol;
+            if (defaultDevice.AudioEndpointVolume.Mute)
+                defaultDevice.AudioEndpointVolume.Mute = false;
         }
         catch (Exception ex)
         {
@@ -278,10 +292,12 @@ public class AudioMixerService : IAudioMixerService
 
     public int GetSystemVolume()
     {
-        if (_defaultDevice == null) return -1;
         try
         {
-            return (int)(_defaultDevice.AudioEndpointVolume.MasterVolumeLevelScalar * 100);
+            using var defaultDevice = GetDefaultDevice();
+            if (defaultDevice == null) return -1;
+
+            return (int)(defaultDevice.AudioEndpointVolume.MasterVolumeLevelScalar * 100);
         }
         catch (Exception ex)
         {

@@ -28,7 +28,7 @@ public partial class PlayQueueViewModel : ObservableObject
     private void EmptyPlayingQueue()
     {
         SMTCService.TrackPlayingQueue.Clear(); // Reset
-        AppSettings.MusicGallerySettings.PlayQueueIndex = -1;
+        SMTCService.PlaybackState.PlayQueueIndex = -1;
         SMTCService.PlayTrackAt(-1); // Stop playing
     }
 
@@ -38,7 +38,7 @@ public partial class PlayQueueViewModel : ObservableObject
         SMTCService.TrackPlayingQueue.Remove(item);
         if (SMTCService.TrackPlayingQueue.Count == 0)
         {
-            AppSettings.MusicGallerySettings.PlayQueueIndex = -1;
+            SMTCService.PlaybackState.PlayQueueIndex = -1;
             SMTCService.PlayTrackAt(-1); // Stop playing
         }
     }

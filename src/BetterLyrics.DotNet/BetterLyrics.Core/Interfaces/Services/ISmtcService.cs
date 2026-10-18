@@ -1,5 +1,6 @@
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Models;
+using BetterLyrics.Core.Models.Entities;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 
@@ -14,9 +15,9 @@ public interface ISmtcService : INotifyPropertyChanged
 
     public ObservableCollection<PlayQueueItem> TrackPlayingQueue { get; set; }
     public ExtendedTrack? PlayingTrack { get; set; }
+    public PlaybackState PlaybackState { get; }
 
-    Task UpdatePlaybackListAsync(IEnumerable<PlayQueueItem> source, bool recoverPlaybackPosition = false,
-        bool allowAutoPlay = false);
+    Task UpdatePlaybackListAsync(IEnumerable<PlayQueueItem> source, bool recoverPlaybackPosition = false, bool allowAutoPlay = false);
 
     void ApplyPlaybackOrder(PlaybackOrder order);
 

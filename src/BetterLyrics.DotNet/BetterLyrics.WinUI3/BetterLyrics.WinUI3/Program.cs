@@ -238,6 +238,10 @@ public class Program
                 // 数据库服务和迁移
                 .AddSingleton<IDatabaseService, DatabaseService>()
                 .AddSingleton<IDatabaseMigrationService, DatabaseMigrationService>()
+                .AddSingleton<IPlayHistoryService, PlayHistoryService>()
+                .AddSingleton<IFileSystemService, FileSystemService>()
+                .AddSingleton<ISongSearchMapService, SongSearchMapService>()
+                .AddSingleton<IPlaybackStateService, PlaybackStateService>()
 
                 // 日志
                 .AddLogging(loggingBuilder =>
@@ -257,10 +261,7 @@ public class Program
                 .AddSingleton<ILastFmService, LastFmService>()
                 .AddSingleton<IDiscordService, DiscordService>()
                 .AddSingleton<ILocalizationService, LocalizationService>()
-                .AddSingleton<IFileSystemService, FileSystemService>()
-                .AddSingleton<IPlayHistoryService, PlayHistoryService>()
                 .AddSingleton<ILyricsCacheService, LyricsCacheService>()
-                .AddSingleton<ISongSearchMapService, SongSearchMapService>()
                 .AddSingleton<IPluginService, PluginService>()
                 .AddSingleton<IFileWatchService, FileWatchService>()
                 .AddSingleton<IAppUpdateService, AppUpdateService>()

@@ -48,13 +48,13 @@ public sealed partial class MusicGalleryPage : Page
     private void AddSongToQueueNextMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
     {
         var startPlaying = _smtcService.TrackPlayingQueue.Count == 0;
-        _smtcService.TrackPlayingQueue.InsertRange(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex + 1,
+        _smtcService.TrackPlayingQueue.InsertRange(
+            _smtcService.PlaybackState.PlayQueueIndex + 1,
             SongListView.SelectedItems.Cast<ExtendedTrack>().Select(x => new PlayQueueItem(x)));
         if (startPlaying)
         {
-            ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex =
-                ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex + 1;
-            _smtcService.PlayTrackAt(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex);
+            _smtcService.PlaybackState.PlayQueueIndex = _smtcService.PlaybackState.PlayQueueIndex + 1;
+            _smtcService.PlayTrackAt(_smtcService.PlaybackState.PlayQueueIndex);
         }
     }
 
@@ -62,13 +62,14 @@ public sealed partial class MusicGalleryPage : Page
     {
         var startPlaying = _smtcService.TrackPlayingQueue.Count == 0;
         foreach (var item in SongListView.SelectedItems.Cast<ExtendedTrack>().Select(x => new PlayQueueItem(x)))
+        {
             _smtcService.TrackPlayingQueue.Add(item);
+        }
 
         if (startPlaying)
         {
-            ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex =
-                ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex + 1;
-            _smtcService.PlayTrackAt(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex);
+            _smtcService.PlaybackState.PlayQueueIndex = _smtcService.PlaybackState.PlayQueueIndex + 1;
+            _smtcService.PlayTrackAt(_smtcService.PlaybackState.PlayQueueIndex);
         }
     }
 
@@ -103,9 +104,13 @@ public sealed partial class MusicGalleryPage : Page
                 if (SelectAllCheckBox != null && listViewBase.SelectionMode == ListViewSelectionMode.Multiple)
                 {
                     if (listViewBase.SelectedItems.Count == listViewBase.Items.Count)
+                    {
                         SelectAllCheckBox.IsChecked = true;
+                    }
                     else if (listViewBase.SelectedItems.Count == 0)
+                    {
                         SelectAllCheckBox.IsChecked = false;
+                    }
                 }
             }
         }
@@ -175,7 +180,9 @@ public sealed partial class MusicGalleryPage : Page
         {
             viewModel.CancelRefreshSongs();
             if (viewModel.AppSettings.MusicGallerySettings.StopOnWindowClosed)
+            {
                 viewModel.StopTrackCommand.Execute(null);
+            }
         }
 
         GroupedTracksCVS.Source = null;
@@ -249,13 +256,14 @@ public sealed partial class MusicGalleryPage : Page
                 if (File.Exists(path))
                 {
                     var content = File.ReadAllText(path);
-                    foreach (var item in ViewModel.SelectedTracks.Select(x => x.Uri.ToDecodedAbsoluteUri())
-                                 .ToList())
+                    foreach (var item in ViewModel.SelectedTracks.Select(x => x.Uri.ToDecodedAbsoluteUri()).ToList())
+                    {
                         if (!content.Contains(item))
                         {
                             content += Environment.NewLine;
                             content += item;
                         }
+                    }
 
                     File.WriteAllText(path, content);
                     _globalToastProvider.Show("TracksAddToPlaylistSuccessfully", null, MessageSeverity.Success);

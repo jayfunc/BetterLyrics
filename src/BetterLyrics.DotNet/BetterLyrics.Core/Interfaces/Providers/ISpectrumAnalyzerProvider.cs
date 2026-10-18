@@ -1,6 +1,6 @@
-namespace BetterLyrics.Core.Interfaces.Services;
+namespace BetterLyrics.Core.Interfaces.Providers;
 
-public interface ISpectrumAnalyzer : IDisposable
+public interface ISpectrumAnalyzerProvider : IDisposable
 {
     float[]? SmoothSpectrum { get; }
     float CurrentBassEnergy { get; }

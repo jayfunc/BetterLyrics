@@ -33,10 +33,12 @@ public partial class SmtcService : ObservableObject, ISmtcService
     private readonly IAppUIThreadProvider _appUIThreadProvider;
     private readonly IFileSystemService _fileSystemService;
     private readonly IGlobalToastProvider _globalToastProvider;
-    private readonly MediaPlayer _mediaPlayer;
-    private readonly Timer _positionTimer;
     private readonly ISettingsService _settingsService;
     private readonly IAudioMixerService _audioMixerService;
+    private readonly IPlaybackStateService _playbackStateService;
+
+    private readonly MediaPlayer _mediaPlayer;
+    private readonly Timer _positionTimer;
 
     private int _currentIndex = -1;
     private readonly List<int> _shuffleOrder = [];
@@ -49,16 +51,20 @@ public partial class SmtcService : ObservableObject, ISmtcService
 
     [ObservableProperty] public partial ObservableCollection<PlayQueueItem> TrackPlayingQueue { get; set; } = [];
     [ObservableProperty] public partial ExtendedTrack? PlayingTrack { get; set; }
+    [ObservableProperty] public partial PlaybackState PlaybackState { get; set; }
 
     public SmtcService(ISettingsService settingsService, IFileSystemService fileSystemService,
         IAppUIThreadProvider appUiThreadProvider, IGlobalToastProvider globalToastProvider,
-        IAudioMixerService audioMixerService)
+        IAudioMixerService audioMixerService, IPlaybackStateService playbackStateService)
     {
         _settingsService = settingsService;
         _fileSystemService = fileSystemService;
         _appUIThreadProvider = appUiThreadProvider;
         _globalToastProvider = globalToastProvider;
         _audioMixerService = audioMixerService;
+        _playbackStateService = playbackStateService;
+
+        PlaybackState = _playbackStateService.CurrentState;
 
         _mediaPlayer = new MediaPlayer();
 
@@ -152,11 +158,12 @@ public partial class SmtcService : ObservableObject, ISmtcService
         catch { }
     }
 
-    public async Task UpdatePlaybackListAsync(IEnumerable<PlayQueueItem> playQueue,
-        bool recoverPlaybackPosition = false, bool allowAutoPlay = false)
+    public async Task UpdatePlaybackListAsync(IEnumerable<PlayQueueItem> playQueue, bool recoverPlaybackPosition = false, bool allowAutoPlay = false)
     {
         var musicGallerySettings = _settingsService.AppSettings.MusicGallerySettings;
-        var savedIndex = musicGallerySettings.PlayQueueIndex;
+
+        var savedPlaybackState = _playbackStateService.CurrentState;
+        var savedPlaybackIndex = savedPlaybackState.PlayQueueIndex;
 
         var playQueueList = playQueue.ToList();
 
@@ -164,8 +171,7 @@ public partial class SmtcService : ObservableObject, ISmtcService
         TrackPlayingQueue = [.. playQueueList];
         TrackPlayingQueue.CollectionChanged += TrackPlayingQueue_CollectionChanged;
 
-        _settingsService.AppSettings.MusicGallerySettings.PlayQueuePaths =
-            [.. TrackPlayingQueue.Select(x => x.Track.Uri.ToDecodedAbsoluteUri())];
+        PlaybackState.PlayQueuePaths = [.. TrackPlayingQueue.Select(x => x.Track.Uri.ToDecodedAbsoluteUri())];
 
         _mediaPlayer.Pause();
         _positionTimer.Stop();
@@ -174,10 +180,12 @@ public partial class SmtcService : ObservableObject, ISmtcService
 
         ApplyPlaybackOrder(musicGallerySettings.PlaybackOrder);
 
-        if (savedIndex >= 0 && savedIndex < TrackPlayingQueue.Count)
+        if (savedPlaybackIndex >= 0 && savedPlaybackIndex < TrackPlayingQueue.Count)
         {
-            _currentIndex = savedIndex;
-            var queueItem = TrackPlayingQueue[savedIndex];
+            _currentIndex = savedPlaybackIndex;
+            PlaybackState.PlayQueueIndex = savedPlaybackIndex;
+
+            var queueItem = TrackPlayingQueue[savedPlaybackIndex];
             PlayingTrack = queueItem.Track;
 
             _currentPlaybackItem = CreatePlaybackItem(queueItem);
@@ -188,7 +196,7 @@ public partial class SmtcService : ObservableObject, ISmtcService
 
             if (recoverPlaybackPosition)
             {
-                _mediaPlayer.Position = musicGallerySettings.PlaybackPosition;
+                _mediaPlayer.Position = savedPlaybackState.PlaybackPosition;
             }
 
             if (allowAutoPlay && musicGallerySettings.AutoPlay)
@@ -200,6 +208,7 @@ public partial class SmtcService : ObservableObject, ISmtcService
         else
         {
             _currentIndex = -1;
+            PlaybackState.PlayQueueIndex = -1;
             PlayingTrack = null;
             _mediaPlayer.SystemMediaTransportControls.IsEnabled = false;
         }
@@ -343,7 +352,7 @@ public partial class SmtcService : ObservableObject, ISmtcService
         if (index >= 0 && index < TrackPlayingQueue.Count)
         {
             _currentIndex = index;
-            _settingsService.AppSettings.MusicGallerySettings.PlayQueueIndex = index;
+            PlaybackState.PlayQueueIndex = index;
 
             var queueItem = TrackPlayingQueue[index];
             PlayingTrack = queueItem.Track;
@@ -373,7 +382,7 @@ public partial class SmtcService : ObservableObject, ISmtcService
 
             if (recoverPlaybackPosition)
             {
-                _mediaPlayer.Position = _settingsService.AppSettings.MusicGallerySettings.PlaybackPosition;
+                _mediaPlayer.Position = PlaybackState.PlaybackPosition;
             }
 
             _mediaPlayer.Play();
@@ -387,9 +396,11 @@ public partial class SmtcService : ObservableObject, ISmtcService
             CleanupCurrentPlaybackItem();
 
             _mediaPlayer.SystemMediaTransportControls.IsEnabled = false;
-            _settingsService.AppSettings.MusicGallerySettings.PlaybackPosition = TimeSpan.Zero;
-            _settingsService.AppSettings.MusicGallerySettings.PlayQueueIndex = -1;
+
             _currentIndex = -1;
+            PlaybackState.PlayQueueIndex = -1;
+            PlaybackState.PlaybackPosition = TimeSpan.Zero;
+
             PlayingTrack = null;
         }
     }
@@ -459,9 +470,10 @@ public partial class SmtcService : ObservableObject, ISmtcService
             var session = _mediaPlayer.PlaybackSession;
             if (session != null)
             {
+                var pos = session.Position;
                 _appUIThreadProvider.Execute(() =>
                 {
-                    _settingsService.AppSettings.MusicGallerySettings.PlaybackPosition = session.Position;
+                    PlaybackState.PlaybackPosition = pos;
                 });
             }
         }
@@ -536,11 +548,9 @@ public partial class SmtcService : ObservableObject, ISmtcService
         catch { }
     }
 
-    private void TrackPlayingQueue_CollectionChanged(object? sender,
-        NotifyCollectionChangedEventArgs e)
+    private void TrackPlayingQueue_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
-        _settingsService.AppSettings.MusicGallerySettings.PlayQueuePaths =
-            [.. TrackPlayingQueue.Select(x => x.Track.Uri.ToDecodedAbsoluteUri())];
+        PlaybackState.PlayQueuePaths = [.. TrackPlayingQueue.Select(x => x.Track.Uri.ToDecodedAbsoluteUri())];
 
         switch (e.Action)
         {
@@ -548,7 +558,7 @@ public partial class SmtcService : ObservableObject, ISmtcService
                 if (e.NewStartingIndex <= _currentIndex)
                 {
                     _currentIndex += e.NewItems?.Count ?? 0;
-                    _settingsService.AppSettings.MusicGallerySettings.PlayQueueIndex = _currentIndex;
+                    PlaybackState.PlayQueueIndex = _currentIndex;
                 }
                 if (_settingsService.AppSettings.MusicGallerySettings.PlaybackOrder == PlaybackOrder.Shuffle)
                 {
@@ -577,7 +587,7 @@ public partial class SmtcService : ObservableObject, ISmtcService
                 else if (_currentIndex > removedEnd)
                 {
                     _currentIndex -= removedCount;
-                    _settingsService.AppSettings.MusicGallerySettings.PlayQueueIndex = _currentIndex;
+                    PlaybackState.PlayQueueIndex = _currentIndex;
                 }
 
                 if (_settingsService.AppSettings.MusicGallerySettings.PlaybackOrder == PlaybackOrder.Shuffle)

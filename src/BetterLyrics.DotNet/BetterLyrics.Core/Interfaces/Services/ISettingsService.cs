@@ -10,5 +10,5 @@ public interface ISettingsService
 
     bool ImportSettings(string importPath);
     void ExportSettings(string exportPath);
-    void TryWriteAppSettingsImmediately();
+    void TryWriteImmediately();
 }

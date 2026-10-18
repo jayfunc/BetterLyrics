@@ -78,7 +78,7 @@ public class SettingsService : ISettingsService
         AppSettings.LayoutProfiles.CollectionChanged += AppSettings_CollectionChanged;
         AppSettings.LayoutProfiles.ItemPropertyChanged += AppSettings_ItemPropertyChanged;
 
-        AppSettings.MusicGallerySettings.PlayQueuePaths.CollectionChanged += AppSettings_CollectionChanged;
+        //AppSettings.MusicGallerySettings.PlayQueuePaths.CollectionChanged += AppSettings_CollectionChanged;
 
         AppSettings.Version = MetadataHelper.AppVersion;
 
@@ -352,7 +352,7 @@ public class SettingsService : ISettingsService
         });
     }
 
-    public void TryWriteAppSettingsImmediately()
+    public void TryWriteImmediately()
     {
         _appUiThreadProvider.Execute(() =>
         {

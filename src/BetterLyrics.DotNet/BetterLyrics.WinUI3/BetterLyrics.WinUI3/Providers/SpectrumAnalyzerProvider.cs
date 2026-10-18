@@ -1,5 +1,5 @@
 using BetterLyrics.Core.Helpers;
-using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.WinUI3.Helpers;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -14,9 +14,9 @@ using System.Threading.Tasks;
 namespace BetterLyrics.WinUI3.Providers;
 
 /// <summary>
-/// Singleton Provider
+/// Transient Provider
 /// </summary>
-public partial class SpectrumAnalyzerProvider : ISpectrumAnalyzer
+public partial class SpectrumAnalyzerProvider : ISpectrumAnalyzerProvider
 {
     private readonly Debouncer _deviceDebouncer = new();
     private readonly MMDeviceEnumerator? _deviceEnumerator;
@@ -33,6 +33,7 @@ public partial class SpectrumAnalyzerProvider : ISpectrumAnalyzer
     // Windowing & Compensation
     private readonly double[] _hammingWindow;
     private readonly object _lock = new();
+    private readonly object _captureLock = new();
     private readonly ILogger<SpectrumAnalyzerProvider> _logger;
     private readonly int _m; // FFT Log2 n
     private SafeWasapiLoopbackCapture? _capture;
@@ -57,7 +58,7 @@ public partial class SpectrumAnalyzerProvider : ISpectrumAnalyzer
         try
         {
             _deviceEnumerator = new MMDeviceEnumerator();
-            _notificationClient = _deviceEnumerator.CreateNotificationClient();
+            _notificationClient = _deviceEnumerator.CreateNotificationClient(false);
             _notificationClient.DefaultDeviceChanged += OnDefaultDeviceChanged;
         }
         catch (Exception ex)
@@ -113,27 +114,48 @@ public partial class SpectrumAnalyzerProvider : ISpectrumAnalyzer
     {
         if (!_disposed)
         {
+            _disposed = true;
+
             StopCapture();
 
             try
             {
                 _deviceDebouncer.Dispose();
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, "Error occurred during debouncer disposal");
+            }
 
+            try
+            {
                 if (_notificationClient != null)
                 {
                     _notificationClient.DefaultDeviceChanged -= OnDefaultDeviceChanged;
+                    _notificationClient.Dispose();
                 }
+            }
+            catch (Exception ex)
+            {
+                _logger?.LogError(ex, "Error occurred during notification client disposal");
+            }
+
+            try
+            {
                 _deviceEnumerator?.Dispose();
             }
             catch (Exception ex)
             {
-                _logger?.LogError(ex, "Error occurred during SpectrumAnalyzer disposal");
+                _logger?.LogError(ex, "Error occurred during device enumerator disposal");
             }
-            finally
-            {
-                _disposed = true;
-            }
+
+            GC.SuppressFinalize(this);
         }
+    }
+
+    ~SpectrumAnalyzerProvider()
+    {
+        Dispose();
     }
 
     private void OnDefaultDeviceChanged(object? sender, DefaultDeviceChangedEventArgs e)
@@ -148,68 +170,80 @@ public partial class SpectrumAnalyzerProvider : ISpectrumAnalyzer
             {
                 _logger.LogInformation("Audio device stable, restarting capture...");
                 await Task.Delay(500, token);
-                StartCapture();
+
+                for (var i = 0; i < 3 && !token.IsCancellationRequested; i++)
+                {
+                    StartCapture();
+                    if (IsCapturing) break;
+                    await Task.Delay(500, token);
+                }
             }, 1000);
         }
     }
 
     public void StartCapture()
     {
-        if (IsCapturing) return;
-
-        try
+        lock (_captureLock)
         {
-            _capture = new SafeWasapiLoopbackCapture();
-            //_capture = new WasapiLoopbackCapture();
-            _sampleRate = _capture.WaveFormat.SampleRate;
+            if (IsCapturing || _disposed) return;
 
-            lock (_lock)
+            try
             {
-                _currentSpectrum = new float[BarCount];
-                SmoothSpectrum = new float[BarCount];
+                _capture = new SafeWasapiLoopbackCapture();
+                //_capture = new WasapiLoopbackCapture();
+                _sampleRate = _capture.WaveFormat.SampleRate;
 
-                var effectiveLength = _fftLength / 2;
+                lock (_lock)
+                {
+                    _currentSpectrum = new float[BarCount];
+                    SmoothSpectrum = new float[BarCount];
 
-                _fullSpectrumData = new float[effectiveLength * 2];
+                    var effectiveLength = _fftLength / 2;
 
-                PrecomputeCompensation(effectiveLength);
+                    _fullSpectrumData = new float[effectiveLength * 2];
+
+                    PrecomputeCompensation(effectiveLength);
+                }
+
+                _capture.DataAvailable += OnDataAvailable;
+                _capture.RecordingStopped += OnRecordingStopped;
+                _capture.StartRecording();
+
+                IsCapturing = true;
             }
-
-            _capture.DataAvailable += OnDataAvailable;
-            _capture.RecordingStopped += OnRecordingStopped;
-            _capture.StartRecording();
-
-            IsCapturing = true;
-        }
-        catch (Exception ex)
-        {
-            // 建议记录日志
-            _logger.LogError(ex, "StartCapture");
+            catch (Exception ex)
+            {
+                // 建议记录日志
+                _logger.LogError(ex, "StartCapture");
+            }
         }
     }
 
     public void StopCapture()
     {
-        if (_capture != null)
+        lock (_captureLock)
         {
-            try
+            if (_capture != null)
             {
-                _capture.DataAvailable -= OnDataAvailable;
-                _capture.RecordingStopped -= OnRecordingStopped;
-                _capture.StopRecording();
-                _capture.Dispose();
+                try
+                {
+                    _capture.DataAvailable -= OnDataAvailable;
+                    _capture.RecordingStopped -= OnRecordingStopped;
+                    _capture.StopRecording();
+                    _capture.Dispose();
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(ex, "Error occurred while stopping NAudio capture");
+                }
+                finally
+                {
+                    _capture = null;
+                }
             }
-            catch (Exception ex)
-            {
-                _logger.LogError(ex, "Error occurred while stopping NAudio capture");
-            }
-            finally
-            {
-                _capture = null;
-            }
-        }
 
-        IsCapturing = false;
+            IsCapturing = false;
+        }
     }
 
     private static float CalculateCompensationFactor(float freq)

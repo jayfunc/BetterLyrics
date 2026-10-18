@@ -370,8 +370,11 @@ public class WindowManagerProvider : IWindowManagerProvider
             var smtcService = Ioc.Default.GetService<ISmtcService>();
             smtcService?.SaveCurrentPlaybackPosition();
 
+            var playbackStateService = Ioc.Default.GetService<IPlaybackStateService>();
+            playbackStateService?.TryWriteImmediately();
+
             var settingsService = Ioc.Default.GetService<ISettingsService>();
-            settingsService?.TryWriteAppSettingsImmediately();
+            settingsService?.TryWriteImmediately();
         }
         catch { }
 

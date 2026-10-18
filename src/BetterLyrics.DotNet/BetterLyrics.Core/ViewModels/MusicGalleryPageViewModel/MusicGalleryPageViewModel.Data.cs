@@ -1,6 +1,7 @@
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Settings;
 using System.Collections.ObjectModel;
@@ -33,13 +34,13 @@ public partial class MusicGalleryPageViewModel
                     .ToList();
                 var sourceDict = newTrackList.ToDictionary(s => s.Uri, s => s);
 
-                var playQueue = _settingsService.AppSettings.MusicGallerySettings.PlayQueuePaths
+                var savedPaths = _playbackStateService.CurrentState.PlayQueuePaths;
+                var playQueue = savedPaths
                     .Where(x => !string.IsNullOrWhiteSpace(x))
                     .Select(x =>
                     {
                         var encodedUri = new Uri(x).AbsoluteUri;
                         if (sourceDict.TryGetValue(encodedUri, out var found)) return new PlayQueueItem(found);
-
                         return null;
                     })
                     .Where(x => x != null)

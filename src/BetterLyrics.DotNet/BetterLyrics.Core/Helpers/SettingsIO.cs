@@ -15,7 +15,10 @@ public static class SettingsIO
             var bakPath = path + ".bak";
             try
             {
-                File.WriteAllText(tempPath, JsonSerializer.Serialize(settings, jsonTypeInfo));
+                using (var fileStream = new FileStream(tempPath, FileMode.Create, FileAccess.Write, FileShare.None))
+                {
+                    JsonSerializer.Serialize(fileStream, settings, jsonTypeInfo);
+                }
 
                 if (File.Exists(path))
                 {

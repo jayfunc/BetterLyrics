@@ -27,8 +27,8 @@ public sealed partial class PlayQueue : UserControl
     {
         if (PlayingQueueListView == null) return;
 
-        var targetItem = ViewModel.SMTCService.TrackPlayingQueue
-            .ElementAtOrDefault(ViewModel.AppSettings.MusicGallerySettings.PlayQueueIndex);
+        var targetItem = ViewModel.SMTCService.TrackPlayingQueue.ElementAtOrDefault(ViewModel.SMTCService.PlaybackState.PlayQueueIndex);
+
         if (targetItem == null) return;
 
         PlayingQueueListView.ScrollIntoView(targetItem);

@@ -75,6 +75,7 @@ public static class PathHelper
     public static string FilesIndexLiteDbPath => Path.Combine(LocalFolderPath, "files-index.litedb");
     public static string SongSearchMapLiteDbPath => Path.Combine(LocalFolderPath, "song-search-map.litedb");
     public static string LyricsCacheLiteDbPath => Path.Combine(LyricsCacheDirectory, "lyrics-cache.litedb");
+    public static string PlaybackStateLiteDbPath => Path.Combine(LocalFolderPath, "playback-state.litedb");
 
     public static string PluginsDirectory => Path.Combine(LocalFolderPath, "plugins");
     public static string PendingPluginsDirectory => Path.Combine(LocalFolderPath, "plugins-pending");
