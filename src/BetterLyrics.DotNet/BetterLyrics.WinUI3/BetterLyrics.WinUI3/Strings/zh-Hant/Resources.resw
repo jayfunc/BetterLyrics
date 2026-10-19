@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -1718,6 +1718,15 @@
   </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>字重</value>
+  </data>
+  <data name="SettingsPageLyricsGapDots.Description" xml:space="preserve">
+    <value>在較長的無歌詞間隙中顯示三個呼吸圓點</value>
+  </data>
+  <data name="SettingsPageLyricsGapDots.Header" xml:space="preserve">
+    <value>間奏呼吸點</value>
+  </data>
+  <data name="SettingsPageLyricsGapDotsMinimumDuration.Header" xml:space="preserve">
+    <value>最短間隙</value>
   </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>發光效果</value>

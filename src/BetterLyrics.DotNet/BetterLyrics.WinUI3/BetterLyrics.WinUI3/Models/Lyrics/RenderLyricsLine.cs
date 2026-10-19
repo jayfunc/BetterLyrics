@@ -9,6 +9,7 @@ using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI.Xaml;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 
 namespace BetterLyrics.WinUI3.Models.Lyrics;
 
@@ -40,6 +41,25 @@ public class RenderLyricsLine : BaseRenderLyricsLine
     public CanvasTextLayoutRegion[]? PrimaryTextRegions { get; private set; }
 
     public RenderLyricsRegion[]? RenderLyricsRegions { get; private set; }
+
+    /// <summary>
+    /// 空行：用于占位一段没有歌词的间隙（播放时显示呼吸圆点）
+    /// </summary>
+    public bool IsGapLine => string.IsNullOrWhiteSpace(PrimaryText);
+
+    /// <summary>
+    /// 在重新排版之前先给间隙占位行一个临时锚点（位置取前后两句之间的空白），
+    /// 排版完成后会被真实的行位覆盖。
+    /// </summary>
+    public void PlaceAsGap(ICanvasAnimatedControl control, Vector2 center)
+    {
+        PrimaryTextLayout ??= new CanvasTextLayout(control, "", new CanvasTextFormat { FontSize = 1f }, 1f, 1f);
+        PrimaryTextRegions = [];
+
+        TopLeftPosition = center;
+        BottomRightPosition = center;
+        CenterPosition = center;
+    }
 
     public void DisposeTextLayout()
     {
@@ -93,8 +113,9 @@ public class RenderLyricsLine : BaseRenderLyricsLine
             TertiaryTextLayout.SetFontFamily(TertiaryText, fontFamilyCJK, fontFamilyWestern);
         }
 
-        // 原文
-        PrimaryTextLayout = new CanvasTextLayout(control, PrimaryText, new CanvasTextFormat
+        // 原文：间隙占位行没有文字，用不换行空格撑出行高，才能为呼吸圆点占住一整行
+        var primaryLayoutText = PrimaryText.Length > 0 ? PrimaryText : "\u00A0";
+        PrimaryTextLayout = new CanvasTextLayout(control, primaryLayoutText, new CanvasTextFormat
         {
             VerticalAlignment = verticalAlignment,
             FontSize = originalTextFontSize,
@@ -106,8 +127,10 @@ public class RenderLyricsLine : BaseRenderLyricsLine
             Options = CanvasDrawTextOptions.NoPixelSnap,
             Direction = canvasTextDirection
         };
-        PrimaryTextLayout.SetFontFamily(PrimaryText, fontFamilyCJK, fontFamilyWestern);
-        PrimaryTextRegions = PrimaryTextLayout.GetCharacterRegions(0, PrimaryText.Length);
+        PrimaryTextLayout.SetFontFamily(primaryLayoutText, fontFamilyCJK, fontFamilyWestern);
+        PrimaryTextRegions = PrimaryText.Length > 0
+            ? PrimaryTextLayout.GetCharacterRegions(0, PrimaryText.Length)
+            : [];
 
         // 翻译
         if (translatedVisible)

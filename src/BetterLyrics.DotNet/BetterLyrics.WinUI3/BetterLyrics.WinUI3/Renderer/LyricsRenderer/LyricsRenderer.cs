@@ -20,6 +20,7 @@ public partial class LyricsRenderer : EffectRendererBase, IDisposable
     private const double PressHighlightScale = 1.05;
 
     private readonly EdgeFadeMaskRenderer _edgeFadeMaskRenderer = new();
+    private readonly GapIndicatorRenderer _gapIndicatorRenderer = new();
 
     // 每行独立的高亮动画状态，保证从一行划到另一行时旧高亮淡出、新高亮淡入
     private readonly Dictionary<int, LineHighlightAnimation> _lineHighlightAnimations = new();
@@ -48,6 +49,11 @@ public partial class LyricsRenderer : EffectRendererBase, IDisposable
     public LyricsWindowStatus? LyricsWindowStatus { get; set; }
 
     public IList<RenderLyricsLine>? RenderLyricsLines { get; set; }
+
+    /// <summary>
+    /// 当前所在的无歌词间隙，为 null 时不显示呼吸圆点
+    /// </summary>
+    public GapIndicatorState? GapIndicator { get; set; }
 
     public void Dispose()
     {
@@ -142,7 +148,9 @@ public partial class LyricsRenderer : EffectRendererBase, IDisposable
             if (i < 0 || i >= RenderLyricsLines.Count) continue;
             var line = RenderLyricsLines[i];
 
-            if (line?.PrimaryTextLayout == null || line.PrimaryTextLayout.LayoutBounds.Width <= 0) continue;
+            // 空行只用于占位无歌词间隙，由呼吸圆点代替绘制
+            if (line == null || line.IsGapLine) continue;
+            if (line.PrimaryTextLayout == null || line.PrimaryTextLayout.LayoutBounds.Width <= 0) continue;
 
             var isPlaying = line.GetIsPlaying(CurrentProgressMs);
 
@@ -239,6 +247,72 @@ public partial class LyricsRenderer : EffectRendererBase, IDisposable
 
             ds.Transform = Matrix3x2.Identity;
         }
+
+        DrawGapIndicator(ds, isVertical, baseScrollX, baseScrollY, styleSettings);
+    }
+
+    /// <summary>
+    /// 绘制超长无歌词间隙中的呼吸圆点
+    /// </summary>
+    private void DrawGapIndicator(CanvasDrawingSession ds, bool isVertical, double baseScrollX, double baseScrollY,
+        LyricsStyleSettings styleSettings)
+    {
+        if (GapIndicator is not { } indicator) return;
+        if (LyricsWindowStatus == null || RenderLyricsLines == null) return;
+        if (indicator.ReferenceLineIndex < 0 || indicator.ReferenceLineIndex >= RenderLyricsLines.Count) return;
+
+        var referenceLine = RenderLyricsLines[indicator.ReferenceLineIndex];
+        if (referenceLine == null) return;
+
+        // 行绘制可能因为缓存缺失提前 continue 而残留变换
+        ds.Transform = Matrix3x2.Identity;
+
+        // 圆点跟随参考行一起滚动，间奏开始时它会与歌词一起滑到当前行位置
+        var flowPosition = referenceLine.OffsetTransition.Value + indicator.FlowOffset;
+
+        var alignment = styleSettings.UseInternalLyricsAlignment
+            ? referenceLine.HorizontalAlignmentType ?? styleSettings.LyricsAlignmentType
+            : styleSettings.LyricsAlignmentType;
+
+        if (alignment == TextAlignmentType.LeftRight)
+            alignment = indicator.ReferenceLineIndex % 2 == 0
+                ? TextAlignmentType.Left
+                : TextAlignmentType.Right;
+
+        // 竖排时圆点上下堆叠，因此宽高相同
+        var groupSize = GapIndicatorRenderer.MeasureWidth(indicator.LineHeight);
+
+        float centerX;
+        float centerY;
+
+        if (isVertical)
+        {
+            centerX = (float)(baseScrollX + flowPosition);
+            centerY = (float)(alignment switch
+            {
+                TextAlignmentType.Left => LyricsY + groupSize / 2,
+                TextAlignmentType.Right => LyricsY + LyricsHeight - groupSize / 2,
+                _ => LyricsY + LyricsHeight / 2
+            });
+        }
+        else
+        {
+            centerX = (float)(alignment switch
+            {
+                TextAlignmentType.Left => LyricsX + groupSize / 2,
+                TextAlignmentType.Right => LyricsX + LyricsWidth - groupSize / 2,
+                _ => LyricsX + LyricsWidth / 2
+            });
+            centerY = (float)(baseScrollY + flowPosition);
+        }
+
+        _gapIndicatorRenderer.Draw(
+            ds,
+            LyricsWindowStatus,
+            new Vector2(centerX, centerY),
+            isVertical,
+            CurrentProgressMs,
+            indicator);
     }
 
     private void UpdateLyricsParallaxMatrix()

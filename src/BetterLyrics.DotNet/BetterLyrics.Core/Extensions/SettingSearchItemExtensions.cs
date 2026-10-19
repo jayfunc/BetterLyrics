@@ -305,6 +305,9 @@ public static class SettingSearchItemExtensions
         new SettingSearchItem { Uid = "WindowSettingsControlEdgeFeathering", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.LyricsEffect },
         new SettingSearchItem { Uid = "SettingsPageLyricsOutOfSightEffect", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.LyricsEffect },
 
+        new SettingSearchItem { Uid = "SettingsPageLyricsGapDots", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.LyricsEffect },
+        new SettingSearchItem { Uid = "SettingsPageLyricsGapDotsMinimumDuration", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.LyricsEffect, ParentUid = "SettingsPageLyricsGapDots" },
+
         new SettingSearchItem { Uid = "SettingsPageSpectrumBrethingEffect", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.LyricsEffect, ParentUid = "SettingsPageSpectrumLayer" },
         new SettingSearchItem { Uid = "SettingsPageSpectrumBreathingIntensity", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.LyricsEffect, ParentUid = "SettingsPageSpectrumBrethingEffect" },
 

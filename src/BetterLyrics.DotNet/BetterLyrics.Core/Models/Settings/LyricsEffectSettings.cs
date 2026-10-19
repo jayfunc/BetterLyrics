@@ -123,6 +123,12 @@ public partial class LyricsEffectSettings : ObservableObject, ICloneable
     [ObservableProperty]
     public partial int LyricsBreathingIntensity { get; set; } = 80;
 
+    [ObservableProperty]
+    public partial bool IsLyricsGapDotsEnabled { get; set; } = true;
+
+    [ObservableProperty]
+    public partial int LyricsGapDotsMinimumDuration { get; set; } = 6000; // 6000ms
+
     partial void OnIsFanLyricsEnabledChanged(bool value) =>
         WeakReferenceMessenger.Default.Send(new LyricsEffectRelayoutChangedMessage(this));
 
@@ -225,7 +231,10 @@ public partial class LyricsEffectSettings : ObservableObject, ICloneable
             Lyrics3DDepth = Lyrics3DDepth,
 
             IsLyricsBrethingEffectEnabled = IsLyricsBrethingEffectEnabled,
-            LyricsBreathingIntensity = LyricsBreathingIntensity
+            LyricsBreathingIntensity = LyricsBreathingIntensity,
+
+            IsLyricsGapDotsEnabled = IsLyricsGapDotsEnabled,
+            LyricsGapDotsMinimumDuration = LyricsGapDotsMinimumDuration
         };
     }
 }

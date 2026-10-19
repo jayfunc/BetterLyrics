@@ -203,6 +203,23 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
     private ILyricsLayoutStrategy _layoutStrategy = new HorizontalLyricsLayoutStrategy();
 
+    private List<LyricsGapSegment>? _lyricsGaps;
+    private bool _isGapListChanged;
+
+    // 间隙检测输入（包含歌词文件自带的空行标记）
+    private List<LyricsGapLine>? _gapInputs;
+
+    // 当前动态插入的间隙占位行
+    private LyricsGapSegment? _insertedGap;
+    private int _insertedGapLineIndex = -1;
+
+    // 间隙占位行插入 / 移除导致的排版变化，需要保持视觉位置并平滑滚动
+    private bool _isGapLayoutChanged;
+    private List<(RenderLyricsLine Line, double Center)>? _gapLayoutBefore;
+
+    // 渲染行 -> 原始歌词行索引（间隙占位行为 -1）
+    private List<int>? _renderLineSourceIndices;
+
     private LyricsWindowStatus? _lyricsWindowStatus;
 
     private Point _mousePosition = new(0, 0);
@@ -573,6 +590,8 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
         UpdatePlaybackState(elapsedTime);
 
+        var isGapLineChanged = UpdateGapLineInsertion();
+
         TriggerRelayout();
 
         #region UpdatePlayingLineIndex
@@ -593,9 +612,11 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
         #endregion
 
+        UpdateGapIndicator();
+
         #region UpdateTargetScrollOffset
 
-        if (isPrimaryPlayingLineChanged || _isLayoutChanged)
+        if (isPrimaryPlayingLineChanged || _isLayoutChanged || isGapLineChanged)
         {
             var targetScroll = _layoutStrategy.CalculateTargetScrollOffset(_renderLyricsLines, _primaryPlayingLineIndex);
             if (targetScroll.HasValue)
@@ -633,6 +654,10 @@ public sealed partial class NowPlayingCanvas : UserControl,
             lyricsStyle.PlayingLineTopOffset / 100.0
         );
 
+        // 空行占位不参与交互，避免点击时跳转到错误的时间
+        if (GetSourceLineIndex(CurrentHoveringLineIndex) < 0)
+            CurrentHoveringLineIndex = -1;
+
         _visibleRange = _layoutStrategy.CalculateVisibleRange(
             _renderLyricsLines,
             _canvasScrollTransition.Value + _mouseYScrollTransition.Value, // 当前滚动偏移
@@ -662,7 +687,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
             elapsedTime,
             _isMouseScrolling,
             _isLayoutChanged,
-            isPrimaryPlayingLineChanged,
+            isPrimaryPlayingLineChanged || isGapLineChanged,
             _isMouseScrollingChanged,
             _isNowPlayingPaletteChanged,
             _songPositionWithOffset.TotalMilliseconds
@@ -899,7 +924,8 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
         if (IsPointerInsideLyricsContainer(pointerPoint.Position))
         {
-            _ = _gsmtcService.ChangeLyricsLineAsync(CurrentHoveringLineIndex);
+            var sourceLineIndex = GetSourceLineIndex(CurrentHoveringLineIndex);
+            if (sourceLineIndex >= 0) _ = _gsmtcService.ChangeLyricsLineAsync(sourceLineIndex);
         }
     }
 
@@ -1063,6 +1089,10 @@ public sealed partial class NowPlayingCanvas : UserControl,
         {
             DisposeRenderLyricsLines();
 
+            // 旧列表里的间隙占位行已随 DisposeRenderLyricsLines 一起释放
+            _insertedGapLineIndex = -1;
+            _insertedGap = null;
+
             var lyricsData = _gsmtcService.CurrentLyricsData;
             if (lyricsData == LyricsDataExtensions.NotFoundPlaceholder)
             {
@@ -1088,31 +1118,76 @@ public sealed partial class NowPlayingCanvas : UserControl,
                 }
             }
 
-            _renderLyricsLines = lyricsData?.LyricsLines.Select(x => new RenderLyricsLine(x))
-                .ToList();
-            EnsureRenderLyricsLinesPreservedAnimation();
+            var sourceLines = lyricsData?.LyricsLines.Select(x => new RenderLyricsLine(x)).ToList();
+            if (sourceLines != null)
+            {
+                // 空行只作为间隙标记，不参与排版；间隙行在播放到间隙时才动态插入
+                var renderLines = new List<RenderLyricsLine>(sourceLines.Count);
+                var sourceIndices = new List<int>(sourceLines.Count);
+                for (var i = 0; i < sourceLines.Count; i++)
+                {
+                    var line = sourceLines[i];
+                    if (line.IsGapLine) continue;
+
+                    renderLines.Add(line);
+                    sourceIndices.Add(i);
+                }
+
+                EnsureRenderLyricsLinesPreservedAnimation(renderLines);
+
+                // 间隙始终按完整歌词（含空行标记）计算，且不预先过滤时长
+                _gapInputs = sourceLines
+                    .Select(x => new LyricsGapLine(x.StartMs, x.EndMs, x.IsGapLine))
+                    .ToList();
+
+                _renderLyricsLines = renderLines;
+                _renderLineSourceIndices = sourceIndices;
+            }
+            else
+            {
+                _gapInputs = null;
+                _renderLyricsLines = null;
+                _renderLineSourceIndices = null;
+            }
+
+            _lyricsGaps = BuildLyricsGaps();
+            _isGapListChanged = false;
+            _isGapLayoutChanged = false;
+            _gapLayoutBefore = null;
             _isLyricsChanged = false;
             _isLayoutChanged = true;
         }
+        else if (_isGapListChanged)
+        {
+            _lyricsGaps = BuildLyricsGaps();
+            _isGapListChanged = false;
+        }
 
         if (_renderLyricsLines == null) return;
+        if (!_isLayoutChanged && !_isGapLayoutChanged) return;
 
-        if (_isLayoutChanged)
+        _layoutStrategy = _lyricsWindowStatus.LyricsStyleSettings.LyricsLayoutOrientation ==
+            LyricsLayoutOrientation.Horizontal ? new HorizontalLyricsLayoutStrategy() : new VerticalLyricsLayoutStrategy();
+        LyricsLayoutStrategyBase.CalculateLanes(_renderLyricsLines);
+        LyricsLayoutStrategyBase.CalculateAlignments(_renderLyricsLines);
+        _layoutStrategy.MeasureAndArrange(
+            Canvas,
+            _renderLyricsLines,
+            _lyricsWindowStatus,
+            _settingsService.AppSettings,
+            Canvas.Size.Width,
+            Canvas.Size.Height,
+            _renderLyricsWidth,
+            _renderLyricsHeight
+        );
+
+        if (_isGapLayoutChanged)
         {
-            _layoutStrategy = _lyricsWindowStatus.LyricsStyleSettings.LyricsLayoutOrientation ==
-                LyricsLayoutOrientation.Horizontal ? new HorizontalLyricsLayoutStrategy() : new VerticalLyricsLayoutStrategy();
-            LyricsLayoutStrategyBase.CalculateLanes(_renderLyricsLines);
-            LyricsLayoutStrategyBase.CalculateAlignments(_renderLyricsLines);
-            _layoutStrategy.MeasureAndArrange(
-                Canvas,
-                _renderLyricsLines,
-                _lyricsWindowStatus,
-                _settingsService.AppSettings,
-                Canvas.Size.Width,
-                Canvas.Size.Height,
-                _renderLyricsWidth,
-                _renderLyricsHeight
-            );
+            // 普通的整页重排会直接跳变，间隙占位行只在保持视觉位置的前提下平滑滚动
+            if (!_isLayoutChanged) ApplyGapLayoutCompensation();
+            else _gapLayoutBefore = null;
+
+            _isGapLayoutChanged = false;
         }
     }
 
@@ -1124,6 +1199,233 @@ public sealed partial class NowPlayingCanvas : UserControl,
     private void RequestReloadLyrics()
     {
         _ = _lyricsDebouncer.RunAsync(() => { _isLyricsChanged = true; });
+    }
+
+    /// <summary>
+    /// 只有真正处于间隙中时才把占位行插进渲染列表，其余时间歌词行保持原样。
+    /// 返回本次是否改变了占位行（会推动后续歌词，需要重新排版）。
+    /// </summary>
+    private bool UpdateGapLineInsertion()
+    {
+        if (_lyricsWindowStatus == null || _renderLyricsLines == null) return false;
+
+        var effectSettings = _lyricsWindowStatus.LyricsEffectSettings;
+        var timeMs = _songPositionWithOffset.TotalMilliseconds;
+
+        LyricsGapSegment? activeGap = null;
+        if (effectSettings.IsLyricsGapDotsEnabled && _lyricsGaps != null)
+            foreach (var candidate in _lyricsGaps)
+            {
+                if (timeMs < candidate.StartMs || timeMs >= candidate.EndMs) continue;
+                if (candidate.DurationMs < effectSettings.LyricsGapDotsMinimumDuration) continue;
+
+                activeGap = candidate;
+                break;
+            }
+
+        var isSameGap = activeGap is { } next && _insertedGap is { } current &&
+                        next.StartMs == current.StartMs && next.EndMs == current.EndMs;
+
+        if (isSameGap) return false;
+        if (activeGap is null && _insertedGap is null) return false;
+
+        // 记录排版前各行的位置：插入 / 移除后抵消位移，歌词就不会整块硬跳
+        _gapLayoutBefore = CaptureFlowCenters();
+
+        RemoveGapLine();
+
+        if (activeGap is { } gapToInsert) InsertGapLine(gapToInsert);
+
+        _isGapLayoutChanged = true;
+        return true;
+    }
+
+    private List<(RenderLyricsLine Line, double Center)>? CaptureFlowCenters()
+    {
+        if (_renderLyricsLines == null) return null;
+
+        var isVertical = _lyricsWindowStatus?.LyricsStyleSettings.LyricsLayoutOrientation ==
+                         LyricsLayoutOrientation.Vertical;
+
+        var centers = new List<(RenderLyricsLine, double)>(_renderLyricsLines.Count);
+        foreach (var line in _renderLyricsLines)
+            centers.Add((line, isVertical ? line.CenterPosition.X : line.CenterPosition.Y));
+
+        return centers;
+    }
+
+    /// <summary>
+    /// 排版后按位移反向补偿滚动量，使歌词保持原位，再由滚动动画平滑移动
+    /// </summary>
+    private void ApplyGapLayoutCompensation()
+    {
+        var before = _gapLayoutBefore;
+        _gapLayoutBefore = null;
+        if (before == null) return;
+
+        var isVertical = _lyricsWindowStatus?.LyricsStyleSettings.LyricsLayoutOrientation ==
+                         LyricsLayoutOrientation.Vertical;
+
+        foreach (var (line, oldCenter) in before)
+        {
+            var newCenter = isVertical ? line.CenterPosition.X : line.CenterPosition.Y;
+            var delta = newCenter - oldCenter;
+            if (Math.Abs(delta) < 0.01) continue;
+
+            line.OffsetTransition.JumpTo(line.OffsetTransition.Value - delta);
+        }
+    }
+
+    /// <summary>
+    /// 间隙占位行不占行高，只作为“当前行”的锚点插入，因此不会推动任何歌词行
+    /// </summary>
+    private void InsertGapLine(LyricsGapSegment gap)
+    {
+        if (_renderLyricsLines == null || Canvas == null) return;
+
+        var index = _renderLyricsLines.Count;
+        for (var i = 0; i < _renderLyricsLines.Count; i++)
+            if (_renderLyricsLines[i].StartMs >= gap.EndMs)
+            {
+                index = i;
+                break;
+            }
+
+        var previousLine = index - 1 >= 0 ? _renderLyricsLines[index - 1] : null;
+        var nextLine = index < _renderLyricsLines.Count ? _renderLyricsLines[index] : null;
+
+        // 没有任何歌词行可参考时无法定位
+        if (previousLine == null && nextLine == null) return;
+
+        var isVertical = _lyricsWindowStatus?.LyricsStyleSettings.LyricsLayoutOrientation ==
+                         LyricsLayoutOrientation.Vertical;
+
+        var lineHeight = previousLine?.PrimaryLineHeight ?? nextLine?.PrimaryLineHeight ?? 0;
+        if (lineHeight <= 0)
+            lineHeight = (_lyricsWindowStatus?.LyricsStyleSettings.OriginalLyricsFontSize ?? 32) * 1.3;
+
+        float flowCenter;
+        if (isVertical)
+        {
+            flowCenter = (float)(previousLine != null && nextLine != null
+                ? (previousLine.TopLeftPosition.X + nextLine.BottomRightPosition.X) / 2
+                : nextLine != null
+                    ? nextLine.BottomRightPosition.X + lineHeight / 2
+                    : previousLine!.TopLeftPosition.X - lineHeight / 2);
+        }
+        else
+        {
+            flowCenter = (float)(previousLine != null && nextLine != null
+                ? (previousLine.BottomRightPosition.Y + nextLine.TopLeftPosition.Y) / 2
+                : nextLine != null
+                    ? nextLine.TopLeftPosition.Y - lineHeight / 2
+                    : previousLine!.BottomRightPosition.Y + lineHeight / 2);
+        }
+
+        var line = CreateGapLine(gap);
+        line.PlaceAsGap(Canvas, isVertical ? new Vector2(flowCenter, 0) : new Vector2(0, flowCenter));
+
+        _renderLyricsLines.Insert(index, line);
+        _renderLineSourceIndices?.Insert(index, -1);
+
+        _insertedGapLineIndex = index;
+        _insertedGap = gap;
+    }
+
+    private void RemoveGapLine()
+    {
+        if (_renderLyricsLines != null &&
+            _insertedGapLineIndex >= 0 && _insertedGapLineIndex < _renderLyricsLines.Count)
+        {
+            var line = _renderLyricsLines[_insertedGapLineIndex];
+
+            _renderLyricsLines.RemoveAt(_insertedGapLineIndex);
+            _renderLineSourceIndices?.RemoveAt(_insertedGapLineIndex);
+
+            line.DisposeTextLayout();
+            line.DisposeTextGeometry();
+            line.DisposeCaches();
+        }
+
+        _insertedGapLineIndex = -1;
+        _insertedGap = null;
+    }
+
+    private static RenderLyricsLine CreateGapLine(LyricsGapSegment gap) =>
+        new(new LyricsLine
+        {
+            StartMs = gap.StartMs,
+            EndMs = gap.EndMs,
+            PrimaryText = ""
+        });
+
+    /// <summary>
+    /// 重新计算所有无歌词间隙（只在歌词或歌曲总长变化时执行）
+    /// </summary>
+    private List<LyricsGapSegment>? BuildLyricsGaps()
+    {
+        if (_gapInputs == null || _gapInputs.Count == 0) return null;
+
+        // 只有知道歌曲总长时才能识别尾奏间隙
+        return LyricsGapHelper.FindGaps(_gapInputs, _gsmtcService.CurrentSongInfo.DurationMs);
+    }
+
+    /// <summary>
+    /// 给渲染器提供呼吸圆点的位置
+    /// </summary>
+    private void UpdateGapIndicator()
+    {
+        _lyricsRenderer.GapIndicator = null;
+
+        if (_insertedGap is not { } gap) return;
+        if (_lyricsWindowStatus == null || _renderLyricsLines == null) return;
+        if (_insertedGapLineIndex < 0 || _insertedGapLineIndex >= _renderLyricsLines.Count) return;
+
+        var markerLine = _renderLyricsLines[_insertedGapLineIndex];
+        if (markerLine == null) return;
+
+        // 占位行自身没有动画状态，因此用相邻的真实歌词行作为滚动位移的参考
+        var referenceLineIndex = _insertedGapLineIndex - 1 >= 0
+            ? _insertedGapLineIndex - 1
+            : _insertedGapLineIndex + 1;
+
+        var referenceLine = GetRenderLyricsLine(referenceLineIndex);
+        if (referenceLine == null) return;
+
+        var lineHeight = referenceLine.PrimaryLineHeight ?? 0;
+        if (lineHeight <= 0)
+            lineHeight = _lyricsWindowStatus.LyricsStyleSettings.OriginalLyricsFontSize * 1.3;
+
+        var isVertical = _lyricsWindowStatus.LyricsStyleSettings.LyricsLayoutOrientation ==
+                         LyricsLayoutOrientation.Vertical;
+
+        var flowCenter = isVertical ? markerLine.CenterPosition.X : markerLine.CenterPosition.Y;
+
+        _lyricsRenderer.GapIndicator = new GapIndicatorState(
+            gap.StartMs,
+            gap.EndMs,
+            referenceLineIndex,
+            flowCenter,
+            lineHeight);
+    }
+
+    private RenderLyricsLine? GetRenderLyricsLine(int index)
+    {
+        if (_renderLyricsLines == null) return null;
+        if (index < 0 || index >= _renderLyricsLines.Count) return null;
+
+        return _renderLyricsLines[index];
+    }
+
+    /// <summary>
+    /// 把渲染行索引映射回原始歌词行索引，间隙占位行返回 -1
+    /// </summary>
+    private int GetSourceLineIndex(int renderLineIndex)
+    {
+        if (_renderLineSourceIndices == null) return -1;
+        if (renderLineIndex < 0 || renderLineIndex >= _renderLineSourceIndices.Count) return -1;
+
+        return _renderLineSourceIndices[renderLineIndex];
     }
 
     private void UpdatePlaybackState(TimeSpan elapsedTime)
@@ -1233,10 +1535,9 @@ public sealed partial class NowPlayingCanvas : UserControl,
         _isNowPlayingPaletteChanged = true;
     }
 
-    private void EnsureRenderLyricsLinesPreservedAnimation()
+    private void EnsureRenderLyricsLinesPreservedAnimation(List<RenderLyricsLine> lines)
     {
         if (_lyricsWindowStatus == null) return;
-        if (_renderLyricsLines == null) return;
 
         if (!_lyricsWindowStatus.LyricsEffectSettings.IsLyricsScaleEffectEnabled &&
             !_lyricsWindowStatus.LyricsEffectSettings.IsLyricsGlowEffectEnabled)
@@ -1250,7 +1551,6 @@ public sealed partial class NowPlayingCanvas : UserControl,
             _lyricsWindowStatus.LyricsEffectSettings.LyricsGlowEffectLongSyllableDuration
         );
 
-        var lines = _renderLyricsLines;
         for (var i = 0; i < lines.Count; i++)
         {
             var line = lines[i];
@@ -1345,6 +1645,9 @@ public sealed partial class NowPlayingCanvas : UserControl,
     public void Receive(CurrentSongInfoChangedMessage message)
     {
         ResetPlaybackState();
+
+        // 歌曲总长变化会影响尾奏间隙的识别
+        _isGapListChanged = true;
     }
 
     public void Receive(CurrentPositionChangedMessage message)

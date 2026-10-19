@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -1721,6 +1721,15 @@
   </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>Font Weight</value>
+  </data>
+  <data name="SettingsPageLyricsGapDots.Description" xml:space="preserve">
+    <value>Show three breathing dots during long gaps without lyrics</value>
+  </data>
+  <data name="SettingsPageLyricsGapDots.Header" xml:space="preserve">
+    <value>Interlude Dots</value>
+  </data>
+  <data name="SettingsPageLyricsGapDotsMinimumDuration.Header" xml:space="preserve">
+    <value>Minimum Gap</value>
   </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>Glow Effect</value>

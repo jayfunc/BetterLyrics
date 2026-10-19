@@ -62,6 +62,22 @@
                         </controls:SettingsExpander.Items>
                     </controls:SettingsExpander>
 
+                    <!--  间奏呼吸点  -->
+                    <controls:SettingsExpander x:Uid="SettingsPageLyricsGapDots" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE712;}">
+                        <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsGapDotsEnabled, Mode=TwoWay}" />
+                        <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="SettingsPageLyricsGapDotsMinimumDuration" IsEnabled="{x:Bind LyricsEffectSettings.IsLyricsGapDotsEnabled, Mode=OneWay}">
+                                <local:ExtendedSlider
+                                    Default="6000"
+                                    Frequency="500"
+                                    Maximum="30000"
+                                    Minimum="2000"
+                                    Unit="ms"
+                                    Value="{x:Bind LyricsEffectSettings.LyricsGapDotsMinimumDuration, Mode=TwoWay}" />
+                            </controls:SettingsCard>
+                        </controls:SettingsExpander.Items>
+                    </controls:SettingsExpander>
+
                     <!--  辉光效果  -->
                     <controls:SettingsExpander x:Uid="SettingsPageLyricsGlowEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE9A9;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsGlowEffectEnabled, Mode=TwoWay}" />
