@@ -111,6 +111,11 @@ public class SystemUIProvider : ISystemUIProvider
         }
     }
 
+    public string GetWallpaperPath(AppRect monitorBounds)
+    {
+        return GetCurrentWallpaper(monitorBounds);
+    }
+
     public AppTheme GetAppTheme()
     {
         return Application.Current.RequestedTheme switch
@@ -145,25 +150,61 @@ public class SystemUIProvider : ISystemUIProvider
         ApplicationLanguages.PrimaryLanguageOverride = languageCode;
     }
 
-    private static string GetCurrentWallpaper()
+    private static string GetCurrentWallpaper(AppRect? monitorBounds = null)
     {
+        string? firstWallpaperPath = null;
+
         try
         {
             var desktopWallpaper = (Shell32.IDesktopWallpaper)new Shell32.DesktopWallpaper();
 
-            // 获取第一个显示器的 ID (通常索引为 0)
-            // 如果你有多个显示器，可以遍历 GetMonitorDevicePathCount
-            if (desktopWallpaper.GetMonitorDevicePathAt(0, out var monitorId) == HRESULT.S_OK)
+            for (uint index = 0; ; index++)
+            {
+                if (desktopWallpaper.GetMonitorDevicePathAt(index, out var monitorId) != HRESULT.S_OK)
+                    break;
+
                 // 获取该显示器的壁纸路径
-                if (desktopWallpaper.GetWallpaper(monitorId, out var wallpaperPath) == HRESULT.S_OK)
+                if (desktopWallpaper.GetWallpaper(monitorId, out var wallpaperPath) != HRESULT.S_OK ||
+                    string.IsNullOrWhiteSpace(wallpaperPath))
+                    continue;
+
+                firstWallpaperPath ??= wallpaperPath;
+
+                if (monitorBounds == null) return wallpaperPath;
+
+                if (desktopWallpaper.GetMonitorRECT(monitorId, out var monitorRect) == HRESULT.S_OK &&
+                    IsSameMonitor(monitorRect, monitorBounds))
                     return wallpaperPath;
+            }
         }
         catch (Exception ex)
         {
             Debug.WriteLine($"获取壁纸失败: {ex.Message}");
         }
 
-        return string.Empty;
+        return firstWallpaperPath ?? GetTranscodedWallpaperPath();
+    }
+
+    private static bool IsSameMonitor(RECT monitorRect, AppRect monitorBounds)
+    {
+        const double tolerance = 1;
+
+        return Math.Abs(monitorRect.Left - monitorBounds.X) <= tolerance &&
+               Math.Abs(monitorRect.Top - monitorBounds.Y) <= tolerance &&
+               Math.Abs(monitorRect.Width - monitorBounds.Width) <= tolerance &&
+               Math.Abs(monitorRect.Height - monitorBounds.Height) <= tolerance;
+    }
+
+    private static string GetTranscodedWallpaperPath()
+    {
+        var path = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+            "Microsoft",
+            "Windows",
+            "Themes",
+            "TranscodedWallpaper");
+
+        return File.Exists(path) ? path : string.Empty;
     }
 
     private static Bitmap CaptureScreenRegion(int x, int y, int width, int height)

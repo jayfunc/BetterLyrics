@@ -22,6 +22,15 @@ public partial class LyricsBackgroundSettings : ObservableObject, ICloneable
     public partial AppColor PureColorOverlayCustomColor { get; set; } = Colors.White;
 
     [ObservableProperty]
+    public partial bool IsDesktopWallpaperOverlayEnabled { get; set; } = false;
+
+    [ObservableProperty]
+    public partial int DesktopWallpaperOverlayOpacity { get; set; } = 100; // 100 % = 1.0
+
+    [ObservableProperty]
+    public partial int DesktopWallpaperOverlayBlurAmount { get; set; } = 0;
+
+    [ObservableProperty]
     public partial bool IsCoverOverlayEnabled { get; set; } = false;
 
     [ObservableProperty]
@@ -191,6 +200,10 @@ public partial class LyricsBackgroundSettings : ObservableObject, ICloneable
             PureColorOverlayOpacity = PureColorOverlayOpacity,
             PureColorOverlayColorType = PureColorOverlayColorType,
             PureColorOverlayCustomColor = PureColorOverlayCustomColor,
+
+            IsDesktopWallpaperOverlayEnabled = IsDesktopWallpaperOverlayEnabled,
+            DesktopWallpaperOverlayOpacity = DesktopWallpaperOverlayOpacity,
+            DesktopWallpaperOverlayBlurAmount = DesktopWallpaperOverlayBlurAmount,
 
             IsCoverOverlayEnabled = IsCoverOverlayEnabled,
             CoverOverlayOpacity = CoverOverlayOpacity,

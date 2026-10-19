@@ -39,6 +39,7 @@ public static class LyricsWindowStatusExtensions
             if (status.IsWorkArea) return NowPlayingLayoutMode.LyricsOnly;
             if (status.IsFullscreen) return NowPlayingLayoutMode.TopAlbumArtBottomLyrics;
             if (!status.LyricsBackgroundSettings.IsPureColorOverlayEnabled &&
+                !status.LyricsBackgroundSettings.IsDesktopWallpaperOverlayEnabled &&
                 !status.LyricsBackgroundSettings.IsCoverOverlayEnabled &&
                 !status.LyricsBackgroundSettings.IsFluidOverlayEnabled) return NowPlayingLayoutMode.LyricsOnly;
             if (status.WindowBounds.Width > status.WindowBounds.Height)

@@ -146,6 +146,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
     private readonly CompositionRenderer _compositionRenderer = new();
     private readonly CoverBackgroundRenderer _coverRenderer = new();
+    private readonly DesktopWallpaperBackgroundRenderer _desktopWallpaperRenderer = new();
     private readonly EdgeFadeMaskRenderer _edgeFadeMaskRenderer = new();
     private readonly FluidBackgroundRenderer _fluidRenderer = new();
     private readonly FogRenderer _fogRenderer = new();
@@ -181,6 +182,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
     private readonly Debouncer _scrollChangedDebouncer = new();
     private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
     private readonly SnowRenderer _snowRenderer = new();
+    private readonly ISystemUIProvider _systemUIProvider = Ioc.Default.GetRequiredService<ISystemUIProvider>();
 
     private readonly ISpectrumAnalyzerProvider _spectrumAnalyzer = new SpectrumAnalyzerProvider();
     private readonly SpectrumRenderer _spectrumRenderer = new();
@@ -188,6 +190,8 @@ public sealed partial class NowPlayingCanvas : UserControl,
     private readonly LyricsSynchronizer _synchronizer = new();
     private Rect _albumArtRect;
     private double _canvasTargetScrollOffset;
+    private TimeSpan _desktopWallpaperPathCheckTimer = TimeSpan.FromSeconds(1);
+    private string? _loadedWallpaperPath;
 
     private bool _isLayoutChanged;
     private bool _isLyricsChanged = true;
@@ -700,6 +704,11 @@ public sealed partial class NowPlayingCanvas : UserControl,
             lyricsBg.FluidOverlayBreathingIntensity,
             lyricsBg.IsFluidOverlayParallaxEnabled);
 
+        _desktopWallpaperRenderer.IsEnabled = lyricsBg.IsDesktopWallpaperOverlayEnabled;
+        _desktopWallpaperRenderer.Opacity = lyricsBg.DesktopWallpaperOverlayOpacity;
+        _desktopWallpaperRenderer.BlurAmount = lyricsBg.DesktopWallpaperOverlayBlurAmount;
+        UpdateDesktopWallpaperSource(elapsedTime, lyricsBg.IsDesktopWallpaperOverlayEnabled);
+
         _coverRenderer.IsEnabled = lyricsBg.IsCoverOverlayEnabled;
         _coverRenderer.Opacity = lyricsBg.CoverOverlayOpacity;
         _coverRenderer.BlurAmount = lyricsBg.CoverOverlayBlurAmount;
@@ -776,6 +785,10 @@ public sealed partial class NowPlayingCanvas : UserControl,
         _fogRenderer.LoadResources();
         _raindropRenderer.LoadResources();
 
+        _desktopWallpaperRenderer.Reset();
+        _loadedWallpaperPath = null;
+        _desktopWallpaperPathCheckTimer = TimeSpan.FromSeconds(1);
+
         InitSpectrumAnalyzer();
         InitSpoutHook(sender);
 
@@ -811,6 +824,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
         _lyricsRenderer.Dispose();
         _fluidRenderer.Dispose();
         _coverRenderer.Dispose();
+        _desktopWallpaperRenderer.Dispose();
         _snowRenderer.Dispose();
         _fogRenderer.Dispose();
         _raindropRenderer.Dispose();
@@ -960,6 +974,8 @@ public sealed partial class NowPlayingCanvas : UserControl,
             finalOpacity,
             lyricsBg.IsPureColorOverlayEnabled
         );
+
+        _desktopWallpaperRenderer.Draw(sender, ds);
 
         _coverRenderer.Draw(sender, ds, lyricsBg.IsCoverOverlayBrethingEffectEnabled);
 
@@ -1123,6 +1139,32 @@ public sealed partial class NowPlayingCanvas : UserControl,
     private void ResetPlaybackState()
     {
         _songPosition = TimeSpan.Zero;
+    }
+
+    private void UpdateDesktopWallpaperSource(TimeSpan elapsedTime, bool isEnabled)
+    {
+        if (!isEnabled)
+        {
+            _desktopWallpaperPathCheckTimer = TimeSpan.FromSeconds(1);
+            return;
+        }
+
+        _desktopWallpaperPathCheckTimer += elapsedTime;
+        if (_desktopWallpaperPathCheckTimer < TimeSpan.FromSeconds(1)) return;
+
+        _desktopWallpaperPathCheckTimer = TimeSpan.Zero;
+        RefreshDesktopWallpaperSource();
+    }
+
+    private void RefreshDesktopWallpaperSource()
+    {
+        if (_lyricsWindowStatus == null || Canvas == null) return;
+
+        var path = _systemUIProvider.GetWallpaperPath(_lyricsWindowStatus.MonitorBounds);
+        if (path == _loadedWallpaperPath && _desktopWallpaperRenderer.HasWallpaper) return;
+
+        _loadedWallpaperPath = path;
+        _desktopWallpaperRenderer.SetWallpaperPath(Canvas, path);
     }
 
     private async Task ReloadCoverBackgroundResourcesAsync()

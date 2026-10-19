@@ -7,6 +7,8 @@ public interface ISystemUIProvider
 {
     AppColor GetAccentColor(IntPtr myHwnd, WindowPixelSampleMode mode);
 
+    string GetWallpaperPath(AppRect monitorBounds);
+
     AppTheme GetAppTheme();
     AppTheme GetSystemTheme();
 

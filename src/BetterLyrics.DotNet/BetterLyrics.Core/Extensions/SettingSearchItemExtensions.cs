@@ -239,6 +239,10 @@ public static class SettingSearchItemExtensions
         new SettingSearchItem { Uid = "SettingsPageColor", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.LyricsBackground, ParentUid = "SettingsPagePureLayer" },
         new SettingSearchItem { Uid = "SettingsPageOpacity", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.LyricsBackground, ParentUid = "SettingsPagePureLayer" },
 
+        new SettingSearchItem { Uid = "SettingsPageDesktopWallpaperLayer", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.LyricsBackground },
+        new SettingSearchItem { Uid = "SettingsPageOpacity", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.LyricsBackground, ParentUid = "SettingsPageDesktopWallpaperLayer" },
+        new SettingSearchItem { Uid = "SettingsPageBlurAmount", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.LyricsBackground, ParentUid = "SettingsPageDesktopWallpaperLayer" },
+
         new SettingSearchItem { Uid = "SettingsPageAlbumArtLayer", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.LyricsBackground },
         new SettingSearchItem { Uid = "SettingsPageOpacity", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.LyricsBackground, ParentUid = "SettingsPageAlbumArtLayer" },
         new SettingSearchItem { Uid = "SettingsPageSpeed", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.LyricsBackground, ParentUid = "SettingsPageAlbumArtLayer" },
