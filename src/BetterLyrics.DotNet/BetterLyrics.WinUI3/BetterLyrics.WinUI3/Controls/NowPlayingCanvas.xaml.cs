@@ -631,7 +631,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
         _visibleRange = _layoutStrategy.CalculateVisibleRange(
             _renderLyricsLines,
-            _canvasScrollTransition.Value + _mouseYScrollTransition.Value, // ��ǰ����λ��
+            _canvasScrollTransition.Value + _mouseYScrollTransition.Value, // 当前滚动偏移
             isVerticalLayoutStrategy ? _renderLyricsStartX : _renderLyricsStartY,
             isVerticalLayoutStrategy ? _renderLyricsWidth : _renderLyricsHeight,
             lyricsStyle.PlayingLineTopOffset / 100.0
@@ -639,10 +639,13 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
         var maxRange = LyricsLayoutStrategyBase.CalculateMaxRange(_renderLyricsLines);
 
+        var isMouseScrollJustEnded = _isMouseScrollingChanged && !_isMouseScrolling;
+        var shouldUpdateAllLines = _isMouseScrolling || isMouseScrollJustEnded;
+
         _animator.UpdateLines(
             _renderLyricsLines?.Select(x => x.ToBaseRenderLyricsLine()).ToList(),
-            _isMouseScrolling ? maxRange.Start : _visibleRange.Start,
-            _isMouseScrolling ? maxRange.End : _visibleRange.End,
+            shouldUpdateAllLines ? maxRange.Start : _visibleRange.Start,
+            shouldUpdateAllLines ? maxRange.End : _visibleRange.End,
             _primaryPlayingLineIndex,
             _renderLyricsWidth,
             _renderLyricsHeight,
