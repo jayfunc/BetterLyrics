@@ -39,6 +39,10 @@ public class MediaSessionProvider : IMediaSessionProvider
     {
         _session = session;
         SessionId = session.Id;
+
+        // 初始化播放状态：MediaManager.Start() 期间的播放状态事件在 BetterLyrics 完成订阅前就已发出，
+        // 若不在此读取，所有已存在的会话都会停留在默认的 Stopped，导致“正在播放的播放源优先”在选择时失效。
+        RefreshPlaybackStatus();
     }
 
     public async Task TryRefreshMediaPropsAsync()
@@ -58,7 +62,7 @@ public class MediaSessionProvider : IMediaSessionProvider
         }
     }
 
-    public async Task TryRefreshPlaybackStateAsync()
+    private void RefreshPlaybackStatus()
     {
         try
         {
@@ -82,7 +86,12 @@ public class MediaSessionProvider : IMediaSessionProvider
             Debug.WriteLine($"Error refreshing playback state: {ex.Message}");
             PlaybackStatus = SessionPlaybackStatus.Stopped;
         }
-        await Task.CompletedTask;
+    }
+
+    public Task TryRefreshPlaybackStateAsync()
+    {
+        RefreshPlaybackStatus();
+        return Task.CompletedTask;
     }
 
     public async Task TryRefreshTimelinePropsAsync()

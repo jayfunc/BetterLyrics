@@ -15,7 +15,6 @@ using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Memory;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.Serialization;
-using BetterLyrics.Core.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
@@ -345,6 +344,9 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
 
             _mediaManagerProvider.Init();
 
+            _logger.LogInformation("Media manager initialized, sessions: {sessions}",
+                string.Join(", ", _mediaManagerProvider.CurrentMediaSessions.Select(x => $"{x.SessionId} ({x.PlaybackStatus})")));
+
             _mediaManagerProvider.CurrentMediaSessions.ToList().ForEach(x => RecordMediaSession(x.SessionId));
 
             OnDesiredSessionChanged(true);
@@ -371,7 +373,7 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
     {
         _appUIThreadProvider.Execute(() =>
         {
-            if (mediaSession != _currentDesiredSession) return;
+            if (!IsCurrentDesiredSession(mediaSession)) return;
 
             mediaSession?.TryRefreshTimelinePropsAsync();
 
@@ -405,7 +407,7 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
 
         OnDesiredSessionChanged();
 
-        if (mediaSession != _currentDesiredSession) return;
+        if (!IsCurrentDesiredSession(mediaSession)) return;
 
         var isPlaying = mediaSession?.PlaybackStatus switch
         {
@@ -427,6 +429,11 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
 
     private void MediaManager_OnAnyMediaPropertyChanged(IMediaSessionProvider? mediaSession)
     {
+        // 其他播放源的媒体信息变化不应影响当前播放源：共用的 debouncer 会被它们重置，
+        // 导致当前播放源待执行的刷新被取消，而它们自己的回调又会在身份检查处直接返回，
+        // 结果是歌曲信息与歌词永远不更新（典型场景：多个暂停中的播放源）。
+        if (!IsCurrentDesiredSession(mediaSession)) return;
+
         _ = _onMediaPropsChangedDebouncer.RunAsync(
             () =>
             {
@@ -454,7 +461,7 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
 
     private async Task OnAnyMediaPropertyChangedCoreAsync(IMediaSessionProvider? mediaSession)
     {
-        if (mediaSession != _currentDesiredSession) return;
+        if (!IsCurrentDesiredSession(mediaSession)) return;
 
         var sessionId = mediaSession?.SessionId;
 
@@ -465,6 +472,9 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
         if (mediaSession != null)
         {
             await mediaSession.TryRefreshMediaPropsAsync();
+            // 暂停状态下切歌通常不会产生时间轴变化事件，EndTime 会停留在上一首；
+            // 时长取自 EndTime，这里主动刷新一次，避免时长为上一首的数值。
+            await mediaSession.TryRefreshTimelinePropsAsync();
         }
 
         // 处理歌曲信息
@@ -592,9 +602,11 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
             .Where(x => IsMediaSourceEnabled(x.SessionId))
             .ToList();
         var validFocusedSession = GetValidFocusedSession();
-        bool isCurrentSessionValid = _currentDesiredSession != null &&
-            IsMediaSourceEnabled(_currentDesiredSession.SessionId) &&
-            _mediaManagerProvider.IsMediaSessionExisting(_currentDesiredSession.SessionId);
+        // 当前会话的 provider 实例可能因会话重建而失效，这里始终取媒体管理器中的实时实例，
+        // 避免 _currentDesiredSession 指向已释放的旧对象。
+        var currentDesiredSession = _currentDesiredSession is null
+            ? null
+            : enabledSessions.FirstOrDefault(x => x.SessionId == _currentDesiredSession.SessionId);
 
         // Priority 1: Playing sessions
         // 1.1 Valid focused session that is playing
@@ -603,9 +615,9 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
             return validFocusedSession;
         }
         // 1.2 Valid current desired session that is playing
-        if (isCurrentSessionValid && _currentDesiredSession!.PlaybackStatus == SessionPlaybackStatus.Playing)
+        if (currentDesiredSession?.PlaybackStatus == SessionPlaybackStatus.Playing)
         {
-            return _currentDesiredSession;
+            return currentDesiredSession;
         }
         // 1.3 Any other session that is playing
         var playingSession = enabledSessions.FirstOrDefault(x => x.PlaybackStatus == SessionPlaybackStatus.Playing);
@@ -621,9 +633,9 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
             return validFocusedSession;
         }
         // 2.2 Valid current desired session that is paused
-        if (isCurrentSessionValid)
+        if (currentDesiredSession != null)
         {
-            return _currentDesiredSession;
+            return currentDesiredSession;
         }
 
         // Priority 3: Fallback strategy
@@ -631,11 +643,28 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
         return enabledSessions.FirstOrDefault();
     }
 
+    /// <summary>
+    /// 判断给定会话是否就是当前播放源。
+    /// 按 <see cref="IMediaSessionProvider.SessionId"/> 比较，避免 provider 实例被重建（同一会话产生新实例）后
+    /// 引用比较静默失效、导致事件被丢弃且歌曲信息/歌词不再更新；null 与 null 视为一致（用于清空歌曲信息的场景）。
+    /// </summary>
+    private bool IsCurrentDesiredSession(IMediaSessionProvider? mediaSession)
+    {
+        if (mediaSession is null || _currentDesiredSession is null)
+        {
+            return mediaSession is null && _currentDesiredSession is null;
+        }
+
+        return mediaSession.SessionId == _currentDesiredSession.SessionId;
+    }
+
     private void UpdateCurrentMediaSourceProviderInfoPositionOffset()
     {
         if (CurrentPosition.TotalSeconds <= 1 &&
             CurrentMediaSourceProviderInfo?.ResetPositionOffsetOnSongChanged == true)
+        {
             CurrentMediaSourceProviderInfo?.PositionOffset = 0;
+        }
     }
 
     private async Task UpdateDiscordPresenceAsync()
