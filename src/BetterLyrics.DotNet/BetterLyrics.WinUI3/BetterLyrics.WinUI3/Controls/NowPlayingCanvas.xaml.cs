@@ -754,7 +754,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
             _lyricsRenderer.CurrentProgressMs = _songPositionWithOffset.TotalMilliseconds;
             _lyricsRenderer.LyricsWindowStatus = _lyricsWindowStatus;
             _lyricsRenderer.RenderLyricsLines = _renderLyricsLines;
-            _lyricsRenderer.Update(sender, _spectrumAnalyzer.CurrentBassEnergy, lyricsEffect.LyricsBreathingIntensity);
+            _lyricsRenderer.Update(sender, elapsedTime, _spectrumAnalyzer.CurrentBassEnergy, lyricsEffect.LyricsBreathingIntensity);
         }
     }
 
@@ -864,8 +864,13 @@ public sealed partial class NowPlayingCanvas : UserControl,
     {
         var pointerPoint = e.GetCurrentPoint(this);
 
-        if (IsPointerInsideLyricsContainer(pointerPoint.Position))
+        // 触摸 / 笔可能没有先触发 PointerMoved，这里同步位置，保证按下动画立即出现
+        var isInsideLyricsArea = IsPointerInsideLyricsContainer(pointerPoint.Position);
+        IsMouseInLyricsArea = isInsideLyricsArea;
+
+        if (isInsideLyricsArea)
         {
+            MousePosition = pointerPoint.Position;
             IsMousePressing = true;
         }
     }

@@ -14,7 +14,17 @@ namespace BetterLyrics.WinUI3.Renderer.LyricsRenderer;
 
 public partial class LyricsRenderer : EffectRendererBase, IDisposable
 {
+    private const byte HoverHighlightAlpha = 16;
+    private const byte PressHighlightAlpha = 32;
+    private const double HoverHighlightScale = 1.10;
+    private const double PressHighlightScale = 1.05;
+
     private readonly EdgeFadeMaskRenderer _edgeFadeMaskRenderer = new();
+
+    // 每行独立的高亮动画状态，保证从一行划到另一行时旧高亮淡出、新高亮淡入
+    private readonly Dictionary<int, LineHighlightAnimation> _lineHighlightAnimations = new();
+
+    private IList<RenderLyricsLine>? _lineHighlightAnimationLines;
 
     public int MouseHoverLineIndex { get; set; } = -1;
     public bool IsMousePressing { get; set; } = false;
@@ -192,15 +202,26 @@ public partial class LyricsRenderer : EffectRendererBase, IDisposable
             // 真正的绘制调用
             lineRenderer.Draw(control, ds);
 
-            // 鼠标悬停的高亮背景框
-            if (i == MouseHoverLineIndex)
+            // 鼠标悬停的高亮背景框：悬浮只淡入淡出，缩放仅由按下 / 释放驱动
+            if (_lineHighlightAnimations.TryGetValue(i, out var highlightAnimation))
             {
-                var opacity = IsMousePressing ? (byte)32 : (byte)16;
-                var scale = IsMousePressing ? 1.09 : 1.10;
-                // 这里的 TopLeft 和 BottomRight 无论横竖排都是绝对包围盒，所以可以直接 Scale
-                ds.FillRoundedRectangle(
-                    new Rect(line.TopLeftPosition.ToPoint(), line.BottomRightPosition.ToPoint()).Scale(scale),
-                    8, 8, Color.FromArgb(opacity, 255, 255, 255));
+                var hoverAmount = highlightAnimation.Hover.Value;
+                if (hoverAmount > 0.001)
+                {
+                    var pressAmount = highlightAnimation.Press.Value;
+
+                    var opacity = Math.Clamp(
+                        (HoverHighlightAlpha + (PressHighlightAlpha - HoverHighlightAlpha) * pressAmount) *
+                        hoverAmount, 0, 255);
+                    var scale = HoverHighlightScale -
+                                (HoverHighlightScale - PressHighlightScale) * pressAmount;
+
+                    // 这里的 TopLeft 和 BottomRight 无论横竖排都是绝对包围盒，所以可以直接 Scale
+                    ds.FillRoundedRectangle(
+                        new Rect(line.TopLeftPosition.ToPoint(), line.BottomRightPosition.ToPoint()).Scale(scale),
+                        8, 8,
+                        Color.FromArgb((byte)opacity, 255, 255, 255));
+                }
             }
 
 #if DEBUG && false
@@ -268,8 +289,48 @@ public partial class LyricsRenderer : EffectRendererBase, IDisposable
                 autoWrapFadeWidth, lyricsEdgeFadeWidth, autoWrapFadeWidth, lyricsEdgeFadeWidth);
     }
 
-    public void Update(ICanvasAnimatedControl sender, float bassEnergy, int breathingIntensity)
+    private void UpdateLineHighlightAnimations(TimeSpan elapsedTime)
     {
+        // 歌词数据切换后，旧的行索引不再有效，直接清空动画状态
+        if (!ReferenceEquals(_lineHighlightAnimationLines, RenderLyricsLines))
+        {
+            _lineHighlightAnimationLines = RenderLyricsLines;
+            _lineHighlightAnimations.Clear();
+        }
+
+        var hoveredLineIndex = MouseHoverLineIndex;
+        var isPressing = IsMousePressing && hoveredLineIndex >= 0;
+
+        if (hoveredLineIndex >= 0 && !_lineHighlightAnimations.ContainsKey(hoveredLineIndex))
+        {
+            _lineHighlightAnimations[hoveredLineIndex] = new LineHighlightAnimation(hoveredLineIndex);
+        }
+
+        List<int>? finishedLineIndices = null;
+
+        foreach (var (lineIndex, animation) in _lineHighlightAnimations)
+        {
+            var isHovered = lineIndex == hoveredLineIndex;
+
+            animation.SetHovered(isHovered);
+            animation.SetPressed(isHovered && isPressing);
+
+            animation.Hover.Update(elapsedTime);
+            animation.Press.Update(elapsedTime);
+
+            // 已淡出的行不再需要保留动画状态
+            if (!isHovered && !animation.Hover.IsTransitioning && animation.Hover.Value <= 0.001)
+                (finishedLineIndices ??= []).Add(lineIndex);
+        }
+
+        if (finishedLineIndices == null) return;
+
+        foreach (var lineIndex in finishedLineIndices) _lineHighlightAnimations.Remove(lineIndex);
+    }
+
+    public void Update(ICanvasAnimatedControl sender, TimeSpan elapsedTime, float bassEnergy, int breathingIntensity)
+    {
+        UpdateLineHighlightAnimations(elapsedTime);
         UpdateBreathing(bassEnergy, breathingIntensity);
         UpdateLyricsParallaxMatrix();
         UpdateEdgeFadeMask(sender);
