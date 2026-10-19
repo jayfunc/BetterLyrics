@@ -8,6 +8,10 @@ namespace BetterLyrics.Core.Helpers.Lyrics;
 
 public class LyricsAnimator
 {
+    // 呼吸效果权重的淡入 / 淡出时长，用于消除行开始与结束播放时的缩放跳变
+    private const double BreathingFadeInDurationSeconds = 0.35;
+    private const double BreathingFadeOutDurationSeconds = 0.5;
+
     private readonly double _defaultScale = 0.75f;
     private readonly double _highlightedScale = 1.0f;
 
@@ -102,6 +106,9 @@ public class LyricsAnimator
             var isSecondaryLinePlaying = line.GetIsPlaying(currentPositionMs);
             var isSecondaryLinePlayingChanged = line.IsPlayingLastFrame != isSecondaryLinePlaying;
             line.IsPlayingLastFrame = isSecondaryLinePlaying;
+
+            // 呼吸效果权重仅在行播放期间为 1，进入 / 离开时平滑过渡，避免缩放突然开始或结束
+            UpdateBreathingWeight(line, isSecondaryLinePlaying);
 
             var playProgress = line.GetPlayProgress(currentPositionMs);
 
@@ -411,6 +418,19 @@ public class LyricsAnimator
 
             line.Update(elapsedTime);
         }
+    }
+
+    private static void UpdateBreathingWeight(BaseRenderLyricsLine line, bool isPlaying)
+    {
+        var target = isPlaying ? 1.0 : 0.0;
+        var transition = line.BreathingWeightTransition;
+
+        // 目标未变化且动画已结束时无需重启，避免每帧都重置过渡
+        if (transition.TargetValue == target && (transition.IsTransitioning || transition.Value == target)) return;
+
+        transition.SetDuration(isPlaying ? BreathingFadeInDurationSeconds : BreathingFadeOutDurationSeconds);
+        transition.SetDelay(0);
+        transition.Start(target);
     }
 
     private static double CalculateTargetOpacity(double baseOpacity, double baseOpacityWhenZeroDistanceFactor,

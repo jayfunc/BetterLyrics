@@ -45,6 +45,11 @@ public class BaseRenderLyricsLine : BaseRenderLyrics
             EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
             AnimationDuration
         );
+        BreathingWeightTransition = new ValueTransition<double>(
+            0.0,
+            EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
+            AnimationDuration
+        );
         PrimaryXOffsetTransition = new ValueTransition<double>(
             0,
             EasingHelper.GetInterpolatorByEasingType<double>(EasingType.Sine),
@@ -103,6 +108,12 @@ public class BaseRenderLyricsLine : BaseRenderLyrics
     public ValueTransition<double> AngleTransition { get; set; }
     public ValueTransition<double> BlurAmountTransition { get; set; }
     public ValueTransition<double> ScaleTransition { get; set; }
+
+    /// <summary>
+    /// 呼吸效果权重（0 = 完全不受呼吸缩放影响，1 = 完全跟随呼吸缩放）
+    /// 用于在行进入 / 离开播放状态时平滑淡入淡出，避免缩放突然跳变
+    /// </summary>
+    public ValueTransition<double> BreathingWeightTransition { get; set; }
 
     public ValueTransition<double> PlayedPrimaryOpacityTransition { get; set; }
     public ValueTransition<double> UnplayedPrimaryOpacityTransition { get; set; }
@@ -176,6 +187,7 @@ public class BaseRenderLyricsLine : BaseRenderLyrics
     {
         AngleTransition.Update(elapsedTime);
         ScaleTransition.Update(elapsedTime);
+        BreathingWeightTransition.Update(elapsedTime);
         BlurAmountTransition.Update(elapsedTime);
 
         PlayedPrimaryOpacityTransition.Update(elapsedTime);

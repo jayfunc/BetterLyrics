@@ -160,7 +160,8 @@ public partial class LyricsRenderer : EffectRendererBase, IDisposable
             else
                 currentYOffset += line.OffsetTransition.Value;
 
-            if (isPlaying) ApplyBreathingTransform(ds, line.CenterPosition, isBreathingEnabled);
+            // 呼吸效果按每行的权重应用：行开始 / 结束播放时权重平滑过渡，避免缩放突然跳变
+            ApplyBreathingTransform(ds, line.CenterPosition, isBreathingEnabled, line.BreathingWeightTransition.Value);
 
             // 应用缩放矩阵
             ds.Transform *= Matrix3x2.CreateScale((float)line.ScaleTransition.Value, line.CenterPosition);
