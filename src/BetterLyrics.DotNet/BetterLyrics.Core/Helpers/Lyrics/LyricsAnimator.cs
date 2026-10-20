@@ -1,4 +1,4 @@
-using BetterLyrics.Core.Constants;
+﻿using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Lyrics;
@@ -91,6 +91,10 @@ public class LyricsAnimator
                 _ => line.IsPrimaryHasRealSyllableInfo
             };
 
+            // 关闭译文 / 音译时先保持旧布局淡出，因此本行需要忽略其基础不透明度
+            var linePhoneticOpacity = line.IsTertiaryVisible ? phoneticOpacity : 0;
+            var lineTranslatedOpacity = line.IsSecondaryVisible ? translatedOpacity : 0;
+
             var targetCharFloat = lyricsEffect.IsLyricsFloatAnimationAmountAutoAdjust
                 ? lineHeight.Value * 0.1
                 : lyricsEffect.LyricsFloatAnimationAmount;
@@ -125,9 +129,13 @@ public class LyricsAnimator
 
                 double distanceFactor;
                 if (lineCountDelta < 0)
+                {
                     distanceFactor = Math.Clamp(distanceFromPlayingLine / spaceBefore, 0, 1);
+                }
                 else
+                {
                     distanceFactor = Math.Clamp(distanceFromPlayingLine / spaceAfter, 0, 1);
+                }
 
                 double scrollDuration;
                 double scrollDelay;
@@ -174,13 +182,17 @@ public class LyricsAnimator
                             ? _highlightedScale - distanceFactor * (_highlightedScale - _defaultScale)
                             : _highlightedScale);
 
-                line.TertiaryOpacityTransition.SetDuration(scrollDuration);
-                line.TertiaryOpacityTransition.SetDelay(scrollDelay);
-                line.TertiaryOpacityTransition.Start(
-                    isSecondaryLinePlaying
-                        ? phoneticOpacity
-                        : CalculateTargetOpacity(phoneticOpacity, phoneticOpacity, distanceFactor, isMouseScrolling,
-                            lyricsEffect));
+                // 正在淡出的译文 / 音译由关闭开关时的短过渡接管，避免被行滚动动画重新拉长
+                if (line.IsTertiaryVisible)
+                {
+                    line.TertiaryOpacityTransition.SetDuration(scrollDuration);
+                    line.TertiaryOpacityTransition.SetDelay(scrollDelay);
+                    line.TertiaryOpacityTransition.Start(
+                        isSecondaryLinePlaying
+                            ? linePhoneticOpacity
+                            : CalculateTargetOpacity(linePhoneticOpacity, linePhoneticOpacity, distanceFactor,
+                                isMouseScrolling, lyricsEffect));
+                }
 
                 // 原文不透明度（已播放）
                 line.PlayedPrimaryOpacityTransition.SetDuration(scrollDuration);
@@ -199,13 +211,16 @@ public class LyricsAnimator
                         : CalculateTargetOpacity(originalOpacity, originalOpacity, distanceFactor, isMouseScrolling,
                             lyricsEffect));
 
-                line.SecondaryOpacityTransition.SetDuration(scrollDuration);
-                line.SecondaryOpacityTransition.SetDelay(scrollDelay);
-                line.SecondaryOpacityTransition.Start(
-                    isSecondaryLinePlaying
-                        ? translatedOpacity
-                        : CalculateTargetOpacity(translatedOpacity, translatedOpacity, distanceFactor,
-                            isMouseScrolling, lyricsEffect));
+                if (line.IsSecondaryVisible)
+                {
+                    line.SecondaryOpacityTransition.SetDuration(scrollDuration);
+                    line.SecondaryOpacityTransition.SetDelay(scrollDelay);
+                    line.SecondaryOpacityTransition.Start(
+                        isSecondaryLinePlaying
+                            ? lineTranslatedOpacity
+                            : CalculateTargetOpacity(lineTranslatedOpacity, lineTranslatedOpacity, distanceFactor,
+                                isMouseScrolling, lyricsEffect));
+                }
 
                 line.PlayedFillColorTransition.SetDuration(scrollDuration);
                 line.PlayedFillColorTransition.SetDelay(scrollDelay);
@@ -246,9 +261,13 @@ public class LyricsAnimator
                     line.OffsetTransition.SetDelay(scrollDelay);
                     line.OffsetTransition.IsSpring = lyricsEffect.LyricsScrollEasingType == EasingType.Spring;
                     if (isLayoutChanged)
+                    {
                         line.OffsetTransition.JumpTo(targetScrollOffset);
+                    }
                     else
+                    {
                         line.OffsetTransition.Start(targetScrollOffset);
+                    }
                 }
             }
 
@@ -276,21 +295,29 @@ public class LyricsAnimator
 
                     // 浮动动画（控制整体）
                     if (isFloatEnabled)
+                    {
                         foreach (var renderChar in line.PrimaryRenderChars)
+                        {
                             if (isSecondaryLinePlaying)
                             {
                                 if (renderChar.EndMs < currentPositionMs)
+                                {
                                     // 确保已播放的部分恢复原位
                                     renderChar.FloatTransition.JumpTo(0);
+                                }
                                 else
+                                {
                                     // 下沉（以便后续上浮）
                                     renderChar.FloatTransition.Start(targetCharFloat);
+                                }
                             }
                             else
                             {
                                 // 恢复初始状态（相当于上浮）
                                 renderChar.FloatTransition.Start(0);
                             }
+                        }
+                    }
                 }
 
                 // 浮动动画（控制单个）
@@ -335,7 +362,9 @@ public class LyricsAnimator
                     {
                         // 缩放
                         if (isScaleEnabled && isSyllablePlaying)
+                        {
                             foreach (var renderChar in syllable.ChildrenRenderLyricsChars)
+                            {
                                 if (syllable.DurationMs >= lyricsEffect.LyricsScaleEffectLongSyllableDuration)
                                 {
                                     var (inDuration, outDuration) =
@@ -346,11 +375,14 @@ public class LyricsAnimator
                                         new Keyframe<double>(1.0, outDuration)
                                     );
                                 }
+                            }
+                        }
 
                         // 辉光（长音节）
                         if (isGlowEnabled && isSyllablePlaying && lyricsEffect.LyricsGlowEffectScope ==
                             LyricsEffectScope.LongDurationSyllable
                             && syllable.DurationMs >= lyricsEffect.LyricsGlowEffectLongSyllableDuration)
+                        {
                             foreach (var renderChar in syllable.ChildrenRenderLyricsChars)
                             {
                                 var (inDuration, outDuration) =
@@ -361,12 +393,16 @@ public class LyricsAnimator
                                     new Keyframe<double>(0, outDuration)
                                 );
                             }
+                        }
 
                         syllable.IsPlayingLastFrame = isSyllablePlaying;
                     }
                 }
 
-                foreach (var renderChar in line.PrimaryRenderChars) renderChar.Update(elapsedTime);
+                foreach (var renderChar in line.PrimaryRenderChars)
+                {
+                    renderChar.Update(elapsedTime);
+                }
             }
 
             if (!autoWrap)
@@ -389,30 +425,42 @@ public class LyricsAnimator
                 if (isSecondaryLinePlaying)
                 {
                     if (pSize > 0)
+                    {
                         line.PrimaryXOffsetTransition.JumpTo(
                             CalculateTargetNonWrapOffset(alignmentForNonWrap, pSize, layoutLimit,
                                 playProgress));
+                    }
                     if (sSize > 0)
+                    {
                         line.SecondaryXOffsetTransition.JumpTo(
                             CalculateTargetNonWrapOffset(alignmentForNonWrap, sSize, layoutLimit,
                                 playProgress));
+                    }
                     if (tSize > 0)
+                    {
                         line.TertiaryXOffsetTransition.JumpTo(
                             CalculateTargetNonWrapOffset(alignmentForNonWrap, tSize, layoutLimit,
                                 playProgress));
+                    }
                 }
 
                 if (isSecondaryLinePlayingChanged && !isSecondaryLinePlaying)
                 {
                     if (pSize > 0)
+                    {
                         line.PrimaryXOffsetTransition.Start(
                             CalculateTargetNonWrapOffset(alignmentForNonWrap, pSize, layoutLimit, 0));
+                    }
                     if (sSize > 0)
+                    {
                         line.SecondaryXOffsetTransition.Start(
                             CalculateTargetNonWrapOffset(alignmentForNonWrap, sSize, layoutLimit, 0));
+                    }
                     if (tSize > 0)
+                    {
                         line.TertiaryXOffsetTransition.Start(
                             CalculateTargetNonWrapOffset(alignmentForNonWrap, tSize, layoutLimit, 0));
+                    }
                 }
             }
 
@@ -450,9 +498,13 @@ public class LyricsAnimator
             else
             {
                 if (lyricsEffect.IsLyricsFadeOutEffectEnabled)
+                {
                     targetOpacity = (1 - distanceFactor) * baseOpacity;
+                }
                 else
+                {
                     targetOpacity = baseOpacity;
+                }
             }
         }
 

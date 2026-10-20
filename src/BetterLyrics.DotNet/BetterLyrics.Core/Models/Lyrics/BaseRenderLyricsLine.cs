@@ -109,16 +109,15 @@ public class BaseRenderLyricsLine : BaseRenderLyrics
     public ValueTransition<double> BlurAmountTransition { get; set; }
     public ValueTransition<double> ScaleTransition { get; set; }
 
-    /// <summary>
-    /// 呼吸效果权重（0 = 完全不受呼吸缩放影响，1 = 完全跟随呼吸缩放）
-    /// 用于在行进入 / 离开播放状态时平滑淡入淡出，避免缩放突然跳变
-    /// </summary>
     public ValueTransition<double> BreathingWeightTransition { get; set; }
 
     public ValueTransition<double> PlayedPrimaryOpacityTransition { get; set; }
     public ValueTransition<double> UnplayedPrimaryOpacityTransition { get; set; }
     public ValueTransition<double> SecondaryOpacityTransition { get; set; }
     public ValueTransition<double> TertiaryOpacityTransition { get; set; }
+
+    public bool IsSecondaryVisible { get; set; } = true;
+    public bool IsTertiaryVisible { get; set; } = true;
 
     public ValueTransition<double> PrimaryXOffsetTransition { get; set; }
     public ValueTransition<double> SecondaryXOffsetTransition { get; set; }

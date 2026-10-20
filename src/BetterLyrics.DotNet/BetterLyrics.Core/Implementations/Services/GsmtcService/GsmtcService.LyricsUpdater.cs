@@ -1,4 +1,4 @@
-using BetterLyrics.Core.Extensions;
+﻿using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Messages.Playback;
@@ -13,18 +13,56 @@ namespace BetterLyrics.Core.Implementations.Services.GsmtcService;
 public partial class GsmtcService : IGsmtcService
 {
     private readonly Debouncer _lyricsDebouncer = new();
+    private readonly Debouncer _lyricsPresentationDebouncer = new();
+
+    /// <summary>
+    /// 标记本次 <see cref="CurrentLyricsData"/> 变更是否只是译文（翻译 / 音译）的显示变化
+    /// </summary>
+    private bool _isPresentationUpdate;
 
     [ObservableProperty]
     public partial LyricsData? CurrentLyricsData { get; private set; }
 
     partial void OnCurrentLyricsDataChanged(LyricsData? value) =>
-        WeakReferenceMessenger.Default.Send(new CurrentLyricsDataChangedMessage(value));
+        WeakReferenceMessenger.Default.Send(new CurrentLyricsDataChangedMessage(value, _isPresentationUpdate));
 
     [ObservableProperty] public partial LyricsCacheItem? CurrentLyricsSearchResult { get; private set; }
 
     public void UpdateLyrics()
     {
         _ = _lyricsDebouncer.RunAsync(async token => await RefreshLyricsAsync(token));
+    }
+
+    public void UpdateLyricsPresentation()
+    {
+        var searchResult = CurrentLyricsSearchResult;
+        if (searchResult == null)
+        {
+            // 没有缓存结果（例如尚未成功获取歌词）时退回到完整刷新
+            UpdateLyrics();
+            return;
+        }
+
+        _ = _lyricsPresentationDebouncer.RunAsync(async token =>
+        {
+            var lyricsParser = new LyricsContentParser();
+            var lyricsData = await Task.Run(async () => await lyricsParser.ParseAsync(searchResult, token), token);
+
+            token.ThrowIfCancellationRequested();
+
+            // 解析期间歌曲或歌词源已经变化，本次结果作废
+            if (!ReferenceEquals(CurrentLyricsSearchResult, searchResult)) return;
+
+            _isPresentationUpdate = true;
+            try
+            {
+                CurrentLyricsData = lyricsData;
+            }
+            finally
+            {
+                _isPresentationUpdate = false;
+            }
+        });
     }
 
     private async Task RefreshLyricsAsync(CancellationToken token)

@@ -1,4 +1,4 @@
-// 2025/6/23 by Zhe Fang
+﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.Core.Collections;
 using BetterLyrics.Core.Constants;
@@ -216,8 +216,28 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
             _logger.LogInformation("Target LibreTranslate language code changed: {code}",
                 _settingsService.AppSettings.TranslationSettings.SelectedTargetLanguageCode);
         }
-        UpdateLyrics();
+
+        if (IsPresentationTranslationProperty(message.PropertyName))
+        {
+            UpdateLyricsPresentation();
+        }
+        else
+        {
+            // Only do a full refresh when the lyrics content changed
+            UpdateLyrics();
+        }
     }
+
+    private static bool IsPresentationTranslationProperty(string propertyName) =>
+        propertyName is
+            nameof(TranslationSettings.IsTranslationEnabled) or
+            nameof(TranslationSettings.SelectedTargetLanguageCode) or
+            nameof(TranslationSettings.IsMandarinRomanizationEnabled) or
+            nameof(TranslationSettings.IsCantoneseRomanizationEnabled) or
+            nameof(TranslationSettings.IsJapaneseRomanizationEnabled) or
+            nameof(TranslationSettings.IsKoreanRomanizationEnabled) or
+            nameof(TranslationSettings.IsLibreTranslateEnabled) or
+            nameof(TranslationSettings.LibreTranslateServer);
 
     public void Receive(MediaFolderEnabledChangedMessage message)
     {
@@ -286,8 +306,7 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
         }
     }
 
-    private void LocalMediaFolders_CollectionChanged(object? sender,
-        NotifyCollectionChangedEventArgs e)
+    private void LocalMediaFolders_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         UpdateAlbumArt();
         UpdateLyrics();
@@ -416,9 +435,13 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
         };
 
         if (isPlaying)
+        {
             _scrobbleTimer.Change(0, 1000);
+        }
         else
+        {
             _scrobbleTimer.Change(Timeout.Infinite, Timeout.Infinite);
+        }
 
         _appUIThreadProvider.Execute(async () =>
         {
@@ -429,9 +452,7 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
 
     private void MediaManager_OnAnyMediaPropertyChanged(IMediaSessionProvider? mediaSession)
     {
-        // 其他播放源的媒体信息变化不应影响当前播放源：共用的 debouncer 会被它们重置，
-        // 导致当前播放源待执行的刷新被取消，而它们自己的回调又会在身份检查处直接返回，
-        // 结果是歌曲信息与歌词永远不更新（典型场景：多个暂停中的播放源）。
+        // 避免其他播放源的媒体信息变化应影响当前播放源
         if (!IsCurrentDesiredSession(mediaSession)) return;
 
         _ = _onMediaPropsChangedDebouncer.RunAsync(
@@ -467,7 +488,9 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
 
         var currentMediaSourceProviderInfo = GetCurrentDesiredMediaSourceProviderInfo();
         if (currentMediaSourceProviderInfo?.ResetPositionOffsetOnSongChanged == true)
+        {
             currentMediaSourceProviderInfo?.PositionOffset = 0;
+        }
 
         if (mediaSession != null)
         {
@@ -514,20 +537,28 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
 
         // 注册
         if (currentMediaSourceProviderInfo?.IsMemoryReaderEnabled == true)
+        {
             if (currentMediaSourceProviderInfo.MemoryReaderConfig is MemoryReaderConfig config)
             {
                 _memoryReader.Config = config;
                 _memoryReader.Start();
                 _memoryReader.OnProgressChanged += UniversalMemoryReader_OnProgressChanged;
             }
+        }
 
         // 处理专辑图片
         if (PlayerIdHelper.IsLXMusic(sessionId) && _lxMusicAlbumArtBytes != null)
+        {
             _smtcAlbumArtBuffer = _lxMusicAlbumArtBytes;
+        }
         else if (mediaSession?.Thumbnail is byte[] imageData)
+        {
             _smtcAlbumArtBuffer = imageData;
+        }
         else
+        {
             _smtcAlbumArtBuffer = null;
+        }
 
         _appUIThreadProvider.Execute(() =>
         {
@@ -576,8 +607,10 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
     {
         var found = _settingsService.AppSettings.MediaSourceProvidersInfo.FirstOrDefault(x => x.Provider == id);
         if (found == null)
+        {
             _settingsService.AppSettings.MediaSourceProvidersInfo.Add(new MediaSourceProviderInfo(id,
                 _settingsService.AppSettings.GeneralSettings.ListenOnNewPlaybackSource));
+        }
     }
 
     private IMediaSessionProvider? GetValidFocusedSession()
@@ -712,9 +745,13 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
     private void HandleLXMusicIfDetected(string? sessionId)
     {
         if (PlayerIdHelper.IsLXMusic(sessionId))
+        {
             StartLXMusicSSE();
+        }
         else
+        {
             StopLXMusicSSE();
+        }
     }
 
     private void StartLXMusicSSE()
@@ -756,7 +793,10 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
         _appUIThreadProvider.RunAsync(async () =>
         {
             await Task.Delay(e.ReconnectDelay);
-            if (_lxMusicSse != null && !_lxMusicSse.IsDisposed) _lxMusicSse.Start();
+            if (_lxMusicSse != null && !_lxMusicSse.IsDisposed)
+            {
+                _lxMusicSse.Start();
+            }
         });
     }
 
@@ -781,7 +821,9 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
                     }
 
                     if (IsMediaSourceTimelineSyncEnabled(CurrentSongInfo.PlayerId))
+                    {
                         CurrentPosition = TimeSpan.FromSeconds(_lxMusicPositionSeconds);
+                    }
                 }
                 else if (data.ValueKind == JsonValueKind.String)
                 {
@@ -793,9 +835,13 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
                             //_logger.LogInformation("LX Music Album Art URL: {url}", picUrl);
                             _lxMusicAlbumArtBytes = await ImageHelper.GetImageByteArrayFromUrlAsync(picUrl);
                             if (_lxMusicAlbumArtBytes != null)
+                            {
                                 _smtcAlbumArtBuffer = _lxMusicAlbumArtBytes;
+                            }
                             else
+                            {
                                 _smtcAlbumArtBuffer = null;
+                            }
 
                             UpdateAlbumArt();
                         }
@@ -843,7 +889,9 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
     partial void OnCurrentMediaSourceProviderInfoChanged(MediaSourceProviderInfo? value)
     {
         foreach (var item in _settingsService.AppSettings.MediaSourceProvidersInfo)
+        {
             item.IsFocused = item.Provider == value?.Provider;
+        }
         WeakReferenceMessenger.Default.Send(new CurrentMediaSourceProviderChangedMessage(value));
     }
 }

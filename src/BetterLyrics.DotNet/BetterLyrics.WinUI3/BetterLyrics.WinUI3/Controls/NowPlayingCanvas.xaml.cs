@@ -1,4 +1,4 @@
-// 2025/6/23 by Zhe Fang
+﻿// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Effects;
@@ -200,6 +200,18 @@ public sealed partial class NowPlayingCanvas : UserControl,
     private bool _isMouseScrolling;
     private bool _isMouseScrollingChanged;
     private bool _isNowPlayingPaletteChanged;
+
+    // 翻译 / 音译开关等只改变译文显示时，原地更新歌词并播放过渡动画
+    private const int PresentationFadeDurationMs = 180;
+
+    private bool _isPresentationChanged;
+    private bool _isPresentationCollapseReady;
+    private bool _isPresentationAnimating;
+    private bool _isSoftLayoutChanged;
+    private DateTime _presentationFadeOutDeadline;
+    private DateTime _presentationSlideUntil;
+    private (int Start, int End) _presentationVisibleRangeBefore = (-1, -1);
+    private List<(RenderLyricsLine Line, double Anchor)>? _presentationAnchorsBefore;
 
     private ILyricsLayoutStrategy _layoutStrategy = new HorizontalLyricsLayoutStrategy();
 
@@ -592,6 +604,14 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
         var isGapLineChanged = UpdateGapLineInsertion();
 
+        // 译文淡出完成后再收起布局，避免文字与行高同时跳变
+        if (_presentationFadeOutDeadline != default && DateTime.UtcNow >= _presentationFadeOutDeadline)
+        {
+            _presentationFadeOutDeadline = default;
+            _isPresentationCollapseReady = true;
+            _isPresentationChanged = true;
+        }
+
         TriggerRelayout();
 
         #region UpdatePlayingLineIndex
@@ -616,7 +636,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
         #region UpdateTargetScrollOffset
 
-        if (isPrimaryPlayingLineChanged || _isLayoutChanged || isGapLineChanged)
+        if (isPrimaryPlayingLineChanged || _isLayoutChanged || isGapLineChanged || _isPresentationAnimating)
         {
             var targetScroll = _layoutStrategy.CalculateTargetScrollOffset(_renderLyricsLines, _primaryPlayingLineIndex);
             if (targetScroll.HasValue)
@@ -624,7 +644,8 @@ public sealed partial class NowPlayingCanvas : UserControl,
                 _canvasTargetScrollOffset = targetScroll.Value;
             }
 
-            if (_isLayoutChanged)
+            // 排版变化立即更新滚动基准；歌词本身的过渡由各行的 OffsetTransition 完成
+            if (_isLayoutChanged || _isPresentationAnimating)
             {
                 _canvasScrollTransition.JumpTo(_canvasTargetScrollOffset);
             }
@@ -671,10 +692,49 @@ public sealed partial class NowPlayingCanvas : UserControl,
         var isMouseScrollJustEnded = _isMouseScrollingChanged && !_isMouseScrolling;
         var shouldUpdateAllLines = _isMouseScrolling || isMouseScrollJustEnded;
 
+        var animatorStartIndex = shouldUpdateAllLines ? maxRange.Start : _visibleRange.Start;
+        var animatorEndIndex = shouldUpdateAllLines ? maxRange.End : _visibleRange.End;
+
+        var isPresentationSlideActive = _presentationSlideUntil != default &&
+                                        DateTime.UtcNow < _presentationSlideUntil;
+        if (_presentationSlideUntil != default && !isPresentationSlideActive)
+            _presentationSlideUntil = default;
+
+        if ((_isPresentationAnimating || isPresentationSlideActive) &&
+            !shouldUpdateAllLines && _renderLyricsLines != null)
+        {
+            // 过渡期间行位置仍接近旧排版，把旧可见范围和最终可见范围都纳入绘制 / 动画范围，
+            // 避免视口边缘因为排版位移短暂漏画歌词。
+            const int visiblePadding = 3;
+
+            animatorStartIndex = Math.Max(0, animatorStartIndex - visiblePadding);
+            animatorEndIndex = Math.Min(_renderLyricsLines.Count - 1, animatorEndIndex + visiblePadding);
+
+            var oldRange = _presentationVisibleRangeBefore;
+            if (oldRange.Start >= 0)
+            {
+                animatorStartIndex = Math.Min(animatorStartIndex, Math.Max(0, oldRange.Start - visiblePadding));
+                animatorEndIndex = Math.Max(animatorEndIndex,
+                    Math.Min(_renderLyricsLines.Count - 1, oldRange.End + visiblePadding));
+            }
+
+            _visibleRange = (animatorStartIndex, animatorEndIndex);
+
+            if (_isPresentationAnimating)
+            {
+                // 过渡范围外的行直接对齐最终位置，避免它们之后进入视口时跳变
+                for (var i = 0; i < _renderLyricsLines.Count; i++)
+                {
+                    if (i < animatorStartIndex || i > animatorEndIndex)
+                        _renderLyricsLines[i].OffsetTransition.JumpTo(_canvasTargetScrollOffset);
+                }
+            }
+        }
+
         _animator.UpdateLines(
             _renderLyricsLines?.Select(x => x.ToBaseRenderLyricsLine()).ToList(),
-            shouldUpdateAllLines ? maxRange.Start : _visibleRange.Start,
-            shouldUpdateAllLines ? maxRange.End : _visibleRange.End,
+            animatorStartIndex,
+            animatorEndIndex,
             _primaryPlayingLineIndex,
             _renderLyricsWidth,
             _renderLyricsHeight,
@@ -687,7 +747,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
             elapsedTime,
             _isMouseScrolling,
             _isLayoutChanged,
-            isPrimaryPlayingLineChanged || isGapLineChanged,
+            isPrimaryPlayingLineChanged || isGapLineChanged || _isPresentationAnimating,
             _isMouseScrollingChanged,
             _isNowPlayingPaletteChanged,
             _songPositionWithOffset.TotalMilliseconds
@@ -697,6 +757,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
         _isNowPlayingPaletteChanged = false;
 
         _isLayoutChanged = false;
+        _isPresentationAnimating = false;
 
         if (_spectrumAnalyzer.IsCapturing) _spectrumAnalyzer.UpdateSmoothSpectrum();
 
@@ -1085,8 +1146,22 @@ public sealed partial class NowPlayingCanvas : UserControl,
     {
         if (_lyricsWindowStatus == null) return;
 
+        // 翻译 / 音译开关：行结构与原文不变时原地更新，避免整页歌词重建
+        if (_isPresentationChanged && !_isLyricsChanged)
+        {
+            var result = TryApplyPresentationChange();
+            _isPresentationChanged = false;
+
+            if (result == PresentationApplyResult.Failed) _isLyricsChanged = true;
+        }
+
         if (_isLyricsChanged)
         {
+            _isPresentationChanged = false;
+            _isSoftLayoutChanged = false;
+            _isPresentationAnimating = false;
+            ResetPresentationTransitionState();
+
             DisposeRenderLyricsLines();
 
             // 旧列表里的间隙占位行已随 DisposeRenderLyricsLines 一起释放
@@ -1164,7 +1239,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
         }
 
         if (_renderLyricsLines == null) return;
-        if (!_isLayoutChanged && !_isGapLayoutChanged) return;
+        if (!_isLayoutChanged && !_isGapLayoutChanged && !_isSoftLayoutChanged) return;
 
         _layoutStrategy = _lyricsWindowStatus.LyricsStyleSettings.LyricsLayoutOrientation ==
             LyricsLayoutOrientation.Horizontal ? new HorizontalLyricsLayoutStrategy() : new VerticalLyricsLayoutStrategy();
@@ -1189,6 +1264,287 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
             _isGapLayoutChanged = false;
         }
+
+        if (_isSoftLayoutChanged)
+        {
+            // 译文显示 / 隐藏导致行高变化：按旧位置反向补偿，再由滚动动画平滑归位
+            ApplyPresentationLayoutCompensation();
+            _isSoftLayoutChanged = false;
+        }
+    }
+
+    /// <summary>
+    /// 将新解析出的译文 / 音译文本原地写入现有歌词行。
+    /// 只处理行结构与原文完全一致的“显示变化”，否则退回整页刷新。
+    /// </summary>
+    private PresentationApplyResult TryApplyPresentationChange()
+    {
+        if (_lyricsWindowStatus == null || _renderLyricsLines == null || _renderLineSourceIndices == null)
+        {
+            return PresentationApplyResult.Failed;
+        }
+
+        var lyricsData = _gsmtcService.CurrentLyricsData;
+        if (lyricsData == null || lyricsData == LyricsDataExtensions.NotFoundPlaceholder)
+        {
+            return PresentationApplyResult.Failed;
+        }
+
+        var sourceLines = lyricsData.LyricsLines;
+        if (_renderLineSourceIndices.Count != _renderLyricsLines.Count)
+        {
+            return PresentationApplyResult.Failed;
+        }
+
+        if (sourceLines.Count(x => !string.IsNullOrWhiteSpace(x.PrimaryText)) !=
+            _renderLyricsLines.Count(x => !x.IsGapLine))
+        {
+            return PresentationApplyResult.Failed;
+        }
+
+        var hasChange = false;
+        var hasRemoval = false;
+
+        for (var i = 0; i < _renderLyricsLines.Count; i++)
+        {
+            var line = _renderLyricsLines[i];
+            var sourceIndex = _renderLineSourceIndices[i];
+            if (line.IsGapLine || sourceIndex < 0) continue;
+            if (sourceIndex >= sourceLines.Count)
+            {
+                return PresentationApplyResult.Failed;
+            }
+
+            var source = sourceLines[sourceIndex];
+
+            // 原文或时间轴变化不属于译文显示变化，必须整页刷新
+            if (source.StartMs != line.StartMs ||
+                !string.Equals(source.PrimaryText, line.PrimaryText, StringComparison.Ordinal))
+            {
+                return PresentationApplyResult.Failed;
+            }
+
+            if (!string.Equals(source.SecondaryText, line.SecondaryText, StringComparison.Ordinal))
+            {
+                hasChange = true;
+                if (source.SecondaryText.Length == 0 && line.SecondaryText.Length > 0)
+                {
+                    hasRemoval = true;
+                }
+            }
+
+            if (!string.Equals(source.TertiaryText, line.TertiaryText, StringComparison.Ordinal))
+            {
+                hasChange = true;
+                if (source.TertiaryText.Length == 0 && line.TertiaryText.Length > 0)
+                {
+                    hasRemoval = true;
+                }
+            }
+        }
+
+        if (!hasChange)
+        {
+            RestoreHiddenPresentationLayers(sourceLines);
+            ResetPresentationFadeState();
+            return PresentationApplyResult.Applied;
+        }
+
+        // 关闭译文 / 音译时先让旧文字淡出，淡出结束后再收起它占用的行高
+        if (hasRemoval && !_isPresentationCollapseReady)
+        {
+            BeginPresentationFadeOut(sourceLines);
+            _presentationFadeOutDeadline = DateTime.UtcNow.AddMilliseconds(PresentationFadeDurationMs + 120);
+            return PresentationApplyResult.Deferred;
+        }
+
+        ApplyPresentationTexts(sourceLines);
+        return PresentationApplyResult.Applied;
+    }
+
+    private void BeginPresentationFadeOut(IReadOnlyList<LyricsLine> sourceLines)
+    {
+        for (var i = 0; i < _renderLyricsLines!.Count; i++)
+        {
+            var line = _renderLyricsLines[i];
+            var sourceIndex = _renderLineSourceIndices![i];
+            if (line.IsGapLine || sourceIndex < 0 || sourceIndex >= sourceLines.Count) continue;
+
+            var source = sourceLines[sourceIndex];
+
+            // 可见区从上往下轻微错开淡出，避免整片文字同时消失
+            var visibleStart = _visibleRange.Start >= 0 ? _visibleRange.Start : 0;
+            var delayMs = Math.Clamp((i - visibleStart) * 10, 0, 90);
+
+            if (line.IsSecondaryVisible && line.SecondaryText.Length > 0 && source.SecondaryText.Length == 0)
+            {
+                line.IsSecondaryVisible = false;
+                StartPresentationOpacityTransition(line.SecondaryOpacityTransition, 0, delayMs);
+            }
+
+            if (line.IsTertiaryVisible && line.TertiaryText.Length > 0 && source.TertiaryText.Length == 0)
+            {
+                line.IsTertiaryVisible = false;
+                StartPresentationOpacityTransition(line.TertiaryOpacityTransition, 0, delayMs);
+            }
+        }
+    }
+
+    private void ApplyPresentationTexts(IReadOnlyList<LyricsLine> sourceLines)
+    {
+        // 先记录旧排版的原文位置和可见范围，排版后逐行反向补偿
+        _presentationAnchorsBefore = CapturePresentationAnchors();
+        _presentationVisibleRangeBefore = _visibleRange;
+
+        // 行位移沿用歌词滚动动画的缓动 / 弹簧与逐行延迟，因此需要覆盖最长时长 + 延迟
+        var effect = _lyricsWindowStatus!.LyricsEffectSettings;
+        var maxScrollDuration = Math.Max(effect.LyricsScrollDuration,
+            Math.Max(effect.LyricsScrollTopDuration, effect.LyricsScrollBottomDuration));
+        var maxScrollDelay = Math.Max(effect.LyricsScrollTopDelay, effect.LyricsScrollBottomDelay) + 400;
+        _presentationSlideUntil = DateTime.UtcNow.AddMilliseconds(maxScrollDuration + maxScrollDelay + 300);
+
+        var style = _lyricsWindowStatus!.LyricsStyleSettings;
+        var translatedOpacity = style.TranslatedLyricsOpacity / 100.0;
+        var phoneticOpacity = style.PhoneticLyricsOpacity / 100.0;
+
+        for (var i = 0; i < _renderLyricsLines!.Count; i++)
+        {
+            var line = _renderLyricsLines[i];
+            var sourceIndex = _renderLineSourceIndices![i];
+            if (line.IsGapLine || sourceIndex < 0 || sourceIndex >= sourceLines.Count) continue;
+
+            var source = sourceLines[sourceIndex];
+
+            if (!string.Equals(source.SecondaryText, line.SecondaryText, StringComparison.Ordinal))
+            {
+                line.SecondaryText = source.SecondaryText;
+                // 新出现的译文从透明开始淡入
+                if (source.SecondaryText.Length > 0)
+                {
+                    line.SecondaryOpacityTransition.JumpTo(0);
+                }
+            }
+
+            if (!line.IsSecondaryVisible)
+            {
+                line.IsSecondaryVisible = true;
+                if (source.SecondaryText.Length > 0)
+                {
+                    StartPresentationOpacityTransition(line.SecondaryOpacityTransition, translatedOpacity);
+                }
+            }
+
+            if (!string.Equals(source.TertiaryText, line.TertiaryText, StringComparison.Ordinal))
+            {
+                line.TertiaryText = source.TertiaryText;
+                if (source.TertiaryText.Length > 0)
+                {
+                    line.TertiaryOpacityTransition.JumpTo(0);
+                }
+            }
+
+            if (!line.IsTertiaryVisible)
+            {
+                line.IsTertiaryVisible = true;
+                if (source.TertiaryText.Length > 0)
+                {
+                    StartPresentationOpacityTransition(line.TertiaryOpacityTransition, phoneticOpacity);
+                }
+            }
+        }
+
+        ResetPresentationFadeState();
+        _isSoftLayoutChanged = true;
+        _isPresentationAnimating = true;
+    }
+
+    private void RestoreHiddenPresentationLayers(IReadOnlyList<LyricsLine> sourceLines)
+    {
+        if (_lyricsWindowStatus == null || _renderLyricsLines == null || _renderLineSourceIndices == null) return;
+
+        var style = _lyricsWindowStatus.LyricsStyleSettings;
+        var translatedOpacity = style.TranslatedLyricsOpacity / 100.0;
+        var phoneticOpacity = style.PhoneticLyricsOpacity / 100.0;
+
+        for (var i = 0; i < _renderLyricsLines.Count; i++)
+        {
+            var line = _renderLyricsLines[i];
+            var sourceIndex = _renderLineSourceIndices[i];
+            if (line.IsGapLine || sourceIndex < 0 || sourceIndex >= sourceLines.Count) continue;
+
+            var source = sourceLines[sourceIndex];
+
+            if (!line.IsSecondaryVisible && source.SecondaryText.Length > 0)
+            {
+                line.IsSecondaryVisible = true;
+                StartPresentationOpacityTransition(line.SecondaryOpacityTransition, translatedOpacity);
+            }
+
+            if (!line.IsTertiaryVisible && source.TertiaryText.Length > 0)
+            {
+                line.IsTertiaryVisible = true;
+                StartPresentationOpacityTransition(line.TertiaryOpacityTransition, phoneticOpacity);
+            }
+        }
+    }
+
+    private static void StartPresentationOpacityTransition(ValueTransition<double> transition, double target,
+        int delayMs = 0)
+    {
+        transition.SetDurationMs(PresentationFadeDurationMs);
+        transition.SetDelay(delayMs / 1000.0);
+        transition.Start(target);
+    }
+
+    private void ApplyPresentationLayoutCompensation()
+    {
+        var before = _presentationAnchorsBefore;
+        _presentationAnchorsBefore = null;
+        if (before == null) return;
+
+        var isVertical = _lyricsWindowStatus?.LyricsStyleSettings.LyricsLayoutOrientation ==
+                         LyricsLayoutOrientation.Vertical;
+
+        foreach (var (line, oldAnchor) in before)
+        {
+            // 用原文实际绘制位置做补偿：行框中心会随译文高度变化，
+            // 按中心补偿会让原文跳半个行高。
+            var newAnchor = isVertical ? line.PrimaryPosition.X : line.PrimaryPosition.Y;
+            var delta = newAnchor - oldAnchor;
+            if (Math.Abs(delta) < 0.01) continue;
+
+            line.OffsetTransition.JumpTo(line.OffsetTransition.Value - delta);
+        }
+    }
+
+    private List<(RenderLyricsLine Line, double Anchor)>? CapturePresentationAnchors()
+    {
+        if (_renderLyricsLines == null) return null;
+
+        var isVertical = _lyricsWindowStatus?.LyricsStyleSettings.LyricsLayoutOrientation ==
+                         LyricsLayoutOrientation.Vertical;
+
+        var anchors = new List<(RenderLyricsLine, double)>(_renderLyricsLines.Count);
+        foreach (var line in _renderLyricsLines)
+        {
+            anchors.Add((line, isVertical ? line.PrimaryPosition.X : line.PrimaryPosition.Y));
+        }
+
+        return anchors;
+    }
+
+    private void ResetPresentationFadeState()
+    {
+        _presentationFadeOutDeadline = default;
+        _isPresentationCollapseReady = false;
+    }
+
+    private void ResetPresentationTransitionState()
+    {
+        ResetPresentationFadeState();
+        _presentationAnchorsBefore = null;
+        _presentationVisibleRangeBefore = (-1, -1);
+        _presentationSlideUntil = default;
     }
 
     private void RequestRelayout()
@@ -1214,6 +1570,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
         LyricsGapSegment? activeGap = null;
         if (effectSettings.IsLyricsGapDotsEnabled && _lyricsGaps != null)
+        {
             foreach (var candidate in _lyricsGaps)
             {
                 if (timeMs < candidate.StartMs || timeMs >= candidate.EndMs) continue;
@@ -1222,6 +1579,7 @@ public sealed partial class NowPlayingCanvas : UserControl,
                 activeGap = candidate;
                 break;
             }
+        }
 
         var isSameGap = activeGap is { } next && _insertedGap is { } current &&
                         next.StartMs == current.StartMs && next.EndMs == current.EndMs;
@@ -1249,7 +1607,9 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
         var centers = new List<(RenderLyricsLine, double)>(_renderLyricsLines.Count);
         foreach (var line in _renderLyricsLines)
+        {
             centers.Add((line, isVertical ? line.CenterPosition.X : line.CenterPosition.Y));
+        }
 
         return centers;
     }
@@ -1285,11 +1645,13 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
         var index = _renderLyricsLines.Count;
         for (var i = 0; i < _renderLyricsLines.Count; i++)
+        {
             if (_renderLyricsLines[i].StartMs >= gap.EndMs)
             {
                 index = i;
                 break;
             }
+        }
 
         var previousLine = index - 1 >= 0 ? _renderLyricsLines[index - 1] : null;
         var nextLine = index < _renderLyricsLines.Count ? _renderLyricsLines[index] : null;
@@ -1302,7 +1664,9 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
         var lineHeight = previousLine?.PrimaryLineHeight ?? nextLine?.PrimaryLineHeight ?? 0;
         if (lineHeight <= 0)
+        {
             lineHeight = (_lyricsWindowStatus?.LyricsStyleSettings.OriginalLyricsFontSize ?? 32) * 1.3;
+        }
 
         float flowCenter;
         if (isVertical)
@@ -1626,6 +1990,15 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
     public void Receive(CurrentLyricsDataChangedMessage message)
     {
+        // 只有译文显示变化（翻译 / 音译开关等）时原地更新，保留当前歌词行与滚动位置
+        if (message.IsPresentationChange)
+        {
+            _isPresentationChanged = true;
+            return;
+        }
+
+        _isPresentationChanged = false;
+        ResetPresentationTransitionState();
         RequestReloadLyrics();
     }
 
@@ -1658,8 +2031,14 @@ public sealed partial class NowPlayingCanvas : UserControl,
         var timelineSyncThreshold = _gsmtcService.CurrentMediaSourceProviderInfo?.TimelineSyncThreshold ?? 0;
 
         // seek
-        if (diff >= timelineSyncThreshold) _songPosition = realPosition;
+        if (diff >= timelineSyncThreshold)
+        {
+            _songPosition = realPosition;
+        }
 
-        if (diff >= timelineSyncThreshold + 5000) RequestRelayout();
+        if (diff >= timelineSyncThreshold + 5000)
+        {
+            RequestRelayout();
+        }
     }
 }
