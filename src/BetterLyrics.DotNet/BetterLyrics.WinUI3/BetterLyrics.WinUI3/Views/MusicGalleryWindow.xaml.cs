@@ -123,12 +123,12 @@ public sealed partial class MusicGalleryWindow : BaseWindow,
 
     private void RootGrid_Loaded(object sender, RoutedEventArgs e)
     {
-        ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.WindowStatus = WindowStatus.Opened;
+        ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.WindowState = LyricsWindowState.Opened;
     }
 
     private void RootGrid_Unloaded(object sender, RoutedEventArgs e)
     {
-        ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.WindowStatus = WindowStatus.Closed;
+        ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus.WindowState = LyricsWindowState.Closed;
     }
 
     private void NowPlayingBar_PlayingQueueClick(object sender, EventArgs e)

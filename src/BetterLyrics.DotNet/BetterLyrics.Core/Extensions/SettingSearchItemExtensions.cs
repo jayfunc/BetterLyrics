@@ -155,6 +155,7 @@ public static class SettingSearchItemExtensions
         new SettingSearchItem { Uid = "SettingsPageHideWindow", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.Window },
         new SettingSearchItem { Uid = "SettingsPageHideWindowWhenNullSession", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.Window },
         new SettingSearchItem { Uid = "SettingsPageHideWindowDelay", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.Window },
+        new SettingSearchItem { Uid = "WindowSettingsControlWallpaperEngineBinding", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.Window },
         new SettingSearchItem { Uid = "WindowSettingsControlTheme", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.Window },
 
         new SettingSearchItem { Uid = "SettingsPageAdaptEnvColor", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.Window },

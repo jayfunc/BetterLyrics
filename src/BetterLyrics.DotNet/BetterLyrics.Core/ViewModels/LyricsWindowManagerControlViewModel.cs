@@ -129,7 +129,7 @@ public partial class LyricsWindowManagerControlViewModel : ObservableRecipient,
     public void Receive(MultiNowPlayingWindowModeChangedMessage message)
     {
         if (!message.Value &&
-            AppSettings.WindowBoundsRecords.Any(x => x.WindowStatus == WindowStatus.Opened))
+            AppSettings.WindowBoundsRecords.Any(x => x.WindowState == LyricsWindowState.Opened))
         {
             var windows = _windowManagerProvider.GetWindows(WindowType.NowPlayingWindow);
             var latest = windows.Last();

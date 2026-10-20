@@ -1,4 +1,4 @@
-﻿// 2025/6/23 by Zhe Fang
+// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.Core.Collections;
 using BetterLyrics.Core.Constants;
@@ -36,7 +36,7 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
     IRecipient<MediaFolderEnabledChangedMessage>,
     IRecipient<MediaFolderLastSyncTimeChangedMessage>,
     IRecipient<MediaSourceTargetAlbumArtSizeChangedMessage>,
-    IRecipient<LyricsWindowStatusStateChangedMessage>,
+    IRecipient<LyricsWindowStateChangedMessage>,
     IRecipient<DiscordAlbumArtSourceChangedMessage>
 {
     private readonly IAlbumArtSearchService _albumArtSearchService;
@@ -256,7 +256,7 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
         UpdateAlbumArt(true);
     }
 
-    public void Receive(LyricsWindowStatusStateChangedMessage message)
+    public void Receive(LyricsWindowStateChangedMessage message)
     {
         OnDesiredSessionChanged();
     }

@@ -37,7 +37,6 @@ namespace BetterLyrics.WinUI3.Views;
 public sealed partial class NowPlayingWindow : BaseWindow,
     IRecipient<CurrentIsPlayingChangedMessage>,
     IRecipient<AlbumArtBytesChangedMessage>,
-    IRecipient<CurrentMediaSourceProviderChangedMessage>,
     IRecipient<LyricsStyleColorConfigChangedMessage>,
     IRecipient<LyricsBackgroundColorConfigChangedMessage>,
     IRecipient<LyricsWindowPaletteConfigChangedMessage>,
@@ -46,7 +45,6 @@ public sealed partial class NowPlayingWindow : BaseWindow,
     IRecipient<LyricsWindowAlwaysOnTopChangedMessage>,
     IRecipient<LyricsWindowAlwaysOnTopPollingChangedMessage>,
     IRecipient<LyricsWindowLockConfigChangedMessage>,
-    IRecipient<LyricsWindowAutoHideConfigChangedMessage>,
     IRecipient<LyricsWindowPlayingBarConfigChangedMessage>,
     IRecipient<LyricsWindowWorkAreaConfigChangedMessage>,
     IRecipient<LyricsWindowNameChangedMessage>,
@@ -64,11 +62,12 @@ public sealed partial class NowPlayingWindow : BaseWindow,
 
     private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
     private readonly AsyncPoller _underlayColorPoller = new();
-    private readonly Debouncer _visibilityDebouncer = new();
-    private readonly Debouncer _displayChangeDebouncer = new();
     private readonly Debouncer _windowBoundsChangeDebouncer = new();
 
     private readonly IMonitorProvider _monitorProvider = Ioc.Default.GetRequiredService<IMonitorProvider>();
+
+    private readonly ILyricsWindowVisibilityService _lyricsWindowVisibilityService =
+        Ioc.Default.GetRequiredService<ILyricsWindowVisibilityService>();
 
     private readonly ITaskbarThumbnailProvider _taskbarThumbnailProvider = Ioc.Default.GetRequiredService<ITaskbarThumbnailProvider>();
 
@@ -99,7 +98,9 @@ public sealed partial class NowPlayingWindow : BaseWindow,
 
         RequestUpdateAlbumArtThemeColors();
 
-        LyricsWindowStatus.WindowStatus = WindowStatus.Opened;
+        LyricsWindowStatus.WindowState = LyricsWindowState.Opened;
+        LyricsWindowStatus.HideReasons = LyricsWindowHideReason.None;
+        LyricsWindowStatus.IsUserHidden = false;
     }
 
     private void Wmm_WindowMessageReceived(object? sender, WindowMessageEventArgs e)
@@ -157,10 +158,6 @@ public sealed partial class NowPlayingWindow : BaseWindow,
                 }
                 e.Handled = true;
             }
-        }
-        else if (msgId == (uint)WindowMessage.WM_DISPLAYCHANGE)
-        {
-            OnAutoShowOrHideWindowChanged(1500);
         }
         else
         {
@@ -230,7 +227,7 @@ public sealed partial class NowPlayingWindow : BaseWindow,
             }
         }
 
-        OnAutoShowOrHideWindowChanged();
+        _lyricsWindowVisibilityService.NotifyWindowLoaded(LyricsWindowStatus);
         UpdateNowPlayingBarStatus();
     }
 
@@ -399,90 +396,58 @@ public sealed partial class NowPlayingWindow : BaseWindow,
         _taskbarHook = new TaskbarHook(this, LyricsWindowStatus.TaskbarPlacement, LyricsWindowStatus.MonitorBounds);
     }
 
-    private void OnAutoShowOrHideWindowChanged(int? overrideDelay = null)
+    public void ShowFromVisibilityPolicy()
     {
         var status = LyricsWindowStatus;
 
-        _ = _visibilityDebouncer.RunAsync(() =>
+        MoveToTargetMonitorIfNeeded();
+
+        if (Visible && status.WindowState == LyricsWindowState.Opened) return;
+
+        _windowManagerProvider.OpenOrShowWindow<NowPlayingWindow>(status);
+        if (status.IsWorkArea)
         {
-            DispatcherQueue.TryEnqueue(() =>
-            {
-                bool isTargetMonitorConnected = true;
-                var targetMonitor = status.MonitorDeviceName;
-                if (!string.IsNullOrEmpty(targetMonitor))
-                {
-                    if (!string.Equals(targetMonitor, _monitorProvider.GetPrimaryMonitorDeviceName(), StringComparison.OrdinalIgnoreCase))
-                    {
-                        var allMonitors = _monitorProvider.GetAllMonitorDeviceNames();
-                        if (!allMonitors.Contains(targetMonitor, StringComparer.OrdinalIgnoreCase))
-                        {
-                            isTargetMonitorConnected = false;
-                        }
-                    }
-                }
+            _windowManagerProvider.SetIsAppBar(this, true);
+            _windowManagerProvider.MoveAndResize(this, status.GetAppBarBounds());
+        }
 
-                bool shouldHide = (status.HideWindowWhenPaused && !_gsmtcService.CurrentIsPlaying) ||
-                                  (status.HideWindowWhenNullSession && _gsmtcService.CurrentMediaSourceProviderInfo == null) ||
-                                  !isTargetMonitorConnected;
+        if (status.IsLocked && !status.IsWallpaper &&
+            (!status.IsAlwaysHideUnlockButton || status.KeepNowPlayingBarInteractiveWhenLocked))
+        {
+            RestartOverlayInputHelper();
+        }
+    }
 
-                if (status.WindowStatus == WindowStatus.HiddenBySystem)
-                {
-                    if (!shouldHide)
-                    {
-                        if (!string.IsNullOrEmpty(targetMonitor) && isTargetMonitorConnected && !string.Equals(targetMonitor, _monitorProvider.GetPrimaryMonitorDeviceName(), StringComparison.OrdinalIgnoreCase))
-                        {
-                            var currentMonitorInfo = _monitorProvider.GetMonitorInfoFromWindow(this);
-                            if (!string.Equals(currentMonitorInfo.Item1, targetMonitor, StringComparison.OrdinalIgnoreCase))
-                            {
-                                var targetRect = _monitorProvider.GetMonitorRectFromDeviceName(targetMonitor);
-                                if (targetRect != AppRect.Empty)
-                                {
-                                    var newBounds = CalculatePlacement(status.WindowBounds, currentMonitorInfo.Item2, targetRect, true);
-                                    status.WindowBounds = newBounds;
-                                    _windowManagerProvider.MoveAndResize(this, newBounds);
-                                }
-                            }
-                        }
+    public void HideFromVisibilityPolicy(LyricsWindowHideReason reasons)
+    {
+        _windowManagerProvider.HideWindow(this, reasons);
+        StopOverlayInputHelper();
+    }
 
-                        _windowManagerProvider.OpenOrShowWindow<NowPlayingWindow>(status);
-                        if (status.IsWorkArea)
-                        {
-                            _windowManagerProvider.SetIsAppBar(this, true);
-                            _windowManagerProvider.MoveAndResize(this, status.GetAppBarBounds());
-                        }
+    private void MoveToTargetMonitorIfNeeded()
+    {
+        var status = LyricsWindowStatus;
+        var targetMonitor = status.MonitorDeviceName;
+        if (string.IsNullOrEmpty(targetMonitor)) return;
 
-                        if (status.IsLocked && !status.IsWallpaper &&
-                            (!status.IsAlwaysHideUnlockButton || status.KeepNowPlayingBarInteractiveWhenLocked))
-                            RestartOverlayInputHelper();
-                    }
-                }
-                else if (status.WindowStatus == WindowStatus.Opened)
-                {
-                    if (shouldHide)
-                    {
-                        _windowManagerProvider.HideWindow(this, WindowStatus.HiddenBySystem);
-                        StopOverlayInputHelper();
-                    }
-                    else
-                    {
-                        if (!string.IsNullOrEmpty(targetMonitor) && isTargetMonitorConnected && !string.Equals(targetMonitor, _monitorProvider.GetPrimaryMonitorDeviceName(), StringComparison.OrdinalIgnoreCase))
-                        {
-                            var currentMonitorInfo = _monitorProvider.GetMonitorInfoFromWindow(this);
-                            if (!string.Equals(currentMonitorInfo.Item1, targetMonitor, StringComparison.OrdinalIgnoreCase))
-                            {
-                                var targetRect = _monitorProvider.GetMonitorRectFromDeviceName(targetMonitor);
-                                if (targetRect != AppRect.Empty)
-                                {
-                                    var newBounds = CalculatePlacement(status.WindowBounds, currentMonitorInfo.Item2, targetRect, true);
-                                    status.WindowBounds = newBounds;
-                                    _windowManagerProvider.MoveAndResize(this, newBounds);
-                                }
-                            }
-                        }
-                    }
-                }
-            });
-        }, overrideDelay ?? LyricsWindowStatus.AutoShowOrHideWindowDelay);
+        if (string.Equals(targetMonitor, _monitorProvider.GetPrimaryMonitorDeviceName(),
+                StringComparison.OrdinalIgnoreCase))
+        {
+            return;
+        }
+
+        var allMonitors = _monitorProvider.GetAllMonitorDeviceNames();
+        if (!allMonitors.Contains(targetMonitor, StringComparer.OrdinalIgnoreCase)) return;
+
+        var currentMonitorInfo = _monitorProvider.GetMonitorInfoFromWindow(this);
+        if (string.Equals(currentMonitorInfo.Item1, targetMonitor, StringComparison.OrdinalIgnoreCase)) return;
+
+        var targetRect = _monitorProvider.GetMonitorRectFromDeviceName(targetMonitor);
+        if (targetRect == AppRect.Empty) return;
+
+        var newBounds = CalculatePlacement(status.WindowBounds, currentMonitorInfo.Item2, targetRect, true);
+        status.WindowBounds = newBounds;
+        _windowManagerProvider.MoveAndResize(this, newBounds);
     }
 
     private void OnIsAdaptToEnvironmentChanged()
@@ -590,8 +555,6 @@ public sealed partial class NowPlayingWindow : BaseWindow,
         _underlayColorPoller.Dispose();
         LyricsWindowStatus.IsUnderlayColorTimerRunning = false;
 
-        _visibilityDebouncer.Dispose();
-        _displayChangeDebouncer.Dispose();
         _albumArtThemeColorsDebounder.Dispose();
 
         _taskbarHook?.Dispose();
@@ -902,7 +865,6 @@ public sealed partial class NowPlayingWindow : BaseWindow,
 
     public void Receive(CurrentIsPlayingChangedMessage message)
     {
-        OnAutoShowOrHideWindowChanged();
         _taskbarThumbnailProvider.UpdatePlayPauseState(WindowNative.GetWindowHandle(this), _gsmtcService.CurrentIsPlaying);
     }
 
@@ -930,12 +892,6 @@ public sealed partial class NowPlayingWindow : BaseWindow,
             OnIsLockedChanged();
     }
 
-    public void Receive(LyricsWindowAutoHideConfigChangedMessage message)
-    {
-        if (message.Sender == LyricsWindowStatus)
-            OnAutoShowOrHideWindowChanged();
-    }
-
     public void Receive(LyricsWindowPlayingBarConfigChangedMessage message)
     {
         if (message.Sender == LyricsWindowStatus)
@@ -951,11 +907,6 @@ public sealed partial class NowPlayingWindow : BaseWindow,
     {
         if (message.Sender == LyricsWindowStatus)
             OnWorkAreaChanged();
-    }
-
-    public void Receive(CurrentMediaSourceProviderChangedMessage message)
-    {
-        OnAutoShowOrHideWindowChanged();
     }
 
     public void Receive(LyricsWindowNameChangedMessage message)

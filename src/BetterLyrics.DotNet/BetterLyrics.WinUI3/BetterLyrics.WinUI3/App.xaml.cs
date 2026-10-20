@@ -11,6 +11,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.ExceptionServices;
 using System.Threading;
@@ -105,6 +106,8 @@ public partial class App : Application
         {
             var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
             var windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
+            var wallpaperEngineService = Ioc.Default.GetRequiredService<IWallpaperEngineService>();
+            var activeWallpaperProjectPaths = wallpaperEngineService.GetActiveWallpaperProjectPaths();
 
             // 初始化歌词切换窗口
             _ = windowManagerProvider.OpenOrShowWindow<LyricsWindowSwitchWindow>();
@@ -117,6 +120,9 @@ public partial class App : Application
                 {
                     foreach (var item in defaultStatus)
                     {
+                        // 已绑定其他壁纸的窗口由 Wallpaper Engine 联动服务决定是否显示
+                        if (IsBoundToInactiveWallpaper(item, activeWallpaperProjectPaths)) continue;
+
                         windowManagerProvider.OpenOrShowWindow<NowPlayingWindow>(item);
                         if (!settingsService.AppSettings.GeneralSettings.MultiNowPlayingWindowMode)
                         {
@@ -125,6 +131,9 @@ public partial class App : Application
                     }
                 }
             }
+
+            // 根据当前 Wallpaper Engine 壁纸同步已绑定窗口
+            Ioc.Default.GetRequiredService<IWallpaperEngineLyricsWindowService>().Initialize();
 
             // 自动打开音乐库逻辑
             if (settingsService.AppSettings.MusicGallerySettings.AutoOpen)
@@ -138,6 +147,18 @@ public partial class App : Application
             System.Windows.Forms.MessageBox.Show(ex.Message, "HandleNormalLaunch: Fatal error", System.Windows.Forms.MessageBoxButtons.OK, System.Windows.Forms.MessageBoxIcon.Error);
             Environment.Exit(1);
         }
+    }
+
+    private static bool IsBoundToInactiveWallpaper(LyricsWindowStatus status,
+        IReadOnlySet<string>? activeWallpaperProjectPaths)
+    {
+        if (activeWallpaperProjectPaths == null || string.IsNullOrWhiteSpace(status.WallpaperEngineBindingPath))
+        {
+            return false;
+        }
+
+        var bindingPath = status.WallpaperEngineBindingPath.Replace('/', '\\');
+        return !activeWallpaperProjectPaths.Contains(bindingPath);
     }
 
     private static async Task InitAppServicesAsync()
@@ -192,6 +213,9 @@ public partial class App : Application
 
         // 启动全局快捷键服务
         _ = Ioc.Default.GetRequiredService<IGlobalShortcutService>();
+
+        // 初始化 Wallpaper Engine 联动所需的配置读取
+        await Ioc.Default.GetRequiredService<IWallpaperEngineService>().InitializeAsync();
     }
 
     private static void EnsureLyricsSearchProvidersInfo()

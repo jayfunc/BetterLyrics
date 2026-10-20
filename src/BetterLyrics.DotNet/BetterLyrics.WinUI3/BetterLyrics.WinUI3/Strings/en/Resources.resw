@@ -2367,6 +2367,33 @@
   <data name="WindowSettingsControlShowAndHide.Text" xml:space="preserve">
     <value>Hide and Show</value>
   </data>
+  <data name="WindowSettingsControlWallpaperEngine.Text" xml:space="preserve">
+    <value>Wallpaper Engine Integration</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineBinding.Header" xml:space="preserve">
+    <value>Link to a Wallpaper Engine wallpaper</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineBinding.Description" xml:space="preserve">
+    <value>Automatically show this lyrics window when the linked wallpaper becomes active, and hide it when another linked wallpaper becomes active. Pause and no-session auto-hide still apply. Unlinked windows are not affected.</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineRefresh.Text" xml:space="preserve">
+    <value>Refresh wallpaper list</value>
+  </data>
+  <data name="WallpaperEngineNotLinked" xml:space="preserve">
+    <value>Not linked</value>
+  </data>
+  <data name="WallpaperEngineMissing" xml:space="preserve">
+    <value>not installed</value>
+  </data>
+  <data name="WallpaperEngineNotInstalled" xml:space="preserve">
+    <value>Wallpaper Engine was not detected. Make sure it is installed and running, then refresh the wallpaper list.</value>
+  </data>
+  <data name="WallpaperEngineNoActiveWallpaper" xml:space="preserve">
+    <value>No active Wallpaper Engine wallpaper was detected.</value>
+  </data>
+  <data name="WallpaperEngineCurrentWallpaper" xml:space="preserve">
+    <value>Current wallpaper:</value>
+  </data>
   <data name="WindowSettingsControlSpoutOutput.Header" xml:space="preserve">
     <value>Spout Output</value>
   </data>

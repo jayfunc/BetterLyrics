@@ -8,7 +8,7 @@ public interface IWindowManagerProvider
 {
     // For general windows
 
-    void HideWindow(object obj, WindowStatus hiddenBy = WindowStatus.HiddenByUser);
+    void HideWindow(object obj, LyricsWindowHideReason reason = LyricsWindowHideReason.UserHidden);
     void ToggleWindow(object obj);
     void ToggleWindows(WindowType windowType);
 

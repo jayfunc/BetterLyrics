@@ -35,16 +35,16 @@ public class WindowManagerProvider : IWindowManagerProvider
     private static readonly List<object> _activeWindows = [];
     private static readonly List<object> _activeAppBars = [];
 
-    public void HideWindow(object obj, WindowStatus hiddenBy = WindowStatus.HiddenByUser)
+    public void HideWindow(object obj, LyricsWindowHideReason reason = LyricsWindowHideReason.UserHidden)
     {
         if (obj is not Window)
         {
             throw new ArgumentException($"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.", nameof(obj));
         }
 
-        if (hiddenBy is WindowStatus.Closed or WindowStatus.Opened)
+        if (reason == LyricsWindowHideReason.None)
         {
-            throw new ArgumentOutOfRangeException(nameof(hiddenBy));
+            throw new ArgumentOutOfRangeException(nameof(reason));
         }
 
         if (obj is NowPlayingWindow nowPlayingWindow)
@@ -54,7 +54,10 @@ public class WindowManagerProvider : IWindowManagerProvider
                 UnregisterAppBar(hwnd);
             }
 
-            nowPlayingWindow.LyricsWindowStatus.WindowStatus = hiddenBy;
+            var status = nowPlayingWindow.LyricsWindowStatus;
+            if (reason.HasFlag(LyricsWindowHideReason.UserHidden)) status.IsUserHidden = true;
+            status.HideReasons = reason;
+            status.WindowState = LyricsWindowState.Hidden;
         }
 
         var window = (Window)obj;
@@ -117,7 +120,19 @@ public class WindowManagerProvider : IWindowManagerProvider
                 WorkerWHook.UnpinFromDesktop(nowPlayingWindow);
             }
 
-            nowPlayingWindow.LyricsWindowStatus.WindowStatus = WindowStatus.Closed;
+            var status = nowPlayingWindow.LyricsWindowStatus;
+
+            // OnWindowClosed can be invoked twice for a programmatic close
+            // (CloseWindow and the later Closed event). Only the first
+            // transition may update the user-hidden override.
+            if (status.WindowState != LyricsWindowState.Closed)
+            {
+                if (!status.IsClosingProgrammatically) status.IsUserHidden = true;
+                status.WindowState = LyricsWindowState.Closed;
+                status.HideReasons = LyricsWindowHideReason.None;
+            }
+
+            status.IsClosingProgrammatically = false;
         }
 
         _activeWindows.Remove(obj);
@@ -135,6 +150,13 @@ public class WindowManagerProvider : IWindowManagerProvider
 
     public void CloseWindow(object obj)
     {
+        if (obj is NowPlayingWindow nowPlayingWindow)
+        {
+            // Distinguish an application-driven close (single-window switch,
+            // multi-window mode change, config deletion) from a user close.
+            nowPlayingWindow.LyricsWindowStatus.IsClosingProgrammatically = true;
+        }
+
         OnWindowClosed(obj);
 
         var window = (Window)obj;
@@ -321,7 +343,10 @@ public class WindowManagerProvider : IWindowManagerProvider
         {
             if (typeof(T) == typeof(NowPlayingWindow))
             {
-                ((NowPlayingWindow)window).LyricsWindowStatus.WindowStatus = WindowStatus.Opened;
+                var lyricsStatus = ((NowPlayingWindow)window).LyricsWindowStatus;
+                lyricsStatus.WindowState = LyricsWindowState.Opened;
+                lyricsStatus.HideReasons = LyricsWindowHideReason.None;
+                lyricsStatus.IsUserHidden = false;
             }
             else if (typeof(T) == typeof(MusicGalleryWindow))
             {

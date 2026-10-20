@@ -167,6 +167,41 @@
                             Value="{x:Bind LyricsWindowStatus.AutoShowOrHideWindowDelay, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
+                    <StackPanel
+                        x:Name="WallpaperEngineSection"
+                        Spacing="{StaticResource SettingsCardSpacing}"
+                        Visibility="Collapsed">
+                        <TextBlock x:Uid="WindowSettingsControlWallpaperEngine" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                        <!--  跟随 Wallpaper Engine 壁纸显示/隐藏  -->
+                        <controls:SettingsCard x:Uid="WindowSettingsControlWallpaperEngineBinding" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE7F4;}">
+                            <StackPanel Orientation="Horizontal" Spacing="6">
+                                <ComboBox
+                                    x:Name="WallpaperComboBox"
+                                    MinWidth="240"
+                                    DisplayMemberPath="DisplayName"
+                                    SelectionChanged="WallpaperComboBox_SelectionChanged" />
+                                <Button
+                                    Padding="6"
+                                    Click="RefreshWallpaperButton_Click"
+                                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                          FontSize=14,
+                                                          Glyph=&#xE72C;}"
+                                    Style="{ThemeResource GhostButtonStyle}">
+                                    <ToolTipService.ToolTip>
+                                        <TextBlock x:Uid="WindowSettingsControlWallpaperEngineRefresh" />
+                                    </ToolTipService.ToolTip>
+                                </Button>
+                            </StackPanel>
+                        </controls:SettingsCard>
+
+                        <TextBlock
+                            x:Name="WallpaperEngineStatusTextBlock"
+                            Margin="2,0,0,0"
+                            Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                            TextWrapping="Wrap" />
+                    </StackPanel>
+
                     <TextBlock x:Uid="WindowSettingsControlColor" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <!--  窗口主题色  -->
@@ -384,7 +419,8 @@
                             <local:PropertyRow Header="IsOverlayInputHelperRunning" Value="{x:Bind LyricsWindowStatus.IsOverlayInputHelperRunning, Mode=OneWay}" />
                             <local:PropertyRow Header="IsAlwaysOnTopPollingTimerRunning" Value="{x:Bind LyricsWindowStatus.IsAlwaysOnTopPollingTimerRunning, Mode=OneWay}" />
                             <local:PropertyRow Header="IsUnderlayColorTimerRunning" Value="{x:Bind LyricsWindowStatus.IsUnderlayColorTimerRunning, Mode=OneWay}" />
-                            <local:PropertyRow Header="WindowStatus" Value="{x:Bind LyricsWindowStatus.WindowStatus, Mode=OneWay}" />
+                            <local:PropertyRow Header="WindowState" Value="{x:Bind LyricsWindowStatus.WindowState, Mode=OneWay}" />
+                            <local:PropertyRow Header="HideReasons" Value="{x:Bind LyricsWindowStatus.HideReasons, Mode=OneWay}" />
                             <local:PropertyRow Header="WindowTheme" Value="{Binding ActualTheme, Converter={StaticResource EnumToIntConverter}, Mode=OneWay, RelativeSource={RelativeSource Mode=Self}}" />
                             <local:PropertyRow Header="WindowBounds" Value="{x:Bind LyricsWindowStatus.WindowBounds, Mode=OneWay}" />
                             <local:PropertyRow Header="MonitorBounds" Value="{x:Bind LyricsWindowStatus.MonitorBounds, Mode=OneWay}" />

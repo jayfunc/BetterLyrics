@@ -135,7 +135,7 @@
                     Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                           FontSize=16,
                                           Glyph=&#xE711;}"
-                    IsEnabled="{x:Bind LyricsWindowStatus.WindowStatus, Mode=OneWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=0}">
+                    IsEnabled="{x:Bind LyricsWindowStatus.WindowState, Mode=OneWay, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=1}">
                     <ToolTipService.ToolTip>
                         <TextBlock x:Uid="SettingsPageCloseStatus" />
                     </ToolTipService.ToolTip>
@@ -187,7 +187,7 @@
             BorderBrush="{ThemeResource AccentAAFillColorDefaultBrush}"
             BorderThickness="2"
             CornerRadius="4"
-            Visibility="{x:Bind LyricsWindowStatus.WindowStatus, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=0}" />
+            Visibility="{x:Bind LyricsWindowStatus.WindowState, Mode=OneWay, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter=1}" />
 
         <!--  警告消息: 如果显示器未找到  -->
         <Grid

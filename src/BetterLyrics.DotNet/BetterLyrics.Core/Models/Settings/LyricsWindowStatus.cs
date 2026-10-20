@@ -82,6 +82,19 @@ public partial class LyricsWindowStatus : ObservableObject, ICloneable
     [ObservableProperty]
     public partial bool IsWallpaper { get; set; } = false;
 
+    /// <summary>
+    /// project.json path of the Wallpaper Engine wallpaper this lyrics window is bound to.
+    /// Empty means the window is not bound and is ignored by the wallpaper integration.
+    /// </summary>
+    [ObservableProperty]
+    public partial string WallpaperEngineBindingPath { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Cached display name of the bound wallpaper, used when it is no longer installed.
+    /// </summary>
+    [ObservableProperty]
+    public partial string WallpaperEngineBindingName { get; set; } = string.Empty;
+
     [ObservableProperty]
     public partial bool IsLocked { get; set; } = false;
 
@@ -244,7 +257,29 @@ public partial class LyricsWindowStatus : ObservableObject, ICloneable
 
     [JsonIgnore]
     [ObservableProperty]
-    public partial WindowStatus WindowStatus { get; set; } = WindowStatus.Closed;
+    public partial LyricsWindowState WindowState { get; set; } = LyricsWindowState.Closed;
+
+    /// <summary>
+    /// Current reasons why the window is hidden. Multiple reasons can be active
+    /// at the same time. This is runtime/diagnostic state.
+    /// </summary>
+    [JsonIgnore]
+    public LyricsWindowHideReason HideReasons { get; set; } = LyricsWindowHideReason.None;
+
+    /// <summary>
+    /// Sticky user override. Set when the user explicitly hides or closes the
+    /// window, cleared when the user shows it again.
+    /// </summary>
+    [JsonIgnore]
+    public bool IsUserHidden { get; set; }
+
+    /// <summary>
+    /// Set while the window is being closed by application code (for example
+    /// when switching a single-window setup), so the visibility policy does not
+    /// treat that close as a sticky manual hide.
+    /// </summary>
+    [JsonIgnore]
+    public bool IsClosingProgrammatically { get; set; }
 
     [JsonIgnore]
     public AppThickness DemoWindowMargin =>
@@ -308,6 +343,9 @@ public partial class LyricsWindowStatus : ObservableObject, ICloneable
     partial void OnLayoutProfileIdChanged(Guid value) =>
         WeakReferenceMessenger.Default.Send(new LyricsWindowLayoutProfileIdChangedMessage(this, value));
 
+    partial void OnWallpaperEngineBindingPathChanged(string value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowWallpaperEngineBindingChangedMessage(this));
+
     partial void OnIsAdaptToEnvironmentChanged(bool value) =>
         WeakReferenceMessenger.Default.Send(new LyricsWindowAdaptToEnvironmentChangedMessage(this, value));
 
@@ -350,8 +388,8 @@ public partial class LyricsWindowStatus : ObservableObject, ICloneable
     partial void OnIsKeepScreenOpenChanged(bool value) =>
         WeakReferenceMessenger.Default.Send(new LyricsWindowKeepScreenOpenChangedMessage(this, value));
 
-    partial void OnWindowStatusChanged(WindowStatus value) =>
-        WeakReferenceMessenger.Default.Send(new LyricsWindowStatusStateChangedMessage(this, value));
+    partial void OnWindowStateChanged(LyricsWindowState value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowStateChangedMessage(this, value));
 
     public object Clone()
     {
@@ -366,6 +404,8 @@ public partial class LyricsWindowStatus : ObservableObject, ICloneable
             IsAlwaysOnTopPolling = IsAlwaysOnTopPolling,
             IsShownInSwitchers = IsShownInSwitchers,
             IsWallpaper = IsWallpaper,
+            WallpaperEngineBindingPath = WallpaperEngineBindingPath,
+            WallpaperEngineBindingName = WallpaperEngineBindingName,
             IsLocked = IsLocked,
             IsBorderlessWhenLocked = IsBorderlessWhenLocked,
             IsAlwaysHideUnlockButton = IsAlwaysHideUnlockButton,
