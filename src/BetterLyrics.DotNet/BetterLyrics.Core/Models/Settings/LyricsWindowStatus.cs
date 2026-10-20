@@ -175,7 +175,7 @@ public partial class LyricsWindowStatus : ObservableObject, ICloneable
     public partial AppTheme WindowTheme { get; set; } = AppTheme.Dark;
 
     [ObservableProperty]
-    public partial PaletteGeneratorType PaletteGeneratorType { get; set; } = PaletteGeneratorType.CelebiQuantizer;
+    public partial PaletteGeneratorType PaletteGeneratorType { get; set; } = PaletteGeneratorType.WuQuantizer;
 
     [ObservableProperty]
     public partial double PaletteChromaWeight { get; set; } = 1.0;
