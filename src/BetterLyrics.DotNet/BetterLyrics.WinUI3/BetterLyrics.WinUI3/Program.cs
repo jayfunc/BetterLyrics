@@ -303,6 +303,7 @@ public class Program
                 .AddSingleton<MediaSettingsControlViewModel>()
                 .AddSingleton<LyricsSearchControlViewModel>()
                 .AddSingleton<LyricsWindowManagerControlViewModel>()
+                .AddSingleton<WindowSettingsControlViewModel>()
                 .AddSingleton<LyricsWindowSwitchControlViewModel>()
                 .AddSingleton<LyricsWindowSwitchWindowViewModel>()
                 .AddSingleton<SystemTrayViewModel>()

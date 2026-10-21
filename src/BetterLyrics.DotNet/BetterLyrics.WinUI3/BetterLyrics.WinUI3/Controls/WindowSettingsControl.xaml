@@ -55,7 +55,7 @@
 
                             <controls:SettingsCard x:Uid="SettingsPageDockMonitor" IsEnabled="{x:Bind LyricsWindowStatus.IsWorkArea, Mode=OneWay}">
                                 <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <ComboBox ItemsSource="{x:Bind MonitorDeviceNames, Mode=OneWay}" SelectedItem="{x:Bind LyricsWindowStatus.MonitorDeviceName, Mode=TwoWay}" />
+                                    <ComboBox ItemsSource="{x:Bind ViewModel.MonitorDeviceNames, Mode=OneWay}" SelectedItem="{x:Bind LyricsWindowStatus.MonitorDeviceName, Mode=TwoWay}" />
                                     <Button
                                         Click="RefreshMonitorButton_Click"
                                         Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
@@ -86,7 +86,7 @@
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xE718;}"
                         IsExpanded="True"
-                        Visibility="{x:Bind IsManagedLyricsWindow, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{x:Bind ViewModel.IsManaged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAlwaysOnTop, Mode=TwoWay}" />
                         <controls:SettingsExpander.Items>
                             <controls:SettingsCard x:Uid="SettingsPageForceAlwaysOnTop" IsEnabled="{x:Bind LyricsWindowStatus.IsAlwaysOnTop, Mode=OneWay}">
@@ -99,7 +99,7 @@
                         x:Uid="SettingsPageKeepScreenOpen"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xEA80;}"
-                        Visibility="{x:Bind IsManagedLyricsWindow, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{x:Bind ViewModel.IsManaged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsKeepScreenOpen, Mode=TwoWay}" />
                     </controls:SettingsCard>
                     <!--  在系统环境中显示  -->
@@ -107,7 +107,7 @@
                         x:Uid="SettingsPageShowInSwitchers"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xE7C4;}"
-                        Visibility="{x:Bind IsManagedLyricsWindow, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{x:Bind ViewModel.IsManaged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsShownInSwitchers, Mode=TwoWay}" />
                     </controls:SettingsCard>
                     <!--  可拖动区域  -->
@@ -115,7 +115,7 @@
                         x:Uid="SettingsPageDragArea"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xEB41;}"
-                        Visibility="{x:Bind IsManagedLyricsWindow, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{x:Bind ViewModel.IsManaged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                         <ComboBox SelectedIndex="{x:Bind LyricsWindowStatus.TitleBarArea, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                             <ComboBoxItem x:Uid="SettingsPageTitleBarAreaNone" />
                             <ComboBoxItem x:Uid="SettingsPageTitleBarAreaTop" />
@@ -168,14 +168,14 @@
                     <TextBlock
                         x:Uid="WindowSettingsControlShowAndHide"
                         Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"
-                        Visibility="{x:Bind IsManagedLyricsWindow, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                        Visibility="{x:Bind ViewModel.IsManaged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
 
                     <!--  隐藏窗口（暂停时）  -->
                     <controls:SettingsCard
                         x:Uid="SettingsPageHideWindow"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xED1A;}"
-                        Visibility="{x:Bind IsManagedLyricsWindow, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{x:Bind ViewModel.IsManaged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.HideWindowWhenPaused, Mode=TwoWay}" />
                     </controls:SettingsCard>
                     <!--  隐藏窗口（媒体会话为空时）  -->
@@ -183,14 +183,14 @@
                         x:Uid="SettingsPageHideWindowWhenNullSession"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xED1A;}"
-                        Visibility="{x:Bind IsManagedLyricsWindow, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{x:Bind ViewModel.IsManaged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.HideWindowWhenNullSession, Mode=TwoWay}" />
                     </controls:SettingsCard>
                     <controls:SettingsCard
                         x:Uid="SettingsPageHideWindowDelay"
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xECC5;}"
-                        Visibility="{x:Bind IsManagedLyricsWindow, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{x:Bind ViewModel.IsManaged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                         <local:ExtendedSlider
                             Default="250"
                             Frequency="50"
@@ -203,7 +203,7 @@
                     <TextBlock
                         x:Uid="WindowSettingsControlWallpaperEngine"
                         Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"
-                        Visibility="{x:Bind IsManagedLyricsWindow, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                        Visibility="{x:Bind ViewModel.IsManaged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
 
                     <!--  跟随 Wallpaper Engine 壁纸显示/隐藏  -->
                     <controls:SettingsExpander
@@ -211,14 +211,14 @@
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xE7F4;}"
                         IsExpanded="True"
-                        Visibility="{x:Bind IsManagedLyricsWindow, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{x:Bind ViewModel.IsManaged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                         <controls:SettingsExpander.ItemsFooter>
                             <InfoBar
                                 BorderThickness="0"
                                 IsClosable="False"
                                 IsOpen="True"
-                                Message="{x:Bind WallpaperEngineStatusMessage, Mode=OneWay}"
-                                Severity="{x:Bind WallpaperEngineStatusSeverity, Mode=OneWay}">
+                                Message="{x:Bind ViewModel.StatusMessage, Mode=OneWay}"
+                                Severity="{x:Bind ViewModel.StatusSeverity, Mode=OneWay, Converter={StaticResource MessageSeverityToInfoBarSeverity}}">
                                 <InfoBar.ActionButton>
                                     <Button
                                         Padding="6"
@@ -227,7 +227,7 @@
                                                               FontSize=14,
                                                               Glyph=&#xE8C8;}"
                                         Style="{ThemeResource GhostButtonStyle}"
-                                        Visibility="{x:Bind WallpaperEngineCurrentWallpaperNames, Mode=OneWay, Converter={StaticResource StringToVisibilityConverter}}">
+                                        Visibility="{x:Bind ViewModel.CurrentWallpaperNames, Mode=OneWay, Converter={StaticResource StringToVisibilityConverter}}">
                                         <ToolTipService.ToolTip>
                                             <TextBlock x:Uid="WindowSettingsControlCopyCurrentWallpaperName" />
                                         </ToolTipService.ToolTip>
@@ -238,8 +238,8 @@
                         <StackPanel Orientation="Horizontal" Spacing="6">
                             <ComboBox
                                 MinWidth="240"
-                                ItemsSource="{x:Bind WallpaperOptions}"
-                                SelectedItem="{x:Bind SelectedWallpaperOption, Mode=TwoWay}">
+                                ItemsSource="{x:Bind ViewModel.WallpaperOptions}"
+                                SelectedItem="{x:Bind ViewModel.SelectedWallpaperOption, Mode=TwoWay}">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate x:DataType="models:WallpaperEngineBindingOption">
                                         <Grid
@@ -431,7 +431,7 @@
                     <TextBlock
                         x:Uid="WindowSettingsControlLockAndUnlock"
                         Style="{StaticResource SettingsSectionHeaderTextBlockStyle}"
-                        Visibility="{x:Bind IsManagedLyricsWindow, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                        Visibility="{x:Bind ViewModel.IsManaged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
 
                     <!--  隐藏解锁键  -->
                     <controls:SettingsCard
@@ -439,7 +439,7 @@
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xE785;}"
                         IsEnabled="{x:Bind LyricsWindowStatus.IsLocked, Mode=OneWay}"
-                        Visibility="{x:Bind IsManagedLyricsWindow, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{x:Bind ViewModel.IsManaged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsAlwaysHideUnlockButton, Mode=TwoWay}" />
                     </controls:SettingsCard>
                     <!--  无边框  -->
@@ -448,7 +448,7 @@
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xEA48;}"
                         IsEnabled="{x:Bind LyricsWindowStatus.IsLocked, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
-                        Visibility="{x:Bind IsManagedLyricsWindow, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{x:Bind ViewModel.IsManaged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.IsBorderlessWhenLocked, Mode=TwoWay}" />
                     </controls:SettingsCard>
 
@@ -460,7 +460,7 @@
                         HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                  Glyph=&#xE76F;}"
                         IsEnabled="{x:Bind LyricsWindowStatus.IsWallpaper, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}"
-                        Visibility="{x:Bind IsManagedLyricsWindow, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                        Visibility="{x:Bind ViewModel.IsManaged, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                         <ToggleSwitch IsOn="{x:Bind LyricsWindowStatus.KeepNowPlayingBarInteractiveWhenLocked, Mode=TwoWay}" />
                     </controls:SettingsCard>
                     <!--  进度条歌词预览  -->
