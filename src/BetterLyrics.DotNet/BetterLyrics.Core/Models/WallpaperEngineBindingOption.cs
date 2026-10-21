@@ -1,4 +1,4 @@
-namespace BetterLyrics.WinUI3.Controls;
+namespace BetterLyrics.Core.Models;
 
 public sealed class WallpaperEngineBindingOption
 {

@@ -21,7 +21,11 @@
                     <TextBlock x:Uid="AppSettingsControlGeneral" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
 
                     <!--  配置名称  -->
-                    <controls:SettingsCard x:Uid="SettingsPageConfigName" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8AC;}">
+                    <controls:SettingsCard
+                        x:Uid="SettingsPageConfigName"
+                        HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                 Glyph=&#xE8AC;}"
+                        Visibility="{x:Bind LyricsWindowStatus.IsWorkArea, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                         <TextBox Text="{x:Bind LyricsWindowStatus.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" />
                     </controls:SettingsCard>
                     <!--  工作区  -->

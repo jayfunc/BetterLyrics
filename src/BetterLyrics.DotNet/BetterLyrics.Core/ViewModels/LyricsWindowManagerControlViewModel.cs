@@ -121,8 +121,10 @@ public partial class LyricsWindowManagerControlViewModel : ObservableRecipient,
     }
 
     [RelayCommand]
-    private void ShowEmbeddedConfigPanel(LyricsWindowStatus? status)
+    private void ShowEmbeddedConfigPanel()
     {
+        _settingsService.AppSettings.MusicGallerySettings.LyricsWindowStatus.Name = 
+            _localizationService.GetLocalizedString("LyricsWindowSettingsControlConfigMusicGalleryLyrics/Text");
         ShowConfigPanel(_settingsService.AppSettings.MusicGallerySettings.LyricsWindowStatus);
     }
 

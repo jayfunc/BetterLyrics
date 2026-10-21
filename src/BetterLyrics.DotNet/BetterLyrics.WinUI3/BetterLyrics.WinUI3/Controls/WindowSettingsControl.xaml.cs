@@ -1,5 +1,6 @@
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.Models.WallpaperEngine;
 using CommunityToolkit.Mvvm.DependencyInjection;
