@@ -14,6 +14,9 @@ public static class WallpaperEngineHelper
 {
     private const string WallpaperEngineAppId = "431960";
 
+    private static readonly string[] PreviewFileNames =
+        ["preview.jpg", "preview.jpeg", "preview.png", "preview.gif", "preview.webp"];
+
     private static readonly JsonDocumentOptions JsonOptions = new()
     {
         AllowTrailingCommas = true,
@@ -195,7 +198,8 @@ public static class WallpaperEngineHelper
                 Title = title,
                 DisplayName = title,
                 Type = type,
-                WorkshopId = workshopId
+                WorkshopId = workshopId,
+                PreviewImagePath = GetPreviewImagePath(projectJsonPath)
             });
         }
 
@@ -212,7 +216,8 @@ public static class WallpaperEngineHelper
                 Title = x.Title,
                 DisplayName = duplicatedTitles.Contains(x.Title) ? $"{x.Title} ({x.Identifier})" : x.Title,
                 Type = x.Type,
-                WorkshopId = x.WorkshopId
+                WorkshopId = x.WorkshopId,
+                PreviewImagePath = x.PreviewImagePath
             })
             .OrderBy(x => x.DisplayName, StringComparer.CurrentCultureIgnoreCase)
             .ThenBy(x => x.ProjectPath, StringComparer.OrdinalIgnoreCase)
@@ -298,6 +303,31 @@ public static class WallpaperEngineHelper
     {
         var projectJson = Path.Combine(directory, "project.json");
         if (File.Exists(projectJson)) projectJsonPaths.Add(Path.GetFullPath(projectJson));
+    }
+
+    /// <summary>
+    /// Wallpaper Engine stores a preview image (preview.jpg in most cases) next
+    /// to project.json in the wallpaper project folder.
+    /// </summary>
+    private static string? GetPreviewImagePath(string projectJsonPath)
+    {
+        try
+        {
+            var directory = Path.GetDirectoryName(projectJsonPath);
+            if (string.IsNullOrEmpty(directory)) return null;
+
+            foreach (var fileName in PreviewFileNames)
+            {
+                var candidate = Path.Combine(directory, fileName);
+                if (File.Exists(candidate)) return candidate;
+            }
+        }
+        catch
+        {
+            // Ignore inaccessible wallpaper folders.
+        }
+
+        return null;
     }
 
     private static (string Title, string Type, string? WorkshopId) ReadProjectInfo(string projectJsonPath)

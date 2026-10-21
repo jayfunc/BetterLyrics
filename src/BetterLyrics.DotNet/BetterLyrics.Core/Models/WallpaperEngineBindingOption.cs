@@ -6,5 +6,12 @@ public sealed class WallpaperEngineBindingOption
 
     public string DisplayName { get; set; } = string.Empty;
 
+    /// <summary>
+    /// Plain wallpaper name without disambiguation or status suffixes, used when copying.
+    /// </summary>
+    public string CopyName { get; set; } = string.Empty;
+
+    public string? PreviewImagePath { get; set; }
+
     public override string ToString() => DisplayName;
 }

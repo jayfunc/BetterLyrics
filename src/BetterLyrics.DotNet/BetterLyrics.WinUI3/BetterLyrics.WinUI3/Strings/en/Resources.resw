@@ -2394,6 +2394,12 @@
   <data name="WallpaperEngineCurrentWallpaper" xml:space="preserve">
     <value>Current wallpaper:</value>
   </data>
+  <data name="WindowSettingsControlCopyWallpaperName.Text" xml:space="preserve">
+    <value>Copy wallpaper name</value>
+  </data>
+  <data name="WindowSettingsControlCopyCurrentWallpaperName.Text" xml:space="preserve">
+    <value>Copy current wallpaper name</value>
+  </data>
   <data name="WindowSettingsControlSpoutOutput.Header" xml:space="preserve">
     <value>Spout Output</value>
   </data>

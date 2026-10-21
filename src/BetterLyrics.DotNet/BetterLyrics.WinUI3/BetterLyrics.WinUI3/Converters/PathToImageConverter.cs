@@ -27,7 +27,15 @@ public partial class PathToImageConverter : IValueConverter
             }
         }
 
-        return new BitmapImage(new Uri(targetPath));
+        var bitmapImage = new BitmapImage(new Uri(targetPath));
+
+        // 可选参数：解码宽度，用于缩略图场景，避免加载完整分辨率的图片
+        if (int.TryParse(parameter as string, out var decodePixelWidth) && decodePixelWidth > 0)
+        {
+            bitmapImage.DecodePixelWidth = decodePixelWidth;
+        }
+
+        return bitmapImage;
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, string language)

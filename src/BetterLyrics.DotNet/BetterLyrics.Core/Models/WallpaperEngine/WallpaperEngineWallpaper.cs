@@ -20,6 +20,12 @@ public sealed class WallpaperEngineWallpaper
     /// </summary>
     public required string DisplayName { get; init; }
 
+    /// <summary>
+    /// Path to the preview image stored next to project.json, or
+    /// <see langword="null"/> when the wallpaper has no preview image.
+    /// </summary>
+    public string? PreviewImagePath { get; init; }
+
     public string? WorkshopId { get; init; }
 
     public string Type { get; init; } = string.Empty;

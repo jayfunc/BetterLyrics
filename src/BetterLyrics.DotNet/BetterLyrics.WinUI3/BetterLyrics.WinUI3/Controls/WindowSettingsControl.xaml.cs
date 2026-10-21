@@ -1,3 +1,4 @@
+using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
@@ -12,6 +13,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -24,9 +26,9 @@ public sealed partial class WindowSettingsControl : UserControl
     private readonly IWallpaperEngineService _wallpaperEngineService = Ioc.Default.GetRequiredService<IWallpaperEngineService>();
     private readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
     private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+    private readonly IGlobalToastProvider _globalToastProvider = Ioc.Default.GetRequiredService<IGlobalToastProvider>();
 
     private IReadOnlyList<WallpaperEngineWallpaper> _installedWallpapers = [];
-    private bool _isUpdatingWallpaperSelection;
     private bool _isLoadingWallpaperOptions;
     private bool _isWallpaperServiceSubscribed;
 
@@ -72,13 +74,32 @@ public sealed partial class WindowSettingsControl : UserControl
         private set => SetValue(WallpaperEngineStatusSeverityProperty, value);
     }
 
+    public static readonly DependencyProperty WallpaperEngineCurrentWallpaperNamesProperty =
+        DependencyProperty.Register(nameof(WallpaperEngineCurrentWallpaperNames), typeof(string),
+            typeof(WindowSettingsControl), new PropertyMetadata(string.Empty));
+
+    public string WallpaperEngineCurrentWallpaperNames
+    {
+        get => (string)GetValue(WallpaperEngineCurrentWallpaperNamesProperty);
+        private set => SetValue(WallpaperEngineCurrentWallpaperNamesProperty, value);
+    }
+
     public ObservableCollection<WallpaperEngineBindingOption> WallpaperOptions { get; } = [];
+
+    public static readonly DependencyProperty SelectedWallpaperOptionProperty =
+        DependencyProperty.Register(nameof(SelectedWallpaperOption), typeof(WallpaperEngineBindingOption),
+            typeof(WindowSettingsControl), new PropertyMetadata(null, OnSelectedWallpaperOptionChanged));
+
+    public WallpaperEngineBindingOption? SelectedWallpaperOption
+    {
+        get => (WallpaperEngineBindingOption?)GetValue(SelectedWallpaperOptionProperty);
+        set => SetValue(SelectedWallpaperOptionProperty, value);
+    }
 
     public WindowSettingsControl()
     {
         InitializeComponent();
         MonitorDeviceNames = [.. _monitorProvider.GetAllMonitorDeviceNames()];
-        WallpaperComboBox.ItemsSource = WallpaperOptions;
     }
 
     private async void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -171,15 +192,39 @@ public sealed partial class WindowSettingsControl : UserControl
         await LoadWallpaperOptionsAsync(forceRefresh: true);
     }
 
-    private void WallpaperComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    private void CopyWallpaperName_Click(object sender, RoutedEventArgs e)
     {
-        if (_isUpdatingWallpaperSelection || LyricsWindowStatus == null) return;
-        if (WallpaperComboBox.SelectedItem is not WallpaperEngineBindingOption option) return;
+        if (sender is not FrameworkElement { Tag: string name }) return;
 
-        if (PathEquals(option.ProjectPath, LyricsWindowStatus.WallpaperEngineBindingPath)) return;
+        CopyToClipboard(name);
+    }
 
-        LyricsWindowStatus.WallpaperEngineBindingPath = option.ProjectPath ?? string.Empty;
-        LyricsWindowStatus.WallpaperEngineBindingName = option.ProjectPath == null ? string.Empty : option.DisplayName;
+    private void CopyCurrentWallpaperName_Click(object sender, RoutedEventArgs e) =>
+        CopyToClipboard(WallpaperEngineCurrentWallpaperNames);
+
+    private void CopyToClipboard(string? text)
+    {
+        if (string.IsNullOrWhiteSpace(text)) return;
+
+        var dataPackage = new DataPackage
+        {
+            RequestedOperation = DataPackageOperation.Copy
+        };
+        dataPackage.SetText(text);
+        Clipboard.SetContent(dataPackage);
+
+        _globalToastProvider.Show("ActionCompleted", null, MessageSeverity.Success);
+    }
+
+    private static void OnSelectedWallpaperOptionChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        if (d is not WindowSettingsControl control || control.LyricsWindowStatus == null) return;
+        if (e.NewValue is not WallpaperEngineBindingOption option) return;
+
+        if (PathEquals(option.ProjectPath, control.LyricsWindowStatus.WallpaperEngineBindingPath)) return;
+
+        control.LyricsWindowStatus.WallpaperEngineBindingPath = option.ProjectPath ?? string.Empty;
+        control.LyricsWindowStatus.WallpaperEngineBindingName = option.ProjectPath == null ? string.Empty : option.CopyName;
     }
 
     private void WallpaperEngineService_ActiveWallpaperChanged(object? sender,
@@ -197,19 +242,23 @@ public sealed partial class WindowSettingsControl : UserControl
         {
             _installedWallpapers = await _wallpaperEngineService.GetInstalledWallpapersAsync(forceRefresh);
 
+            var notLinkedName = _localizationService.GetLocalizedString("WallpaperEngineNotLinked");
             var options = new List<WallpaperEngineBindingOption>
             {
                 new()
                 {
                     ProjectPath = null,
-                    DisplayName = _localizationService.GetLocalizedString("WallpaperEngineNotLinked")
+                    DisplayName = notLinkedName,
+                    CopyName = notLinkedName
                 }
             };
 
             options.AddRange(_installedWallpapers.Select(wallpaper => new WallpaperEngineBindingOption
             {
                 ProjectPath = wallpaper.ProjectPath,
-                DisplayName = wallpaper.DisplayName
+                DisplayName = wallpaper.DisplayName,
+                CopyName = wallpaper.Title,
+                PreviewImagePath = wallpaper.PreviewImagePath
             }));
 
             var currentPath = LyricsWindowStatus.WallpaperEngineBindingPath;
@@ -224,27 +273,18 @@ public sealed partial class WindowSettingsControl : UserControl
                 {
                     ProjectPath = currentPath,
                     DisplayName =
-                        $"{name} ({_localizationService.GetLocalizedString("WallpaperEngineMissing")})"
+                        $"{name} ({_localizationService.GetLocalizedString("WallpaperEngineMissing")})",
+                    CopyName = name
                 });
             }
 
-            _isUpdatingWallpaperSelection = true;
-            try
+            WallpaperOptions.Clear();
+            foreach (var option in options)
             {
-                WallpaperOptions.Clear();
-                foreach (var option in options)
-                {
-                    WallpaperOptions.Add(option);
-                }
+                WallpaperOptions.Add(option);
+            }
 
-                WallpaperComboBox.SelectedItem =
-                    WallpaperOptions.FirstOrDefault(option => PathEquals(option.ProjectPath, currentPath)) ??
-                    WallpaperOptions[0];
-            }
-            finally
-            {
-                _isUpdatingWallpaperSelection = false;
-            }
+            SelectedWallpaperOption = GetSelectedWallpaperOption(currentPath);
 
             UpdateWallpaperEngineStatus();
         }
@@ -258,24 +298,18 @@ public sealed partial class WindowSettingsControl : UserControl
     {
         if (LyricsWindowStatus == null || WallpaperOptions.Count == 0) return;
 
-        _isUpdatingWallpaperSelection = true;
-        try
-        {
-            var currentPath = LyricsWindowStatus.WallpaperEngineBindingPath;
-            WallpaperComboBox.SelectedItem =
-                WallpaperOptions.FirstOrDefault(option => PathEquals(option.ProjectPath, currentPath)) ??
-                WallpaperOptions[0];
-        }
-        finally
-        {
-            _isUpdatingWallpaperSelection = false;
-        }
+        SelectedWallpaperOption = GetSelectedWallpaperOption(LyricsWindowStatus.WallpaperEngineBindingPath);
     }
+
+    private WallpaperEngineBindingOption GetSelectedWallpaperOption(string currentPath) =>
+        WallpaperOptions.FirstOrDefault(option => PathEquals(option.ProjectPath, currentPath)) ??
+        WallpaperOptions[0];
 
     private void UpdateWallpaperEngineStatus()
     {
         if (!_wallpaperEngineService.IsAvailable)
         {
+            WallpaperEngineCurrentWallpaperNames = string.Empty;
             WallpaperEngineStatusMessage =
                 _localizationService.GetLocalizedString("WallpaperEngineNotInstalled");
             WallpaperEngineStatusSeverity = InfoBarSeverity.Warning;
@@ -285,6 +319,7 @@ public sealed partial class WindowSettingsControl : UserControl
         var activeProjectPaths = _wallpaperEngineService.GetActiveWallpaperProjectPaths();
         if (activeProjectPaths == null || activeProjectPaths.Count == 0)
         {
+            WallpaperEngineCurrentWallpaperNames = string.Empty;
             WallpaperEngineStatusMessage =
                 _localizationService.GetLocalizedString("WallpaperEngineNoActiveWallpaper");
             WallpaperEngineStatusSeverity = InfoBarSeverity.Warning;
@@ -296,8 +331,9 @@ public sealed partial class WindowSettingsControl : UserControl
             .Where(name => !string.IsNullOrWhiteSpace(name))
             .Distinct(StringComparer.CurrentCultureIgnoreCase);
 
+        WallpaperEngineCurrentWallpaperNames = string.Join(", ", names);
         WallpaperEngineStatusMessage =
-            $"{_localizationService.GetLocalizedString("WallpaperEngineCurrentWallpaper")} {string.Join(", ", names)}";
+            $"{_localizationService.GetLocalizedString("WallpaperEngineCurrentWallpaper")} {WallpaperEngineCurrentWallpaperNames}";
         WallpaperEngineStatusSeverity = InfoBarSeverity.Informational;
     }
 
