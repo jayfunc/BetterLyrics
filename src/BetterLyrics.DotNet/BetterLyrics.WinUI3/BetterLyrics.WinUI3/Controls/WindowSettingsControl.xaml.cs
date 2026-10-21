@@ -39,7 +39,37 @@ public sealed partial class WindowSettingsControl : UserControl
         set => SetValue(LyricsWindowStatusProperty, value);
     }
 
+    public static readonly DependencyProperty IsManagedLyricsWindowProperty =
+        DependencyProperty.Register(nameof(IsManagedLyricsWindow), typeof(bool),
+            typeof(WindowSettingsControl), new PropertyMetadata(false));
+
+    public bool IsManagedLyricsWindow
+    {
+        get => (bool)GetValue(IsManagedLyricsWindowProperty);
+        private set => SetValue(IsManagedLyricsWindowProperty, value);
+    }
+
     public ObservableCollection<string> MonitorDeviceNames { get; set; } = [];
+
+    public static readonly DependencyProperty WallpaperEngineStatusMessageProperty =
+        DependencyProperty.Register(nameof(WallpaperEngineStatusMessage), typeof(string),
+            typeof(WindowSettingsControl), new PropertyMetadata(string.Empty));
+
+    public string WallpaperEngineStatusMessage
+    {
+        get => (string)GetValue(WallpaperEngineStatusMessageProperty);
+        private set => SetValue(WallpaperEngineStatusMessageProperty, value);
+    }
+
+    public static readonly DependencyProperty WallpaperEngineStatusSeverityProperty =
+        DependencyProperty.Register(nameof(WallpaperEngineStatusSeverity), typeof(InfoBarSeverity),
+            typeof(WindowSettingsControl), new PropertyMetadata(InfoBarSeverity.Informational));
+
+    public InfoBarSeverity WallpaperEngineStatusSeverity
+    {
+        get => (InfoBarSeverity)GetValue(WallpaperEngineStatusSeverityProperty);
+        private set => SetValue(WallpaperEngineStatusSeverityProperty, value);
+    }
 
     public ObservableCollection<WallpaperEngineBindingOption> WallpaperOptions { get; } = [];
 
@@ -60,9 +90,7 @@ public sealed partial class WindowSettingsControl : UserControl
             _isWallpaperServiceSubscribed = true;
         }
 
-        UpdateWallpaperEngineSectionVisibility();
-
-        if (IsManagedLyricsWindow)
+        if (IsWindowManaged(LyricsWindowStatus))
         {
             await LoadWallpaperOptionsAsync();
         }
@@ -83,7 +111,7 @@ public sealed partial class WindowSettingsControl : UserControl
     {
         if (d is not WindowSettingsControl control) return;
 
-        control.UpdateWallpaperEngineSectionVisibility();
+        control.IsManagedLyricsWindow = control.IsWindowManaged(control.LyricsWindowStatus);
 
         if (!control.IsManagedLyricsWindow) return;
 
@@ -97,13 +125,11 @@ public sealed partial class WindowSettingsControl : UserControl
         }
     }
 
-    private bool IsManagedLyricsWindow =>
-        LyricsWindowStatus != null && _settingsService.AppSettings.WindowBoundsRecords.Contains(LyricsWindowStatus);
-
-    private void UpdateWallpaperEngineSectionVisibility()
-    {
-        WallpaperEngineSection.Visibility = IsManagedLyricsWindow ? Visibility.Visible : Visibility.Collapsed;
-    }
+    /// <summary>
+    /// Whether the given status belongs to a lyrics window managed by the lyrics window manager.
+    /// </summary>
+    public bool IsWindowManaged(LyricsWindowStatus? status) =>
+        status != null && _settingsService.AppSettings.WindowBoundsRecords.Contains(status);
 
     private void MonitorProvider_MonitorsChanged(object? sender, EventArgs e)
     {
@@ -163,7 +189,7 @@ public sealed partial class WindowSettingsControl : UserControl
 
     private async Task LoadWallpaperOptionsAsync(bool forceRefresh = false)
     {
-        if (!IsManagedLyricsWindow || _isLoadingWallpaperOptions) return;
+        if (!IsWindowManaged(LyricsWindowStatus) || _isLoadingWallpaperOptions) return;
 
         _isLoadingWallpaperOptions = true;
         try
@@ -247,20 +273,20 @@ public sealed partial class WindowSettingsControl : UserControl
 
     private void UpdateWallpaperEngineStatus()
     {
-        if (WallpaperEngineStatusTextBlock == null) return;
-
         if (!_wallpaperEngineService.IsAvailable)
         {
-            WallpaperEngineStatusTextBlock.Text =
+            WallpaperEngineStatusMessage =
                 _localizationService.GetLocalizedString("WallpaperEngineNotInstalled");
+            WallpaperEngineStatusSeverity = InfoBarSeverity.Warning;
             return;
         }
 
         var activeProjectPaths = _wallpaperEngineService.GetActiveWallpaperProjectPaths();
         if (activeProjectPaths == null || activeProjectPaths.Count == 0)
         {
-            WallpaperEngineStatusTextBlock.Text =
+            WallpaperEngineStatusMessage =
                 _localizationService.GetLocalizedString("WallpaperEngineNoActiveWallpaper");
+            WallpaperEngineStatusSeverity = InfoBarSeverity.Warning;
             return;
         }
 
@@ -269,8 +295,9 @@ public sealed partial class WindowSettingsControl : UserControl
             .Where(name => !string.IsNullOrWhiteSpace(name))
             .Distinct(StringComparer.CurrentCultureIgnoreCase);
 
-        WallpaperEngineStatusTextBlock.Text =
+        WallpaperEngineStatusMessage =
             $"{_localizationService.GetLocalizedString("WallpaperEngineCurrentWallpaper")} {string.Join(", ", names)}";
+        WallpaperEngineStatusSeverity = InfoBarSeverity.Informational;
     }
 
     private string GetWallpaperName(string projectPath)
