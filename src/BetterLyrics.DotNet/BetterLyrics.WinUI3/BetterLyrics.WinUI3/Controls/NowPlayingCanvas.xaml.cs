@@ -27,6 +27,7 @@ using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
+using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -967,6 +968,10 @@ public sealed partial class NowPlayingCanvas : UserControl,
     {
         var pointerPoint = e.GetCurrentPoint(this);
 
+        // 鼠标只有左键参与歌词交互
+        if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse &&
+            !pointerPoint.Properties.IsLeftButtonPressed) return;
+
         // 触摸 / 笔可能没有先触发 PointerMoved，这里同步位置，保证按下动画立即出现
         var isInsideLyricsArea = IsPointerInsideLyricsContainer(pointerPoint.Position);
         IsMouseInLyricsArea = isInsideLyricsArea;
@@ -982,6 +987,10 @@ public sealed partial class NowPlayingCanvas : UserControl,
     {
         IsMousePressing = false;
         var pointerPoint = e.GetCurrentPoint(this);
+
+        // 鼠标只响应左键抬起，避免右键 / 中键误触发 seek
+        if (e.Pointer.PointerDeviceType == PointerDeviceType.Mouse &&
+            pointerPoint.Properties.PointerUpdateKind != PointerUpdateKind.LeftButtonReleased) return;
 
         if (IsPointerInsideLyricsContainer(pointerPoint.Position))
         {
