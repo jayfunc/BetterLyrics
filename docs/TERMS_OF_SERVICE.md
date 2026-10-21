@@ -42,7 +42,7 @@ As per the MIT License, we do not warrant that:
 Your use of the App is at your sole risk.
 
 ## 5. Limitation of Liability
-In no event shall Zhe Fang (the developer) be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising out of or in connection with your use of, or inability to use, the App, even if advised of the possibility of such damages.
+In no event shall the BetterLyrics contributors (the developer) be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising out of or in connection with your use of, or inability to use, the App, even if advised of the possibility of such damages.
 
 ## 6. Termination
 We may terminate or suspend your access to the App immediately, without prior notice or liability, for any reason whatsoever, including, without limitation, if you breach the Terms.
