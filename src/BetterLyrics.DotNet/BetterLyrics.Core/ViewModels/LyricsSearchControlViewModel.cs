@@ -18,7 +18,7 @@ using LyricsContentParser = BetterLyrics.Core.Helpers.Lyrics.ContentParser.Lyric
 namespace BetterLyrics.Core.ViewModels;
 
 /// <summary>
-/// Singleton ViewModel
+/// Singleton ViewModel，应用级：Program 在协议激活时会直接解析它填充搜索条件。
 /// </summary>
 public partial class LyricsSearchControlViewModel : ObservableRecipient,
     IRecipient<CurrentSongInfoChangedMessage>

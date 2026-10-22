@@ -32,6 +32,16 @@ public sealed partial class PlaybackSettingsControl : UserControl
         InitializeComponent();
         DataContext = Ioc.Default.GetRequiredService<PlaybackSettingsControlViewModel>();
         WeakReferenceMessenger.Default.RegisterAll(this);
+
+        Loaded += (_, _) =>
+        {
+            if (DataContext is PlaybackSettingsControlViewModel viewModel) viewModel.IsActive = true;
+        };
+        Unloaded += (_, _) =>
+        {
+            if (DataContext is PlaybackSettingsControlViewModel viewModel) viewModel.IsActive = false;
+            Bindings?.StopTracking();
+        };
     }
 
     private void AlbumArtSearchProvidersListView_DragItemsCompleted(ListViewBase sender,

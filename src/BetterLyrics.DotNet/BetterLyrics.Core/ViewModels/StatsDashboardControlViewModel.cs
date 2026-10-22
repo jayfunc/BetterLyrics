@@ -15,13 +15,14 @@ using Microsoft.Extensions.Logging;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
+using BetterLyrics.Core.Interfaces.ViewModels;
 
 namespace BetterLyrics.Core.ViewModels;
 
 /// <summary>
-/// Singleton ViewModel
+/// Transient ViewModel，生命周期跟随 StatsDashboardControl 所在窗口实例。
 /// </summary>
-public partial class StatsDashboardControlViewModel : ObservableRecipient,
+public partial class StatsDashboardControlViewModel : ObservableRecipient, ITransientViewModel,
     IRecipient<SongScrobbledMessage>
 {
     private readonly IAlbumArtSearchService _albumArtSearchService;

@@ -1,13 +1,14 @@
-﻿using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
+using BetterLyrics.Core.Interfaces.ViewModels;
 
 namespace BetterLyrics.Core.ViewModels;
 
 /// <summary>
-/// Singleton ViewModel
+/// Transient ViewModel，生命周期跟随 MusicGalleryWindow 实例。
 /// </summary>
-public partial class MusicGalleryWindowViewModel : ObservableObject
+public partial class MusicGalleryWindowViewModel : ObservableObject, ITransientViewModel
 {
     private readonly ISettingsService _settingsService;
 

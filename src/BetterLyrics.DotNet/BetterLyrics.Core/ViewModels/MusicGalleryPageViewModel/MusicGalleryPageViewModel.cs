@@ -14,7 +14,7 @@ using System.Collections.Specialized;
 namespace BetterLyrics.Core.ViewModels.MusicGalleryPageViewModel;
 
 /// <summary>
-/// Singleton ViewModel
+/// Singleton ViewModel，应用级：WindowManagerProvider 会直接解析它触发自动播放。
 /// </summary>
 public partial class MusicGalleryPageViewModel : ObservableRecipient,
     IRecipient<MediaFolderLastSyncTimeChangedMessage>,

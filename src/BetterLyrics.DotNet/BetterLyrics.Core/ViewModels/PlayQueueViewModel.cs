@@ -3,13 +3,15 @@ using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using BetterLyrics.Core.Interfaces.ViewModels;
 
 namespace BetterLyrics.Core.ViewModels;
 
 /// <summary>
-/// Singleton ViewModel
+/// Transient ViewModel，生命周期跟随 PlayQueue 控件实例
+/// （音乐库页面与 NowPlayingBar 浮出面板中会同时存在多个实例）。
 /// </summary>
-public partial class PlayQueueViewModel : ObservableObject
+public partial class PlayQueueViewModel : ObservableObject, ITransientViewModel
 {
     private readonly ISettingsService _settingsService;
 

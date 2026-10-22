@@ -8,13 +8,14 @@ using BetterLyrics.Core.Models.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
+using BetterLyrics.Core.Interfaces.ViewModels;
 
 namespace BetterLyrics.Core.ViewModels;
 
 /// <summary>
-/// Singleton ViewModel
+/// Transient ViewModel，生命周期跟随 LyricsSharePage 实例。
 /// </summary>
-public partial class LyricsSharePageViewModel : ObservableRecipient,
+public partial class LyricsSharePageViewModel : ObservableRecipient, ITransientViewModel,
     IRecipient<AlbumArtBytesChangedMessage>,
     IRecipient<MappedSongSearchQueryChangedMessage>
 {

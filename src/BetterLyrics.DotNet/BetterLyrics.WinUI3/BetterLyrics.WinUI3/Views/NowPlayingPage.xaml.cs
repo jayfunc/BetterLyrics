@@ -561,8 +561,17 @@ public sealed partial class NowPlayingPage : Page,
         Cleanup();
     }
 
+    private bool _isCleanedUp;
+
     public void Cleanup()
     {
+        if (_isCleanedUp) return;
+        _isCleanedUp = true;
+
+        // 关闭窗口时 Unloaded 不保证触发，这里显式清理子控件（定时器与 x:Bind 订阅），
+        // 否则 DispatcherTimer / 单例服务上的 PropertyChanged 会长期钉住 NowPlayingBar 及其 ViewModel
+        NowPlayingBar?.Cleanup();
+
         WeakReferenceMessenger.Default.UnregisterAll(this);
         Bindings?.StopTracking();
         DataContext = null;

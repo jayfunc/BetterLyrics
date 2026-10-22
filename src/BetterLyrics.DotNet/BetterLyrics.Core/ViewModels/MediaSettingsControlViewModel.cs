@@ -7,13 +7,14 @@ using BetterLyrics.Core.Models.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Diagnostics;
+using BetterLyrics.Core.Interfaces.ViewModels;
 
 namespace BetterLyrics.Core.ViewModels;
 
 /// <summary>
-/// Singleton ViewModel
+/// Transient ViewModel，生命周期跟随 MediaSettingsControl 实例。
 /// </summary>
-public partial class MediaSettingsControlViewModel : ObservableObject
+public partial class MediaSettingsControlViewModel : ObservableObject, ITransientViewModel
 {
     private readonly IAppUIThreadProvider _appUIThreadProvider;
     private readonly IFileSystemService _fileSystemService;

@@ -16,19 +16,24 @@ using System.Collections.ObjectModel;
 namespace BetterLyrics.Core.ViewModels;
 
 /// <summary>
-/// Singleton ViewModel
+/// Singleton ViewModel，应用级：Program 与其他窗口会直接解析它来导航设置页。
 /// </summary>
 public partial class SettingsPageViewModel : ObservableRecipient,
     IRecipient<SettingsSectionChangedMessage>
 {
     private readonly ILocalizationService _localizationService;
     private readonly IGlobalToastProvider _globalToastProvider;
-
-    private readonly AppSettingsControlViewModel _appSettingsControlViewModel;
-    private readonly PlaybackSettingsControlViewModel _playbackSettingsControlViewModel;
-    private readonly LyricsWindowManagerControlViewModel _lyricsWindowSettingsControlViewModel;
+    private readonly ISettingsService _settingsService;
 
     private readonly Debouncer _searchDebouncer = new();
+
+    // 各设置控件通过 SettingsSectionChangedMessage 上报的当前路径状态，
+    // 避免本 ViewModel 直接依赖控件的 ViewModel 实例（否则它们无法成为 transient）。
+    private AppSettingsSection? _appSubsection;
+    private PlaybackLibSettingsSection? _playbackSubsection;
+    private string? _playbackProvider;
+    private LyricsWindowManagerSettingsSection? _lyricsWindowSubsection;
+    private LyricsWindowStatus? _selectedLyricsWindowStatus;
 
     [ObservableProperty] public partial SettingsNavMenuItem? SelectedNavItem { get; set; }
 
@@ -46,16 +51,11 @@ public partial class SettingsPageViewModel : ObservableRecipient,
     public SettingsPageViewModel(
         ILocalizationService localizationService,
         IGlobalToastProvider globalToastProvider,
-        AppSettingsControlViewModel appSettingsControlViewModel,
-        PlaybackSettingsControlViewModel playbackSettingsControlViewModel,
-        LyricsWindowManagerControlViewModel lyricsWindowSettingsControlViewModel)
+        ISettingsService settingsService)
     {
         _localizationService = localizationService;
         _globalToastProvider = globalToastProvider;
-        _lyricsWindowSettingsControlViewModel = lyricsWindowSettingsControlViewModel;
-
-        _appSettingsControlViewModel = appSettingsControlViewModel;
-        _playbackSettingsControlViewModel = playbackSettingsControlViewModel;
+        _settingsService = settingsService;
 
         NavItems.Add(new SettingsNavMenuItem
         {
@@ -114,43 +114,37 @@ public partial class SettingsPageViewModel : ObservableRecipient,
 
         if (SelectedNavItem.Section == SettingsSection.App)
         {
-            var vm = _appSettingsControlViewModel;
+            uriSegments.Add(_appSubsection?.ToString().ToLowerInvariant() ?? "");
 
-            uriSegments.Add(vm.SelectedNavItem?.Section.ToString().ToLowerInvariant() ?? "");
-
-            displayPathSegments.Add(GetLocalizedSubsectionName(vm.SelectedNavItem?.Section));
+            displayPathSegments.Add(GetLocalizedSubsectionName(_appSubsection));
         }
         else if (SelectedNavItem.Section == SettingsSection.PlaybackLib)
         {
-            var vm = _playbackSettingsControlViewModel;
+            string subsectionName = GetLocalizedSubsectionName(_playbackSubsection);
 
-            string subsectionName = GetLocalizedSubsectionName(vm.SelectedNavItem?.Section);
-
-            if (vm.SelectedNavItem?.Section == PlaybackLibSettingsSection.General && vm.SelectedMediaSourceProvider != null)
+            if (_playbackSubsection == PlaybackLibSettingsSection.General && _playbackProvider != null)
             {
-                uriSegments.Add(vm.SelectedNavItem?.Section.ToString().ToLowerInvariant() ?? "");
-                uriSegments.Add(vm.SelectedMediaSourceProvider.Provider);
+                uriSegments.Add(_playbackSubsection?.ToString().ToLowerInvariant() ?? "");
+                uriSegments.Add(_playbackProvider);
 
                 displayPathSegments.Add(subsectionName);
-                displayPathSegments.Add(GetLocalizedTitle(vm.SelectedMediaSourceProvider.Provider));
+                displayPathSegments.Add(GetLocalizedTitle(_playbackProvider));
             }
             else
             {
-                uriSegments.Add(vm.SelectedNavItem?.Section.ToString().ToLowerInvariant() ?? "");
+                uriSegments.Add(_playbackSubsection?.ToString().ToLowerInvariant() ?? "");
                 displayPathSegments.Add(subsectionName);
             }
         }
         else if (SelectedNavItem.Section == SettingsSection.LyricsWindowMgr)
         {
-            var vm = _lyricsWindowSettingsControlViewModel;
-
-            if (vm.SelectedWindowStatus != null)
+            if (_selectedLyricsWindowStatus != null)
             {
-                uriSegments.Add(vm.SelectedWindowStatus.Id.ToString());
-                uriSegments.Add(vm.SelectedNavItem?.Section.ToString().ToLowerInvariant() ?? "");
+                uriSegments.Add(_selectedLyricsWindowStatus.Id.ToString());
+                uriSegments.Add(_lyricsWindowSubsection?.ToString().ToLowerInvariant() ?? "");
 
-                displayPathSegments.Add(vm.SelectedWindowStatus.Name);
-                displayPathSegments.Add(GetLocalizedSubsectionName(vm.SelectedNavItem?.Section));
+                displayPathSegments.Add(_selectedLyricsWindowStatus.Name);
+                displayPathSegments.Add(GetLocalizedSubsectionName(_lyricsWindowSubsection));
             }
         }
 
@@ -260,7 +254,7 @@ public partial class SettingsPageViewModel : ObservableRecipient,
                         {
                             if (isLyricsWindowMgr)
                             {
-                                foreach (var window in _lyricsWindowSettingsControlViewModel.AppSettings.WindowBoundsRecords)
+                                foreach (var window in _settingsService.AppSettings.WindowBoundsRecords)
                                 {
                                     results.Add(new SettingSearchItem
                                     {
@@ -275,7 +269,7 @@ public partial class SettingsPageViewModel : ObservableRecipient,
                             }
                             else if (isPlaybackLib)
                             {
-                                foreach (var provider in _playbackSettingsControlViewModel.AppSettings.MediaSourceProvidersInfo)
+                                foreach (var provider in _settingsService.AppSettings.MediaSourceProvidersInfo)
                                 {
                                     results.Add(new SettingSearchItem
                                     {
@@ -375,6 +369,21 @@ public partial class SettingsPageViewModel : ObservableRecipient,
 
     public void Receive(SettingsSectionChangedMessage message)
     {
+        switch (message.Section)
+        {
+            case SettingsSection.App:
+                _appSubsection = message.Subsection as AppSettingsSection?;
+                break;
+            case SettingsSection.PlaybackLib:
+                _playbackSubsection = message.Subsection as PlaybackLibSettingsSection?;
+                _playbackProvider = message.Parameter as string;
+                break;
+            case SettingsSection.LyricsWindowMgr:
+                _lyricsWindowSubsection = message.Subsection as LyricsWindowManagerSettingsSection?;
+                _selectedLyricsWindowStatus = message.Parameter as LyricsWindowStatus;
+                break;
+        }
+
         UpdateCurrentPath();
     }
 }

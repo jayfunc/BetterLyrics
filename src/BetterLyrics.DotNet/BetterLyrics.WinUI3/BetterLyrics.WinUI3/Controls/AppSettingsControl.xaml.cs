@@ -19,5 +19,15 @@ public sealed partial class AppSettingsControl : UserControl
     {
         InitializeComponent();
         DataContext = Ioc.Default.GetRequiredService<AppSettingsControlViewModel>();
+
+        Loaded += (_, _) =>
+        {
+            if (DataContext is AppSettingsControlViewModel viewModel) viewModel.IsActive = true;
+        };
+        Unloaded += (_, _) =>
+        {
+            if (DataContext is AppSettingsControlViewModel viewModel) viewModel.IsActive = false;
+            Bindings?.StopTracking();
+        };
     }
 }

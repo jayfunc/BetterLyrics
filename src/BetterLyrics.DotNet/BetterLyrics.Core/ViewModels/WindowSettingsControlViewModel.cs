@@ -6,13 +6,14 @@ using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.Models.WallpaperEngine;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
+using BetterLyrics.Core.Interfaces.ViewModels;
 
 namespace BetterLyrics.Core.ViewModels;
 
 /// <summary>
-/// Singleton ViewModel
+/// Transient ViewModel，生命周期跟随 WindowSettingsControl 实例（绑定单个 LyricsWindowStatus）。
 /// </summary>
-public partial class WindowSettingsControlViewModel : ObservableObject
+public partial class WindowSettingsControlViewModel : ObservableObject, ITransientViewModel
 {
     private readonly ISettingsService _settingsService;
     private readonly IWallpaperEngineService _wallpaperEngineService;

@@ -16,8 +16,7 @@ public sealed partial class WindowSettingsControl : UserControl
 {
     private readonly IGlobalToastProvider _globalToastProvider = Ioc.Default.GetRequiredService<IGlobalToastProvider>();
 
-    public WindowSettingsControlViewModel ViewModel { get; } =
-        Ioc.Default.GetRequiredService<WindowSettingsControlViewModel>();
+    public WindowSettingsControlViewModel ViewModel => (WindowSettingsControlViewModel)DataContext;
 
     public static readonly DependencyProperty LyricsWindowStatusProperty =
         DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus),
@@ -32,6 +31,7 @@ public sealed partial class WindowSettingsControl : UserControl
     public WindowSettingsControl()
     {
         InitializeComponent();
+        DataContext = Ioc.Default.GetRequiredService<WindowSettingsControlViewModel>();
     }
 
     private async void UserControl_Loaded(object sender, RoutedEventArgs e)

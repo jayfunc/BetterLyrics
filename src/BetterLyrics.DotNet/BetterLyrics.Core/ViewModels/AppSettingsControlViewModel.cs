@@ -9,13 +9,14 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
+using BetterLyrics.Core.Interfaces.ViewModels;
 
 namespace BetterLyrics.Core.ViewModels;
 
 /// <summary>
-/// Singleton ViewModel
+/// Transient ViewModel，生命周期跟随 AppSettingsControl 实例。
 /// </summary>
-public partial class AppSettingsControlViewModel : ObservableRecipient,
+public partial class AppSettingsControlViewModel : ObservableRecipient, ITransientViewModel,
     IRecipient<LanguageCodeChangedMessage>,
     IRecipient<GlobalFontFamilyChangedMessage>,
     IRecipient<EnhanceControlInteractiveAnimationsChangedMessage>,
@@ -87,7 +88,8 @@ public partial class AppSettingsControlViewModel : ObservableRecipient,
 
     partial void OnSelectedNavItemChanged(AppSettingsNavMenuItem? value)
     {
-        WeakReferenceMessenger.Default.Send(new SettingsSectionChangedMessage(this));
+        WeakReferenceMessenger.Default.Send(
+            new SettingsSectionChangedMessage(this, SettingsSection.App, SelectedNavItem?.Section));
     }
 
     public void Receive(LanguageCodeChangedMessage message)

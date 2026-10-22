@@ -1,6 +1,7 @@
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Events;
 using BetterLyrics.Core.Extensions;
+using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Messages.Playback;
@@ -76,7 +77,7 @@ public sealed partial class NowPlayingBar : UserControl
     private readonly DispatcherTimer _simulationTimer;
     private long _lastTickTicks;
 
-    public NowPlayingBarViewModel ViewModel { get; set; }
+    public NowPlayingBarViewModel ViewModel => (NowPlayingBarViewModel)DataContext;
     public IGsmtcService GSMTCService { get; set; }
 
     public bool ShowTime
@@ -177,7 +178,7 @@ public sealed partial class NowPlayingBar : UserControl
     public NowPlayingBar()
     {
         InitializeComponent();
-        ViewModel = Ioc.Default.GetRequiredService<NowPlayingBarViewModel>();
+        DataContext = Ioc.Default.GetRequiredService<NowPlayingBarViewModel>();
         GSMTCService = Ioc.Default.GetRequiredService<IGsmtcService>();
 
         _simulationTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(1000) };
@@ -187,16 +188,46 @@ public sealed partial class NowPlayingBar : UserControl
     private void UserControl_Loaded(object sender, RoutedEventArgs e)
     {
         _lastTickTicks = Stopwatch.GetTimestamp();
+
+        _simulationTimer.Tick -= SimulationTimer_Tick;
+        _simulationTimer.Tick += SimulationTimer_Tick;
         _simulationTimer.Start();
 
-        ViewModel.IsActive = true;
+        if (DataContext is NowPlayingBarViewModel viewModel)
+        {
+            viewModel.IsActive = true;
+        }
     }
 
     private void UserControl_Unloaded(object sender, RoutedEventArgs e)
     {
-        _simulationTimer.Stop();
+        StopSimulation();
 
-        ViewModel.IsActive = false;
+        if (DataContext is NowPlayingBarViewModel viewModel)
+        {
+            viewModel.IsActive = false;
+        }
+
+        Bindings?.StopTracking();
+    }
+
+    public void StopSimulation()
+    {
+        _simulationTimer.Stop();
+        _simulationTimer.Tick -= SimulationTimer_Tick;
+    }
+
+    public void Cleanup()
+    {
+        StopSimulation();
+
+        if (DataContext is NowPlayingBarViewModel viewModel)
+        {
+            viewModel.IsActive = false;
+        }
+
+        Bindings?.StopTracking();
+        DataContext = null;
     }
 
     private void SimulationTimer_Tick(object? sender, object e)
@@ -221,8 +252,13 @@ public sealed partial class NowPlayingBar : UserControl
         if (d is NowPlayingBar self)
         {
             if (e.Property == IsCompactModeProperty)
+            {
                 self.OnIsCompactModeChanged();
-            else if (e.Property == IsAutoHideEnabledProperty) self.OnIsAutoHideEnabledChanged();
+            }
+            else if (e.Property == IsAutoHideEnabledProperty)
+            {
+                self.OnIsAutoHideEnabledChanged();
+            }
         }
     }
 
@@ -288,7 +324,14 @@ public sealed partial class NowPlayingBar : UserControl
 
     private void PlaybackSettingsFlyout_Closed(object sender, object e)
     {
+        var content = PlaybackSettingsFlyout.Content as PlaybackSettingsControl;
         PlaybackSettingsFlyout.Content = null;
+
+        if (content != null)
+        {
+            MemoryLeakDetector.Track(content.ViewModel);
+            MemoryLeakDetector.ScheduleCheck();
+        }
     }
 
     private void PlaybackSettingsFlyout_Opened(object sender, object e)
@@ -299,7 +342,14 @@ public sealed partial class NowPlayingBar : UserControl
 
     private void LyricsSettingsFlyout_Closed(object sender, object e)
     {
+        var content = LyricsSettingsFlyout.Content as LyricsWindowManagerControl;
         LyricsSettingsFlyout.Content = null;
+
+        if (content != null)
+        {
+            MemoryLeakDetector.Track(content.ViewModel);
+            MemoryLeakDetector.ScheduleCheck();
+        }
     }
 
     private void LyricsSettingsFlyout_Opened(object sender, object e)

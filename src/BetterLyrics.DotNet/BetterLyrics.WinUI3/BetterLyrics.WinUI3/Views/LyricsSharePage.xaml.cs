@@ -29,13 +29,23 @@ public sealed partial class LyricsSharePage : Page
     private readonly IFilePickerProvider _filePickerProvider =
         Ioc.Default.GetRequiredService<IFilePickerProvider>();
 
+    public LyricsSharePageViewModel ViewModel => (LyricsSharePageViewModel)DataContext;
+
     public LyricsSharePage()
     {
         InitializeComponent();
-        ViewModel = Ioc.Default.GetRequiredService<LyricsSharePageViewModel>();
-    }
+        DataContext = Ioc.Default.GetRequiredService<LyricsSharePageViewModel>();
 
-    public LyricsSharePageViewModel ViewModel { get; set; }
+        Loaded += (_, _) =>
+        {
+            if (DataContext is LyricsSharePageViewModel viewModel) viewModel.IsActive = true;
+        };
+        Unloaded += (_, _) =>
+        {
+            if (DataContext is LyricsSharePageViewModel viewModel) viewModel.IsActive = false;
+            Bindings?.StopTracking();
+        };
+    }
 
     private void LyricsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {

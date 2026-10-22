@@ -26,6 +26,7 @@ using Serilog.Events;
 using System;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading;
@@ -41,6 +42,8 @@ public class Program
 {
     private static ILogger<Program>? _logger;
 
+    private static ServiceProvider? _serviceProvider;
+
     private static IntPtr redirectEventHandle = IntPtr.Zero;
 
     [STAThread]
@@ -50,6 +53,7 @@ public class Program
         var isRedirect = DecideRedirection();
 
         if (!isRedirect)
+        {
             Application.Start(p =>
             {
                 var context = new DispatcherQueueSynchronizationContext(
@@ -69,6 +73,10 @@ public class Program
                 var args = AppInstance.GetCurrent().GetActivatedEventArgs();
                 HandleActivation(args, true);
             });
+
+            // 正常关闭（非 ExitApp 路径）时释放容器；DisposeServices 可重复调用
+            DisposeServices();
+        }
 
         return 0;
     }
@@ -230,10 +238,16 @@ public class Program
             .WriteTo.File(PathHelper.LogFilePattern, rollingInterval: RollingInterval.Day)
             .CreateLogger();
 
-        Ioc.Default.ConfigureServices(
-            new ServiceCollection()
+        var services = new ServiceCollection()
                 // HTTP Client
+                // 单例 Service 会长期持有 HttpClient，通过 PooledConnectionLifetime 定期回收底层连接，
+                // 以便 DNS 变化能够生效（否则长生命周期 HttpClient 会一直复用旧连接）。
                 .AddHttpClient()
+                .ConfigureHttpClientDefaults(builder => builder.ConfigurePrimaryHttpMessageHandler(() =>
+                    new SocketsHttpHandler
+                    {
+                        PooledConnectionLifetime = TimeSpan.FromMinutes(5)
+                    }))
 
                 // 数据库服务和迁移
                 .AddSingleton<IDatabaseService, DatabaseService>()
@@ -298,29 +312,42 @@ public class Program
                 .AddSingleton<IGlobalShortcutProvider, GlobalShortcutProvider>()
 
                 // ViewModels
-                .AddSingleton<AppSettingsControlViewModel>()
-                .AddSingleton<PlaybackSettingsControlViewModel>()
-                .AddSingleton<MediaSettingsControlViewModel>()
-                .AddSingleton<LyricsSearchControlViewModel>()
-                .AddSingleton<LyricsWindowManagerControlViewModel>()
-                .AddSingleton<WindowSettingsControlViewModel>()
-                .AddSingleton<LyricsWindowSwitchControlViewModel>()
-                .AddSingleton<LyricsWindowSwitchWindowViewModel>()
-                .AddSingleton<SystemTrayViewModel>()
+                // 应用级单例：需要被视图之外的代码解析，或在窗口重建后保留状态
                 .AddSingleton<SettingsPageViewModel>()
                 .AddSingleton<MusicGalleryPageViewModel>()
-                .AddSingleton<AboutControlViewModel>()
-                .AddSingleton<StatsDashboardControlViewModel>()
-                .AddSingleton<PlayQueueViewModel>()
-                .AddSingleton<PluginManagerControlViewModel>()
-                .AddSingleton<LyricsSharePageViewModel>()
-                .AddSingleton<MusicGalleryWindowViewModel>()
+                .AddSingleton<LyricsSearchControlViewModel>()
+                .AddSingleton<SystemTrayViewModel>()
 
+                // 视图级实例：每个 Window/Page/Control 生命周期内独立，随视图创建与释放
+                .AddTransient<AppSettingsControlViewModel>()
+                .AddTransient<PlaybackSettingsControlViewModel>()
+                .AddTransient<MediaSettingsControlViewModel>()
+                .AddTransient<LyricsWindowManagerControlViewModel>()
+                .AddTransient<WindowSettingsControlViewModel>()
+                .AddTransient<LyricsWindowSwitchControlViewModel>()
+                .AddTransient<LyricsWindowSwitchWindowViewModel>()
+                .AddTransient<AboutControlViewModel>()
+                .AddTransient<StatsDashboardControlViewModel>()
+                .AddTransient<PlayQueueViewModel>()
+                .AddTransient<PluginManagerControlViewModel>()
+                .AddTransient<LyricsSharePageViewModel>()
+                .AddTransient<MusicGalleryWindowViewModel>()
                 .AddTransient<NowPlayingPageViewModel>()
-                .AddTransient<NowPlayingBarViewModel>()
-                
-                .BuildServiceProvider()
-        );
+                .AddTransient<NowPlayingBarViewModel>();
+
+        _serviceProvider = services.BuildServiceProvider();
+        Ioc.Default.ConfigureServices(_serviceProvider);
+    }
+
+    /// <summary>
+    /// 释放 Ioc 容器及其持有的单例资源（数据库、文件监视器、全局快捷键、托盘等）。
+    /// </summary>
+    public static void DisposeServices()
+    {
+        var serviceProvider = _serviceProvider;
+        _serviceProvider = null;
+
+        serviceProvider?.Dispose();
     }
 
     [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]

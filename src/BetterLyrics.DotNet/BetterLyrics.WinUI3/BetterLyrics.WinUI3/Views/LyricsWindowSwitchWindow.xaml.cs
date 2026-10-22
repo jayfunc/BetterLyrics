@@ -11,6 +11,7 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
+using System.Collections.Generic;
 using System.Linq;
 using Vanara.PInvoke;
 using WinUIEx;
@@ -28,10 +29,12 @@ public sealed partial class LyricsWindowSwitchWindow : BaseWindow
 {
     public LyricsWindowSwitchWindowViewModel ViewModel { get; } = Ioc.Default.GetRequiredService<LyricsWindowSwitchWindowViewModel>();
 
+    protected override IEnumerable<object> GetAdditionalTrackedViewModels() => [ViewModel];
+
     public LyricsWindowSwitchWindow()
     {
         InitializeComponent();
-
+        
         this.Init("LyricsWindowSwitchWindowTitle", titleBarHeightOption: TitleBarHeightOption.Collapsed, backdropType: BackdropType.Transparent);
 
         SetTitleBar(PlaceholderGrid);

@@ -9,13 +9,14 @@ using BetterLyrics.Core.Models.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using BetterLyrics.Core.Interfaces.ViewModels;
 
 namespace BetterLyrics.Core.ViewModels;
 
 /// <summary>
 /// Transient ViewModel
 /// </summary>
-public partial class NowPlayingBarViewModel : ObservableRecipient,
+public partial class NowPlayingBarViewModel : ObservableRecipient, ITransientViewModel,
     IRecipient<CurrentPositionChangedMessage>,
     IRecipient<CurrentMediaSourceProviderChangedMessage>
 {

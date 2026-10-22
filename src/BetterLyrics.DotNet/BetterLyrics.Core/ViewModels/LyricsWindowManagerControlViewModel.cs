@@ -11,13 +11,15 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
+using BetterLyrics.Core.Interfaces.ViewModels;
 
 namespace BetterLyrics.Core.ViewModels;
 
 /// <summary>
-/// Singleton ViewModel
+/// Transient ViewModel，生命周期跟随 LyricsWindowManagerControl 实例
+/// （设置页与 NowPlayingBar 的浮出面板各自持有独立实例）。
 /// </summary>
-public partial class LyricsWindowManagerControlViewModel : ObservableRecipient,
+public partial class LyricsWindowManagerControlViewModel : ObservableRecipient, ITransientViewModel,
     IRecipient<MultiNowPlayingWindowModeChangedMessage>,
     IRecipient<LyricsWindowNavigationRequestedMessage>
 {
@@ -85,10 +87,12 @@ public partial class LyricsWindowManagerControlViewModel : ObservableRecipient,
     }
 
     partial void OnSelectedWindowStatusChanged(LyricsWindowStatus? value) =>
-        WeakReferenceMessenger.Default.Send(new SettingsSectionChangedMessage(this));
+        WeakReferenceMessenger.Default.Send(new SettingsSectionChangedMessage(
+            this, SettingsSection.LyricsWindowMgr, SelectedNavItem?.Section, SelectedWindowStatus));
 
     partial void OnSelectedNavItemChanged(LyricsWindowManagerSettingsNavMenuItem? value) =>
-        WeakReferenceMessenger.Default.Send(new SettingsSectionChangedMessage(this));
+        WeakReferenceMessenger.Default.Send(new SettingsSectionChangedMessage(
+            this, SettingsSection.LyricsWindowMgr, SelectedNavItem?.Section, SelectedWindowStatus));
 
     [RelayCommand]
     private void CreateLyricsWindowStatus(LyricsWindowMode mode)

@@ -15,13 +15,15 @@ using Hqub.Lastfm.Entities;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Text.Json;
+using BetterLyrics.Core.Interfaces.ViewModels;
 
 namespace BetterLyrics.Core.ViewModels;
 
 /// <summary>
-/// Singleton ViewModel
+/// Transient ViewModel，生命周期跟随 PlaybackSettingsControl 实例
+/// （设置页与 NowPlayingBar 的浮出面板各自持有独立实例）。
 /// </summary>
-public partial class PlaybackSettingsControlViewModel : ObservableRecipient,
+public partial class PlaybackSettingsControlViewModel : ObservableRecipient, ITransientViewModel,
     IRecipient<PlaybackLibSettingsNavigationRequestedMessage>
 {
     private readonly IAppUIThreadProvider _appUiThreadProvider;
@@ -80,17 +82,13 @@ public partial class PlaybackSettingsControlViewModel : ObservableRecipient,
         _filePickerProvider = filePickerProvider;
 
         _lastFmService = lastFmService;
-        _lastFmService.UserChanged += LastFMService_UserChanged;
-        _lastFmService.IsAuthenticatedChanged += LastFMService_IsAuthenticatedChanged;
 
         _discordService = discordService;
-        _discordService.UserChanged += DiscordService_UserChanged;
         DiscordUser = _discordService.CurrentUser;
         DiscordUsername = DiscordUser != null ? $"{DiscordUser.Username}" : null;
         IsDiscordConnected = DiscordUser != null;
 
         AppSettings = settingsService.AppSettings;
-        AppSettings.MediaSourceProvidersInfo.CollectionChanged += MediaSourceProvidersInfo_CollectionChanged;
 
         AppleMusicMediaUserToken =
             _passwordVaultProvider.Get(App.AppName, AppleMusic.MediaUserTokenKey) ??
@@ -129,6 +127,33 @@ public partial class PlaybackSettingsControlViewModel : ObservableRecipient,
         IsActive = true;
     }
 
+    protected override void OnActivated()
+    {
+        base.OnActivated();
+
+        _lastFmService.UserChanged += LastFMService_UserChanged;
+        _lastFmService.IsAuthenticatedChanged += LastFMService_IsAuthenticatedChanged;
+        _discordService.UserChanged += DiscordService_UserChanged;
+        AppSettings.MediaSourceProvidersInfo.CollectionChanged += MediaSourceProvidersInfo_CollectionChanged;
+
+        // 重新激活时同步一次外部状态，避免控件隐藏期间状态变旧
+        IsLastFmAuthenticated = _lastFmService.IsAuthenticated;
+        LastFmUser = _lastFmService.User;
+        DiscordUser = _discordService.CurrentUser;
+        DiscordUsername = DiscordUser != null ? $"{DiscordUser.Username}" : null;
+        IsDiscordConnected = DiscordUser != null;
+    }
+
+    protected override void OnDeactivated()
+    {
+        _lastFmService.UserChanged -= LastFMService_UserChanged;
+        _lastFmService.IsAuthenticatedChanged -= LastFMService_IsAuthenticatedChanged;
+        _discordService.UserChanged -= DiscordService_UserChanged;
+        AppSettings.MediaSourceProvidersInfo.CollectionChanged -= MediaSourceProvidersInfo_CollectionChanged;
+
+        base.OnDeactivated();
+    }
+
     partial void OnSelectedTargetLanguageIndexChanged(int value)
     {
         AppSettings.TranslationSettings.SelectedTargetLanguageCode =
@@ -137,12 +162,14 @@ public partial class PlaybackSettingsControlViewModel : ObservableRecipient,
 
     partial void OnSelectedNavItemChanged(PlaybackLibSettingsNavMenuItem? value)
     {
-        WeakReferenceMessenger.Default.Send(new SettingsSectionChangedMessage(this));
+        WeakReferenceMessenger.Default.Send(
+            new SettingsSectionChangedMessage(this, SettingsSection.PlaybackLib, SelectedNavItem?.Section));
     }
 
     partial void OnSelectedMediaSourceProviderChanged(MediaSourceProviderInfo? value)
     {
-        WeakReferenceMessenger.Default.Send(new SettingsSectionChangedMessage(this));
+        WeakReferenceMessenger.Default.Send(new SettingsSectionChangedMessage(
+            this, SettingsSection.PlaybackLib, SelectedNavItem?.Section, SelectedMediaSourceProvider?.Provider));
     }
 
     private void MediaSourceProvidersInfo_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)

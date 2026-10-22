@@ -44,6 +44,16 @@ public sealed partial class LyricsWindowManagerControl : UserControl
     {
         InitializeComponent();
         DataContext = Ioc.Default.GetRequiredService<LyricsWindowManagerControlViewModel>();
+
+        Loaded += (_, _) =>
+        {
+            if (DataContext is LyricsWindowManagerControlViewModel viewModel) viewModel.IsActive = true;
+        };
+        Unloaded += (_, _) =>
+        {
+            if (DataContext is LyricsWindowManagerControlViewModel viewModel) viewModel.IsActive = false;
+            Bindings?.StopTracking();
+        };
     }
 
     private void DeleteMenuFlyoutItem_Click(object sender, RoutedEventArgs e)

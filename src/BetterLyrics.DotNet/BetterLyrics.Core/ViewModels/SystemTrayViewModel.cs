@@ -9,7 +9,7 @@ using CommunityToolkit.Mvvm.Messaging;
 namespace BetterLyrics.Core.ViewModels;
 
 /// <summary>
-/// Singleton ViewModel
+/// Singleton ViewModel，应用级：托盘控件在应用生命周期内只创建一次。
 /// </summary>
 /// <param name="navigationService"></param>
 /// <param name="appLifecycleService"></param>

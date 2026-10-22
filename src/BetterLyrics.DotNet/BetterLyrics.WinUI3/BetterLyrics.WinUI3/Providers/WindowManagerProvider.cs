@@ -409,6 +409,10 @@ public class WindowManagerProvider : IWindowManagerProvider
         catch { }
 
         EnsureAllWorkAreasReleased();
+
+        // 退出前释放 Ioc 容器，确保 IDisposable 单例（数据库、文件监视器、快捷键等）被正确清理
+        Program.DisposeServices();
+
         Environment.Exit(0);
     }
 

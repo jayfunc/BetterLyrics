@@ -20,9 +20,9 @@ public class OverlayInputHelper
 
     private bool _wasOverControl;
 
-    public Action<InteractiveAreaEventArgs> OnInteractiveAreaEntered;
-    public Action OnInteractiveAreaExited;
-    public Action<InteractiveAreaEventArgs> OnInteractiveAreaMoved;
+    public Action<InteractiveAreaEventArgs>? OnInteractiveAreaEntered;
+    public Action? OnInteractiveAreaExited;
+    public Action<InteractiveAreaEventArgs>? OnInteractiveAreaMoved;
 
     public OverlayInputHelper(Window window)
     {
@@ -53,6 +53,14 @@ public class OverlayInputHelper
     public void Stop()
     {
         _timer.Stop();
+        _timer.Tick -= Timer_Tick;
+
+        // 断开对窗口内元素与回调闭包的引用，
+        // 否则 DispatcherTimer 可能通过处理器间接持有整个视觉树
+        _interactiveControls.Clear();
+        OnInteractiveAreaEntered = null;
+        OnInteractiveAreaExited = null;
+        OnInteractiveAreaMoved = null;
     }
 
     private void Timer_Tick(object? sender, object e)

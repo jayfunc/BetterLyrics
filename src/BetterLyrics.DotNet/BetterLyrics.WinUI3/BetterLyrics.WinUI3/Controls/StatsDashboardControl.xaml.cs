@@ -23,6 +23,16 @@ public sealed partial class StatsDashboardControl : UserControl
         DataContext = Ioc.Default.GetRequiredService<StatsDashboardControlViewModel>();
         _heatmapHoverTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(50) };
         _heatmapHoverTimer.Tick += HeatmapHoverTimer_Tick;
+
+        Loaded += (_, _) =>
+        {
+            if (DataContext is StatsDashboardControlViewModel viewModel) viewModel.IsActive = true;
+        };
+        Unloaded += (_, _) =>
+        {
+            if (DataContext is StatsDashboardControlViewModel viewModel) viewModel.IsActive = false;
+            Bindings?.StopTracking();
+        };
     }
 
     private void HeatmapHoverTimer_Tick(object sender, object e)

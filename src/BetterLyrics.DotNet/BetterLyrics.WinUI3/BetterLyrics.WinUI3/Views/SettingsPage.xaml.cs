@@ -21,8 +21,9 @@ public sealed partial class SettingsPage : Page
 
     public SettingsPage()
     {
-        InitializeComponent();
+        // 先创建 ViewModel，确保它能收到各设置控件在 InitializeComponent 期间上报的初始路径状态
         DataContext = Ioc.Default.GetRequiredService<SettingsPageViewModel>();
+        InitializeComponent();
     }
 
     private void AutoSuggestBox_GotFocus(object sender, RoutedEventArgs e)

@@ -12,6 +12,7 @@ using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Vanara.PInvoke;
 
@@ -49,6 +50,16 @@ public sealed partial class MusicGalleryWindow : BaseWindow,
     protected override void OnAppThemeChanged(AppThemeChangedMessage? message = null)
     {
         this.UpdateTheme();
+    }
+
+    protected override IEnumerable<object> GetAdditionalTrackedViewModels() => [ViewModel];
+
+    protected override void Cleanup()
+    {
+        // 显式清理页面与 NowPlayingBar，避免 Unloaded 不触发导致定时器钉住 ViewModel
+        NowPlayingPage.Cleanup();
+        MusicGalleryPage.Cleanup();
+        NowPlayingBar.Cleanup();
     }
 
     private void UpdateExternalSourceVisibility()

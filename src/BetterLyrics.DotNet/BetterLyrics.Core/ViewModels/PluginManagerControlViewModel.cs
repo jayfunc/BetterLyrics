@@ -6,13 +6,14 @@ using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Sdk.Interfaces.Plugins;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using BetterLyrics.Core.Interfaces.ViewModels;
 
 namespace BetterLyrics.Core.ViewModels;
 
 /// <summary>
-/// Singleton ViewModel
+/// Transient ViewModel，生命周期跟随 PluginManagerControl 实例。
 /// </summary>
-public partial class PluginManagerControlViewModel : ObservableObject
+public partial class PluginManagerControlViewModel : ObservableObject, ITransientViewModel
 {
     private readonly IGlobalToastProvider _globalToastProvider;
     private readonly IPluginService _pluginService;

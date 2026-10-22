@@ -23,10 +23,17 @@ public class DatabaseService : IDatabaseService, IDisposable
 
     public void Dispose()
     {
-        _playHistoryDb?.Dispose();
-        _filesIndexDb?.Dispose();
-        _lyricsCacheDb?.Dispose();
-        _songSearchMapDb?.Dispose();
-        _playbackStateDb?.Dispose();
+        // 置空以确保幂等：导入设置时会手动释放一次，退出时容器还会再释放一次
+        DisposeDb(ref _playHistoryDb);
+        DisposeDb(ref _filesIndexDb);
+        DisposeDb(ref _lyricsCacheDb);
+        DisposeDb(ref _songSearchMapDb);
+        DisposeDb(ref _playbackStateDb);
+    }
+
+    private static void DisposeDb(ref LiteDatabase? db)
+    {
+        db?.Dispose();
+        db = null;
     }
 }
