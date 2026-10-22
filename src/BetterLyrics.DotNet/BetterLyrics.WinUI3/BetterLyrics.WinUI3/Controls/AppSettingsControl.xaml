@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 
-<UserControl
+<views:BaseUserControl
     x:Class="BetterLyrics.WinUI3.Controls.AppSettingsControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -13,6 +13,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BetterLyrics.Core.Models"
     xmlns:ui="using:CommunityToolkit.WinUI"
+    xmlns:views="using:BetterLyrics.WinUI3.Views"
     mc:Ignorable="d">
 
     <Grid>
@@ -287,4 +288,4 @@
             </Grid>
         </ScrollViewer>
     </Grid>
-</UserControl>
+</views:BaseUserControl>

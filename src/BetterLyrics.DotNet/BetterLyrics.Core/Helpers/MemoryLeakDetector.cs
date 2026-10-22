@@ -21,6 +21,11 @@ public class MemoryLeakDetector
 
         lock (_watchedObjects)
         {
+            foreach (var (reference, _) in _watchedObjects)
+            {
+                if (ReferenceEquals(reference.Target, target)) return;
+            }
+
             _watchedObjects.Add((new WeakReference(target), name));
         }
 
@@ -30,18 +35,25 @@ public class MemoryLeakDetector
 
     private static async Task CheckAsync()
     {
-        GC.Collect();
-        GC.WaitForPendingFinalizers();
-        GC.Collect();
+        CollectAndWait();
+
+        // WinUI 原生侧（Composition/窗口销毁）释放引用的时间可能晚于托管对象，
+        // 立即判定会把“尚未拆卸完”误报为泄漏；留出缓冲后再次强制回收再判定。
+        await Task.Delay(4000);
+
+        CollectAndWait();
 
         await Task.Delay(100);
 
         lock (_watchedObjects)
         {
+            Debug.WriteLine($"[MemoryLeakDetector] === Checking watched objects ===");
+
             var aliveObjects = new List<(WeakReference Reference, string Name)>();
             var deadObjects = new List<(WeakReference Reference, string Name)>();
 
             foreach (var item in _watchedObjects)
+            {
                 if (item.Reference.IsAlive)
                 {
                     aliveObjects.Add(item);
@@ -53,6 +65,7 @@ public class MemoryLeakDetector
                 {
                     deadObjects.Add(item);
                 }
+            }
 
             foreach (var dead in deadObjects)
             {
@@ -62,6 +75,13 @@ public class MemoryLeakDetector
                 _logger.LogInformation("[MemoryLeakDetector] GC completed: {Name}", dead.Name);
             }
         }
+    }
+
+    private static void CollectAndWait()
+    {
+        GC.Collect();
+        GC.WaitForPendingFinalizers();
+        GC.Collect();
     }
 
     public static void ScheduleCheck(int delayMs = 3000)

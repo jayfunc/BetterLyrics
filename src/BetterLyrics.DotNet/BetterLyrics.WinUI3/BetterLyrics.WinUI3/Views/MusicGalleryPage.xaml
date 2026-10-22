@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<Page
+<views:BasePage
     x:Class="BetterLyrics.WinUI3.Views.MusicGalleryPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:views="using:BetterLyrics.WinUI3.Views"
     xmlns:behaviors="using:BetterLyrics.WinUI3.Behaviors"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:converters="using:BetterLyrics.WinUI3.Converters"
@@ -17,7 +18,7 @@
     Unloaded="Page_Unloaded"
     mc:Ignorable="d">
 
-    <Page.Resources>
+    <views:BasePage.Resources>
         <converters:EnumToBoolConverter x:Key="EnumToBoolConverter" />
         <converters:FileSizeToStringConverter x:Key="FileSizeToStringConverter" />
         <converters:DateTimeToStringConverter x:Key="DateTimeToStringConverter" />
@@ -136,7 +137,7 @@
                     TextWrapping="Wrap" />
             </Grid>
         </DataTemplate>
-    </Page.Resources>
+    </views:BasePage.Resources>
     <Grid>
         <Grid Padding="0,0,0,66" ColumnSpacing="6">
             <Grid.ColumnDefinitions>
@@ -830,4 +831,4 @@
             </Grid>
         </Grid>
     </Grid>
-</Page>
+</views:BasePage>

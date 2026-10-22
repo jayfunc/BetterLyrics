@@ -30,7 +30,7 @@ using ColorExtensions = BetterLyrics.WinUI3.Extensions.ColorExtensions;
 
 namespace BetterLyrics.WinUI3.Views;
 
-public sealed partial class NowPlayingPage : Page,
+public sealed partial class NowPlayingPage : BasePage,
     IRecipient<CurrentSongInfoChangedMessage>,
     IRecipient<AlbumArtSongInfoAutoScrollChangedMessage>,
     IRecipient<AlbumArtFadeOutChangedMessage>,
@@ -563,7 +563,7 @@ public sealed partial class NowPlayingPage : Page,
 
     private bool _isCleanedUp;
 
-    public void Cleanup()
+    public override void Cleanup()
     {
         if (_isCleanedUp) return;
         _isCleanedUp = true;

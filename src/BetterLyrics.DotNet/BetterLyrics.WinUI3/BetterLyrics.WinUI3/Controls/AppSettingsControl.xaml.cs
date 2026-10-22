@@ -1,6 +1,7 @@
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Messages.SettingsNavigation;
 using BetterLyrics.Core.ViewModels;
+using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml.Controls;
@@ -11,7 +12,7 @@ using System.Linq;
 
 namespace BetterLyrics.WinUI3.Controls;
 
-public sealed partial class AppSettingsControl : UserControl
+public sealed partial class AppSettingsControl : BaseUserControl
 {
     public AppSettingsControlViewModel ViewModel => (AppSettingsControlViewModel)DataContext;
 
@@ -19,15 +20,10 @@ public sealed partial class AppSettingsControl : UserControl
     {
         InitializeComponent();
         DataContext = Ioc.Default.GetRequiredService<AppSettingsControlViewModel>();
+    }
 
-        Loaded += (_, _) =>
-        {
-            if (DataContext is AppSettingsControlViewModel viewModel) viewModel.IsActive = true;
-        };
-        Unloaded += (_, _) =>
-        {
-            if (DataContext is AppSettingsControlViewModel viewModel) viewModel.IsActive = false;
-            Bindings?.StopTracking();
-        };
+    protected override void Cleanup()
+    {
+        this.Bindings.StopTracking();
     }
 }

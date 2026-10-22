@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Views;
 
-public sealed partial class SettingsPage : Page
+public sealed partial class SettingsPage : BasePage
 {
     public SettingsPageViewModel ViewModel => (SettingsPageViewModel)DataContext;
 
@@ -24,6 +24,24 @@ public sealed partial class SettingsPage : Page
         // 先创建 ViewModel，确保它能收到各设置控件在 InitializeComponent 期间上报的初始路径状态
         DataContext = Ioc.Default.GetRequiredService<SettingsPageViewModel>();
         InitializeComponent();
+    }
+
+    private bool _isCleanedUp;
+
+    public override void Cleanup()
+    {
+        if (_isCleanedUp) return;
+        _isCleanedUp = true;
+
+        // 先停止 x:Bind 监听，避免后续释放 ItemsSource 时通过双向绑定回写 Singleton ViewModel
+        Bindings?.StopTracking();
+
+        // SettingsPageViewModel 是 Singleton，其集合比页面活得更久。
+        // 若不清空 ItemsSource，集合的 CollectionChanged 订阅会反向持有页面，导致页面无法被回收。
+        if (NavView != null) NavView.MenuItemsSource = null;
+        if (SearchBox != null) SearchBox.ItemsSource = null;
+
+        DataContext = null;
     }
 
     private void AutoSuggestBox_GotFocus(object sender, RoutedEventArgs e)

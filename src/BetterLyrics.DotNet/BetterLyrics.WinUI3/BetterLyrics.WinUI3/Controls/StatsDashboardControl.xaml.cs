@@ -1,4 +1,5 @@
 using BetterLyrics.Core.ViewModels;
+using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -12,7 +13,7 @@ using System;
 
 namespace BetterLyrics.WinUI3.Controls;
 
-public sealed partial class StatsDashboardControl : UserControl
+public sealed partial class StatsDashboardControl : BaseUserControl
 {
     private DispatcherTimer _heatmapHoverTimer;
     private VariableSizedWrapGrid _currentWrapGrid;

@@ -6,6 +6,7 @@ using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Messages.SettingsNavigation;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.ViewModels;
+using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml;
@@ -20,7 +21,7 @@ using Windows.Storage;
 
 namespace BetterLyrics.WinUI3.Controls;
 
-public sealed partial class PlaybackSettingsControl : UserControl
+public sealed partial class PlaybackSettingsControl : BaseUserControl
 {
     private readonly IGlobalToastProvider _globalToastProvider = Ioc.Default.GetRequiredService<IGlobalToastProvider>();
     private readonly IFilePickerProvider _filePickerProvider = Ioc.Default.GetRequiredService<IFilePickerProvider>();

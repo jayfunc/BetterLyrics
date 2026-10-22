@@ -10,6 +10,7 @@ using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
 using BetterLyrics.Core.Interfaces.ViewModels;
+using System.Diagnostics;
 
 namespace BetterLyrics.Core.ViewModels;
 
@@ -47,6 +48,8 @@ public partial class AppSettingsControlViewModel : ObservableRecipient, ITransie
 
     public ObservableCollection<AppSettingsNavMenuItem> NavItems { get; } = [];
     [ObservableProperty] public partial AppSettingsNavMenuItem? SelectedNavItem { get; set; }
+
+    [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 
     public AppSettingsControlViewModel(ISettingsService settingsService,
         IWindowManagerProvider windowManagerProvider, ILauncherProvider launcherProvider, ILocalizationService localizationService)
@@ -111,8 +114,6 @@ public partial class AppSettingsControlViewModel : ObservableRecipient, ITransie
     {
         SelectedNavItem = NavItems.FirstOrDefault(item => item.Section == message.Value);
     }
-
-    [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 
     [RelayCommand]
     private async Task OpenTaskMgrStartupAppsAsync()

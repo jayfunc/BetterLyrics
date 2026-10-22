@@ -2,6 +2,7 @@ using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.ViewModels;
+using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -12,7 +13,7 @@ using Windows.ApplicationModel.DataTransfer;
 
 namespace BetterLyrics.WinUI3.Controls;
 
-public sealed partial class WindowSettingsControl : UserControl
+public sealed partial class WindowSettingsControl : BaseUserControl
 {
     private readonly IGlobalToastProvider _globalToastProvider = Ioc.Default.GetRequiredService<IGlobalToastProvider>();
 

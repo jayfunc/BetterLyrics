@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Controls;
 
-public sealed partial class LyricsWindowSwitchControl : UserControl
+public sealed partial class LyricsWindowSwitchControl : BaseUserControl
 {
     private readonly IWindowManagerProvider _windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
 

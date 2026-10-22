@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<Page
+<views:BasePage
     x:Class="BetterLyrics.WinUI3.Views.SettingsPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -12,6 +12,7 @@
     xmlns:models="using:BetterLyrics.Core.Models"
     xmlns:selectors="using:BetterLyrics.WinUI3.Selectors"
     xmlns:uc="using:BetterLyrics.WinUI3.Controls"
+    xmlns:views="using:BetterLyrics.WinUI3.Views"
     mc:Ignorable="d">
 
     <Grid x:Name="RootGrid">
@@ -35,6 +36,7 @@
 
             <NavigationView.AutoSuggestBox>
                 <AutoSuggestBox
+                    x:Name="SearchBox"
                     x:Uid="SettingsSearchBox"
                     GotFocus="AutoSuggestBox_GotFocus"
                     ItemsSource="{x:Bind ViewModel.FilteredSettings, Mode=OneWay}"
@@ -84,7 +86,6 @@
                     </AutoSuggestBox.ItemTemplateSelector>
                 </AutoSuggestBox>
             </NavigationView.AutoSuggestBox>
-
 
             <Grid>
                 <Grid.RowDefinitions>
@@ -180,4 +181,4 @@
                 VerticalAlignment="Top" />
         </Grid>
     </Grid>
-</Page>
+</views:BasePage>

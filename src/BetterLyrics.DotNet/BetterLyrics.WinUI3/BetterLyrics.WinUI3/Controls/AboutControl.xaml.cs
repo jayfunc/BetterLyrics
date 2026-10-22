@@ -1,4 +1,5 @@
 using BetterLyrics.Core.ViewModels;
+using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -8,7 +9,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace BetterLyrics.WinUI3.Controls;
 
-public sealed partial class AboutControl : UserControl
+public sealed partial class AboutControl : BaseUserControl
 {
     private double _creditsOffset = 0;
     private bool _isCreditsHovered = false;

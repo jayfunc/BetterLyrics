@@ -29,7 +29,7 @@ using WinUIEx;
 
 namespace BetterLyrics.WinUI3.Controls;
 
-public sealed partial class LyricsWindowManagerControl : UserControl
+public sealed partial class LyricsWindowManagerControl : BaseUserControl
 {
     private readonly IGlobalToastProvider _globalToastProvider = Ioc.Default.GetRequiredService<IGlobalToastProvider>();
     private readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();

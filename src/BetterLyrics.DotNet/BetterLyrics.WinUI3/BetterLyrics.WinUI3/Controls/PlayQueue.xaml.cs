@@ -1,6 +1,7 @@
 using BetterLyrics.Core.Messages.MediaLibrary;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.ViewModels;
+using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml;
@@ -13,7 +14,7 @@ using System.Linq;
 
 namespace BetterLyrics.WinUI3.Controls;
 
-public sealed partial class PlayQueue : UserControl
+public sealed partial class PlayQueue : BaseUserControl
 {
     public PlayQueueViewModel ViewModel => (PlayQueueViewModel)DataContext;
 
@@ -63,7 +64,7 @@ public sealed partial class PlayQueue : UserControl
 
     private bool _isCleanedUp;
 
-    public void Cleanup()
+    public new void Cleanup()
     {
         if (_isCleanedUp) return;
         _isCleanedUp = true;

@@ -1,5 +1,6 @@
 ﻿using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.ViewModels;
+using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
@@ -9,7 +10,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace BetterLyrics.WinUI3.Controls;
 
-public sealed partial class PluginManagerControl : UserControl
+public sealed partial class PluginManagerControl : BaseUserControl
 {
     public PluginManagerControl()
     {

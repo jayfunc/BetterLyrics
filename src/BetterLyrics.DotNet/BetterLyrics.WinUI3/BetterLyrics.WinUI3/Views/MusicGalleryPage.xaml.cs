@@ -21,7 +21,7 @@ namespace BetterLyrics.WinUI3.Views;
 /// <summary>
 /// An empty page that can be used on its own or navigated to within a Frame.
 /// </summary>
-public sealed partial class MusicGalleryPage : Page
+public sealed partial class MusicGalleryPage : BasePage
 {
     private readonly IGlobalToastProvider _globalToastProvider =
         Ioc.Default.GetRequiredService<IGlobalToastProvider>();
@@ -174,7 +174,7 @@ public sealed partial class MusicGalleryPage : Page
 
     private bool _isCleanedUp;
 
-    public void Cleanup()
+    public override void Cleanup()
     {
         if (_isCleanedUp) return;
         _isCleanedUp = true;

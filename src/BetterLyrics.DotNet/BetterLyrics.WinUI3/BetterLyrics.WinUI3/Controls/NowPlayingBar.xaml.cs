@@ -1,7 +1,6 @@
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Events;
 using BetterLyrics.Core.Extensions;
-using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Messages.Playback;
@@ -324,14 +323,7 @@ public sealed partial class NowPlayingBar : UserControl
 
     private void PlaybackSettingsFlyout_Closed(object sender, object e)
     {
-        var content = PlaybackSettingsFlyout.Content as PlaybackSettingsControl;
         PlaybackSettingsFlyout.Content = null;
-
-        if (content != null)
-        {
-            MemoryLeakDetector.Track(content.ViewModel);
-            MemoryLeakDetector.ScheduleCheck();
-        }
     }
 
     private void PlaybackSettingsFlyout_Opened(object sender, object e)
@@ -342,14 +334,7 @@ public sealed partial class NowPlayingBar : UserControl
 
     private void LyricsSettingsFlyout_Closed(object sender, object e)
     {
-        var content = LyricsSettingsFlyout.Content as LyricsWindowManagerControl;
         LyricsSettingsFlyout.Content = null;
-
-        if (content != null)
-        {
-            MemoryLeakDetector.Track(content.ViewModel);
-            MemoryLeakDetector.ScheduleCheck();
-        }
     }
 
     private void LyricsSettingsFlyout_Opened(object sender, object e)

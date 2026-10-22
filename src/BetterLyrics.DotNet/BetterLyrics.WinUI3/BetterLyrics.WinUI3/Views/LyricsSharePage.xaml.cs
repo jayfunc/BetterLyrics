@@ -21,7 +21,7 @@ using File = System.IO.File;
 
 namespace BetterLyrics.WinUI3.Views;
 
-public sealed partial class LyricsSharePage : Page
+public sealed partial class LyricsSharePage : BasePage
 {
     private readonly IGlobalToastProvider _globalToastProvider =
         Ioc.Default.GetRequiredService<IGlobalToastProvider>();
