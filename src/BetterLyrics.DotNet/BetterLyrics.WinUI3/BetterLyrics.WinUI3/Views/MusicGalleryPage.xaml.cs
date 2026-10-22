@@ -181,6 +181,8 @@ public sealed partial class MusicGalleryPage : Page
 
         Bindings?.StopTracking();
 
+        PlayQueue?.Cleanup();
+
         if (ViewModel is { } viewModel)
         {
             viewModel.CancelRefreshSongs();

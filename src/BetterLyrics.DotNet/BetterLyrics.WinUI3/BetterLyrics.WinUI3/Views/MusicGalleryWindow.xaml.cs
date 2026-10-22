@@ -56,10 +56,10 @@ public sealed partial class MusicGalleryWindow : BaseWindow,
 
     protected override void Cleanup()
     {
-        // 显式清理页面与 NowPlayingBar，避免 Unloaded 不触发导致定时器钉住 ViewModel
         NowPlayingPage.Cleanup();
         MusicGalleryPage.Cleanup();
         NowPlayingBar.Cleanup();
+        PlayQueue.Cleanup();
     }
 
     private void UpdateExternalSourceVisibility()
