@@ -66,8 +66,7 @@ public sealed partial class NowPlayingWindow : BaseWindow,
 
     private readonly IMonitorProvider _monitorProvider = Ioc.Default.GetRequiredService<IMonitorProvider>();
 
-    private readonly ILyricsWindowVisibilityService _lyricsWindowVisibilityService =
-        Ioc.Default.GetRequiredService<ILyricsWindowVisibilityService>();
+    private readonly ILyricsWindowVisibilityService _lyricsWindowVisibilityService = Ioc.Default.GetRequiredService<ILyricsWindowVisibilityService>();
 
     private readonly ITaskbarThumbnailProvider _taskbarThumbnailProvider = Ioc.Default.GetRequiredService<ITaskbarThumbnailProvider>();
 
@@ -149,8 +148,14 @@ public sealed partial class NowPlayingWindow : BaseWindow,
                         _gsmtcService.PreviousAsync();
                         break;
                     case TaskbarThumbnailProvider.THB_PLAYPAUSE:
-                        if (_gsmtcService.CurrentIsPlaying) _gsmtcService.PauseAsync();
-                        else _gsmtcService.PlayAsync();
+                        if (_gsmtcService.CurrentIsPlaying)
+                        {
+                            _gsmtcService.PauseAsync();
+                        }
+                        else
+                        {
+                            _gsmtcService.PlayAsync();
+                        }
                         break;
                     case TaskbarThumbnailProvider.THB_NEXT:
                         _gsmtcService.NextAsync();
@@ -159,19 +164,19 @@ public sealed partial class NowPlayingWindow : BaseWindow,
                 e.Handled = true;
             }
         }
-        else
+        else if (msgId == (uint)WindowMessage.WM_SETTINGCHANGE)
         {
-            var msg = (WindowMessage)msgId;
-            if (msg == WindowMessage.WM_SETTINGCHANGE)
+            var changedSetting = Marshal.PtrToStringUni(e.Message.LParam);
+            if (changedSetting == "Desktop")
             {
-                var changedSetting = Marshal.PtrToStringUni(e.Message.LParam);
-                if (changedSetting == "Desktop")
-                    if (LyricsWindowStatus.IsWallpaper && LyricsWindowStatus.IsLocked)
-                        _appUIThreadProvider.Execute(() =>
-                        {
-                            WorkerWHook.UnpinFromDesktop(this);
-                            WorkerWHook.PinToDesktop(this);
-                        });
+                if (LyricsWindowStatus.IsWallpaper && LyricsWindowStatus.IsLocked)
+                {
+                    _appUIThreadProvider.Execute(() =>
+                    {
+                        WorkerWHook.UnpinFromDesktop(this);
+                        WorkerWHook.PinToDesktop(this);
+                    });
+                }
             }
         }
     }
@@ -249,8 +254,7 @@ public sealed partial class NowPlayingWindow : BaseWindow,
     {
         _ = _albumArtThemeColorsDebounder.RunAsync(async () =>
         {
-            var result =
-                await _gsmtcService.CalculateAlbumArtThemeColorsAsync(LyricsWindowStatus, _backdropAccentColor);
+            var result = await _gsmtcService.CalculateAlbumArtThemeColorsAsync(LyricsWindowStatus, _backdropAccentColor);
 
             _appUIThreadProvider.Execute(() =>
             {
@@ -341,12 +345,16 @@ public sealed partial class NowPlayingWindow : BaseWindow,
     private void OnIsLockedChanged()
     {
         if (LyricsWindowStatus.IsBorderlessWhenLocked)
+        {
             _windowManagerProvider.SetIsBorderless(this, LyricsWindowStatus.IsLocked);
+        }
 
-        if (!LyricsWindowStatus.IsWallpaper) _windowManagerProvider.SetIsBorderless(this, LyricsWindowStatus.IsLocked);
+        if (!LyricsWindowStatus.IsWallpaper)
+        {
+            _windowManagerProvider.SetIsBorderless(this, LyricsWindowStatus.IsLocked);
+        }
 
-        UnlockButton.Visibility =
-            LyricsWindowStatus.IsAlwaysHideUnlockButton ? Visibility.Collapsed : Visibility.Visible;
+        UnlockButton.Visibility = LyricsWindowStatus.IsAlwaysHideUnlockButton ? Visibility.Collapsed : Visibility.Visible;
         StopOverlayInputHelper();
 
         if (LyricsWindowStatus.IsLocked)
@@ -358,10 +366,12 @@ public sealed partial class NowPlayingWindow : BaseWindow,
             }
             else
             {
-                if (LyricsWindowStatus.IsPinToTaskbar) PinToTaskbar();
+                if (LyricsWindowStatus.IsPinToTaskbar)
+                {
+                    PinToTaskbar();
+                }
 
-                if (!LyricsWindowStatus.IsAlwaysHideUnlockButton ||
-                    LyricsWindowStatus.KeepNowPlayingBarInteractiveWhenLocked)
+                if (!LyricsWindowStatus.IsAlwaysHideUnlockButton || LyricsWindowStatus.KeepNowPlayingBarInteractiveWhenLocked)
                 {
                     StartOverlayInputHelper();
                 }
@@ -430,8 +440,7 @@ public sealed partial class NowPlayingWindow : BaseWindow,
         var targetMonitor = status.MonitorDeviceName;
         if (string.IsNullOrEmpty(targetMonitor)) return;
 
-        if (string.Equals(targetMonitor, _monitorProvider.GetPrimaryMonitorDeviceName(),
-                StringComparison.OrdinalIgnoreCase))
+        if (string.Equals(targetMonitor, _monitorProvider.GetPrimaryMonitorDeviceName(), StringComparison.OrdinalIgnoreCase))
         {
             return;
         }
@@ -538,6 +547,8 @@ public sealed partial class NowPlayingWindow : BaseWindow,
     {
         StopOverlayInputHelper();
 
+        DetachXamlEventHandlers();
+
         RootGrid.XamlRoot?.Changed -= XamlRoot_Changed;
 
         AppWindow?.Changed -= AppWindow_Changed;
@@ -559,6 +570,33 @@ public sealed partial class NowPlayingWindow : BaseWindow,
 
         _taskbarHook?.Dispose();
         _taskbarHook = null;
+    }
+
+    /// <summary>
+    /// A must call method to detach all XAML event handlers to prevent memory leaks.
+    /// </summary>
+    private void DetachXamlEventHandlers()
+    {
+        RootGrid.Loaded -= RootGrid_Loaded;
+        RootGrid.SizeChanged -= RootGrid_SizeChanged;
+
+        TopCommandGrid.PointerEntered -= TopCommandGrid_PointerEntered;
+        TopCommandGrid.PointerExited -= TopCommandGrid_PointerExited;
+
+        MusicGalleryButton.Click -= MusicGalleryButton_Click;
+        SettingsWindowButton.Click -= SettingsWindowButton_Click;
+        LyricsWindowSwitchButton.Click -= LyricsWindowSwitchButton_Click;
+
+        LockButton.Click -= LockButton_Click;
+        AOTButton.Click -= AOTButton_Click;
+        FullscreenButton.Click -= FullscreenButton_Click;
+        MinimizeButton.Click -= MinimizeButton_Click;
+        MaximizeButton.Click -= MaximizeButton_Click;
+        CloseButton.Click -= CloseButton_Click;
+
+        UnlockButton.Click -= UnlockButton_Click;
+        UnlockButton.PointerEntered -= UnlockButton_PointerEntered;
+        UnlockButton.PointerExited -= UnlockButton_PointerExited;
     }
 
     private void AppWindow_Changed(AppWindow sender, AppWindowChangedEventArgs args)
