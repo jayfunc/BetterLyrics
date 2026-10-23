@@ -187,6 +187,8 @@ public sealed partial class NowPlayingBar : BaseUserControl
 
     protected override void Initialize()
     {
+        Bindings?.Update();
+
         _lastTickTicks = Stopwatch.GetTimestamp();
 
         _simulationTimer.Tick -= SimulationTimer_Tick;
@@ -198,6 +200,8 @@ public sealed partial class NowPlayingBar : BaseUserControl
     {
         _simulationTimer.Stop();
         _simulationTimer.Tick -= SimulationTimer_Tick;
+
+        Bindings?.StopTracking();
     }
 
     private void SimulationTimer_Tick(object? sender, object e)
