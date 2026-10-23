@@ -1,9 +1,9 @@
 namespace BetterLyrics.Core.Interfaces.ViewModels;
 
 /// <summary>
-/// 标记接口：生命周期跟随视图实例的 ViewModel。
-/// 只有实现该接口的 ViewModel 会在视图关闭时被 MemoryLeakDetector 跟踪，
-/// 应用级单例 ViewModel 不会被误报为泄漏。
+/// ViewModel that implements this interface should not manage its own lifetime.
+/// If at the same time it inherits from ObservableRecipient, IsActive should be set by the view that uses it, when the view is loaded and unloaded.
+/// In this project, this is done by the BaseUserControl, BasePage and BaseWindow classes, which are the base classes for all views.
 /// </summary>
 public interface ITransientViewModel
 {

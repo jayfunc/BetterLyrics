@@ -4,7 +4,7 @@ using BetterLyrics.Core.Interfaces.ViewModels;
 namespace BetterLyrics.Core.ViewModels;
 
 /// <summary>
-/// Transient ViewModel，生命周期跟随 LyricsWindowSwitchWindow 实例。
+/// Transient ViewModel
 /// </summary>
 public partial class LyricsWindowSwitchWindowViewModel : ObservableObject, ITransientViewModel
 {

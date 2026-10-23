@@ -1,11 +1,11 @@
 using BetterLyrics.Core.Helpers;
-using BetterLyrics.WinUI3.Helpers;
+using BetterLyrics.Core.Interfaces.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
-namespace BetterLyrics.WinUI3.Views;
+namespace BetterLyrics.WinUI3.Controls;
 
 public partial class BaseUserControl : UserControl
 {
@@ -22,7 +22,7 @@ public partial class BaseUserControl : UserControl
     {
         WeakReferenceMessenger.Default.RegisterAll(this);
 
-        if (DataContext is ObservableRecipient observableRecipient)
+        if (DataContext is ITransientViewModel && DataContext is ObservableRecipient observableRecipient)
         {
             observableRecipient.IsActive = true;
         }
@@ -34,13 +34,17 @@ public partial class BaseUserControl : UserControl
     {
         WeakReferenceMessenger.Default.UnregisterAll(this);
 
-        if (DataContext is ObservableRecipient observableRecipient)
+        if (DataContext is ITransientViewModel && DataContext is ObservableRecipient observableRecipient)
         {
             observableRecipient.IsActive = false;
         }
 
         MemoryLeakDetector.Track(this);
-        MemoryLeakDetector.Track(DataContext);
+
+        if (DataContext is ITransientViewModel)
+        {
+            MemoryLeakDetector.Track(DataContext);
+        }
 
         Cleanup();
 

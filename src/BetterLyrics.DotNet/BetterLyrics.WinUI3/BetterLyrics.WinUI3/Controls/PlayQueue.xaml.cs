@@ -57,6 +57,20 @@ public sealed partial class PlayQueue : BaseUserControl
         ScrollToPlayingItem();
     }
 
+    private bool _isCleanedUp;
+
+    protected override void Cleanup()
+    {
+        if (_isCleanedUp) return;
+        _isCleanedUp = true;
+
+        Bindings?.StopTracking();
+
+        if (PlayingQueueListView != null) PlayingQueueListView.ItemsSource = null;
+
+        DataContext = null;
+    }
+
     private void PlayingQueueListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         ScrollToPlayingItem();

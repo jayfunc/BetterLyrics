@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<views:BaseUserControl
+<local:BaseUserControl
     x:Class="BetterLyrics.WinUI3.Controls.PlayQueue"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="using:BetterLyrics.WinUI3.Controls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:ui="using:CommunityToolkit.WinUI"
     xmlns:views="using:BetterLyrics.WinUI3.Views"
@@ -128,4 +129,4 @@
 
     </Grid>
 
-</views:BaseUserControl>
+</local:BaseUserControl>

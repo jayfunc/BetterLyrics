@@ -1,4 +1,5 @@
 using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Interfaces.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml;
@@ -21,7 +22,7 @@ public partial class BasePage : Page
     {
         WeakReferenceMessenger.Default.RegisterAll(this);
 
-        if (DataContext is ObservableRecipient observableRecipient)
+        if (DataContext is ITransientViewModel && DataContext is ObservableRecipient observableRecipient)
         {
             observableRecipient.IsActive = true;
         }
@@ -33,13 +34,17 @@ public partial class BasePage : Page
     {
         WeakReferenceMessenger.Default.UnregisterAll(this);
 
-        if (DataContext is ObservableRecipient observableRecipient)
+        if (DataContext is ITransientViewModel && DataContext is ObservableRecipient observableRecipient)
         {
             observableRecipient.IsActive = false;
         }
 
         MemoryLeakDetector.Track(this);
-        MemoryLeakDetector.Track(DataContext);
+
+        if (DataContext is ITransientViewModel)
+        {
+            MemoryLeakDetector.Track(DataContext);
+        }
 
         Cleanup();
 

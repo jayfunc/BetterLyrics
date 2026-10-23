@@ -1,6 +1,7 @@
 ﻿using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Interfaces.ViewModels;
 using BetterLyrics.Core.Messages.AppSettings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
@@ -16,7 +17,7 @@ namespace BetterLyrics.Core.ViewModels;
 /// <param name="windowManagerProvider"></param>
 /// <param name="settingsService"></param>
 /// <param name="systemUiProvider"></param>
-public partial class SystemTrayViewModel : ObservableRecipient,
+public partial class SystemTrayViewModel : ObservableRecipient, ISingletonViewModel,
     IRecipient<ColorfulSystemTrayIconChangedMessage>
 {
     private readonly IWindowManagerProvider _windowManagerProvider;

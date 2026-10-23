@@ -11,7 +11,7 @@ using BetterLyrics.Core.Interfaces.ViewModels;
 namespace BetterLyrics.Core.ViewModels;
 
 /// <summary>
-/// Transient ViewModel，生命周期跟随 WindowSettingsControl 实例（绑定单个 LyricsWindowStatus）。
+/// Transient ViewModel
 /// </summary>
 public partial class WindowSettingsControlViewModel : ObservableObject, ITransientViewModel
 {

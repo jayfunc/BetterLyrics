@@ -45,6 +45,11 @@ public sealed partial class LyricsWindowManagerControl : BaseUserControl
         DataContext = Ioc.Default.GetRequiredService<LyricsWindowManagerControlViewModel>();
     }
 
+    protected override void Cleanup()
+    {
+        Bindings?.StopTracking();
+    }
+
     private void DeleteMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
     {
         if (sender is MenuFlyoutItem menuFlyoutItem)

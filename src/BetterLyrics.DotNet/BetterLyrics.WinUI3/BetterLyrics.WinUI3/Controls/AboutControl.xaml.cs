@@ -23,6 +23,13 @@ public sealed partial class AboutControl : BaseUserControl
         DataContext = Ioc.Default.GetRequiredService<AboutControlViewModel>();
     }
 
+    protected override void Cleanup()
+    {
+        Bindings?.StopTracking();
+
+        Microsoft.UI.Xaml.Media.CompositionTarget.Rendering -= CompositionTarget_Rendering;
+    }
+
     private void PlayCreditsButton_Click(object sender, RoutedEventArgs e)
     {
         CreditsTransform?.Y = 8000; // Move off-screen to prevent flash on next open

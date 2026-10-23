@@ -3,6 +3,7 @@ using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Interfaces.ViewModels;
 using BetterLyrics.Core.Messages.MediaLibrary;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Settings;
@@ -14,9 +15,9 @@ using System.Collections.Specialized;
 namespace BetterLyrics.Core.ViewModels.MusicGalleryPageViewModel;
 
 /// <summary>
-/// Singleton ViewModel，应用级：WindowManagerProvider 会直接解析它触发自动播放。
+/// Singleton ViewModel
 /// </summary>
-public partial class MusicGalleryPageViewModel : ObservableRecipient,
+public partial class MusicGalleryPageViewModel : ObservableRecipient, ISingletonViewModel,
     IRecipient<MediaFolderLastSyncTimeChangedMessage>,
     IRecipient<MediaFolderEnabledChangedMessage>,
     IRecipient<MediaFolderProcessingChangedMessage>,

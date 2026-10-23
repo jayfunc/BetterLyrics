@@ -15,7 +15,7 @@ using System.Diagnostics;
 namespace BetterLyrics.Core.ViewModels;
 
 /// <summary>
-/// Transient ViewModel，生命周期跟随 AppSettingsControl 实例。
+/// Transient ViewModel
 /// </summary>
 public partial class AppSettingsControlViewModel : ObservableRecipient, ITransientViewModel,
     IRecipient<LanguageCodeChangedMessage>,

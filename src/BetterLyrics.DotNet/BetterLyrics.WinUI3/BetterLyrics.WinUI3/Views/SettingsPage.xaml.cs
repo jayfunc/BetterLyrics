@@ -3,6 +3,7 @@
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.ViewModels;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.WinUI.Controls;
 using Microsoft.UI.Composition;
@@ -23,6 +24,29 @@ public sealed partial class SettingsPage : BasePage
     {
         DataContext = Ioc.Default.GetRequiredService<SettingsPageViewModel>();
         InitializeComponent();
+    }
+
+    protected override void Cleanup()
+    {
+        Bindings?.StopTracking();
+
+        CleanupTab(AppSettingsTab);
+        CleanupTab(LyricsWindowManagerTab);
+        CleanupTab(PlaybackSettingsTab);
+        CleanupTab(MediaSettingsTab);
+        CleanupTab(PluginManagerTab);
+        CleanupTab(AboutTab);
+
+        DataContext = null;
+    }
+
+    private static void CleanupTab(Control? tab)
+    {
+        if (tab == null) return;
+
+        if (tab.DataContext is ObservableRecipient recipient) recipient.IsActive = false;
+
+        tab.DataContext = null;
     }
 
     private void AutoSuggestBox_GotFocus(object sender, RoutedEventArgs e)

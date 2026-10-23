@@ -34,6 +34,11 @@ public sealed partial class PlaybackSettingsControl : BaseUserControl
         DataContext = Ioc.Default.GetRequiredService<PlaybackSettingsControlViewModel>();
     }
 
+    protected override void Cleanup()
+    {
+        Bindings?.StopTracking();
+    }
+
     private void AlbumArtSearchProvidersListView_DragItemsCompleted(ListViewBase sender,
         DragItemsCompletedEventArgs args)
     {

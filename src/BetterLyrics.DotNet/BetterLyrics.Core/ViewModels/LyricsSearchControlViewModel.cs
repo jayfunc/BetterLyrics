@@ -2,6 +2,7 @@ using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Interfaces.ViewModels;
 using BetterLyrics.Core.Messages.Playback;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Entities;
@@ -20,7 +21,7 @@ namespace BetterLyrics.Core.ViewModels;
 /// <summary>
 /// Singleton ViewModel，应用级：Program 在协议激活时会直接解析它填充搜索条件。
 /// </summary>
-public partial class LyricsSearchControlViewModel : ObservableRecipient,
+public partial class LyricsSearchControlViewModel : ObservableRecipient, ISingletonViewModel,
     IRecipient<CurrentSongInfoChangedMessage>
 {
     private readonly IAppUIThreadProvider _appUIThreadProvider;

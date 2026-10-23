@@ -20,7 +20,7 @@ using BetterLyrics.Core.Interfaces.ViewModels;
 namespace BetterLyrics.Core.ViewModels;
 
 /// <summary>
-/// Transient ViewModel，生命周期跟随 StatsDashboardControl 所在窗口实例。
+/// Transient ViewModel
 /// </summary>
 public partial class StatsDashboardControlViewModel : ObservableRecipient, ITransientViewModel,
     IRecipient<SongScrobbledMessage>

@@ -16,4 +16,9 @@ public sealed partial class AppSettingsControl : BaseUserControl
         InitializeComponent();
         DataContext = Ioc.Default.GetRequiredService<AppSettingsControlViewModel>();
     }
+
+    protected override void Cleanup()
+    {
+        Bindings?.StopTracking();
+    }
 }

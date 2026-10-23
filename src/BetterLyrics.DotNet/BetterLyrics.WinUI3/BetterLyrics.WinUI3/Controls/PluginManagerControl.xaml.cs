@@ -20,6 +20,11 @@ public sealed partial class PluginManagerControl : BaseUserControl
         DataContext = Ioc.Default.GetRequiredService<PluginManagerControlViewModel>();
     }
 
+    protected override void Cleanup()
+    {
+        Bindings?.StopTracking();
+    }
+
     private void UninstallPluginButton_Click(object sender, RoutedEventArgs e)
     {
         var element = (FrameworkElement)sender;

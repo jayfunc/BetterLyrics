@@ -1,7 +1,9 @@
 ﻿using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
+using BetterLyrics.Core.Interfaces.ViewModels;
 using BetterLyrics.Core.Messages.AppSettings;
 using BetterLyrics.WinUI3.Extensions;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml;
@@ -15,7 +17,7 @@ public class BaseWindow : Window
     private bool _isClosed;
 
     protected readonly IWindowManagerProvider _windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
-    
+
     protected virtual bool EnableAppThemeChangeSync => true;
 
     public BaseWindow()
@@ -35,9 +37,17 @@ public class BaseWindow : Window
             {
                 OnAppThemeChanged();
             }
-            
+
             WeakReferenceMessenger.Default.RegisterAll(this);
-            
+
+            foreach (var item in GetAdditionalTrackedViewModels())
+            {
+                if (item is ITransientViewModel && item is ObservableRecipient observableRecipient)
+                {
+                    observableRecipient.IsActive = true;
+                }
+            }
+
             if (EnableAppThemeChangeSync)
             {
                 WeakReferenceMessenger.Default.Register<AppThemeChangedMessage>(this, (r, m) =>
@@ -64,11 +74,22 @@ public class BaseWindow : Window
         WeakReferenceMessenger.Default.UnregisterAll(this);
         _windowManagerProvider.OnWindowClosed(this);
 
+        foreach (var item in GetAdditionalTrackedViewModels())
+        {
+            if (item is ObservableRecipient observableRecipient)
+            {
+                observableRecipient.IsActive = false;
+            }
+        }
+
         MemoryLeakDetector.Track(this);
 
         foreach (var item in GetAdditionalTrackedViewModels())
         {
-            MemoryLeakDetector.Track(item);
+            if (item is ITransientViewModel)
+            {
+                MemoryLeakDetector.Track(item);
+            }
         }
 
         Cleanup();

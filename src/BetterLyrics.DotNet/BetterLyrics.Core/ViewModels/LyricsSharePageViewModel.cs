@@ -13,7 +13,7 @@ using BetterLyrics.Core.Interfaces.ViewModels;
 namespace BetterLyrics.Core.ViewModels;
 
 /// <summary>
-/// Transient ViewModel，生命周期跟随 LyricsSharePage 实例。
+/// Transient ViewModel
 /// </summary>
 public partial class LyricsSharePageViewModel : ObservableRecipient, ITransientViewModel,
     IRecipient<AlbumArtBytesChangedMessage>,

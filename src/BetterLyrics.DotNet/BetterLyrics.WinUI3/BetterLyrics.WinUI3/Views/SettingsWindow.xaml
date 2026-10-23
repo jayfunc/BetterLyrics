@@ -11,7 +11,7 @@
     mc:Ignorable="d">
 
     <Grid x:Name="RootGrid">
-        <local:SettingsPage />
+        <local:SettingsPage x:Name="SettingsPageView" />
 
         <StackPanel
             Margin="0,0,140,0"

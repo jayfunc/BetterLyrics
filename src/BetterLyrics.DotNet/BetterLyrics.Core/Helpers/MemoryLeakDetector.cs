@@ -37,12 +37,6 @@ public class MemoryLeakDetector
     {
         CollectAndWait();
 
-        // WinUI 原生侧（Composition/窗口销毁）释放引用的时间可能晚于托管对象，
-        // 立即判定会把“尚未拆卸完”误报为泄漏；留出缓冲后再次强制回收再判定。
-        await Task.Delay(4000);
-
-        CollectAndWait();
-
         await Task.Delay(100);
 
         lock (_watchedObjects)

@@ -5,6 +5,7 @@ using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Interfaces.ViewModels;
 using BetterLyrics.Core.Messages.SettingsNavigation;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Settings;
@@ -16,9 +17,9 @@ using System.Collections.ObjectModel;
 namespace BetterLyrics.Core.ViewModels;
 
 /// <summary>
-/// Singleton ViewModel，应用级：Program 与其他窗口会直接解析它来导航设置页。
+/// Singleton ViewModel
 /// </summary>
-public partial class SettingsPageViewModel : ObservableRecipient,
+public partial class SettingsPageViewModel : ObservableRecipient, ISingletonViewModel,
     IRecipient<SettingsSectionChangedMessage>
 {
     private readonly ILocalizationService _localizationService;

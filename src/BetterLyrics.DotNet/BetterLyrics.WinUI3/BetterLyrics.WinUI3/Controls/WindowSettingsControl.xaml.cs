@@ -41,9 +41,11 @@ public sealed partial class WindowSettingsControl : BaseUserControl
         _ = ViewModel.InitializeAsync();
     }
 
-     protected override void Cleanup()
+    protected override void Cleanup()
     {
-        ViewModel.Detach();
+        ViewModel?.Detach();
+
+        Bindings?.StopTracking();
     }
 
     private static void OnLyricsWindowStatusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

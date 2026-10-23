@@ -102,32 +102,32 @@
 
                     <!--  App appearance and behavior  -->
                     <controls:Case Value="{x:Bind enums:SettingsSection.App}">
-                        <uc:AppSettingsControl />
+                        <uc:AppSettingsControl x:Name="AppSettingsTab" />
                     </controls:Case>
 
                     <!--  Lyrics window manager  -->
                     <controls:Case Value="{x:Bind enums:SettingsSection.LyricsWindowMgr}">
-                        <uc:LyricsWindowManagerControl />
+                        <uc:LyricsWindowManagerControl x:Name="LyricsWindowManagerTab" />
                     </controls:Case>
 
                     <!--  Playback sources  -->
                     <controls:Case Value="{x:Bind enums:SettingsSection.PlaybackLib}">
-                        <uc:PlaybackSettingsControl />
+                        <uc:PlaybackSettingsControl x:Name="PlaybackSettingsTab" />
                     </controls:Case>
 
                     <!--  Media lib  -->
                     <controls:Case Value="{x:Bind enums:SettingsSection.MediaLib}">
-                        <uc:MediaSettingsControl />
+                        <uc:MediaSettingsControl x:Name="MediaSettingsTab" />
                     </controls:Case>
 
                     <!--  Plugins  -->
                     <controls:Case Value="{x:Bind enums:SettingsSection.Plugins}">
-                        <uc:PluginManagerControl />
+                        <uc:PluginManagerControl x:Name="PluginManagerTab" />
                     </controls:Case>
 
                     <!--  About  -->
                     <controls:Case Value="{x:Bind enums:SettingsSection.About}">
-                        <uc:AboutControl />
+                        <uc:AboutControl x:Name="AboutTab" />
                     </controls:Case>
 
                 </controls:SwitchPresenter>

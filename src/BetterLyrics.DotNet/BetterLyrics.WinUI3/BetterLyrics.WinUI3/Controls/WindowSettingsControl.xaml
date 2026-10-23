@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 
-<views:BaseUserControl
+<local:BaseUserControl
     x:Class="BetterLyrics.WinUI3.Controls.WindowSettingsControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -546,4 +546,4 @@
         </ScrollViewer>
 
     </Grid>
-</views:BaseUserControl>
+</local:BaseUserControl>

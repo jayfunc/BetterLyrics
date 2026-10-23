@@ -8,8 +8,7 @@ using BetterLyrics.Core.Interfaces.ViewModels;
 namespace BetterLyrics.Core.ViewModels;
 
 /// <summary>
-/// Transient ViewModel，生命周期跟随 PlayQueue 控件实例
-/// （音乐库页面与 NowPlayingBar 浮出面板中会同时存在多个实例）。
+/// Transient ViewModel
 /// </summary>
 public partial class PlayQueueViewModel : ObservableObject, ITransientViewModel
 {

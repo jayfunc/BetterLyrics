@@ -20,8 +20,7 @@ using BetterLyrics.Core.Interfaces.ViewModels;
 namespace BetterLyrics.Core.ViewModels;
 
 /// <summary>
-/// Transient ViewModel，生命周期跟随 PlaybackSettingsControl 实例
-/// （设置页与 NowPlayingBar 的浮出面板各自持有独立实例）。
+/// Transient ViewModel
 /// </summary>
 public partial class PlaybackSettingsControlViewModel : ObservableRecipient, ITransientViewModel,
     IRecipient<PlaybackLibSettingsNavigationRequestedMessage>

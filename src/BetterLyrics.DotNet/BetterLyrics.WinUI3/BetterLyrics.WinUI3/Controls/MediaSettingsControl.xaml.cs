@@ -20,6 +20,11 @@ public sealed partial class MediaSettingsControl : BaseUserControl
         DataContext = Ioc.Default.GetRequiredService<MediaSettingsControlViewModel>();
     }
 
+    protected override void Cleanup()
+    {
+        Bindings?.StopTracking();
+    }
+
     private void SettingsPageRemovePathButton_Click(object sender, RoutedEventArgs e)
     {
         var folder = (MediaFolder)((FrameworkElement)sender).DataContext;
