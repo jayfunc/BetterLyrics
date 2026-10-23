@@ -545,9 +545,6 @@ public sealed partial class NowPlayingWindow : BaseWindow,
 
     protected override void Cleanup()
     {
-        // 显式清理页面，避免其 Unloaded 不触发导致定时器/消息订阅残留
-        NowPlayingPage.Cleanup();
-
         StopOverlayInputHelper();
 
         DetachXamlEventHandlers();

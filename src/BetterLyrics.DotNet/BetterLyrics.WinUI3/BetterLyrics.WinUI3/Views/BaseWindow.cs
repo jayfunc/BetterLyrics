@@ -1,13 +1,11 @@
-﻿using BetterLyrics.Core.Interfaces.Providers;
+﻿using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Messages.AppSettings;
 using BetterLyrics.WinUI3.Extensions;
-using BetterLyrics.WinUI3.Helpers;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml;
 using System.Collections.Generic;
-using System.Reflection;
 
 namespace BetterLyrics.WinUI3.Views;
 
@@ -66,28 +64,20 @@ public class BaseWindow : Window
         WeakReferenceMessenger.Default.UnregisterAll(this);
         _windowManagerProvider.OnWindowClosed(this);
 
-        // 必须在 Content = null 之前收集，否则视觉树已被释放
-        var transientViewModels = ViewMemoryLeakTracker.CollectTransientViewModels(
-            Content as DependencyObject, GetAdditionalTrackedViewModels());
+        MemoryLeakDetector.Track(this);
+
+        foreach (var item in GetAdditionalTrackedViewModels())
+        {
+            MemoryLeakDetector.Track(item);
+        }
 
         Cleanup();
 
         Content = null;
 
-        foreach (var viewModel in transientViewModels)
-        {
-            if (viewModel is ObservableRecipient recipient)
-            {
-                recipient.IsActive = false;
-            }
-        }
-
-        ViewMemoryLeakTracker.TrackAndCheck(transientViewModels, this);
+        MemoryLeakDetector.ScheduleCheck();
     }
 
-    /// <summary>
-    /// 窗口自身持有、但不在视觉树中的 transient ViewModel（如窗口级 ViewModel）。
-    /// </summary>
     protected virtual IEnumerable<object> GetAdditionalTrackedViewModels() => [];
 
     protected virtual void Cleanup() { }

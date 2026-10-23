@@ -1,27 +1,49 @@
+using BetterLyrics.Core.Helpers;
 using BetterLyrics.WinUI3.Helpers;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace BetterLyrics.WinUI3.Views;
 
-/// <summary>
-/// 带有内存泄漏检测的 UserControl 基类。
-/// 卸载时跟踪自身及子树中的 Transient ViewModel，并触发一次 GC 检查。
-/// </summary>
 public partial class BaseUserControl : UserControl
 {
     protected BaseUserControl()
     {
+        Loaded += BaseUserControl_Loaded;
         Unloaded += BaseUserControl_Unloaded;
     }
 
+    protected virtual void Initialize() { }
     protected virtual void Cleanup() { }
+
+    private void BaseUserControl_Loaded(object sender, RoutedEventArgs e)
+    {
+        WeakReferenceMessenger.Default.RegisterAll(this);
+
+        if (DataContext is ObservableRecipient observableRecipient)
+        {
+            observableRecipient.IsActive = true;
+        }
+
+        Initialize();
+    }
 
     private void BaseUserControl_Unloaded(object sender, RoutedEventArgs e)
     {
+        WeakReferenceMessenger.Default.UnregisterAll(this);
+
+        if (DataContext is ObservableRecipient observableRecipient)
+        {
+            observableRecipient.IsActive = false;
+        }
+
+        MemoryLeakDetector.Track(this);
+        MemoryLeakDetector.Track(DataContext);
+
         Cleanup();
 
-        var viewModels = ViewMemoryLeakTracker.CollectTransientViewModels(this);
-        ViewMemoryLeakTracker.TrackAndCheck(viewModels, this);
+        MemoryLeakDetector.ScheduleCheck();
     }
 }

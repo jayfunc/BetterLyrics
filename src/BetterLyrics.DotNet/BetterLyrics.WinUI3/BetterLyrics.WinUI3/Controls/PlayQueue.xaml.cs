@@ -52,27 +52,9 @@ public sealed partial class PlayQueue : BaseUserControl
         ViewModel.RemoveFromPlayingQueueCommand.Execute(item);
     }
 
-    private void UserControl_Loaded(object sender, RoutedEventArgs e)
+    protected override void Initialize()
     {
         ScrollToPlayingItem();
-    }
-
-    private void UserControl_Unloaded(object sender, RoutedEventArgs e)
-    {
-        Cleanup();
-    }
-
-    private bool _isCleanedUp;
-
-    public new void Cleanup()
-    {
-        if (_isCleanedUp) return;
-        _isCleanedUp = true;
-
-        Bindings?.StopTracking();
-        if (PlayingQueueListView != null) PlayingQueueListView.ItemsSource = null;
-
-        DataContext = null;
     }
 
     private void PlayingQueueListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -7,6 +7,7 @@ using BetterLyrics.Core.Messages.Playback;
 using BetterLyrics.Core.Messages.SettingsNavigation;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.ViewModels;
+using BetterLyrics.WinUI3.Helpers;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
@@ -23,7 +24,7 @@ using Windows.System;
 
 namespace BetterLyrics.WinUI3.Controls;
 
-public sealed partial class NowPlayingBar : UserControl
+public sealed partial class NowPlayingBar : BaseUserControl
 {
     public static readonly DependencyProperty ShowTimeProperty =
         DependencyProperty.Register(nameof(ShowTime), typeof(bool), typeof(NowPlayingBar), new PropertyMetadata(false));
@@ -184,49 +185,19 @@ public sealed partial class NowPlayingBar : UserControl
         _simulationTimer.Tick += SimulationTimer_Tick;
     }
 
-    private void UserControl_Loaded(object sender, RoutedEventArgs e)
+    protected override void Initialize()
     {
         _lastTickTicks = Stopwatch.GetTimestamp();
 
         _simulationTimer.Tick -= SimulationTimer_Tick;
         _simulationTimer.Tick += SimulationTimer_Tick;
         _simulationTimer.Start();
-
-        if (DataContext is NowPlayingBarViewModel viewModel)
-        {
-            viewModel.IsActive = true;
-        }
     }
 
-    private void UserControl_Unloaded(object sender, RoutedEventArgs e)
-    {
-        StopSimulation();
-
-        if (DataContext is NowPlayingBarViewModel viewModel)
-        {
-            viewModel.IsActive = false;
-        }
-
-        Bindings?.StopTracking();
-    }
-
-    public void StopSimulation()
+    protected override void Cleanup()
     {
         _simulationTimer.Stop();
         _simulationTimer.Tick -= SimulationTimer_Tick;
-    }
-
-    public void Cleanup()
-    {
-        StopSimulation();
-
-        if (DataContext is NowPlayingBarViewModel viewModel)
-        {
-            viewModel.IsActive = false;
-        }
-
-        Bindings?.StopTracking();
-        DataContext = null;
     }
 
     private void SimulationTimer_Tick(object? sender, object e)

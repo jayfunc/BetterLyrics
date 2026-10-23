@@ -54,14 +54,6 @@ public sealed partial class MusicGalleryWindow : BaseWindow,
 
     protected override IEnumerable<object> GetAdditionalTrackedViewModels() => [ViewModel];
 
-    protected override void Cleanup()
-    {
-        NowPlayingPage.Cleanup();
-        MusicGalleryPage.Cleanup();
-        NowPlayingBar.Cleanup();
-        PlayQueue.Cleanup();
-    }
-
     private void UpdateExternalSourceVisibility()
     {
         var isActive = GSMTCService.IsExternalSourceActive;

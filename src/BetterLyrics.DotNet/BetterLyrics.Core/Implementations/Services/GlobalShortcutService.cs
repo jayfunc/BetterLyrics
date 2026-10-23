@@ -1,9 +1,10 @@
 ﻿using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
+using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Messages.AppSettings;
 using CommunityToolkit.Mvvm.Messaging;
 
-namespace BetterLyrics.Core.Interfaces.Services;
+namespace BetterLyrics.Core.Implementations.Services;
 
 /// <summary>
 /// Singleton Service

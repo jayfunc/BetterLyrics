@@ -31,13 +31,13 @@ public sealed partial class MusicGalleryPage : BasePage
 
     private readonly ISmtcService _smtcService = Ioc.Default.GetRequiredService<ISmtcService>();
 
+    public MusicGalleryPageViewModel ViewModel => (MusicGalleryPageViewModel)DataContext;
+
     public MusicGalleryPage()
     {
         InitializeComponent();
         DataContext = Ioc.Default.GetRequiredService<MusicGalleryPageViewModel>();
     }
-
-    public MusicGalleryPageViewModel ViewModel => (MusicGalleryPageViewModel)DataContext;
 
     private async void SongPathHyperlinkButton_Click(object sender, RoutedEventArgs e)
     {
@@ -162,27 +162,13 @@ public sealed partial class MusicGalleryPage : BasePage
         }
     }
 
-    private void Page_Loaded(object sender, RoutedEventArgs e)
+    protected override void Initialize()
     {
         ViewModel?.HandleAutoPlay();
     }
 
-    private void Page_Unloaded(object sender, RoutedEventArgs e)
+    protected override void Cleanup()
     {
-        Cleanup();
-    }
-
-    private bool _isCleanedUp;
-
-    public override void Cleanup()
-    {
-        if (_isCleanedUp) return;
-        _isCleanedUp = true;
-
-        Bindings?.StopTracking();
-
-        PlayQueue?.Cleanup();
-
         if (ViewModel is { } viewModel)
         {
             viewModel.CancelRefreshSongs();

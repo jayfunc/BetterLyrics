@@ -34,7 +34,6 @@ public sealed partial class LyricsWindowManagerControl : BaseUserControl
     private readonly IGlobalToastProvider _globalToastProvider = Ioc.Default.GetRequiredService<IGlobalToastProvider>();
     private readonly ILocalizationService _localizationService = Ioc.Default.GetRequiredService<ILocalizationService>();
     private readonly IFilePickerProvider _filePickerProvider = Ioc.Default.GetRequiredService<IFilePickerProvider>();
-    private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
     private readonly IWindowManagerProvider _windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
     private readonly IMonitorProvider _monitorProvider = Ioc.Default.GetRequiredService<IMonitorProvider>();
 
@@ -44,16 +43,6 @@ public sealed partial class LyricsWindowManagerControl : BaseUserControl
     {
         InitializeComponent();
         DataContext = Ioc.Default.GetRequiredService<LyricsWindowManagerControlViewModel>();
-
-        Loaded += (_, _) =>
-        {
-            if (DataContext is LyricsWindowManagerControlViewModel viewModel) viewModel.IsActive = true;
-        };
-        Unloaded += (_, _) =>
-        {
-            if (DataContext is LyricsWindowManagerControlViewModel viewModel) viewModel.IsActive = false;
-            Bindings?.StopTracking();
-        };
     }
 
     private void DeleteMenuFlyoutItem_Click(object sender, RoutedEventArgs e)

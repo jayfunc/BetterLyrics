@@ -23,7 +23,6 @@
         </Grid.RowDefinitions>
 
         <NavigationView
-            x:Name="ConfigNavView"
             Grid.Row="0"
             Margin="28,36,28,0"
             IsBackButtonVisible="Collapsed"

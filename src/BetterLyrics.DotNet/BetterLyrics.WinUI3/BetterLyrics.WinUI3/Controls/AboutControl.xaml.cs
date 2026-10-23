@@ -15,13 +15,13 @@ public sealed partial class AboutControl : BaseUserControl
     private bool _isCreditsHovered = false;
     private bool _creditsInitialized = false;
 
+    public AboutControlViewModel ViewModel => (AboutControlViewModel)DataContext;
+
     public AboutControl()
     {
         InitializeComponent();
         DataContext = Ioc.Default.GetRequiredService<AboutControlViewModel>();
     }
-
-    public AboutControlViewModel ViewModel => (AboutControlViewModel)DataContext;
 
     private void PlayCreditsButton_Click(object sender, RoutedEventArgs e)
     {

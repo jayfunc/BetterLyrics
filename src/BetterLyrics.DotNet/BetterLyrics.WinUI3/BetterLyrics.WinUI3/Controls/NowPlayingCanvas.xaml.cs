@@ -21,6 +21,7 @@ using BetterLyrics.WinUI3.Providers;
 using BetterLyrics.WinUI3.Renderer;
 using BetterLyrics.WinUI3.Renderer.LyricsRenderer;
 using BetterLyrics.WinUI3.Renderer.SemanticEffectsRenderer;
+using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Graphics.Canvas;
@@ -44,7 +45,7 @@ using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Controls;
 
-public sealed partial class NowPlayingCanvas : UserControl,
+public sealed partial class NowPlayingCanvas : BaseUserControl,
     IRecipient<CurrentPositionChangedMessage>,
     IRecipient<CurrentLyricsDataChangedMessage>,
     IRecipient<CurrentSongInfoChangedMessage>,
@@ -885,15 +886,13 @@ public sealed partial class NowPlayingCanvas : UserControl,
 
     // ====
 
-    private void UserControl_Loaded(object sender, RoutedEventArgs e)
+    protected override void Initialize()
     {
-        WeakReferenceMessenger.Default.RegisterAll(this);
         _monitorProvider.DisplayStatusChanged += PowerManager_DisplayStatusChanged;
     }
 
-    private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+    protected override void Cleanup()
     {
-        WeakReferenceMessenger.Default.UnregisterAll(this);
         _monitorProvider.DisplayStatusChanged -= PowerManager_DisplayStatusChanged;
 
         if (Canvas != null)

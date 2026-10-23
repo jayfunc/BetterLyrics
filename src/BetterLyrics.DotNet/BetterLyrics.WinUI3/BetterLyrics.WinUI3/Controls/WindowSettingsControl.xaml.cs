@@ -35,13 +35,13 @@ public sealed partial class WindowSettingsControl : BaseUserControl
         DataContext = Ioc.Default.GetRequiredService<WindowSettingsControlViewModel>();
     }
 
-    private async void UserControl_Loaded(object sender, RoutedEventArgs e)
+    protected override void Initialize()
     {
         ViewModel.Attach();
-        await ViewModel.InitializeAsync();
+        _ = ViewModel.InitializeAsync();
     }
 
-    private void UserControl_Unloaded(object sender, RoutedEventArgs e)
+     protected override void Cleanup()
     {
         ViewModel.Detach();
     }

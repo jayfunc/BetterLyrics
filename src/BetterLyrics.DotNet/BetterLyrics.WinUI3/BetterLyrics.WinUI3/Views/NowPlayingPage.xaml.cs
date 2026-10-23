@@ -11,6 +11,7 @@ using BetterLyrics.Core.Messages.LyricsWindow;
 using BetterLyrics.Core.Messages.Playback;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.ViewModels;
+using BetterLyrics.WinUI3.Controls;
 using BetterLyrics.WinUI3.Extensions;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
@@ -71,12 +72,11 @@ public sealed partial class NowPlayingPage : BasePage,
     {
         InitializeComponent();
         DataContext = Ioc.Default.GetRequiredService<NowPlayingPageViewModel>();
-        WeakReferenceMessenger.Default.RegisterAll(this);
     }
 
     public NowPlayingPageViewModel ViewModel => (NowPlayingPageViewModel)DataContext;
 
-    public BetterLyrics.WinUI3.Controls.NowPlayingBar PlaybackControlBar => NowPlayingBar;
+    public NowPlayingBar PlaybackControlBar => NowPlayingBar;
 
     public void Receive(LayoutChangedMessage message)
     {
@@ -556,26 +556,8 @@ public sealed partial class NowPlayingPage : BasePage,
             }
     }
 
-    private void Page_Unloaded(object sender, RoutedEventArgs e)
+    protected override void Cleanup()
     {
-        Cleanup();
-    }
-
-    private bool _isCleanedUp;
-
-    public override void Cleanup()
-    {
-        if (_isCleanedUp) return;
-        _isCleanedUp = true;
-
-        // 关闭窗口时 Unloaded 不保证触发，这里显式清理子控件（定时器与 x:Bind 订阅），
-        // 否则 DispatcherTimer / 单例服务上的 PropertyChanged 会长期钉住 NowPlayingBar 及其 ViewModel
-        NowPlayingBar?.Cleanup();
-
-        WeakReferenceMessenger.Default.UnregisterAll(this);
-        Bindings?.StopTracking();
-        DataContext = null;
-
         _layoutChangedDebouncer.Dispose();
     }
 

@@ -12,13 +12,13 @@ namespace BetterLyrics.WinUI3.Controls;
 
 public sealed partial class PluginManagerControl : BaseUserControl
 {
+    public PluginManagerControlViewModel ViewModel => (PluginManagerControlViewModel)DataContext;
+
     public PluginManagerControl()
     {
         InitializeComponent();
         DataContext = Ioc.Default.GetRequiredService<PluginManagerControlViewModel>();
     }
-
-    public PluginManagerControlViewModel ViewModel => (PluginManagerControlViewModel)DataContext;
 
     private void UninstallPluginButton_Click(object sender, RoutedEventArgs e)
     {
