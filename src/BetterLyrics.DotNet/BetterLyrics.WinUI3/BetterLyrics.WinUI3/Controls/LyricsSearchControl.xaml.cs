@@ -11,7 +11,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace BetterLyrics.WinUI3.Controls;
 
-public sealed partial class LyricsSearchControl : UserControl
+public sealed partial class LyricsSearchControl : BaseUserControl
 {
     public LyricsSearchControlViewModel ViewModel => (LyricsSearchControlViewModel)DataContext;
 

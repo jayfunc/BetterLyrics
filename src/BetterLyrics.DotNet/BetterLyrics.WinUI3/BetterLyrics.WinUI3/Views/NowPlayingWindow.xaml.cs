@@ -706,7 +706,9 @@ public sealed partial class NowPlayingWindow : BaseWindow,
     private async void CloseButton_Click(object sender, RoutedEventArgs e)
     {
         if (_settingsService.AppSettings.GeneralSettings.ExitOnLyricsWindowClosed)
+        {
             _windowManagerProvider.ExitApp();
+        }
         else
         {
             // 实测：任务栏缩略图关闭（指针在窗口外）、指针在窗口内但未点击按钮时 Alt+F4、

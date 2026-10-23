@@ -23,8 +23,7 @@ namespace BetterLyrics.WinUI3.Views;
 
 public sealed partial class LyricsSharePage : BasePage
 {
-    private readonly IGlobalToastProvider _globalToastProvider =
-        Ioc.Default.GetRequiredService<IGlobalToastProvider>();
+    private readonly IGlobalToastProvider _globalToastProvider = Ioc.Default.GetRequiredService<IGlobalToastProvider>();
 
     private readonly IFilePickerProvider _filePickerProvider = Ioc.Default.GetRequiredService<IFilePickerProvider>();
 

@@ -1,6 +1,5 @@
 using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
-using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Messages.AppSettings;
 using BetterLyrics.Core.Messages.LyricsWindow;
@@ -99,7 +98,6 @@ public sealed partial class MusicGalleryWindow : BaseWindow,
         if (ViewModel.AppSettings.MusicGallerySettings.ExitOnWindowClosed)
         {
             _windowManagerProvider.ExitApp();
-            return;
         }
     }
 

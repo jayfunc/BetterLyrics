@@ -546,9 +546,13 @@ public partial class StatsDashboardControlViewModel : ObservableRecipient, ITran
     private void RefreshData()
     {
         if (IsCustomRangeSelected)
+        {
             LoadData();
+        }
         else
+        {
             UpdateDateRange();
+        }
     }
 
     [RelayCommand]
@@ -567,6 +571,8 @@ public partial class StatsDashboardControlViewModel : ObservableRecipient, ITran
     public void Receive(SongScrobbledMessage message)
     {
         if (message.Value)
+        {
             RefreshData();
+        }
     }
 }

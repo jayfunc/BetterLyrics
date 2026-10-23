@@ -77,4 +77,6 @@
 
     <bwc:NaNToZeroConverter x:Key="NaNToZeroConverter" />
 
+    <bwc:LyricsTrackTypeToNameConverter x:Key="LyricsTrackTypeToNameConverter" />
+
 </ResourceDictionary>

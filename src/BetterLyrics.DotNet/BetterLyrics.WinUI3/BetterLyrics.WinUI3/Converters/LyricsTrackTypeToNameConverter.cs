@@ -5,7 +5,7 @@ using System;
 
 namespace BetterLyrics.WinUI3.Converters;
 
-public class LyricsTrackTypeToNameConverter : IValueConverter
+public partial class LyricsTrackTypeToNameConverter : IValueConverter
 {
     private static readonly ResourceLoader _resourceLoader = new();
 

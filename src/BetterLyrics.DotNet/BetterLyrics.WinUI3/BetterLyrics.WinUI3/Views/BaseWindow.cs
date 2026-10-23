@@ -94,8 +94,6 @@ public class BaseWindow : Window
 
         Cleanup();
 
-        Content = null;
-
         MemoryLeakDetector.ScheduleCheck();
     }
 

@@ -1,3 +1,4 @@
+using BetterLyrics.Core.Models;
 using BetterLyrics.Core.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
@@ -15,8 +16,10 @@ namespace BetterLyrics.WinUI3.Controls;
 
 public sealed partial class StatsDashboardControl : BaseUserControl
 {
-    private DispatcherTimer _heatmapHoverTimer;
-    private VariableSizedWrapGrid _currentWrapGrid;
+    private readonly DispatcherTimer _heatmapHoverTimer;
+    private VariableSizedWrapGrid? _currentWrapGrid;
+
+    public StatsDashboardControlViewModel ViewModel => (StatsDashboardControlViewModel)DataContext;
 
     public StatsDashboardControl()
     {
@@ -26,7 +29,7 @@ public sealed partial class StatsDashboardControl : BaseUserControl
         _heatmapHoverTimer.Tick += HeatmapHoverTimer_Tick;
     }
 
-    private void HeatmapHoverTimer_Tick(object sender, object e)
+    private void HeatmapHoverTimer_Tick(object? sender, object e)
     {
         _heatmapHoverTimer.Stop();
         if (_currentWrapGrid != null)
@@ -35,15 +38,13 @@ public sealed partial class StatsDashboardControl : BaseUserControl
             {
                 var child = VisualTreeHelper.GetChild(_currentWrapGrid, i);
                 var border = FindVisualChild<Border>(child);
-                if (border != null && border.DataContext is BetterLyrics.Core.Models.HeatmapNode node)
+                if (border != null && border.DataContext is HeatmapNode node)
                 {
                     AnimateOpacity(border, node.Opacity);
                 }
             }
         }
     }
-
-    public StatsDashboardControlViewModel ViewModel => (StatsDashboardControlViewModel)DataContext;
 
     private void AnimateOpacity(UIElement element, double toOpacity)
     {

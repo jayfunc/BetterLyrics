@@ -8,8 +8,7 @@ public class MemoryLeakDetector
 {
     private static readonly List<(WeakReference Reference, string Name)> _watchedObjects = [];
 
-    private static readonly ILogger<MemoryLeakDetector> _logger =
-        Ioc.Default.GetRequiredService<ILogger<MemoryLeakDetector>>();
+    private static readonly ILogger<MemoryLeakDetector> _logger = Ioc.Default.GetRequiredService<ILogger<MemoryLeakDetector>>();
 
     public static void Track(object target)
     {
