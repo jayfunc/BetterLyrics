@@ -81,8 +81,6 @@ public partial class LyricsWindowManagerControlViewModel : ObservableRecipient, 
             Section = LyricsWindowManagerSettingsSection.LyricsBackground
         });
         SelectedNavItem = NavItems[0];
-
-        IsActive = true;
     }
 
     partial void OnSelectedWindowStatusChanged(LyricsWindowStatus? value) =>

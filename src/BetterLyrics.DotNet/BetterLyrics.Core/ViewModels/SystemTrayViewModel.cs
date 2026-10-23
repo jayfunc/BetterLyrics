@@ -10,13 +10,8 @@ using CommunityToolkit.Mvvm.Messaging;
 namespace BetterLyrics.Core.ViewModels;
 
 /// <summary>
-/// Singleton ViewModel，应用级：托盘控件在应用生命周期内只创建一次。
+/// Singleton ViewModel
 /// </summary>
-/// <param name="navigationService"></param>
-/// <param name="appLifecycleService"></param>
-/// <param name="windowManagerProvider"></param>
-/// <param name="settingsService"></param>
-/// <param name="systemUiProvider"></param>
 public partial class SystemTrayViewModel : ObservableRecipient, ISingletonViewModel,
     IRecipient<ColorfulSystemTrayIconChangedMessage>
 {

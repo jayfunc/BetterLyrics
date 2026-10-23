@@ -47,8 +47,6 @@ public partial class LyricsSharePageViewModel : ObservableRecipient, ITransientV
         _ = RefreshCardDataAsync();
         ActivateCardDataForBinding();
         LoadStyleData();
-
-        IsActive = true;
     }
 
     partial void OnSelectedStyleItemChanged(LyricsCardStyleItem value)

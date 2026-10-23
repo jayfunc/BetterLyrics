@@ -101,8 +101,6 @@ public partial class StatsDashboardControlViewModel : ObservableRecipient, ITran
         _localizedTimesValue = _localizationService.GetLocalizedString("StatsDashboardControlTimes");
 
         UpdateDateRange();
-
-        IsActive = true;
     }
 
     partial void OnSelectedTimeRangeChanged(StatsRange value)

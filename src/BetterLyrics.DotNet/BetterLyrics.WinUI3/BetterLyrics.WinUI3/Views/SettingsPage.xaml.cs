@@ -30,6 +30,9 @@ public sealed partial class SettingsPage : BasePage
     {
         Bindings?.StopTracking();
 
+        if (NavView != null) NavView.MenuItemsSource = null;
+        if (SearchBox != null) SearchBox.ItemsSource = null;
+
         CleanupTab(AppSettingsTab);
         CleanupTab(LyricsWindowManagerTab);
         CleanupTab(PlaybackSettingsTab);

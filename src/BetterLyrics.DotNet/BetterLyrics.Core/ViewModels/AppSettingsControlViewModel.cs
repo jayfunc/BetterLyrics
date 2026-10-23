@@ -85,8 +85,6 @@ public partial class AppSettingsControlViewModel : ObservableRecipient, ITransie
             Section = AppSettingsSection.SystemTray
         });
         SelectedNavItem = NavItems[0];
-
-        IsActive = true;
     }
 
     partial void OnSelectedNavItemChanged(AppSettingsNavMenuItem? value)

@@ -122,8 +122,6 @@ public partial class PlaybackSettingsControlViewModel : ObservableRecipient, ITr
             Section = PlaybackLibSettingsSection.RealtimeStatus
         });
         SelectedNavItem = NavItems[0];
-
-        IsActive = true;
     }
 
     protected override void OnActivated()

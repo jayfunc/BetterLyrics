@@ -26,8 +26,7 @@ public sealed partial class LyricsSharePage : BasePage
     private readonly IGlobalToastProvider _globalToastProvider =
         Ioc.Default.GetRequiredService<IGlobalToastProvider>();
 
-    private readonly IFilePickerProvider _filePickerProvider =
-        Ioc.Default.GetRequiredService<IFilePickerProvider>();
+    private readonly IFilePickerProvider _filePickerProvider = Ioc.Default.GetRequiredService<IFilePickerProvider>();
 
     public LyricsSharePageViewModel ViewModel => (LyricsSharePageViewModel)DataContext;
 
@@ -35,16 +34,6 @@ public sealed partial class LyricsSharePage : BasePage
     {
         InitializeComponent();
         DataContext = Ioc.Default.GetRequiredService<LyricsSharePageViewModel>();
-
-        Loaded += (_, _) =>
-        {
-            if (DataContext is LyricsSharePageViewModel viewModel) viewModel.IsActive = true;
-        };
-        Unloaded += (_, _) =>
-        {
-            if (DataContext is LyricsSharePageViewModel viewModel) viewModel.IsActive = false;
-            Bindings?.StopTracking();
-        };
     }
 
     private void LyricsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -106,8 +95,10 @@ public sealed partial class LyricsSharePage : BasePage
         {
             var memoryStream = await RenderToStreamAsync(PreviewCard, ImageQualitySlider.Value / 100.0 * 4.0);
 
-            var dataPackage = new DataPackage();
-            dataPackage.RequestedOperation = DataPackageOperation.Copy;
+            var dataPackage = new DataPackage
+            {
+                RequestedOperation = DataPackageOperation.Copy
+            };
 
             var streamRef = RandomAccessStreamReference.CreateFromStream(memoryStream);
             dataPackage.SetBitmap(streamRef);
@@ -181,7 +172,12 @@ public sealed partial class LyricsSharePage : BasePage
     private void LyricsHostCheckBox_Click(object sender, RoutedEventArgs e)
     {
         if (LyricsHostCheckBox.IsChecked == true)
+        {
             LyricsListView.SelectAll();
-        else if (LyricsHostCheckBox.IsChecked == false) LyricsListView.SelectedItems.Clear();
+        }
+        else if (LyricsHostCheckBox.IsChecked == false)
+        {
+            LyricsListView.SelectedItems.Clear();
+        }
     }
 }
