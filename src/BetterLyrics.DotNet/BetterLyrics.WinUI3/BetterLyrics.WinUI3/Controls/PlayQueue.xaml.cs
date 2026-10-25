@@ -1,9 +1,6 @@
-using BetterLyrics.Core.Messages.MediaLibrary;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.ViewModels;
-using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;

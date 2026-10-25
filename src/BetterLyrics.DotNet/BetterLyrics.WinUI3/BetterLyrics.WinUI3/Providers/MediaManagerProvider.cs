@@ -1,4 +1,5 @@
 using BetterLyrics.Core.Interfaces.Providers;
+using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,15 @@ public class MediaManagerProvider : IMediaManagerProvider
 {
     private readonly MediaManager _mediaManager = new();
     private readonly ConcurrentDictionary<string, IMediaSessionProvider> _mediaSessions = new();
+    private readonly ILogger<MediaManagerProvider> _logger;
+    private readonly ILogger<MediaSessionProvider> _sessionLogger;
+
+    public MediaManagerProvider(ILogger<MediaManagerProvider> logger,
+        ILogger<MediaSessionProvider> sessionLogger)
+    {
+        _logger = logger;
+        _sessionLogger = sessionLogger;
+    }
 
     public IMediaSessionProvider? FocusedSession
     {
@@ -45,6 +55,7 @@ public class MediaManagerProvider : IMediaManagerProvider
 
     public void Init()
     {
+        _logger.LogDebug("Starting Windows media manager.");
         _mediaManager.Start();
 
         _mediaManager.OnAnySessionOpened += MediaManager_OnAnySessionOpened;
@@ -113,13 +124,15 @@ public class MediaManagerProvider : IMediaManagerProvider
         foreach (var sessionId in existingSessionIds.Except(currentSessionIds))
         {
             _mediaSessions.TryRemove(sessionId, out _);
+            _logger.LogDebug("Media session closed: {SessionId}.", sessionId);
         }
         // Add new sessions
         foreach (var sessionId in currentSessionIds.Except(existingSessionIds))
         {
             var session = _mediaManager.CurrentMediaSessions[sessionId];
-            var mediaSessionProvider = new MediaSessionProvider(session);
+            var mediaSessionProvider = new MediaSessionProvider(session, _sessionLogger);
             _mediaSessions.TryAdd(sessionId, mediaSessionProvider);
+            _logger.LogDebug("Media session opened: {SessionId}.", sessionId);
         }
     }
 }

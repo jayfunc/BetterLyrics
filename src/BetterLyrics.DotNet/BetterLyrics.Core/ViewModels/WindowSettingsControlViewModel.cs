@@ -1,12 +1,12 @@
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Interfaces.ViewModels;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.Models.WallpaperEngine;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
-using BetterLyrics.Core.Interfaces.ViewModels;
 
 namespace BetterLyrics.Core.ViewModels;
 

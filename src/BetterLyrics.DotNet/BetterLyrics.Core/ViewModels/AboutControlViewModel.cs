@@ -3,15 +3,16 @@ using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Interfaces.ViewModels;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Data.Sqlite;
+using Microsoft.Extensions.Logging;
 using System.Collections.ObjectModel;
 using System.IO.Compression;
 using System.Text.RegularExpressions;
-using BetterLyrics.Core.Interfaces.ViewModels;
 
 namespace BetterLyrics.Core.ViewModels;
 
@@ -29,6 +30,7 @@ public partial class AboutControlViewModel : ObservableObject, ITransientViewMod
     private readonly ILauncherProvider _launcherProvider;
     private readonly IFilePickerProvider _filePickerProvider;
     private readonly IDatabaseService _databaseService;
+    private readonly ILogger<AboutControlViewModel> _logger;
 
     [ObservableProperty] public partial IAppUpdateService AppUpdateService { get; set; }
     [ObservableProperty] public partial AppSettings AppSettings { get; set; }
@@ -40,7 +42,8 @@ public partial class AboutControlViewModel : ObservableObject, ITransientViewMod
         IAppUpdateService appUpdateService, ILocalizationService localizationService,
         IGlobalToastProvider globalToastProvider, IWindowManagerProvider windowManagerProvider,
         IAssetReaderProvider assetReaderProvider, ILauncherProvider launcherProvider,
-        IFilePickerProvider filePickerProvider, IDatabaseService databaseService)
+        IFilePickerProvider filePickerProvider, IDatabaseService databaseService,
+        ILogger<AboutControlViewModel> logger)
     {
         _settingsService = settingsService;
         _lyricsCacheService = lyricsCacheService;
@@ -51,6 +54,7 @@ public partial class AboutControlViewModel : ObservableObject, ITransientViewMod
         _launcherProvider = launcherProvider;
         _filePickerProvider = filePickerProvider;
         _databaseService = databaseService;
+        _logger = logger;
 
         AppUpdateService = appUpdateService;
 
@@ -152,6 +156,7 @@ public partial class AboutControlViewModel : ObservableObject, ITransientViewMod
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Failed to import settings from {Path}.", filePath);
                 _globalToastProvider.Show("ImportSettingsFailed", ex.Message, MessageSeverity.Error);
             }
     }
@@ -196,6 +201,7 @@ public partial class AboutControlViewModel : ObservableObject, ITransientViewMod
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Failed to export settings.");
             _globalToastProvider.Show("Error", ex.Message, MessageSeverity.Error);
         }
     }
@@ -209,6 +215,7 @@ public partial class AboutControlViewModel : ObservableObject, ITransientViewMod
         DirectoryHelper.DeleteAllFiles(PathHelper.LyricsCacheDirectory);
         DirectoryHelper.DeleteAllFiles(PathHelper.iTunesAlbumArtCacheDirectory);
 
+        _logger.LogInformation("Application cache files cleared.");
         _globalToastProvider.Show("ActionCompleted", null, MessageSeverity.Success);
     }
 

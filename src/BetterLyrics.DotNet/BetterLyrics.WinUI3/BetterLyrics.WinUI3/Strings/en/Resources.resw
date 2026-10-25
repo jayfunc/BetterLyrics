@@ -1269,6 +1269,18 @@
   <data name="SettingsPageApp" xml:space="preserve">
     <value>App Appearance &amp; Behavior</value>
   </data>
+  <data name="SettingsPageAdvanced.Text" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="SettingsPageLogging.Text" xml:space="preserve">
+    <value>Logging</value>
+  </data>
+  <data name="SettingsPageWriteDebugLogs.Header" xml:space="preserve">
+    <value>Write Debug Logs</value>
+  </data>
+  <data name="SettingsPageWriteDebugLogs.Description" xml:space="preserve">
+    <value>Include Debug-level and higher logs. This makes troubleshooting easier but increases log file size. Takes effect after restarting the app.</value>
+  </data>
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>App Appearance</value>
   </data>

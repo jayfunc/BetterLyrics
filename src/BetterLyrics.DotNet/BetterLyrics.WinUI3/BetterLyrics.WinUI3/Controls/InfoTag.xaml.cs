@@ -136,7 +136,7 @@ public sealed partial class InfoTag : UserControl
             TagIcon.Foreground = fgBrush;
         }
 
-        _hoverBackground = 
+        _hoverBackground =
             Application.Current.Resources.TryGetValue(hoverBackgroundKey, out var hbg) && hbg is Brush hbgBrush ? hbgBrush : BadgeBorder.Background;
         _normalBackground = BadgeBorder.Background;
     }

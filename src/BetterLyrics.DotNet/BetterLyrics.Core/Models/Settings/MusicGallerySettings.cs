@@ -3,7 +3,6 @@ using BetterLyrics.Core.Messages.MediaLibrary;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
-using System.Text.Json.Serialization;
 
 namespace BetterLyrics.Core.Models.Settings;
 

@@ -12,6 +12,7 @@ using BetterLyrics.Core.Models.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Extensions.Logging;
 using System.Collections.ObjectModel;
 
 namespace BetterLyrics.Core.ViewModels;
@@ -25,6 +26,7 @@ public partial class SettingsPageViewModel : ObservableRecipient, ISingletonView
     private readonly ILocalizationService _localizationService;
     private readonly IGlobalToastProvider _globalToastProvider;
     private readonly ISettingsService _settingsService;
+    private readonly ILogger<SettingsPageViewModel> _logger;
 
     private readonly Debouncer _searchDebouncer = new();
 
@@ -52,11 +54,13 @@ public partial class SettingsPageViewModel : ObservableRecipient, ISingletonView
     public SettingsPageViewModel(
         ILocalizationService localizationService,
         IGlobalToastProvider globalToastProvider,
-        ISettingsService settingsService)
+        ISettingsService settingsService,
+        ILogger<SettingsPageViewModel> logger)
     {
         _localizationService = localizationService;
         _globalToastProvider = globalToastProvider;
         _settingsService = settingsService;
+        _logger = logger;
 
         NavItems.Add(new SettingsNavMenuItem
         {
@@ -196,6 +200,7 @@ public partial class SettingsPageViewModel : ObservableRecipient, ISingletonView
             AppSettingsSection.Window => "SettingsPageWindow",
             AppSettingsSection.Shortcut => "SettingsPageShortcut",
             AppSettingsSection.SystemTray => "AppSettingsControlSystemTray",
+            AppSettingsSection.Advanced => "SettingsPageAdvanced",
 
             LyricsWindowManagerSettingsSection.Window => "SettingsPageWindow",
             LyricsWindowManagerSettingsSection.Layout => "SettingsPageLayout",
@@ -363,6 +368,7 @@ public partial class SettingsPageViewModel : ObservableRecipient, ISingletonView
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Failed to copy the settings deep link to the clipboard.");
                 _globalToastProvider.Show("Error", ex.Message, MessageSeverity.Error);
             }
         }

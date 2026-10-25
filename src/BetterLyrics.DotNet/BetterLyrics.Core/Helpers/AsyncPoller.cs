@@ -1,9 +1,25 @@
-﻿using System.Diagnostics;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace BetterLyrics.Core.Helpers;
 
 public class AsyncPoller : IDisposable
 {
+    private static ILogger<AsyncPoller>? Logger
+    {
+        get
+        {
+            try
+            {
+                return Ioc.Default.GetService<ILogger<AsyncPoller>>();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+    }
+
     private readonly TimeSpan _interval;
     private CancellationTokenSource? _cts;
     private Task? _pollingTask;
@@ -53,7 +69,7 @@ public class AsyncPoller : IDisposable
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"AsyncPoller Action Error: {ex.Message}");
+                    Logger?.LogError(ex, "A polled background operation failed.");
                 }
         }
         catch (OperationCanceledException)

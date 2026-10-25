@@ -45,6 +45,9 @@ public class AlbumArtSearchService : IAlbumArtSearchService
     {
         var format = ".jpg";
 
+        _logger.LogDebug("Searching album art for {Title} - {Artist} (ignore cache: {IgnoreCache}).", songInfo.Title,
+            songInfo.Artist, ignoreCache);
+
         try
         {
             var mediaSourceProviderInfo =
@@ -70,7 +73,12 @@ public class AlbumArtSearchService : IAlbumArtSearchService
                         {
                             var cachedAlbumArt = FileHelper.ReadAlbumArtCache(songInfo, format,
                                 providerInfo.Provider.GetCacheDirectory());
-                            if (cachedAlbumArt != null) return cachedAlbumArt;
+                            if (cachedAlbumArt != null)
+                            {
+                                _logger.LogDebug("Album art cache hit for provider {Provider}: {Title} - {Artist}.",
+                                    providerInfo.Provider, songInfo.Title, songInfo.Artist);
+                                return cachedAlbumArt;
+                            }
                         }
                         catch (Exception ex)
                         {
@@ -132,6 +140,8 @@ public class AlbumArtSearchService : IAlbumArtSearchService
                                 _logger.LogWarning(ex, "Failed to write album art cache.");
                             }
 
+                        _logger.LogDebug("Album art found by provider {Provider} for {Title} - {Artist}.",
+                            providerInfo.Provider, songInfo.Title, songInfo.Artist);
                         return result;
                     }
                 }
@@ -154,6 +164,7 @@ public class AlbumArtSearchService : IAlbumArtSearchService
             _logger.LogError(ex, "Unexpected error in SearchAsync.");
         }
 
+        _logger.LogDebug("No album art found for {Title} - {Artist}.", songInfo.Title, songInfo.Artist);
         return null;
     }
 

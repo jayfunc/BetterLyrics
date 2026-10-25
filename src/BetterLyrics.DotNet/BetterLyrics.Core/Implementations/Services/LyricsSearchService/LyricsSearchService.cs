@@ -209,7 +209,15 @@ public class LyricsSearchService : ILyricsSearchService
                     }
             }
 
-            if (finalResult == null) throw new Exception("SearchSmartlyAsync: Could't find any lyrics");
+            if (finalResult == null)
+            {
+                _logger.LogDebug("SearchSmartlyAsync: No provider returned lyrics above the matching threshold for {SongInfo}.",
+                    songInfo);
+                throw new Exception("SearchSmartlyAsync: Could't find any lyrics");
+            }
+
+            _logger.LogDebug("SearchSmartlyAsync: Selected lyrics from {Provider} with match {MatchPercentage}% for {Title} - {Artist}.",
+                finalResult.Provider, finalResult.MatchPercentage, finalResult.Title, finalResult.Artist);
         }
         catch (OperationCanceledException)
         {
@@ -263,7 +271,12 @@ public class LyricsSearchService : ILyricsSearchService
                 _logger.LogError(ex, "SearchAllAsync: A lyrics search provider failed or timed out.");
             }
 
-            if (result != null) yield return result;
+            if (result != null)
+            {
+                _logger.LogDebug("SearchAllAsync: Provider {Provider} returned a result for {Title} - {Artist}.",
+                    result.Provider, result.Title, result.Artist);
+                yield return result;
+            }
         }
     }
 
@@ -318,10 +331,17 @@ public class LyricsSearchService : ILyricsSearchService
             var currentTs = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
             File.WriteAllText(PathHelper.AmllTtmlDbLastUpdatedPath, currentTs.ToString());
 
+            _logger.LogDebug("Downloaded AMLL TTML DB index to {Path}.", PathHelper.AmllTtmlDbIndexPath);
             return true;
         }
-        catch
+        catch (OperationCanceledException)
         {
+            throw;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Failed to download AMLL TTML DB index from {BaseUrl}.",
+                _settingsService.AppSettings.GeneralSettings.AmllTtmlDbBaseUrl);
             return false;
         }
     }
@@ -340,6 +360,8 @@ public class LyricsSearchService : ILyricsSearchService
             var cached = await _lyricsCacheService.GetLyricsAsync(songInfo, provider, token);
             if (cached != null)
             {
+                _logger.LogDebug("SearchSingleAsync: Cache hit for provider {Provider} ({Title} - {Artist}).",
+                    provider, songInfo.Title, songInfo.Artist);
                 lyricsSearchResult = cached;
                 return lyricsSearchResult;
             }
@@ -379,6 +401,18 @@ public class LyricsSearchService : ILyricsSearchService
             }
 
         if (provider.IsCacheable()) await _lyricsCacheService.SaveLyricsAsync(songInfo, lyricsSearchResult, token);
+
+        if (lyricsSearchResult.IsFound)
+        {
+            _logger.LogDebug(
+                "SearchSingleAsync: Provider {Provider} returned lyrics for {Title} - {Artist} (match {MatchPercentage}%).",
+                provider, songInfo.Title, songInfo.Artist, lyricsSearchResult.MatchPercentage);
+        }
+        else
+        {
+            _logger.LogDebug("SearchSingleAsync: Provider {Provider} returned no lyrics for {Title} - {Artist}.",
+                provider, songInfo.Title, songInfo.Artist);
+        }
 
         return lyricsSearchResult;
     }

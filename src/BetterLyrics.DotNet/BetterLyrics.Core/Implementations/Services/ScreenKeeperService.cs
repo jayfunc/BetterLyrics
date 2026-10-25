@@ -3,9 +3,6 @@ using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Messages.LyricsWindow;
 using CommunityToolkit.Mvvm.Messaging;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace BetterLyrics.Core.Implementations.Services;
 

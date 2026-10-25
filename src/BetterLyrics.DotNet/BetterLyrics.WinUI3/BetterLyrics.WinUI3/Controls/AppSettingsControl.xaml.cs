@@ -1,5 +1,4 @@
 using BetterLyrics.Core.ViewModels;
-using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 
 // To learn more about WinUI, the WinUI project structure,

@@ -2,6 +2,7 @@
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Entities;
 using LiteDB;
+using Microsoft.Extensions.Logging;
 using System.Collections.Specialized;
 using System.ComponentModel;
 
@@ -14,15 +15,18 @@ public class PlaybackStateService : IPlaybackStateService, IDisposable
 {
     private readonly IDatabaseService _databaseService;
     private readonly ISettingsService _settingsService;
+    private readonly ILogger<PlaybackStateService> _logger;
     private readonly Debouncer _debouncer = new();
     private readonly object _lock = new();
 
     public PlaybackState CurrentState { get; }
 
-    public PlaybackStateService(IDatabaseService databaseService, ISettingsService settingsService)
+    public PlaybackStateService(IDatabaseService databaseService, ISettingsService settingsService,
+        ILogger<PlaybackStateService> logger)
     {
         _databaseService = databaseService;
         _settingsService = settingsService;
+        _logger = logger;
 
         CurrentState = LoadInitialState();
 
@@ -70,8 +74,9 @@ public class PlaybackStateService : IPlaybackStateService, IDisposable
 
             return state;
         }
-        catch
+        catch (Exception ex)
         {
+            _logger.LogWarning(ex, "Failed to load playback state; starting with a default state.");
             return new PlaybackState();
         }
     }
@@ -97,7 +102,10 @@ public class PlaybackStateService : IPlaybackStateService, IDisposable
                     var col = GetCollection();
                     col.Upsert(CurrentState);
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    _logger.LogWarning(ex, "Failed to persist playback state.");
+                }
             }
         }, delayMilliseconds: 500);
     }
@@ -111,7 +119,10 @@ public class PlaybackStateService : IPlaybackStateService, IDisposable
                 var col = GetCollection();
                 col.Upsert(CurrentState);
             }
-            catch { }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Failed to persist playback state immediately.");
+            }
         }
     }
 

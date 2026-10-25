@@ -6,6 +6,7 @@ using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
 using Hqub.Lastfm;
 using Hqub.Lastfm.Entities;
+using Microsoft.Extensions.Logging;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
@@ -21,6 +22,7 @@ public class LastFmService : ILastFmService
     private readonly ISettingsService _settingsService;
     private readonly ISongSearchMapService _songSearchMapService;
     private readonly ILauncherProvider _launcherProvider;
+    private readonly ILogger<LastFmService> _logger;
     private string? _sessionKey;
 
     public event EventHandler<LastFMUserChangedEventArgs>? UserChanged;
@@ -33,7 +35,8 @@ public class LastFmService : ILastFmService
     public LastFmService(ISettingsService settingsService,
         ISongSearchMapService songSearchMapService, IPasswordVaultProvider passwordVaultProvider,
         IGlobalToastProvider globalToastProvider,
-        ILauncherProvider launcherProvider, ILastFmDialogProvider lastFmDialogProvider)
+        ILauncherProvider launcherProvider, ILastFmDialogProvider lastFmDialogProvider,
+        ILogger<LastFmService> logger)
     {
         _settingsService = settingsService;
         _songSearchMapService = songSearchMapService;
@@ -41,9 +44,12 @@ public class LastFmService : ILastFmService
         _globalToastProvider = globalToastProvider;
         _launcherProvider = launcherProvider;
         _lastFmDialogProvider = lastFmDialogProvider;
+        _logger = logger;
 
         _client = new LastfmClient(LastFM.ApiKey, LastFM.SharedSecret);
         _sessionKey = _passwordVaultProvider.Get(Core.Constants.App.AppName, LastFM.SessionKeyCredentialKey);
+        _logger.LogDebug("Last.fm service initialized. Session key present: {HasSessionKey}.",
+            !string.IsNullOrEmpty(_sessionKey));
         _ = UpdateAuthStatusAsync();
     }
 
@@ -56,6 +62,7 @@ public class LastFmService : ILastFmService
             {
                 _sessionKey = _client.Session.SessionKey;
                 _passwordVaultProvider.Save(Core.Constants.App.AppName, LastFM.SessionKeyCredentialKey, _sessionKey);
+                _logger.LogInformation("Last.fm authentication succeeded.");
                 await UpdateAuthStatusAsync();
                 return;
             }
@@ -63,6 +70,7 @@ public class LastFmService : ILastFmService
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Last.fm authentication failed.");
             _globalToastProvider.Show("LastFMAuthFailed", ex.Message, MessageSeverity.Error);
         }
     }
@@ -71,6 +79,7 @@ public class LastFmService : ILastFmService
     {
         _sessionKey = null;
         _passwordVaultProvider.Delete(Core.Constants.App.AppName, LastFM.SessionKeyCredentialKey);
+        _logger.LogInformation("Last.fm authentication cleared by the user.");
         await UpdateAuthStatusAsync();
     }
 
@@ -107,13 +116,24 @@ public class LastFmService : ILastFmService
                 var resp = await _client.Track.ScrobbleAsync(scrobble);
                 if (resp != null && resp.Accepted == 0)
                 {
+                    _logger.LogWarning("Last.fm scrobble was not accepted. Ignored: {Ignored}.", resp.Ignored);
                     _globalToastProvider.Show("Error", resp.Ignored > 0 ? "Scrobble ignored" : "Scrobble failed", MessageSeverity.Error);
+                }
+                else
+                {
+                    _logger.LogInformation("Scrobbled to Last.fm: {Title} - {Artist}.", mappedTitle, mappedArtist);
                 }
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Failed to scrobble to Last.fm: {Title} - {Artist}.", mappedTitle,
+                    mappedArtist);
                 _globalToastProvider.Show("Error", ex.Message, MessageSeverity.Error);
             }
+        }
+        else
+        {
+            _logger.LogDebug("Skipped Last.fm scrobble because the service is not authenticated.");
         }
     }
 
@@ -128,11 +148,19 @@ public class LastFmService : ILastFmService
                 var resp = await _client.Track.UpdateNowPlayingAsync(mappedTitle, mappedArtist, 0, mappedAlbum);
                 if (!resp)
                 {
+                    _logger.LogWarning("Failed to update Last.fm now playing: {Title} - {Artist}.", mappedTitle,
+                        mappedArtist);
                     _globalToastProvider.Show("Error", "Update now playing failed", MessageSeverity.Error);
+                }
+                else
+                {
+                    _logger.LogDebug("Updated Last.fm now playing: {Title} - {Artist}.", mappedTitle, mappedArtist);
                 }
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Failed to update Last.fm now playing: {Title} - {Artist}.", mappedTitle,
+                    mappedArtist);
                 _globalToastProvider.Show("Error", ex.Message, MessageSeverity.Error);
             }
         }
@@ -156,9 +184,11 @@ public class LastFmService : ILastFmService
             try
             {
                 User = await _client.User.GetInfoAsync(null);
+                _logger.LogInformation("Last.fm user information loaded: {UserName}.", User?.Name);
             }
             catch (Exception ex)
             {
+                _logger.LogWarning(ex, "Failed to load Last.fm user information; treating the session as unavailable.");
                 _globalToastProvider.Show("Error", ex.Message, MessageSeverity.Error);
                 User = null;
             }
@@ -166,6 +196,7 @@ public class LastFmService : ILastFmService
         else
         {
             User = null;
+            _logger.LogDebug("Last.fm is not authenticated.");
         }
 
         UserChanged?.Invoke(this, new LastFMUserChangedEventArgs(User));
@@ -205,9 +236,10 @@ public class LastFmService : ILastFmService
                 }
             }
         }
-        catch (Exception)
+        catch (Exception ex)
         {
-            // Ignore errors for fetching album art
+            _logger.LogDebug(ex, "Failed to fetch album art from Last.fm for {Title} - {Artist}.", songInfo.Title,
+                songInfo.Artist);
         }
 
         return null;

@@ -282,6 +282,21 @@
                             </StackPanel>
                         </controls:Case>
 
+                        <controls:Case Value="{x:Bind enums:AppSettingsSection.Advanced}">
+                            <StackPanel Spacing="{StaticResource SettingsCardSpacing}">
+
+                                <!--  Logging  -->
+
+                                <TextBlock x:Uid="SettingsPageLogging" Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" />
+
+                                <controls:SettingsCard x:Uid="SettingsPageWriteDebugLogs" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE9D9;}">
+                                    <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.AdvancedSettings.WriteDebugLogs, Mode=TwoWay}" />
+                                </controls:SettingsCard>
+
+
+                            </StackPanel>
+                        </controls:Case>
+
                     </controls:SwitchPresenter>
                 </StackPanel>
             </Grid>

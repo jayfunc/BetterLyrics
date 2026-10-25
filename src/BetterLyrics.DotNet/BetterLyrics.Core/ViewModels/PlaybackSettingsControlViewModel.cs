@@ -4,6 +4,7 @@ using BetterLyrics.Core.Events;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Interfaces.ViewModels;
 using BetterLyrics.Core.Messages.SettingsNavigation;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Settings;
@@ -12,10 +13,10 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using Hqub.Lastfm.Entities;
+using Microsoft.Extensions.Logging;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Text.Json;
-using BetterLyrics.Core.Interfaces.ViewModels;
 
 namespace BetterLyrics.Core.ViewModels;
 
@@ -32,6 +33,7 @@ public partial class PlaybackSettingsControlViewModel : ObservableRecipient, ITr
     private readonly ITranslationService _translationService;
     private readonly IFilePickerProvider _filePickerProvider;
     private readonly ILocalizationService _localizationService;
+    private readonly ILogger<PlaybackSettingsControlViewModel> _logger;
 
     public IGsmtcService GsmtcService { get; }
 
@@ -69,10 +71,11 @@ public partial class PlaybackSettingsControlViewModel : ObservableRecipient, ITr
     ISettingsService settingsService, IGsmtcService gsmtcService, ITranslationService libreTranslationService,
     ILastFmService lastFmService, IAppUIThreadProvider appUiThreadProvider, IPasswordVaultProvider passwordVaultProvider,
     IGlobalToastProvider globalToastProvider, IFilePickerProvider filePickerProvider, IDiscordService discordService,
-    ILocalizationService localizationService)
+    ILocalizationService localizationService, ILogger<PlaybackSettingsControlViewModel> logger)
     {
         GsmtcService = gsmtcService;
 
+        _logger = logger;
         _translationService = libreTranslationService;
         _appUiThreadProvider = appUiThreadProvider;
         _localizationService = localizationService;
@@ -232,8 +235,9 @@ public partial class PlaybackSettingsControlViewModel : ObservableRecipient, ITr
                         MessageSeverity.Success);
                 });
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                _logger.LogWarning(ex, "LibreTranslate server connectivity test failed.");
                 _appUiThreadProvider.Execute(() =>
                 {
                     _globalToastProvider.Show("SettingsPageServerTestFailedInfo", null, MessageSeverity.Error);

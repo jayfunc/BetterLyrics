@@ -6,6 +6,7 @@ using BetterLyrics.Core.Models.Entities;
 using BetterLyrics.Core.Models.Lyrics;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Extensions.Logging;
 using LyricsContentParser = BetterLyrics.Core.Helpers.Lyrics.ContentParser.LyricsContentParser;
 
 namespace BetterLyrics.Core.Implementations.Services.GsmtcService;
@@ -87,8 +88,12 @@ public partial class GsmtcService : IGsmtcService
                 {
                     return;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
+                    _logger.LogWarning(ex,
+                        "Lyrics search attempt {Attempt}/{MaxRetries} failed for {Title} - {Artist}.",
+                        attempt, maxRetries, CurrentSongInfo.Title, CurrentSongInfo.Artist);
+
                     if (attempt == maxRetries) break;
 
                     await Task.Delay((attempt * 2 - 1) * 1000, token);

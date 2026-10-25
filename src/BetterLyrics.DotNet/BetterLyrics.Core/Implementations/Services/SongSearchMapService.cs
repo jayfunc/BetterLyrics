@@ -2,6 +2,7 @@ using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Entities;
 using LiteDB;
+using Microsoft.Extensions.Logging;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
@@ -11,10 +12,12 @@ namespace BetterLyrics.Core.Implementations.Services;
 public class SongSearchMapService : ISongSearchMapService
 {
     private readonly IDatabaseService _databaseService;
+    private readonly ILogger<SongSearchMapService> _logger;
 
-    public SongSearchMapService(IDatabaseService databaseService)
+    public SongSearchMapService(IDatabaseService databaseService, ILogger<SongSearchMapService> logger)
     {
         _databaseService = databaseService;
+        _logger = logger;
 
         var col = _databaseService.SongSearchMapDb.GetCollection<MappedSongSearchQuery>("songSearchMap");
 
@@ -24,7 +27,10 @@ public class SongSearchMapService : ISongSearchMapService
             col.DropIndex("OriginalArtist");
             col.DropIndex("OriginalAlbum");
         }
-        catch { }
+        catch (Exception ex)
+        {
+            _logger.LogDebug(ex, "Failed to drop legacy song search map indexes.");
+        }
     }
 
     private ILiteCollection<MappedSongSearchQuery> GetCollection()
@@ -51,11 +57,15 @@ public class SongSearchMapService : ISongSearchMapService
             existing.LyricsSearchProvider = mapping.LyricsSearchProvider;
 
             col.Update(existing);
+            _logger.LogDebug("Updated song search mapping: {OriginalTitle} - {OriginalArtist} -> {MappedTitle} - {MappedArtist}.",
+                existing.OriginalTitle, existing.OriginalArtist, existing.MappedTitle, existing.MappedArtist);
         }
         else
         {
             var newItem = (MappedSongSearchQuery)mapping.Clone();
             col.Insert(newItem);
+            _logger.LogDebug("Created song search mapping: {OriginalTitle} - {OriginalArtist} -> {MappedTitle} - {MappedArtist}.",
+                newItem.OriginalTitle, newItem.OriginalArtist, newItem.MappedTitle, newItem.MappedArtist);
         }
 
         return Task.CompletedTask;
@@ -104,6 +114,8 @@ public class SongSearchMapService : ISongSearchMapService
         if (target != null)
         {
             col.Delete(target.Id);
+            _logger.LogDebug("Deleted song search mapping: {OriginalTitle} - {OriginalArtist}.",
+                mapping.OriginalTitle, mapping.OriginalArtist);
         }
 
         return Task.CompletedTask;

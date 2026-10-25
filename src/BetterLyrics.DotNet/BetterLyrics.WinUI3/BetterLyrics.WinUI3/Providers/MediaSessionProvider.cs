@@ -1,9 +1,9 @@
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.WinUI3.Extensions;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using WindowsMediaController;
@@ -16,6 +16,7 @@ namespace BetterLyrics.WinUI3.Providers;
 public class MediaSessionProvider : IMediaSessionProvider
 {
     private readonly MediaManager.MediaSession _session;
+    private readonly ILogger<MediaSessionProvider> _logger;
 
     public string SessionId { get; }
 
@@ -35,9 +36,10 @@ public class MediaSessionProvider : IMediaSessionProvider
 
     public TimeSpan EndTime { get; private set; }
 
-    public MediaSessionProvider(MediaManager.MediaSession session)
+    public MediaSessionProvider(MediaManager.MediaSession session, ILogger<MediaSessionProvider> logger)
     {
         _session = session;
+        _logger = logger;
         SessionId = session.Id;
 
         // 初始化播放状态：MediaManager.Start() 期间的播放状态事件在 BetterLyrics 完成订阅前就已发出，
@@ -57,8 +59,9 @@ public class MediaSessionProvider : IMediaSessionProvider
             Genres = mediaProperties.Genres.ToList();
             Thumbnail = await mediaProperties.Thumbnail.ToByteArrayAsync();
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            _logger.LogDebug(ex, "Failed to refresh media properties for session {SessionId}.", SessionId);
         }
     }
 
@@ -83,7 +86,7 @@ public class MediaSessionProvider : IMediaSessionProvider
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"Error refreshing playback state: {ex.Message}");
+            _logger.LogDebug(ex, "Failed to refresh playback state for session {SessionId}.", SessionId);
             PlaybackStatus = SessionPlaybackStatus.Stopped;
         }
     }
@@ -102,8 +105,9 @@ public class MediaSessionProvider : IMediaSessionProvider
             CurrentTime = timelineProperties.Position;
             EndTime = timelineProperties.EndTime;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            _logger.LogDebug(ex, "Failed to refresh timeline properties for session {SessionId}.", SessionId);
         }
     }
 

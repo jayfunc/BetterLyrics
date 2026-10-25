@@ -3,11 +3,11 @@ using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Interfaces.ViewModels;
 using BetterLyrics.Core.Models.Settings;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using System.Diagnostics;
-using BetterLyrics.Core.Interfaces.ViewModels;
+using Microsoft.Extensions.Logging;
 
 namespace BetterLyrics.Core.ViewModels;
 
@@ -22,6 +22,7 @@ public partial class MediaSettingsControlViewModel : ObservableObject, ITransien
     private readonly IPasswordVaultProvider _passwordVaultProvider;
     private readonly ISettingsService _settingsService;
     private readonly IAddMediaSourceDialogProvider _addMediaSourceDialogProvider;
+    private readonly ILogger<MediaSettingsControlViewModel> _logger;
 
     public INavigationService NavigationService { get; }
     [ObservableProperty] public partial AppSettings AppSettings { get; set; }
@@ -32,7 +33,7 @@ public partial class MediaSettingsControlViewModel : ObservableObject, ITransien
         IFileSystemService fileSystemService,
         INavigationService navigationService, IAppUIThreadProvider appUiThreadProvider,
         IAddMediaSourceDialogProvider addMediaSourceDialogProvider,
-        IPasswordVaultProvider passwordVaultProvider)
+        IPasswordVaultProvider passwordVaultProvider, ILogger<MediaSettingsControlViewModel> logger)
     {
         _localizationService = localizationService;
         _settingsService = settingsService;
@@ -42,6 +43,7 @@ public partial class MediaSettingsControlViewModel : ObservableObject, ITransien
         NavigationService = navigationService;
         _appUIThreadProvider = appUiThreadProvider;
         _addMediaSourceDialogProvider = addMediaSourceDialogProvider;
+        _logger = logger;
         AppSettings = _settingsService.AppSettings;
     }
 
@@ -157,7 +159,7 @@ public partial class MediaSettingsControlViewModel : ObservableObject, ITransien
                     }
                     catch (Exception ex)
                     {
-                        Debug.WriteLine(ex);
+                        _logger.LogWarning(ex, "Failed to connect to media folder \"{Path}\".", newUriString);
                         return false;
                     }
                 });

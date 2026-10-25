@@ -82,7 +82,11 @@ public class SettingsService : ISettingsService
 
         AppSettings.Version = MetadataHelper.AppVersion;
 
-        _logger.LogInformation("App version: {AppVersion}", AppSettings.Version);
+        _logger.LogInformation("Settings loaded from {SettingsPath}. App version: {AppVersion}.",
+            PathHelper.SettingsFilePath, AppSettings.Version);
+        _logger.LogDebug("Settings snapshot: media folders={FolderCount}, playback sources={ProviderCount}, plugins={PluginCount}, debug logs={WriteDebugLogs}.",
+            AppSettings.LocalMediaFolders.Count, AppSettings.MediaSourceProvidersInfo.Count,
+            AppSettings.PluginsInfo.Count, AppSettings.AdvancedSettings.WriteDebugLogs);
 
         EnsureMediaSourceProvidersInfo();
         EnsureStarredPlaylists();
@@ -97,10 +101,13 @@ public class SettingsService : ISettingsService
     public void ExportSettings(string exportPath)
     {
         // 导出到文件
+        var fileName = $"BetterLyrics_Settings_Export_{DateTime.Now:yyyyMMdd_HHmmss}.json";
+        var exportFilePath = Path.Combine(exportPath, fileName);
+
         var exportJson = JsonSerializer.Serialize(AppSettings, SourceGenerationContext.Default.AppSettings);
-        File.WriteAllText(
-            Path.Combine(exportPath, $"BetterLyrics_Settings_Export_{DateTime.Now:yyyyMMdd_HHmmss}.json"),
-            exportJson);
+        File.WriteAllText(exportFilePath, exportJson);
+
+        _logger.LogInformation("Settings exported to {Path}.", exportFilePath);
     }
 
     /// <summary>
@@ -112,6 +119,7 @@ public class SettingsService : ISettingsService
     {
         if (!File.Exists(importPath))
         {
+            _logger.LogWarning("Settings import failed: file does not exist at {Path}.", importPath);
             return false;
         }
 
@@ -120,6 +128,7 @@ public class SettingsService : ISettingsService
             var importJson = File.ReadAllText(importPath);
             if (string.IsNullOrWhiteSpace(importJson) || importJson.StartsWith('\0'))
             {
+                _logger.LogWarning("Settings import failed: file at {Path} is empty or invalid.", importPath);
                 return false;
             }
 
@@ -127,15 +136,18 @@ public class SettingsService : ISettingsService
 
             if (importData == null)
             {
+                _logger.LogWarning("Settings import failed: deserialized settings are null for {Path}.", importPath);
                 return false;
             }
 
             AppSettings = importData;
             SaveAppSettings();
+            _logger.LogInformation("Settings imported from {Path}.", importPath);
             return true;
         }
-        catch
+        catch (Exception ex)
         {
+            _logger.LogError(ex, "Settings import failed for {Path}.", importPath);
             return false;
         }
     }
@@ -363,5 +375,6 @@ public class SettingsService : ISettingsService
     private void SaveAppSettings()
     {
         SettingsIO.SaveSettings(PathHelper.SettingsFilePath, AppSettings, SourceGenerationContext.Default.AppSettings);
+        _logger.LogDebug("Settings saved to {SettingsPath}.", PathHelper.SettingsFilePath);
     }
 }

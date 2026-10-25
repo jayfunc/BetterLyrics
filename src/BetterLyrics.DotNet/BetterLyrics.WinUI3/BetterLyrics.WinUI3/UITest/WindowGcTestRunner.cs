@@ -1,4 +1,5 @@
 using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Events;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Models.Settings;

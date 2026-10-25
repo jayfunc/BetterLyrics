@@ -1,4 +1,6 @@
-namespace BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Helpers;
+
+namespace BetterLyrics.Core.Events;
 
 /// <summary>
 /// Describes an object that was registered with <see cref="MemoryLeakDetector"/>.

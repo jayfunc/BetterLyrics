@@ -5,8 +5,8 @@ using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Entities;
-using BetterLyrics.Core.ViewModels;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.Extensions.Logging;
 using MimeMapping;
 using System;
 using System.Collections.Generic;
@@ -36,6 +36,7 @@ public partial class SmtcService : ObservableObject, ISmtcService
     private readonly ISettingsService _settingsService;
     private readonly IAudioMixerService _audioMixerService;
     private readonly IPlaybackStateService _playbackStateService;
+    private readonly ILogger<SmtcService> _logger;
 
     private readonly MediaPlayer _mediaPlayer;
     private readonly Timer _positionTimer;
@@ -57,7 +58,8 @@ public partial class SmtcService : ObservableObject, ISmtcService
 
     public SmtcService(ISettingsService settingsService, IFileSystemService fileSystemService,
         IAppUIThreadProvider appUiThreadProvider, IGlobalToastProvider globalToastProvider,
-        IAudioMixerService audioMixerService, IPlaybackStateService playbackStateService)
+        IAudioMixerService audioMixerService, IPlaybackStateService playbackStateService,
+        ILogger<SmtcService> logger)
     {
         _settingsService = settingsService;
         _fileSystemService = fileSystemService;
@@ -65,6 +67,7 @@ public partial class SmtcService : ObservableObject, ISmtcService
         _globalToastProvider = globalToastProvider;
         _audioMixerService = audioMixerService;
         _playbackStateService = playbackStateService;
+        _logger = logger;
 
         PlaybackState = _playbackStateService.CurrentState;
 
@@ -102,12 +105,17 @@ public partial class SmtcService : ObservableObject, ISmtcService
                     sender.Position = targetPos;
                 }
             }
-            catch { }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Failed to restore the saved playback position.");
+            }
         }
     }
 
     private void MediaPlayer_MediaFailed(MediaPlayer sender, MediaPlayerFailedEventArgs args)
     {
+        _logger.LogError("Media playback failed. Error: {Error}; message: {ErrorMessage}; extended code: {ExtendedErrorCode}.",
+            args.Error, args.ErrorMessage, args.ExtendedErrorCode);
         _positionToRestoreOnMediaOpened = null;
     }
 
@@ -193,6 +201,9 @@ public partial class SmtcService : ObservableObject, ISmtcService
         var savedPlaybackPosition = savedPlaybackState.PlaybackPosition;
 
         var playQueueList = playQueue.ToList();
+
+        _logger.LogDebug("Updating playback queue. Tracks: {TrackCount}; recover position: {RecoverPosition}; auto play: {AutoPlay}.",
+            playQueueList.Count, recoverPlaybackPosition, allowAutoPlay);
 
         TrackPlayingQueue.CollectionChanged -= TrackPlayingQueue_CollectionChanged;
         TrackPlayingQueue = [.. playQueueList];
@@ -375,7 +386,10 @@ public partial class SmtcService : ObservableObject, ISmtcService
                 return;
             }
         }
-        catch { }
+        catch (Exception ex)
+        {
+            _logger.LogDebug(ex, "Failed to reset the playback position before switching tracks.");
+        }
 
         var order = _settingsService.AppSettings.MusicGallerySettings.PlaybackOrder;
         if (order == PlaybackOrder.Shuffle)
@@ -454,6 +468,9 @@ public partial class SmtcService : ObservableObject, ISmtcService
 
             _mediaPlayer.Play();
             EnsureVolumeApplied();
+
+            _logger.LogInformation("Playing track: {Title} - {Artist} (queue index {Index}).", queueItem.Track.Title,
+                queueItem.Track.Artist, index);
         }
         else if (index == -1) // 停止播放
         {
@@ -469,6 +486,8 @@ public partial class SmtcService : ObservableObject, ISmtcService
             PlaybackState.PlaybackPosition = TimeSpan.Zero;
 
             PlayingTrack = null;
+
+            _logger.LogInformation("Playback stopped.");
         }
     }
 
@@ -509,6 +528,10 @@ public partial class SmtcService : ObservableObject, ISmtcService
                     await Task.Delay(100);
                 }
             }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "Failed to apply the configured application volume.");
+            }
             finally
             {
                 _isApplyingVolume = false;
@@ -546,7 +569,10 @@ public partial class SmtcService : ObservableObject, ISmtcService
                 });
             }
         }
-        catch { }
+        catch (Exception ex)
+        {
+            _logger.LogDebug(ex, "Failed to read the current playback position.");
+        }
     }
 
     private void PositionTimer_Elapsed(object? sender, ElapsedEventArgs e)
@@ -568,8 +594,9 @@ public partial class SmtcService : ObservableObject, ISmtcService
                 SaveCurrentPlaybackPosition();
             }
         }
-        catch
+        catch (Exception ex)
         {
+            _logger.LogDebug(ex, "Failed to update the media timeline properties.");
         }
     }
 
@@ -606,15 +633,24 @@ public partial class SmtcService : ObservableObject, ISmtcService
                                 {
                                     item.ApplyDisplayProperties(thumbProps);
                                 }
-                                catch { }
+                                catch (Exception ex)
+                                {
+                                    _logger.LogDebug(ex, "Failed to apply album art to media display properties.");
+                                }
                             });
                         }
                     }
-                    catch { }
+                    catch (Exception ex)
+                    {
+                        _logger.LogDebug(ex, "Failed to load album art for media display properties.");
+                    }
                 });
             }
         }
-        catch { }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Failed to update media display properties for {Title}.", track.Title);
+        }
     }
 
     private void TrackPlayingQueue_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
@@ -761,6 +797,8 @@ public partial class SmtcService : ObservableObject, ISmtcService
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Failed to open the media stream for {Title} ({Uri}).", queueItem.Track.Title,
+                queueItem.Track.Uri);
             if (source.CustomProperties.ContainsKey("Stream") == false)
             {
                 sourceStream?.Dispose();

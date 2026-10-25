@@ -89,8 +89,8 @@ namespace BetterLyrics.Core.Helpers
         }
 
         public static async Task<List<Vector3>> GetAccentColorsAsync(
-            byte[]? data, int count, PaletteGeneratorType generatorType, bool? isDark, 
-            double chromaWeight = 1.0, double toneWeight = -0.75, double populationWeight = 3.0, 
+            byte[]? data, int count, PaletteGeneratorType generatorType, bool? isDark,
+            double chromaWeight = 1.0, double toneWeight = -0.75, double populationWeight = 3.0,
             double darkToneThreshold = 75.0, double lightToneThreshold = 25.0)
         {
             var pixels = await GetPixelsAsync(data);

@@ -2,11 +2,12 @@
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Interfaces.ViewModels;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Sdk.Interfaces.Plugins;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using BetterLyrics.Core.Interfaces.ViewModels;
+using Microsoft.Extensions.Logging;
 
 namespace BetterLyrics.Core.ViewModels;
 
@@ -20,16 +21,19 @@ public partial class PluginManagerControlViewModel : ObservableObject, ITransien
     private readonly ISettingsService _settingsService;
     private readonly IWindowManagerProvider _windowManagerProvider;
     private readonly IFilePickerProvider _filePickerProvider;
+    private readonly ILogger<PluginManagerControlViewModel> _logger;
 
     public PluginManagerControlViewModel(IPluginService pluginService, ISettingsService settingsService,
         IGlobalToastProvider globalToastProvider,
-        IWindowManagerProvider windowManagerProvider, IFilePickerProvider filePickerProvider)
+        IWindowManagerProvider windowManagerProvider, IFilePickerProvider filePickerProvider,
+        ILogger<PluginManagerControlViewModel> logger)
     {
         _pluginService = pluginService;
         _settingsService = settingsService;
         _globalToastProvider = globalToastProvider;
         _windowManagerProvider = windowManagerProvider;
         _filePickerProvider = filePickerProvider;
+        _logger = logger;
         AppSettings = _settingsService.AppSettings;
     }
 
@@ -58,6 +62,7 @@ public partial class PluginManagerControlViewModel : ObservableObject, ITransien
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Failed to install plugin from {Path}.", filePath);
                 _globalToastProvider.Show("Error", ex.Message, MessageSeverity.Error);
             }
     }
@@ -76,6 +81,7 @@ public partial class PluginManagerControlViewModel : ObservableObject, ITransien
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Failed to uninstall plugin {PluginId}.", plugin.Id);
             _globalToastProvider.Show("Error", ex.Message, MessageSeverity.Error);
         }
     }

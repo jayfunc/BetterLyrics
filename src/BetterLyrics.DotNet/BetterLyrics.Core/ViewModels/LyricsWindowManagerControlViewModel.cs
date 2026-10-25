@@ -2,16 +2,15 @@ using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Interfaces.ViewModels;
 using BetterLyrics.Core.Messages.AppSettings;
 using BetterLyrics.Core.Messages.SettingsNavigation;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Settings;
-using BetterLyrics.Core.Serialization;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
-using BetterLyrics.Core.Interfaces.ViewModels;
 
 namespace BetterLyrics.Core.ViewModels;
 
@@ -124,7 +123,7 @@ public partial class LyricsWindowManagerControlViewModel : ObservableRecipient, 
     [RelayCommand]
     private void ShowEmbeddedConfigPanel()
     {
-        _settingsService.AppSettings.MusicGallerySettings.LyricsWindowStatus.Name = 
+        _settingsService.AppSettings.MusicGallerySettings.LyricsWindowStatus.Name =
             _localizationService.GetLocalizedString("LyricsWindowSettingsControlConfigMusicGalleryLyrics/Text");
         ShowConfigPanel(_settingsService.AppSettings.MusicGallerySettings.LyricsWindowStatus);
     }

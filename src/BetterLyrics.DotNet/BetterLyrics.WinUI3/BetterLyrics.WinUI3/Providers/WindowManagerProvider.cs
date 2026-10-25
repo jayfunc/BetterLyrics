@@ -10,6 +10,7 @@ using BetterLyrics.WinUI3.Constants;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Microsoft.UI.Windowing;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
@@ -34,6 +35,13 @@ public class WindowManagerProvider : IWindowManagerProvider
 {
     private static readonly List<object> _activeWindows = [];
     private static readonly List<object> _activeAppBars = [];
+
+    private readonly ILogger<WindowManagerProvider> _logger;
+
+    public WindowManagerProvider(ILogger<WindowManagerProvider> logger)
+    {
+        _logger = logger;
+    }
 
     public void HideWindow(object obj, LyricsWindowHideReason reason = LyricsWindowHideReason.UserHidden)
     {
@@ -62,6 +70,7 @@ public class WindowManagerProvider : IWindowManagerProvider
 
         var window = (Window)obj;
 
+        _logger.LogDebug("Hiding window {WindowType}. Reason: {Reason}.", obj.GetType().Name, reason);
         window.Hide();
     }
 
@@ -332,6 +341,7 @@ public class WindowManagerProvider : IWindowManagerProvider
             TrackWindow(window);
 
             var castedWindow = (Window)window;
+            _logger.LogInformation("Created window {WindowType}.", typeof(T).Name);
 
             // Not activate NowPlayingWindow to avoid window flashing
             if (typeof(T) != typeof(LyricsWindowSwitchWindow) && typeof(T) != typeof(NowPlayingWindow))
@@ -354,6 +364,7 @@ public class WindowManagerProvider : IWindowManagerProvider
                 musicGalleryPageViewModel?.HandleAutoPlay();
             }
 
+            _logger.LogDebug("Showing existing window {WindowType}.", typeof(T).Name);
             var castedWindow = (Window)window;
             castedWindow.Activate();
             castedWindow.SetForegroundWindow();
@@ -379,7 +390,9 @@ public class WindowManagerProvider : IWindowManagerProvider
     public void RestartApp(string args = "")
     {
         // The restart will be executed immediately.
+        _logger.LogInformation("Restarting application. Arguments: {Arguments}.", args);
         var failureReason = AppInstance.Restart(args);
+        _logger.LogInformation("Application restart requested. Result: {FailureReason}.", failureReason);
 
         // If the restart fails, handle it here.
         switch (failureReason)
@@ -395,6 +408,7 @@ public class WindowManagerProvider : IWindowManagerProvider
 
     public void ExitApp()
     {
+        _logger.LogInformation("Exiting application.");
         try
         {
             var smtcService = Ioc.Default.GetService<ISmtcService>();
@@ -406,7 +420,10 @@ public class WindowManagerProvider : IWindowManagerProvider
             var settingsService = Ioc.Default.GetService<ISettingsService>();
             settingsService?.TryWriteImmediately();
         }
-        catch { }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Failed to persist application state during exit.");
+        }
 
         EnsureAllWorkAreasReleased();
 

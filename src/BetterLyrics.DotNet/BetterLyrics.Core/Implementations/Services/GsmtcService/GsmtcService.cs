@@ -21,7 +21,6 @@ using CommunityToolkit.Mvvm.Messaging;
 using EvtSource;
 using Microsoft.Extensions.Logging;
 using System.Collections.Specialized;
-using System.Diagnostics;
 using System.Text.Json;
 
 namespace BetterLyrics.Core.Implementations.Services.GsmtcService;
@@ -173,8 +172,9 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
         {
             await (_currentDesiredSession?.TryStopAsync() ?? Task.CompletedTask);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            _logger.LogWarning(ex, "Failed to stop the current media session.");
         }
     }
 
@@ -372,6 +372,7 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Failed to initialize the Windows media manager.");
             _globalToastProvider.Show("Error", ex.Message, MessageSeverity.Error);
             return;
         }
@@ -384,6 +385,7 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
         if (firstTime || desiredSession != _currentDesiredSession)
         {
             _currentDesiredSession = desiredSession;
+            _logger.LogDebug("Active media session changed to {SessionId}.", desiredSession?.SessionId);
             SendFocusedMessages();
         }
     }
@@ -733,8 +735,9 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
             MediaManager_OnAnyMediaPropertyChanged(_currentDesiredSession);
             MediaManager_OnAnyPlaybackStateChanged(_currentDesiredSession);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            _logger.LogDebug(ex, "Failed to refresh the focused media session; clearing the current song.");
             MediaManager_OnAnyTimelinePropertyChanged(null);
             MediaManager_OnAnyMediaPropertyChanged(null);
             MediaManager_OnAnyPlaybackStateChanged(null);
@@ -790,6 +793,7 @@ public partial class GsmtcService : ObservableObject, IGsmtcService,
 
     private void LXMusicSse_Disconnected(object sender, DisconnectEventArgs e)
     {
+        _logger.LogDebug("LX Music SSE disconnected. Reconnecting in {Delay}.", e.ReconnectDelay);
         _appUIThreadProvider.RunAsync(async () =>
         {
             await Task.Delay(e.ReconnectDelay);

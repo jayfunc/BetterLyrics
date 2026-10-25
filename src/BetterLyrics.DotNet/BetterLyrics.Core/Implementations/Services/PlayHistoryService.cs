@@ -2,6 +2,7 @@ using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Entities;
 using BetterLyrics.Core.Models.Stats;
 using LiteDB;
+using Microsoft.Extensions.Logging;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
@@ -11,10 +12,12 @@ namespace BetterLyrics.Core.Implementations.Services;
 public class PlayHistoryService : IPlayHistoryService
 {
     private readonly IDatabaseService _databaseService;
+    private readonly ILogger<PlayHistoryService> _logger;
 
-    public PlayHistoryService(IDatabaseService databaseService)
+    public PlayHistoryService(IDatabaseService databaseService, ILogger<PlayHistoryService> logger)
     {
         _databaseService = databaseService;
+        _logger = logger;
 
         var col = _databaseService.PlayHistoryDb.GetCollection<PlayHistoryItem>("playHistory");
 
@@ -24,7 +27,10 @@ public class PlayHistoryService : IPlayHistoryService
             col.DropIndex("Artist");
             col.DropIndex("PlayerId");
         }
-        catch { }
+        catch (Exception ex)
+        {
+            _logger.LogDebug(ex, "Failed to drop legacy play history indexes.");
+        }
 
         col.EnsureIndex(x => x.StartedAt);
     }
@@ -40,6 +46,9 @@ public class PlayHistoryService : IPlayHistoryService
 
         var col = GetCollection();
         col.Insert(item);
+
+        _logger.LogDebug("Added play history record: {Title} - {Artist} ({PlayerId}).", item.Title, item.Artist,
+            item.PlayerId);
 
         return Task.CompletedTask;
     }
@@ -144,6 +153,7 @@ public class PlayHistoryService : IPlayHistoryService
     {
         var col = GetCollection();
         col.Delete(id);
+        _logger.LogDebug("Deleted play history record {Id}.", id);
         return Task.CompletedTask;
     }
 
@@ -151,6 +161,7 @@ public class PlayHistoryService : IPlayHistoryService
     {
         var col = GetCollection();
         col.DeleteAll();
+        _logger.LogInformation("Play history cleared.");
         return Task.CompletedTask;
     }
 
@@ -239,6 +250,8 @@ public class PlayHistoryService : IPlayHistoryService
             var col = GetCollection();
             col.InsertBulk(batchList);
         }
+
+        _logger.LogInformation("Generated {Count} test play history records.", batchList.Count);
 
         return Task.CompletedTask;
     }

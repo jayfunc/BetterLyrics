@@ -1,10 +1,26 @@
 ﻿using BetterLyrics.Core.Constants;
-using System.Diagnostics;
+using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace BetterLyrics.Core.Helpers;
 
 public class Debouncer : IDisposable
 {
+    private static ILogger<Debouncer>? Logger
+    {
+        get
+        {
+            try
+            {
+                return Ioc.Default.GetService<ILogger<Debouncer>>();
+            }
+            catch
+            {
+                return null;
+            }
+        }
+    }
+
     private long _currentVersion;
     private CancellationTokenSource? _delayCts;
     private CancellationTokenSource? _executeCts;
@@ -102,7 +118,7 @@ public class Debouncer : IDisposable
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"Debouncer Execute Error: {ex.Message}");
+                Logger?.LogError(ex, "A debounced background operation failed.");
             }
         }
     }

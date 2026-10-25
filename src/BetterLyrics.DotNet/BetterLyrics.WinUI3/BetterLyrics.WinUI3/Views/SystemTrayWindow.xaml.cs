@@ -1,7 +1,6 @@
 using BetterLyrics.Core.Enums;
 using BetterLyrics.WinUI3.Extensions;
 using Microsoft.UI.Windowing;
-using WinUIEx;
 
 namespace BetterLyrics.WinUI3.Views
 {

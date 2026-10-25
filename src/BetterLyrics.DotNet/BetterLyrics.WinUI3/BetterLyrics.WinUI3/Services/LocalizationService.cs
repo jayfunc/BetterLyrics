@@ -1,15 +1,19 @@
 using BetterLyrics.Core.Interfaces.Services;
+using Microsoft.Extensions.Logging;
 using Microsoft.Windows.ApplicationModel.Resources;
+using System;
 
 namespace BetterLyrics.WinUI3.Services;
 
 public class LocalizationService : ILocalizationService
 {
+    private readonly ILogger<LocalizationService> _logger;
     private readonly ResourceManager _resourceManager = new();
     private readonly ResourceMap _resourceMap;
 
-    public LocalizationService()
+    public LocalizationService(ILogger<LocalizationService> logger)
     {
+        _logger = logger;
         _resourceMap = _resourceManager.MainResourceMap.GetSubtree("Resources");
     }
 
@@ -24,10 +28,12 @@ public class LocalizationService : ILocalizationService
             {
                 return candidate.ValueAsString;
             }
+
+            _logger.LogDebug("Localized string \"{ResourceId}\" was not found.", id);
         }
-        catch
+        catch (Exception ex)
         {
-            // Fallback in case TryGetValue throws or something unexpected happens
+            _logger.LogWarning(ex, "Failed to read localized string \"{ResourceId}\".", id);
         }
         return string.Empty;
     }

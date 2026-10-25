@@ -1,14 +1,9 @@
-using BetterLyrics.Core.Messages.LayoutChanged;
-using BetterLyrics.Core.Messages.LyricsWindow;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Domain;
-using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helpers;
-using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using System;
 using System.Linq;
 
 namespace BetterLyrics.WinUI3.Controls;

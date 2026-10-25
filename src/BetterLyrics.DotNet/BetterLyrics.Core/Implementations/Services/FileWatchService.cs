@@ -3,11 +3,10 @@ using BetterLyrics.Core.Events;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Messages.MediaLibrary;
 using BetterLyrics.Core.Models.Settings;
-using BetterLyrics.Core.ViewModels;
 using CommunityToolkit.Mvvm.Messaging;
+using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
 using System.Collections.Specialized;
-using System.Diagnostics;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
@@ -21,14 +20,17 @@ public class FileWatchService : IDisposable, IFileWatchService,
     private const int DebounceDelay = 2000;
     private readonly ConcurrentDictionary<string, CancellationTokenSource> _debounceTokens = new();
     private readonly IFileSystemService _fileSystemService;
+    private readonly ILogger<FileWatchService> _logger;
 
     private readonly ISettingsService _settingsService;
     private readonly Dictionary<string, FileSystemWatcher> _watchers = [];
 
-    public FileWatchService(ISettingsService settingsService, IFileSystemService fileSystemService)
+    public FileWatchService(ISettingsService settingsService, IFileSystemService fileSystemService,
+        ILogger<FileWatchService> logger)
     {
         _settingsService = settingsService;
         _fileSystemService = fileSystemService;
+        _logger = logger;
 
         _settingsService.AppSettings.LocalMediaFolders.CollectionChanged += LocalMediaFolders_CollectionChanged;
         UpdateWatchers();
@@ -39,6 +41,9 @@ public class FileWatchService : IDisposable, IFileWatchService,
     private void OnChangedWithDebounce(MediaFolder folder, FileSystemEventArgs e)
     {
         if (e.Name != null && (e.Name.StartsWith("~$") || e.Name.EndsWith(".tmp"))) return;
+
+        _logger.LogDebug("File change detected in \"{Folder}\": {ChangeType} {Name}.", folder.Name, e.ChangeType,
+            e.Name);
 
         var key = folder.Id;
 
@@ -66,7 +71,8 @@ public class FileWatchService : IDisposable, IFileWatchService,
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"FileWatch Error: {ex.Message}");
+                _logger.LogError(ex, "Real-time scan failed for folder \"{Folder}\" triggered by {ChangeType}.",
+                    folder.Name, e.ChangeType);
             }
             finally
             {
@@ -113,6 +119,7 @@ public class FileWatchService : IDisposable, IFileWatchService,
         foreach (var key in _watchers.Keys.ToList())
             if (!folders.Any(x => x.Id == key))
             {
+                _logger.LogDebug("Stopping file watcher for folder {FolderId}.", key);
                 _watchers[key].EnableRaisingEvents = false;
                 _watchers[key].Dispose();
                 _watchers.Remove(key);
@@ -144,11 +151,15 @@ public class FileWatchService : IDisposable, IFileWatchService,
 
                         watcher.EnableRaisingEvents = true;
                         _watchers[folder.Id] = watcher;
+
+                        _logger.LogDebug("Started file watcher for \"{Folder}\" at {Path}.", folder.Name,
+                            folder.UriPath);
                     }
                 }
                 catch (Exception ex)
                 {
-                    Debug.WriteLine($"Failed to start watcher for {folder.UriPath}: {ex.Message}");
+                    _logger.LogWarning(ex, "Failed to start file watcher for \"{Folder}\" at {Path}.",
+                        folder.Name, folder.UriPath);
                 }
     }
 

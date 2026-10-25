@@ -3,16 +3,12 @@ using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Helpers.Lyrics;
 using BetterLyrics.Core.Interfaces.Providers;
-using BetterLyrics.Core.Messages.SettingsNavigation;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.ViewModels;
-using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Windows.Storage;
 

@@ -11,7 +11,6 @@ using CommunityToolkit.Mvvm.Messaging;
 using LiteDB;
 using Microsoft.Extensions.Logging;
 using System.Collections.Concurrent;
-using System.Diagnostics;
 using System.Security.Cryptography;
 using LyricsMetadataParser = BetterLyrics.Core.Helpers.Lyrics.MetadataParser.LyricsMetadataParser;
 
@@ -169,6 +168,8 @@ public class FileSystemService : IFileSystemService,
                 var col = GetCollection();
                 col.DeleteMany(x => x.MediaFolderId == folder.Id);
                 _databaseService.FilesIndexDb.Rebuild();
+
+                _logger.LogInformation("Cleared file index cache for media folder \"{Folder}\".", folder.Name);
             }
             finally
             {
@@ -197,6 +198,8 @@ public class FileSystemService : IFileSystemService,
         using var scanCts = CancellationTokenSource.CreateLinkedTokenSource(token);
         _activeScanTokens[folder.Id] = scanCts;
 
+        _logger.LogDebug("Scanning media folder \"{Folder}\" at {Path}.", folder.Name, folder.UriPath);
+
         _appUIThreadProvider.Execute(() =>
         {
             folder.StatusSeverity = MessageSeverity.Informational;
@@ -205,9 +208,11 @@ public class FileSystemService : IFileSystemService,
             folder.StatusText = _localizationService.GetLocalizedString("FileSystemServiceWaitingForScan");
         });
 
+        var lockAcquired = false;
         try
         {
             await _folderScanLock.WaitAsync(scanCts.Token);
+            lockAcquired = true;
 
             _appUIThreadProvider.Execute(() =>
                 folder.StatusText = _localizationService.GetLocalizedString("FileSystemServiceConnecting"));
@@ -215,6 +220,8 @@ public class FileSystemService : IFileSystemService,
             using var fs = folder.CreateFileSystem();
             if (fs == null || !await fs.ConnectAsync())
             {
+                _logger.LogWarning("Failed to connect to media folder \"{Folder}\" at {Path}.", folder.Name,
+                    folder.UriPath);
                 _appUIThreadProvider.Execute(() =>
                 {
                     folder.StatusSeverity = MessageSeverity.Error;
@@ -392,7 +399,8 @@ public class FileSystemService : IFileSystemService,
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "ScanMediaFolderAsync");
+                    _logger.LogWarning(ex, "Failed to parse metadata for \"{File}\" in folder \"{Folder}\".",
+                        item.FileName, folder.Name);
                 }
             }
 
@@ -402,13 +410,18 @@ public class FileSystemService : IFileSystemService,
                 folder.StatusText = _localizationService.GetLocalizedString("FileSystemServiceReady");
                 folder.LastSyncTime = DateTime.Now;
             });
+
+            _logger.LogInformation("Media folder \"{Folder}\" scanned. Files processed: {FileCount}.",
+                folder.Name, total);
         }
         catch (OperationCanceledException)
         {
-            // 正常取消
+            _logger.LogDebug("Scanning media folder \"{Folder}\" was cancelled.", folder.Name);
         }
         catch (Exception ex)
         {
+            _logger.LogError(ex, "Failed to scan media folder \"{Folder}\" at {Path}.", folder.Name,
+                folder.UriPath);
             _appUIThreadProvider.Execute(() =>
             {
                 folder.StatusText = ex.Message;
@@ -417,7 +430,11 @@ public class FileSystemService : IFileSystemService,
         }
         finally
         {
-            _folderScanLock.Release();
+            if (lockAcquired)
+            {
+                _folderScanLock.Release();
+            }
+
             _activeScanTokens.TryRemove(folder.Id, out _);
 
             _appUIThreadProvider.Execute(() =>
@@ -483,7 +500,7 @@ public class FileSystemService : IFileSystemService,
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"Network sync error: {ex.Message}");
+            _logger.LogWarning(ex, "Failed to fetch the remote file list for media folder {FolderId}.", configId);
             return [];
         }
 
@@ -577,7 +594,7 @@ public class FileSystemService : IFileSystemService,
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"Database sync error: {ex.Message}");
+            _logger.LogError(ex, "Failed to synchronize file index for media folder {FolderId}.", configId);
             return [];
         }
     }
@@ -618,7 +635,7 @@ public class FileSystemService : IFileSystemService,
             }
             catch (Exception ex)
             {
-                Debug.WriteLine($"文件夹 {folder.Name} 定时扫描出错: {ex.Message}");
+                _logger.LogError(ex, "Periodic scan timer failed for media folder \"{Folder}\".", folder.Name);
             }
         }, newCts.Token);
     }
@@ -643,8 +660,9 @@ public class FileSystemService : IFileSystemService,
 
             return localPath;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            _logger.LogWarning(ex, "Failed to save album art to disk for track \"{Title}\".", track.Title);
             return null;
         }
     }

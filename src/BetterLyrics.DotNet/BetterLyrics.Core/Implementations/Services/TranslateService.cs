@@ -1,6 +1,7 @@
 using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Serialization;
+using Microsoft.Extensions.Logging;
 using NLanguageTag;
 using System.Text.Json;
 
@@ -9,9 +10,11 @@ namespace BetterLyrics.Core.Implementations.Services;
 /// <summary>
 /// Singleton Service
 /// </summary>
-public class TranslationService(ISettingsService settingsService, IPluginService pluginService, IHttpClientFactory httpClientFactory) : ITranslationService
+public class TranslationService(ISettingsService settingsService, IPluginService pluginService,
+    IHttpClientFactory httpClientFactory, ILogger<TranslationService> logger) : ITranslationService
 {
     private readonly HttpClient _client = httpClientFactory.CreateClient();
+    private readonly ILogger<TranslationService> _logger = logger;
     private readonly IPluginService _pluginService = pluginService;
     private readonly ISettingsService _settingsService = settingsService;
 
@@ -19,6 +22,7 @@ public class TranslationService(ISettingsService settingsService, IPluginService
     {
         if (string.IsNullOrWhiteSpace(text))
         {
+            _logger.LogWarning("Translation skipped because the source text is empty.");
             throw new Exception(text + " is empty or null.");
         }
 
@@ -30,8 +34,11 @@ public class TranslationService(ISettingsService settingsService, IPluginService
 
         if (string.IsNullOrEmpty(_settingsService.AppSettings.TranslationSettings.LibreTranslateServer))
         {
+            _logger.LogWarning("Translation failed because the LibreTranslate server URL is not configured.");
             throw new Exception("LibreTranslate server URL is not set in settings.");
         }
+
+        _logger.LogDebug("Translating lyrics text to {TargetLanguage}.", targetLangTag);
 
         var url = $"{_settingsService.AppSettings.TranslationSettings.LibreTranslateServer}/translate";
         var requestBody = new FormUrlEncodedContent(
@@ -42,7 +49,16 @@ public class TranslationService(ISettingsService settingsService, IPluginService
         ]);
         var response = await _client.PostAsync(url, requestBody, token);
 
-        response.EnsureSuccessStatusCode();
+        try
+        {
+            response.EnsureSuccessStatusCode();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "LibreTranslate request failed with status code {StatusCode}.", response.StatusCode);
+            throw;
+        }
+
         var json = await response.Content.ReadAsStringAsync(token);
 
         var result = JsonSerializer.Deserialize(json, SourceGenerationContext.Default.LibreTranslateResponse);

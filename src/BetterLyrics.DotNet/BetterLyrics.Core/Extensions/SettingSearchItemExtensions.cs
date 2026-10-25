@@ -48,6 +48,10 @@ public static class SettingSearchItemExtensions
         new SettingSearchItem { Uid = "AppSettingsControlSystemTrayDoubleClickCallback", Section = SettingsSection.App, Subsection = AppSettingsSection.SystemTray },
         new SettingSearchItem { Uid = "AppSettingsControlSystemTrayMiddleClickCallback", Section = SettingsSection.App, Subsection = AppSettingsSection.SystemTray },
 
+        // App apperance and behavior settings - Advanced settings
+
+        new SettingSearchItem { Uid = "SettingsPageWriteDebugLogs", Section = SettingsSection.App, Subsection = AppSettingsSection.Advanced },
+
         // Media library settings
 
         new SettingSearchItem { Uid = "SettingsPageMusicLib", Section = SettingsSection.MediaLib, Subsection = null },

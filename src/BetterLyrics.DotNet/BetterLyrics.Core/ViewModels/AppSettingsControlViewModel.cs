@@ -1,6 +1,7 @@
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
+using BetterLyrics.Core.Interfaces.ViewModels;
 using BetterLyrics.Core.Messages.AppSettings;
 using BetterLyrics.Core.Messages.SettingsNavigation;
 using BetterLyrics.Core.Models;
@@ -9,8 +10,6 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using CommunityToolkit.Mvvm.Messaging;
 using System.Collections.ObjectModel;
-using BetterLyrics.Core.Interfaces.ViewModels;
-using System.Diagnostics;
 
 namespace BetterLyrics.Core.ViewModels;
 
@@ -21,6 +20,7 @@ public partial class AppSettingsControlViewModel : ObservableRecipient, ITransie
     IRecipient<LanguageCodeChangedMessage>,
     IRecipient<GlobalFontFamilyChangedMessage>,
     IRecipient<EnhanceControlInteractiveAnimationsChangedMessage>,
+    IRecipient<WriteDebugLogsChangedMessage>,
     IRecipient<AppSettingsNavigationRequestedMessage>
 {
     private readonly IWindowManagerProvider _windowManagerProvider;
@@ -31,6 +31,7 @@ public partial class AppSettingsControlViewModel : ObservableRecipient, ITransie
     private readonly string _initialLanguageCode;
     private readonly string _initialGlobalFontFamily;
     private readonly bool _initialEnhanceControlInteractiveAnimations;
+    private readonly bool _initialWriteDebugLogs;
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsRestartRequired))]
@@ -44,7 +45,12 @@ public partial class AppSettingsControlViewModel : ObservableRecipient, ITransie
     [NotifyPropertyChangedFor(nameof(IsRestartRequired))]
     public partial bool IsEnhanceControlInteractiveAnimationsChanged { get; set; }
 
-    public bool IsRestartRequired => IsLanguageChanged || IsGlobalFontChanged || IsEnhanceControlInteractiveAnimationsChanged;
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(IsRestartRequired))]
+    public partial bool IsWriteDebugLogsChanged { get; set; }
+
+    public bool IsRestartRequired => IsLanguageChanged || IsGlobalFontChanged ||
+                                     IsEnhanceControlInteractiveAnimationsChanged || IsWriteDebugLogsChanged;
 
     public ObservableCollection<AppSettingsNavMenuItem> NavItems { get; } = [];
     [ObservableProperty] public partial AppSettingsNavMenuItem? SelectedNavItem { get; set; }
@@ -63,6 +69,7 @@ public partial class AppSettingsControlViewModel : ObservableRecipient, ITransie
         _initialLanguageCode = AppSettings.GeneralSettings.LanguageCode;
         _initialGlobalFontFamily = AppSettings.GeneralSettings.GlobalFontFamily;
         _initialEnhanceControlInteractiveAnimations = AppSettings.GeneralSettings.EnhanceControlInteractiveAnimations;
+        _initialWriteDebugLogs = AppSettings.AdvancedSettings.WriteDebugLogs;
 
         NavItems.Add(new AppSettingsNavMenuItem
         {
@@ -83,6 +90,11 @@ public partial class AppSettingsControlViewModel : ObservableRecipient, ITransie
         {
             Label = _localizationService.GetLocalizedString("AppSettingsControlSystemTray/Text"),
             Section = AppSettingsSection.SystemTray
+        });
+        NavItems.Add(new AppSettingsNavMenuItem
+        {
+            Label = _localizationService.GetLocalizedString("SettingsPageAdvanced/Text"),
+            Section = AppSettingsSection.Advanced
         });
         SelectedNavItem = NavItems[0];
     }
@@ -106,6 +118,11 @@ public partial class AppSettingsControlViewModel : ObservableRecipient, ITransie
     public void Receive(EnhanceControlInteractiveAnimationsChangedMessage message)
     {
         IsEnhanceControlInteractiveAnimationsChanged = message.Value != _initialEnhanceControlInteractiveAnimations;
+    }
+
+    public void Receive(WriteDebugLogsChangedMessage message)
+    {
+        IsWriteDebugLogsChanged = message.Value != _initialWriteDebugLogs;
     }
 
     public void Receive(AppSettingsNavigationRequestedMessage message)

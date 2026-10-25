@@ -2,6 +2,7 @@ using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
 using DiscordRPC;
+using Microsoft.Extensions.Logging;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
@@ -11,14 +12,16 @@ namespace BetterLyrics.Core.Implementations.Services;
 public class DiscordService : IDiscordService
 {
     private readonly ISongSearchMapService _songSearchMapService;
+    private readonly ILogger<DiscordService> _logger;
     private DiscordRpcClient? _client;
 
     public User? CurrentUser { get; private set; }
     public event EventHandler<User?>? UserChanged;
 
-    public DiscordService(ISongSearchMapService songSearchMapService)
+    public DiscordService(ISongSearchMapService songSearchMapService, ILogger<DiscordService> logger)
     {
         _songSearchMapService = songSearchMapService;
+        _logger = logger;
         Enable();
     }
 
@@ -26,13 +29,24 @@ public class DiscordService : IDiscordService
     {
         if (_client == null)
         {
-            _client = new DiscordRpcClient(Discord.AppID);
-            _client.OnReady += (sender, args) =>
+            try
             {
-                CurrentUser = args.User;
-                UserChanged?.Invoke(this, CurrentUser);
-            };
-            _client.Initialize();
+                _client = new DiscordRpcClient(Discord.AppID);
+                _client.OnReady += (sender, args) =>
+                {
+                    CurrentUser = args.User;
+                    _logger.LogInformation("Discord Rich Presence connected as {UserName}.", CurrentUser?.Username);
+                    UserChanged?.Invoke(this, CurrentUser);
+                };
+                _client.Initialize();
+                _logger.LogDebug("Discord Rich Presence client initialized.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Failed to initialize Discord Rich Presence.");
+                _client?.Dispose();
+                _client = null;
+            }
         }
     }
 
@@ -47,6 +61,9 @@ public class DiscordService : IDiscordService
             var end = DateTime.UtcNow.AddMilliseconds(songInfo.DurationMs).Subtract(currentPosition ?? TimeSpan.Zero);
             timestamps = new Timestamps { Start = start, End = end };
         }
+
+        _logger.LogDebug("Updating Discord Rich Presence: {Title} - {Artist} (playing: {IsPlaying}).",
+            mappedTitle, mappedArtist, isPlaying);
 
         _client?.SetPresence(new RichPresence
         {
@@ -66,6 +83,7 @@ public class DiscordService : IDiscordService
 
     public void ClearRichPresence()
     {
+        _logger.LogDebug("Clearing Discord Rich Presence.");
         _client?.ClearPresence();
     }
 
@@ -73,6 +91,7 @@ public class DiscordService : IDiscordService
     {
         if (_client != null)
         {
+            _logger.LogInformation("Disabling Discord Rich Presence.");
             _client.ClearPresence();
             _client.Dispose();
             _client = null;

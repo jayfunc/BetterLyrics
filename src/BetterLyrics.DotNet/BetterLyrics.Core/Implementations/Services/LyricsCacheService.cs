@@ -4,6 +4,7 @@ using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Entities;
 using LiteDB;
+using Microsoft.Extensions.Logging;
 
 namespace BetterLyrics.Core.Implementations.Services;
 
@@ -13,10 +14,12 @@ namespace BetterLyrics.Core.Implementations.Services;
 public class LyricsCacheService : ILyricsCacheService
 {
     private readonly IDatabaseService _databaseService;
+    private readonly ILogger<LyricsCacheService> _logger;
 
-    public LyricsCacheService(IDatabaseService databaseService)
+    public LyricsCacheService(IDatabaseService databaseService, ILogger<LyricsCacheService> logger)
     {
         _databaseService = databaseService;
+        _logger = logger;
 
         var col = _databaseService.LyricsCacheDb.GetCollection<LyricsCacheItem>("lyricsCache");
         col.EnsureIndex(x => x.CacheKey);
@@ -34,6 +37,9 @@ public class LyricsCacheService : ILyricsCacheService
         var key = songInfo.GetCacheKey();
 
         var existingItem = col.FindOne(x => x.CacheKey == key && x.Provider == provider);
+
+        _logger.LogDebug("Lyrics cache {CacheStatus} for provider {Provider}: {Title} - {Artist}.",
+            existingItem == null ? "miss" : "hit", provider, songInfo.Title, songInfo.Artist);
 
         return await Task.FromResult(existingItem);
     }
@@ -70,6 +76,9 @@ public class LyricsCacheService : ILyricsCacheService
             col.Update(existingItem);
         }
 
+        _logger.LogDebug("Lyrics cache saved for provider {Provider}: {Title} - {Artist}.", result.Provider,
+            songInfo.Title, songInfo.Artist);
+
         return Task.CompletedTask;
     }
 
@@ -78,6 +87,7 @@ public class LyricsCacheService : ILyricsCacheService
         var col = GetCollection();
         col.DeleteAll();
         _databaseService.LyricsCacheDb.Rebuild();
+        _logger.LogInformation("Lyrics cache cleared and rebuilt.");
         return Task.CompletedTask;
     }
 }

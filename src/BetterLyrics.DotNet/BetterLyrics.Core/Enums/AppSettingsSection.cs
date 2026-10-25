@@ -1,4 +1,4 @@
-﻿namespace BetterLyrics.Core.Enums;
+namespace BetterLyrics.Core.Enums;
 
 public enum AppSettingsSection
 {
@@ -6,4 +6,5 @@ public enum AppSettingsSection
     Window,
     Shortcut,
     SystemTray,
+    Advanced,
 }

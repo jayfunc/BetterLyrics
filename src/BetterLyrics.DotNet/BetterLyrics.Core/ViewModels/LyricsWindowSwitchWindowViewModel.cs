@@ -1,5 +1,5 @@
-using CommunityToolkit.Mvvm.ComponentModel;
 using BetterLyrics.Core.Interfaces.ViewModels;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BetterLyrics.Core.ViewModels;
 

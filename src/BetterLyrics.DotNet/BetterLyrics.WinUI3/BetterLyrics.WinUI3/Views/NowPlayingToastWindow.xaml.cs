@@ -1,5 +1,4 @@
 using BetterLyrics.Core.Enums;
-using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Messages.AppSettings;
 using BetterLyrics.Core.Models;

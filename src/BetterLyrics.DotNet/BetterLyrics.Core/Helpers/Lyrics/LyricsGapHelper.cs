@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-
 namespace BetterLyrics.Core.Helpers.Lyrics;
 
 /// <summary>

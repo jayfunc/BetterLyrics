@@ -12,6 +12,7 @@ using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.ViewModels;
 using BetterLyrics.Core.ViewModels.MusicGalleryPageViewModel;
+using BetterLyrics.WinUI3.Logging;
 using BetterLyrics.WinUI3.Providers;
 using BetterLyrics.WinUI3.Services;
 using BetterLyrics.WinUI3.UITest;
@@ -23,7 +24,6 @@ using Microsoft.UI.Dispatching;
 using Microsoft.UI.Xaml;
 using Microsoft.Windows.AppLifecycle;
 using Serilog;
-using Serilog.Events;
 using System;
 using System.Diagnostics;
 using System.Linq;
@@ -69,6 +69,10 @@ public class Program
                 ConfigureServices();
 
                 _logger = Ioc.Default.GetRequiredService<ILogger<Program>>();
+
+                _logger.LogInformation(
+                    "BetterLyrics starting. Version: {Version}; log level: {LogLevel}; process id: {ProcessId}.",
+                    MetadataHelper.AppVersion, AppLogging.MinimumLevel, Environment.ProcessId);
 
                 _ = new App();
 
@@ -122,6 +126,8 @@ public class Program
     private static void HandleActivation(AppActivationArguments args, bool init = false)
     {
         var kind = args.Kind;
+        _logger?.LogDebug("Activation received. Kind: {Kind}; initial: {IsInitial}.", kind, init);
+
         if (kind == ExtendedActivationKind.File)
         {
             _ = HandleFileActivationAsync(args);
@@ -129,6 +135,10 @@ public class Program
         else if (kind == ExtendedActivationKind.Protocol)
         {
             _ = HandleProtocolActivationAsync(args);
+        }
+        else if (kind == ExtendedActivationKind.Launch && !init)
+        {
+            _logger?.LogDebug("App launched by the user without a specific activation target.");
         }
         else if (!init)
         {
@@ -152,6 +162,10 @@ public class Program
                 var pluginManagerControlViewModel = Ioc.Default.GetRequiredService<PluginManagerControlViewModel>();
                 await pluginManagerControlViewModel.InstallPluginAsync(file.Path);
             }
+            else
+            {
+                _logger?.LogWarning("File activation ignored: only storage files are supported.");
+            }
         }
     }
 
@@ -161,6 +175,8 @@ public class Program
 
         if (args.Data is IProtocolActivatedEventArgs protocolArgs)
         {
+            _logger?.LogDebug("Protocol activation received: {Uri}.", protocolArgs.Uri);
+
             if (protocolArgs.Uri.Host == "settings")
             {
                 var segments = protocolArgs.Uri.Segments.Select(s => s.Trim('/')).Where(s => !string.IsNullOrEmpty(s)).ToArray();
@@ -239,113 +255,110 @@ public class Program
 
     private static void ConfigureServices()
     {
-        Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Is(LogEventLevel.Verbose)
-            .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Error)
-            .MinimumLevel.Override("Microsoft.Extensions.Http", LogEventLevel.Error)
-            .MinimumLevel.Override("System.Net.Http.HttpClient", LogEventLevel.Warning)
-            .WriteTo.File(PathHelper.LogFilePattern, rollingInterval: RollingInterval.Day)
-            .CreateLogger();
+        AppLogging.Initialize();
+
+        Log.Information("Logging initialized. File: {LogFile}; minimum level: {MinimumLevel}.", PathHelper.LogFilePattern, AppLogging.MinimumLevel);
 
         var services = new ServiceCollection()
-                // HTTP Client
-                // 单例 Service 会长期持有 HttpClient，通过 PooledConnectionLifetime 定期回收底层连接，
-                // 以便 DNS 变化能够生效（否则长生命周期 HttpClient 会一直复用旧连接）。
-                .AddHttpClient()
-                .ConfigureHttpClientDefaults(builder => builder.ConfigurePrimaryHttpMessageHandler(() =>
-                    new SocketsHttpHandler
-                    {
-                        PooledConnectionLifetime = TimeSpan.FromMinutes(5)
-                    }))
-
-                // 数据库服务和迁移
-                .AddSingleton<IDatabaseService, DatabaseService>()
-                .AddSingleton<IDatabaseMigrationService, DatabaseMigrationService>()
-                .AddSingleton<IPlayHistoryService, PlayHistoryService>()
-                .AddSingleton<IFileSystemService, FileSystemService>()
-                .AddSingleton<ISongSearchMapService, SongSearchMapService>()
-                .AddSingleton<IPlaybackStateService, PlaybackStateService>()
-
-                // 日志
-                .AddLogging(loggingBuilder =>
+            // HTTP Client
+            .AddHttpClient()
+            .ConfigureHttpClientDefaults(builder => builder.ConfigurePrimaryHttpMessageHandler(() =>
+                new SocketsHttpHandler
                 {
-                    loggingBuilder.ClearProviders();
-                    loggingBuilder.AddSerilog();
-                })
+                    PooledConnectionLifetime = TimeSpan.FromMinutes(5)
+                }))
 
-                // Services
-                .AddSingleton<ISettingsService, SettingsService>()
-                .AddSingleton<ISmtcService, SmtcService>()
-                .AddSingleton<IGsmtcService, GsmtcService>()
-                .AddSingleton<IAlbumArtSearchService, AlbumArtSearchService>()
-                .AddSingleton<ILyricsSearchService, LyricsSearchService>()
-                .AddSingleton<ITranslationService, TranslationService>()
-                .AddSingleton<ITransliterationService, TransliterationService>()
-                .AddSingleton<ILastFmService, LastFmService>()
-                .AddSingleton<IDiscordService, DiscordService>()
-                .AddSingleton<ILocalizationService, LocalizationService>()
-                .AddSingleton<ILyricsCacheService, LyricsCacheService>()
-                .AddSingleton<IPluginService, PluginService>()
-                .AddSingleton<IFileWatchService, FileWatchService>()
-                .AddSingleton<IAppUpdateService, AppUpdateService>()
-                .AddSingleton<INavigationService, NavigationService>()
-                .AddSingleton<IAppLifecycleService, AppLifecycleService>()
-                .AddSingleton<IAudioMixerService, AudioMixerService>()
-                .AddSingleton<IGlobalShortcutService, GlobalShortcutService>()
-                .AddSingleton<IScreenKeeperService, ScreenKeeperService>()
-                .AddSingleton<IWallpaperEngineService, WallpaperEngineService>()
-                .AddSingleton<ILyricsWindowVisibilityService, LyricsWindowVisibilityService>()
-                .AddSingleton<IWallpaperEngineLyricsWindowService, WallpaperEngineLyricsWindowService>()
+            // 数据库服务和迁移
+            .AddSingleton<IDatabaseService, DatabaseService>()
+            .AddSingleton<IDatabaseMigrationService, DatabaseMigrationService>()
+            .AddSingleton<IPlayHistoryService, PlayHistoryService>()
+            .AddSingleton<IFileSystemService, FileSystemService>()
+            .AddSingleton<ISongSearchMapService, SongSearchMapService>()
+            .AddSingleton<IPlaybackStateService, PlaybackStateService>()
 
-                // Providers
-                .AddSingleton<IPasswordVaultProvider, PasswordVaultProvider>()
-                .AddSingleton<IPlatformProvider, PlatformProvider>()
-                .AddSingleton<IStringConverterProvider, StringConverterProvider>()
-                .AddSingleton<ISystemUIProvider, SystemUIProvider>()
-                .AddSingleton<IUniversalMemoryReaderProvider, UniversalMemoryReaderProvider>()
-                .AddSingleton<IAppUIThreadProvider, AppUIThreadProvider>()
-                .AddSingleton<IGlobalToastProvider, GlobalToastProvider>()
-                .AddSingleton<INowPlayingToastProvider, NowPlayingToastProvider>()
-                .AddSingleton<INowPlayingNotificationService, NowPlayingNotificationService>()
-                .AddSingleton<IWindowManagerProvider, WindowManagerProvider>()
-                .AddSingleton<IAddMediaSourceDialogProvider, MediaSourceDialogProvider>()
-                .AddSingleton<ILastFmDialogProvider, LastFmDialogProvider>()
-                .AddSingleton<IAssetReaderProvider, AssetReaderProvider>()
-                .AddSingleton<IMediaManagerProvider, MediaManagerProvider>()
-                .AddSingleton<ILauncherProvider, LauncherProvider>()
-                .AddSingleton<IFilePickerProvider, FilePickerProvider>()
-                .AddSingleton<IProgramProvider, ProgramProvider>()
-                .AddSingleton<IMonitorProvider, MonitorProvider>()
-                .AddSingleton<ISpoutTextureProvider, SpoutTextureProvider>()
-                .AddSingleton<ITaskbarThumbnailProvider, TaskbarThumbnailProvider>()
-                .AddSingleton<IGlobalShortcutProvider, GlobalShortcutProvider>()
+            // 日志
+            .AddLogging(loggingBuilder =>
+            {
+                loggingBuilder.ClearProviders();
+                loggingBuilder.AddSerilog();
+            })
 
-                // ViewModels
-                // 应用级单例：需要被视图之外的代码解析，或在窗口重建后保留状态
-                .AddSingleton<SettingsPageViewModel>()
-                .AddSingleton<MusicGalleryPageViewModel>()
-                .AddSingleton<LyricsSearchControlViewModel>()
-                .AddSingleton<SystemTrayViewModel>()
+            // Services
+            .AddSingleton<ISettingsService, SettingsService>()
+            .AddSingleton<ISmtcService, SmtcService>()
+            .AddSingleton<IGsmtcService, GsmtcService>()
+            .AddSingleton<IAlbumArtSearchService, AlbumArtSearchService>()
+            .AddSingleton<ILyricsSearchService, LyricsSearchService>()
+            .AddSingleton<ITranslationService, TranslationService>()
+            .AddSingleton<ITransliterationService, TransliterationService>()
+            .AddSingleton<ILastFmService, LastFmService>()
+            .AddSingleton<IDiscordService, DiscordService>()
+            .AddSingleton<ILocalizationService, LocalizationService>()
+            .AddSingleton<ILyricsCacheService, LyricsCacheService>()
+            .AddSingleton<IPluginService, PluginService>()
+            .AddSingleton<IFileWatchService, FileWatchService>()
+            .AddSingleton<IAppUpdateService, AppUpdateService>()
+            .AddSingleton<INavigationService, NavigationService>()
+            .AddSingleton<IAppLifecycleService, AppLifecycleService>()
+            .AddSingleton<IAudioMixerService, AudioMixerService>()
+            .AddSingleton<IGlobalShortcutService, GlobalShortcutService>()
+            .AddSingleton<IScreenKeeperService, ScreenKeeperService>()
+            .AddSingleton<IWallpaperEngineService, WallpaperEngineService>()
+            .AddSingleton<ILyricsWindowVisibilityService, LyricsWindowVisibilityService>()
+            .AddSingleton<IWallpaperEngineLyricsWindowService, WallpaperEngineLyricsWindowService>()
 
-                // 视图级实例：每个 Window/Page/Control 生命周期内独立，随视图创建与释放
-                .AddTransient<AppSettingsControlViewModel>()
-                .AddTransient<PlaybackSettingsControlViewModel>()
-                .AddTransient<MediaSettingsControlViewModel>()
-                .AddTransient<LyricsWindowManagerControlViewModel>()
-                .AddTransient<WindowSettingsControlViewModel>()
-                .AddTransient<LyricsWindowSwitchControlViewModel>()
-                .AddTransient<LyricsWindowSwitchWindowViewModel>()
-                .AddTransient<AboutControlViewModel>()
-                .AddTransient<StatsDashboardControlViewModel>()
-                .AddTransient<PlayQueueViewModel>()
-                .AddTransient<PluginManagerControlViewModel>()
-                .AddTransient<LyricsSharePageViewModel>()
-                .AddTransient<MusicGalleryWindowViewModel>()
-                .AddTransient<NowPlayingPageViewModel>()
-                .AddTransient<NowPlayingBarViewModel>();
+            // Providers
+            .AddSingleton<IPasswordVaultProvider, PasswordVaultProvider>()
+            .AddSingleton<IPlatformProvider, PlatformProvider>()
+            .AddSingleton<IStringConverterProvider, StringConverterProvider>()
+            .AddSingleton<ISystemUIProvider, SystemUIProvider>()
+            .AddSingleton<IUniversalMemoryReaderProvider, UniversalMemoryReaderProvider>()
+            .AddSingleton<IAppUIThreadProvider, AppUIThreadProvider>()
+            .AddSingleton<IGlobalToastProvider, GlobalToastProvider>()
+            .AddSingleton<INowPlayingToastProvider, NowPlayingToastProvider>()
+            .AddSingleton<INowPlayingNotificationService, NowPlayingNotificationService>()
+            .AddSingleton<IWindowManagerProvider, WindowManagerProvider>()
+            .AddSingleton<IAddMediaSourceDialogProvider, MediaSourceDialogProvider>()
+            .AddSingleton<ILastFmDialogProvider, LastFmDialogProvider>()
+            .AddSingleton<IAssetReaderProvider, AssetReaderProvider>()
+            .AddSingleton<IMediaManagerProvider, MediaManagerProvider>()
+            .AddSingleton<ILauncherProvider, LauncherProvider>()
+            .AddSingleton<IFilePickerProvider, FilePickerProvider>()
+            .AddSingleton<IProgramProvider, ProgramProvider>()
+            .AddSingleton<IMonitorProvider, MonitorProvider>()
+            .AddSingleton<ISpoutTextureProvider, SpoutTextureProvider>()
+            .AddSingleton<ITaskbarThumbnailProvider, TaskbarThumbnailProvider>()
+            .AddSingleton<IGlobalShortcutProvider, GlobalShortcutProvider>()
+
+            // ViewModels
+            // 应用级单例：需要被视图之外的代码解析，或在窗口重建后保留状态
+            .AddSingleton<SettingsPageViewModel>()
+            .AddSingleton<MusicGalleryPageViewModel>()
+            .AddSingleton<LyricsSearchControlViewModel>()
+            .AddSingleton<SystemTrayViewModel>()
+
+            // 视图级实例：每个 Window/Page/Control 生命周期内独立，随视图创建与释放
+            .AddTransient<AppSettingsControlViewModel>()
+            .AddTransient<PlaybackSettingsControlViewModel>()
+            .AddTransient<MediaSettingsControlViewModel>()
+            .AddTransient<LyricsWindowManagerControlViewModel>()
+            .AddTransient<WindowSettingsControlViewModel>()
+            .AddTransient<LyricsWindowSwitchControlViewModel>()
+            .AddTransient<LyricsWindowSwitchWindowViewModel>()
+            .AddTransient<AboutControlViewModel>()
+            .AddTransient<StatsDashboardControlViewModel>()
+            .AddTransient<PlayQueueViewModel>()
+            .AddTransient<PluginManagerControlViewModel>()
+            .AddTransient<LyricsSharePageViewModel>()
+            .AddTransient<MusicGalleryWindowViewModel>()
+            .AddTransient<NowPlayingPageViewModel>()
+            .AddTransient<NowPlayingBarViewModel>();
 
         _serviceProvider = services.BuildServiceProvider();
         Ioc.Default.ConfigureServices(_serviceProvider);
+
+        var settingsService = _serviceProvider.GetRequiredService<ISettingsService>();
+        AppLogging.ApplyLogLevel(settingsService.AppSettings.AdvancedSettings.WriteDebugLogs);
     }
 
     /// <summary>
@@ -357,6 +370,7 @@ public class Program
         _serviceProvider = null;
 
         serviceProvider?.Dispose();
+        AppLogging.Shutdown();
     }
 
     [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]

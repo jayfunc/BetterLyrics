@@ -54,6 +54,9 @@ public partial class App : Application
         {
             // 应用增强动效/全局字体设置项
             var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+            _logger.LogDebug("Applying global appearance settings. Animations: {Animations}; font: {FontFamily}.",
+                settingsService.AppSettings.GeneralSettings.EnhanceControlInteractiveAnimations,
+                settingsService.AppSettings.GeneralSettings.GlobalFontFamily);
             UpdateGlobalStyles(settingsService.AppSettings.GeneralSettings.EnhanceControlInteractiveAnimations);
             UpdateGlobalFontFamily(settingsService.AppSettings.GeneralSettings.GlobalFontFamily);
 
@@ -223,6 +226,11 @@ public partial class App : Application
 
         // 初始化 Wallpaper Engine 联动所需的配置读取
         await Ioc.Default.GetRequiredService<IWallpaperEngineService>().InitializeAsync();
+
+        Ioc.Default.GetRequiredService<ILogger<App>>().LogInformation(
+            "Application services initialized. Media folders: {FolderCount}; plugins: {PluginCount}.",
+            settingsService.AppSettings.LocalMediaFolders.Count,
+            settingsService.AppSettings.PluginsInfo.Count);
     }
 
     private static void EnsureLyricsSearchProvidersInfo()

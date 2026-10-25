@@ -1,4 +1,5 @@
 ﻿using BetterLyrics.Core.Interfaces.Providers;
+using Microsoft.Extensions.Logging;
 using System;
 using Windows.Security.Credentials;
 
@@ -9,6 +10,13 @@ namespace BetterLyrics.WinUI3.Providers;
 /// </summary>
 public class PasswordVaultProvider : IPasswordVaultProvider
 {
+    private readonly ILogger<PasswordVaultProvider> _logger;
+
+    public PasswordVaultProvider(ILogger<PasswordVaultProvider> logger)
+    {
+        _logger = logger;
+    }
+
     /// <summary>
     /// 保存敏感数据到 PasswordVault
     /// </summary>
@@ -22,9 +30,11 @@ public class PasswordVaultProvider : IPasswordVaultProvider
             var vault = new PasswordVault();
 
             vault.Add(new PasswordCredential(resource, key, value));
+            _logger.LogDebug("Saved credential {Resource}/{Key} to PasswordVault.", resource, key);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            _logger.LogWarning(ex, "Failed to save credential {Resource}/{Key} to PasswordVault.", resource, key);
         }
     }
 
@@ -44,8 +54,9 @@ public class PasswordVaultProvider : IPasswordVaultProvider
             credential.RetrievePassword();
             return credential.Password;
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            _logger.LogDebug(ex, "Credential {Resource}/{Key} was not found in PasswordVault.", resource, key);
             return null;
         }
     }
@@ -61,9 +72,11 @@ public class PasswordVaultProvider : IPasswordVaultProvider
 
             var credential = vault.Retrieve(resource, key);
             vault.Remove(credential);
+            _logger.LogDebug("Deleted credential {Resource}/{Key} from PasswordVault.", resource, key);
         }
-        catch (Exception)
+        catch (Exception ex)
         {
+            _logger.LogDebug(ex, "Failed to delete credential {Resource}/{Key} from PasswordVault.", resource, key);
         }
     }
 }

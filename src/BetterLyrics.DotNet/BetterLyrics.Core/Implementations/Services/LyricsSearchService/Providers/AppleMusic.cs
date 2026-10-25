@@ -6,6 +6,7 @@ using BetterLyrics.Core.Models;
 using BetterLyrics.Core.Models.Entities;
 using BetterLyrics.Core.Serialization;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using System.Net;
 using System.Text;
 using System.Text.Json;
@@ -16,6 +17,7 @@ namespace BetterLyrics.Core.Implementations.Services.LyricsSearchService.Provide
 public class AppleMusic
 {
     private readonly HttpClient _client;
+    private readonly ILogger<AppleMusic> _logger = Ioc.Default.GetRequiredService<ILogger<AppleMusic>>();
 
     private readonly IPasswordVaultProvider _passwordVaultProvider =
         Ioc.Default.GetRequiredService<IPasswordVaultProvider>();
@@ -51,6 +53,13 @@ public class AppleMusic
                 await GetAccessTokenAsync(cancellationToken);
                 await SetMediaUserTokenAsync(mediaUserToken, cancellationToken);
                 _isInited = !string.IsNullOrEmpty(_accessToken);
+
+                _logger.LogDebug("Apple Music initialized. Storefront: {Storefront}; language: {Language}.",
+                    _storefront, _language);
+            }
+            else
+            {
+                _logger.LogDebug("Apple Music is not configured: media user token is missing.");
             }
         }
 
@@ -236,6 +245,14 @@ public class AppleMusic
             lyricsSearchResult.MatchPercentage = MetadataComparer.CalculateScore(songInfo, lyricsSearchResult);
 
             if (id != null) lyricsSearchResult.Raw = await GetLyricsAsync(id, token);
+
+            _logger.LogDebug("Apple Music returned lyrics for {Title} - {Artist} (match {MatchPercentage}%).",
+                lyricsSearchResult.Title, lyricsSearchResult.Artist, lyricsSearchResult.MatchPercentage);
+        }
+        else
+        {
+            _logger.LogDebug("Apple Music search returned no songs for {Title} - {Artist}.", songInfo.Title,
+                songInfo.Artist);
         }
 
         return lyricsSearchResult;
