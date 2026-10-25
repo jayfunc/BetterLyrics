@@ -21,9 +21,6 @@ public static class AppLogging
     {
         _isShutdown = false;
 
-        var writeDebugLogs = SettingsIO.ReadWriteDebugLogs(PathHelper.SettingsFilePath);
-        ApplyLogLevel(writeDebugLogs);
-
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.ControlledBy(LevelSwitch)
             .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Error)

@@ -30,8 +30,6 @@ public partial class SettingsPageViewModel : ObservableRecipient, ISingletonView
 
     private readonly Debouncer _searchDebouncer = new();
 
-    // 各设置控件通过 SettingsSectionChangedMessage 上报的当前路径状态，
-    // 避免本 ViewModel 直接依赖控件的 ViewModel 实例（否则它们无法成为 transient）。
     private AppSettingsSection? _appSubsection;
     private PlaybackLibSettingsSection? _playbackSubsection;
     private string? _playbackProvider;
@@ -114,7 +112,7 @@ public partial class SettingsPageViewModel : ObservableRecipient, ISingletonView
     {
         if (SelectedNavItem == null) return;
 
-        var displayPathSegments = new List<string> { GetLocalizedTitle("SettingsPageTitle"), GetLocalizedSectionName(SelectedNavItem.Section) };
+        var displayPathSegments = new List<string> { _localizationService.GetLocalizedString("SettingsPageTitle"), GetLocalizedSectionName(SelectedNavItem.Section) };
         var uriSegments = new List<string> { "betterlyrics://settings", SelectedNavItem.Section.ToString().ToLowerInvariant() };
 
         if (SelectedNavItem.Section == SettingsSection.App)
@@ -133,7 +131,7 @@ public partial class SettingsPageViewModel : ObservableRecipient, ISingletonView
                 uriSegments.Add(_playbackProvider);
 
                 displayPathSegments.Add(subsectionName);
-                displayPathSegments.Add(GetLocalizedTitle(_playbackProvider));
+                displayPathSegments.Add(_playbackProvider);
             }
             else
             {
@@ -157,26 +155,6 @@ public partial class SettingsPageViewModel : ObservableRecipient, ISingletonView
         CurrentDeepLink = string.Join("/", uriSegments);
     }
 
-    private string GetLocalizedTitle(string uid)
-    {
-        var s = _localizationService.GetLocalizedString($"{uid}/Header");
-        if (!string.IsNullOrEmpty(s)) return s;
-
-        s = _localizationService.GetLocalizedString($"{uid}/Text");
-        if (!string.IsNullOrEmpty(s)) return s;
-
-        s = _localizationService.GetLocalizedString(uid);
-        if (!string.IsNullOrEmpty(s)) return s;
-
-        s = _localizationService.GetLocalizedString($"{uid}.Header");
-        if (!string.IsNullOrEmpty(s)) return s;
-
-        s = _localizationService.GetLocalizedString($"{uid}.Text");
-        if (!string.IsNullOrEmpty(s)) return s;
-
-        return uid;
-    }
-
     private string GetLocalizedSectionName(SettingsSection section)
     {
         string sectionUid = section switch
@@ -189,34 +167,34 @@ public partial class SettingsPageViewModel : ObservableRecipient, ISingletonView
             SettingsSection.About => "SettingsPageAbout",
             _ => ""
         };
-        return GetLocalizedTitle(sectionUid);
+        return _localizationService.GetLocalizedString(sectionUid);
     }
 
     private string GetLocalizedSubsectionName(Enum? subsection)
     {
         string subsectionUid = subsection switch
         {
-            AppSettingsSection.Appearance => "SettingsPageAppAppearance",
-            AppSettingsSection.Window => "SettingsPageWindow",
-            AppSettingsSection.Shortcut => "SettingsPageShortcut",
-            AppSettingsSection.SystemTray => "AppSettingsControlSystemTray",
-            AppSettingsSection.Advanced => "SettingsPageAdvanced",
+            AppSettingsSection.Appearance => "SettingsPageAppAppearance/Text",
+            AppSettingsSection.Window => "SettingsPageWindow/Text",
+            AppSettingsSection.Shortcut => "SettingsPageShortcut/Text",
+            AppSettingsSection.SystemTray => "AppSettingsControlSystemTray/Text",
+            AppSettingsSection.Advanced => "SettingsPageAdvanced/Text",
 
-            LyricsWindowManagerSettingsSection.Window => "SettingsPageWindow",
-            LyricsWindowManagerSettingsSection.Layout => "SettingsPageLayout",
-            LyricsWindowManagerSettingsSection.AlbumArt => "SettingsPageAlbumArt",
-            LyricsWindowManagerSettingsSection.LyricsStyle => "SettingsPageLyricsStyle",
-            LyricsWindowManagerSettingsSection.LyricsEffect => "SettingsPageLyricsEffect",
-            LyricsWindowManagerSettingsSection.LyricsBackground => "SettingsPageBackgroundOverlay",
+            LyricsWindowManagerSettingsSection.Window => "SettingsPageWindow/Text",
+            LyricsWindowManagerSettingsSection.Layout => "SettingsPageLayout/Text",
+            LyricsWindowManagerSettingsSection.AlbumArt => "SettingsPageAlbumArt/Text",
+            LyricsWindowManagerSettingsSection.LyricsStyle => "SettingsPageLyricsStyle/Text",
+            LyricsWindowManagerSettingsSection.LyricsEffect => "SettingsPageLyricsEffect/Text",
+            LyricsWindowManagerSettingsSection.LyricsBackground => "SettingsPageBackgroundOverlay/Text",
 
-            PlaybackLibSettingsSection.General => "SettingsPageConfigPlaybackSource",
-            PlaybackLibSettingsSection.LyricsProcessing => "SettingsPageLyricsProcessing",
-            PlaybackLibSettingsSection.Integration => "SettingsPageIntegration",
-            PlaybackLibSettingsSection.RealtimeStatus => "SettingsPageRealtimeStatus",
+            PlaybackLibSettingsSection.General => "SettingsPageConfigPlaybackSource/Text",
+            PlaybackLibSettingsSection.LyricsProcessing => "SettingsPageLyricsProcessing/Text",
+            PlaybackLibSettingsSection.Integration => "SettingsPageIntegration/Text",
+            PlaybackLibSettingsSection.RealtimeStatus => "SettingsPageRealtimeStatus/Text",
 
             _ => ""
         };
-        return GetLocalizedTitle(subsectionUid);
+        return _localizationService.GetLocalizedString(subsectionUid);
     }
 
     partial void OnSearchQueryChanged(string value)
@@ -243,18 +221,18 @@ public partial class SettingsPageViewModel : ObservableRecipient, ISingletonView
                     {
                         if (token.IsCancellationRequested) return null;
 
-                        staticItem.Title = GetLocalizedTitle(staticItem.Uid);
+                        staticItem.Title = _localizationService.GetLocalizedString(staticItem.Uid);
 
                         if (staticItem.Title.Contains(value, StringComparison.OrdinalIgnoreCase) != true) continue;
 
                         string secName = GetLocalizedSectionName(staticItem.Section);
-                        string basePath = GetLocalizedTitle("SettingsPageTitle") + $" > {secName}";
+                        string basePath = _localizationService.GetLocalizedString("SettingsPageTitle") + $" > {secName}";
 
                         string subsecName = staticItem.Subsection != null ? GetLocalizedSubsectionName(staticItem.Subsection) : "";
-                        string parentName = !string.IsNullOrEmpty(staticItem.ParentUid) ? GetLocalizedTitle(staticItem.ParentUid) : "";
+                        string parentName = !string.IsNullOrEmpty(staticItem.ParentUid) ? _localizationService.GetLocalizedString(staticItem.ParentUid) : "";
 
                         bool isLyricsWindowMgr = staticItem.Section == SettingsSection.LyricsWindowMgr && staticItem.Subsection != null;
-                        bool isPlaybackLib = staticItem.Section == SettingsSection.PlaybackLib && staticItem.Subsection is PlaybackLibSettingsSection.General && staticItem.Uid != "SettingsPageListenNewSession";
+                        bool isPlaybackLib = staticItem.Section == SettingsSection.PlaybackLib && staticItem.Subsection is PlaybackLibSettingsSection.General && staticItem.Uid != "SettingsPageListenNewSession/Header";
 
                         if (isLyricsWindowMgr || isPlaybackLib)
                         {
@@ -284,7 +262,7 @@ public partial class SettingsPageViewModel : ObservableRecipient, ISingletonView
                                         Section = staticItem.Section,
                                         Subsection = staticItem.Subsection,
                                         TargetParameter = provider.Provider,
-                                        Path = basePath + $" > {subsecName} > {GetLocalizedTitle(provider.Provider)}" + (!string.IsNullOrEmpty(parentName) ? $" > {parentName}" : "")
+                                        Path = basePath + $" > {subsecName} > {provider.Provider}" + (!string.IsNullOrEmpty(parentName) ? $" > {parentName}" : "")
                                     });
                                 }
                             }

@@ -57,52 +57,6 @@ public static class SettingsIO
         return new T();
     }
 
-    public static bool ReadWriteDebugLogs(string path)
-    {
-        if (TryReadWriteDebugLogs(path, out var enabled))
-        {
-            return enabled;
-        }
-
-        var bakPath = path + ".bak";
-        return TryReadWriteDebugLogs(bakPath, out enabled) && enabled;
-    }
-
-    private static bool TryReadWriteDebugLogs(string path, out bool enabled)
-    {
-        enabled = false;
-        if (!File.Exists(path)) return false;
-
-        try
-        {
-            using var document = JsonDocument.Parse(File.ReadAllText(path));
-            if (document.RootElement.ValueKind != JsonValueKind.Object) return false;
-
-            if (!document.RootElement.TryGetProperty("AdvancedSettings", out var advancedSettings) ||
-                advancedSettings.ValueKind != JsonValueKind.Object)
-            {
-                return false;
-            }
-
-            if (!advancedSettings.TryGetProperty("WriteDebugLogs", out var writeDebugLogs))
-            {
-                return false;
-            }
-
-            if (writeDebugLogs.ValueKind is not (JsonValueKind.True or JsonValueKind.False))
-            {
-                return false;
-            }
-
-            enabled = writeDebugLogs.GetBoolean();
-            return true;
-        }
-        catch
-        {
-            return false;
-        }
-    }
-
     private static bool TryReadFile<T>(string path, JsonTypeInfo<T> jsonTypeInfo, out T result) where T : new()
     {
         result = new T();
