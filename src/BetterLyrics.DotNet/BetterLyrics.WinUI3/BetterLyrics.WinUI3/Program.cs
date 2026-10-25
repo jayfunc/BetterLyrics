@@ -14,6 +14,7 @@ using BetterLyrics.Core.ViewModels;
 using BetterLyrics.Core.ViewModels.MusicGalleryPageViewModel;
 using BetterLyrics.WinUI3.Providers;
 using BetterLyrics.WinUI3.Services;
+using BetterLyrics.WinUI3.UITest;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
@@ -50,6 +51,7 @@ public class Program
     private static int Main(string[] args)
     {
         ComWrappersSupport.InitializeComWrappers();
+        UiTestSession.Initialize(args);
         var isRedirect = DecideRedirection();
 
         if (!isRedirect)
@@ -86,7 +88,14 @@ public class Program
         var isRedirect = false;
         var args = AppInstance.GetCurrent().GetActivatedEventArgs();
         var kind = args.Kind;
-        var keyInstance = AppInstance.FindOrRegisterForKey("MySingleInstanceApp");
+
+        // Run the UI test host as an independent instance so it does not get
+        // redirected into a user instance that cannot accept test arguments.
+        var instanceKey = UiTestSession.IsEnabled
+            ? $"BetterLyrics.UiTest.{Environment.ProcessId}"
+            : "MySingleInstanceApp";
+
+        var keyInstance = AppInstance.FindOrRegisterForKey(instanceKey);
 
         if (keyInstance.IsCurrent)
         {

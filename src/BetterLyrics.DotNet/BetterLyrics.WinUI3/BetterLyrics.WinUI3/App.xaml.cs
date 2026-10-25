@@ -4,6 +4,7 @@ using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Sdk.Interfaces.Plugins;
+using BetterLyrics.WinUI3.UITest;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using LiteDB;
@@ -63,7 +64,7 @@ public partial class App : Application
             m_window = windowManagerProvider.OpenOrShowWindow<SystemTrayWindow>();
             appUiThreadProvider.Initialize(m_window.DispatcherQueue);
 
-            if (settingsService.AppSettings.GeneralSettings.ShowSplashScreen)
+            if (!UiTestSession.IsEnabled && settingsService.AppSettings.GeneralSettings.ShowSplashScreen)
             {
                 _splashScreen = SimpleSplashScreen.ShowDefaultSplashScreen();
             }
@@ -104,6 +105,12 @@ public partial class App : Application
     {
         try
         {
+            if (UiTestSession.IsEnabled)
+            {
+                _ = WindowGcTestRunner.RunAsync();
+                return;
+            }
+
             var settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
             var windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
             var wallpaperEngineService = Ioc.Default.GetRequiredService<IWallpaperEngineService>();

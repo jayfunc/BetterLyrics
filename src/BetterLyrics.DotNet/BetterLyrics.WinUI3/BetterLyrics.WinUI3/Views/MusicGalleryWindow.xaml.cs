@@ -6,6 +6,7 @@ using BetterLyrics.Core.Messages.LyricsWindow;
 using BetterLyrics.Core.Messages.Playback;
 using BetterLyrics.Core.ViewModels;
 using BetterLyrics.WinUI3.Extensions;
+using BetterLyrics.WinUI3.UITest;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Windowing;
@@ -95,7 +96,7 @@ public sealed partial class MusicGalleryWindow : BaseWindow,
 
     private async void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
     {
-        if (ViewModel.AppSettings.MusicGallerySettings.ExitOnWindowClosed)
+        if (!UiTestSession.IsEnabled && ViewModel.AppSettings.MusicGallerySettings.ExitOnWindowClosed)
         {
             _windowManagerProvider.ExitApp();
         }

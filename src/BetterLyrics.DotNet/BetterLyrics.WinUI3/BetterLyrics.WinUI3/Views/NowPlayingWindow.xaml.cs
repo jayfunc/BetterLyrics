@@ -14,6 +14,7 @@ using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Helpers;
 using BetterLyrics.WinUI3.Hooks;
 using BetterLyrics.WinUI3.Providers;
+using BetterLyrics.WinUI3.UITest;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.Extensions.Logging;
@@ -537,7 +538,7 @@ public sealed partial class NowPlayingWindow : BaseWindow,
 
     private void AppWindow_Closing(AppWindow sender, AppWindowClosingEventArgs args)
     {
-        if (_settingsService.AppSettings.GeneralSettings.ExitOnLyricsWindowClosed)
+        if (!UiTestSession.IsEnabled && _settingsService.AppSettings.GeneralSettings.ExitOnLyricsWindowClosed)
         {
             _windowManagerProvider.ExitApp();
         }
@@ -705,7 +706,7 @@ public sealed partial class NowPlayingWindow : BaseWindow,
 
     private async void CloseButton_Click(object sender, RoutedEventArgs e)
     {
-        if (_settingsService.AppSettings.GeneralSettings.ExitOnLyricsWindowClosed)
+        if (!UiTestSession.IsEnabled && _settingsService.AppSettings.GeneralSettings.ExitOnLyricsWindowClosed)
         {
             _windowManagerProvider.ExitApp();
         }

@@ -10,6 +10,12 @@ public class MemoryLeakDetector
 
     private static readonly ILogger<MemoryLeakDetector> _logger = Ioc.Default.GetRequiredService<ILogger<MemoryLeakDetector>>();
 
+    /// <summary>
+    /// Raised when an object starts being watched. UI tests use this to keep only weak
+    /// references to the objects that belong to the window being closed.
+    /// </summary>
+    public static event EventHandler<MemoryLeakObjectTrackedEventArgs>? ObjectTracked;
+
     public static void Track(object target)
     {
         if (target == null) return;
@@ -18,18 +24,22 @@ public class MemoryLeakDetector
         var hashCode = target.GetHashCode();
         name = $"{name}({hashCode})";
 
+        var reference = new WeakReference(target);
+
         lock (_watchedObjects)
         {
-            foreach (var (reference, _) in _watchedObjects)
+            foreach (var (watchedReference, _) in _watchedObjects)
             {
-                if (ReferenceEquals(reference.Target, target)) return;
+                if (ReferenceEquals(watchedReference.Target, target)) return;
             }
 
-            _watchedObjects.Add((new WeakReference(target), name));
+            _watchedObjects.Add((reference, name));
         }
 
         Debug.WriteLine($"[MemoryLeakDetector] GC is preparing: {name}");
         _logger.LogInformation("[MemoryLeakDetector] GC is preparing: {Name}", name);
+
+        ObjectTracked?.Invoke(null, new MemoryLeakObjectTrackedEventArgs(name, reference));
     }
 
     private static async Task CheckAsync()
