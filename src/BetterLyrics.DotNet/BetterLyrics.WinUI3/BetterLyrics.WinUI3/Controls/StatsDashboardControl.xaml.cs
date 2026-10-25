@@ -27,13 +27,23 @@ public sealed partial class StatsDashboardControl : BaseUserControl
         _heatmapHoverTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(50) };
     }
 
-    protected override void Initialize()
+    protected override void BindGeneratedControls()
+    {
+        Bindings?.Update();
+    }
+
+    protected override void UnbindGeneratedControls()
+    {
+        Bindings?.StopTracking();
+    }
+
+    protected override void OnLoaded()
     {
         _heatmapHoverTimer.Tick -= HeatmapHoverTimer_Tick;
         _heatmapHoverTimer.Tick += HeatmapHoverTimer_Tick;
     }
 
-    protected override void Cleanup()
+    protected override void OnUnloaded()
     {
         _heatmapHoverTimer.Tick -= HeatmapHoverTimer_Tick;
         _heatmapHoverTimer.Stop();

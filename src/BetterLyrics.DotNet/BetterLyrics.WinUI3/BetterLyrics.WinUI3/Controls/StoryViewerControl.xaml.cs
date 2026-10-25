@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace BetterLyrics.WinUI3.Controls;
 
-public sealed partial class StoryViewerControl : UserControl
+public sealed partial class StoryViewerControl : BaseUserControl
 {
     public delegate void CloseRequestedHandler();
     public event CloseRequestedHandler CloseRequested;
@@ -23,6 +23,14 @@ public sealed partial class StoryViewerControl : UserControl
     public StoryViewerControl()
     {
         this.InitializeComponent();
+    }
+
+    override protected void BindGeneratedControls()
+    {
+    }
+
+    override protected void UnbindGeneratedControls()
+    {
     }
 
     public void StartStory(StatsDashboardControlViewModel vm)

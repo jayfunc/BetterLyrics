@@ -1,13 +1,10 @@
-using BetterLyrics.Core.Helpers;
-using BetterLyrics.Core.Interfaces.ViewModels;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Messaging;
+using BetterLyrics.WinUI3.Helpers;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace BetterLyrics.WinUI3.Views;
 
-public partial class BasePage : Page
+public abstract partial class BasePage : Page
 {
     protected BasePage()
     {
@@ -15,42 +12,19 @@ public partial class BasePage : Page
         Unloaded += BasePage_Unloaded;
     }
 
-    protected virtual void Initialize() { }
-    protected virtual void Cleanup() { }
+    protected abstract void BindGeneratedControls();
+    protected abstract void UnbindGeneratedControls();
+
+    protected virtual void OnLoaded() { }
+    protected virtual void OnUnloaded() { }
 
     private void BasePage_Loaded(object sender, RoutedEventArgs e)
     {
-        WeakReferenceMessenger.Default.RegisterAll(this);
-
-        if (DataContext is ITransientViewModel && DataContext is ObservableRecipient observableRecipient)
-        {
-            observableRecipient.IsActive = true;
-        }
-
-        Initialize();
+        FrameworkElementLifecycleHelper.HandleLoaded(this, OnLoaded, BindGeneratedControls);
     }
 
     private void BasePage_Unloaded(object sender, RoutedEventArgs e)
     {
-        Loaded -= BasePage_Loaded;
-        Unloaded -= BasePage_Unloaded;
-
-        WeakReferenceMessenger.Default.UnregisterAll(this);
-
-        if (DataContext is ITransientViewModel && DataContext is ObservableRecipient observableRecipient)
-        {
-            observableRecipient.IsActive = false;
-        }
-
-        MemoryLeakDetector.Track(this);
-
-        if (DataContext is ITransientViewModel)
-        {
-            MemoryLeakDetector.Track(DataContext);
-        }
-
-        Cleanup();
-
-        MemoryLeakDetector.ScheduleCheck();
+        FrameworkElementLifecycleHelper.HandleUnloaded(this, BasePage_Loaded, BasePage_Unloaded, OnUnloaded, UnbindGeneratedControls);
     }
 }

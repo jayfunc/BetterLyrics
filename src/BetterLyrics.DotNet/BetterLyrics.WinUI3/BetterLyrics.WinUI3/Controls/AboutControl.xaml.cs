@@ -21,10 +21,16 @@ public sealed partial class AboutControl : BaseUserControl
         DataContext = Ioc.Default.GetRequiredService<AboutControlViewModel>();
     }
 
-    protected override void Cleanup()
+    protected override void BindGeneratedControls()
     {
-        Bindings?.StopTracking();
+    }
 
+    protected override void UnbindGeneratedControls()
+    {
+    }
+
+    protected override void OnUnloaded()
+    {
         Microsoft.UI.Xaml.Media.CompositionTarget.Rendering -= CompositionTarget_Rendering;
     }
 

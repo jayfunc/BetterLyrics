@@ -1,13 +1,10 @@
-using BetterLyrics.Core.Helpers;
-using BetterLyrics.Core.Interfaces.ViewModels;
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Messaging;
+using BetterLyrics.WinUI3.Helpers;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace BetterLyrics.WinUI3.Controls;
 
-public partial class BaseUserControl : UserControl
+public abstract partial class BaseUserControl : UserControl
 {
     protected BaseUserControl()
     {
@@ -15,42 +12,19 @@ public partial class BaseUserControl : UserControl
         Unloaded += BaseUserControl_Unloaded;
     }
 
-    protected virtual void Initialize() { }
-    protected virtual void Cleanup() { }
+    protected abstract void BindGeneratedControls();
+    protected abstract void UnbindGeneratedControls();
+
+    protected virtual void OnLoaded() { }
+    protected virtual void OnUnloaded() { }
 
     private void BaseUserControl_Loaded(object sender, RoutedEventArgs e)
     {
-        WeakReferenceMessenger.Default.RegisterAll(this);
-
-        if (DataContext is ITransientViewModel && DataContext is ObservableRecipient observableRecipient)
-        {
-            observableRecipient.IsActive = true;
-        }
-
-        Initialize();
+        FrameworkElementLifecycleHelper.HandleLoaded(this, OnLoaded, BindGeneratedControls);
     }
 
     private void BaseUserControl_Unloaded(object sender, RoutedEventArgs e)
     {
-        Loaded -= BaseUserControl_Loaded;
-        Unloaded -= BaseUserControl_Unloaded;
-
-        WeakReferenceMessenger.Default.UnregisterAll(this);
-
-        if (DataContext is ITransientViewModel && DataContext is ObservableRecipient observableRecipient)
-        {
-            observableRecipient.IsActive = false;
-        }
-
-        MemoryLeakDetector.Track(this);
-
-        if (DataContext is ITransientViewModel)
-        {
-            MemoryLeakDetector.Track(DataContext);
-        }
-
-        Cleanup();
-
-        MemoryLeakDetector.ScheduleCheck();
+        FrameworkElementLifecycleHelper.HandleUnloaded(this, BaseUserControl_Loaded, BaseUserControl_Unloaded, OnUnloaded, UnbindGeneratedControls);
     }
 }

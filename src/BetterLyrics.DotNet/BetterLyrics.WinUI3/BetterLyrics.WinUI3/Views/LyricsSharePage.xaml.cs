@@ -35,27 +35,14 @@ public sealed partial class LyricsSharePage : BasePage
         DataContext = Ioc.Default.GetRequiredService<LyricsSharePageViewModel>();
     }
 
-    protected override void Cleanup()
+    protected override void BindGeneratedControls()
     {
-        this.Bindings?.StopTracking();
+        Bindings?.Update();
+    }
 
-        StyleGroupsCVS?.Source = null;
-
-        LyricsListView?.SelectionChanged -= LyricsListView_SelectionChanged;
-        LyricsListView?.ItemsSource = null;
-
-        LyricsHostCheckBox?.Click -= LyricsHostCheckBox_Click;
-
-        PreviewCard?.Title = null;
-        PreviewCard?.Artist = null;
-        PreviewCard?.CoverAccentColor = null;
-        PreviewCard?.CoverImage = null;
-        PreviewCard?.LyricsLines = null;
-
-        RootGrid?.Children.Clear();
-
-        Content = null;
-        DataContext = null;
+    protected override void UnbindGeneratedControls()
+    {
+        Bindings?.StopTracking();
     }
 
     private void LyricsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

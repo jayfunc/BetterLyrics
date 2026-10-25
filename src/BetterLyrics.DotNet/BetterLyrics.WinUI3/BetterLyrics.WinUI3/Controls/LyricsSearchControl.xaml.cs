@@ -21,6 +21,16 @@ public sealed partial class LyricsSearchControl : BaseUserControl
         DataContext = Ioc.Default.GetRequiredService<LyricsSearchControlViewModel>();
     }
 
+    protected override void BindGeneratedControls()
+    {
+        Bindings?.Update();
+    }
+
+    protected override void UnbindGeneratedControls()
+    {
+        Bindings.StopTracking();
+    }
+
     private void ConvertRomajiToKanji(TextBox textBox)
     {
         var selectedText = textBox.SelectedText;

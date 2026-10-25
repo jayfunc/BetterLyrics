@@ -556,7 +556,17 @@ public sealed partial class NowPlayingPage : BasePage,
             }
     }
 
-    protected override void Cleanup()
+    protected override void BindGeneratedControls()
+    {
+        Bindings?.Update();
+    }
+
+    protected override void UnbindGeneratedControls()
+    {
+        Bindings?.StopTracking();
+    }
+
+    protected override void OnUnloaded()
     {
         _layoutChangedDebouncer.Dispose();
     }

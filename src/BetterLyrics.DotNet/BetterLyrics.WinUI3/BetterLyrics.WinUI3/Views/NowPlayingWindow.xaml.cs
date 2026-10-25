@@ -544,7 +544,7 @@ public sealed partial class NowPlayingWindow : BaseWindow,
         }
     }
 
-    protected override void Cleanup()
+    protected override void OnClosed()
     {
         StopOverlayInputHelper();
 

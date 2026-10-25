@@ -24,6 +24,16 @@ public sealed partial class LyricsWindowSwitchControl : BaseUserControl
         DataContext = Ioc.Default.GetRequiredService<LyricsWindowSwitchControlViewModel>();
     }
 
+    protected override void BindGeneratedControls()
+    {
+        Bindings?.Update();
+    }
+
+    protected override void UnbindGeneratedControls()
+    {
+        Bindings.StopTracking();
+    }
+
     private async void Grid_Tapped(object sender, TappedRoutedEventArgs e)
     {
         await HideAsync();

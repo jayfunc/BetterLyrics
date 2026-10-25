@@ -180,10 +180,19 @@ public sealed partial class NowPlayingBar : BaseUserControl
         GSMTCService = Ioc.Default.GetRequiredService<IGsmtcService>();
 
         _simulationTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(1000) };
-        _simulationTimer.Tick += SimulationTimer_Tick;
     }
 
-    protected override void Initialize()
+    protected override void BindGeneratedControls()
+    {
+        Bindings?.Update();
+    }
+
+    protected override void UnbindGeneratedControls()
+    {
+        Bindings?.StopTracking();
+    }
+
+    protected override void OnLoaded()
     {
         Bindings?.Update();
 
@@ -194,12 +203,10 @@ public sealed partial class NowPlayingBar : BaseUserControl
         _simulationTimer.Start();
     }
 
-    protected override void Cleanup()
+    protected override void OnUnloaded()
     {
         _simulationTimer.Stop();
         _simulationTimer.Tick -= SimulationTimer_Tick;
-
-        Bindings?.StopTracking();
     }
 
     private void SimulationTimer_Tick(object? sender, object e)

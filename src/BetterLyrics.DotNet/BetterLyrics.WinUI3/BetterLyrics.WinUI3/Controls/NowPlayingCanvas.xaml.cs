@@ -347,6 +347,16 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
         InitializeComponent();
     }
 
+    protected override void BindGeneratedControls()
+    {
+        Bindings?.Update();
+    }
+
+    protected override void UnbindGeneratedControls()
+    {
+        Bindings?.StopTracking();
+    }
+
     private void PowerManager_DisplayStatusChanged(object sender, bool isDisplayOn)
     {
         if (Canvas != null)
@@ -884,12 +894,13 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
 
     // ====
 
-    protected override void Initialize()
+    protected override void OnLoaded()
     {
+        _monitorProvider.DisplayStatusChanged -= PowerManager_DisplayStatusChanged;
         _monitorProvider.DisplayStatusChanged += PowerManager_DisplayStatusChanged;
     }
 
-    protected override void Cleanup()
+    protected override void OnUnloaded()
     {
         _monitorProvider.DisplayStatusChanged -= PowerManager_DisplayStatusChanged;
 

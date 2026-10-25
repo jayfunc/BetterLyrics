@@ -30,9 +30,12 @@ public sealed partial class PlaybackSettingsControl : BaseUserControl
         DataContext = Ioc.Default.GetRequiredService<PlaybackSettingsControlViewModel>();
     }
 
-    protected override void Cleanup()
+    protected override void BindGeneratedControls()
     {
-        Bindings?.StopTracking();
+    }
+
+    protected override void UnbindGeneratedControls()
+    {
     }
 
     private void AlbumArtSearchProvidersListView_DragItemsCompleted(ListViewBase sender,

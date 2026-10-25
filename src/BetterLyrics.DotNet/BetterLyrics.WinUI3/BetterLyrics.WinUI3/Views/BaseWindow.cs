@@ -8,10 +8,11 @@ using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace BetterLyrics.WinUI3.Views;
 
-public class BaseWindow : Window
+public abstract class BaseWindow : Window
 {
     private bool _isInitialized;
     private bool _isClosed;
@@ -90,14 +91,18 @@ public class BaseWindow : Window
             {
                 MemoryLeakDetector.Track(item);
             }
+            else if (item is ISingletonViewModel)
+            {
+                Debug.WriteLine($"[MemoryLeakDetector] {item.GetType().Name} is a singleton view model, skipping memory leak detection.");
+            }
         }
 
-        Cleanup();
+        OnClosed();
 
         MemoryLeakDetector.ScheduleCheck();
     }
 
     protected virtual IEnumerable<object> GetAdditionalTrackedViewModels() => [];
 
-    protected virtual void Cleanup() { }
+    protected virtual void OnClosed() { }
 }

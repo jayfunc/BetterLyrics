@@ -21,6 +21,16 @@ public sealed partial class PlayQueue : BaseUserControl
         DataContext = Ioc.Default.GetRequiredService<PlayQueueViewModel>();
     }
 
+    protected override void BindGeneratedControls()
+    {
+        Bindings?.Update();
+    }
+
+    override protected void UnbindGeneratedControls()
+    {
+        Bindings?.StopTracking();
+    }
+
     private void ScrollToPlayingItem()
     {
         if (PlayingQueueListView == null) return;
@@ -49,23 +59,9 @@ public sealed partial class PlayQueue : BaseUserControl
         ViewModel.RemoveFromPlayingQueueCommand.Execute(item);
     }
 
-    protected override void Initialize()
+    protected override void OnLoaded()
     {
         ScrollToPlayingItem();
-    }
-
-    private bool _isCleanedUp;
-
-    protected override void Cleanup()
-    {
-        if (_isCleanedUp) return;
-        _isCleanedUp = true;
-
-        Bindings?.StopTracking();
-
-        if (PlayingQueueListView != null) PlayingQueueListView.ItemsSource = null;
-
-        DataContext = null;
     }
 
     private void PlayingQueueListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -162,12 +162,22 @@ public sealed partial class MusicGalleryPage : BasePage
         }
     }
 
-    protected override void Initialize()
+    protected override void BindGeneratedControls()
+    {
+        Bindings?.Update();
+    }
+
+    protected override void UnbindGeneratedControls()
+    {
+        Bindings?.StopTracking();
+    }
+
+    protected override void OnLoaded()
     {
         ViewModel?.HandleAutoPlay();
     }
 
-    protected override void Cleanup()
+    protected override void OnUnloaded()
     {
         if (ViewModel is { } viewModel)
         {
@@ -177,20 +187,6 @@ public sealed partial class MusicGalleryPage : BasePage
                 viewModel.PausePlayback();
             }
         }
-
-        GroupedTracksCVS.Source = null;
-        GroupedAlbumsCVS.Source = null;
-        GroupedArtistsCVS.Source = null;
-
-        if (SongListView != null) SongListView.ItemsSource = null;
-        if (AlbumGridView != null) AlbumGridView.ItemsSource = null;
-        if (ArtistGridView != null) ArtistGridView.ItemsSource = null;
-        if (AlbumDetailSongListView != null) AlbumDetailSongListView.ItemsSource = null;
-        if (ArtistDetailSongListView != null) ArtistDetailSongListView.ItemsSource = null;
-        if (FolderTreeView != null) FolderTreeView.ItemsSource = null;
-        if (StarredPlaylistsListView != null) StarredPlaylistsListView.ItemsSource = null;
-
-        DataContext = null;
     }
 
     private void RemoveFromPlaylistMenuFlyoutItem_Click(object sender, RoutedEventArgs e)

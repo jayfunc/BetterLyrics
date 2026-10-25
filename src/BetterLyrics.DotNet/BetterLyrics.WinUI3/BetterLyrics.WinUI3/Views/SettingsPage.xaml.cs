@@ -26,10 +26,18 @@ public sealed partial class SettingsPage : BasePage
         InitializeComponent();
     }
 
-    protected override void Cleanup()
+    protected override void BindGeneratedControls()
+    {
+        Bindings?.Update();
+    }
+
+    protected override void UnbindGeneratedControls()
     {
         Bindings?.StopTracking();
+    }
 
+    protected override void OnUnloaded()
+    {
         if (NavView != null) NavView.MenuItemsSource = null;
         if (SearchBox != null) SearchBox.ItemsSource = null;
 
@@ -39,8 +47,6 @@ public sealed partial class SettingsPage : BasePage
         CleanupTab(MediaSettingsTab);
         CleanupTab(PluginManagerTab);
         CleanupTab(AboutTab);
-
-        DataContext = null;
     }
 
     private static void CleanupTab(Control? tab)

@@ -33,17 +33,23 @@ public sealed partial class WindowSettingsControl : BaseUserControl
         DataContext = Ioc.Default.GetRequiredService<WindowSettingsControlViewModel>();
     }
 
-    protected override void Initialize()
+    protected override void BindGeneratedControls()
+    {
+    }
+
+    protected override void UnbindGeneratedControls()
+    {
+    }
+
+    protected override void OnLoaded()
     {
         ViewModel.Attach();
         _ = ViewModel.InitializeAsync();
     }
 
-    protected override void Cleanup()
+    protected override void OnUnloaded()
     {
         ViewModel?.Detach();
-
-        Bindings?.StopTracking();
     }
 
     private static void OnLyricsWindowStatusChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

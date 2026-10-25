@@ -19,9 +19,12 @@ public sealed partial class MediaSettingsControl : BaseUserControl
         DataContext = Ioc.Default.GetRequiredService<MediaSettingsControlViewModel>();
     }
 
-    protected override void Cleanup()
+    protected override void BindGeneratedControls()
     {
-        Bindings?.StopTracking();
+    }
+
+    protected override void UnbindGeneratedControls()
+    {
     }
 
     private void SettingsPageRemovePathButton_Click(object sender, RoutedEventArgs e)

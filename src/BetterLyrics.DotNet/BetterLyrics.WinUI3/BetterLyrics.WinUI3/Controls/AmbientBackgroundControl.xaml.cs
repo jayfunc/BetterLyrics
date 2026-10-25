@@ -16,7 +16,7 @@ using Windows.UI;
 
 namespace BetterLyrics.WinUI3.Controls;
 
-public sealed partial class AmbientBackgroundControl : UserControl
+public sealed partial class AmbientBackgroundControl : BaseUserControl
 {
     private readonly IMonitorProvider _monitorProvider = Ioc.Default.GetRequiredService<IMonitorProvider>();
 
@@ -67,6 +67,39 @@ public sealed partial class AmbientBackgroundControl : UserControl
     {
         this.InitializeComponent();
         InitializeParticles();
+    }
+
+    protected override void BindGeneratedControls()
+    {
+    }
+
+    protected override void UnbindGeneratedControls()
+    {
+    }
+
+    protected override void OnLoaded()
+    {
+        _monitorProvider.DisplayStatusChanged -= PowerManager_DisplayStatusChanged;
+        _monitorProvider.DisplayStatusChanged += PowerManager_DisplayStatusChanged;
+    }
+
+    protected override void OnUnloaded()
+    {
+        _monitorProvider.DisplayStatusChanged -= PowerManager_DisplayStatusChanged;
+
+        if (AnimatedCanvas != null)
+        {
+            AnimatedCanvas.Draw -= AnimatedCanvas_Draw;
+            AnimatedCanvas.Update -= AnimatedCanvas_Update;
+            AnimatedCanvas.CreateResources -= AnimatedCanvas_CreateResources;
+
+            AnimatedCanvas.Paused = true;
+
+            AnimatedCanvas.RemoveFromVisualTree();
+            AnimatedCanvas = null;
+        }
+
+        _treeBlur.Dispose();
     }
 
     private void PowerManager_DisplayStatusChanged(object sender, bool isDisplayOn)
@@ -647,17 +680,5 @@ public sealed partial class AmbientBackgroundControl : UserControl
                 _dataParticles[i].Pos.X = (float)_rnd.NextDouble();
             }
         }
-    }
-
-    private void AnimatedCanvas_Unloaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
-    {
-        _monitorProvider.DisplayStatusChanged -= PowerManager_DisplayStatusChanged;
-        AnimatedCanvas?.RemoveFromVisualTree();
-        AnimatedCanvas = null;
-    }
-
-    private void AnimatedCanvas_Loaded(object sender, Microsoft.UI.Xaml.RoutedEventArgs e)
-    {
-        _monitorProvider.DisplayStatusChanged += PowerManager_DisplayStatusChanged;
     }
 }
