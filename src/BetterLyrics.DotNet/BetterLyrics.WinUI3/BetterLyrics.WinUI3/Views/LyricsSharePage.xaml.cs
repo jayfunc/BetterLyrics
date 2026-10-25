@@ -37,39 +37,25 @@ public sealed partial class LyricsSharePage : BasePage
 
     protected override void Cleanup()
     {
-        try
-        {
-            this.Bindings?.StopTracking();
+        this.Bindings?.StopTracking();
 
-            if (StyleGroupsCVS != null) StyleGroupsCVS.Source = null;
+        StyleGroupsCVS?.Source = null;
 
-            if (LyricsListView != null)
-            {
-                LyricsListView.SelectionChanged -= LyricsListView_SelectionChanged;
-                LyricsListView.ItemsSource = null;
-            }
+        LyricsListView?.SelectionChanged -= LyricsListView_SelectionChanged;
+        LyricsListView?.ItemsSource = null;
 
-            if (LyricsHostCheckBox != null)
-            {
-                LyricsHostCheckBox.Click -= LyricsHostCheckBox_Click;
-            }
+        LyricsHostCheckBox?.Click -= LyricsHostCheckBox_Click;
 
-            PreviewCard?.Title = null;
-            PreviewCard?.Artist = null;
-            PreviewCard?.CoverAccentColor = null;
-            PreviewCard?.CoverImage = null;
-            PreviewCard?.LyricsLines = null;
+        PreviewCard?.Title = null;
+        PreviewCard?.Artist = null;
+        PreviewCard?.CoverAccentColor = null;
+        PreviewCard?.CoverImage = null;
+        PreviewCard?.LyricsLines = null;
 
-            // 窗口关闭后 WinUI 原生 XAML 树可能仍短暂持有页面内容。
-            // DataTemplate/控件上的 XAML 事件处理委托会反向引用 Page，必须显式断开视觉树。
-            RootGrid?.Children.Clear();
-        }
-        finally
-        {
-            Content = null;
+        RootGrid?.Children.Clear();
 
-            DataContext = null;
-        }
+        Content = null;
+        DataContext = null;
     }
 
     private void LyricsListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
