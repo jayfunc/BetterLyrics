@@ -413,7 +413,7 @@ public partial class StatsDashboardControlViewModel : ObservableRecipient, ITran
         });
     }
 
-    private async Task LoadDataCoreAsync()
+    private async Task LoadDataCoreAsync(CancellationToken token)
     {
         if (IsLoading) return;
         _appUIThreadProvider.Execute(() =>
@@ -423,7 +423,9 @@ public partial class StatsDashboardControlViewModel : ObservableRecipient, ITran
 
         try
         {
-            await Task.Delay(Time.WaitingDuration);
+            await Task.Delay(Time.WaitingDuration, token);
+
+            token.ThrowIfCancellationRequested();
 
             var (start, end) = CalculateDateRange();
 
@@ -445,6 +447,8 @@ public partial class StatsDashboardControlViewModel : ObservableRecipient, ITran
 
             await UpdatePlayerStatsAsync(pStats);
 
+            token.ThrowIfCancellationRequested();
+
             _appUIThreadProvider.Execute(() =>
             {
                 TotalDuration = duration;
@@ -457,21 +461,32 @@ public partial class StatsDashboardControlViewModel : ObservableRecipient, ITran
             {
                 foreach (var song in topSongs)
                 {
-                    var url = await _albumArtSearchService.GetAlbumArtUrlAsync(
-                        new Models.SongInfo { Artist = song.Artist, Title = song.Title },
-                        OnlineAlbumArtProvider.LastFm,
-                        64,
-                        CancellationToken.None);
+                    if (token.IsCancellationRequested) break;
 
-                    if (!string.IsNullOrEmpty(url))
+                    try
                     {
-                        _appUIThreadProvider.Execute(() =>
+                        var url = await _albumArtSearchService.GetAlbumArtUrlAsync(
+                            new Models.SongInfo { Artist = song.Artist, Title = song.Title },
+                            OnlineAlbumArtProvider.LastFm,
+                            64,
+                            token);
+
+                        if (!string.IsNullOrEmpty(url) && !token.IsCancellationRequested)
                         {
-                            song.AlbumArtUrl = url;
-                        });
+                            _appUIThreadProvider.Execute(() =>
+                            {
+                                song.AlbumArtUrl = url;
+                            });
+                        }
+                    }
+                    catch (OperationCanceledException)
+                    {
+                        break;
                     }
                 }
-            });
+            }, token);
+
+            token.ThrowIfCancellationRequested();
 
             ProcessHeatmapStats(logs, start.Value, end.Value);
             ProcessHourlyStats(logs);
@@ -526,6 +541,10 @@ public partial class StatsDashboardControlViewModel : ObservableRecipient, ITran
                 PersonaDescription = _localizationService.GetLocalizedString(personaDescKey);
             });
         }
+        catch (OperationCanceledException)
+        {
+            // The load was superseded or the view was closed; nothing to update.
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "StatsDashboardControlViewModel: LoadDataCoreAsync");
@@ -533,10 +552,13 @@ public partial class StatsDashboardControlViewModel : ObservableRecipient, ITran
         }
         finally
         {
-            _appUIThreadProvider.Execute(() =>
+            if (!token.IsCancellationRequested)
             {
-                IsLoading = false;
-            });
+                _appUIThreadProvider.Execute(() =>
+                {
+                    IsLoading = false;
+                });
+            }
         }
     }
 
@@ -558,7 +580,15 @@ public partial class StatsDashboardControlViewModel : ObservableRecipient, ITran
     [RelayCommand]
     public void LoadData()
     {
-        _ = _debouncer.RunAsync(() => { _ = LoadDataCoreAsync(); });
+        _ = _debouncer.RunAsync(LoadDataCoreAsync);
+    }
+
+    /// <summary>
+    /// 视图关闭时取消仍在进行的加载，避免异步任务继续持有 ViewModel。
+    /// </summary>
+    public void CancelLoading()
+    {
+        _debouncer.Cancel();
     }
 
     [RelayCommand]

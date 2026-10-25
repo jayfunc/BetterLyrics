@@ -282,7 +282,9 @@ public partial class LyricsSharePageViewModel : ObservableRecipient, ITransientV
         CardData.Title = mappedTitle;
         CardData.Artist = mappedArtist;
         CardData.CoverImageBytes = GSMTCService.AlbumArtBytes;
-        CardData.AccentCoverColor = (await GSMTCService.GetAlbumArtAccentColorsAsync(PaletteGeneratorType.CelebiQuantizer, true)).First();
+
+        var accentColors = await GSMTCService.GetAlbumArtAccentColorsAsync(PaletteGeneratorType.CelebiQuantizer, true);
+        CardData.AccentCoverColor = accentColors.Count > 0 ? accentColors[0] : null;
 
         CardData.Lyrics = [];
     }

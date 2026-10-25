@@ -190,7 +190,7 @@
                                                         RadiusX="4"
                                                         RadiusY="4">
                                                         <Rectangle.Fill>
-                                                            <ImageBrush ImageSource="{Binding Tag.CoverImageBytes, ElementName=WeChatCardRoot, Converter={StaticResource ByteArrayToImageConverter}}" Stretch="UniformToFill" />
+                                                            <ImageBrush ImageSource="{Binding Tag.CoverImage, ElementName=WeChatCardRoot}" Stretch="UniformToFill" />
                                                         </Rectangle.Fill>
                                                     </Rectangle>
 

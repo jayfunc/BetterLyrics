@@ -32,6 +32,9 @@ public partial class BaseUserControl : UserControl
 
     private void BaseUserControl_Unloaded(object sender, RoutedEventArgs e)
     {
+        Loaded -= BaseUserControl_Loaded;
+        Unloaded -= BaseUserControl_Unloaded;
+
         WeakReferenceMessenger.Default.UnregisterAll(this);
 
         if (DataContext is ITransientViewModel && DataContext is ObservableRecipient observableRecipient)

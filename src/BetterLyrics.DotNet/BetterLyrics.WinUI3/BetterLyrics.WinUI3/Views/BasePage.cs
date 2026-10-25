@@ -32,6 +32,9 @@ public partial class BasePage : Page
 
     private void BasePage_Unloaded(object sender, RoutedEventArgs e)
     {
+        Loaded -= BasePage_Loaded;
+        Unloaded -= BasePage_Unloaded;
+
         WeakReferenceMessenger.Default.UnregisterAll(this);
 
         if (DataContext is ITransientViewModel && DataContext is ObservableRecipient observableRecipient)
