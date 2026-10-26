@@ -43,10 +43,12 @@ public sealed partial class LyricsWindowManagerControl : BaseUserControl
 
     protected override void BindGeneratedControls()
     {
+        Bindings?.Update();
     }
 
     protected override void UnbindGeneratedControls()
     {
+        Bindings?.StopTracking();
     }
 
     private void DeleteMenuFlyoutItem_Click(object sender, RoutedEventArgs e)

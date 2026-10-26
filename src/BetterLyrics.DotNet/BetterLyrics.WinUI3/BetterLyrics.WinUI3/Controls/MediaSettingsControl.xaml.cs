@@ -21,10 +21,12 @@ public sealed partial class MediaSettingsControl : BaseUserControl
 
     protected override void BindGeneratedControls()
     {
+        Bindings?.Update();
     }
 
     protected override void UnbindGeneratedControls()
     {
+        Bindings?.StopTracking();
     }
 
     private void SettingsPageRemovePathButton_Click(object sender, RoutedEventArgs e)

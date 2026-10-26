@@ -32,10 +32,12 @@ public sealed partial class PlaybackSettingsControl : BaseUserControl
 
     protected override void BindGeneratedControls()
     {
+        Bindings?.Update();
     }
 
     protected override void UnbindGeneratedControls()
     {
+        Bindings?.StopTracking();
     }
 
     private void AlbumArtSearchProvidersListView_DragItemsCompleted(ListViewBase sender,

@@ -20,10 +20,12 @@ public sealed partial class PluginManagerControl : BaseUserControl
 
     protected override void BindGeneratedControls()
     {
+        Bindings?.Update();
     }
 
     protected override void UnbindGeneratedControls()
     {
+        Bindings?.StopTracking();
     }
 
     private void UninstallPluginButton_Click(object sender, RoutedEventArgs e)

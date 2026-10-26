@@ -1,7 +1,5 @@
 using BetterLyrics.Core.Enums;
 using BetterLyrics.WinUI3.Controls;
-using CommunityToolkit.Mvvm.ComponentModel;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using System;
@@ -27,21 +25,6 @@ public sealed partial class SettingsSectionPage : BasePage
         Section = section;
         ContentRoot.Children.Add(CreateSectionControl(section));
         base.OnNavigatedTo(e);
-    }
-
-    protected override void OnUnloaded()
-    {
-        if (ContentRoot.Children.Count == 0 || ContentRoot.Children[0] is not Control control)
-        {
-            return;
-        }
-
-        if (control.DataContext is ObservableRecipient recipient)
-        {
-            recipient.IsActive = false;
-        }
-
-        control.DataContext = null;
     }
 
     protected override void BindGeneratedControls()

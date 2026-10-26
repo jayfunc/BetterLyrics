@@ -18,9 +18,11 @@ public sealed partial class AppSettingsControl : BaseUserControl
 
     protected override void BindGeneratedControls()
     {
+        Bindings?.Update();
     }
 
     protected override void UnbindGeneratedControls()
     {
+        Bindings?.StopTracking();
     }
 }

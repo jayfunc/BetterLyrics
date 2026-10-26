@@ -23,10 +23,12 @@ public sealed partial class AboutControl : BaseUserControl
 
     protected override void BindGeneratedControls()
     {
+        Bindings?.Update();
     }
 
     protected override void UnbindGeneratedControls()
     {
+        Bindings?.StopTracking();
     }
 
     protected override void OnUnloaded()
