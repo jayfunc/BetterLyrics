@@ -122,7 +122,7 @@
                                                                     TextWrapping="Wrap" />
                                                                 <Image
                                                                     Height="16"
-                                                                    behaviors:AnimatedImage.IsPlaying="{Binding ElementName=MediaSourceProvidersListView, Path=ViewModel.GsmtcService.CurrentIsPlaying, Mode=OneWay}"
+                                                                    behaviors:AnimatedImage.IsPlaying="{Binding ElementName=MediaSourceProvidersListView, Path=DataContext.GsmtcService.CurrentIsPlaying, Mode=OneWay}"
                                                                     Source="{ThemeResource MusicWave}"
                                                                     Visibility="{Binding IsFocused, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
                                                             </StackPanel>
