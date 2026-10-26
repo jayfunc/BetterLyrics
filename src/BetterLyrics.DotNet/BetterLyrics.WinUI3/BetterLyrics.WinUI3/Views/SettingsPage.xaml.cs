@@ -1,22 +1,25 @@
 // 2025/6/23 by Zhe Fang
 
 using BetterLyrics.Core.Extensions;
+using BetterLyrics.Core.Enums;
+using BetterLyrics.Core.Messages.SettingsNavigation;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.ViewModels;
-using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.DependencyInjection;
+using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI.Controls;
 using Microsoft.UI.Composition;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Hosting;
 using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Views;
 
-public sealed partial class SettingsPage : BasePage
+public sealed partial class SettingsPage : BasePage, IRecipient<SettingsSectionChangedMessage>
 {
     public SettingsPageViewModel ViewModel => (SettingsPageViewModel)DataContext;
 
@@ -40,22 +43,35 @@ public sealed partial class SettingsPage : BasePage
     {
         if (NavView != null) NavView.MenuItemsSource = null;
         if (SearchBox != null) SearchBox.ItemsSource = null;
-
-        CleanupTab(AppSettingsTab);
-        CleanupTab(LyricsWindowManagerTab);
-        CleanupTab(PlaybackSettingsTab);
-        CleanupTab(MediaSettingsTab);
-        CleanupTab(PluginManagerTab);
-        CleanupTab(AboutTab);
+        if (ContentFrame != null) ContentFrame.Content = null;
     }
 
-    private static void CleanupTab(Control? tab)
+    protected override void OnLoaded()
     {
-        if (tab == null) return;
+        NavigateToSelectedSection();
+    }
 
-        if (tab.DataContext is ObservableRecipient recipient) recipient.IsActive = false;
+    public void Receive(SettingsSectionChangedMessage message)
+    {
+        NavigateToSection(message.Section);
+    }
 
-        tab.DataContext = null;
+    private void NavigateToSelectedSection()
+    {
+        if (ViewModel.SelectedNavItem is { } selectedItem)
+        {
+            NavigateToSection(selectedItem.Section);
+        }
+    }
+
+    private void NavigateToSection(SettingsSection section)
+    {
+        if (ContentFrame.Content is SettingsSectionPage currentPage && currentPage.Section == section)
+        {
+            return;
+        }
+
+        ContentFrame.Navigate(typeof(SettingsSectionPage), section);
     }
 
     private void AutoSuggestBox_GotFocus(object sender, RoutedEventArgs e)

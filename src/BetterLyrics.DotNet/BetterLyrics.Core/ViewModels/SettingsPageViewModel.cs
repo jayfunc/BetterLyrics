@@ -106,6 +106,10 @@ public partial class SettingsPageViewModel : ObservableRecipient, ISingletonView
     partial void OnSelectedNavItemChanged(SettingsNavMenuItem? value)
     {
         UpdateCurrentPath();
+        if (value != null)
+        {
+            WeakReferenceMessenger.Default.Send(new SettingsSectionChangedMessage(this, value.Section));
+        }
     }
 
     public void UpdateCurrentPath()

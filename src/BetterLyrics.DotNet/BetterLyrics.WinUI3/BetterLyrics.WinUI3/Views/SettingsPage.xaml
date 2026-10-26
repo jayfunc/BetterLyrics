@@ -6,7 +6,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:enums="using:BetterLyrics.Core.Enums"
     xmlns:local="using:BetterLyrics.WinUI3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:models="using:BetterLyrics.Core.Models"
@@ -93,44 +92,16 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <controls:SwitchPresenter Grid.Row="0" Value="{x:Bind ViewModel.SelectedNavItem.Section, Mode=OneWay}">
-                    <controls:SwitchPresenter.ContentTransitions>
+                <Frame
+                    x:Name="ContentFrame"
+                    Grid.Row="0"
+                    IsNavigationStackEnabled="False">
+                    <Frame.ContentTransitions>
                         <TransitionCollection>
                             <PopupThemeTransition />
                         </TransitionCollection>
-                    </controls:SwitchPresenter.ContentTransitions>
-
-                    <!--  App appearance and behavior  -->
-                    <controls:Case Value="{x:Bind enums:SettingsSection.App}">
-                        <uc:AppSettingsControl x:Name="AppSettingsTab" />
-                    </controls:Case>
-
-                    <!--  Lyrics window manager  -->
-                    <controls:Case Value="{x:Bind enums:SettingsSection.LyricsWindowMgr}">
-                        <uc:LyricsWindowManagerControl x:Name="LyricsWindowManagerTab" />
-                    </controls:Case>
-
-                    <!--  Playback sources  -->
-                    <controls:Case Value="{x:Bind enums:SettingsSection.PlaybackLib}">
-                        <uc:PlaybackSettingsControl x:Name="PlaybackSettingsTab" />
-                    </controls:Case>
-
-                    <!--  Media lib  -->
-                    <controls:Case Value="{x:Bind enums:SettingsSection.MediaLib}">
-                        <uc:MediaSettingsControl x:Name="MediaSettingsTab" />
-                    </controls:Case>
-
-                    <!--  Plugins  -->
-                    <controls:Case Value="{x:Bind enums:SettingsSection.Plugins}">
-                        <uc:PluginManagerControl x:Name="PluginManagerTab" />
-                    </controls:Case>
-
-                    <!--  About  -->
-                    <controls:Case Value="{x:Bind enums:SettingsSection.About}">
-                        <uc:AboutControl x:Name="AboutTab" />
-                    </controls:Case>
-
-                </controls:SwitchPresenter>
+                    </Frame.ContentTransitions>
+                </Frame>
 
                 <Border
                     Grid.Row="1"
