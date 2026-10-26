@@ -13,7 +13,6 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Hosting;
 using Microsoft.UI.Xaml.Media;
-using Microsoft.UI.Xaml.Navigation;
 using System;
 using System.Threading.Tasks;
 
@@ -41,19 +40,14 @@ public sealed partial class SettingsPage : BasePage, IRecipient<SettingsSectionC
 
     protected override void OnUnloaded()
     {
-        if (NavView != null) NavView.MenuItemsSource = null;
-        if (SearchBox != null) SearchBox.ItemsSource = null;
-        if (ContentFrame != null) ContentFrame.Content = null;
+        NavView?.MenuItemsSource = null;
+        SearchBox?.ItemsSource = null;
+        ContentFrame?.Content = null;
     }
 
     protected override void OnLoaded()
     {
         NavigateToSelectedSection();
-    }
-
-    public void Receive(SettingsSectionChangedMessage message)
-    {
-        NavigateToSection(message.Section);
     }
 
     private void NavigateToSelectedSection()
@@ -327,5 +321,10 @@ public sealed partial class SettingsPage : BasePage, IRecipient<SettingsSectionC
             if (result != null) return result;
         }
         return null;
+    }
+
+    public void Receive(SettingsSectionChangedMessage message)
+    {
+        NavigateToSection(message.Section);
     }
 }
