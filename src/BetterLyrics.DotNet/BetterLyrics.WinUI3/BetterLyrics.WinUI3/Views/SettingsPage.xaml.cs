@@ -1,12 +1,9 @@
 // 2025/6/23 by Zhe Fang
 
 using BetterLyrics.Core.Extensions;
-using BetterLyrics.Core.Enums;
-using BetterLyrics.Core.Messages.SettingsNavigation;
 using BetterLyrics.Core.Models;
 using BetterLyrics.Core.ViewModels;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using CommunityToolkit.Mvvm.Messaging;
 using CommunityToolkit.WinUI.Controls;
 using Microsoft.UI.Composition;
 using Microsoft.UI.Xaml;
@@ -18,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace BetterLyrics.WinUI3.Views;
 
-public sealed partial class SettingsPage : BasePage, IRecipient<SettingsSectionChangedMessage>
+public sealed partial class SettingsPage : BasePage
 {
     public SettingsPageViewModel ViewModel => (SettingsPageViewModel)DataContext;
 
@@ -42,30 +39,6 @@ public sealed partial class SettingsPage : BasePage, IRecipient<SettingsSectionC
     {
         NavView?.MenuItemsSource = null;
         SearchBox?.ItemsSource = null;
-        ContentFrame?.Content = null;
-    }
-
-    protected override void OnLoaded()
-    {
-        NavigateToSelectedSection();
-    }
-
-    private void NavigateToSelectedSection()
-    {
-        if (ViewModel.SelectedNavItem is { } selectedItem)
-        {
-            NavigateToSection(selectedItem.Section);
-        }
-    }
-
-    private void NavigateToSection(SettingsSection section)
-    {
-        if (ContentFrame.Content is SettingsSectionPage currentPage && currentPage.Section == section)
-        {
-            return;
-        }
-
-        ContentFrame.Navigate(typeof(SettingsSectionPage), section);
     }
 
     private void AutoSuggestBox_GotFocus(object sender, RoutedEventArgs e)
@@ -321,10 +294,5 @@ public sealed partial class SettingsPage : BasePage, IRecipient<SettingsSectionC
             if (result != null) return result;
         }
         return null;
-    }
-
-    public void Receive(SettingsSectionChangedMessage message)
-    {
-        NavigateToSection(message.Section);
     }
 }

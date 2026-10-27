@@ -2,6 +2,7 @@ using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Interfaces.ViewModels;
+using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Messages.AppSettings;
 using BetterLyrics.Core.Messages.SettingsNavigation;
 using BetterLyrics.Core.Models;
@@ -56,6 +57,10 @@ public partial class AppSettingsControlViewModel : ObservableRecipient, ITransie
     [ObservableProperty] public partial AppSettingsNavMenuItem? SelectedNavItem { get; set; }
 
     [ObservableProperty] public partial AppSettings AppSettings { get; set; }
+
+    [ObservableProperty] public partial string GcObjectCheckSummary { get; set; } = string.Empty;
+
+    public ObservableCollection<string> AliveGcObjects { get; } = [];
 
     public AppSettingsControlViewModel(ISettingsService settingsService,
         IWindowManagerProvider windowManagerProvider, ILauncherProvider launcherProvider, ILocalizationService localizationService)
@@ -140,5 +145,20 @@ public partial class AppSettingsControlViewModel : ObservableRecipient, ITransie
     private void RestartApp()
     {
         _windowManagerProvider.RestartApp();
+    }
+
+    [RelayCommand]
+    private async Task CheckGcObjectsAsync()
+    {
+        AliveGcObjects.Clear();
+        var aliveObjects = await MemoryLeakDetector.CheckAliveObjectsAsync();
+
+        foreach (var name in aliveObjects)
+        {
+            AliveGcObjects.Add(name);
+        }
+
+        GcObjectCheckSummary = _localizationService.GetLocalizedString(
+            aliveObjects.Count == 0 ? "SettingsPageGcObjectsNone" : "SettingsPageGcObjectsFound");
     }
 }

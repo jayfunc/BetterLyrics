@@ -42,15 +42,9 @@ public static class FrameworkElementLifecycleHelper
         {
             MemoryLeakDetector.Track(element.DataContext);
         }
-        else if (element.DataContext is ISingletonViewModel)
-        {
-            Debug.WriteLine($"[MemoryLeakDetector] {element.DataContext.GetType().Name} is a singleton view model, skipping memory leak detection.");
-        }
 
         onUnloadedCustom?.Invoke();
 
         unbindControls?.Invoke();
-
-        MemoryLeakDetector.ScheduleCheck();
     }
 }

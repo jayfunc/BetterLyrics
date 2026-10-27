@@ -38,20 +38,21 @@ public class MemoryLeakDetector
         }
 
         Debug.WriteLine($"[MemoryLeakDetector] GC is preparing: {name}");
-        _logger.LogInformation("[MemoryLeakDetector] GC is preparing: {Name}", name);
+        _logger.LogDebug("[MemoryLeakDetector] GC is preparing: {Name}", name);
 
         ObjectTracked?.Invoke(null, new MemoryLeakObjectTrackedEventArgs(name, reference));
     }
 
-    private static async Task CheckAsync()
+    public static async Task<IReadOnlyList<string>> CheckAliveObjectsAsync()
     {
-        CollectAndWait();
+        await Task.Run(CollectAndWait);
 
         await Task.Delay(100);
 
         lock (_watchedObjects)
         {
             Debug.WriteLine($"[MemoryLeakDetector] === Checking watched objects ===");
+            _logger.LogDebug("[MemoryLeakDetector] === Checking watched objects ===");
 
             var aliveObjects = new List<(WeakReference Reference, string Name)>();
             var deadObjects = new List<(WeakReference Reference, string Name)>();
@@ -63,7 +64,7 @@ public class MemoryLeakDetector
                     aliveObjects.Add(item);
 
                     Debug.WriteLine($"[MemoryLeakDetector] GC failed, object is still alive: {item.Name}");
-                    _logger.LogWarning("[MemoryLeakDetector] GC failed, object is still alive: {Name}", item.Name);
+                    _logger.LogDebug("[MemoryLeakDetector] GC failed, object is still alive: {Name}", item.Name);
                 }
                 else
                 {
@@ -76,8 +77,10 @@ public class MemoryLeakDetector
                 _watchedObjects.Remove(dead);
 
                 Debug.WriteLine($"[MemoryLeakDetector] GC completed: {dead.Name}");
-                _logger.LogInformation("[MemoryLeakDetector] GC completed: {Name}", dead.Name);
+                _logger.LogDebug("[MemoryLeakDetector] GC completed: {Name}", dead.Name);
             }
+
+            return aliveObjects.Select(item => item.Name).ToArray();
         }
     }
 
@@ -93,7 +96,7 @@ public class MemoryLeakDetector
         _ = Task.Run(async () =>
         {
             await Task.Delay(delayMs);
-            await CheckAsync();
+            await CheckAliveObjectsAsync();
         });
     }
 }

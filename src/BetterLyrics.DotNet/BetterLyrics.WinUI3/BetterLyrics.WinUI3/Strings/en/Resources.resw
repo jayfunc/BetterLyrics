@@ -1281,6 +1281,21 @@
   <data name="SettingsPageWriteDebugLogs.Description" xml:space="preserve">
     <value>Include Debug-level and higher logs. This makes troubleshooting easier but increases log file size. Takes effect after restarting the app.</value>
   </data>
+  <data name="SettingsPageGcObjectCheck.Header" xml:space="preserve">
+    <value>Check objects not collected by GC</value>
+  </data>
+  <data name="SettingsPageGcObjectCheck.Description" xml:space="preserve">
+    <value>Run garbage collection and list tracked objects that are still alive.</value>
+  </data>
+  <data name="SettingsPageGcObjectCheckButton.Content" xml:space="preserve">
+    <value>Check</value>
+  </data>
+  <data name="SettingsPageGcObjectsNone" xml:space="preserve">
+    <value>No tracked objects remain alive.</value>
+  </data>
+  <data name="SettingsPageGcObjectsFound" xml:space="preserve">
+    <value>Tracked objects still alive after garbage collection:</value>
+  </data>
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>App Appearance</value>
   </data>

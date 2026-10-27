@@ -1272,6 +1272,21 @@
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>应用外观</value>
   </data>
+  <data name="SettingsPageGcObjectCheck.Header" xml:space="preserve">
+    <value>检查未被垃圾回收的对象</value>
+  </data>
+  <data name="SettingsPageGcObjectCheck.Description" xml:space="preserve">
+    <value>运行垃圾回收，并列出仍然存活的已跟踪对象。</value>
+  </data>
+  <data name="SettingsPageGcObjectCheckButton.Content" xml:space="preserve">
+    <value>检查</value>
+  </data>
+  <data name="SettingsPageGcObjectsNone" xml:space="preserve">
+    <value>没有仍然存活的已跟踪对象。</value>
+  </data>
+  <data name="SettingsPageGcObjectsFound" xml:space="preserve">
+    <value>垃圾回收后仍然存活的已跟踪对象：</value>
+  </data>
   <data name="SettingsPageArtist.Header" xml:space="preserve">
     <value>艺术家</value>
   </data>

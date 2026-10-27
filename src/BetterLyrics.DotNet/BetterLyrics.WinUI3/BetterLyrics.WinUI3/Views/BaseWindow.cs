@@ -91,15 +91,9 @@ public abstract class BaseWindow : Window
             {
                 MemoryLeakDetector.Track(item);
             }
-            else if (item is ISingletonViewModel)
-            {
-                Debug.WriteLine($"[MemoryLeakDetector] {item.GetType().Name} is a singleton view model, skipping memory leak detection.");
-            }
         }
 
         OnClosed();
-
-        MemoryLeakDetector.ScheduleCheck();
     }
 
     protected virtual IEnumerable<object> GetAdditionalTrackedViewModels() => [];
