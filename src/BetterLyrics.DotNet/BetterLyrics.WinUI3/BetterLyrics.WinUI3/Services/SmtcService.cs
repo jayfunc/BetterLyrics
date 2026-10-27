@@ -78,7 +78,7 @@ public partial class SmtcService : ObservableObject, ISmtcService
         _mediaPlayer.CommandManager.NextReceived += CommandManager_NextReceived;
         _mediaPlayer.CommandManager.PreviousReceived += CommandManager_PreviousReceived;
 
-        _mediaPlayer.SystemMediaTransportControls.IsEnabled = true;
+        _mediaPlayer.SystemMediaTransportControls.IsEnabled = false;
         _mediaPlayer.SystemMediaTransportControls.IsStopEnabled = true;
         _mediaPlayer.SystemMediaTransportControls.ButtonPressed += SystemMediaTransportControls_ButtonPressed;
 
