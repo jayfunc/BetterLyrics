@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -1269,6 +1269,33 @@
   <data name="SettingsPageApp" xml:space="preserve">
     <value>Erscheinungsbild und Verhalten der App</value>
   </data>
+  <data name="SettingsPageAdvanced.Text" xml:space="preserve">
+    <value>Fortgeschritten</value>
+  </data>
+  <data name="SettingsPageLogging.Text" xml:space="preserve">
+    <value>Protokollierung</value>
+  </data>
+  <data name="SettingsPageWriteDebugLogs.Header" xml:space="preserve">
+    <value>Debug-Protokolle schreiben</value>
+  </data>
+  <data name="SettingsPageWriteDebugLogs.Description" xml:space="preserve">
+    <value>Protokolle der Stufe „Debug“ und höher einbeziehen. Dies erleichtert die Fehlerbehebung, erhöht jedoch die Größe der Protokolldatei. Die Einstellung wird nach einem Neustart der App wirksam.</value>
+  </data>
+  <data name="SettingsPageGcObjectCheck.Header" xml:space="preserve">
+    <value>Objekte überprüfen, die nicht vom GC gesammelt wurden</value>
+  </data>
+  <data name="SettingsPageGcObjectCheck.Description" xml:space="preserve">
+    <value>Führe die Garbage Collection durch und liste die verfolgten Objekte auf, die noch vorhanden sind.</value>
+  </data>
+  <data name="SettingsPageGcObjectCheckButton.Content" xml:space="preserve">
+    <value>Überprüfen</value>
+  </data>
+  <data name="SettingsPageGcObjectsNone" xml:space="preserve">
+    <value>Es sind keine verfolgten Objekte mehr vorhanden.</value>
+  </data>
+  <data name="SettingsPageGcObjectsFound" xml:space="preserve">
+    <value>Objekte, die nach der Garbage Collection noch vorhanden sind:</value>
+  </data>
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>Erscheinungsbild</value>
   </data>
@@ -1388,6 +1415,9 @@
   </data>
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>Desktop-Modus (Transparent)</value>
+  </data>
+  <data name="SettingsPageDesktopWallpaperLayer.Header" xml:space="preserve">
+    <value>Ebene für Desktop-Hintergrundbilder</value>
   </data>
   <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
     <value>Dieses Projekt wird "wie besehen" ohne jegliche Gewährleistung bereitgestellt. Alle Songtexte, Schriftarten, Symbole und andere Ressourcen Dritter sind Eigentum ihrer jeweiligen Urheberrechtsinhaber. Die Autoren dieses Projekts beanspruchen kein Eigentum an solchen Ressourcen. Dieses Projekt ist nicht-kommerziell und darf nicht zur Verletzung von Rechten verwendet werden. Benutzer sind dafür verantwortlich, dass ihre Nutzung den geltenden Gesetzen und Lizenzen entspricht.</value>
@@ -1718,6 +1748,15 @@
   </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>Schriftgewicht</value>
+  </data>
+  <data name="SettingsPageLyricsGapDots.Description" xml:space="preserve">
+    <value>Bei langen Pausen ohne Liedtext drei Atempunkte anzeigen</value>
+  </data>
+  <data name="SettingsPageLyricsGapDots.Header" xml:space="preserve">
+    <value>Zwischenstück-Punkte</value>
+  </data>
+  <data name="SettingsPageLyricsGapDotsMinimumDuration.Header" xml:space="preserve">
+    <value>Mindestabstand</value>
   </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>Leuchteffekt</value>
@@ -2354,6 +2393,39 @@
   </data>
   <data name="WindowSettingsControlShowAndHide.Text" xml:space="preserve">
     <value>Ausblenden und Anzeigen</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngine.Text" xml:space="preserve">
+    <value>Integration von Wallpaper Engine</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineBinding.Header" xml:space="preserve">
+    <value>Link zu einem Wallpaper Engine-Hintergrundbild</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineBinding.Description" xml:space="preserve">
+    <value>Dieses Liedtextfenster wird automatisch angezeigt, sobald das verknüpfte Hintergrundbild aktiv wird, und ausgeblendet, sobald ein anderes verknüpftes Hintergrundbild aktiv wird. Die Funktionen „Pause“ und „Automatisches Ausblenden bei fehlender Sitzung“ gelten weiterhin. Nicht verknüpfte Fenster sind davon nicht betroffen.</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineRefresh.Text" xml:space="preserve">
+    <value>Hintergrundbildliste aktualisieren</value>
+  </data>
+  <data name="WallpaperEngineNotLinked" xml:space="preserve">
+    <value>Nicht verlinkt</value>
+  </data>
+  <data name="WallpaperEngineMissing" xml:space="preserve">
+    <value>nicht installiert</value>
+  </data>
+  <data name="WallpaperEngineNotInstalled" xml:space="preserve">
+    <value>Wallpaper Engine wurde nicht erkannt. Stellen Sie sicher, dass das Programm installiert ist und ausgeführt wird, und aktualisieren Sie anschließend die Hintergrundbildliste.</value>
+  </data>
+  <data name="WallpaperEngineNoActiveWallpaper" xml:space="preserve">
+    <value>Es wurde kein aktives Wallpaper von Wallpaper Engine erkannt.</value>
+  </data>
+  <data name="WallpaperEngineCurrentWallpaper" xml:space="preserve">
+    <value>Aktuelles Hintergrundbild:</value>
+  </data>
+  <data name="WindowSettingsControlCopyWallpaperName.Text" xml:space="preserve">
+    <value>Hintergrundbild-Namen kopieren</value>
+  </data>
+  <data name="WindowSettingsControlCopyCurrentWallpaperName.Text" xml:space="preserve">
+    <value>Aktuellen Hintergrundbildnamen kopieren</value>
   </data>
   <data name="WindowSettingsControlSpoutOutput.Header" xml:space="preserve">
     <value>Ausgießer Ausgang</value>

@@ -1269,6 +1269,33 @@
   <data name="SettingsPageApp" xml:space="preserve">
     <value>應用程式外觀和行為</value>
   </data>
+  <data name="SettingsPageAdvanced.Text" xml:space="preserve">
+    <value>進階</value>
+  </data>
+  <data name="SettingsPageLogging.Text" xml:space="preserve">
+    <value>記錄</value>
+  </data>
+  <data name="SettingsPageWriteDebugLogs.Header" xml:space="preserve">
+    <value>寫入偵錯記錄檔</value>
+  </data>
+  <data name="SettingsPageWriteDebugLogs.Description" xml:space="preserve">
+    <value>包含偵錯層級及更高層級的記錄。這有助於疑難排解，但會增加記錄檔大小。重新啟動應用程式後生效</value>
+  </data>
+  <data name="SettingsPageGcObjectCheck.Header" xml:space="preserve">
+    <value>檢查未被垃圾回收回收的物件</value>
+  </data>
+  <data name="SettingsPageGcObjectCheck.Description" xml:space="preserve">
+    <value>執行垃圾回收，並列出仍存活的受追蹤物件</value>
+  </data>
+  <data name="SettingsPageGcObjectCheckButton.Content" xml:space="preserve">
+    <value>檢查</value>
+  </data>
+  <data name="SettingsPageGcObjectsNone" xml:space="preserve">
+    <value>沒有任何被追蹤的物件仍處於存活狀態</value>
+  </data>
+  <data name="SettingsPageGcObjectsFound" xml:space="preserve">
+    <value>在垃圾回收後仍存活的追蹤物件：</value>
+  </data>
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>應用程式外觀</value>
   </data>
@@ -1388,6 +1415,9 @@
   </data>
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>桌面模式（透明）</value>
+  </data>
+  <data name="SettingsPageDesktopWallpaperLayer.Header" xml:space="preserve">
+    <value>桌面壁紙層</value>
   </data>
   <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
     <value>本專案按現狀提供，不提供任何形式的保證。所有歌詞、字型、圖示和其他第三方資源均為其各自版權所有者的財產。本專案的作者不主張此類資源的所有權。本專案為非商業性專案，不得用於侵犯任何權利。使用者有責任確保自己的使用符合適用的法律和許可</value>
@@ -2363,6 +2393,39 @@
   </data>
   <data name="WindowSettingsControlShowAndHide.Text" xml:space="preserve">
     <value>顯示與隱藏</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngine.Text" xml:space="preserve">
+    <value>Wallpaper Engine 整合</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineBinding.Header" xml:space="preserve">
+    <value>連結至 Wallpaper Engine 壁紙</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineBinding.Description" xml:space="preserve">
+    <value>當連結的壁紙正在使用時，自動顯示此歌詞視窗；當另一個已連結的壁紙正在使用時，自動隱藏此視窗。暫停和無媒體工作階段時的自動隱藏仍會生效。未連結的視窗不受影響</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineRefresh.Text" xml:space="preserve">
+    <value>重新整理壁紙清單</value>
+  </data>
+  <data name="WallpaperEngineNotLinked" xml:space="preserve">
+    <value>未連結</value>
+  </data>
+  <data name="WallpaperEngineMissing" xml:space="preserve">
+    <value>未安裝</value>
+  </data>
+  <data name="WallpaperEngineNotInstalled" xml:space="preserve">
+    <value>未偵測到 Wallpaper Engine。請確認其已安裝並正在執行，然後重新整理壁紙清單</value>
+  </data>
+  <data name="WallpaperEngineNoActiveWallpaper" xml:space="preserve">
+    <value>未偵測到正在使用的 Wallpaper Engine 壁紙</value>
+  </data>
+  <data name="WallpaperEngineCurrentWallpaper" xml:space="preserve">
+    <value>目前壁紙：</value>
+  </data>
+  <data name="WindowSettingsControlCopyWallpaperName.Text" xml:space="preserve">
+    <value>複製壁紙名稱</value>
+  </data>
+  <data name="WindowSettingsControlCopyCurrentWallpaperName.Text" xml:space="preserve">
+    <value>複製目前壁紙名稱</value>
   </data>
   <data name="WindowSettingsControlSpoutOutput.Header" xml:space="preserve">
     <value>Spout 輸出</value>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -1269,6 +1269,33 @@
   <data name="SettingsPageApp" xml:space="preserve">
     <value>Giao diện và Hành vi của Ứng dụng</value>
   </data>
+  <data name="SettingsPageAdvanced.Text" xml:space="preserve">
+    <value>Nâng cao</value>
+  </data>
+  <data name="SettingsPageLogging.Text" xml:space="preserve">
+    <value>Ghi nhật ký</value>
+  </data>
+  <data name="SettingsPageWriteDebugLogs.Header" xml:space="preserve">
+    <value>Ghi nhật ký gỡ lỗi</value>
+  </data>
+  <data name="SettingsPageWriteDebugLogs.Description" xml:space="preserve">
+    <value>Bao gồm các bản ghi ở mức Debug trở lên. Điều này giúp việc khắc phục sự cố trở nên dễ dàng hơn nhưng sẽ làm tăng kích thước tệp nhật ký. Thay đổi có hiệu lực sau khi khởi động lại ứng dụng.</value>
+  </data>
+  <data name="SettingsPageGcObjectCheck.Header" xml:space="preserve">
+    <value>Kiểm tra các đối tượng chưa được GC thu gom</value>
+  </data>
+  <data name="SettingsPageGcObjectCheck.Description" xml:space="preserve">
+    <value>Chạy quá trình thu gom rác và liệt kê các đối tượng được theo dõi vẫn còn tồn tại.</value>
+  </data>
+  <data name="SettingsPageGcObjectCheckButton.Content" xml:space="preserve">
+    <value>Kiểm tra</value>
+  </data>
+  <data name="SettingsPageGcObjectsNone" xml:space="preserve">
+    <value>Không còn đối tượng nào đang được theo dõi còn tồn tại.</value>
+  </data>
+  <data name="SettingsPageGcObjectsFound" xml:space="preserve">
+    <value>Các đối tượng được theo dõi vẫn còn tồn tại sau khi thu gom rác:</value>
+  </data>
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>Giao diện ứng dụng</value>
   </data>
@@ -1388,6 +1415,9 @@
   </data>
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>Chế độ màn hình (Trong suốt)</value>
+  </data>
+  <data name="SettingsPageDesktopWallpaperLayer.Header" xml:space="preserve">
+    <value>Lớp hình nền máy tính để bàn</value>
   </data>
   <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
     <value>Dự án này được cung cấp "nguyên trạng", không có bất kỳ bảo đảm nào. Tất cả lời bài hát, phông chữ, biểu tượng và các tài nguyên bên thứ ba khác là tài sản của chủ sở hữu bản quyền tương ứng. Tác giả của dự án này không tuyên bố quyền sở hữu đối với các tài nguyên đó. Đây là một dự án phi thương mại và không được sử dụng để vi phạm bất kỳ quyền nào. Người dùng chịu trách nhiệm đảm bảo việc sử dụng của họ tuân thủ các luật và giấy phép hiện hành.</value>
@@ -1718,6 +1748,15 @@
   </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>Độ đậm phông chữ</value>
+  </data>
+  <data name="SettingsPageLyricsGapDots.Description" xml:space="preserve">
+    <value>Hiển thị ba chấm nhấp nháy trong những khoảng trống dài không có lời bài hát</value>
+  </data>
+  <data name="SettingsPageLyricsGapDots.Header" xml:space="preserve">
+    <value>Những chấm trong đoạn chuyển tiếp</value>
+  </data>
+  <data name="SettingsPageLyricsGapDotsMinimumDuration.Header" xml:space="preserve">
+    <value>Khoảng cách tối thiểu</value>
   </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>Hiệu ứng phát sáng</value>
@@ -2354,6 +2393,39 @@
   </data>
   <data name="WindowSettingsControlShowAndHide.Text" xml:space="preserve">
     <value>Ẩn và Hiển thị</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngine.Text" xml:space="preserve">
+    <value>Tích hợp Wallpaper Engine</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineBinding.Header" xml:space="preserve">
+    <value>Liên kết đến hình nền trên Wallpaper Engine</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineBinding.Description" xml:space="preserve">
+    <value>Tự động hiển thị cửa sổ lời bài hát này khi hình nền được liên kết trở nên hoạt động, và ẩn nó khi một hình nền được liên kết khác trở nên hoạt động. Các tính năng tạm dừng và tự động ẩn khi không có phiên làm việc vẫn được áp dụng. Các cửa sổ không được liên kết sẽ không bị ảnh hưởng.</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineRefresh.Text" xml:space="preserve">
+    <value>Làm mới danh sách hình nền</value>
+  </data>
+  <data name="WallpaperEngineNotLinked" xml:space="preserve">
+    <value>Chưa được liên kết</value>
+  </data>
+  <data name="WallpaperEngineMissing" xml:space="preserve">
+    <value>chưa được cài đặt</value>
+  </data>
+  <data name="WallpaperEngineNotInstalled" xml:space="preserve">
+    <value>Không phát hiện thấy Wallpaper Engine. Hãy đảm bảo rằng ứng dụng này đã được cài đặt và đang chạy, sau đó làm mới danh sách hình nền.</value>
+  </data>
+  <data name="WallpaperEngineNoActiveWallpaper" xml:space="preserve">
+    <value>Không phát hiện thấy hình nền nào đang hoạt động của Wallpaper Engine.</value>
+  </data>
+  <data name="WallpaperEngineCurrentWallpaper" xml:space="preserve">
+    <value>Hình nền hiện tại:</value>
+  </data>
+  <data name="WindowSettingsControlCopyWallpaperName.Text" xml:space="preserve">
+    <value>Sao chép tên hình nền</value>
+  </data>
+  <data name="WindowSettingsControlCopyCurrentWallpaperName.Text" xml:space="preserve">
+    <value>Sao chép tên hình nền hiện tại</value>
   </data>
   <data name="WindowSettingsControlSpoutOutput.Header" xml:space="preserve">
     <value>Đầu ra vòi</value>

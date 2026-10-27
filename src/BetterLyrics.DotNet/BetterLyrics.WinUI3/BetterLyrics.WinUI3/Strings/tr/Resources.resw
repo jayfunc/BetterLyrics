@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -1269,6 +1269,33 @@
   <data name="SettingsPageApp" xml:space="preserve">
     <value>Uygulama Görünümü ve Davranışı</value>
   </data>
+  <data name="SettingsPageAdvanced.Text" xml:space="preserve">
+    <value>İleri Düzey</value>
+  </data>
+  <data name="SettingsPageLogging.Text" xml:space="preserve">
+    <value>Günlük kaydı</value>
+  </data>
+  <data name="SettingsPageWriteDebugLogs.Header" xml:space="preserve">
+    <value>Hata Giderme Günlüklerini Yaz</value>
+  </data>
+  <data name="SettingsPageWriteDebugLogs.Description" xml:space="preserve">
+    <value>Debug düzeyindeki ve daha yüksek düzeydeki günlükleri dahil edin. Bu, sorun gidermeyi kolaylaştırır ancak günlük dosyasının boyutunu artırır. Uygulama yeniden başlatıldıktan sonra yürürlüğe girer.</value>
+  </data>
+  <data name="SettingsPageGcObjectCheck.Header" xml:space="preserve">
+    <value>GC tarafından toplanmayan nesneleri kontrol et</value>
+  </data>
+  <data name="SettingsPageGcObjectCheck.Description" xml:space="preserve">
+    <value>Çöp toplama işlemini çalıştır ve hâlâ aktif olan izlenen nesneleri listele.</value>
+  </data>
+  <data name="SettingsPageGcObjectCheckButton.Content" xml:space="preserve">
+    <value>Kontrol et</value>
+  </data>
+  <data name="SettingsPageGcObjectsNone" xml:space="preserve">
+    <value>İzlenen nesnelerin hiçbiri hayatta kalmadı.</value>
+  </data>
+  <data name="SettingsPageGcObjectsFound" xml:space="preserve">
+    <value>Çöp toplama işleminden sonra hâlâ var olan izlenen nesneler:</value>
+  </data>
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>Uygulama Görünümü</value>
   </data>
@@ -1388,6 +1415,9 @@
   </data>
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>Masaüstü Modu (Şeffaf)</value>
+  </data>
+  <data name="SettingsPageDesktopWallpaperLayer.Header" xml:space="preserve">
+    <value>Masaüstü Arka Plan Katmanı</value>
   </data>
   <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
     <value>Bu proje herhangi bir garanti olmaksızın olduğu gibi sunulmaktadır. Tüm şarkı sözleri, yazı tipleri, simgeler ve diğer üçüncü taraf kaynakları ilgili telif hakkı sahiplerinin mülkiyetindedir. Bu projenin yazarları bu tür kaynaklar üzerinde hiçbir mülkiyet iddiasında bulunmamaktadır. Bu proje ticari değildir ve herhangi bir hakkı ihlal etmek için kullanılmamalıdır. Kullanıcılar, kullanımlarının yürürlükteki yasalara ve lisanslara uygun olmasını sağlamaktan sorumludur.</value>
@@ -1718,6 +1748,15 @@
   </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>Yazı Tipi Ağırlığı</value>
+  </data>
+  <data name="SettingsPageLyricsGapDots.Description" xml:space="preserve">
+    <value>Sözlerin olmadığı uzun aralarda üç nefes noktası göster</value>
+  </data>
+  <data name="SettingsPageLyricsGapDots.Header" xml:space="preserve">
+    <value>Ara Noktalar</value>
+  </data>
+  <data name="SettingsPageLyricsGapDotsMinimumDuration.Header" xml:space="preserve">
+    <value>Asgari Boşluk</value>
   </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>Parıltı Etkisi</value>
@@ -2354,6 +2393,39 @@
   </data>
   <data name="WindowSettingsControlShowAndHide.Text" xml:space="preserve">
     <value>Gizle ve Göster</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngine.Text" xml:space="preserve">
+    <value>Wallpaper Engine Entegrasyonu</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineBinding.Header" xml:space="preserve">
+    <value>Wallpaper Engine duvar kağıdına bağlantı</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineBinding.Description" xml:space="preserve">
+    <value>Bağlantılı duvar kağıdı etkin hale geldiğinde bu şarkı sözü penceresi otomatik olarak gösterilsin ve başka bir bağlantılı duvar kağıdı etkin hale geldiğinde gizlensin. Duraklatma ve oturum yokken otomatik gizleme özellikleri hâlâ geçerlidir. Bağlantısız pencereler bundan etkilenmez.</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineRefresh.Text" xml:space="preserve">
+    <value>Duvar kağıdı listesini yenile</value>
+  </data>
+  <data name="WallpaperEngineNotLinked" xml:space="preserve">
+    <value>Bağlantı yok</value>
+  </data>
+  <data name="WallpaperEngineMissing" xml:space="preserve">
+    <value>yüklenmemiş</value>
+  </data>
+  <data name="WallpaperEngineNotInstalled" xml:space="preserve">
+    <value>Wallpaper Engine algılanmadı. Programın kurulu ve çalışır durumda olduğundan emin olun, ardından duvar kağıdı listesini yenileyin.</value>
+  </data>
+  <data name="WallpaperEngineNoActiveWallpaper" xml:space="preserve">
+    <value>Wallpaper Engine'de etkin bir duvar kağıdı tespit edilmedi.</value>
+  </data>
+  <data name="WallpaperEngineCurrentWallpaper" xml:space="preserve">
+    <value>Şu anki duvar kağıdı:</value>
+  </data>
+  <data name="WindowSettingsControlCopyWallpaperName.Text" xml:space="preserve">
+    <value>Duvar kağıdının adını kopyala</value>
+  </data>
+  <data name="WindowSettingsControlCopyCurrentWallpaperName.Text" xml:space="preserve">
+    <value>Mevcut duvar kağıdının adını kopyala</value>
   </data>
   <data name="WindowSettingsControlSpoutOutput.Header" xml:space="preserve">
     <value>Çıkış Borusu</value>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -1269,6 +1269,33 @@
   <data name="SettingsPageApp" xml:space="preserve">
     <value>ऐप का स्वरूप और व्यवहार</value>
   </data>
+  <data name="SettingsPageAdvanced.Text" xml:space="preserve">
+    <value>उन्नत</value>
+  </data>
+  <data name="SettingsPageLogging.Text" xml:space="preserve">
+    <value>लॉगिंग</value>
+  </data>
+  <data name="SettingsPageWriteDebugLogs.Header" xml:space="preserve">
+    <value>डिबग लॉग लिखें</value>
+  </data>
+  <data name="SettingsPageWriteDebugLogs.Description" xml:space="preserve">
+    <value>डिबग-स्तर और उससे उच्च स्तर के लॉग शामिल करें। इससे समस्या निवारण आसान हो जाता है, लेकिन लॉग फ़ाइल का आकार बढ़ जाता है। यह ऐप को पुनः आरंभ करने के बाद प्रभावी होता है।</value>
+  </data>
+  <data name="SettingsPageGcObjectCheck.Header" xml:space="preserve">
+    <value>GC द्वारा एकत्रित न किए गए ऑब्जेक्ट्स की जाँच करें</value>
+  </data>
+  <data name="SettingsPageGcObjectCheck.Description" xml:space="preserve">
+    <value>गार्बेज कलेक्शन चलाएँ और उन ट्रैक किए गए ऑब्जेक्ट्स की सूची बनाएँ जो अभी भी जीवित हैं।</value>
+  </data>
+  <data name="SettingsPageGcObjectCheckButton.Content" xml:space="preserve">
+    <value>जाँचें</value>
+  </data>
+  <data name="SettingsPageGcObjectsNone" xml:space="preserve">
+    <value>कोई भी ट्रैक किए गए ऑब्जेक्ट जीवित नहीं रहते।</value>
+  </data>
+  <data name="SettingsPageGcObjectsFound" xml:space="preserve">
+    <value>गार्बेज कलेक्शन के बाद भी जीवित वस्तुएँ:</value>
+  </data>
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>ऐप का रूप</value>
   </data>
@@ -1388,6 +1415,9 @@
   </data>
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>डेस्कटॉप मोड (पारदर्शी)</value>
+  </data>
+  <data name="SettingsPageDesktopWallpaperLayer.Header" xml:space="preserve">
+    <value>डेस्कटॉप वॉलपेपर परत</value>
   </data>
   <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
     <value>यह प्रोजेक्ट "जैसा है" के आधार पर प्रदान किया गया है, बिना किसी प्रकार की वारंटी के। सभी बोल, फ़ॉन्ट, आइकन और अन्य तृतीय-पक्ष संसाधन उनके संबंधित कॉपीराइट स्वामियों की संपत्ति हैं। इस प्रोजेक्ट के लेखक ऐसे संसाधनों पर स्वामित्व का दावा नहीं करते हैं। यह एक गैर-व्यावसायिक परियोजना है और इसका उपयोग किसी भी अधिकार का उल्लंघन करने के लिए नहीं किया जा सकता है। उपयोगकर्ता यह सुनिश्चित करने के लिए जिम्मेदार हैं कि उनका उपयोग लागू कानूनों और लाइसेंसों का अनुपालन करता है।</value>
@@ -1718,6 +1748,15 @@
   </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>फ़ॉन्ट भार</value>
+  </data>
+  <data name="SettingsPageLyricsGapDots.Description" xml:space="preserve">
+    <value>गीत के बोलों के लंबे अंतराल के दौरान तीन सांस लेने वाले बिंदु दिखाएँ।</value>
+  </data>
+  <data name="SettingsPageLyricsGapDots.Header" xml:space="preserve">
+    <value>अंतराल बिंदु</value>
+  </data>
+  <data name="SettingsPageLyricsGapDotsMinimumDuration.Header" xml:space="preserve">
+    <value>न्यूनतम अंतराल</value>
   </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>चमक प्रभाव</value>
@@ -2354,6 +2393,39 @@
   </data>
   <data name="WindowSettingsControlShowAndHide.Text" xml:space="preserve">
     <value>छिपाएँ और दिखाएँ</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngine.Text" xml:space="preserve">
+    <value>वॉलपेपर इंजन एकीकरण</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineBinding.Header" xml:space="preserve">
+    <value>वॉलपेपर इंजन के वॉलपेपर का लिंक</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineBinding.Description" xml:space="preserve">
+    <value>जब लिंक किया गया वॉलपेपर सक्रिय हो, तो स्वचालित रूप से यह गीतों की विंडो दिखाएँ, और जब कोई अन्य लिंक किया गया वॉलपेपर सक्रिय हो, तो इसे छिपाएँ। पॉज़ और नो-सेशन ऑटो-हाइड अभी भी लागू होते हैं। अनलिंक की गई विंडो प्रभावित नहीं होतीं।</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineRefresh.Text" xml:space="preserve">
+    <value>वॉलपेपर सूची ताज़ा करें</value>
+  </data>
+  <data name="WallpaperEngineNotLinked" xml:space="preserve">
+    <value>संलग्न नहीं</value>
+  </data>
+  <data name="WallpaperEngineMissing" xml:space="preserve">
+    <value>स्थापित नहीं</value>
+  </data>
+  <data name="WallpaperEngineNotInstalled" xml:space="preserve">
+    <value>Wallpaper Engine का पता नहीं चला। सुनिश्चित करें कि यह इंस्टॉल और चल रहा है, फिर वॉलपेपर सूची को रिफ्रेश करें।</value>
+  </data>
+  <data name="WallpaperEngineNoActiveWallpaper" xml:space="preserve">
+    <value>कोई सक्रिय वॉलपेपर इंजन वॉलपेपर नहीं मिला।</value>
+  </data>
+  <data name="WallpaperEngineCurrentWallpaper" xml:space="preserve">
+    <value>वर्तमान वॉलपेपर:</value>
+  </data>
+  <data name="WindowSettingsControlCopyWallpaperName.Text" xml:space="preserve">
+    <value>वॉलपेपर का नाम कॉपी करें</value>
+  </data>
+  <data name="WindowSettingsControlCopyCurrentWallpaperName.Text" xml:space="preserve">
+    <value>वर्तमान वॉलपेपर का नाम कॉपी करें</value>
   </data>
   <data name="WindowSettingsControlSpoutOutput.Header" xml:space="preserve">
     <value>Spout आउटपुट</value>

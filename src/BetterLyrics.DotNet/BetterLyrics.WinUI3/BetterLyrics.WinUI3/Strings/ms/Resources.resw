@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -1269,6 +1269,33 @@
   <data name="SettingsPageApp" xml:space="preserve">
     <value>Rupa &amp; Tingkah Laku Aplikasi</value>
   </data>
+  <data name="SettingsPageAdvanced.Text" xml:space="preserve">
+    <value>Lanjutan</value>
+  </data>
+  <data name="SettingsPageLogging.Text" xml:space="preserve">
+    <value>Pencatatan</value>
+  </data>
+  <data name="SettingsPageWriteDebugLogs.Header" xml:space="preserve">
+    <value>Tulis log ralat</value>
+  </data>
+  <data name="SettingsPageWriteDebugLogs.Description" xml:space="preserve">
+    <value>Sertakan log tahap Debug dan ke atas. Ini memudahkan penyelesaian masalah tetapi meningkatkan saiz fail log. Berkuat kuasa selepas memulakan semula aplikasi.</value>
+  </data>
+  <data name="SettingsPageGcObjectCheck.Header" xml:space="preserve">
+    <value>Semak objek yang tidak dikumpul oleh pengumpul sampah</value>
+  </data>
+  <data name="SettingsPageGcObjectCheck.Description" xml:space="preserve">
+    <value>Jalankan pengumpulan sampah dan senaraikan objek yang dijejaki yang masih hidup.</value>
+  </data>
+  <data name="SettingsPageGcObjectCheckButton.Content" xml:space="preserve">
+    <value>Semak</value>
+  </data>
+  <data name="SettingsPageGcObjectsNone" xml:space="preserve">
+    <value>Tiada objek yang dijejak yang masih hidup.</value>
+  </data>
+  <data name="SettingsPageGcObjectsFound" xml:space="preserve">
+    <value>Objek yang dijejak masih wujud selepas pengumpulan sampah:</value>
+  </data>
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>Rupa Aplikasi</value>
   </data>
@@ -1388,6 +1415,9 @@
   </data>
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>Mod Desktop (Lut Sinar)</value>
+  </data>
+  <data name="SettingsPageDesktopWallpaperLayer.Header" xml:space="preserve">
+    <value>Lapisan Latar Belakang Desktop</value>
   </data>
   <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
     <value>Projek ini disediakan "seadanya" tanpa sebarang jaminan. Semua lirik, fon, ikon, dan sumber pihak ketiga yang lain adalah hak milik pemegang hak cipta masing-masing. Pengarang projek ini tidak menuntut pemilikan ke atas sumber tersebut. Ini adalah projek bukan komersial dan tidak boleh digunakan untuk melanggar mana-mana hak. Pengguna bertanggungjawab untuk memastikan penggunaan mereka mematuhi undang-undang dan lesen yang berkenaan.</value>
@@ -1718,6 +1748,15 @@
   </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>Ketebalan Fon</value>
+  </data>
+  <data name="SettingsPageLyricsGapDots.Description" xml:space="preserve">
+    <value>Tunjukkan tiga titik pernafasan semasa sela panjang tanpa lirik</value>
+  </data>
+  <data name="SettingsPageLyricsGapDots.Header" xml:space="preserve">
+    <value>Titik Selingan</value>
+  </data>
+  <data name="SettingsPageLyricsGapDotsMinimumDuration.Header" xml:space="preserve">
+    <value>Jurang Minimum</value>
   </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>Kesan Bersinar</value>
@@ -2354,6 +2393,39 @@
   </data>
   <data name="WindowSettingsControlShowAndHide.Text" xml:space="preserve">
     <value>Sembunyikan dan Tunjukkan</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngine.Text" xml:space="preserve">
+    <value>Integrasi Wallpaper Engine</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineBinding.Header" xml:space="preserve">
+    <value>Pautan ke latar belakang Wallpaper Engine</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineBinding.Description" xml:space="preserve">
+    <value>Secara automatik tunjukkan tetingkap lirik ini apabila latar belakang yang dipautkan menjadi aktif, dan sorokkannya apabila latar belakang yang dipautkan yang lain menjadi aktif. Fungsi jeda dan sorokan automatik tanpa sesi masih terpakai. Tetingkap yang tidak dipautkan tidak terjejas.</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineRefresh.Text" xml:space="preserve">
+    <value>Segarkan semula senarai latar belakang</value>
+  </data>
+  <data name="WallpaperEngineNotLinked" xml:space="preserve">
+    <value>Tidak dipautkan</value>
+  </data>
+  <data name="WallpaperEngineMissing" xml:space="preserve">
+    <value>belum dipasang</value>
+  </data>
+  <data name="WallpaperEngineNotInstalled" xml:space="preserve">
+    <value>Wallpaper Engine tidak dikesan. Pastikan ia dipasang dan sedang berjalan, kemudian segar semula senarai latar belakang.</value>
+  </data>
+  <data name="WallpaperEngineNoActiveWallpaper" xml:space="preserve">
+    <value>Tiada latar belakang Wallpaper Engine yang aktif dikesan.</value>
+  </data>
+  <data name="WallpaperEngineCurrentWallpaper" xml:space="preserve">
+    <value>Kertas dinding semasa:</value>
+  </data>
+  <data name="WindowSettingsControlCopyWallpaperName.Text" xml:space="preserve">
+    <value>Salin nama kertas dinding</value>
+  </data>
+  <data name="WindowSettingsControlCopyCurrentWallpaperName.Text" xml:space="preserve">
+    <value>Salin nama latar belakang semasa</value>
   </data>
   <data name="WindowSettingsControlSpoutOutput.Header" xml:space="preserve">
     <value>Keluaran Spout</value>

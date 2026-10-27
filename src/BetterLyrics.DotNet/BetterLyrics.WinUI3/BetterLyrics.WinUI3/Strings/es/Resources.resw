@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -1269,6 +1269,33 @@
   <data name="SettingsPageApp" xml:space="preserve">
     <value>Apariencia y comportamiento de la aplicación</value>
   </data>
+  <data name="SettingsPageAdvanced.Text" xml:space="preserve">
+    <value>Avanzado</value>
+  </data>
+  <data name="SettingsPageLogging.Text" xml:space="preserve">
+    <value>Tala de árboles</value>
+  </data>
+  <data name="SettingsPageWriteDebugLogs.Header" xml:space="preserve">
+    <value>Escribir registros de depuración</value>
+  </data>
+  <data name="SettingsPageWriteDebugLogs.Description" xml:space="preserve">
+    <value>Incluye los registros de nivel «Debug» y superiores. Esto facilita la resolución de problemas, pero aumenta el tamaño del archivo de registro. Se aplica tras reiniciar la aplicación.</value>
+  </data>
+  <data name="SettingsPageGcObjectCheck.Header" xml:space="preserve">
+    <value>Comprobar los objetos que no ha recogido el GC</value>
+  </data>
+  <data name="SettingsPageGcObjectCheck.Description" xml:space="preserve">
+    <value>Ejecuta la recolección de basura y muestra una lista de los objetos rastreados que siguen activos.</value>
+  </data>
+  <data name="SettingsPageGcObjectCheckButton.Content" xml:space="preserve">
+    <value>Comprobar</value>
+  </data>
+  <data name="SettingsPageGcObjectsNone" xml:space="preserve">
+    <value>No queda ningún objeto rastreado activo.</value>
+  </data>
+  <data name="SettingsPageGcObjectsFound" xml:space="preserve">
+    <value>Objetos rastreados que siguen activos tras la recolección de basura:</value>
+  </data>
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>Apariencia de la aplicación</value>
   </data>
@@ -1388,6 +1415,9 @@
   </data>
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>Modo Escritorio (Transparente)</value>
+  </data>
+  <data name="SettingsPageDesktopWallpaperLayer.Header" xml:space="preserve">
+    <value>Capa de fondo de pantalla del escritorio</value>
   </data>
   <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
     <value>Este proyecto se proporciona tal cual, sin garantía de ningún tipo. Todas las letras, fuentes, iconos y otros recursos de terceros son propiedad de sus respectivos titulares de derechos de autor. Los autores de este proyecto no reclaman la propiedad de dichos recursos. Este proyecto no es comercial y no debe usarse para infringir ningún derecho. Los usuarios son responsables de garantizar que su uso cumpla con las leyes y licencias aplicables.</value>
@@ -1718,6 +1748,15 @@
   </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>Peso de la fuente</value>
+  </data>
+  <data name="SettingsPageLyricsGapDots.Description" xml:space="preserve">
+    <value>Mostrar tres puntos de respiración durante los silencios prolongados en los que no hay letra</value>
+  </data>
+  <data name="SettingsPageLyricsGapDots.Header" xml:space="preserve">
+    <value>Puntos de interludio</value>
+  </data>
+  <data name="SettingsPageLyricsGapDotsMinimumDuration.Header" xml:space="preserve">
+    <value>Distancia mínima</value>
   </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>Efecto de resplandor</value>
@@ -2354,6 +2393,39 @@
   </data>
   <data name="WindowSettingsControlShowAndHide.Text" xml:space="preserve">
     <value>Ocultar y mostrar</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngine.Text" xml:space="preserve">
+    <value>Integración con Wallpaper Engine</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineBinding.Header" xml:space="preserve">
+    <value>Enlace a un fondo de pantalla de Wallpaper Engine</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineBinding.Description" xml:space="preserve">
+    <value>Mostrar automáticamente esta ventana de letra cuando se active el fondo de pantalla vinculado y ocultarla cuando se active otro fondo de pantalla vinculado. Las opciones de pausa y ocultación automática por ausencia de sesión siguen aplicándose. Las ventanas no vinculadas no se ven afectadas.</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineRefresh.Text" xml:space="preserve">
+    <value>Actualizar la lista de fondos de pantalla</value>
+  </data>
+  <data name="WallpaperEngineNotLinked" xml:space="preserve">
+    <value>Sin enlace</value>
+  </data>
+  <data name="WallpaperEngineMissing" xml:space="preserve">
+    <value>no está instalado</value>
+  </data>
+  <data name="WallpaperEngineNotInstalled" xml:space="preserve">
+    <value>No se ha detectado Wallpaper Engine. Asegúrate de que esté instalado y en funcionamiento y, a continuación, actualiza la lista de fondos de pantalla.</value>
+  </data>
+  <data name="WallpaperEngineNoActiveWallpaper" xml:space="preserve">
+    <value>No se ha detectado ningún fondo de pantalla activo de Wallpaper Engine.</value>
+  </data>
+  <data name="WallpaperEngineCurrentWallpaper" xml:space="preserve">
+    <value>Fondo de pantalla actual:</value>
+  </data>
+  <data name="WindowSettingsControlCopyWallpaperName.Text" xml:space="preserve">
+    <value>Copiar el nombre del fondo de pantalla</value>
+  </data>
+  <data name="WindowSettingsControlCopyCurrentWallpaperName.Text" xml:space="preserve">
+    <value>Copiar el nombre del fondo de pantalla actual</value>
   </data>
   <data name="WindowSettingsControlSpoutOutput.Header" xml:space="preserve">
     <value>Salida de caño</value>

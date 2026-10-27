@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -1269,6 +1269,33 @@
   <data name="SettingsPageApp" xml:space="preserve">
     <value>Apariencia y comportamiento de la aplicación</value>
   </data>
+  <data name="SettingsPageAdvanced.Text" xml:space="preserve">
+    <value>Avancé</value>
+  </data>
+  <data name="SettingsPageLogging.Text" xml:space="preserve">
+    <value>Exploitation forestière</value>
+  </data>
+  <data name="SettingsPageWriteDebugLogs.Header" xml:space="preserve">
+    <value>Écrire des journaux de débogage</value>
+  </data>
+  <data name="SettingsPageWriteDebugLogs.Description" xml:space="preserve">
+    <value>Inclure les journaux de niveau « Debug » et supérieurs. Cela facilite le dépannage, mais augmente la taille des fichiers journaux. Cette modification prend effet après le redémarrage de l'application.</value>
+  </data>
+  <data name="SettingsPageGcObjectCheck.Header" xml:space="preserve">
+    <value>Vérifier les objets non collectés par le GC</value>
+  </data>
+  <data name="SettingsPageGcObjectCheck.Description" xml:space="preserve">
+    <value>Lancer le ramasse-miettes et répertorier les objets suivis qui sont encore actifs.</value>
+  </data>
+  <data name="SettingsPageGcObjectCheckButton.Content" xml:space="preserve">
+    <value>Vérifier</value>
+  </data>
+  <data name="SettingsPageGcObjectsNone" xml:space="preserve">
+    <value>Il ne reste plus aucun objet suivi.</value>
+  </data>
+  <data name="SettingsPageGcObjectsFound" xml:space="preserve">
+    <value>Objets suivis encore présents après le ramassage des déchets :</value>
+  </data>
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>Apariencia de la aplicación</value>
   </data>
@@ -1388,6 +1415,9 @@
   </data>
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>Modo Escritorio (Transparente)</value>
+  </data>
+  <data name="SettingsPageDesktopWallpaperLayer.Header" xml:space="preserve">
+    <value>Calque de fond d'écran</value>
   </data>
   <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
     <value>Este proyecto se proporciona tal cual, sin garantía de ningún tipo. Todas las letras, fuentes, iconos y otros recursos de terceros son propiedad de sus respectivos titulares de derechos de autor. Los autores de este proyecto no reclaman la propiedad de dichos recursos. Este proyecto no es comercial y no debe usarse para infringir ningún derecho. Los usuarios son responsables de garantizar que su uso cumpla con las leyes y licencias aplicables.</value>
@@ -1718,6 +1748,15 @@
   </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>Peso de la fuente</value>
+  </data>
+  <data name="SettingsPageLyricsGapDots.Description" xml:space="preserve">
+    <value>Afficher trois points de respiration pendant les longs silences sans paroles</value>
+  </data>
+  <data name="SettingsPageLyricsGapDots.Header" xml:space="preserve">
+    <value>Interlude Dots</value>
+  </data>
+  <data name="SettingsPageLyricsGapDotsMinimumDuration.Header" xml:space="preserve">
+    <value>Écart minimal</value>
   </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>Efecto de resplandor</value>
@@ -2354,6 +2393,39 @@
   </data>
   <data name="WindowSettingsControlShowAndHide.Text" xml:space="preserve">
     <value>Ocultar y mostrar</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngine.Text" xml:space="preserve">
+    <value>Intégration de Wallpaper Engine</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineBinding.Header" xml:space="preserve">
+    <value>Lien vers un fond d'écran Wallpaper Engine</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineBinding.Description" xml:space="preserve">
+    <value>Afficher automatiquement cette fenêtre de paroles lorsque le fond d'écran associé devient actif, et la masquer lorsqu'un autre fond d'écran associé devient actif. Les options « Pause » et « Masquage automatique en l'absence de session » restent applicables. Les fenêtres non associées ne sont pas concernées.</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineRefresh.Text" xml:space="preserve">
+    <value>Actualiser la liste des fonds d'écran</value>
+  </data>
+  <data name="WallpaperEngineNotLinked" xml:space="preserve">
+    <value>Non lié</value>
+  </data>
+  <data name="WallpaperEngineMissing" xml:space="preserve">
+    <value>non installé</value>
+  </data>
+  <data name="WallpaperEngineNotInstalled" xml:space="preserve">
+    <value>Wallpaper Engine n'a pas été détecté. Assurez-vous qu'il est bien installé et en cours d'exécution, puis actualisez la liste des fonds d'écran.</value>
+  </data>
+  <data name="WallpaperEngineNoActiveWallpaper" xml:space="preserve">
+    <value>Aucun fond d'écran Wallpaper Engine actif n'a été détecté.</value>
+  </data>
+  <data name="WallpaperEngineCurrentWallpaper" xml:space="preserve">
+    <value>Fond d'écran actuel :</value>
+  </data>
+  <data name="WindowSettingsControlCopyWallpaperName.Text" xml:space="preserve">
+    <value>Copier le nom du fond d'écran</value>
+  </data>
+  <data name="WindowSettingsControlCopyCurrentWallpaperName.Text" xml:space="preserve">
+    <value>Copier le nom du fond d'écran actuel</value>
   </data>
   <data name="WindowSettingsControlSpoutOutput.Header" xml:space="preserve">
     <value>Salida de caño</value>

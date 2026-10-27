@@ -1269,23 +1269,35 @@
   <data name="SettingsPageApp" xml:space="preserve">
     <value>应用外观与行为</value>
   </data>
-  <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
-    <value>应用外观</value>
+  <data name="SettingsPageAdvanced.Text" xml:space="preserve">
+    <value>高级</value>
+  </data>
+  <data name="SettingsPageLogging.Text" xml:space="preserve">
+    <value>日志</value>
+  </data>
+  <data name="SettingsPageWriteDebugLogs.Header" xml:space="preserve">
+    <value>写入调试日志</value>
+  </data>
+  <data name="SettingsPageWriteDebugLogs.Description" xml:space="preserve">
+    <value>包含调试级别及更高级别的日志。这有助于排查问题，但会增加日志文件大小。重启应用后生效</value>
   </data>
   <data name="SettingsPageGcObjectCheck.Header" xml:space="preserve">
-    <value>检查未被垃圾回收的对象</value>
+    <value>检查未被垃圾回收收回的对象</value>
   </data>
   <data name="SettingsPageGcObjectCheck.Description" xml:space="preserve">
-    <value>运行垃圾回收，并列出仍然存活的已跟踪对象。</value>
+    <value>运行垃圾回收，并列出仍存活的被追踪对象</value>
   </data>
   <data name="SettingsPageGcObjectCheckButton.Content" xml:space="preserve">
     <value>检查</value>
   </data>
   <data name="SettingsPageGcObjectsNone" xml:space="preserve">
-    <value>没有仍然存活的已跟踪对象。</value>
+    <value>没有被追踪的对象仍处于活动状态。</value>
   </data>
   <data name="SettingsPageGcObjectsFound" xml:space="preserve">
-    <value>垃圾回收后仍然存活的已跟踪对象：</value>
+    <value>垃圾回收后仍存活的被追踪对象：</value>
+  </data>
+  <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
+    <value>应用外观</value>
   </data>
   <data name="SettingsPageArtist.Header" xml:space="preserve">
     <value>艺术家</value>
@@ -1403,6 +1415,9 @@
   </data>
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>桌面模式（透明）</value>
+  </data>
+  <data name="SettingsPageDesktopWallpaperLayer.Header" xml:space="preserve">
+    <value>桌面壁纸层</value>
   </data>
   <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
     <value>本项目按原样提供，不提供任何形式的保证。所有歌词、字体、图标和其他第三方资源均为其各自版权所有者的财产。本项目的作者不主张此类资源的所有权。本项目为非商业性项目，不得用于侵犯任何权利。用户有责任确保自己的使用符合适用的法律和许可</value>
@@ -2378,6 +2393,39 @@
   </data>
   <data name="WindowSettingsControlShowAndHide.Text" xml:space="preserve">
     <value>显示和隐藏</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngine.Text" xml:space="preserve">
+    <value>Wallpaper Engine 集成</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineBinding.Header" xml:space="preserve">
+    <value>关联 Wallpaper Engine 壁纸</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineBinding.Description" xml:space="preserve">
+    <value>当关联的壁纸正在使用时，自动显示此歌词窗口；当另一个已关联的壁纸正在使用时，自动隐藏此窗口。暂停和无媒体会话时的自动隐藏仍然生效。未关联的窗口不受影响</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineRefresh.Text" xml:space="preserve">
+    <value>刷新壁纸列表</value>
+  </data>
+  <data name="WallpaperEngineNotLinked" xml:space="preserve">
+    <value>未关联</value>
+  </data>
+  <data name="WallpaperEngineMissing" xml:space="preserve">
+    <value>未安装</value>
+  </data>
+  <data name="WallpaperEngineNotInstalled" xml:space="preserve">
+    <value>未检测到 Wallpaper Engine。请确认其已安装并正在运行，然后刷新壁纸列表</value>
+  </data>
+  <data name="WallpaperEngineNoActiveWallpaper" xml:space="preserve">
+    <value>未检测到正在使用的 Wallpaper Engine 壁纸</value>
+  </data>
+  <data name="WallpaperEngineCurrentWallpaper" xml:space="preserve">
+    <value>当前壁纸：</value>
+  </data>
+  <data name="WindowSettingsControlCopyWallpaperName.Text" xml:space="preserve">
+    <value>复制壁纸名称</value>
+  </data>
+  <data name="WindowSettingsControlCopyCurrentWallpaperName.Text" xml:space="preserve">
+    <value>复制当前壁纸名称</value>
   </data>
   <data name="WindowSettingsControlSpoutOutput.Header" xml:space="preserve">
     <value>Spout 输出</value>

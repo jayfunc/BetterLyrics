@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -1269,6 +1269,33 @@
   <data name="SettingsPageApp" xml:space="preserve">
     <value>ลักษณะและการทำงานของแอปพลิเคชัน</value>
   </data>
+  <data name="SettingsPageAdvanced.Text" xml:space="preserve">
+    <value>ระดับสูง</value>
+  </data>
+  <data name="SettingsPageLogging.Text" xml:space="preserve">
+    <value>การบันทึก</value>
+  </data>
+  <data name="SettingsPageWriteDebugLogs.Header" xml:space="preserve">
+    <value>เขียนบันทึกการดีบัก</value>
+  </data>
+  <data name="SettingsPageWriteDebugLogs.Description" xml:space="preserve">
+    <value>ให้รวมบันทึกในระดับ Debug และระดับที่สูงกว่าด้วย สิ่งนี้จะช่วยให้การแก้ไขปัญหาง่ายขึ้น แต่จะทำให้ขนาดไฟล์บันทึกเพิ่มขึ้น การตั้งค่านี้มีผลหลังจากรีสตาร์ทแอป</value>
+  </data>
+  <data name="SettingsPageGcObjectCheck.Header" xml:space="preserve">
+    <value>ตรวจสอบวัตถุที่ GC ยังไม่เก็บไป</value>
+  </data>
+  <data name="SettingsPageGcObjectCheck.Description" xml:space="preserve">
+    <value>ดำเนินการเก็บขยะและแสดงรายการวัตถุที่ถูกติดตามซึ่งยังคงมีอยู่</value>
+  </data>
+  <data name="SettingsPageGcObjectCheckButton.Content" xml:space="preserve">
+    <value>ตรวจสอบ</value>
+  </data>
+  <data name="SettingsPageGcObjectsNone" xml:space="preserve">
+    <value>ไม่มีวัตถุที่ถูกติดตามใดที่ยังคงอยู่</value>
+  </data>
+  <data name="SettingsPageGcObjectsFound" xml:space="preserve">
+    <value>วัตถุที่ถูกติดตามที่ยังคงอยู่หลังการเก็บขยะ:</value>
+  </data>
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>รูปลักษณ์แอป</value>
   </data>
@@ -1388,6 +1415,9 @@
   </data>
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>โหมดเดสก์ท็อป (โปร่งใส)</value>
+  </data>
+  <data name="SettingsPageDesktopWallpaperLayer.Header" xml:space="preserve">
+    <value>ชั้นภาพพื้นหลังบนเดสก์ท็อป</value>
   </data>
   <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
     <value>โปรเจกต์นี้จัดทำขึ้น "ตามสภาพ" โดยไม่มีการรับประกันใดๆ เนื้อเพลง แบบอักษร ไอคอน และทรัพยากรบุคคลที่สามอื่นๆ ทั้งหมดเป็นทรัพย์สินของผู้ถือลิขสิทธิ์แต่ละราย ผู้เขียนโปรเจกต์นี้ไม่อ้างสิทธิ์ความเป็นเจ้าของในทรัพยากรดังกล่าว นี่คือโปรเจกต์ที่ไม่ใช่เชิงพาณิชย์และห้ามนำไปใช้เพื่อละเมิดสิทธิ์ใดๆ ผู้ใช้ต้องรับผิดชอบในการตรวจสอบให้แน่ใจว่าการใช้งานของตนสอดคล้องกับกฎหมายและใบอนุญาตที่เกี่ยวข้อง</value>
@@ -1718,6 +1748,15 @@
   </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>น้ำหนักฟอนต์</value>
+  </data>
+  <data name="SettingsPageLyricsGapDots.Description" xml:space="preserve">
+    <value>แสดงจุดหายใจสามจุดในช่วงที่ไม่มีเนื้อเพลงและมีการเว้นช่วงนาน</value>
+  </data>
+  <data name="SettingsPageLyricsGapDots.Header" xml:space="preserve">
+    <value>จุดพักระหว่างบท</value>
+  </data>
+  <data name="SettingsPageLyricsGapDotsMinimumDuration.Header" xml:space="preserve">
+    <value>ช่องว่างขั้นต่ำ</value>
   </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>เอฟเฟกต์เรืองแสง</value>
@@ -2354,6 +2393,39 @@
   </data>
   <data name="WindowSettingsControlShowAndHide.Text" xml:space="preserve">
     <value>ซ่อนและแสดง</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngine.Text" xml:space="preserve">
+    <value>การผสานรวม Wallpaper Engine</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineBinding.Header" xml:space="preserve">
+    <value>ลิงก์ไปยังภาพพื้นหลังของ Wallpaper Engine</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineBinding.Description" xml:space="preserve">
+    <value>แสดงหน้าต่างเนื้อเพลงนี้โดยอัตโนมัติเมื่อภาพพื้นหลังที่เชื่อมโยงถูกเปิดใช้งาน และซ่อนหน้าต่างนี้เมื่อภาพพื้นหลังที่เชื่อมโยงอื่นถูกเปิดใช้งาน การหยุดชั่วคราวและการซ่อนอัตโนมัติเมื่อไม่มีเซสชันยังคงมีผลอยู่ หน้าต่างที่ไม่มีการเชื่อมโยงจะไม่ได้รับผลกระทบ</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineRefresh.Text" xml:space="preserve">
+    <value>อัปเดตรายชื่อภาพพื้นหลัง</value>
+  </data>
+  <data name="WallpaperEngineNotLinked" xml:space="preserve">
+    <value>ไม่มีความเกี่ยวข้อง</value>
+  </data>
+  <data name="WallpaperEngineMissing" xml:space="preserve">
+    <value>ยังไม่ได้ติดตั้ง</value>
+  </data>
+  <data name="WallpaperEngineNotInstalled" xml:space="preserve">
+    <value>ไม่พบ Wallpaper Engine โปรดตรวจสอบให้แน่ใจว่าโปรแกรมได้ติดตั้งและกำลังทำงานอยู่ แล้วรีเฟรชรายชื่อภาพพื้นหลัง</value>
+  </data>
+  <data name="WallpaperEngineNoActiveWallpaper" xml:space="preserve">
+    <value>ไม่พบภาพพื้นหลัง Wallpaper Engine ที่กำลังทำงานอยู่</value>
+  </data>
+  <data name="WallpaperEngineCurrentWallpaper" xml:space="preserve">
+    <value>ภาพพื้นหลังปัจจุบัน:</value>
+  </data>
+  <data name="WindowSettingsControlCopyWallpaperName.Text" xml:space="preserve">
+    <value>คัดลอกชื่อวอลเปเปอร์</value>
+  </data>
+  <data name="WindowSettingsControlCopyCurrentWallpaperName.Text" xml:space="preserve">
+    <value>คัดลอกชื่อภาพพื้นหลังปัจจุบัน</value>
   </data>
   <data name="WindowSettingsControlSpoutOutput.Header" xml:space="preserve">
     <value>สปาวต์ เอาต์พุต</value>

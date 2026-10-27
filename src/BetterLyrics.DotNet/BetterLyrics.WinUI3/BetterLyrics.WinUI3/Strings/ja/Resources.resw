@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -1269,6 +1269,33 @@
   <data name="SettingsPageApp" xml:space="preserve">
     <value>アプリの外観と動作</value>
   </data>
+  <data name="SettingsPageAdvanced.Text" xml:space="preserve">
+    <value>高度な設定</value>
+  </data>
+  <data name="SettingsPageLogging.Text" xml:space="preserve">
+    <value>ログ記録</value>
+  </data>
+  <data name="SettingsPageWriteDebugLogs.Header" xml:space="preserve">
+    <value>デバッグログを出力</value>
+  </data>
+  <data name="SettingsPageWriteDebugLogs.Description" xml:space="preserve">
+    <value>デバッグレベル以上のログを含めます。トラブルシューティングが容易になりますが、ログファイルサイズが大きくなります。アプリの再起動後に反映されます。</value>
+  </data>
+  <data name="SettingsPageGcObjectCheck.Header" xml:space="preserve">
+    <value>GCによって回収されなかったオブジェクトを確認する</value>
+  </data>
+  <data name="SettingsPageGcObjectCheck.Description" xml:space="preserve">
+    <value>ガベージコレクションを実行し、まだ生存している追跡対象オブジェクトを一覧表示します。</value>
+  </data>
+  <data name="SettingsPageGcObjectCheckButton.Content" xml:space="preserve">
+    <value>確認</value>
+  </data>
+  <data name="SettingsPageGcObjectsNone" xml:space="preserve">
+    <value>追跡対象はすべて消滅しました。</value>
+  </data>
+  <data name="SettingsPageGcObjectsFound" xml:space="preserve">
+    <value>ガベージコレクション後も存続している追跡対象：</value>
+  </data>
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>アプリの外観</value>
   </data>
@@ -1388,6 +1415,9 @@
   </data>
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve">
     <value>デスクトップモード（透明）</value>
+  </data>
+  <data name="SettingsPageDesktopWallpaperLayer.Header" xml:space="preserve">
+    <value>デスクトップ壁紙レイヤー</value>
   </data>
   <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
     <value>このプロジェクトは現状のまま提供されており、何の保証もありません。歌詞、フォント、アイコンなどの素材は、すべてそれぞれの権利者のものです。作者がそれらの権利を主張することはありません。これは非営利のプロジェクトです。権利を侵害するような使い方はしないでください。法律やライセンスを守って使うのは、利用する方の自己責任でお願いします。</value>
@@ -1718,6 +1748,15 @@
   </data>
   <data name="SettingsPageLyricsFontWeight.Header" xml:space="preserve">
     <value>フォントの太さ</value>
+  </data>
+  <data name="SettingsPageLyricsGapDots.Description" xml:space="preserve">
+    <value>歌詞のない長い間奏中に 3 つの点滅ドットを表示</value>
+  </data>
+  <data name="SettingsPageLyricsGapDots.Header" xml:space="preserve">
+    <value>間奏ドット</value>
+  </data>
+  <data name="SettingsPageLyricsGapDotsMinimumDuration.Header" xml:space="preserve">
+    <value>最小間奏時間</value>
   </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>光沢効果</value>
@@ -2354,6 +2393,39 @@
   </data>
   <data name="WindowSettingsControlShowAndHide.Text" xml:space="preserve">
     <value>表示 / 非表示</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngine.Text" xml:space="preserve">
+    <value>Wallpaper Engine 連携</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineBinding.Header" xml:space="preserve">
+    <value>Wallpaper Engine の壁紙にリンク</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineBinding.Description" xml:space="preserve">
+    <value>リンクされた壁紙が有効になると、この歌詞ウィンドウを自動的に表示し、別のリンクされた壁紙が有効になると非表示にします。一時停止やセッションなしの自動非表示は引き続き適用されます。リンクされていないウィンドウには影響しません。</value>
+  </data>
+  <data name="WindowSettingsControlWallpaperEngineRefresh.Text" xml:space="preserve">
+    <value>壁紙リストを更新</value>
+  </data>
+  <data name="WallpaperEngineNotLinked" xml:space="preserve">
+    <value>リンクされていません</value>
+  </data>
+  <data name="WallpaperEngineMissing" xml:space="preserve">
+    <value>インストールされていません</value>
+  </data>
+  <data name="WallpaperEngineNotInstalled" xml:space="preserve">
+    <value>Wallpaper Engine が検出されませんでした。インストールされ、実行されていることを確認してから、壁紙リストを更新してください。</value>
+  </data>
+  <data name="WallpaperEngineNoActiveWallpaper" xml:space="preserve">
+    <value>アクティブな Wallpaper Engine の壁紙が検出されませんでした。</value>
+  </data>
+  <data name="WallpaperEngineCurrentWallpaper" xml:space="preserve">
+    <value>現在の壁紙：</value>
+  </data>
+  <data name="WindowSettingsControlCopyWallpaperName.Text" xml:space="preserve">
+    <value>壁紙名をコピー</value>
+  </data>
+  <data name="WindowSettingsControlCopyCurrentWallpaperName.Text" xml:space="preserve">
+    <value>現在の壁紙名をコピー</value>
   </data>
   <data name="WindowSettingsControlSpoutOutput.Header" xml:space="preserve">
     <value>Spout 出力</value>
