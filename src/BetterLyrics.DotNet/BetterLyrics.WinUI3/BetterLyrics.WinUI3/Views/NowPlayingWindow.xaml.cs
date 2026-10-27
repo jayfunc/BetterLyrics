@@ -93,6 +93,9 @@ public sealed partial class NowPlayingWindow : BaseWindow,
 
         this.Init(title: status.Name, titleBarHeightOption: TitleBarHeightOption.Collapsed,
             backdropType: BackdropType.Transparent);
+        _windowManagerProvider.MoveAndResize(
+            this,
+            status.IsWorkArea ? status.GetAppBarBounds() : status.WindowBounds);
 
         AppWindow.Closing += AppWindow_Closing;
 
@@ -192,16 +195,12 @@ public sealed partial class NowPlayingWindow : BaseWindow,
         if (LyricsWindowStatus.IsPinToTaskbar)
         {
             AppWindow.Changed += AppWindow_Changed;
-            _windowManagerProvider.MoveAndResize(this, LyricsWindowStatus.WindowBounds);
             OnIsLockedChanged();
-            Activate();
         }
         else if (LyricsWindowStatus.IsWallpaper)
         {
             AppWindow.Changed += AppWindow_Changed;
-            _windowManagerProvider.MoveAndResize(this, LyricsWindowStatus.WindowBounds);
             OnIsLockedChanged();
-            Activate();
         }
         else if (LyricsWindowStatus.IsWorkArea)
         {
@@ -210,28 +209,22 @@ public sealed partial class NowPlayingWindow : BaseWindow,
             UpdateBackdropAccentColor();
             OnIsLockedChanged();
             AppWindow.Changed += AppWindow_Changed;
-            Activate();
         }
         else
         {
-            _windowManagerProvider.MoveAndResize(this, LyricsWindowStatus.WindowBounds);
             OnIsLockedChanged();
             AppWindow.Changed += AppWindow_Changed;
             if (LyricsWindowStatus.IsFullscreen)
             {
-                Activate();
                 this.SetWindowPresenter(AppWindowPresenterKind.FullScreen);
             }
             else if (LyricsWindowStatus.IsMaximized)
             {
                 this.Maximize();
-                Activate();
-            }
-            else
-            {
-                Activate();
             }
         }
+
+        if (!Visible) Activate();
 
         _lyricsWindowVisibilityService.NotifyWindowLoaded(LyricsWindowStatus);
         UpdateNowPlayingBarStatus();
