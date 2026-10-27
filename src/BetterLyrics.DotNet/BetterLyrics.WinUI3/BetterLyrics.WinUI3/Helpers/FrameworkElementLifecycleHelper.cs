@@ -24,11 +24,8 @@ public static class FrameworkElementLifecycleHelper
         bindControls?.Invoke();
     }
 
-    public static void HandleUnloaded(FrameworkElement element, RoutedEventHandler loadedHandler, RoutedEventHandler unloadedHandler, Action onUnloadedCustom, Action unbindControls)
+    public static void HandleUnloaded(FrameworkElement element, Action onUnloadedCustom, Action unbindControls)
     {
-        element.Loaded -= loadedHandler;
-        element.Unloaded -= unloadedHandler;
-
         WeakReferenceMessenger.Default.UnregisterAll(element);
 
         if (element.DataContext is ITransientViewModel && element.DataContext is ObservableRecipient observableRecipient)

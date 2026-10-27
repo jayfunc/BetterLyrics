@@ -25,6 +25,6 @@ public abstract partial class BasePage : Page
 
     private void BasePage_Unloaded(object sender, RoutedEventArgs e)
     {
-        FrameworkElementLifecycleHelper.HandleUnloaded(this, BasePage_Loaded, BasePage_Unloaded, OnUnloaded, UnbindGeneratedControls);
+        FrameworkElementLifecycleHelper.HandleUnloaded(this, OnUnloaded, UnbindGeneratedControls);
     }
 }

@@ -35,6 +35,11 @@ public sealed partial class SettingsPage : BasePage
         Bindings?.StopTracking();
     }
 
+    protected override void OnLoaded()
+    {
+        ViewModel.SelectedNavItem ??= ViewModel.NavItems[0];
+    }
+
     protected override void OnUnloaded()
     {
         NavView?.MenuItemsSource = null;

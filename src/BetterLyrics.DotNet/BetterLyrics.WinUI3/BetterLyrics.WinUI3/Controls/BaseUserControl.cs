@@ -25,6 +25,6 @@ public abstract partial class BaseUserControl : UserControl
 
     private void BaseUserControl_Unloaded(object sender, RoutedEventArgs e)
     {
-        FrameworkElementLifecycleHelper.HandleUnloaded(this, BaseUserControl_Loaded, BaseUserControl_Unloaded, OnUnloaded, UnbindGeneratedControls);
+        FrameworkElementLifecycleHelper.HandleUnloaded(this, OnUnloaded, UnbindGeneratedControls);
     }
 }

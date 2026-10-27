@@ -297,9 +297,7 @@
                                     <Button x:Uid="SettingsPageGcObjectCheckButton" Command="{x:Bind ViewModel.CheckGcObjectsCommand}" />
                                 </controls:SettingsCard>
 
-                                <TextBlock
-                                    Text="{x:Bind ViewModel.GcObjectCheckSummary, Mode=OneWay}"
-                                    TextWrapping="Wrap" />
+                                <TextBlock Text="{x:Bind ViewModel.GcObjectCheckSummary, Mode=OneWay}" TextWrapping="Wrap" />
 
                                 <ItemsControl ItemsSource="{x:Bind ViewModel.AliveGcObjects, Mode=OneWay}">
                                     <ItemsControl.ItemTemplate>
