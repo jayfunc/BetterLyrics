@@ -293,23 +293,34 @@
                                     <ToggleSwitch IsOn="{x:Bind ViewModel.AppSettings.AdvancedSettings.WriteDebugLogs, Mode=TwoWay}" />
                                 </controls:SettingsCard>
 
-                                <controls:SettingsCard x:Uid="SettingsPageGcObjectCheck" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE9D9;}">
+                                <controls:SettingsExpander
+                                    x:Uid="SettingsPageGcObjectCheck"
+                                    HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                             Glyph=&#xE9D9;}"
+                                    IsExpanded="True">
                                     <Button x:Uid="SettingsPageGcObjectCheckButton" Command="{x:Bind ViewModel.CheckGcObjectsCommand}" />
-                                </controls:SettingsCard>
-
-                                <TextBlock Text="{x:Bind ViewModel.GcObjectCheckSummary, Mode=OneWay}" TextWrapping="Wrap" />
-
-                                <ItemsControl ItemsSource="{x:Bind ViewModel.AliveGcObjects, Mode=OneWay}">
-                                    <ItemsControl.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock
-                                                Margin="0,2"
-                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                                Text="{Binding}"
-                                                TextWrapping="Wrap" />
-                                        </DataTemplate>
-                                    </ItemsControl.ItemTemplate>
-                                </ItemsControl>
+                                    <controls:SettingsExpander.Items>
+                                        <controls:SettingsCard HorizontalContentAlignment="Stretch" ContentAlignment="Vertical">
+                                            <StackPanel>
+                                                <TextBlock
+                                                    Margin="0,0,0,8"
+                                                    Text="{x:Bind ViewModel.GcObjectCheckSummary, Mode=OneWay}"
+                                                    TextWrapping="Wrap" />
+                                                <ItemsControl ItemsSource="{x:Bind ViewModel.AliveGcObjects, Mode=OneWay}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <TextBlock
+                                                                Margin="0,2"
+                                                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                                                Text="{Binding}"
+                                                                TextWrapping="Wrap" />
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </StackPanel>
+                                        </controls:SettingsCard>
+                                    </controls:SettingsExpander.Items>
+                                </controls:SettingsExpander>
 
                             </StackPanel>
                         </controls:Case>
