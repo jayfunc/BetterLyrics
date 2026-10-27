@@ -1,7 +1,6 @@
 ﻿using BetterLyrics.Core.Events;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System.Diagnostics;
 
 namespace BetterLyrics.Core.Helpers;
 
@@ -37,7 +36,6 @@ public class MemoryLeakDetector
             _watchedObjects.Add((reference, name));
         }
 
-        Debug.WriteLine($"[MemoryLeakDetector] GC is preparing: {name}");
         _logger.LogDebug("[MemoryLeakDetector] GC is preparing: {Name}", name);
 
         ObjectTracked?.Invoke(null, new MemoryLeakObjectTrackedEventArgs(name, reference));
@@ -51,7 +49,6 @@ public class MemoryLeakDetector
 
         lock (_watchedObjects)
         {
-            Debug.WriteLine($"[MemoryLeakDetector] === Checking watched objects ===");
             _logger.LogDebug("[MemoryLeakDetector] === Checking watched objects ===");
 
             var aliveObjects = new List<(WeakReference Reference, string Name)>();
@@ -63,7 +60,6 @@ public class MemoryLeakDetector
                 {
                     aliveObjects.Add(item);
 
-                    Debug.WriteLine($"[MemoryLeakDetector] GC failed, object is still alive: {item.Name}");
                     _logger.LogDebug("[MemoryLeakDetector] GC failed, object is still alive: {Name}", item.Name);
                 }
                 else
@@ -76,7 +72,6 @@ public class MemoryLeakDetector
             {
                 _watchedObjects.Remove(dead);
 
-                Debug.WriteLine($"[MemoryLeakDetector] GC completed: {dead.Name}");
                 _logger.LogDebug("[MemoryLeakDetector] GC completed: {Name}", dead.Name);
             }
 
