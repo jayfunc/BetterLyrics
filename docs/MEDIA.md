@@ -22,6 +22,7 @@ Thanks to the following media, open-source weeklies, and community developers fo
 - **Kifranei/Halcyon** | [Halcyon](https://github.com/Kifranei/Halcyon/blob/main/README_en.md#-credits)
 - **aodianjun/com.aodianjun.hyperglow.cnplus** | [HyperGlow CN+](https://github.com/aodianjun/com.aodianjun.hyperglow.cnplus#acknowledgements)
 - **wxj881027/QmClient** | [Q1menG Client](https://github.com/wxj881027/QmClient/blob/master/README_en.md#-credits)
+- **youshen2/MeloX** | [MeloX](https://github.com/youshen2/MeloX/blob/main/README.en.md#special-thanks)
 - **LYlostyu** | [Git Tutorial - Slidev](https://tdx-bus-demo.vercel.app/37)
 - **Chen Shi Yu Jing Xuan's Blog** | [[Pinned] [Chitchat] How to Get a Better Quality of Life](https://blog.cyx2009.top/archives/better_life)
 - **Fengfeng** | [How to listen to the songs of Nanjing citizens and Bobby Chen on Apple Music](https://wesley666.github.io/article/20c98ff0)

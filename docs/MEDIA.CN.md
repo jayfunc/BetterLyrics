@@ -22,6 +22,7 @@
 - **Kifranei/Halcyon** | [Halcyon](https://github.com/Kifranei/Halcyon#-%E8%87%B4%E8%B0%A2)
 - **aodianjun/com.aodianjun.hyperglow.cnplus** | [HyperGlow CN+](https://github.com/aodianjun/com.aodianjun.hyperglow.cnplus#%E8%87%B4%E8%B0%A2)
 - **wxj881027/QmClient** | [Q1menG Client](https://github.com/wxj881027/QmClient#-%E8%87%B4%E8%B0%A2)
+- **youshen2/MeloX** | [MeloX](https://github.com/youshen2/MeloX#%E7%89%B9%E5%88%AB%E9%B8%A3%E8%B0%A2)
 - **LYlostyu** | [Git 教程 - Slidev](https://tdx-bus-demo.vercel.app/37)
 - **沉石鱼惊旋 的博客** | [『置顶』[闲话] 如何获得更优质的生活](https://blog.cyx2009.top/archives/better_life)
 - **锋风Fengfeng** | [怎么在Apple Music听南京市民和升哥的歌](https://wesley666.github.io/article/20c98ff0)
