@@ -472,13 +472,13 @@
             </controls:OpacityMaskView>
 
             <Button
-                Margin="24"
-                HorizontalAlignment="Right"
+                Margin="24,52,0,0"
+                HorizontalAlignment="Left"
                 VerticalAlignment="Top"
                 Click="CloseCreditsButton_Click"
                 Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
-                                      FontSize=16,
-                                      Glyph=&#xE70D;}"
+                                      FontSize=12,
+                                      Glyph=&#xE72B;}"
                 Foreground="White"
                 Style="{ThemeResource GhostButtonStyle}" />
         </Grid>

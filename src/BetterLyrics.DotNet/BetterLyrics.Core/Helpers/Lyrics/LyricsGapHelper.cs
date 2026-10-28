@@ -9,13 +9,13 @@ namespace BetterLyrics.Core.Helpers.Lyrics;
 public readonly record struct LyricsGapLine(int StartMs, int? EndMs, bool IsEmpty);
 
 /// <summary>
-/// 一段没有歌词的间隙（前奏、行与行之间、尾奏）
+/// 一段没有歌词的间隙（前奏、行与行之间）
 /// </summary>
 /// <param name="StartMs">间隙开始时间</param>
 /// <param name="EndMs">间隙结束时间</param>
 /// <param name="MarkerLineIndex">标记该间隙的空行索引，没有空行时为 -1</param>
 /// <param name="PreviousLineIndex">间隙前最后一句歌词的索引，前奏时为 -1</param>
-/// <param name="NextLineIndex">间隙后第一句歌词的索引，尾奏时为 -1</param>
+/// <param name="NextLineIndex">间隙后第一句歌词的索引</param>
 public readonly record struct LyricsGapSegment(
     int StartMs,
     int EndMs,
@@ -32,11 +32,9 @@ public static class LyricsGapHelper
     /// 计算所有时长不小于 <paramref name="minimumDurationMs" /> 的无歌词间隙
     /// </summary>
     /// <param name="lines">按时间排序的歌词行</param>
-    /// <param name="songDurationMs">歌曲总时长，提供后才会识别尾奏间隙</param>
     /// <param name="minimumDurationMs">最短间隙时长，用于过滤短促的行间空白</param>
     public static List<LyricsGapSegment> FindGaps(
         IReadOnlyList<LyricsGapLine>? lines,
-        double songDurationMs = 0,
         int minimumDurationMs = 0)
     {
         var gaps = new List<LyricsGapSegment>();
@@ -76,10 +74,7 @@ public static class LyricsGapHelper
             if (interval.End > cursor) cursor = interval.End;
         }
 
-        // 尾奏：只有知道歌曲总长时才能确定结束时间
-        var songDuration = (int)Math.Round(songDurationMs);
-        if (songDuration > cursor) AddGap(gaps, lines, cursor, songDuration, minimumDurationMs);
-
+        // 最后一句歌词之后的尾奏不算间隙，没有下一句歌词可以等待
         return gaps;
     }
 

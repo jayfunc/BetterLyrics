@@ -1741,14 +1741,13 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
         });
 
     /// <summary>
-    /// 重新计算所有无歌词间隙（只在歌词或歌曲总长变化时执行）
+    /// 重新计算所有无歌词间隙（只在歌词变化时执行）
     /// </summary>
     private List<LyricsGapSegment>? BuildLyricsGaps()
     {
         if (_gapInputs == null || _gapInputs.Count == 0) return null;
 
-        // 只有知道歌曲总长时才能识别尾奏间隙
-        return LyricsGapHelper.FindGaps(_gapInputs, _gsmtcService.CurrentSongInfo.DurationMs);
+        return LyricsGapHelper.FindGaps(_gapInputs);
     }
 
     /// <summary>
@@ -2036,7 +2035,6 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
     {
         ResetPlaybackState();
 
-        // 歌曲总长变化会影响尾奏间隙的识别
         _isGapListChanged = true;
     }
 

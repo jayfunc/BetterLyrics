@@ -30,7 +30,7 @@ public sealed class GapIndicatorRenderer
     private const double FadeInMs = 300;
     private const double FadeOutMs = 250;
 
-    private const double PulsePeriodMs = 1400;
+    private const double PulsePeriodMs = 2000;
     private const int DotCount = 3;
 
     // 相位错开 1/6 周期，形成从左到右流动的呼吸波
