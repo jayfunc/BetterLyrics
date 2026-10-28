@@ -40,7 +40,6 @@ public sealed partial class MusicGalleryWindow : BaseWindow,
         this.Init("MusicGalleryPageTitle");
 
         NowPlayingPage.LyricsWindowStatus = ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus;
-        UpdateExternalSourceVisibility();
 
         AppWindow.Closing += AppWindow_Closing;
 
@@ -53,13 +52,6 @@ public sealed partial class MusicGalleryWindow : BaseWindow,
     }
 
     protected override IEnumerable<object> GetAdditionalTrackedViewModels() => [ViewModel];
-
-    private void UpdateExternalSourceVisibility()
-    {
-        var isActive = GSMTCService.IsExternalSourceActive;
-        NowPlayingBar.Visibility = isActive ? Visibility.Collapsed : Visibility.Visible;
-        ExternalSourcePromptGrid.Visibility = isActive ? Visibility.Visible : Visibility.Collapsed;
-    }
 
     private void UpdateTheme()
     {
@@ -163,7 +155,6 @@ public sealed partial class MusicGalleryWindow : BaseWindow,
     {
         DispatcherQueue.TryEnqueue(() =>
         {
-            UpdateExternalSourceVisibility();
             if (GSMTCService.IsExternalSourceActive)
             {
                 if (NowPlayingPage.Visibility == Visibility.Visible)

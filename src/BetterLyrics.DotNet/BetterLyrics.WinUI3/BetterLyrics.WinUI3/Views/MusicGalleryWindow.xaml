@@ -53,26 +53,6 @@
             </uc:NowPlayingBar.ContextFlyout>
         </uc:NowPlayingBar>
 
-        <Grid
-            x:Name="ExternalSourcePromptGrid"
-            Height="68"
-            VerticalAlignment="Bottom"
-            Background="{ThemeResource LayerFillColorDefaultBrush}"
-            BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-            BorderThickness="0,1,0,0">
-            <StackPanel
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                Orientation="Horizontal"
-                Spacing="12">
-                <FontIcon
-                    FontFamily="{StaticResource SegoeFluentIcons}"
-                    FontSize="16"
-                    Glyph="&#xE946;" />
-                <TextBlock x:Uid="MusicGalleryWindowExternalSourcePrompt" VerticalAlignment="Center" />
-            </StackPanel>
-        </Grid>
-
     </Grid>
 
 </local:BaseWindow>
