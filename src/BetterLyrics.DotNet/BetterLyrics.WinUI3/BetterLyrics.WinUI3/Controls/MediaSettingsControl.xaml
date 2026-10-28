@@ -61,7 +61,7 @@
                                         <TextBlock IsTextSelectionEnabled="True" Text="{x:Bind Name, Mode=OneWay}" />
                                     </controls:SettingsExpander.Header>
                                     <controls:SettingsExpander.Description>
-                                        <TextBlock IsTextSelectionEnabled="True" Text="{x:Bind ConnectionSummary, Mode=OneWay}" />
+                                        <TextBlock Text="{x:Bind ConnectionSummary, Mode=OneWay}" />
                                     </controls:SettingsExpander.Description>
 
                                     <ToggleSwitch IsOn="{x:Bind IsEnabled, Mode=TwoWay}" />
