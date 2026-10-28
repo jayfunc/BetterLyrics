@@ -99,8 +99,14 @@ public sealed partial class LyricsCard : Control
             typeof(LyricsCard),
             new PropertyMetadata(null, OnDependencyPropertyChanged));
 
-    private readonly IGsmtcService _gsmtcService;
+    private IGsmtcService _gsmtcService;
     private readonly ISettingsService _settingsService;
+
+    public IGsmtcService GsmtcSource
+    {
+        get => _gsmtcService;
+        set => _gsmtcService = value;
+    }
     private int _currentActiveIndex = -1;
     private ItemsControl? _itemsControl;
 

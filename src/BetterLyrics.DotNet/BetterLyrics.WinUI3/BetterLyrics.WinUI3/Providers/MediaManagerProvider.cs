@@ -53,8 +53,14 @@ public class MediaManagerProvider : IMediaManagerProvider
     public event IMediaManagerProvider.SessionChangeDelegate? OnAnyPlaybackStateChanged;
     public event IMediaManagerProvider.SessionChangeDelegate? OnAnyTimelinePropertyChanged;
 
+    private bool _isInitialized;
+
     public void Init()
     {
+        // 多个 GSMTC 服务实例共享同一个提供者，只需启动一次
+        if (_isInitialized) return;
+        _isInitialized = true;
+
         _logger.LogDebug("Starting Windows media manager.");
         _mediaManager.Start();
 

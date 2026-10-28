@@ -287,6 +287,7 @@ public class Program
             .AddSingleton<ISettingsService, SettingsService>()
             .AddSingleton<ISmtcService, SmtcService>()
             .AddSingleton<IGsmtcService, GsmtcService>()
+            .AddSingleton<IBuiltInGsmtcService, BuiltInGsmtcService>()
             .AddSingleton<IAlbumArtSearchService, AlbumArtSearchService>()
             .AddSingleton<ILyricsSearchService, LyricsSearchService>()
             .AddSingleton<ITranslationService, TranslationService>()

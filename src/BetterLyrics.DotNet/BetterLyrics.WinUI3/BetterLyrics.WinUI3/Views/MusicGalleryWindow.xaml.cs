@@ -25,11 +25,10 @@ namespace BetterLyrics.WinUI3.Views;
 /// An empty window that can be used on its own or navigated to within a Frame.
 /// </summary>
 public sealed partial class MusicGalleryWindow : BaseWindow,
-    IRecipient<AlbumArtBytesChangedMessage>,
-    IRecipient<LyricsWindowPaletteConfigChangedMessage>,
-    IRecipient<CurrentMediaSourceProviderChangedMessage>
+    IRecipient<LyricsWindowPaletteConfigChangedMessage>
 {
-    public IGsmtcService GSMTCService { get; } = Ioc.Default.GetRequiredService<IGsmtcService>();
+    // 音乐库窗口只跟踪内置播放器，不受当前 GSMTC 会话影响
+    public IGsmtcService GSMTCService { get; } = Ioc.Default.GetRequiredService<IBuiltInGsmtcService>();
 
     public MusicGalleryWindowViewModel ViewModel { get; }
 
@@ -39,11 +38,19 @@ public sealed partial class MusicGalleryWindow : BaseWindow,
         ViewModel = Ioc.Default.GetRequiredService<MusicGalleryWindowViewModel>();
         this.Init("MusicGalleryPageTitle");
 
+        WeakReferenceMessenger.Default.Register<MusicGalleryWindow, AlbumArtBytesChangedMessage, string>(
+            this, GsmtcMessageToken.BuiltIn, static (r, m) => r.Receive(m));
+
         NowPlayingPage.LyricsWindowStatus = ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus;
 
         AppWindow.Closing += AppWindow_Closing;
 
         _ = UpdateAlbumArtThemeColorsAsync();
+    }
+
+    protected override void OnClosed()
+    {
+        WeakReferenceMessenger.Default.UnregisterAll(this, GsmtcMessageToken.BuiltIn);
     }
 
     protected override void OnAppThemeChanged(AppThemeChangedMessage? message = null)
@@ -149,19 +156,5 @@ public sealed partial class MusicGalleryWindow : BaseWindow,
     {
         if (message.Sender == ViewModel.AppSettings.MusicGallerySettings.LyricsWindowStatus)
             _ = UpdateAlbumArtThemeColorsAsync();
-    }
-
-    public void Receive(CurrentMediaSourceProviderChangedMessage message)
-    {
-        DispatcherQueue.TryEnqueue(() =>
-        {
-            if (GSMTCService.IsExternalSourceActive)
-            {
-                if (NowPlayingPage.Visibility == Visibility.Visible)
-                {
-                    NowPlayingBar_TimeTapped(null, EventArgs.Empty);
-                }
-            }
-        });
     }
 }

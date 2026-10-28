@@ -19,6 +19,7 @@
 
         <local:NowPlayingPage
             x:Name="NowPlayingPage"
+            IsBuiltInOnly="True"
             Opacity="0"
             Visibility="Collapsed">
             <local:NowPlayingPage.OpacityTransition>
@@ -31,6 +32,7 @@
             Padding="16"
             VerticalAlignment="Bottom"
             IsAutoHideEnabled="False"
+            IsBuiltInOnly="True"
             PlayQueueButtonClick="NowPlayingBar_PlayingQueueClick"
             ShowPlaybackOrderButton="True"
             ShowPlayingQueueButton="True"

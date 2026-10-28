@@ -96,7 +96,7 @@
                                 Height="36"
                                 VerticalAlignment="Center">
                                 <Grid CornerRadius="4">
-                                    <local:ImageSwitcher Source="{x:Bind GSMTCService.AlbumArtBytes, Converter={StaticResource ByteArrayToImageConverter}, Mode=OneWay}" />
+                                    <local:ImageSwitcher Source="{x:Bind ViewModel.AlbumArtBytes, Converter={StaticResource ByteArrayToImageConverter}, Mode=OneWay}" />
                                 </Grid>
                                 <Grid
                                     x:Name="LyricsOpenHintGrid"
@@ -116,12 +116,12 @@
                                 </Grid>
                             </Grid>
                             <StackPanel VerticalAlignment="Center">
-                                <TextBlock IsTextSelectionEnabled="True" Text="{x:Bind GSMTCService.CurrentSongInfo.Title, Mode=OneWay}" />
+                                <TextBlock IsTextSelectionEnabled="True" Text="{x:Bind ViewModel.Title, Mode=OneWay}" />
                                 <TextBlock
                                     FontSize="12"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
                                     IsTextSelectionEnabled="True"
-                                    Text="{x:Bind GSMTCService.CurrentSongInfo.Artist, Mode=OneWay}" />
+                                    Text="{x:Bind ViewModel.Artist, Mode=OneWay}" />
                             </StackPanel>
                         </StackPanel>
 
@@ -218,13 +218,13 @@
                             Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                   Glyph=&#xF8AE;}"
                             Style="{ThemeResource GhostButtonStyle}"
-                            Visibility="{x:Bind GSMTCService.CurrentIsPlaying, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+                            Visibility="{x:Bind ViewModel.IsPlaying, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
                         <Button
                             Command="{x:Bind ViewModel.PlaySongCommand}"
                             Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                   Glyph=&#xF5B0;}"
                             Style="{ThemeResource GhostButtonStyle}"
-                            Visibility="{x:Bind GSMTCService.CurrentIsPlaying, Mode=OneWay, Converter={StaticResource BoolNegationToVisibilityConverter}}" />
+                            Visibility="{x:Bind ViewModel.IsPlaying, Mode=OneWay, Converter={StaticResource BoolNegationToVisibilityConverter}}" />
                         <!--  Next track  -->
                         <Button
                             Command="{x:Bind ViewModel.NextSongCommand}"
@@ -394,7 +394,8 @@
                                                     Height="16"
                                                     Margin="0,9,0,0"
                                                     VerticalAlignment="Top"
-                                                    behaviors:AppProperties.Aumid="{x:Bind GSMTCService.CurrentMediaSourceProviderInfo.Provider, Mode=OneWay}" />
+                                                    behaviors:AppProperties.Aumid="{x:Bind GSMTCService.CurrentMediaSourceProviderInfo.Provider, Mode=OneWay}"
+                                                    Visibility="{x:Bind ViewModel.IsExternalSourceInfoVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
                                                 <local:ExtendedSlider
                                                     Grid.Column="1"
                                                     Frequency="1"
@@ -500,7 +501,7 @@
                     x:Name="TimelineSlider"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Top"
-                    Maximum="{x:Bind GSMTCService.CurrentSongInfo.DurationMs, Mode=OneWay, Converter={StaticResource MillisecondsToSecondsConverter}}"
+                    Maximum="{x:Bind ViewModel.DurationSeconds, Mode=OneWay}"
                     Minimum="0"
                     Style="{StaticResource GhostSliderStyle}"
                     ThumbToolTipValueConverter="{StaticResource SecondsToFormattedTimeConverter}"
@@ -573,7 +574,7 @@
                                 Height="48"
                                 Margin="16"
                                 CornerRadius="4">
-                                <Image Source="{x:Bind GSMTCService.AlbumArtBytes, Converter={StaticResource ByteArrayToImageConverter}, Mode=OneWay}" />
+                                <Image Source="{x:Bind ViewModel.AlbumArtBytes, Converter={StaticResource ByteArrayToImageConverter}, Mode=OneWay}" />
                             </Grid>
                             <Grid
                                 Grid.Column="1"
@@ -585,12 +586,12 @@
                                 </Grid.RowDefinitions>
                                 <TextBlock
                                     Grid.Row="0"
-                                    Text="{x:Bind GSMTCService.CurrentSongInfo.Title, Mode=OneWay}"
+                                    Text="{x:Bind ViewModel.Title, Mode=OneWay}"
                                     TextTrimming="CharacterEllipsis" />
                                 <TextBlock
                                     Grid.Row="1"
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
-                                    Text="{x:Bind GSMTCService.CurrentSongInfo.Artist, Mode=OneWay}"
+                                    Text="{x:Bind ViewModel.Artist, Mode=OneWay}"
                                     TextTrimming="CharacterEllipsis" />
                             </Grid>
                             <Grid
@@ -609,12 +610,14 @@
                                     Content="{ui:FontIcon FontSize=16,
                                                           FontFamily={StaticResource SegoeFluentIcons},
                                                           Glyph=&#xE8A7;}"
-                                    Style="{ThemeResource GhostButtonStyle}" />
+                                    Style="{ThemeResource GhostButtonStyle}"
+                                    Visibility="{x:Bind ViewModel.IsExternalSourceInfoVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
                                 <Grid
                                     Grid.Row="1"
                                     Margin="0,0,16,16"
                                     VerticalAlignment="Bottom"
-                                    ColumnSpacing="6">
+                                    ColumnSpacing="6"
+                                    Visibility="{x:Bind ViewModel.IsExternalSourceInfoVisible, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />

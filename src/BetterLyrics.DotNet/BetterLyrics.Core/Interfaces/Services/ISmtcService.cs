@@ -17,6 +17,7 @@ public interface ISmtcService : INotifyPropertyChanged
     public ObservableCollection<PlayQueueItem> TrackPlayingQueue { get; set; }
     public ExtendedTrack? PlayingTrack { get; set; }
     public PlaybackState PlaybackState { get; }
+    TimeSpan CurrentPosition { get; }
 
     Task UpdatePlaybackListAsync(IEnumerable<PlayQueueItem> source, bool recoverPlaybackPosition = false, bool allowAutoPlay = false);
 
@@ -24,6 +25,8 @@ public interface ISmtcService : INotifyPropertyChanged
 
     void Play();
     void Pause();
+    void Stop();
+    void Seek(TimeSpan position);
     void PlayNextTrack();
     void PlayPreviousTrack();
     void PlayTrack(PlayQueueItem? playQueueItem);

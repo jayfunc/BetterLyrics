@@ -152,7 +152,13 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
     private readonly FogRenderer _fogRenderer = new();
     private readonly SemanticEffectsRenderer _semanticEffectsRenderer = new();
 
-    private readonly IGsmtcService _gsmtcService = Ioc.Default.GetRequiredService<IGsmtcService>();
+    private IGsmtcService _gsmtcService = Ioc.Default.GetRequiredService<IGsmtcService>();
+
+    public IGsmtcService GsmtcSource
+    {
+        get => _gsmtcService;
+        set => _gsmtcService = value;
+    }
     private readonly IMonitorProvider _monitorProvider = Ioc.Default.GetRequiredService<IMonitorProvider>();
 
     private readonly ValueTransition<AppColor> _immersiveBgColorTransition = new(
@@ -898,10 +904,26 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
     {
         _monitorProvider.DisplayStatusChanged -= PowerManager_DisplayStatusChanged;
         _monitorProvider.DisplayStatusChanged += PowerManager_DisplayStatusChanged;
+
+        if (_gsmtcService is IBuiltInGsmtcService)
+        {
+            // 内置播放器专用服务的消息走独立通道，不再接收默认通道（当前 GSMTC 会话）的同类消息
+            var messenger = WeakReferenceMessenger.Default;
+            messenger.Unregister<CurrentPositionChangedMessage>(this);
+            messenger.Unregister<CurrentLyricsDataChangedMessage>(this);
+            messenger.Unregister<CurrentSongInfoChangedMessage>(this);
+            messenger.Unregister<AlbumArtBytesChangedMessage>(this);
+
+            messenger.Register<NowPlayingCanvas, CurrentPositionChangedMessage, string>(this, GsmtcMessageToken.BuiltIn, static (r, m) => r.Receive(m));
+            messenger.Register<NowPlayingCanvas, CurrentLyricsDataChangedMessage, string>(this, GsmtcMessageToken.BuiltIn, static (r, m) => r.Receive(m));
+            messenger.Register<NowPlayingCanvas, CurrentSongInfoChangedMessage, string>(this, GsmtcMessageToken.BuiltIn, static (r, m) => r.Receive(m));
+            messenger.Register<NowPlayingCanvas, AlbumArtBytesChangedMessage, string>(this, GsmtcMessageToken.BuiltIn, static (r, m) => r.Receive(m));
+        }
     }
 
     protected override void OnUnloaded()
     {
+        WeakReferenceMessenger.Default.UnregisterAll(this, GsmtcMessageToken.BuiltIn);
         _monitorProvider.DisplayStatusChanged -= PowerManager_DisplayStatusChanged;
 
         if (Canvas != null)

@@ -63,6 +63,10 @@ public sealed partial class NowPlayingBar : BaseUserControl
         DependencyProperty.Register(nameof(IsAutoHideEnabled), typeof(bool), typeof(NowPlayingBar),
             new PropertyMetadata(false, OnDependencyPropertyChanged));
 
+    public static readonly DependencyProperty IsBuiltInOnlyProperty =
+        DependencyProperty.Register(nameof(IsBuiltInOnly), typeof(bool), typeof(NowPlayingBar),
+            new PropertyMetadata(false, OnDependencyPropertyChanged));
+
     public static readonly DependencyProperty LyricsWindowStatusProperty =
         DependencyProperty.Register(nameof(LyricsWindowStatus), typeof(LyricsWindowStatus), typeof(NowPlayingBar),
             new PropertyMetadata(null, (d, e) => (d as NowPlayingBar)?.UpdateStatus()));
@@ -124,6 +128,12 @@ public sealed partial class NowPlayingBar : BaseUserControl
     {
         get => (bool)GetValue(ShowMoreButtonProperty);
         set => SetValue(ShowMoreButtonProperty, value);
+    }
+
+    public bool IsBuiltInOnly
+    {
+        get => (bool)GetValue(IsBuiltInOnlyProperty);
+        set => SetValue(IsBuiltInOnlyProperty, value);
     }
 
     public bool IsCompactMode
@@ -215,6 +225,12 @@ public sealed partial class NowPlayingBar : BaseUserControl
         double elapsedSeconds = (currentTicks - _lastTickTicks) / (double)Stopwatch.Frequency;
         _lastTickTicks = currentTicks;
 
+        if (IsBuiltInOnly)
+        {
+            ViewModel.SyncBuiltInPosition();
+            return;
+        }
+
         if (GSMTCService.CurrentIsPlaying)
         {
             var newPos = ViewModel.SimulatedPositionSeconds + elapsedSeconds;
@@ -233,6 +249,10 @@ public sealed partial class NowPlayingBar : BaseUserControl
             if (e.Property == IsCompactModeProperty)
             {
                 self.OnIsCompactModeChanged();
+            }
+            else if (e.Property == IsBuiltInOnlyProperty)
+            {
+                self.ViewModel.IsBuiltInOnly = (bool)e.NewValue;
             }
             else if (e.Property == IsAutoHideEnabledProperty)
             {

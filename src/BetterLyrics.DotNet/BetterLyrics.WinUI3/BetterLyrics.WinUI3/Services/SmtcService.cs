@@ -343,6 +343,40 @@ public partial class SmtcService : ObservableObject, ISmtcService
         SaveCurrentPlaybackPosition();
     }
 
+    public void Stop()
+    {
+        PlayTrackAt(-1);
+    }
+
+    public TimeSpan CurrentPosition
+    {
+        get
+        {
+            try
+            {
+                return _mediaPlayer.Source == null ? TimeSpan.Zero : _mediaPlayer.PlaybackSession.Position;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogDebug(ex, "Failed to read the current playback position.");
+                return TimeSpan.Zero;
+            }
+        }
+    }
+
+    public void Seek(TimeSpan position)
+    {
+        try
+        {
+            if (_mediaPlayer.Source == null) return;
+            _mediaPlayer.PlaybackSession.Position = position;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Failed to seek to {Position}.", position);
+        }
+    }
+
     public void PlayNextTrack()
     {
         if (TrackPlayingQueue.Count == 0) return;
@@ -541,6 +575,8 @@ public partial class SmtcService : ObservableObject, ISmtcService
 
     private void PlaybackSession_PlaybackStateChanged(MediaPlaybackSession sender, object args)
     {
+        _appUIThreadProvider.Execute(() => OnPropertyChanged(nameof(IsPlaying)));
+
         if (sender.PlaybackState == MediaPlaybackState.Playing)
         {
             _positionTimer.Start();

@@ -11,7 +11,7 @@ using LyricsContentParser = BetterLyrics.Core.Helpers.Lyrics.ContentParser.Lyric
 
 namespace BetterLyrics.Core.Implementations.Services.GsmtcService;
 
-public partial class GsmtcService : IGsmtcService
+public abstract partial class GsmtcServiceBase : IGsmtcService
 {
     private readonly Debouncer _lyricsDebouncer = new();
     private readonly Debouncer _lyricsPresentationDebouncer = new();
@@ -25,7 +25,7 @@ public partial class GsmtcService : IGsmtcService
     public partial LyricsData? CurrentLyricsData { get; private set; }
 
     partial void OnCurrentLyricsDataChanged(LyricsData? value) =>
-        WeakReferenceMessenger.Default.Send(new CurrentLyricsDataChangedMessage(value, _isPresentationUpdate));
+        SendMessage(new CurrentLyricsDataChangedMessage(value, _isPresentationUpdate));
 
     [ObservableProperty] public partial LyricsCacheItem? CurrentLyricsSearchResult { get; private set; }
 

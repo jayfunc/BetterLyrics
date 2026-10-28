@@ -2,13 +2,14 @@
 
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Interfaces.ViewModels;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace BetterLyrics.Core.ViewModels;
 
 /// <summary>
 /// Transient ViewModel
 /// </summary>
-public partial class NowPlayingPageViewModel(IGsmtcService mediaSessionsService) : ITransientViewModel
+public partial class NowPlayingPageViewModel(IGsmtcService mediaSessionsService) : ObservableObject, ITransientViewModel
 {
-    public IGsmtcService MediaSessionsService { get; } = mediaSessionsService;
+    [ObservableProperty] public partial IGsmtcService MediaSessionsService { get; set; } = mediaSessionsService;
 }

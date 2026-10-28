@@ -52,13 +52,26 @@ public sealed partial class NowPlayingPage : BasePage,
         set => SetValue(LyricsWindowStatusProperty, value);
     }
 
+    public static readonly DependencyProperty IsBuiltInOnlyProperty =
+        DependencyProperty.Register(nameof(IsBuiltInOnly), typeof(bool), typeof(NowPlayingPage),
+            new PropertyMetadata(false, OnDependencyPropertyChanged));
+
+    /// <summary>
+    /// 为 true 时仅跟踪并显示内置播放器，否则跟踪当前 GSMTC 会话。
+    /// </summary>
+    public bool IsBuiltInOnly
+    {
+        get => (bool)GetValue(IsBuiltInOnlyProperty);
+        set => SetValue(IsBuiltInOnlyProperty, value);
+    }
+
     private LyricsWindowStatus? _lyricsWindowStatus = null;
 
     private readonly IGlobalToastProvider _globalToastProvider = Ioc.Default.GetRequiredService<IGlobalToastProvider>();
 
     private readonly IFilePickerProvider _filePickerProvider = Ioc.Default.GetRequiredService<IFilePickerProvider>();
 
-    private readonly IGsmtcService _gsmtcService = Ioc.Default.GetRequiredService<IGsmtcService>();
+    private IGsmtcService _gsmtcService = Ioc.Default.GetRequiredService<IGsmtcService>();
 
     private readonly Debouncer _layoutChangedDebouncer = new();
 
@@ -148,6 +161,10 @@ public sealed partial class NowPlayingPage : BasePage,
             {
                 page._lyricsWindowStatus = (LyricsWindowStatus?)e.NewValue;
                 page.OnLayoutChanged();
+            }
+            else if (e.Property == IsBuiltInOnlyProperty)
+            {
+                page.ApplyGsmtcSource((bool)e.NewValue);
             }
         }
     }
@@ -566,8 +583,32 @@ public sealed partial class NowPlayingPage : BasePage,
         Bindings?.StopTracking();
     }
 
+    private void ApplyGsmtcSource(bool isBuiltInOnly)
+    {
+        _gsmtcService = isBuiltInOnly
+            ? Ioc.Default.GetRequiredService<IBuiltInGsmtcService>()
+            : Ioc.Default.GetRequiredService<IGsmtcService>();
+
+        ViewModel.MediaSessionsService = _gsmtcService;
+        NowPlayingCanvas.GsmtcSource = _gsmtcService;
+        LyricsCard.GsmtcSource = _gsmtcService;
+        NowPlayingBar.IsBuiltInOnly = isBuiltInOnly;
+    }
+
+    protected override void OnLoaded()
+    {
+        if (_gsmtcService is not IBuiltInGsmtcService) return;
+
+        // 内置播放器专用服务的消息走独立通道，不再接收默认通道（当前 GSMTC 会话）的同类消息
+        var messenger = WeakReferenceMessenger.Default;
+        messenger.Unregister<CurrentSongInfoChangedMessage>(this);
+        messenger.Register<NowPlayingPage, CurrentSongInfoChangedMessage, string>(this, GsmtcMessageToken.BuiltIn,
+            static (r, m) => r.Receive(m));
+    }
+
     protected override void OnUnloaded()
     {
+        WeakReferenceMessenger.Default.UnregisterAll(this, GsmtcMessageToken.BuiltIn);
         _layoutChangedDebouncer.Dispose();
     }
 

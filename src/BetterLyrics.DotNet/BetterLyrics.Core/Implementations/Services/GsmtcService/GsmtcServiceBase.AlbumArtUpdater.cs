@@ -14,7 +14,7 @@ using CommunityToolkit.Mvvm.Messaging;
 
 namespace BetterLyrics.Core.Implementations.Services.GsmtcService;
 
-public partial class GsmtcService : IGsmtcService
+public abstract partial class GsmtcServiceBase : IGsmtcService
 {
     private readonly Debouncer _albumArtDebouncer = new();
     private readonly ISystemUIProvider _systemUIProvider = Ioc.Default.GetService<ISystemUIProvider>();
@@ -23,7 +23,7 @@ public partial class GsmtcService : IGsmtcService
     public partial byte[]? AlbumArtBytes { get; set; }
 
     partial void OnAlbumArtBytesChanged(byte[]? value) =>
-        WeakReferenceMessenger.Default.Send(new AlbumArtBytesChangedMessage(value));
+        SendMessage(new AlbumArtBytesChangedMessage(value));
 
     public async Task<NowPlayingPalette> CalculateAlbumArtThemeColorsAsync(LyricsWindowStatus lyricsWindowStatus,
         AppColor backdropAccentColor, CancellationToken token = default)

@@ -101,9 +101,9 @@ public class MediaSessionProvider : IMediaSessionProvider
     {
         try
         {
-            var timelineProperties = _session.ControlSession.GetTimelineProperties();
-            CurrentTime = timelineProperties.Position;
-            EndTime = timelineProperties.EndTime;
+            var timelineProperties = _session.ControlSession?.GetTimelineProperties();
+            CurrentTime = timelineProperties?.Position ?? TimeSpan.Zero;
+            EndTime = timelineProperties?.EndTime ?? TimeSpan.Zero;
         }
         catch (Exception ex)
         {
