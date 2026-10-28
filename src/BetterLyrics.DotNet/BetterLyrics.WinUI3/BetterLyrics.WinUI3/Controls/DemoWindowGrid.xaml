@@ -197,24 +197,29 @@
             Opacity="0.8"
             Visibility="Collapsed">
             <Grid VerticalAlignment="Center" Background="{ThemeResource SystemFillColorCriticalBackgroundBrush}">
-                <StackPanel
+                <Grid
                     Padding="4,8"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
-                    Orientation="Horizontal"
-                    Spacing="8">
+                    ColumnSpacing="8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
                     <FontIcon
+                        Grid.Column="0"
                         FontFamily="{StaticResource SegoeFluentIcons}"
                         FontSize="16"
                         Foreground="{ThemeResource SystemFillColorCriticalBrush}"
                         Glyph="&#xE7BA;" />
                     <TextBlock
                         x:Uid="DemoWindowGridMonitorDisconnected"
+                        Grid.Column="1"
                         HorizontalAlignment="Center"
                         FontSize="12"
                         Foreground="{ThemeResource SystemFillColorCriticalBrush}"
                         TextWrapping="Wrap" />
-                </StackPanel>
+                </Grid>
             </Grid>
         </Grid>
     </Grid>
