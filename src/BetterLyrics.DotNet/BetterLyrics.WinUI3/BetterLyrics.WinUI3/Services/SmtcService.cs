@@ -38,7 +38,7 @@ public partial class SmtcService : ObservableObject, ISmtcService
     private readonly IPlaybackStateService _playbackStateService;
     private readonly ILogger<SmtcService> _logger;
 
-    private readonly MediaPlayer _mediaPlayer;
+    private MediaPlayer _mediaPlayer;
     private readonly Timer _positionTimer;
 
     private int _currentIndex = -1;
@@ -71,25 +71,108 @@ public partial class SmtcService : ObservableObject, ISmtcService
 
         PlaybackState = _playbackStateService.CurrentState;
 
-        _mediaPlayer = new MediaPlayer();
-
-        _mediaPlayer.CommandManager.NextBehavior.EnablingRule = MediaCommandEnablingRule.Always;
-        _mediaPlayer.CommandManager.PreviousBehavior.EnablingRule = MediaCommandEnablingRule.Always;
-        _mediaPlayer.CommandManager.NextReceived += CommandManager_NextReceived;
-        _mediaPlayer.CommandManager.PreviousReceived += CommandManager_PreviousReceived;
-
-        _mediaPlayer.SystemMediaTransportControls.IsEnabled = false;
-        _mediaPlayer.SystemMediaTransportControls.IsStopEnabled = true;
-        _mediaPlayer.SystemMediaTransportControls.ButtonPressed += SystemMediaTransportControls_ButtonPressed;
-
-        _mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
-        _mediaPlayer.MediaFailed += MediaPlayer_MediaFailed;
-        _mediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
+        _mediaPlayer = CreateMediaPlayer();
 
         _positionTimer = new Timer(1000);
         _positionTimer.Elapsed += PositionTimer_Elapsed;
+    }
 
-        _mediaPlayer.PlaybackSession.PlaybackStateChanged += PlaybackSession_PlaybackStateChanged;
+    private MediaPlayer CreateMediaPlayer()
+    {
+        var mediaPlayer = new MediaPlayer();
+
+        mediaPlayer.CommandManager.NextBehavior.EnablingRule = MediaCommandEnablingRule.Always;
+        mediaPlayer.CommandManager.PreviousBehavior.EnablingRule = MediaCommandEnablingRule.Always;
+        mediaPlayer.CommandManager.NextReceived += CommandManager_NextReceived;
+        mediaPlayer.CommandManager.PreviousReceived += CommandManager_PreviousReceived;
+
+        mediaPlayer.SystemMediaTransportControls.IsEnabled = false;
+        mediaPlayer.SystemMediaTransportControls.IsStopEnabled = true;
+        mediaPlayer.SystemMediaTransportControls.ButtonPressed += SystemMediaTransportControls_ButtonPressed;
+
+        mediaPlayer.MediaOpened += MediaPlayer_MediaOpened;
+        mediaPlayer.MediaFailed += MediaPlayer_MediaFailed;
+        mediaPlayer.MediaEnded += MediaPlayer_MediaEnded;
+
+        mediaPlayer.PlaybackSession.PlaybackStateChanged += PlaybackSession_PlaybackStateChanged;
+
+        return mediaPlayer;
+    }
+
+    private void ReleaseMediaPlayer()
+    {
+        var mediaPlayer = _mediaPlayer;
+
+        // 先换上新实例，避免计时器、事件回调读到已销毁的对象
+        _mediaPlayer = CreateMediaPlayer();
+
+        try
+        {
+            mediaPlayer.MediaOpened -= MediaPlayer_MediaOpened;
+            mediaPlayer.MediaFailed -= MediaPlayer_MediaFailed;
+            mediaPlayer.MediaEnded -= MediaPlayer_MediaEnded;
+            mediaPlayer.CommandManager.NextReceived -= CommandManager_NextReceived;
+            mediaPlayer.CommandManager.PreviousReceived -= CommandManager_PreviousReceived;
+            mediaPlayer.SystemMediaTransportControls.ButtonPressed -= SystemMediaTransportControls_ButtonPressed;
+            mediaPlayer.PlaybackSession.PlaybackStateChanged -= PlaybackSession_PlaybackStateChanged;
+
+            mediaPlayer.Pause();
+            mediaPlayer.Source = null;
+            mediaPlayer.SystemMediaTransportControls.IsEnabled = false;
+            mediaPlayer.Dispose();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogWarning(ex, "Failed to release the media player.");
+        }
+    }
+
+    private void ResetPlayback()
+    {
+        _positionTimer.Stop();
+        _positionToRestoreOnMediaOpened = null;
+
+        // 空闲的 MediaPlayer 不持有音轨，也就不会注册 SMTC 会话，此时无需重建实例
+        if (_currentPlaybackItem == null && _mediaPlayer.Source == null) return;
+
+        try
+        {
+            _mediaPlayer.Pause();
+            _mediaPlayer.Source = null;
+            _mediaPlayer.SystemMediaTransportControls.IsEnabled = false;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogDebug(ex, "Failed to reset the media player.");
+        }
+
+        CleanupCurrentPlaybackItem();
+        ReleaseMediaPlayer();
+    }
+
+    private void LoadAndPlayTrack(int index, bool recoverPlaybackPosition)
+    {
+        var queueItem = TrackPlayingQueue[index];
+        PlayingTrack = queueItem.Track;
+
+        var previousItem = _currentPlaybackItem;
+        _currentPlaybackItem = CreatePlaybackItem(queueItem);
+        UpdateItemDisplayProperties(_currentPlaybackItem, queueItem.Track);
+
+        _positionToRestoreOnMediaOpened = recoverPlaybackPosition ? PlaybackState.PlaybackPosition : null;
+
+        _mediaPlayer.SystemMediaTransportControls.IsEnabled = true;
+        _mediaPlayer.Source = _currentPlaybackItem;
+
+        if (previousItem != null)
+        {
+            // 直接替换 Source 可以避免出现"Source 为空"的中间态，让 SMTC 会话一直挂着最新音轨
+            DisposePlaybackItem(previousItem);
+            GC.Collect(1, GCCollectionMode.Optimized);
+        }
+
+        _mediaPlayer.Play();
+        EnsureVolumeApplied();
     }
 
     private void MediaPlayer_MediaOpened(MediaPlayer sender, object args)
@@ -222,6 +305,10 @@ public partial class SmtcService : ObservableObject, ISmtcService
                 _currentIndex = existingIndex;
                 PlaybackState.PlayQueueIndex = existingIndex;
 
+                // 队列重建后会生成新的 ExtendedTrack 实例（元数据、封面路径可能已被重新解析），
+                // 这里同步给 PlayingTrack，否则界面会一直绑定在旧数据上（例如封面一直是占位图）。
+                PlayingTrack = existingItem.Track;
+
                 if (allowAutoPlay && musicGallerySettings.AutoPlay && !IsPlaying)
                 {
                     _mediaPlayer.Play();
@@ -233,38 +320,19 @@ public partial class SmtcService : ObservableObject, ISmtcService
             }
         }
 
-        _mediaPlayer.Pause();
-        _positionTimer.Stop();
-        _mediaPlayer.Source = null;
-        CleanupCurrentPlaybackItem();
+        ResetPlayback();
 
         if (savedPlaybackIndex >= 0 && savedPlaybackIndex < TrackPlayingQueue.Count)
         {
             _currentIndex = savedPlaybackIndex;
             PlaybackState.PlayQueueIndex = savedPlaybackIndex;
+            PlaybackState.PlaybackPosition = savedPlaybackPosition;
 
-            var queueItem = TrackPlayingQueue[savedPlaybackIndex];
-            PlayingTrack = queueItem.Track;
-
-            _currentPlaybackItem = CreatePlaybackItem(queueItem);
-            UpdateItemDisplayProperties(_currentPlaybackItem, queueItem.Track);
-
-            _mediaPlayer.SystemMediaTransportControls.IsEnabled = true;
-            _mediaPlayer.Source = _currentPlaybackItem;
-
-            if (recoverPlaybackPosition)
-            {
-                _positionToRestoreOnMediaOpened = savedPlaybackPosition;
-            }
-            else
-            {
-                _positionToRestoreOnMediaOpened = null;
-            }
+            PlayingTrack = TrackPlayingQueue[savedPlaybackIndex].Track;
 
             if (allowAutoPlay && musicGallerySettings.AutoPlay)
             {
-                _mediaPlayer.Play();
-                EnsureVolumeApplied();
+                LoadAndPlayTrack(savedPlaybackIndex, recoverPlaybackPosition);
             }
         }
         else
@@ -272,7 +340,6 @@ public partial class SmtcService : ObservableObject, ISmtcService
             _currentIndex = -1;
             PlaybackState.PlayQueueIndex = -1;
             PlayingTrack = null;
-            _mediaPlayer.SystemMediaTransportControls.IsEnabled = false;
         }
 
         await Task.CompletedTask;
@@ -333,6 +400,13 @@ public partial class SmtcService : ObservableObject, ISmtcService
 
     public void Play()
     {
+        // 音轨是懒加载的（见 UpdatePlaybackListAsync），恢复队列后第一次播放时在这里挂上音轨
+        if (_mediaPlayer.Source == null && _currentIndex >= 0 && _currentIndex < TrackPlayingQueue.Count)
+        {
+            LoadAndPlayTrack(_currentIndex, recoverPlaybackPosition: true);
+            return;
+        }
+
         _mediaPlayer.Play();
         EnsureVolumeApplied();
     }
@@ -354,7 +428,7 @@ public partial class SmtcService : ObservableObject, ISmtcService
         {
             try
             {
-                return _mediaPlayer.Source == null ? TimeSpan.Zero : _mediaPlayer.PlaybackSession.Position;
+                return _mediaPlayer.Source == null ? PlaybackState.PlaybackPosition : _mediaPlayer.PlaybackSession.Position;
             }
             catch (Exception ex)
             {
@@ -466,7 +540,6 @@ public partial class SmtcService : ObservableObject, ISmtcService
             PlaybackState.PlayQueueIndex = index;
 
             var queueItem = TrackPlayingQueue[index];
-            PlayingTrack = queueItem.Track;
 
             if (_settingsService.AppSettings.MusicGallerySettings.PlaybackOrder == PlaybackOrder.Shuffle)
             {
@@ -482,38 +555,15 @@ public partial class SmtcService : ObservableObject, ISmtcService
             }
 
             _mediaPlayer.Pause();
-            _mediaPlayer.Source = null;
-            CleanupCurrentPlaybackItem();
 
-            _currentPlaybackItem = CreatePlaybackItem(queueItem);
-            UpdateItemDisplayProperties(_currentPlaybackItem, queueItem.Track);
-
-            _mediaPlayer.SystemMediaTransportControls.IsEnabled = true;
-            _mediaPlayer.Source = _currentPlaybackItem;
-
-            if (recoverPlaybackPosition)
-            {
-                _positionToRestoreOnMediaOpened = PlaybackState.PlaybackPosition;
-            }
-            else
-            {
-                _positionToRestoreOnMediaOpened = null;
-            }
-
-            _mediaPlayer.Play();
-            EnsureVolumeApplied();
+            LoadAndPlayTrack(index, recoverPlaybackPosition);
 
             _logger.LogInformation("Playing track: {Title} - {Artist} (queue index {Index}).", queueItem.Track.Title,
                 queueItem.Track.Artist, index);
         }
         else if (index == -1) // 停止播放
         {
-            _mediaPlayer.Pause();
-            _positionTimer.Stop();
-            _mediaPlayer.Source = null;
-            CleanupCurrentPlaybackItem();
-
-            _mediaPlayer.SystemMediaTransportControls.IsEnabled = false;
+            ResetPlayback();
 
             _currentIndex = -1;
             PlaybackState.PlayQueueIndex = -1;

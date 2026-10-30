@@ -51,13 +51,13 @@ public class MediaSessionProvider : IMediaSessionProvider
     {
         try
         {
-            var mediaProperties = await _session.ControlSession.TryGetMediaPropertiesAsync();
-            Title = mediaProperties.Title;
-            Artist = mediaProperties.Artist;
-            Album = mediaProperties.AlbumTitle;
+            var mediaProperties = await _session.ControlSession?.TryGetMediaPropertiesAsync();
+            Title = mediaProperties?.Title;
+            Artist = mediaProperties?.Artist;
+            Album = mediaProperties?.AlbumTitle;
 
-            Genres = mediaProperties.Genres.ToList();
-            Thumbnail = await mediaProperties.Thumbnail.ToByteArrayAsync();
+            Genres = mediaProperties?.Genres?.ToList();
+            Thumbnail = mediaProperties == null ? null : await mediaProperties.Thumbnail.ToByteArrayAsync();
         }
         catch (Exception ex)
         {

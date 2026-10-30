@@ -287,7 +287,19 @@ public class FileSystemService : IFileSystemService,
                     });
                 }
 
-                if (item.IsMetadataParsed) continue;
+                if (item.IsMetadataParsed)
+                {
+                    if (string.IsNullOrEmpty(item.LocalAlbumArtPath) || File.Exists(item.LocalAlbumArtPath))
+                    {
+                        continue;
+                    }
+
+                    _logger.LogInformation("Album art cache for \"{File}\" is missing, re-parsing metadata.",
+                        item.FileName);
+
+                    item.LocalAlbumArtPath = null;
+                    item.IsMetadataParsed = false;
+                }
 
                 var ext = Path.GetExtension(item.FileName).ToLower();
 
