@@ -38,8 +38,9 @@ public partial class SmtcService : ObservableObject, ISmtcService
     private readonly IPlaybackStateService _playbackStateService;
     private readonly ILogger<SmtcService> _logger;
 
-    private MediaPlayer _mediaPlayer;
+    private MediaPlayer? _mediaPlayer;
     private readonly Timer _positionTimer;
+    private bool _isLoopingEnabled;
 
     private int _currentIndex = -1;
     private readonly List<int> _shuffleOrder = [];
@@ -48,7 +49,7 @@ public partial class SmtcService : ObservableObject, ISmtcService
     private TimeSpan? _positionToRestoreOnMediaOpened;
 
     public bool IsVolumeRestored { get; set; }
-    public bool IsPlaying => _mediaPlayer.PlaybackSession.PlaybackState == MediaPlaybackState.Playing;
+    public bool IsPlaying => _mediaPlayer?.PlaybackSession.PlaybackState == MediaPlaybackState.Playing;
     private bool _isApplyingVolume;
     private int _positionSaveTicks;
 
@@ -71,15 +72,28 @@ public partial class SmtcService : ObservableObject, ISmtcService
 
         PlaybackState = _playbackStateService.CurrentState;
 
-        _mediaPlayer = CreateMediaPlayer();
-
         _positionTimer = new Timer(1000);
         _positionTimer.Elapsed += PositionTimer_Elapsed;
+    }
+
+    /// <summary>
+    /// 懒加载 <see cref="MediaPlayer"/>：只有真正要播放时才创建实例。
+    /// </summary>
+    private MediaPlayer GetOrCreateMediaPlayer()
+    {
+        if (_mediaPlayer != null) return _mediaPlayer;
+
+        _logger.LogDebug("Creating the media player on demand.");
+
+        _mediaPlayer = CreateMediaPlayer();
+        return _mediaPlayer;
     }
 
     private MediaPlayer CreateMediaPlayer()
     {
         var mediaPlayer = new MediaPlayer();
+
+        mediaPlayer.IsLoopingEnabled = _isLoopingEnabled;
 
         mediaPlayer.CommandManager.NextBehavior.EnablingRule = MediaCommandEnablingRule.Always;
         mediaPlayer.CommandManager.PreviousBehavior.EnablingRule = MediaCommandEnablingRule.Always;
@@ -102,9 +116,10 @@ public partial class SmtcService : ObservableObject, ISmtcService
     private void ReleaseMediaPlayer()
     {
         var mediaPlayer = _mediaPlayer;
+        if (mediaPlayer == null) return;
 
-        // 先换上新实例，避免计时器、事件回调读到已销毁的对象
-        _mediaPlayer = CreateMediaPlayer();
+        // 先置空，避免计时器、事件回调读到正在销毁的对象；下次播放时再按需重建
+        _mediaPlayer = null;
 
         try
         {
@@ -132,18 +147,23 @@ public partial class SmtcService : ObservableObject, ISmtcService
         _positionTimer.Stop();
         _positionToRestoreOnMediaOpened = null;
 
-        // 空闲的 MediaPlayer 不持有音轨，也就不会注册 SMTC 会话，此时无需重建实例
-        if (_currentPlaybackItem == null && _mediaPlayer.Source == null) return;
+        var mediaPlayer = _mediaPlayer;
 
-        try
+        // 空闲的 MediaPlayer 不持有音轨，也就不会注册 SMTC 会话，此时无需重建实例
+        if (_currentPlaybackItem == null && (mediaPlayer == null || mediaPlayer.Source == null)) return;
+
+        if (mediaPlayer != null)
         {
-            _mediaPlayer.Pause();
-            _mediaPlayer.Source = null;
-            _mediaPlayer.SystemMediaTransportControls.IsEnabled = false;
-        }
-        catch (Exception ex)
-        {
-            _logger.LogDebug(ex, "Failed to reset the media player.");
+            try
+            {
+                mediaPlayer.Pause();
+                mediaPlayer.Source = null;
+                mediaPlayer.SystemMediaTransportControls.IsEnabled = false;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogDebug(ex, "Failed to reset the media player.");
+            }
         }
 
         CleanupCurrentPlaybackItem();
@@ -155,14 +175,16 @@ public partial class SmtcService : ObservableObject, ISmtcService
         var queueItem = TrackPlayingQueue[index];
         PlayingTrack = queueItem.Track;
 
+        var mediaPlayer = GetOrCreateMediaPlayer();
+
         var previousItem = _currentPlaybackItem;
         _currentPlaybackItem = CreatePlaybackItem(queueItem);
         UpdateItemDisplayProperties(_currentPlaybackItem, queueItem.Track);
 
         _positionToRestoreOnMediaOpened = recoverPlaybackPosition ? PlaybackState.PlaybackPosition : null;
 
-        _mediaPlayer.SystemMediaTransportControls.IsEnabled = true;
-        _mediaPlayer.Source = _currentPlaybackItem;
+        mediaPlayer.SystemMediaTransportControls.IsEnabled = true;
+        mediaPlayer.Source = _currentPlaybackItem;
 
         if (previousItem != null)
         {
@@ -171,7 +193,7 @@ public partial class SmtcService : ObservableObject, ISmtcService
             GC.Collect(1, GCCollectionMode.Optimized);
         }
 
-        _mediaPlayer.Play();
+        mediaPlayer.Play();
         EnsureVolumeApplied();
     }
 
@@ -226,11 +248,14 @@ public partial class SmtcService : ObservableObject, ISmtcService
     {
         _appUIThreadProvider.Execute(() =>
         {
+            // 播放器可能已被释放/重建（例如用户停止播放），此时忽略这次回调
+            if (!ReferenceEquals(sender, _mediaPlayer)) return;
+
             var order = _settingsService.AppSettings.MusicGallerySettings.PlaybackOrder;
             if (order == PlaybackOrder.RepeatOne)
             {
-                _mediaPlayer.Position = TimeSpan.Zero;
-                _mediaPlayer.Play();
+                sender.Position = TimeSpan.Zero;
+                sender.Play();
                 return;
             }
 
@@ -311,7 +336,7 @@ public partial class SmtcService : ObservableObject, ISmtcService
 
                 if (allowAutoPlay && musicGallerySettings.AutoPlay && !IsPlaying)
                 {
-                    _mediaPlayer.Play();
+                    _mediaPlayer?.Play();
                     EnsureVolumeApplied();
                 }
 
@@ -347,18 +372,17 @@ public partial class SmtcService : ObservableObject, ISmtcService
 
     public void ApplyPlaybackOrder(PlaybackOrder order)
     {
-        switch (order)
+        // 播放器是懒加载的，这里只记录状态，等实例真正创建时再应用
+        _isLoopingEnabled = order == PlaybackOrder.RepeatOne;
+
+        if (_mediaPlayer != null)
         {
-            case PlaybackOrder.Shuffle:
-                _mediaPlayer.IsLoopingEnabled = false;
-                GenerateShuffleOrder();
-                break;
-            case PlaybackOrder.RepeatAll:
-                _mediaPlayer.IsLoopingEnabled = false;
-                break;
-            case PlaybackOrder.RepeatOne:
-                _mediaPlayer.IsLoopingEnabled = true;
-                break;
+            _mediaPlayer.IsLoopingEnabled = _isLoopingEnabled;
+        }
+
+        if (order == PlaybackOrder.Shuffle)
+        {
+            GenerateShuffleOrder();
         }
     }
 
@@ -401,19 +425,20 @@ public partial class SmtcService : ObservableObject, ISmtcService
     public void Play()
     {
         // 音轨是懒加载的（见 UpdatePlaybackListAsync），恢复队列后第一次播放时在这里挂上音轨
-        if (_mediaPlayer.Source == null && _currentIndex >= 0 && _currentIndex < TrackPlayingQueue.Count)
+        if (_currentIndex >= 0 && _currentIndex < TrackPlayingQueue.Count &&
+            (_mediaPlayer == null || _mediaPlayer.Source == null))
         {
             LoadAndPlayTrack(_currentIndex, recoverPlaybackPosition: true);
             return;
         }
 
-        _mediaPlayer.Play();
+        _mediaPlayer?.Play();
         EnsureVolumeApplied();
     }
 
     public void Pause()
     {
-        _mediaPlayer.Pause();
+        _mediaPlayer?.Pause();
         SaveCurrentPlaybackPosition();
     }
 
@@ -428,7 +453,10 @@ public partial class SmtcService : ObservableObject, ISmtcService
         {
             try
             {
-                return _mediaPlayer.Source == null ? PlaybackState.PlaybackPosition : _mediaPlayer.PlaybackSession.Position;
+                var mediaPlayer = _mediaPlayer;
+                return mediaPlayer == null || mediaPlayer.Source == null
+                    ? PlaybackState.PlaybackPosition
+                    : mediaPlayer.PlaybackSession.Position;
             }
             catch (Exception ex)
             {
@@ -442,8 +470,9 @@ public partial class SmtcService : ObservableObject, ISmtcService
     {
         try
         {
-            if (_mediaPlayer.Source == null) return;
-            _mediaPlayer.PlaybackSession.Position = position;
+            var mediaPlayer = _mediaPlayer;
+            if (mediaPlayer == null || mediaPlayer.Source == null) return;
+            mediaPlayer.PlaybackSession.Position = position;
         }
         catch (Exception ex)
         {
@@ -488,7 +517,7 @@ public partial class SmtcService : ObservableObject, ISmtcService
 
         try
         {
-            if (_mediaPlayer.PlaybackSession.Position > TimeSpan.FromSeconds(3))
+            if (_mediaPlayer != null && _mediaPlayer.PlaybackSession.Position > TimeSpan.FromSeconds(3))
             {
                 _mediaPlayer.Position = TimeSpan.Zero;
                 return;
@@ -554,7 +583,7 @@ public partial class SmtcService : ObservableObject, ISmtcService
                 }
             }
 
-            _mediaPlayer.Pause();
+            _mediaPlayer?.Pause();
 
             LoadAndPlayTrack(index, recoverPlaybackPosition);
 
@@ -643,9 +672,11 @@ public partial class SmtcService : ObservableObject, ISmtcService
     {
         try
         {
-            if (_currentPlaybackItem == null || PlayingTrack == null || _mediaPlayer.Source == null) return;
+            var mediaPlayer = _mediaPlayer;
+            if (_currentPlaybackItem == null || PlayingTrack == null || mediaPlayer == null ||
+                mediaPlayer.Source == null) return;
 
-            var session = _mediaPlayer.PlaybackSession;
+            var session = mediaPlayer.PlaybackSession;
             if (session != null)
             {
                 var pos = session.Position;
@@ -665,9 +696,12 @@ public partial class SmtcService : ObservableObject, ISmtcService
     {
         try
         {
-            var session = _mediaPlayer.PlaybackSession;
+            var mediaPlayer = _mediaPlayer;
+            if (mediaPlayer == null) return;
 
-            _mediaPlayer.SystemMediaTransportControls.UpdateTimelineProperties(
+            var session = mediaPlayer.PlaybackSession;
+
+            mediaPlayer.SystemMediaTransportControls.UpdateTimelineProperties(
                 new SystemMediaTransportControlsTimelineProperties
                 {
                     Position = session.Position,
