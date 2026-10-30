@@ -16,10 +16,7 @@ using System.Linq;
 namespace BetterLyrics.WinUI3.Services;
 
 /// <summary>
-/// Single source of truth for lyrics window visibility. Wallpaper binding,
-/// pause/no-session auto-hide, monitor availability and manual user hiding are
-/// all evaluated together: any active reason hides the window, and it is shown
-/// only when every condition allows it.
+/// Singleton Service
 /// </summary>
 public sealed class LyricsWindowVisibilityService : ILyricsWindowVisibilityService,
     IRecipient<CurrentIsPlayingChangedMessage>,
@@ -179,8 +176,15 @@ public sealed class LyricsWindowVisibilityService : ILyricsWindowVisibilityServi
     {
         if (!IsManaged(status)) return;
 
-        var (reasons, canCreate) = Evaluate(status);
         var window = _windowManagerProvider.GetNowPlayingWindow(status) as NowPlayingWindow;
+
+        if (window != null && _windowManagerProvider.IsWindowMinimized(window))
+        {
+            _logger.LogDebug("Skipped lyrics window \"{Name}\" because the user minimized it.", status.Name);
+            return;
+        }
+
+        var (reasons, canCreate) = Evaluate(status);
 
         if (LyricsWindowVisibilityPolicy.ShouldShow(reasons))
         {

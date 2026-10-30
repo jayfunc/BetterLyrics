@@ -81,7 +81,7 @@ public class WindowManagerProvider : IWindowManagerProvider
             throw new ArgumentException($"Expected a {nameof(Window)} instance, but received {obj?.GetType().Name ?? "null"}.", nameof(obj));
         }
 
-        if (window.Visible)
+        if (window.Visible && !IsWindowMinimized(window))
         {
             HideWindow(window);
         }
@@ -93,6 +93,7 @@ public class WindowManagerProvider : IWindowManagerProvider
             }
             else
             {
+                RestoreWindowIfMinimized(window);
                 window.Show();
                 window.Activate();
                 window.SetForegroundWindow();
@@ -290,6 +291,11 @@ public class WindowManagerProvider : IWindowManagerProvider
         return obj is Window window && window.Visible;
     }
 
+    public bool IsWindowMinimized(object? obj)
+    {
+        return obj is Window window && User32.IsIconic(WindowNative.GetWindowHandle(window));
+    }
+
     public T OpenOrShowWindow<T>(LyricsWindowStatus? status = null)
     {
         var window = _activeWindows.Find(w =>
@@ -366,6 +372,11 @@ public class WindowManagerProvider : IWindowManagerProvider
 
             _logger.LogDebug("Showing existing window {WindowType}.", typeof(T).Name);
             var castedWindow = (Window)window;
+
+            // An explicit show request outranks the minimized state. Activate
+            // alone does not always leave the minimized state, so restore first.
+            RestoreWindowIfMinimized(castedWindow);
+
             castedWindow.Activate();
             castedWindow.SetForegroundWindow();
         }
@@ -689,6 +700,21 @@ public class WindowManagerProvider : IWindowManagerProvider
             {
                 UnregisterAppBar(hwnd);
             }
+        }
+    }
+
+    private static void RestoreWindowIfMinimized(Window window)
+    {
+        var hwnd = WindowNative.GetWindowHandle(window);
+        if (!User32.IsIconic(hwnd)) return;
+
+        if (window.AppWindow?.Presenter is OverlappedPresenter presenter)
+        {
+            presenter.Restore();
+        }
+        else
+        {
+            User32.ShowWindow(hwnd, ShowWindowCommand.SW_RESTORE);
         }
     }
 

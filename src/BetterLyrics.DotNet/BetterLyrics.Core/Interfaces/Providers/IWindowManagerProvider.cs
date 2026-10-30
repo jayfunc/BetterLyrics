@@ -34,6 +34,8 @@ public interface IWindowManagerProvider
     bool IsWindowFocused(WindowType windowType);
     bool IsWindowVisible(object? obj);
 
+    bool IsWindowMinimized(object? obj);
+
     void RestartApp(string args = "");
     void ExitApp();
 
