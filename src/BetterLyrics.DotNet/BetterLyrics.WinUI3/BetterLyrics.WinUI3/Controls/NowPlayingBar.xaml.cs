@@ -233,12 +233,7 @@ public sealed partial class NowPlayingBar : BaseUserControl
 
         if (GSMTCService.CurrentIsPlaying)
         {
-            var newPos = ViewModel.SimulatedPositionSeconds + elapsedSeconds;
-            if (newPos > GSMTCService.CurrentSongInfo.DurationMs / 1000.0)
-            {
-                newPos = GSMTCService.CurrentSongInfo.DurationMs / 1000.0;
-            }
-            ViewModel.SimulatedPositionSeconds = newPos;
+            ViewModel.AdvanceSimulatedPosition(elapsedSeconds);
         }
     }
 

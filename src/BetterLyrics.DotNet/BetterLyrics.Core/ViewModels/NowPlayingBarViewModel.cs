@@ -44,8 +44,26 @@ public partial class NowPlayingBarViewModel : ObservableRecipient, ITransientVie
     /// </summary>
     [ObservableProperty] public partial bool IsBuiltInOnly { get; set; }
 
+    /// <summary>
+    /// 与权威位置的偏差达到该值时判定为真正的跳转（拖动、切歌、恢复播放），立即对齐。
+    /// 低于该值的偏差只调整累加速率，让进度条连续移动而不是瞬时回跳。
+    /// </summary>
+    private const double SeekSnapThresholdSeconds = 3.0;
+
+    /// <summary>
+    /// 死区内的偏差不做速率修正，避免播放器每次上报时间轴都改变进度条的移动速度。
+    /// </summary>
+    private const double DriftDeadbandSeconds = 0.12;
+
+    /// <summary>
+    /// 落后时最多加速到 1.5 倍，保证追赶过程本身也是连续移动。
+    /// </summary>
+    private const double MaxCatchUpRate = 1.5;
+
     private byte[]? _builtInAlbumArtBytes;
     private SongInfo? _hookedSongInfo;
+    private double _latestRealPositionSeconds;
+    private long _ignorePositionChangeUntilTicks;
 
     public string Title => IsBuiltInOnly
         ? _smtcService.PlayingTrack is { } track ? (string.IsNullOrEmpty(track.Title) ? track.FileName : track.Title) : ""
@@ -133,12 +151,34 @@ public partial class NowPlayingBarViewModel : ObservableRecipient, ITransientVie
         _audioMixerService.SetSystemVolume(SystemVolume);
     }
 
-    /// <summary>
-    /// 内置播放器模式下直接读取播放器的真实进度。
-    /// </summary>
     public void SyncBuiltInPosition()
     {
         SimulatedPositionSeconds = _smtcService.CurrentPosition.TotalSeconds;
+    }
+
+    /// <summary>
+    /// 由 UI 定时器按真实流逝时间推进进度条。
+    /// </summary>
+    public void AdvanceSimulatedPosition(double elapsedSeconds)
+    {
+        if (elapsedSeconds <= 0) return;
+
+        var drift = _latestRealPositionSeconds - SimulatedPositionSeconds;
+
+        var rate = drift > DriftDeadbandSeconds
+            ? Math.Clamp(1.0 + drift * 0.5, 1.0, MaxCatchUpRate)
+            : 1.0;
+
+        SetSimulatedPosition(SimulatedPositionSeconds + elapsedSeconds * rate);
+    }
+
+    private void SetSimulatedPosition(double seconds)
+    {
+        var duration = DurationSeconds;
+        if (duration > 0 && seconds > duration) seconds = duration;
+        if (seconds < 0) seconds = 0;
+
+        SimulatedPositionSeconds = seconds;
     }
 
     protected override void OnActivated()
@@ -148,6 +188,13 @@ public partial class NowPlayingBarViewModel : ObservableRecipient, ITransientVie
         _smtcService.PropertyChanged += SmtcService_PropertyChanged;
         HookSongInfo();
         RefreshBuiltInAlbumArt();
+
+        // 窗口中途打开时直接落到当前进度，避免从 0 跳到权威位置
+        if (!IsBuiltInOnly)
+        {
+            _latestRealPositionSeconds = _gsmtcService.CurrentPosition.TotalSeconds;
+            SimulatedPositionSeconds = _latestRealPositionSeconds;
+        }
     }
 
     protected override void OnDeactivated()
@@ -163,7 +210,13 @@ public partial class NowPlayingBarViewModel : ObservableRecipient, ITransientVie
         RefreshBuiltInAlbumArt();
         RaiseSourceStateChanged();
         UpdateVolume();
-        SimulatedPositionSeconds = value ? _smtcService.CurrentPosition.TotalSeconds : _gsmtcService.CurrentPosition.TotalSeconds;
+
+        // 切换播放源后两边的进度基准不同，用最新的权威位置重置，避免被判定为跳转而弹跳
+        _latestRealPositionSeconds = value
+            ? _smtcService.CurrentPosition.TotalSeconds
+            : _gsmtcService.CurrentPosition.TotalSeconds;
+
+        SetSimulatedPosition(_latestRealPositionSeconds);
     }
 
     private void RaiseSourceStateChanged()
@@ -353,7 +406,12 @@ public partial class NowPlayingBarViewModel : ObservableRecipient, ITransientVie
     [RelayCommand]
     public async Task SeekToPositionAsync(double seconds)
     {
-        SimulatedPositionSeconds = seconds;
+        _latestRealPositionSeconds = seconds;
+        SetSimulatedPosition(seconds);
+
+        // 播放器会先把拖动前的位置回报上来，短暂忽略避免进度条弹回再弹出
+        _ignorePositionChangeUntilTicks = Environment.TickCount64 + 1000;
+
         if (IsBuiltInOnly)
         {
             _smtcService.Seek(TimeSpan.FromSeconds(seconds));
@@ -365,14 +423,14 @@ public partial class NowPlayingBarViewModel : ObservableRecipient, ITransientVie
     public void Receive(CurrentPositionChangedMessage message)
     {
         if (IsBuiltInOnly) return;
+        if (Environment.TickCount64 < _ignorePositionChangeUntilTicks) return;
 
-        var realPosition = message.Value.TotalSeconds;
-        var diff = Math.Abs(SimulatedPositionSeconds - realPosition);
-        var timelineSyncThreshold = (_gsmtcService.CurrentMediaSourceProviderInfo?.TimelineSyncThreshold ?? 0) / 1000.0;
+        _latestRealPositionSeconds = message.Value.TotalSeconds;
 
-        if (diff >= timelineSyncThreshold)
+        // 只有真正的跳转才立即对齐；其余偏差留给 AdvanceSimulatedPosition 用速率修正
+        if (Math.Abs(_latestRealPositionSeconds - SimulatedPositionSeconds) >= SeekSnapThresholdSeconds)
         {
-            SimulatedPositionSeconds = realPosition;
+            SetSimulatedPosition(_latestRealPositionSeconds);
         }
     }
 
