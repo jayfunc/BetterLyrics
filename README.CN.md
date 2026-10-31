@@ -222,6 +222,7 @@
 | [borcolasky](https://crowdin.com/profile/borcolasky) | `I` |
 | [H-MAli](https://github.com/H-MAli) | `C` |
 | [kusutori](https://github.com/kusutori) | `C` |
+| [OctoBored](https://github.com/OctoBored) | `D` |
 | [PiYuanZhouLv](https://github.com/PiYuanZhouLv) | `C` |
 | [Raspberry-Monster](https://github.com/Raspberry-Monster) | `C` |
 | [SuHeAndZl](https://crowdin.com/profile/SuHeAndZl) | `I` `Q` `D` |
