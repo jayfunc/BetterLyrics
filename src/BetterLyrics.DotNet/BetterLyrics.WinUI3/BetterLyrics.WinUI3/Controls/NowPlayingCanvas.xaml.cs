@@ -146,6 +146,9 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
 
     private readonly CompositionRenderer _compositionRenderer = new();
     private readonly CoverBackgroundRenderer _coverRenderer = new();
+
+    private int _coverReloadVersion;
+
     private readonly DesktopWallpaperBackgroundRenderer _desktopWallpaperRenderer = new();
     private readonly EdgeFadeMaskRenderer _edgeFadeMaskRenderer = new();
     private readonly FluidBackgroundRenderer _fluidRenderer = new();
@@ -369,7 +372,13 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
         {
             DispatcherQueue.TryEnqueue(() =>
             {
-                Canvas?.Paused = !isDisplayOn;
+                if (Canvas == null) return;
+
+                Canvas.Paused = !isDisplayOn;
+
+                // 息屏期间画布被暂停，期间收到的封面变更消息可能没有成功加载（或被跳过），
+                // 亮屏后主动重新加载一次封面，避免背景一直停留在旧封面。
+                if (isDisplayOn) _ = ReloadCoverBackgroundResourcesAsync();
             });
         }
     }
@@ -1875,6 +1884,8 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
     {
         if (Canvas == null) return;
 
+        var reloadVersion = ++_coverReloadVersion;
+
         try
         {
             if (Canvas.Device == null) return;
@@ -1899,6 +1910,14 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
                 if (Canvas.Device == null) return;
 
                 var bitmap = await CanvasBitmap.LoadAsync(Canvas, localMemoryStream);
+
+                // 期间有更新的封面请求，丢弃这次较旧的结果，避免旧封面覆盖新封面
+                if (reloadVersion != _coverReloadVersion)
+                {
+                    bitmap.Dispose();
+                    return;
+                }
+
                 _coverRenderer.SetCoverBitmap(bitmap);
             }
         }

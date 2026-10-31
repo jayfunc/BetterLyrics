@@ -40,6 +40,9 @@ public abstract partial class GsmtcServiceBase : ObservableObject, IGsmtcService
     protected readonly IMediaManagerProvider _mediaManagerProvider =
         Ioc.Default.GetRequiredService<IMediaManagerProvider>();
 
+    protected readonly IMonitorProvider _monitorProvider =
+        Ioc.Default.GetRequiredService<IMonitorProvider>();
+
     private readonly Debouncer _onMediaPropsChangedDebouncer = new();
     protected readonly ISettingsService _settingsService;
     private readonly ITranslationService _translationService;
@@ -52,6 +55,13 @@ public abstract partial class GsmtcServiceBase : ObservableObject, IGsmtcService
     private double _lxMusicPositionSeconds;
     private EventSourceReader? _lxMusicSse;
     private byte[]? _smtcAlbumArtBuffer;
+
+    /// <summary>
+    /// 上一次成功应用到 UI 的 SMTC 媒体信息快照；系统息屏/挂起恢复后用于判断歌曲是否已经变化。
+    /// </summary>
+    private (string? Title, string? Artist, string? Album)? _appliedMediaPropsSnapshot;
+
+    private bool _isRefreshingAfterDisplayResume;
 
     [ObservableProperty]
     public partial bool IsScrobbled { get; set; } = false;
@@ -159,7 +169,103 @@ public abstract partial class GsmtcServiceBase : ObservableObject, IGsmtcService
     {
         InitMediaManager();
 
+        // 系统自动息屏后（Modern Standby 下桌面应用会被挂起），期间的部分 SMTC 事件会丢失；
+        // 亮屏后必须主动补齐当前会话状态，否则歌曲信息与封面会一直停留在旧值。
+        _monitorProvider.DisplayStatusChanged += MonitorProvider_DisplayStatusChanged;
+
         WeakReferenceMessenger.Default.RegisterAll(this);
+    }
+
+    private void MonitorProvider_DisplayStatusChanged(object? sender, bool isDisplayOn)
+    {
+        if (!isDisplayOn) return;
+
+        _ = RefreshCurrentSessionAfterDisplayResumeAsync();
+    }
+
+    private async Task RefreshCurrentSessionAfterDisplayResumeAsync()
+    {
+        if (_isRefreshingAfterDisplayResume) return;
+        _isRefreshingAfterDisplayResume = true;
+
+        try
+        {
+            var previousSessionId = _currentDesiredSession?.SessionId;
+
+            // 息屏期间可能发生了会话切换（事件在系统挂起时丢失），先重新选取一次当前会话
+            OnDesiredSessionChanged();
+
+            var mediaSession = _currentDesiredSession;
+            if (mediaSession == null) return;
+
+            await mediaSession.TryRefreshPlaybackStateAsync();
+            await mediaSession.TryRefreshMediaPropsAsync();
+            await mediaSession.TryRefreshTimelinePropsAsync();
+
+            var snapshot = GetMediaPropsSnapshot(mediaSession);
+            var isSongChanged = mediaSession.SessionId != previousSessionId || snapshot != _appliedMediaPropsSnapshot;
+
+            if (isSongChanged)
+            {
+                // 息屏期间切歌但 SMTC 事件丢失：走一次完整的切歌流程
+                _logger.LogDebug("Media properties changed while the display was off; refreshing the current song.");
+                await OnAnyMediaPropertyChangedCoreAsync(mediaSession);
+            }
+            else
+            {
+                // 歌曲未变化，只是 UI 在息屏/挂起期间没有及时刷新（例如 Win2D 画布被暂停）
+                RefreshCurrentMediaPresentation(mediaSession);
+            }
+        }
+        catch (Exception ex)
+        {
+            _logger.LogDebug(ex, "Failed to refresh the media session after the display was turned on.");
+        }
+        finally
+        {
+            _isRefreshingAfterDisplayResume = false;
+        }
+    }
+
+    private static (string? Title, string? Artist, string? Album) GetMediaPropsSnapshot(
+        IMediaSessionProvider mediaSession) =>
+        (mediaSession.Title, mediaSession.Artist, mediaSession.Album);
+
+    private void RefreshCurrentMediaPresentation(IMediaSessionProvider mediaSession)
+    {
+        // 同一首歌的封面也可能在息屏期间被更新，此时需要重新检索
+        var thumbnail = mediaSession.Thumbnail;
+        var isThumbnailChanged = thumbnail is { Length: > 0 } && !ReferenceEquals(thumbnail, _smtcAlbumArtBuffer);
+        if (isThumbnailChanged)
+        {
+            _smtcAlbumArtBuffer = thumbnail;
+        }
+
+        _appUIThreadProvider.Execute(() =>
+        {
+            if (!IsCurrentDesiredSession(mediaSession)) return;
+
+            if (CurrentSongInfo != SongInfoExtensions.Placeholder)
+            {
+                CurrentSongInfo.DurationMs = mediaSession.EndTime.TotalMilliseconds;
+                UpdateTargetScrobbledDuration();
+            }
+
+            CurrentPosition = mediaSession.CurrentTime;
+
+            if (isThumbnailChanged)
+            {
+                UpdateAlbumArt();
+            }
+            else
+            {
+                // 图片字节没有变化时属性不会触发变更通知，这里强制通知一次，让 UI 重新加载封面
+                NotifyAlbumArtChanged();
+            }
+
+            _logger.LogDebug("Refreshed media presentation after the display was turned on: {Title}.",
+                CurrentSongInfo.Title);
+        });
     }
 
     partial void OnIsScrobbledChanged(bool value) =>
@@ -446,6 +552,8 @@ public abstract partial class GsmtcServiceBase : ObservableObject, IGsmtcService
             // 时长取自 EndTime，这里主动刷新一次，避免时长为上一首的数值。
             await mediaSession.TryRefreshTimelinePropsAsync();
         }
+
+        _appliedMediaPropsSnapshot = mediaSession == null ? null : GetMediaPropsSnapshot(mediaSession);
 
         // 处理歌曲信息
         var fixedTitle = mediaSession?.Title;

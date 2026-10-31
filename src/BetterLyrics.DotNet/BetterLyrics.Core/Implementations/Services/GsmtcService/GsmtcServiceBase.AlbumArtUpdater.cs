@@ -170,6 +170,16 @@ public abstract partial class GsmtcServiceBase : IGsmtcService
         _ = _albumArtDebouncer.RunAsync(async token => await RefreshArtAlbumAsync(ignoreCache, token));
     }
 
+    /// <summary>
+    /// 强制重新通知当前封面，即使图片字节没有变化。
+    /// 系统息屏/挂起期间 UI 可能错过封面刷新，亮屏后需要让绑定与画布重新加载当前封面。
+    /// </summary>
+    private void NotifyAlbumArtChanged()
+    {
+        OnPropertyChanged(nameof(AlbumArtBytes));
+        SendMessage(new AlbumArtBytesChangedMessage(AlbumArtBytes));
+    }
+
     private async Task RefreshArtAlbumAsync(bool ignoreCache, CancellationToken token)
     {
         if (CurrentSongInfo != SongInfoExtensions.Placeholder)
