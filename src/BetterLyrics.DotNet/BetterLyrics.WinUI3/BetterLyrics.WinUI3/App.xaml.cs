@@ -75,6 +75,9 @@ public partial class App : Application
             var globalToastProvider = Ioc.Default.GetRequiredService<IGlobalToastProvider>();
             globalToastProvider.Initialize();
 
+            // 初始化 IScreenKeeperService
+            _ = Ioc.Default.GetRequiredService<IScreenKeeperService>();
+
             _ = LaunchAsync();
         }
         catch (Exception ex)

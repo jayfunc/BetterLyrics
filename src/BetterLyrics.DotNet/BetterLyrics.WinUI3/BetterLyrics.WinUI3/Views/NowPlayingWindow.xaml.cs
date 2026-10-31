@@ -104,6 +104,7 @@ public sealed partial class NowPlayingWindow : BaseWindow,
         LyricsWindowStatus.WindowState = LyricsWindowState.Opened;
         LyricsWindowStatus.HideReasons = LyricsWindowHideReason.None;
         LyricsWindowStatus.IsUserHidden = false;
+        LyricsWindowStatus.IsMinimized = false;
     }
 
     private void Wmm_WindowMessageReceived(object? sender, WindowMessageEventArgs e)
@@ -168,6 +169,12 @@ public sealed partial class NowPlayingWindow : BaseWindow,
                 e.Handled = true;
             }
         }
+        else if (msgId == (uint)WindowMessage.WM_SIZE)
+        {
+            // AppWindow.Changed is the primary source, but WM_SIZE also covers
+            // minimize/restore paths such as Win+D and the system menu.
+            SyncMinimizedState();
+        }
         else if (msgId == (uint)WindowMessage.WM_SETTINGCHANGE)
         {
             var changedSetting = Marshal.PtrToStringUni(e.Message.LParam);
@@ -187,6 +194,7 @@ public sealed partial class NowPlayingWindow : BaseWindow,
 
     private void InitStatus()
     {
+        SyncMinimizedState();
         OnIsShownInSwitchersChanged();
         OnIsAlwaysOnTopChanged();
         OnTitleBarAreaChanged();
@@ -228,6 +236,15 @@ public sealed partial class NowPlayingWindow : BaseWindow,
 
         _lyricsWindowVisibilityService.NotifyWindowLoaded(LyricsWindowStatus);
         UpdateNowPlayingBarStatus();
+    }
+
+    private void SyncMinimizedState()
+    {
+        var isMinimized = _windowManagerProvider.IsWindowMinimized(this);
+        if (LyricsWindowStatus.IsMinimized != isMinimized)
+        {
+            LyricsWindowStatus.IsMinimized = isMinimized;
+        }
     }
 
     public void UpdateBackdropAccentColor()
@@ -597,6 +614,8 @@ public sealed partial class NowPlayingWindow : BaseWindow,
     {
         if (args.DidPositionChange || args.DidSizeChange || args.DidPresenterChange)
         {
+            SyncMinimizedState();
+
             if (AppWindow == null) return;
 
             var presenter = AppWindow.Presenter;

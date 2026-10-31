@@ -224,6 +224,15 @@ public partial class LyricsWindowStatus : ObservableObject, ICloneable
     [ObservableProperty]
     public partial bool IsKeepScreenOpen { get; set; } = false;
 
+    /// <summary>
+    /// Runtime state reported by the window. Minimized windows are still
+    /// <see cref="LyricsWindowState.Opened"/>, so services that depend on the
+    /// window actually being displayed must check this separately.
+    /// </summary>
+    [JsonIgnore]
+    [ObservableProperty]
+    public partial bool IsMinimized { get; set; } = false;
+
     [ObservableProperty]
     public partial bool IsEdgeFeatheringEnabled { get; set; } = false;
 
@@ -387,6 +396,9 @@ public partial class LyricsWindowStatus : ObservableObject, ICloneable
 
     partial void OnIsKeepScreenOpenChanged(bool value) =>
         WeakReferenceMessenger.Default.Send(new LyricsWindowKeepScreenOpenChangedMessage(this, value));
+
+    partial void OnIsMinimizedChanged(bool value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowDisplayStateChangedMessage(this, value));
 
     partial void OnWindowStateChanged(LyricsWindowState value) =>
         WeakReferenceMessenger.Default.Send(new LyricsWindowStateChangedMessage(this, value));

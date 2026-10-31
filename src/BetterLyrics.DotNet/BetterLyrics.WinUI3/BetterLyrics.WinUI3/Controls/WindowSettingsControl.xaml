@@ -541,8 +541,9 @@
                             <local:PropertyRow Header="WindowTheme" Value="{Binding ActualTheme, Converter={StaticResource EnumToIntConverter}, Mode=OneWay, RelativeSource={RelativeSource Mode=Self}}" />
                             <local:PropertyRow Header="WindowBounds" Value="{x:Bind LyricsWindowStatus.WindowBounds, Mode=OneWay}" />
                             <local:PropertyRow Header="MonitorBounds" Value="{x:Bind LyricsWindowStatus.MonitorBounds, Mode=OneWay}" />
-                            <local:PropertyRow Header="IsFullscreen" Value="{x:Bind LyricsWindowStatus.IsFullscreen, Mode=OneWay}" />
+                            <local:PropertyRow Header="IsMinimized" Value="{x:Bind LyricsWindowStatus.IsMinimized, Mode=OneWay}" />
                             <local:PropertyRow Header="IsMaximized" Value="{x:Bind LyricsWindowStatus.IsMaximized, Mode=OneWay}" />
+                            <local:PropertyRow Header="IsFullscreen" Value="{x:Bind LyricsWindowStatus.IsFullscreen, Mode=OneWay}" />
                         </StackPanel>
                     </Expander>
 
