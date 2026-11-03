@@ -5,6 +5,8 @@ using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -23,6 +25,8 @@ public sealed partial class DemoWindowGrid : UserControl
     private readonly IWindowManagerProvider _windowManagerProvider = Ioc.Default.GetRequiredService<IWindowManagerProvider>();
     private readonly IMonitorProvider _monitorProvider = Ioc.Default.GetRequiredService<IMonitorProvider>();
 
+    private LyricsWindowStatus? _subscribedStatus;
+
     public DemoWindowGrid()
     {
         InitializeComponent();
@@ -32,29 +36,61 @@ public sealed partial class DemoWindowGrid : UserControl
     {
         if (d is DemoWindowGrid grid)
         {
+            // The same LyricsWindowStatus instance is reused by the settings UI, so the
+            // monitor can change without this dependency property ever changing value.
+            grid.DetachStatus();
+            grid.AttachStatus(e.NewValue as LyricsWindowStatus);
             grid.UpdateMonitorWarningVisibility();
+        }
+    }
+
+    private void AttachStatus(LyricsWindowStatus? status)
+    {
+        if (status == null || ReferenceEquals(_subscribedStatus, status)) return;
+
+        _subscribedStatus = status;
+        _subscribedStatus.PropertyChanged += Status_PropertyChanged;
+    }
+
+    private void DetachStatus()
+    {
+        if (_subscribedStatus == null) return;
+
+        _subscribedStatus.PropertyChanged -= Status_PropertyChanged;
+        _subscribedStatus = null;
+    }
+
+    private void Status_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (string.IsNullOrEmpty(e.PropertyName) || e.PropertyName == nameof(LyricsWindowStatus.MonitorDeviceName))
+        {
+            UpdateMonitorWarningVisibility();
         }
     }
 
     private void UserControl_Loaded(object sender, RoutedEventArgs e)
     {
+        AttachStatus(LyricsWindowStatus);
         _monitorProvider.MonitorsChanged += MonitorProvider_MonitorsChanged;
+        UpdateMonitorWarningVisibility();
     }
 
     private void UserControl_Unloaded(object sender, RoutedEventArgs e)
     {
+        DetachStatus();
         _monitorProvider.MonitorsChanged -= MonitorProvider_MonitorsChanged;
     }
 
     private void MonitorProvider_MonitorsChanged(object? sender, System.EventArgs e)
     {
-        Task.Run(async () =>
+        var dispatcherQueue = DispatcherQueue;
+        if (dispatcherQueue == null) return;
+
+        _ = Task.Run(async () =>
         {
+            // Give the OS a moment to settle the display topology before re-checking.
             await Task.Delay(500);
-            DispatcherQueue.TryEnqueue(() =>
-            {
-                UpdateMonitorWarningVisibility();
-            });
+            dispatcherQueue.TryEnqueue(UpdateMonitorWarningVisibility);
         });
     }
 
@@ -96,6 +132,13 @@ public sealed partial class DemoWindowGrid : UserControl
     {
         if (DisconnectedWarningGrid == null) return;
 
+        var dispatcherQueue = DispatcherQueue;
+        if (dispatcherQueue != null && !dispatcherQueue.HasThreadAccess)
+        {
+            dispatcherQueue.TryEnqueue(UpdateMonitorWarningVisibility);
+            return;
+        }
+
         var status = LyricsWindowStatus;
         if (status == null || string.IsNullOrEmpty(status.MonitorDeviceName))
         {
@@ -103,7 +146,9 @@ public sealed partial class DemoWindowGrid : UserControl
             return;
         }
 
-        var names = _monitorProvider.GetAllMonitorDeviceNames();
-        DisconnectedWarningGrid.Visibility = !names.Contains(status.MonitorDeviceName) ? Visibility.Visible : Visibility.Collapsed;
+        var isConnected = _monitorProvider.GetAllMonitorDeviceNames()
+            .Contains(status.MonitorDeviceName, StringComparer.OrdinalIgnoreCase);
+
+        DisconnectedWarningGrid.Visibility = isConnected ? Visibility.Collapsed : Visibility.Visible;
     }
 }
