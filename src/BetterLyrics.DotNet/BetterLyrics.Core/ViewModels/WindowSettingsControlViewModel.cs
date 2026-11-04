@@ -3,10 +3,12 @@ using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Interfaces.ViewModels;
 using BetterLyrics.Core.Models;
+using BetterLyrics.Core.Models.Domain;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.Models.WallpaperEngine;
 using CommunityToolkit.Mvvm.ComponentModel;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 
 namespace BetterLyrics.Core.ViewModels;
 
@@ -24,6 +26,8 @@ public partial class WindowSettingsControlViewModel : ObservableObject, ITransie
     private IReadOnlyList<WallpaperEngineWallpaper> _installedWallpapers = [];
     private bool _isLoadingWallpaperOptions;
     private bool _isAttached;
+    private LyricsWindowStatus? _boundStatus;
+    private bool _isStatusSubscribed;
 
     public WindowSettingsControlViewModel(ISettingsService settingsService,
         IWallpaperEngineService wallpaperEngineService, IMonitorProvider monitorProvider,
@@ -35,17 +39,14 @@ public partial class WindowSettingsControlViewModel : ObservableObject, ITransie
         _localizationService = localizationService;
         _appUiThreadProvider = appUiThreadProvider;
 
-        foreach (var name in _monitorProvider.GetAllMonitorDeviceNames())
-        {
-            MonitorDeviceNames.Add(name);
-        }
+        ReloadMonitors(force: false);
     }
 
     [ObservableProperty] public partial LyricsWindowStatus? LyricsWindowStatus { get; set; }
 
     [ObservableProperty] public partial bool IsManaged { get; set; }
 
-    public ObservableCollection<string> MonitorDeviceNames { get; } = [];
+    public ObservableCollection<MonitorInfo> Monitors { get; } = [];
 
     public ObservableCollection<WallpaperEngineBindingOption> WallpaperOptions { get; } = [];
 
@@ -74,6 +75,7 @@ public partial class WindowSettingsControlViewModel : ObservableObject, ITransie
 
         _wallpaperEngineService.ActiveWallpaperChanged += WallpaperEngineService_ActiveWallpaperChanged;
         _monitorProvider.MonitorsChanged += MonitorProvider_MonitorsChanged;
+        SubscribeStatus();
         _isAttached = true;
     }
 
@@ -83,6 +85,7 @@ public partial class WindowSettingsControlViewModel : ObservableObject, ITransie
 
         _wallpaperEngineService.ActiveWallpaperChanged -= WallpaperEngineService_ActiveWallpaperChanged;
         _monitorProvider.MonitorsChanged -= MonitorProvider_MonitorsChanged;
+        UnsubscribeStatus();
         _isAttached = false;
     }
 
@@ -91,13 +94,51 @@ public partial class WindowSettingsControlViewModel : ObservableObject, ITransie
     /// </summary>
     public void SetLyricsWindowStatus(LyricsWindowStatus? status)
     {
+        UnsubscribeStatus();
+
         LyricsWindowStatus = status;
+        _boundStatus = status;
+        SubscribeStatus();
+
         IsManaged = status != null && _settingsService.AppSettings.WindowBoundsRecords.Contains(status);
 
         if (!IsManaged) return;
 
         if (WallpaperOptions.Count == 0) _ = LoadWallpaperOptionsAsync();
         else RefreshSelectedWallpaper();
+    }
+
+    private void SubscribeStatus()
+    {
+        if (_isStatusSubscribed || _boundStatus is null) return;
+
+        _boundStatus.PropertyChanged += BoundStatus_PropertyChanged;
+        _isStatusSubscribed = true;
+    }
+
+    private void UnsubscribeStatus()
+    {
+        if (!_isStatusSubscribed || _boundStatus is null) return;
+
+        _boundStatus.PropertyChanged -= BoundStatus_PropertyChanged;
+        _isStatusSubscribed = false;
+    }
+
+    private void BoundStatus_PropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName != nameof(LyricsWindowStatus.MonitorDeviceName)) return;
+
+        var status = _boundStatus;
+        if (status is null) return;
+
+        // The combo box stores the GDI name because it is what the Win32 window APIs use.
+        // Keep the persisted identity in sync with the selected monitor.
+        var monitor = _monitorProvider.ResolveMonitor(null, null, status.MonitorDeviceName);
+        if (monitor is null) return;
+
+        if (!string.IsNullOrEmpty(monitor.DevicePath)) status.MonitorDevicePath = monitor.DevicePath;
+        if (!string.IsNullOrEmpty(monitor.EdidId)) status.MonitorEdid = monitor.EdidId;
+        status.MonitorBounds = _monitorProvider.GetMonitorRectFromDeviceName(monitor.GdiDeviceName);
     }
 
     public async Task InitializeAsync()
@@ -195,24 +236,43 @@ public partial class WindowSettingsControlViewModel : ObservableObject, ITransie
         _ = Task.Run(async () =>
         {
             await Task.Delay(500);
-            _appUiThreadProvider.Execute(RefreshMonitorDeviceNames);
+            _appUiThreadProvider.Execute(() => ReloadMonitors(force: true));
         });
     }
 
-    public void RefreshMonitorDeviceNames()
+    public void RefreshMonitors() => ReloadMonitors(force: true);
+
+    private void ReloadMonitors(bool force)
     {
-        var currentNames = _monitorProvider.GetAllMonitorDeviceNames().ToList();
+        var monitors = force ? _monitorProvider.RefreshMonitors() : _monitorProvider.GetMonitors();
 
-        MonitorDeviceNames.Clear();
-        foreach (var name in currentNames)
+        // Avoid clearing the collection when nothing changed: clearing it makes the ComboBox
+        // drop its selection even though the underlying binding is still valid.
+        if (Monitors.Count == monitors.Count)
         {
-            MonitorDeviceNames.Add(name);
+            var isSame = true;
+            for (var i = 0; i < monitors.Count; i++)
+            {
+                if (!string.Equals(Monitors[i].DevicePath, monitors[i].DevicePath,
+                        StringComparison.OrdinalIgnoreCase))
+                {
+                    isSame = false;
+                    break;
+                }
+            }
+
+            if (isSame) return;
         }
 
-        if (LyricsWindowStatus != null && !currentNames.Contains(LyricsWindowStatus.MonitorDeviceName))
+        Monitors.Clear();
+        foreach (var monitor in monitors)
         {
-            LyricsWindowStatus.MonitorDeviceName = currentNames.FirstOrDefault() ?? "";
+            Monitors.Add(monitor);
         }
+
+        // Do not rewrite the binding here. A monitor can be temporarily unavailable (for
+        // example when the user switches to "PC screen only"), and silently rebinding the
+        // window to the first monitor would destroy the user's configuration.
     }
 
     private void UpdateWallpaperEngineStatus()

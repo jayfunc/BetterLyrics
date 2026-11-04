@@ -61,7 +61,7 @@ public sealed partial class WindowSettingsControl : BaseUserControl
 
     private void RefreshMonitorButton_Click(object sender, RoutedEventArgs e)
     {
-        ViewModel.RefreshMonitorDeviceNames();
+        ViewModel.RefreshMonitors();
     }
 
     private async void RefreshWallpaperButton_Click(object sender, RoutedEventArgs e)

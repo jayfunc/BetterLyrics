@@ -64,8 +64,26 @@ public partial class LyricsWindowStatus : ObservableObject, ICloneable
 
     [ObservableProperty] public partial bool IsDefault { get; set; } = false;
 
+    /// <summary>
+    /// Runtime GDI source name (for example <c>\\.\DISPLAY1</c>) resolved from
+    /// <see cref="MonitorDevicePath"/> on the current display topology. Do not use it as the
+    /// persisted identity.
+    /// </summary>
     [ObservableProperty]
     public partial string MonitorDeviceName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Stable monitor device interface path persisted as the primary monitor binding.
+    /// </summary>
+    [ObservableProperty]
+    public partial string MonitorDevicePath { get; set; } = string.Empty;
+
+    /// <summary>
+    /// EDID based monitor identity (manufacturer, product and serial number) used as a fallback
+    /// when the device path changes.
+    /// </summary>
+    [ObservableProperty]
+    public partial string MonitorEdid { get; set; } = string.Empty;
 
     [ObservableProperty]
     public partial bool IsWorkArea { get; set; } = false;
@@ -304,6 +322,9 @@ public partial class LyricsWindowStatus : ObservableObject, ICloneable
     partial void OnMonitorDeviceNameChanged(string value) =>
         WeakReferenceMessenger.Default.Send(new LyricsWindowWorkAreaConfigChangedMessage(this));
 
+    partial void OnMonitorDevicePathChanged(string value) =>
+        WeakReferenceMessenger.Default.Send(new LyricsWindowWorkAreaConfigChangedMessage(this));
+
     partial void OnDockHeightChanged(double value) =>
         WeakReferenceMessenger.Default.Send(new LyricsWindowWorkAreaConfigChangedMessage(this));
 
@@ -411,6 +432,8 @@ public partial class LyricsWindowStatus : ObservableObject, ICloneable
             Name = Name,
             IsDefault = IsDefault,
             MonitorDeviceName = MonitorDeviceName,
+            MonitorDevicePath = MonitorDevicePath,
+            MonitorEdid = MonitorEdid,
             IsWorkArea = IsWorkArea,
             IsAlwaysOnTop = IsAlwaysOnTop,
             IsAlwaysOnTopPolling = IsAlwaysOnTopPolling,

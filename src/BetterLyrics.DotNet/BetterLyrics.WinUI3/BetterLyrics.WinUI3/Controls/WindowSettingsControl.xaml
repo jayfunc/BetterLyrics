@@ -54,7 +54,11 @@
 
                             <controls:SettingsCard x:Uid="SettingsPageDockMonitor" IsEnabled="{x:Bind LyricsWindowStatus.IsWorkArea, Mode=OneWay}">
                                 <StackPanel Orientation="Horizontal" Spacing="6">
-                                    <ComboBox ItemsSource="{x:Bind ViewModel.MonitorDeviceNames, Mode=OneWay}" SelectedItem="{x:Bind LyricsWindowStatus.MonitorDeviceName, Mode=TwoWay}" />
+                                    <ComboBox
+                                        DisplayMemberPath="DisplayName"
+                                        ItemsSource="{x:Bind ViewModel.Monitors, Mode=OneWay}"
+                                        SelectedValue="{x:Bind LyricsWindowStatus.MonitorDeviceName, Mode=TwoWay}"
+                                        SelectedValuePath="GdiDeviceName" />
                                     <Button
                                         Click="RefreshMonitorButton_Click"
                                         Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},

@@ -279,17 +279,33 @@ public sealed partial class NowPlayingWindow : BaseWindow,
     {
         var (name, rect) = _monitorProvider.GetMonitorInfoFromWindow(this);
 
-        // Prevent overwriting the saved monitor if it was just disconnected and OS moved us
-        var allMonitors = _monitorProvider.GetAllMonitorDeviceNames();
-        if (!string.IsNullOrEmpty(LyricsWindowStatus.MonitorDeviceName) &&
-            !allMonitors.Contains(LyricsWindowStatus.MonitorDeviceName, StringComparer.OrdinalIgnoreCase) &&
-            allMonitors.Contains(name, StringComparer.OrdinalIgnoreCase))
+        var currentMonitor = _monitorProvider.GetMonitors()
+            .FirstOrDefault(m => string.Equals(m.GdiDeviceName, name, StringComparison.OrdinalIgnoreCase));
+
+        var savedMonitor = _monitorProvider.ResolveMonitor(
+            LyricsWindowStatus.MonitorDevicePath,
+            LyricsWindowStatus.MonitorEdid,
+            LyricsWindowStatus.MonitorDeviceName);
+
+        // Prevent overwriting the saved monitor if it was just disconnected and the OS moved us.
+        // The saved binding is kept so that it can be restored when the monitor comes back.
+        if (savedMonitor is null &&
+            (!string.IsNullOrEmpty(LyricsWindowStatus.MonitorDevicePath) ||
+             !string.IsNullOrEmpty(LyricsWindowStatus.MonitorDeviceName)))
         {
             return;
         }
 
         LyricsWindowStatus.MonitorDeviceName = name;
         LyricsWindowStatus.MonitorBounds = rect;
+
+        if (currentMonitor is not null)
+        {
+            if (!string.IsNullOrEmpty(currentMonitor.DevicePath))
+                LyricsWindowStatus.MonitorDevicePath = currentMonitor.DevicePath;
+            if (!string.IsNullOrEmpty(currentMonitor.EdidId))
+                LyricsWindowStatus.MonitorEdid = currentMonitor.EdidId;
+        }
     }
 
     // ====
@@ -448,16 +464,23 @@ public sealed partial class NowPlayingWindow : BaseWindow,
     private void MoveToTargetMonitorIfNeeded()
     {
         var status = LyricsWindowStatus;
-        var targetMonitor = status.MonitorDeviceName;
-        if (string.IsNullOrEmpty(targetMonitor)) return;
+
+        // Resolve the persisted identity (device path / EDID) to the GDI name that is valid for
+        // the current topology. Fall back to the legacy GDI name for settings written by older
+        // versions.
+        var target = _monitorProvider.ResolveMonitor(
+            status.MonitorDevicePath,
+            status.MonitorEdid,
+            status.MonitorDeviceName);
+
+        if (target is null || string.IsNullOrEmpty(target.GdiDeviceName)) return;
+
+        var targetMonitor = target.GdiDeviceName;
 
         if (string.Equals(targetMonitor, _monitorProvider.GetPrimaryMonitorDeviceName(), StringComparison.OrdinalIgnoreCase))
         {
             return;
         }
-
-        var allMonitors = _monitorProvider.GetAllMonitorDeviceNames();
-        if (!allMonitors.Contains(targetMonitor, StringComparer.OrdinalIgnoreCase)) return;
 
         var currentMonitorInfo = _monitorProvider.GetMonitorInfoFromWindow(this);
         if (string.Equals(currentMonitorInfo.Item1, targetMonitor, StringComparison.OrdinalIgnoreCase)) return;
@@ -495,9 +518,22 @@ public sealed partial class NowPlayingWindow : BaseWindow,
 
     private void OnWorkAreaChanged()
     {
-        UpdateMonitorNameAndBounds();
+        // Do not call UpdateMonitorNameAndBounds() here: the user just picked a monitor in the
+        // settings UI, and the window is still on the old monitor. Overwriting the binding with
+        // the current window position would undo the selection.
         if (LyricsWindowStatus.IsWorkArea)
         {
+            var target = _monitorProvider.ResolveMonitor(
+                LyricsWindowStatus.MonitorDevicePath,
+                LyricsWindowStatus.MonitorEdid,
+                LyricsWindowStatus.MonitorDeviceName);
+
+            if (target is not null && !string.IsNullOrEmpty(target.GdiDeviceName))
+            {
+                LyricsWindowStatus.MonitorBounds =
+                    _monitorProvider.GetMonitorRectFromDeviceName(target.GdiDeviceName);
+            }
+
             _windowManagerProvider.UpdateAppBar(this);
             LyricsWindowStatus.IsLocked = true;
         }

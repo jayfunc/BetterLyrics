@@ -62,7 +62,10 @@ public sealed partial class DemoWindowGrid : UserControl
 
     private void Status_PropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
-        if (string.IsNullOrEmpty(e.PropertyName) || e.PropertyName == nameof(LyricsWindowStatus.MonitorDeviceName))
+        if (string.IsNullOrEmpty(e.PropertyName) ||
+            e.PropertyName is nameof(LyricsWindowStatus.MonitorDeviceName)
+                or nameof(LyricsWindowStatus.MonitorDevicePath)
+                or nameof(LyricsWindowStatus.MonitorEdid))
         {
             UpdateMonitorWarningVisibility();
         }
@@ -140,14 +143,18 @@ public sealed partial class DemoWindowGrid : UserControl
         }
 
         var status = LyricsWindowStatus;
-        if (status == null || string.IsNullOrEmpty(status.MonitorDeviceName))
+        if (status == null ||
+            (string.IsNullOrEmpty(status.MonitorDeviceName) &&
+             string.IsNullOrEmpty(status.MonitorDevicePath)))
         {
             DisconnectedWarningGrid.Visibility = Visibility.Collapsed;
             return;
         }
 
-        var isConnected = _monitorProvider.GetAllMonitorDeviceNames()
-            .Contains(status.MonitorDeviceName, StringComparer.OrdinalIgnoreCase);
+        var isConnected = _monitorProvider.IsMonitorConnected(
+            status.MonitorDevicePath,
+            status.MonitorEdid,
+            status.MonitorDeviceName);
 
         DisconnectedWarningGrid.Visibility = isConnected ? Visibility.Collapsed : Visibility.Visible;
     }

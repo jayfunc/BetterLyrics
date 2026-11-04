@@ -254,17 +254,16 @@ public sealed class LyricsWindowVisibilityService : ILyricsWindowVisibilityServi
 
     private bool IsTargetMonitorConnected(LyricsWindowStatus status)
     {
-        var targetMonitor = status.MonitorDeviceName;
-        if (string.IsNullOrEmpty(targetMonitor)) return true;
-
-        if (string.Equals(targetMonitor, _monitorProvider.GetPrimaryMonitorDeviceName(),
-                StringComparison.OrdinalIgnoreCase))
+        if (string.IsNullOrEmpty(status.MonitorDeviceName) &&
+            string.IsNullOrEmpty(status.MonitorDevicePath))
         {
             return true;
         }
 
-        return _monitorProvider.GetAllMonitorDeviceNames()
-            .Contains(targetMonitor, StringComparer.OrdinalIgnoreCase);
+        return _monitorProvider.IsMonitorConnected(
+            status.MonitorDevicePath,
+            status.MonitorEdid,
+            status.MonitorDeviceName);
     }
 
     private bool IsManaged(LyricsWindowStatus status) =>

@@ -304,6 +304,7 @@ public class Program
             .AddSingleton<IAudioMixerService, AudioMixerService>()
             .AddSingleton<IGlobalShortcutService, GlobalShortcutService>()
             .AddSingleton<IScreenKeeperService, ScreenKeeperService>()
+            .AddSingleton<IMonitorBindingService, MonitorBindingService>()
             .AddSingleton<IWallpaperEngineService, WallpaperEngineService>()
             .AddSingleton<ILyricsWindowVisibilityService, LyricsWindowVisibilityService>()
             .AddSingleton<IWallpaperEngineLyricsWindowService, WallpaperEngineLyricsWindowService>()

@@ -4,6 +4,7 @@ using BetterLyrics.WinUI3.Extensions;
 using BetterLyrics.WinUI3.Hooks;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
 using Vanara.PInvoke;
@@ -23,6 +24,9 @@ public partial class MonitorProvider : IMonitorProvider, IDisposable
     private bool _isKeepScreenOn;
     private readonly object _lock = new();
 
+    private readonly object _monitorsLock = new();
+    private IReadOnlyList<MonitorInfo>? _monitors;
+
     public bool IsDisplayOn { get; private set; } = true;
 
     public event EventHandler<bool>? DisplayStatusChanged;
@@ -31,7 +35,11 @@ public partial class MonitorProvider : IMonitorProvider, IDisposable
     public MonitorProvider()
     {
         _monitorHook = new MonitorHook();
-        _monitorHook.DisplayChanged += () => MonitorsChanged?.Invoke(this, EventArgs.Empty);
+        _monitorHook.DisplayChanged += () =>
+        {
+            InvalidateMonitors();
+            MonitorsChanged?.Invoke(this, EventArgs.Empty);
+        };
         _monitorHook.DisplayPowerStatusChanged += (isOn) =>
         {
             IsDisplayOn = isOn;
@@ -39,7 +47,46 @@ public partial class MonitorProvider : IMonitorProvider, IDisposable
         };
     }
 
-    public IEnumerable<string> GetAllMonitorDeviceNames()
+    public IReadOnlyList<MonitorInfo> GetMonitors()
+    {
+        lock (_monitorsLock)
+        {
+            return _monitors ??= BuildMonitors();
+        }
+    }
+
+    public IReadOnlyList<MonitorInfo> RefreshMonitors()
+    {
+        InvalidateMonitors();
+        return GetMonitors();
+    }
+
+    private IReadOnlyList<MonitorInfo> BuildMonitors()
+    {
+        var monitors = DisplayConfigMonitorHook.GetMonitors(activeOnly: true);
+        if (monitors.Count > 0) return monitors;
+
+        // DisplayConfig is unavailable (for example in a remote session); fall back to the
+        // legacy GDI enumeration. The resulting entries have no stable identity, but the
+        // rest of the app keeps working.
+        Debug.WriteLine("DisplayConfig returned no monitors; falling back to EnumDisplayDevices.");
+
+        return EnumerateGdiDeviceNames()
+            .Select(name => new MonitorInfo(name, string.Empty, string.Empty, string.Empty, true))
+            .ToList();
+    }
+
+    private void InvalidateMonitors()
+    {
+        lock (_monitorsLock)
+        {
+            _monitors = null;
+        }
+    }
+
+    public IEnumerable<string> GetAllMonitorDeviceNames() => EnumerateGdiDeviceNames();
+
+    private static IEnumerable<string> EnumerateGdiDeviceNames()
     {
         var deviceNames = new List<string>();
         uint devNum = 0;
@@ -63,6 +110,68 @@ public partial class MonitorProvider : IMonitorProvider, IDisposable
         }
 
         return deviceNames.Distinct();
+    }
+
+    public MonitorInfo? ResolveMonitor(string? devicePath, string? edidId, string? legacyDeviceName,
+        AppRect? savedBounds = null)
+    {
+        var monitors = GetMonitors();
+        if (monitors.Count == 0) return null;
+
+        if (!string.IsNullOrWhiteSpace(devicePath))
+        {
+            var byPath = monitors.FirstOrDefault(m =>
+                string.Equals(m.DevicePath, devicePath, StringComparison.OrdinalIgnoreCase));
+            if (byPath is not null) return byPath;
+        }
+
+        if (!string.IsNullOrWhiteSpace(edidId))
+        {
+            var byEdid = monitors.FirstOrDefault(m =>
+                string.Equals(m.EdidId, edidId, StringComparison.OrdinalIgnoreCase));
+            if (byEdid is not null) return byEdid;
+        }
+
+        if (!string.IsNullOrWhiteSpace(legacyDeviceName))
+        {
+            var byName = monitors.FirstOrDefault(m =>
+                string.Equals(m.GdiDeviceName, legacyDeviceName, StringComparison.OrdinalIgnoreCase));
+            if (byName is not null) return byName;
+        }
+
+        // Last resort for settings written before device paths were persisted: match the
+        // monitor by the bounds that were saved together with the binding.
+        if (savedBounds is { IsEmpty: false } bounds)
+        {
+            var byBounds = monitors.FirstOrDefault(m =>
+                !string.IsNullOrEmpty(m.GdiDeviceName) &&
+                IsNearlyEqual(GetMonitorRectFromDeviceName(m.GdiDeviceName), bounds, 2));
+            if (byBounds is not null) return byBounds;
+        }
+
+        return null;
+    }
+
+    public bool IsMonitorConnected(string? devicePath, string? edidId, string? legacyDeviceName,
+        AppRect? savedBounds = null)
+    {
+        // Keep the existing primary-monitor escape hatch: a window bound to the primary display
+        // must never be treated as disconnected.
+        if (!string.IsNullOrWhiteSpace(legacyDeviceName) &&
+            string.Equals(legacyDeviceName, GetPrimaryMonitorDeviceName(), StringComparison.OrdinalIgnoreCase))
+        {
+            return true;
+        }
+
+        return ResolveMonitor(devicePath, edidId, legacyDeviceName, savedBounds) is not null;
+    }
+
+    private static bool IsNearlyEqual(AppRect a, AppRect b, double tolerance)
+    {
+        return Math.Abs(a.Left - b.Left) <= tolerance &&
+               Math.Abs(a.Top - b.Top) <= tolerance &&
+               Math.Abs(a.Right - b.Right) <= tolerance &&
+               Math.Abs(a.Bottom - b.Bottom) <= tolerance;
     }
 
     public AppRect GetMonitorRectFromDeviceName(string deviceName)

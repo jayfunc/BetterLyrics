@@ -1,4 +1,4 @@
-﻿// 2025/6/23 by Zhe Fang
+// 2025/6/23 by Zhe Fang
 
 using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Effects;
@@ -977,6 +977,16 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
 
     public void HandlePointerEntered(PointerRoutedEventArgs e)
     {
+    }
+
+    /// <summary>
+    /// Invalidates the Win2D canvas and reloads its bitmap resources. This is used after a
+    /// per-monitor DPI change, where the compositor may keep a stale surface for the window.
+    /// </summary>
+    public void RequestRedraw()
+    {
+        Canvas?.Invalidate();
+        _ = ReloadCoverBackgroundResourcesAsync();
     }
 
     public void HandlePointerExited(PointerRoutedEventArgs e)

@@ -39,6 +39,18 @@ public partial class App : Application
 
         _logger.LogInformation("App started");
 
+        try
+        {
+            var xamlAssemblyPath = typeof(Microsoft.UI.Xaml.Application).Assembly.Location;
+            _logger.LogInformation("WinUI runtime: {FileVersion} ({Path})",
+                System.Diagnostics.FileVersionInfo.GetVersionInfo(xamlAssemblyPath).FileVersion,
+                xamlAssemblyPath);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogDebug(ex, "Failed to log the WinUI runtime version.");
+        }
+
         // 注册全局异常捕获
         UnhandledException += App_UnhandledException;
         AppDomain.CurrentDomain.UnhandledException += CurrentDomain_UnhandledException;
@@ -77,6 +89,9 @@ public partial class App : Application
 
             // 初始化 IScreenKeeperService
             _ = Ioc.Default.GetRequiredService<IScreenKeeperService>();
+
+            // 初始化 IMonitorBindingService：把旧版保存的 \\.\DISPLAYn 迁移为稳定的显示器 device path
+            _ = Ioc.Default.GetRequiredService<IMonitorBindingService>();
 
             _ = LaunchAsync();
         }

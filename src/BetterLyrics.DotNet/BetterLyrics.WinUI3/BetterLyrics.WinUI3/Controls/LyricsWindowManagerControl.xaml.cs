@@ -120,6 +120,8 @@ public sealed partial class LyricsWindowManagerControl : BaseUserControl
                 SourceGenerationContext.Default.LyricsWindowStatus);
             if (data != null)
             {
+                // Resolve a possibly legacy monitor binding from the imported file.
+                ViewModel.NormalizeMonitorBinding(data);
                 ViewModel.AppSettings.WindowBoundsRecords.Add(data);
                 _globalToastProvider.Show("ImportSettingsSuccess", null, MessageSeverity.Success);
             }
@@ -203,16 +205,20 @@ public sealed partial class LyricsWindowManagerControl : BaseUserControl
         var windowRectBefore = status.WindowBounds;
 
         menuFlyoutSubItem.Items.Clear();
-        var names = _monitorProvider.GetAllMonitorDeviceNames();
-        foreach (var name in names)
+        var monitors = _monitorProvider.GetMonitors();
+        foreach (var monitor in monitors)
         {
-            var menuFlyoutItem = new MenuFlyoutItem { Text = name };
+            var menuFlyoutItem = new MenuFlyoutItem { Text = monitor.DisplayName };
             menuFlyoutItem.Click += async (s, args) =>
             {
-                var monitorRectAfter = _monitorProvider.GetMonitorRectFromDeviceName(name);
+                var monitorRectAfter = _monitorProvider.GetMonitorRectFromDeviceName(monitor.GdiDeviceName);
                 var windowRectAfter = MapToMonitor(monitorRectBefore, monitorRectAfter, windowRectBefore);
 
-                status.MonitorDeviceName = name;
+                if (!string.IsNullOrEmpty(monitor.DevicePath))
+                    status.MonitorDevicePath = monitor.DevicePath;
+                if (!string.IsNullOrEmpty(monitor.EdidId))
+                    status.MonitorEdid = monitor.EdidId;
+                status.MonitorDeviceName = monitor.GdiDeviceName;
                 status.MonitorBounds = monitorRectAfter;
                 status.WindowBounds = windowRectAfter.ToAppRect();
 

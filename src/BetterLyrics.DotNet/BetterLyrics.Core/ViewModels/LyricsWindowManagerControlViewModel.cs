@@ -25,6 +25,7 @@ public partial class LyricsWindowManagerControlViewModel : ObservableRecipient, 
     private readonly IWindowManagerProvider _windowManagerProvider;
     private readonly ILocalizationService _localizationService;
     private readonly ILauncherProvider _launcherProvider;
+    private readonly IMonitorBindingService _monitorBindingService;
 
     [ObservableProperty] public partial AppSettings AppSettings { get; set; }
 
@@ -40,12 +41,14 @@ public partial class LyricsWindowManagerControlViewModel : ObservableRecipient, 
     public partial bool IsConfigPanelOpen { get; set; }
 
     public LyricsWindowManagerControlViewModel(ISettingsService settingsService,
-        IWindowManagerProvider windowManagerProvider, ILocalizationService localizationService, ILauncherProvider launcherProvider)
+        IWindowManagerProvider windowManagerProvider, ILocalizationService localizationService,
+        ILauncherProvider launcherProvider, IMonitorBindingService monitorBindingService)
     {
         _settingsService = settingsService;
         _windowManagerProvider = windowManagerProvider;
         _localizationService = localizationService;
         _launcherProvider = launcherProvider;
+        _monitorBindingService = monitorBindingService;
 
         AppSettings = _settingsService.AppSettings;
 
@@ -96,8 +99,14 @@ public partial class LyricsWindowManagerControlViewModel : ObservableRecipient, 
         var status = new LyricsWindowStatus(mode);
         status.LayoutProfileId =
             AppSettings.LayoutProfiles.First(x => x.Mode == status.GetDefaultLayoutProfileMode()).Id;
+
+        // Persist the stable monitor identity for the newly created mode as well.
+        _monitorBindingService.Normalize(status);
+
         AppSettings.WindowBoundsRecords.Add(status);
     }
+
+    public void NormalizeMonitorBinding(LyricsWindowStatus status) => _monitorBindingService.Normalize(status);
 
     [RelayCommand]
     private void CloseConfigPanel()
