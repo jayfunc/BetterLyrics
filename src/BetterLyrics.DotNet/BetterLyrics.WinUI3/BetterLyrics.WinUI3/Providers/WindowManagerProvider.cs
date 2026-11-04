@@ -379,6 +379,13 @@ public class WindowManagerProvider : IWindowManagerProvider
 
             castedWindow.Activate();
             castedWindow.SetForegroundWindow();
+
+            // Hiding a docked window releases its work-area reservation, so the
+            // AppBar has to be registered again whatever the reveal path is.
+            if (window is NowPlayingWindow nowPlayingWindow)
+            {
+                nowPlayingWindow.EnsureAppBarRegistered();
+            }
         }
 
         return (T)window;

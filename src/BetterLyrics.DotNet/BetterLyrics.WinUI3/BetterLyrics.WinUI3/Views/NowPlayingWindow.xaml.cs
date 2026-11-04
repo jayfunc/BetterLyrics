@@ -433,6 +433,23 @@ public sealed partial class NowPlayingWindow : BaseWindow,
         _taskbarHook = new TaskbarHook(this, LyricsWindowStatus.TaskbarPlacement, LyricsWindowStatus.MonitorBounds);
     }
 
+    /// <summary>
+    /// Reserves the docked work area again after the window has been shown.
+    /// Hiding a docked window unregisters its AppBar, which restores the full
+    /// desktop work area. Every show path must re-register the AppBar, otherwise
+    /// Windows keeps the expanded work area and foreground windows no longer
+    /// avoid the docked lyrics until the window is recreated.
+    /// </summary>
+    public void EnsureAppBarRegistered()
+    {
+        var status = LyricsWindowStatus;
+        if (!status.IsWorkArea) return;
+
+        _logger.LogDebug("Restoring the AppBar reservation of docked lyrics window \"{Name}\".", status.Name);
+        _windowManagerProvider.SetIsAppBar(this, true);
+        _windowManagerProvider.MoveAndResize(this, status.GetAppBarBounds());
+    }
+
     public void ShowFromVisibilityPolicy()
     {
         var status = LyricsWindowStatus;
@@ -441,12 +458,8 @@ public sealed partial class NowPlayingWindow : BaseWindow,
 
         if (Visible && status.WindowState == LyricsWindowState.Opened) return;
 
+        // OpenOrShowWindow also re-registers the AppBar of a docked window.
         _windowManagerProvider.OpenOrShowWindow<NowPlayingWindow>(status);
-        if (status.IsWorkArea)
-        {
-            _windowManagerProvider.SetIsAppBar(this, true);
-            _windowManagerProvider.MoveAndResize(this, status.GetAppBarBounds());
-        }
 
         if (status.IsLocked && !status.IsWallpaper &&
             (!status.IsAlwaysHideUnlockButton || status.KeepNowPlayingBarInteractiveWhenLocked))
