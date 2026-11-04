@@ -2,7 +2,7 @@
 name: Bug 反馈
 about: 帮助我们改进 BetterLyrics
 title: ''
-labels: bug 捉虫
+labels: bug
 assignees: ''
 
 ---
