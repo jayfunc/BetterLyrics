@@ -240,7 +240,9 @@ public static partial class LanguageHelper
     {
         if (sourceTag != null && targetTag != null)
         {
-            if (sourceTag.Value.Script == targetTag.Value.Script)
+            if (sourceTag.Value.Script == targetTag.Value.Script ||
+                (fuzzy && (sourceTag.Value.Script == null || targetTag.Value.Script == null) &&
+                 sourceTag.Value.Script != Script.Latn && targetTag.Value.Script != Script.Latn))
             {
                 if (fuzzy)
                 {
