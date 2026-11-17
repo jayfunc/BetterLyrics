@@ -317,6 +317,7 @@ public static class SettingSearchItemExtensions
         new SettingSearchItem { Uid = "SettingsPageSpectrumBreathingIntensity/Header", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.LyricsEffect, ParentUid = "SettingsPageSpectrumBrethingEffect/Header" },
 
         new SettingSearchItem { Uid = "SettingsPageLyricsGlowEffect/Header", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.LyricsEffect },
+        new SettingSearchItem { Uid = "SettingsPageLyricsHdrGlow/Header", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.LyricsEffect, ParentUid = "SettingsPageLyricsGlowEffect/Header" },
         new SettingSearchItem { Uid = "SettingsPageScope/Header", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.LyricsEffect, ParentUid = "SettingsPageLyricsGlowEffect/Header" },
         new SettingSearchItem { Uid = "SettingsPageLongSyllableDuration/Header", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.LyricsEffect, ParentUid = "SettingsPageLyricsGlowEffect/Header" },
         new SettingSearchItem { Uid = "SettingsPageAutoAdjust/Header", Section = SettingsSection.LyricsWindowMgr, Subsection = LyricsWindowManagerSettingsSection.LyricsEffect, ParentUid = "SettingsPageLyricsGlowEffect/Header" },

@@ -82,6 +82,12 @@
                     <controls:SettingsExpander x:Uid="SettingsPageLyricsGlowEffect" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE9A9;}">
                         <ToggleSwitch IsOn="{x:Bind LyricsEffectSettings.IsLyricsGlowEffectEnabled, Mode=TwoWay}" />
                         <controls:SettingsExpander.Items>
+                            <controls:SettingsCard x:Uid="SettingsPageLyricsHdrGlow">
+                                <ToggleSwitch
+                                    x:Name="HdrGlowToggle"
+                                    IsEnabled="False"
+                                    IsOn="{x:Bind LyricsEffectSettings.IsLyricsHdrGlowEnabled, Mode=TwoWay}" />
+                            </controls:SettingsCard>
                             <controls:SettingsCard x:Uid="SettingsPageScope">
                                 <ComboBox SelectedIndex="{x:Bind LyricsEffectSettings.LyricsGlowEffectScope, Mode=TwoWay, Converter={StaticResource EnumToIntConverter}}">
                                     <ComboBoxItem x:Uid="SettingsPageEffectScopeLongDurationSyllable" />

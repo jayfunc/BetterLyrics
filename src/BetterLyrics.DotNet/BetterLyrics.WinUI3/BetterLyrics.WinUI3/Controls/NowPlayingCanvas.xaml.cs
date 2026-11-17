@@ -242,6 +242,7 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
     private List<int>? _renderLineSourceIndices;
 
     private LyricsWindowStatus? _lyricsWindowStatus;
+    private HdrLyricsPresenter? _hdrPresenter;
 
     private Point _mousePosition = new(0, 0);
 
@@ -480,7 +481,16 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
     {
         if (_lyricsWindowStatus == null) return;
 
-        var ds = args.DrawingSession;
+        var enableHdr = _lyricsWindowStatus.LyricsEffectSettings.IsLyricsHdrGlowEnabled;
+        var hdrVisible = _hdrPresenter?.TryDraw(sender, args.Timing, enableHdr) == true;
+        if (!hdrVisible || _lyricsWindowStatus.IsSpoutOutputEnabled)
+            DrawFrame(sender, args.DrawingSession, args.Timing, 1, showOnCanvas: !hdrVisible);
+    }
+
+    private void DrawFrame(ICanvasAnimatedControl sender, CanvasDrawingSession ds, CanvasTimingInformation timing,
+        float hdrHighlightGain, bool showOnCanvas = true)
+    {
+        if (_lyricsWindowStatus == null) return;
 
         var albumArtLayout = _lyricsWindowStatus.AlbumArtLayoutSettings;
         var lyricsBg = _lyricsWindowStatus.LyricsBackgroundSettings;
@@ -513,7 +523,7 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
             finalOpacity = lyricsBg.PureColorOverlayOpacity / 100.0;
         }
 
-        if (_lyricsWindowStatus.IsSpoutOutputEnabled)
+        if (hdrHighlightGain == 1 && _lyricsWindowStatus.IsSpoutOutputEnabled)
         {
             var finalTexture = _compositionRenderer.Render(
                 sender,
@@ -527,15 +537,15 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
                         lyricsBg);
                 });
 
-            ds.DrawImage(finalTexture);
-
             _spoutHook.SendTexture(finalTexture);
+            if (!showOnCanvas) return;
+            ds.DrawImage(finalTexture);
         }
         else
         {
             DrawCoreWithEdgeFeatheringHandled(sender, ds, bounds, ColorExtensions.FromAppColor(overlayColor),
                 finalOpacity, lyricsStyle,
-                albumStyle, lyricsBg);
+                albumStyle, lyricsBg, hdrHighlightGain);
         }
 
         if (_lyricsWindowStatus.ShowDebugOverlay)
@@ -549,7 +559,7 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
 
             var debugText =
                 $"Spout Sender : {_spoutHook.SenderName ?? "Disabled"}\n" +
-                $"FPS          : {1.0 / args.Timing.ElapsedTime.TotalSeconds:00.0} (Avg: {args.Timing.UpdateCount / args.Timing.TotalTime.TotalSeconds:00.0})\n" +
+                $"FPS          : {1.0 / timing.ElapsedTime.TotalSeconds:00.0} (Avg: {timing.UpdateCount / timing.TotalTime.TotalSeconds:00.0})\n" +
                 $"----------------------------------------\n" +
                 $"Render Pos   : [{(int)_renderLyricsStartX}, {(int)_renderLyricsStartY}]\n" +
                 $"Render Size  : [{(int)_renderLyricsWidth} x {(int)_renderLyricsHeight}]\n" +
@@ -572,7 +582,7 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
                 HorizontalAlignment = CanvasHorizontalAlignment.Left
             })
             using (var layout =
-                   new CanvasTextLayout(args.DrawingSession, debugText, format,
+                   new CanvasTextLayout(ds, debugText, format,
                        2000f, 2000f))
             {
                 var textBounds = layout.LayoutBounds;
@@ -588,9 +598,9 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
 
                 var bgRect = new Rect(xPos, yPos, boxWidth, boxHeight);
 
-                args.DrawingSession.FillRectangle(bgRect, Color.FromArgb(128, 10, 10, 10));
-                args.DrawingSession.DrawRectangle(bgRect, ColorExtensions.FromAppColor(Colors.Cyan), 1.0f);
-                args.DrawingSession.DrawTextLayout(layout, new Vector2(xPos + padding, yPos + padding),
+                ds.FillRectangle(bgRect, Color.FromArgb(128, 10, 10, 10));
+                ds.DrawRectangle(bgRect, ColorExtensions.FromAppColor(Colors.Cyan), 1.0f);
+                ds.DrawTextLayout(layout, new Vector2(xPos + padding, yPos + padding),
                     ColorExtensions.FromAppColor(Colors.GreenYellow));
             }
 
@@ -883,6 +893,7 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
 
     private void Canvas_CreateResources(CanvasAnimatedControl sender, CanvasCreateResourcesEventArgs args)
     {
+        _hdrPresenter?.Reset();
         _compositionRenderer?.Dispose();
 
         var tasks = new[]
@@ -911,6 +922,8 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
 
     protected override void OnLoaded()
     {
+        _hdrPresenter = HdrLyricsPresenter.TryCreate(HdrPanel, XamlRoot.ContentIslandEnvironment.AppWindowId,
+            (sender, ds, timing, gain) => DrawFrame(sender, ds, timing, gain));
         _monitorProvider.DisplayStatusChanged -= PowerManager_DisplayStatusChanged;
         _monitorProvider.DisplayStatusChanged += PowerManager_DisplayStatusChanged;
 
@@ -946,6 +959,9 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
             Canvas.RemoveFromVisualTree();
             Canvas = null;
         }
+
+        _hdrPresenter?.Dispose();
+        _hdrPresenter = null;
 
         _lyricsRenderer.Dispose();
         _fluidRenderer.Dispose();
@@ -1108,7 +1124,8 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
 
     private void DrawCore(ICanvasAnimatedControl sender, CanvasDrawingSession ds,
         Rect bounds, Color overlayColor, double finalOpacity,
-        LyricsStyleSettings lyricsStyle, AlbumArtAreaStyleSettings albumStyle, LyricsBackgroundSettings lyricsBg)
+        LyricsStyleSettings lyricsStyle, AlbumArtAreaStyleSettings albumStyle, LyricsBackgroundSettings lyricsBg,
+        float hdrHighlightGain)
     {
         if (_lyricsWindowStatus == null) return;
 
@@ -1153,12 +1170,13 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
 
         _semanticEffectsRenderer.Draw(sender, ds, false);
 
-        if (_renderLyricsOpacity == 1) _lyricsRenderer.Draw(sender, ds);
+        if (_renderLyricsOpacity == 1) _lyricsRenderer.Draw(sender, ds, hdrHighlightGain);
     }
 
     private void DrawCoreWithEdgeFeatheringHandled(ICanvasAnimatedControl sender, CanvasDrawingSession ds,
         Rect bounds, Color overlayColor, double finalOpacity,
-        LyricsStyleSettings lyricsStyle, AlbumArtAreaStyleSettings albumStyle, LyricsBackgroundSettings lyricsBg)
+        LyricsStyleSettings lyricsStyle, AlbumArtAreaStyleSettings albumStyle, LyricsBackgroundSettings lyricsBg,
+        float hdrHighlightGain = 1)
     {
         if (_lyricsWindowStatus == null) return;
 
@@ -1166,12 +1184,12 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
         {
             using (ds.CreateLayer(_edgeFadeMaskRenderer.Brush))
             {
-                DrawCore(sender, ds, bounds, overlayColor, finalOpacity, lyricsStyle, albumStyle, lyricsBg);
+                DrawCore(sender, ds, bounds, overlayColor, finalOpacity, lyricsStyle, albumStyle, lyricsBg, hdrHighlightGain);
             }
         }
         else
         {
-            DrawCore(sender, ds, bounds, overlayColor, finalOpacity, lyricsStyle, albumStyle, lyricsBg);
+            DrawCore(sender, ds, bounds, overlayColor, finalOpacity, lyricsStyle, albumStyle, lyricsBg, hdrHighlightGain);
         }
     }
 

@@ -370,7 +370,9 @@
 
                     <!--  Lyrics effect  -->
                     <controls:Case Value="{x:Bind enums:LyricsWindowManagerSettingsSection.LyricsEffect}">
-                        <local:LyricsEffectSettingsControl LyricsEffectSettings="{x:Bind ViewModel.SelectedWindowStatus.LyricsEffectSettings, Mode=OneWay}" />
+                        <local:LyricsEffectSettingsControl
+                            LyricsEffectSettings="{x:Bind ViewModel.SelectedWindowStatus.LyricsEffectSettings, Mode=OneWay}"
+                            LyricsWindowStatus="{x:Bind ViewModel.SelectedWindowStatus, Mode=OneWay}" />
                     </controls:Case>
 
                     <!--  Lyrics background  -->
