@@ -201,24 +201,17 @@ public abstract class LyricsLineRendererBase
             finalOutputImage = region.CombinedEffect!;
         }
 
-        using var hdrFrontMask = HdrHighlightGain > 1 && progressInRegion is > 0 and < 1 && playedOpacity > 0
+        var hdrEnabled = HdrHighlightGain > 1 && playedOpacity > 0;
+        using var hdrFrontMask = hdrEnabled && progressInRegion is > 0 and < 1
             ? CreateHdrFrontMask(resourceCreator, subLineRect, progressInRegion,
-                fadeProgressInRegion * firstCharProgressInRegion, subLineRegion.CharacterCount, (float)playedOpacity)
+                fadeProgressInRegion * firstCharProgressInRegion, subLineRegion.CharacterCount)
             : null;
-        using var hdrFrontFill = hdrFrontMask != null && Line.CachedFill != null
-            ? new AlphaMaskEffect { Source = hdrFrontMask, AlphaMask = Line.CachedFill }
+        using var hdrFill = hdrFrontMask != null || (hdrEnabled && LyricsWindowStatus.LyricsEffectSettings.IsLyricsGlowEffectEnabled)
+            ? new HdrGlyphFill(region, hdrFrontMask, subLineRect)
             : null;
-        var hdrColor = fillStops[0].Color;
-        var normalFrontGain = Math.Min(HdrHighlightGain, NormalFrontGain);
-        using var hdrFront = hdrFrontFill != null
-            ? RenderLyricsChar.CreateHdrTintEffect(hdrFrontFill, normalFrontGain, hdrColor)
-            : null;
-        using var hdrGlowFront = hdrFrontFill != null && HdrHighlightGain > normalFrontGain &&
-                                 LyricsWindowStatus.LyricsEffectSettings.IsLyricsGlowEffectEnabled
-            ? RenderLyricsChar.CreateHdrTintEffect(hdrFrontFill, HdrHighlightGain, hdrColor)
-            : null;
+        var normalBoost = hdrFrontMask == null ? 0 : Math.Min(HdrHighlightGain, NormalFrontGain) - 1;
 
-        if (hdrFront == null && !LyricsWindowStatus.LyricsEffectSettings.IsLyricsFloatAnimationEnabled &&
+        if (hdrFill == null && !LyricsWindowStatus.LyricsEffectSettings.IsLyricsFloatAnimationEnabled &&
             !LyricsWindowStatus.LyricsEffectSettings.IsLyricsGlowEffectEnabled &&
             !LyricsWindowStatus.LyricsEffectSettings.IsLyricsScaleEffectEnabled)
         {
@@ -228,12 +221,12 @@ public abstract class LyricsLineRendererBase
         {
             var endCharIndex = subLineRegion.CharacterIndex + subLineRegion.CharacterCount;
             for (var i = subLineRegion.CharacterIndex; i < endCharIndex; i++)
-                DrawSingleCharacter(ds, i, finalOutputImage, hdrFront, hdrGlowFront, hdrColor);
+                DrawSingleCharacter(ds, i, finalOutputImage, hdrFill, normalBoost, fillStops[0].Color);
         }
     }
 
     private void DrawSingleCharacter(CanvasDrawingSession ds, int charIndex, ICanvasImage source,
-        ICanvasImage? hdrFront, ICanvasImage? hdrGlowFront, Color hdrColor)
+        HdrGlyphFill? hdrFill, float normalBoost, Color hdrColor)
     {
         if (LyricsWindowStatus == null || Line?.PrimaryTextLayout == null ||
             charIndex >= Line.PrimaryRenderChars.Count) return;
@@ -242,49 +235,52 @@ public abstract class LyricsLineRendererBase
         var (sourceCharRect, destCharRect) = GetCharacterRects(renderChar, Line,
             LyricsWindowStatus.LyricsStyleSettings.AutoWrap);
 
-        ICanvasImage? hdrGlowFill = null;
-        float hdrGlowStrength = 0;
+        var hdrGlowStrength = 0f;
+        var playedRect = sourceCharRect;
         var glowBlur = (float)renderChar.GlowTransition.Value;
         if (glowBlur > 0)
         {
-            renderChar.Crop.SourceRectangle = GetPlayedCharCropRect(sourceCharRect, renderChar.ProgressPlayed);
+            playedRect = GetPlayedCharCropRect(sourceCharRect, renderChar.ProgressPlayed);
+            renderChar.Crop.SourceRectangle = playedRect;
             renderChar.Crop.Source = source;
             renderChar.Glow.BlurAmount = glowBlur;
             var glowSource = sourceCharRect.Extend(sourceCharRect.Height);
             var glowDestination = destCharRect.Extend(destCharRect.Height);
             ds.DrawImage(renderChar.Glow, glowDestination, glowSource);
-            if (HdrHighlightGain > 1 && LyricsWindowStatus.LyricsEffectSettings.IsLyricsGlowEffectEnabled)
-                (hdrGlowFill, hdrGlowStrength) =
-                    renderChar.DrawHdrGlow(ds, glowSource, glowDestination, HdrHighlightGain, hdrColor);
+            if (hdrFill != null && LyricsWindowStatus.LyricsEffectSettings.IsLyricsGlowEffectEnabled)
+            {
+                hdrGlowStrength = EasingHelper.SmoothStep(Math.Clamp(glowBlur / 4, 0, 1));
+                renderChar.DrawHdrHalo(ds, glowSource, glowDestination, HdrHighlightGain, hdrColor, hdrGlowStrength);
+            }
+        }
+
+        if (hdrFill != null && (normalBoost > 0 || hdrGlowStrength > 0))
+        {
+            var peakBoost = HdrHighlightGain - 1;
+            var frontBoost = normalBoost > 0 ? normalBoost + (peakBoost - normalBoost) * hdrGlowStrength : 0;
+            source = hdrFill.Apply(playedRect, frontBoost, peakBoost * hdrGlowStrength * 0.78f);
         }
 
         ds.DrawImage(source, destCharRect, sourceCharRect);
-        if (hdrGlowFill != null)
-            ds.DrawImage(hdrGlowFill, destCharRect, sourceCharRect, hdrGlowStrength * 0.78f);
-        if (hdrFront != null && (hdrGlowFront == null || hdrGlowStrength < 1))
-            ds.DrawImage(hdrFront, destCharRect, sourceCharRect);
-        if (hdrGlowFront != null && hdrGlowStrength > 0)
-            ds.DrawImage(hdrGlowFront, destCharRect, sourceCharRect, hdrGlowStrength);
     }
 
     private CanvasCommandList CreateHdrFrontMask(ICanvasResourceCreator resourceCreator, Rect regionRect,
-        float progress, float whiteFadeWidth, int characterCount, float opacity)
+        float progress, float fadeWidth, int characterCount)
     {
         using var brush = CreateGradientBrush(resourceCreator,
-            CreateHdrFrontStops(progress, whiteFadeWidth, characterCount, opacity), regionRect);
+            CreateHdrFrontStops(progress, fadeWidth, characterCount), regionRect);
         var mask = new CanvasCommandList(resourceCreator);
         using (var fill = mask.CreateDrawingSession())
             fill.FillRectangle(regionRect, brush);
         return mask;
     }
 
-    internal static CanvasGradientStop[] CreateHdrFrontStops(float progress, float whiteFadeWidth,
-        int characterCount, float opacity)
+    internal static CanvasGradientStop[] CreateHdrFrontStops(float progress, float fadeWidth, int characterCount)
     {
         var trail = Math.Min(0.22f, 0.9f / characterCount);
-        var leadingFade = Math.Min(whiteFadeWidth, trail * 0.25f);
+        var leadingFade = Math.Min(fadeWidth, trail * 0.25f);
         var edgeFade = EasingHelper.SmoothStep(Math.Clamp(Math.Min(progress, 1 - progress) / (trail * 0.65f), 0, 1));
-        var peakAlpha = (byte)MathF.Round(255 * Math.Clamp(opacity * edgeFade, 0, 1));
+        var peakAlpha = (byte)MathF.Round(255 * edgeFade);
 
         return
         [

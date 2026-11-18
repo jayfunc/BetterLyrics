@@ -26,8 +26,8 @@ public class RenderLyricsChar : BaseRenderLyricsChar
     public CropEffect Crop { get; }
     public GaussianBlurEffect Glow { get; }
 
-    public (ICanvasImage Fill, float Strength) DrawHdrGlow(CanvasDrawingSession ds, Rect sourceRect,
-        Rect destinationRect, float gain, Color tint)
+    public void DrawHdrHalo(CanvasDrawingSession ds, Rect sourceRect, Rect destinationRect, float gain, Color tint,
+        float strength)
     {
         if (_hdrGlowColor == null)
         {
@@ -59,10 +59,8 @@ public class RenderLyricsChar : BaseRenderLyricsChar
         };
 
         _hdrGlow.BlurAmount = Glow.BlurAmount;
-        var strength = EasingHelper.SmoothStep(Math.Clamp(Glow.BlurAmount / 4, 0, 1));
         var passed = EasingHelper.SmoothStep(Math.Clamp((float)(ProgressPlayed - 0.65) / 0.35f, 0, 1));
         ds.DrawImage(_hdrGlow, destinationRect, sourceRect, strength * (0.82f - 0.59f * passed));
-        return (_hdrGlowColor, strength);
     }
 
     internal static ColorMatrixEffect CreateHdrTintEffect(ICanvasImage source, float gain, Color tint) =>
