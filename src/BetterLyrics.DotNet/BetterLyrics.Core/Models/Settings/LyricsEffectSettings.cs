@@ -27,6 +27,9 @@ public partial class LyricsEffectSettings : ObservableObject, ICloneable
     public partial bool IsLyricsGlowEffectEnabled { get; set; } = true;
 
     [ObservableProperty]
+    public partial bool IsLyricsHdrGlowEnabled { get; set; }
+
+    [ObservableProperty]
     public partial LyricsEffectScope LyricsGlowEffectScope { get; set; } = LyricsEffectScope.LongDurationSyllable;
 
     [ObservableProperty]
@@ -195,6 +198,7 @@ public partial class LyricsEffectSettings : ObservableObject, ICloneable
             IsLyricsOutOfSightEffectEnabled = IsLyricsOutOfSightEffectEnabled,
 
             IsLyricsGlowEffectEnabled = IsLyricsGlowEffectEnabled,
+            IsLyricsHdrGlowEnabled = IsLyricsHdrGlowEnabled,
             LyricsGlowEffectLongSyllableDuration = LyricsGlowEffectLongSyllableDuration,
             IsLyricsGlowEffectAmountAutoAdjust = IsLyricsGlowEffectAmountAutoAdjust,
             LyricsGlowEffectAmount = LyricsGlowEffectAmount,

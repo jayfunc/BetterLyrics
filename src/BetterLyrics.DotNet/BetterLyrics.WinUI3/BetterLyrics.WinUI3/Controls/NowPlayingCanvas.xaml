@@ -18,5 +18,9 @@
             Draw="Canvas_Draw"
             TargetElapsedTime="{x:Bind LyricsWindowStatus.FPS, Mode=OneWay, Converter={StaticResource FPSToTimeSpanConverter}}"
             Update="Canvas_Update" />
+        <canvas:CanvasSwapChainPanel
+            x:Name="HdrPanel"
+            IsHitTestVisible="False"
+            Visibility="Collapsed" />
     </Grid>
 </local:BaseUserControl>

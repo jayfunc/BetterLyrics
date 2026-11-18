@@ -60,7 +60,7 @@ public partial class LyricsRenderer : EffectRendererBase, IDisposable
         _edgeFadeMaskRenderer.Dispose();
     }
 
-    public void Draw(ICanvasAnimatedControl control, CanvasDrawingSession ds)
+    public void Draw(ICanvasAnimatedControl control, CanvasDrawingSession ds, float hdrHighlightGain = 1)
     {
         if (LyricsOpacity == 0) return;
 
@@ -70,18 +70,19 @@ public partial class LyricsRenderer : EffectRendererBase, IDisposable
             using var layer = new CanvasCommandList(control);
             using (var layerDs = layer.CreateDrawingSession())
             {
-                DrawLyricsWithEdgeFadeHandled(control, layerDs);
+                DrawLyricsWithEdgeFadeHandled(control, layerDs, hdrHighlightGain);
             }
 
             DrawWithParallax(ds, layer);
         }
         else
         {
-            DrawLyricsWithEdgeFadeHandled(control, ds);
+            DrawLyricsWithEdgeFadeHandled(control, ds, hdrHighlightGain);
         }
     }
 
-    private void DrawLyricsWithEdgeFadeHandled(ICanvasAnimatedControl control, CanvasDrawingSession ds)
+    private void DrawLyricsWithEdgeFadeHandled(ICanvasAnimatedControl control, CanvasDrawingSession ds,
+        float hdrHighlightGain)
     {
         if (LyricsWindowStatus == null) return;
         if (_edgeFadeMaskRenderer.Brush != null &&
@@ -89,13 +90,13 @@ public partial class LyricsRenderer : EffectRendererBase, IDisposable
              LyricsWindowStatus.LyricsEffectSettings.IsLyricsEdgeFeatheringEffectEnabled))
             using (ds.CreateLayer(_edgeFadeMaskRenderer.Brush))
             {
-                DrawLyrics(control, ds);
+                DrawLyrics(control, ds, hdrHighlightGain);
             }
         else
-            DrawLyrics(control, ds);
+            DrawLyrics(control, ds, hdrHighlightGain);
     }
 
-    private void DrawLyrics(ICanvasAnimatedControl control, CanvasDrawingSession ds)
+    private void DrawLyrics(ICanvasAnimatedControl control, CanvasDrawingSession ds, float hdrHighlightGain)
     {
         if (RenderLyricsLines == null || LyricsWindowStatus == null) return;
 
@@ -113,6 +114,7 @@ public partial class LyricsRenderer : EffectRendererBase, IDisposable
         lineRenderer.LyricsWidth = LyricsWidth;
         lineRenderer.LyricsHeight = LyricsHeight;
         lineRenderer.LyricsWindowStatus = LyricsWindowStatus;
+        lineRenderer.HdrHighlightGain = hdrHighlightGain;
 
         // 提前计算全局基准坐标
         var baseScrollX = isVertical
