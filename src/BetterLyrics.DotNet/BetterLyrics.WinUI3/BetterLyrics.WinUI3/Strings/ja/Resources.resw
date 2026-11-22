@@ -1282,19 +1282,19 @@
     <value>デバッグレベル以上のログを含めます。トラブルシューティングが容易になりますが、ログファイルサイズが大きくなります。アプリの再起動後に反映されます。</value>
   </data>
   <data name="SettingsPageGcObjectCheck.Header" xml:space="preserve">
-    <value>GCによって回収されなかったオブジェクトを確認する</value>
+    <value>ガベージコレクションで回収されなかったオブジェクトをチェック</value>
   </data>
   <data name="SettingsPageGcObjectCheck.Description" xml:space="preserve">
-    <value>ガベージコレクションを実行し、まだ生存している追跡対象オブジェクトを一覧表示します。</value>
+    <value>ガベージコレクションを実行し、生存している追跡対象オブジェクトの一覧を表示します。</value>
   </data>
   <data name="SettingsPageGcObjectCheckButton.Content" xml:space="preserve">
-    <value>確認</value>
+    <value>チェック</value>
   </data>
   <data name="SettingsPageGcObjectsNone" xml:space="preserve">
-    <value>追跡対象はすべて消滅しました。</value>
+    <value>生存している追跡対象オブジェクトはありません。</value>
   </data>
   <data name="SettingsPageGcObjectsFound" xml:space="preserve">
-    <value>ガベージコレクション後も存続している追跡対象：</value>
+    <value>ガベージコレクション実行後も生存している追跡対象オブジェクト:</value>
   </data>
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve">
     <value>アプリの外観</value>
@@ -1760,6 +1760,12 @@
   </data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>光沢効果</value>
+  </data>
+  <data name="SettingsPageLyricsHdrGlow.Header" xml:space="preserve">
+    <value>HDRの歌詞が輝いている</value>
+  </data>
+  <data name="SettingsPageLyricsHdrGlow.Description" xml:space="preserve">
+    <value>選択したディスプレイで Windows HDR がオンになっている場合に利用可能です</value>
   </data>
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
     <value>ライト</value>

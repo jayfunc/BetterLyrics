@@ -1761,6 +1761,12 @@
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>Efeito de Brilho</value>
   </data>
+  <data name="SettingsPageLyricsHdrGlow.Header" xml:space="preserve">
+    <value>As letras em HDR brilham</value>
+  </data>
+  <data name="SettingsPageLyricsHdrGlow.Description" xml:space="preserve">
+    <value>Disponível quando o Windows HDR estiver ativado no ecrã selecionado</value>
+  </data>
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
     <value>Leve</value>
   </data>

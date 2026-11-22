@@ -1761,6 +1761,12 @@
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>Efek Bersinar</value>
   </data>
+  <data name="SettingsPageLyricsHdrGlow.Header" xml:space="preserve">
+    <value>Lirik HDR bersinar</value>
+  </data>
+  <data name="SettingsPageLyricsHdrGlow.Description" xml:space="preserve">
+    <value>Fitur ini tersedia saat Windows HDR diaktifkan untuk layar yang dipilih</value>
+  </data>
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
     <value>Tipis</value>
   </data>

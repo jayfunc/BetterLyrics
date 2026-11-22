@@ -1761,6 +1761,12 @@
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>발광 효과</value>
   </data>
+  <data name="SettingsPageLyricsHdrGlow.Header" xml:space="preserve">
+    <value>HDR 가사가 빛난다</value>
+  </data>
+  <data name="SettingsPageLyricsHdrGlow.Description" xml:space="preserve">
+    <value>선택한 디스플레이에서 Windows HDR이 켜져 있을 때 사용할 수 있습니다.</value>
+  </data>
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
     <value>라이트</value>
   </data>

@@ -1761,6 +1761,12 @@
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>تأثير التوهج</value>
   </data>
+  <data name="SettingsPageLyricsHdrGlow.Header" xml:space="preserve">
+    <value>تتألق كلمات الأغاني بتقنية HDR</value>
+  </data>
+  <data name="SettingsPageLyricsHdrGlow.Description" xml:space="preserve">
+    <value>تتوفر هذه الميزة عند تشغيل ميزة Windows HDR على الشاشة المحددة</value>
+  </data>
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
     <value>خفيف</value>
   </data>

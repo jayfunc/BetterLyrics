@@ -1765,7 +1765,7 @@
     <value>HDR lyrics glow</value>
   </data>
   <data name="SettingsPageLyricsHdrGlow.Description" xml:space="preserve">
-    <value>Available when Windows HDR is on for the selected display.</value>
+    <value>Available when Windows HDR is on for the selected display</value>
   </data>
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
     <value>Light</value>

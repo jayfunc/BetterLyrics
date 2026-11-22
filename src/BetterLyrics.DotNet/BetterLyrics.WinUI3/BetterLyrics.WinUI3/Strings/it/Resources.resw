@@ -1761,6 +1761,12 @@
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve">
     <value>Effetto bagliore</value>
   </data>
+  <data name="SettingsPageLyricsHdrGlow.Header" xml:space="preserve">
+    <value>I testi delle canzoni in HDR risplendono</value>
+  </data>
+  <data name="SettingsPageLyricsHdrGlow.Description" xml:space="preserve">
+    <value>Disponibile quando la funzione HDR di Windows è attiva per lo schermo selezionato</value>
+  </data>
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
     <value>Leggero</value>
   </data>
