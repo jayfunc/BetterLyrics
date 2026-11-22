@@ -219,6 +219,7 @@ This project is licensed under the **[GNU General Public License v3.0](LICENSE)*
 | Contributor | Contributions |
 | :--- | :--- |
 | [borcolasky](https://crowdin.com/profile/borcolasky) | `I` |
+| [DrivingGodJ](https://github.com/DrivingGodJ) | `C` |
 | [H-MAli](https://github.com/H-MAli) | `C` |
 | [kusutori](https://github.com/kusutori) | `C` |
 | [OctoBored](https://github.com/OctoBored) | `D` |

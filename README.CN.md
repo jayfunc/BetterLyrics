@@ -220,6 +220,7 @@
 | 贡献者 | 贡献类型 |
 | :--- | :--- |
 | [borcolasky](https://crowdin.com/profile/borcolasky) | `I` |
+| [DrivingGodJ](https://github.com/DrivingGodJ) | `C` |
 | [H-MAli](https://github.com/H-MAli) | `C` |
 | [kusutori](https://github.com/kusutori) | `C` |
 | [OctoBored](https://github.com/OctoBored) | `D` |
