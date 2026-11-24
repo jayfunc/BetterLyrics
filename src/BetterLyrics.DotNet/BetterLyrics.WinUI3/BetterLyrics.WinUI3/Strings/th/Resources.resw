@@ -318,6 +318,9 @@
   <data name="LastFMAuthFailed" xml:space="preserve">
     <value>การอนุญาตล้มเหลว โปรดลองอีกครั้ง</value>
   </data>
+  <data name="LastFMCredentialsRequired" xml:space="preserve">
+    <value>จำเป็นต้องมี API Key และ Shared Secret ของ Last.fm</value>
+  </data>
   <data name="LastFMRequestAuthConfirm" xml:space="preserve">
     <value>ฉันได้ทำการอนุญาตเสร็จสิ้นแล้ว</value>
   </data>
@@ -2927,5 +2930,23 @@
   </data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve">
     <value>ไม่พบจอภาพที่ตรงกับโหมดนี้</value>
+  </data>
+  <data name="SettingsPageListenBrainzTrack.Header" xml:space="preserve">
+    <value>ติดตามประวัติการฟังผ่าน ListenBrainz</value>
+  </data>
+  <data name="SettingsPageListenBrainzToken.Header" xml:space="preserve">
+    <value>โทเค็นผู้ใช้</value>
+  </data>
+  <data name="SettingsPageListenBrainzToken.Description" xml:space="preserve">
+    <value>คัดลอกโทเค็นผู้ใช้จากส่วนตั้งค่าบัญชี ListenBrainz ของคุณ</value>
+  </data>
+  <data name="SettingsPageListenBrainzUsername.Header" xml:space="preserve">
+    <value>ชื่อผู้ใช้</value>
+  </data>
+  <data name="SettingsPageListenBrainzDisconnect.Content" xml:space="preserve">
+    <value>ตัดการเชื่อมต่อ</value>
+  </data>
+  <data name="ListenBrainzTokenInvalid" xml:space="preserve">
+    <value>โทเคน ListenBrainz ไม่ถูกต้อง</value>
   </data>
 </root>

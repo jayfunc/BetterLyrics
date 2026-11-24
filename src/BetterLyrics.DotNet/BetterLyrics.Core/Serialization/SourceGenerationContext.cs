@@ -16,6 +16,9 @@ namespace BetterLyrics.Core.Serialization;
 [JsonSerializable(typeof(Dictionary<string, object>))]
 [JsonSerializable(typeof(MemoryReaderConfig))]
 [JsonSerializable(typeof(LayoutProfile))]
+[JsonSerializable(typeof(ListenBrainzValidateTokenResponse))]
+[JsonSerializable(typeof(ListenBrainzSubmitListenRequest))]
+[JsonSerializable(typeof(ListenBrainzSubmitListenResponse))]
 [JsonSourceGenerationOptions(WriteIndented = true)]
 public partial class SourceGenerationContext : JsonSerializerContext
 {

@@ -73,6 +73,7 @@ public static class SettingSearchItemExtensions
         new SettingSearchItem { Uid = "PlaybackSettingsControlMemoryReader/Header", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.General, ParentUid = "SettingsPageMediaSourceProvidersConfig/Header" },
 
         new SettingSearchItem { Uid = "SettingsPageLastFMTrack/Header", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.General },
+        new SettingSearchItem { Uid = "SettingsPageListenBrainzTrack/Header", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.General },
         new SettingSearchItem { Uid = "SettingsPageDiscordPresence/Header", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.General },
         new SettingSearchItem { Uid = "SettingsPageLXMusicServer/Header", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.General },
 
@@ -114,6 +115,9 @@ public static class SettingSearchItemExtensions
         new SettingSearchItem { Uid = "SettingsPageLastFMUsername/Header", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.Integration },
         new SettingSearchItem { Uid = "SettingsPageLastFMPlaycount/Header", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.Integration },
         new SettingSearchItem { Uid = "SettingsPageLastFMRegistered/Header", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.Integration },
+
+        new SettingSearchItem { Uid = "SettingsPageListenBrainzToken/Header", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.Integration },
+        new SettingSearchItem { Uid = "SettingsPageListenBrainzUsername/Header", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.Integration },
 
         new SettingSearchItem { Uid = "SettingsPageDiscordUsername/Header", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.Integration },
         new SettingSearchItem { Uid = "SettingsPageDiscordAlbumArtSource/Header", Section = SettingsSection.PlaybackLib, Subsection = PlaybackLibSettingsSection.Integration },

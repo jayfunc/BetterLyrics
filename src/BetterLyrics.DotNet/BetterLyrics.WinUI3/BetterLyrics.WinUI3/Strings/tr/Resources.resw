@@ -318,6 +318,9 @@
   <data name="LastFMAuthFailed" xml:space="preserve">
     <value>Yetkilendirme başarısız oldu, lütfen tekrar deneyin</value>
   </data>
+  <data name="LastFMCredentialsRequired" xml:space="preserve">
+    <value>Last.fm API Anahtarı ve Paylaşılan Gizli Anahtar gereklidir</value>
+  </data>
   <data name="LastFMRequestAuthConfirm" xml:space="preserve">
     <value>Yetkilendirmeyi tamamladım</value>
   </data>
@@ -2927,5 +2930,23 @@
   </data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve">
     <value>Bu modla eşleşen bir monitör bulunamadı</value>
+  </data>
+  <data name="SettingsPageListenBrainzTrack.Header" xml:space="preserve">
+    <value>ListenBrainz aracılığıyla dinleme geçmişini takip edin</value>
+  </data>
+  <data name="SettingsPageListenBrainzToken.Header" xml:space="preserve">
+    <value>Kullanıcı Jetonu</value>
+  </data>
+  <data name="SettingsPageListenBrainzToken.Description" xml:space="preserve">
+    <value>ListenBrainz hesap ayarlarınızdan kullanıcı jetonunu kopyalayın</value>
+  </data>
+  <data name="SettingsPageListenBrainzUsername.Header" xml:space="preserve">
+    <value>Kullanıcı adı</value>
+  </data>
+  <data name="SettingsPageListenBrainzDisconnect.Content" xml:space="preserve">
+    <value>Bağlantıyı kes</value>
+  </data>
+  <data name="ListenBrainzTokenInvalid" xml:space="preserve">
+    <value>ListenBrainz jetonu geçersiz</value>
   </data>
 </root>

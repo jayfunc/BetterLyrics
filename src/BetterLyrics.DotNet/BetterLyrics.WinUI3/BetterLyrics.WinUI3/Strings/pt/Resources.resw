@@ -318,6 +318,9 @@
   <data name="LastFMAuthFailed" xml:space="preserve">
     <value>Autorização falhou, tente novamente</value>
   </data>
+  <data name="LastFMCredentialsRequired" xml:space="preserve">
+    <value>É necessário dispor de uma chave API e de um segredo partilhado da Last.fm</value>
+  </data>
   <data name="LastFMRequestAuthConfirm" xml:space="preserve">
     <value>Concluí a autorização</value>
   </data>
@@ -2927,5 +2930,23 @@
   </data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve">
     <value>Não foi encontrado nenhum monitor que corresponda ao modo</value>
+  </data>
+  <data name="SettingsPageListenBrainzTrack.Header" xml:space="preserve">
+    <value>Acompanhar o histórico de audição através do ListenBrainz</value>
+  </data>
+  <data name="SettingsPageListenBrainzToken.Header" xml:space="preserve">
+    <value>Token de utilizador</value>
+  </data>
+  <data name="SettingsPageListenBrainzToken.Description" xml:space="preserve">
+    <value>Copie o token de utilizador nas definições da sua conta ListenBrainz</value>
+  </data>
+  <data name="SettingsPageListenBrainzUsername.Header" xml:space="preserve">
+    <value>Nome de utilizador</value>
+  </data>
+  <data name="SettingsPageListenBrainzDisconnect.Content" xml:space="preserve">
+    <value>Desligar</value>
+  </data>
+  <data name="ListenBrainzTokenInvalid" xml:space="preserve">
+    <value>O token do ListenBrainz não é válido</value>
   </data>
 </root>

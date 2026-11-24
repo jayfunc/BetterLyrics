@@ -318,6 +318,9 @@
   <data name="LastFMAuthFailed" xml:space="preserve">
     <value>Pemberian kuasa gagal, sila cuba lagi</value>
   </data>
+  <data name="LastFMCredentialsRequired" xml:space="preserve">
+    <value>Kunci API Last.fm dan Rahsia Bersama diperlukan</value>
+  </data>
   <data name="LastFMRequestAuthConfirm" xml:space="preserve">
     <value>Saya telah melengkapkan pemberian kuasa</value>
   </data>
@@ -2927,5 +2930,23 @@
   </data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve">
     <value>Tiada monitor ditemui yang sepadan dengan mod</value>
+  </data>
+  <data name="SettingsPageListenBrainzTrack.Header" xml:space="preserve">
+    <value>Lacak sejarah pendengaran melalui ListenBrainz</value>
+  </data>
+  <data name="SettingsPageListenBrainzToken.Header" xml:space="preserve">
+    <value>Token Pengguna</value>
+  </data>
+  <data name="SettingsPageListenBrainzToken.Description" xml:space="preserve">
+    <value>Salin token pengguna daripada tetapan akaun ListenBrainz anda.</value>
+  </data>
+  <data name="SettingsPageListenBrainzUsername.Header" xml:space="preserve">
+    <value>Nama pengguna</value>
+  </data>
+  <data name="SettingsPageListenBrainzDisconnect.Content" xml:space="preserve">
+    <value>Putuskan sambungan</value>
+  </data>
+  <data name="ListenBrainzTokenInvalid" xml:space="preserve">
+    <value>Token ListenBrainz tidak sah</value>
   </data>
 </root>

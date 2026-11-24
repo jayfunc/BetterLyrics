@@ -269,6 +269,11 @@
                                                 <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsLastFMTrackEnabled, Mode=TwoWay}" />
                                             </controls:SettingsCard>
 
+                                            <!--  ListenBrainz  -->
+                                            <controls:SettingsCard x:Uid="SettingsPageListenBrainzTrack" IsEnabled="{x:Bind ViewModel.IsListenBrainzAuthenticated, Mode=OneWay}">
+                                                <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsListenBrainzTrackEnabled, Mode=TwoWay}" />
+                                            </controls:SettingsCard>
+
                                             <!--  Discord  -->
                                             <controls:SettingsCard x:Uid="SettingsPageDiscordPresence">
                                                 <ToggleSwitch IsOn="{x:Bind ViewModel.SelectedMediaSourceProvider.IsDiscordPresenceEnabled, Mode=TwoWay}" />
@@ -591,18 +596,57 @@
                                 <controls:SettingsExpander
                                     Header="Last.fm"
                                     HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/LastFM.png}"
-                                    IsExpanded="{x:Bind ViewModel.IsLastFmAuthenticated, Mode=OneWay}">
+                                    IsExpanded="True">
                                     <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <local:ExternalLinkButton x:Uid="Help" NavigateUri="{x:Bind constants:Link.LastFmApiAccounts}" />
                                         <Button
                                             x:Uid="SettingsPageLastFMAuth"
                                             Command="{x:Bind ViewModel.LastFmAuthCommand}"
-                                            IsEnabled="{x:Bind ViewModel.IsLastFmAuthenticated, Mode=OneWay, Converter={StaticResource BoolNegationConverter}}" />
+                                            IsEnabled="{x:Bind ViewModel.CanAuthorizeLastFm, Mode=OneWay}" />
                                         <Button
                                             x:Uid="SettingsPageLastFMUnAuth"
                                             Command="{x:Bind ViewModel.LastFmUnAuthCommand}"
                                             IsEnabled="{x:Bind ViewModel.IsLastFmAuthenticated, Mode=OneWay}" />
                                     </StackPanel>
                                     <controls:SettingsExpander.Items>
+                                        <controls:SettingsCard Header="API Key">
+                                            <Grid ColumnSpacing="6">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <local:RevealPasswordBox
+                                                    Grid.Column="0"
+                                                    MinWidth="240"
+                                                    Password="{x:Bind ViewModel.LastFmApiKey, Mode=TwoWay}" />
+                                                <Button
+                                                    Grid.Column="1"
+                                                    Command="{x:Bind ViewModel.SaveLastFmCredentialsCommand}"
+                                                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                                          FontSize=12,
+                                                                          Glyph=&#xE8FB;}"
+                                                    Style="{ThemeResource GhostButtonStyle}" />
+                                            </Grid>
+                                        </controls:SettingsCard>
+                                        <controls:SettingsCard Header="Shared Secret">
+                                            <Grid ColumnSpacing="6">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <local:RevealPasswordBox
+                                                    Grid.Column="0"
+                                                    MinWidth="240"
+                                                    Password="{x:Bind ViewModel.LastFmSharedSecret, Mode=TwoWay}" />
+                                                <Button
+                                                    Grid.Column="1"
+                                                    Command="{x:Bind ViewModel.SaveLastFmCredentialsCommand}"
+                                                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                                          FontSize=12,
+                                                                          Glyph=&#xE8FB;}"
+                                                    Style="{ThemeResource GhostButtonStyle}" />
+                                            </Grid>
+                                        </controls:SettingsCard>
                                         <controls:SettingsCard x:Uid="SettingsPageLastFMUsername" IsEnabled="{x:Bind ViewModel.IsLastFmAuthenticated, Mode=OneWay}">
                                             <local:ExternalLinkButton
                                                 Padding="0"
@@ -617,6 +661,43 @@
                                         </controls:SettingsCard>
                                         <controls:SettingsCard IsEnabled="{x:Bind ViewModel.IsLastFmAuthenticated, Mode=OneWay}">
                                             <Button x:Uid="SettingsPageLastFMRefresh" Command="{x:Bind ViewModel.LastFmRefreshCommand}" />
+                                        </controls:SettingsCard>
+                                    </controls:SettingsExpander.Items>
+                                </controls:SettingsExpander>
+
+                                <!--  ListenBrainz  -->
+                                <TextBlock Style="{StaticResource SettingsSectionHeaderTextBlockStyle}" Text="ListenBrainz" />
+                                <controls:SettingsExpander
+                                    Header="ListenBrainz"
+                                    HeaderIcon="{ui:BitmapIcon Source=ms-appx:///Assets/ListenBrainz.png}"
+                                    IsExpanded="True">
+                                    <StackPanel Orientation="Horizontal" Spacing="6">
+                                        <local:ExternalLinkButton x:Uid="Help" NavigateUri="{x:Bind constants:Link.ListenBrainzSettings}" />
+                                        <Button
+                                            x:Uid="SettingsPageListenBrainzDisconnect"
+                                            Command="{x:Bind ViewModel.ClearListenBrainzTokenCommand}"
+                                            IsEnabled="{x:Bind ViewModel.IsListenBrainzAuthenticated, Mode=OneWay}" />
+                                    </StackPanel>
+                                    <controls:SettingsExpander.Items>
+                                        <controls:SettingsCard x:Uid="SettingsPageListenBrainzToken">
+                                            <Grid ColumnSpacing="6">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <local:RevealPasswordBox Grid.Column="0" Password="{x:Bind ViewModel.ListenBrainzToken, Mode=TwoWay}" />
+                                                <Button
+                                                    Grid.Column="1"
+                                                    Command="{x:Bind ViewModel.SaveListenBrainzTokenCommand}"
+                                                    Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                                          FontSize=12,
+                                                                          Glyph=&#xE8FB;}"
+                                                    IsEnabled="{x:Bind ViewModel.CanSaveListenBrainzToken, Mode=OneWay}"
+                                                    Style="{ThemeResource GhostButtonStyle}" />
+                                            </Grid>
+                                        </controls:SettingsCard>
+                                        <controls:SettingsCard x:Uid="SettingsPageListenBrainzUsername" IsEnabled="{x:Bind ViewModel.IsListenBrainzAuthenticated, Mode=OneWay}">
+                                            <TextBlock Text="{x:Bind ViewModel.ListenBrainzUsername, Mode=OneWay, TargetNullValue=-, FallbackValue=-}" />
                                         </controls:SettingsCard>
                                     </controls:SettingsExpander.Items>
                                 </controls:SettingsExpander>
@@ -675,19 +756,16 @@
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBox
+                                    <local:RevealPasswordBox
                                         Grid.Column="0"
-                                        PlaceholderText="media-user-token"
-                                        Text="{x:Bind ViewModel.AppleMusicMediaUserToken, Mode=TwoWay}"
-                                        TextWrapping="Wrap" />
+                                        Password="{x:Bind ViewModel.AppleMusicMediaUserToken, Mode=TwoWay}"
+                                        PlaceholderText="media-user-token" />
                                     <local:ExternalLinkButton
                                         x:Uid="Help"
                                         Grid.Column="1"
-                                        VerticalAlignment="Bottom"
                                         NavigateUri="{x:Bind constants:Link.AppleMusicCfg}" />
                                     <Button
                                         Grid.Column="2"
-                                        VerticalAlignment="Bottom"
                                         Command="{x:Bind ViewModel.SaveAppleMusicMediaUserTokenCommand}"
                                         Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                               FontSize=12,

@@ -318,6 +318,9 @@
   <data name="LastFMAuthFailed" xml:space="preserve">
     <value>प्राधिकरण विफल, कृपया पुनः प्रयास करें</value>
   </data>
+  <data name="LastFMCredentialsRequired" xml:space="preserve">
+    <value>Last.fm API कुंजी और साझा रहस्य आवश्यक हैं।</value>
+  </data>
   <data name="LastFMRequestAuthConfirm" xml:space="preserve">
     <value>मैंने प्राधिकरण पूरा कर लिया है</value>
   </data>
@@ -2927,5 +2930,23 @@
   </data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve">
     <value>मोड से मेल खाने वाला कोई मॉनिटर नहीं मिला</value>
+  </data>
+  <data name="SettingsPageListenBrainzTrack.Header" xml:space="preserve">
+    <value>ListenBrainz के माध्यम से सुनने का इतिहास ट्रैक करें</value>
+  </data>
+  <data name="SettingsPageListenBrainzToken.Header" xml:space="preserve">
+    <value>उपयोगकर्ता टोकन</value>
+  </data>
+  <data name="SettingsPageListenBrainzToken.Description" xml:space="preserve">
+    <value>अपने ListenBrainz खाते की सेटिंग्स से यूज़र टोकन कॉपी करें।</value>
+  </data>
+  <data name="SettingsPageListenBrainzUsername.Header" xml:space="preserve">
+    <value>उपयोगकर्ता नाम</value>
+  </data>
+  <data name="SettingsPageListenBrainzDisconnect.Content" xml:space="preserve">
+    <value>अनप्लग करें</value>
+  </data>
+  <data name="ListenBrainzTokenInvalid" xml:space="preserve">
+    <value>ListenBrainz टोकन अमान्य है</value>
   </data>
 </root>

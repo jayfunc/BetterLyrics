@@ -66,6 +66,9 @@ public partial class MediaSourceProviderInfo : ObservableObject
     public partial bool IsLastFMTrackEnabled { get; set; } = false;
 
     [ObservableProperty]
+    public partial bool IsListenBrainzTrackEnabled { get; set; } = false;
+
+    [ObservableProperty]
     public partial bool IsDiscordPresenceEnabled { get; set; } = false;
 
     [ObservableProperty]

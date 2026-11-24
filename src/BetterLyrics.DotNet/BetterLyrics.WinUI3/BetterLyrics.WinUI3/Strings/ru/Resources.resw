@@ -318,6 +318,9 @@
   <data name="LastFMAuthFailed" xml:space="preserve">
     <value>Ошибка авторизации, попробуйте снова</value>
   </data>
+  <data name="LastFMCredentialsRequired" xml:space="preserve">
+    <value>Требуются ключ API Last.fm и общий секретный ключ</value>
+  </data>
   <data name="LastFMRequestAuthConfirm" xml:space="preserve">
     <value>Я завершил авторизацию</value>
   </data>
@@ -2927,5 +2930,23 @@
   </data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve">
     <value>Не найден монитор, соответствующий данному режиму</value>
+  </data>
+  <data name="SettingsPageListenBrainzTrack.Header" xml:space="preserve">
+    <value>Отслеживайте историю прослушивания с помощью ListenBrainz</value>
+  </data>
+  <data name="SettingsPageListenBrainzToken.Header" xml:space="preserve">
+    <value>Токен пользователя</value>
+  </data>
+  <data name="SettingsPageListenBrainzToken.Description" xml:space="preserve">
+    <value>Скопируйте токен пользователя из настроек вашей учетной записи ListenBrainz</value>
+  </data>
+  <data name="SettingsPageListenBrainzUsername.Header" xml:space="preserve">
+    <value>Имя пользователя</value>
+  </data>
+  <data name="SettingsPageListenBrainzDisconnect.Content" xml:space="preserve">
+    <value>Отключить</value>
+  </data>
+  <data name="ListenBrainzTokenInvalid" xml:space="preserve">
+    <value>Токен ListenBrainz недействителен</value>
   </data>
 </root>

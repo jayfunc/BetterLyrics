@@ -318,6 +318,9 @@
   <data name="LastFMAuthFailed" xml:space="preserve">
     <value>認証に失敗しました。もう一度お試しください</value>
   </data>
+  <data name="LastFMCredentialsRequired" xml:space="preserve">
+    <value>Last.fmのAPIキーと共有シークレットが必要です</value>
+  </data>
   <data name="LastFMRequestAuthConfirm" xml:space="preserve">
     <value>認証を完了しました</value>
   </data>
@@ -1762,10 +1765,10 @@
     <value>光沢効果</value>
   </data>
   <data name="SettingsPageLyricsHdrGlow.Header" xml:space="preserve">
-    <value>HDRの歌詞が輝いている</value>
+    <value>HDR 歌詞グロー</value>
   </data>
   <data name="SettingsPageLyricsHdrGlow.Description" xml:space="preserve">
-    <value>選択したディスプレイで Windows HDR がオンになっている場合に利用可能です</value>
+    <value>選択したディスプレイで Windows HDR がオンの場合に利用できます</value>
   </data>
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve">
     <value>ライト</value>
@@ -2927,5 +2930,23 @@
   </data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve">
     <value>モードに一致するモニターが見つかりません</value>
+  </data>
+  <data name="SettingsPageListenBrainzTrack.Header" xml:space="preserve">
+    <value>ListenBrainz を使って再生履歴を追跡する</value>
+  </data>
+  <data name="SettingsPageListenBrainzToken.Header" xml:space="preserve">
+    <value>ユーザートークン</value>
+  </data>
+  <data name="SettingsPageListenBrainzToken.Description" xml:space="preserve">
+    <value>ListenBrainzアカウントの設定からユーザートークンをコピーしてください</value>
+  </data>
+  <data name="SettingsPageListenBrainzUsername.Header" xml:space="preserve">
+    <value>ユーザー名</value>
+  </data>
+  <data name="SettingsPageListenBrainzDisconnect.Content" xml:space="preserve">
+    <value>切断</value>
+  </data>
+  <data name="ListenBrainzTokenInvalid" xml:space="preserve">
+    <value>ListenBrainzのトークンが無効です</value>
   </data>
 </root>

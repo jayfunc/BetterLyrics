@@ -27,6 +27,7 @@ public class GsmtcService : GsmtcServiceBase,
 {
     private readonly IDiscordService _discordService;
     private readonly ILastFmService _lastFmService;
+    private readonly IListenBrainzService _listenBrainzService;
     private readonly IPlayHistoryService _playHistoryService;
     private readonly Timer _scrobbleTimer;
 
@@ -42,6 +43,7 @@ public class GsmtcService : GsmtcServiceBase,
     ITransliterationService transliterationService,
     IPlayHistoryService playHistoryService,
     ILastFmService lastFmService,
+    IListenBrainzService listenBrainzService,
     IAppUIThreadProvider appUiThreadProvider,
     ILogger<GsmtcService> logger, IGlobalToastProvider globalToastProvider,
     IWindowManagerProvider windowManagerProvider)
@@ -51,6 +53,7 @@ public class GsmtcService : GsmtcServiceBase,
         _discordService = discordService;
         _playHistoryService = playHistoryService;
         _lastFmService = lastFmService;
+        _listenBrainzService = listenBrainzService;
 
         _scrobbleTimer = new Timer(ScrobbleTimerCallback, null, Timeout.Infinite, 1000);
 
@@ -102,6 +105,13 @@ public class GsmtcService : GsmtcServiceBase,
         {
             _ = Task.Run(() => _lastFmService.UpdateNowPlayingAsync(CurrentSongInfo));
             _logger.LogInformation("MediaManager_OnAnyMediaPropertyChanged: {Title} update now playing to last.fm", CurrentSongInfo.Title);
+        }
+
+        var isListenBrainzEnabled = CurrentMediaSourceProviderInfo?.IsListenBrainzTrackEnabled ?? false;
+        if (isListenBrainzEnabled)
+        {
+            _ = Task.Run(() => _listenBrainzService.UpdateNowPlayingAsync(CurrentSongInfo));
+            _logger.LogInformation("MediaManager_OnAnyMediaPropertyChanged: {Title} update now playing to ListenBrainz", CurrentSongInfo.Title);
         }
     }
 
@@ -250,6 +260,16 @@ public class GsmtcService : GsmtcServiceBase,
                             // 后台
                             _ = Task.Run(() => _lastFmService.TrackAsync(CurrentSongInfo));
                             _logger.LogInformation("ScrobbleTimer_Tick: {Title} scrobbled to last.fm",
+                                CurrentSongInfo.Title);
+                        }
+
+                        // 写入 ListenBrainz 播放记录
+                        var isListenBrainzEnabled = CurrentMediaSourceProviderInfo?.IsListenBrainzTrackEnabled ?? false;
+                        if (isListenBrainzEnabled)
+                        {
+                            // 后台
+                            _ = Task.Run(() => _listenBrainzService.TrackAsync(CurrentSongInfo));
+                            _logger.LogInformation("ScrobbleTimer_Tick: {Title} scrobbled to ListenBrainz",
                                 CurrentSongInfo.Title);
                         }
 

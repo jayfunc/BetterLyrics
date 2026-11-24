@@ -318,6 +318,9 @@
   <data name="LastFMAuthFailed" xml:space="preserve">
     <value>인증 실패, 다시 시도해 주세요</value>
   </data>
+  <data name="LastFMCredentialsRequired" xml:space="preserve">
+    <value>Last.fm API 키와 공유 비밀번호가 필요합니다.</value>
+  </data>
   <data name="LastFMRequestAuthConfirm" xml:space="preserve">
     <value>인증을 완료했습니다</value>
   </data>
@@ -2927,5 +2930,23 @@
   </data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve">
     <value>해당 모드에 해당하는 모니터를 찾을 수 없습니다.</value>
+  </data>
+  <data name="SettingsPageListenBrainzTrack.Header" xml:space="preserve">
+    <value>ListenBrainz를 통해 청취 내역 추적하기</value>
+  </data>
+  <data name="SettingsPageListenBrainzToken.Header" xml:space="preserve">
+    <value>사용자 토큰</value>
+  </data>
+  <data name="SettingsPageListenBrainzToken.Description" xml:space="preserve">
+    <value>ListenBrainz 계정 설정에서 사용자 토큰을 복사하세요.</value>
+  </data>
+  <data name="SettingsPageListenBrainzUsername.Header" xml:space="preserve">
+    <value>사용자 이름</value>
+  </data>
+  <data name="SettingsPageListenBrainzDisconnect.Content" xml:space="preserve">
+    <value>연결 해제</value>
+  </data>
+  <data name="ListenBrainzTokenInvalid" xml:space="preserve">
+    <value>ListenBrainz 토큰이 유효하지 않습니다.</value>
   </data>
 </root>

@@ -29,6 +29,7 @@ public partial class PlaybackSettingsControlViewModel : ObservableRecipient, ITr
     private readonly IAppUIThreadProvider _appUiThreadProvider;
     private readonly IGlobalToastProvider _globalToastProvider;
     private readonly ILastFmService _lastFmService;
+    private readonly IListenBrainzService _listenBrainzService;
     private readonly IPasswordVaultProvider _passwordVaultProvider;
     private readonly ITranslationService _translationService;
     private readonly IFilePickerProvider _filePickerProvider;
@@ -45,9 +46,36 @@ public partial class PlaybackSettingsControlViewModel : ObservableRecipient, ITr
 
     [ObservableProperty] public partial PlaybackLibSettingsNavMenuItem? SelectedNavItem { get; set; }
 
-    [ObservableProperty] public partial bool IsLastFmAuthenticated { get; set; }
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CanAuthorizeLastFm))]
+    public partial bool IsLastFmAuthenticated { get; set; }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CanAuthorizeLastFm))]
+    public partial bool IsLastFmConfigured { get; set; }
 
     [ObservableProperty] public partial User? LastFmUser { get; set; }
+
+    [ObservableProperty] public partial string LastFmApiKey { get; set; }
+
+    [ObservableProperty] public partial string LastFmSharedSecret { get; set; }
+
+    public bool CanAuthorizeLastFm => IsLastFmConfigured && !IsLastFmAuthenticated;
+
+    [ObservableProperty] public partial bool IsListenBrainzAuthenticated { get; set; }
+
+    [ObservableProperty] public partial string? ListenBrainzUsername { get; set; }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CanSaveListenBrainzToken))]
+    public partial string ListenBrainzToken { get; set; }
+
+    [ObservableProperty]
+    [NotifyPropertyChangedFor(nameof(CanSaveListenBrainzToken))]
+    public partial bool IsListenBrainzSavingToken { get; set; }
+
+    public bool CanSaveListenBrainzToken =>
+        !string.IsNullOrWhiteSpace(ListenBrainzToken) && !IsListenBrainzSavingToken;
 
     private readonly IDiscordService _discordService;
 
@@ -69,7 +97,8 @@ public partial class PlaybackSettingsControlViewModel : ObservableRecipient, ITr
 
     public PlaybackSettingsControlViewModel(
     ISettingsService settingsService, IGsmtcService gsmtcService, ITranslationService libreTranslationService,
-    ILastFmService lastFmService, IAppUIThreadProvider appUiThreadProvider, IPasswordVaultProvider passwordVaultProvider,
+    ILastFmService lastFmService, IListenBrainzService listenBrainzService,
+    IAppUIThreadProvider appUiThreadProvider, IPasswordVaultProvider passwordVaultProvider,
     IGlobalToastProvider globalToastProvider, IFilePickerProvider filePickerProvider, IDiscordService discordService,
     ILocalizationService localizationService, ILogger<PlaybackSettingsControlViewModel> logger)
     {
@@ -84,6 +113,7 @@ public partial class PlaybackSettingsControlViewModel : ObservableRecipient, ITr
         _filePickerProvider = filePickerProvider;
 
         _lastFmService = lastFmService;
+        _listenBrainzService = listenBrainzService;
 
         _discordService = discordService;
         DiscordUser = _discordService.CurrentUser;
@@ -100,7 +130,14 @@ public partial class PlaybackSettingsControlViewModel : ObservableRecipient, ITr
             x.LanguageCode == AppSettings.TranslationSettings.SelectedTargetLanguageCode);
 
         IsLastFmAuthenticated = _lastFmService.IsAuthenticated;
+        IsLastFmConfigured = _lastFmService.IsConfigured;
         LastFmUser = _lastFmService.User;
+        LastFmApiKey = _lastFmService.ApiKey ?? string.Empty;
+        LastFmSharedSecret = _lastFmService.SharedSecret ?? string.Empty;
+
+        IsListenBrainzAuthenticated = _listenBrainzService.IsAuthenticated;
+        ListenBrainzUsername = _listenBrainzService.Username;
+        ListenBrainzToken = _listenBrainzService.UserToken ?? string.Empty;
 
         SelectedMediaSourceProvider = AppSettings.MediaSourceProvidersInfo.FirstOrDefault();
 
@@ -133,12 +170,15 @@ public partial class PlaybackSettingsControlViewModel : ObservableRecipient, ITr
 
         _lastFmService.UserChanged += LastFMService_UserChanged;
         _lastFmService.IsAuthenticatedChanged += LastFMService_IsAuthenticatedChanged;
+        _listenBrainzService.AuthenticationChanged += ListenBrainzService_AuthenticationChanged;
         _discordService.UserChanged += DiscordService_UserChanged;
         AppSettings.MediaSourceProvidersInfo.CollectionChanged += MediaSourceProvidersInfo_CollectionChanged;
 
         // 重新激活时同步一次外部状态，避免控件隐藏期间状态变旧
         IsLastFmAuthenticated = _lastFmService.IsAuthenticated;
+        IsLastFmConfigured = _lastFmService.IsConfigured;
         LastFmUser = _lastFmService.User;
+        SyncListenBrainzState();
         DiscordUser = _discordService.CurrentUser;
         DiscordUsername = DiscordUser != null ? $"{DiscordUser.Username}" : null;
         IsDiscordConnected = DiscordUser != null;
@@ -148,6 +188,7 @@ public partial class PlaybackSettingsControlViewModel : ObservableRecipient, ITr
     {
         _lastFmService.UserChanged -= LastFMService_UserChanged;
         _lastFmService.IsAuthenticatedChanged -= LastFMService_IsAuthenticatedChanged;
+        _listenBrainzService.AuthenticationChanged -= ListenBrainzService_AuthenticationChanged;
         _discordService.UserChanged -= DiscordService_UserChanged;
         AppSettings.MediaSourceProvidersInfo.CollectionChanged -= MediaSourceProvidersInfo_CollectionChanged;
 
@@ -185,6 +226,28 @@ public partial class PlaybackSettingsControlViewModel : ObservableRecipient, ITr
     private void LastFMService_UserChanged(object? sender, LastFMUserChangedEventArgs e)
     {
         LastFmUser = e.User;
+    }
+
+    private void ListenBrainzService_AuthenticationChanged(object? sender,
+        ListenBrainzAuthenticationChangedEventArgs e)
+    {
+        _appUiThreadProvider.Execute(() =>
+        {
+            IsListenBrainzAuthenticated = e.IsAuthenticated;
+            ListenBrainzUsername = e.UserName;
+
+            // The token was cleared (sign-out / server rejection), so the input must be emptied as well.
+            if (!e.IsAuthenticated)
+            {
+                ListenBrainzToken = string.Empty;
+            }
+        });
+    }
+
+    private void SyncListenBrainzState()
+    {
+        IsListenBrainzAuthenticated = _listenBrainzService.IsAuthenticated;
+        ListenBrainzUsername = _listenBrainzService.Username;
     }
 
     private void DiscordService_UserChanged(object? sender, DiscordRPC.User? e)
@@ -267,6 +330,55 @@ public partial class PlaybackSettingsControlViewModel : ObservableRecipient, ITr
     private async Task LastFmRefreshAsync()
     {
         await _lastFmService.RefreshAsync();
+    }
+
+    [RelayCommand]
+    private async Task SaveLastFmCredentialsAsync()
+    {
+        await _lastFmService.ConfigureAsync(LastFmApiKey, LastFmSharedSecret);
+
+        // Reflect the normalized values (trimmed / cleared) back to the UI.
+        LastFmApiKey = _lastFmService.ApiKey ?? string.Empty;
+        LastFmSharedSecret = _lastFmService.SharedSecret ?? string.Empty;
+        IsLastFmConfigured = _lastFmService.IsConfigured;
+        IsLastFmAuthenticated = _lastFmService.IsAuthenticated;
+        LastFmUser = _lastFmService.User;
+
+        _globalToastProvider.Show("ActionCompleted", null, MessageSeverity.Success);
+    }
+
+    [RelayCommand]
+    private async Task SaveListenBrainzTokenAsync()
+    {
+        if (string.IsNullOrWhiteSpace(ListenBrainzToken))
+        {
+            return;
+        }
+
+        IsListenBrainzSavingToken = true;
+        try
+        {
+            if (await _listenBrainzService.SaveTokenAsync(ListenBrainzToken))
+            {
+                // Keep the stored token in the field so it is visible (masked) while connected.
+                ListenBrainzToken = _listenBrainzService.UserToken ?? string.Empty;
+                _globalToastProvider.Show("ActionCompleted", null, MessageSeverity.Success);
+            }
+        }
+        finally
+        {
+            IsListenBrainzSavingToken = false;
+            SyncListenBrainzState();
+        }
+    }
+
+    [RelayCommand]
+    private async Task ClearListenBrainzTokenAsync()
+    {
+        await _listenBrainzService.ClearTokenAsync();
+        ListenBrainzToken = string.Empty;
+        SyncListenBrainzState();
+        _globalToastProvider.Show("ActionCompleted", null, MessageSeverity.Success);
     }
 
     [RelayCommand]

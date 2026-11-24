@@ -318,6 +318,9 @@
   <data name="LastFMAuthFailed" xml:space="preserve">
     <value>فشل التفويض، يرجى المحاولة مرة أخرى</value>
   </data>
+  <data name="LastFMCredentialsRequired" xml:space="preserve">
+    <value>يلزم توفير مفتاح واجهة برمجة التطبيقات (API) لـ Last.fm والسر المشترك</value>
+  </data>
   <data name="LastFMRequestAuthConfirm" xml:space="preserve">
     <value>لقد أكملت التفويض</value>
   </data>
@@ -2927,5 +2930,23 @@
   </data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve">
     <value>لم يتم العثور على شاشة تتوافق مع هذا الوضع</value>
+  </data>
+  <data name="SettingsPageListenBrainzTrack.Header" xml:space="preserve">
+    <value>تتبع سجل الاستماع عبر ListenBrainz</value>
+  </data>
+  <data name="SettingsPageListenBrainzToken.Header" xml:space="preserve">
+    <value>رمز المستخدم</value>
+  </data>
+  <data name="SettingsPageListenBrainzToken.Description" xml:space="preserve">
+    <value>انسخ رمز المستخدم من إعدادات حسابك على ListenBrainz</value>
+  </data>
+  <data name="SettingsPageListenBrainzUsername.Header" xml:space="preserve">
+    <value>اسم المستخدم</value>
+  </data>
+  <data name="SettingsPageListenBrainzDisconnect.Content" xml:space="preserve">
+    <value>قطع الاتصال</value>
+  </data>
+  <data name="ListenBrainzTokenInvalid" xml:space="preserve">
+    <value>رمز ListenBrainz غير صالح</value>
   </data>
 </root>

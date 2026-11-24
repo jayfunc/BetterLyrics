@@ -24,6 +24,10 @@ public static class Link
 
     public const string AppleMusicCfg = $"{OfficialWebsite}/docs/features/lyrics-cfg/apple-music";
 
+    public const string LastFmApiAccounts = "https://www.last.fm/api/accounts";
+
+    public const string ListenBrainzSettings = "https://listenbrainz.org/settings";
+
     public const string LayoutEditor = $"{OfficialWebsite}/docs/features/layout-editor";
 
     public const string QQGroup1 = "https://qm.qq.com/q/yArcw3n8pq";

@@ -318,6 +318,9 @@
   <data name="LastFMAuthFailed" xml:space="preserve">
     <value>Error de autorización, inténtelo de nuevo</value>
   </data>
+  <data name="LastFMCredentialsRequired" xml:space="preserve">
+    <value>La clé API Last.fm et le secret partagé sont obligatoires</value>
+  </data>
   <data name="LastFMRequestAuthConfirm" xml:space="preserve">
     <value>J'ai complété l'autorisation</value>
   </data>
@@ -2927,5 +2930,23 @@
   </data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve">
     <value>Aucun écran correspondant à ce mode n'a été détecté.</value>
+  </data>
+  <data name="SettingsPageListenBrainzTrack.Header" xml:space="preserve">
+    <value>Suivre l'historique d'écoute via ListenBrainz</value>
+  </data>
+  <data name="SettingsPageListenBrainzToken.Header" xml:space="preserve">
+    <value>Jeton d'utilisateur</value>
+  </data>
+  <data name="SettingsPageListenBrainzToken.Description" xml:space="preserve">
+    <value>Copiez le jeton d'utilisateur depuis les paramètres de votre compte ListenBrainz</value>
+  </data>
+  <data name="SettingsPageListenBrainzUsername.Header" xml:space="preserve">
+    <value>Nom d'utilisateur</value>
+  </data>
+  <data name="SettingsPageListenBrainzDisconnect.Content" xml:space="preserve">
+    <value>Déconnecter</value>
+  </data>
+  <data name="ListenBrainzTokenInvalid" xml:space="preserve">
+    <value>Le jeton ListenBrainz n'est pas valide</value>
   </data>
 </root>

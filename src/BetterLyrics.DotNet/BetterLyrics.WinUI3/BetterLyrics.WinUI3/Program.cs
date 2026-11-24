@@ -293,6 +293,7 @@ public class Program
             .AddSingleton<ITranslationService, TranslationService>()
             .AddSingleton<ITransliterationService, TransliterationService>()
             .AddSingleton<ILastFmService, LastFmService>()
+            .AddSingleton<IListenBrainzService, ListenBrainzService>()
             .AddSingleton<IDiscordService, DiscordService>()
             .AddSingleton<ILocalizationService, LocalizationService>()
             .AddSingleton<ILyricsCacheService, LyricsCacheService>()

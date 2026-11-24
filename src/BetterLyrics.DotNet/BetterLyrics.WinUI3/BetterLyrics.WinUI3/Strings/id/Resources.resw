@@ -318,6 +318,9 @@
   <data name="LastFMAuthFailed" xml:space="preserve">
     <value>Otorisasi gagal, silakan coba lagi</value>
   </data>
+  <data name="LastFMCredentialsRequired" xml:space="preserve">
+    <value>Kunci API dan Kode Rahasia Bersama Last.fm wajib diisi</value>
+  </data>
   <data name="LastFMRequestAuthConfirm" xml:space="preserve">
     <value>Saya telah menyelesaikan otorisasi</value>
   </data>
@@ -2927,5 +2930,23 @@
   </data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve">
     <value>Tidak ditemukan monitor yang sesuai dengan mode tersebut</value>
+  </data>
+  <data name="SettingsPageListenBrainzTrack.Header" xml:space="preserve">
+    <value>Lacak riwayat mendengarkan melalui ListenBrainz</value>
+  </data>
+  <data name="SettingsPageListenBrainzToken.Header" xml:space="preserve">
+    <value>Token Pengguna</value>
+  </data>
+  <data name="SettingsPageListenBrainzToken.Description" xml:space="preserve">
+    <value>Salin token pengguna dari pengaturan akun ListenBrainz Anda</value>
+  </data>
+  <data name="SettingsPageListenBrainzUsername.Header" xml:space="preserve">
+    <value>Nama Pengguna</value>
+  </data>
+  <data name="SettingsPageListenBrainzDisconnect.Content" xml:space="preserve">
+    <value>Putuskan sambungan</value>
+  </data>
+  <data name="ListenBrainzTokenInvalid" xml:space="preserve">
+    <value>Token ListenBrainz tidak valid</value>
   </data>
 </root>

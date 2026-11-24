@@ -318,6 +318,9 @@
   <data name="LastFMAuthFailed" xml:space="preserve">
     <value>授權失敗，請重試</value>
   </data>
+  <data name="LastFMCredentialsRequired" xml:space="preserve">
+    <value>必須提供 Last.fm API 金鑰和共享密鑰</value>
+  </data>
   <data name="LastFMRequestAuthConfirm" xml:space="preserve">
     <value>我已經完成了授權</value>
   </data>
@@ -2927,5 +2930,23 @@
   </data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve">
     <value>未找到符合該模式的顯示器</value>
+  </data>
+  <data name="SettingsPageListenBrainzTrack.Header" xml:space="preserve">
+    <value>透過 ListenBrainz 追蹤聆聽紀錄</value>
+  </data>
+  <data name="SettingsPageListenBrainzToken.Header" xml:space="preserve">
+    <value>使用者代幣</value>
+  </data>
+  <data name="SettingsPageListenBrainzToken.Description" xml:space="preserve">
+    <value>請從您的 ListenBrainz 帳戶設定中複製使用者代碼</value>
+  </data>
+  <data name="SettingsPageListenBrainzUsername.Header" xml:space="preserve">
+    <value>使用者名稱</value>
+  </data>
+  <data name="SettingsPageListenBrainzDisconnect.Content" xml:space="preserve">
+    <value>斷開連接</value>
+  </data>
+  <data name="ListenBrainzTokenInvalid" xml:space="preserve">
+    <value>ListenBrainz 憑證無效</value>
   </data>
 </root>
