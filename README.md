@@ -226,6 +226,7 @@ This project is licensed under the **[GNU General Public License v3.0](LICENSE)*
 | [PiYuanZhouLv](https://github.com/PiYuanZhouLv) | `C` |
 | [Raspberry-Monster](https://github.com/Raspberry-Monster) | `C` |
 | [SuHeAndZl](https://crowdin.com/profile/SuHeAndZl) | `I` `Q` `D` |
+| [Xionghaizi001](https://github.com/Xionghaizi001) | `C` |
 | [YUZU384](https://github.com/YUZU384) | `C` |
 | [ZHider](https://github.com/ZHider) | `C` |
 | [zxbmmmmmmmmm](https://github.com/zxbmmmmmmmmm) | `C` |
