@@ -50,6 +50,14 @@
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <PackageCertificateKeyFile>BetterLyrics.WinUI3 %28Package%29_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <!--
+      不要按 Language 限定符自动拆分资源包。
+      SearchPioneer.Lingua 的语言模型位于 Lingua\LanguageModels\<ISO 代码>\ 下，
+      PRI 会把 <ISO 代码> 目录当成语言限定符，于是这些文件被划到“语言资源包”里，
+      而 bundle 打包时主包(AppxManifest 对应的 .msix)只包含主资源映射中的文件，
+      结果安装后 Lingua 只找得到少数几个语言模型。保留 Scale/DXFeatureLevel 拆分即可。
+    -->
+    <AppxBundleAutoResourcePackageQualifiers>Scale|DXFeatureLevel</AppxBundleAutoResourcePackageQualifiers>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <AppxBundle>Always</AppxBundle>

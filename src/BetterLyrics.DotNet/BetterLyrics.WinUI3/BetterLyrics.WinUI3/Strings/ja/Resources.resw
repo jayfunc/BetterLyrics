@@ -319,7 +319,7 @@
     <value>認証に失敗しました。もう一度お試しください</value>
   </data>
   <data name="LastFMCredentialsRequired" xml:space="preserve">
-    <value>Last.fmのAPIキーと共有シークレットが必要です</value>
+    <value>Last.fm の API キーと共有シークレットが必要です</value>
   </data>
   <data name="LastFMRequestAuthConfirm" xml:space="preserve">
     <value>認証を完了しました</value>
@@ -2929,24 +2929,24 @@
     <value>ディープリンクをコピー</value>
   </data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve">
-    <value>モードに一致するモニターが見つかりません</value>
+    <value>該当モードのモニターなし</value>
   </data>
   <data name="SettingsPageListenBrainzTrack.Header" xml:space="preserve">
-    <value>ListenBrainz を使って再生履歴を追跡する</value>
+    <value>ListenBrainz で再生履歴を記録</value>
   </data>
   <data name="SettingsPageListenBrainzToken.Header" xml:space="preserve">
     <value>ユーザートークン</value>
   </data>
   <data name="SettingsPageListenBrainzToken.Description" xml:space="preserve">
-    <value>ListenBrainzアカウントの設定からユーザートークンをコピーしてください</value>
+    <value>ListenBrainz のアカウント設定からユーザートークンをコピーしてください</value>
   </data>
   <data name="SettingsPageListenBrainzUsername.Header" xml:space="preserve">
     <value>ユーザー名</value>
   </data>
   <data name="SettingsPageListenBrainzDisconnect.Content" xml:space="preserve">
-    <value>切断</value>
+    <value>接続解除</value>
   </data>
   <data name="ListenBrainzTokenInvalid" xml:space="preserve">
-    <value>ListenBrainzのトークンが無効です</value>
+    <value>ListenBrainz トークンが無効です</value>
   </data>
 </root>
