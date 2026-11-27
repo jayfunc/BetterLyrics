@@ -170,6 +170,9 @@ public class SettingsService : ISettingsService
                 p => p.Provider,
                 p => new AlbumArtSearchProviderInfo(p, true)
             );
+
+            // 为历史配置补齐字段纠正的默认规则（例如 Apple Music 的「歌手 — 专辑」拆分）
+            x.EnsureFieldCorrectionRulesSeeded();
         }
     }
 

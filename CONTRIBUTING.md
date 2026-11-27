@@ -1,75 +1,68 @@
+## Contributing / 贡献
+
+### Code / 代码
+
+We welcome code contributions through GitHub Pull Requests:
+
+1. Fork the repository and create a branch from `dev`.
+2. Make your changes and keep each commit focused.
+3. Open a Pull Request targeting `dev`, describing what changed and how you tested it.
+
+欢迎通过 GitHub Pull Request 贡献代码：
+
+1. Fork 本仓库，并基于 `dev` 分支创建自己的分支。
+2. 完成修改，并尽量让每个提交聚焦于一件事。
+3. 向 `dev` 分支提交 Pull Request，说明改动内容与验证方式。
+
+[Open a Pull Request / 提交 Pull Request](https://github.com/jayfunc/BetterLyrics/pulls)
+
+---
+
 ## 🌍 Translation / 翻译
 
-We want **BetterLyrics** to be accessible to everyone, and your help in translating it is greatly appreciated! We use **Crowdin** to manage localization.
+We want **BetterLyrics** to be accessible to everyone, and we are grateful to everyone who has helped improve its translations.
 
-我们致力于让 **BetterLyrics** 面向全球用户，非常感谢您在翻译方面提供的帮助！本项目使用 **Crowdin** 平台进行本地化管理。
+我们致力于让 **BetterLyrics** 面向全球用户，感谢每一位曾为翻译改进提供帮助的朋友。
 
----
+### Punctuation / 标点
 
-### How to Contribute
+Keep punctuation consistent across languages, but use each language's own marks.
 
-1.  **Join the Project:**
-    Accept our invitation to join the translation team via Crowdin:
-    [**Join BetterLyrics on Crowdin**](https://crowdin.com/project/betterlyrics/invite?h=413bb0df7afa420247a98fefdae5e12c2647410)
+- If a string has no punctuation inside it, do not add a mark at the end.
+- If a string already contains punctuation inside (comma, semicolon, period, etc.), end it with the language's sentence mark — `.` in English, `。` in Chinese/Japanese, `।` in Hindi, `.` in Arabic; Thai usually omits it.
+- UI labels, option names, templates, and other fragments are not sentences even when they contain dashes, braces, slashes, or quotation marks; do not add a sentence mark to them (e.g. `MediaFieldRuleKindTemplate.Content` = `Template — {field} placeholders`).
+- Keep meaningful ending marks such as `?`/`？`, `!`/`！`, `:`/`：`, trailing commas, and ellipses; do not strip dots from abbreviations or extensions (`Hrs.`, `.lrc`).
+- When a sentence is split into multiple resource entries, apply the rule to each entry and keep commas or spaces on earlier fragments.
+- The Music Memoir / StoryPage slides are an exception: they must be elegant, poetic, and rhyme within each scene, but never end with a sentence mark. Avoid flattening them into literal UI phrasing.
 
-2.  **Translate & Proofread:**
-    Once you have joined, you are welcome to translate new strings or proofread existing language resources.
-    > **Note:** Please only **approve** a translation if you are native or fluent in that language and are confident in its accuracy.
+保持一致，但使用各语言自己的标点：
 
-**Syncing and Recognition**
-* **Synchronization:** Crowdin automatically syncs translations to GitHub periodically.
-* **Merging:** Once you have completed proofreading a language and the resources have synced to GitHub via a Pull Request, the maintainers will merge the changes.
-* **Credit:** After the merge, we will add your Crowdin profile to the **Contributors** column in the table below.
-
-Thank you for helping us make BetterLyrics better!
-
----
-
-### 如何参与贡献
-
-1.  **加入项目：**
-    通过以下链接接受邀请，加入 Crowdin 上的翻译团队：
-    [**在 Crowdin 上加入 BetterLyrics**](https://crowdin.com/project/betterlyrics/invite?h=413bb0df7afa420247a98fefdae5e12c2647410)
-
-2.  **翻译与校对：**
-    加入项目后，欢迎您翻译新的词条或校对现有的语言资源。
-    > **注意：** 请仅在您精通目标语言（母语或流利水平）并确信翻译准确无误时，才对翻译进行 **批准 (Approve)** 操作。
-
-**同步与致谢**
-* **同步机制：** Crowdin 会定期自动将翻译内容同步至 GitHub。
-* **合并流程：** 当您完成了一种语言的校对工作，且资源已通过 Pull Request 同步至 GitHub 后，维护者会将更改合并。
-* **贡献者致谢：** 代码合并后，我们会将您的 Crowdin 个人资料添加到下方的 **贡献者 (Contributors)** 列表中。
-
-感谢您帮助我们将 BetterLyrics 打造得更好！
+- 文案中间没有任何标点时，句尾不加标点。
+- 文案中间已有逗号、分号、句号等标点时，句尾按语言补上对应句末标点：英文 `.`、中/日 `。`、印地语 `।`、阿拉伯语 `.`；泰语通常不加。
+- 界面标签、选项名、模板等非句子片段即使包含破折号、占位符 `{}`、斜杠或引号，也不加句末标点（如 `MediaFieldRuleKindTemplate.Content` = `模板 —— {field} 占位符`）。
+- 保留有意义的结尾符号（`?`/`？`、`!`/`！`、`:`/`：`、结尾逗号、省略号）；不要删掉缩写或扩展名里的点（`Hrs.`、`.lrc`）。
+- 一句文案被拆成多条资源时，每条分别按此规则处理，中间片段保留逗号或空格。
+- 音乐回忆录（StoryPage）slides 是特例：文案必须优雅、诗意，并在每个场景内押韵，但句尾不加句点，不要写成生硬的界面提示语。
 
 ---
 
-### 📊 Status / 状态
+### Translation workflow / 翻译方式
 
-| Language / 语言 | Code | Translated / 已翻译 | Proofread / 已校对 | Contributors / 贡献者 |
-| --- | --- | --- | --- | --- |
-| English | en | 100% | 100% | jayfunc[^1] |
-| Arabic (العربية) | ar | 100% | 0% | - |
-| German (Deutsch) | de | 100% | 0% | - |
-| Spanish (Español) | es | 100% | 0% | - |
-| French (Français) | fr | 100% | 3% | - |
-| Hindi (हिन्दी) | hi | 100% | 0% | - |
-| Indonesian (Bahasa Indonesia) | id | 100% | 0% | - |
-| Italian (Italiano) | it | 100% | 99% | pascal-00[^2] |
-| Japanese (日本語) | ja | 100% | 100% | SuHeAndZl[^3] |
-| Korean (한국어) | ko | 100% | 0% | - |
-| Malay (Bahasa Melayu) | ms | 100% | 0% | - |
-| Portuguese (Português) | pt | 100% | 0% | - |
-| Russian (Русский) | ru | 100% | 0% | - |
-| Thai (ไทย) | th | 100% | 0% | - |
-| Vietnamese (Tiếng Việt) | vi | 100% | 0% | - |
-| Simplified Chinese (简体中文) | zh-Hans | 100% | 100% | jayfunc[^1] borcolasky[^4] |
-| Traditional Chinese (繁體中文) | zh-Hant | 100% | 100% | borcolasky[^4] SuHeAndZl[^3] |
+The contributors listed below contributed through our former Crowdin platform. Crowdin has reached its free usage limit, so translations for all languages will be generated with AI going forward. We still welcome translation contributions — if you would like to improve a translation, please [submit a Pull Request](https://github.com/jayfunc/BetterLyrics/pulls) directly.
 
-[^1]: [jayfunc](https://crowdin.com/profile/jayfunc)
-[^2]: [pascal-00](https://crowdin.com/profile/pascal-00)
-[^3]: [SuHeAndZl](https://crowdin.com/profile/SuHeAndZl)
-[^4]: [borcolasky](https://crowdin.com/profile/borcolasky)
+下方列出的贡献者是通过我们以往使用的 Crowdin 平台参与翻译的。由于 Crowdin 已达到免费额度上限，今后各语言的翻译将由 AI 完成。项目仍然接受翻译贡献；如果你希望改进译文，请[直接提交 Pull Request](https://github.com/jayfunc/BetterLyrics/pulls)。
 
-> 💡 **Note / 提示:** To keep the list concise, minor contributions (e.g., translating only a few strings) may not be explicitly listed in the table above, but we are deeply grateful for every helper!
-> 为了保持列表简洁，较小的贡献（如仅翻译/校对了个别词条）可能不会在上方表格中明确列出，但我们由衷感谢每一位热心帮助的朋友！
+---
+
+### Past translation contributors / 往期翻译贡献者
+
+| Language / 语言 | Code | Contributors / 贡献者 |
+| --- | --- | --- |
+| English | en | jayfunc |
+| Italian (Italiano) | it | pascal-00 |
+| Japanese (日本語) | ja | SuHeAndZl |
+| Simplified Chinese (简体中文) | zh-Hans | jayfunc borcolasky |
+| Traditional Chinese (繁體中文) | zh-Hant | borcolasky SuHeAndZl |
+
+> 💡 **Note / 提示:** To keep the list concise, minor contributions (e.g., translating only a few strings) may not be explicitly listed above, but we are deeply grateful for every helper!
+> 为了保持列表简洁，较小的贡献（如仅翻译了个别词条）可能不会在上方明确列出，但我们由衷感谢每一位热心帮助的朋友！

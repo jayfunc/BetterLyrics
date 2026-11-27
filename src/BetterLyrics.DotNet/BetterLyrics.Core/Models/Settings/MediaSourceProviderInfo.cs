@@ -4,6 +4,7 @@ using BetterLyrics.Core.Collections;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Helpers.MediaFieldCorrection;
 using BetterLyrics.Core.Messages.MediaLibrary;
 using BetterLyrics.Core.Models.Memory;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -21,6 +22,10 @@ public partial class MediaSourceProviderInfo : ObservableObject
         Provider = string.Empty;
         TimelineSyncThreshold = 0;
         PositionOffset = 0;
+
+        // 旧的配置文件里没有 FieldMappingRules 字段，反序列化不会触发属性赋值，
+        // 这里先挂上通知，保证之后添加的规则能够正常保存并触发歌曲信息刷新。
+        AttachFieldMappingRulesHandlers(FieldMappingRules);
     }
 
     public MediaSourceProviderInfo(string provider, bool isEnable = true)
@@ -46,6 +51,11 @@ public partial class MediaSourceProviderInfo : ObservableObject
 
         LyricsSearchProvidersInfo.ItemPropertyChanged += LyricsSearchProvidersInfo_ItemPropertyChanged;
         LyricsSearchProvidersInfo.CollectionChanged += LyricsSearchProvidersInfo_CollectionChanged;
+
+        AttachFieldMappingRulesHandlers(FieldMappingRules);
+
+        // 播放器一旦被记录，立即写入内置默认规则（目前只有 Apple Music 需要）
+        EnsureFieldCorrectionRulesSeeded();
     }
 
     [ObservableProperty]
@@ -103,6 +113,19 @@ public partial class MediaSourceProviderInfo : ObservableObject
     public partial FullyObservableCollection<AlbumArtSearchProviderInfo> AlbumArtSearchProvidersInfo { get; set; } =
         [.. Enum.GetValues<AlbumArtProvider>().Select(p => new AlbumArtSearchProviderInfo(p, true))];
 
+    /// <summary>
+    /// 该播放器的字段纠正规则，按列表顺序依次执行。
+    /// </summary>
+    [ObservableProperty]
+    public partial FullyObservableCollection<MediaFieldMappingRule> FieldMappingRules { get; set; } = [];
+
+    /// <summary>
+    /// 是否已经写入过内置默认规则。
+    /// 用户删除默认规则后，下次启动不会再自动加回来。
+    /// </summary>
+    [ObservableProperty]
+    public partial bool IsFieldCorrectionSeeded { get; set; } = false;
+
     [JsonIgnore] public bool IsLXMusic => PlayerIdHelper.IsLXMusic(Provider);
     [JsonIgnore] public bool IsBetterLyrics => PlayerIdHelper.IsBetterLyrics(Provider);
     [JsonIgnore][ObservableProperty] public partial bool IsFocused { get; set; } = false;
@@ -152,5 +175,66 @@ public partial class MediaSourceProviderInfo : ObservableObject
     private void LyricsSearchProvidersInfo_ItemPropertyChanged(object? sender, PropertyChangedEventArgs e)
     {
         OnPropertyChanged(nameof(LyricsSearchProvidersInfo));
+    }
+
+    partial void OnFieldMappingRulesChanged(FullyObservableCollection<MediaFieldMappingRule> oldValue,
+        FullyObservableCollection<MediaFieldMappingRule> newValue)
+    {
+        oldValue?.CollectionChanged -= FieldMappingRules_CollectionChanged;
+        oldValue?.ItemPropertyChanged -= FieldMappingRules_ItemPropertyChanged;
+        AttachFieldMappingRulesHandlers(newValue);
+    }
+
+    private void AttachFieldMappingRulesHandlers(FullyObservableCollection<MediaFieldMappingRule>? rules)
+    {
+        if (rules == null) return;
+
+        rules.CollectionChanged += FieldMappingRules_CollectionChanged;
+        rules.ItemPropertyChanged += FieldMappingRules_ItemPropertyChanged;
+    }
+
+    private void FieldMappingRules_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
+    {
+        // 冒泡给上一层（设置持久化与歌曲信息刷新都依赖这个通知）
+        OnPropertyChanged(nameof(FieldMappingRules));
+    }
+
+    private void FieldMappingRules_ItemPropertyChanged(object? sender, PropertyChangedEventArgs e)
+    {
+        OnPropertyChanged(nameof(FieldMappingRules));
+    }
+
+    /// <summary>
+    /// 首次见到该播放器时写入内置默认规则。
+    /// 只在没有写入过的情况下执行，避免用户清空规则后又被自动加回来。
+    /// </summary>
+    public void EnsureFieldCorrectionRulesSeeded()
+    {
+        // 配置文件里显式写成 null 时也能正常恢复
+        if (FieldMappingRules is null) FieldMappingRules = [];
+
+        // 更早版本的规则只有 Text 参数、没有 Pattern，已经无法执行，直接清掉并允许重新种入默认规则
+        var removedLegacyRules = false;
+        for (var i = FieldMappingRules.Count - 1; i >= 0; i--)
+        {
+            if (!string.IsNullOrWhiteSpace(FieldMappingRules[i].Pattern)) continue;
+
+            FieldMappingRules.RemoveAt(i);
+            removedLegacyRules = true;
+        }
+
+        if (removedLegacyRules) IsFieldCorrectionSeeded = false;
+
+        if (IsFieldCorrectionSeeded) return;
+
+        IsFieldCorrectionSeeded = true;
+
+        if (FieldMappingRules.Count > 0) return;
+        if (!PlayerIdHelper.IsAppleMusic(Provider)) return;
+
+        foreach (var rule in MediaFieldCorrectionPresets.CreateAppleMusicRules())
+        {
+            FieldMappingRules.Add(rule);
+        }
     }
 }

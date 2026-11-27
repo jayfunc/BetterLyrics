@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentDialog
+    x:Class="BetterLyrics.WinUI3.Controls.MediaFieldRuleDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DefaultButton="Primary"
+    Style="{StaticResource DefaultContentDialogStyle}"
+    mc:Ignorable="d">
+
+    <ScrollViewer MaxHeight="560">
+        <StackPanel MinWidth="460" Spacing="10">
+            <TextBlock
+                FontFamily="Consolas"
+                Foreground="{ThemeResource AccentTextFillColorPrimaryBrush}"
+                Text="{x:Bind ViewModel.Summary, Mode=OneWay}"
+                TextWrapping="Wrap" />
+
+            <ComboBox x:Uid="MediaFieldRuleKind" SelectedIndex="{x:Bind ViewModel.KindIndex, Mode=TwoWay}">
+                <ComboBoxItem x:Uid="MediaFieldRuleKindTemplate" />
+                <ComboBoxItem x:Uid="MediaFieldRuleKindRegexExtract" />
+                <ComboBoxItem x:Uid="MediaFieldRuleKindRegexReplace" />
+            </ComboBox>
+
+            <ComboBox x:Uid="MediaFieldRuleSource" SelectedIndex="{x:Bind ViewModel.SourceIndex, Mode=TwoWay}">
+                <ComboBoxItem x:Uid="MediaFieldTitle" />
+                <ComboBoxItem x:Uid="MediaFieldArtist" />
+                <ComboBoxItem x:Uid="MediaFieldAlbum" />
+            </ComboBox>
+
+            <TextBox
+                x:Uid="MediaFieldRulePattern"
+                MinHeight="96"
+                AcceptsReturn="True"
+                FontFamily="Consolas"
+                PlaceholderText="{x:Bind ViewModel.PatternPlaceholder, Mode=OneWay}"
+                Text="{x:Bind ViewModel.Pattern, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                TextWrapping="Wrap" />
+
+            <TextBox
+                x:Uid="MediaFieldRuleReplacement"
+                FontFamily="Consolas"
+                Text="{x:Bind ViewModel.Replacement, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Visibility="{x:Bind ViewModel.NeedsReplacement, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+
+            <TextBlock x:Uid="MediaFieldRulePreviewHeader" Style="{StaticResource CaptionTextBlockStyle}" />
+
+            <Border
+                Padding="10,8"
+                Background="{ThemeResource CardBackgroundFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="4">
+                <TextBlock
+                    FontFamily="Consolas"
+                    IsTextSelectionEnabled="True"
+                    Style="{StaticResource CaptionTextBlockStyle}"
+                    Text="{x:Bind ViewModel.PreviewText, Mode=OneWay}"
+                    TextWrapping="Wrap" />
+            </Border>
+
+            <TextBlock
+                Foreground="{ThemeResource TextFillColorTertiaryBrush}"
+                Style="{StaticResource CaptionTextBlockStyle}"
+                Text="{x:Bind ViewModel.Hint, Mode=OneWay}"
+                TextWrapping="Wrap" />
+
+            <TextBlock
+                x:Uid="MediaFieldRuleInvalidPattern"
+                Foreground="{ThemeResource SystemFillColorCriticalBrush}"
+                Style="{StaticResource CaptionTextBlockStyle}"
+                TextWrapping="Wrap"
+                Visibility="{x:Bind ViewModel.HasValidationError, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
+        </StackPanel>
+    </ScrollViewer>
+</ContentDialog>

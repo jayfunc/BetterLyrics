@@ -91,10 +91,6 @@
                                     </ComboBox>
                                 </controls:SettingsCard>
 
-                                <InfoBar IsClosable="False" IsOpen="True">
-                                    <local:ExternalLinkButton x:Uid="SettingsPageHelpUsTranslate" NavigateUri="{x:Bind constants:Link.Crowdin}" />
-                                </InfoBar>
-
                                 <controls:SettingsCard x:Uid="SettingsPageGlobalFont" HeaderIcon="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons}, Glyph=&#xE8D2;}">
                                     <local:FontPicker AllowMultipleSelection="False" SelectedFontId="{x:Bind ViewModel.AppSettings.GeneralSettings.GlobalFontFamily, Mode=TwoWay}" />
                                 </controls:SettingsCard>

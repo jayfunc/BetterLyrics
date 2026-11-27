@@ -52,6 +52,7 @@
                     Foreground="White" />
                 <TextBlock
                     x:Name="MaxCountTextBlock"
+                    Margin="0,0,8,0"
                     FontSize="64"
                     FontWeight="Bold"
                     Foreground="White" />
@@ -78,6 +79,7 @@
                     Opacity="0.5" />
                 <TextBlock
                     x:Name="StreakTextBlock"
+                    Margin="0,0,8,0"
                     FontSize="36"
                     FontWeight="SemiBold"
                     Foreground="White" />

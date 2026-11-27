@@ -151,7 +151,7 @@ Join our communities to get support, share your layouts, and stay updated:
 
 We welcome community contributions! Here is how you can help:
 
-- **Help us translate:** Cannot find your language? [Start translating here](https://crowdin.com/project/betterlyrics).
+- **Contribute code:** Fork the repository and open a Pull Request targeting `dev`. [Read the contribution guide](CONTRIBUTING.md).
 - **Develop Plugins:** Want to extend functionality? [Read the Developer Guide](https://betterlyrics.github.io/docs/plugin-dev/intro).
 - **Build from source:** [View build instructions](https://betterlyrics.github.io/docs/get-started/download.html#visual-studio).
 
@@ -218,14 +218,15 @@ This project is licensed under the **[GNU General Public License v3.0](LICENSE)*
 
 | Contributor | Contributions |
 | :--- | :--- |
-| [borcolasky](https://crowdin.com/profile/borcolasky) | `I` |
+| borcolasky | `I` |
 | [DrivingGodJ](https://github.com/DrivingGodJ) | `C` |
 | [H-MAli](https://github.com/H-MAli) | `C` |
 | [kusutori](https://github.com/kusutori) | `C` |
 | [OctoBored](https://github.com/OctoBored) | `D` |
+| pascal-00 | `I` |
 | [PiYuanZhouLv](https://github.com/PiYuanZhouLv) | `C` |
 | [Raspberry-Monster](https://github.com/Raspberry-Monster) | `C` |
-| [SuHeAndZl](https://crowdin.com/profile/SuHeAndZl) | `I` `Q` `D` |
+| SuHeAndZl | `I` `Q` `D` |
 | [Xionghaizi001](https://github.com/Xionghaizi001) | `C` |
 | [YUZU384](https://github.com/YUZU384) | `C` |
 | [ZHider](https://github.com/ZHider) | `C` |

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -142,7 +142,7 @@
     <value>Add</value>
   </data>
   <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Description" xml:space="preserve">
-    <value>Automatically scroll song info when it's too long, regardless of mouse hover</value>
+    <value>Automatically scroll song info when it's too long, regardless of mouse hover.</value>
   </data>
   <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Header" xml:space="preserve">
     <value>Auto-scroll Song Info</value>
@@ -163,7 +163,7 @@
     <value>Local music files</value>
   </data>
   <data name="AlbumArtSearchProvidersTargetSize.Description" xml:space="preserve">
-    <value>Applies to online sources only. This is a target resolution and may not be achievable</value>
+    <value>Applies to online sources only. This is a target resolution and may not be achievable.</value>
   </data>
   <data name="AlbumArtSearchProvidersTargetSize.Header" xml:space="preserve">
     <value>Target Size</value>
@@ -256,7 +256,7 @@
     <value>Export successful</value>
   </data>
   <data name="FailToStartLXMusicServer" xml:space="preserve">
-    <value>Unable to connect to LX Music Server. Please go to Settings - Playback Source - LX Music - LX Music Server to check if the link is entered correctly</value>
+    <value>Unable to connect to LX Music Server. Please go to Settings - Playback Source - LX Music - LX Music Server to check if the link is entered correctly.</value>
   </data>
   <data name="FileSystemServiceCleaningCache" xml:space="preserve">
     <value>Clearing cache...</value>
@@ -280,13 +280,13 @@
     <value>Ready</value>
   </data>
   <data name="FileSystemServiceRootDirectoryWarning" xml:space="preserve">
-    <value>The root directory path has been detected. A full disk index may contain a large number of non-media files and cause the scan to take too long. It is recommended to specify a specific subdirectory</value>
+    <value>The root directory path has been detected. A full disk index may contain a large number of non-media files and cause the scan to take too long. It is recommended to specify a specific subdirectory.</value>
   </data>
   <data name="FileSystemServiceWaitingForScan" xml:space="preserve">
     <value>Preparing to scan...</value>
   </data>
   <data name="FontPickerDialogFontNotFound.Text" xml:space="preserve">
-    <value>The font is not found in the system, it is not valid</value>
+    <value>The font is not found in the system, it is not valid.</value>
   </data>
   <data name="FontPickerSearchBox.PlaceholderText" xml:space="preserve">
     <value>Search fonts</value>
@@ -310,13 +310,13 @@
     <value>Playlist imported successfully</value>
   </data>
   <data name="ImportSettingsFailed" xml:space="preserve">
-    <value>Settings file import failed, application settings remain unchanged</value>
+    <value>Settings file import failed, application settings remain unchanged.</value>
   </data>
   <data name="ImportSettingsSuccess" xml:space="preserve">
     <value>Import successful</value>
   </data>
   <data name="LastFMAuthFailed" xml:space="preserve">
-    <value>Authorization failed, please try again</value>
+    <value>Authorization failed, please try again.</value>
   </data>
   <data name="LastFMCredentialsRequired" xml:space="preserve">
     <value>Last.fm API Key and Shared Secret are required</value>
@@ -523,7 +523,7 @@
     <value>Select a component in the preview or the left list to continue</value>
   </data>
   <data name="LayoutEditorControlPendingComponentsDescriptionTextBlock.Text" xml:space="preserve">
-    <value>Drag components to the right-hand grid to place them. Once placed, components can be moved freely within the grid</value>
+    <value>Drag components to the right-hand grid to place them. Once placed, components can be moved freely within the grid.</value>
   </data>
   <data name="LayoutEditorControlPendingComponentsTextBlock.Text" xml:space="preserve">
     <value>Pending Component</value>
@@ -607,7 +607,7 @@
     <value>Custom</value>
   </data>
   <data name="LayoutSettingsControlCustomProfilesEmpty.Text" xml:space="preserve">
-    <value>No custom layouts found. Create from a template or import an existing layout</value>
+    <value>No custom layouts found. Create from a template or import an existing layout.</value>
   </data>
   <data name="LayoutSettingsControlLayoutNameTextBox.PlaceholderText" xml:space="preserve">
     <value>Enter a name for this layout to help distinguish it</value>
@@ -634,10 +634,10 @@
     <value>Left Lyrics Right Album Art Layout</value>
   </data>
   <data name="LibreTranslateFailed" xml:space="preserve">
-    <value>Failed to request translation from LibreTranslate. Please check settings or local LibreTranslate configuration</value>
+    <value>Failed to request translation from LibreTranslate. Please check settings or local LibreTranslate configuration.</value>
   </data>
   <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve">
-    <value>e.g. http://localhost:5000</value>
+    <value>e.g. http://localhost:5000.</value>
   </data>
   <data name="Loading" xml:space="preserve">
     <value>Loading...</value>
@@ -688,7 +688,7 @@
     <value>Settings</value>
   </data>
   <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve">
-    <value>Prioritize reading translations within lyrics; if no match, request machine translation from LibreTranslate server</value>
+    <value>Prioritize reading translations within lyrics; if no match, request machine translation from LibreTranslate server.</value>
   </data>
   <data name="LyricsPageTranslationEnabled.Header" xml:space="preserve">
     <value>Enable Translation</value>
@@ -718,7 +718,7 @@
     <value>Separated by slashes</value>
   </data>
   <data name="LyricsSaveConfigInOneLine.Header" xml:space="preserve">
-    <value>Combine Original, Translation, and Transliteration</value>
+    <value>Combine Original, Translation, and Transliteration.</value>
   </data>
   <data name="LyricsSaveConfigInSyllablesFormat.Header" xml:space="preserve">
     <value>Save as Word-Synced Lyrics</value>
@@ -742,7 +742,7 @@
     <value>Duration</value>
   </data>
   <data name="LyricsSearchControlHelp.Text" xml:space="preserve">
-    <value>* Changes take effect immediately after saving, and subsequent song lyrics will be retrieved using mapping info and target lyrics; marking as Instrumental will directly revert to Instrumental placeholder lyrics. Resetting will restore original data retrieval</value>
+    <value>* Changes take effect immediately after saving, and subsequent song lyrics will be retrieved using mapping info and target lyrics; marking as Instrumental will directly revert to Instrumental placeholder lyrics. Resetting will restore original data retrieval.</value>
   </data>
   <data name="LyricsSearchControlIgnoreCache.Header" xml:space="preserve">
     <value>Ignore cache when searching</value>
@@ -934,7 +934,7 @@
     <value>Perform forced sync</value>
   </data>
   <data name="MediaSettingsForceSyncHint.Text" xml:space="preserve">
-    <value>This option will force a re-resolution of metadata from the remote database. This option is helpful when there are problems with the local database, or when a full refresh is required for some reason</value>
+    <value>This option will force a re-resolution of metadata from the remote database. This option is helpful when there are problems with the local database, or when a full refresh is required for some reason.</value>
   </data>
   <data name="MusicGalleryPageAddToCustomList.Text" xml:space="preserve">
     <value>Add to playlist</value>
@@ -1051,7 +1051,7 @@
     <value>Loop Single</value>
   </data>
   <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
-    <value>Search title, artist, album, filename or folder path</value>
+    <value>Search title, artist, album, filename or folder path.</value>
   </data>
   <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve">
     <value>Album</value>
@@ -1072,7 +1072,7 @@
     <value>Music Gallery - BetterLyrics</value>
   </data>
   <data name="MusicSettingsControlAutoSyncInterval.Description" xml:space="preserve">
-    <value>Automatically checks for file changes at a set interval. Applies to both local and remote sources</value>
+    <value>Automatically checks for file changes at a set interval. Applies to both local and remote sources.</value>
   </data>
   <data name="MusicSettingsControlAutoSyncInterval.Header" xml:space="preserve">
     <value>Auto-sync Frequency</value>
@@ -1093,7 +1093,7 @@
     <value>Every 6 Hours</value>
   </data>
   <data name="MusicSettingsControlRealTimeScan.Description" xml:space="preserve">
-    <value>Automatically syncs when file changes are detected. This option is only available for local sources</value>
+    <value>Automatically syncs when file changes are detected. This option is only available for local sources.</value>
   </data>
   <data name="MusicSettingsControlRealTimeScan.Header" xml:space="preserve">
     <value>Real-time Monitoring</value>
@@ -1111,7 +1111,7 @@
     <value>Config Current Playback Source</value>
   </data>
   <data name="PlaybackSettingsControlMemoryReader.Description" xml:space="preserve">
-    <value>Loads external configurations to read playback progress directly from target process memory. Please use with caution; the developer is not responsible for the safety of third-party configurations</value>
+    <value>Loads external configurations to read playback progress directly from target process memory. Please use with caution; the developer is not responsible for the safety of third-party configurations.</value>
   </data>
   <data name="PlaybackSettingsControlMemoryReader.Header" xml:space="preserve">
     <value>Memory Reader Adapter</value>
@@ -1132,7 +1132,7 @@
     <value>Enable Plugin</value>
   </data>
   <data name="PluginManagerControlInfoBar.Message" xml:space="preserve">
-    <value>Restart will be automatically performed after install, uninstall or update any plugins</value>
+    <value>Restart will be automatically performed after install, uninstall or update any plugins.</value>
   </data>
   <data name="PluginManagerControlInstall.Content" xml:space="preserve">
     <value>Install plugin</value>
@@ -1213,7 +1213,7 @@
     <value>Feedback</value>
   </data>
   <data name="SetingsPageThanks.Text" xml:space="preserve">
-    <value>If you like this project, please consider supporting it by donating. Your support helps keep the project alive and encourages further development</value>
+    <value>If you like this project, please consider supporting it by donating. Your support helps keep the project alive and encourages further development.</value>
   </data>
   <data name="SettingsPage3DLyrics.Header" xml:space="preserve">
     <value>[Experimental] Depth Effect</value>
@@ -1288,13 +1288,13 @@
     <value>Check objects not collected by GC</value>
   </data>
   <data name="SettingsPageGcObjectCheck.Description" xml:space="preserve">
-    <value>Run garbage collection and list tracked objects that are still alive.</value>
+    <value>Run garbage collection and list tracked objects that are still alive</value>
   </data>
   <data name="SettingsPageGcObjectCheckButton.Content" xml:space="preserve">
     <value>Check</value>
   </data>
   <data name="SettingsPageGcObjectsNone" xml:space="preserve">
-    <value>No tracked objects remain alive.</value>
+    <value>No tracked objects remain alive</value>
   </data>
   <data name="SettingsPageGcObjectsFound" xml:space="preserve">
     <value>Tracked objects still alive after garbage collection:</value>
@@ -1339,7 +1339,7 @@
     <value>Bottom</value>
   </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
-    <value>Includes log files, online lyrics cache</value>
+    <value>Includes log files, online lyrics cache.</value>
   </data>
   <data name="SettingsPageCache.Header" xml:space="preserve">
     <value>Cache</value>
@@ -1354,7 +1354,7 @@
     <value>Chinese Phonetic</value>
   </data>
   <data name="SettingsPageChinesePreference.Description" xml:space="preserve">
-    <value>Selecting "Unspecified" will preserve the original lyrics; selecting "Simplified Chinese" or "Traditional Chinese" will perform machine conversion on the original lyrics</value>
+    <value>Selecting "Unspecified" will preserve the original lyrics; selecting "Simplified Chinese" or "Traditional Chinese" will perform machine conversion on the original lyrics.</value>
   </data>
   <data name="SettingsPageChinesePreference.Header" xml:space="preserve">
     <value>Chinese Preference</value>
@@ -1423,7 +1423,7 @@
     <value>Desktop Wallpaper Layer</value>
   </data>
   <data name="SettingsPageDisclaimer.Text" xml:space="preserve">
-    <value>This project is provided as-is without warranty of any kind. All lyrics, fonts, icons, and other third-party resources are property of their respective copyright holders. The authors of this project claim no ownership of such resources. This project is non-commercial and must not be used to infringe any rights. Users are responsible for ensuring their use complies with applicable laws and licenses</value>
+    <value>This project is provided as-is without warranty of any kind. All lyrics, fonts, icons, and other third-party resources are property of their respective copyright holders. The authors of this project claim no ownership of such resources. This project is non-commercial and must not be used to infringe any rights. Users are responsible for ensuring their use complies with applicable laws and licenses.</value>
   </data>
   <data name="SettingsPageDiscordPresence.Header" xml:space="preserve">
     <value>Show listening status via Discord Presence</value>
@@ -1560,9 +1560,6 @@
   <data name="SettingsPageHeight.Header" xml:space="preserve">
     <value>Height</value>
   </data>
-  <data name="SettingsPageHelpUsTranslate.Content" xml:space="preserve">
-    <value>Help us translate this app</value>
-  </data>
   <data name="SettingsPageHideWindow.Header" xml:space="preserve">
     <value>Auto-Hide Window When Music Paused</value>
   </data>
@@ -1630,7 +1627,7 @@
     <value>Layout</value>
   </data>
   <data name="SettingsPageLayoutConfigShareHint.Text" xml:space="preserve">
-    <value>Note: Layout configurations are shared globally. A single layout can be applied to lyrics windows in different modes. Any modification or deletion will affect all windows currently using this layout</value>
+    <value>Note: Layout configurations are shared globally. A single layout can be applied to lyrics windows in different modes. Any modification or deletion will affect all windows currently using this layout.</value>
   </data>
   <data name="SettingsPageLayoutOrientation.Header" xml:space="preserve">
     <value>Layout Orientation</value>
@@ -1675,7 +1672,7 @@
     <value>LX Music Server</value>
   </data>
   <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve">
-    <value>e.g. http://127.0.0.1:23330</value>
+    <value>e.g. http://127.0.0.1:23330.</value>
   </data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
     <value>Alignment</value>
@@ -1819,7 +1816,7 @@
     <value>Sequential</value>
   </data>
   <data name="SettingsPageLyricsSearchType.Description" xml:space="preserve">
-    <value>Sequential: Search through the list below in order of priority, returning the first result found; Best Match: Search all enabled sources and automatically select the result with the highest match score</value>
+    <value>Sequential: Search through the list below in order of priority, returning the first result found; Best Match: Search all enabled sources and automatically select the result with the highest match score.</value>
   </data>
   <data name="SettingsPageLyricsSearchType.Header" xml:space="preserve">
     <value>Lyrics Search Strategy</value>
@@ -1840,7 +1837,7 @@
     <value>Lyrics Timeline Sync</value>
   </data>
   <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve">
-    <value>Try increasing this threshold if lyric progress jitters; changing this value may cause lyric sync deviations</value>
+    <value>Try increasing this threshold if lyric progress jitters; changing this value may cause lyric sync deviations.</value>
   </data>
   <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
     <value>Lyrics Timeline Sync Threshold</value>
@@ -1870,7 +1867,7 @@
     <value>Never</value>
   </data>
   <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve">
-    <value>Adjusting this value will affect sequential search and best match search results, but will not affect search results in the manual lyrics search interface</value>
+    <value>Adjusting this value will affect sequential search and best match search results, but will not affect search results in the manual lyrics search interface.</value>
   </data>
   <data name="SettingsPageMatchingThreshold.Header" xml:space="preserve">
     <value>Minimum Match Threshold</value>
@@ -1918,13 +1915,13 @@
     <value>Parallax Tilt</value>
   </data>
   <data name="SettingsPagePathBeIncludedInfo" xml:space="preserve">
-    <value>This folder is already included in an existing folder, no need to add again</value>
+    <value>This folder is already included in an existing folder, no need to add again.</value>
   </data>
   <data name="SettingsPagePathExistedInfo" xml:space="preserve">
-    <value>This folder has already been added, please do not add it again</value>
+    <value>This folder has already been added, please do not add it again.</value>
   </data>
   <data name="SettingsPagePathIncludingOthersInfo" xml:space="preserve">
-    <value>This folder contains already added folders, please remove them to add this folder</value>
+    <value>This folder contains already added folders, please remove them to add this folder.</value>
   </data>
   <data name="SettingsPagePatrons.Text" xml:space="preserve">
     <value>Sponsorship</value>
@@ -2053,7 +2050,7 @@
     <value>Show/Hide Lyrics Window Shortcut</value>
   </data>
   <data name="SettingsPageShowInSwitchers.Description" xml:space="preserve">
-    <value>e.g., Alt + Tab, Taskbar</value>
+    <value>e.g., Alt + Tab, Taskbar.</value>
   </data>
   <data name="SettingsPageShowInSwitchers.Header" xml:space="preserve">
     <value>Show in System Environment</value>
@@ -2191,7 +2188,7 @@
     <value>Width</value>
   </data>
   <data name="SettingsPageWorkArea.Description" xml:space="preserve">
-    <value>Application desktop toolbar, docked to the top/bottom edge of the screen</value>
+    <value>Application desktop toolbar, docked to the top/bottom edge of the screen.</value>
   </data>
   <data name="SettingsPageWorkArea.Header" xml:space="preserve">
     <value>Appbar</value>
@@ -2425,7 +2422,7 @@
     <value>Wallpaper Engine was not detected. Make sure it is installed and running, then refresh the wallpaper list.</value>
   </data>
   <data name="WallpaperEngineNoActiveWallpaper" xml:space="preserve">
-    <value>No active Wallpaper Engine wallpaper was detected.</value>
+    <value>No active Wallpaper Engine wallpaper was detected</value>
   </data>
   <data name="WallpaperEngineCurrentWallpaper" xml:space="preserve">
     <value>Current wallpaper:</value>
@@ -2613,132 +2610,62 @@
   <data name="StatsDashboardControlHours.Text" xml:space="preserve">
     <value>Hrs</value>
   </data>
-  <data name="StoryPageOverviewText1.Text" xml:space="preserve">
-    <value>In the past period,</value>
-  </data>
-  <data name="StoryPageOverviewText2.Text" xml:space="preserve">
-    <value>You embarked on a music journey</value>
-  </data>
+  <data name="StoryPageOverviewText1.Text" xml:space="preserve"><value>Over the past little while,</value></data>
+  <data name="StoryPageOverviewText2.Text" xml:space="preserve"><value>you roamed a musical land</value></data>
   <data name="StoryPageOverviewCountUnit.Text" xml:space="preserve">
     <value>times</value>
   </data>
-  <data name="StoryPageOverviewText3.Text" xml:space="preserve">
-    <value>Immersed in melodies for</value>
-  </data>
+  <data name="StoryPageOverviewText3.Text" xml:space="preserve"><value>and held the melody in hand</value></data>
   <data name="StoryPageOverviewHourUnit.Text" xml:space="preserve">
     <value>hours</value>
   </data>
-  <data name="StoryPageTimeText1.Text" xml:space="preserve">
-    <value>You always like to</value>
-  </data>
-  <data name="StoryPageTimeText2.Text" xml:space="preserve">
-    <value>immerse yourself in the world of music,</value>
-  </data>
-  <data name="StoryPageTimeText3.Text" xml:space="preserve">
-    <value>perhaps that's when you needed melody the most</value>
-  </data>
-  <data name="StoryPageTimeText4.Text" xml:space="preserve">
-    <value>And at</value>
-  </data>
-  <data name="StoryPageTimeText5.Text" xml:space="preserve">
-    <value>you seem to prefer the quiet.</value>
-  </data>
-  <data name="StoryPageTopArtistText1.Text" xml:space="preserve">
-    <value>In the vast crowd,</value>
-  </data>
-  <data name="StoryPageTopArtistText2.Text" xml:space="preserve">
-    <value>You seem to have a special liking for</value>
-  </data>
-  <data name="StoryPageTopArtistText3.Text" xml:space="preserve">
-    <value>'s voice.</value>
-  </data>
-  <data name="StoryPageTopArtistText4.Text" xml:space="preserve">
-    <value>Their voice accompanied you for</value>
-  </data>
-  <data name="StoryPageTopArtistText5.Text" xml:space="preserve">
-    <value>songs</value>
-  </data>
-  <data name="StoryPageTopSongText1.Text" xml:space="preserve">
-    <value>There is a melody,</value>
-  </data>
-  <data name="StoryPageTopSongText2.Text" xml:space="preserve">
-    <value>that always unexpectedly rings in your ears...</value>
-  </data>
-  <data name="StoryPageTopSongText3.Text" xml:space="preserve">
-    <value>You've looped it</value>
-  </data>
-  <data name="StoryPageTopSongText4.Text" xml:space="preserve">
-    <value>times</value>
-  </data>
-  <data name="StoryPageStreakText1.Text" xml:space="preserve">
-    <value>On </value>
-  </data>
-  <data name="StoryPageStreakText2.Text" xml:space="preserve">
-    <value>, you had the most immersive day</value>
-  </data>
-  <data name="StoryPageStreakText3.Text" xml:space="preserve">
-    <value>Listened to </value>
-  </data>
-  <data name="StoryPageStreakText4.Text" xml:space="preserve">
-    <value> tracks.</value>
-  </data>
-  <data name="StoryPageStreakText5.Text" xml:space="preserve">
-    <value>You also kept a listening streak of </value>
-  </data>
-  <data name="StoryPageStreakText6.Text" xml:space="preserve">
-    <value> days.</value>
-  </data>
-  <data name="StoryPageSpecialMomentText1.Text" xml:space="preserve">
-    <value>The beginning of this journey</value>
-  </data>
-  <data name="StoryPageSpecialMomentText2.Text" xml:space="preserve">
-    <value>started with this song:</value>
-  </data>
-  <data name="StoryPageSpecialMomentText3.Text" xml:space="preserve">
-    <value>On </value>
-  </data>
-  <data name="StoryPageSpecialMomentText4.Text" xml:space="preserve">
-    <value>,</value>
-  </data>
-  <data name="StoryPageSpecialMomentText5.Text" xml:space="preserve">
-    <value>at </value>
-  </data>
-  <data name="StoryPageSpecialMomentText6.Text" xml:space="preserve">
-    <value> you were still listening to:</value>
-  </data>
-  <data name="StoryPagePersonaText1.Text" xml:space="preserve">
-    <value>Based on your habits, your musical persona is:</value>
-  </data>
+  <data name="StoryPageTimeText1.Text" xml:space="preserve"><value>You loved to lose yourself at</value></data>
+  <data name="StoryPageTimeText2.Text" xml:space="preserve"><value>where the night hummed along,</value></data>
+  <data name="StoryPageTimeText3.Text" xml:space="preserve"><value>when the world felt far and the melody was strong</value></data>
+  <data name="StoryPageTimeText4.Text" xml:space="preserve"><value>But at</value></data>
+  <data name="StoryPageTimeText5.Text" xml:space="preserve"><value>you let the quiet sing along</value></data>
+  <data name="StoryPageTopArtistText1.Text" xml:space="preserve"><value>In a sea of faces,</value></data>
+  <data name="StoryPageTopArtistText2.Text" xml:space="preserve"><value>you favored</value></data>
+  <data name="StoryPageTopArtistText3.Text" xml:space="preserve"><value>and found a kindred strain</value></data>
+  <data name="StoryPageTopArtistText4.Text" xml:space="preserve"><value>That voice walked with you through</value></data>
+  <data name="StoryPageTopArtistText5.Text" xml:space="preserve"><value>songs of joy and rain</value></data>
+  <data name="StoryPageTopSongText1.Text" xml:space="preserve"><value>There was a melody,</value></data>
+  <data name="StoryPageTopSongText2.Text" xml:space="preserve"><value>that often strummed a chord you knew...</value></data>
+  <data name="StoryPageTopSongText3.Text" xml:space="preserve"><value>You looped it</value></data>
+  <data name="StoryPageTopSongText4.Text" xml:space="preserve"><value>times, and still it rang true</value></data>
+  <data name="StoryPageStreakText1.Text" xml:space="preserve"><value>On</value></data>
+  <data name="StoryPageStreakText2.Text" xml:space="preserve"><value> you drifted with the tune and let the world slip away</value></data>
+  <data name="StoryPageStreakText3.Text" xml:space="preserve"><value>You listened to</value></data>
+  <data name="StoryPageStreakText4.Text" xml:space="preserve"><value>songs that lit your inner day</value></data>
+  <data name="StoryPageStreakText5.Text" xml:space="preserve"><value>You kept the streak alive for</value></data>
+  <data name="StoryPageStreakText6.Text" xml:space="preserve"><value>days, and still the music stayed</value></data>
+  <data name="StoryPageSpecialMomentText1.Text" xml:space="preserve"><value>Where the journey began,</value></data>
+  <data name="StoryPageSpecialMomentText2.Text" xml:space="preserve"><value>this song was the key:</value></data>
+  <data name="StoryPageSpecialMomentText3.Text" xml:space="preserve"><value>On</value></data>
+  <data name="StoryPageSpecialMomentText4.Text" xml:space="preserve"><value>, </value></data>
+  <data name="StoryPageSpecialMomentText5.Text" xml:space="preserve"><value>at</value></data>
+  <data name="StoryPageSpecialMomentText6.Text" xml:space="preserve"><value> you were still listening, wild and free:</value></data>
+  <data name="StoryPagePersonaText1.Text" xml:space="preserve"><value>Held to the mirror of song, your music persona is:</value></data>
   <data name="PersonaDefaultTitle" xml:space="preserve">
     <value>Music Explorer</value>
   </data>
-  <data name="PersonaDefaultDesc" xml:space="preserve">
-    <value>You enjoy wandering in the world of melodies</value>
-  </data>
+  <data name="PersonaDefaultDesc" xml:space="preserve"><value>You wander where the melodies belong</value></data>
   <data name="PersonaNightOwlTitle" xml:space="preserve">
     <value>Night Owl</value>
   </data>
-  <data name="PersonaNightOwlDesc" xml:space="preserve">
-    <value>The late night is your best time for music</value>
-  </data>
+  <data name="PersonaNightOwlDesc" xml:space="preserve"><value>The deeper the night, the closer you and song</value></data>
   <data name="PersonaStreakTitle" xml:space="preserve">
     <value>Melody Addict</value>
   </data>
-  <data name="PersonaStreakDesc" xml:space="preserve">
-    <value>You can't live a day without music</value>
-  </data>
+  <data name="PersonaStreakDesc" xml:space="preserve"><value>A day without music feels too long</value></data>
   <data name="PersonaLoyalTitle" xml:space="preserve">
     <value>Loyal Fan</value>
   </data>
-  <data name="PersonaLoyalDesc" xml:space="preserve">
-    <value>You have a deep love for a specific voice</value>
-  </data>
+  <data name="PersonaLoyalDesc" xml:space="preserve"><value>One voice stays with you, steady and strong</value></data>
   <data name="PersonaExplorerTitle" xml:space="preserve">
     <value>Music Explorer</value>
   </data>
-  <data name="PersonaExplorerDesc" xml:space="preserve">
-    <value>You embrace diverse voices from everywhere</value>
-  </data>
+  <data name="PersonaExplorerDesc" xml:space="preserve"><value>Every distant sound still finds you in song</value></data>
   <data name="SettingsPageGlobalFont.Header" xml:space="preserve">
     <value>Font Family</value>
   </data>
@@ -2767,16 +2694,16 @@
     <value>Restart required</value>
   </data>
   <data name="SettingsPageRestartRequiredInfoBar.Message" xml:space="preserve">
-    <value>You have changed some settings; you need to restart the application for them to take effect</value>
+    <value>You have changed some settings; you need to restart the application for them to take effect.</value>
   </data>
   <data name="SettingsPageFileNamePatternChangeHintInfoBar.Message" xml:space="preserve">
-    <value>After changing the parsing pattern, please manually click 'Sync now' below to apply the new rules</value>
+    <value>After changing the parsing pattern, please manually click 'Sync now' below to apply the new rules.</value>
   </data>
   <data name="SettingsPageLocalMusicFilePattern.Description" xml:space="preserve">
-    <value>Specify how to extract song info from filenames when built-in tags are missing (e.g., {Artist} - {Title}). Leave blank to use the default strategy</value>
+    <value>Specify how to extract song info from filenames when built-in tags are missing (e.g., {Artist} - {Title}). Leave blank to use the default strategy.</value>
   </data>
   <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve">
-    <value>Specify the naming convention for local lyrics files (e.g., {Artist} - {Title}) to link them accurately. Leave blank to use the default matching strategy</value>
+    <value>Specify the naming convention for local lyrics files (e.g., {Artist} - {Title}) to link them accurately. Leave blank to use the default matching strategy.</value>
   </data>
   <data name="NowPlayingToastTitle" xml:space="preserve">
     <value>Now Playing Toast</value>
@@ -2794,7 +2721,7 @@
     <value>Show on all monitors</value>
   </data>
   <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve">
-    <value>If disabled, the popup will only appear on the primary monitor</value>
+    <value>If disabled, the popup will only appear on the primary monitor.</value>
   </data>
   <data name="NowPlayingNotificationCornerTopLeft.Content" xml:space="preserve">
     <value>Top Left</value>
@@ -2833,7 +2760,7 @@
     <value>Popup Theme</value>
   </data>
   <data name="MusicGalleryWindowExternalSourcePrompt.Text" xml:space="preserve">
-    <value>Currently tracking an external source. Double-click a local track or pause the external source to switch back</value>
+    <value>Currently tracking an external source. Double-click a local track or pause the external source to switch back.</value>
   </data>
   <data name="PlaybackSettingsControlShowMessage.Content" xml:space="preserve">
     <value>Show message</value>
@@ -2902,7 +2829,7 @@
     <value>Apple Music-like</value>
   </data>
   <data name="SettingsPageAppleMusicSpringRecommendationInfoBar.Message" xml:space="preserve">
-    <value>To get an experience closer to Apple Music, it is recommended to set the top line delay to 0ms and the bottom line delay to 50ms</value>
+    <value>To get an experience closer to Apple Music, it is recommended to set the top line delay to 0ms and the bottom line delay to 50ms.</value>
   </data>
   <data name="SettingsSearchBox.PlaceholderText" xml:space="preserve">
     <value>Search settings</value>
@@ -2923,7 +2850,7 @@
     <value>Semantic Lyrics Effects</value>
   </data>
   <data name="SettingsPageSemanticEffects.Description" xml:space="preserve">
-    <value>Spawn particles (e.g. heart, rain, snow) when specific keywords appear in lyrics</value>
+    <value>Spawn particles (e.g. heart, rain, snow) when specific keywords appear in lyrics.</value>
   </data>
   <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve">
     <value>Copy deep link</value>
@@ -2948,5 +2875,176 @@
   </data>
   <data name="ListenBrainzTokenInvalid" xml:space="preserve">
     <value>ListenBrainz token is invalid</value>
+  </data>
+  <data name="MediaFieldCorrection.Text" xml:space="preserve">
+    <value>Song info correction</value>
+  </data>
+  <data name="MediaFieldCorrectionRules.Header" xml:space="preserve">
+    <value>Rules</value>
+  </data>
+  <data name="MediaFieldCorrectionRules.Description" xml:space="preserve">
+    <value>Rewrite the title, artist or album this player reports. Rules run in order and only affect this player.</value>
+  </data>
+  <data name="MediaFieldCorrectionInsertSnippet.Content" xml:space="preserve">
+    <value>Insert example</value>
+  </data>
+  <data name="MediaFieldCorrectionAddCustom.Content" xml:space="preserve">
+    <value>New rule</value>
+  </data>
+  <data name="MediaFieldCorrectionMore.Content" xml:space="preserve">
+    <value>More</value>
+  </data>
+  <data name="MediaFieldCorrectionEmpty.Header" xml:space="preserve">
+    <value>No rules yet</value>
+  </data>
+  <data name="MediaFieldCorrectionEmpty.Description" xml:space="preserve">
+    <value>Insert an example to see the syntax, or write a template yourself.</value>
+  </data>
+  <data name="MediaFieldPreviewHeaderCurrent" xml:space="preserve">
+    <value>Result for the current song</value>
+  </data>
+  <data name="MediaFieldPreviewHeaderSample" xml:space="preserve">
+    <value>Sample result (nothing is playing)</value>
+  </data>
+  <data name="MediaFieldPreviewNoChange" xml:space="preserve">
+    <value>No field changed — the rules do not match this text.</value>
+  </data>
+  <data name="MediaFieldCorrectionImport.Text" xml:space="preserve">
+    <value>Import rules</value>
+  </data>
+  <data name="MediaFieldCorrectionExport.Text" xml:space="preserve">
+    <value>Export rules</value>
+  </data>
+  <data name="MediaFieldCorrectionReset.Text" xml:space="preserve">
+    <value>Restore defaults</value>
+  </data>
+  <data name="MediaFieldCorrectionClear.Text" xml:space="preserve">
+    <value>Remove all rules</value>
+  </data>
+  <data name="MediaFieldCorrectionEditRule.Content" xml:space="preserve">
+    <value>Edit rule</value>
+  </data>
+  <data name="MediaFieldCorrectionDeleteRule.Content" xml:space="preserve">
+    <value>Delete rule</value>
+  </data>
+  <data name="MediaFieldCorrectionImportConfirmTitle" xml:space="preserve">
+    <value>Replace current rules?</value>
+  </data>
+  <data name="MediaFieldCorrectionImportConfirmDescription" xml:space="preserve">
+    <value>Importing removes the rules that already exist for this player</value>
+  </data>
+  <data name="MediaFieldCorrectionClearConfirmTitle" xml:space="preserve">
+    <value>Remove all rules?</value>
+  </data>
+  <data name="MediaFieldCorrectionClearConfirmDescription" xml:space="preserve">
+    <value>This cannot be undone</value>
+  </data>
+  <data name="MediaFieldRuleDialogAddTitle" xml:space="preserve">
+    <value>New rule</value>
+  </data>
+  <data name="MediaFieldRuleDialogEditTitle" xml:space="preserve">
+    <value>Edit rule</value>
+  </data>
+  <data name="MediaFieldRuleKind.Header" xml:space="preserve">
+    <value>Mode</value>
+  </data>
+  <data name="MediaFieldRuleKindTemplate.Content" xml:space="preserve">
+    <value>Template — {field} placeholders</value>
+  </data>
+  <data name="MediaFieldRuleKindRegexExtract.Content" xml:space="preserve">
+    <value>Regex — named groups</value>
+  </data>
+  <data name="MediaFieldRuleKindRegexReplace.Content" xml:space="preserve">
+    <value>Regex — replace</value>
+  </data>
+  <data name="MediaFieldRuleSource.Header" xml:space="preserve">
+    <value>Field</value>
+  </data>
+  <data name="MediaFieldRulePattern.Header" xml:space="preserve">
+    <value>Pattern</value>
+  </data>
+  <data name="MediaFieldRuleReplacement.Header" xml:space="preserve">
+    <value>Replace with</value>
+  </data>
+  <data name="MediaFieldRuleReplacement.PlaceholderText" xml:space="preserve">
+    <value>Empty deletes the match</value>
+  </data>
+  <data name="MediaFieldRulePreviewHeader.Text" xml:space="preserve">
+    <value>Try it</value>
+  </data>
+  <data name="MediaFieldRuleInvalidPattern.Text" xml:space="preserve">
+    <value>Pattern is invalid</value>
+  </data>
+  <data name="MediaFieldTitle.Content" xml:space="preserve">
+    <value>Title</value>
+  </data>
+  <data name="MediaFieldArtist.Content" xml:space="preserve">
+    <value>Artist</value>
+  </data>
+  <data name="MediaFieldAlbum.Content" xml:space="preserve">
+    <value>Album</value>
+  </data>
+  <data name="MediaFieldRuleSummaryTemplate" xml:space="preserve">
+    <value>Match template "{1}" in "{0}".</value>
+  </data>
+  <data name="MediaFieldRuleSummaryRegexExtract" xml:space="preserve">
+    <value>Extract with regex "{1}" from "{0}".</value>
+  </data>
+  <data name="MediaFieldRuleSummaryRegexReplace" xml:space="preserve">
+    <value>Replace "{1}" with "{2}" in "{0}".</value>
+  </data>
+  <data name="MediaFieldRuleHintTemplate" xml:space="preserve">
+    <value>{title}, {artist} and {album} are written back into those fields; any other {name} is discarded; * matches the rest.</value>
+  </data>
+  <data name="MediaFieldRuleHintRegexExtract" xml:space="preserve">
+    <value>Named groups (?&lt;title&gt;…), (?&lt;artist&gt;…), (?&lt;album&gt;…) are written back into those fields. Without field groups the matched part replaces the field.</value>
+  </data>
+  <data name="MediaFieldRuleHintRegexReplace" xml:space="preserve">
+    <value>The whole field is rewritten; $1 and ${name} are supported. An empty replacement deletes the match.</value>
+  </data>
+  <data name="MediaFieldCorrectionPreviewArrow" xml:space="preserve">
+    <value>→</value>
+  </data>
+  <data name="MediaFieldPreviewSampleTitle" xml:space="preserve">
+    <value>Sample Song (Live)</value>
+  </data>
+  <data name="MediaFieldPreviewSampleArtist" xml:space="preserve">
+    <value>Sample Artist — Sample Album - Single</value>
+  </data>
+  <data name="MediaFieldPreviewSampleAlbum" xml:space="preserve">
+    <value>Sample Album - EP</value>
+  </data>
+  <data name="MediaFieldSnippetTitleArtistDescription" xml:space="preserve">
+    <value>Title is "Artist - Song": split and fill both fields.</value>
+  </data>
+  <data name="MediaFieldSnippetTitleArtistReversedDescription" xml:space="preserve">
+    <value>Title is "Song - Artist".</value>
+  </data>
+  <data name="MediaFieldSnippetArtistAlbumDescription" xml:space="preserve">
+    <value>Artist field contains the album (Apple Music).</value>
+  </data>
+  <data name="MediaFieldSnippetTrimDashSuffixDescription" xml:space="preserve">
+    <value>Drop a trailing "- anything" from the title.</value>
+  </data>
+  <data name="MediaFieldSnippetRemoveBracketsDescription" xml:space="preserve">
+    <value>Drop bracketed text and everything after it</value>
+  </data>
+  <data name="MediaFieldSnippetRemoveFeatDescription" xml:space="preserve">
+    <value>Drop "feat." and the rest.</value>
+  </data>
+  <data name="MediaFieldSnippetRegexExtractBracketDescription" xml:space="preserve">
+    <value>Regex: keep the part before the first bracket.</value>
+  </data>
+  <data name="MediaFieldSnippetRegexRemoveAlbumSuffixDescription" xml:space="preserve">
+    <value>Regex: drop "- Single" / "- EP" from the album.</value>
+  </data>
+  <data name="MediaFieldSnippetRegexCollapseSpacesDescription" xml:space="preserve">
+    <value>Regex: collapse repeated spaces.</value>
+  </data>
+  <data name="MediaFieldSnippetRegexArtistSeparatorDescription" xml:space="preserve">
+    <value>Regex: "A/B" to "A, B".</value>
+  </data>
+  <data name="MediaFieldSnippetRegexTrackNumberDescription" xml:space="preserve">
+    <value>Regex: drop a leading track number.</value>
   </data>
 </root>

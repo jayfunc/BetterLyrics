@@ -5,6 +5,7 @@ using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Helpers;
+using BetterLyrics.Core.Helpers.MediaFieldCorrection;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Messages.AppSettings;
@@ -43,6 +44,7 @@ public abstract partial class GsmtcServiceBase : ObservableObject, IGsmtcService
     protected readonly IMonitorProvider _monitorProvider =
         Ioc.Default.GetRequiredService<IMonitorProvider>();
 
+    private readonly Debouncer _onFieldCorrectionChangedDebouncer = new();
     private readonly Debouncer _onMediaPropsChangedDebouncer = new();
     protected readonly ISettingsService _settingsService;
     private readonly ITranslationService _translationService;
@@ -77,6 +79,12 @@ public abstract partial class GsmtcServiceBase : ObservableObject, IGsmtcService
 
     [ObservableProperty]
     public partial SongInfo CurrentSongInfo { get; private set; } = SongInfoExtensions.Placeholder;
+
+    /// <summary>
+    /// 播放器上报的原始歌曲信息（未经字段纠正规则处理），用于设置界面的效果预览。
+    /// </summary>
+    [ObservableProperty]
+    public partial SongInfo? CurrentRawSongInfo { get; private set; }
 
     [ObservableProperty]
     [NotifyPropertyChangedFor(nameof(IsExternalSourceActive))]
@@ -386,6 +394,15 @@ public abstract partial class GsmtcServiceBase : ObservableObject, IGsmtcService
             case nameof(MediaSourceProviderInfo.MatchingThreshold):
                 UpdateLyrics();
                 break;
+            case nameof(MediaSourceProviderInfo.FieldMappingRules):
+                // 字段纠正规则变化后需要重新纠正当前歌曲（歌名/歌手/专辑都会变）
+                var changedProvider = _settingsService.AppSettings.MediaSourceProvidersInfo
+                    .ElementAtOrDefault(e.CollectionIndex);
+                if (changedProvider == null || changedProvider.Provider != _currentDesiredSession?.SessionId) break;
+
+                _ = _onFieldCorrectionChangedDebouncer.RunAsync(
+                    () => { _ = OnAnyMediaPropertyChangedCoreAsync(_currentDesiredSession); }, 300);
+                break;
         }
     }
 
@@ -540,6 +557,7 @@ public abstract partial class GsmtcServiceBase : ObservableObject, IGsmtcService
         var sessionId = mediaSession?.SessionId;
 
         var currentMediaSourceProviderInfo = GetCurrentDesiredMediaSourceProviderInfo();
+
         if (currentMediaSourceProviderInfo?.ResetPositionOffsetOnSongChanged == true)
         {
             currentMediaSourceProviderInfo?.PositionOffset = 0;
@@ -556,19 +574,27 @@ public abstract partial class GsmtcServiceBase : ObservableObject, IGsmtcService
         _appliedMediaPropsSnapshot = mediaSession == null ? null : GetMediaPropsSnapshot(mediaSession);
 
         // 处理歌曲信息
-        var fixedTitle = mediaSession?.Title;
-        var fixedArtist = mediaSession?.Artist;
-        var fixedAlbum = mediaSession?.Album;
+        var rawTitle = mediaSession?.Title;
+        var rawArtist = mediaSession?.Artist;
+        var rawAlbum = mediaSession?.Album;
+
+        // 用规则纠正播放器上报的字段（Apple Music 的「歌手 — 专辑」等特性也由规则表达）
+        IEnumerable<MediaFieldMappingRule>? correctionRules = currentMediaSourceProviderInfo?.FieldMappingRules;
+
+        // 配置项尚未写入时（极少见）仍然套用内置默认规则，避免与旧版本行为不一致
+        if (correctionRules == null && PlayerIdHelper.IsAppleMusic(sessionId))
+        {
+            correctionRules = MediaFieldCorrectionPresets.CreateAppleMusicRules();
+        }
+
+        var corrected = MediaFieldCorrectionEngine.Apply(correctionRules, rawTitle, rawArtist, rawAlbum);
+
+        var fixedTitle = corrected.Title;
+        var fixedArtist = corrected.Artist;
+        var fixedAlbum = corrected.Album;
         string? songId = null;
 
-        if (PlayerIdHelper.IsAppleMusic(sessionId))
-        {
-            fixedArtist = mediaSession?.Artist?.Split(" — ").First();
-            fixedAlbum = mediaSession?.Artist?.Split(" — ").Last();
-            fixedAlbum = fixedAlbum?.Replace(" - Single", "");
-            fixedAlbum = fixedAlbum?.Replace(" - EP", "");
-        }
-        else if (PlayerIdHelper.IsNeteaseFamily(sessionId))
+        if (PlayerIdHelper.IsNeteaseFamily(sessionId))
         {
             songId = mediaSession?.Genres?
                 .FirstOrDefault(x => x.StartsWith(ExtendedGenreFiled.NetEaseCloudMusicTrackID))?
@@ -606,6 +632,19 @@ public abstract partial class GsmtcServiceBase : ObservableObject, IGsmtcService
 
         _appUIThreadProvider.Execute(() =>
         {
+            CurrentRawSongInfo =
+                string.IsNullOrEmpty(rawTitle) && string.IsNullOrEmpty(rawArtist) && string.IsNullOrEmpty(rawAlbum)
+                    ? null
+                    : new SongInfo
+                    {
+                        Title = rawTitle ?? "N/A",
+                        Artist = rawArtist ?? "N/A",
+                        Album = rawAlbum ?? "N/A",
+                        DurationMs = mediaSession?.EndTime.TotalMilliseconds ?? 0,
+                        PlayerId = sessionId,
+                        StartedAt = DateTime.Now.ToBinary()
+                    };
+
             if (string.IsNullOrEmpty(fixedTitle) && string.IsNullOrEmpty(fixedArtist) && string.IsNullOrEmpty(fixedAlbum))
             {
                 CurrentSongInfo = SongInfoExtensions.Placeholder;

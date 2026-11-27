@@ -330,6 +330,9 @@
                                                 </controls:SettingsExpander.Items>
                                             </controls:SettingsExpander>
 
+                                            <!--  歌曲信息纠正（标题/歌手/专辑）  -->
+                                            <local:MediaFieldCorrectionControl />
+
                                             <!--  专辑封面源配置  -->
                                             <Expander
                                                 Padding="0"

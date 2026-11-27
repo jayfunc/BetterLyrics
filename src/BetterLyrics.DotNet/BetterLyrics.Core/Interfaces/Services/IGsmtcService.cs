@@ -24,6 +24,12 @@ public interface IGsmtcService : INotifyPropertyChanged
 
     bool CurrentIsPlaying { get; }
     SongInfo CurrentSongInfo { get; }
+
+    /// <summary>
+    /// 播放器上报的原始歌曲信息（未经字段纠正规则处理）。
+    /// </summary>
+    SongInfo? CurrentRawSongInfo { get; }
+
     TimeSpan CurrentPosition { get; }
     LyricsData? CurrentLyricsData { get; }
 

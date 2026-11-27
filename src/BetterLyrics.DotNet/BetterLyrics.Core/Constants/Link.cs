@@ -7,9 +7,6 @@ public static class Link
 
     public const string AuthorGitHub = "https://github.com/jayfunc";
 
-    public const string Crowdin =
-        "https://crowdin.com/project/betterlyrics/invite?h=413bb0df7afa420247a98fefdae5e12c2647410";
-
     public const string BetterLyricsGitHub = $"{AuthorGitHub}/BetterLyrics";
 
     public const string TermsOfService = $"{BetterLyricsGitHub}/blob/dev/docs/TERMS_OF_SERVICE.md";

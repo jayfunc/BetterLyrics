@@ -152,7 +152,7 @@
 
 欢迎社区的任何贡献！你可以通过以下方式帮助我们：
 
-- **协助翻译：** 找不到你的语言？[点此开始翻译](https://zh.crowdin.com/project/betterlyrics)。
+- **贡献代码：** Fork 本仓库并向 `dev` 分支提交 Pull Request。[查看贡献指南](CONTRIBUTING.md)。
 - **开发插件：** 想要扩展功能？[查看插件开发指南](https://betterlyrics.github.io/zh-cn/docs/plugin-dev/intro)。
 - **从源码构建：** [查看构建说明](https://betterlyrics.github.io/zh-cn/docs/get-started/download.html#visual-studio)。
 
@@ -219,14 +219,15 @@
 
 | 贡献者 | 贡献类型 |
 | :--- | :--- |
-| [borcolasky](https://crowdin.com/profile/borcolasky) | `I` |
+| borcolasky | `I` |
 | [DrivingGodJ](https://github.com/DrivingGodJ) | `C` |
 | [H-MAli](https://github.com/H-MAli) | `C` |
 | [kusutori](https://github.com/kusutori) | `C` |
 | [OctoBored](https://github.com/OctoBored) | `D` |
+| pascal-00 | `I` |
 | [PiYuanZhouLv](https://github.com/PiYuanZhouLv) | `C` |
 | [Raspberry-Monster](https://github.com/Raspberry-Monster) | `C` |
-| [SuHeAndZl](https://crowdin.com/profile/SuHeAndZl) | `I` `Q` `D` |
+| SuHeAndZl | `I` `Q` `D` |
 | [Xionghaizi001](https://github.com/Xionghaizi001) | `C` |
 | [YUZU384](https://github.com/YUZU384) | `C` |
 | [ZHider](https://github.com/ZHider) | `C` |
