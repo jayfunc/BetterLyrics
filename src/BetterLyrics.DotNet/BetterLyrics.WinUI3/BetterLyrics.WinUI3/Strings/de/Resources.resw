@@ -125,7 +125,7 @@
   <data name="AboutControlUpToDate.Title" xml:space="preserve"><value>BetterLyrics ist auf dem neuesten Stand</value></data>
   <data name="ActionCompleted" xml:space="preserve"><value>Aktion abgeschlossen</value></data>
   <data name="Add" xml:space="preserve"><value>Hinzufügen</value></data>
-  <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Description" xml:space="preserve"><value>Titelinformationen werden automatisch gescrollt, wenn sie zu lang sind – unabhängig davon, ob sich der Mauszeiger darüber befindet.</value></data>
+  <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Description" xml:space="preserve"><value>Titelinformationen werden automatisch gescrollt, wenn sie zu lang sind – unabhängig davon, ob sich der Mauszeiger darüber befindet</value></data>
   <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Header" xml:space="preserve"><value>Titelinformationen automatisch scrollen</value></data>
   <data name="AlbumArtAreaSettingsControlEndPoint.Header" xml:space="preserve"><value>Endpunkt</value></data>
   <data name="AlbumArtAreaSettingsControlFadeOut.Header" xml:space="preserve"><value>Ausblenden</value></data>
@@ -254,7 +254,7 @@
   <data name="LayoutEditorControlNoSelection" xml:space="preserve"><value>Wählen Sie eine Komponente in der Vorschau oder in der Liste links aus, um fortzufahren.</value></data>
   <data name="LayoutEditorControlPendingComponentsDescriptionTextBlock.Text" xml:space="preserve"><value>Ziehen Sie Komponenten auf das Raster rechts, um sie zu platzieren. Nach dem Platzieren können Komponenten im Raster frei verschoben werden.</value></data>
   <data name="LayoutEditorControlPendingComponentsTextBlock.Text" xml:space="preserve"><value>Zu platzierende Komponenten</value></data>
-  <data name="LayoutEditorControlPlacedComponentsDescriptionTextBlock.Text" xml:space="preserve"><value>Wenn eine Komponente rechts nicht sichtbar oder nicht anklickbar ist, wählen Sie sie hier aus.</value></data>
+  <data name="LayoutEditorControlPlacedComponentsDescriptionTextBlock.Text" xml:space="preserve"><value>Wenn eine Komponente rechts nicht sichtbar oder nicht anklickbar ist, wählen Sie sie hier aus</value></data>
   <data name="LayoutEditorControlPlacedComponentsTextBlock.Text" xml:space="preserve"><value>Platzierte Komponenten</value></data>
   <data name="LayoutEditorControlPxDescription.Text" xml:space="preserve"><value>Auf die angegebene absolute Pixelbreite bzw. -höhe festgelegt.</value></data>
   <data name="LayoutEditorControlRemoveButton.Content" xml:space="preserve"><value>Komponente entfernen</value></data>
@@ -281,7 +281,7 @@
   <data name="LayoutEditorControlZoomResetButton.Content" xml:space="preserve"><value>An Zeichenfläche anpassen</value></data>
   <data name="LayoutSettingsControlCustomProfiles.Text" xml:space="preserve"><value>Benutzerdefiniert</value></data>
   <data name="LayoutSettingsControlCustomProfilesEmpty.Text" xml:space="preserve"><value>Keine benutzerdefinierten Layouts gefunden. Erstellen Sie eines aus einer Vorlage oder importieren Sie ein vorhandenes Layout.</value></data>
-  <data name="LayoutSettingsControlLayoutNameTextBox.PlaceholderText" xml:space="preserve"><value>Geben Sie einen Namen für dieses Layout ein, um es leichter unterscheiden zu können.</value></data>
+  <data name="LayoutSettingsControlLayoutNameTextBox.PlaceholderText" xml:space="preserve"><value>Geben Sie einen Namen für dieses Layout ein, um es leichter unterscheiden zu können</value></data>
   <data name="LayoutSettingsControlNoLyricsWindow" xml:space="preserve"><value>Es wird kein Songtextfenster mit diesem Layout verwendet</value></data>
   <data name="LayoutSettingsControlSystemProfiles.Text" xml:space="preserve"><value>Standard</value></data>
   <data name="LayoutSettingsControlViewAppliedLyricsWindow.Text" xml:space="preserve"><value>Songtextfenster anzeigen, die dieses Layout verwenden</value></data>
@@ -290,7 +290,8 @@
   <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve"><value>Songtext links, Albumcover rechts (kompakt)</value></data>
   <data name="LeftLyricsRightAlbumArtLayout" xml:space="preserve"><value>Songtext links, Albumcover rechts</value></data>
   <data name="LibreTranslateFailed" xml:space="preserve"><value>Die Übersetzungsanfrage an LibreTranslate ist fehlgeschlagen. Prüfen Sie die Einstellungen oder die lokale LibreTranslate-Konfiguration.</value></data>
-  <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve"><value>z. B. http://localhost:5000.</value></data>
+  <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve"><value>http://localhost:5000</value></data>
+  <data name="ListSeparator" xml:space="preserve"><value>, </value></data>
   <data name="Loading" xml:space="preserve"><value>Wird geladen...</value></data>
   <data name="LyricsCardOnlyLayout" xml:space="preserve"><value>Layout nur mit Songtextkarte</value></data>
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve"><value>Dauer</value></data>
@@ -317,7 +318,7 @@
   <data name="LyricsSaveConfigIncludeTranslation.Header" xml:space="preserve"><value>Übersetzung einschließen</value></data>
   <data name="LyricsSaveConfigIncludeTransliteration.Header" xml:space="preserve"><value>Umschrift einschließen</value></data>
   <data name="LyricsSaveConfigInOneLine.Description" xml:space="preserve"><value>Durch Schrägstriche getrennt</value></data>
-  <data name="LyricsSaveConfigInOneLine.Header" xml:space="preserve"><value>Original, Übersetzung und Umschrift kombinieren.</value></data>
+  <data name="LyricsSaveConfigInOneLine.Header" xml:space="preserve"><value>Original, Übersetzung und Umschrift kombinieren</value></data>
   <data name="LyricsSaveConfigInSyllablesFormat.Header" xml:space="preserve"><value>Als wortweise synchronisierten Songtext speichern</value></data>
   <data name="LyricsSearchControlAlbum.Header" xml:space="preserve"><value>Album</value></data>
   <data name="LyricsSearchControlArtist.Header" xml:space="preserve"><value>Interpret</value></data>
@@ -428,7 +429,7 @@
   <data name="MusicGalleryPageSelectedTrackDetail.Content" xml:space="preserve"><value>Informationen zum aktuell ausgewählten Titel</value></data>
   <data name="MusicGalleryPageShufflePlay.Content" xml:space="preserve"><value>Zufallswiedergabe</value></data>
   <data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve"><value>Einen Titel wiederholen</value></data>
-  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve"><value>Titel, Interpret, Album, Dateiname oder Ordnerpfad durchsuchen.</value></data>
+  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve"><value>Titel, Interpret, Album, Dateiname oder Ordnerpfad durchsuchen</value></data>
   <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve"><value>Album</value></data>
   <data name="MusicGalleryPageSortByArtist.Content" xml:space="preserve"><value>Interpret</value></data>
   <data name="MusicGalleryPageSortByFolder.Content" xml:space="preserve"><value>Ordner</value></data>
@@ -469,7 +470,7 @@
   <data name="PrivacyPolicy.Content" xml:space="preserve"><value>Datenschutzrichtlinie</value></data>
   <data name="RemoteServerConfigControlBrowse.Content" xml:space="preserve"><value>Durchsuchen</value></data>
   <data name="RemoteServerConfigControlName.Header" xml:space="preserve"><value>Name</value></data>
-  <data name="RemoteServerConfigControlName.PlaceholderText" xml:space="preserve"><value>Wenn Sie das Feld leer lassen, wird automatisch ein Standardname generiert.</value></data>
+  <data name="RemoteServerConfigControlName.PlaceholderText" xml:space="preserve"><value>Wenn Sie das Feld leer lassen, wird automatisch ein Standardname generiert</value></data>
   <data name="RemoteServerConfigControlPassword.Header" xml:space="preserve"><value>Kennwort</value></data>
   <data name="RemoteServerConfigControlPath.Header" xml:space="preserve"><value>Pfad</value></data>
   <data name="RemoteServerConfigControlPathNotExisted" xml:space="preserve"><value>Der angegebene Ordnerpfad wurde nicht gefunden</value></data>
@@ -507,7 +508,7 @@
   <data name="SettingsPageWriteDebugLogs.Header" xml:space="preserve"><value>Debugprotokolle schreiben</value></data>
   <data name="SettingsPageWriteDebugLogs.Description" xml:space="preserve"><value>Schließt Protokolle ab der Ebene „Debug“ und höher ein. Dies erleichtert die Fehlerbehebung, vergrößert jedoch die Protokolldatei. Die Änderung wird nach dem Neustart der App wirksam.</value></data>
   <data name="SettingsPageGcObjectCheck.Header" xml:space="preserve"><value>Auf nicht durch GC erfasste Objekte prüfen</value></data>
-  <data name="SettingsPageGcObjectCheck.Description" xml:space="preserve"><value>Führt eine Garbage Collection aus und listet überwachte Objekte auf, die noch aktiv sind.</value></data>
+  <data name="SettingsPageGcObjectCheck.Description" xml:space="preserve"><value>Führt eine Garbage Collection aus und listet überwachte Objekte auf, die noch aktiv sind</value></data>
   <data name="SettingsPageGcObjectCheckButton.Content" xml:space="preserve"><value>Prüfen</value></data>
   <data name="SettingsPageGcObjectsNone" xml:space="preserve"><value>Nach der Garbage Collection sind keine überwachten Objekte mehr aktiv</value></data>
   <data name="SettingsPageGcObjectsFound" xml:space="preserve"><value>Überwachte Objekte, die nach der Garbage Collection noch aktiv sind:</value></data>
@@ -524,12 +525,12 @@
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>Songtexthintergrund</value></data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve"><value>Unschärfe</value></data>
   <data name="SettingsPageBottom.Content" xml:space="preserve"><value>Unten</value></data>
-  <data name="SettingsPageCache.Description" xml:space="preserve"><value>Umfasst Protokolldateien und den Cache für Online-Songtexte.</value></data>
+  <data name="SettingsPageCache.Description" xml:space="preserve"><value>Umfasst Protokolldateien und den Cache für Online-Songtexte</value></data>
   <data name="SettingsPageCache.Header" xml:space="preserve"><value>Cache</value></data>
   <data name="SettingsPageCenter.Content" xml:space="preserve"><value>Mitte</value></data>
   <data name="SettingsPageCheckShortcut.Content" xml:space="preserve"><value>Tastenkombination prüfen</value></data>
   <data name="SettingsPageChinese.Header" xml:space="preserve"><value>Chinesische Lautschrift</value></data>
-  <data name="SettingsPageChinesePreference.Description" xml:space="preserve"><value>Bei Auswahl von „Nicht angegeben“ bleibt der ursprüngliche Songtext erhalten; bei Auswahl von „Chinesisch (vereinfacht)“ oder „Chinesisch (traditionell)“ wird der ursprüngliche Songtext maschinell umgewandelt.</value></data>
+  <data name="SettingsPageChinesePreference.Description" xml:space="preserve"><value>Bei Auswahl von „Nicht angegeben“ bleibt der ursprüngliche Songtext erhalten; bei Auswahl von „Chinesisch (vereinfacht)“ oder „Chinesisch (traditionell)“ wird der ursprüngliche Songtext maschinell umgewandelt</value></data>
   <data name="SettingsPageChinesePreference.Header" xml:space="preserve"><value>Chinesische Sprachvariante</value></data>
   <data name="SettingsPageChinesePreferenceSToT.Content" xml:space="preserve"><value>Chinesisch (traditionell)</value></data>
   <data name="SettingsPageChinesePreferenceTToS.Content" xml:space="preserve"><value>Chinesisch (vereinfacht)</value></data>
@@ -635,7 +636,7 @@
   <data name="SettingsPageLocalLyricsFilePattern.Header" xml:space="preserve"><value>Analysemuster für Songtextdateien</value></data>
   <data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve"><value>Schwellenwert für lange Silben</value></data>
   <data name="SettingsPageLXMusicServer.Header" xml:space="preserve"><value>LX Music-Server</value></data>
-  <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve"><value>z. B. http://127.0.0.1:23330.</value></data>
+  <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve"><value>http://127.0.0.1:23330</value></data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve"><value>Ausrichtung</value></data>
   <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve"><value>Nicht aktuelle Zeile</value></data>
   <data name="SettingsPageLyricsBlack.Content" xml:space="preserve"><value>Schwarz</value></data>
@@ -666,7 +667,7 @@
   <data name="SettingsPageLyricsGapDotsMinimumDuration.Header" xml:space="preserve"><value>Mindestdauer der Pause</value></data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve"><value>Leuchteffekt</value></data>
   <data name="SettingsPageLyricsHdrGlow.Header" xml:space="preserve"><value>HDR-Leuchten des Songtexts</value></data>
-  <data name="SettingsPageLyricsHdrGlow.Description" xml:space="preserve"><value>Verfügbar, wenn Windows HDR für die ausgewählte Anzeige aktiviert ist.</value></data>
+  <data name="SettingsPageLyricsHdrGlow.Description" xml:space="preserve"><value>Verfügbar, wenn Windows HDR für die ausgewählte Anzeige aktiviert ist</value></data>
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve"><value>Leicht</value></data>
   <data name="SettingsPageLyricsLineInnerSpacingFactor.Header" xml:space="preserve"><value>Zeileninnenabstand</value></data>
   <data name="SettingsPageLyricsLineOverallSpacingFactor.Header" xml:space="preserve"><value>Gesamtzeilenabstand</value></data>
@@ -700,7 +701,7 @@
   <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve"><value>Immer</value></data>
   <data name="SettingsPageLyricsWordByWordEffectModeAuto.Content" xml:space="preserve"><value>Automatisch</value></data>
   <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve"><value>Nie</value></data>
-  <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve"><value>Eine Änderung dieses Werts wirkt sich auf die Ergebnisse der sequenziellen Suche und der Suche nach der besten Übereinstimmung aus, nicht jedoch auf die Ergebnisse in der manuellen Songtextsuche.</value></data>
+  <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve"><value>Eine Änderung dieses Werts wirkt sich auf die Ergebnisse der sequenziellen Suche und der Suche nach der besten Übereinstimmung aus, nicht jedoch auf die Ergebnisse in der manuellen Songtextsuche</value></data>
   <data name="SettingsPageMatchingThreshold.Header" xml:space="preserve"><value>Minimaler Übereinstimmungsschwellenwert</value></data>
   <data name="SettingsPageMediaLib" xml:space="preserve"><value>Mediathek</value></data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve"><value>Diese Wiedergabequelle überwachen</value></data>
@@ -761,7 +762,7 @@
   <data name="SettingsPageShortcutRegFailInfo" xml:space="preserve"><value>Registrierung der Tastenkombination fehlgeschlagen</value></data>
   <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve"><value>Registrierung der Tastenkombination erfolgreich</value></data>
   <data name="SettingsPageShowHideHotKey.Header" xml:space="preserve"><value>Tastenkombination zum Ein-/Ausblenden des Songtextfensters</value></data>
-  <data name="SettingsPageShowInSwitchers.Description" xml:space="preserve"><value>z. B. Alt+Tab, Taskleiste.</value></data>
+  <data name="SettingsPageShowInSwitchers.Description" xml:space="preserve"><value>z. B. Alt+Tab, Taskleiste</value></data>
   <data name="SettingsPageShowInSwitchers.Header" xml:space="preserve"><value>In der Systemumgebung anzeigen</value></data>
   <data name="SettingsPageSize.Header" xml:space="preserve"><value>Größe</value></data>
   <data name="SettingsPageSlide.Content" xml:space="preserve"><value>Gleiten</value></data>
@@ -807,7 +808,7 @@
   <data name="SettingsPageWallpaperMode.Text" xml:space="preserve"><value>Hintergrundbildmodus</value></data>
   <data name="SettingsPageWesternChar.Header" xml:space="preserve"><value>Lateinische Zeichen</value></data>
   <data name="SettingsPageWidth.Header" xml:space="preserve"><value>Breite</value></data>
-  <data name="SettingsPageWorkArea.Description" xml:space="preserve"><value>Symbolleiste des Anwendungsdesktops, die am oberen oder unteren Bildschirmrand angedockt wird.</value></data>
+  <data name="SettingsPageWorkArea.Description" xml:space="preserve"><value>Symbolleiste des Anwendungsdesktops, die am oberen oder unteren Bildschirmrand angedockt wird</value></data>
   <data name="SettingsPageWorkArea.Header" xml:space="preserve"><value>App-Leiste</value></data>
   <data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve"><value>Höhe der App-Leiste</value></data>
   <data name="SetTo1Star" xml:space="preserve"><value>Auf 1 Stern setzen</value></data>
@@ -933,7 +934,7 @@
   <data name="LyricsSearchControlTranslationAvailable.Text" xml:space="preserve"><value>Übersetzung</value></data>
   <data name="LyricsSearchControlTransliterationAvailable.Text" xml:space="preserve"><value>Umschrift</value></data>
   <data name="SettingsPageLyricsAutoRetryCount.Header" xml:space="preserve"><value>Maximale Suchversuche</value></data>
-  <data name="SettingsPageLyricsAutoRetryCount.Description" xml:space="preserve"><value>Maximale Anzahl von Versuchen, wenn die Songtextsuche fehlschlägt.</value></data>
+  <data name="SettingsPageLyricsAutoRetryCount.Description" xml:space="preserve"><value>Maximale Anzahl von Versuchen, wenn die Songtextsuche fehlschlägt</value></data>
   <data name="StoryPageSummaryTitle.Text" xml:space="preserve"><value>Musikrückblick</value></data>
   <data name="StoryPageSummaryTotalPlays.Text" xml:space="preserve"><value>Wiedergaben insgesamt</value></data>
   <data name="StoryPageSummaryUnitTracks.Text" xml:space="preserve"><value>Titel</value></data>
@@ -995,7 +996,7 @@
   <data name="FileNamePatternControlHelpArtist.Text" xml:space="preserve"><value>Der Name des Interpreten</value></data>
   <data name="FileNamePatternControlHelpTitleDesc.Text" xml:space="preserve"><value>Der Titel des Songs</value></data>
   <data name="FileNamePatternControlHelpAlbum.Text" xml:space="preserve"><value>Der Name des Albums</value></data>
-  <data name="FileNamePatternControlHelpTip.Text" xml:space="preserve"><value>Hinweis: Sie können auch andere Wörter wie {BPM} als Platzhalter verwenden, um Teile des Dateinamens zu ignorieren.</value></data>
+  <data name="FileNamePatternControlHelpTip.Text" xml:space="preserve"><value>Hinweis: Sie können auch andere Wörter wie {BPM} als Platzhalter verwenden, um Teile des Dateinamens zu ignorieren</value></data>
   <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve"><value>Beispielvorschau:</value></data>
   <data name="FileNamePatternControlNoPatternProvided" xml:space="preserve"><value>Kein Muster angegeben</value></data>
   <data name="SettingsPageRestartRequiredInfoBar.Title" xml:space="preserve"><value>Neustart erforderlich</value></data>
@@ -1008,7 +1009,7 @@
   <data name="SettingsPageShowNowPlayingNotification.Description" xml:space="preserve"><value>Zeigt beim Titelwechsel eine kurze Popupbenachrichtigung in der Bildschirmecke an</value></data>
   <data name="SettingsPageNowPlayingNotificationCorner.Header" xml:space="preserve"><value>Position des Popups</value></data>
   <data name="SettingsPageNowPlayingNotificationAllMonitors.Header" xml:space="preserve"><value>Auf allen Anzeigen anzeigen</value></data>
-  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve"><value>Wenn diese Option deaktiviert ist, wird das Popup nur auf der Hauptanzeige angezeigt.</value></data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve"><value>Wenn diese Option deaktiviert ist, wird das Popup nur auf der Hauptanzeige angezeigt</value></data>
   <data name="NowPlayingNotificationCornerTopLeft.Content" xml:space="preserve"><value>Oben links</value></data>
   <data name="NowPlayingNotificationCornerTopRight.Content" xml:space="preserve"><value>Oben rechts</value></data>
   <data name="NowPlayingNotificationCornerBottomLeft.Content" xml:space="preserve"><value>Unten links</value></data>
@@ -1025,14 +1026,14 @@
   <data name="PlaybackSettingsControlShowMessage.Content" xml:space="preserve"><value>Meldung anzeigen</value></data>
   <data name="PlaybackSettingsControlHideLyricsArea.Content" xml:space="preserve"><value>Songtextbereich ausblenden</value></data>
   <data name="PlaybackSettingsControlNoLyricsFoundHandling.Header" xml:space="preserve"><value>Verhalten bei nicht gefundenem Songtext</value></data>
-  <data name="PlaybackSettingsControlCustomNotFoundMessage.PlaceholderText" xml:space="preserve"><value>Leer lassen, um die Standardmeldung zu verwenden.</value></data>
+  <data name="PlaybackSettingsControlCustomNotFoundMessage.PlaceholderText" xml:space="preserve"><value>Leer lassen, um die Standardmeldung zu verwenden</value></data>
   <data name="PlaybackSettingsControlCustomNotFoundMessageCard.Header" xml:space="preserve"><value>Benutzerdefinierte Meldung</value></data>
   <data name="SettingsPageSpectrumDelay.Header" xml:space="preserve"><value>Verzögerung des Spektrums</value></data>
   <data name="SettingsPageIntegration.Text" xml:space="preserve"><value>Integration</value></data>
   <data name="SettingsPageWindow.Text" xml:space="preserve"><value>Fenster</value></data>
   <data name="LayoutEditorControlComponentPlaybackControl" xml:space="preserve"><value>Mediensteuerleiste</value></data>
   <data name="WindowSettingsControlNowPlayingBarAutoAdaptive.Header" xml:space="preserve"><value>Automatische Anpassung der Mediensteuerleiste</value></data>
-  <data name="WindowSettingsControlNowPlayingBarAutoAdaptive.Description" xml:space="preserve"><value>Blendet Zeit- und Weitere-Schaltflächen automatisch aus, wenn die Breite gering ist.</value></data>
+  <data name="WindowSettingsControlNowPlayingBarAutoAdaptive.Description" xml:space="preserve"><value>Blendet Zeit- und Weitere-Schaltflächen automatisch aus, wenn die Breite gering ist</value></data>
   <data name="WindowSettingsControlNowPlayingBarShowTimeArea.Header" xml:space="preserve"><value>Zeitbereich anzeigen</value></data>
   <data name="WindowSettingsControlNowPlayingBarShowProgressBar.Header" xml:space="preserve"><value>Fortschrittsleiste anzeigen</value></data>
   <data name="WindowSettingsControlNowPlayingBarShowMoreButton.Header" xml:space="preserve"><value>Menüschaltfläche „Mehr“ anzeigen</value></data>
@@ -1040,7 +1041,7 @@
   <data name="SettingsPagePaletteLightToneThreshold.Header" xml:space="preserve"><value>Schwellenwert für helle Farbtöne</value></data>
   <data name="SettingsPagePaletteChromaWeight.Description" xml:space="preserve"><value>Passt die Bevorzugung kräftiger Farben bei der Palettenextraktion an</value></data>
   <data name="SettingsPagePaletteToneWeight.Description" xml:space="preserve"><value>Passt die Bevorzugung heller oder dunkler Farbtöne bei der Palettenextraktion an</value></data>
-  <data name="SettingsPagePalettePopulationWeight.Description" xml:space="preserve"><value>Passt die Bevorzugung von Farben an, die größere Bildbereiche einnehmen.</value></data>
+  <data name="SettingsPagePalettePopulationWeight.Description" xml:space="preserve"><value>Passt die Bevorzugung von Farben an, die größere Bildbereiche einnehmen</value></data>
   <data name="SettingsPagePaletteDarkToneThreshold.Description" xml:space="preserve"><value>Maximaler Helligkeitsschwellenwert zum Filtern von Farben im dunklen Modus</value></data>
   <data name="SettingsPagePaletteLightToneThreshold.Description" xml:space="preserve"><value>Minimaler Helligkeitsschwellenwert zum Filtern von Farben im hellen Modus</value></data>
   <data name="SettingsPageEasingTypeAppleMusicSpring.Content" xml:space="preserve"><value>Apple Music-ähnlich</value></data>
@@ -1051,7 +1052,7 @@
   <data name="SettingsPageMonitorLayout.Header" xml:space="preserve"><value>Aktuelle Anzeigenanordnung</value></data>
   <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve"><value>Systemanzeigeeinstellungen öffnen</value></data>
   <data name="SettingsPageSemanticEffects.Header" xml:space="preserve"><value>Semantische Songtexteffekte</value></data>
-  <data name="SettingsPageSemanticEffects.Description" xml:space="preserve"><value>Erzeugt Partikel (z. B. Herz, Regen, Schnee), wenn bestimmte Schlüsselwörter im Songtext erscheinen.</value></data>
+  <data name="SettingsPageSemanticEffects.Description" xml:space="preserve"><value>Erzeugt Partikel (z. B. Herz, Regen, Schnee), wenn bestimmte Schlüsselwörter im Songtext erscheinen</value></data>
   <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve"><value>Deep-Link kopieren</value></data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve"><value>Keine Anzeige gefunden, die dem Modus entspricht.</value></data>
   <data name="SettingsPageListenBrainzTrack.Header" xml:space="preserve"><value>Hörverlauf über ListenBrainz aufzeichnen</value></data>
@@ -1067,7 +1068,7 @@
   <data name="MediaFieldCorrectionAddCustom.Content" xml:space="preserve"><value>Neue Regel</value></data>
   <data name="MediaFieldCorrectionMore.Content" xml:space="preserve"><value>Mehr</value></data>
   <data name="MediaFieldCorrectionEmpty.Header" xml:space="preserve"><value>Noch keine Regeln</value></data>
-  <data name="MediaFieldCorrectionEmpty.Description" xml:space="preserve"><value>Fügen Sie ein Beispiel ein, um die Syntax zu sehen, oder schreiben Sie selbst eine Vorlage.</value></data>
+  <data name="MediaFieldCorrectionEmpty.Description" xml:space="preserve"><value>Fügen Sie ein Beispiel ein, um die Syntax zu sehen, oder schreiben Sie selbst eine Vorlage</value></data>
   <data name="MediaFieldPreviewHeaderCurrent" xml:space="preserve"><value>Ergebnis für den aktuellen Titel</value></data>
   <data name="MediaFieldPreviewHeaderSample" xml:space="preserve"><value>Beispielergebnis (es wird nichts wiedergegeben)</value></data>
   <data name="MediaFieldPreviewNoChange" xml:space="preserve"><value>Kein Feld geändert – die Regeln stimmen nicht mit diesem Text überein.</value></data>
@@ -1084,21 +1085,21 @@
   <data name="MediaFieldRuleDialogAddTitle" xml:space="preserve"><value>Neue Regel</value></data>
   <data name="MediaFieldRuleDialogEditTitle" xml:space="preserve"><value>Regel bearbeiten</value></data>
   <data name="MediaFieldRuleKind.Header" xml:space="preserve"><value>Modus</value></data>
-  <data name="MediaFieldRuleKindTemplate.Content" xml:space="preserve"><value>Vorlage – {field}-Platzhalter</value></data>
-  <data name="MediaFieldRuleKindRegexExtract.Content" xml:space="preserve"><value>Regulärer Ausdruck – benannte Gruppen</value></data>
-  <data name="MediaFieldRuleKindRegexReplace.Content" xml:space="preserve"><value>Regulärer Ausdruck – Ersetzen</value></data>
+  <data name="MediaFieldRuleKindTemplate.Content" xml:space="preserve"><value>Vorlage: {field}-Platzhalter</value></data>
+  <data name="MediaFieldRuleKindRegexExtract.Content" xml:space="preserve"><value>Regulärer Ausdruck: benannte Gruppen</value></data>
+  <data name="MediaFieldRuleKindRegexReplace.Content" xml:space="preserve"><value>Regulärer Ausdruck: Ersetzen</value></data>
   <data name="MediaFieldRuleSource.Header" xml:space="preserve"><value>Feld</value></data>
   <data name="MediaFieldRulePattern.Header" xml:space="preserve"><value>Muster</value></data>
   <data name="MediaFieldRuleReplacement.Header" xml:space="preserve"><value>Ersetzen durch</value></data>
-  <data name="MediaFieldRuleReplacement.PlaceholderText" xml:space="preserve"><value>Leer bedeutet, die Übereinstimmung wird gelöscht.</value></data>
+  <data name="MediaFieldRuleReplacement.PlaceholderText" xml:space="preserve"><value>Leer bedeutet, die Übereinstimmung wird gelöscht</value></data>
   <data name="MediaFieldRulePreviewHeader.Text" xml:space="preserve"><value>Ausprobieren</value></data>
   <data name="MediaFieldRuleInvalidPattern.Text" xml:space="preserve"><value>Das Muster ist ungültig</value></data>
   <data name="MediaFieldTitle.Content" xml:space="preserve"><value>Titel</value></data>
   <data name="MediaFieldArtist.Content" xml:space="preserve"><value>Interpret</value></data>
   <data name="MediaFieldAlbum.Content" xml:space="preserve"><value>Album</value></data>
-  <data name="MediaFieldRuleSummaryTemplate" xml:space="preserve"><value>Vorlage „{1}“ in „{0}“ abgleichen.</value></data>
-  <data name="MediaFieldRuleSummaryRegexExtract" xml:space="preserve"><value>Mit regulärem Ausdruck „{1}“ aus „{0}“ extrahieren.</value></data>
-  <data name="MediaFieldRuleSummaryRegexReplace" xml:space="preserve"><value>„{1}“ in „{0}“ durch „{2}“ ersetzen.</value></data>
+  <data name="MediaFieldRuleSummaryTemplate" xml:space="preserve"><value>Vorlage „{1}“ in „{0}“ abgleichen</value></data>
+  <data name="MediaFieldRuleSummaryRegexExtract" xml:space="preserve"><value>Mit regulärem Ausdruck „{1}“ aus „{0}“ extrahieren</value></data>
+  <data name="MediaFieldRuleSummaryRegexReplace" xml:space="preserve"><value>„{1}“ in „{0}“ durch „{2}“ ersetzen</value></data>
   <data name="MediaFieldRuleHintTemplate" xml:space="preserve"><value>{title}, {artist} und {album} werden in die entsprechenden Felder zurückgeschrieben; alle anderen {name} werden verworfen; * entspricht dem Rest.</value></data>
   <data name="MediaFieldRuleHintRegexExtract" xml:space="preserve"><value>Benannte Gruppen (?&lt;title&gt;…), (?&lt;artist&gt;…), (?&lt;album&gt;…) werden in die entsprechenden Felder zurückgeschrieben. Ohne Feldgruppen ersetzt der übereinstimmende Teil das Feld.</value></data>
   <data name="MediaFieldRuleHintRegexReplace" xml:space="preserve"><value>Das gesamte Feld wird neu geschrieben; $1 und ${name} werden unterstützt. Eine leere Ersetzung löscht die Übereinstimmung.</value></data>

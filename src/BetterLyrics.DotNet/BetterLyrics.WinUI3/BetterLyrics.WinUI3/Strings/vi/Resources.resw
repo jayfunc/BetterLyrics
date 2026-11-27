@@ -125,7 +125,7 @@
   <data name="AboutControlUpToDate.Title" xml:space="preserve"><value>BetterLyrics đã là phiên bản mới nhất</value></data>
   <data name="ActionCompleted" xml:space="preserve"><value>Đã hoàn tất thao tác</value></data>
   <data name="Add" xml:space="preserve"><value>Thêm</value></data>
-  <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Description" xml:space="preserve"><value>Tự động cuộn thông tin bài hát khi quá dài, không phụ thuộc vào việc rê chuột.</value></data>
+  <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Description" xml:space="preserve"><value>Tự động cuộn thông tin bài hát khi quá dài, không phụ thuộc vào việc rê chuột</value></data>
   <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Header" xml:space="preserve"><value>Tự động cuộn thông tin bài hát</value></data>
   <data name="AlbumArtAreaSettingsControlEndPoint.Header" xml:space="preserve"><value>Điểm kết thúc</value></data>
   <data name="AlbumArtAreaSettingsControlFadeOut.Header" xml:space="preserve"><value>Mờ dần</value></data>
@@ -254,7 +254,7 @@
   <data name="LayoutEditorControlNoSelection" xml:space="preserve"><value>Chọn một thành phần trong bản xem trước hoặc danh sách bên trái để tiếp tục</value></data>
   <data name="LayoutEditorControlPendingComponentsDescriptionTextBlock.Text" xml:space="preserve"><value>Kéo các thành phần vào lưới bên phải để đặt chúng. Sau khi được đặt, các thành phần có thể di chuyển tự do trong lưới.</value></data>
   <data name="LayoutEditorControlPendingComponentsTextBlock.Text" xml:space="preserve"><value>Thành phần chờ đặt</value></data>
-  <data name="LayoutEditorControlPlacedComponentsDescriptionTextBlock.Text" xml:space="preserve"><value>Nếu một thành phần không hiển thị hoặc không thể nhấp ở bên phải, hãy chọn thành phần đó tại đây.</value></data>
+  <data name="LayoutEditorControlPlacedComponentsDescriptionTextBlock.Text" xml:space="preserve"><value>Nếu một thành phần không hiển thị hoặc không thể nhấp ở bên phải, hãy chọn thành phần đó tại đây</value></data>
   <data name="LayoutEditorControlPlacedComponentsTextBlock.Text" xml:space="preserve"><value>Thành phần đã đặt</value></data>
   <data name="LayoutEditorControlPxDescription.Text" xml:space="preserve"><value>Cố định theo chiều rộng và chiều cao tuyệt đối bằng pixel đã chỉ định</value></data>
   <data name="LayoutEditorControlRemoveButton.Content" xml:space="preserve"><value>Xóa thành phần</value></data>
@@ -290,7 +290,8 @@
   <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve"><value>Lời bài hát bên trái, ảnh bìa bên phải (thu gọn)</value></data>
   <data name="LeftLyricsRightAlbumArtLayout" xml:space="preserve"><value>Lời bài hát bên trái, ảnh bìa bên phải</value></data>
   <data name="LibreTranslateFailed" xml:space="preserve"><value>Yêu cầu dịch tới LibreTranslate thất bại. Vui lòng kiểm tra cài đặt hoặc cấu hình LibreTranslate cục bộ.</value></data>
-  <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve"><value>ví dụ: http://localhost:5000.</value></data>
+  <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve"><value>http://localhost:5000</value></data>
+  <data name="ListSeparator" xml:space="preserve"><value>, </value></data>
   <data name="Loading" xml:space="preserve"><value>Đang tải...</value></data>
   <data name="LyricsCardOnlyLayout" xml:space="preserve"><value>Bố cục chỉ có thẻ lời bài hát</value></data>
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve"><value>Thời lượng</value></data>
@@ -307,7 +308,7 @@
   <data name="LyricsPageMatchPercentage.Header" xml:space="preserve"><value>Tỷ lệ khớp</value></data>
   <data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve"><value>Đặt lại về 0 khi chuyển bài hát</value></data>
   <data name="LyricsPageSettings.Text" xml:space="preserve"><value>Cài đặt</value></data>
-  <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve"><value>Ưu tiên bản dịch có sẵn trong lời bài hát; nếu không khớp, sẽ yêu cầu dịch máy từ máy chủ LibreTranslate.</value></data>
+  <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve"><value>Ưu tiên bản dịch có sẵn trong lời bài hát; nếu không khớp, sẽ yêu cầu dịch máy từ máy chủ LibreTranslate</value></data>
   <data name="LyricsPageTranslationEnabled.Header" xml:space="preserve"><value>Bật dịch</value></data>
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve"><value>Nguồn bản dịch</value></data>
   <data name="LyricsPageTransliterationProviderPrefix.Header" xml:space="preserve"><value>Nguồn phiên âm</value></data>
@@ -317,7 +318,7 @@
   <data name="LyricsSaveConfigIncludeTranslation.Header" xml:space="preserve"><value>Bao gồm bản dịch</value></data>
   <data name="LyricsSaveConfigIncludeTransliteration.Header" xml:space="preserve"><value>Bao gồm phiên âm</value></data>
   <data name="LyricsSaveConfigInOneLine.Description" xml:space="preserve"><value>Phân tách bằng dấu gạch chéo</value></data>
-  <data name="LyricsSaveConfigInOneLine.Header" xml:space="preserve"><value>Kết hợp nguyên bản, bản dịch và phiên âm.</value></data>
+  <data name="LyricsSaveConfigInOneLine.Header" xml:space="preserve"><value>Kết hợp nguyên bản, bản dịch và phiên âm</value></data>
   <data name="LyricsSaveConfigInSyllablesFormat.Header" xml:space="preserve"><value>Lưu dưới dạng lời đồng bộ theo từ</value></data>
   <data name="LyricsSearchControlAlbum.Header" xml:space="preserve"><value>Album</value></data>
   <data name="LyricsSearchControlArtist.Header" xml:space="preserve"><value>Nghệ sĩ</value></data>
@@ -428,7 +429,7 @@
   <data name="MusicGalleryPageSelectedTrackDetail.Content" xml:space="preserve"><value>Thông tin về bản nhạc đã chọn</value></data>
   <data name="MusicGalleryPageShufflePlay.Content" xml:space="preserve"><value>Phát ngẫu nhiên</value></data>
   <data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve"><value>Lặp một bản</value></data>
-  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve"><value>Tìm kiếm tiêu đề, nghệ sĩ, album, tên tệp hoặc đường dẫn thư mục.</value></data>
+  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve"><value>Tìm kiếm tiêu đề, nghệ sĩ, album, tên tệp hoặc đường dẫn thư mục</value></data>
   <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve"><value>Album</value></data>
   <data name="MusicGalleryPageSortByArtist.Content" xml:space="preserve"><value>Nghệ sĩ</value></data>
   <data name="MusicGalleryPageSortByFolder.Content" xml:space="preserve"><value>Thư mục</value></data>
@@ -524,12 +525,12 @@
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>Nền lời bài hát</value></data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve"><value>Mức độ nhòe</value></data>
   <data name="SettingsPageBottom.Content" xml:space="preserve"><value>Dưới</value></data>
-  <data name="SettingsPageCache.Description" xml:space="preserve"><value>Bao gồm tệp nhật ký và bộ nhớ đệm lời bài hát trực tuyến.</value></data>
+  <data name="SettingsPageCache.Description" xml:space="preserve"><value>Bao gồm tệp nhật ký và bộ nhớ đệm lời bài hát trực tuyến</value></data>
   <data name="SettingsPageCache.Header" xml:space="preserve"><value>Bộ nhớ đệm</value></data>
   <data name="SettingsPageCenter.Content" xml:space="preserve"><value>Giữa</value></data>
   <data name="SettingsPageCheckShortcut.Content" xml:space="preserve"><value>Kiểm tra phím tắt</value></data>
   <data name="SettingsPageChinese.Header" xml:space="preserve"><value>Phiên âm tiếng Trung</value></data>
-  <data name="SettingsPageChinesePreference.Description" xml:space="preserve"><value>Chọn "Không chỉ định" sẽ giữ nguyên lời bài hát gốc; chọn "Tiếng Trung giản thể" hoặc "Tiếng Trung phồn thể" sẽ thực hiện chuyển đổi tự động trên lời bài hát gốc.</value></data>
+  <data name="SettingsPageChinesePreference.Description" xml:space="preserve"><value>Chọn "Không chỉ định" sẽ giữ nguyên lời bài hát gốc; chọn "Tiếng Trung giản thể" hoặc "Tiếng Trung phồn thể" sẽ thực hiện chuyển đổi tự động trên lời bài hát gốc</value></data>
   <data name="SettingsPageChinesePreference.Header" xml:space="preserve"><value>Tùy chọn tiếng Trung</value></data>
   <data name="SettingsPageChinesePreferenceSToT.Content" xml:space="preserve"><value>Tiếng Trung phồn thể</value></data>
   <data name="SettingsPageChinesePreferenceTToS.Content" xml:space="preserve"><value>Tiếng Trung giản thể</value></data>
@@ -635,7 +636,7 @@
   <data name="SettingsPageLocalLyricsFilePattern.Header" xml:space="preserve"><value>Mẫu phân tích tệp lời bài hát</value></data>
   <data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve"><value>Ngưỡng âm tiết dài</value></data>
   <data name="SettingsPageLXMusicServer.Header" xml:space="preserve"><value>Máy chủ LX Music</value></data>
-  <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve"><value>ví dụ: http://127.0.0.1:23330.</value></data>
+  <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve"><value>http://127.0.0.1:23330</value></data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve"><value>Căn chỉnh</value></data>
   <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve"><value>Dòng không hiện tại</value></data>
   <data name="SettingsPageLyricsBlack.Content" xml:space="preserve"><value>Đen</value></data>
@@ -683,14 +684,14 @@
   <data name="SettingsPageLyricsSearchBestMatch.Content" xml:space="preserve"><value>Khớp tốt nhất</value></data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Text" xml:space="preserve"><value>Cấu hình nguồn lời bài hát</value></data>
   <data name="SettingsPageLyricsSearchSequential.Content" xml:space="preserve"><value>Tuần tự</value></data>
-  <data name="SettingsPageLyricsSearchType.Description" xml:space="preserve"><value>Tuần tự: tìm kiếm theo danh sách bên dưới theo thứ tự ưu tiên và trả về kết quả đầu tiên tìm được; Khớp tốt nhất: tìm kiếm trên tất cả nguồn đã bật và tự động chọn kết quả có điểm khớp cao nhất.</value></data>
+  <data name="SettingsPageLyricsSearchType.Description" xml:space="preserve"><value>Tuần tự: tìm kiếm theo danh sách bên dưới theo thứ tự ưu tiên và trả về kết quả đầu tiên tìm được; Khớp tốt nhất: tìm kiếm trên tất cả nguồn đã bật và tự động chọn kết quả có điểm khớp cao nhất</value></data>
   <data name="SettingsPageLyricsSearchType.Header" xml:space="preserve"><value>Chiến lược tìm kiếm lời bài hát</value></data>
   <data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve"><value>Bán đậm</value></data>
   <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve"><value>Bán mảnh</value></data>
   <data name="SettingsPageLyricsStyle.Text" xml:space="preserve"><value>Kiểu lời bài hát</value></data>
   <data name="SettingsPageLyricsThin.Content" xml:space="preserve"><value>Rất mảnh</value></data>
   <data name="SettingsPageLyricsTimeline.Header" xml:space="preserve"><value>Đồng bộ dòng thời gian lời bài hát</value></data>
-  <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve"><value>Nếu tiến trình lời bài hát bị giật, hãy thử tăng ngưỡng này; thay đổi giá trị này có thể gây lệch đồng bộ lời bài hát.</value></data>
+  <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve"><value>Nếu tiến trình lời bài hát bị giật, hãy thử tăng ngưỡng này; thay đổi giá trị này có thể gây lệch đồng bộ lời bài hát</value></data>
   <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve"><value>Ngưỡng đồng bộ dòng thời gian lời bài hát</value></data>
   <data name="SettingsPageLyricsUnplayedFgFontColor.Header" xml:space="preserve"><value>Dòng hiện tại (chưa phát)</value></data>
   <data name="SettingsPageLyricsWindow.Text" xml:space="preserve"><value>Cửa sổ lời bài hát</value></data>
@@ -700,7 +701,7 @@
   <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve"><value>Luôn luôn</value></data>
   <data name="SettingsPageLyricsWordByWordEffectModeAuto.Content" xml:space="preserve"><value>Tự động</value></data>
   <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve"><value>Không bao giờ</value></data>
-  <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve"><value>Điều chỉnh giá trị này sẽ ảnh hưởng đến kết quả tìm kiếm tuần tự và tìm kiếm khớp tốt nhất, nhưng không ảnh hưởng đến kết quả trong giao diện tìm kiếm lời bài hát thủ công.</value></data>
+  <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve"><value>Điều chỉnh giá trị này sẽ ảnh hưởng đến kết quả tìm kiếm tuần tự và tìm kiếm khớp tốt nhất, nhưng không ảnh hưởng đến kết quả trong giao diện tìm kiếm lời bài hát thủ công</value></data>
   <data name="SettingsPageMatchingThreshold.Header" xml:space="preserve"><value>Ngưỡng khớp tối thiểu</value></data>
   <data name="SettingsPageMediaLib" xml:space="preserve"><value>Thư viện phương tiện</value></data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve"><value>Lắng nghe nguồn phát này</value></data>
@@ -761,7 +762,7 @@
   <data name="SettingsPageShortcutRegFailInfo" xml:space="preserve"><value>Đăng ký phím nóng thất bại</value></data>
   <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve"><value>Đăng ký phím nóng thành công</value></data>
   <data name="SettingsPageShowHideHotKey.Header" xml:space="preserve"><value>Phím tắt hiện/ẩn cửa sổ lời bài hát</value></data>
-  <data name="SettingsPageShowInSwitchers.Description" xml:space="preserve"><value>ví dụ: Alt + Tab, thanh tác vụ.</value></data>
+  <data name="SettingsPageShowInSwitchers.Description" xml:space="preserve"><value>ví dụ: Alt + Tab, thanh tác vụ</value></data>
   <data name="SettingsPageShowInSwitchers.Header" xml:space="preserve"><value>Hiển thị trong môi trường hệ thống</value></data>
   <data name="SettingsPageSize.Header" xml:space="preserve"><value>Kích thước</value></data>
   <data name="SettingsPageSlide.Content" xml:space="preserve"><value>Trượt</value></data>
@@ -807,7 +808,7 @@
   <data name="SettingsPageWallpaperMode.Text" xml:space="preserve"><value>Chế độ hình nền</value></data>
   <data name="SettingsPageWesternChar.Header" xml:space="preserve"><value>Ký tự Latinh</value></data>
   <data name="SettingsPageWidth.Header" xml:space="preserve"><value>Chiều rộng</value></data>
-  <data name="SettingsPageWorkArea.Description" xml:space="preserve"><value>Thanh công cụ màn hình nền của ứng dụng, được neo ở cạnh trên hoặc cạnh dưới của màn hình.</value></data>
+  <data name="SettingsPageWorkArea.Description" xml:space="preserve"><value>Thanh công cụ màn hình nền của ứng dụng, được neo ở cạnh trên hoặc cạnh dưới của màn hình</value></data>
   <data name="SettingsPageWorkArea.Header" xml:space="preserve"><value>Thanh ứng dụng</value></data>
   <data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve"><value>Chiều cao thanh ứng dụng</value></data>
   <data name="SetTo1Star" xml:space="preserve"><value>Đặt thành 1 sao</value></data>
@@ -995,7 +996,7 @@
   <data name="FileNamePatternControlHelpArtist.Text" xml:space="preserve"><value>Tên nghệ sĩ</value></data>
   <data name="FileNamePatternControlHelpTitleDesc.Text" xml:space="preserve"><value>Tiêu đề bài hát</value></data>
   <data name="FileNamePatternControlHelpAlbum.Text" xml:space="preserve"><value>Tên album</value></data>
-  <data name="FileNamePatternControlHelpTip.Text" xml:space="preserve"><value>Mẹo: bạn cũng có thể dùng các từ khác như {BPM} làm phần giữ chỗ để bỏ qua một số phần của tên tệp.</value></data>
+  <data name="FileNamePatternControlHelpTip.Text" xml:space="preserve"><value>Mẹo: bạn cũng có thể dùng các từ khác như {BPM} làm phần giữ chỗ để bỏ qua một số phần của tên tệp</value></data>
   <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve"><value>Ví dụ xem trước:</value></data>
   <data name="FileNamePatternControlNoPatternProvided" xml:space="preserve"><value>Chưa cung cấp mẫu</value></data>
   <data name="SettingsPageRestartRequiredInfoBar.Title" xml:space="preserve"><value>Cần khởi động lại</value></data>
@@ -1008,7 +1009,7 @@
   <data name="SettingsPageShowNowPlayingNotification.Description" xml:space="preserve"><value>Hiển thị thông báo bật lên ngắn ở góc màn hình khi chuyển bài hát</value></data>
   <data name="SettingsPageNowPlayingNotificationCorner.Header" xml:space="preserve"><value>Vị trí cửa sổ bật lên</value></data>
   <data name="SettingsPageNowPlayingNotificationAllMonitors.Header" xml:space="preserve"><value>Hiển thị trên tất cả màn hình</value></data>
-  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve"><value>Nếu tắt, cửa sổ bật lên sẽ chỉ xuất hiện trên màn hình chính.</value></data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve"><value>Nếu tắt, cửa sổ bật lên sẽ chỉ xuất hiện trên màn hình chính</value></data>
   <data name="NowPlayingNotificationCornerTopLeft.Content" xml:space="preserve"><value>Trên trái</value></data>
   <data name="NowPlayingNotificationCornerTopRight.Content" xml:space="preserve"><value>Trên phải</value></data>
   <data name="NowPlayingNotificationCornerBottomLeft.Content" xml:space="preserve"><value>Dưới trái</value></data>
@@ -1051,7 +1052,7 @@
   <data name="SettingsPageMonitorLayout.Header" xml:space="preserve"><value>Bố trí màn hình hiện tại</value></data>
   <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve"><value>Mở cài đặt hiển thị của hệ thống</value></data>
   <data name="SettingsPageSemanticEffects.Header" xml:space="preserve"><value>Hiệu ứng lời bài hát theo ngữ nghĩa</value></data>
-  <data name="SettingsPageSemanticEffects.Description" xml:space="preserve"><value>Tạo hạt (ví dụ: trái tim, mưa, tuyết) khi có từ khóa cụ thể xuất hiện trong lời bài hát.</value></data>
+  <data name="SettingsPageSemanticEffects.Description" xml:space="preserve"><value>Tạo hạt (ví dụ: trái tim, mưa, tuyết) khi có từ khóa cụ thể xuất hiện trong lời bài hát</value></data>
   <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve"><value>Sao chép liên kết sâu</value></data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve"><value>Không tìm thấy màn hình phù hợp với chế độ</value></data>
   <data name="SettingsPageListenBrainzTrack.Header" xml:space="preserve"><value>Theo dõi lịch sử nghe qua ListenBrainz</value></data>
@@ -1067,7 +1068,7 @@
   <data name="MediaFieldCorrectionAddCustom.Content" xml:space="preserve"><value>Quy tắc mới</value></data>
   <data name="MediaFieldCorrectionMore.Content" xml:space="preserve"><value>Thêm</value></data>
   <data name="MediaFieldCorrectionEmpty.Header" xml:space="preserve"><value>Chưa có quy tắc nào</value></data>
-  <data name="MediaFieldCorrectionEmpty.Description" xml:space="preserve"><value>Chèn một ví dụ để xem cú pháp hoặc tự viết mẫu.</value></data>
+  <data name="MediaFieldCorrectionEmpty.Description" xml:space="preserve"><value>Chèn một ví dụ để xem cú pháp hoặc tự viết mẫu</value></data>
   <data name="MediaFieldPreviewHeaderCurrent" xml:space="preserve"><value>Kết quả cho bài hát hiện tại</value></data>
   <data name="MediaFieldPreviewHeaderSample" xml:space="preserve"><value>Kết quả mẫu (không có gì đang phát)</value></data>
   <data name="MediaFieldPreviewNoChange" xml:space="preserve"><value>Không có trường nào thay đổi — các quy tắc không khớp với văn bản này.</value></data>
@@ -1084,9 +1085,9 @@
   <data name="MediaFieldRuleDialogAddTitle" xml:space="preserve"><value>Quy tắc mới</value></data>
   <data name="MediaFieldRuleDialogEditTitle" xml:space="preserve"><value>Sửa quy tắc</value></data>
   <data name="MediaFieldRuleKind.Header" xml:space="preserve"><value>Chế độ</value></data>
-  <data name="MediaFieldRuleKindTemplate.Content" xml:space="preserve"><value>Mẫu — phần giữ chỗ {field}</value></data>
-  <data name="MediaFieldRuleKindRegexExtract.Content" xml:space="preserve"><value>Biểu thức chính quy — nhóm có tên</value></data>
-  <data name="MediaFieldRuleKindRegexReplace.Content" xml:space="preserve"><value>Biểu thức chính quy — thay thế</value></data>
+  <data name="MediaFieldRuleKindTemplate.Content" xml:space="preserve"><value>Mẫu: phần giữ chỗ {field}</value></data>
+  <data name="MediaFieldRuleKindRegexExtract.Content" xml:space="preserve"><value>Biểu thức chính quy: nhóm có tên</value></data>
+  <data name="MediaFieldRuleKindRegexReplace.Content" xml:space="preserve"><value>Biểu thức chính quy: thay thế</value></data>
   <data name="MediaFieldRuleSource.Header" xml:space="preserve"><value>Trường</value></data>
   <data name="MediaFieldRulePattern.Header" xml:space="preserve"><value>Mẫu</value></data>
   <data name="MediaFieldRuleReplacement.Header" xml:space="preserve"><value>Thay thế bằng</value></data>
@@ -1096,9 +1097,9 @@
   <data name="MediaFieldTitle.Content" xml:space="preserve"><value>Tiêu đề</value></data>
   <data name="MediaFieldArtist.Content" xml:space="preserve"><value>Nghệ sĩ</value></data>
   <data name="MediaFieldAlbum.Content" xml:space="preserve"><value>Album</value></data>
-  <data name="MediaFieldRuleSummaryTemplate" xml:space="preserve"><value>Khớp mẫu "{1}" trong "{0}".</value></data>
-  <data name="MediaFieldRuleSummaryRegexExtract" xml:space="preserve"><value>Trích xuất bằng biểu thức chính quy "{1}" từ "{0}".</value></data>
-  <data name="MediaFieldRuleSummaryRegexReplace" xml:space="preserve"><value>Thay thế "{1}" bằng "{2}" trong "{0}".</value></data>
+  <data name="MediaFieldRuleSummaryTemplate" xml:space="preserve"><value>Khớp mẫu "{1}" trong "{0}"</value></data>
+  <data name="MediaFieldRuleSummaryRegexExtract" xml:space="preserve"><value>Trích xuất bằng biểu thức chính quy "{1}" từ "{0}"</value></data>
+  <data name="MediaFieldRuleSummaryRegexReplace" xml:space="preserve"><value>Thay thế "{1}" bằng "{2}" trong "{0}"</value></data>
   <data name="MediaFieldRuleHintTemplate" xml:space="preserve"><value>{title}, {artist} và {album} được ghi trở lại vào các trường tương ứng; mọi {name} khác bị bỏ qua; * khớp với phần còn lại.</value></data>
   <data name="MediaFieldRuleHintRegexExtract" xml:space="preserve"><value>Các nhóm có tên (?&lt;title&gt;…), (?&lt;artist&gt;…), (?&lt;album&gt;…) được ghi trở lại vào các trường tương ứng. Nếu không có nhóm trường, phần khớp sẽ thay thế trường.</value></data>
   <data name="MediaFieldRuleHintRegexReplace" xml:space="preserve"><value>Toàn bộ trường được viết lại; hỗ trợ $1 và ${name}. Phần thay thế trống sẽ xóa phần khớp.</value></data>

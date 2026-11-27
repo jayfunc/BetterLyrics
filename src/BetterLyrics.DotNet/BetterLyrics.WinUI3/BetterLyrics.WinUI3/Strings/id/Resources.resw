@@ -125,7 +125,7 @@
   <data name="AboutControlUpToDate.Title" xml:space="preserve"><value>BetterLyrics sudah versi terbaru</value></data>
   <data name="ActionCompleted" xml:space="preserve"><value>Tindakan selesai</value></data>
   <data name="Add" xml:space="preserve"><value>Tambah</value></data>
-  <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Description" xml:space="preserve"><value>Menggulir informasi lagu secara otomatis bila terlalu panjang, terlepas dari posisi kursor.</value></data>
+  <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Description" xml:space="preserve"><value>Menggulir informasi lagu secara otomatis bila terlalu panjang, terlepas dari posisi kursor</value></data>
   <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Header" xml:space="preserve"><value>Gulir otomatis informasi lagu</value></data>
   <data name="AlbumArtAreaSettingsControlEndPoint.Header" xml:space="preserve"><value>Titik akhir</value></data>
   <data name="AlbumArtAreaSettingsControlFadeOut.Header" xml:space="preserve"><value>Pudar</value></data>
@@ -254,7 +254,7 @@
   <data name="LayoutEditorControlNoSelection" xml:space="preserve"><value>Pilih komponen pada pratinjau atau daftar di kiri untuk melanjutkan</value></data>
   <data name="LayoutEditorControlPendingComponentsDescriptionTextBlock.Text" xml:space="preserve"><value>Seret komponen ke kisi di kanan untuk menempatkannya. Setelah ditempatkan, komponen dapat dipindahkan dengan bebas di dalam kisi.</value></data>
   <data name="LayoutEditorControlPendingComponentsTextBlock.Text" xml:space="preserve"><value>Komponen yang menunggu</value></data>
-  <data name="LayoutEditorControlPlacedComponentsDescriptionTextBlock.Text" xml:space="preserve"><value>Jika komponen tidak terlihat atau tidak dapat diklik di kanan, pilih di sini.</value></data>
+  <data name="LayoutEditorControlPlacedComponentsDescriptionTextBlock.Text" xml:space="preserve"><value>Jika komponen tidak terlihat atau tidak dapat diklik di kanan, pilih di sini</value></data>
   <data name="LayoutEditorControlPlacedComponentsTextBlock.Text" xml:space="preserve"><value>Komponen yang ditempatkan</value></data>
   <data name="LayoutEditorControlPxDescription.Text" xml:space="preserve"><value>Tetap pada lebar/tinggi piksel absolut yang ditentukan</value></data>
   <data name="LayoutEditorControlRemoveButton.Content" xml:space="preserve"><value>Hapus komponen</value></data>
@@ -290,7 +290,8 @@
   <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve"><value>Lirik kiri, sampul album kanan (ringkas)</value></data>
   <data name="LeftLyricsRightAlbumArtLayout" xml:space="preserve"><value>Lirik kiri, sampul album kanan</value></data>
   <data name="LibreTranslateFailed" xml:space="preserve"><value>Gagal meminta terjemahan dari LibreTranslate. Periksa pengaturan atau konfigurasi LibreTranslate lokal.</value></data>
-  <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve"><value>misalnya http://localhost:5000.</value></data>
+  <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve"><value>http://localhost:5000</value></data>
+  <data name="ListSeparator" xml:space="preserve"><value>, </value></data>
   <data name="Loading" xml:space="preserve"><value>Memuat...</value></data>
   <data name="LyricsCardOnlyLayout" xml:space="preserve"><value>Tata letak hanya kartu lirik</value></data>
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve"><value>Durasi</value></data>
@@ -307,7 +308,7 @@
   <data name="LyricsPageMatchPercentage.Header" xml:space="preserve"><value>Persentase kecocokan</value></data>
   <data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve"><value>Disesuaikan ke 0 saat berganti lagu</value></data>
   <data name="LyricsPageSettings.Text" xml:space="preserve"><value>Pengaturan</value></data>
-  <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve"><value>Mengutamakan terjemahan yang tertanam dalam lirik; jika tidak ada kecocokan, terjemahan mesin akan diminta dari server LibreTranslate.</value></data>
+  <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve"><value>Mengutamakan terjemahan yang tertanam dalam lirik; jika tidak ada kecocokan, terjemahan mesin akan diminta dari server LibreTranslate</value></data>
   <data name="LyricsPageTranslationEnabled.Header" xml:space="preserve"><value>Aktifkan terjemahan</value></data>
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve"><value>Sumber terjemahan</value></data>
   <data name="LyricsPageTransliterationProviderPrefix.Header" xml:space="preserve"><value>Sumber transliterasi</value></data>
@@ -317,7 +318,7 @@
   <data name="LyricsSaveConfigIncludeTranslation.Header" xml:space="preserve"><value>Sertakan terjemahan</value></data>
   <data name="LyricsSaveConfigIncludeTransliteration.Header" xml:space="preserve"><value>Sertakan transliterasi</value></data>
   <data name="LyricsSaveConfigInOneLine.Description" xml:space="preserve"><value>Dipisahkan dengan garis miring</value></data>
-  <data name="LyricsSaveConfigInOneLine.Header" xml:space="preserve"><value>Gabungkan asli, terjemahan, dan transliterasi.</value></data>
+  <data name="LyricsSaveConfigInOneLine.Header" xml:space="preserve"><value>Gabungkan asli, terjemahan, dan transliterasi</value></data>
   <data name="LyricsSaveConfigInSyllablesFormat.Header" xml:space="preserve"><value>Simpan sebagai lirik tersinkron per kata</value></data>
   <data name="LyricsSearchControlAlbum.Header" xml:space="preserve"><value>Album</value></data>
   <data name="LyricsSearchControlArtist.Header" xml:space="preserve"><value>Artis</value></data>
@@ -428,7 +429,7 @@
   <data name="MusicGalleryPageSelectedTrackDetail.Content" xml:space="preserve"><value>Informasi trek yang dipilih</value></data>
   <data name="MusicGalleryPageShufflePlay.Content" xml:space="preserve"><value>Acak</value></data>
   <data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve"><value>Ulangi satu trek</value></data>
-  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve"><value>Cari judul, artis, album, nama file, atau jalur folder.</value></data>
+  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve"><value>Cari judul, artis, album, nama file, atau jalur folder</value></data>
   <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve"><value>Album</value></data>
   <data name="MusicGalleryPageSortByArtist.Content" xml:space="preserve"><value>Artis</value></data>
   <data name="MusicGalleryPageSortByFolder.Content" xml:space="preserve"><value>Folder</value></data>
@@ -524,12 +525,12 @@
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>Latar belakang lirik</value></data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve"><value>Besaran keburaman</value></data>
   <data name="SettingsPageBottom.Content" xml:space="preserve"><value>Bawah</value></data>
-  <data name="SettingsPageCache.Description" xml:space="preserve"><value>Mencakup file log dan cache lirik daring.</value></data>
+  <data name="SettingsPageCache.Description" xml:space="preserve"><value>Mencakup file log dan cache lirik daring</value></data>
   <data name="SettingsPageCache.Header" xml:space="preserve"><value>Cache</value></data>
   <data name="SettingsPageCenter.Content" xml:space="preserve"><value>Tengah</value></data>
   <data name="SettingsPageCheckShortcut.Content" xml:space="preserve"><value>Periksa pintasan</value></data>
   <data name="SettingsPageChinese.Header" xml:space="preserve"><value>Transliterasi Tionghoa</value></data>
-  <data name="SettingsPageChinesePreference.Description" xml:space="preserve"><value>Memilih "Tidak ditentukan" akan mempertahankan lirik asli; memilih "Tionghoa Sederhana" atau "Tionghoa Tradisional" akan melakukan konversi mesin pada lirik asli.</value></data>
+  <data name="SettingsPageChinesePreference.Description" xml:space="preserve"><value>Memilih "Tidak ditentukan" akan mempertahankan lirik asli; memilih "Tionghoa Sederhana" atau "Tionghoa Tradisional" akan melakukan konversi mesin pada lirik asli</value></data>
   <data name="SettingsPageChinesePreference.Header" xml:space="preserve"><value>Preferensi Tionghoa</value></data>
   <data name="SettingsPageChinesePreferenceSToT.Content" xml:space="preserve"><value>Tionghoa Tradisional</value></data>
   <data name="SettingsPageChinesePreferenceTToS.Content" xml:space="preserve"><value>Tionghoa Sederhana</value></data>
@@ -635,7 +636,7 @@
   <data name="SettingsPageLocalLyricsFilePattern.Header" xml:space="preserve"><value>Pola penguraian file lirik</value></data>
   <data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve"><value>Ambang suku kata panjang</value></data>
   <data name="SettingsPageLXMusicServer.Header" xml:space="preserve"><value>Server LX Music</value></data>
-  <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve"><value>misalnya http://127.0.0.1:23330.</value></data>
+  <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve"><value>http://127.0.0.1:23330</value></data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve"><value>Perataan</value></data>
   <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve"><value>Baris bukan saat ini</value></data>
   <data name="SettingsPageLyricsBlack.Content" xml:space="preserve"><value>Hitam</value></data>
@@ -683,14 +684,14 @@
   <data name="SettingsPageLyricsSearchBestMatch.Content" xml:space="preserve"><value>Kecocokan terbaik</value></data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Text" xml:space="preserve"><value>Konfigurasikan sumber lirik</value></data>
   <data name="SettingsPageLyricsSearchSequential.Content" xml:space="preserve"><value>Sekuensial</value></data>
-  <data name="SettingsPageLyricsSearchType.Description" xml:space="preserve"><value>Sekuensial: menelusuri daftar di bawah menurut urutan prioritas dan mengembalikan hasil pertama yang ditemukan; Kecocokan terbaik: mencari di semua sumber yang aktif dan secara otomatis memilih hasil dengan skor kecocokan tertinggi.</value></data>
+  <data name="SettingsPageLyricsSearchType.Description" xml:space="preserve"><value>Sekuensial: menelusuri daftar di bawah menurut urutan prioritas dan mengembalikan hasil pertama yang ditemukan; Kecocokan terbaik: mencari di semua sumber yang aktif dan secara otomatis memilih hasil dengan skor kecocokan tertinggi</value></data>
   <data name="SettingsPageLyricsSearchType.Header" xml:space="preserve"><value>Strategi pencarian lirik</value></data>
   <data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve"><value>Semi tebal</value></data>
   <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve"><value>Semi tipis</value></data>
   <data name="SettingsPageLyricsStyle.Text" xml:space="preserve"><value>Gaya lirik</value></data>
   <data name="SettingsPageLyricsThin.Content" xml:space="preserve"><value>Sangat tipis</value></data>
   <data name="SettingsPageLyricsTimeline.Header" xml:space="preserve"><value>Sinkronisasi linimasa lirik</value></data>
-  <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve"><value>Jika kemajuan lirik tersendat, coba naikkan ambang ini; mengubah nilai ini dapat menyebabkan penyimpangan sinkronisasi lirik.</value></data>
+  <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve"><value>Jika kemajuan lirik tersendat, coba naikkan ambang ini; mengubah nilai ini dapat menyebabkan penyimpangan sinkronisasi lirik</value></data>
   <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve"><value>Ambang sinkronisasi linimasa lirik</value></data>
   <data name="SettingsPageLyricsUnplayedFgFontColor.Header" xml:space="preserve"><value>Baris saat ini (belum diputar)</value></data>
   <data name="SettingsPageLyricsWindow.Text" xml:space="preserve"><value>Jendela lirik</value></data>
@@ -700,7 +701,7 @@
   <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve"><value>Selalu</value></data>
   <data name="SettingsPageLyricsWordByWordEffectModeAuto.Content" xml:space="preserve"><value>Otomatis</value></data>
   <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve"><value>Tidak pernah</value></data>
-  <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve"><value>Menyesuaikan nilai ini akan memengaruhi hasil pencarian sekuensial dan kecocokan terbaik, tetapi tidak memengaruhi hasil pada antarmuka pencarian lirik manual.</value></data>
+  <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve"><value>Menyesuaikan nilai ini akan memengaruhi hasil pencarian sekuensial dan kecocokan terbaik, tetapi tidak memengaruhi hasil pada antarmuka pencarian lirik manual</value></data>
   <data name="SettingsPageMatchingThreshold.Header" xml:space="preserve"><value>Ambang kecocokan minimum</value></data>
   <data name="SettingsPageMediaLib" xml:space="preserve"><value>Pustaka media</value></data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve"><value>Pantau sumber pemutaran ini</value></data>
@@ -761,7 +762,7 @@
   <data name="SettingsPageShortcutRegFailInfo" xml:space="preserve"><value>Pendaftaran tombol pintas gagal</value></data>
   <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve"><value>Pendaftaran tombol pintas berhasil</value></data>
   <data name="SettingsPageShowHideHotKey.Header" xml:space="preserve"><value>Pintasan tampilkan/sembunyikan jendela lirik</value></data>
-  <data name="SettingsPageShowInSwitchers.Description" xml:space="preserve"><value>misalnya Alt + Tab, bilah tugas.</value></data>
+  <data name="SettingsPageShowInSwitchers.Description" xml:space="preserve"><value>misalnya Alt + Tab, bilah tugas</value></data>
   <data name="SettingsPageShowInSwitchers.Header" xml:space="preserve"><value>Tampilkan di lingkungan sistem</value></data>
   <data name="SettingsPageSize.Header" xml:space="preserve"><value>Ukuran</value></data>
   <data name="SettingsPageSlide.Content" xml:space="preserve"><value>Geser</value></data>
@@ -807,7 +808,7 @@
   <data name="SettingsPageWallpaperMode.Text" xml:space="preserve"><value>Mode wallpaper</value></data>
   <data name="SettingsPageWesternChar.Header" xml:space="preserve"><value>Karakter Latin</value></data>
   <data name="SettingsPageWidth.Header" xml:space="preserve"><value>Lebar</value></data>
-  <data name="SettingsPageWorkArea.Description" xml:space="preserve"><value>Bilah alat desktop aplikasi, tertambat ke tepi atas atau bawah layar.</value></data>
+  <data name="SettingsPageWorkArea.Description" xml:space="preserve"><value>Bilah alat desktop aplikasi, tertambat ke tepi atas atau bawah layar</value></data>
   <data name="SettingsPageWorkArea.Header" xml:space="preserve"><value>Bilah aplikasi</value></data>
   <data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve"><value>Tinggi bilah aplikasi</value></data>
   <data name="SetTo1Star" xml:space="preserve"><value>Atur ke 1 bintang</value></data>
@@ -995,7 +996,7 @@
   <data name="FileNamePatternControlHelpArtist.Text" xml:space="preserve"><value>Nama artis</value></data>
   <data name="FileNamePatternControlHelpTitleDesc.Text" xml:space="preserve"><value>Judul lagu</value></data>
   <data name="FileNamePatternControlHelpAlbum.Text" xml:space="preserve"><value>Nama album</value></data>
-  <data name="FileNamePatternControlHelpTip.Text" xml:space="preserve"><value>Tips: Anda juga dapat menggunakan kata lain seperti {BPM} sebagai placeholder untuk mengabaikan sebagian nama file.</value></data>
+  <data name="FileNamePatternControlHelpTip.Text" xml:space="preserve"><value>Tips: Anda juga dapat menggunakan kata lain seperti {BPM} sebagai placeholder untuk mengabaikan sebagian nama file</value></data>
   <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve"><value>Contoh pratinjau:</value></data>
   <data name="FileNamePatternControlNoPatternProvided" xml:space="preserve"><value>Tidak ada pola yang diberikan</value></data>
   <data name="SettingsPageRestartRequiredInfoBar.Title" xml:space="preserve"><value>Perlu memulai ulang</value></data>
@@ -1008,7 +1009,7 @@
   <data name="SettingsPageShowNowPlayingNotification.Description" xml:space="preserve"><value>Menampilkan notifikasi pop-up singkat di sudut layar saat lagu berganti</value></data>
   <data name="SettingsPageNowPlayingNotificationCorner.Header" xml:space="preserve"><value>Posisi pop-up</value></data>
   <data name="SettingsPageNowPlayingNotificationAllMonitors.Header" xml:space="preserve"><value>Tampilkan di semua monitor</value></data>
-  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve"><value>Jika dinonaktifkan, pop-up hanya muncul di monitor utama.</value></data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve"><value>Jika dinonaktifkan, pop-up hanya muncul di monitor utama</value></data>
   <data name="NowPlayingNotificationCornerTopLeft.Content" xml:space="preserve"><value>Kiri atas</value></data>
   <data name="NowPlayingNotificationCornerTopRight.Content" xml:space="preserve"><value>Kanan atas</value></data>
   <data name="NowPlayingNotificationCornerBottomLeft.Content" xml:space="preserve"><value>Kiri bawah</value></data>
@@ -1051,7 +1052,7 @@
   <data name="SettingsPageMonitorLayout.Header" xml:space="preserve"><value>Tata letak monitor saat ini</value></data>
   <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve"><value>Buka pengaturan tampilan sistem</value></data>
   <data name="SettingsPageSemanticEffects.Header" xml:space="preserve"><value>Efek lirik semantik</value></data>
-  <data name="SettingsPageSemanticEffects.Description" xml:space="preserve"><value>Menghasilkan partikel (misalnya hati, hujan, salju) saat kata kunci tertentu muncul dalam lirik.</value></data>
+  <data name="SettingsPageSemanticEffects.Description" xml:space="preserve"><value>Menghasilkan partikel (misalnya hati, hujan, salju) saat kata kunci tertentu muncul dalam lirik</value></data>
   <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve"><value>Salin tautan mendalam</value></data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve"><value>Tidak ada monitor yang cocok dengan mode</value></data>
   <data name="SettingsPageListenBrainzTrack.Header" xml:space="preserve"><value>Lacak riwayat mendengarkan melalui ListenBrainz</value></data>
@@ -1067,7 +1068,7 @@
   <data name="MediaFieldCorrectionAddCustom.Content" xml:space="preserve"><value>Aturan baru</value></data>
   <data name="MediaFieldCorrectionMore.Content" xml:space="preserve"><value>Lainnya</value></data>
   <data name="MediaFieldCorrectionEmpty.Header" xml:space="preserve"><value>Belum ada aturan</value></data>
-  <data name="MediaFieldCorrectionEmpty.Description" xml:space="preserve"><value>Sisipkan contoh untuk melihat sintaksisnya, atau tulis templat sendiri.</value></data>
+  <data name="MediaFieldCorrectionEmpty.Description" xml:space="preserve"><value>Sisipkan contoh untuk melihat sintaksisnya, atau tulis templat sendiri</value></data>
   <data name="MediaFieldPreviewHeaderCurrent" xml:space="preserve"><value>Hasil untuk lagu saat ini</value></data>
   <data name="MediaFieldPreviewHeaderSample" xml:space="preserve"><value>Contoh hasil (tidak ada yang diputar)</value></data>
   <data name="MediaFieldPreviewNoChange" xml:space="preserve"><value>Tidak ada bidang berubah — aturan tidak cocok dengan teks ini.</value></data>
@@ -1084,9 +1085,9 @@
   <data name="MediaFieldRuleDialogAddTitle" xml:space="preserve"><value>Aturan baru</value></data>
   <data name="MediaFieldRuleDialogEditTitle" xml:space="preserve"><value>Edit aturan</value></data>
   <data name="MediaFieldRuleKind.Header" xml:space="preserve"><value>Mode</value></data>
-  <data name="MediaFieldRuleKindTemplate.Content" xml:space="preserve"><value>Templat — placeholder {field}</value></data>
-  <data name="MediaFieldRuleKindRegexExtract.Content" xml:space="preserve"><value>Regex — grup bernama</value></data>
-  <data name="MediaFieldRuleKindRegexReplace.Content" xml:space="preserve"><value>Regex — ganti</value></data>
+  <data name="MediaFieldRuleKindTemplate.Content" xml:space="preserve"><value>Templat: placeholder {field}</value></data>
+  <data name="MediaFieldRuleKindRegexExtract.Content" xml:space="preserve"><value>Regex: grup bernama</value></data>
+  <data name="MediaFieldRuleKindRegexReplace.Content" xml:space="preserve"><value>Regex: ganti</value></data>
   <data name="MediaFieldRuleSource.Header" xml:space="preserve"><value>Bidang</value></data>
   <data name="MediaFieldRulePattern.Header" xml:space="preserve"><value>Pola</value></data>
   <data name="MediaFieldRuleReplacement.Header" xml:space="preserve"><value>Ganti dengan</value></data>
@@ -1096,9 +1097,9 @@
   <data name="MediaFieldTitle.Content" xml:space="preserve"><value>Judul</value></data>
   <data name="MediaFieldArtist.Content" xml:space="preserve"><value>Artis</value></data>
   <data name="MediaFieldAlbum.Content" xml:space="preserve"><value>Album</value></data>
-  <data name="MediaFieldRuleSummaryTemplate" xml:space="preserve"><value>Cocokkan templat "{1}" dalam "{0}".</value></data>
-  <data name="MediaFieldRuleSummaryRegexExtract" xml:space="preserve"><value>Ekstrak dengan regex "{1}" dari "{0}".</value></data>
-  <data name="MediaFieldRuleSummaryRegexReplace" xml:space="preserve"><value>Ganti "{1}" dengan "{2}" dalam "{0}".</value></data>
+  <data name="MediaFieldRuleSummaryTemplate" xml:space="preserve"><value>Cocokkan templat "{1}" dalam "{0}"</value></data>
+  <data name="MediaFieldRuleSummaryRegexExtract" xml:space="preserve"><value>Ekstrak dengan regex "{1}" dari "{0}"</value></data>
+  <data name="MediaFieldRuleSummaryRegexReplace" xml:space="preserve"><value>Ganti "{1}" dengan "{2}" dalam "{0}"</value></data>
   <data name="MediaFieldRuleHintTemplate" xml:space="preserve"><value>{title}, {artist}, dan {album} ditulis kembali ke bidang masing-masing; {name} lainnya diabaikan; * cocok dengan sisanya.</value></data>
   <data name="MediaFieldRuleHintRegexExtract" xml:space="preserve"><value>Grup bernama (?&lt;title&gt;…), (?&lt;artist&gt;…), (?&lt;album&gt;…) ditulis kembali ke bidang masing-masing. Tanpa grup bidang, bagian yang cocok akan menggantikan bidang tersebut.</value></data>
   <data name="MediaFieldRuleHintRegexReplace" xml:space="preserve"><value>Seluruh bidang ditulis ulang; $1 dan ${name} didukung. Penggantian kosong akan menghapus kecocokan.</value></data>

@@ -299,9 +299,13 @@ public partial class WindowSettingsControlViewModel : ObservableObject, ITransie
             .Where(name => !string.IsNullOrWhiteSpace(name))
             .Distinct(StringComparer.CurrentCultureIgnoreCase);
 
-        CurrentWallpaperNames = string.Join(", ", names);
-        StatusMessage =
-            $"{_localizationService.GetLocalizedString("WallpaperEngineCurrentWallpaper")} {CurrentWallpaperNames}";
+        var listSeparator = _localizationService.GetLocalizedString("ListSeparator");
+        CurrentWallpaperNames = string.Join(string.IsNullOrEmpty(listSeparator) ? ", " : listSeparator, names);
+
+        var label = _localizationService.GetLocalizedString("WallpaperEngineCurrentWallpaper");
+        StatusMessage = label.EndsWith('：')
+            ? $"{label}{CurrentWallpaperNames}"
+            : $"{label} {CurrentWallpaperNames}";
         StatusSeverity = MessageSeverity.Informational;
     }
 

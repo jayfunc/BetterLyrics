@@ -125,7 +125,7 @@
   <data name="AboutControlUpToDate.Title" xml:space="preserve"><value>BetterLyrics güncel</value></data>
   <data name="ActionCompleted" xml:space="preserve"><value>İşlem tamamlandı</value></data>
   <data name="Add" xml:space="preserve"><value>Ekle</value></data>
-  <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Description" xml:space="preserve"><value>Fare üzerine gelmese bile şarkı bilgileri çok uzun olduğunda otomatik olarak kaydırır.</value></data>
+  <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Description" xml:space="preserve"><value>Fare üzerine gelmese bile şarkı bilgileri çok uzun olduğunda otomatik olarak kaydırır</value></data>
   <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Header" xml:space="preserve"><value>Şarkı bilgilerini otomatik kaydır</value></data>
   <data name="AlbumArtAreaSettingsControlEndPoint.Header" xml:space="preserve"><value>Bitiş noktası</value></data>
   <data name="AlbumArtAreaSettingsControlFadeOut.Header" xml:space="preserve"><value>Solma</value></data>
@@ -290,7 +290,8 @@
   <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve"><value>Sol şarkı sözleri, sağ albüm kapağı (kompakt)</value></data>
   <data name="LeftLyricsRightAlbumArtLayout" xml:space="preserve"><value>Sol şarkı sözleri, sağ albüm kapağı</value></data>
   <data name="LibreTranslateFailed" xml:space="preserve"><value>LibreTranslate'ten çeviri istenemedi. Ayarları veya yerel LibreTranslate yapılandırmasını denetleyin.</value></data>
-  <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve"><value>örn. http://localhost:5000.</value></data>
+  <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve"><value>http://localhost:5000</value></data>
+  <data name="ListSeparator" xml:space="preserve"><value>, </value></data>
   <data name="Loading" xml:space="preserve"><value>Yükleniyor...</value></data>
   <data name="LyricsCardOnlyLayout" xml:space="preserve"><value>Yalnızca şarkı sözü kartı düzeni</value></data>
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve"><value>Süre</value></data>
@@ -307,7 +308,7 @@
   <data name="LyricsPageMatchPercentage.Header" xml:space="preserve"><value>Eşleşme yüzdesi</value></data>
   <data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve"><value>Şarkı değiştirildiğinde 0'a sıfırlanır</value></data>
   <data name="LyricsPageSettings.Text" xml:space="preserve"><value>Ayarlar</value></data>
-  <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve"><value>Şarkı sözlerine eklenmiş çevirilere öncelik verir; eşleşme bulunmazsa LibreTranslate sunucusundan makine çevirisi ister.</value></data>
+  <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve"><value>Şarkı sözlerine eklenmiş çevirilere öncelik verir; eşleşme bulunmazsa LibreTranslate sunucusundan makine çevirisi ister</value></data>
   <data name="LyricsPageTranslationEnabled.Header" xml:space="preserve"><value>Çeviriyi etkinleştir</value></data>
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve"><value>Çeviri kaynağı</value></data>
   <data name="LyricsPageTransliterationProviderPrefix.Header" xml:space="preserve"><value>Harf çevirisi kaynağı</value></data>
@@ -317,7 +318,7 @@
   <data name="LyricsSaveConfigIncludeTranslation.Header" xml:space="preserve"><value>Çeviriyi dahil et</value></data>
   <data name="LyricsSaveConfigIncludeTransliteration.Header" xml:space="preserve"><value>Harf çevirisini dahil et</value></data>
   <data name="LyricsSaveConfigInOneLine.Description" xml:space="preserve"><value>Eğik çizgiyle ayrılır</value></data>
-  <data name="LyricsSaveConfigInOneLine.Header" xml:space="preserve"><value>Özgün, çeviri ve harf çevirisini birleştir.</value></data>
+  <data name="LyricsSaveConfigInOneLine.Header" xml:space="preserve"><value>Özgün, çeviri ve harf çevirisini birleştir</value></data>
   <data name="LyricsSaveConfigInSyllablesFormat.Header" xml:space="preserve"><value>Sözcük eşlemeli şarkı sözü olarak kaydet</value></data>
   <data name="LyricsSearchControlAlbum.Header" xml:space="preserve"><value>Albüm</value></data>
   <data name="LyricsSearchControlArtist.Header" xml:space="preserve"><value>Sanatçı</value></data>
@@ -428,7 +429,7 @@
   <data name="MusicGalleryPageSelectedTrackDetail.Content" xml:space="preserve"><value>Seçili parçanın bilgileri</value></data>
   <data name="MusicGalleryPageShufflePlay.Content" xml:space="preserve"><value>Karıştır</value></data>
   <data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve"><value>Tek parçayı yinele</value></data>
-  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve"><value>Başlık, sanatçı, albüm, dosya adı veya klasör yolu ara.</value></data>
+  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve"><value>Başlık, sanatçı, albüm, dosya adı veya klasör yolu ara</value></data>
   <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve"><value>Albüm</value></data>
   <data name="MusicGalleryPageSortByArtist.Content" xml:space="preserve"><value>Sanatçı</value></data>
   <data name="MusicGalleryPageSortByFolder.Content" xml:space="preserve"><value>Klasör</value></data>
@@ -524,12 +525,12 @@
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>Şarkı sözü arka planı</value></data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve"><value>Bulanıklık miktarı</value></data>
   <data name="SettingsPageBottom.Content" xml:space="preserve"><value>Alt</value></data>
-  <data name="SettingsPageCache.Description" xml:space="preserve"><value>Günlük dosyalarını ve çevrimiçi şarkı sözü önbelleğini içerir.</value></data>
+  <data name="SettingsPageCache.Description" xml:space="preserve"><value>Günlük dosyalarını ve çevrimiçi şarkı sözü önbelleğini içerir</value></data>
   <data name="SettingsPageCache.Header" xml:space="preserve"><value>Önbellek</value></data>
   <data name="SettingsPageCenter.Content" xml:space="preserve"><value>Orta</value></data>
   <data name="SettingsPageCheckShortcut.Content" xml:space="preserve"><value>Kısayolu denetle</value></data>
   <data name="SettingsPageChinese.Header" xml:space="preserve"><value>Çince harf çevirisi</value></data>
-  <data name="SettingsPageChinesePreference.Description" xml:space="preserve"><value>"Belirtilmemiş" seçilirse özgün şarkı sözleri korunur; "Basitleştirilmiş Çince" veya "Geleneksel Çince" seçilirse özgün şarkı sözlerine makine dönüşümü uygulanır.</value></data>
+  <data name="SettingsPageChinesePreference.Description" xml:space="preserve"><value>"Belirtilmemiş" seçilirse özgün şarkı sözleri korunur; "Basitleştirilmiş Çince" veya "Geleneksel Çince" seçilirse özgün şarkı sözlerine makine dönüşümü uygulanır</value></data>
   <data name="SettingsPageChinesePreference.Header" xml:space="preserve"><value>Çince tercihi</value></data>
   <data name="SettingsPageChinesePreferenceSToT.Content" xml:space="preserve"><value>Geleneksel Çince</value></data>
   <data name="SettingsPageChinesePreferenceTToS.Content" xml:space="preserve"><value>Basitleştirilmiş Çince</value></data>
@@ -539,7 +540,7 @@
   <data name="SettingsPageClearCache.Content" xml:space="preserve"><value>Önbellek dosyalarını temizle</value></data>
   <data name="SettingsPageCloseStatus.Text" xml:space="preserve"><value>Kapat</value></data>
   <data name="SettingsPageColor.Header" xml:space="preserve"><value>Renk</value></data>
-  <data name="SettingsPageConfigName.Description" xml:space="preserve"><value>Kaydedilen pencere durumlarını adlandırmak, bunları daha kolay ayırt etmenizi sağlar.</value></data>
+  <data name="SettingsPageConfigName.Description" xml:space="preserve"><value>Kaydedilen pencere durumlarını adlandırmak, bunları daha kolay ayırt etmenizi sağlar</value></data>
   <data name="SettingsPageConfigName.Header" xml:space="preserve"><value>Yapılandırma adı</value></data>
   <data name="SettingsPageConfigPlaybackSource.Text" xml:space="preserve"><value>Çalma kaynağını yapılandır</value></data>
   <data name="SettingsPageCreateFromCurrent.Text" xml:space="preserve"><value>Çoğalt</value></data>
@@ -635,7 +636,7 @@
   <data name="SettingsPageLocalLyricsFilePattern.Header" xml:space="preserve"><value>Şarkı sözü dosyası ayrıştırma deseni</value></data>
   <data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve"><value>Uzun hece eşiği</value></data>
   <data name="SettingsPageLXMusicServer.Header" xml:space="preserve"><value>LX Music sunucusu</value></data>
-  <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve"><value>örn. http://127.0.0.1:23330.</value></data>
+  <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve"><value>http://127.0.0.1:23330</value></data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve"><value>Hizalama</value></data>
   <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve"><value>Geçerli olmayan satır</value></data>
   <data name="SettingsPageLyricsBlack.Content" xml:space="preserve"><value>Siyah</value></data>
@@ -683,14 +684,14 @@
   <data name="SettingsPageLyricsSearchBestMatch.Content" xml:space="preserve"><value>En iyi eşleşme</value></data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Text" xml:space="preserve"><value>Şarkı sözü kaynaklarını yapılandır</value></data>
   <data name="SettingsPageLyricsSearchSequential.Content" xml:space="preserve"><value>Sıralı</value></data>
-  <data name="SettingsPageLyricsSearchType.Description" xml:space="preserve"><value>Sıralı: Aşağıdaki listeyi öncelik sırasına göre tarar ve bulunan ilk sonucu döndürür; En iyi eşleşme: Etkin tüm kaynaklarda arama yapar ve eşleşme puanı en yüksek sonucu otomatik olarak seçer.</value></data>
+  <data name="SettingsPageLyricsSearchType.Description" xml:space="preserve"><value>Sıralı: Aşağıdaki listeyi öncelik sırasına göre tarar ve bulunan ilk sonucu döndürür; En iyi eşleşme: Etkin tüm kaynaklarda arama yapar ve eşleşme puanı en yüksek sonucu otomatik olarak seçer</value></data>
   <data name="SettingsPageLyricsSearchType.Header" xml:space="preserve"><value>Şarkı sözü arama stratejisi</value></data>
   <data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve"><value>Yarı kalın</value></data>
   <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve"><value>Yarı ince</value></data>
   <data name="SettingsPageLyricsStyle.Text" xml:space="preserve"><value>Şarkı sözü stili</value></data>
   <data name="SettingsPageLyricsThin.Content" xml:space="preserve"><value>Çok ince</value></data>
   <data name="SettingsPageLyricsTimeline.Header" xml:space="preserve"><value>Şarkı sözü zaman çizelgesi eşitlemesi</value></data>
-  <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve"><value>Şarkı sözü ilerlemesi titriyorsa bu eşiği artırmayı deneyin; bu değerin değiştirilmesi şarkı sözü eşitlemesinde sapmalara yol açabilir.</value></data>
+  <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve"><value>Şarkı sözü ilerlemesi titriyorsa bu eşiği artırmayı deneyin; bu değerin değiştirilmesi şarkı sözü eşitlemesinde sapmalara yol açabilir</value></data>
   <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve"><value>Şarkı sözü zaman çizelgesi eşitleme eşiği</value></data>
   <data name="SettingsPageLyricsUnplayedFgFontColor.Header" xml:space="preserve"><value>Geçerli satır (çalınmadı)</value></data>
   <data name="SettingsPageLyricsWindow.Text" xml:space="preserve"><value>Şarkı sözü penceresi</value></data>
@@ -700,7 +701,7 @@
   <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve"><value>Her zaman</value></data>
   <data name="SettingsPageLyricsWordByWordEffectModeAuto.Content" xml:space="preserve"><value>Otomatik</value></data>
   <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve"><value>Hiçbir zaman</value></data>
-  <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve"><value>Bu değerin değiştirilmesi sıralı arama ve en iyi eşleşme arama sonuçlarını etkiler, ancak el ile şarkı sözü arama arabirimindeki sonuçları etkilemez.</value></data>
+  <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve"><value>Bu değerin değiştirilmesi sıralı arama ve en iyi eşleşme arama sonuçlarını etkiler, ancak el ile şarkı sözü arama arabirimindeki sonuçları etkilemez</value></data>
   <data name="SettingsPageMatchingThreshold.Header" xml:space="preserve"><value>En düşük eşleşme eşiği</value></data>
   <data name="SettingsPageMediaLib" xml:space="preserve"><value>Medya kitaplığı</value></data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve"><value>Bu çalma kaynağını dinle</value></data>
@@ -761,7 +762,7 @@
   <data name="SettingsPageShortcutRegFailInfo" xml:space="preserve"><value>Kısayol tuşu kaydı başarısız</value></data>
   <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve"><value>Kısayol tuşu kaydı başarılı</value></data>
   <data name="SettingsPageShowHideHotKey.Header" xml:space="preserve"><value>Şarkı sözü penceresini göster/gizle kısayolu</value></data>
-  <data name="SettingsPageShowInSwitchers.Description" xml:space="preserve"><value>örn. Alt + Tab, görev çubuğu.</value></data>
+  <data name="SettingsPageShowInSwitchers.Description" xml:space="preserve"><value>örn. Alt + Tab, görev çubuğu</value></data>
   <data name="SettingsPageShowInSwitchers.Header" xml:space="preserve"><value>Sistem ortamında göster</value></data>
   <data name="SettingsPageSize.Header" xml:space="preserve"><value>Boyut</value></data>
   <data name="SettingsPageSlide.Content" xml:space="preserve"><value>Kaydırma</value></data>
@@ -807,7 +808,7 @@
   <data name="SettingsPageWallpaperMode.Text" xml:space="preserve"><value>Duvar kağıdı modu</value></data>
   <data name="SettingsPageWesternChar.Header" xml:space="preserve"><value>Latin karakterleri</value></data>
   <data name="SettingsPageWidth.Header" xml:space="preserve"><value>Genişlik</value></data>
-  <data name="SettingsPageWorkArea.Description" xml:space="preserve"><value>Ekranın üst veya alt kenarına kenetlenen uygulama masaüstü araç çubuğu.</value></data>
+  <data name="SettingsPageWorkArea.Description" xml:space="preserve"><value>Ekranın üst veya alt kenarına kenetlenen uygulama masaüstü araç çubuğu</value></data>
   <data name="SettingsPageWorkArea.Header" xml:space="preserve"><value>Uygulama çubuğu</value></data>
   <data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve"><value>Uygulama çubuğu yüksekliği</value></data>
   <data name="SetTo1Star" xml:space="preserve"><value>1 yıldıza ayarla</value></data>
@@ -995,7 +996,7 @@
   <data name="FileNamePatternControlHelpArtist.Text" xml:space="preserve"><value>Sanatçının adı</value></data>
   <data name="FileNamePatternControlHelpTitleDesc.Text" xml:space="preserve"><value>Şarkının başlığı</value></data>
   <data name="FileNamePatternControlHelpAlbum.Text" xml:space="preserve"><value>Albümün adı</value></data>
-  <data name="FileNamePatternControlHelpTip.Text" xml:space="preserve"><value>İpucu: Dosya adının bazı bölümlerini yoksaymak için {BPM} gibi başka sözcükleri de yer tutucu olarak kullanabilirsiniz.</value></data>
+  <data name="FileNamePatternControlHelpTip.Text" xml:space="preserve"><value>İpucu: Dosya adının bazı bölümlerini yoksaymak için {BPM} gibi başka sözcükleri de yer tutucu olarak kullanabilirsiniz</value></data>
   <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve"><value>Örnek önizleme:</value></data>
   <data name="FileNamePatternControlNoPatternProvided" xml:space="preserve"><value>Desen belirtilmedi</value></data>
   <data name="SettingsPageRestartRequiredInfoBar.Title" xml:space="preserve"><value>Yeniden başlatma gerekli</value></data>
@@ -1008,7 +1009,7 @@
   <data name="SettingsPageShowNowPlayingNotification.Description" xml:space="preserve"><value>Şarkı değiştiğinde ekranın köşesinde kısa bir açılır bildirim gösterir</value></data>
   <data name="SettingsPageNowPlayingNotificationCorner.Header" xml:space="preserve"><value>Açılır pencere konumu</value></data>
   <data name="SettingsPageNowPlayingNotificationAllMonitors.Header" xml:space="preserve"><value>Tüm ekranlarda göster</value></data>
-  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve"><value>Devre dışı bırakılırsa açılır pencere yalnızca birincil ekranda görünür.</value></data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve"><value>Devre dışı bırakılırsa açılır pencere yalnızca birincil ekranda görünür</value></data>
   <data name="NowPlayingNotificationCornerTopLeft.Content" xml:space="preserve"><value>Sol üst</value></data>
   <data name="NowPlayingNotificationCornerTopRight.Content" xml:space="preserve"><value>Sağ üst</value></data>
   <data name="NowPlayingNotificationCornerBottomLeft.Content" xml:space="preserve"><value>Sol alt</value></data>
@@ -1051,7 +1052,7 @@
   <data name="SettingsPageMonitorLayout.Header" xml:space="preserve"><value>Geçerli ekran düzeni</value></data>
   <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve"><value>Sistem görüntü ayarlarını aç</value></data>
   <data name="SettingsPageSemanticEffects.Header" xml:space="preserve"><value>Anlamsal şarkı sözü efektleri</value></data>
-  <data name="SettingsPageSemanticEffects.Description" xml:space="preserve"><value>Şarkı sözlerinde belirli anahtar sözcükler göründüğünde parçacıklar (örn. kalp, yağmur, kar) oluşturur.</value></data>
+  <data name="SettingsPageSemanticEffects.Description" xml:space="preserve"><value>Şarkı sözlerinde belirli anahtar sözcükler göründüğünde parçacıklar (örn. kalp, yağmur, kar) oluşturur</value></data>
   <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve"><value>Derin bağlantıyı kopyala</value></data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve"><value>Modla eşleşen ekran bulunamadı</value></data>
   <data name="SettingsPageListenBrainzTrack.Header" xml:space="preserve"><value>ListenBrainz ile dinleme geçmişini izle</value></data>
@@ -1067,7 +1068,7 @@
   <data name="MediaFieldCorrectionAddCustom.Content" xml:space="preserve"><value>Yeni kural</value></data>
   <data name="MediaFieldCorrectionMore.Content" xml:space="preserve"><value>Diğer</value></data>
   <data name="MediaFieldCorrectionEmpty.Header" xml:space="preserve"><value>Henüz kural yok</value></data>
-  <data name="MediaFieldCorrectionEmpty.Description" xml:space="preserve"><value>Söz dizimini görmek için bir örnek ekleyin veya kendi şablonunuzu yazın.</value></data>
+  <data name="MediaFieldCorrectionEmpty.Description" xml:space="preserve"><value>Söz dizimini görmek için bir örnek ekleyin veya kendi şablonunuzu yazın</value></data>
   <data name="MediaFieldPreviewHeaderCurrent" xml:space="preserve"><value>Geçerli şarkı için sonuç</value></data>
   <data name="MediaFieldPreviewHeaderSample" xml:space="preserve"><value>Örnek sonuç (hiçbir şey çalmıyor)</value></data>
   <data name="MediaFieldPreviewNoChange" xml:space="preserve"><value>Hiçbir alan değişmedi; kurallar bu metinle eşleşmiyor.</value></data>
@@ -1084,9 +1085,9 @@
   <data name="MediaFieldRuleDialogAddTitle" xml:space="preserve"><value>Yeni kural</value></data>
   <data name="MediaFieldRuleDialogEditTitle" xml:space="preserve"><value>Kuralı düzenle</value></data>
   <data name="MediaFieldRuleKind.Header" xml:space="preserve"><value>Mod</value></data>
-  <data name="MediaFieldRuleKindTemplate.Content" xml:space="preserve"><value>Şablon — {field} yer tutucuları</value></data>
-  <data name="MediaFieldRuleKindRegexExtract.Content" xml:space="preserve"><value>Düzenli ifade — adlandırılmış gruplar</value></data>
-  <data name="MediaFieldRuleKindRegexReplace.Content" xml:space="preserve"><value>Düzenli ifade — değiştir</value></data>
+  <data name="MediaFieldRuleKindTemplate.Content" xml:space="preserve"><value>Şablon: {field} yer tutucuları</value></data>
+  <data name="MediaFieldRuleKindRegexExtract.Content" xml:space="preserve"><value>Düzenli ifade: adlandırılmış gruplar</value></data>
+  <data name="MediaFieldRuleKindRegexReplace.Content" xml:space="preserve"><value>Düzenli ifade: değiştir</value></data>
   <data name="MediaFieldRuleSource.Header" xml:space="preserve"><value>Alan</value></data>
   <data name="MediaFieldRulePattern.Header" xml:space="preserve"><value>Desen</value></data>
   <data name="MediaFieldRuleReplacement.Header" xml:space="preserve"><value>Şununla değiştir</value></data>
@@ -1096,9 +1097,9 @@
   <data name="MediaFieldTitle.Content" xml:space="preserve"><value>Başlık</value></data>
   <data name="MediaFieldArtist.Content" xml:space="preserve"><value>Sanatçı</value></data>
   <data name="MediaFieldAlbum.Content" xml:space="preserve"><value>Albüm</value></data>
-  <data name="MediaFieldRuleSummaryTemplate" xml:space="preserve"><value>"{0}" içinde "{1}" şablonunu eşleştir.</value></data>
-  <data name="MediaFieldRuleSummaryRegexExtract" xml:space="preserve"><value>"{0}" içinden "{1}" düzenli ifadesiyle ayıkla.</value></data>
-  <data name="MediaFieldRuleSummaryRegexReplace" xml:space="preserve"><value>"{0}" içinde "{1}" yerine "{2}" koy.</value></data>
+  <data name="MediaFieldRuleSummaryTemplate" xml:space="preserve"><value>"{0}" içinde "{1}" şablonunu eşleştir</value></data>
+  <data name="MediaFieldRuleSummaryRegexExtract" xml:space="preserve"><value>"{0}" içinden "{1}" düzenli ifadesiyle ayıkla</value></data>
+  <data name="MediaFieldRuleSummaryRegexReplace" xml:space="preserve"><value>"{0}" içinde "{1}" yerine "{2}" koy</value></data>
   <data name="MediaFieldRuleHintTemplate" xml:space="preserve"><value>{title}, {artist} ve {album} ilgili alanlara geri yazılır; diğer tüm {name} değerleri atılır; * kalan kısımla eşleşir.</value></data>
   <data name="MediaFieldRuleHintRegexExtract" xml:space="preserve"><value>Adlandırılmış gruplar (?&lt;title&gt;…), (?&lt;artist&gt;…), (?&lt;album&gt;…) ilgili alanlara geri yazılır. Alan grubu yoksa eşleşen kısım alanın yerine geçer.</value></data>
   <data name="MediaFieldRuleHintRegexReplace" xml:space="preserve"><value>Alanın tamamı yeniden yazılır; $1 ve ${name} desteklenir. Boş değiştirme, eşleşmeyi siler.</value></data>

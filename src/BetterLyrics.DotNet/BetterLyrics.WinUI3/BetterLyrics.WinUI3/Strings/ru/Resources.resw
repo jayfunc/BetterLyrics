@@ -125,7 +125,7 @@
   <data name="AboutControlUpToDate.Title" xml:space="preserve"><value>Установлена последняя версия BetterLyrics</value></data>
   <data name="ActionCompleted" xml:space="preserve"><value>Действие выполнено</value></data>
   <data name="Add" xml:space="preserve"><value>Добавить</value></data>
-  <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Description" xml:space="preserve"><value>Автоматически прокручивает сведения о песне, если они слишком длинные, независимо от наведения указателя мыши.</value></data>
+  <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Description" xml:space="preserve"><value>Автоматически прокручивает сведения о песне, если они слишком длинные, независимо от наведения указателя мыши</value></data>
   <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Header" xml:space="preserve"><value>Автопрокрутка сведений о песне</value></data>
   <data name="AlbumArtAreaSettingsControlEndPoint.Header" xml:space="preserve"><value>Конечная точка</value></data>
   <data name="AlbumArtAreaSettingsControlFadeOut.Header" xml:space="preserve"><value>Затухание</value></data>
@@ -254,7 +254,7 @@
   <data name="LayoutEditorControlNoSelection" xml:space="preserve"><value>Выберите компонент в области предварительного просмотра или в списке слева, чтобы продолжить.</value></data>
   <data name="LayoutEditorControlPendingComponentsDescriptionTextBlock.Text" xml:space="preserve"><value>Перетащите компоненты в сетку справа, чтобы разместить их. После размещения компоненты можно свободно перемещать в пределах сетки.</value></data>
   <data name="LayoutEditorControlPendingComponentsTextBlock.Text" xml:space="preserve"><value>Неразмещённые компоненты</value></data>
-  <data name="LayoutEditorControlPlacedComponentsDescriptionTextBlock.Text" xml:space="preserve"><value>Если компонент не виден справа или недоступен для щелчка, выберите его здесь.</value></data>
+  <data name="LayoutEditorControlPlacedComponentsDescriptionTextBlock.Text" xml:space="preserve"><value>Если компонент не виден справа или недоступен для щелчка, выберите его здесь</value></data>
   <data name="LayoutEditorControlPlacedComponentsTextBlock.Text" xml:space="preserve"><value>Размещённые компоненты</value></data>
   <data name="LayoutEditorControlPxDescription.Text" xml:space="preserve"><value>Фиксируется на указанной абсолютной ширине и высоте в пикселях</value></data>
   <data name="LayoutEditorControlRemoveButton.Content" xml:space="preserve"><value>Удалить компонент</value></data>
@@ -281,7 +281,7 @@
   <data name="LayoutEditorControlZoomResetButton.Content" xml:space="preserve"><value>По размеру холста</value></data>
   <data name="LayoutSettingsControlCustomProfiles.Text" xml:space="preserve"><value>Пользовательский</value></data>
   <data name="LayoutSettingsControlCustomProfilesEmpty.Text" xml:space="preserve"><value>Пользовательские макеты не найдены. Создайте макет на основе шаблона или импортируйте существующий.</value></data>
-  <data name="LayoutSettingsControlLayoutNameTextBox.PlaceholderText" xml:space="preserve"><value>Введите название макета, чтобы его было легко отличить.</value></data>
+  <data name="LayoutSettingsControlLayoutNameTextBox.PlaceholderText" xml:space="preserve"><value>Введите название макета, чтобы его было легко отличить</value></data>
   <data name="LayoutSettingsControlNoLyricsWindow" xml:space="preserve"><value>Ни одно окно текста не использует этот макет</value></data>
   <data name="LayoutSettingsControlSystemProfiles.Text" xml:space="preserve"><value>По умолчанию</value></data>
   <data name="LayoutSettingsControlViewAppliedLyricsWindow.Text" xml:space="preserve"><value>Показать окна текста, использующие этот макет</value></data>
@@ -290,7 +290,8 @@
   <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve"><value>Текст слева, обложка справа (компактный)</value></data>
   <data name="LeftLyricsRightAlbumArtLayout" xml:space="preserve"><value>Текст слева, обложка справа</value></data>
   <data name="LibreTranslateFailed" xml:space="preserve"><value>Не удалось запросить перевод у LibreTranslate. Проверьте параметры или локальную конфигурацию LibreTranslate.</value></data>
-  <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve"><value>например, http://localhost:5000.</value></data>
+  <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve"><value>http://localhost:5000</value></data>
+  <data name="ListSeparator" xml:space="preserve"><value>, </value></data>
   <data name="Loading" xml:space="preserve"><value>Загрузка...</value></data>
   <data name="LyricsCardOnlyLayout" xml:space="preserve"><value>Макет только с карточкой текста</value></data>
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve"><value>Длительность</value></data>
@@ -307,7 +308,7 @@
   <data name="LyricsPageMatchPercentage.Header" xml:space="preserve"><value>Процент совпадения</value></data>
   <data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve"><value>Сбрасывается на 0 при смене песни</value></data>
   <data name="LyricsPageSettings.Text" xml:space="preserve"><value>Параметры</value></data>
-  <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve"><value>Приоритет отдаётся переводам, встроенным в текст песни; при отсутствии совпадений запрашивается машинный перевод с сервера LibreTranslate.</value></data>
+  <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve"><value>Приоритет отдаётся переводам, встроенным в текст песни; при отсутствии совпадений запрашивается машинный перевод с сервера LibreTranslate</value></data>
   <data name="LyricsPageTranslationEnabled.Header" xml:space="preserve"><value>Включить перевод</value></data>
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve"><value>Источник перевода</value></data>
   <data name="LyricsPageTransliterationProviderPrefix.Header" xml:space="preserve"><value>Источник транслитерации</value></data>
@@ -317,7 +318,7 @@
   <data name="LyricsSaveConfigIncludeTranslation.Header" xml:space="preserve"><value>Включать перевод</value></data>
   <data name="LyricsSaveConfigIncludeTransliteration.Header" xml:space="preserve"><value>Включать транслитерацию</value></data>
   <data name="LyricsSaveConfigInOneLine.Description" xml:space="preserve"><value>Разделяются косой чертой</value></data>
-  <data name="LyricsSaveConfigInOneLine.Header" xml:space="preserve"><value>Объединять оригинал, перевод и транслитерацию.</value></data>
+  <data name="LyricsSaveConfigInOneLine.Header" xml:space="preserve"><value>Объединять оригинал, перевод и транслитерацию</value></data>
   <data name="LyricsSaveConfigInSyllablesFormat.Header" xml:space="preserve"><value>Сохранять как пословно синхронизированный текст</value></data>
   <data name="LyricsSearchControlAlbum.Header" xml:space="preserve"><value>Альбом</value></data>
   <data name="LyricsSearchControlArtist.Header" xml:space="preserve"><value>Исполнитель</value></data>
@@ -428,7 +429,7 @@
   <data name="MusicGalleryPageSelectedTrackDetail.Content" xml:space="preserve"><value>Сведения о выбранном треке</value></data>
   <data name="MusicGalleryPageShufflePlay.Content" xml:space="preserve"><value>Случайное воспроизведение</value></data>
   <data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve"><value>Повтор одного трека</value></data>
-  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve"><value>Поиск по названию, исполнителю, альбому, имени файла или пути к папке.</value></data>
+  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve"><value>Поиск по названию, исполнителю, альбому, имени файла или пути к папке</value></data>
   <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve"><value>Альбом</value></data>
   <data name="MusicGalleryPageSortByArtist.Content" xml:space="preserve"><value>Исполнитель</value></data>
   <data name="MusicGalleryPageSortByFolder.Content" xml:space="preserve"><value>Папка</value></data>
@@ -469,7 +470,7 @@
   <data name="PrivacyPolicy.Content" xml:space="preserve"><value>Политика конфиденциальности</value></data>
   <data name="RemoteServerConfigControlBrowse.Content" xml:space="preserve"><value>Обзор</value></data>
   <data name="RemoteServerConfigControlName.Header" xml:space="preserve"><value>Название</value></data>
-  <data name="RemoteServerConfigControlName.PlaceholderText" xml:space="preserve"><value>Если оставить поле пустым, имя по умолчанию будет создано автоматически.</value></data>
+  <data name="RemoteServerConfigControlName.PlaceholderText" xml:space="preserve"><value>Если оставить поле пустым, имя по умолчанию будет создано автоматически</value></data>
   <data name="RemoteServerConfigControlPassword.Header" xml:space="preserve"><value>Пароль</value></data>
   <data name="RemoteServerConfigControlPath.Header" xml:space="preserve"><value>Путь</value></data>
   <data name="RemoteServerConfigControlPathNotExisted" xml:space="preserve"><value>Указанный путь к папке не найден</value></data>
@@ -507,7 +508,7 @@
   <data name="SettingsPageWriteDebugLogs.Header" xml:space="preserve"><value>Записывать отладочные журналы</value></data>
   <data name="SettingsPageWriteDebugLogs.Description" xml:space="preserve"><value>Включает журналы уровня Debug и выше. Это упрощает диагностику, но увеличивает размер файла журнала. Вступает в силу после перезапуска приложения.</value></data>
   <data name="SettingsPageGcObjectCheck.Header" xml:space="preserve"><value>Проверять объекты, не собранные сборщиком мусора</value></data>
-  <data name="SettingsPageGcObjectCheck.Description" xml:space="preserve"><value>Запускает сборку мусора и выводит список отслеживаемых объектов, которые всё ещё живы.</value></data>
+  <data name="SettingsPageGcObjectCheck.Description" xml:space="preserve"><value>Запускает сборку мусора и выводит список отслеживаемых объектов, которые всё ещё живы</value></data>
   <data name="SettingsPageGcObjectCheckButton.Content" xml:space="preserve"><value>Проверить</value></data>
   <data name="SettingsPageGcObjectsNone" xml:space="preserve"><value>После сборки мусора живых отслеживаемых объектов не осталось</value></data>
   <data name="SettingsPageGcObjectsFound" xml:space="preserve"><value>Отслеживаемые объекты, оставшиеся живыми после сборки мусора:</value></data>
@@ -524,12 +525,12 @@
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>Фон текста</value></data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve"><value>Интенсивность размытия</value></data>
   <data name="SettingsPageBottom.Content" xml:space="preserve"><value>Снизу</value></data>
-  <data name="SettingsPageCache.Description" xml:space="preserve"><value>Включает файлы журналов и кэш онлайн-текстов.</value></data>
+  <data name="SettingsPageCache.Description" xml:space="preserve"><value>Включает файлы журналов и кэш онлайн-текстов</value></data>
   <data name="SettingsPageCache.Header" xml:space="preserve"><value>Кэш</value></data>
   <data name="SettingsPageCenter.Content" xml:space="preserve"><value>По центру</value></data>
   <data name="SettingsPageCheckShortcut.Content" xml:space="preserve"><value>Проверить сочетание клавиш</value></data>
   <data name="SettingsPageChinese.Header" xml:space="preserve"><value>Китайская транслитерация</value></data>
-  <data name="SettingsPageChinesePreference.Description" xml:space="preserve"><value>При выборе «Не указано» исходный текст сохраняется; при выборе «Китайский (упрощённый)» или «Китайский (традиционный)» к исходному тексту применяется машинное преобразование.</value></data>
+  <data name="SettingsPageChinesePreference.Description" xml:space="preserve"><value>При выборе «Не указано» исходный текст сохраняется; при выборе «Китайский (упрощённый)» или «Китайский (традиционный)» к исходному тексту применяется машинное преобразование</value></data>
   <data name="SettingsPageChinesePreference.Header" xml:space="preserve"><value>Вариант китайского языка</value></data>
   <data name="SettingsPageChinesePreferenceSToT.Content" xml:space="preserve"><value>Китайский (традиционный)</value></data>
   <data name="SettingsPageChinesePreferenceTToS.Content" xml:space="preserve"><value>Китайский (упрощённый)</value></data>
@@ -635,7 +636,7 @@
   <data name="SettingsPageLocalLyricsFilePattern.Header" xml:space="preserve"><value>Шаблон разбора файлов текстов</value></data>
   <data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve"><value>Порог длительного слога</value></data>
   <data name="SettingsPageLXMusicServer.Header" xml:space="preserve"><value>Сервер LX Music</value></data>
-  <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve"><value>например, http://127.0.0.1:23330.</value></data>
+  <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve"><value>http://127.0.0.1:23330</value></data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve"><value>Выравнивание</value></data>
   <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve"><value>Неактивная строка</value></data>
   <data name="SettingsPageLyricsBlack.Content" xml:space="preserve"><value>Чёрный</value></data>
@@ -651,7 +652,7 @@
   <data name="SettingsPageLyricsExtraLight.Content" xml:space="preserve"><value>Сверхтонкий</value></data>
   <data name="SettingsPageLyricsFadeOutEffect.Description" xml:space="preserve"><value>Включить затухание для неактивных строк</value></data>
   <data name="SettingsPageLyricsFadeOutEffect.Header" xml:space="preserve"><value>Эффект затухания</value></data>
-  <data name="SettingsPageLyricsFilter.Description" xml:space="preserve"><value>Удаляет нетекстовую информацию, например сведения об авторе текста и композиторе.</value></data>
+  <data name="SettingsPageLyricsFilter.Description" xml:space="preserve"><value>Удаляет нетекстовую информацию, например сведения об авторе текста и композиторе</value></data>
   <data name="SettingsPageLyricsFilter.Header" xml:space="preserve"><value>Фильтр текста</value></data>
   <data name="SettingsPageLyricsFloatAnimation.Header" xml:space="preserve"><value>Анимация парения</value></data>
   <data name="SettingsPageLyricsFontColorAdaptiveColored.Content" xml:space="preserve"><value>Подстраивать под фон текста (цветной)</value></data>
@@ -666,7 +667,7 @@
   <data name="SettingsPageLyricsGapDotsMinimumDuration.Header" xml:space="preserve"><value>Минимальная пауза</value></data>
   <data name="SettingsPageLyricsGlowEffect.Header" xml:space="preserve"><value>Эффект свечения</value></data>
   <data name="SettingsPageLyricsHdrGlow.Header" xml:space="preserve"><value>Свечение текста HDR</value></data>
-  <data name="SettingsPageLyricsHdrGlow.Description" xml:space="preserve"><value>Доступно, если на выбранном мониторе включён режим HDR Windows.</value></data>
+  <data name="SettingsPageLyricsHdrGlow.Description" xml:space="preserve"><value>Доступно, если на выбранном мониторе включён режим HDR Windows</value></data>
   <data name="SettingsPageLyricsLight.Content" xml:space="preserve"><value>Тонкий</value></data>
   <data name="SettingsPageLyricsLineInnerSpacingFactor.Header" xml:space="preserve"><value>Внутренний межстрочный интервал</value></data>
   <data name="SettingsPageLyricsLineOverallSpacingFactor.Header" xml:space="preserve"><value>Общий межстрочный интервал</value></data>
@@ -683,14 +684,14 @@
   <data name="SettingsPageLyricsSearchBestMatch.Content" xml:space="preserve"><value>Лучшее совпадение</value></data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Text" xml:space="preserve"><value>Настроить источники текстов</value></data>
   <data name="SettingsPageLyricsSearchSequential.Content" xml:space="preserve"><value>Последовательно</value></data>
-  <data name="SettingsPageLyricsSearchType.Description" xml:space="preserve"><value>Последовательно: поиск по приведённому ниже списку в порядке приоритета с возвратом первого найденного результата; Лучшее совпадение: поиск во всех включённых источниках с автоматическим выбором результата с наибольшей оценкой совпадения.</value></data>
+  <data name="SettingsPageLyricsSearchType.Description" xml:space="preserve"><value>Последовательно: поиск по приведённому ниже списку в порядке приоритета с возвратом первого найденного результата; Лучшее совпадение: поиск во всех включённых источниках с автоматическим выбором результата с наибольшей оценкой совпадения</value></data>
   <data name="SettingsPageLyricsSearchType.Header" xml:space="preserve"><value>Стратегия поиска текстов</value></data>
   <data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve"><value>Полужирный</value></data>
   <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve"><value>Полутонкий</value></data>
   <data name="SettingsPageLyricsStyle.Text" xml:space="preserve"><value>Стиль текста</value></data>
   <data name="SettingsPageLyricsThin.Content" xml:space="preserve"><value>Очень тонкий</value></data>
   <data name="SettingsPageLyricsTimeline.Header" xml:space="preserve"><value>Синхронизация временной шкалы текста</value></data>
-  <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve"><value>Если ход текста подёргивается, попробуйте увеличить это пороговое значение; изменение значения может привести к рассинхронизации текста.</value></data>
+  <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve"><value>Если ход текста подёргивается, попробуйте увеличить это пороговое значение; изменение значения может привести к рассинхронизации текста</value></data>
   <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve"><value>Порог синхронизации временной шкалы</value></data>
   <data name="SettingsPageLyricsUnplayedFgFontColor.Header" xml:space="preserve"><value>Активная строка (не воспроизведена)</value></data>
   <data name="SettingsPageLyricsWindow.Text" xml:space="preserve"><value>Окно текста</value></data>
@@ -700,13 +701,13 @@
   <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve"><value>Всегда</value></data>
   <data name="SettingsPageLyricsWordByWordEffectModeAuto.Content" xml:space="preserve"><value>Автоматически</value></data>
   <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve"><value>Никогда</value></data>
-  <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve"><value>Изменение этого значения влияет на результаты последовательного поиска и поиска по лучшему совпадению, но не на результаты в интерфейсе ручного поиска текстов.</value></data>
+  <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve"><value>Изменение этого значения влияет на результаты последовательного поиска и поиска по лучшему совпадению, но не на результаты в интерфейсе ручного поиска текстов</value></data>
   <data name="SettingsPageMatchingThreshold.Header" xml:space="preserve"><value>Минимальный порог совпадения</value></data>
   <data name="SettingsPageMediaLib" xml:space="preserve"><value>Медиатека</value></data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve"><value>Отслеживать этот источник воспроизведения</value></data>
   <data name="SettingsPageMultiNowPlayingWindows.Text" xml:space="preserve"><value>Режим нескольких окон</value></data>
   <data name="SettingsPageMusicGallery.Text" xml:space="preserve"><value>Музыкальная галерея</value></data>
-  <data name="SettingsPageMusicLib.Description" xml:space="preserve"><value>Добавьте папки, содержащие музыку или тексты песен.</value></data>
+  <data name="SettingsPageMusicLib.Description" xml:space="preserve"><value>Добавьте папки, содержащие музыку или тексты песен</value></data>
   <data name="SettingsPageMusicLib.Header" xml:space="preserve"><value>Локальная медиатека</value></data>
   <data name="SettingsPageNarrowMode.Text" xml:space="preserve"><value>Узкий режим</value></data>
   <data name="SettingsPageNextSongHotKey.Header" xml:space="preserve"><value>Сочетание клавиш для следующего трека</value></data>
@@ -761,7 +762,7 @@
   <data name="SettingsPageShortcutRegFailInfo" xml:space="preserve"><value>Не удалось зарегистрировать сочетание клавиш</value></data>
   <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve"><value>Сочетание клавиш зарегистрировано</value></data>
   <data name="SettingsPageShowHideHotKey.Header" xml:space="preserve"><value>Сочетание клавиш для показа/скрытия окна текста</value></data>
-  <data name="SettingsPageShowInSwitchers.Description" xml:space="preserve"><value>например, Alt + Tab, панель задач.</value></data>
+  <data name="SettingsPageShowInSwitchers.Description" xml:space="preserve"><value>например, Alt + Tab, панель задач</value></data>
   <data name="SettingsPageShowInSwitchers.Header" xml:space="preserve"><value>Показывать в системной среде</value></data>
   <data name="SettingsPageSize.Header" xml:space="preserve"><value>Размер</value></data>
   <data name="SettingsPageSlide.Content" xml:space="preserve"><value>Скольжение</value></data>
@@ -801,13 +802,13 @@
   <data name="SettingsPageTranslationConfig.Header" xml:space="preserve"><value>Служба LibreTranslate</value></data>
   <data name="SettingsPageUnplayedOriginalText.Header" xml:space="preserve"><value>Оригинал (не воспроизведён)</value></data>
   <data name="SettingsPageUnplayedStrokeFontColor.Header" xml:space="preserve"><value>Обводка (не воспроизведена)</value></data>
-  <data name="SettingsPageUseInternalLyricsAlignment.Description" xml:space="preserve"><value>Использует выравнивание, указанное в содержимом текста (в настоящее время поддерживается только TTML).</value></data>
+  <data name="SettingsPageUseInternalLyricsAlignment.Description" xml:space="preserve"><value>Использует выравнивание, указанное в содержимом текста (в настоящее время поддерживается только TTML)</value></data>
   <data name="SettingsPageUseInternalLyricsAlignment.Header" xml:space="preserve"><value>Сохранять исходное выравнивание</value></data>
   <data name="SettingsPageUserWhoPurchased" xml:space="preserve"><value>а также пользователям, приобретшим BetterLyrics</value></data>
   <data name="SettingsPageWallpaperMode.Text" xml:space="preserve"><value>Режим обоев</value></data>
   <data name="SettingsPageWesternChar.Header" xml:space="preserve"><value>Латинские символы</value></data>
   <data name="SettingsPageWidth.Header" xml:space="preserve"><value>Ширина</value></data>
-  <data name="SettingsPageWorkArea.Description" xml:space="preserve"><value>Панель инструментов рабочего стола приложения, прикреплённая к верхнему или нижнему краю экрана.</value></data>
+  <data name="SettingsPageWorkArea.Description" xml:space="preserve"><value>Панель инструментов рабочего стола приложения, прикреплённая к верхнему или нижнему краю экрана</value></data>
   <data name="SettingsPageWorkArea.Header" xml:space="preserve"><value>Панель приложения</value></data>
   <data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve"><value>Высота панели приложения</value></data>
   <data name="SetTo1Star" xml:space="preserve"><value>Установить 1 звезду</value></data>
@@ -995,7 +996,7 @@
   <data name="FileNamePatternControlHelpArtist.Text" xml:space="preserve"><value>Имя исполнителя</value></data>
   <data name="FileNamePatternControlHelpTitleDesc.Text" xml:space="preserve"><value>Название песни</value></data>
   <data name="FileNamePatternControlHelpAlbum.Text" xml:space="preserve"><value>Название альбома</value></data>
-  <data name="FileNamePatternControlHelpTip.Text" xml:space="preserve"><value>Совет: можно использовать другие слова, например {BPM}, в качестве заполнителей, чтобы игнорировать части имени файла.</value></data>
+  <data name="FileNamePatternControlHelpTip.Text" xml:space="preserve"><value>Совет: можно использовать другие слова, например {BPM}, в качестве заполнителей, чтобы игнорировать части имени файла</value></data>
   <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve"><value>Пример предпросмотра:</value></data>
   <data name="FileNamePatternControlNoPatternProvided" xml:space="preserve"><value>Шаблон не указан</value></data>
   <data name="SettingsPageRestartRequiredInfoBar.Title" xml:space="preserve"><value>Требуется перезапуск</value></data>
@@ -1008,7 +1009,7 @@
   <data name="SettingsPageShowNowPlayingNotification.Description" xml:space="preserve"><value>Показывает краткое всплывающее уведомление в углу экрана при смене песни</value></data>
   <data name="SettingsPageNowPlayingNotificationCorner.Header" xml:space="preserve"><value>Положение всплывающего окна</value></data>
   <data name="SettingsPageNowPlayingNotificationAllMonitors.Header" xml:space="preserve"><value>Показывать на всех мониторах</value></data>
-  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve"><value>Если параметр отключён, всплывающее окно будет отображаться только на основном мониторе.</value></data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve"><value>Если параметр отключён, всплывающее окно будет отображаться только на основном мониторе</value></data>
   <data name="NowPlayingNotificationCornerTopLeft.Content" xml:space="preserve"><value>Сверху слева</value></data>
   <data name="NowPlayingNotificationCornerTopRight.Content" xml:space="preserve"><value>Сверху справа</value></data>
   <data name="NowPlayingNotificationCornerBottomLeft.Content" xml:space="preserve"><value>Снизу слева</value></data>
@@ -1025,7 +1026,7 @@
   <data name="PlaybackSettingsControlShowMessage.Content" xml:space="preserve"><value>Показать сообщение</value></data>
   <data name="PlaybackSettingsControlHideLyricsArea.Content" xml:space="preserve"><value>Скрыть область текста</value></data>
   <data name="PlaybackSettingsControlNoLyricsFoundHandling.Header" xml:space="preserve"><value>Действие при отсутствии текста</value></data>
-  <data name="PlaybackSettingsControlCustomNotFoundMessage.PlaceholderText" xml:space="preserve"><value>Оставьте пустым, чтобы использовать сообщение по умолчанию.</value></data>
+  <data name="PlaybackSettingsControlCustomNotFoundMessage.PlaceholderText" xml:space="preserve"><value>Оставьте пустым, чтобы использовать сообщение по умолчанию</value></data>
   <data name="PlaybackSettingsControlCustomNotFoundMessageCard.Header" xml:space="preserve"><value>Пользовательское сообщение</value></data>
   <data name="SettingsPageSpectrumDelay.Header" xml:space="preserve"><value>Задержка спектра</value></data>
   <data name="SettingsPageIntegration.Text" xml:space="preserve"><value>Интеграция</value></data>
@@ -1040,7 +1041,7 @@
   <data name="SettingsPagePaletteLightToneThreshold.Header" xml:space="preserve"><value>Порог светлого тона</value></data>
   <data name="SettingsPagePaletteChromaWeight.Description" xml:space="preserve"><value>Настраивает предпочтение насыщенных цветов при извлечении палитры</value></data>
   <data name="SettingsPagePaletteToneWeight.Description" xml:space="preserve"><value>Настраивает предпочтение светлых или тёмных тонов при извлечении палитры</value></data>
-  <data name="SettingsPagePalettePopulationWeight.Description" xml:space="preserve"><value>Настраивает предпочтение цветов, занимающих большую площадь изображения.</value></data>
+  <data name="SettingsPagePalettePopulationWeight.Description" xml:space="preserve"><value>Настраивает предпочтение цветов, занимающих большую площадь изображения</value></data>
   <data name="SettingsPagePaletteDarkToneThreshold.Description" xml:space="preserve"><value>Максимальный порог светлоты для фильтрации цветов в тёмном режиме</value></data>
   <data name="SettingsPagePaletteLightToneThreshold.Description" xml:space="preserve"><value>Минимальный порог светлоты для фильтрации цветов в светлом режиме</value></data>
   <data name="SettingsPageEasingTypeAppleMusicSpring.Content" xml:space="preserve"><value>Как в Apple Music</value></data>
@@ -1051,7 +1052,7 @@
   <data name="SettingsPageMonitorLayout.Header" xml:space="preserve"><value>Текущее расположение мониторов</value></data>
   <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve"><value>Открыть системные параметры экрана</value></data>
   <data name="SettingsPageSemanticEffects.Header" xml:space="preserve"><value>Семантические эффекты текста</value></data>
-  <data name="SettingsPageSemanticEffects.Description" xml:space="preserve"><value>Создаёт частицы (например, сердца, дождь, снег) при появлении определённых ключевых слов в тексте.</value></data>
+  <data name="SettingsPageSemanticEffects.Description" xml:space="preserve"><value>Создаёт частицы (например, сердца, дождь, снег) при появлении определённых ключевых слов в тексте</value></data>
   <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve"><value>Копировать глубокую ссылку</value></data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve"><value>Монитор, соответствующий режиму, не найден.</value></data>
   <data name="SettingsPageListenBrainzTrack.Header" xml:space="preserve"><value>Отслеживать историю прослушиваний через ListenBrainz</value></data>
@@ -1067,7 +1068,7 @@
   <data name="MediaFieldCorrectionAddCustom.Content" xml:space="preserve"><value>Новое правило</value></data>
   <data name="MediaFieldCorrectionMore.Content" xml:space="preserve"><value>Дополнительно</value></data>
   <data name="MediaFieldCorrectionEmpty.Header" xml:space="preserve"><value>Правил пока нет</value></data>
-  <data name="MediaFieldCorrectionEmpty.Description" xml:space="preserve"><value>Вставьте пример, чтобы ознакомиться с синтаксисом, или создайте собственный шаблон.</value></data>
+  <data name="MediaFieldCorrectionEmpty.Description" xml:space="preserve"><value>Вставьте пример, чтобы ознакомиться с синтаксисом, или создайте собственный шаблон</value></data>
   <data name="MediaFieldPreviewHeaderCurrent" xml:space="preserve"><value>Результат для текущей песни</value></data>
   <data name="MediaFieldPreviewHeaderSample" xml:space="preserve"><value>Пример результата (воспроизведение не выполняется)</value></data>
   <data name="MediaFieldPreviewNoChange" xml:space="preserve"><value>Ни одно поле не изменено — правила не соответствуют этому тексту.</value></data>
@@ -1084,9 +1085,9 @@
   <data name="MediaFieldRuleDialogAddTitle" xml:space="preserve"><value>Новое правило</value></data>
   <data name="MediaFieldRuleDialogEditTitle" xml:space="preserve"><value>Изменить правило</value></data>
   <data name="MediaFieldRuleKind.Header" xml:space="preserve"><value>Режим</value></data>
-  <data name="MediaFieldRuleKindTemplate.Content" xml:space="preserve"><value>Шаблон — заполнители {field}</value></data>
-  <data name="MediaFieldRuleKindRegexExtract.Content" xml:space="preserve"><value>Регулярное выражение — именованные группы</value></data>
-  <data name="MediaFieldRuleKindRegexReplace.Content" xml:space="preserve"><value>Регулярное выражение — замена</value></data>
+  <data name="MediaFieldRuleKindTemplate.Content" xml:space="preserve"><value>Шаблон: заполнители {field}</value></data>
+  <data name="MediaFieldRuleKindRegexExtract.Content" xml:space="preserve"><value>Регулярное выражение: именованные группы</value></data>
+  <data name="MediaFieldRuleKindRegexReplace.Content" xml:space="preserve"><value>Регулярное выражение: замена</value></data>
   <data name="MediaFieldRuleSource.Header" xml:space="preserve"><value>Поле</value></data>
   <data name="MediaFieldRulePattern.Header" xml:space="preserve"><value>Шаблон</value></data>
   <data name="MediaFieldRuleReplacement.Header" xml:space="preserve"><value>Заменить на</value></data>
@@ -1096,9 +1097,9 @@
   <data name="MediaFieldTitle.Content" xml:space="preserve"><value>Название</value></data>
   <data name="MediaFieldArtist.Content" xml:space="preserve"><value>Исполнитель</value></data>
   <data name="MediaFieldAlbum.Content" xml:space="preserve"><value>Альбом</value></data>
-  <data name="MediaFieldRuleSummaryTemplate" xml:space="preserve"><value>Сопоставить шаблон «{1}» в «{0}».</value></data>
-  <data name="MediaFieldRuleSummaryRegexExtract" xml:space="preserve"><value>Извлечь с помощью регулярного выражения «{1}» из «{0}».</value></data>
-  <data name="MediaFieldRuleSummaryRegexReplace" xml:space="preserve"><value>Заменить «{1}» на «{2}» в «{0}».</value></data>
+  <data name="MediaFieldRuleSummaryTemplate" xml:space="preserve"><value>Сопоставить шаблон «{1}» в «{0}»</value></data>
+  <data name="MediaFieldRuleSummaryRegexExtract" xml:space="preserve"><value>Извлечь с помощью регулярного выражения «{1}» из «{0}»</value></data>
+  <data name="MediaFieldRuleSummaryRegexReplace" xml:space="preserve"><value>Заменить «{1}» на «{2}» в «{0}»</value></data>
   <data name="MediaFieldRuleHintTemplate" xml:space="preserve"><value>{title}, {artist} и {album} записываются обратно в соответствующие поля; любой другой {name} отбрасывается; * соответствует остатку.</value></data>
   <data name="MediaFieldRuleHintRegexExtract" xml:space="preserve"><value>Именованные группы (?&lt;title&gt;…), (?&lt;artist&gt;…), (?&lt;album&gt;…) записываются обратно в соответствующие поля. Без групп полей совпавшая часть заменяет поле.</value></data>
   <data name="MediaFieldRuleHintRegexReplace" xml:space="preserve"><value>Всё поле перезаписывается; поддерживаются $1 и ${name}. Пустая замена удаляет совпадение.</value></data>

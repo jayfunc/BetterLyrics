@@ -142,7 +142,7 @@
     <value>Add</value>
   </data>
   <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Description" xml:space="preserve">
-    <value>Automatically scroll song info when it's too long, regardless of mouse hover.</value>
+    <value>Automatically scroll song info when it's too long, regardless of mouse hover</value>
   </data>
   <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Header" xml:space="preserve">
     <value>Auto-scroll Song Info</value>
@@ -535,7 +535,7 @@
     <value>Placed Components</value>
   </data>
   <data name="LayoutEditorControlPxDescription.Text" xml:space="preserve">
-    <value>Fixed to the specified absolute pixel width/height</value>
+    <value>Fixed to the specified absolute pixel width or height</value>
   </data>
   <data name="LayoutEditorControlRemoveButton.Content" xml:space="preserve">
     <value>Remove Component</value>
@@ -637,7 +637,10 @@
     <value>Failed to request translation from LibreTranslate. Please check settings or local LibreTranslate configuration.</value>
   </data>
   <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve">
-    <value>e.g. http://localhost:5000.</value>
+    <value>http://localhost:5000</value>
+  </data>
+  <data name="ListSeparator" xml:space="preserve">
+    <value>, </value>
   </data>
   <data name="Loading" xml:space="preserve">
     <value>Loading...</value>
@@ -688,7 +691,7 @@
     <value>Settings</value>
   </data>
   <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve">
-    <value>Prioritize reading translations within lyrics; if no match, request machine translation from LibreTranslate server.</value>
+    <value>Prioritize reading translations within lyrics; if no match, request machine translation from LibreTranslate server</value>
   </data>
   <data name="LyricsPageTranslationEnabled.Header" xml:space="preserve">
     <value>Enable Translation</value>
@@ -718,7 +721,7 @@
     <value>Separated by slashes</value>
   </data>
   <data name="LyricsSaveConfigInOneLine.Header" xml:space="preserve">
-    <value>Combine Original, Translation, and Transliteration.</value>
+    <value>Combine Original, Translation, and Transliteration</value>
   </data>
   <data name="LyricsSaveConfigInSyllablesFormat.Header" xml:space="preserve">
     <value>Save as Word-Synced Lyrics</value>
@@ -1051,7 +1054,7 @@
     <value>Loop Single</value>
   </data>
   <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve">
-    <value>Search title, artist, album, filename or folder path.</value>
+    <value>Search title, artist, album, filename, or folder path</value>
   </data>
   <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve">
     <value>Album</value>
@@ -1339,7 +1342,7 @@
     <value>Bottom</value>
   </data>
   <data name="SettingsPageCache.Description" xml:space="preserve">
-    <value>Includes log files, online lyrics cache.</value>
+    <value>Includes log files, online lyrics cache</value>
   </data>
   <data name="SettingsPageCache.Header" xml:space="preserve">
     <value>Cache</value>
@@ -1354,7 +1357,7 @@
     <value>Chinese Phonetic</value>
   </data>
   <data name="SettingsPageChinesePreference.Description" xml:space="preserve">
-    <value>Selecting "Unspecified" will preserve the original lyrics; selecting "Simplified Chinese" or "Traditional Chinese" will perform machine conversion on the original lyrics.</value>
+    <value>Selecting "Unspecified" will preserve the original lyrics; selecting "Simplified Chinese" or "Traditional Chinese" will perform machine conversion on the original lyrics</value>
   </data>
   <data name="SettingsPageChinesePreference.Header" xml:space="preserve">
     <value>Chinese Preference</value>
@@ -1672,7 +1675,7 @@
     <value>LX Music Server</value>
   </data>
   <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve">
-    <value>e.g. http://127.0.0.1:23330.</value>
+    <value>http://127.0.0.1:23330</value>
   </data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve">
     <value>Alignment</value>
@@ -1816,7 +1819,7 @@
     <value>Sequential</value>
   </data>
   <data name="SettingsPageLyricsSearchType.Description" xml:space="preserve">
-    <value>Sequential: Search through the list below in order of priority, returning the first result found; Best Match: Search all enabled sources and automatically select the result with the highest match score.</value>
+    <value>Sequential: Search through the list below in order of priority, returning the first result found; Best Match: Search all enabled sources and automatically select the result with the highest match score</value>
   </data>
   <data name="SettingsPageLyricsSearchType.Header" xml:space="preserve">
     <value>Lyrics Search Strategy</value>
@@ -1837,7 +1840,7 @@
     <value>Lyrics Timeline Sync</value>
   </data>
   <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve">
-    <value>Try increasing this threshold if lyric progress jitters; changing this value may cause lyric sync deviations.</value>
+    <value>Try increasing this threshold if lyric progress jitters; changing this value may cause lyric sync deviations</value>
   </data>
   <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve">
     <value>Lyrics Timeline Sync Threshold</value>
@@ -1867,7 +1870,7 @@
     <value>Never</value>
   </data>
   <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve">
-    <value>Adjusting this value will affect sequential search and best match search results, but will not affect search results in the manual lyrics search interface.</value>
+    <value>Adjusting this value will affect sequential search and best match search results, but will not affect search results in the manual lyrics search interface</value>
   </data>
   <data name="SettingsPageMatchingThreshold.Header" xml:space="preserve">
     <value>Minimum Match Threshold</value>
@@ -2050,7 +2053,7 @@
     <value>Show/Hide Lyrics Window Shortcut</value>
   </data>
   <data name="SettingsPageShowInSwitchers.Description" xml:space="preserve">
-    <value>e.g., Alt + Tab, Taskbar.</value>
+    <value>e.g., Alt + Tab, Taskbar</value>
   </data>
   <data name="SettingsPageShowInSwitchers.Header" xml:space="preserve">
     <value>Show in System Environment</value>
@@ -2188,7 +2191,7 @@
     <value>Width</value>
   </data>
   <data name="SettingsPageWorkArea.Description" xml:space="preserve">
-    <value>Application desktop toolbar, docked to the top/bottom edge of the screen.</value>
+    <value>Application desktop toolbar, docked to the top or bottom edge of the screen</value>
   </data>
   <data name="SettingsPageWorkArea.Header" xml:space="preserve">
     <value>Appbar</value>
@@ -2682,7 +2685,7 @@
     <value>The name of the album</value>
   </data>
   <data name="FileNamePatternControlHelpTip.Text" xml:space="preserve">
-    <value>Tip: You can use other words like {BPM} as placeholders to ignore parts of the filename.</value>
+    <value>Tip: You can use other words like {BPM} as placeholders to ignore parts of the filename</value>
   </data>
   <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve">
     <value>Example Preview:</value>
@@ -2721,7 +2724,7 @@
     <value>Show on all monitors</value>
   </data>
   <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve">
-    <value>If disabled, the popup will only appear on the primary monitor.</value>
+    <value>If disabled, the popup will only appear on the primary monitor</value>
   </data>
   <data name="NowPlayingNotificationCornerTopLeft.Content" xml:space="preserve">
     <value>Top Left</value>
@@ -2850,7 +2853,7 @@
     <value>Semantic Lyrics Effects</value>
   </data>
   <data name="SettingsPageSemanticEffects.Description" xml:space="preserve">
-    <value>Spawn particles (e.g. heart, rain, snow) when specific keywords appear in lyrics.</value>
+    <value>Spawn particles (e.g., heart, rain, snow) when specific keywords appear in lyrics</value>
   </data>
   <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve">
     <value>Copy deep link</value>
@@ -2883,7 +2886,7 @@
     <value>Rules</value>
   </data>
   <data name="MediaFieldCorrectionRules.Description" xml:space="preserve">
-    <value>Rewrite the title, artist or album this player reports. Rules run in order and only affect this player.</value>
+    <value>Rewrite the title, artist, or album this player reports. Rules run in order and only affect this player.</value>
   </data>
   <data name="MediaFieldCorrectionInsertSnippet.Content" xml:space="preserve">
     <value>Insert example</value>
@@ -2898,7 +2901,7 @@
     <value>No rules yet</value>
   </data>
   <data name="MediaFieldCorrectionEmpty.Description" xml:space="preserve">
-    <value>Insert an example to see the syntax, or write a template yourself.</value>
+    <value>Insert an example to see the syntax, or write a template yourself</value>
   </data>
   <data name="MediaFieldPreviewHeaderCurrent" xml:space="preserve">
     <value>Result for the current song</value>
@@ -2949,13 +2952,13 @@
     <value>Mode</value>
   </data>
   <data name="MediaFieldRuleKindTemplate.Content" xml:space="preserve">
-    <value>Template — {field} placeholders</value>
+    <value>Template: {field} placeholders</value>
   </data>
   <data name="MediaFieldRuleKindRegexExtract.Content" xml:space="preserve">
-    <value>Regex — named groups</value>
+    <value>Regex: named groups</value>
   </data>
   <data name="MediaFieldRuleKindRegexReplace.Content" xml:space="preserve">
-    <value>Regex — replace</value>
+    <value>Regex: replace</value>
   </data>
   <data name="MediaFieldRuleSource.Header" xml:space="preserve">
     <value>Field</value>
@@ -2985,13 +2988,13 @@
     <value>Album</value>
   </data>
   <data name="MediaFieldRuleSummaryTemplate" xml:space="preserve">
-    <value>Match template "{1}" in "{0}".</value>
+    <value>Match template "{1}" in "{0}"</value>
   </data>
   <data name="MediaFieldRuleSummaryRegexExtract" xml:space="preserve">
-    <value>Extract with regex "{1}" from "{0}".</value>
+    <value>Extract with regex "{1}" from "{0}"</value>
   </data>
   <data name="MediaFieldRuleSummaryRegexReplace" xml:space="preserve">
-    <value>Replace "{1}" with "{2}" in "{0}".</value>
+    <value>Replace "{1}" with "{2}" in "{0}"</value>
   </data>
   <data name="MediaFieldRuleHintTemplate" xml:space="preserve">
     <value>{title}, {artist} and {album} are written back into those fields; any other {name} is discarded; * matches the rest.</value>

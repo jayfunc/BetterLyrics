@@ -125,7 +125,7 @@
   <data name="AboutControlUpToDate.Title" xml:space="preserve"><value>BetterLyrics は最新バージョンです</value></data>
   <data name="ActionCompleted" xml:space="preserve"><value>操作が完了しました</value></data>
   <data name="Add" xml:space="preserve"><value>追加</value></data>
-  <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Description" xml:space="preserve"><value>曲情報が長い場合、マウスを重ねているかどうかに関係なく自動的にスクロールします。</value></data>
+  <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Description" xml:space="preserve"><value>曲情報が長い場合、マウスを重ねているかどうかに関係なく自動的にスクロールします</value></data>
   <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Header" xml:space="preserve"><value>曲情報の自動スクロール</value></data>
   <data name="AlbumArtAreaSettingsControlEndPoint.Header" xml:space="preserve"><value>終点</value></data>
   <data name="AlbumArtAreaSettingsControlFadeOut.Header" xml:space="preserve"><value>フェードアウト</value></data>
@@ -254,7 +254,7 @@
   <data name="LayoutEditorControlNoSelection" xml:space="preserve"><value>続行するには、プレビューまたは左側の一覧でコンポーネントを選択してください。</value></data>
   <data name="LayoutEditorControlPendingComponentsDescriptionTextBlock.Text" xml:space="preserve"><value>コンポーネントを右側のグリッドにドラッグして配置します。配置後は、グリッド内で自由に移動できます。</value></data>
   <data name="LayoutEditorControlPendingComponentsTextBlock.Text" xml:space="preserve"><value>未配置のコンポーネント</value></data>
-  <data name="LayoutEditorControlPlacedComponentsDescriptionTextBlock.Text" xml:space="preserve"><value>右側でコンポーネントが表示されない、またはクリックできない場合は、ここで選択してください。</value></data>
+  <data name="LayoutEditorControlPlacedComponentsDescriptionTextBlock.Text" xml:space="preserve"><value>右側でコンポーネントが表示されない、またはクリックできない場合は、ここで選択してください</value></data>
   <data name="LayoutEditorControlPlacedComponentsTextBlock.Text" xml:space="preserve"><value>配置済みのコンポーネント</value></data>
   <data name="LayoutEditorControlPxDescription.Text" xml:space="preserve"><value>指定した絶対ピクセル幅/高さに固定します</value></data>
   <data name="LayoutEditorControlRemoveButton.Content" xml:space="preserve"><value>コンポーネントを削除</value></data>
@@ -290,7 +290,8 @@
   <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve"><value>歌詞左・アルバム アート右レイアウト（コンパクト）</value></data>
   <data name="LeftLyricsRightAlbumArtLayout" xml:space="preserve"><value>歌詞左・アルバム アート右レイアウト</value></data>
   <data name="LibreTranslateFailed" xml:space="preserve"><value>LibreTranslate への翻訳リクエストに失敗しました。設定またはローカルの LibreTranslate 構成を確認してください。</value></data>
-  <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve"><value>例: http://localhost:5000。</value></data>
+  <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve"><value>http://localhost:5000</value></data>
+  <data name="ListSeparator" xml:space="preserve"><value>、</value></data>
   <data name="Loading" xml:space="preserve"><value>読み込み中…</value></data>
   <data name="LyricsCardOnlyLayout" xml:space="preserve"><value>歌詞カードのみのレイアウト</value></data>
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve"><value>長さ</value></data>
@@ -307,7 +308,7 @@
   <data name="LyricsPageMatchPercentage.Header" xml:space="preserve"><value>一致率</value></data>
   <data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve"><value>曲を切り替えると 0 にリセットされます</value></data>
   <data name="LyricsPageSettings.Text" xml:space="preserve"><value>設定</value></data>
-  <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve"><value>歌詞に含まれる翻訳を優先して表示し、一致するものがない場合は LibreTranslate サーバーに機械翻訳を要求します。</value></data>
+  <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve"><value>歌詞に含まれる翻訳を優先して表示し、一致するものがない場合は LibreTranslate サーバーに機械翻訳を要求します</value></data>
   <data name="LyricsPageTranslationEnabled.Header" xml:space="preserve"><value>翻訳を有効にする</value></data>
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve"><value>翻訳プロバイダー</value></data>
   <data name="LyricsPageTransliterationProviderPrefix.Header" xml:space="preserve"><value>翻字プロバイダー</value></data>
@@ -317,7 +318,7 @@
   <data name="LyricsSaveConfigIncludeTranslation.Header" xml:space="preserve"><value>翻訳を含める</value></data>
   <data name="LyricsSaveConfigIncludeTransliteration.Header" xml:space="preserve"><value>翻字を含める</value></data>
   <data name="LyricsSaveConfigInOneLine.Description" xml:space="preserve"><value>スラッシュで区切る</value></data>
-  <data name="LyricsSaveConfigInOneLine.Header" xml:space="preserve"><value>原文、翻訳、翻字を結合する。</value></data>
+  <data name="LyricsSaveConfigInOneLine.Header" xml:space="preserve"><value>原文、翻訳、翻字を結合する</value></data>
   <data name="LyricsSaveConfigInSyllablesFormat.Header" xml:space="preserve"><value>単語同期の歌詞として保存</value></data>
   <data name="LyricsSearchControlAlbum.Header" xml:space="preserve"><value>アルバム</value></data>
   <data name="LyricsSearchControlArtist.Header" xml:space="preserve"><value>アーティスト</value></data>
@@ -428,7 +429,7 @@
   <data name="MusicGalleryPageSelectedTrackDetail.Content" xml:space="preserve"><value>現在選択中のトラックの情報</value></data>
   <data name="MusicGalleryPageShufflePlay.Content" xml:space="preserve"><value>シャッフル</value></data>
   <data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve"><value>1 曲リピート</value></data>
-  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve"><value>タイトル、アーティスト、アルバム、ファイル名、またはフォルダー パスを検索。</value></data>
+  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve"><value>タイトル、アーティスト、アルバム、ファイル名、またはフォルダー パスを検索</value></data>
   <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve"><value>アルバム</value></data>
   <data name="MusicGalleryPageSortByArtist.Content" xml:space="preserve"><value>アーティスト</value></data>
   <data name="MusicGalleryPageSortByFolder.Content" xml:space="preserve"><value>フォルダー</value></data>
@@ -483,7 +484,7 @@
   <data name="SetingsPageDonation.Text" xml:space="preserve"><value>寄付</value></data>
   <data name="SetingsPageFeedback.Text" xml:space="preserve"><value>フィードバック</value></data>
   <data name="SetingsPageThanks.Text" xml:space="preserve"><value>このプロジェクトを気に入っていただけましたら、寄付による支援をご検討ください。皆さまの支援がプロジェクトの維持と今後の開発を支えます。</value></data>
-  <data name="SettingsPage3DLyrics.Header" xml:space="preserve"><value>[試験的] 奥行き効果</value></data>
+  <data name="SettingsPage3DLyrics.Header" xml:space="preserve"><value>奥行き効果（試験的）</value></data>
   <data name="SettingsPage3DLyricsDepth.Header" xml:space="preserve"><value>奥行き</value></data>
   <data name="SettingsPageAbout" xml:space="preserve"><value>バージョン情報</value></data>
   <data name="SettingsPageAdaptAlbumArtAccentColor.Header" xml:space="preserve"><value>アルバム アートのアクセント カラーに合わせる</value></data>
@@ -507,10 +508,10 @@
   <data name="SettingsPageWriteDebugLogs.Header" xml:space="preserve"><value>デバッグ ログを書き込む</value></data>
   <data name="SettingsPageWriteDebugLogs.Description" xml:space="preserve"><value>Debug レベル以上のログを含めます。トラブルシューティングが容易になりますが、ログ ファイルのサイズが増加します。アプリの再起動後に反映されます。</value></data>
   <data name="SettingsPageGcObjectCheck.Header" xml:space="preserve"><value>GC によって回収されていないオブジェクトを確認する</value></data>
-  <data name="SettingsPageGcObjectCheck.Description" xml:space="preserve"><value>ガベージ コレクションを実行し、まだ有効な追跡対象オブジェクトを一覧表示します。</value></data>
+  <data name="SettingsPageGcObjectCheck.Description" xml:space="preserve"><value>ガベージ コレクションを実行し、まだ有効な追跡対象オブジェクトを一覧表示します</value></data>
   <data name="SettingsPageGcObjectCheckButton.Content" xml:space="preserve"><value>確認</value></data>
   <data name="SettingsPageGcObjectsNone" xml:space="preserve"><value>ガベージ コレクション後に有効な追跡対象オブジェクトはありません</value></data>
-  <data name="SettingsPageGcObjectsFound" xml:space="preserve"><value>ガベージ コレクション後も有効な追跡対象オブジェクト:</value></data>
+  <data name="SettingsPageGcObjectsFound" xml:space="preserve"><value>ガベージ コレクション後も有効な追跡対象オブジェクト：</value></data>
   <data name="SettingsPageAppAppearance.Text" xml:space="preserve"><value>アプリの外観</value></data>
   <data name="SettingsPageArtist.Header" xml:space="preserve"><value>アーティスト</value></data>
   <data name="SettingsPageAuto.Content" xml:space="preserve"><value>自動</value></data>
@@ -524,7 +525,7 @@
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>歌詞の背景</value></data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve"><value>ぼかしの強さ</value></data>
   <data name="SettingsPageBottom.Content" xml:space="preserve"><value>下</value></data>
-  <data name="SettingsPageCache.Description" xml:space="preserve"><value>ログ ファイルとオンライン歌詞キャッシュが含まれます。</value></data>
+  <data name="SettingsPageCache.Description" xml:space="preserve"><value>ログ ファイルとオンライン歌詞キャッシュが含まれます</value></data>
   <data name="SettingsPageCache.Header" xml:space="preserve"><value>キャッシュ</value></data>
   <data name="SettingsPageCenter.Content" xml:space="preserve"><value>中央</value></data>
   <data name="SettingsPageCheckShortcut.Content" xml:space="preserve"><value>ショートカットを確認</value></data>
@@ -539,7 +540,7 @@
   <data name="SettingsPageClearCache.Content" xml:space="preserve"><value>キャッシュ ファイルをクリア</value></data>
   <data name="SettingsPageCloseStatus.Text" xml:space="preserve"><value>閉じる</value></data>
   <data name="SettingsPageColor.Header" xml:space="preserve"><value>色</value></data>
-  <data name="SettingsPageConfigName.Description" xml:space="preserve"><value>記録したウィンドウの状態に名前を付けると、区別しやすくなります。</value></data>
+  <data name="SettingsPageConfigName.Description" xml:space="preserve"><value>記録したウィンドウの状態に名前を付けると、区別しやすくなります</value></data>
   <data name="SettingsPageConfigName.Header" xml:space="preserve"><value>構成名</value></data>
   <data name="SettingsPageConfigPlaybackSource.Text" xml:space="preserve"><value>再生ソースを構成</value></data>
   <data name="SettingsPageCreateFromCurrent.Text" xml:space="preserve"><value>複製</value></data>
@@ -620,7 +621,7 @@
   <data name="SettingsPageLastFMUnAuth.Content" xml:space="preserve"><value>認証を取り消す</value></data>
   <data name="SettingsPageLastFMUsername.Header" xml:space="preserve"><value>ユーザー名</value></data>
   <data name="SettingsPageLayout.Text" xml:space="preserve"><value>レイアウト</value></data>
-  <data name="SettingsPageLayoutConfigShareHint.Text" xml:space="preserve"><value>注: レイアウト構成はグローバルに共有されます。1 つのレイアウトを異なるモードの歌詞ウィンドウに適用できます。変更または削除すると、このレイアウトを使用しているすべてのウィンドウに影響します。</value></data>
+  <data name="SettingsPageLayoutConfigShareHint.Text" xml:space="preserve"><value>注：レイアウト構成はグローバルに共有されます。1 つのレイアウトを異なるモードの歌詞ウィンドウに適用できます。変更または削除すると、このレイアウトを使用しているすべてのウィンドウに影響します。</value></data>
   <data name="SettingsPageLayoutOrientation.Header" xml:space="preserve"><value>レイアウトの方向</value></data>
   <data name="SettingsPageLayoutOrientationHorizontal.Content" xml:space="preserve"><value>水平</value></data>
   <data name="SettingsPageLayoutOrientationVertical.Content" xml:space="preserve"><value>垂直</value></data>
@@ -635,7 +636,7 @@
   <data name="SettingsPageLocalLyricsFilePattern.Header" xml:space="preserve"><value>歌詞ファイルの解析パターン</value></data>
   <data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve"><value>長い音節のしきい値</value></data>
   <data name="SettingsPageLXMusicServer.Header" xml:space="preserve"><value>LX Music サーバー</value></data>
-  <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve"><value>例: http://127.0.0.1:23330。</value></data>
+  <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve"><value>http://127.0.0.1:23330</value></data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve"><value>配置</value></data>
   <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve"><value>現在の行以外</value></data>
   <data name="SettingsPageLyricsBlack.Content" xml:space="preserve"><value>黒</value></data>
@@ -683,7 +684,7 @@
   <data name="SettingsPageLyricsSearchBestMatch.Content" xml:space="preserve"><value>ベスト マッチ</value></data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Text" xml:space="preserve"><value>歌詞のソースを構成</value></data>
   <data name="SettingsPageLyricsSearchSequential.Content" xml:space="preserve"><value>順次</value></data>
-  <data name="SettingsPageLyricsSearchType.Description" xml:space="preserve"><value>順次: 下の一覧の優先順位に従って検索し、最初に見つかった結果を返します。ベスト マッチ: 有効なすべてのソースを検索し、一致度が最も高い結果を自動的に選択します。</value></data>
+  <data name="SettingsPageLyricsSearchType.Description" xml:space="preserve"><value>順次：下の一覧の優先順位に従って検索し、最初に見つかった結果を返します。ベスト マッチ：有効なすべてのソースを検索し、一致度が最も高い結果を自動的に選択します。</value></data>
   <data name="SettingsPageLyricsSearchType.Header" xml:space="preserve"><value>歌詞検索の戦略</value></data>
   <data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve"><value>セミ太字</value></data>
   <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve"><value>セミ細字</value></data>
@@ -700,7 +701,7 @@
   <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve"><value>常に</value></data>
   <data name="SettingsPageLyricsWordByWordEffectModeAuto.Content" xml:space="preserve"><value>自動</value></data>
   <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve"><value>なし</value></data>
-  <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve"><value>この値を調整すると、順次検索とベスト マッチ検索の結果に影響しますが、歌詞の手動検索画面での検索結果には影響しません。</value></data>
+  <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve"><value>この値を調整すると、順次検索とベスト マッチ検索の結果に影響しますが、歌詞の手動検索画面での検索結果には影響しません</value></data>
   <data name="SettingsPageMatchingThreshold.Header" xml:space="preserve"><value>最小一致しきい値</value></data>
   <data name="SettingsPageMediaLib" xml:space="preserve"><value>メディア ライブラリ</value></data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve"><value>この再生ソースを監視する</value></data>
@@ -761,7 +762,7 @@
   <data name="SettingsPageShortcutRegFailInfo" xml:space="preserve"><value>ホットキーの登録に失敗しました</value></data>
   <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve"><value>ホットキーの登録に成功しました</value></data>
   <data name="SettingsPageShowHideHotKey.Header" xml:space="preserve"><value>歌詞ウィンドウの表示/非表示ショートカット</value></data>
-  <data name="SettingsPageShowInSwitchers.Description" xml:space="preserve"><value>例: Alt + Tab、タスク バー。</value></data>
+  <data name="SettingsPageShowInSwitchers.Description" xml:space="preserve"><value>例：Alt + Tab、タスク バー</value></data>
   <data name="SettingsPageShowInSwitchers.Header" xml:space="preserve"><value>システム環境に表示する</value></data>
   <data name="SettingsPageSize.Header" xml:space="preserve"><value>サイズ</value></data>
   <data name="SettingsPageSlide.Content" xml:space="preserve"><value>スライド</value></data>
@@ -886,7 +887,7 @@
   <data name="WallpaperEngineMissing" xml:space="preserve"><value>未インストール</value></data>
   <data name="WallpaperEngineNotInstalled" xml:space="preserve"><value>Wallpaper Engine が検出されませんでした。インストールされて実行中であることを確認してから、壁紙の一覧を更新してください。</value></data>
   <data name="WallpaperEngineNoActiveWallpaper" xml:space="preserve"><value>アクティブな Wallpaper Engine の壁紙が検出されませんでした</value></data>
-  <data name="WallpaperEngineCurrentWallpaper" xml:space="preserve"><value>現在の壁紙:</value></data>
+  <data name="WallpaperEngineCurrentWallpaper" xml:space="preserve"><value>現在の壁紙：</value></data>
   <data name="WindowSettingsControlCopyWallpaperName.Text" xml:space="preserve"><value>壁紙の名前をコピー</value></data>
   <data name="WindowSettingsControlCopyCurrentWallpaperName.Text" xml:space="preserve"><value>現在の壁紙の名前をコピー</value></data>
   <data name="WindowSettingsControlSpoutOutput.Header" xml:space="preserve"><value>Spout 出力</value></data>
@@ -943,7 +944,7 @@
   <data name="StoryPageSummaryTopSong.Text" xml:space="preserve"><value>トップ ソング</value></data>
   <data name="StoryPageSummaryExitHint.Text" xml:space="preserve"><value>右側の空白部分をクリックすると終了します</value></data>
   <data name="StatsDashboardControlMemoirTitle.Text" xml:space="preserve"><value>音楽の回想録</value></data>
-  <data name="StatsDashboardControlMemoirDesc.Text" xml:space="preserve"><value>音楽の歩みを振り返り、パーソナライズされたリスニング レポートを生成します。</value></data>
+  <data name="StatsDashboardControlMemoirDesc.Text" xml:space="preserve"><value>音楽の歩みを振り返り、パーソナライズされたリスニング レポートを生成します</value></data>
   <data name="StatsDashboardControlMemoirPlay.Text" xml:space="preserve"><value>今すぐ再生</value></data>
   <data name="StatsDashboardControlStartText.Text" xml:space="preserve"><value>開始</value></data>
   <data name="StatsDashboardControlEndText.Text" xml:space="preserve"><value>終了</value></data>
@@ -995,20 +996,20 @@
   <data name="FileNamePatternControlHelpArtist.Text" xml:space="preserve"><value>アーティストの名前</value></data>
   <data name="FileNamePatternControlHelpTitleDesc.Text" xml:space="preserve"><value>曲のタイトル</value></data>
   <data name="FileNamePatternControlHelpAlbum.Text" xml:space="preserve"><value>アルバムの名前</value></data>
-  <data name="FileNamePatternControlHelpTip.Text" xml:space="preserve"><value>ヒント: {BPM} などの他の語をプレースホルダーとして使用し、ファイル名の一部を無視することもできます。</value></data>
-  <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve"><value>プレビュー例:</value></data>
+  <data name="FileNamePatternControlHelpTip.Text" xml:space="preserve"><value>ヒント：{BPM} などの他の語をプレースホルダーとして使用し、ファイル名の一部を無視することもできます</value></data>
+  <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve"><value>プレビュー例：</value></data>
   <data name="FileNamePatternControlNoPatternProvided" xml:space="preserve"><value>パターンが指定されていません</value></data>
   <data name="SettingsPageRestartRequiredInfoBar.Title" xml:space="preserve"><value>再起動が必要です</value></data>
   <data name="SettingsPageRestartRequiredInfoBar.Message" xml:space="preserve"><value>一部の設定が変更されました。反映するにはアプリを再起動する必要があります。</value></data>
   <data name="SettingsPageFileNamePatternChangeHintInfoBar.Message" xml:space="preserve"><value>解析パターンを変更した後は、下の「今すぐ同期」を手動でクリックして新しい規則を適用してください。</value></data>
-  <data name="SettingsPageLocalMusicFilePattern.Description" xml:space="preserve"><value>組み込みのタグがない場合に、ファイル名から曲情報を抽出する方法を指定します（例: {Artist} - {Title}）。空欄のままにすると既定の方法が使用されます。</value></data>
-  <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve"><value>ローカルの歌詞ファイルの命名規則を指定して、正確に関連付けます（例: {Artist} - {Title}）。空欄のままにすると既定の照合方法が使用されます。</value></data>
+  <data name="SettingsPageLocalMusicFilePattern.Description" xml:space="preserve"><value>組み込みのタグがない場合に、ファイル名から曲情報を抽出する方法を指定します（例：{Artist} - {Title}）。空欄のままにすると既定の方法が使用されます。</value></data>
+  <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve"><value>ローカルの歌詞ファイルの命名規則を指定して、正確に関連付けます（例：{Artist} - {Title}）。空欄のままにすると既定の照合方法が使用されます。</value></data>
   <data name="NowPlayingToastTitle" xml:space="preserve"><value>再生中のトースト通知</value></data>
   <data name="SettingsPageShowNowPlayingNotification.Header" xml:space="preserve"><value>再生中のポップアップを表示する</value></data>
-  <data name="SettingsPageShowNowPlayingNotification.Description" xml:space="preserve"><value>曲が切り替わったときに、画面の隅に簡単なポップアップ通知を表示します。</value></data>
+  <data name="SettingsPageShowNowPlayingNotification.Description" xml:space="preserve"><value>曲が切り替わったときに、画面の隅に簡単なポップアップ通知を表示します</value></data>
   <data name="SettingsPageNowPlayingNotificationCorner.Header" xml:space="preserve"><value>ポップアップの位置</value></data>
   <data name="SettingsPageNowPlayingNotificationAllMonitors.Header" xml:space="preserve"><value>すべてのディスプレイに表示する</value></data>
-  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve"><value>オフにすると、ポップアップはプライマリ ディスプレイにのみ表示されます。</value></data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve"><value>オフにすると、ポップアップはプライマリ ディスプレイにのみ表示されます</value></data>
   <data name="NowPlayingNotificationCornerTopLeft.Content" xml:space="preserve"><value>左上</value></data>
   <data name="NowPlayingNotificationCornerTopRight.Content" xml:space="preserve"><value>右上</value></data>
   <data name="NowPlayingNotificationCornerBottomLeft.Content" xml:space="preserve"><value>左下</value></data>
@@ -1040,7 +1041,7 @@
   <data name="SettingsPagePaletteLightToneThreshold.Header" xml:space="preserve"><value>明るい色調のしきい値</value></data>
   <data name="SettingsPagePaletteChromaWeight.Description" xml:space="preserve"><value>パレットを抽出する際の鮮やかな色の優先度を調整します</value></data>
   <data name="SettingsPagePaletteToneWeight.Description" xml:space="preserve"><value>パレットを抽出する際の明るい色調と暗い色調の優先度を調整します</value></data>
-  <data name="SettingsPagePalettePopulationWeight.Description" xml:space="preserve"><value>パレットを抽出する際の、画像内で広い面積を占める色の優先度を調整します。</value></data>
+  <data name="SettingsPagePalettePopulationWeight.Description" xml:space="preserve"><value>パレットを抽出する際の、画像内で広い面積を占める色の優先度を調整します</value></data>
   <data name="SettingsPagePaletteDarkToneThreshold.Description" xml:space="preserve"><value>ダーク モードで色を絞り込む際の明度の上限しきい値</value></data>
   <data name="SettingsPagePaletteLightToneThreshold.Description" xml:space="preserve"><value>ライト モードで色を絞り込む際の明度の下限しきい値</value></data>
   <data name="SettingsPageEasingTypeAppleMusicSpring.Content" xml:space="preserve"><value>Apple Music 風</value></data>
@@ -1051,7 +1052,7 @@
   <data name="SettingsPageMonitorLayout.Header" xml:space="preserve"><value>現在のディスプレイ配置</value></data>
   <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve"><value>システムのディスプレイ設定を開く</value></data>
   <data name="SettingsPageSemanticEffects.Header" xml:space="preserve"><value>セマンティック歌詞効果</value></data>
-  <data name="SettingsPageSemanticEffects.Description" xml:space="preserve"><value>歌詞に特定のキーワードが現れたときにパーティクル（ハート、雨、雪など）を生成します。</value></data>
+  <data name="SettingsPageSemanticEffects.Description" xml:space="preserve"><value>歌詞に特定のキーワードが現れたときにパーティクル（ハート、雨、雪など）を生成します</value></data>
   <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve"><value>ディープ リンクをコピー</value></data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve"><value>モードに一致するディスプレイが見つかりません</value></data>
   <data name="SettingsPageListenBrainzTrack.Header" xml:space="preserve"><value>ListenBrainz で再生履歴を記録する</value></data>
@@ -1067,7 +1068,7 @@
   <data name="MediaFieldCorrectionAddCustom.Content" xml:space="preserve"><value>新しい規則</value></data>
   <data name="MediaFieldCorrectionMore.Content" xml:space="preserve"><value>その他</value></data>
   <data name="MediaFieldCorrectionEmpty.Header" xml:space="preserve"><value>規則はまだありません</value></data>
-  <data name="MediaFieldCorrectionEmpty.Description" xml:space="preserve"><value>例を挿入して構文を確認するか、テンプレートを自分で記述してください。</value></data>
+  <data name="MediaFieldCorrectionEmpty.Description" xml:space="preserve"><value>例を挿入して構文を確認するか、テンプレートを自分で記述してください</value></data>
   <data name="MediaFieldPreviewHeaderCurrent" xml:space="preserve"><value>現在の曲の結果</value></data>
   <data name="MediaFieldPreviewHeaderSample" xml:space="preserve"><value>結果の例（再生中ではありません）</value></data>
   <data name="MediaFieldPreviewNoChange" xml:space="preserve"><value>変更されたフィールドはありません。規則がこのテキストに一致しません。</value></data>
@@ -1084,9 +1085,9 @@
   <data name="MediaFieldRuleDialogAddTitle" xml:space="preserve"><value>新しい規則</value></data>
   <data name="MediaFieldRuleDialogEditTitle" xml:space="preserve"><value>規則を編集</value></data>
   <data name="MediaFieldRuleKind.Header" xml:space="preserve"><value>モード</value></data>
-  <data name="MediaFieldRuleKindTemplate.Content" xml:space="preserve"><value>テンプレート — {field} プレースホルダー</value></data>
-  <data name="MediaFieldRuleKindRegexExtract.Content" xml:space="preserve"><value>正規表現 — 名前付きグループ</value></data>
-  <data name="MediaFieldRuleKindRegexReplace.Content" xml:space="preserve"><value>正規表現 — 置換</value></data>
+  <data name="MediaFieldRuleKindTemplate.Content" xml:space="preserve"><value>テンプレート：{field} プレースホルダー</value></data>
+  <data name="MediaFieldRuleKindRegexExtract.Content" xml:space="preserve"><value>正規表現：名前付きグループ</value></data>
+  <data name="MediaFieldRuleKindRegexReplace.Content" xml:space="preserve"><value>正規表現：置換</value></data>
   <data name="MediaFieldRuleSource.Header" xml:space="preserve"><value>フィールド</value></data>
   <data name="MediaFieldRulePattern.Header" xml:space="preserve"><value>パターン</value></data>
   <data name="MediaFieldRuleReplacement.Header" xml:space="preserve"><value>置換後の文字列</value></data>
@@ -1096,9 +1097,9 @@
   <data name="MediaFieldTitle.Content" xml:space="preserve"><value>タイトル</value></data>
   <data name="MediaFieldArtist.Content" xml:space="preserve"><value>アーティスト</value></data>
   <data name="MediaFieldAlbum.Content" xml:space="preserve"><value>アルバム</value></data>
-  <data name="MediaFieldRuleSummaryTemplate" xml:space="preserve"><value>「{0}」内のテンプレート「{1}」に一致。</value></data>
-  <data name="MediaFieldRuleSummaryRegexExtract" xml:space="preserve"><value>「{0}」から正規表現「{1}」で抽出。</value></data>
-  <data name="MediaFieldRuleSummaryRegexReplace" xml:space="preserve"><value>「{0}」内の「{1}」を「{2}」に置換。</value></data>
+  <data name="MediaFieldRuleSummaryTemplate" xml:space="preserve"><value>「{0}」内のテンプレート「{1}」に一致</value></data>
+  <data name="MediaFieldRuleSummaryRegexExtract" xml:space="preserve"><value>「{0}」から正規表現「{1}」で抽出</value></data>
+  <data name="MediaFieldRuleSummaryRegexReplace" xml:space="preserve"><value>「{0}」内の「{1}」を「{2}」に置換</value></data>
   <data name="MediaFieldRuleHintTemplate" xml:space="preserve"><value>{title}、{artist}、{album} はそれぞれのフィールドに書き戻されます。その他の {name} は破棄されます。* は残りの部分に一致します。</value></data>
   <data name="MediaFieldRuleHintRegexExtract" xml:space="preserve"><value>名前付きグループ (?&lt;title&gt;…)、(?&lt;artist&gt;…)、(?&lt;album&gt;…) はそれぞれのフィールドに書き戻されます。フィールドのグループがない場合は、一致部分がフィールドを置き換えます。</value></data>
   <data name="MediaFieldRuleHintRegexReplace" xml:space="preserve"><value>フィールド全体が書き換えられます。$1 と ${name} を使用できます。置換後の文字列が空の場合は一致部分が削除されます。</value></data>
@@ -1106,15 +1107,15 @@
   <data name="MediaFieldPreviewSampleTitle" xml:space="preserve"><value>サンプル曲（ライブ）</value></data>
   <data name="MediaFieldPreviewSampleArtist" xml:space="preserve"><value>サンプル アーティスト — サンプル アルバム - Single</value></data>
   <data name="MediaFieldPreviewSampleAlbum" xml:space="preserve"><value>サンプル アルバム - EP</value></data>
-  <data name="MediaFieldSnippetTitleArtistDescription" xml:space="preserve"><value>タイトルが「アーティスト - 曲名」の場合: 分割して両方のフィールドに入力します。</value></data>
+  <data name="MediaFieldSnippetTitleArtistDescription" xml:space="preserve"><value>タイトルが「アーティスト - 曲名」の場合：分割して両方のフィールドに入力します。</value></data>
   <data name="MediaFieldSnippetTitleArtistReversedDescription" xml:space="preserve"><value>タイトルが「曲名 - アーティスト」の場合。</value></data>
   <data name="MediaFieldSnippetArtistAlbumDescription" xml:space="preserve"><value>アーティスト フィールドにアルバムが含まれている場合（Apple Music）。</value></data>
   <data name="MediaFieldSnippetTrimDashSuffixDescription" xml:space="preserve"><value>タイトルの末尾にある「- 任意の文字列」を削除します。</value></data>
   <data name="MediaFieldSnippetRemoveBracketsDescription" xml:space="preserve"><value>括弧内のテキストとそれ以降をすべて削除します</value></data>
   <data name="MediaFieldSnippetRemoveFeatDescription" xml:space="preserve"><value>「feat.」とそれ以降を削除します。</value></data>
-  <data name="MediaFieldSnippetRegexExtractBracketDescription" xml:space="preserve"><value>正規表現: 最初の括弧より前の部分を保持します。</value></data>
-  <data name="MediaFieldSnippetRegexRemoveAlbumSuffixDescription" xml:space="preserve"><value>正規表現: アルバムから「- Single」/「- EP」を削除します。</value></data>
-  <data name="MediaFieldSnippetRegexCollapseSpacesDescription" xml:space="preserve"><value>正規表現: 連続する空白を 1 つにまとめます。</value></data>
-  <data name="MediaFieldSnippetRegexArtistSeparatorDescription" xml:space="preserve"><value>正規表現: 「A/B」を「A, B」に変換します。</value></data>
-  <data name="MediaFieldSnippetRegexTrackNumberDescription" xml:space="preserve"><value>正規表現: 先頭のトラック番号を削除します。</value></data>
+  <data name="MediaFieldSnippetRegexExtractBracketDescription" xml:space="preserve"><value>正規表現：最初の括弧より前の部分を保持します。</value></data>
+  <data name="MediaFieldSnippetRegexRemoveAlbumSuffixDescription" xml:space="preserve"><value>正規表現：アルバムから「- Single」/「- EP」を削除します。</value></data>
+  <data name="MediaFieldSnippetRegexCollapseSpacesDescription" xml:space="preserve"><value>正規表現：連続する空白を 1 つにまとめます。</value></data>
+  <data name="MediaFieldSnippetRegexArtistSeparatorDescription" xml:space="preserve"><value>正規表現：「A/B」を「A, B」に変換します。</value></data>
+  <data name="MediaFieldSnippetRegexTrackNumberDescription" xml:space="preserve"><value>正規表現：先頭のトラック番号を削除します。</value></data>
 </root>

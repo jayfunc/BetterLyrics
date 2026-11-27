@@ -125,7 +125,7 @@
   <data name="AboutControlUpToDate.Title" xml:space="preserve"><value>BetterLyrics पहले से अद्यतित है</value></data>
   <data name="ActionCompleted" xml:space="preserve"><value>कार्रवाई पूरी हुई</value></data>
   <data name="Add" xml:space="preserve"><value>जोड़ें</value></data>
-  <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Description" xml:space="preserve"><value>गाने की जानकारी अधिक लंबी होने पर, माउस होवर की स्थिति से स्वतंत्र रूप से उसे स्वतः स्क्रॉल करता है।</value></data>
+  <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Description" xml:space="preserve"><value>गाने की जानकारी अधिक लंबी होने पर, माउस होवर की स्थिति से स्वतंत्र रूप से उसे स्वतः स्क्रॉल करता है</value></data>
   <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Header" xml:space="preserve"><value>गाने की जानकारी स्वतः स्क्रॉल करें</value></data>
   <data name="AlbumArtAreaSettingsControlEndPoint.Header" xml:space="preserve"><value>अंतिम बिंदु</value></data>
   <data name="AlbumArtAreaSettingsControlFadeOut.Header" xml:space="preserve"><value>फ़ेड आउट</value></data>
@@ -254,7 +254,7 @@
   <data name="LayoutEditorControlNoSelection" xml:space="preserve"><value>जारी रखने के लिए पूर्वावलोकन या बाईं सूची में कोई घटक चुनें</value></data>
   <data name="LayoutEditorControlPendingComponentsDescriptionTextBlock.Text" xml:space="preserve"><value>घटकों को रखने के लिए उन्हें दाईं ओर के ग्रिड में खींचें। रखे जाने के बाद घटकों को ग्रिड के भीतर स्वतंत्र रूप से स्थानांतरित किया जा सकता है।</value></data>
   <data name="LayoutEditorControlPendingComponentsTextBlock.Text" xml:space="preserve"><value>रखे जाने वाले घटक</value></data>
-  <data name="LayoutEditorControlPlacedComponentsDescriptionTextBlock.Text" xml:space="preserve"><value>यदि कोई घटक दाईं ओर दिखाई न दे या क्लिक न हो सके, तो उसे यहाँ चुनें।</value></data>
+  <data name="LayoutEditorControlPlacedComponentsDescriptionTextBlock.Text" xml:space="preserve"><value>यदि कोई घटक दाईं ओर दिखाई न दे या क्लिक न हो सके, तो उसे यहाँ चुनें</value></data>
   <data name="LayoutEditorControlPlacedComponentsTextBlock.Text" xml:space="preserve"><value>रखे गए घटक</value></data>
   <data name="LayoutEditorControlPxDescription.Text" xml:space="preserve"><value>निर्दिष्ट पूर्ण पिक्सेल चौड़ाई/ऊँचाई पर स्थिर रहता है</value></data>
   <data name="LayoutEditorControlRemoveButton.Content" xml:space="preserve"><value>घटक हटाएँ</value></data>
@@ -290,7 +290,8 @@
   <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve"><value>बाएँ बोल, दाएँ एल्बम कवर (संक्षिप्त)</value></data>
   <data name="LeftLyricsRightAlbumArtLayout" xml:space="preserve"><value>बाएँ बोल, दाएँ एल्बम कवर</value></data>
   <data name="LibreTranslateFailed" xml:space="preserve"><value>LibreTranslate से अनुवाद का अनुरोध विफल रहा। कृपया सेटिंग्स या स्थानीय LibreTranslate कॉन्फ़िगरेशन जाँचें।</value></data>
-  <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve"><value>उदाहरण: http://localhost:5000।</value></data>
+  <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve"><value>http://localhost:5000</value></data>
+  <data name="ListSeparator" xml:space="preserve"><value>, </value></data>
   <data name="Loading" xml:space="preserve"><value>लोड हो रहा है...</value></data>
   <data name="LyricsCardOnlyLayout" xml:space="preserve"><value>केवल बोल कार्ड वाला लेआउट</value></data>
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve"><value>अवधि</value></data>
@@ -307,7 +308,7 @@
   <data name="LyricsPageMatchPercentage.Header" xml:space="preserve"><value>मिलान प्रतिशत</value></data>
   <data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve"><value>गाना बदलने पर 0 पर रीसेट होता है</value></data>
   <data name="LyricsPageSettings.Text" xml:space="preserve"><value>सेटिंग्स</value></data>
-  <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve"><value>बोल में शामिल अनुवादों को प्राथमिकता देता है; यदि कोई मिलान न मिले, तो LibreTranslate सर्वर से मशीन अनुवाद का अनुरोध करता है।</value></data>
+  <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve"><value>बोल में शामिल अनुवादों को प्राथमिकता देता है; यदि कोई मिलान न मिले, तो LibreTranslate सर्वर से मशीन अनुवाद का अनुरोध करता है</value></data>
   <data name="LyricsPageTranslationEnabled.Header" xml:space="preserve"><value>अनुवाद सक्षम करें</value></data>
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve"><value>अनुवाद स्रोत</value></data>
   <data name="LyricsPageTransliterationProviderPrefix.Header" xml:space="preserve"><value>लिप्यंतरण स्रोत</value></data>
@@ -317,7 +318,7 @@
   <data name="LyricsSaveConfigIncludeTranslation.Header" xml:space="preserve"><value>अनुवाद शामिल करें</value></data>
   <data name="LyricsSaveConfigIncludeTransliteration.Header" xml:space="preserve"><value>लिप्यंतरण शामिल करें</value></data>
   <data name="LyricsSaveConfigInOneLine.Description" xml:space="preserve"><value>स्लैश से अलग किए गए</value></data>
-  <data name="LyricsSaveConfigInOneLine.Header" xml:space="preserve"><value>मूल, अनुवाद और लिप्यंतरण को संयोजित करें।</value></data>
+  <data name="LyricsSaveConfigInOneLine.Header" xml:space="preserve"><value>मूल, अनुवाद और लिप्यंतरण को संयोजित करें</value></data>
   <data name="LyricsSaveConfigInSyllablesFormat.Header" xml:space="preserve"><value>शब्द-समकालिक बोल के रूप में सहेजें</value></data>
   <data name="LyricsSearchControlAlbum.Header" xml:space="preserve"><value>एल्बम</value></data>
   <data name="LyricsSearchControlArtist.Header" xml:space="preserve"><value>कलाकार</value></data>
@@ -428,7 +429,7 @@
   <data name="MusicGalleryPageSelectedTrackDetail.Content" xml:space="preserve"><value>चयनित ट्रैक की जानकारी</value></data>
   <data name="MusicGalleryPageShufflePlay.Content" xml:space="preserve"><value>शफ़ल</value></data>
   <data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve"><value>एक ट्रैक दोहराएँ</value></data>
-  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve"><value>शीर्षक, कलाकार, एल्बम, फ़ाइल नाम या फ़ोल्डर पथ खोजें।</value></data>
+  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve"><value>शीर्षक, कलाकार, एल्बम, फ़ाइल नाम या फ़ोल्डर पथ खोजें</value></data>
   <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve"><value>एल्बम</value></data>
   <data name="MusicGalleryPageSortByArtist.Content" xml:space="preserve"><value>कलाकार</value></data>
   <data name="MusicGalleryPageSortByFolder.Content" xml:space="preserve"><value>फ़ोल्डर</value></data>
@@ -524,12 +525,12 @@
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>बोल की पृष्ठभूमि</value></data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve"><value>धुंधलापन मात्रा</value></data>
   <data name="SettingsPageBottom.Content" xml:space="preserve"><value>नीचे</value></data>
-  <data name="SettingsPageCache.Description" xml:space="preserve"><value>लॉग फ़ाइलें और ऑनलाइन बोल कैश शामिल हैं।</value></data>
+  <data name="SettingsPageCache.Description" xml:space="preserve"><value>लॉग फ़ाइलें और ऑनलाइन बोल कैश शामिल हैं</value></data>
   <data name="SettingsPageCache.Header" xml:space="preserve"><value>कैश</value></data>
   <data name="SettingsPageCenter.Content" xml:space="preserve"><value>केंद्र</value></data>
   <data name="SettingsPageCheckShortcut.Content" xml:space="preserve"><value>शॉर्टकट जाँचें</value></data>
   <data name="SettingsPageChinese.Header" xml:space="preserve"><value>चीनी लिप्यंतरण</value></data>
-  <data name="SettingsPageChinesePreference.Description" xml:space="preserve"><value>"अनिर्दिष्ट" चुनने पर मूल बोल सुरक्षित रहेंगे; "सरलीकृत चीनी" या "पारंपरिक चीनी" चुनने पर मूल बोल पर मशीन रूपांतरण किया जाएगा।</value></data>
+  <data name="SettingsPageChinesePreference.Description" xml:space="preserve"><value>"अनिर्दिष्ट" चुनने पर मूल बोल सुरक्षित रहेंगे; "सरलीकृत चीनी" या "पारंपरिक चीनी" चुनने पर मूल बोल पर मशीन रूपांतरण किया जाएगा</value></data>
   <data name="SettingsPageChinesePreference.Header" xml:space="preserve"><value>चीनी प्राथमिकता</value></data>
   <data name="SettingsPageChinesePreferenceSToT.Content" xml:space="preserve"><value>पारंपरिक चीनी</value></data>
   <data name="SettingsPageChinesePreferenceTToS.Content" xml:space="preserve"><value>सरलीकृत चीनी</value></data>
@@ -635,7 +636,7 @@
   <data name="SettingsPageLocalLyricsFilePattern.Header" xml:space="preserve"><value>बोल फ़ाइल विश्लेषण पैटर्न</value></data>
   <data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve"><value>दीर्घ अक्षर की सीमा</value></data>
   <data name="SettingsPageLXMusicServer.Header" xml:space="preserve"><value>LX Music सर्वर</value></data>
-  <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve"><value>उदाहरण: http://127.0.0.1:23330।</value></data>
+  <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve"><value>http://127.0.0.1:23330</value></data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve"><value>संरेखण</value></data>
   <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve"><value>वर्तमान के अतिरिक्त पंक्ति</value></data>
   <data name="SettingsPageLyricsBlack.Content" xml:space="preserve"><value>काला</value></data>
@@ -683,14 +684,14 @@
   <data name="SettingsPageLyricsSearchBestMatch.Content" xml:space="preserve"><value>सर्वोत्तम मिलान</value></data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Text" xml:space="preserve"><value>बोल स्रोत कॉन्फ़िगर करें</value></data>
   <data name="SettingsPageLyricsSearchSequential.Content" xml:space="preserve"><value>अनुक्रमिक</value></data>
-  <data name="SettingsPageLyricsSearchType.Description" xml:space="preserve"><value>अनुक्रमिक: नीचे दी गई सूची में प्राथमिकता के क्रम में खोजता है और पहला मिला परिणाम लौटाता है; सर्वोत्तम मिलान: सभी सक्षम स्रोतों में खोजता है और सर्वाधिक मिलान स्कोर वाला परिणाम स्वतः चुनता है।</value></data>
+  <data name="SettingsPageLyricsSearchType.Description" xml:space="preserve"><value>अनुक्रमिक: नीचे दी गई सूची में प्राथमिकता के क्रम में खोजता है और पहला मिला परिणाम लौटाता है; सर्वोत्तम मिलान: सभी सक्षम स्रोतों में खोजता है और सर्वाधिक मिलान स्कोर वाला परिणाम स्वतः चुनता है</value></data>
   <data name="SettingsPageLyricsSearchType.Header" xml:space="preserve"><value>बोल खोज रणनीति</value></data>
   <data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve"><value>सेमी बोल्ड</value></data>
   <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve"><value>सेमी पतला</value></data>
   <data name="SettingsPageLyricsStyle.Text" xml:space="preserve"><value>बोल शैली</value></data>
   <data name="SettingsPageLyricsThin.Content" xml:space="preserve"><value>अति पतला</value></data>
   <data name="SettingsPageLyricsTimeline.Header" xml:space="preserve"><value>बोल टाइमलाइन सिंक</value></data>
-  <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve"><value>यदि बोल की प्रगति में कंपन हो, तो इस सीमा को बढ़ाने का प्रयास करें; इस मान को बदलने से बोल सिंक में विचलन हो सकता है।</value></data>
+  <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve"><value>यदि बोल की प्रगति में कंपन हो, तो इस सीमा को बढ़ाने का प्रयास करें; इस मान को बदलने से बोल सिंक में विचलन हो सकता है</value></data>
   <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve"><value>बोल टाइमलाइन सिंक सीमा</value></data>
   <data name="SettingsPageLyricsUnplayedFgFontColor.Header" xml:space="preserve"><value>वर्तमान पंक्ति (नहीं चलाई गई)</value></data>
   <data name="SettingsPageLyricsWindow.Text" xml:space="preserve"><value>बोल विंडो</value></data>
@@ -700,7 +701,7 @@
   <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve"><value>सदैव</value></data>
   <data name="SettingsPageLyricsWordByWordEffectModeAuto.Content" xml:space="preserve"><value>स्वतः</value></data>
   <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve"><value>कभी नहीं</value></data>
-  <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve"><value>इस मान को समायोजित करने से अनुक्रमिक खोज और सर्वोत्तम मिलान खोज के परिणाम प्रभावित होंगे, लेकिन मैन्युअल बोल खोज इंटरफ़ेस के परिणाम प्रभावित नहीं होंगे।</value></data>
+  <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve"><value>इस मान को समायोजित करने से अनुक्रमिक खोज और सर्वोत्तम मिलान खोज के परिणाम प्रभावित होंगे, लेकिन मैन्युअल बोल खोज इंटरफ़ेस के परिणाम प्रभावित नहीं होंगे</value></data>
   <data name="SettingsPageMatchingThreshold.Header" xml:space="preserve"><value>न्यूनतम मिलान सीमा</value></data>
   <data name="SettingsPageMediaLib" xml:space="preserve"><value>मीडिया लाइब्रेरी</value></data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve"><value>इस प्लेबैक स्रोत को सुनें</value></data>
@@ -761,7 +762,7 @@
   <data name="SettingsPageShortcutRegFailInfo" xml:space="preserve"><value>हॉटकी पंजीकरण विफल</value></data>
   <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve"><value>हॉटकी पंजीकरण सफल</value></data>
   <data name="SettingsPageShowHideHotKey.Header" xml:space="preserve"><value>बोल विंडो दिखाने/छिपाने का शॉर्टकट</value></data>
-  <data name="SettingsPageShowInSwitchers.Description" xml:space="preserve"><value>उदाहरण: Alt + Tab, टास्कबार।</value></data>
+  <data name="SettingsPageShowInSwitchers.Description" xml:space="preserve"><value>उदाहरण: Alt + Tab, टास्कबार</value></data>
   <data name="SettingsPageShowInSwitchers.Header" xml:space="preserve"><value>सिस्टम वातावरण में दिखाएँ</value></data>
   <data name="SettingsPageSize.Header" xml:space="preserve"><value>आकार</value></data>
   <data name="SettingsPageSlide.Content" xml:space="preserve"><value>स्लाइड</value></data>
@@ -807,7 +808,7 @@
   <data name="SettingsPageWallpaperMode.Text" xml:space="preserve"><value>वॉलपेपर मोड</value></data>
   <data name="SettingsPageWesternChar.Header" xml:space="preserve"><value>लैटिन वर्ण</value></data>
   <data name="SettingsPageWidth.Header" xml:space="preserve"><value>चौड़ाई</value></data>
-  <data name="SettingsPageWorkArea.Description" xml:space="preserve"><value>एप्लिकेशन डेस्कटॉप टूलबार, जो स्क्रीन के ऊपरी या निचले किनारे पर डॉक होता है।</value></data>
+  <data name="SettingsPageWorkArea.Description" xml:space="preserve"><value>एप्लिकेशन डेस्कटॉप टूलबार, जो स्क्रीन के ऊपरी या निचले किनारे पर डॉक होता है</value></data>
   <data name="SettingsPageWorkArea.Header" xml:space="preserve"><value>ऐपबार</value></data>
   <data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve"><value>ऐपबार की ऊँचाई</value></data>
   <data name="SetTo1Star" xml:space="preserve"><value>1 स्टार पर सेट करें</value></data>
@@ -995,7 +996,7 @@
   <data name="FileNamePatternControlHelpArtist.Text" xml:space="preserve"><value>कलाकार का नाम</value></data>
   <data name="FileNamePatternControlHelpTitleDesc.Text" xml:space="preserve"><value>गाने का शीर्षक</value></data>
   <data name="FileNamePatternControlHelpAlbum.Text" xml:space="preserve"><value>एल्बम का नाम</value></data>
-  <data name="FileNamePatternControlHelpTip.Text" xml:space="preserve"><value>सुझाव: फ़ाइल नाम के कुछ भागों को अनदेखा करने के लिए आप {BPM} जैसे अन्य शब्दों को प्लेसहोल्डर के रूप में भी उपयोग कर सकते हैं।</value></data>
+  <data name="FileNamePatternControlHelpTip.Text" xml:space="preserve"><value>सुझाव: फ़ाइल नाम के कुछ भागों को अनदेखा करने के लिए आप {BPM} जैसे अन्य शब्दों को प्लेसहोल्डर के रूप में भी उपयोग कर सकते हैं</value></data>
   <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve"><value>उदाहरण पूर्वावलोकन:</value></data>
   <data name="FileNamePatternControlNoPatternProvided" xml:space="preserve"><value>कोई पैटर्न प्रदान नहीं किया गया</value></data>
   <data name="SettingsPageRestartRequiredInfoBar.Title" xml:space="preserve"><value>पुनः आरंभ आवश्यक</value></data>
@@ -1008,7 +1009,7 @@
   <data name="SettingsPageShowNowPlayingNotification.Description" xml:space="preserve"><value>गाना बदलने पर स्क्रीन के कोने में संक्षिप्त पॉपअप सूचना दिखाता है</value></data>
   <data name="SettingsPageNowPlayingNotificationCorner.Header" xml:space="preserve"><value>पॉपअप स्थिति</value></data>
   <data name="SettingsPageNowPlayingNotificationAllMonitors.Header" xml:space="preserve"><value>सभी डिस्प्ले पर दिखाएँ</value></data>
-  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve"><value>अक्षम करने पर पॉपअप केवल प्राथमिक डिस्प्ले पर दिखाई देगा।</value></data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve"><value>अक्षम करने पर पॉपअप केवल प्राथमिक डिस्प्ले पर दिखाई देगा</value></data>
   <data name="NowPlayingNotificationCornerTopLeft.Content" xml:space="preserve"><value>ऊपर बाएँ</value></data>
   <data name="NowPlayingNotificationCornerTopRight.Content" xml:space="preserve"><value>ऊपर दाएँ</value></data>
   <data name="NowPlayingNotificationCornerBottomLeft.Content" xml:space="preserve"><value>नीचे बाएँ</value></data>
@@ -1051,7 +1052,7 @@
   <data name="SettingsPageMonitorLayout.Header" xml:space="preserve"><value>वर्तमान डिस्प्ले लेआउट</value></data>
   <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve"><value>सिस्टम डिस्प्ले सेटिंग्स खोलें</value></data>
   <data name="SettingsPageSemanticEffects.Header" xml:space="preserve"><value>अर्थपूर्ण बोल प्रभाव</value></data>
-  <data name="SettingsPageSemanticEffects.Description" xml:space="preserve"><value>बोल में विशिष्ट कीवर्ड आने पर कण (जैसे दिल, वर्षा, हिम) उत्पन्न करता है।</value></data>
+  <data name="SettingsPageSemanticEffects.Description" xml:space="preserve"><value>बोल में विशिष्ट कीवर्ड आने पर कण (जैसे दिल, वर्षा, हिम) उत्पन्न करता है</value></data>
   <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve"><value>डीप लिंक कॉपी करें</value></data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve"><value>मोड से मेल खाता कोई डिस्प्ले नहीं मिला</value></data>
   <data name="SettingsPageListenBrainzTrack.Header" xml:space="preserve"><value>ListenBrainz के माध्यम से सुनने का इतिहास ट्रैक करें</value></data>
@@ -1067,7 +1068,7 @@
   <data name="MediaFieldCorrectionAddCustom.Content" xml:space="preserve"><value>नया नियम</value></data>
   <data name="MediaFieldCorrectionMore.Content" xml:space="preserve"><value>अधिक</value></data>
   <data name="MediaFieldCorrectionEmpty.Header" xml:space="preserve"><value>अभी कोई नियम नहीं है</value></data>
-  <data name="MediaFieldCorrectionEmpty.Description" xml:space="preserve"><value>सिंटैक्स देखने के लिए कोई उदाहरण डालें, या स्वयं टेम्पलेट लिखें।</value></data>
+  <data name="MediaFieldCorrectionEmpty.Description" xml:space="preserve"><value>सिंटैक्स देखने के लिए कोई उदाहरण डालें, या स्वयं टेम्पलेट लिखें</value></data>
   <data name="MediaFieldPreviewHeaderCurrent" xml:space="preserve"><value>वर्तमान गाने के लिए परिणाम</value></data>
   <data name="MediaFieldPreviewHeaderSample" xml:space="preserve"><value>नमूना परिणाम (कुछ भी नहीं चल रहा है)</value></data>
   <data name="MediaFieldPreviewNoChange" xml:space="preserve"><value>कोई फ़ील्ड नहीं बदला — नियम इस पाठ से मेल नहीं खाते।</value></data>
@@ -1084,9 +1085,9 @@
   <data name="MediaFieldRuleDialogAddTitle" xml:space="preserve"><value>नया नियम</value></data>
   <data name="MediaFieldRuleDialogEditTitle" xml:space="preserve"><value>नियम संपादित करें</value></data>
   <data name="MediaFieldRuleKind.Header" xml:space="preserve"><value>मोड</value></data>
-  <data name="MediaFieldRuleKindTemplate.Content" xml:space="preserve"><value>टेम्पलेट — {field} प्लेसहोल्डर</value></data>
-  <data name="MediaFieldRuleKindRegexExtract.Content" xml:space="preserve"><value>रेगुलर एक्सप्रेशन — नामित समूह</value></data>
-  <data name="MediaFieldRuleKindRegexReplace.Content" xml:space="preserve"><value>रेगुलर एक्सप्रेशन — प्रतिस्थापन</value></data>
+  <data name="MediaFieldRuleKindTemplate.Content" xml:space="preserve"><value>टेम्पलेट: {field} प्लेसहोल्डर</value></data>
+  <data name="MediaFieldRuleKindRegexExtract.Content" xml:space="preserve"><value>रेगुलर एक्सप्रेशन: नामित समूह</value></data>
+  <data name="MediaFieldRuleKindRegexReplace.Content" xml:space="preserve"><value>रेगुलर एक्सप्रेशन: प्रतिस्थापन</value></data>
   <data name="MediaFieldRuleSource.Header" xml:space="preserve"><value>फ़ील्ड</value></data>
   <data name="MediaFieldRulePattern.Header" xml:space="preserve"><value>पैटर्न</value></data>
   <data name="MediaFieldRuleReplacement.Header" xml:space="preserve"><value>इसके साथ बदलें</value></data>
@@ -1096,9 +1097,9 @@
   <data name="MediaFieldTitle.Content" xml:space="preserve"><value>शीर्षक</value></data>
   <data name="MediaFieldArtist.Content" xml:space="preserve"><value>कलाकार</value></data>
   <data name="MediaFieldAlbum.Content" xml:space="preserve"><value>एल्बम</value></data>
-  <data name="MediaFieldRuleSummaryTemplate" xml:space="preserve"><value>"{0}" में टेम्पलेट "{1}" का मिलान करें।</value></data>
-  <data name="MediaFieldRuleSummaryRegexExtract" xml:space="preserve"><value>"{0}" से रेगुलर एक्सप्रेशन "{1}" द्वारा निकालें।</value></data>
-  <data name="MediaFieldRuleSummaryRegexReplace" xml:space="preserve"><value>"{0}" में "{1}" को "{2}" से बदलें।</value></data>
+  <data name="MediaFieldRuleSummaryTemplate" xml:space="preserve"><value>"{0}" में टेम्पलेट "{1}" का मिलान करें</value></data>
+  <data name="MediaFieldRuleSummaryRegexExtract" xml:space="preserve"><value>"{0}" से रेगुलर एक्सप्रेशन "{1}" द्वारा निकालें</value></data>
+  <data name="MediaFieldRuleSummaryRegexReplace" xml:space="preserve"><value>"{0}" में "{1}" को "{2}" से बदलें</value></data>
   <data name="MediaFieldRuleHintTemplate" xml:space="preserve"><value>{title}, {artist} और {album} संबंधित फ़ील्ड में वापस लिखे जाते हैं; अन्य कोई भी {name} छोड़ दिया जाता है; * शेष भाग से मेल खाता है।</value></data>
   <data name="MediaFieldRuleHintRegexExtract" xml:space="preserve"><value>नामित समूह (?&lt;title&gt;…), (?&lt;artist&gt;…), (?&lt;album&gt;…) संबंधित फ़ील्ड में वापस लिखे जाते हैं। फ़ील्ड समूह न होने पर मिला भाग फ़ील्ड का स्थान लेता है।</value></data>
   <data name="MediaFieldRuleHintRegexReplace" xml:space="preserve"><value>पूरा फ़ील्ड पुनः लिखा जाता है; $1 और ${name} समर्थित हैं। खाली प्रतिस्थापन मिलान को हटा देता है।</value></data>

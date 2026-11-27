@@ -290,7 +290,8 @@
   <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve"><value>เนื้อเพลงซ้าย ปกอัลบั้มขวา (กะทัดรัด)</value></data>
   <data name="LeftLyricsRightAlbumArtLayout" xml:space="preserve"><value>เนื้อเพลงซ้าย ปกอัลบั้มขวา</value></data>
   <data name="LibreTranslateFailed" xml:space="preserve"><value>ส่งคำขอแปลไปยัง LibreTranslate ไม่สำเร็จ โปรดตรวจสอบการตั้งค่าหรือการกำหนดค่า LibreTranslate ภายในเครื่อง</value></data>
-  <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve"><value>เช่น http://localhost:5000</value></data>
+  <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve"><value>http://localhost:5000</value></data>
+  <data name="ListSeparator" xml:space="preserve"><value>, </value></data>
   <data name="Loading" xml:space="preserve"><value>กำลังโหลด...</value></data>
   <data name="LyricsCardOnlyLayout" xml:space="preserve"><value>เลย์เอาต์แสดงเฉพาะการ์ดเนื้อเพลง</value></data>
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve"><value>ระยะเวลา</value></data>
@@ -635,7 +636,7 @@
   <data name="SettingsPageLocalLyricsFilePattern.Header" xml:space="preserve"><value>รูปแบบการแยกวิเคราะห์ไฟล์เนื้อเพลง</value></data>
   <data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve"><value>เกณฑ์พยางค์ยาว</value></data>
   <data name="SettingsPageLXMusicServer.Header" xml:space="preserve"><value>เซิร์ฟเวอร์ LX Music</value></data>
-  <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve"><value>เช่น http://127.0.0.1:23330</value></data>
+  <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve"><value>http://127.0.0.1:23330</value></data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve"><value>การจัดตำแหน่ง</value></data>
   <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve"><value>บรรทัดที่ไม่ใช่ปัจจุบัน</value></data>
   <data name="SettingsPageLyricsBlack.Content" xml:space="preserve"><value>ดำ</value></data>
@@ -1084,9 +1085,9 @@
   <data name="MediaFieldRuleDialogAddTitle" xml:space="preserve"><value>กฎใหม่</value></data>
   <data name="MediaFieldRuleDialogEditTitle" xml:space="preserve"><value>แก้ไขกฎ</value></data>
   <data name="MediaFieldRuleKind.Header" xml:space="preserve"><value>โหมด</value></data>
-  <data name="MediaFieldRuleKindTemplate.Content" xml:space="preserve"><value>เทมเพลต — ตัวแทน {field}</value></data>
-  <data name="MediaFieldRuleKindRegexExtract.Content" xml:space="preserve"><value>นิพจน์ปกติ — กลุ่มที่ตั้งชื่อ</value></data>
-  <data name="MediaFieldRuleKindRegexReplace.Content" xml:space="preserve"><value>นิพจน์ปกติ — การแทนที่</value></data>
+  <data name="MediaFieldRuleKindTemplate.Content" xml:space="preserve"><value>เทมเพลต: ตัวแทน {field}</value></data>
+  <data name="MediaFieldRuleKindRegexExtract.Content" xml:space="preserve"><value>นิพจน์ปกติ: กลุ่มที่ตั้งชื่อ</value></data>
+  <data name="MediaFieldRuleKindRegexReplace.Content" xml:space="preserve"><value>นิพจน์ปกติ: การแทนที่</value></data>
   <data name="MediaFieldRuleSource.Header" xml:space="preserve"><value>ฟิลด์</value></data>
   <data name="MediaFieldRulePattern.Header" xml:space="preserve"><value>รูปแบบ</value></data>
   <data name="MediaFieldRuleReplacement.Header" xml:space="preserve"><value>แทนที่ด้วย</value></data>

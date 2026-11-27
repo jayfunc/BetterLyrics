@@ -125,7 +125,7 @@
   <data name="AboutControlUpToDate.Title" xml:space="preserve"><value>BetterLyrics 已是最新版本</value></data>
   <data name="ActionCompleted" xml:space="preserve"><value>操作已完成</value></data>
   <data name="Add" xml:space="preserve"><value>添加</value></data>
-  <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Description" xml:space="preserve"><value>歌曲信息过长时自动滚动显示，不受鼠标悬停影响。</value></data>
+  <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Description" xml:space="preserve"><value>歌曲信息过长时自动滚动显示，不受鼠标悬停影响</value></data>
   <data name="AlbumArtAreaEffectSettingsControlSongInfoAutoScroll.Header" xml:space="preserve"><value>自动滚动歌曲信息</value></data>
   <data name="AlbumArtAreaSettingsControlEndPoint.Header" xml:space="preserve"><value>终点</value></data>
   <data name="AlbumArtAreaSettingsControlFadeOut.Header" xml:space="preserve"><value>淡出</value></data>
@@ -163,7 +163,7 @@
   <data name="DockedMode" xml:space="preserve"><value>停靠模式</value></data>
   <data name="Error" xml:space="preserve"><value>错误</value></data>
   <data name="ExportSettingsSuccess" xml:space="preserve"><value>导出成功</value></data>
-  <data name="FailToStartLXMusicServer" xml:space="preserve"><value>无法连接至 LX Music 服务器。请前往「设置 - 播放源 - LX Music - LX Music 服务器」检查链接是否填写正确。</value></data>
+  <data name="FailToStartLXMusicServer" xml:space="preserve"><value>无法连接至 LX Music 服务器。请前往“设置 - 播放源 - LX Music - LX Music 服务器”检查链接是否填写正确。</value></data>
   <data name="FileSystemServiceCleaningCache" xml:space="preserve"><value>正在清理缓存……</value></data>
   <data name="FileSystemServiceConnectFailed" xml:space="preserve"><value>连接失败</value></data>
   <data name="FileSystemServiceConnecting" xml:space="preserve"><value>正在连接……</value></data>
@@ -254,9 +254,9 @@
   <data name="LayoutEditorControlNoSelection" xml:space="preserve"><value>请在预览区或左侧列表中选择一个组件以继续</value></data>
   <data name="LayoutEditorControlPendingComponentsDescriptionTextBlock.Text" xml:space="preserve"><value>将组件拖拽至右侧网格即可放置。放置后，组件可在网格内自由移动。</value></data>
   <data name="LayoutEditorControlPendingComponentsTextBlock.Text" xml:space="preserve"><value>待放置组件</value></data>
-  <data name="LayoutEditorControlPlacedComponentsDescriptionTextBlock.Text" xml:space="preserve"><value>若组件在右侧不可见或无法点击，请在此处选择。</value></data>
+  <data name="LayoutEditorControlPlacedComponentsDescriptionTextBlock.Text" xml:space="preserve"><value>若组件在右侧不可见或无法点击，请在此处选择</value></data>
   <data name="LayoutEditorControlPlacedComponentsTextBlock.Text" xml:space="preserve"><value>已放置组件</value></data>
-  <data name="LayoutEditorControlPxDescription.Text" xml:space="preserve"><value>固定为指定的绝对像素宽度/高度</value></data>
+  <data name="LayoutEditorControlPxDescription.Text" xml:space="preserve"><value>固定为指定的绝对像素宽度或高度</value></data>
   <data name="LayoutEditorControlRemoveButton.Content" xml:space="preserve"><value>移除组件</value></data>
   <data name="LayoutEditorControlRowBox.Header" xml:space="preserve"><value>行</value></data>
   <data name="LayoutEditorControlRowHeader.Text" xml:space="preserve"><value>行</value></data>
@@ -281,7 +281,7 @@
   <data name="LayoutEditorControlZoomResetButton.Content" xml:space="preserve"><value>适应画布</value></data>
   <data name="LayoutSettingsControlCustomProfiles.Text" xml:space="preserve"><value>自定义</value></data>
   <data name="LayoutSettingsControlCustomProfilesEmpty.Text" xml:space="preserve"><value>未找到自定义布局。可从模板创建，或导入现有布局。</value></data>
-  <data name="LayoutSettingsControlLayoutNameTextBox.PlaceholderText" xml:space="preserve"><value>输入布局名称，以便区分不同布局。</value></data>
+  <data name="LayoutSettingsControlLayoutNameTextBox.PlaceholderText" xml:space="preserve"><value>输入布局名称，以便区分不同布局</value></data>
   <data name="LayoutSettingsControlNoLyricsWindow" xml:space="preserve"><value>没有歌词窗口正在使用此布局</value></data>
   <data name="LayoutSettingsControlSystemProfiles.Text" xml:space="preserve"><value>默认</value></data>
   <data name="LayoutSettingsControlViewAppliedLyricsWindow.Text" xml:space="preserve"><value>查看使用此布局的歌词窗口</value></data>
@@ -290,7 +290,8 @@
   <data name="LeftLyricsRightAlbumArtCompactLayout" xml:space="preserve"><value>左歌词右封面布局（紧凑）</value></data>
   <data name="LeftLyricsRightAlbumArtLayout" xml:space="preserve"><value>左歌词右封面布局</value></data>
   <data name="LibreTranslateFailed" xml:space="preserve"><value>向 LibreTranslate 请求翻译失败。请检查设置或本地 LibreTranslate 配置。</value></data>
-  <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve"><value>例如：http://localhost:5000。</value></data>
+  <data name="LibreTranslateServerTextBox.PlaceholderText" xml:space="preserve"><value>http://localhost:5000</value></data>
+  <data name="ListSeparator" xml:space="preserve"><value>、</value></data>
   <data name="Loading" xml:space="preserve"><value>正在加载……</value></data>
   <data name="LyricsCardOnlyLayout" xml:space="preserve"><value>仅歌词卡片布局</value></data>
   <data name="LyricsEffectSettingsControlAnimationDuration.Header" xml:space="preserve"><value>时长</value></data>
@@ -307,7 +308,7 @@
   <data name="LyricsPageMatchPercentage.Header" xml:space="preserve"><value>匹配度</value></data>
   <data name="LyricsPagePositionOffsetHint.Header" xml:space="preserve"><value>切换歌曲时重置为 0</value></data>
   <data name="LyricsPageSettings.Text" xml:space="preserve"><value>设置</value></data>
-  <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve"><value>优先使用歌词内嵌的译文；若无匹配，则向 LibreTranslate 服务器请求机器翻译。</value></data>
+  <data name="LyricsPageTranslationEnabled.Description" xml:space="preserve"><value>优先使用歌词内嵌的译文；若无匹配，则向 LibreTranslate 服务器请求机器翻译</value></data>
   <data name="LyricsPageTranslationEnabled.Header" xml:space="preserve"><value>启用翻译</value></data>
   <data name="LyricsPageTranslationProviderPrefix.Header" xml:space="preserve"><value>翻译来源</value></data>
   <data name="LyricsPageTransliterationProviderPrefix.Header" xml:space="preserve"><value>音译来源</value></data>
@@ -317,7 +318,7 @@
   <data name="LyricsSaveConfigIncludeTranslation.Header" xml:space="preserve"><value>包含译文</value></data>
   <data name="LyricsSaveConfigIncludeTransliteration.Header" xml:space="preserve"><value>包含音译</value></data>
   <data name="LyricsSaveConfigInOneLine.Description" xml:space="preserve"><value>以斜杠分隔</value></data>
-  <data name="LyricsSaveConfigInOneLine.Header" xml:space="preserve"><value>合并原文、译文与音译。</value></data>
+  <data name="LyricsSaveConfigInOneLine.Header" xml:space="preserve"><value>合并原文、译文与音译</value></data>
   <data name="LyricsSaveConfigInSyllablesFormat.Header" xml:space="preserve"><value>保存为逐字歌词</value></data>
   <data name="LyricsSearchControlAlbum.Header" xml:space="preserve"><value>专辑</value></data>
   <data name="LyricsSearchControlArtist.Header" xml:space="preserve"><value>艺术家</value></data>
@@ -379,7 +380,7 @@
   <data name="LyricsWindowSettingsControlSetDefault.Text" xml:space="preserve"><value>设为默认</value></data>
   <data name="LyricsWindowSettingsControlShare.Text" xml:space="preserve"><value>导出</value></data>
   <data name="LyricsWindowSwitchButtonToolTip.Content" xml:space="preserve"><value>歌词窗口切换器</value></data>
-  <data name="LyricsWindowSwitchWindowHelp.Text" xml:space="preserve"><value>前往「设置」添加更多模式</value></data>
+  <data name="LyricsWindowSwitchWindowHelp.Text" xml:space="preserve"><value>前往“设置”添加更多模式</value></data>
   <data name="LyricsWindowSwitchWindowTitle" xml:space="preserve"><value>歌词窗口切换器</value></data>
   <data name="MainPageNoLocalFilesMatched.Text" xml:space="preserve"><value>未找到匹配的本地文件</value></data>
   <data name="MainPagePositionOffsetSlider.Header" xml:space="preserve"><value>歌词时间轴偏移</value></data>
@@ -428,7 +429,7 @@
   <data name="MusicGalleryPageSelectedTrackDetail.Content" xml:space="preserve"><value>当前选中曲目的信息</value></data>
   <data name="MusicGalleryPageShufflePlay.Content" xml:space="preserve"><value>随机播放</value></data>
   <data name="MusicGalleryPageSingleLoop.Text" xml:space="preserve"><value>单曲循环</value></data>
-  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve"><value>搜索标题、艺术家、专辑、文件名或文件夹路径。</value></data>
+  <data name="MusicGalleryPageSongSearchBox.PlaceholderText" xml:space="preserve"><value>搜索标题、艺术家、专辑、文件名或文件夹路径</value></data>
   <data name="MusicGalleryPageSortByAlbum.Content" xml:space="preserve"><value>专辑</value></data>
   <data name="MusicGalleryPageSortByArtist.Content" xml:space="preserve"><value>艺术家</value></data>
   <data name="MusicGalleryPageSortByFolder.Content" xml:space="preserve"><value>文件夹</value></data>
@@ -483,7 +484,7 @@
   <data name="SetingsPageDonation.Text" xml:space="preserve"><value>捐赠</value></data>
   <data name="SetingsPageFeedback.Text" xml:space="preserve"><value>反馈</value></data>
   <data name="SetingsPageThanks.Text" xml:space="preserve"><value>如果您喜欢本项目，欢迎通过捐赠给予支持。您的支持有助于项目持续维护，并推动其进一步发展。</value></data>
-  <data name="SettingsPage3DLyrics.Header" xml:space="preserve"><value>[实验性] 景深效果</value></data>
+  <data name="SettingsPage3DLyrics.Header" xml:space="preserve"><value>景深效果（实验性）</value></data>
   <data name="SettingsPage3DLyricsDepth.Header" xml:space="preserve"><value>景深</value></data>
   <data name="SettingsPageAbout" xml:space="preserve"><value>关于</value></data>
   <data name="SettingsPageAdaptAlbumArtAccentColor.Header" xml:space="preserve"><value>适配专辑封面主色</value></data>
@@ -507,7 +508,7 @@
   <data name="SettingsPageWriteDebugLogs.Header" xml:space="preserve"><value>写入调试日志</value></data>
   <data name="SettingsPageWriteDebugLogs.Description" xml:space="preserve"><value>包含 Debug 级别及更高级别的日志。便于排查问题，但会增大日志文件体积。重启应用后生效。</value></data>
   <data name="SettingsPageGcObjectCheck.Header" xml:space="preserve"><value>检查未被 GC 回收的对象</value></data>
-  <data name="SettingsPageGcObjectCheck.Description" xml:space="preserve"><value>执行垃圾回收，并列出仍然存活的受跟踪对象。</value></data>
+  <data name="SettingsPageGcObjectCheck.Description" xml:space="preserve"><value>执行垃圾回收，并列出仍然存活的受跟踪对象</value></data>
   <data name="SettingsPageGcObjectCheckButton.Content" xml:space="preserve"><value>检查</value></data>
   <data name="SettingsPageGcObjectsNone" xml:space="preserve"><value>垃圾回收后已无存活的受跟踪对象</value></data>
   <data name="SettingsPageGcObjectsFound" xml:space="preserve"><value>垃圾回收后仍然存活的受跟踪对象：</value></data>
@@ -524,12 +525,12 @@
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>歌词背景</value></data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve"><value>模糊强度</value></data>
   <data name="SettingsPageBottom.Content" xml:space="preserve"><value>底部</value></data>
-  <data name="SettingsPageCache.Description" xml:space="preserve"><value>包含日志文件与在线歌词缓存。</value></data>
+  <data name="SettingsPageCache.Description" xml:space="preserve"><value>包含日志文件与在线歌词缓存</value></data>
   <data name="SettingsPageCache.Header" xml:space="preserve"><value>缓存</value></data>
   <data name="SettingsPageCenter.Content" xml:space="preserve"><value>居中</value></data>
   <data name="SettingsPageCheckShortcut.Content" xml:space="preserve"><value>检查快捷键</value></data>
   <data name="SettingsPageChinese.Header" xml:space="preserve"><value>中文注音</value></data>
-  <data name="SettingsPageChinesePreference.Description" xml:space="preserve"><value>选择「未指定」将保留原始歌词；选择「简体中文」或「繁体中文」将对原始歌词执行机器转换。</value></data>
+  <data name="SettingsPageChinesePreference.Description" xml:space="preserve"><value>选择“未指定”将保留原始歌词；选择“简体中文”或“繁体中文”将对原始歌词执行机器转换</value></data>
   <data name="SettingsPageChinesePreference.Header" xml:space="preserve"><value>中文偏好</value></data>
   <data name="SettingsPageChinesePreferenceSToT.Content" xml:space="preserve"><value>繁体中文</value></data>
   <data name="SettingsPageChinesePreferenceTToS.Content" xml:space="preserve"><value>简体中文</value></data>
@@ -539,7 +540,7 @@
   <data name="SettingsPageClearCache.Content" xml:space="preserve"><value>清理缓存文件</value></data>
   <data name="SettingsPageCloseStatus.Text" xml:space="preserve"><value>关闭</value></data>
   <data name="SettingsPageColor.Header" xml:space="preserve"><value>颜色</value></data>
-  <data name="SettingsPageConfigName.Description" xml:space="preserve"><value>为记录的窗口状态命名，有助于更好地区分。</value></data>
+  <data name="SettingsPageConfigName.Description" xml:space="preserve"><value>为记录的窗口状态命名，有助于更好地区分</value></data>
   <data name="SettingsPageConfigName.Header" xml:space="preserve"><value>配置名称</value></data>
   <data name="SettingsPageConfigPlaybackSource.Text" xml:space="preserve"><value>配置播放源</value></data>
   <data name="SettingsPageCreateFromCurrent.Text" xml:space="preserve"><value>复制</value></data>
@@ -552,7 +553,7 @@
   <data name="SettingsPageDensity.Header" xml:space="preserve"><value>密度</value></data>
   <data name="SettingsPageDesktopMode.Text" xml:space="preserve"><value>桌面模式（透明）</value></data>
   <data name="SettingsPageDesktopWallpaperLayer.Header" xml:space="preserve"><value>桌面壁纸图层</value></data>
-  <data name="SettingsPageDisclaimer.Text" xml:space="preserve"><value>本项目按「原样」提供，不附带任何形式的担保。所有歌词、字体、图标及其他第三方资源均为其各自版权所有者所有，本项目作者不对上述资源主张任何权利。本项目为非商业项目，不得用于任何侵权行为。用户应自行确保其使用方式符合适用的法律与许可协议。</value></data>
+  <data name="SettingsPageDisclaimer.Text" xml:space="preserve"><value>本项目按“原样”提供，不附带任何形式的担保。所有歌词、字体、图标及其他第三方资源均为其各自版权所有者所有，本项目作者不对上述资源主张任何权利。本项目为非商业项目，不得用于任何侵权行为。用户应自行确保其使用方式符合适用的法律与许可协议。</value></data>
   <data name="SettingsPageDiscordPresence.Header" xml:space="preserve"><value>通过 Discord 状态显示正在收听的内容</value></data>
   <data name="SettingsPageDockedMode.Text" xml:space="preserve"><value>停靠模式</value></data>
   <data name="SettingsPageDockMonitor.Header" xml:space="preserve"><value>目标显示器</value></data>
@@ -635,7 +636,7 @@
   <data name="SettingsPageLocalLyricsFilePattern.Header" xml:space="preserve"><value>歌词文件解析规则</value></data>
   <data name="SettingsPageLongSyllableDuration.Header" xml:space="preserve"><value>长音节阈值</value></data>
   <data name="SettingsPageLXMusicServer.Header" xml:space="preserve"><value>LX Music 服务器</value></data>
-  <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve"><value>例如：http://127.0.0.1:23330。</value></data>
+  <data name="SettingsPageLXMusicServerInput.PlaceholderText" xml:space="preserve"><value>http://127.0.0.1:23330</value></data>
   <data name="SettingsPageLyricsAlignment.Header" xml:space="preserve"><value>对齐方式</value></data>
   <data name="SettingsPageLyricsBgFontColor.Header" xml:space="preserve"><value>非当前行</value></data>
   <data name="SettingsPageLyricsBlack.Content" xml:space="preserve"><value>黑色</value></data>
@@ -651,7 +652,7 @@
   <data name="SettingsPageLyricsExtraLight.Content" xml:space="preserve"><value>特细</value></data>
   <data name="SettingsPageLyricsFadeOutEffect.Description" xml:space="preserve"><value>为非当前行启用淡出效果</value></data>
   <data name="SettingsPageLyricsFadeOutEffect.Header" xml:space="preserve"><value>淡出效果</value></data>
-  <data name="SettingsPageLyricsFilter.Description" xml:space="preserve"><value>移除非文本信息，如作词、作曲等署名。</value></data>
+  <data name="SettingsPageLyricsFilter.Description" xml:space="preserve"><value>移除非文本信息，如作词、作曲等署名</value></data>
   <data name="SettingsPageLyricsFilter.Header" xml:space="preserve"><value>歌词过滤</value></data>
   <data name="SettingsPageLyricsFloatAnimation.Header" xml:space="preserve"><value>漂浮动画</value></data>
   <data name="SettingsPageLyricsFontColorAdaptiveColored.Content" xml:space="preserve"><value>适配歌词背景（彩色）</value></data>
@@ -683,14 +684,14 @@
   <data name="SettingsPageLyricsSearchBestMatch.Content" xml:space="preserve"><value>最佳匹配</value></data>
   <data name="SettingsPageLyricsSearchProvidersConfig.Text" xml:space="preserve"><value>配置歌词来源</value></data>
   <data name="SettingsPageLyricsSearchSequential.Content" xml:space="preserve"><value>顺序</value></data>
-  <data name="SettingsPageLyricsSearchType.Description" xml:space="preserve"><value>顺序：按下方列表的优先级依次搜索，返回第一个结果；最佳匹配：搜索所有已启用的来源，并自动选择匹配度最高的结果。</value></data>
+  <data name="SettingsPageLyricsSearchType.Description" xml:space="preserve"><value>顺序：按下方列表的优先级依次搜索，返回第一个结果；最佳匹配：搜索所有已启用的来源，并自动选择匹配度最高的结果</value></data>
   <data name="SettingsPageLyricsSearchType.Header" xml:space="preserve"><value>歌词搜索策略</value></data>
   <data name="SettingsPageLyricsSemiBold.Content" xml:space="preserve"><value>次粗</value></data>
   <data name="SettingsPageLyricsSemiLight.Content" xml:space="preserve"><value>次细</value></data>
   <data name="SettingsPageLyricsStyle.Text" xml:space="preserve"><value>歌词样式</value></data>
   <data name="SettingsPageLyricsThin.Content" xml:space="preserve"><value>极细</value></data>
   <data name="SettingsPageLyricsTimeline.Header" xml:space="preserve"><value>歌词时间轴同步</value></data>
-  <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve"><value>若歌词进度出现抖动，可尝试增大此阈值；修改该值可能导致歌词同步出现偏差。</value></data>
+  <data name="SettingsPageLyricsTimelineThreshold.Description" xml:space="preserve"><value>若歌词进度出现抖动，可尝试增大此阈值；修改该值可能导致歌词同步出现偏差</value></data>
   <data name="SettingsPageLyricsTimelineThreshold.Header" xml:space="preserve"><value>歌词时间轴同步阈值</value></data>
   <data name="SettingsPageLyricsUnplayedFgFontColor.Header" xml:space="preserve"><value>当前行（未播放）</value></data>
   <data name="SettingsPageLyricsWindow.Text" xml:space="preserve"><value>歌词窗口</value></data>
@@ -700,7 +701,7 @@
   <data name="SettingsPageLyricsWordByWordEffectModeAlways.Content" xml:space="preserve"><value>始终</value></data>
   <data name="SettingsPageLyricsWordByWordEffectModeAuto.Content" xml:space="preserve"><value>自动</value></data>
   <data name="SettingsPageLyricsWordByWordEffectModeNever.Content" xml:space="preserve"><value>从不</value></data>
-  <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve"><value>调整此值会影响顺序搜索与最佳匹配的搜索结果，但不会影响手动搜索歌词界面中的搜索结果。</value></data>
+  <data name="SettingsPageMatchingThreshold.Description" xml:space="preserve"><value>调整此值会影响顺序搜索与最佳匹配的搜索结果，但不会影响手动搜索歌词界面中的搜索结果</value></data>
   <data name="SettingsPageMatchingThreshold.Header" xml:space="preserve"><value>最低匹配阈值</value></data>
   <data name="SettingsPageMediaLib" xml:space="preserve"><value>媒体库</value></data>
   <data name="SettingsPageMediaSourceProvidersConfig.Header" xml:space="preserve"><value>监听此播放源</value></data>
@@ -761,7 +762,7 @@
   <data name="SettingsPageShortcutRegFailInfo" xml:space="preserve"><value>热键注册失败</value></data>
   <data name="SettingsPageShortcutRegSuccessInfo" xml:space="preserve"><value>热键注册成功</value></data>
   <data name="SettingsPageShowHideHotKey.Header" xml:space="preserve"><value>显示/隐藏歌词窗口快捷键</value></data>
-  <data name="SettingsPageShowInSwitchers.Description" xml:space="preserve"><value>例如：Alt + Tab、任务栏。</value></data>
+  <data name="SettingsPageShowInSwitchers.Description" xml:space="preserve"><value>例如：Alt + Tab、任务栏</value></data>
   <data name="SettingsPageShowInSwitchers.Header" xml:space="preserve"><value>在系统环境中显示</value></data>
   <data name="SettingsPageSize.Header" xml:space="preserve"><value>尺寸</value></data>
   <data name="SettingsPageSlide.Content" xml:space="preserve"><value>滑动</value></data>
@@ -807,7 +808,7 @@
   <data name="SettingsPageWallpaperMode.Text" xml:space="preserve"><value>壁纸模式</value></data>
   <data name="SettingsPageWesternChar.Header" xml:space="preserve"><value>拉丁字符</value></data>
   <data name="SettingsPageWidth.Header" xml:space="preserve"><value>宽度</value></data>
-  <data name="SettingsPageWorkArea.Description" xml:space="preserve"><value>应用程序桌面工具栏，停靠于屏幕的上边缘或下边缘。</value></data>
+  <data name="SettingsPageWorkArea.Description" xml:space="preserve"><value>应用程序桌面工具栏，停靠于屏幕的上边缘或下边缘</value></data>
   <data name="SettingsPageWorkArea.Header" xml:space="preserve"><value>应用栏</value></data>
   <data name="SettingsPageWorkAreaHeight.Header" xml:space="preserve"><value>应用栏高度</value></data>
   <data name="SetTo1Star" xml:space="preserve"><value>设为 1 星</value></data>
@@ -943,7 +944,7 @@
   <data name="StoryPageSummaryTopSong.Text" xml:space="preserve"><value>最常听歌曲</value></data>
   <data name="StoryPageSummaryExitHint.Text" xml:space="preserve"><value>点击右侧空白区域以退出</value></data>
   <data name="StatsDashboardControlMemoirTitle.Text" xml:space="preserve"><value>音乐回忆录</value></data>
-  <data name="StatsDashboardControlMemoirDesc.Text" xml:space="preserve"><value>回顾你的音乐旅程，生成个性化收听报告。</value></data>
+  <data name="StatsDashboardControlMemoirDesc.Text" xml:space="preserve"><value>回顾你的音乐旅程，生成个性化收听报告</value></data>
   <data name="StatsDashboardControlMemoirPlay.Text" xml:space="preserve"><value>立即播放</value></data>
   <data name="StatsDashboardControlStartText.Text" xml:space="preserve"><value>从</value></data>
   <data name="StatsDashboardControlEndText.Text" xml:space="preserve"><value>至</value></data>
@@ -995,12 +996,12 @@
   <data name="FileNamePatternControlHelpArtist.Text" xml:space="preserve"><value>艺术家的名称</value></data>
   <data name="FileNamePatternControlHelpTitleDesc.Text" xml:space="preserve"><value>歌曲的标题</value></data>
   <data name="FileNamePatternControlHelpAlbum.Text" xml:space="preserve"><value>专辑的名称</value></data>
-  <data name="FileNamePatternControlHelpTip.Text" xml:space="preserve"><value>提示：你也可以使用 {BPM} 等其他词语作为占位符，以忽略文件名中的部分内容。</value></data>
+  <data name="FileNamePatternControlHelpTip.Text" xml:space="preserve"><value>提示：你也可以使用 {BPM} 等其他词语作为占位符，以忽略文件名中的部分内容</value></data>
   <data name="FileNamePatternControlExamplePreview.Text" xml:space="preserve"><value>示例预览：</value></data>
   <data name="FileNamePatternControlNoPatternProvided" xml:space="preserve"><value>未提供格式</value></data>
   <data name="SettingsPageRestartRequiredInfoBar.Title" xml:space="preserve"><value>需要重启</value></data>
   <data name="SettingsPageRestartRequiredInfoBar.Message" xml:space="preserve"><value>你已更改部分设置，需要重启应用后方可生效。</value></data>
-  <data name="SettingsPageFileNamePatternChangeHintInfoBar.Message" xml:space="preserve"><value>更改解析规则后，请手动点击下方的「立即同步」以应用新规则。</value></data>
+  <data name="SettingsPageFileNamePatternChangeHintInfoBar.Message" xml:space="preserve"><value>更改解析规则后，请手动点击下方的“立即同步”以应用新规则。</value></data>
   <data name="SettingsPageLocalMusicFilePattern.Description" xml:space="preserve"><value>指定在缺少内置标签时如何从文件名中提取歌曲信息（例如 {Artist} - {Title}）。留空则使用默认策略。</value></data>
   <data name="SettingsPageLocalLyricsFilePattern.Description" xml:space="preserve"><value>指定本地歌词文件的命名规则（例如 {Artist} - {Title}），以便准确关联。留空则使用默认匹配策略。</value></data>
   <data name="NowPlayingToastTitle" xml:space="preserve"><value>正在播放提示</value></data>
@@ -1008,7 +1009,7 @@
   <data name="SettingsPageShowNowPlayingNotification.Description" xml:space="preserve"><value>歌曲切换时在屏幕角落显示简短的弹窗提示</value></data>
   <data name="SettingsPageNowPlayingNotificationCorner.Header" xml:space="preserve"><value>弹窗位置</value></data>
   <data name="SettingsPageNowPlayingNotificationAllMonitors.Header" xml:space="preserve"><value>在所有显示器上显示</value></data>
-  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve"><value>关闭后，弹窗仅在主显示器上显示。</value></data>
+  <data name="SettingsPageNowPlayingNotificationAllMonitors.Description" xml:space="preserve"><value>关闭后，弹窗仅在主显示器上显示</value></data>
   <data name="NowPlayingNotificationCornerTopLeft.Content" xml:space="preserve"><value>左上</value></data>
   <data name="NowPlayingNotificationCornerTopRight.Content" xml:space="preserve"><value>右上</value></data>
   <data name="NowPlayingNotificationCornerBottomLeft.Content" xml:space="preserve"><value>左下</value></data>
@@ -1051,7 +1052,7 @@
   <data name="SettingsPageMonitorLayout.Header" xml:space="preserve"><value>当前显示器布局</value></data>
   <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve"><value>打开系统显示设置</value></data>
   <data name="SettingsPageSemanticEffects.Header" xml:space="preserve"><value>语义歌词效果</value></data>
-  <data name="SettingsPageSemanticEffects.Description" xml:space="preserve"><value>歌词中出现特定关键词时生成粒子效果（如爱心、雨、雪）。</value></data>
+  <data name="SettingsPageSemanticEffects.Description" xml:space="preserve"><value>歌词中出现特定关键词时生成粒子效果（如爱心、雨、雪）</value></data>
   <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve"><value>复制深层链接</value></data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve"><value>未找到与该模式匹配的显示器</value></data>
   <data name="SettingsPageListenBrainzTrack.Header" xml:space="preserve"><value>通过 ListenBrainz 记录收听历史</value></data>
@@ -1067,7 +1068,7 @@
   <data name="MediaFieldCorrectionAddCustom.Content" xml:space="preserve"><value>新建规则</value></data>
   <data name="MediaFieldCorrectionMore.Content" xml:space="preserve"><value>更多</value></data>
   <data name="MediaFieldCorrectionEmpty.Header" xml:space="preserve"><value>尚无规则</value></data>
-  <data name="MediaFieldCorrectionEmpty.Description" xml:space="preserve"><value>插入示例以查看语法，或自行编写模板。</value></data>
+  <data name="MediaFieldCorrectionEmpty.Description" xml:space="preserve"><value>插入示例以查看语法，或自行编写模板</value></data>
   <data name="MediaFieldPreviewHeaderCurrent" xml:space="preserve"><value>当前歌曲的结果</value></data>
   <data name="MediaFieldPreviewHeaderSample" xml:space="preserve"><value>示例结果（当前未在播放）</value></data>
   <data name="MediaFieldPreviewNoChange" xml:space="preserve"><value>未更改任何字段——规则与该文本不匹配。</value></data>
@@ -1084,9 +1085,9 @@
   <data name="MediaFieldRuleDialogAddTitle" xml:space="preserve"><value>新建规则</value></data>
   <data name="MediaFieldRuleDialogEditTitle" xml:space="preserve"><value>编辑规则</value></data>
   <data name="MediaFieldRuleKind.Header" xml:space="preserve"><value>模式</value></data>
-  <data name="MediaFieldRuleKindTemplate.Content" xml:space="preserve"><value>模板 —— {field} 占位符</value></data>
-  <data name="MediaFieldRuleKindRegexExtract.Content" xml:space="preserve"><value>正则 —— 命名分组</value></data>
-  <data name="MediaFieldRuleKindRegexReplace.Content" xml:space="preserve"><value>正则 —— 替换</value></data>
+  <data name="MediaFieldRuleKindTemplate.Content" xml:space="preserve"><value>模板：{field} 占位符</value></data>
+  <data name="MediaFieldRuleKindRegexExtract.Content" xml:space="preserve"><value>正则：命名分组</value></data>
+  <data name="MediaFieldRuleKindRegexReplace.Content" xml:space="preserve"><value>正则：替换</value></data>
   <data name="MediaFieldRuleSource.Header" xml:space="preserve"><value>字段</value></data>
   <data name="MediaFieldRulePattern.Header" xml:space="preserve"><value>匹配模式</value></data>
   <data name="MediaFieldRuleReplacement.Header" xml:space="preserve"><value>替换为</value></data>
@@ -1096,9 +1097,9 @@
   <data name="MediaFieldTitle.Content" xml:space="preserve"><value>标题</value></data>
   <data name="MediaFieldArtist.Content" xml:space="preserve"><value>艺术家</value></data>
   <data name="MediaFieldAlbum.Content" xml:space="preserve"><value>专辑</value></data>
-  <data name="MediaFieldRuleSummaryTemplate" xml:space="preserve"><value>在「{0}」中匹配模板「{1}」。</value></data>
-  <data name="MediaFieldRuleSummaryRegexExtract" xml:space="preserve"><value>使用正则「{1}」从「{0}」中提取。</value></data>
-  <data name="MediaFieldRuleSummaryRegexReplace" xml:space="preserve"><value>将「{0}」中的「{1}」替换为「{2}」。</value></data>
+  <data name="MediaFieldRuleSummaryTemplate" xml:space="preserve"><value>在“{0}”中匹配模板“{1}”</value></data>
+  <data name="MediaFieldRuleSummaryRegexExtract" xml:space="preserve"><value>使用正则“{1}”从“{0}”中提取</value></data>
+  <data name="MediaFieldRuleSummaryRegexReplace" xml:space="preserve"><value>将“{0}”中的“{1}”替换为“{2}”</value></data>
   <data name="MediaFieldRuleHintTemplate" xml:space="preserve"><value>{title}、{artist} 与 {album} 将被写回对应字段；其他 {name} 将被丢弃；* 匹配剩余部分。</value></data>
   <data name="MediaFieldRuleHintRegexExtract" xml:space="preserve"><value>命名分组 (?&lt;title&gt;…)、(?&lt;artist&gt;…)、(?&lt;album&gt;…) 将被写回对应字段。若未包含字段分组，则匹配部分将替换该字段。</value></data>
   <data name="MediaFieldRuleHintRegexReplace" xml:space="preserve"><value>整个字段将被重写；支持 $1 与 ${name}。替换内容为空时删除匹配部分。</value></data>
@@ -1106,15 +1107,15 @@
   <data name="MediaFieldPreviewSampleTitle" xml:space="preserve"><value>示例歌曲（Live）</value></data>
   <data name="MediaFieldPreviewSampleArtist" xml:space="preserve"><value>示例艺术家 —— 示例专辑 - Single</value></data>
   <data name="MediaFieldPreviewSampleAlbum" xml:space="preserve"><value>示例专辑 - EP</value></data>
-  <data name="MediaFieldSnippetTitleArtistDescription" xml:space="preserve"><value>标题为「艺术家 - 歌曲」：拆分并填入两个字段。</value></data>
-  <data name="MediaFieldSnippetTitleArtistReversedDescription" xml:space="preserve"><value>标题为「歌曲 - 艺术家」。</value></data>
+  <data name="MediaFieldSnippetTitleArtistDescription" xml:space="preserve"><value>标题为“艺术家 - 歌曲”：拆分并填入两个字段。</value></data>
+  <data name="MediaFieldSnippetTitleArtistReversedDescription" xml:space="preserve"><value>标题为“歌曲 - 艺术家”。</value></data>
   <data name="MediaFieldSnippetArtistAlbumDescription" xml:space="preserve"><value>艺术家字段中包含专辑（Apple Music）。</value></data>
-  <data name="MediaFieldSnippetTrimDashSuffixDescription" xml:space="preserve"><value>移除标题末尾的「- 任意内容」。</value></data>
+  <data name="MediaFieldSnippetTrimDashSuffixDescription" xml:space="preserve"><value>移除标题末尾的“- 任意内容”。</value></data>
   <data name="MediaFieldSnippetRemoveBracketsDescription" xml:space="preserve"><value>移除括号内的文本及其后的全部内容</value></data>
-  <data name="MediaFieldSnippetRemoveFeatDescription" xml:space="preserve"><value>移除「feat.」及其后的内容。</value></data>
+  <data name="MediaFieldSnippetRemoveFeatDescription" xml:space="preserve"><value>移除“feat.”及其后的内容。</value></data>
   <data name="MediaFieldSnippetRegexExtractBracketDescription" xml:space="preserve"><value>正则：保留第一个括号之前的部分。</value></data>
-  <data name="MediaFieldSnippetRegexRemoveAlbumSuffixDescription" xml:space="preserve"><value>正则：移除专辑中的「- Single」/「- EP」。</value></data>
+  <data name="MediaFieldSnippetRegexRemoveAlbumSuffixDescription" xml:space="preserve"><value>正则：移除专辑中的“- Single”/“- EP”。</value></data>
   <data name="MediaFieldSnippetRegexCollapseSpacesDescription" xml:space="preserve"><value>正则：合并连续空格。</value></data>
-  <data name="MediaFieldSnippetRegexArtistSeparatorDescription" xml:space="preserve"><value>正则：将「A/B」转换为「A, B」。</value></data>
+  <data name="MediaFieldSnippetRegexArtistSeparatorDescription" xml:space="preserve"><value>正则：将“A/B”转换为“A, B”。</value></data>
   <data name="MediaFieldSnippetRegexTrackNumberDescription" xml:space="preserve"><value>正则：移除开头的音轨号。</value></data>
 </root>
