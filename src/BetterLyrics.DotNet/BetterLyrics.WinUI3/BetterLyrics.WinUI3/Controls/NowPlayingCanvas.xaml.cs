@@ -155,6 +155,7 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
     private readonly FluidBackgroundRenderer _fluidRenderer = new();
     private readonly FogRenderer _fogRenderer = new();
     private readonly SemanticEffectsRenderer _semanticEffectsRenderer = new();
+    private readonly SongInfoRenderer _songInfoRenderer = new();
 
     private IGsmtcService _gsmtcService = Ioc.Default.GetRequiredService<IGsmtcService>();
 
@@ -290,6 +291,20 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
         get => (Rect)GetValue(AlbumArtRectProperty);
         set => SetValue(AlbumArtRectProperty, value);
     }
+
+    public void SetSongInfo(string? title, string? artist, string? album,
+        double titleFontSize, double artistFontSize, double albumFontSize) =>
+        _songInfoRenderer.SetContent(title, artist, album, titleFontSize, artistFontSize, albumFontSize);
+
+    public void SetSongInfoLayout(Rect title, Rect artist, Rect album) =>
+        _songInfoRenderer.SetLayout(title, artist, album);
+
+    public void SetSongInfoHover(SongInfoKind kind, bool hovered) => _songInfoRenderer.SetHover(kind, hovered);
+
+    public void SetSongInfoAlignment(SongInfoKind kind, SongInfoAlignment alignment) =>
+        _songInfoRenderer.SetAlignment(kind, alignment);
+
+    public void SetSongInfoOpacityTarget(double target) => _songInfoRenderer.SetOpacityTarget(target);
 
     public Rect NowPlayingBarRect
     {
@@ -553,6 +568,9 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
                 albumStyle, lyricsBg, hdrHighlightGain);
         }
 
+        // 歌曲信息不写入 Spout 纹理，保持共享歌词的原有输出内容
+        _songInfoRenderer.Draw(ds, _lyricsWindowStatus);
+
         if (_lyricsWindowStatus.ShowDebugOverlay)
         {
             ds.DrawRectangle(
@@ -718,6 +736,8 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
         #endregion
 
         _mouseYScrollTransition.Update(elapsedTime);
+
+        _songInfoRenderer.Update(sender, elapsedTime.TotalSeconds, _lyricsWindowStatus);
 
         CurrentHoveringLineIndex = _layoutStrategy.FindMouseHoverLineIndex(
             _renderLyricsLines,
@@ -914,6 +934,7 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
     {
         _hdrPresenter?.Reset();
         _compositionRenderer?.Dispose();
+        _songInfoRenderer.ResetDeviceResources();
 
         var tasks = new[]
         {
@@ -993,6 +1014,7 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
         _raindropRenderer.Dispose();
         _spectrumRenderer.Dispose();
         _semanticEffectsRenderer.Dispose();
+        _songInfoRenderer.Dispose();
 
         DisposeRenderLyricsLines();
         DisposeSpectrumAnalyzer();

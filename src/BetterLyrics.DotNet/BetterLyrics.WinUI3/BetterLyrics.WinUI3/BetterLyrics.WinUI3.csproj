@@ -33,7 +33,6 @@
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="CommunityToolkit.Labs.WinUI.Controls.OpacityMaskView" Version="0.1.260617-build.2640" />
-        <PackageReference Include="CommunityToolkit.Labs.WinUI.MarqueeText" Version="0.1.250828-build.2223" />
         <PackageReference Include="CommunityToolkit.Labs.WinUI.Shimmer" Version="0.1.250828-build.2223" />
         <PackageReference Include="CommunityToolkit.WinUI.Behaviors" Version="8.2.251219" />
         <PackageReference Include="CommunityToolkit.WinUI.Controls.ColorPicker" Version="8.2.251219" />
@@ -47,7 +46,6 @@
         <PackageReference Include="CommunityToolkit.WinUI.Media" Version="8.2.251219" />
         <PackageReference Include="CommunityToolkit.WinUI.Triggers" Version="8.2.251219" />
         <PackageReference Include="ComputeSharp.D2D1.WinUI" Version="3.2.0" />
-        <PackageReference Include="DevWinUI" Version="10.9.1" />
         <PackageReference Include="Dubya.WindowsMediaController.Jayfunc" Version="2.5.6" />
         <PackageReference Include="FlaUI.UIA3" Version="5.0.0" />
         <PackageReference Include="H.NotifyIcon.WinUI" Version="2.4.1" />

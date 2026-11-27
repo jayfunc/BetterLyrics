@@ -9,13 +9,15 @@ using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Messages.LayoutChanged;
 using BetterLyrics.Core.Messages.LyricsWindow;
 using BetterLyrics.Core.Messages.Playback;
+using BetterLyrics.Core.Models;
+using BetterLyrics.Core.Models.Domain;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.ViewModels;
 using BetterLyrics.WinUI3.Controls;
 using BetterLyrics.WinUI3.Extensions;
+using BetterLyrics.WinUI3.Renderer;
 using CommunityToolkit.Mvvm.DependencyInjection;
 using CommunityToolkit.Mvvm.Messaging;
-using DevWinUI;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Documents;
@@ -34,7 +36,6 @@ namespace BetterLyrics.WinUI3.Views;
 
 public sealed partial class NowPlayingPage : BasePage,
     IRecipient<CurrentSongInfoChangedMessage>,
-    IRecipient<AlbumArtSongInfoAutoScrollChangedMessage>,
     IRecipient<AlbumArtFadeOutChangedMessage>,
     IRecipient<AlbumArtFadeOutDirectionChangedMessage>,
     IRecipient<LyricsWindowLayoutProfileIdChangedMessage>,
@@ -90,6 +91,14 @@ public sealed partial class NowPlayingPage : BasePage,
 
     private IntPtr _windowHandle;
 
+    private Rect _songTitleBounds;
+    private Rect _songArtistBounds;
+    private Rect _songAlbumBounds;
+
+    private SongInfoAlignment _songTitleAlignment;
+    private SongInfoAlignment _songArtistAlignment;
+    private SongInfoAlignment _songAlbumAlignment;
+
     public NowPlayingPage()
     {
         InitializeComponent();
@@ -104,16 +113,6 @@ public sealed partial class NowPlayingPage : BasePage,
     public void Receive(LayoutChangedMessage message)
     {
         OnLayoutChanged();
-    }
-
-    public void Receive(AlbumArtSongInfoAutoScrollChangedMessage message)
-    {
-        if (message.Sender == _lyricsWindowStatus?.AlbumArtAreaEffectSettings)
-        {
-            UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, false);
-            UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
-            UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
-        }
     }
 
     public void Receive(AlbumArtFadeOutChangedMessage message)
@@ -152,9 +151,7 @@ public sealed partial class NowPlayingPage : BasePage,
     public void Receive(CurrentSongInfoChangedMessage message)
     {
         _ = RefreshSongInfoAsync();
-        UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, false);
-        UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
-        UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
+        ResetSongInfoHover();
     }
 
     public void Receive(LyricsFontFamilyChangedMessage message)
@@ -227,12 +224,13 @@ public sealed partial class NowPlayingPage : BasePage,
             RenderTextBlock(ArtistsTextBlock, mappedArtist, artistFontSize);
             RenderTextBlock(AlbumTextBlock, mappedAlbum, albumFontSize);
 
-            // 立即完成布局，让 AutoScrollView 读到新文本的实际宽度
+            // 立即完成布局，让画布读到新文本与区域的实际尺寸
             UpdateLayout();
 
-            UpdateAutoScrollSpeed(TitleAutoScrollHoverEffectView, titleFontSize);
-            UpdateAutoScrollSpeed(ArtistsAutoScrollHoverEffectView, artistFontSize);
-            UpdateAutoScrollSpeed(AlbumAutoScrollHoverEffectView, albumFontSize);
+            UpdateSongInfoLayout();
+
+            NowPlayingCanvas.SetSongInfo(mappedTitle, mappedArtist, mappedAlbum,
+                titleFontSize, artistFontSize, albumFontSize);
         }
         catch (Exception ex)
         {
@@ -240,31 +238,45 @@ public sealed partial class NowPlayingPage : BasePage,
         }
     }
 
-    private static void UpdateAutoScrollSpeed(AutoScrollView view, double fontSize)
+    private void UpdateSongInfoLayout()
     {
-        if (!double.IsNormal(fontSize)) return;
+        if (NowPlayingCanvas == null) return;
 
-        var speed = (int)fontSize;
+        _songTitleBounds = GetSongInfoBounds(SongTitleContainer);
+        _songArtistBounds = GetSongInfoBounds(SongArtistContainer);
+        _songAlbumBounds = GetSongInfoBounds(SongAlbumContainer);
 
-        // AutoScrollView 只在挂载或其速度变化时按当前文本宽度计算动画时长，
-        // 文本变宽后不会刷新，滚动速度会随内容长度成比例变快，故强制重算一次
-        if (view.ScrollingPixelsPreSecond == speed)
-            view.ScrollingPixelsPreSecond = speed + 1;
-        view.ScrollingPixelsPreSecond = speed;
+        NowPlayingCanvas.SetSongInfoLayout(_songTitleBounds, _songArtistBounds, _songAlbumBounds);
+        NowPlayingCanvas.SetSongInfoAlignment(SongInfoKind.Title, _songTitleAlignment);
+        NowPlayingCanvas.SetSongInfoAlignment(SongInfoKind.Artist, _songArtistAlignment);
+        NowPlayingCanvas.SetSongInfoAlignment(SongInfoKind.Album, _songAlbumAlignment);
+    }
+
+    private Rect GetSongInfoBounds(Grid? container)
+    {
+        if (container == null || RootGrid == null) return new Rect();
+        if (container.Visibility != Visibility.Visible) return new Rect();
+        if (container.ActualWidth <= 0 || container.ActualHeight <= 0) return new Rect();
+
+        var bounds = container.TransformToVisual(RootGrid)
+            .TransformBounds(new Rect(0, 0, container.ActualWidth, container.ActualHeight));
+        var padding = container.Padding;
+
+        return new Rect(
+            bounds.X + padding.Left,
+            bounds.Y + padding.Top,
+            Math.Max(0, bounds.Width - padding.Left - padding.Right),
+            Math.Max(0, bounds.Height - padding.Top - padding.Bottom));
     }
 
     private async Task RefreshSongInfoAsync()
     {
         try
         {
-            SongTitleContainer.Opacity = 0;
-            SongArtistContainer.Opacity = 0;
-            SongAlbumContainer.Opacity = 0;
+            NowPlayingCanvas.SetSongInfoOpacityTarget(0);
             await Task.Delay(Time.AnimationDuration);
             await RenderSongInfoAsync();
-            SongTitleContainer.Opacity = 1;
-            SongArtistContainer.Opacity = 1;
-            SongAlbumContainer.Opacity = 1;
+            NowPlayingCanvas.SetSongInfoOpacityTarget(1);
         }
         catch (Exception ex)
         {
@@ -353,8 +365,43 @@ public sealed partial class NowPlayingPage : BasePage,
                     HorizontalAlignmentExtensions.FromAppHorizontalAlignment(placement.HorizontalAlignment);
                 targetElement.VerticalAlignment =
                     VerticalAlignmentExtensions.FromAppVerticalAlignment(placement.VerticalAlignment);
+
+                // 歌曲信息由画布绘制：容器需要占满所在格子，视口才是正确的可滚动宽度
+                if (double.IsNaN(placement.Width) &&
+                    placement.ComponentType is ComponentType.SongTitle
+                        or ComponentType.SongArtist
+                        or ComponentType.SongAlbum)
+                {
+                    targetElement.HorizontalAlignment = HorizontalAlignment.Stretch;
+                }
+
+                switch (placement.ComponentType)
+                {
+                    case ComponentType.SongTitle:
+                        _songTitleAlignment = GetSongInfoAlignment(placement);
+                        break;
+                    case ComponentType.SongArtist:
+                        _songArtistAlignment = GetSongInfoAlignment(placement);
+                        break;
+                    case ComponentType.SongAlbum:
+                        _songAlbumAlignment = GetSongInfoAlignment(placement);
+                        break;
+                }
             }
         }
+    }
+
+    private static SongInfoAlignment GetSongInfoAlignment(ComponentPlacement placement)
+    {
+        // 设置了显式宽度时，对齐作用于组件盒子本身，盒内文本保持左对齐
+        if (!double.IsNaN(placement.Width)) return SongInfoAlignment.Left;
+
+        return placement.HorizontalAlignment switch
+        {
+            AppHorizontalAlignment.Center => SongInfoAlignment.Center,
+            AppHorizontalAlignment.Right => SongInfoAlignment.Right,
+            _ => SongInfoAlignment.Left
+        };
     }
 
     private void ShowContainers()
@@ -391,6 +438,12 @@ public sealed partial class NowPlayingPage : BasePage,
         SongArtistContainer.Visibility = Visibility.Collapsed;
         SongAlbumContainer.Visibility = Visibility.Collapsed;
         PlaybackControlContainer.Visibility = Visibility.Collapsed;
+
+        // 容器折叠后 ActualWidth 会保留旧值，立即清空画布里的视口，避免隐藏后仍绘制
+        _songTitleBounds = new Rect();
+        _songArtistBounds = new Rect();
+        _songAlbumBounds = new Rect();
+        NowPlayingCanvas?.SetSongInfoLayout(_songTitleBounds, _songArtistBounds, _songAlbumBounds);
     }
 
     private void UpdateLyricsLayout()
@@ -492,12 +545,11 @@ public sealed partial class NowPlayingPage : BasePage,
         UpdateNowPlayingBarLayout();
     }
 
-    private void UpdateAutoScrollViewIsPlaying(AutoScrollView element, bool isPointerEntered)
+    private void ResetSongInfoHover()
     {
-        if (_lyricsWindowStatus?.AlbumArtAreaEffectSettings.SongInfoAutoScroll == true)
-            element.IsPlaying = true;
-        else
-            element.IsPlaying = isPointerEntered;
+        NowPlayingCanvas?.SetSongInfoHover(SongInfoKind.Title, false);
+        NowPlayingCanvas?.SetSongInfoHover(SongInfoKind.Artist, false);
+        NowPlayingCanvas?.SetSongInfoHover(SongInfoKind.Album, false);
     }
 
     // 锁定窗口除播放栏外均为鼠标穿透（WS_EX_TRANSPARENT），拿不到 PointerEntered，
@@ -518,9 +570,7 @@ public sealed partial class NowPlayingPage : BasePage,
         if (!_lockedHoverPollTimer.IsEnabled) return;
 
         _lockedHoverPollTimer.Stop();
-        UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, false);
-        UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
-        UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
+        ResetSongInfoHover();
     }
 
     private void LockedHoverPollTimer_Tick(object? sender, object e)
@@ -533,28 +583,36 @@ public sealed partial class NowPlayingPage : BasePage,
 
         if (!Vanara.PInvoke.User32.GetCursorPos(out var cursor)) return;
 
-        UpdateAutoScrollHoverFromCursor(TitleAutoScrollHoverEffectView, cursor);
-        UpdateAutoScrollHoverFromCursor(ArtistsAutoScrollHoverEffectView, cursor);
-        UpdateAutoScrollHoverFromCursor(AlbumAutoScrollHoverEffectView, cursor);
+        UpdateSongInfoHoverFromCursor(cursor);
     }
 
-    private void UpdateAutoScrollHoverFromCursor(AutoScrollView element, Vanara.PInvoke.POINT cursor)
+    private void UpdateSongInfoHover(Point position)
     {
-        UpdateAutoScrollViewIsPlaying(element, IsCursorOver(element, cursor));
+        NowPlayingCanvas.SetSongInfoHover(SongInfoKind.Title, _songTitleBounds.Contains(position));
+        NowPlayingCanvas.SetSongInfoHover(SongInfoKind.Artist, _songArtistBounds.Contains(position));
+        NowPlayingCanvas.SetSongInfoHover(SongInfoKind.Album, _songAlbumBounds.Contains(position));
     }
 
-    private bool IsCursorOver(FrameworkElement element, Vanara.PInvoke.POINT cursor)
+    private void UpdateSongInfoHoverFromCursor(Vanara.PInvoke.POINT cursor)
+    {
+        NowPlayingCanvas.SetSongInfoHover(SongInfoKind.Title, IsCursorOver(_songTitleBounds, cursor));
+        NowPlayingCanvas.SetSongInfoHover(SongInfoKind.Artist, IsCursorOver(_songArtistBounds, cursor));
+        NowPlayingCanvas.SetSongInfoHover(SongInfoKind.Album, IsCursorOver(_songAlbumBounds, cursor));
+    }
+
+    private bool IsCursorOver(Rect bounds, Vanara.PInvoke.POINT cursor)
     {
         try
         {
-            if (element.XamlRoot is not { IsHostVisible: true }) return false;
-            if (element.ActualWidth <= 0 || element.ActualHeight <= 0) return false;
+            if (bounds.Width <= 0 || bounds.Height <= 0) return false;
+            if (RootGrid.XamlRoot is not { IsHostVisible: true } xamlRoot) return false;
 
-            var hwnd = GetWindowHandle(element);
+            var hwnd = GetWindowHandle(RootGrid);
             if (hwnd == IntPtr.Zero) return false;
 
-            var topLeft = element.TransformToVisual(null).TransformPoint(new Point(0, 0));
-            var scale = element.XamlRoot.RasterizationScale;
+            var topLeft = RootGrid.TransformToVisual(null)
+                .TransformPoint(new Point(bounds.X, bounds.Y));
+            var scale = xamlRoot.RasterizationScale;
 
             var point = new Vanara.PInvoke.POINT
             {
@@ -563,8 +621,8 @@ public sealed partial class NowPlayingPage : BasePage,
             };
             Vanara.PInvoke.User32.ClientToScreen(hwnd, ref point);
 
-            return cursor.X >= point.X && cursor.X <= point.X + element.ActualWidth * scale &&
-                   cursor.Y >= point.Y && cursor.Y <= point.Y + element.ActualHeight * scale;
+            return cursor.X >= point.X && cursor.X <= point.X + bounds.Width * scale &&
+                   cursor.Y >= point.Y && cursor.Y <= point.Y + bounds.Height * scale;
         }
         catch
         {
@@ -581,51 +639,6 @@ public sealed partial class NowPlayingPage : BasePage,
         return _windowHandle;
     }
 
-    private void TitleAutoScrollHoverEffectView_PointerCanceled(object sender, PointerRoutedEventArgs e)
-    {
-        UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, false);
-    }
-
-    private void TitleAutoScrollHoverEffectView_PointerEntered(object sender, PointerRoutedEventArgs e)
-    {
-        UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, true);
-    }
-
-    private void TitleAutoScrollHoverEffectView_PointerExited(object sender, PointerRoutedEventArgs e)
-    {
-        UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, false);
-    }
-
-    private void ArtistsAutoScrollHoverEffectView_PointerCanceled(object sender, PointerRoutedEventArgs e)
-    {
-        UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
-    }
-
-    private void ArtistsAutoScrollHoverEffectView_PointerEntered(object sender, PointerRoutedEventArgs e)
-    {
-        UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, true);
-    }
-
-    private void ArtistsAutoScrollHoverEffectView_PointerExited(object sender, PointerRoutedEventArgs e)
-    {
-        UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
-    }
-
-    private void AlbumAutoScrollHoverEffectView_PointerCanceled(object sender, PointerRoutedEventArgs e)
-    {
-        UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
-    }
-
-    private void AlbumAutoScrollHoverEffectView_PointerEntered(object sender, PointerRoutedEventArgs e)
-    {
-        UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, true);
-    }
-
-    private void AlbumAutoScrollHoverEffectView_PointerExited(object sender, PointerRoutedEventArgs e)
-    {
-        UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
-    }
-
     private void RootGrid_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
     {
         NowPlayingCanvas.HandlePointerWheelChanged(e);
@@ -634,6 +647,7 @@ public sealed partial class NowPlayingPage : BasePage,
     private void RootGrid_PointerMoved(object sender, PointerRoutedEventArgs e)
     {
         NowPlayingCanvas.HandlePointerMoved(e);
+        UpdateSongInfoHover(e.GetCurrentPoint(RootGrid).Position);
     }
 
     private void RootGrid_PointerReleased(object sender, PointerRoutedEventArgs e)
@@ -644,11 +658,13 @@ public sealed partial class NowPlayingPage : BasePage,
     private void RootGrid_PointerExited(object sender, PointerRoutedEventArgs e)
     {
         NowPlayingCanvas.HandlePointerExited(e);
+        ResetSongInfoHover();
     }
 
     private void RootGrid_PointerEntered(object sender, PointerRoutedEventArgs e)
     {
         NowPlayingCanvas.HandlePointerEntered(e);
+        UpdateSongInfoHover(e.GetCurrentPoint(RootGrid).Position);
     }
 
     private void RootGrid_PointerPressed(object sender, PointerRoutedEventArgs e)
@@ -734,21 +750,6 @@ public sealed partial class NowPlayingPage : BasePage,
     private void AlbumArtParallaxTiltControl_Loaded(object sender, RoutedEventArgs e)
     {
         AlbumArtParallaxTiltControl.ParallaxContext = _parallaxEffect;
-    }
-
-    private void SongTitleParallaxTiltControl_Loaded(object sender, RoutedEventArgs e)
-    {
-        SongTitleParallaxTiltControl.ParallaxContext = _parallaxEffect;
-    }
-
-    private void SongArtistParallaxTiltControl_Loaded(object sender, RoutedEventArgs e)
-    {
-        SongAristParallaxTiltControl.ParallaxContext = _parallaxEffect;
-    }
-
-    private void SongAlbumParallaxTiltControl_Loaded(object sender, RoutedEventArgs e)
-    {
-        SongAlbumParallaxTiltControl.ParallaxContext = _parallaxEffect;
     }
 
     private void NowPlayingCanvas_Loaded(object sender, RoutedEventArgs e)
