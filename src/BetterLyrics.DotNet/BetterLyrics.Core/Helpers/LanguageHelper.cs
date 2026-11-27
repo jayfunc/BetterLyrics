@@ -95,6 +95,59 @@ public static partial class LanguageHelper
     {
         if (string.IsNullOrWhiteSpace(text)) return null;
 
+        using var cld3Detector = new CLD3Detector(minNumBytes: 0, maxNumBytes: 10000);
+        return DetectLanguageTagCore(text, cld3Detector);
+    }
+
+    /// <summary>
+    /// 逐行识别后按信息量加权投票得出整体语言
+    /// </summary>
+    public static LanguageTag? DetectLanguageTag(IEnumerable<string> lines)
+    {
+        ArgumentNullException.ThrowIfNull(lines);
+
+        var samples = lines
+            .Where(line => !string.IsNullOrWhiteSpace(line))
+            .Select(line => line.Trim())
+            .ToList();
+
+        if (samples.Count == 0) return null;
+        if (samples.Count == 1) return DetectLanguageTag(samples[0]);
+
+        var votes = new Dictionary<string, (LanguageTag Tag, int Weight, int Count)>();
+
+        using (var cld3Detector = new CLD3Detector(minNumBytes: 0, maxNumBytes: 10000))
+        {
+            foreach (var sample in samples)
+            {
+                var tag = DetectLanguageTagCore(sample, cld3Detector);
+                if (tag == null) continue;
+
+                int weight = GetInformationWeight(sample);
+                if (weight <= 0) continue;
+
+                string key = GetVoteKey(tag.Value);
+                votes[key] = votes.TryGetValue(key, out var vote)
+                    ? (vote.Tag, vote.Weight + weight, vote.Count + 1)
+                    : (tag.Value, weight, 1);
+            }
+        }
+
+        if (votes.Count == 0)
+        {
+            // 逐行均无法识别时，回退到整体识别
+            return DetectLanguageTag(string.Join("\n", samples));
+        }
+
+        return votes.Values
+            .OrderByDescending(vote => vote.Weight)
+            .ThenByDescending(vote => vote.Count)
+            .First()
+            .Tag;
+    }
+
+    private static LanguageTag? DetectLanguageTagCore(string text, CLD3Detector cld3Detector)
+    {
         // 1. 拦截粤语特有汉字
         if (CantoneseFeatureRegex().IsMatch(text))
         {
@@ -113,22 +166,19 @@ public static partial class LanguageHelper
             return MandarinChineseLatnTag;
         }
 
-        using (var cld3Detector = new CLD3Detector(minNumBytes: 0, maxNumBytes: 10000))
+        var cld3Result = cld3Detector.PredictLanguage(text);
+        if (cld3Result.IsReliable)
         {
-            var cld3Result = cld3Detector.PredictLanguage(text);
-            if (cld3Result.IsReliable)
+            var code = cld3Result.Language;
+
+            if (code.Equals("zh-Latn", StringComparison.OrdinalIgnoreCase)) return MandarinChineseLatnTag;
+            if (code.Equals("ja-Latn", StringComparison.OrdinalIgnoreCase)) return JapaneseLatnTag;
+            if (code.Equals("ko-Latn", StringComparison.OrdinalIgnoreCase)) return KoreanLatnTag;
+
+            if (code == "zh") return MandarinChineseCode;
+            if (LanguageTag.TryParse(code, out var tag))
             {
-                var code = cld3Result.Language;
-
-                if (code.Equals("zh-Latn", StringComparison.OrdinalIgnoreCase)) return MandarinChineseLatnTag;
-                if (code.Equals("ja-Latn", StringComparison.OrdinalIgnoreCase)) return JapaneseLatnTag;
-                if (code.Equals("ko-Latn", StringComparison.OrdinalIgnoreCase)) return KoreanLatnTag;
-
-                if (code == "zh") return MandarinChineseCode;
-                if (LanguageTag.TryParse(code, out var tag))
-                {
-                    return tag;
-                }
+                return tag;
             }
         }
 
@@ -148,9 +198,55 @@ public static partial class LanguageHelper
         return null;
     }
 
-    public static LanguageTag? DetectLanguageTag(IEnumerable<string> lines)
+    /// <summary>
+    /// 投票分组键。汉字的不同书写形式（zh / zh-Hant / cmn）视为同一种语言合并计票，
+    /// 而拉丁转写（cmn-Latn、ja-Latn…）保持独立，以便区分原文与音译。
+    /// </summary>
+    private static string GetVoteKey(LanguageTag tag)
     {
-        return DetectLanguageTag(string.Join("\n", lines));
+        var code = tag.ToString();
+
+        if (code.Equals("cmn", StringComparison.OrdinalIgnoreCase) ||
+            (code.StartsWith("zh", StringComparison.OrdinalIgnoreCase) &&
+             !code.StartsWith("zh-Latn", StringComparison.OrdinalIgnoreCase)))
+        {
+            return MandarinChineseCode.ToString();
+        }
+
+        return code;
+    }
+
+    /// <summary>
+    /// 估算一行文本的信息量权重：以空格分词的文字按词计，CJK 等表意文字按字计。
+    /// </summary>
+    private static int GetInformationWeight(string text)
+    {
+        var weight = 0;
+        var inWord = false;
+
+        foreach (var ch in text)
+        {
+            if (!char.IsLetter(ch))
+            {
+                inWord = false;
+                continue;
+            }
+
+            // CJK、假名、谚文、假名重复符号等表意/音节文字，一字即一个单位
+            if (ch >= FirstCjkRadical)
+            {
+                weight++;
+                inWord = false;
+            }
+            else if (!inWord)
+            {
+                // 拉丁、希腊、西里尔等以空格分词的文字，一个词计一个单位
+                weight++;
+                inWord = true;
+            }
+        }
+
+        return weight;
     }
 
 
@@ -282,6 +378,11 @@ public static partial class LanguageHelper
     {
         return _stringConverterProvider.RomajiToKanji(romaji);
     }
+
+    /// <summary>
+    /// CJK 部首区的起始码位（U+2E80），此码位及之后的字符按“一字一单位”计算信息量。
+    /// </summary>
+    private const char FirstCjkRadical = '\u2E80';
 
     [GeneratedRegex(@"[a-z]+[1-6]\b", RegexOptions.IgnoreCase | RegexOptions.Compiled)]
     private static partial Regex NumberedToneRegex();

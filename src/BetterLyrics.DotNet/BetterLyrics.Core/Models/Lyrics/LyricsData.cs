@@ -19,7 +19,7 @@ public class LyricsData
 
     public LanguageTag? LanguageTag
     {
-        get => field ?? LanguageHelper.DetectLanguageTag(LyricsLines.Select(line => line.PrimaryText));
+        get => field ??= LanguageHelper.DetectLanguageTag(LyricsLines.Select(line => line.PrimaryText));
         set;
     }
 
