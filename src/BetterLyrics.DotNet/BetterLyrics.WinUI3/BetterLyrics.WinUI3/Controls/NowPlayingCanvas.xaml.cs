@@ -27,6 +27,7 @@ using Microsoft.Graphics.Canvas;
 using Microsoft.Graphics.Canvas.Text;
 using Microsoft.Graphics.Canvas.UI;
 using Microsoft.Graphics.Canvas.UI.Xaml;
+using Microsoft.UI.Dispatching;
 using Microsoft.UI.Input;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Input;
@@ -190,6 +191,7 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
     private readonly RaindropRenderer _raindropRenderer = new();
     private readonly Debouncer _scrollChangedDebouncer = new();
     private readonly ISettingsService _settingsService = Ioc.Default.GetRequiredService<ISettingsService>();
+    private DispatcherQueue? _uiDispatcherQueue;
     private readonly SnowRenderer _snowRenderer = new();
     private readonly ISystemUIProvider _systemUIProvider = Ioc.Default.GetRequiredService<ISystemUIProvider>();
 
@@ -201,6 +203,9 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
     private double _canvasTargetScrollOffset;
     private TimeSpan _desktopWallpaperPathCheckTimer = TimeSpan.FromSeconds(1);
     private string? _loadedWallpaperPath;
+
+    private double _mouseScrollOffset;
+    private bool _isMouseScrollFoldRequested;
 
     private bool _isLayoutChanged;
     private bool _isLyricsChanged = true;
@@ -572,7 +577,8 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
                 $"----------------------------------------\n" +
                 $"Time         : {_songPosition:mm\\:ss} / {TimeSpan.FromMilliseconds(_gsmtcService.CurrentSongInfo.DurationMs):mm\\:ss}\n" +
                 $"Y Offset     : {_canvasScrollTransition.Value:0.00}\n" +
-                $"User Scroll  : {_mouseYScrollTransition.Value:0.00}";
+                $"User Scroll  : {_mouseYScrollTransition.Value:0.00}\n" +
+                $"Total Offset : {_canvasScrollTransition.Value + _mouseYScrollTransition.Value:0.00}";
 
             using (var format = new CanvasTextFormat
             {
@@ -671,27 +677,40 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
 
         #region UpdateTargetScrollOffset
 
+        // 点击跳转：先把滚轮偏移折算进画布与各行的滚动量（视觉位置不变），
+        // 再由下面的滚动动画平滑过渡到目标句，避免跳转瞬间画面跳变
+        if (_isMouseScrollFoldRequested)
+        {
+            _isMouseScrollFoldRequested = false;
+
+            if (FoldMouseScrollOffset())
+            {
+                // 画布基准已被折算到当前视觉位置，需要滚回播放行；
+                // 若本帧播放行发生变化，下面的分支会用新目标覆盖
+                StartCanvasScrollTransition(lyricsEffect, false);
+            }
+
+            // 结束滚轮状态，让行偏移动画重新对目标滚动量起效（依赖属性只能在 UI 线程写）
+            _uiDispatcherQueue?.TryEnqueue(() =>
+            {
+                MouseScrollOffset = 0;
+                IsMouseScrolling = false;
+            });
+        }
+
         if (isPrimaryPlayingLineChanged || _isLayoutChanged || isGapLineChanged || _isPresentationAnimating)
         {
             var targetScroll = _layoutStrategy.CalculateTargetScrollOffset(_renderLyricsLines, _primaryPlayingLineIndex);
             if (targetScroll.HasValue)
             {
                 _canvasTargetScrollOffset = targetScroll.Value;
+
+                // 画布基准变化后，残留的滚轮偏移可能把视图顶出歌词范围（整屏空白），这里按新基准重新限制
+                ClampMouseScrollOffset(_canvasTargetScrollOffset);
             }
 
             // 排版变化立即更新滚动基准；歌词本身的过渡由各行的 OffsetTransition 完成
-            if (_isLayoutChanged || _isPresentationAnimating)
-            {
-                _canvasScrollTransition.JumpTo(_canvasTargetScrollOffset);
-            }
-            else
-            {
-                _canvasScrollTransition.SetDurationMs(lyricsEffect.LyricsScrollDuration);
-                _canvasScrollTransition.SetInterpolator(
-                    EasingHelper.GetInterpolatorByEasingType<double>(lyricsEffect.LyricsScrollEasingType,
-                        lyricsEffect.LyricsScrollEasingMode));
-                _canvasScrollTransition.Start(_canvasTargetScrollOffset);
-            }
+            StartCanvasScrollTransition(lyricsEffect, _isLayoutChanged || _isPresentationAnimating);
         }
 
         _canvasScrollTransition.Update(elapsedTime);
@@ -922,6 +941,8 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
 
     protected override void OnLoaded()
     {
+        _uiDispatcherQueue = DispatcherQueue;
+
         _hdrPresenter = HdrLyricsPresenter.TryCreate(HdrPanel, XamlRoot.ContentIslandEnvironment.AppWindowId,
             (sender, ds, timing, gain) => DrawFrame(sender, ds, timing, gain));
         _monitorProvider.DisplayStatusChanged -= PowerManager_DisplayStatusChanged;
@@ -1060,7 +1081,15 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
         if (IsPointerInsideLyricsContainer(pointerPoint.Position))
         {
             var sourceLineIndex = GetSourceLineIndex(CurrentHoveringLineIndex);
-            if (sourceLineIndex >= 0) _ = _gsmtcService.ChangeLyricsLineAsync(sourceLineIndex);
+            if (sourceLineIndex >= 0)
+            {
+                // 滚轮偏移是相对“点击前”画布位置的临时增量，跳转后画布目标会变化，
+                // 不清零会把视图顶离目标句（表现为整屏空白后再回弹）。
+                // 交给画布线程折算进滚动量，视觉上不跳变，再平滑过渡到目标句。
+                _scrollChangedDebouncer.Cancel();
+                _isMouseScrollFoldRequested = true;
+                _ = _gsmtcService.ChangeLyricsLineAsync(sourceLineIndex);
+            }
         }
     }
 
@@ -1095,19 +1124,142 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
             maxOffset = 0;
         }
 
-        var currentTotalOffset = CurrentCanvasScroll + MouseScrollOffset;
+        var currentTotalOffset = CurrentCanvasScroll + _mouseScrollOffset;
 
         var targetTotalOffset = currentTotalOffset + adjustedDelta;
 
         targetTotalOffset = Math.Clamp(targetTotalOffset, minOffset, maxOffset);
 
-        MouseScrollOffset = targetTotalOffset - CurrentCanvasScroll;
+        _mouseScrollOffset = targetTotalOffset - CurrentCanvasScroll;
+        MouseScrollOffset = _mouseScrollOffset;
 
         _ = _scrollChangedDebouncer.RunAsync(() =>
         {
-            MouseScrollOffset = 0;
-            IsMouseScrolling = false;
+            _mouseScrollOffset = 0;
+
+            // 防抖回调在线程池线程上执行，依赖属性必须回到 UI 线程写入
+            var dispatcherQueue = _uiDispatcherQueue;
+            void Reset()
+            {
+                MouseScrollOffset = 0;
+                IsMouseScrolling = false;
+            }
+
+            if (dispatcherQueue == null || dispatcherQueue.HasThreadAccess) Reset();
+            else dispatcherQueue.TryEnqueue(Reset);
         }, 3000);
+    }
+
+    /// <summary>
+    /// 清除用户滚轮偏移。滚轮偏移是相对“当时”画布滚动位置的临时增量，
+    /// 点击跳转、切歌等改变画布目标后它就会变成过期值，继续叠加会把视图顶离目标句。
+    /// 只能在 UI 线程调用。
+    /// </summary>
+    private void ResetMouseScrollOffset()
+    {
+        _scrollChangedDebouncer.Cancel();
+
+        _mouseScrollOffset = 0;
+        MouseScrollOffset = 0;
+        _mouseYScrollTransition.JumpTo(0);
+
+        IsMouseScrolling = false;
+    }
+
+    /// <summary>
+    /// 从任意线程请求清除用户滚轮偏移
+    /// </summary>
+    private void RequestResetMouseScrollOffset()
+    {
+        var dispatcherQueue = _uiDispatcherQueue;
+        if (dispatcherQueue == null) return;
+
+        if (dispatcherQueue.HasThreadAccess) ResetMouseScrollOffset();
+        else dispatcherQueue.TryEnqueue(ResetMouseScrollOffset);
+    }
+
+    /// <summary>
+    /// 把用户滚轮偏移折算进画布滚动与每一行的滚动量：各行的绘制位置 = 滚轮偏移 + 行偏移，
+    /// 两者同时加上该偏移、再把滚轮偏移清零，画面保持不变，随后由滚动动画平滑过渡到目标句。
+    /// 本方法在画布更新线程上调用，不能读写依赖属性。
+    /// 返回是否发生了折算。
+    /// </summary>
+    private bool FoldMouseScrollOffset()
+    {
+        var userScrollOffset = _mouseYScrollTransition.Value;
+        if (Math.Abs(userScrollOffset) < 0.01) return false;
+
+        _canvasScrollTransition.JumpTo(_canvasScrollTransition.Value + userScrollOffset);
+
+        if (_renderLyricsLines != null)
+        {
+            foreach (var line in _renderLyricsLines)
+            {
+                line.OffsetTransition.JumpTo(line.OffsetTransition.Value + userScrollOffset);
+            }
+        }
+
+        _mouseScrollOffset = 0;
+        _mouseYScrollTransition.JumpTo(0);
+
+        return true;
+    }
+
+    /// <summary>
+    /// 按当前目标滚动量启动画布滚动过渡（jump 为 true 时立即对齐，用于排版变化）
+    /// </summary>
+    private void StartCanvasScrollTransition(LyricsEffectSettings lyricsEffect, bool jump)
+    {
+        if (jump)
+        {
+            _canvasScrollTransition.JumpTo(_canvasTargetScrollOffset);
+            return;
+        }
+
+        _canvasScrollTransition.SetDurationMs(lyricsEffect.LyricsScrollDuration);
+        _canvasScrollTransition.SetInterpolator(
+            EasingHelper.GetInterpolatorByEasingType<double>(lyricsEffect.LyricsScrollEasingType,
+                lyricsEffect.LyricsScrollEasingMode));
+        _canvasScrollTransition.Start(_canvasTargetScrollOffset);
+    }
+
+    /// <summary>
+    /// 把“画布滚动 + 用户滚轮偏移”的总量限制在歌词内容范围内，
+    /// 保证画布目标变化（跳转 / 切歌 / 排版变化）后视图不会停在歌词之外。
+    /// 本方法在画布更新线程上调用，不能读写依赖属性。
+    /// </summary>
+    private void ClampMouseScrollOffset(double canvasScrollOffset)
+    {
+        if (_mouseScrollOffset == 0 && _mouseYScrollTransition.Value == 0) return;
+
+        var actualSize = ActualLyricsSize;
+        if (actualSize <= 0) return;
+
+        var isVertical = _lyricsWindowStatus?.LyricsStyleSettings.LyricsLayoutOrientation ==
+                         LyricsLayoutOrientation.Vertical;
+
+        var minTotalOffset = isVertical ? 0 : -actualSize;
+        var maxTotalOffset = isVertical ? actualSize : 0;
+
+        var userScrollOffset = _mouseYScrollTransition.Value;
+        var totalOffset = canvasScrollOffset + userScrollOffset;
+        var clampedTotalOffset = Math.Clamp(totalOffset, minTotalOffset, maxTotalOffset);
+        if (Math.Abs(clampedTotalOffset - totalOffset) < 0.01) return;
+
+        var clampedUserScrollOffset = clampedTotalOffset - canvasScrollOffset;
+
+        // 先用修正值替换字段，后续滚轮事件与目标变化都以它为准
+        _mouseScrollOffset = clampedUserScrollOffset;
+
+        // 依赖属性与过渡值只能在 UI 线程更新
+        _uiDispatcherQueue?.TryEnqueue(() =>
+        {
+            MouseScrollOffset = clampedUserScrollOffset;
+
+            // 过期偏移可能还在过渡中，直接跳到修正后的位置，避免画面继续空白
+            if (Math.Abs(_mouseYScrollTransition.Value - clampedUserScrollOffset) > 0.01)
+                _mouseYScrollTransition.JumpTo(clampedUserScrollOffset);
+        });
     }
 
     private bool IsPointerInsideLyricsContainer(Point position)
@@ -2085,6 +2237,9 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
         _isPresentationChanged = false;
         ResetPresentationTransitionState();
         RequestReloadLyrics();
+
+        // 歌词整体替换后画布基准会变化，残留的滚轮偏移会把视图顶离当前句
+        RequestResetMouseScrollOffset();
     }
 
     public void Receive(NoLyricsFoundHandlingChangedMessage message)
@@ -2105,6 +2260,9 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
         ResetPlaybackState();
 
         _isGapListChanged = true;
+
+        // 切歌后画布基准完全变化，上一首残留的滚轮偏移不再有意义
+        RequestResetMouseScrollOffset();
     }
 
     public void Receive(CurrentPositionChangedMessage message)
