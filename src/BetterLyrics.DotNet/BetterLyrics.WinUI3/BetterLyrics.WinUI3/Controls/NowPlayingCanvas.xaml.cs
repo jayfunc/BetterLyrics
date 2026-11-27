@@ -2023,15 +2023,20 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
     {
         if (_gsmtcService.CurrentIsPlaying)
         {
-            _songPosition += elapsedTime;
-            _songPositionWithOffset = _songPosition +
-                TimeSpan.FromMilliseconds(_gsmtcService.CurrentMediaSourceProviderInfo?.PositionOffset ?? 0);
+            ApplySongPosition(_songPosition + elapsedTime);
         }
+    }
+
+    private void ApplySongPosition(TimeSpan position)
+    {
+        _songPosition = position;
+        _songPositionWithOffset = position +
+            TimeSpan.FromMilliseconds(_gsmtcService.CurrentMediaSourceProviderInfo?.PositionOffset ?? 0);
     }
 
     private void ResetPlaybackState()
     {
-        _songPosition = TimeSpan.Zero;
+        ApplySongPosition(TimeSpan.Zero);
     }
 
     private void UpdateDesktopWallpaperSource(TimeSpan elapsedTime, bool isEnabled)
@@ -2275,7 +2280,9 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
         // seek
         if (diff >= timelineSyncThreshold)
         {
-            _songPosition = realPosition;
+            // 暂停时 UpdatePlaybackState 不会推进位置，这里必须同步带偏移的位置，
+            // 否则 Playing Line、高亮与歌词视图会停留在 seek 前的位置
+            ApplySongPosition(realPosition);
         }
 
         if (diff >= timelineSyncThreshold + 5000)
