@@ -28,6 +28,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using ColorExtensions = BetterLyrics.WinUI3.Extensions.ColorExtensions;
+using Win32Interop = Microsoft.UI.Win32Interop;
 
 namespace BetterLyrics.WinUI3.Views;
 
@@ -40,6 +41,7 @@ public sealed partial class NowPlayingPage : BasePage,
     IRecipient<MappedSongSearchQueryChangedMessage>,
     IRecipient<LyricsWindowPaletteChangedMessage>,
     IRecipient<LyricsFontFamilyChangedMessage>,
+    IRecipient<LyricsWindowLockConfigChangedMessage>,
     IRecipient<LayoutChangedMessage>
 {
     public static readonly DependencyProperty LyricsWindowStatusProperty =
@@ -81,10 +83,18 @@ public sealed partial class NowPlayingPage : BasePage,
 
     private readonly ISongSearchMapService _songSearchMapService = Ioc.Default.GetRequiredService<ISongSearchMapService>();
 
+    private readonly DispatcherTimer _lockedHoverPollTimer = new()
+    {
+        Interval = TimeSpan.FromMilliseconds(100)
+    };
+
+    private IntPtr _windowHandle;
+
     public NowPlayingPage()
     {
         InitializeComponent();
         DataContext = Ioc.Default.GetRequiredService<NowPlayingPageViewModel>();
+        _lockedHoverPollTimer.Tick += LockedHoverPollTimer_Tick;
     }
 
     public NowPlayingPageViewModel ViewModel => (NowPlayingPageViewModel)DataContext;
@@ -153,6 +163,12 @@ public sealed partial class NowPlayingPage : BasePage,
             _ = RenderSongInfoAsync();
     }
 
+    public void Receive(LyricsWindowLockConfigChangedMessage message)
+    {
+        if (message.Sender == _lyricsWindowStatus)
+            UpdateLockedHoverTracking();
+    }
+
     private static void OnDependencyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         if (d is NowPlayingPage page)
@@ -160,6 +176,7 @@ public sealed partial class NowPlayingPage : BasePage,
             if (e.Property == LyricsWindowStatusProperty)
             {
                 page._lyricsWindowStatus = (LyricsWindowStatus?)e.NewValue;
+                page.UpdateLockedHoverTracking();
                 page.OnLayoutChanged();
             }
             else if (e.Property == IsBuiltInOnlyProperty)
@@ -483,6 +500,87 @@ public sealed partial class NowPlayingPage : BasePage,
             element.IsPlaying = isPointerEntered;
     }
 
+    // 锁定窗口除播放栏外均为鼠标穿透（WS_EX_TRANSPARENT），拿不到 PointerEntered，
+    // 故在锁定期间轮询光标位置来驱动歌曲信息的悬停滚动
+    private bool IsLockedHoverTrackingRequired =>
+        _lyricsWindowStatus is { IsLocked: true, IsWallpaper: false };
+
+    private void UpdateLockedHoverTracking()
+    {
+        if (IsLockedHoverTrackingRequired)
+            _lockedHoverPollTimer.Start();
+        else
+            StopLockedHoverTracking();
+    }
+
+    private void StopLockedHoverTracking()
+    {
+        if (!_lockedHoverPollTimer.IsEnabled) return;
+
+        _lockedHoverPollTimer.Stop();
+        UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, false);
+        UpdateAutoScrollViewIsPlaying(ArtistsAutoScrollHoverEffectView, false);
+        UpdateAutoScrollViewIsPlaying(AlbumAutoScrollHoverEffectView, false);
+    }
+
+    private void LockedHoverPollTimer_Tick(object? sender, object e)
+    {
+        if (!IsLockedHoverTrackingRequired)
+        {
+            StopLockedHoverTracking();
+            return;
+        }
+
+        if (!Vanara.PInvoke.User32.GetCursorPos(out var cursor)) return;
+
+        UpdateAutoScrollHoverFromCursor(TitleAutoScrollHoverEffectView, cursor);
+        UpdateAutoScrollHoverFromCursor(ArtistsAutoScrollHoverEffectView, cursor);
+        UpdateAutoScrollHoverFromCursor(AlbumAutoScrollHoverEffectView, cursor);
+    }
+
+    private void UpdateAutoScrollHoverFromCursor(AutoScrollView element, Vanara.PInvoke.POINT cursor)
+    {
+        UpdateAutoScrollViewIsPlaying(element, IsCursorOver(element, cursor));
+    }
+
+    private bool IsCursorOver(FrameworkElement element, Vanara.PInvoke.POINT cursor)
+    {
+        try
+        {
+            if (element.XamlRoot is not { IsHostVisible: true }) return false;
+            if (element.ActualWidth <= 0 || element.ActualHeight <= 0) return false;
+
+            var hwnd = GetWindowHandle(element);
+            if (hwnd == IntPtr.Zero) return false;
+
+            var topLeft = element.TransformToVisual(null).TransformPoint(new Point(0, 0));
+            var scale = element.XamlRoot.RasterizationScale;
+
+            var point = new Vanara.PInvoke.POINT
+            {
+                X = (int)(topLeft.X * scale),
+                Y = (int)(topLeft.Y * scale)
+            };
+            Vanara.PInvoke.User32.ClientToScreen(hwnd, ref point);
+
+            return cursor.X >= point.X && cursor.X <= point.X + element.ActualWidth * scale &&
+                   cursor.Y >= point.Y && cursor.Y <= point.Y + element.ActualHeight * scale;
+        }
+        catch
+        {
+            return false;
+        }
+    }
+
+    private IntPtr GetWindowHandle(FrameworkElement element)
+    {
+        if (_windowHandle != IntPtr.Zero) return _windowHandle;
+        if (element.XamlRoot == null) return IntPtr.Zero;
+
+        _windowHandle = Win32Interop.GetWindowFromWindowId(element.XamlRoot.ContentIslandEnvironment.AppWindowId);
+        return _windowHandle;
+    }
+
     private void TitleAutoScrollHoverEffectView_PointerCanceled(object sender, PointerRoutedEventArgs e)
     {
         UpdateAutoScrollViewIsPlaying(TitleAutoScrollHoverEffectView, false);
@@ -610,6 +708,8 @@ public sealed partial class NowPlayingPage : BasePage,
 
     protected override void OnLoaded()
     {
+        UpdateLockedHoverTracking();
+
         if (_gsmtcService is not IBuiltInGsmtcService) return;
 
         // 内置播放器专用服务的消息走独立通道，不再接收默认通道（当前 GSMTC 会话）的同类消息
@@ -621,6 +721,7 @@ public sealed partial class NowPlayingPage : BasePage,
 
     protected override void OnUnloaded()
     {
+        StopLockedHoverTracking();
         WeakReferenceMessenger.Default.UnregisterAll(this, GsmtcMessageToken.BuiltIn);
         _layoutChangedDebouncer.Dispose();
     }
