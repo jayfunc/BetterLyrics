@@ -210,17 +210,30 @@ public sealed partial class NowPlayingPage : BasePage,
             RenderTextBlock(ArtistsTextBlock, mappedArtist, artistFontSize);
             RenderTextBlock(AlbumTextBlock, mappedAlbum, albumFontSize);
 
-            if (double.IsNormal(titleFontSize))
-                TitleAutoScrollHoverEffectView.ScrollingPixelsPreSecond = (int)titleFontSize;
-            if (double.IsNormal(artistFontSize))
-                ArtistsAutoScrollHoverEffectView.ScrollingPixelsPreSecond = (int)artistFontSize;
-            if (double.IsNormal(albumFontSize))
-                AlbumAutoScrollHoverEffectView.ScrollingPixelsPreSecond = (int)albumFontSize;
+            // 立即完成布局，让 AutoScrollView 读到新文本的实际宽度
+            UpdateLayout();
+
+            UpdateAutoScrollSpeed(TitleAutoScrollHoverEffectView, titleFontSize);
+            UpdateAutoScrollSpeed(ArtistsAutoScrollHoverEffectView, artistFontSize);
+            UpdateAutoScrollSpeed(AlbumAutoScrollHoverEffectView, albumFontSize);
         }
         catch (Exception ex)
         {
             System.Diagnostics.Debug.WriteLine($"RenderSongInfoAsync: {ex}");
         }
+    }
+
+    private static void UpdateAutoScrollSpeed(AutoScrollView view, double fontSize)
+    {
+        if (!double.IsNormal(fontSize)) return;
+
+        var speed = (int)fontSize;
+
+        // AutoScrollView 只在挂载或其速度变化时按当前文本宽度计算动画时长，
+        // 文本变宽后不会刷新，滚动速度会随内容长度成比例变快，故强制重算一次
+        if (view.ScrollingPixelsPreSecond == speed)
+            view.ScrollingPixelsPreSecond = speed + 1;
+        view.ScrollingPixelsPreSecond = speed;
     }
 
     private async Task RefreshSongInfoAsync()
