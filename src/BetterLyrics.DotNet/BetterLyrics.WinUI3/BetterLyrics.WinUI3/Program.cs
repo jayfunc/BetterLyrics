@@ -219,7 +219,12 @@ public class Program
             }
             else if (protocolArgs.Uri.Host == "lyrics")
             {
-                var targetSegment = protocolArgs.Uri.Segments.LastOrDefault()?.Trim('/');
+                var segments = protocolArgs.Uri.Segments
+                    .Select(s => s.Trim('/'))
+                    .Where(s => !string.IsNullOrEmpty(s))
+                    .ToArray();
+
+                var targetSegment = segments.FirstOrDefault();
                 if (targetSegment == "card")
                 {
                     windowManagerProvider.OpenOrShowWindow<LyricsShareWindow>();
@@ -228,18 +233,27 @@ public class Program
                 {
                     windowManagerProvider.OpenOrShowWindow<LyricsSearchWindow>();
 
-                    var decoder = new WwwFormUrlDecoder(protocolArgs.Uri.Query);
-                    var title = decoder.FirstOrDefault(p => p.Name == "title")?.Value ?? "";
-                    var artist = decoder.FirstOrDefault(p => p.Name == "artist")?.Value ?? "";
-                    var album = decoder.FirstOrDefault(p => p.Name == "album")?.Value ?? "";
+                    // CopySearchLink writes "…/lyrics/search/title=…&artist=…", while
+                    // "…/lyrics/search?title=…" is also accepted.
+                    var parameterString = string.Join("&", segments.Skip(1));
+                    var query = protocolArgs.Uri.Query.TrimStart('?');
+                    if (!string.IsNullOrEmpty(query))
+                        parameterString = string.IsNullOrEmpty(parameterString) ? query : $"{parameterString}&{query}";
+
+                    var title = "";
+                    var artist = "";
+                    var album = "";
+                    if (!string.IsNullOrEmpty(parameterString))
+                    {
+                        var decoder = new WwwFormUrlDecoder(parameterString);
+                        title = decoder.FirstOrDefault(p => p.Name == "title")?.Value ?? "";
+                        artist = decoder.FirstOrDefault(p => p.Name == "artist")?.Value ?? "";
+                        album = decoder.FirstOrDefault(p => p.Name == "album")?.Value ?? "";
+                    }
 
                     var lyricsSearchControlViewModel =
                         Ioc.Default.GetRequiredService<LyricsSearchControlViewModel>();
-                    lyricsSearchControlViewModel.MappedSongSearchQuery?.MappedTitle = title;
-                    lyricsSearchControlViewModel.MappedSongSearchQuery?.MappedArtist = artist;
-                    lyricsSearchControlViewModel.MappedSongSearchQuery?.MappedAlbum = album;
-                    if (!lyricsSearchControlViewModel.IsSearching)
-                        lyricsSearchControlViewModel.SearchCommand.Execute(null);
+                    await lyricsSearchControlViewModel.ApplySearchLinkAsync(title, artist, album);
                 }
             }
             else if (protocolArgs.Uri.Host == "player")

@@ -48,6 +48,8 @@ public partial class LyricsSearchControlViewModel : ObservableRecipient, ISingle
 
     [ObservableProperty] public partial bool IsSearching { get; set; } = false;
 
+    private readonly Task _initializationTask;
+
     public LyricsSearchControlViewModel(
     ILyricsSearchService lyricsSearchService,
     IGsmtcService gsmtcService,
@@ -67,9 +69,25 @@ public partial class LyricsSearchControlViewModel : ObservableRecipient, ISingle
         GsmtcService = gsmtcService;
         AppSettings = _settingsService.AppSettings;
 
-        _ = InitMappedSongSearchQueryAsync();
+        _initializationTask = InitMappedSongSearchQueryAsync();
 
         IsActive = true;
+    }
+
+    public async Task ApplySearchLinkAsync(string title, string artist, string album)
+    {
+        await _initializationTask;
+
+        if (string.IsNullOrEmpty(title) && string.IsNullOrEmpty(artist) && string.IsNullOrEmpty(album))
+            return;
+
+        MappedSongSearchQuery ??= new MappedSongSearchQuery();
+        MappedSongSearchQuery.MappedTitle = title;
+        MappedSongSearchQuery.MappedArtist = artist;
+        MappedSongSearchQuery.MappedAlbum = album;
+
+        if (!IsSearching)
+            SearchCommand.Execute(null);
     }
 
     private async Task InitMappedSongSearchQueryAsync()
