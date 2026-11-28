@@ -78,6 +78,11 @@
                         </StackPanel>
                     </Flyout>
                 </Grid.ContextFlyout>
+                <!--  Auto 行 / 列需要内容尺寸，按封面原始尺寸报告等比缩放后的期望大小  -->
+                <uc:AlbumArtMeasurePlaceholder
+                    x:Name="AlbumArtMeasurePlaceholder"
+                    IsHitTestVisible="False"
+                    NaturalSize="{x:Bind NowPlayingCanvas.AlbumArtNaturalSize, Mode=OneWay}" />
             </Grid>
 
             <Grid x:Name="SongTitleContainer" Visibility="Collapsed">

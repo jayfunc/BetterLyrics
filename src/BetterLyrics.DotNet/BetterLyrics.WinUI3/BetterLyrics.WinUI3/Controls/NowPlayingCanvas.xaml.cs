@@ -80,6 +80,10 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
             typeof(NowPlayingCanvas),
             new PropertyMetadata(AppVerticalAlignment.Center, OnDependencyPropertyChanged));
 
+    public static readonly DependencyProperty AlbumArtNaturalSizeProperty =
+        DependencyProperty.Register(nameof(AlbumArtNaturalSize), typeof(Size), typeof(NowPlayingCanvas),
+            new PropertyMetadata(new Size()));
+
     public static readonly DependencyProperty NowPlayingBarRectProperty =
         DependencyProperty.Register(nameof(NowPlayingBarRect), typeof(Rect), typeof(NowPlayingCanvas),
             new PropertyMetadata(new Rect(), OnDependencyPropertyChanged));
@@ -316,6 +320,15 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
     {
         get => (AppVerticalAlignment)GetValue(AlbumArtVerticalAlignmentProperty);
         set => SetValue(AlbumArtVerticalAlignmentProperty, value);
+    }
+
+    /// <summary>
+    /// 当前封面的原始尺寸（DIP），供页面里的占位元素在 Auto 行 / 列中撑出正确尺寸。
+    /// </summary>
+    public Size AlbumArtNaturalSize
+    {
+        get => (Size)GetValue(AlbumArtNaturalSizeProperty);
+        set => SetValue(AlbumArtNaturalSizeProperty, value);
     }
 
     public void SetSongInfo(string? title, string? artist, string? album,
@@ -2153,6 +2166,12 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
         _desktopWallpaperRenderer.SetWallpaperPath(Canvas, path);
     }
 
+    private void SetAlbumArtNaturalSize(Size size)
+    {
+        if (DispatcherQueue.HasThreadAccess) AlbumArtNaturalSize = size;
+        else DispatcherQueue.TryEnqueue(() => AlbumArtNaturalSize = size);
+    }
+
     private async Task ReloadCoverResourcesAsync()
     {
         if (Canvas == null) return;
@@ -2170,9 +2189,14 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
 
                 var placeholder = await LoadPlaceholderCoverAsync();
                 if (placeholder != null && reloadVersion == _coverReloadVersion)
+                {
+                    SetAlbumArtNaturalSize(placeholder.Size);
                     _albumArtRenderer.SetCoverBitmap(placeholder);
+                }
                 else
+                {
                     placeholder?.Dispose();
+                }
 
                 return;
             }
@@ -2204,6 +2228,7 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
 
                 _coverRenderer.SetCoverBitmap(backgroundBitmap);
                 _albumArtRenderer.SetCoverBitmap(albumArtBitmap);
+                SetAlbumArtNaturalSize(albumArtBitmap.Size);
             }
         }
         catch (Exception ex)
