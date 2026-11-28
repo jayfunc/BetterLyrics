@@ -198,9 +198,9 @@ public sealed partial class NowPlayingPage : BasePage,
             LyricsCard.Title = mappedTitle;
             LyricsCard.Artist = mappedArtist;
 
-            var titleFontSize = SongTitleContainer.ActualHeight * 0.75;
-            var artistFontSize = SongArtistContainer.ActualHeight * 0.75;
-            var albumFontSize = SongAlbumContainer.ActualHeight * 0.75;
+            var titleFontSize = GetSongInfoFontSize(SongTitleContainer);
+            var artistFontSize = GetSongInfoFontSize(SongArtistContainer);
+            var albumFontSize = GetSongInfoFontSize(SongAlbumContainer);
 
             RenderTextBlock(TitleTextBlock, mappedTitle, titleFontSize);
             RenderTextBlock(ArtistsTextBlock, mappedArtist, artistFontSize);
@@ -232,6 +232,37 @@ public sealed partial class NowPlayingPage : BasePage,
         NowPlayingCanvas.SetSongInfoAlignment(SongInfoKind.Title, _songTitleAlignment);
         NowPlayingCanvas.SetSongInfoAlignment(SongInfoKind.Artist, _songArtistAlignment);
         NowPlayingCanvas.SetSongInfoAlignment(SongInfoKind.Album, _songAlbumAlignment);
+    }
+
+    // 字号按组件占据的网格单元高度计算。垂直对齐不是 Stretch 时，容器高度由占位文本撑开，
+    // 若再用容器 ActualHeight 推导字号，每次重新布局都会按自身字号再缩放一次，窗口反复缩放后文本越来越小。
+    private double GetSongInfoFontSize(Grid? container)
+    {
+        if (container == null) return 0;
+
+        var height = !double.IsNaN(container.Height) && container.Height > 0
+            ? container.Height
+            : GetSongInfoCellHeight(container);
+
+        if (!(height > 0)) height = container.ActualHeight;
+
+        return Math.Max(0, height * 0.75);
+    }
+
+    private double GetSongInfoCellHeight(FrameworkElement element)
+    {
+        var rows = DynamicLayoutGrid?.RowDefinitions;
+        if (rows == null || rows.Count == 0) return 0;
+
+        var start = Math.Clamp(Grid.GetRow(element), 0, rows.Count - 1);
+        var end = Math.Clamp(start + Math.Max(1, Grid.GetRowSpan(element)), start + 1, rows.Count);
+
+        double height = 0;
+        for (var i = start; i < end; i++) height += rows[i].ActualHeight;
+        height += DynamicLayoutGrid!.RowSpacing * (end - start - 1);
+        height -= element.Margin.Top + element.Margin.Bottom;
+
+        return height;
     }
 
     private Rect GetSongInfoBounds(Grid? container)
