@@ -1054,7 +1054,7 @@
   <data name="SettingsPageSearchNotFound.Text" xml:space="preserve"><value>Tidak ada hasil ditemukan</value></data>
   <data name="SettingsPageMonitorLayout.Header" xml:space="preserve"><value>Tata letak monitor saat ini</value></data>
   <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve"><value>Buka pengaturan tampilan sistem</value></data>
-  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve"><value>Efek lirik semantik</value></data>
+  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve"><value>Lapisan lirik semantik</value></data>
   <data name="SettingsPageSemanticEffects.Description" xml:space="preserve"><value>Menghasilkan partikel (misalnya hati, hujan, salju) saat kata kunci tertentu muncul dalam lirik</value></data>
   <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve"><value>Salin tautan mendalam</value></data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve"><value>Tidak ada monitor yang cocok dengan mode</value></data>

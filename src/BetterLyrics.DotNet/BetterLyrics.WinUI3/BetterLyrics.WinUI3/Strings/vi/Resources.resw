@@ -1054,7 +1054,7 @@
   <data name="SettingsPageSearchNotFound.Text" xml:space="preserve"><value>Không tìm thấy kết quả</value></data>
   <data name="SettingsPageMonitorLayout.Header" xml:space="preserve"><value>Bố trí màn hình hiện tại</value></data>
   <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve"><value>Mở cài đặt hiển thị của hệ thống</value></data>
-  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve"><value>Hiệu ứng lời bài hát theo ngữ nghĩa</value></data>
+  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve"><value>Lớp lời bài hát theo ngữ nghĩa</value></data>
   <data name="SettingsPageSemanticEffects.Description" xml:space="preserve"><value>Tạo hạt (ví dụ: trái tim, mưa, tuyết) khi có từ khóa cụ thể xuất hiện trong lời bài hát</value></data>
   <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve"><value>Sao chép liên kết sâu</value></data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve"><value>Không tìm thấy màn hình phù hợp với chế độ</value></data>

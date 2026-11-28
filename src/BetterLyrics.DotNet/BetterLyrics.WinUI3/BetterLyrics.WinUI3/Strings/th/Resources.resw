@@ -1054,7 +1054,7 @@
   <data name="SettingsPageSearchNotFound.Text" xml:space="preserve"><value>ไม่พบผลลัพธ์</value></data>
   <data name="SettingsPageMonitorLayout.Header" xml:space="preserve"><value>เลย์เอาต์จอภาพปัจจุบัน</value></data>
   <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve"><value>เปิดการตั้งค่าจอแสดงผลของระบบ</value></data>
-  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve"><value>เอฟเฟกต์เนื้อเพลงเชิงความหมาย</value></data>
+  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve"><value>เลเยอร์เนื้อเพลงเชิงความหมาย</value></data>
   <data name="SettingsPageSemanticEffects.Description" xml:space="preserve"><value>สร้างอนุภาค (เช่น หัวใจ ฝน หิมะ) เมื่อมีคำสำคัญบางคำปรากฏในเนื้อเพลง</value></data>
   <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve"><value>คัดลอกลิงก์เชิงลึก</value></data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve"><value>ไม่พบจอภาพที่ตรงกับโหมดนี้</value></data>

@@ -1054,7 +1054,7 @@
   <data name="SettingsPageSearchNotFound.Text" xml:space="preserve"><value>لم يُعثر على نتائج</value></data>
   <data name="SettingsPageMonitorLayout.Header" xml:space="preserve"><value>تخطيط الشاشات الحالي</value></data>
   <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve"><value>فتح إعدادات العرض في النظام</value></data>
-  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve"><value>تأثيرات الكلمات الدلالية</value></data>
+  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve"><value>طبقة الكلمات الدلالية</value></data>
   <data name="SettingsPageSemanticEffects.Description" xml:space="preserve"><value>ينشئ جزيئات (مثل القلوب أو المطر أو الثلج) عند ظهور كلمات مفتاحية معيّنة في الكلمات</value></data>
   <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve"><value>نسخ الرابط العميق</value></data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve"><value>لم يُعثر على شاشة مطابقة للوضع</value></data>

@@ -1054,7 +1054,7 @@
   <data name="SettingsPageSearchNotFound.Text" xml:space="preserve"><value>Ничего не найдено</value></data>
   <data name="SettingsPageMonitorLayout.Header" xml:space="preserve"><value>Текущее расположение мониторов</value></data>
   <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve"><value>Открыть системные параметры экрана</value></data>
-  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve"><value>Семантические эффекты текста</value></data>
+  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve"><value>Семантический слой текста</value></data>
   <data name="SettingsPageSemanticEffects.Description" xml:space="preserve"><value>Создаёт частицы (например, сердца, дождь, снег) при появлении определённых ключевых слов в тексте</value></data>
   <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve"><value>Копировать глубокую ссылку</value></data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve"><value>Монитор, соответствующий режиму, не найден.</value></data>

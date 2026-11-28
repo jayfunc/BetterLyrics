@@ -1054,7 +1054,7 @@
   <data name="SettingsPageSearchNotFound.Text" xml:space="preserve"><value>Sonuç bulunamadı</value></data>
   <data name="SettingsPageMonitorLayout.Header" xml:space="preserve"><value>Geçerli ekran düzeni</value></data>
   <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve"><value>Sistem görüntü ayarlarını aç</value></data>
-  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve"><value>Anlamsal şarkı sözü efektleri</value></data>
+  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve"><value>Anlamsal şarkı sözü katmanı</value></data>
   <data name="SettingsPageSemanticEffects.Description" xml:space="preserve"><value>Şarkı sözlerinde belirli anahtar sözcükler göründüğünde parçacıklar (örn. kalp, yağmur, kar) oluşturur</value></data>
   <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve"><value>Derin bağlantıyı kopyala</value></data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve"><value>Modla eşleşen ekran bulunamadı</value></data>

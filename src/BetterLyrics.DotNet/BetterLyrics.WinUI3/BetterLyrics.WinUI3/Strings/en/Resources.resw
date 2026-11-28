@@ -2851,7 +2851,7 @@
     <value>Open system display settings</value>
   </data>
   <data name="SettingsPageSemanticEffects.Header" xml:space="preserve">
-    <value>Semantic Lyrics Effects</value>
+    <value>Semantic Lyrics Layer</value>
   </data>
   <data name="SettingsPageSemanticEffects.Description" xml:space="preserve">
     <value>Spawn particles (e.g., heart, rain, snow) when specific keywords appear in lyrics</value>

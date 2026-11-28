@@ -1054,7 +1054,7 @@
   <data name="SettingsPageSearchNotFound.Text" xml:space="preserve"><value>未找到结果</value></data>
   <data name="SettingsPageMonitorLayout.Header" xml:space="preserve"><value>当前显示器布局</value></data>
   <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve"><value>打开系统显示设置</value></data>
-  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve"><value>语义歌词效果</value></data>
+  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve"><value>语义歌词图层</value></data>
   <data name="SettingsPageSemanticEffects.Description" xml:space="preserve"><value>歌词中出现特定关键词时生成粒子效果（如爱心、雨、雪）</value></data>
   <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve"><value>复制深层链接</value></data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve"><value>未找到与该模式匹配的显示器</value></data>

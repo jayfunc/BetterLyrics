@@ -1054,7 +1054,7 @@
   <data name="SettingsPageSearchNotFound.Text" xml:space="preserve"><value>결과를 찾을 수 없습니다</value></data>
   <data name="SettingsPageMonitorLayout.Header" xml:space="preserve"><value>현재 모니터 배치</value></data>
   <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve"><value>시스템 디스플레이 설정 열기</value></data>
-  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve"><value>의미 기반 가사 효과</value></data>
+  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve"><value>의미 기반 가사 레이어</value></data>
   <data name="SettingsPageSemanticEffects.Description" xml:space="preserve"><value>가사에 특정 키워드가 나타나면 입자 효과(하트, 비, 눈 등)를 생성합니다</value></data>
   <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve"><value>딥 링크 복사</value></data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve"><value>모드와 일치하는 모니터를 찾을 수 없습니다</value></data>

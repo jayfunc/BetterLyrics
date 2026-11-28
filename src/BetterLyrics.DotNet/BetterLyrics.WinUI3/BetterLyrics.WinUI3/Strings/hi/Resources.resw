@@ -1054,7 +1054,7 @@
   <data name="SettingsPageSearchNotFound.Text" xml:space="preserve"><value>कोई परिणाम नहीं मिला</value></data>
   <data name="SettingsPageMonitorLayout.Header" xml:space="preserve"><value>वर्तमान डिस्प्ले लेआउट</value></data>
   <data name="SettingsPageOpenDisplaySettings.Header" xml:space="preserve"><value>सिस्टम डिस्प्ले सेटिंग्स खोलें</value></data>
-  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve"><value>अर्थपूर्ण बोल प्रभाव</value></data>
+  <data name="SettingsPageSemanticEffects.Header" xml:space="preserve"><value>अर्थपूर्ण बोल लेयर</value></data>
   <data name="SettingsPageSemanticEffects.Description" xml:space="preserve"><value>बोल में विशिष्ट कीवर्ड आने पर कण (जैसे दिल, वर्षा, हिम) उत्पन्न करता है</value></data>
   <data name="SettingsPageCopyDeepLink.Text" xml:space="preserve"><value>डीप लिंक कॉपी करें</value></data>
   <data name="DemoWindowGridMonitorDisconnected.Text" xml:space="preserve"><value>मोड से मेल खाता कोई डिस्प्ले नहीं मिला</value></data>
