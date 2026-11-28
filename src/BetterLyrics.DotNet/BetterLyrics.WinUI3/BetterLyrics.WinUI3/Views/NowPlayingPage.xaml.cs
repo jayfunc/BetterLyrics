@@ -476,6 +476,14 @@ public sealed partial class NowPlayingPage : BasePage,
         if (RootGrid == null || AlbumArtContainer == null) return;
         if (!AlbumArtContainer.IsLoaded || !RootGrid.IsLoaded) return;
 
+        // 布局配置里没有封面时容器保持折叠，ActualWidth 会保留上一次的值，
+        // 不检查可见性会把旧矩形重新写回画布，导致封面无法隐藏
+        if (AlbumArtContainer.Visibility != Visibility.Visible)
+        {
+            NowPlayingCanvas.AlbumArtRect = new Rect();
+            return;
+        }
+
         var transform = AlbumArtContainer.TransformToVisual(RootGrid);
         var localRect =
             new Rect(0, 0, AlbumArtContainer.ActualWidth, AlbumArtContainer.ActualHeight);
