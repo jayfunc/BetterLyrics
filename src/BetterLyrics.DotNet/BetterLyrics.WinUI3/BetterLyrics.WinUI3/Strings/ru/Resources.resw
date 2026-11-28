@@ -522,7 +522,8 @@
   <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve"><value>Автоматически возобновлять воспроизведение при открытии музыкальной галереи</value></data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve"><value>Автозапуск</value></data>
   <data name="SettingsPageAutoWrap.Header" xml:space="preserve"><value>Автоматический перенос</value></data>
-  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>Фон текста</value></data>
+  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>Слой фона</value></data>
+  <data name="SettingsPageForegroundOverlay.Text" xml:space="preserve"><value>Слой переднего плана</value></data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve"><value>Интенсивность размытия</value></data>
   <data name="SettingsPageBottom.Content" xml:space="preserve"><value>Снизу</value></data>
   <data name="SettingsPageCache.Description" xml:space="preserve"><value>Включает файлы журналов и кэш онлайн-текстов</value></data>

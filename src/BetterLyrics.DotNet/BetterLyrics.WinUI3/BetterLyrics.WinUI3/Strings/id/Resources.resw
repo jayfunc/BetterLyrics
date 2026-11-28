@@ -522,7 +522,8 @@
   <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve"><value>Lanjutkan pemutaran secara otomatis saat jendela galeri musik dibuka</value></data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve"><value>Mulai otomatis</value></data>
   <data name="SettingsPageAutoWrap.Header" xml:space="preserve"><value>Bungkus otomatis</value></data>
-  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>Latar belakang lirik</value></data>
+  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>Lapisan latar belakang</value></data>
+  <data name="SettingsPageForegroundOverlay.Text" xml:space="preserve"><value>Lapisan latar depan</value></data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve"><value>Besaran keburaman</value></data>
   <data name="SettingsPageBottom.Content" xml:space="preserve"><value>Bawah</value></data>
   <data name="SettingsPageCache.Description" xml:space="preserve"><value>Mencakup file log dan cache lirik daring</value></data>

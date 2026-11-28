@@ -39,6 +39,7 @@ using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 using Windows.Foundation;
+using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.UI;
 
@@ -68,6 +69,16 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
     public static readonly DependencyProperty AlbumArtRectProperty =
         DependencyProperty.Register(nameof(AlbumArtRect), typeof(Rect), typeof(NowPlayingCanvas),
             new PropertyMetadata(new Rect(), OnDependencyPropertyChanged));
+
+    public static readonly DependencyProperty AlbumArtHorizontalAlignmentProperty =
+        DependencyProperty.Register(nameof(AlbumArtHorizontalAlignment), typeof(AppHorizontalAlignment),
+            typeof(NowPlayingCanvas),
+            new PropertyMetadata(AppHorizontalAlignment.Center, OnDependencyPropertyChanged));
+
+    public static readonly DependencyProperty AlbumArtVerticalAlignmentProperty =
+        DependencyProperty.Register(nameof(AlbumArtVerticalAlignment), typeof(AppVerticalAlignment),
+            typeof(NowPlayingCanvas),
+            new PropertyMetadata(AppVerticalAlignment.Center, OnDependencyPropertyChanged));
 
     public static readonly DependencyProperty NowPlayingBarRectProperty =
         DependencyProperty.Register(nameof(NowPlayingBarRect), typeof(Rect), typeof(NowPlayingCanvas),
@@ -145,6 +156,7 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
         0.3f
     );
 
+    private readonly AlbumArtRenderer _albumArtRenderer = new();
     private readonly CompositionRenderer _compositionRenderer = new();
     private readonly CoverBackgroundRenderer _coverRenderer = new();
 
@@ -201,6 +213,8 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
 
     private readonly LyricsSynchronizer _synchronizer = new();
     private Rect _albumArtRect;
+    private AppHorizontalAlignment _albumArtHorizontalAlignment = AppHorizontalAlignment.Center;
+    private AppVerticalAlignment _albumArtVerticalAlignment = AppVerticalAlignment.Center;
     private double _canvasTargetScrollOffset;
     private TimeSpan _desktopWallpaperPathCheckTimer = TimeSpan.FromSeconds(1);
     private string? _loadedWallpaperPath;
@@ -290,6 +304,18 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
     {
         get => (Rect)GetValue(AlbumArtRectProperty);
         set => SetValue(AlbumArtRectProperty, value);
+    }
+
+    public AppHorizontalAlignment AlbumArtHorizontalAlignment
+    {
+        get => (AppHorizontalAlignment)GetValue(AlbumArtHorizontalAlignmentProperty);
+        set => SetValue(AlbumArtHorizontalAlignmentProperty, value);
+    }
+
+    public AppVerticalAlignment AlbumArtVerticalAlignment
+    {
+        get => (AppVerticalAlignment)GetValue(AlbumArtVerticalAlignmentProperty);
+        set => SetValue(AlbumArtVerticalAlignmentProperty, value);
     }
 
     public void SetSongInfo(string? title, string? artist, string? album,
@@ -399,7 +425,7 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
 
                 // 息屏期间画布被暂停，期间收到的封面变更消息可能没有成功加载（或被跳过），
                 // 亮屏后主动重新加载一次封面，避免背景一直停留在旧封面。
-                if (isDisplayOn) _ = ReloadCoverBackgroundResourcesAsync();
+                if (isDisplayOn) _ = ReloadCoverResourcesAsync();
             });
         }
     }
@@ -425,6 +451,7 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
                 canvas._parallaxContext = (ParallaxTiltEffect)e.NewValue;
                 canvas._lyricsRenderer.ParallaxContext = canvas._parallaxContext;
                 canvas._fluidRenderer.ParallaxContext = canvas._parallaxContext;
+                canvas._albumArtRenderer.ParallaxContext = canvas._parallaxContext;
                 canvas._coverRenderer.ParallaxContext = canvas._parallaxContext;
                 canvas._snowRenderer.ParallaxContext = canvas._parallaxContext;
                 canvas._fogRenderer.ParallaxContext = canvas._parallaxContext;
@@ -434,6 +461,14 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
             else if (e.Property == AlbumArtRectProperty)
             {
                 canvas._albumArtRect = (Rect)e.NewValue;
+            }
+            else if (e.Property == AlbumArtHorizontalAlignmentProperty)
+            {
+                canvas._albumArtHorizontalAlignment = (AppHorizontalAlignment)e.NewValue;
+            }
+            else if (e.Property == AlbumArtVerticalAlignmentProperty)
+            {
+                canvas._albumArtVerticalAlignment = (AppVerticalAlignment)e.NewValue;
             }
             else if (e.Property == LyricsStartXProperty)
             {
@@ -514,7 +549,6 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
 
         var albumArtLayout = _lyricsWindowStatus.AlbumArtLayoutSettings;
         var lyricsBg = _lyricsWindowStatus.LyricsBackgroundSettings;
-        var lyricsStyle = _lyricsWindowStatus.LyricsStyleSettings;
         var lyricsEffect = _lyricsWindowStatus.LyricsEffectSettings;
         var albumStyle = _lyricsWindowStatus.AlbumArtLayoutSettings;
 
@@ -543,6 +577,19 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
             finalOpacity = lyricsBg.PureColorOverlayOpacity / 100.0;
         }
 
+        // 封面与歌曲信息同样写入 Spout 纹理，共享输出与窗口内容保持一致
+        void DrawScene(CanvasDrawingSession sceneDs)
+        {
+            DrawCoreWithEdgeFeatheringHandled(sender, sceneDs, bounds,
+                ColorExtensions.FromAppColor(overlayColor), finalOpacity, albumStyle, lyricsBg, hdrHighlightGain);
+            _albumArtRenderer.Draw(sender, sceneDs, _albumArtRect, _lyricsWindowStatus,
+                _albumArtHorizontalAlignment, _albumArtVerticalAlignment);
+            _songInfoRenderer.Draw(sceneDs, _lyricsWindowStatus);
+
+            // 雪花 / 雾 / 雨滴 / 语义效果属于前景氛围层，压在歌词、封面与歌曲信息之上
+            DrawForegroundEffectsWithEdgeFeatheringHandled(sender, sceneDs, lyricsBg);
+        }
+
         if (hdrHighlightGain == 1 && _lyricsWindowStatus.IsSpoutOutputEnabled)
         {
             var finalTexture = _compositionRenderer.Render(
@@ -550,12 +597,7 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
                 sender.Size,
                 sender.Dpi,
                 ColorExtensions.FromAppColor(Colors.Transparent),
-                ds =>
-                {
-                    DrawCoreWithEdgeFeatheringHandled(sender, ds, bounds,
-                        ColorExtensions.FromAppColor(overlayColor), finalOpacity, lyricsStyle, albumStyle,
-                        lyricsBg);
-                });
+                DrawScene);
 
             _spoutHook.SendTexture(finalTexture);
             if (!showOnCanvas) return;
@@ -563,13 +605,8 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
         }
         else
         {
-            DrawCoreWithEdgeFeatheringHandled(sender, ds, bounds, ColorExtensions.FromAppColor(overlayColor),
-                finalOpacity, lyricsStyle,
-                albumStyle, lyricsBg, hdrHighlightGain);
+            DrawScene(ds);
         }
-
-        // 歌曲信息不写入 Spout 纹理，保持共享歌词的原有输出内容
-        _songInfoRenderer.Draw(ds, _lyricsWindowStatus);
 
         if (_lyricsWindowStatus.ShowDebugOverlay)
         {
@@ -737,6 +774,7 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
 
         _mouseYScrollTransition.Update(elapsedTime);
 
+        _albumArtRenderer.Update(elapsedTime);
         _songInfoRenderer.Update(sender, elapsedTime.TotalSeconds, _lyricsWindowStatus);
 
         CurrentHoveringLineIndex = _layoutStrategy.FindMouseHoverLineIndex(
@@ -903,9 +941,12 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
             _spectrumAnalyzer.CurrentBassEnergy, lyricsBg.RaindropOverlayBreathingIntensity,
             lyricsBg.IsRaindropOverlayParallaxEnabled);
 
+        var albumArtBounds = _albumArtRenderer.GetAlbumArtBounds(_albumArtRect,
+            _albumArtHorizontalAlignment, _albumArtVerticalAlignment);
+
         _spectrumRenderer.Update(
             sender,
-            lyricsBg.SpectrumPlacement, _albumArtRect, _spectrumAnalyzer.CurrentBassEnergy,
+            lyricsBg.SpectrumPlacement, albumArtBounds, _spectrumAnalyzer.CurrentBassEnergy,
             lyricsBg.SpectrumBreathingIntensity, lyricsBg.IsSpectrumOverlayParallaxEnabled);
 
         _semanticEffectsRenderer.Update(sender, elapsedTime, _spectrumAnalyzer.CurrentBassEnergy, 0, false, _songPositionWithOffset.TotalMilliseconds);
@@ -934,11 +975,12 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
     {
         _hdrPresenter?.Reset();
         _compositionRenderer?.Dispose();
+        _albumArtRenderer.ResetDeviceResources();
         _songInfoRenderer.ResetDeviceResources();
 
         var tasks = new[]
         {
-            ReloadCoverBackgroundResourcesAsync()
+            ReloadCoverResourcesAsync()
         };
         args.TrackAsyncAction(Task.WhenAll(tasks).AsAsyncAction());
 
@@ -1014,6 +1056,7 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
         _raindropRenderer.Dispose();
         _spectrumRenderer.Dispose();
         _semanticEffectsRenderer.Dispose();
+        _albumArtRenderer.Dispose();
         _songInfoRenderer.Dispose();
 
         DisposeRenderLyricsLines();
@@ -1045,7 +1088,7 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
     public void RequestRedraw()
     {
         Canvas?.Invalidate();
-        _ = ReloadCoverBackgroundResourcesAsync();
+        _ = ReloadCoverResourcesAsync();
     }
 
     public void HandlePointerExited(PointerRoutedEventArgs e)
@@ -1298,8 +1341,7 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
 
     private void DrawCore(ICanvasAnimatedControl sender, CanvasDrawingSession ds,
         Rect bounds, Color overlayColor, double finalOpacity,
-        LyricsStyleSettings lyricsStyle, AlbumArtAreaStyleSettings albumStyle, LyricsBackgroundSettings lyricsBg,
-        float hdrHighlightGain)
+        AlbumArtAreaStyleSettings albumStyle, LyricsBackgroundSettings lyricsBg, float hdrHighlightGain)
     {
         if (_lyricsWindowStatus == null) return;
 
@@ -1332,9 +1374,18 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
                 sender.Size.Width,
                 sender.Size.Height,
                 ColorExtensions.FromAppColor(_lyricsWindowStatus.WindowPalette.SpectrumColor),
-                _albumArtRect,
+                _albumArtRenderer.GetAlbumArtBounds(_albumArtRect, _albumArtHorizontalAlignment,
+                    _albumArtVerticalAlignment),
                 albumStyle.CoverImageRadius
             );
+
+        if (_renderLyricsOpacity == 1) _lyricsRenderer.Draw(sender, ds, hdrHighlightGain);
+    }
+
+    private void DrawForegroundEffects(ICanvasAnimatedControl sender, CanvasDrawingSession ds,
+        LyricsBackgroundSettings lyricsBg)
+    {
+        if (_lyricsWindowStatus == null) return;
 
         _snowRenderer.Draw(sender, ds, lyricsBg.IsSnowFlakeOverlayBrethingEffectEnabled);
 
@@ -1343,14 +1394,11 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
         _raindropRenderer.Draw(sender, ds, lyricsBg.IsRaindropOverlayBrethingEffectEnabled);
 
         _semanticEffectsRenderer.Draw(sender, ds, false);
-
-        if (_renderLyricsOpacity == 1) _lyricsRenderer.Draw(sender, ds, hdrHighlightGain);
     }
 
     private void DrawCoreWithEdgeFeatheringHandled(ICanvasAnimatedControl sender, CanvasDrawingSession ds,
         Rect bounds, Color overlayColor, double finalOpacity,
-        LyricsStyleSettings lyricsStyle, AlbumArtAreaStyleSettings albumStyle, LyricsBackgroundSettings lyricsBg,
-        float hdrHighlightGain = 1)
+        AlbumArtAreaStyleSettings albumStyle, LyricsBackgroundSettings lyricsBg, float hdrHighlightGain = 1)
     {
         if (_lyricsWindowStatus == null) return;
 
@@ -1358,12 +1406,30 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
         {
             using (ds.CreateLayer(_edgeFadeMaskRenderer.Brush))
             {
-                DrawCore(sender, ds, bounds, overlayColor, finalOpacity, lyricsStyle, albumStyle, lyricsBg, hdrHighlightGain);
+                DrawCore(sender, ds, bounds, overlayColor, finalOpacity, albumStyle, lyricsBg, hdrHighlightGain);
             }
         }
         else
         {
-            DrawCore(sender, ds, bounds, overlayColor, finalOpacity, lyricsStyle, albumStyle, lyricsBg, hdrHighlightGain);
+            DrawCore(sender, ds, bounds, overlayColor, finalOpacity, albumStyle, lyricsBg, hdrHighlightGain);
+        }
+    }
+
+    private void DrawForegroundEffectsWithEdgeFeatheringHandled(ICanvasAnimatedControl sender,
+        CanvasDrawingSession ds, LyricsBackgroundSettings lyricsBg)
+    {
+        if (_lyricsWindowStatus == null) return;
+
+        if (_lyricsWindowStatus.IsEdgeFeatheringEnabled && _edgeFadeMaskRenderer.Brush != null)
+        {
+            using (ds.CreateLayer(_edgeFadeMaskRenderer.Brush))
+            {
+                DrawForegroundEffects(sender, ds, lyricsBg);
+            }
+        }
+        else
+        {
+            DrawForegroundEffects(sender, ds, lyricsBg);
         }
     }
 
@@ -2087,7 +2153,7 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
         _desktopWallpaperRenderer.SetWallpaperPath(Canvas, path);
     }
 
-    private async Task ReloadCoverBackgroundResourcesAsync()
+    private async Task ReloadCoverResourcesAsync()
     {
         if (Canvas == null) return;
 
@@ -2101,6 +2167,13 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
             if (imageBytes == null || imageBytes.Length == 0)
             {
                 _coverRenderer.SetCoverBitmap(null);
+
+                var placeholder = await LoadPlaceholderCoverAsync();
+                if (placeholder != null && reloadVersion == _coverReloadVersion)
+                    _albumArtRenderer.SetCoverBitmap(placeholder);
+                else
+                    placeholder?.Dispose();
+
                 return;
             }
 
@@ -2112,25 +2185,49 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
                     await writer.StoreAsync();
                 }
 
-                localMemoryStream.Seek(0);
-
                 if (Canvas.Device == null) return;
 
-                var bitmap = await CanvasBitmap.LoadAsync(Canvas, localMemoryStream);
+                // 背景模糊与封面展示各持有一份位图，换图与释放节奏互不影响
+                localMemoryStream.Seek(0);
+                var backgroundBitmap = await CanvasBitmap.LoadAsync(Canvas, localMemoryStream);
+
+                localMemoryStream.Seek(0);
+                var albumArtBitmap = await CanvasBitmap.LoadAsync(Canvas, localMemoryStream);
 
                 // 期间有更新的封面请求，丢弃这次较旧的结果，避免旧封面覆盖新封面
                 if (reloadVersion != _coverReloadVersion)
                 {
-                    bitmap.Dispose();
+                    backgroundBitmap.Dispose();
+                    albumArtBitmap.Dispose();
                     return;
                 }
 
-                _coverRenderer.SetCoverBitmap(bitmap);
+                _coverRenderer.SetCoverBitmap(backgroundBitmap);
+                _albumArtRenderer.SetCoverBitmap(albumArtBitmap);
             }
         }
         catch (Exception ex)
         {
-            Debug.WriteLine($"ReloadCoverBackgroundResourcesAsync: {ex}");
+            Debug.WriteLine($"ReloadCoverResourcesAsync: {ex}");
+        }
+    }
+
+    private async Task<CanvasBitmap?> LoadPlaceholderCoverAsync()
+    {
+        if (Canvas?.Device == null) return null;
+
+        try
+        {
+            var uri = new Uri(PathHelper.AlbumArtPlaceholderPath.Replace('\\', '/'));
+            var file = await StorageFile.GetFileFromApplicationUriAsync(uri);
+
+            using var stream = await file.OpenReadAsync();
+            return await CanvasBitmap.LoadAsync(Canvas, stream);
+        }
+        catch (Exception ex)
+        {
+            Debug.WriteLine($"LoadPlaceholderCoverAsync: {ex}");
+            return null;
         }
     }
 
@@ -2249,7 +2346,7 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
 
     public void Receive(AlbumArtBytesChangedMessage message)
     {
-        _ = ReloadCoverBackgroundResourcesAsync();
+        _ = ReloadCoverResourcesAsync();
     }
 
     public void Receive(CurrentLyricsDataChangedMessage message)

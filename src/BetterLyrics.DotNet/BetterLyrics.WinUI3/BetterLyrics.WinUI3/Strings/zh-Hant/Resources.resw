@@ -522,7 +522,8 @@
   <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve"><value>音樂庫視窗開啟時自動繼續播放</value></data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve"><value>開機時自動啟動</value></data>
   <data name="SettingsPageAutoWrap.Header" xml:space="preserve"><value>自動換行</value></data>
-  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>歌詞背景</value></data>
+  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>背景疊層</value></data>
+  <data name="SettingsPageForegroundOverlay.Text" xml:space="preserve"><value>前景疊層</value></data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve"><value>模糊強度</value></data>
   <data name="SettingsPageBottom.Content" xml:space="preserve"><value>底部</value></data>
   <data name="SettingsPageCache.Description" xml:space="preserve"><value>包含記錄檔與線上歌詞快取</value></data>

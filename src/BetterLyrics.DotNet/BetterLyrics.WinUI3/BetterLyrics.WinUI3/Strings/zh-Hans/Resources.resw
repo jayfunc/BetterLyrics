@@ -522,7 +522,8 @@
   <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve"><value>音乐库窗口打开时自动恢复播放</value></data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve"><value>开机自启动</value></data>
   <data name="SettingsPageAutoWrap.Header" xml:space="preserve"><value>自动换行</value></data>
-  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>歌词背景</value></data>
+  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>背景叠层</value></data>
+  <data name="SettingsPageForegroundOverlay.Text" xml:space="preserve"><value>前景叠层</value></data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve"><value>模糊强度</value></data>
   <data name="SettingsPageBottom.Content" xml:space="preserve"><value>底部</value></data>
   <data name="SettingsPageCache.Description" xml:space="preserve"><value>包含日志文件与在线歌词缓存</value></data>

@@ -5,7 +5,6 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:constants="using:BetterLyrics.Core.Constants"
-    xmlns:controls="using:CommunityToolkit.WinUI.Controls"
     xmlns:converters="using:BetterLyrics.WinUI3.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -51,13 +50,12 @@
                 </Viewbox>
             </Border>
 
+            <!--  封面由 NowPlayingCanvas 以 Win2D 绘制；此容器仅用于布局占位、命中测试与右键菜单  -->
             <Grid
                 x:Name="AlbumArtContainer"
+                Background="Transparent"
                 SizeChanged="AlbumArtContainer_SizeChanged"
                 Visibility="Collapsed">
-                <Grid.OpacityTransition>
-                    <ScalarTransition Duration="{x:Bind constants:Time.AnimationDuration}" />
-                </Grid.OpacityTransition>
                 <Grid.ContextFlyout>
                     <Flyout FlyoutPresenterStyle="{StaticResource FlyoutGhostStyle}">
                         <StackPanel>
@@ -80,65 +78,35 @@
                         </StackPanel>
                     </Flyout>
                 </Grid.ContextFlyout>
-                <uc:ParallaxTiltControl
-                    x:Name="AlbumArtParallaxTiltControl"
-                    Margin="-32"
-                    IsParallaxEnabled="{x:Bind LyricsWindowStatus.AlbumArtAreaEffectSettings.IsParallaxEnabled, Mode=OneWay}"
-                    Loaded="AlbumArtParallaxTiltControl_Loaded">
-                    <controls:OpacityMaskView>
-                        <controls:OpacityMaskView.OpacityMask>
-                            <Rectangle>
-                                <Rectangle.Fill>
-                                    <LinearGradientBrush x:Name="AlbumArtGradientBrush">
-                                        <GradientStop Offset="0" Color="#FFFFFFFF" />
-                                        <GradientStop x:Name="AlbumArtGradientBrushEnd" Offset="1" Color="Transparent" />
-                                    </LinearGradientBrush>
-                                </Rectangle.Fill>
-                            </Rectangle>
-                        </controls:OpacityMaskView.OpacityMask>
-                        <uc:ImageSwitcher
-                            Margin="32"
-                            CornerRadiusAmount="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageRadius, Mode=OneWay}"
-                            ShadowAmount="{x:Bind LyricsWindowStatus.AlbumArtLayoutSettings.CoverImageShadowAmount, Mode=OneWay}"
-                            Source="{x:Bind ViewModel.MediaSessionsService.AlbumArtBytes, Converter={StaticResource ByteArrayToImageConverter}, Mode=OneWay}"
-                            SwitchType="{x:Bind LyricsWindowStatus.AlbumArtAreaEffectSettings.ImageSwitchType, Mode=OneWay}" />
-                    </controls:OpacityMaskView>
-                </uc:ParallaxTiltControl>
             </Grid>
 
-            <Grid
-                x:Name="SongTitleContainer"
-                Visibility="Collapsed">
-                <!-- 由 NowPlayingCanvas 以 Win2D 绘制；此 TextBlock 仅用于占位测量与无障碍 -->
+            <Grid x:Name="SongTitleContainer" Visibility="Collapsed">
+                <!--  由 NowPlayingCanvas 以 Win2D 绘制；此 TextBlock 仅用于占位测量与无障碍  -->
                 <TextBlock
                     x:Name="TitleTextBlock"
                     Padding="2,0"
-                    IsHitTestVisible="False"
                     FontWeight="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
+                    IsHitTestVisible="False"
                     Opacity="0"
                     TextTrimming="None" />
             </Grid>
 
-            <Grid
-                x:Name="SongArtistContainer"
-                Visibility="Collapsed">
+            <Grid x:Name="SongArtistContainer" Visibility="Collapsed">
                 <TextBlock
                     x:Name="ArtistsTextBlock"
                     Padding="2,0"
-                    IsHitTestVisible="False"
                     FontWeight="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
+                    IsHitTestVisible="False"
                     Opacity="0"
                     TextTrimming="None" />
             </Grid>
 
-            <Grid
-                x:Name="SongAlbumContainer"
-                Visibility="Collapsed">
+            <Grid x:Name="SongAlbumContainer" Visibility="Collapsed">
                 <TextBlock
                     x:Name="AlbumTextBlock"
                     Padding="2,0"
-                    IsHitTestVisible="False"
                     FontWeight="{x:Bind LyricsWindowStatus.LyricsStyleSettings.LyricsFontWeight, Converter={StaticResource LyricsFontWeightToFontWeightConverter}, Mode=OneWay}"
+                    IsHitTestVisible="False"
                     Opacity="0"
                     TextTrimming="None" />
             </Grid>

@@ -522,7 +522,8 @@
   <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve"><value>استئناف التشغيل تلقائيًا عند فتح نافذة معرض الموسيقى</value></data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve"><value>بدء التشغيل التلقائي</value></data>
   <data name="SettingsPageAutoWrap.Header" xml:space="preserve"><value>التفاف تلقائي</value></data>
-  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>خلفية الكلمات</value></data>
+  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>طبقة الخلفية</value></data>
+  <data name="SettingsPageForegroundOverlay.Text" xml:space="preserve"><value>طبقة أمامية</value></data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve"><value>مقدار التمويه</value></data>
   <data name="SettingsPageBottom.Content" xml:space="preserve"><value>أسفل</value></data>
   <data name="SettingsPageCache.Description" xml:space="preserve"><value>يتضمّن ملفات السجلات وذاكرة التخزين المؤقت لكلمات الأغاني المتصلة</value></data>

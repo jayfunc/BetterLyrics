@@ -1333,7 +1333,10 @@
     <value>Auto Wrap</value>
   </data>
   <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
-    <value>Lyrics Background</value>
+    <value>Background Overlay</value>
+  </data>
+  <data name="SettingsPageForegroundOverlay.Text" xml:space="preserve">
+    <value>Foreground Overlay</value>
   </data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>Blur Amount</value>

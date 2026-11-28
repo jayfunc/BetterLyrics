@@ -522,7 +522,8 @@
   <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve"><value>Retomar automaticamente a reprodução ao abrir a galeria de músicas</value></data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve"><value>Inicialização automática</value></data>
   <data name="SettingsPageAutoWrap.Header" xml:space="preserve"><value>Quebra automática de linha</value></data>
-  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>Fundo da letra</value></data>
+  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>Sobreposição de fundo</value></data>
+  <data name="SettingsPageForegroundOverlay.Text" xml:space="preserve"><value>Sobreposição em primeiro plano</value></data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve"><value>Intensidade do desfoque</value></data>
   <data name="SettingsPageBottom.Content" xml:space="preserve"><value>Inferior</value></data>
   <data name="SettingsPageCache.Description" xml:space="preserve"><value>Inclui arquivos de log e o cache de letras online</value></data>

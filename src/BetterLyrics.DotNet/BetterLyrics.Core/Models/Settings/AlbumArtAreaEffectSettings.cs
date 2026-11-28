@@ -34,21 +34,6 @@ public partial class AlbumArtAreaEffectSettings : ObservableObject, ICloneable
     partial void OnSongInfoAutoScrollChanged(bool value) =>
         WeakReferenceMessenger.Default.Send(new AlbumArtSongInfoAutoScrollChangedMessage(this, value));
 
-    partial void OnFadeOutChanged(bool value) =>
-        WeakReferenceMessenger.Default.Send(new AlbumArtFadeOutChangedMessage(this, value));
-
-    partial void OnFadeOutStartPointXChanged(float value) =>
-        WeakReferenceMessenger.Default.Send(new AlbumArtFadeOutDirectionChangedMessage(this));
-
-    partial void OnFadeOutStartPointYChanged(float value) =>
-        WeakReferenceMessenger.Default.Send(new AlbumArtFadeOutDirectionChangedMessage(this));
-
-    partial void OnFadeOutEndPointXChanged(float value) =>
-        WeakReferenceMessenger.Default.Send(new AlbumArtFadeOutDirectionChangedMessage(this));
-
-    partial void OnFadeOutEndPointYChanged(float value) =>
-        WeakReferenceMessenger.Default.Send(new AlbumArtFadeOutDirectionChangedMessage(this));
-
     public object Clone()
     {
         return new AlbumArtAreaEffectSettings

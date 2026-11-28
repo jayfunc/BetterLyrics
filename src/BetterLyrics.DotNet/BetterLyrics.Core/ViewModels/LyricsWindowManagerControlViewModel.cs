@@ -82,6 +82,11 @@ public partial class LyricsWindowManagerControlViewModel : ObservableRecipient, 
             Label = _localizationService.GetLocalizedString("SettingsPageBackgroundOverlay/Text"),
             Section = LyricsWindowManagerSettingsSection.LyricsBackground
         });
+        NavItems.Add(new LyricsWindowManagerSettingsNavMenuItem
+        {
+            Label = _localizationService.GetLocalizedString("SettingsPageForegroundOverlay/Text"),
+            Section = LyricsWindowManagerSettingsSection.ForegroundOverlay
+        });
         SelectedNavItem = NavItems[0];
     }
 

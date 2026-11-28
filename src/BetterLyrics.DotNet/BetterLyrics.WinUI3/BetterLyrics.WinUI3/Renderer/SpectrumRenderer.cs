@@ -122,6 +122,9 @@ public partial class SpectrumRenderer : EffectRendererBase, IDisposable
 
         if (placement == SpectrumPlacement.AroundAlbumArt)
         {
+            // 封面不存在或容器退化时没有可环绕的边界，直接跳过
+            if (albumRect.Width < 1 || albumRect.Height < 1) return null;
+
             var w = (float)albumRect.Width;
             var h = (float)albumRect.Height;
             var cornerRadius = cornerRadiusPercentage / 100f * Math.Min(w / 2, h / 2);

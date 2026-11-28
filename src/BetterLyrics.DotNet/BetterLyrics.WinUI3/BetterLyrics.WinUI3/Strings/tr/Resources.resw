@@ -522,7 +522,8 @@
   <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve"><value>Müzik galerisi penceresi açıldığında çalmayı otomatik sürdür</value></data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve"><value>Otomatik başlat</value></data>
   <data name="SettingsPageAutoWrap.Header" xml:space="preserve"><value>Otomatik kaydır</value></data>
-  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>Şarkı sözü arka planı</value></data>
+  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>Arka plan katmanı</value></data>
+  <data name="SettingsPageForegroundOverlay.Text" xml:space="preserve"><value>Ön plan katmanı</value></data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve"><value>Bulanıklık miktarı</value></data>
   <data name="SettingsPageBottom.Content" xml:space="preserve"><value>Alt</value></data>
   <data name="SettingsPageCache.Description" xml:space="preserve"><value>Günlük dosyalarını ve çevrimiçi şarkı sözü önbelleğini içerir</value></data>

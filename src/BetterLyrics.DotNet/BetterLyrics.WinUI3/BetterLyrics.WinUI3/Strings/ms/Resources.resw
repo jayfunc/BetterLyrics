@@ -522,7 +522,8 @@
   <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve"><value>Sambung semula main balik secara automatik apabila tetingkap galeri muzik dibuka</value></data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve"><value>Mula automatik</value></data>
   <data name="SettingsPageAutoWrap.Header" xml:space="preserve"><value>Balutan automatik</value></data>
-  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>Latar belakang lirik</value></data>
+  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>Lapisan latar belakang</value></data>
+  <data name="SettingsPageForegroundOverlay.Text" xml:space="preserve"><value>Lapisan latar hadapan</value></data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve"><value>Jumlah kabur</value></data>
   <data name="SettingsPageBottom.Content" xml:space="preserve"><value>Bawah</value></data>
   <data name="SettingsPageCache.Description" xml:space="preserve"><value>Merangkumi fail log dan cache lirik dalam talian</value></data>

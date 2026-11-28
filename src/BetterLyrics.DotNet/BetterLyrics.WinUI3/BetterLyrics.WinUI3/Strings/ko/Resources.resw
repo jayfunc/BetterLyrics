@@ -522,7 +522,8 @@
   <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve"><value>뮤직 갤러리 창을 열 때 재생 자동 다시 시작</value></data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve"><value>자동 시작</value></data>
   <data name="SettingsPageAutoWrap.Header" xml:space="preserve"><value>자동 줄 바꿈</value></data>
-  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>가사 배경</value></data>
+  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>배경 오버레이</value></data>
+  <data name="SettingsPageForegroundOverlay.Text" xml:space="preserve"><value>전경 오버레이</value></data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve"><value>흐림 정도</value></data>
   <data name="SettingsPageBottom.Content" xml:space="preserve"><value>아래쪽</value></data>
   <data name="SettingsPageCache.Description" xml:space="preserve"><value>로그 파일과 온라인 가사 캐시를 포함합니다</value></data>

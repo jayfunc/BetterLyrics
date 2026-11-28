@@ -6,6 +6,7 @@ public enum LyricsWindowManagerSettingsSection
     Layout,
     LyricsStyle,
     LyricsBackground,
+    ForegroundOverlay,
     LyricsEffect,
     AlbumArt
 }

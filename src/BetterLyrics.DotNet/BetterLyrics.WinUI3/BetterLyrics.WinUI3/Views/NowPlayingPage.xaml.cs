@@ -36,8 +36,6 @@ namespace BetterLyrics.WinUI3.Views;
 
 public sealed partial class NowPlayingPage : BasePage,
     IRecipient<CurrentSongInfoChangedMessage>,
-    IRecipient<AlbumArtFadeOutChangedMessage>,
-    IRecipient<AlbumArtFadeOutDirectionChangedMessage>,
     IRecipient<LyricsWindowLayoutProfileIdChangedMessage>,
     IRecipient<MappedSongSearchQueryChangedMessage>,
     IRecipient<LyricsWindowPaletteChangedMessage>,
@@ -113,22 +111,6 @@ public sealed partial class NowPlayingPage : BasePage,
     public void Receive(LayoutChangedMessage message)
     {
         OnLayoutChanged();
-    }
-
-    public void Receive(AlbumArtFadeOutChangedMessage message)
-    {
-        if (message.Sender == _lyricsWindowStatus?.AlbumArtAreaEffectSettings)
-        {
-            ToggleAlbumArtFadeOut();
-        }
-    }
-
-    public void Receive(AlbumArtFadeOutDirectionChangedMessage message)
-    {
-        if (message.Sender == _lyricsWindowStatus?.AlbumArtAreaEffectSettings)
-        {
-            UpdateAlbumArtFadeOutDirection();
-        }
     }
 
     public void Receive(LyricsWindowLayoutProfileIdChangedMessage message)
@@ -375,8 +357,23 @@ public sealed partial class NowPlayingPage : BasePage,
                     targetElement.HorizontalAlignment = HorizontalAlignment.Stretch;
                 }
 
+                // 封面同样由画布绘制，空容器不再有内容撑开尺寸，未显式指定宽高时填满所在格子
+                if (placement.ComponentType == ComponentType.AlbumArt)
+                {
+                    if (double.IsNaN(placement.Width))
+                        targetElement.HorizontalAlignment = HorizontalAlignment.Stretch;
+
+                    if (double.IsNaN(placement.Height))
+                        targetElement.VerticalAlignment = VerticalAlignment.Stretch;
+                }
+
                 switch (placement.ComponentType)
                 {
+                    case ComponentType.AlbumArt:
+                        // 封面由画布绘制，容器始终填满格子，对齐交给画布按真实图片边界摆放
+                        NowPlayingCanvas.AlbumArtHorizontalAlignment = placement.HorizontalAlignment;
+                        NowPlayingCanvas.AlbumArtVerticalAlignment = placement.VerticalAlignment;
+                        break;
                     case ComponentType.SongTitle:
                         _songTitleAlignment = GetSongInfoAlignment(placement);
                         break;
@@ -440,6 +437,7 @@ public sealed partial class NowPlayingPage : BasePage,
         PlaybackControlContainer.Visibility = Visibility.Collapsed;
 
         // 容器折叠后 ActualWidth 会保留旧值，立即清空画布里的视口，避免隐藏后仍绘制
+        NowPlayingCanvas.AlbumArtRect = new Rect();
         _songTitleBounds = new Rect();
         _songArtistBounds = new Rect();
         _songAlbumBounds = new Rect();
@@ -482,9 +480,6 @@ public sealed partial class NowPlayingPage : BasePage,
         var localRect =
             new Rect(0, 0, AlbumArtContainer.ActualWidth, AlbumArtContainer.ActualHeight);
         NowPlayingCanvas.AlbumArtRect = transform.TransformBounds(localRect);
-
-        ToggleAlbumArtFadeOut();
-        UpdateAlbumArtFadeOutDirection();
     }
 
     private void UpdateNowPlayingBarLayout()
@@ -747,38 +742,8 @@ public sealed partial class NowPlayingPage : BasePage,
         OnLayoutChanged();
     }
 
-    private void AlbumArtParallaxTiltControl_Loaded(object sender, RoutedEventArgs e)
-    {
-        AlbumArtParallaxTiltControl.ParallaxContext = _parallaxEffect;
-    }
-
     private void NowPlayingCanvas_Loaded(object sender, RoutedEventArgs e)
     {
         NowPlayingCanvas.ParallaxContext = _parallaxEffect;
-    }
-
-    private void UpdateAlbumArtFadeOutDirection()
-    {
-        var settings = _lyricsWindowStatus?.AlbumArtAreaEffectSettings;
-        if (settings == null) return;
-
-        var albumArtParallaxTiltControlWidth = AlbumArtParallaxTiltControl.ActualWidth;
-        var albumArtParallaxTiltControlHeight = AlbumArtParallaxTiltControl.ActualHeight;
-
-        var startPointX = ((albumArtParallaxTiltControlWidth - 32 * 2) * settings.FadeOutStartPointX + 32) / albumArtParallaxTiltControlWidth;
-        var startPointY = ((albumArtParallaxTiltControlHeight - 32 * 2) * settings.FadeOutStartPointY + 32) / albumArtParallaxTiltControlHeight;
-        var endPointX = ((albumArtParallaxTiltControlWidth - 32 * 2) * settings.FadeOutEndPointX + 32) / albumArtParallaxTiltControlWidth;
-        var endPointY = ((albumArtParallaxTiltControlHeight - 32 * 2) * settings.FadeOutEndPointY + 32) / albumArtParallaxTiltControlHeight;
-
-        AlbumArtGradientBrush.StartPoint = new Point(startPointX, startPointY);
-        AlbumArtGradientBrush.EndPoint = new Point(endPointX, endPointY);
-    }
-
-    private void ToggleAlbumArtFadeOut()
-    {
-        AlbumArtGradientBrushEnd.Color = ColorExtensions.FromAppColor(
-            _lyricsWindowStatus?.AlbumArtAreaEffectSettings.FadeOut == true
-                ? Colors.Transparent
-                : Colors.White);
     }
 }

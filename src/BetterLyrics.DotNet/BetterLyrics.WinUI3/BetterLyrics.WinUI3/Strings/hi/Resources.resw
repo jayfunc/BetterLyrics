@@ -522,7 +522,8 @@
   <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve"><value>संगीत गैलरी विंडो खुलने पर प्लेबैक स्वतः फिर से शुरू करें</value></data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve"><value>स्वतः प्रारंभ</value></data>
   <data name="SettingsPageAutoWrap.Header" xml:space="preserve"><value>स्वतः रैप</value></data>
-  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>बोल की पृष्ठभूमि</value></data>
+  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>पृष्ठभूमि ओवरले</value></data>
+  <data name="SettingsPageForegroundOverlay.Text" xml:space="preserve"><value>अग्रभूमि ओवरले</value></data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve"><value>धुंधलापन मात्रा</value></data>
   <data name="SettingsPageBottom.Content" xml:space="preserve"><value>नीचे</value></data>
   <data name="SettingsPageCache.Description" xml:space="preserve"><value>लॉग फ़ाइलें और ऑनलाइन बोल कैश शामिल हैं</value></data>

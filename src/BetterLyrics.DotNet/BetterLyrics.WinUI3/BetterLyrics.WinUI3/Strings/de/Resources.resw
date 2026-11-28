@@ -522,7 +522,8 @@
   <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve"><value>Wiedergabe automatisch fortsetzen, wenn das Musikgaleriefenster geöffnet wird</value></data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve"><value>Automatisch starten</value></data>
   <data name="SettingsPageAutoWrap.Header" xml:space="preserve"><value>Automatischer Zeilenumbruch</value></data>
-  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>Songtexthintergrund</value></data>
+  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>Hintergrund-Overlay</value></data>
+  <data name="SettingsPageForegroundOverlay.Text" xml:space="preserve"><value>Vordergrund-Overlay</value></data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve"><value>Unschärfe</value></data>
   <data name="SettingsPageBottom.Content" xml:space="preserve"><value>Unten</value></data>
   <data name="SettingsPageCache.Description" xml:space="preserve"><value>Umfasst Protokolldateien und den Cache für Online-Songtexte</value></data>
