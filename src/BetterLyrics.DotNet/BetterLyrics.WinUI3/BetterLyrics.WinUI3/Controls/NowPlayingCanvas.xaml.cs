@@ -593,14 +593,9 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
         // 封面与歌曲信息同样写入 Spout 纹理，共享输出与窗口内容保持一致
         void DrawScene(CanvasDrawingSession sceneDs)
         {
-            DrawCoreWithEdgeFeatheringHandled(sender, sceneDs, bounds,
+            // 叠层顺序由用户配置，歌词、封面与歌曲信息作为内容锚点参与排序
+            DrawOrderedLayers(sender, sceneDs, bounds,
                 ColorExtensions.FromAppColor(overlayColor), finalOpacity, albumStyle, lyricsBg, hdrHighlightGain);
-            _albumArtRenderer.Draw(sender, sceneDs, _albumArtRect, _lyricsWindowStatus,
-                _albumArtHorizontalAlignment, _albumArtVerticalAlignment);
-            _songInfoRenderer.Draw(sceneDs, _lyricsWindowStatus);
-
-            // 雪花 / 雾 / 雨滴 / 语义效果属于前景氛围层，压在歌词、封面与歌曲信息之上
-            DrawForegroundEffectsWithEdgeFeatheringHandled(sender, sceneDs, lyricsBg);
         }
 
         if (hdrHighlightGain == 1 && _lyricsWindowStatus.IsSpoutOutputEnabled)
@@ -1353,97 +1348,130 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
 
     // ====
 
-    private void DrawCore(ICanvasAnimatedControl sender, CanvasDrawingSession ds,
+    private void DrawOrderedLayers(ICanvasAnimatedControl sender, CanvasDrawingSession ds,
         Rect bounds, Color overlayColor, double finalOpacity,
         AlbumArtAreaStyleSettings albumStyle, LyricsBackgroundSettings lyricsBg, float hdrHighlightGain)
     {
         if (_lyricsWindowStatus == null) return;
 
-        PureColorBackgroundRenderer.Draw(
-            ds,
-            bounds,
-            overlayColor,
-            finalOpacity,
-            lyricsBg.IsPureColorOverlayEnabled
-        );
+        IReadOnlyList<LyricsOverlayLayerConfig> order = lyricsBg.OverlayLayerOrder;
+        if (order == null || order.Count == 0)
+            order = LyricsBackgroundSettings.CreateDefaultOverlayLayerOrder();
 
-        _desktopWallpaperRenderer.Draw(sender, ds);
+        var useEdgeFeathering = _lyricsWindowStatus.IsEdgeFeatheringEnabled &&
+                                _edgeFadeMaskRenderer.Brush != null;
 
-        _coverRenderer.Draw(sender, ds, lyricsBg.IsCoverOverlayBrethingEffectEnabled);
+        // 连续的可羽化叠层共用一个遮罩段；封面与歌曲信息不参与羽化，并切断遮罩段
+        CanvasActiveLayer? maskLayer = null;
 
-        _fluidRenderer.Draw(sender, ds, lyricsBg.IsFluidOverlayBrethingEffectEnabled);
-
-        if (_spectrumAnalyzer.IsCapturing)
-            _spectrumRenderer.Draw(
-                sender,
-                ds,
-                _spectrumAnalyzer?.SmoothSpectrum,
-                _spectrumAnalyzer?.BarCount ?? 1,
-                lyricsBg.IsSpectrumOverlayEnabled,
-                lyricsBg.IsSpectrumGlowEffectEnabled,
-                lyricsBg.IsSpectrumBrethingEffectEnabled,
-                lyricsBg.SpectrumOpacity / 100.0f,
-                lyricsBg.SpectrumPlacement,
-                lyricsBg.SpectrumStyle,
-                sender.Size.Width,
-                sender.Size.Height,
-                ColorExtensions.FromAppColor(_lyricsWindowStatus.WindowPalette.SpectrumColor),
-                _albumArtRenderer.GetAlbumArtBounds(_albumArtRect, _albumArtHorizontalAlignment,
-                    _albumArtVerticalAlignment),
-                albumStyle.CoverImageRadius
-            );
-
-        if (_renderLyricsOpacity == 1) _lyricsRenderer.Draw(sender, ds, hdrHighlightGain);
-    }
-
-    private void DrawForegroundEffects(ICanvasAnimatedControl sender, CanvasDrawingSession ds,
-        LyricsBackgroundSettings lyricsBg)
-    {
-        if (_lyricsWindowStatus == null) return;
-
-        _snowRenderer.Draw(sender, ds, lyricsBg.IsSnowFlakeOverlayBrethingEffectEnabled);
-
-        _fogRenderer.Draw(sender, ds, lyricsBg.IsFogOverlayBrethingEffectEnabled);
-
-        _raindropRenderer.Draw(sender, ds, lyricsBg.IsRaindropOverlayBrethingEffectEnabled);
-
-        _semanticEffectsRenderer.Draw(sender, ds, false);
-    }
-
-    private void DrawCoreWithEdgeFeatheringHandled(ICanvasAnimatedControl sender, CanvasDrawingSession ds,
-        Rect bounds, Color overlayColor, double finalOpacity,
-        AlbumArtAreaStyleSettings albumStyle, LyricsBackgroundSettings lyricsBg, float hdrHighlightGain = 1)
-    {
-        if (_lyricsWindowStatus == null) return;
-
-        if (_lyricsWindowStatus.IsEdgeFeatheringEnabled && _edgeFadeMaskRenderer.Brush != null)
+        void OpenMask()
         {
-            using (ds.CreateLayer(_edgeFadeMaskRenderer.Brush))
+            if (useEdgeFeathering && maskLayer == null)
+                maskLayer = ds.CreateLayer(_edgeFadeMaskRenderer.Brush);
+        }
+
+        void CloseMask()
+        {
+            maskLayer?.Dispose();
+            maskLayer = null;
+        }
+
+        // 列表按“越靠上越靠前”存储，绘制时从后往前遍历
+        for (var i = order.Count - 1; i >= 0; i--)
+        {
+            switch (order[i].LayerType)
             {
-                DrawCore(sender, ds, bounds, overlayColor, finalOpacity, albumStyle, lyricsBg, hdrHighlightGain);
+                case LyricsOverlayLayerType.AlbumArt:
+                    CloseMask();
+                    _albumArtRenderer.Draw(sender, ds, _albumArtRect, _lyricsWindowStatus,
+                        _albumArtHorizontalAlignment, _albumArtVerticalAlignment);
+                    break;
+                case LyricsOverlayLayerType.SongInfo:
+                    CloseMask();
+                    _songInfoRenderer.Draw(ds, _lyricsWindowStatus);
+                    break;
+                default:
+                    OpenMask();
+                    DrawMaskableLayer(sender, ds, order[i].LayerType, bounds, overlayColor,
+                        finalOpacity, albumStyle, lyricsBg, hdrHighlightGain);
+                    break;
             }
         }
-        else
-        {
-            DrawCore(sender, ds, bounds, overlayColor, finalOpacity, albumStyle, lyricsBg, hdrHighlightGain);
-        }
+
+        CloseMask();
     }
 
-    private void DrawForegroundEffectsWithEdgeFeatheringHandled(ICanvasAnimatedControl sender,
-        CanvasDrawingSession ds, LyricsBackgroundSettings lyricsBg)
+    private void DrawMaskableLayer(ICanvasAnimatedControl sender, CanvasDrawingSession ds,
+        LyricsOverlayLayerType layerType, Rect bounds, Color overlayColor, double finalOpacity,
+        AlbumArtAreaStyleSettings albumStyle, LyricsBackgroundSettings lyricsBg, float hdrHighlightGain)
     {
         if (_lyricsWindowStatus == null) return;
 
-        if (_lyricsWindowStatus.IsEdgeFeatheringEnabled && _edgeFadeMaskRenderer.Brush != null)
+        switch (layerType)
         {
-            using (ds.CreateLayer(_edgeFadeMaskRenderer.Brush))
-            {
-                DrawForegroundEffects(sender, ds, lyricsBg);
-            }
-        }
-        else
-        {
-            DrawForegroundEffects(sender, ds, lyricsBg);
+            case LyricsOverlayLayerType.PureColor:
+                PureColorBackgroundRenderer.Draw(
+                    ds,
+                    bounds,
+                    overlayColor,
+                    finalOpacity,
+                    lyricsBg.IsPureColorOverlayEnabled
+                );
+                break;
+
+            case LyricsOverlayLayerType.DesktopWallpaper:
+                _desktopWallpaperRenderer.Draw(sender, ds);
+                break;
+
+            case LyricsOverlayLayerType.CoverOverlay:
+                _coverRenderer.Draw(sender, ds, lyricsBg.IsCoverOverlayBrethingEffectEnabled);
+                break;
+
+            case LyricsOverlayLayerType.Fluid:
+                _fluidRenderer.Draw(sender, ds, lyricsBg.IsFluidOverlayBrethingEffectEnabled);
+                break;
+
+            case LyricsOverlayLayerType.Spectrum:
+                if (_spectrumAnalyzer.IsCapturing)
+                    _spectrumRenderer.Draw(
+                        sender,
+                        ds,
+                        _spectrumAnalyzer?.SmoothSpectrum,
+                        _spectrumAnalyzer?.BarCount ?? 1,
+                        lyricsBg.IsSpectrumOverlayEnabled,
+                        lyricsBg.IsSpectrumGlowEffectEnabled,
+                        lyricsBg.IsSpectrumBrethingEffectEnabled,
+                        lyricsBg.SpectrumOpacity / 100.0f,
+                        lyricsBg.SpectrumPlacement,
+                        lyricsBg.SpectrumStyle,
+                        sender.Size.Width,
+                        sender.Size.Height,
+                        ColorExtensions.FromAppColor(_lyricsWindowStatus.WindowPalette.SpectrumColor),
+                        _albumArtRenderer.GetAlbumArtBounds(_albumArtRect, _albumArtHorizontalAlignment,
+                            _albumArtVerticalAlignment),
+                        albumStyle.CoverImageRadius
+                    );
+                break;
+
+            case LyricsOverlayLayerType.SnowFlake:
+                _snowRenderer.Draw(sender, ds, lyricsBg.IsSnowFlakeOverlayBrethingEffectEnabled);
+                break;
+
+            case LyricsOverlayLayerType.Fog:
+                _fogRenderer.Draw(sender, ds, lyricsBg.IsFogOverlayBrethingEffectEnabled);
+                break;
+
+            case LyricsOverlayLayerType.Raindrop:
+                _raindropRenderer.Draw(sender, ds, lyricsBg.IsRaindropOverlayBrethingEffectEnabled);
+                break;
+
+            case LyricsOverlayLayerType.SemanticEffect:
+                _semanticEffectsRenderer.Draw(sender, ds, false);
+                break;
+
+            case LyricsOverlayLayerType.Lyrics:
+                if (_renderLyricsOpacity == 1) _lyricsRenderer.Draw(sender, ds, hdrHighlightGain);
+                break;
         }
     }
 

@@ -375,14 +375,9 @@
                             LyricsWindowStatus="{x:Bind ViewModel.SelectedWindowStatus, Mode=OneWay}" />
                     </controls:Case>
 
-                    <!--  Lyrics background  -->
+                    <!--  Layers  -->
                     <controls:Case Value="{x:Bind enums:LyricsWindowManagerSettingsSection.LyricsBackground}">
                         <local:LyricsBackgroundSettingsControl LyricsBackgroundSettings="{x:Bind ViewModel.SelectedWindowStatus.LyricsBackgroundSettings, Mode=OneWay}" />
-                    </controls:Case>
-
-                    <!--  Foreground overlay  -->
-                    <controls:Case Value="{x:Bind enums:LyricsWindowManagerSettingsSection.ForegroundOverlay}">
-                        <local:ForegroundOverlaySettingsControl LyricsBackgroundSettings="{x:Bind ViewModel.SelectedWindowStatus.LyricsBackgroundSettings, Mode=OneWay}" />
                     </controls:Case>
 
                 </controls:SwitchPresenter>

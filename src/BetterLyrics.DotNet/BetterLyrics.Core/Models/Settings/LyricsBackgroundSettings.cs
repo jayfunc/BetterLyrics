@@ -1,3 +1,4 @@
+using BetterLyrics.Core.Collections;
 using BetterLyrics.Core.Constants;
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Messages.LyricsWindow;
@@ -9,6 +10,27 @@ namespace BetterLyrics.Core.Models.Settings;
 
 public partial class LyricsBackgroundSettings : ObservableObject, ICloneable
 {
+    // 列表按“越靠上越靠前”存储，绘制时反向遍历
+    public static LyricsOverlayLayerConfig[] CreateDefaultOverlayLayerOrder() =>
+    [
+        new(LyricsOverlayLayerType.SemanticEffect),
+        new(LyricsOverlayLayerType.Raindrop),
+        new(LyricsOverlayLayerType.Fog),
+        new(LyricsOverlayLayerType.SnowFlake),
+        new(LyricsOverlayLayerType.SongInfo),
+        new(LyricsOverlayLayerType.AlbumArt),
+        new(LyricsOverlayLayerType.Lyrics),
+        new(LyricsOverlayLayerType.Spectrum),
+        new(LyricsOverlayLayerType.Fluid),
+        new(LyricsOverlayLayerType.CoverOverlay),
+        new(LyricsOverlayLayerType.DesktopWallpaper),
+        new(LyricsOverlayLayerType.PureColor)
+    ];
+
+    [ObservableProperty]
+    public partial FullyObservableCollection<LyricsOverlayLayerConfig> OverlayLayerOrder { get; set; } =
+        new(CreateDefaultOverlayLayerOrder());
+
     [ObservableProperty]
     public partial bool IsPureColorOverlayEnabled { get; set; } = false;
 
@@ -196,6 +218,9 @@ public partial class LyricsBackgroundSettings : ObservableObject, ICloneable
     {
         return new LyricsBackgroundSettings
         {
+            OverlayLayerOrder = new FullyObservableCollection<LyricsOverlayLayerConfig>(
+                OverlayLayerOrder.Select(p => (LyricsOverlayLayerConfig)p.Clone())),
+
             IsPureColorOverlayEnabled = IsPureColorOverlayEnabled,
             PureColorOverlayOpacity = PureColorOverlayOpacity,
             PureColorOverlayColorType = PureColorOverlayColorType,

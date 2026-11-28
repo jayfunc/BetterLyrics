@@ -23,4 +23,10 @@ public sealed partial class LyricsBackgroundSettingsControl : UserControl
     {
         InitializeComponent();
     }
+
+    private void OverlayLayerOrderListView_DragItemsCompleted(ListViewBase sender,
+        DragItemsCompletedEventArgs args)
+    {
+        LyricsBackgroundSettings.OverlayLayerOrder.Refresh();
+    }
 }

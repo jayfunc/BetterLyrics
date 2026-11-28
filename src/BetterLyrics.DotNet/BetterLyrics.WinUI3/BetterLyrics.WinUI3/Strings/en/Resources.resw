@@ -1332,12 +1332,10 @@
   <data name="SettingsPageAutoWrap.Header" xml:space="preserve">
     <value>Auto Wrap</value>
   </data>
-  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve">
-    <value>Background Overlay</value>
-  </data>
-  <data name="SettingsPageForegroundOverlay.Text" xml:space="preserve">
-    <value>Foreground Overlay</value>
-  </data>
+    <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>Layers</value></data>
+  <data name="SettingsPageOverlayLayerOrder.Text" xml:space="preserve"><value>Layer Order</value></data>
+  <data name="SettingsPageOverlayLayerOrderInfoBar.Message" xml:space="preserve"><value>Topmost first. Drag to change where layers sit relative to the lyrics, album art, and song info.</value></data>
+  <data name="LyricsOverlayLayerLyricsName" xml:space="preserve"><value>Lyrics</value></data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve">
     <value>Blur Amount</value>
   </data>

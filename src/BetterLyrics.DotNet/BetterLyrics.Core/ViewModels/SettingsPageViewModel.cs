@@ -190,7 +190,6 @@ public partial class SettingsPageViewModel : ObservableRecipient, ISingletonView
             LyricsWindowManagerSettingsSection.LyricsStyle => "SettingsPageLyricsStyle/Text",
             LyricsWindowManagerSettingsSection.LyricsEffect => "SettingsPageLyricsEffect/Text",
             LyricsWindowManagerSettingsSection.LyricsBackground => "SettingsPageBackgroundOverlay/Text",
-            LyricsWindowManagerSettingsSection.ForegroundOverlay => "SettingsPageForegroundOverlay/Text",
 
             PlaybackLibSettingsSection.General => "SettingsPageConfigPlaybackSource/Text",
             PlaybackLibSettingsSection.LyricsProcessing => "SettingsPageLyricsProcessing/Text",

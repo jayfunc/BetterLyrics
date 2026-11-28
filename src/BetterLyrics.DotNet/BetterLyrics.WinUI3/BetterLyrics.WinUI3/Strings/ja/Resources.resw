@@ -522,8 +522,10 @@
   <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve"><value>ミュージック ギャラリー ウィンドウを開いたときに再生を自動的に再開する</value></data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve"><value>自動起動</value></data>
   <data name="SettingsPageAutoWrap.Header" xml:space="preserve"><value>自動折り返し</value></data>
-  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>背景レイヤー</value></data>
-  <data name="SettingsPageForegroundOverlay.Text" xml:space="preserve"><value>前景レイヤー</value></data>
+    <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>レイヤー</value></data>
+  <data name="SettingsPageOverlayLayerOrder.Text" xml:space="preserve"><value>レイヤーの順序</value></data>
+  <data name="SettingsPageOverlayLayerOrderInfoBar.Message" xml:space="preserve"><value>上にあるほど前面に表示されます。ドラッグして歌詞・アルバムアート・曲情報との重なり順を調整できます。</value></data>
+  <data name="LyricsOverlayLayerLyricsName" xml:space="preserve"><value>歌詞</value></data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve"><value>ぼかしの強さ</value></data>
   <data name="SettingsPageBottom.Content" xml:space="preserve"><value>下</value></data>
   <data name="SettingsPageCache.Description" xml:space="preserve"><value>ログ ファイルとオンライン歌詞キャッシュが含まれます</value></data>

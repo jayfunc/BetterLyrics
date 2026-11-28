@@ -522,8 +522,10 @@
   <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve"><value>เล่นต่อโดยอัตโนมัติเมื่อเปิดหน้าต่างแกลเลอรีเพลง</value></data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve"><value>เริ่มทำงานอัตโนมัติ</value></data>
   <data name="SettingsPageAutoWrap.Header" xml:space="preserve"><value>ตัดบรรทัดอัตโนมัติ</value></data>
-  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>เลเยอร์พื้นหลัง</value></data>
-  <data name="SettingsPageForegroundOverlay.Text" xml:space="preserve"><value>เลเยอร์ฉากหน้า</value></data>
+    <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>เลเยอร์</value></data>
+  <data name="SettingsPageOverlayLayerOrder.Text" xml:space="preserve"><value>ลำดับเลเยอร์</value></data>
+  <data name="SettingsPageOverlayLayerOrderInfoBar.Message" xml:space="preserve"><value>ด้านบนอยู่ด้านหน้า ลากเพื่อสลับลำดับกับเนื้อเพลง ปกอัลบั้ม และข้อมูลเพลง</value></data>
+  <data name="LyricsOverlayLayerLyricsName" xml:space="preserve"><value>เนื้อเพลง</value></data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve"><value>ระดับความเบลอ</value></data>
   <data name="SettingsPageBottom.Content" xml:space="preserve"><value>ด้านล่าง</value></data>
   <data name="SettingsPageCache.Description" xml:space="preserve"><value>รวมไฟล์ Log และแคชเนื้อเพลงออนไลน์</value></data>

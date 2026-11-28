@@ -522,8 +522,10 @@
   <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve"><value>Riprendi automaticamente la riproduzione all'apertura della galleria musicale</value></data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve"><value>Avvio automatico</value></data>
   <data name="SettingsPageAutoWrap.Header" xml:space="preserve"><value>A capo automatico</value></data>
-  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>Sovrapposizione sfondo</value></data>
-  <data name="SettingsPageForegroundOverlay.Text" xml:space="preserve"><value>Sovrapposizione in primo piano</value></data>
+    <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>Livelli</value></data>
+  <data name="SettingsPageOverlayLayerOrder.Text" xml:space="preserve"><value>Ordine dei livelli</value></data>
+  <data name="SettingsPageOverlayLayerOrderInfoBar.Message" xml:space="preserve"><value>In alto è più avanti. Trascina per cambiare l'ordine rispetto a testo, copertina e informazioni del brano.</value></data>
+  <data name="LyricsOverlayLayerLyricsName" xml:space="preserve"><value>Testo</value></data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve"><value>Intensità della sfocatura</value></data>
   <data name="SettingsPageBottom.Content" xml:space="preserve"><value>In basso</value></data>
   <data name="SettingsPageCache.Description" xml:space="preserve"><value>Include i file di log e la cache dei testi online</value></data>

@@ -522,8 +522,10 @@
   <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve"><value>Tự động tiếp tục phát khi mở cửa sổ thư viện nhạc</value></data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve"><value>Tự khởi động</value></data>
   <data name="SettingsPageAutoWrap.Header" xml:space="preserve"><value>Tự động xuống dòng</value></data>
-  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>Lớp nền</value></data>
-  <data name="SettingsPageForegroundOverlay.Text" xml:space="preserve"><value>Lớp tiền cảnh</value></data>
+    <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>Lớp</value></data>
+  <data name="SettingsPageOverlayLayerOrder.Text" xml:space="preserve"><value>Thứ tự lớp</value></data>
+  <data name="SettingsPageOverlayLayerOrderInfoBar.Message" xml:space="preserve"><value>Càng ở trên càng ra trước. Kéo để đổi thứ tự so với lời bài hát, ảnh bìa và thông tin bài hát.</value></data>
+  <data name="LyricsOverlayLayerLyricsName" xml:space="preserve"><value>Lời bài hát</value></data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve"><value>Mức độ nhòe</value></data>
   <data name="SettingsPageBottom.Content" xml:space="preserve"><value>Dưới</value></data>
   <data name="SettingsPageCache.Description" xml:space="preserve"><value>Bao gồm tệp nhật ký và bộ nhớ đệm lời bài hát trực tuyến</value></data>

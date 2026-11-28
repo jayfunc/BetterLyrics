@@ -522,8 +522,10 @@
   <data name="SettingsPageAutoPlayWhenOpenMusicGalleryWindow.Header" xml:space="preserve"><value>Reprendre automatiquement la lecture à l’ouverture de la galerie musicale</value></data>
   <data name="SettingsPageAutoStart.Header" xml:space="preserve"><value>Démarrage automatique</value></data>
   <data name="SettingsPageAutoWrap.Header" xml:space="preserve"><value>Retour à la ligne automatique</value></data>
-  <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>Superposition d'arrière-plan</value></data>
-  <data name="SettingsPageForegroundOverlay.Text" xml:space="preserve"><value>Superposition de premier plan</value></data>
+    <data name="SettingsPageBackgroundOverlay.Text" xml:space="preserve"><value>Calques</value></data>
+  <data name="SettingsPageOverlayLayerOrder.Text" xml:space="preserve"><value>Ordre des calques</value></data>
+  <data name="SettingsPageOverlayLayerOrderInfoBar.Message" xml:space="preserve"><value>Le plus haut est au premier plan. Faites glisser pour changer l'ordre par rapport aux paroles, à la pochette et aux infos du morceau.</value></data>
+  <data name="LyricsOverlayLayerLyricsName" xml:space="preserve"><value>Paroles</value></data>
   <data name="SettingsPageBlurAmount.Header" xml:space="preserve"><value>Intensité du flou</value></data>
   <data name="SettingsPageBottom.Content" xml:space="preserve"><value>Bas</value></data>
   <data name="SettingsPageCache.Description" xml:space="preserve"><value>Comprend les fichiers journaux et le cache des paroles en ligne</value></data>
