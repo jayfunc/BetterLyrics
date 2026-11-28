@@ -163,6 +163,24 @@ public partial class MusicGalleryPageViewModel
     }
 
     [RelayCommand]
+    private void TogglePlaylistOrder()
+    {
+        if (!IsLocalPlaylistSelected) return;
+
+        if (IsPlaylistOrderMode)
+        {
+            IsPlaylistOrderMode = false;
+            IsSortDescending = _lastIsSortDescending;
+            SongOrderType = _lastSongOrderType;
+        }
+        else
+        {
+            ApplyPlaylist();
+            if (!IsPlaylistOrderMode) OnPropertyChanged(nameof(IsPlaylistOrderMode));
+        }
+    }
+
+    [RelayCommand]
     private void SetSongOrderType(CommonSongProperty property)
     {
         if (SongOrderType == property)
@@ -175,6 +193,13 @@ public partial class MusicGalleryPageViewModel
             SongOrderType = property;
         }
 
+        if (SongOrderType != CommonSongProperty.PlaylistOrder)
+        {
+            _lastSongOrderType = SongOrderType;
+            _lastIsSortDescending = IsSortDescending;
+        }
+
+        IsPlaylistOrderMode = false;
         ApplySongOrderType();
     }
 }

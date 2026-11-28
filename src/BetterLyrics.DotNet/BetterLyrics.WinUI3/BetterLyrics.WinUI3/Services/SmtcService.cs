@@ -43,6 +43,8 @@ public partial class SmtcService : ObservableObject, ISmtcService
     private bool _isLoopingEnabled;
 
     private int _currentIndex = -1;
+    private bool _isQueueReordering;
+    private PlayQueueItem? _queueReorderPlayingItem;
     private readonly List<int> _shuffleOrder = [];
     private int _shufflePointer = -1;
     private MediaPlaybackItem? _currentPlaybackItem;
@@ -773,9 +775,43 @@ public partial class SmtcService : ObservableObject, ISmtcService
         }
     }
 
+    public void BeginQueueReorder()
+    {
+        _isQueueReordering = true;
+        _queueReorderPlayingItem = _currentIndex >= 0 && _currentIndex < TrackPlayingQueue.Count
+            ? TrackPlayingQueue[_currentIndex]
+            : null;
+    }
+
+    public void EndQueueReorder()
+    {
+        if (!_isQueueReordering) return;
+        _isQueueReordering = false;
+
+        if (_queueReorderPlayingItem != null)
+        {
+            var newIndex = TrackPlayingQueue.IndexOf(_queueReorderPlayingItem);
+            if (newIndex >= 0 && newIndex != _currentIndex)
+            {
+                _currentIndex = newIndex;
+                PlaybackState.PlayQueueIndex = newIndex;
+            }
+            _queueReorderPlayingItem = null;
+        }
+
+        if (_settingsService.AppSettings.MusicGallerySettings.PlaybackOrder == PlaybackOrder.Shuffle)
+        {
+            GenerateShuffleOrder();
+        }
+    }
+
     private void TrackPlayingQueue_CollectionChanged(object? sender, NotifyCollectionChangedEventArgs e)
     {
         PlaybackState.PlayQueuePaths = [.. TrackPlayingQueue.Select(x => x.Track.Uri.ToDecodedAbsoluteUri())];
+
+        // Item containers reorder the bound collection as a remove/insert pair; playback position is
+        // recalculated from the playing item identity when the drag operation ends.
+        if (_isQueueReordering) return;
 
         switch (e.Action)
         {
@@ -790,6 +826,32 @@ public partial class SmtcService : ObservableObject, ISmtcService
                     GenerateShuffleOrder();
                 }
                 break;
+
+            case NotifyCollectionChangedAction.Move:
+            {
+                var oldIndex = e.OldStartingIndex;
+                var newIndex = e.NewStartingIndex;
+                if (oldIndex == _currentIndex)
+                {
+                    _currentIndex = newIndex;
+                    PlaybackState.PlayQueueIndex = _currentIndex;
+                }
+                else if (oldIndex < _currentIndex && newIndex >= _currentIndex)
+                {
+                    _currentIndex--;
+                    PlaybackState.PlayQueueIndex = _currentIndex;
+                }
+                else if (oldIndex > _currentIndex && newIndex <= _currentIndex)
+                {
+                    _currentIndex++;
+                    PlaybackState.PlayQueueIndex = _currentIndex;
+                }
+                if (_settingsService.AppSettings.MusicGallerySettings.PlaybackOrder == PlaybackOrder.Shuffle)
+                {
+                    GenerateShuffleOrder();
+                }
+                break;
+            }
 
             case NotifyCollectionChangedAction.Remove:
                 if (TrackPlayingQueue.Count == 0)

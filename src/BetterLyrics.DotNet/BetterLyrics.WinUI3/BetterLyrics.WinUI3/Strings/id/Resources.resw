@@ -1119,4 +1119,7 @@
   <data name="MediaFieldSnippetRegexCollapseSpacesDescription" xml:space="preserve"><value>Regex: gabungkan spasi berulang.</value></data>
   <data name="MediaFieldSnippetRegexArtistSeparatorDescription" xml:space="preserve"><value>Regex: ubah "A/B" menjadi "A, B".</value></data>
   <data name="MediaFieldSnippetRegexTrackNumberDescription" xml:space="preserve"><value>Regex: hapus nomor trek di awal.</value></data>
+  <data name="PlaylistOrderSaveFailed" xml:space="preserve"><value>Gagal menyimpan urutan daftar putar</value></data>
+  <data name="MusicGalleryPageSortByPlaylistOrder.Content" xml:space="preserve"><value>Urutan berkas</value></data>
+<data name="MusicGalleryPageNoPlaylistsAvailable" xml:space="preserve"><value>Tidak ada daftar putar tersedia</value></data>
 </root>

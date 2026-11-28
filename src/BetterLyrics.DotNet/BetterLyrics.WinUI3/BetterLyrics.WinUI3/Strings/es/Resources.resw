@@ -1119,4 +1119,7 @@
   <data name="MediaFieldSnippetRegexCollapseSpacesDescription" xml:space="preserve"><value>Expresión regular: unir los espacios repetidos.</value></data>
   <data name="MediaFieldSnippetRegexArtistSeparatorDescription" xml:space="preserve"><value>Expresión regular: convertir «A/B» en «A, B».</value></data>
   <data name="MediaFieldSnippetRegexTrackNumberDescription" xml:space="preserve"><value>Expresión regular: quitar el número de pista inicial.</value></data>
+  <data name="PlaylistOrderSaveFailed" xml:space="preserve"><value>No se pudo guardar el orden de la lista de reproducción</value></data>
+  <data name="MusicGalleryPageSortByPlaylistOrder.Content" xml:space="preserve"><value>Orden del archivo</value></data>
+<data name="MusicGalleryPageNoPlaylistsAvailable" xml:space="preserve"><value>No hay listas de reproducción disponibles</value></data>
 </root>

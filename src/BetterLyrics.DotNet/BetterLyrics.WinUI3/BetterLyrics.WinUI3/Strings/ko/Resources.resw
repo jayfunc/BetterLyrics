@@ -1119,4 +1119,7 @@
   <data name="MediaFieldSnippetRegexCollapseSpacesDescription" xml:space="preserve"><value>정규식: 연속된 공백을 하나로 합칩니다.</value></data>
   <data name="MediaFieldSnippetRegexArtistSeparatorDescription" xml:space="preserve"><value>정규식: 'A/B'를 'A, B'로 변환합니다.</value></data>
   <data name="MediaFieldSnippetRegexTrackNumberDescription" xml:space="preserve"><value>정규식: 앞쪽 트랙 번호를 제거합니다.</value></data>
+  <data name="PlaylistOrderSaveFailed" xml:space="preserve"><value>재생목록 순서를 저장하지 못했습니다</value></data>
+  <data name="MusicGalleryPageSortByPlaylistOrder.Content" xml:space="preserve"><value>파일 순서</value></data>
+<data name="MusicGalleryPageNoPlaylistsAvailable" xml:space="preserve"><value>사용 가능한 재생목록이 없습니다</value></data>
 </root>

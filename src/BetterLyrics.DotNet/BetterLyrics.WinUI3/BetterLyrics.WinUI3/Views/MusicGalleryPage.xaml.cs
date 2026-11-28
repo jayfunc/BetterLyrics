@@ -1,5 +1,6 @@
 using BetterLyrics.Core.Enums;
 using BetterLyrics.Core.Extensions;
+using BetterLyrics.Core.Helpers;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
 using BetterLyrics.Core.Models;
@@ -12,6 +13,7 @@ using Microsoft.UI.Xaml.Input;
 using System;
 using System.IO;
 using System.Linq;
+using Windows.ApplicationModel.DataTransfer;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -208,6 +210,7 @@ public sealed partial class MusicGalleryPage : BasePage
         if (ViewModel.SongListViewSelectionMode == AppListViewSelectionMode.Multiple)
         {
             SongListView.SelectAll();
+            PlaylistOrderSongListView?.SelectAll();
             AlbumDetailSongListView?.SelectAll();
             ArtistDetailSongListView?.SelectAll();
             AlbumGridView?.SelectAll();
@@ -218,6 +221,7 @@ public sealed partial class MusicGalleryPage : BasePage
     private void SelectAllCheckBox_Unchecked(object sender, RoutedEventArgs e)
     {
         SongListView.SelectedItems.Clear();
+        PlaylistOrderSongListView?.SelectedItems.Clear();
         AlbumDetailSongListView?.SelectedItems.Clear();
         ArtistDetailSongListView?.SelectedItems.Clear();
         AlbumGridView?.SelectedItems.Clear();
@@ -230,6 +234,14 @@ public sealed partial class MusicGalleryPage : BasePage
         ViewModel.PlayCommand.Execute(track);
     }
 
+    private void PlaylistOrderSongListView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
+    {
+        if (args.DropResult == DataPackageOperation.Move)
+        {
+            ViewModel.CommitPlaylistOrder();
+        }
+    }
+
     private void FolderTreeView_ItemInvoked(TreeView sender, TreeViewItemInvokedEventArgs args)
     {
         ViewModel.SelectedSongsTabInfoIndex = -1;
@@ -239,29 +251,35 @@ public sealed partial class MusicGalleryPage : BasePage
     private void ToBeAddedPlaylistsMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
     {
         var songsTabInfo = (SongsTabInfo)((FrameworkElement)sender).DataContext;
-        if (songsTabInfo.FilterProperty == CommonSongProperty.M3UFilePath)
-            if (songsTabInfo.FilterValue is string path)
-            {
-                if (File.Exists(path))
-                {
-                    var content = File.ReadAllText(path);
-                    foreach (var item in ViewModel.SelectedTracks.Select(x => x.Uri.ToDecodedAbsoluteUri()).ToList())
-                    {
-                        if (!content.Contains(item))
-                        {
-                            content += Environment.NewLine;
-                            content += item;
-                        }
-                    }
+        if (songsTabInfo.FilterProperty != CommonSongProperty.M3UFilePath) return;
+        if (songsTabInfo.FilterValue is not string path) return;
 
-                    File.WriteAllText(path, content);
-                    _globalToastProvider.Show("TracksAddToPlaylistSuccessfully", null, MessageSeverity.Success);
-                }
-                else
-                {
-                    _globalToastProvider.Show("TracksAddToPlaylistFailed", null, MessageSeverity.Error);
-                }
-            }
+        if (!File.Exists(path))
+        {
+            _globalToastProvider.Show("TracksAddToPlaylistFailed", null, MessageSeverity.Error);
+            return;
+        }
+
+        var entries = M3uPlaylistFile.Read(path);
+        var existingPaths = entries
+            .Where(x => x.TrackPath != null)
+            .Select(x => x.TrackPath!)
+            .ToHashSet(StringComparer.OrdinalIgnoreCase);
+
+        foreach (var track in ViewModel.SelectedTracks)
+        {
+            var trackPath = M3uPlaylistFile.GetTrackPath(track);
+            if (trackPath == null || !existingPaths.Add(trackPath)) continue;
+            entries.Add(M3uPlaylistFile.CreateTrackEntry(trackPath));
+        }
+
+        M3uPlaylistFile.Write(path, entries);
+        _globalToastProvider.Show("TracksAddToPlaylistSuccessfully", null, MessageSeverity.Success);
+
+        if (ViewModel.SelectedSongsTabInfo?.FilterValue == path)
+        {
+            ViewModel.ApplyPlaylist();
+        }
     }
 
     private void AddToMenuBarItemFlyout_Opened(object sender, object e)

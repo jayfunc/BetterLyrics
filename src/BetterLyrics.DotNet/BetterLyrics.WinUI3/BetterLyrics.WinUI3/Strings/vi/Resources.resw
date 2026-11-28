@@ -1119,4 +1119,7 @@
   <data name="MediaFieldSnippetRegexCollapseSpacesDescription" xml:space="preserve"><value>Biểu thức chính quy: gộp các khoảng trắng lặp lại.</value></data>
   <data name="MediaFieldSnippetRegexArtistSeparatorDescription" xml:space="preserve"><value>Biểu thức chính quy: chuyển "A/B" thành "A, B".</value></data>
   <data name="MediaFieldSnippetRegexTrackNumberDescription" xml:space="preserve"><value>Biểu thức chính quy: bỏ số bản nhạc ở đầu.</value></data>
+  <data name="PlaylistOrderSaveFailed" xml:space="preserve"><value>Không thể lưu thứ tự danh sách phát</value></data>
+  <data name="MusicGalleryPageSortByPlaylistOrder.Content" xml:space="preserve"><value>Thứ tự tệp</value></data>
+<data name="MusicGalleryPageNoPlaylistsAvailable" xml:space="preserve"><value>Không có danh sách phát nào</value></data>
 </root>

@@ -1119,4 +1119,7 @@
   <data name="MediaFieldSnippetRegexCollapseSpacesDescription" xml:space="preserve"><value>تعبير نمطي: دمج المسافات المتكرّرة.</value></data>
   <data name="MediaFieldSnippetRegexArtistSeparatorDescription" xml:space="preserve"><value>تعبير نمطي: تحويل «A/B» إلى «A, B».</value></data>
   <data name="MediaFieldSnippetRegexTrackNumberDescription" xml:space="preserve"><value>تعبير نمطي: إزالة رقم المقطع في البداية.</value></data>
+  <data name="PlaylistOrderSaveFailed" xml:space="preserve"><value>تعذّر حفظ ترتيب قائمة التشغيل</value></data>
+  <data name="MusicGalleryPageSortByPlaylistOrder.Content" xml:space="preserve"><value>ترتيب الملف</value></data>
+<data name="MusicGalleryPageNoPlaylistsAvailable" xml:space="preserve"><value>لا توجد قوائم تشغيل متاحة</value></data>
 </root>

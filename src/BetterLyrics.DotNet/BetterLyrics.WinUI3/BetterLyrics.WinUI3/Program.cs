@@ -343,7 +343,7 @@ public class Program
             .AddSingleton<IFilePickerProvider, FilePickerProvider>()
             .AddSingleton<IProgramProvider, ProgramProvider>()
             .AddSingleton<IMonitorProvider, MonitorProvider>()
-            .AddSingleton<ISpoutTextureProvider, SpoutTextureProvider>()
+            .AddTransient<ISpoutTextureProvider, SpoutTextureProvider>()
             .AddSingleton<ITaskbarThumbnailProvider, TaskbarThumbnailProvider>()
             .AddSingleton<IGlobalShortcutProvider, GlobalShortcutProvider>()
 

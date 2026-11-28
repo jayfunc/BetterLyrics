@@ -135,6 +135,127 @@
                     TextWrapping="Wrap" />
             </Grid>
         </DataTemplate>
+        <DataTemplate x:Key="PlaylistOrderTemplate" x:DataType="models:ExtendedTrack">
+            <Grid
+                Padding="12"
+                behaviors:MusicGalleryGrid.SyncColumnVisibility="True"
+                Background="Transparent"
+                ColumnSpacing="12"
+                DoubleTapped="SongListViewItem_DoubleTapped">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="32" />
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0" ColumnSpacing="8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <FontIcon
+                        Grid.Column="0"
+                        Width="16"
+                        VerticalAlignment="Top"
+                        FontFamily="Segoe UI Symbol"
+                        FontSize="14"
+                        Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                        Glyph="&#x283F;">
+                        <ToolTipService.ToolTip>
+                            <ToolTip x:Uid="SettingsPageHoldDragSort" />
+                        </ToolTipService.ToolTip>
+                    </FontIcon>
+                    <TextBlock
+                        Grid.Column="1"
+                        Padding="0"
+                        Text="{x:Bind Title}"
+                        TextWrapping="Wrap" />
+                </Grid>
+                <HyperlinkButton
+                    Grid.Column="1"
+                    Padding="0"
+                    VerticalAlignment="Top"
+                    Click="ArtistHyperlibkButton_Click">
+                    <TextBlock Text="{x:Bind Artist}" TextWrapping="Wrap" />
+                </HyperlinkButton>
+                <HyperlinkButton
+                    Grid.Column="2"
+                    Padding="0"
+                    VerticalAlignment="Top"
+                    Click="AlbumHyperlibkButton_Click">
+                    <TextBlock Text="{x:Bind Album}" TextWrapping="Wrap" />
+                </HyperlinkButton>
+                <TextBlock
+                    Grid.Column="3"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind Genre}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Grid.Column="4"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind Year}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Grid.Column="5"
+                    VerticalAlignment="Center"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind TrackNumber}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Grid.Column="6"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind Bitrate}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Grid.Column="7"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind SampleRate}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Grid.Column="8"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind AudioFormatShortName}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Grid.Column="9"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind FileSize, Converter={StaticResource FileSizeToStringConverter}}"
+                    TextWrapping="Wrap" />
+                <HyperlinkButton
+                    Grid.Column="10"
+                    Padding="0"
+                    VerticalAlignment="Top"
+                    Click="PathHyperlibkButton_Click">
+                    <TextBlock Text="{x:Bind ParentFolderName}" TextWrapping="Wrap" />
+                </HyperlinkButton>
+                <TextBlock
+                    Grid.Column="11"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind Duration, Converter={StaticResource SecondsToFormattedTimeConverter}}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Grid.Column="12"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind DateCreated, Converter={StaticResource DateTimeToStringConverter}}"
+                    TextWrapping="Wrap" />
+                <TextBlock
+                    Grid.Column="13"
+                    Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                    Text="{x:Bind DateModified, Converter={StaticResource DateTimeToStringConverter}}"
+                    TextWrapping="Wrap" />
+            </Grid>
+        </DataTemplate>
     </views:BasePage.Resources>
     <Grid>
         <Grid Padding="0,0,0,66" ColumnSpacing="6">
@@ -388,8 +509,9 @@
                                 x:Name="SongListHeader1"
                                 Grid.Row="0"
                                 Margin="12,0"
+                                ShowPlaylistGripSpacer="{x:Bind ViewModel.IsPlaylistOrderMode, Mode=OneWay}"
                                 ViewModel="{x:Bind ViewModel, Mode=OneWay}" />
-                            <SemanticZoom Grid.Row="1">
+                            <SemanticZoom Grid.Row="1" Visibility="{x:Bind ViewModel.IsPlaylistOrderMode, Mode=OneWay, Converter={StaticResource BoolNegationToVisibilityConverter}}">
                                 <SemanticZoom.ZoomedInView>
                                     <ListView
                                         x:Name="SongListView"
@@ -446,6 +568,34 @@
                                     </GridView>
                                 </SemanticZoom.ZoomedOutView>
                             </SemanticZoom>
+                            <ListView
+                                x:Name="PlaylistOrderSongListView"
+                                Grid.Row="1"
+                                AllowDrop="{x:Bind ViewModel.IsPlaylistReorderEnabled, Mode=OneWay}"
+                                CanReorderItems="{x:Bind ViewModel.IsPlaylistReorderEnabled, Mode=OneWay}"
+                                DragItemsCompleted="PlaylistOrderSongListView_DragItemsCompleted"
+                                ItemTemplate="{StaticResource PlaylistOrderTemplate}"
+                                ItemsSource="{x:Bind ViewModel.PlaylistOrderTracks, Mode=OneWay}"
+                                RightTapped="SongListView_RightTapped"
+                                SelectionChanged="OnGenericSelectionChanged"
+                                SelectionMode="{x:Bind ViewModel.SongListViewSelectionMode, Mode=TwoWay, Converter={StaticResource AppListViewSelectionModeToListViewSelectionModeConverter}}"
+                                Visibility="{x:Bind ViewModel.IsPlaylistOrderMode, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
+                                <ListView.ContextFlyout>
+                                    <MenuBarItemFlyout Opened="AddToMenuBarItemFlyout_Opened">
+                                        <MenuFlyoutSubItem x:Uid="MusicGalleryPageAddToPlayingQueue" IsEnabled="{x:Bind ViewModel.SelectedTracks.Count, Mode=OneWay, Converter={StaticResource IntToBoolConverter}}">
+                                            <MenuFlyoutItem x:Uid="MusicGalleryPageAddToNext" Click="AddSongToQueueNextMenuFlyoutItem_Click" />
+                                            <MenuFlyoutItem x:Uid="MusicGalleryPageAddToEnd" Click="AddSongToQueueEndMenuFlyoutItem_Click" />
+                                        </MenuFlyoutSubItem>
+                                        <MenuFlyoutSubItem
+                                            x:Name="AddToCustomListMenuFlyoutSubItem_PlaylistOrder"
+                                            x:Uid="MusicGalleryPageAddToCustomList"
+                                            IsEnabled="{x:Bind ViewModel.SelectedTracks.Count, Mode=OneWay, Converter={StaticResource IntToBoolConverter}}" />
+                                    </MenuBarItemFlyout>
+                                </ListView.ContextFlyout>
+                                <ListView.ItemContainerStyle>
+                                    <Style BasedOn="{StaticResource ListViewStretchedItemContainerStyle}" TargetType="ListViewItem" />
+                                </ListView.ItemContainerStyle>
+                            </ListView>
                         </Grid>
                     </controls:Case>
                     <controls:Case Value="{x:Bind enums:MusicLibraryViewType.Albums}">
@@ -740,6 +890,7 @@
                             <ColumnDefinition />
                             <ColumnDefinition />
                             <ColumnDefinition />
+                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <!--  切换选择模式  -->
                         <ToggleButton
@@ -767,10 +918,21 @@
                             <Paragraph>
                                 <Run Text="{x:Bind ViewModel.SelectedTracks.Count, Mode=OneWay}" />
                                 <Run Text="/" />
-                                <Run Text="{x:Bind GroupedTracksCVS.View.Count, Mode=OneWay}" />
+                                <Run Text="{x:Bind ViewModel.FilteredTracksCount, Mode=OneWay}" />
                                 <Run Text="{x:Bind ViewModel.SelectedTracksTotalDuration, Mode=OneWay, Converter={StaticResource SecondsToFormattedTimeConverter}}" />
                             </Paragraph>
                         </RichTextBlock>
+                        <!--  文件顺序（本地播放列表）  -->
+                        <CheckBox
+                            x:Name="PlaylistOrderCheckBox"
+                            x:Uid="MusicGalleryPageSortByPlaylistOrder"
+                            Grid.Column="3"
+                            MinWidth="0"
+                            Margin="4,0,0,0"
+                            VerticalAlignment="Center"
+                            Command="{x:Bind ViewModel.TogglePlaylistOrderCommand}"
+                            IsChecked="{x:Bind ViewModel.IsPlaylistOrderMode, Mode=OneWay}"
+                            Visibility="{x:Bind ViewModel.IsLocalPlaylistSelected, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
                     </Grid>
                     <!--  播放  -->
                     <Grid Grid.Column="2" ColumnSpacing="6">

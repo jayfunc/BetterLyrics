@@ -1119,4 +1119,7 @@
   <data name="MediaFieldSnippetRegexCollapseSpacesDescription" xml:space="preserve"><value>正規表現：連続する空白を 1 つにまとめます。</value></data>
   <data name="MediaFieldSnippetRegexArtistSeparatorDescription" xml:space="preserve"><value>正規表現：「A/B」を「A, B」に変換します。</value></data>
   <data name="MediaFieldSnippetRegexTrackNumberDescription" xml:space="preserve"><value>正規表現：先頭のトラック番号を削除します。</value></data>
+  <data name="PlaylistOrderSaveFailed" xml:space="preserve"><value>プレイリストの順序を保存できませんでした</value></data>
+  <data name="MusicGalleryPageSortByPlaylistOrder.Content" xml:space="preserve"><value>ファイル順</value></data>
+<data name="MusicGalleryPageNoPlaylistsAvailable" xml:space="preserve"><value>利用可能なプレイリストがありません</value></data>
 </root>

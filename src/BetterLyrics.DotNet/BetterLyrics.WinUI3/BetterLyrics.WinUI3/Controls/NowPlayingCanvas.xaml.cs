@@ -787,7 +787,8 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
 
         _mouseYScrollTransition.Update(elapsedTime);
 
-        _albumArtRenderer.Update(elapsedTime);
+        _albumArtRenderer.Update(sender, elapsedTime, _albumArtRect, _lyricsWindowStatus,
+            _albumArtHorizontalAlignment, _albumArtVerticalAlignment);
         _songInfoRenderer.Update(sender, elapsedTime.TotalSeconds, _lyricsWindowStatus);
 
         CurrentHoveringLineIndex = _layoutStrategy.FindMouseHoverLineIndex(
@@ -2174,13 +2175,23 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
 
     private async Task ReloadCoverResourcesAsync()
     {
-        if (Canvas == null) return;
+        // 封面消息可能来自后台线程；CanvasBitmap 必须与画布控件在同一线程创建，
+        // 否则跨线程使用画布设备会让显卡驱动在绘制时崩溃
+        var uiDispatcher = _uiDispatcherQueue;
+        if (uiDispatcher != null && !uiDispatcher.HasThreadAccess)
+        {
+            uiDispatcher.TryEnqueue(() => _ = ReloadCoverResourcesAsync());
+            return;
+        }
+
+        var canvas = Canvas;
+        if (canvas == null) return;
 
         var reloadVersion = ++_coverReloadVersion;
 
         try
         {
-            if (Canvas.Device == null) return;
+            if (canvas.Device == null) return;
 
             var imageBytes = _gsmtcService.AlbumArtBytes;
             if (imageBytes == null || imageBytes.Length == 0)
@@ -2188,7 +2199,8 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
                 _coverRenderer.SetCoverBitmap(null);
 
                 var placeholder = await LoadPlaceholderCoverAsync();
-                if (placeholder != null && reloadVersion == _coverReloadVersion)
+                if (placeholder != null && reloadVersion == _coverReloadVersion &&
+                    ReferenceEquals(placeholder.Device, canvas.Device))
                 {
                     SetAlbumArtNaturalSize(placeholder.Size);
                     _albumArtRenderer.SetCoverBitmap(placeholder);
@@ -2209,17 +2221,20 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
                     await writer.StoreAsync();
                 }
 
-                if (Canvas.Device == null) return;
+                if (canvas.Device == null) return;
 
                 // 背景模糊与封面展示各持有一份位图，换图与释放节奏互不影响
                 localMemoryStream.Seek(0);
-                var backgroundBitmap = await CanvasBitmap.LoadAsync(Canvas, localMemoryStream);
+                var backgroundBitmap = await CanvasBitmap.LoadAsync(canvas, localMemoryStream);
 
                 localMemoryStream.Seek(0);
-                var albumArtBitmap = await CanvasBitmap.LoadAsync(Canvas, localMemoryStream);
+                var albumArtBitmap = await CanvasBitmap.LoadAsync(canvas, localMemoryStream);
 
-                // 期间有更新的封面请求，丢弃这次较旧的结果，避免旧封面覆盖新封面
-                if (reloadVersion != _coverReloadVersion)
+                // 期间有更新的封面请求，或设备已被重建，丢弃这次结果，避免把旧设备的位图交给画布
+                if (reloadVersion != _coverReloadVersion ||
+                    canvas.Device == null ||
+                    !ReferenceEquals(backgroundBitmap.Device, canvas.Device) ||
+                    !ReferenceEquals(albumArtBitmap.Device, canvas.Device))
                 {
                     backgroundBitmap.Dispose();
                     albumArtBitmap.Dispose();
@@ -2239,7 +2254,8 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
 
     private async Task<CanvasBitmap?> LoadPlaceholderCoverAsync()
     {
-        if (Canvas?.Device == null) return null;
+        var canvas = Canvas;
+        if (canvas?.Device == null) return null;
 
         try
         {
@@ -2247,7 +2263,7 @@ public sealed partial class NowPlayingCanvas : BaseUserControl,
             var file = await StorageFile.GetFileFromApplicationUriAsync(uri);
 
             using var stream = await file.OpenReadAsync();
-            return await CanvasBitmap.LoadAsync(Canvas, stream);
+            return await CanvasBitmap.LoadAsync(canvas, stream);
         }
         catch (Exception ex)
         {

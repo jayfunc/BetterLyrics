@@ -75,7 +75,8 @@ public sealed partial class AlbumArtRenderer : EffectRendererBase, IDisposable
         _switchTransition.JumpTo(1.0);
     }
 
-    public void Update(TimeSpan elapsedTime)
+    public void Update(ICanvasAnimatedControl control, TimeSpan elapsedTime, Rect rect, LyricsWindowStatus status,
+        AppHorizontalAlignment horizontal, AppVerticalAlignment vertical)
     {
         ApplyPendingBitmap();
 
@@ -88,6 +89,26 @@ public sealed partial class AlbumArtRenderer : EffectRendererBase, IDisposable
             _previousBitmap.Dispose();
             _previousBitmap = null;
         }
+
+        // 图层必须在 Draw 之外构建：开启边缘羽化时 Draw 处于 D2D layer 内，
+        // 在活跃图层里创建 CanvasRenderTarget 会触发部分显卡驱动的访问冲突
+        if (!double.IsFinite(rect.Width) || !double.IsFinite(rect.Height) || rect.Width < 1 || rect.Height < 1)
+        {
+            DisposeLayer(ref _currentLayer);
+            DisposeLayer(ref _previousLayer);
+            return;
+        }
+
+        if ((_currentBitmap != null && !ReferenceEquals(_currentBitmap.Device, control.Device)) ||
+            (_previousBitmap != null && !ReferenceEquals(_previousBitmap.Device, control.Device)))
+        {
+            ResetDeviceResources();
+            return;
+        }
+
+        var style = status.AlbumArtLayoutSettings;
+        EnsureLayer(control, ref _currentLayer, _currentBitmap, rect, style, horizontal, vertical);
+        EnsureLayer(control, ref _previousLayer, _previousBitmap, rect, style, horizontal, vertical);
     }
 
     /// <summary>
@@ -135,19 +156,22 @@ public sealed partial class AlbumArtRenderer : EffectRendererBase, IDisposable
     public void Draw(ICanvasAnimatedControl control, CanvasDrawingSession ds, Rect rect,
         LyricsWindowStatus status, AppHorizontalAlignment horizontal, AppVerticalAlignment vertical)
     {
+        if (!double.IsFinite(rect.Width) || !double.IsFinite(rect.Height)) return;
         if (rect.Width < 1 || rect.Height < 1) return;
 
-        var style = status.AlbumArtLayoutSettings;
-        var effect = status.AlbumArtAreaEffectSettings;
-
-        EnsureLayer(control, ref _currentLayer, _currentBitmap, rect, style, horizontal, vertical);
-        EnsureLayer(control, ref _previousLayer, _previousBitmap, rect, style, horizontal, vertical);
+        // 设备重建后旧设备的位图不会再被绘制；对应图层已在 Update 中重置
+        if ((_currentBitmap != null && !ReferenceEquals(_currentBitmap.Device, control.Device)) ||
+            (_previousBitmap != null && !ReferenceEquals(_previousBitmap.Device, control.Device)))
+        {
+            return;
+        }
 
         if (_currentLayer == null && _previousLayer == null) return;
 
-        // 渐隐遮罩、滑入距离与视差旋转都以真实图片边界为基准，
-        // 否则左/右或上/下对齐时会出现位置偏移
         var artBounds = GetAlbumArtBounds(rect, horizontal, vertical);
+        if (artBounds.Width < 1 || artBounds.Height < 1) return;
+
+        var effect = status.AlbumArtAreaEffectSettings;
 
         var center = new Vector3((float)(artBounds.X + artBounds.Width / 2),
             (float)(artBounds.Y + artBounds.Height / 2), 0);
@@ -301,7 +325,7 @@ public sealed partial class AlbumArtRenderer : EffectRendererBase, IDisposable
         layer = BuildLayer(control, bitmap, rect, style, horizontal, vertical);
     }
 
-    private static CoverLayer BuildLayer(ICanvasAnimatedControl control, CanvasBitmap bitmap, Rect rect,
+    private static CoverLayer? BuildLayer(ICanvasAnimatedControl control, CanvasBitmap bitmap, Rect rect,
         AlbumArtAreaStyleSettings style, AppHorizontalAlignment horizontal, AppVerticalAlignment vertical)
     {
         var width = (float)rect.Width;
@@ -325,6 +349,12 @@ public sealed partial class AlbumArtRenderer : EffectRendererBase, IDisposable
 
         var targetWidth = width + padding * 2;
         var targetHeight = height + padding * 2;
+        if (!float.IsFinite(targetWidth) || !float.IsFinite(targetHeight) ||
+            targetWidth < 1 || targetHeight < 1)
+        {
+            return null;
+        }
+
         var dpi = control.Dpi;
 
         var cover = new CanvasRenderTarget(control, targetWidth, targetHeight, dpi);

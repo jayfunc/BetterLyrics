@@ -1119,4 +1119,7 @@
   <data name="MediaFieldSnippetRegexCollapseSpacesDescription" xml:space="preserve"><value>Regex: gabungkan ruang berulang.</value></data>
   <data name="MediaFieldSnippetRegexArtistSeparatorDescription" xml:space="preserve"><value>Regex: tukar "A/B" kepada "A, B".</value></data>
   <data name="MediaFieldSnippetRegexTrackNumberDescription" xml:space="preserve"><value>Regex: buang nombor trek di hadapan.</value></data>
+  <data name="PlaylistOrderSaveFailed" xml:space="preserve"><value>Gagal menyimpan susunan senarai main</value></data>
+  <data name="MusicGalleryPageSortByPlaylistOrder.Content" xml:space="preserve"><value>Susunan fail</value></data>
+<data name="MusicGalleryPageNoPlaylistsAvailable" xml:space="preserve"><value>Tiada senarai main tersedia</value></data>
 </root>

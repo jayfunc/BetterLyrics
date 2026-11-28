@@ -1119,4 +1119,7 @@
   <data name="MediaFieldSnippetRegexCollapseSpacesDescription" xml:space="preserve"><value>Düzenli ifade: yinelenen boşlukları birleştir.</value></data>
   <data name="MediaFieldSnippetRegexArtistSeparatorDescription" xml:space="preserve"><value>Düzenli ifade: "A/B" biçimini "A, B" biçimine dönüştür.</value></data>
   <data name="MediaFieldSnippetRegexTrackNumberDescription" xml:space="preserve"><value>Düzenli ifade: baştaki parça numarasını kaldır.</value></data>
+  <data name="PlaylistOrderSaveFailed" xml:space="preserve"><value>Çalma listesi sırası kaydedilemedi</value></data>
+  <data name="MusicGalleryPageSortByPlaylistOrder.Content" xml:space="preserve"><value>Dosya sırası</value></data>
+<data name="MusicGalleryPageNoPlaylistsAvailable" xml:space="preserve"><value>Kullanılabilir çalma listesi yok</value></data>
 </root>

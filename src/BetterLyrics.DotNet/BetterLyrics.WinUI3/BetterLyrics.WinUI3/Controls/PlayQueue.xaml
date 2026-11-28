@@ -94,14 +94,34 @@
         <ListView
             x:Name="PlayingQueueListView"
             Grid.Row="3"
+            AllowDrop="True"
+            CanDragItems="True"
+            CanReorderItems="True"
+            DragItemsCompleted="PlayingQueueListView_DragItemsCompleted"
+            DragItemsStarting="PlayingQueueListView_DragItemsStarting"
             ItemsSource="{x:Bind ViewModel.SMTCService.TrackPlayingQueue, Mode=OneWay}"
             SelectedIndex="{x:Bind ViewModel.SMTCService.PlaybackState.PlayQueueIndex, Mode=OneWay}"
             SelectionChanged="PlayingQueueListView_SelectionChanged">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Grid Padding="0,6">
-                        <Grid Tapped="PlayingQueueListVireItemGrid_Tapped">
-                            <StackPanel Margin="0,0,36,0">
+                        <Grid ColumnSpacing="12" Tapped="PlayingQueueListVireItemGrid_Tapped">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <FontIcon
+                                Grid.Column="0"
+                                VerticalAlignment="Center"
+                                FontFamily="Segoe UI Symbol"
+                                FontSize="14"
+                                Foreground="{ThemeResource TextFillColorSecondaryBrush}"
+                                Glyph="&#x283F;">
+                                <ToolTipService.ToolTip>
+                                    <ToolTip x:Uid="SettingsPageHoldDragSort" />
+                                </ToolTipService.ToolTip>
+                            </FontIcon>
+                            <StackPanel Grid.Column="1" Margin="0,0,72,0">
                                 <TextBlock Text="{Binding Track.Title}" TextWrapping="Wrap" />
                                 <TextBlock
                                     Foreground="{ThemeResource TextFillColorSecondaryBrush}"
@@ -109,9 +129,21 @@
                                     TextWrapping="Wrap" />
                             </StackPanel>
                         </Grid>
-                        <Grid HorizontalAlignment="Right">
+                        <StackPanel
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Center"
+                            Orientation="Horizontal">
                             <Button
-                                VerticalAlignment="Center"
+                                Click="AddToPlaylistButton_Click"
+                                Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
+                                                      FontSize=16,
+                                                      Glyph=&#xE710;}"
+                                Style="{ThemeResource GhostButtonStyle}">
+                                <ToolTipService.ToolTip>
+                                    <TextBlock x:Uid="MusicGalleryPageAddToCustomList" />
+                                </ToolTipService.ToolTip>
+                            </Button>
+                            <Button
                                 Click="RemoveFromPlayingQueueButton_Click"
                                 Content="{ui:FontIcon FontFamily={StaticResource SegoeFluentIcons},
                                                       FontSize=16,
@@ -121,7 +153,7 @@
                                     <TextBlock x:Uid="MusicGalleryPageRemoveFromPlayingQueue" />
                                 </ToolTipService.ToolTip>
                             </Button>
-                        </Grid>
+                        </StackPanel>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>

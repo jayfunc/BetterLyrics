@@ -77,6 +77,10 @@ public partial class MusicGalleryPageViewModel
     public void ApplyPlaylist()
     {
         CurrentView = MusicLibraryViewType.Songs;
+        _m3uEntries = null;
+        _m3uPath = null;
+        IsPlaylistOrderMode = false;
+
         if (SelectedSongsTabInfo?.FilterValue == string.Empty)
         {
             _middleTracks = _allTracks;
@@ -89,8 +93,24 @@ public partial class MusicGalleryPageViewModel
                 {
                     if (File.Exists(path))
                     {
-                        var m3uFileContent = File.ReadAllText(path);
-                        _middleTracks = _allTracks.Where(t => m3uFileContent.Contains(t.Uri.ToDecodedAbsoluteUri())).ToList();
+                        try
+                        {
+                            _m3uEntries = M3uPlaylistFile.Read(path);
+                            _m3uPath = path;
+                            _middleTracks = M3uPlaylistFile.GetTracks(_m3uEntries, _allTracks);
+                            if (SongOrderType != CommonSongProperty.PlaylistOrder)
+                            {
+                                _lastSongOrderType = SongOrderType;
+                                _lastIsSortDescending = IsSortDescending;
+                            }
+                            IsPlaylistOrderMode = true;
+                            SongOrderType = CommonSongProperty.PlaylistOrder;
+                        }
+                        catch (Exception)
+                        {
+                            _middleTracks = [];
+                            _globalToastProvider.Show("PlaylistViewFailed", path, MessageSeverity.Success);
+                        }
                     }
                     else
                     {
@@ -112,6 +132,7 @@ public partial class MusicGalleryPageViewModel
         ApplySongSearchQuery();
         IsLocalMediaNotFound = !_filteredTracks.Any();
         ApplySongOrderType();
+        RestoreLastSortIfNeeded();
     }
 
     public void ApplySongSearchQuery()
@@ -119,26 +140,40 @@ public partial class MusicGalleryPageViewModel
         if (string.IsNullOrWhiteSpace(SongSearchQuery))
         {
             _filteredTracks = _middleTracks;
-            return;
+        }
+        else
+        {
+            _filteredTracks = _middleTracks.Where(t =>
+                t.Title.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
+                (t.Artist ?? string.Empty).Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
+                (t.Album ?? string.Empty).Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
+                t.FileName.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
+                t.ParentFolderPath.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
         }
 
-        _filteredTracks = _middleTracks.Where(t =>
-            t.Title.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
-            (t.Artist ?? string.Empty).Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
-            (t.Album ?? string.Empty).Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
-            t.FileName.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase) ||
-            t.ParentFolderPath.Contains(SongSearchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
+        FilteredTracksCount = _filteredTracks.Count;
     }
 
     private void ApplySongOrderType()
     {
-        GroupedTracks = _filteredTracks.GetGroupedBy(
-            t => LanguageHelper.GetOrderChar(GetTrackSortValue(t, SongOrderType)),
-            o => GetTrackDisplayValue((ExtendedTrack)o, SongOrderType),
-            IsSortDescending
-        );
+        if (IsPlaylistOrderMode)
+        {
+            // Local playlists keep the order stored in the m3u file instead of being grouped and sorted.
+            PlaylistOrderTracks = new ObservableCollection<ExtendedTrack>(_filteredTracks);
+            _sortedTracks = _filteredTracks.ToList();
+            GroupedTracks = [];
+        }
+        else
+        {
+            GroupedTracks = _filteredTracks.GetGroupedBy(
+                t => LanguageHelper.GetOrderChar(GetTrackSortValue(t, SongOrderType)),
+                o => GetTrackDisplayValue((ExtendedTrack)o, SongOrderType),
+                IsSortDescending
+            );
 
-        _sortedTracks = GroupedTracks.SelectMany(x => x.Cast<ExtendedTrack>()).ToList();
+            _sortedTracks = GroupedTracks.SelectMany(x => x.Cast<ExtendedTrack>()).ToList();
+        }
+
         ApplyAlbumsAndArtists();
 
         if (CurrentView == MusicLibraryViewType.AlbumDetail && SelectedAlbum != null)
@@ -210,6 +245,9 @@ public partial class MusicGalleryPageViewModel
         if (_allTracks == null) return;
 
         CurrentView = MusicLibraryViewType.Songs;
+        _m3uEntries = null;
+        _m3uPath = null;
+        IsPlaylistOrderMode = false;
 
         var baseUri = folder.FolderPath;
         if (!baseUri.EndsWith("/")) baseUri += "/";
@@ -231,6 +269,7 @@ public partial class MusicGalleryPageViewModel
         ApplySongSearchQuery();
         IsLocalMediaNotFound = !_filteredTracks.Any();
         ApplySongOrderType();
+        RestoreLastSortIfNeeded();
     }
 
     public void AddToPlaylists(SongsTabInfo playlist)
@@ -257,11 +296,59 @@ public partial class MusicGalleryPageViewModel
         IsLocalMediaNotFound = !_filteredTracks.Any();
     }
 
+    partial void OnIsPlaylistOrderModeChanged(bool value) =>
+        OnPropertyChanged(nameof(IsPlaylistReorderEnabled));
+
+    private void RestoreLastSortIfNeeded()
+    {
+        if (IsPlaylistOrderMode) return;
+        if (SongOrderType != CommonSongProperty.PlaylistOrder) return;
+
+        IsSortDescending = _lastIsSortDescending;
+        SongOrderType = _lastSongOrderType;
+    }
+
+    partial void OnSongListViewSelectionModeChanged(AppListViewSelectionMode value) =>
+        OnPropertyChanged(nameof(IsPlaylistReorderEnabled));
+
     partial void OnSongSearchQueryChanged(string value)
     {
+        OnPropertyChanged(nameof(IsPlaylistReorderEnabled));
         ApplySongSearchQuery();
         IsLocalMediaNotFound = !_filteredTracks.Any();
         ApplySongOrderType();
+    }
+
+    /// <summary>
+    /// Persists the order of <see cref="PlaylistOrderTracks"/> to the m3u file after a drag reorder.
+    /// </summary>
+    public void CommitPlaylistOrder()
+    {
+        if (!IsPlaylistReorderEnabled || _m3uEntries == null || _m3uPath == null) return;
+        if (PlaylistOrderTracks.Count == 0) return;
+
+        var orderedTracks = PlaylistOrderTracks.ToList();
+        _middleTracks = orderedTracks;
+        _filteredTracks = orderedTracks;
+        _sortedTracks = orderedTracks.ToList();
+        FilteredTracksCount = orderedTracks.Count;
+
+        var entries = _m3uEntries;
+        var playlistPath = _m3uPath;
+        _ = Task.Run(() =>
+        {
+            try
+            {
+                if (!M3uPlaylistFile.Reorder(orderedTracks, entries))
+                    throw new InvalidOperationException("Playlist order does not match the playlist entries.");
+                M3uPlaylistFile.Write(playlistPath, entries);
+            }
+            catch (Exception)
+            {
+                _globalToastProvider.Show("PlaylistOrderSaveFailed", playlistPath, MessageSeverity.Error);
+                _appUIThreadProvider.Execute(ApplyPlaylist);
+            }
+        });
     }
 
     private void AddFileToStarredPlaylists(string fileName, string filePath)

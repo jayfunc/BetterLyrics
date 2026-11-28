@@ -1119,4 +1119,7 @@
   <data name="MediaFieldSnippetRegexCollapseSpacesDescription" xml:space="preserve"><value>रेगुलर एक्सप्रेशन: दोहराए गए रिक्त स्थानों को संयोजित करें।</value></data>
   <data name="MediaFieldSnippetRegexArtistSeparatorDescription" xml:space="preserve"><value>रेगुलर एक्सप्रेशन: "A/B" को "A, B" में बदलें।</value></data>
   <data name="MediaFieldSnippetRegexTrackNumberDescription" xml:space="preserve"><value>रेगुलर एक्सप्रेशन: आरंभ का ट्रैक नंबर हटाएँ।</value></data>
+  <data name="PlaylistOrderSaveFailed" xml:space="preserve"><value>प्लेलिस्ट क्रम सहेजा नहीं जा सका</value></data>
+  <data name="MusicGalleryPageSortByPlaylistOrder.Content" xml:space="preserve"><value>फ़ाइल क्रम</value></data>
+<data name="MusicGalleryPageNoPlaylistsAvailable" xml:space="preserve"><value>कोई प्लेलिस्ट उपलब्ध नहीं है</value></data>
 </root>

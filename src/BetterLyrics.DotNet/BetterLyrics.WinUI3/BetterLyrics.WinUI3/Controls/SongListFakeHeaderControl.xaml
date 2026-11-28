@@ -8,6 +8,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:enums="using:BetterLyrics.Core.Enums"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="Root"
     mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -35,12 +36,14 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0" HorizontalAlignment="Left">
             <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
+            <Border Width="24" Visibility="{Binding ShowPlaylistGripSpacer, ElementName=Root, Converter={StaticResource BoolToVisibilityConverter}}" />
             <HyperlinkButton
                 x:Uid="MusicGalleryPageSortByTitle"
-                Grid.Column="0"
+                Grid.Column="1"
                 Margin="0,0,4,0"
                 Padding="0"
                 HorizontalAlignment="Left"
@@ -57,7 +60,7 @@
                 </HyperlinkButton.ContentTemplate>
             </HyperlinkButton>
             <FontIcon
-                Grid.Column="1"
+                Grid.Column="2"
                 VerticalAlignment="Center"
                 FontFamily="{StaticResource SegoeFluentIcons}"
                 FontSize="12"

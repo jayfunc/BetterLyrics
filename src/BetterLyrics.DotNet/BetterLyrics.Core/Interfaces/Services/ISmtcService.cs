@@ -32,4 +32,7 @@ public interface ISmtcService : INotifyPropertyChanged
     void PlayTrack(PlayQueueItem? playQueueItem);
     void PlayTrackAt(int index, bool recoverPlaybackPosition = false);
     void SaveCurrentPlaybackPosition();
+
+    void BeginQueueReorder();
+    void EndQueueReorder();
 }

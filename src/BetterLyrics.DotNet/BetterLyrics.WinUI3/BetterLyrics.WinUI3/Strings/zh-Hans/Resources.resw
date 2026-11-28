@@ -1119,4 +1119,7 @@
   <data name="MediaFieldSnippetRegexCollapseSpacesDescription" xml:space="preserve"><value>正则：合并连续空格。</value></data>
   <data name="MediaFieldSnippetRegexArtistSeparatorDescription" xml:space="preserve"><value>正则：将“A/B”转换为“A, B”。</value></data>
   <data name="MediaFieldSnippetRegexTrackNumberDescription" xml:space="preserve"><value>正则：移除开头的音轨号。</value></data>
+  <data name="PlaylistOrderSaveFailed" xml:space="preserve"><value>无法保存播放列表顺序</value></data>
+  <data name="MusicGalleryPageSortByPlaylistOrder.Content" xml:space="preserve"><value>文件顺序</value></data>
+<data name="MusicGalleryPageNoPlaylistsAvailable" xml:space="preserve"><value>暂无可用的播放列表</value></data>
 </root>

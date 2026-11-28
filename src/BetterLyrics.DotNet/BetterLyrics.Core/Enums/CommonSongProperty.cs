@@ -16,5 +16,6 @@ public enum CommonSongProperty
     FileSize,
     DateCreated,
     DateModified,
-    Duration
+    Duration,
+    PlaylistOrder
 }

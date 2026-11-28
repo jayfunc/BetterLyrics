@@ -1119,4 +1119,7 @@
   <data name="MediaFieldSnippetRegexCollapseSpacesDescription" xml:space="preserve"><value>นิพจน์ปกติ: รวมช่องว่างที่ซ้ำกัน</value></data>
   <data name="MediaFieldSnippetRegexArtistSeparatorDescription" xml:space="preserve"><value>นิพจน์ปกติ: แปลง "A/B" เป็น "A, B"</value></data>
   <data name="MediaFieldSnippetRegexTrackNumberDescription" xml:space="preserve"><value>นิพจน์ปกติ: ลบหมายเลขแทร็กที่ขึ้นต้น</value></data>
+  <data name="PlaylistOrderSaveFailed" xml:space="preserve"><value>ไม่สามารถบันทึกลำดับเพลย์ลิสต์ได้</value></data>
+  <data name="MusicGalleryPageSortByPlaylistOrder.Content" xml:space="preserve"><value>ลำดับไฟล์</value></data>
+<data name="MusicGalleryPageNoPlaylistsAvailable" xml:space="preserve"><value>ไม่มีเพลย์ลิสต์ที่ใช้ได้</value></data>
 </root>

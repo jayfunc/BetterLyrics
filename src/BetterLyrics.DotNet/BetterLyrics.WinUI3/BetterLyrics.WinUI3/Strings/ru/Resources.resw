@@ -1119,4 +1119,7 @@
   <data name="MediaFieldSnippetRegexCollapseSpacesDescription" xml:space="preserve"><value>Регулярное выражение: объединить повторяющиеся пробелы.</value></data>
   <data name="MediaFieldSnippetRegexArtistSeparatorDescription" xml:space="preserve"><value>Регулярное выражение: преобразовать «A/B» в «A, B».</value></data>
   <data name="MediaFieldSnippetRegexTrackNumberDescription" xml:space="preserve"><value>Регулярное выражение: удалить номер трека в начале.</value></data>
+  <data name="PlaylistOrderSaveFailed" xml:space="preserve"><value>Не удалось сохранить порядок плейлиста</value></data>
+  <data name="MusicGalleryPageSortByPlaylistOrder.Content" xml:space="preserve"><value>Порядок файла</value></data>
+<data name="MusicGalleryPageNoPlaylistsAvailable" xml:space="preserve"><value>Нет доступных плейлистов</value></data>
 </root>

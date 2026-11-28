@@ -50,6 +50,14 @@ public partial class MusicGalleryPageViewModel : ObservableRecipient, ISingleton
     // Sorted songs based on filtered songs
     private List<ExtendedTrack> _sortedTracks = [];
 
+    // Parsed entries of the m3u playlist that is currently displayed
+    private List<M3uPlaylistEntry>? _m3uEntries;
+    private string? _m3uPath;
+
+    // Last column sort, restored when leaving the file-order mode
+    private CommonSongProperty _lastSongOrderType = CommonSongProperty.Title;
+    private bool _lastIsSortDescending;
+
     [ObservableProperty] public partial ISmtcService SMTCService { get; set; }
 
     [ObservableProperty] public partial AppSettings AppSettings { get; set; }
@@ -61,6 +69,23 @@ public partial class MusicGalleryPageViewModel : ObservableRecipient, ISingleton
     /// </summary>
     [ObservableProperty] public partial ObservableCollection<GroupInfoList> GroupedTracks { get; set; } = [];
 
+    /// <summary>
+    /// Flat track list shown while a local playlist keeps its original order. Reordering this list is persisted to the m3u file.
+    /// </summary>
+    [ObservableProperty] public partial ObservableCollection<ExtendedTrack> PlaylistOrderTracks { get; set; } = [];
+
+    [ObservableProperty] public partial bool IsPlaylistOrderMode { get; set; }
+
+    [ObservableProperty] public partial int FilteredTracksCount { get; set; }
+
+    public bool IsPlaylistReorderEnabled => IsPlaylistOrderMode
+        && CurrentView == MusicLibraryViewType.Songs
+        && string.IsNullOrWhiteSpace(SongSearchQuery)
+        && SongListViewSelectionMode == AppListViewSelectionMode.Single;
+
+    public bool IsLocalPlaylistSelected => CurrentView == MusicLibraryViewType.Songs
+        && SelectedSongsTabInfo?.FilterProperty == CommonSongProperty.M3UFilePath;
+
     [ObservableProperty] public partial List<ExtendedTrack> SelectedTracks { get; set; } = [];
     [ObservableProperty] public partial ExtendedTrack? SelectedFirstTrack { get; set; }
 
@@ -69,7 +94,7 @@ public partial class MusicGalleryPageViewModel : ObservableRecipient, ISingleton
     [ObservableProperty] public partial CommonSongProperty SongOrderType { get; set; } = CommonSongProperty.Title;
     [ObservableProperty] public partial bool IsSortDescending { get; set; } = false;
 
-    [ObservableProperty] public partial int SelectedSongsTabInfoIndex { get; set; } = 0;
+    [ObservableProperty][NotifyPropertyChangedFor(nameof(IsLocalPlaylistSelected))] public partial int SelectedSongsTabInfoIndex { get; set; } = 0;
 
     public SongsTabInfo? SelectedSongsTabInfo => AppSettings.StarredPlaylists.ElementAtOrDefault(SelectedSongsTabInfoIndex);
 
@@ -78,7 +103,7 @@ public partial class MusicGalleryPageViewModel : ObservableRecipient, ISingleton
 
     [ObservableProperty] public partial string SongSearchQuery { get; set; } = string.Empty;
 
-    [ObservableProperty][NotifyPropertyChangedFor(nameof(IsMainView))] public partial MusicLibraryViewType CurrentView { get; set; } = MusicLibraryViewType.Songs;
+    [ObservableProperty][NotifyPropertyChangedFor(nameof(IsMainView))][NotifyPropertyChangedFor(nameof(IsPlaylistReorderEnabled))][NotifyPropertyChangedFor(nameof(IsLocalPlaylistSelected))] public partial MusicLibraryViewType CurrentView { get; set; } = MusicLibraryViewType.Songs;
 
     public bool IsMainView => CurrentView == MusicLibraryViewType.Songs || CurrentView == MusicLibraryViewType.Albums || CurrentView == MusicLibraryViewType.Artists;
 
