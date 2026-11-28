@@ -133,6 +133,11 @@ public sealed partial class LyricsWindowManagerControl : BaseUserControl
         ViewModel.ShowConfigPanelCommand.Execute((LyricsWindowStatus)((Button)sender).DataContext);
     }
 
+    public void ShowConfigPanel(LyricsWindowStatus? status)
+    {
+        ViewModel.ShowConfigPanelCommand.Execute(status);
+    }
+
     private void CopyAndTransformMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
     {
         if (sender is MenuFlyoutItem menuFlyoutItem)

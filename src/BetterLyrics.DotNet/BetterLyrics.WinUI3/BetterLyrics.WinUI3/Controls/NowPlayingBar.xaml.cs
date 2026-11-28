@@ -3,12 +3,10 @@ using BetterLyrics.Core.Events;
 using BetterLyrics.Core.Extensions;
 using BetterLyrics.Core.Interfaces.Providers;
 using BetterLyrics.Core.Interfaces.Services;
-using BetterLyrics.Core.Messages.SettingsNavigation;
 using BetterLyrics.Core.Models.Settings;
 using BetterLyrics.Core.ViewModels;
 using BetterLyrics.WinUI3.Views;
 using CommunityToolkit.Mvvm.DependencyInjection;
-using CommunityToolkit.Mvvm.Messaging;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -334,7 +332,8 @@ public sealed partial class NowPlayingBar : BaseUserControl
 
     private void LyricsSettingsFlyout_Opened(object sender, object e)
     {
-        WeakReferenceMessenger.Default.Send(new LyricsWindowNavigationRequestedMessage(LyricsWindowManagerSettingsSection.Window, LyricsWindowStatus?.Id));
+        if (LyricsSettingsFlyout.Content is LyricsWindowManagerControl content)
+            content.ShowConfigPanel(LyricsWindowStatus);
     }
 
     private void LyricsSettingsShortcutMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
